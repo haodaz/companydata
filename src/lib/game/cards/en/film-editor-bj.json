@@ -1,0 +1,153 @@
+{
+ "id": "film-editor-bj",
+ "occupation": "Film and Video Editor",
+ "role": "Assistant Editor at a Commercials and Short-Video Production House",
+ "headline": "A broadcast-directing graduate from Hebei, doing rough cuts and subtitle checks for commercials and short videos at a production house in Jiuxianqiao, revising version after version until dawn",
+ "unit": "A commercials and short-video production house in Chaoyang, Beijing",
+ "unit_type": "Film and commercials production company",
+ "city": "Beijing",
+ "city_tier": "Tier 1",
+ "education": "Bachelor's degree (broadcast and TV directing)",
+ "level": "You're fluent in Premiere and know a little After Effects and DaVinci color. You've cut your graduation short and dozens of talking-head clips. You've never carried a commercial yourself from raw footage to delivery.",
+ "intro": "The edit suite has no window: two monitors, a pair of studio speakers, a row of labeled portable hard drives. You're an assistant editor at a Jiuxianqiao production house that makes commercials and short videos, and every frame on your timeline ends up as three seconds someone swipes past on a phone, or fifteen seconds they stop for. From today, the project-file naming convention includes your initials.",
+ "salary_note": "Estimate: advertising and content production is concentrated in Beijing, and editors earn about thirty percent above the national figure. Busy months bring overtime and project bonuses; in the slow season it's base pay only. Freelance jobs on the side are extra.",
+ "facts": [
+  { "label": "Assistant Editor (current level)", "value": "0–2 years, ¥5,000–8,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Editor (2–5 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Setting the rhythm, telling the story, choosing what to cut", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Transcribing subtitles and tagging footage", "source": "AI exposure" },
+  { "label": "Open positions", "value": "21 related listings nationwide, 6 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "From Tongzhou, the Batong Line to Line 14 and on to Jiuxianqiao: an hour and a half. On the train you watch last night's rough cut once through on your phone.",
+  "Yesterday's shoot has come in: four cards, three camera angles. You copy them to the media server, verify them, build the project, and name everything by scene.",
+  "Boxed lunch from downstairs, listening to interview footage while you eat. The transcription software has produced subtitles and you check them line by line. It's spelled the guest's name three different ways.",
+  "The editor has you do a rough cut of a talking-head series first: ten clips, a minute each, vertical. You cut out every \"um\" and \"you know.\"",
+  "The director comes in to watch. At the third clip he says it drags and has you swap the first three seconds for a close-up of the product.",
+  "The client's notes arrive, twenty-seven of them. The first one is \"make the logo bigger.\" The editor sighs and has you start with the subtitle notes.",
+  "You export version eight. You rename the file from \"FINAL\" to \"FINAL 2,\" upload it to the client's cloud drive, and wait for the progress bar.",
+  "A cab back to Tongzhou. The driver asks what you do, and you say you edit videos. He says all that stuff he scrolls through every day, that's you lot, then."
+ ],
+ "ladder": [
+  { "title": "Assistant Editor", "stage": "Entry", "focus": "Organize footage, build projects, check subtitles, turn out rough cuts and revise versions alongside the editor. You move up by being fast, never losing footage, and cutting a short video on your own." },
+  { "title": "Editor", "stage": "Lead editor", "focus": "Cut commercials and short-video series on your own, review and revise with directors and clients. The rhythm and the choices start to be yours." },
+  { "title": "Senior Editor", "stage": "Senior", "focus": "Cut brand films and longer pieces, train assistants, coordinate color, graphics and sound. Clients ask for you by name." },
+  { "title": "Head of Post-Production", "stage": "Head", "focus": "Run the company's whole post-production department: scheduling, quotes, workflow and equipment, leading the editing, color and graphics teams, and signing off on the quality of what's delivered." }
+ ],
+ "ai_tasks": [
+  { "name": "Transcribing subtitles and tagging footage", "how": "AI turns hours of interviews into subtitles automatically, tags footage by person and scene, and picks out unusable shots. People only need to check names and technical terms." },
+  { "name": "Keying, background removal, simple warp effects", "how": "Automatic keying, person segmentation and image warps: AI tools do them in one click, fast and clean. People only spot-check shots with stray hair and flickering edges." },
+  { "name": "Rough cuts from the script", "how": "AI can assemble footage into a rough cut from the script and the transcript, even trimming the breaths in a talking head. Which shot stays, and which second the story starts on, a person decides." },
+  { "name": "Color grading and matching the picture", "how": "AI can match color across several cameras, denoise and repair automatically. Whether the whole piece runs cool or warm and where the feeling lands, the colorist and the director decide." },
+  { "name": "Setting the rhythm, telling the story, choosing what to cut", "how": "Which frame a fifteen-second ad cuts on, what a film shows the audience first and what it holds back: that rests on the editor's judgment and feel for people." },
+  { "name": "Reviewing and revising with directors and clients", "how": "What a client means by \"make it more premium,\" how to cut the feeling a director is after: people have to sit in the suite and watch together, and argue together." }
+ ],
+ "events": {
+  "e_first_cut": "The first short video you cut on your own goes up on the brand's account and gets two million views overnight. The editor posts one line in the group: good call keeping that pause at the start.",
+  "e_versions": "A thirty-second commercial: the client went through twenty-three versions and then used the second one. You archive all twenty-three project files and can't bring yourself to delete any of them.",
+  "e_drive": "A footage drive dies, and one scene wasn't backed up. You wait all day outside a data recovery shop. In the end they save ninety percent.",
+  "e_allnight": "The week before delivery you cut until three every morning and sleep five nights on the folding bed in the suite.",
+  "e_ai_rough": "The company starts using AI rough cuts, and it assembles four hours of interviews to the script. You watch it from the top and put back one pause it cut out. It's the best second in the whole piece.",
+  "e_ai_avatar": "There's less and less talking-head work. Clients have started making videos directly with digital presenters and AI-generated footage, and the company's short-video team shrinks from ten people to four.",
+  "e_viral": "A public-service short you cut spreads online, and someone in the comments says they cried three times. The director adds your name to the end credits.",
+  "e_award": "A brand film you cut wins an advertising award. You don't go to the ceremony. You're in the suite revising something else, and a colleague sends you a photo of the trophy.",
+  "e_doc": "A documentary director asks you to cut a film about old craftspeople. The money isn't much. You spend four months on it, the longest you've ever stayed on one timeline.",
+  "e_unpaid": "A major client of the company falls six months behind on payments, and salaries come two months late. In your shared flat in Tongzhou you do the sums. You're three thousand yuan short on your credit card.",
+  "e_eyes": "Your eyes start to feel dry and turn red, and your neck goes stiff. The doctor tells you to get away from the screen every forty minutes. You stick a note on the monitor to remind yourself, and rarely do it.",
+  "e_love": "You end up together with a camera assistant. You talked until dawn on the way back from a location shoot, and after that, on every shoot, they film one extra cutaway for you.",
+  "e_marry": "You get married. You cut the wedding video yourself. It takes a month, slower than any commercial.",
+  "e_yanjiao": "You buy a flat in Yanjiao, just over the line east of Beijing, and commute two hours a day. You cut on a tablet on the bus, and one version is exported on the expressway.",
+  "e_child": "Your child is born. You cut the first year of videos down to three minutes and spend a long time choosing the music. In the end you use a bit of humming recorded at home.",
+  "e_assistant": "The assistant you've trained cuts a brand film on his own for the first time, and the client approves the first version. He runs over to ask what else could be changed. You say: don't change it.",
+  "e_ai_color": "AI color matches three cameras in a click. What used to take a day of grading now takes half an hour. You spend the time you save watching the piece twice more.",
+  "e_layoff": "The industry is in a slump and the company lays off a third of its people. You're kept on. On one of the empty desks there's still a drive that was never finished copying.",
+  "e_parent": "Your father is in hospital back home in Hebei. Every weekend you take the high-speed train back, with a project open on your tablet, revising cuts in the ward corridor.",
+  "e_old_film": "Online you come across a commercial you cut ten years ago, the picture gone soft. Someone in the comments says: saw this as a kid, I still remember the music."
+ },
+ "choices": {
+  "c_skill": { "title": "Learn color first, or motion graphics", "situation": "The company is short-handed, and both the colorist and the motion designer want you as an apprentice. Color is DaVinci, sitting in a dark room grading frame by frame. Motion graphics is After Effects, animated titles and openers.", "options": [
+   { "label": "Learn color", "result": "You spend three months in the dark room watching scopes with the colorist. The first piece you grade yourself, the director says: that's starting to look like cinema." },
+   { "label": "Learn motion graphics", "result": "You learn to build animation templates. Half the company's short-video openers are yours, and clients often ask for that title effect by name." }
+  ] },
+  "c_ai": { "title": "Take on the AI editing workflow or not", "situation": "The owner wants the post department to go all in on AI: automatic transcription, automatic rough cuts, automatic keying. Someone has to build the workflow, set the footage naming rules and teach everyone. Take it, and you become the one asked every day what to do when the AI cuts something wrong.", "options": [
+   { "label": "Take it", "result": "You write a footage naming standard and tape it beside every computer. Three months later, delivery is two days faster on average." },
+   { "label": "Stick to cutting", "result": "You still prefer to listen through the footage yourself before you make a cut. It's slower, but you remember where every pause is." }
+  ] },
+  "c_platform": { "title": "Join a big tech company's content team", "situation": "The content team at one of the big internet companies is hiring editors. Thirty percent more pay, social insurance paid in full, no more waiting up past midnight for client notes. But most of what you'd cut is the platform's own promos, one template for a whole year.", "options": [
+   { "label": "Go", "result": "You get a bigger desk and leave at seven in the evening. By the fiftieth video on the same template, you start taking freelance work at weekends." },
+   { "label": "Stay at the production house", "result": "You stay and take on a car brand's annual project: twelve films, cut over a year." }
+  ] },
+  "c_senior": { "title": "Go up for Senior Editor", "situation": "Once a year the company grades its editors. Senior Editor requires brand films you can be proud of and the ability to train assistants. The owner says there's only one slot this year: you or another editor.", "options": [
+   { "label": "Compete with your reel", "result": "You turn the last few years' work into a three-minute reel and stay up two nights doing it. The owner watches and says: that last transition, was that your idea?" },
+   { "label": "Let your colleague have it", "result": "Your colleague is promoted and takes you out for hotpot. You go on cutting, and not one of the clients who call you stops calling." }
+  ] },
+  "c_studio": { "title": "Go out and open your own studio", "situation": "Several directors you've worked with say that if you went out on your own, they'd give their work straight to you. You'd be your own boss with no base pay, and the equipment, the rent and the social insurance would all be on you.", "options": [
+   { "label": "Go solo", "result": "You rent a small office in Shuangjing, buy two workstations, and tape a sheet of A4 paper to the door with the studio's name on it.", "end": "Your studio runs for many years, with five people at its biggest. You still watch the footage through yourself every day before you cut, and the sheet of A4 on the door gets replaced three times." },
+   { "label": "Stay at the company", "result": "You thank the directors and tell them that when the company gets their work, you'll be the one cutting it." }
+  ] },
+  "c_home": { "title": "Go back home to Hebei", "situation": "The county media center back home is hiring a video editor: a permanent state post, twenty minutes from your parents. Half your current pay, and most of what you'd cut is meeting news and tourism promos.", "options": [
+   { "label": "Go back", "result": "You give up the room in Tongzhou, pack the row of portable drives into a cardboard box, and get on the high-speed train to Hebei.", "end": "You cut films for the county media center for many years: meetings, temple fairs, the wheat harvest, a new expressway exit. Every Spring Festival you cut a New Year greeting video for your home village, and everyone there passes it around the group chat." },
+   { "label": "Stay in Beijing", "result": "You buy your parents a big-screen tablet, video-call once a week, and show them what you've cut." }
+  ] },
+  "c_film": { "title": "Join a film crew to cut a feature", "situation": "A young director's first feature needs an editor. The money is a third of what commercials pay, with six months on set and six more in the suite. Get it right, and your name is in the end credits.", "options": [
+   { "label": "Cut the film", "result": "You spend five months with the crew in Shanxi, watching dailies in your hotel room after every wrap. The day the edit is done, the director smokes half a pack in the suite." },
+   { "label": "Keep cutting commercials", "result": "You recommend a classmate who's always wanted to cut films, and move on to the next brand's annual piece yourself." }
+  ] },
+  "c_director": { "title": "Take Head of Post-Production", "situation": "The owner wants you as head of post: editing, color and graphics, three teams, more than twenty people. You'd do the quotes and the scheduling, buy the equipment, handle client complaints, and cut less and less yourself.", "options": [
+   { "label": "Take it", "result": "You move into the office with a window, outside the suites. In your first week you sit through eleven meetings and don't cut a single frame." },
+   { "label": "Keep cutting", "result": "You say you still want to edit, and the owner hires someone from a TV station as head. Your suite stays where it was." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last day you archive the project files one by one and hand the row of labeled drives to the person taking over. When you walk out of the suite it's still light outside. You stand at the Jiuxianqiao intersection for a while, watching the traffic go by frame by frame.",
+  "burnout": "After one delivery your eyes hurt so much you couldn't keep them open, and the doctor said if you kept on, your sight would suffer. You shut down the workstation and went home for a year. Every evening you walked along the edge of the fields, and didn't watch a single short video on your phone."
+ },
+ "stages": [
+  "Your work starts with the footage: copying cards, verifying, building projects, naming by scene, checking transcribed subtitles line by line. When the editor asks for a rough cut, you clean the breaths out of the talking heads in Premiere; when the director comes to watch, you sit beside him taking notes, and work through the client's feedback sheet point by point. If the project gets messy, you're the first one asked.",
+  "You're the lead editor on a piece now. You start from the script: choosing shots, setting the rhythm, finding music, cutting thirty seconds down to twenty-nine and a half on the timeline. When directors and clients come to the suite you play it for them yourself, and hear their arguments yourself. An assistant organizes your footage, and you start telling other people which frame to keep.",
+  "You cut brand films and longer pieces, and clients ask for you by name. In the dark room you settle the look with the colorist; you sync timings with the motion designer and the mixer. You have one or two assistants to do the rough cuts, and the final cut is yours. On the quote sheet, the line that says \"editing\" has your name after it.",
+  "You run the company's whole post department. Every week you schedule projects for more than twenty people, quote clients and negotiate delivery dates, decide which workstations to replace and which AI tools to bring in. When a film has problems, the client calls you. You still go into the suites, but mostly to stand at the back and watch, and now and then say: hold it a beat longer here."
+ ],
+ "work": [
+  "Zhou, the editor, asks you to find a shot of the guest smiling. You go through three hours of footage and find it on the second camera: twelve frames.",
+  "The client says a product model number in the subtitles is wrong. You search all thirty videos one by one, fix them, re-export, and upload them to the drive at two in the morning.",
+  "The director says the piece needs a cutaway. From last year's footage drive you dig out a hutong lane in the rain and drop it in. The director says: that's the one.",
+  "A fifteen-second drinks commercial: you move the product's first appearance from second nine to second three, and add the fizz of a bottle opening. Once it runs, the completion rate jumps.",
+  "The client's marketing manager says the film isn't \"premium enough.\" After a lot of questions she says it's the music, too full. You swap in a piece with only piano, and she nods.",
+  "In an interview piece, the guest stops for five seconds when he gets to his father. The AI rough cut took those five seconds out. You put them back, with no music under them at all.",
+  "On the car brand's annual film, you and the colorist argue all afternoon in the dark room over one dusk scene. In the end you settle on the warmer version.",
+  "A new assistant has named all the footage by date and can't find any shots. You don't yell at him. You rebuild it by scene with him, and it takes a weekend.",
+  "The mix comes back two frames out of sync. You nudge it along the timeline bit by bit until the actor's lips and the sound match, and only then let the mixer go.",
+  "A client complains delivery was three days late. You lay out the schedule and their revision history, then give them a free vertical version on top. The client renews for a year.",
+  "Choosing new AI tools for the post department, you have each of the three teams test-cut an old film. In the end you pick the one that made the fewest mistakes, not the fastest."
+ ],
+ "past": [
+  "In your last year of middle school, back home in Hebei, you filmed the school sports day on a phone and cut it to two minutes in free software, set to a pop song. Your homeroom teacher played it at the parents' meeting.",
+  "The year of the arts entrance exams you tried for directing: storyboards, film reviews, improvised storytelling. Your parents didn't understand what kind of major it was and asked if you were going to be a film director.",
+  "In your second year you cut wedding videos for a wedding studio near campus, three hundred yuan each. After forty-odd of them you'd learned to put the bride turning to look back on the chorus of a song.",
+  "The summer after third year you interned at a small production house in Beijing, sleeping on the office sofa. For the first time you watched an editor stop on a single frame for ten minutes.",
+  "Your graduation short went through more than twenty versions. It was about your grandmother's vegetable garden, and at the school screening someone cried. The month you graduated, you sent out twenty résumés."
+ ],
+ "late": {
+  "pension_note": "Estimate: Beijing's urban employee pension. Production houses often paid contributions on the minimum base in the early years, with gaps, and only later on actual salary, so in retirement you get about forty-five percent of your final monthly pay.",
+  "scenes": [
+   "After retiring you copy all your project files onto a new hard drive. The label says: a lifetime.",
+   "The neighborhood seniors' college asks you to teach a phone-editing class. Your students are in their sixties and seventies, cutting their grandchildren's birthdays and photos of themselves when they were young.",
+   "You start going to the park every day to film one minute of video. No editing, no music. You just leave it as it is.",
+   "For your first few months back home you walk along the edge of the fields every evening. The wheat looks different every day, and you think it would be harder to cut than any film.",
+   "Your eyes are better. Someone in the village is getting married and asks you to film a bit. You shoot it on your phone and that night cut three minutes, with the bride turning to look back on the chorus.",
+   "You open a small photo studio in the county town, doing ID photos and family portraits, and now and then transferring someone's old videotapes to digital.",
+   "The month you leave the company, a former colleague sends you a piece and asks if the last cut is right. You watch it three times and reply with a timecode.",
+   "The assistant you once trained is now head of post at a company. At an industry talk he plays an old piece you cut and says: this is what got me into the business.",
+   "The old drive with your graduation short on it won't read anymore. You find someone to fix it, and the day it's fixed you watch your grandmother's garden once more.",
+   "Later rough cuts were all handed to AI, hours of footage assembled in minutes. But which pause to keep still took a person sitting in front of the screen, watching it.",
+   "On the subway you see a young person cutting a video on a phone, thumb dragging back and forth along the timeline. You watch for two stops and don't disturb them.",
+   "You cut all the family's old photos and videos into one film, ordered by year. The last shot is you as a child, running through the vegetable garden."
+  ],
+  "closing": {
+   "retire": "Many years later, one afternoon, your grandchild shows you the first video they've cut. The opening is too long. You point to the progress bar and say: start here. They try it, and their eyes light up.",
+   "burnout": "Many years later, one evening, you sit outside the photo studio watching people go by. The low sun slants in, and without thinking you raise your hands into a frame, then lower them.",
+   "end": "Many years later, on an old computer, you find a file called \"FINAL 2\" and can't remember which film it was. You open it, watch it to the end, close it, and don't delete it."
+  }
+ }
+}

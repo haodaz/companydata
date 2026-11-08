@@ -1,0 +1,153 @@
+{
+ "id": "esports-ops-cd",
+ "occupation": "Esports Operations Specialist",
+ "role": "Event Coordinator at an Esports Events Company",
+ "headline": "A sports-management graduate running college tournaments and home match days, radio in hand, for an esports events company in Chengdu",
+ "unit": "An esports events company in Chengdu",
+ "unit_type": "Esports event production company",
+ "city": "Chengdu",
+ "city_tier": "New tier 1",
+ "education": "Bachelor's degree (sports economics and management)",
+ "level": "Just made permanent after a year as an intern. You've done floor control and player check-in on a dozen-odd match days, you can build a schedule and check a materials list. You haven't touched an event budget or a sponsor yet.",
+ "intro": "Badge round your neck, radio clipped at the small of your back, the earpiece wire threaded out through your collar. You're an event coordinator at an esports events company in Chengdu, with more than a hundred match days a year: college tournaments in sports halls, city cups in shopping-mall atriums, league home games in an esports arena built inside an old factory on the east side of town. From today, the line in the run book that says \"floor control\" has your name on it.",
+ "salary_note": "Estimate: Chengdu has plenty of esports venues and event companies, and pay runs a notch below Beijing, Shanghai and Shenzhen, taken at ninety percent of the national figure. Big events come with project bonuses; in the off season it's base pay only.",
+ "facts": [
+  { "label": "Event Coordinator (current level)", "value": "0–2 years, ¥5,270–7,750 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Event Operations Supervisor (2–5 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥19,500 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Handling the unexpected and keeping everyone in step on match day", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Making posters, short videos and match highlights", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Metro Line 1 to the high-tech zone. Nobody's in the office yet, so you go over tonight's schedule once more: four matches, two teams switching sides.",
+  "Project stand-up. Your supervisor projects today's run sheet on the wall, three hundred-odd lines. Yours are the player corridor and audience entry.",
+  "Walk-through at the arena. The broadcast booth is setting camera positions, and the network engineer says both main and backup lines are up. You ask him to pull the main once more and check.",
+  "You call the student union running next week's college tournament. Their venue is a basketball court, and they ask whether they can skip the floor covering. You say no; the desks will wobble.",
+  "Players arrive to check in and test their peripherals. A support player's headset cable is broken. You dig the spare out of the kit box and run it over.",
+  "The match starts. You stand at the side of the stage while the director, the referee and security take turns in your radio, and you answer each one: \"Copy.\"",
+  "The crowd is out. Once the audience leaves, the arena is suddenly empty. You and the student temps pack the pull-up banners into crates one by one and log them on the materials sheet.",
+  "Whoever's done gathers at the skewer-hotpot place by the arena's back door, going over the two-minute delay in tonight's third match while they eat. Your voice is gone. You can only nod."
+ ],
+ "ladder": [
+  { "title": "Event Coordinator", "stage": "On the floor", "focus": "Run match days: floor control, player check-in, materials, every surprise that comes through the radio. You move up one clean match day at a time." },
+  { "title": "Event Operations Supervisor", "stage": "Supervisor", "focus": "Run an event on your own: the schedule, the venue, the tech and broadcast handoffs, a few coordinators and a crowd of temps. You start handling budgets and sponsor requests." },
+  { "title": "Event Project Manager", "stage": "Projects", "focus": "Own a whole season or a major event from proposal to post-mortem: pitch the plan, do the accounts, negotiate venues and sponsors, answer for ticket sales and reputation." },
+  { "title": "Director of Event Operations", "stage": "Director", "focus": "Run the company's events business: decide which competitions to hold each year, negotiate with game publishers and city governments, lead several project teams and sign for the revenue." }
+ ],
+ "ai_tasks": [
+  { "name": "Making posters, short videos and match highlights", "how": "Captions, short-video scripts, rough-cut highlights, one draft rewritten for several platforms: AI already produces most of the finished product. People spot-check tone, facts and copyright, and the relationships with platforms and agencies are still kept by people." },
+  { "name": "Building schedules and run sheets", "how": "AI can draft a schedule from the teams, venues and broadcast slots and generate a run sheet hundreds of lines long. Which team can't play two days running, which venue is shut for electrical work that weekend, a person fixes line by line." },
+  { "name": "Ticketing and sponsorship analytics", "how": "AI can price tickets, forecast attendance and produce exposure reports for sponsors. Which brand suits this event and how far a tie-in should go, a person decides." },
+  { "name": "Handling the unexpected and keeping everyone in step on match day", "how": "A network drop, a late team, a scuffle in the crowd, a sponsor suddenly wanting another screen: one sentence over the radio has to move several crews at once, and only a person on the floor can judge it and take responsibility." },
+  { "name": "Dealing with clubs, publishers and venues", "how": "Players' moods, clubs' tempers, the venue manager's phone number: these rest on meal after meal and promise after promise kept. AI can only help with the records and contract templates." }
+ ],
+ "events": {
+  "e_netdown": "Halfway through the final the main line went down, and the match was paused for six minutes before the backup took over. People in the stands shouted for refunds, and over the radio you kept saying: hold steady, we're restoring.",
+  "e_college_final": "You run the grand final of the first college tournament. The winning team are students from a vocational college, and they dissolve into tears holding the trophy. Standing at the side of the stage, you feel your own nose sting.",
+  "e_sponsor": "Two hours before the start a sponsor wants a new logo on the stage backdrop. You get a print shop to rush it out, and when it goes up there are four minutes left before doors open.",
+  "e_ai_poster": "The company starts making posters and highlights with AI. Ten minutes after a match ends, twenty short videos are out. One of them names the champions as the runners-up. You're the one who catches it, past midnight.",
+  "e_ai_schedule": "The schedule is handed over to AI, and the first draft takes three minutes. You spend the afternoon fixing it: it didn't know one team's jungler had to go home to sit an exam.",
+  "e_late_player": "A visiting team's bus is stuck on the ring expressway with half an hour to go. You make a dozen calls between the referee, the director and their team manager, and swap the order of two matches.",
+  "e_voice": "After one season your voice is gone for two weeks. The doctor says it's vocal nodules. Over the radio you start saying one word less: \"Copy.\"",
+  "e_big_event": "An international esports event comes to Chengdu and your company wins part of the production. For a month you sleep four hours a night. On closing night you stand outside the arena watching the fireworks and decide it was worth it.",
+  "e_club_leave": "The home club you've worked with for years is moving to another city. On the last home match day, fans hang a banner at the arena entrance. You fold it away in the company storeroom.",
+  "e_cut": "The game publisher cuts the city cup budget for the second half of the year, and the company loses three projects at once. Two people on the team leave, and the rest split their work.",
+  "e_city_cup": "The neighborhood internet-cafe league you designed takes off. Signing up are delivery riders, a middle school teacher and a man of sixty. A clip of the final gets more than a million views on a short-video platform.",
+  "e_fan": "As the crowd leaves, two groups of fans start arguing at the exit. You and security pull them apart and put them into taxis one by one. Back inside, you find your badge lanyard torn off.",
+  "e_love": "You end up together with a colleague who runs the vision mixer in the broadcast booth. Your first date is in a gap on a match day, sharing a bowl of ice jelly by the arena's back door.",
+  "e_marry": "You get married. You wrote the wedding run sheet yourself, down to the minute. The emcee says he's never seen a wedding so punctual.",
+  "e_house": "You buy a flat on the east side of Chengdu, twenty minutes from the arena. From the balcony you can see the mountains in the distance, but only on clear days.",
+  "e_child": "Your child is born. You can't take weekend match days off, and when you get home after work your child is already asleep. You stand by the bed for a while.",
+  "e_mentee": "The coordinator you trained runs a home match on her own for the first time without a single wasted word on the radio. Afterward she asks what she did wrong. You think for a long time and can't come up with anything.",
+  "e_back": "Years of standing, and years of hauling equipment crates, and your back starts to hurt. You keep a yoga mat in the office and lie on it for ten minutes at lunch.",
+  "e_parent": "Your mother has an operation back home and you take a week off to go. Leave is hard to get in the season; your supervisor covers three match days for you.",
+  "e_ai_team": "The materials team goes from six people to two plus an AI system. The money you save goes into two more city cup stops."
+ },
+ "choices": {
+  "c_cert": { "title": "Get certified as an Esports Operations Specialist", "situation": "The company encourages coordinators to take the national vocational skill certificate for esports operations; it counts in your favor when supervisors are chosen. It means several weekends of training and a complete event proposal, and in the season every weekend is a match day.", "options": [
+   { "label": "Squeeze it in", "result": "You write your proposal as a real college tournament, sixty pages from budget to contingency plan. The examiner says you could run it as is." },
+   { "label": "Matches first", "result": "You push the application to next year and run another forty match days this season. No certificate, but a crate's worth of experience." }
+  ] },
+  "c_ai": { "title": "Hand the materials over to an AI pipeline or not", "situation": "The company wants to give posters, highlights and multi-platform copy entirely to an AI pipeline, and needs someone who understands both the matches and the content to set the rules and do the last review. Take it, and every night you'll have to go through dozens of pieces before you sleep.", "options": [
+   { "label": "Take it", "result": "You write a twenty-point review checklist. Point one: check every player name and team name, character by character." },
+   { "label": "Stay on the floor", "result": "You keep running the floor with your radio and leave materials to a colleague in design." }
+  ] },
+  "c_shanghai": { "title": "Join the league organizer in Shanghai", "situation": "A league operator in Shanghai is hiring event operations staff, at more than thirty percent more pay, running the top competitions. But you'd have to leave Chengdu, your rent would double, and all your friends are here.", "options": [
+   { "label": "Go to Shanghai", "result": "You rent a small north-facing room in Shanghai and work the biggest arenas every day, where everyone on the radio is more senior than you." },
+   { "label": "Stay in Chengdu", "result": "You stay, and your supervisor hands you next season's city cups in one piece. After the weekend wrap you can still go to that skewer place." }
+  ] },
+  "c_manager": { "title": "Apply for Event Project Manager", "situation": "The company has won the hosting rights for a whole season of home matches and needs an event project manager to run it from proposal to post-mortem: budget, venue, sponsors and ticketing all need your signature. The other applicant is a colleague poached from Shanghai.", "options": [
+   { "label": "Apply", "result": "You put every event you've run in the past three years into one table, with each one's cost, attendance and incidents. You include the six-minute network drop." },
+   { "label": "One more year on the floor", "result": "You don't apply, and keep leading the coordinators on match days. In his first month the new manager comes to ask you who to call for the arena's electrician." }
+  ] },
+  "c_concert": { "title": "Switch to producing concerts", "situation": "A company that runs concerts and music festivals wants to poach you, saying people from esports production handle a live floor best. Bigger shows, more money, but the people on stage would no longer be the kids you know.", "options": [
+   { "label": "Go", "result": "You hand the radio back to the company. The earpiece you can't bring yourself to return. You take it with you.", "end": "You go into concerts and music festivals, and your crowds grow from thousands to tens of thousands. Before every show, out of habit, you still pull both the main and backup lines once to check." },
+   { "label": "Stay", "result": "You turn it down. Next weekend is the college tournament final, and you promised those student union kids you'd be there." }
+  ] },
+  "c_club": { "title": "Jump to a club as team manager", "situation": "The home club you work with wants you as team manager: the players' food, lodging and travel, their schedules and moods, traveling the country with the team. Closer to the matches, further from home.", "options": [
+   { "label": "Become team manager", "result": "You spend a year on the road with the team and learn to sleep on a bus, and to say nothing at all after the players lose." },
+   { "label": "Stay with the events company", "result": "You recommend a coordinator who's done away games, and stay to run the home matches." }
+  ] },
+  "c_hotel": { "title": "Open an esports hotel", "situation": "A college friend has leased a whole floor near Chunxi Road, the downtown shopping street, and wants to open an esports hotel with two computers in every room. He needs a partner who understands players and can run small tournaments. It would take half your savings.", "options": [
+   { "label": "Go in with him", "result": "You quit, and rewrite your event run book as an activities manual for the hotel. Page one is still the contingency plan.", "end": "Your esports hotel runs for many years, with a small tournament every month and a free night as the prize. Of the kids who came to play, two later made it onto pro teams." },
+   { "label": "Stay out of it", "result": "You give your friend a few ideas for tournaments and stay at the company. On opening day you go to support him and play games all night." }
+  ] },
+  "c_director": { "title": "Take Director of Event Operations", "situation": "The owner wants to hand the company's events business to one person: which competitions to run each year, which publishers and cities to deal with, whose signature goes on the revenue. Take it, and you'll rarely stand at the side of a stage again.", "options": [
+   { "label": "Take it", "result": "Your calendar changes from match days to meetings and business trips. The first time you go to a publisher to negotiate next year's deal, you put a stack of attendance figures on the table." },
+   { "label": "Keep running projects", "result": "You stay on projects and still stand at the side of the stage every season. The \"copy\" on the radio is still yours." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last match day you leave the radio behind and sit in the back row of the stands for the whole event. When it ends the lights come up one by one, a young coordinator calls \"copy\" from the side of the stage, and in your head you say it along with them.",
+  "burnout": "Two seasons without a single full weekend off, and one day backstage you crouched to pick up a cable and couldn't stand up for a long time. You handed in your badge and rested at home for six months. Later you took a job looking after the county sports hall, done every afternoon at five."
+ },
+ "stages": [
+  "You're floor control and event coordinator on match day. On the walk-through you check camera positions and main and backup lines with the director and the network engineer; once play starts you stand at the side of the stage while the referee, security and the director take turns calling you. Player check-in, peripheral checks and audience entry are all on your list. After the crowd leaves, you count the materials and log them.",
+  "Now you run a whole event: the schedule, the venue, the broadcast and tech handoffs, with two or three coordinators and a crowd of student temps under you. Checking the sponsors' list of deliverables becomes your job, and your signature goes on the budget. On match day you no longer run the player corridor; you sit by the broadcast booth and watch the whole floor.",
+  "You're the event project manager, running a season from proposal to post-mortem. You pitch plans to the owner and budgets to the publisher, negotiate dates with venues and exposure with sponsors; ticket sales and reputation are on your name. On match day you're in the small office backstage, and the radio only goes off when something's wrong.",
+  "You run the company's whole events business. Every autumn you decide which competitions to hold the next year, go to publishers and to the city's culture and sports departments to negotiate, and lead three or four project teams. What you read are revenue sheets, attendance and partner renewals; what you sign are contracts. Only on the night of a big final do you still go and stand at the side of the stage for a while."
+ ],
+ "work": [
+  "An hour before the start, a match computer blue-screens. You carry over a spare and work with the referee to restore the player's settings one by one, done with two minutes to go.",
+  "The college tournament's student union president is a second-year girl running her first event, too nervous to speak. You read the run sheet through with her from the top, and she changes three things herself.",
+  "Counting materials after the crowd leaves, you're one pull-up banner short. You check the cameras: a fan carried it off. You decide not to chase it.",
+  "You lay out next season's schedule, marking each team's back-to-backs and long trips, and send it to the managers of eight clubs. Five rounds of changes, until the last manager replies: fine.",
+  "A sponsor's brand manager says their logo didn't get enough screen time on the broadcast. You bring out the exposure screenshots and seconds for every match and go through them with him one by one. He doesn't raise it again.",
+  "The city cup is in a mall atrium, and the property management says the power goes off at nine. You talk it over with the director and move the awards to before the third game of the final.",
+  "You build the new season's budget, four big blocks: venue, staging, broadcast, staff. It comes out twenty percent in the red. You cut an opening show and put in three city cup stops instead.",
+  "The ticketing system shows the final only sixty percent sold. You and the marketing team stay up making a set of short films looking back on veteran players, and three days later it's sold out.",
+  "At a post-mortem, a new coordinator says the network drop was the network company's fault. You say: it was ours, for not making them pull the main line once more. The minutes record it that way.",
+  "You go to negotiate next year with the publisher, who wants to cut the budget by thirty percent. You bring out five years of attendance and broadcast data, and in the end it's cut by ten, with two more city cup stops added.",
+  "The city's culture and sports department wants to hold an esports competition for middle school students and invites you to a review meeting. You say it can be done, but no match can run past nine at night."
+ ],
+ "past": [
+  "In your last year of middle school you watched a league match on stream at an internet cafe in your county town, thousands of people shouting at once. What caught your eye wasn't the players. It was the person at the side of the stage in an earpiece.",
+  "Your gaokao (college entrance exam) score got you into a university in the province, and you chose sports economics and management. The admissions brochure said career paths included esports events.",
+  "In your second year you ran your first esports tournament at school, borrowing twenty computers from the lab. The power cut out once on the day of the final, and you kept order in the dark with your phone flashlight.",
+  "In third year you took a part-time job at an esports arena in Chengdu, hauling equipment and handing out wristbands for a hundred and fifty yuan a day. The venue manager asked if you'd like to come after graduation. You said yes.",
+  "The year before graduating you interned at your current company and worked more than thirty match days. The first time you said \"copy\" over the radio, your voice shook."
+ ],
+ "late": {
+  "pension_note": "Estimate: Chengdu's urban employee pension. Events companies mostly pay contributions on base salary, not project bonuses, so in retirement you get about half your final monthly pay.",
+  "scenes": [
+   "The first weekend after you retire, you can't sit still at home. You go to the esports arena in the old factory on the east side, buy a ticket and sit in the stands.",
+   "The neighborhood committee asks you to help run a cards and chess tournament for older residents. You write a run sheet down to the minute, and the old men say it's more formal than New Year.",
+   "Every morning you do tai chi in the park. You haven't used a radio in years, but when someone calls your name you still say \"copy\" out of habit.",
+   "At the county sports hall you check the lights, the floor and the hoops every day and lock up at five. On the way home you can see the sun set, which you haven't seen in years.",
+   "The county middle school is holding its first esports tournament, and the students come to you for help. You borrow a few computers, and the first thing you have them do is run two network cables.",
+   "Your voice recovered long ago. In a teahouse in the county town you sit and chat, and when you get to the six-minute network drop, everyone laughs.",
+   "For the first month after leaving esports, every evening at seven your hand still goes to the small of your back, where there's no radio anymore.",
+   "The student union president from that college tournament now runs events at a big company. She recognizes you at a function, runs over and calls you her teacher.",
+   "You walk past the old factory on the east side. The esports arena has become something else. The steps at the entrance are the same ones, and you sit on them for a while.",
+   "Later all the posters and highlights were made by AI, out a minute after the match ended. But someone still had to go and pull the main and backup lines once to check.",
+   "Clearing out old things from the company storeroom, someone mails you the banner the fans hung when the club moved away. You fold it and put it on the top shelf of your wardrobe.",
+   "Your grandchild asks what you used to do. You think about it and say: other people competed on stage, and I stood at the edge making sure nothing went wrong."
+  ],
+  "closing": {
+   "retire": "Many years later, on a summer night, you're sitting out in the cool downstairs when a few children start a game on their phones. They argue over who gets to be referee. From the side you say: me.",
+   "burnout": "Many years later, the lights in the county sports hall are switched off by you for the last time. You stand in the middle of the darkened floor and hear someone playing ball in the distance, thud, thud, one bounce at a time.",
+   "end": "Many years later you find the old earpiece in a drawer, its wire gone stiff. You hook it over your ear. The room is quiet. There's nothing on it at all."
+  }
+ }
+}

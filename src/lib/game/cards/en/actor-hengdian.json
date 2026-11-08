@@ -1,0 +1,155 @@
+{
+ "id": "actor-hengdian",
+ "occupation": "Actor",
+ "role": "Background Extra in Hengdian",
+ "headline": "A twenty-one-year-old extra who came to Hengdian from rural northern Anhui after vocational high school, waits at a street corner before dawn for the crew bus, and has played soldiers, passers-by and corpses",
+ "unit": "Hengdian World Studios, Dongyang, Zhejiang (working for whichever crew is shooting)",
+ "unit_type": "Film and TV production base · freelance actor",
+ "city": "Hengdian, Dongyang (Jinhua)",
+ "city_tier": "County town",
+ "education": "Vocational high school (secretarial studies)",
+ "level": "You've been registered with the actors' guild for six months and worked on more than thirty crews: foreground, passer-by, soldier. You can stand in front of a camera without looking at it. You haven't spoken a single line yet.",
+ "intro": "At half past four in the morning your phone buzzes by your pillow: the crowd wrangler has posted today's call in the group chat. \"Ming-Qing period, twenty soldiers, bus at the corner at five.\" You came to Hengdian from northern Anhui six months ago and live in an eight-square-meter room in an urban village, with a profile card you printed yourself taped to the wall. From today, the first thing you do every day is race to reply with a \"1.\"",
+ "salary_note": "Estimate: extras in Hengdian are paid cash by the day, a hundred or two for twelve hours, money only when there's work, maybe twenty days a month. Featured extras and roles are negotiated by the scene or by the day. In years when vertical short dramas boom there's more work. Taken at ninety percent of the national figure.",
+ "facts": [
+  { "label": "Background Extra (current level)", "value": "0–2 years, ¥3,000–5,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Featured Extra (2–5 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Taking the director's notes and adjusting the performance to fit the intent", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Studying the script and analyzing a character's personality and emotional arc", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You reply \"1\" in the group and get a spot. A splash of water on your face, ID card and actor's card in your pocket, and out the door. There are already dozens of people standing in the street.",
+  "The bus drives into the studio's palace backlot. Wardrobe hands out costumes, and you get a soldier's armor with the last wearer's sweat still drying in it.",
+  "A long queue at makeup. In three minutes the makeup artist glues a ring of beard round your face and says: don't smile, it'll fall off.",
+  "On set. The assistant director shouts through a megaphone, \"foreground, two steps left,\" and you shift two steps left, into the frame on the monitor.",
+  "Boxed lunch, two meat dishes and one vegetable. You squat by the palace wall to eat, and a man who's been an extra for eight years tells you which crews pay promptly.",
+  "In the afternoon they shoot the aftermath of a fight, and you play a soldier fallen on the steps. You lie there three hours without moving, the sun heating the armor plates.",
+  "Wrap. You queue to return the costume and get paid: the wrangler counts out a hundred and eighty yuan in cash. You fold it and put it in your shoe.",
+  "Back in your room you read a speech you copied off the internet into the mirror, twenty times. The neighbor knocks on the wall."
+ ],
+ "ladder": [
+  { "title": "Background Extra", "stage": "Extra", "focus": "Follow the crowd wrangler from crew to crew as soldiers, passers-by and foreground, paid in cash each day. You move up by holding your mark, never looking at the lens, and getting remembered by an assistant director." },
+  { "title": "Featured Extra", "stage": "Featured", "focus": "A line or two, or a shot of your own, paid by the scene. You start building your own clips and profile card, and going to auditions." },
+  { "title": "Character Actor", "stage": "Small roles", "focus": "Play small roles with a name, across several scenes, listed in the cast. You have an agent or a small management studio, and you start choosing your work." },
+  { "title": "Supporting Actor", "stage": "Supporting", "focus": "Play supporting roles that hold up a drama. Directors and casting ask for you by name, you run scenes with young actors, and your name is printed on the second row of the poster." }
+ ],
+ "ai_tasks": [
+  { "name": "Studying the script and analyzing a character's personality and emotional arc", "how": "AI can quickly map a script's structure, the relationships and the emotional beats, and draft a character biography. The actor has to bring their own understanding and life experience to decide what the character really is at the core." },
+  { "name": "Learning lines and working over tone and rhythm", "how": "AI can be a line-reading partner, catch misremembered lines and offer different readings for reference. The actor has to turn the lines into a performance with breath and subtext." },
+  { "name": "Taking the director's notes and adjusting the performance to fit the intent", "how": "A director's notes come through talk on set, guessing at intentions and reacting in the moment; AI can at most take notes. A person has to hear what isn't said and adjust at once with body and feeling." },
+  { "name": "Table reads and rehearsals, finding a rhythm with scene partners", "how": "The heart of a table read or rehearsal is the chemistry and instant response between real people, which AI can't replace. People find rhythm and trust by running into each other." },
+  { "name": "Performing on set or on stage, in front of the camera or an audience", "how": "Performing for a lens or an audience takes a real body, real feeling and being present. AI can only generate a stand-in image or voice. A person has to give a performance no one else can, and answer for it." },
+  { "name": "Training body, voice and expression to stay in shape", "how": "AI can point out problems with movement, voice and expression from video or recordings and build a personal training plan. A person has to do the practice, and a teacher or the actor decides what the right state is." },
+  { "name": "Living the life, watching people, gathering material for a role", "how": "Living the life and watching people means experiencing and feeling it yourself; AI can only help sort material or look up background. A person has to go among real people and places and turn what they feel into the details of a role." },
+  { "name": "Working with camera, lighting, costume, makeup and props to get the shot", "how": "Working with camera, lighting, costume, makeup and props happens on set: blocking, marks, last-minute changes and unspoken understanding. AI can help with call sheets, but people have to work together in real time on the floor." }
+ ],
+ "events": {
+  "e_first_line": "The assistant director picks you out of a crowd of soldiers: \"You. Shout 'Report!'\" You shout it, and behind the monitor the director says: good, moving on. That day you're paid an extra hundred.",
+  "e_scolded": "In one take you accidentally look at the camera, and the whole shot has to go again. The assistant director yells at you for two minutes in front of dozens of people. You're still paid that day. You don't say a word.",
+  "e_summer": "Shooting a costume drama in July, you stand in the sun all day in three layers of costume and nearly faint at noon. A crew runner hands you a bottle of herbal heatstroke tonic. You drink it and go on standing.",
+  "e_no_work": "Slow season. Two weeks without landing a single call. You still go and stand at the corner every morning. After the rent there's three hundred yuan in your pocket.",
+  "e_crew_run": "A web-series crew runs out of money halfway through the shoot and the producer disappears. Not one fen is paid to the twenty-odd featured extras. You file with the actors' guild and wait three months.",
+  "e_director_saw": "You play a teahouse waiter with a single shot of serving tea. The director watches the playback and has the writer add two lines for you. You don't sleep that night.",
+  "e_short_drama": "Vertical short dramas, made for phone screens, take off, and they're shooting everywhere in Hengdian, a hundred episodes in seven days. In one month you do five of them, playing a CEO's driver, a villain's bodyguard, the heroine's brother.",
+  "e_ai_crowd": "A big production's siege scene hires only fifty extras; the remaining thousands are made by computer and AI. Standing beneath the empty city wall, for the first time you feel like a prop.",
+  "e_ai_scan": "A crew asks you to sign a release so they can scan your face and body, saying post-production might need it to patch shots. You read the terms three times and strike out the word \"perpetual\" before you sign.",
+  "e_wire": "On a wire stunt the rope jerks and you land at the edge of the crash mat and wrench your back. Twenty days off, and you go to set to watch other people shoot.",
+  "e_tv": "A drama you were in airs on a national satellite channel. Back home your mother watches all forty episodes, and in episode twenty-seven she finally spots you at the edge of the frame for just over a second. She screenshots it and posts it to the family group.",
+  "e_agency": "A small management studio sees your clips and signs you, finding auditions and negotiating fees. The first year you give them thirty percent.",
+  "e_veteran": "You play a scene opposite a veteran actor. After wrap he stops you and says the look in your eyes was right, but your hands were too busy. You go home and work on your hands for a month.",
+  "e_love": "You end up together with another Hengdian drifter who runs the same crews. Once you had barbecue together on a rooftop in the urban village, talking about which of you would land a named role first.",
+  "e_pressure": "Home for New Year, your relatives ask how much you really make in Hengdian and when you're coming back to get a proper job. You smile and pour their drinks, and hardly eat a thing.",
+  "e_marry": "You get married. The wedding is back home, a dozen friends come from Hengdian, and one of them emcees in a borrowed costume. The whole village turns out to watch.",
+  "e_child": "Your child is born. You work night shoots for a month to save enough before you go home, and by then the baby can grab your finger.",
+  "e_age_roles": "The roles you're offered slowly change: from soldier to a general's lieutenant, and then to the lead's father. The makeup artist spends less and less time painting on your wrinkles.",
+  "e_newcomer": "A new extra on the crew is so nervous he forgets his mark. During a set change you pull him aside and tell him which point to look at, and not to look at the lens.",
+  "e_knees": "Years of kneeling, lying and falling on cold ground, and your knees ache whenever it's overcast. You keep knee pads in your bag and put them on before the cameras roll."
+ },
+ "choices": {
+  "c_class": { "title": "Pay for an acting class", "situation": "There's an acting school in town: three months, six thousand yuan, with a promise of featured-extra work afterward. You only have enough for half and would have to borrow the rest. But you know you can't even deliver a line.", "options": [
+   { "label": "Borrow and enroll", "result": "You spend three months on voice, speech, movement and performance. The teacher shows you how to stand, how to look, how to breathe in the middle of a sentence. The promised work is thin, but your voice doesn't shake anymore." },
+   { "label": "Learn on set instead", "result": "You don't sign up. Every time you're on set you crouch behind the monitor watching how the leads act, and you fill a notebook." }
+  ] },
+  "c_stunt": { "title": "Join the stunt team or wait for acting work", "situation": "A martial arts coordinator sees you move well and asks if you'll join his stunt team: wire work, falls, fights, twice an extra's pay. There's less acting work, but that's what an actor does.", "options": [
+   { "label": "Join the stunt team", "result": "You learn to fall from a two-meter platform without hurting your back. You earn twice what you did, and go home every night covered in bruises." },
+   { "label": "Wait for acting work", "result": "You thank the coordinator and keep waiting for calls at the corner. Some weeks there's only one job, but that week you have a line." }
+  ] },
+  "c_ai": { "title": "Use AI to prepare for auditions or not", "situation": "Young actors all use AI to break down scripts, run lines and pick holes in their self-tape auditions. You think the thing doesn't understand people, but a casting director looks at hundreds of self-tapes a day.", "options": [
+   { "label": "Learn to use it", "result": "Every night you have AI run lines with you, reading the same line ten ways, and you film the one that sounds most like you. More auditions call back." },
+   { "label": "Keep practicing in the mirror", "result": "You keep reading into the mirror in your room until the neighbor knocks. It's slower, but every word is your own." }
+  ] },
+  "c_beijing": { "title": "Go to Beijing to chase auditions", "situation": "A friend from the crews has gone to Beijing and says there are far more casting agencies and auditions there, ten times the chances. But Beijing rent is high and you can't last a day without work, while in Hengdian there's at least a boxed lunch every day.", "options": [
+   { "label": "Go to Beijing", "result": "You rent a bed in an urban village on Beijing's east side and carry your profile cards round the casting agencies every day. In a month you send out two hundred. Three reply." },
+   { "label": "Stay in Hengdian", "result": "You stay and get to know the assistant directors you work with even better. Every month there are a few days when you're the first one they think of." }
+  ] },
+  "c_role": { "title": "Audition for a role with a name", "situation": "A big drama starts shooting in Hengdian, and the casting director gives you an audition: a young constable on screen for six episodes, with a name and a crying scene. More than twenty others are up for it.", "options": [
+   { "label": "Prepare like your life depends on it", "result": "You rehearse the crying scene a hundred times. At the audition you don't cry. You get through the line with red eyes. The casting director looks up at you." },
+   { "label": "Go in calm", "result": "You audition as usual, come home as usual, and go to other crews the next day. You don't get it, but the casting director remembers your name." }
+  ] },
+  "c_home": { "title": "Go back home", "situation": "Your father calls to say your cousin in the county town has opened a wedding services company and needs someone with a quick tongue and stage presence to be the emcee. A steady six or seven thousand a month, and close to home.", "options": [
+   { "label": "Go back", "result": "You take your profile card off the wall and slip it into your suitcase. The day you leave, the people at the corner are standing there as usual, and someone asks which crew you're on today.", "end": "You spend many years as a wedding emcee back in the county town. You're steady on stage and your crying scenes are good, and at every wedding you bring the couple's parents to tears. Now and then someone asks whether they've seen you on TV." },
+   { "label": "Hold on one more year", "result": "You tell your father to give you one more year. After you hang up you go and stand at the corner until dawn." }
+  ] },
+  "c_casting": { "title": "Switch to casting", "situation": "A production coordinator says you know a lot of actors and who can be relied on, and asks if you'll come on as casting assistant director: finding people for the crew, scheduling actors' calls, negotiating fees. Steady income, but you'd stop acting.", "options": [
+   { "label": "Move into casting", "result": "For the first time you stand behind the monitor, holding a stack of profile cards, choosing among people who are just like you were.", "end": "You do casting for many years and know most of Hengdian's extras and featured players. Every time you choose, you take one more look at the ones standing at the very back, who don't dare look at the lens." },
+   { "label": "Keep acting", "result": "You say you still want to act. The coordinator smiles and gives you a small role in his next production." }
+  ] },
+  "c_support": { "title": "Take a supporting role that carries the show", "situation": "A director asks for you by name to play a supporting role in his new drama, a third of the whole series, with three months beforehand living the life, and a fee higher than anything you've ever been paid. But the role is unlike anything you've played. If you blow it, work will be harder to get.", "options": [
+   { "label": "Take it", "result": "You live for two months at a forestry station in the mountains, walking patrols with the rangers. After the first scene of the shoot, the director says: there he is." },
+   { "label": "Take a familiar part", "result": "You turn it down and take a role you're used to in another drama, and play it steady and sure." }
+  ] }
+ },
+ "endings": {
+  "retire": "After your last scene the assistant director calls \"that's a wrap\" and the crew gives you a bouquet. You return your costume to wardrobe and fold it the way you did more than twenty years ago. When you walk out of the studio, there are young people at the corner waiting for the bus, and one of them is running lines.",
+  "burnout": "Your knees and your back gave out together, and one day you couldn't get up from a kneeling scene and had to be helped off set. The doctor said stop acting. You went home and taught tai chi to old people in the county town's park, standing perfectly straight, never looking at anyone's lens."
+ },
+ "stages": [
+  "Every day before dawn you race for calls in the group chat, get on the bus at the corner at five, collect a costume from wardrobe and queue for makeup. On set you follow the assistant director's megaphone: foreground left, passers-by walk, soldiers fall. Twelve hours a day, most of it waiting; at wrap you queue to return the clothes and the wrangler counts out cash. What you fear most is looking at the camera by accident.",
+  "You're a featured extra now, with a line or two and shots of your own. What you get is a few pages of \"mini-script\" to learn ahead of time, and on arrival you find the assistant director to run the scene. Afterward you cut out your own clips and add them to a reel. You start going to auditions, and your profile card is now from a photo studio, with height, skills and the dialects you speak on the back.",
+  "You play roles with names now, listed in the cast. Before you join a crew you get the full script and write a character biography, and talk with the director about where this person comes from. On set you run scenes with the leads, work out blocking with the camera operator, discuss with makeup where the scar goes. Your agent negotiates dates and fees, and you start learning to turn some work down.",
+  "You're a supporting actor who can carry a show, and directors and casting ask for you by name. For one production you prepare months ahead, living the life, learning a trade; on set young actors come to run scenes with you, and you take them through it. In the publicity season you do roadshows and interviews, and your name is on the poster's second row. Before the cameras roll, out of habit, you still go and see where the extras are standing."
+ ],
+ "work": [
+  "The assistant director shouts \"passers-by, walk,\" and you walk across the frame from left to right eleven times. On the twelfth he says: you in grey, slow down, walk like a person.",
+  "You play a soldier fallen in the snow. The fake snow is foam, and it gets down your collar. The director calls \"don't move\" three times, and not once do you move.",
+  "The woman from wardrobe sees your armor's on backward, ties the straps again for you and shows you how left goes over right. After that you're always the first to tie a newcomer's straps.",
+  "You play a teahouse waiter with one line: \"This way, sir, come inside.\" You think about it all night and put the cloth over your left shoulder. The director doesn't say anything and uses that take.",
+  "The casting director asks you for a piece of your own choosing. You play an old man selling vegetables at the market back home, in your northern Anhui dialect. She laughs, and asks you to leave your number.",
+  "You cut a dozen clips from the past two years into a ninety-second reel, get a friend who edits to add subtitles, and send it to five casting agencies.",
+  "Playing a constable, before joining the crew you write three pages of character biography: which county he's from, why he took the job, who gave him the jade pendant on his belt. The director reads it and writes the pendant into the show.",
+  "Playing an interrogation scene with the lead, he forgets his line. You pick up with a line that isn't in the script and bring him back, and when the director calls the take good, he gives you a look.",
+  "Makeup wants to paint you a knife scar. You say this man has been a constable for ten years, so the scar should be old and pale. She changes it, and the next day she's showing it to other people.",
+  "To play an old forest ranger you go into the mountains two months early and walk patrols with a real ranger, learning how he reads bark and listens to birds.",
+  "A young actor just starting out can't cry in a crying scene, however he tries. You don't teach him technique. You sit with him on the steps outside the set and talk for twenty minutes about his grandmother."
+ ],
+ "past": [
+  "You grew up in a village in northern Anhui. In your last year of middle school you saw a martial arts film at the video hall in town and went home and fenced with a broom until midnight.",
+  "You didn't get into academic high school, so you went to vocational high school in the county town to study secretarial work. At the school's New Year gala you did a comic sketch and the whole school laughed.",
+  "After vocational school you sold phones at a shop in the county town for two years. You got good at talking, but every night what you scrolled through was videos from Hengdian.",
+  "At twenty you took three thousand yuan and an overnight train to Yiwu, changed for Hengdian, found an eight-square-meter room in an urban village, and on the first day registered with the actors' guild.",
+  "On your first crew you played a villager running through the shot, twenty times. At wrap you were paid a hundred and twenty yuan, and you called home to say you'd found a job."
+ ],
+ "late": {
+  "pension_note": "Estimate: most Hengdian drifters are freelancers who pay into a pension themselves as flexibly employed workers, on and off in the early years, so in retirement you get about thirty-five percent of your final monthly pay.",
+  "scenes": [
+   "The bouquet the crew gave you on your last day, you put in a mineral water bottle in your room. It lasts a week before it wilts.",
+   "The acting school in town asks you to teach the new drifters. Your first lesson is: how to stand in the frame and not look at the lens.",
+   "You buy a small flat in Hengdian with a balcony facing the studio. Every morning you can see the people at the corner getting on the bus, and you make a cup of tea and watch them go.",
+   "An old drama is rerun on TV, and in episode twenty-seven you flash past. Your grandchild points at the screen and shouts, and you say: I was young then.",
+   "For your first few months back home you still wake at half past four, reach for your phone to look at the calls in the group, and then lie back down.",
+   "The old people doing tai chi in the park say your stance looks like someone on TV. You don't mention you've been on TV. You only say you trained for a few years.",
+   "At New Year the village puts on an opera, and the troupe leader asks you on stage for a cameo as an old squire. You put on the makeup, and when you open your mouth the crowd goes quiet.",
+   "The first year after you leave the crews, in the county town cinema, you see a friend you used to run crews with, playing a role with a name. In the dark, you applaud.",
+   "You dig your old profile card out of a box. The person in the photo is very thin, with very bright eyes. You look at it for a long time, then slip it back into a book.",
+   "The old Hengdian drifters start a group chat, and at New Year everyone posts a recent photo. Someone posts an old picture of the crowd waiting at the corner for the bus, and everyone finds themselves in it.",
+   "Later the big crowd scenes were mostly filled in with AI, and the people waiting at the corner dropped by half. But the few in the foreground still had to be real people standing there.",
+   "One year you go back to Hengdian. The corner has changed beyond recognition, but the noodle shop where you ate for years is still there. The owner recognizes you and adds an extra egg."
+  ],
+  "closing": {
+   "retire": "Many years later, early one morning, from your balcony you see a young man standing at the corner, reading lines into his phone over and over. You want to go down and tell him something. In the end you just finish your tea and watch the bus take him away.",
+   "burnout": "Many years later the tai chi in the park breaks up and the old people leave one by one. You stand alone in the open space, the way you used to stand at the edge of the frame, for a while. Nobody calls cut.",
+   "end": "Many years later you see a new drama on TV with a row of soldiers beneath a palace wall. You lean in close to the screen and look along them one by one, trying to find one who isn't looking at the lens."
+  }
+ }
+}

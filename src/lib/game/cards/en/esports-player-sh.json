@@ -1,0 +1,154 @@
+{
+ "id": "esports-player-sh",
+ "occupation": "Esports Player",
+ "role": "First-Team Player (Jungler) at a Pro Esports Club",
+ "headline": "An eighteen-year-old substitute jungler who left high school for a youth academy, spent two years grinding the ranked ladder at a Shanghai club's gaming house, and has just been called up to the first team",
+ "unit": "A professional esports club in Shanghai",
+ "unit_type": "Professional esports club",
+ "city": "Shanghai",
+ "city_tier": "Tier 1",
+ "education": "Left high school (later a part-time adult-education diploma)",
+ "level": "You've been in the server's top fifty on the ranked ladder for ages, and your tempo and reactions as a jungler are among the best in the academy. You've never played a single match as a starter under the big-stage lights.",
+ "intro": "The training room on the third floor of the gaming house has ten computers. Yours is the one nearest the door, and taped to its monitor is a slip of paper with three digits on it: your ladder rank last season. You spent two years in the academy. Yesterday the manager left a first-team jersey on your desk, with a new number. From today you're the first team's substitute jungler: twelve hours a day in this chair, waiting for one start.",
+ "salary_note": "Estimate: the top league's clubs are concentrated in Shanghai, and a first-team contract's base pay plus bonuses and streaming share runs well above the national figure, taken here at 1.4 times. Star players are another matter entirely; academy players and substitutes are a long way below.",
+ "facts": [
+  { "label": "First-Team Player (current level)", "value": "2–4 years, ¥10,000–25,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Starting Player (4–8 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥35,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Playing the match", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Match review and gameplay statistics", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You get up. Brunch from the house cook, a bowl of beef noodles. Your teammates are still rubbing their eyes. Nobody talks.",
+  "Wrist warm-ups, ten minutes squeezing a grip ball. The team physio looks at your right wrist and says no more than fourteen hours today.",
+  "First block of scrims, against a mid-table league team. You sit behind the starting jungler watching his screen, noting in a notebook where he went and when.",
+  "Review. The coach drags the replay to minute eleven and asks why nobody went for the dragon. The room is silent for half a minute.",
+  "Second block of scrims, and the coach swaps you in for a game. Three minutes in you gank and kill their mid laner, and someone in your headset shouts \"nice.\"",
+  "Ranked time after dinner. You stream while you play, and someone in the chat asks when you'll get to play on stage. You don't answer.",
+  "You win the last ranked game. You take off your headset. The only people left in the training room are you and the other substitute, and the air conditioner humming.",
+  "Lying on the top bunk, you message home: played one game today. Your mother went to sleep long ago and won't reply until morning."
+ ],
+ "ladder": [
+  { "title": "Academy Player", "stage": "Academy", "focus": "Live in the gaming house, grind ranked, play for the second team and in the lower league, and wait for a first-team slot on the strength of your rank and scrim results." },
+  { "title": "First-Team Player", "stage": "Substitute", "focus": "Scrim with the first team, sit on the bench, get subbed in now and then, and prove yourself in one or two matches that matter." },
+  { "title": "Starting Player", "stage": "Starter", "focus": "Play the full league season and the world championship, carry the team's tactics, take on streaming and sponsor commitments. Your form decides your contract and your price." },
+  { "title": "Coach", "stage": "Coaching staff", "focus": "Join the coaching staff after retiring: schedule scrims, do reviews and patch research, train the academy, and advise the head coach from the draft table." },
+  { "title": "Head Coach", "stage": "Team lead", "focus": "Set the whole team's tactics and roster, manage the players' form and relationships, answer for results, and negotiate transfers and budgets with the club." }
+ ],
+ "ai_tasks": [
+  { "name": "Match review and gameplay statistics", "how": "AI tags a match replay automatically, marking every teamfight, every mistake, and every shift in vision and gold, and it can play sparring opponent. The reaction in your hand and your feel in the moment you can only train one game at a time." },
+  { "name": "Patch research and opponent scouting", "how": "AI turns patch changes, composition win rates and the opposing jungler's pathing habits into a report. Which tactics work today and how to make them work in the team, the coaches and players decide." },
+  { "name": "Streaming, recording content and talking with fans", "how": "AI cuts highlights, writes captions, makes subtitles and sorts fans' questions. Being on camera as yourself, your personality, the bit of feeling between you and your fans, only you can supply." },
+  { "name": "Playing the match", "how": "Under the big-stage lights, reactions, nerve and split-second coordination with four teammates: AI can't take the stage for anyone, only hand over some data before and after." },
+  { "name": "Getting along with coaches, teammates and the team psychologist", "how": "Trust on a team, how you make up after a fight, who speaks first after a loss: that rests on the people who sit beside you every day. AI can only offer a log of your condition for reference." }
+ ],
+ "events": {
+  "e_debut": "Week five of the regular season, the starting jungler has a fever, and you start a league match for the first time. Backstage you wash your hands three times before going on. Your first gank works.",
+  "e_loss": "In a match that mattered, the other team punished one mistake of yours and you lost. For days you didn't dare look at your phone, and the club took you off streaming for a week.",
+  "e_wrist": "Your right wrist starts to hurt, like a needle every time you click. The physio diagnoses tendonitis and tells you to practice two hours less a day. You cut one.",
+  "e_patch": "A new patch nerfs your best champion. It takes you a month to get three new ones into the ladder's top hundred before you're back in the starting lineup.",
+  "e_ai_scrim": "The club buys an AI review system that tags every game automatically. For the first time you see that you pause for three tenths of a second before every entry into the enemy jungle. The other side can see it too.",
+  "e_title": "You win the league. At the moment you lift the trophy every light in the arena is on you. You turn to find the row where your family is sitting and can't see a thing.",
+  "e_worlds": "You qualify for the world championship and travel to a city you'd only seen on maps. You go out in the quarterfinals. On the bus back to the hotel nobody says anything, and it's raining outside.",
+  "e_fixing": "An unknown account messages you, offering money to \"go easy\" in a regular-season match. You screenshot it and hand it to the team manager. Later the league publicly sanctions several people.",
+  "e_stream": "Your streaming contract requires sixty hours a month. Practice ends after midnight, and you put the camera on and play another three hours, until your eyes are too dry to keep open.",
+  "e_psych": "The club brings in a psychologist who talks with you once a week. For the first time you say it out loud: what scares you before a match isn't losing. It's being remembered for that one moment.",
+  "e_mom": "Your mother comes to watch a match live for the first time. She sits in the back row holding a light-up sign she made herself, the characters crooked.",
+  "e_age": "A seventeen-year-old jungler comes up from the academy, and his hands are faster than yours. The coach starts putting him in the first block of scrims, and you move to the chair behind him.",
+  "e_farewell": "At your retirement announcement the club puts up a wall of every jersey you've worn over the years. You take down the oldest one and say you'd like to take it home.",
+  "e_love": "You end up together with a colleague who makes content for the club. Most of your dates are at a barbecue stall at three in the morning. They never ask whether you won today.",
+  "e_ai_coach": "AI produces a forty-page report on every scrim. Your job becomes picking three points out of it and explaining them clearly to the players the next morning.",
+  "e_rookie": "A player you brought up through the academy starts a league match for the first time and washes his hands three times backstage. You pat his shoulder and say nothing.",
+  "e_slump": "The team loses eleven matches in one season, and every day the comments demand the coaching staff be fired. You go through your review notebook from first page to last, looking for the reason word by word.",
+  "e_marry": "You get married. All four of your old first-team teammates come to the wedding, and the five of you stand together for a photo. Someone says: this is the most complete we've ever been.",
+  "e_child": "Your child is born. For the first time you're awake at three in the morning not because of practice, but because you're walking circles around the room holding someone who's crying.",
+  "e_eyes": "Years of screens: your eyes are so dry you need drops, and your neck has started to crack. You put up a pull-up bar in the gaming house and hang from it for a while every day."
+ },
+ "choices": {
+  "c_loan": { "title": "Go out on loan to start for another team", "situation": "A mid-table league team wants you on loan for a year, with a guaranteed starting spot. If you stay, you're still a substitute, but you scrim every day with the four strongest players around.", "options": [
+   { "label": "Go and start", "result": "You move into another city's gaming house and play the full regular season. You lose more than you win, and the replays fill a whole hard drive." },
+   { "label": "Stay on the bench", "result": "You stay and sit behind the starter every day. He shows you one flanking route, and you practice it two hundred times." }
+  ] },
+  "c_ai": { "title": "Extra practice against an AI sparring partner", "situation": "The review system can generate practice games built around your habits, targeting the few openings you handle worst. It means two more hours a day against an opponent that never gets tired.", "options": [
+   { "label": "Do the extra hours", "result": "Every night after midnight you play two hours against the AI, and it's always waiting where you're least comfortable. Three months later, those openings don't scare you anymore." },
+   { "label": "Stick to ranked", "result": "You think it takes people against people to bring out the fire. You keep queuing ranked and play whatever comes." }
+  ] },
+  "c_wrist": { "title": "Surgery on the wrist or not", "situation": "The tendonitis keeps getting worse. The doctor says a minor operation would mean three months off, right through the playoffs. Without it, cortisone shots will hold it for a while, and later it will hurt more.", "options": [
+   { "label": "Have the surgery", "result": "You watch the playoffs from the sidelines and the team goes out in the semifinals. Three months later your wrist doesn't hurt, and you have to fight for the starting spot all over again." },
+   { "label": "Take the shots and play on", "result": "You finish the playoffs in a wrist brace. In the post-match interview you smile and say it's fine. Offstage, for a long while your right hand can't hold a cup." }
+  ] },
+  "c_transfer": { "title": "Transfer to a powerhouse team", "situation": "In the transfer window a richer team offers a three-year contract at double the pay. But their starting jungler is your idol, and if you go you might not play.", "options": [
+   { "label": "Sign", "result": "You move into the new gaming house. Your room is twice as big, and everyone across from you in scrims is the best there is. Whether you play, the coach decides each week." },
+   { "label": "Re-sign with your club", "result": "You sign the extension, and the manager hangs your photo on the ground-floor wall of the gaming house." }
+  ] },
+  "c_college": { "title": "Go back for an esports diploma", "situation": "A vocational college offers a part-time adult-education diploma in esports and management, with classes at weekends. It's one more piece of paper for a coaching license and for joining a coaching staff later, but you barely have any time to sleep as it is.", "options": [
+   { "label": "Enroll", "result": "For the first time you hand in homework in a classroom, an essay called \"The Vision Economy of the Jungler.\" The teacher gives it ninety and says it's clearer than the textbook." },
+   { "label": "Play first", "result": "You shove the form in a drawer. The season is long; finish this year first." }
+  ] },
+  "c_streamer": { "title": "Retire to stream full time", "situation": "A streaming platform offers a three-year contract worth several times what you make now. Eight hours on air a day, and no more caring about wins and losses. But once you go, you're off the competitive stage.", "options": [
+   { "label": "Sign the streaming deal", "result": "You write a long retirement statement. The last line is: see you on the stream.", "end": "You spend many years playing on stream, and there's always someone in the chat asking what you were thinking in that one fight years ago. Each time you tell it from the beginning, as if for the first time." },
+   { "label": "One more year", "result": "You turn it down, and sit for another year at the computer nearest the door." }
+  ] },
+  "c_after": { "title": "What to do after retiring", "situation": "Your hands are a little slower every year and your contract is nearly up. The club asks whether you'll join the coaching staff, starting by scheduling scrims and doing reviews. A tournament company wants you as a caster.", "options": [
+   { "label": "Join the coaching staff", "result": "You trade your jersey for a coaching jacket. The first time you sit at the draft table your palms are soaked. You're more nervous than when you played." },
+   { "label": "Become a caster", "result": "You go to the tournament company for a voice test, and in your first match you mispronounce a player's name.", "end": "You become a caster and spend many years on stage describing other people's matches. Whenever there's a beautiful gank, your voice rises first, half a second ahead of the picture." }
+  ] },
+  "c_head": { "title": "Take the head coach job or not", "situation": "The head coach has left and the club asks whether you'll take over. If you do, the roster, the tactics, the players' moods and the budget are all yours, and when results are bad you're the first to go.", "options": [
+   { "label": "Take it", "result": "You move into the small office with the whiteboard. The first thing you do is call in the five starters and talk to them one by one." },
+   { "label": "Stay a coach", "result": "You recommend a veteran from another club and keep running the academy, playing ranked every day with a dozen sixteen- and seventeen-year-olds." }
+  ] }
+ },
+ "endings": {
+  "retire": "The day you leave the club, you sit in the training room for a while. The computer nearest the door has been replaced, and taped to its screen is a slip of paper with a stranger's rank on it. You don't disturb the kids in the middle of their scrim. You close the door quietly behind you.",
+  "burnout": "Your wrist and your neck gave out together, and the doctor said if you kept on you wouldn't be able to hold a mouse at all. You handed in your resignation and went home, rented a room behind the county gym, and taught children badminton. There isn't a single computer in that room."
+ },
+ "stages": [
+  "You're the first team's substitute jungler. Two or three blocks of scrims a day; you sit behind the starter watching his screen and noting where he went and when, and when it's your turn you bring out what you've drilled on the ladder. In review, when the coach calls on you, you have to explain why you pathed the way you did. At night you stream ranked and log off after midnight.",
+  "You're a starter now. Scrims, league, world championship run together into one long year, and every week you go over the opposing jungler's routes with the coach and the analyst. Before a match you put on soundproof headphones; after it there are interviews, promo shoots and streaming hours to fill. Your form is written into your contract, and into the comments.",
+  "You've retired into the coaching staff. Every day you schedule scrims, book opponents, and cut the AI's review report down to three points. When a patch lands, you play the new champions on the ladder first, then teach the players. At the draft table you sit beside the head coach, quietly reminding him of the other jungler's habits. You don't touch the mouse anymore. You only watch the screen.",
+  "You're the head coach, and the roster and tactics are yours to set. In the transfer window you sit with the manager in the meeting room going over budgets and the academy's data; during the season you manage five people's form and relationships, who needs rest, who needs a talk. When the team loses, you're the first one in front of the camera."
+ ],
+ "work": [
+  "Third game of scrims and the coach swaps you in. You take the route you noted in review to gank bot lane, just as their support recalls, and your team takes the first dragon.",
+  "Wu, the analyst, shows you a heat map: your jungle routes are too predictable. That night on the ladder you try three different openings. You lose two games, and the third one flows.",
+  "The starting jungler, coming off, gives you his mouse pad and says there's a groove worn into it. Practice to that spot for a month.",
+  "A week before the world championship the coaches bring you twenty replays of the opposing jungler. You watch every one and sketch in your notebook where he goes on his first move. Later you really do guess right.",
+  "Deciding game of the playoffs: you shout \"with me\" into the headset and all four go in with you. When that fight is over, so is the match.",
+  "The sponsor's promo shoot takes all afternoon, and the director keeps asking you to smile at the camera. You can't. In the end they use the second you pulled off your headset after winning.",
+  "The AI review flags a \"mistake\" by the starting jungler: he took the long way round. You watch the replay. He was giving up vision on purpose. You delete the line.",
+  "A sixteen-year-old arrives at the academy with frighteningly fast hands, who smashes his keyboard every time he loses. You don't yell at him. You take him downstairs for a bowl of noodles and listen to him talk about home until he's done.",
+  "In the draft, the other team takes the champion you'd prepared, and the head coach turns to look at you. You write a name on a slip of paper and pass it over. You win that game.",
+  "In the transfer window the manager brings profiles and prices for three foreign players. You watch their replays for a week and pick the cheapest, because he can communicate.",
+  "After three straight losses you take the five starters up to the roof. You don't talk tactics; you just ask each of them how they've been sleeping. The next day they win their scrims."
+ ],
+ "past": [
+  "You grew up in a small city in northern Jiangsu. At twelve you played this game for the first time in an internet cafe, as jungler. The owner said you had the fastest hands he'd ever seen on a kid.",
+  "In your second year of middle school your ladder rank broke into the server's top thousand, and people started adding you as a friend to play tournaments. Your mother took away your computer. You kept playing at a classmate's house.",
+  "At fifteen an academy manager from a club messaged you in the game, asking if you'd like to come for a trial. You showed your father the screenshot. He was silent all evening.",
+  "In the first term of your second year of high school you went to Shanghai for a two-week trial and stayed. The day you withdrew from school, your father signed in the academic office. His hand shook for a second. When he finished he said: if it doesn't work out, come home.",
+  "In your second year at the academy you played the lower league with the second team and were named player of the month. That year, for the first time, you gave your mother your pay card. There was six thousand yuan on it."
+ ],
+ "late": {
+  "pension_note": "Estimate: the club pays Shanghai urban employee social insurance, but a player's years are full of short contracts and gaps, and contributions only steady once you're coaching. In retirement you get about forty percent of your final monthly pay.",
+  "scenes": [
+   "After you leave the club you go to bed at eleven for the first time. You can't sleep, so you get up and watch an academy match on stream, then lie back down.",
+   "A vocational school back home invites you to talk about what kind of job esports is. You spend a long time on tendonitis and three in the morning, and the kids listen closely.",
+   "Downstairs in your housing estate you learn to play table tennis. The old man you play with says your reactions are quick. You say you used to train.",
+   "In the room behind the gym the children swing their rackets every which way. You stand at the net and correct their wrists one at a time.",
+   "Your wrist doesn't hurt anymore. Sometimes, walking past an internet cafe, you hear someone inside yell \"where's the jungler,\" and you stop to listen for a moment.",
+   "An old teammate comes to the county town to see you, bringing a bottle. You talk until the small hours, and neither of you mentions the match you lost.",
+   "Your first year away from the stage, on the league's opening day, you watch the broadcast at home. For one second the opening sequence flashes an old photo of you.",
+   "Someone recognizes you in the street and says he watched you at the world championship when he was a kid. He hands you his phone for an autograph, and you sign the case.",
+   "The game has gone through several generations, and the champion you were best at is long out of use. Now and then you log into your old account and look at the rank, still sitting where you left it.",
+   "Later the academy kids all practiced against AI sparring partners, and every review report ran to dozens of pages. But before a big match, they still washed their hands three times backstage.",
+   "Your mother kept the light-up sign with the crooked characters on top of her wardrobe all those years. When you're home and see it, you don't let her throw it out.",
+   "In an esports museum you see your old championship trophy. The glass case reflects your face, much older than the photo beside the trophy."
+  ],
+  "closing": {
+   "retire": "Many years later your child pulls you into a game. The moment your hand closes on the mouse, your wrist still remembers that flanking route, only half a beat slow. You lose, your child laughs at you, and you laugh too.",
+   "burnout": "Many years later, one evening, the gym lights go off one by one and you put away the last basket of shuttlecocks. Outside the door a boy is waiting for his father, playing a game on his phone. You stand beside him and watch for a while.",
+   "end": "Many years later, at the bottom of a box, you find the oldest jersey, its number faded. You shake it out, hold it up against yourself, then fold it and put it back."
+  }
+ }
+}

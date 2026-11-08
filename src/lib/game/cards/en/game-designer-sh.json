@@ -1,0 +1,158 @@
+{
+ "id": "game-designer-sh",
+ "occupation": "Game Systems Designer (Economy and Balance)",
+ "role": "Junior Systems Designer at a Mobile Game Studio",
+ "headline": "A math graduate hired straight out of campus recruiting in Zhangjiang, filling in drop tables and progression curves for a mobile card game",
+ "unit": "A mid-sized mobile game studio in Zhangjiang, Shanghai",
+ "unit_type": "Mobile game studio",
+ "city": "Shanghai",
+ "city_tier": "Tier 1",
+ "education": "Bachelor's degree (applied mathematics)",
+ "level": "Just past probation. You're quick with Excel formulas and pivot tables, you can write a simple simulation in Python, and you've built the drop table for one small event on your own. You haven't touched a full game economy yet.",
+ "intro": "Taped to your cubicle divider is a sticky note left by whoever sat here before you: \"Back up before you edit the sheet.\" You're a junior systems designer at a Zhangjiang studio that makes a mobile card game, and what you have in your hands is a config spreadsheet with more than forty tabs. Every number in it ends up, on hundreds of thousands of phones, as a card pull, a hit of damage, a curse word. From today your name shows up in the commit log.",
+ "salary_note": "Estimate: the pay-by-experience figures in the database come mostly from big and mid-sized studios in tier-1 cities, so a mid-sized Shanghai studio sits roughly level with them. The year-end bonus follows the game's revenue: several months' pay in a good year, nothing in a bad one.",
+ "facts": [
+  { "label": "Junior Systems Designer (current level)", "value": "0–2 years, ¥12,750–18,750 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Systems Designer (2–5 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥50,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Trading off revenue against what players go through", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Writing simulation scripts and running batch calculations", "source": "AI exposure" },
+  { "label": "Open positions", "value": "18 related listings nationwide, 4 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Line 2 packed all the way to Zhangjiang. At your desk, the first thing you check is the combat simulation you left running overnight: ten thousand matches, and the new character's win rate is up four points.",
+  "Systems team stand-up. The lead designer hands out the week's work. You get the new event's drop table and its exchange shop.",
+  "You fill it in cell by cell: how much stamina a day, how many dungeon runs, how many shards drop. Then you plot a curve to see on which day a player can max out the new character.",
+  "A gameplay designer comes over and says his new mode just needs \"some numbers, whatever.\" It takes twenty minutes of questions before he can tell you how many days he wants people to play it.",
+  "You chase a bug with QA: a bundle in the shop is priced one decimal place off. You go through the commit log. It was your change, last week.",
+  "You open the analytics dashboard and copy yesterday's retention and spending into the daily report. You don't really understand yet why those lines move the way they do. You write it down to ask your mentor.",
+  "One week before content lock and the whole team is staying late. The takeout arrives, and while you eat you search the player forums for the word \"balance.\"",
+  "Back in your shared flat you open the game and run the dungeon you configured today. When your stamina runs out you're exactly one shard short. You go to sleep satisfied."
+ ],
+ "ladder": [
+  { "title": "Junior Systems Designer", "stage": "Entry", "focus": "Fill config sheets, run simulations and check drop rates and progression curves under the lead. You move up by not making mistakes and by finishing one small system on your own." },
+  { "title": "Systems Designer", "stage": "Core", "focus": "Own the numbers for one line, combat or progression: write the design doc, build the simulator, watch the live data, and be able to say why every number is the number it is." },
+  { "title": "Senior Systems Designer", "stage": "Mainstay", "focus": "Own the whole economy, what flows in and what drains out, and the pace of monetization. Mentor two or three juniors and sit at the same table as live ops and monetization before each release." },
+  { "title": "Lead Systems Designer", "stage": "Lead", "focus": "Set a project's number framework and long-term plan, sign off on the balance between revenue and reputation, report to the producer, hire and run the team." },
+  { "title": "Lead Game Designer", "stage": "Project lead", "focus": "Coordinate systems, combat, levels and economy, decide the direction of the gameplay, and carry releases and green-light decisions with the producer." }
+ ],
+ "ai_tasks": [
+  { "name": "Writing simulation scripts and running batch calculations", "how": "Tell it how many days, how many players and how many spending habits, and AI builds the Python simulator, runs it and plots the results. A person checks whether its assumptions hold and spot-checks the key results." },
+  { "name": "Filling config sheets and catching errors", "how": "AI can fill values in bulk by rule, check references and formats, and find the mispriced bundle or the swapped coefficient. People confirm the requirements with other designers and spot-check the sheets that matter." },
+  { "name": "Building the number framework and growth curves", "how": "AI can draft attributes, damage and progression from common templates and offer a few alternatives. Who the game is for, and on which day a player should get a little thrill, a person decides." },
+  { "name": "Reading live data and finding what's out of balance", "how": "AI summarizes retention, spending and win rates and flags unusual swings. Whether it's the patch or the event schedule to blame, what to change and by how much, a person decides." },
+  { "name": "Trading off revenue against what players go through", "how": "How much more a bundle should sell, and whether ordinary players will feel cheated: someone has to argue that point by point with monetization and live ops, and whoever signs off answers for the game's reputation." },
+  { "name": "Playing it yourself and judging by feel whether it's fun", "how": "However smooth the curve, whether a fight feels dull or a grind feels tiring is something a person has to play through and hear from players. AI can only give you numbers." }
+ ],
+ "events": {
+  "e_first_live": "The first event you configured goes live. You watch the dashboard past midnight; participation comes in well above forecast, and your mentor posts a thumbs-up in the team chat.",
+  "e_decimal": "A bundle sheet was missing a zero. Players caught it ten minutes after launch and the whole server got compensation. You wrote a self-criticism, and the lead said: from now on, any sheet that touches prices gets checked by two people.",
+  "e_crunch": "Three straight weeks of working past midnight before content lock. Twice you slept on the beanbag in the meeting room.",
+  "e_forum": "A new character launches and the forums fill with posts saying the balance is broken. You go through the win-rate data three times. It really is too strong. Next patch you quietly tune it back.",
+  "e_ai_sim": "The team starts using AI to write simulation scripts. You say \"thirty days, ten thousand players, three spending habits,\" and ten minutes later it's built. You start spending your time picking at its assumptions.",
+  "e_ai_table": "AI starts filling the config sheets in bulk, and your job becomes spot-checking and fixing. Once it copied two characters' growth coefficients into each other's rows. You were the one who caught it at a glance.",
+  "e_wait": "The new game is finished, but the paperwork to launch it takes the better part of a year. The team grows restless and two people leave. You use the time to rework the whole economy from the top.",
+  "e_cut": "The company kills a project and half the team next door is let go. Your team stays, but for a week no one says anything in the group chat.",
+  "e_bonus": "The game's revenue beats forecast and the year-end bonus comes to five months' pay. You buy yourself a better computer and sign your parents up for a tour.",
+  "e_talk": "At a game developers' conference you give a talk on long-term economies in card games. The room is full of people from the industry, and afterward several of them add you on WeChat to ask for the slides.",
+  "e_love": "You end up together with a concept artist from the art team. On your first date you go to an indie game expo and play at every booth until someone behind you asks you to move on.",
+  "e_marry": "You get married. Your partner draws the invitations, and on the back you write one line of drop rate: one hundred percent.",
+  "e_house": "You buy a flat on the edge of Shanghai. The down payment empties both families' savings and the mortgage takes half your salary. You work through your own cash flow more carefully than you've ever worked through a game economy.",
+  "e_child": "Your child is born. You take a few days off, but the dashboard stays open on your phone, and while you mix formula at dawn you glance at yesterday's retention.",
+  "e_neck": "Your neck starts to hurt. The doctor says it comes from sitting. You buy a standing desk and edit sheets on your feet.",
+  "e_mentee": "The junior you've been training finishes the numbers for a whole system on their own and presents it without looking at notes. You don't say a word in support the whole meeting.",
+  "e_pack": "Monetization wants a new bundle. Your projections show the big spenders will spend a lot more and ordinary players will have a worse time. In the meeting you put the two curves side by side, and in the end you settle on something in between.",
+  "e_ai_team": "The systems team shrinks from eight people to four, plus a suite of AI tools. The work hasn't shrunk. It's just that each day you review more than you calculate.",
+  "e_parent": "Your father is in hospital back home. For two weeks you take remote meetings in the ward corridor and sit by his bed in the evenings.",
+  "e_shutdown": "The game you worked on years ago shuts down its servers. On the last day you log in and walk around. A few dozen people are still standing in the main city, setting off fireworks."
+ },
+ "choices": {
+  "c_track": { "title": "Combat or economy", "situation": "The lead asks which line you want to follow next release. Combat numbers have a feel you can see, and fights are lively. Economy numbers govern what flows in and drains out and how the game makes money: closer to the cash, and closer to the abuse.", "options": [
+   { "label": "Combat", "result": "You start playing the same level on the test server every day, taking the damage formula apart down to every coefficient. When it comes to whether a fight feels right, your word starts to count." },
+   { "label": "Economy", "result": "You take over the whole resource sheet, and for the first time someone from live ops grills you in a meeting: why was this month's premium currency output up ten percent." }
+  ] },
+  "c_ai": { "title": "Bring AI into the workflow or not", "situation": "The team is trying out an AI tool that can write simulations, fill sheets and produce reports on its own. Someone has to fit it into how the team works: write the prompting rules, decide which sheets must be checked by a person, make it possible to trace whose mistake a mistake was.", "options": [
+   { "label": "Take it on", "result": "Writing the rules takes two months, and getting everyone to follow them takes one more. After that, every sheet on the team carries an extra column in the header: \"filled by AI / checked by.\"" },
+   { "label": "Do your own work well first", "result": "You keep writing your own formulas and running your own simulations. It's slower, and you know where every number came from." }
+  ] },
+  "c_bigco": { "title": "Jump to a big company", "situation": "The team behind a hit game at one of the giants wants you. Forty percent more pay and a stable project. But their systems team has more than a dozen people, and you'd own one small piece of one system.", "options": [
+   { "label": "Jump", "result": "You get a new badge, and each day you edit a smaller sheet in a taller building. The money is noticeably better." },
+   { "label": "Stay", "result": "You stay, and the lead hands you the whole progression line for the next project." }
+  ] },
+  "c_senior": { "title": "Go up for Senior Systems Designer", "situation": "The company reviews grades twice a year. Senior Systems Designer requires a complete economy for a live game, an oral defense, and having mentored someone. This round your team has put forward you and one other colleague.", "options": [
+   { "label": "Prepare the defense", "result": "You turn three releases' worth of economy data into a forty-page deck. When the panel asks about one drain rate, you derive the formula from the beginning." },
+   { "label": "Let it wait a year", "result": "Your colleague gets it and buys the team bubble tea. You're a year behind, and none of your work goes away." }
+  ] },
+  "c_indie": { "title": "Make an indie game with your old roommate", "situation": "Your college roommate has a prototype of an indie game, already past ten thousand wishlists on an overseas store, and he needs a partner who understands numbers. No salary, just equity, and a small rented office.", "options": [
+   { "label": "Go", "result": "You hand in your resignation, peel the \"back up before you edit the sheet\" note off your cubicle and take it with you.", "end": "You and your roommate spend three years making a game in a small office, and on launch day the two of you sit up refreshing the reviews until dawn. Later you make a second one, and a third, and you check every balance sheet twice yourself." },
+   { "label": "Stay", "result": "You recommend a fresh graduate from your old department and stay where you are. On launch day you leave a positive review." }
+  ] },
+  "c_quant": { "title": "Switch to quantitative modeling", "situation": "An old classmate in quant trading says they need people who can build models and understand how people spend money. Twice what you make now, and no more player forums. Only, from then on, what you calculate won't be a game.", "options": [
+   { "label": "Go", "result": "You uninstall every game on your computer and start on a very thick book of financial engineering.", "end": "You move to Lujiazui, the financial district, and spend your days watching a different kind of curve. Now and then someone asks what you did before. You say games, and they always pause for a second, then laugh." },
+   { "label": "Stay", "result": "You turn it down. That weekend you spend an afternoon running dungeons with a new player in the game, and decide the numbers here are more interesting." }
+  ] },
+  "c_lead": { "title": "Apply for Lead Systems Designer", "situation": "A new project is being green-lit and the producer needs a lead systems designer: someone to set the whole framework, answer for revenue, and face the boss's weekly question, why the numbers didn't come in.", "options": [
+   { "label": "Apply", "result": "You write a ten-year plan, from the first release's progression line to the third year's drains. The producer reads it and asks one thing: can you take the abuse." },
+   { "label": "Stay a specialist, no team", "result": "You stay hands-on and take the hardest piece of the economy. Your title doesn't change, but when something comes up, people ask you first." }
+  ] },
+  "c_main": { "title": "Take Lead Game Designer or not", "situation": "The producer is moving up and asks if you'll take the lead designer role. Systems, combat, levels and art requests would all be yours, and you'd have to start caring about things other than numbers: whether it's fun, whether it survives.", "options": [
+   { "label": "Take it", "result": "Your calendar fills with meetings. The first time you say \"we're not building that\" in a green-light review, the room goes quiet for a moment." },
+   { "label": "Turn it down", "result": "You recommend a colleague who came up through level design and stay with the systems team. After work you still get to play for a while." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last day you hand the template sheet you've used for years to the person taking over and tell them not to touch the seventh tab. You shut down the computer and stand for a while on the footbridge in Zhangjiang, where the lights in the buildings are still on floor after floor.",
+  "burnout": "Before one release you stared at curves for three days straight, until the numbers blurred. The doctor told you to rest for six months. You put your badge in a drawer and went back to your hometown. Every afternoon you walk once along the river, and the only game left on your phone is one that plays offline."
+ },
+ "stages": [
+  "You work under the lead: filling config sheets, checking drops, plotting progression curves, with Excel and a Python script open all day. When a designer wants numbers, you first find out how many days he wants people to play; when QA files a bug, you find which cell it was. Every sheet you hand over, your mentor looks at once more.",
+  "Now you own a line. You write the design doc, build the simulator, run ten thousand matches before you write a conclusion, and after launch you check win rates and retention on the dashboard every day. When someone in a meeting asks why a number is that number, you explain it on the spot. No one checks your sheets for you anymore; the name on them is yours.",
+  "The whole economy is yours: where the premium currency, stamina and shards come from and where they go, one sheet of inflows and drains that has to hold for three years. Before each release you sit with live ops and monetization and argue an afternoon over the price of one bundle. You have two or three juniors and go over their sheets once a week.",
+  "You set a project's number framework, writing from the first day of green-light to the third year of live service. Every week you report revenue and reputation to the producer, and when revenue and player experience collide, you're the one who signs. You start interviewing, hiring and scheduling the team, and you open Excel less and less.",
+  "You're the lead designer. The heads of systems, combat, levels and economy all report to you. In green-light reviews you decide what gets built and what doesn't, and you plan releases with the leads of art and engineering. Your measure of a game shifts from whether the curve is smooth to whether players want to log in again tomorrow."
+ ],
+ "work": [
+  "Lin from QA says he can't beat the third stage of the new dungeon no matter what. Half an hour in the sheet and you find a monster's defense coefficient copied one row too many. You delete it and he clears it first try.",
+  "You price the new event's exchange shop and plot a curve: a player who logs in daily gets the limited avatar on day twelve. Your mentor changes it to day fourteen.",
+  "The lead asks you to take apart a rival game's progression line. You play it from scratch on your phone for a week, log every resource you get each day in a sheet, and hand in twenty-three pages.",
+  "You work out three versions of the new character's skill damage and run ten thousand matches of each in the simulator. You pick the one with a point more win rate, because it feels better to play.",
+  "Zhou from live ops wants a double-drop weekend. You run the numbers and tell her two days of double drops would leave the shop empty for the next two weeks. It becomes a day and a half.",
+  "Three days after launch the dashboard shows only ten percent of players clearing one dungeon. Overnight you cut the monsters' health by eight percent, and the next day the complaint threads are down by half.",
+  "A monetization colleague brings you a new bundle proposal. You open the three-year currency sheet and show that it would break the second year's drain. The proposal goes through three drafts.",
+  "A new designer hands in a progression sheet with a beautiful curve. You have him play through the first seven days himself. He comes back and says: day four is boring.",
+  "A new project is green-lit. You draw the whole economy on the whiteboard, from stamina to card pulls and back again, and the producer photographs it and posts it to the group.",
+  "One release misses its revenue target and the boss asks why. You put retention, spending and the event schedule side by side and talk for ten minutes, and at the end you say: I gave out too much.",
+  "In a green-light review a combat designer pitches a new mode. You play his prototype and say the core is good, cut the timeline in half, and get it in front of players first.",
+  "The night before a release, the leads of art, engineering and systems go through the launch list in a meeting room. One feature can't be tested in time, and you make the call to push it to the next release."
+ ],
+ "past": [
+  "In your last year of middle school you got hooked on a mobile card game. Your pocket money couldn't keep up with the pulls, so you worked out on scrap paper how many pulls it took to get a rare card, and your expected value came out more precise than the one the game published.",
+  "Your gaokao (college entrance exam) score was good enough for a decent university, and you picked applied mathematics. Your parents asked what you'd do with it. You said you'd see, and thought of that scrap paper.",
+  "In your second year you took apart a game's progression line in Excel, from day one to day one hundred, and posted it on a player forum. A few people who made games shared it.",
+  "The summer after third year you interned as a tester at a small game studio, playing the same level every day. You quietly wrote down the monsters' health and worked out their formulas.",
+  "In the written test for campus recruiting there was a question: how many resources does it take to raise a character from level one to max. Other people wrote a page. You wrote three, with a curve attached.",
+  "You got the offer from the Zhangjiang studio and treated your roommate to dinner at the little restaurant outside the school gate. He said one day he'd make his own games. You laughed at him."
+ ],
+ "late": {
+  "pension_note": "Estimate: Shanghai's urban employee pension. Contributions are capped, so the higher the salary, the lower the replacement rate; in retirement you get a little over forty percent of your final monthly pay.",
+  "scenes": [
+   "On handover day the young designer asks if there's anything else you want to say. You think about it and say: back up before you edit the sheet.",
+   "For one semester you teach game design students at a university, on how to calculate how long a person is willing to wait for something.",
+   "You learn to play Go and lose to a man in his seventies at the neighborhood games room. At home you replay the game move by move, the way you used to review a release.",
+   "Your grandchild is playing a new game, and the card-pull screen looks almost exactly like the one you made. You watch from beside them and don't mention how the odds were set.",
+   "For the first few months back home, the first thing you do on waking is reach for your phone to check the dashboard. Halfway there you remember there is no dashboard.",
+   "Your cousin in the county town has opened a stationery shop. You make him a stock sheet that shows exactly which pens sell fastest. He says you're more careful than an accountant.",
+   "You reopen an old game and start from the first level. No guides, no drop rates. When you can't win, you close it and go make tea.",
+   "The month you leave the systems team, a former colleague posts a screenshot of the new config sheet in the group and asks who set this coefficient. You reply: me.",
+   "At a game expo you see your old game turned into merchandise, and a high school kid hugging it in the queue. You stand behind them for a while.",
+   "People new to the industry keep passing around an article you wrote on game economies as if it were a textbook. Under it someone asks whether the author is still in the business.",
+   "Later the config sheets were all filled by AI, and the systems team was down to a few people who reviewed it and decided the few things it didn't understand: whether players were tired, whether they'd want to come back tomorrow.",
+   "Clearing out an old computer, you find a photo of that scrap paper from more than twenty years ago: the expected number of card pulls, worked out by a fifteen-year-old. It was right."
+  ],
+  "closing": {
+   "retire": "Many years later, one evening, you play a round with your grandchild, who is stuck on a level. You don't tell them the monster's health. You just say: try again, you're almost there.",
+   "burnout": "Many years later you sit on a bench by the river, watching children play hopscotch in an empty lot. They start arguing about whether a foot on the line counts as out. In your head you settle the rule for them, and say nothing.",
+   "end": "Many years later, at the bottom of a bookcase, you find the sticky note that says \"back up before you edit the sheet,\" its corners curled. You stick it back up beside your monitor."
+  }
+ }
+}

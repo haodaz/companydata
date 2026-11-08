@@ -1,0 +1,200 @@
+{
+ "id": "ecologist-wolong",
+ "occupation": "Nature Reserve Ecological Monitor",
+ "role": "Ecological Monitor at a Giant Panda Reserve",
+ "headline": "An ecological monitor with a bachelor's in wildlife and nature reserve management, in your first year at a giant panda reserve in Aba, Sichuan, heading into the mountains every month with a twenty-kilo pack to walk survey transects, swap out camera traps and look for panda droppings in bamboo forest above two thousand meters",
+ "unit": "A ranger station at a giant panda nature reserve in Aba, Sichuan",
+ "unit_type": "Nature reserve administration",
+ "city": "Aba",
+ "city_tier": "County",
+ "education": "Bachelor's degree in Wildlife and Nature Reserve Management",
+ "level": "You can walk a whole transect behind the old rangers, set up camera traps, change batteries and memory cards, and collect dropping samples by the protocol. Reading signs, telling fresh droppings from old and planning your own route, you're still learning.",
+ "intro": "In your pack: a GPS unit, a compass, a stack of zip bags, a marker, two spare batteries, four memory cards, a machete and a rain jacket, plus food, twenty kilos in all. The ranger station sits by the road in a mountain valley, and the slopes behind it run all the way up to the snow line. From today you go into the mountains with the old rangers. Which transect, which camera, which pile of droppings: from now on, you're the one who has to remember.",
+ "salary_note": "Estimate: a permanent post at a reserve in Aba, base pay plus performance pay, with a hardship allowance for remote areas and a field allowance. Taken at 90 percent of the national figure. Pay only rises noticeably with professional rank and a section chief post.",
+ "facts": [
+  { "label": "Technician (Patrol and Monitoring Officer) (current level)", "value": "0–3 years, ¥4,500–6,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Assistant Engineer (Monitoring Officer) (3–6 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥16,200 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Walking transects and doing fieldwork in the mountains", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Identifying camera-trap photos", "source": "AI exposure" },
+  { "label": "Open positions", "value": "3 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "In the station kitchen, the old ranger is boiling butter tea. You charge the GPS and trace today's transect on the route map.",
+  "The pickup drops you at the mouth of the valley. You climb along a stream in thick fog, and the dew in the bamboo soaks your trouser legs in no time.",
+  "At 2,400 meters, the first camera trap. You swap out the memory card and batteries, wipe the lens, and photograph the camera's angle for the record.",
+  "In the bamboo, a pile of droppings full of half-chewed bamboo stems. The old ranger breaks one open and says: less than three days. You pull on gloves and bag it, number it and log the coordinates by the protocol.",
+  "Lunch under a big boulder: steamed bread, beef jerky, an apple. On the far mountains, the clouds climb layer by layer.",
+  "Beside the transect you find a wire snare. The old ranger cuts it with pliers, photographs it and notes the location, saying it has to be reported to the forest police when you get back.",
+  "By the time you're down at the valley mouth, your legs are shaking. When the pickup comes, it starts to rain.",
+  "At the station computer you load the photos from the memory cards, and AI picks out the ones with animals. One shows a golden snub-nosed monkey staring straight into the lens."
+ ],
+ "ladder": [
+  { "title": "Technician (Patrol and Monitoring Officer)", "stage": "Transects", "focus": "Walk transects behind the old rangers, swap camera traps, collect dropping samples, remove poachers' snares, enter data back at the station." },
+  { "title": "Assistant Engineer (Monitoring Officer)", "stage": "Monitoring alone", "focus": "Take charge of several transects and a camera network on your own, compile monitoring data, write quarterly reports, sit for Assistant Forestry Engineer." },
+  { "title": "Engineer (Monitoring Team Leader)", "stage": "Team leader", "focus": "Lead a monitoring team, plan patrols, manage the camera network and sample store, support research surveys, work with local communities." },
+  { "title": "Senior Engineer (Head of Research and Monitoring)", "stage": "Section chief", "focus": "Run research and monitoring for the whole reserve: setting the monitoring plan, reviewing reports, leading partnerships with universities and institutes, training newcomers." },
+  { "title": "Professor-level Senior Engineer (Head of Science for the Reserve)", "stage": "Head of science", "focus": "Set the reserve's monitoring and research direction for the next decade, take part in the national giant panda survey and habitat planning, review projects." }
+ ],
+ "ai_tasks": [
+  { "name": "Walking transects and doing fieldwork in the mountains", "how": "Walking dozens of kilometers through steep slopes and bamboo with a pack, reading signs, judging how fresh droppings are, finding camera sites: someone has to go in person, and judge the weather and terrain themselves." },
+  { "name": "Identifying camera-trap photos", "how": "With hundreds of thousands of photos a year, AI can already identify species, discard empty frames, and even make a first pass at telling individual pandas apart. People mostly look at the small share it isn't sure of." },
+  { "name": "Fecal DNA and population surveys", "how": "The lab and the models can separate individuals from dropping samples and estimate population size. Where a sample is collected, whether it's fresh, whether it's contaminated: someone has to check that in the field." },
+  { "name": "Habitat monitoring and remote-sensing analysis", "how": "AI can work out bamboo cover, vegetation change and signs of human activity from satellite and drone imagery. Whether a change comes from grazing, herb digging or natural causes takes someone going to look." },
+  { "name": "Writing monitoring reports and papers", "how": "AI can turn data into charts and draft the report. Whether the conclusions hold and whether the data is sound is for the monitor and the section chief to review and answer for." },
+  { "name": "Community work and anti-poaching patrols", "how": "Talking with nearby villagers about grazing, herb digging and fire, removing snares in the hills, handling conflicts between people and wildlife: it comes down to people going in person, year after year." }
+ ],
+ "events": {
+  "e_first_panda": "For the first time you see a giant panda in the wild with your own eyes, sitting in the bamboo twenty meters off, eating. It glances at you, then goes on eating. The old ranger says in twenty years of patrols he's seen one fewer than ten times.",
+  "e_snow_leopard": "A camera trap high on the mountain catches a snow leopard, its tail longer than its body. The photo gets shared again and again, and on the camera log you draw a star in that box.",
+  "e_landslide": "A rainstorm sets off a mudslide and the road into the mountains is cut for two weeks. It takes a day of detours to reach the farthest cameras, and two of them have been swept away.",
+  "e_snow_patrol": "Heavy winter snow. You patrol for three days through knee-deep drifts, and under a fir you recognize a line of panda tracks in the snow.",
+  "e_altitude": "Your first time on a high transect above three thousand meters, your head pounds and you throw up twice. The old ranger moves half your pack onto his own back.",
+  "e_ai_camera": "The reserve brings in an AI recognition system, and a year's several hundred thousand photos are sorted in a week. It mistakes a yak in the fog for a panda. You laugh at a glance and fix the label in the back end.",
+  "e_ai_individual": "A new model can tell individual pandas apart in photos. You discover the two pandas you'd counted for years are actually one, walking back and forth between two valleys.",
+  "e_herder": "Grazing yaks turn up in the core zone again. You go to the village, find the family, and sit by their hearth all afternoon over three bowls of butter tea. In the end they say: next year we won't drive them that way.",
+  "e_bamboo": "The bamboo on one hillside flowers, and bamboo that flowers dies off in whole stands. You go out to measure it every month, map the area and report it up the line.",
+  "e_release": "A captive-bred panda is released into your reserve. You follow its collar signal through the mountains for six months, until one day the signal stops moving in a patch of bamboo. It has settled there.",
+  "e_love": "At a hotpot place in the county town you meet a nurse from the township clinic. Hearing you look for panda droppings in the mountains, they laugh for ages and say: then you must be very thorough.",
+  "e_far": "Twenty days a month in the mountains, and the station's signal comes and goes. Whenever you video-call home it freezes halfway through, the picture stuck on your mud-streaked face.",
+  "e_marry": "You get married at a banquet in the county town. The old rangers from the station come in clean clothes and give you a photo of a panda in the snow, taken by one of your cameras.",
+  "e_house": "You take out a mortgage on an apartment in Dujiangyan, thinking of your future child's schooling. It's a three-hour mountain drive from the station.",
+  "e_child": "When the baby is born, you're up on a high transect. You only get the news once you're down, and you sit in the pickup at the valley mouth for a long time, then drive out of the mountains through the night.",
+  "e_census": "The national giant panda survey reaches your area, and you lead the survey team for two months, covering every valley. The number finally reported includes the several hundred dropping samples you collected.",
+  "e_knees": "After a dozen years of climbing, your knees give out, and you need a stick going downhill. The doctor says the cartilage is worn and tells you to climb less. You ask who'll walk the transects, then.",
+  "e_young": "Two new graduates join the station and get bitten by leeches on their first trip in. You show them how to tuck their trousers into their socks, and rub a layer of salt on their boots.",
+  "e_parent": "Your father is in hospital back home while you're out in the mountains with the survey team. By the time you get out and reach the hospital he's out of intensive care, and he asks you: are there more pandas now?",
+  "e_school": "You go to the township primary school to talk about the reserve, bringing a few camera-trap photos. One child says his grandfather used to go up the mountain hunting, and now works as an ecological ranger."
+ },
+ "choices": {
+  "c_master": {
+   "title": "A part-time master's degree",
+   "situation": "A professor from a university in Chengdu running a project at your reserve says he can take you on as a part-time master's student, with the reserve's monitoring data as your thesis. It would help you go for Engineer and team leader later. But not one day in the mountains could be skipped, and the thesis would have to be written at night in the station.",
+   "options": [
+    { "label": "Do it", "result": "You turn three years of camera-trap data into a thesis. At your defense the professor says he's never had a student who could recite the altitude of every camera site." },
+    { "label": "Don't", "result": "You keep your nights for sleep and data entry. These mountains, you think, are learned on foot." }
+   ]
+  },
+  "c_track": {
+   "title": "Routine monitoring or the release program",
+   "situation": "Two programs need people. One is routine monitoring across the reserve, the same transects and camera network walked and swapped year after year. The other is the rewilding and release program: following released pandas' signals through the mountains for years at a stretch. You'd see more, and suffer more.",
+   "options": [
+    { "label": "Routine monitoring", "result": "You come to know the reserve's camera network so well you could find which camera is on which tree with your eyes shut." },
+    { "label": "The release program", "result": "Three years tracking the signal through the mountains with an antenna on your back, and you learn to tell from the bamboo stubs it leaves how long ago it passed." }
+   ]
+  },
+  "c_engineer": {
+   "title": "Going for Assistant Forestry Engineer",
+   "situation": "The rank review wants monitoring reports, a paper, and a professional exam. You have the data, but the paper isn't written, and you'd have to squeeze it in between trips into the mountains.",
+   "options": [
+    { "label": "Squeeze in the time", "result": "You write about the flowering bamboo and submit to a provincial forestry journal. At the review someone asks how much died off, and you give them the number for every month." },
+    { "label": "Apply next year", "result": "You keep the time between trips for rest. The next year your file is complete and the review goes smoothly." }
+   ]
+  },
+  "c_ai": {
+   "title": "Taking on the smart camera-network platform",
+   "situation": "The reserve wants to connect every camera trap to a smart platform: automatic photo recognition, automatic matching of individuals, data straight into the database. It needs someone who knows the mountains to set the labeling rules and review the results. It won't count as fieldwork, and there'll be extra trips to Chengdu for meetings.",
+   "options": [
+    { "label": "Take it on", "result": "You label tens of thousands of photos and write notes on every animal that's easy to mistake. Later several neighboring reserves come to learn your rules." },
+    { "label": "Pass", "result": "You hand the platform to the IT section and keep going into the mountains. The photos it gets wrong, you fix as you come across them back at the station." }
+   ]
+  },
+  "c_leader": {
+   "title": "Going for Engineer and monitoring team leader",
+   "situation": "The old team leader is retiring, and the station nominates you for Engineer and the monitoring team: patrol plans for a dozen-odd people, the camera network and sample store, supporting researchers, dealing with the villages. Take it, and you'll spend fewer days in the mountains and more at the computer and in village committee offices.",
+   "options": [
+    { "label": "Take it", "result": "You bind your years of transect records and reports into a file for the review. From then on, your phone holds a dozen-odd village officials' numbers." },
+    { "label": "A few more years on transects", "result": "You recommend your longtime partner at the station and keep walking transects with the newcomers. When the team finds a sign nobody's sure of, they still photograph it and send it to you first." }
+   ]
+  },
+  "c_eia": {
+   "title": "Joining an environmental assessment firm",
+   "situation": "An ecological impact assessment firm in Chengdu wants to hire you, at one and a half times your pay. The work is biodiversity surveys and assessment reports for roads, hydropower and tourism projects, living in the city and traveling project by project.",
+   "options": [
+    { "label": "Join the firm", "result": "You hand in your resignation and pass your GPS and transect maps to whoever's taking over.", "end": "You went to the assessment firm and worked many projects in the mountains of the southwest. In every report you mapped any place pandas might use on its own, and added a line: please route around this." },
+    { "label": "Stay at the station", "result": "You turn it down. That released panda, you want to keep watching over it a few more years." }
+   ]
+  },
+  "c_base": {
+   "title": "Outreach at a panda breeding center",
+   "situation": "A giant panda breeding center in Chengdu is hiring for its education department, someone who knows the wild, to explain to visitors and students how wild pandas live. You'd live in the city, no more climbing, and your child's schooling would be easier.",
+   "options": [
+    { "label": "Go to the center", "result": "You take the machete and the zip bags out of your pack and leave them in the station storeroom.", "end": "You went to the breeding center to do education, telling the endless stream of visitors about pandas in the wild. When a child asked if you'd ever seen a wild one, you told them about the panda in the bamboo that glanced at you once." },
+    { "label": "Stay in the mountains", "result": "You recommend a colleague who wants to move back to the city, and early the next morning you head into the mountains again." }
+   ]
+  },
+  "c_chief": {
+   "title": "Going for Senior Engineer, applying for Head of Research and Monitoring",
+   "situation": "The reserve's head of research and monitoring is being transferred, and the administration wants you to go for Senior Engineer and apply for the post: the monitoring plan for the whole reserve, reviewing reports, leading partnerships with universities and institutes. Take it, and the trips you make into the mountains each year could be counted on one hand.",
+   "options": [
+    { "label": "Apply", "result": "In your application you talk about the national survey: which valley was hardest to walk, which sample was hardest to collect." },
+    { "label": "Keep leading the team", "result": "You recommend a young engineer and keep taking your monitoring team into the mountains. In those years, you don't lose a single camera." }
+   ]
+  },
+  "c_top": {
+   "title": "Going for full professor rank and Head of Science",
+   "situation": "The reserve is drawing up its monitoring and research plan for the next ten years, and the administration wants you to lead it, and go for Professor-level Senior Engineer: sitting at the table with the national park, universities and institutes, and taking part in national habitat planning. Take it, and you'll seldom go into the mountains with a pack again.",
+   "options": [
+    { "label": "Take it", "result": "At the planning meeting you insist on just one thing: transects and camera sites aren't to be shuffled around for thirty years, so the data can join up." },
+    { "label": "Recommend someone else", "result": "You recommend a young PhD from a university and stay in the section, still taking newcomers out on the farthest transect once a year." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "Your last trip into the mountains is on the first transect you ever walked. At the first camera you swap the memory card, wipe the lens, and hand it over to the young ranger behind you. Fog comes in on the way down, something moves in the bamboo, and you stop and listen for a long time.",
+  "burnout": "Coming back from a winter patrol that year, your knees can no longer take the downhill, and the doctor says no more mountains. The station moves you to the database, reviewing camera-trap photos at a computer all day. One photo shows a panda caught by a camera you installed years ago, and you make it your desktop background."
+ },
+ "stages": [
+  "You go into the mountains behind the old rangers: walking transects with a twenty-kilo pack, changing camera-trap batteries and memory cards, collecting droppings by the protocol, cutting wire snares. Back down at the station you load the photos into the system, number the samples and freeze them, and enter the GPS tracks into the database. When the old ranger says \"this pile is fresh,\" you memorize its color and its smell.",
+  "You take charge of several transects and a camera network on your own, setting routes, choosing camera sites, reading signs. Back at the station you compile a quarter's monitoring data, map distributions in GIS and write the quarterly report. When researchers come to survey, you lead the way and tell them which valley can be walked and which not to enter after rain.",
+  "You lead a monitoring team of a dozen-odd people, planning the monthly patrols and managing the camera network and sample store. You support university and institute surveys, talk with township and village committees about grazing and herb digging, and handle conflicts between people and wildlife. When the team brings back photos and records, you check the locations first.",
+  "You're head of research and monitoring, responsible for the plan and the data for the whole reserve: which transects are walked each year, how the cameras are laid out, where the samples go, and the reports that come up to you. You lead partnerships with universities and institutes, go to meetings in Chengdu and Beijing, and train new graduates. You go into the mountains less now, but during the months of a national survey you are always out there.",
+  "You're head of science for the reserve, deciding what to monitor and research for the next ten years. You take part in the national panda survey and habitat planning, review projects, and negotiate partnerships with the national park, universities and international organizations. When young staff bring you a plan, you ask first: have you walked this transect yourself?"
+ ],
+ "work": [
+  "The old ranger has you judge how fresh a pile of droppings is. You look for ages and say a week. He breaks one open, sniffs it and says: two days. Look, it's still green inside.",
+  "One of your cameras shoots three hundred empty frames in a row. Back at the station you see why: a bamboo stalk swaying in the wind in front of the lens. Next time you bring scissors.",
+  "It starts raining while you're collecting samples. You shield the zip bags with your body, write the numbers on tape and stick them on, and back at the station not a single character has run.",
+  "Choosing camera sites on a new transect, you find panda hair rubbed off on a fir, and mount the camera on the tree opposite.",
+  "In the quarterly report, panda signs in one area have dropped by half. You pull the GPS tracks and find a mudslide had cut the road those months, so the area wasn't fully walked. You say so in the report.",
+  "A graduate student from the university wants to take a shortcut. You look at the clouds overhead, say that valley will flood after rain, and take them two hours around.",
+  "Planning winter patrols for the monitoring team, you schedule the farthest high transect before the snow melts, and give every group an old ranger who has walked that line.",
+  "A villager says a panda came down and ate the honey from his hives. You go and look. It was a black bear. You help him fill in the compensation claim, and show him how to move the hives into his yard.",
+  "In the camera records Yang hands in, three cameras have identical coordinates. You have him pull up all three cameras' photos and find he copied them wrong.",
+  "A survey report from a partner institution lands on your desk with the population up thirty percent from last time. You check the sampling routes and find they walked two more valleys this time.",
+  "A tourist road is planned along the edge of the reserve. At the review you put up ten years of camera locations and recommend moving the route a kilometer further out.",
+  "Taking the new graduates on their first transect, you don't start with reading signs. First you teach them where to put their feet on a steep slope, and how to read the sky.",
+  "At the ten-year planning meeting, someone wants to replace every camera with a new model. You agree, on condition that old and new cameras sit side by side at the same sites for two years.",
+  "An international partnership wants the reserve's raw data. You say yes, but camera locations will be blurred to a kilometer, so nobody can use them to go looking for pandas.",
+  "Reviewing a young engineer's project proposal, you change just one thing: \"protecting pandas\" becomes \"protecting the bamboo forest pandas live in.\""
+ ],
+ "past": [
+  "You're in ninth grade in a mountain town in Ya'an. On the hillside along your way home from school is a stand of bamboo, and the old people say there were pandas there many years ago.",
+  "For the gaokao (college entrance exam) you put wildlife and nature reserve management on your application. Your mother asks: is that feeding pandas at the zoo? You say: it's finding them in the mountains.",
+  "The summer after second year you intern at a reserve and set up your first camera trap. You strap it on backwards and get a month of photos of a tree trunk.",
+  "Third year, you join a professor's bird survey, up before dawn to listen to birdsong. In a month you learn the calls of more than a hundred species.",
+  "At graduation you test into a giant panda reserve in Aba. On your first day the station chief looks at your shoes and says: tomorrow, wear a pair you can climb in."
+ ],
+ "late": {
+  "pension_note": "Estimate: reserve staff in permanent posts are paid pensions under the civil service and public institution scheme plus an occupational annuity, roughly 65 percent of final monthly pay. The field allowance isn't counted.",
+  "scenes": [
+   "On the day you retire, you hand your few dozen patrol logs to the archive. The archivist asks if you want to keep one. You choose the first, with a dried bamboo leaf pressed inside.",
+   "The station invites you back to give a lesson to new rangers. You teach them how to tell fresh droppings from old. The young ones laugh, and then they all take careful notes.",
+   "In a community center in Dujiangyan you show children camera-trap photos and tell them about the pandas, takins and golden monkeys in the mountains. One child asks: do they know you're taking their picture?",
+   "On the news you see the new figure from the national panda survey, higher than when you were young. You think of the hundreds of samples you collected with your own hands, and call the old ranger.",
+   "No longer allowed into the mountains, you spend your days at a computer looking at camera-trap photos. Every time a panda appears, you check first which camera it walked past.",
+   "At last you have time to turn decades of monitoring data into an atlas. The last page is the released panda's collar signal, drawn as one long line.",
+   "Walking in a park in the county town, you pass a clump of bamboo and stop to check the stems for bite marks, then laugh at yourself.",
+   "Your first year away from the station, you don't go into the mountains once. One day of heavy rain, you think of the valley that floods after rain and wonder who walks it now.",
+   "Your new colleagues know you worked at the reserve and keep asking if you've ever touched a panda. You say no, you can't touch the wild ones. One look from far off is plenty.",
+   "Online you see a newly captured photo of a panda from the reserve. You recognize the fir in the background. The camera is in the spot where you once put one.",
+   "Later photo recognition, matching individuals and estimating populations all went to the models. But someone still has to walk the transects step by step with a pack, and someone still has to crouch over the droppings and see whether they're fresh.",
+   "One autumn morning, at the foot of the mountains, you watch the fog lift slowly out of the bamboo, just like the day you first went in, all those years ago."
+  ],
+  "closing": {
+   "retire": "Years later, a grandchild asks what a wild panda is like. You think, and say: it sat in the bamboo and looked at me once, then went on eating, as if I wasn't there at all.",
+   "burnout": "One afternoon years later, you sit on the balcony watching the far mountains disappear into cloud and come out again. You know there's a transect up there, and someone is walking it now.",
+   "end": "Years later, in a cupboard, you find the old GPS. You press the button and the screen lights up. The last transect you walked is still stored on it. You look at it for a long time, then switch it off."
+  }
+ }
+}

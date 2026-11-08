@@ -1,0 +1,200 @@
+{
+ "id": "forecaster-hainan",
+ "occupation": "Weather Forecaster",
+ "role": "Weather Forecaster at a Provincial Meteorological Observatory",
+ "headline": "A weather forecaster with a master's in atmospheric science, in your second year at the Hainan Provincial Meteorological Observatory, just starting night shifts as the second-desk forecaster, and spending every typhoon season at the forecasting console watching every cloud mass over the South China Sea",
+ "unit": "Hainan Provincial Meteorological Observatory",
+ "unit_type": "Provincial meteorological observatory",
+ "city": "Haikou",
+ "city_tier": "Third-tier city",
+ "education": "Master's degree in Atmospheric Science",
+ "level": "You can analyze a weather chart on your own, write the short-range forecast text and keep a squall line pinned on radar. Whether to issue a typhoon warning, and at what level, is not yet yours to sign.",
+ "intro": "Your desk is in the second row of the forecast hall, with three screens: one showing the weather chart on the forecasting platform, one the province-wide radar mosaic, one the satellite cloud imagery over the South China Sea. On the desk: a duty log, a phone that dials straight through to every city and county weather bureau, and a thermos with goji berries steeping. From today you work night shifts beside the lead forecaster. Every cloud in the sky is yours to watch, but the pen that signs, for now, stays in the lead's hand.",
+ "salary_note": "Estimate: the provincial observatory is run as a public institution, with base pay plus performance pay and extra allowances for night shifts and emergency duty. Taken at 95 percent of the national figure for Hainan. Pay only rises noticeably with professional rank and a chief forecaster post.",
+ "facts": [
+  { "label": "Assistant Engineer (Second-desk Forecaster) (current level)", "value": "0–3 years, ¥6,000–8,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Engineer (Lead Forecaster) (3–8 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥22,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Issuing typhoon warnings and briefing the flood-control headquarters", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Forecasting typhoon track and intensity", "source": "AI exposure" },
+  { "label": "Open positions", "value": "5 related listings nationwide, 1 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Shift handover. The night lead reads out the state of the tropical disturbance over the South China Sea point by point, and you log its center position and pressure.",
+  "Morning forecast briefing. You pull up several numerical models and AI models and overlay their predicted tracks for the disturbance on one chart. Five lines fan out in three directions.",
+  "Writing today's short-range forecast: weather, temperature and wind for all eighteen cities and counties. When you finish a draft, the lead bumps the thunderstorm chance for the western counties up a notch.",
+  "Lunch in the bureau canteen, with a bowl of qingbuliang, Hainan's coconut-milk dessert soup. Outside it's bright and clear, and your mind is still on this morning's satellite image.",
+  "On radar, convective cells start popping up over the central mountains. You watch each echo grow taller and call the Qiongzhong weather bureau for conditions. They say: the rain just got here, and it's heavy.",
+  "The lead issues a yellow lightning warning. You push the signal into the release system and watch it go out to every city and county and onto the text-message platform.",
+  "The national video briefing, with observatories from several coastal provinces online. For the first time you're called on to speak. You talk for thirty seconds and your throat goes a little dry.",
+  "Late at night, the disturbance on the satellite image begins to spin. Staring at the screen, the lead says: they may give it a number tonight. You top up your thermos again."
+ ],
+ "ladder": [
+  { "title": "Assistant Engineer (Second-desk Forecaster)", "stage": "Second desk", "focus": "Work shifts beside the lead: analyzing charts, watching radar, drafting forecast text, phoning cities and counties to check conditions, and passing the forecaster qualification." },
+  { "title": "Engineer (Lead Forecaster)", "stage": "Lead desk", "focus": "Take the lead desk on your own, issue short-range forecasts and warning signals, speak at briefings, go for mid-level rank." },
+  { "title": "Senior Engineer (Chief Forecaster)", "stage": "Chief", "focus": "Chair the typhoon and rainstorm briefings, issue typhoon warnings, brief the flood-control headquarters in person." },
+  { "title": "Professorate Senior Engineer", "stage": "Technical oversight", "focus": "Technical oversight of forecasting for the whole observatory: verification, evaluating new models, research projects, leading the chief forecasters." },
+  { "title": "Deputy Director of the Observatory (Chief Forecasting Expert)", "stage": "Running the observatory", "focus": "Oversee operations and emergency response for the whole observatory. On major weather events, the final call is yours, and you speak for the observatory in public." }
+ ],
+ "ai_tasks": [
+  { "name": "Issuing typhoon warnings and briefing the flood-control headquarters", "how": "When to raise the warning, where to recommend closing schools and work sites, when to call fishing boats back to port: a forecaster signs that after seeing all the data, then explains it face to face to the people at headquarters. AI can only lay the data out." },
+  { "name": "Forecasting typhoon track and intensity", "how": "AI weather models produce a track and intensity forecast for the coming days in seconds, side by side with the numerical models on the platform. When the models disagree, or a typhoon suddenly strengthens or loops, a chief forecaster has to decide, from years of experience, which one to trust." },
+  { "name": "Nowcasting and severe convection warnings", "how": "Radar extrapolation and AI recognition can flag incoming thunderstorms, hail and bursts of heavy rain and raise the alarm tens of minutes ahead. Whether to issue a warning signal, and to which county, is for the duty forecaster to decide while watching the echoes." },
+  { "name": "Compiling observations and writing forecast text and service bulletins", "how": "Observation summaries, routine forecast text and public text-message alerts can already be generated automatically from templates. The forecaster only edits the key sentences and numbers." },
+  { "name": "Post-processing numerical forecasts and verification", "how": "AI can correct the various numerical models down to each township and compute accuracy automatically. Which correction method suits Hainan's island terrain takes someone watching the verification scores and tuning slowly." },
+  { "name": "Briefings, shift work and liaison with city and county bureaus", "how": "When a typhoon comes there are several briefings a night, arguments with national and county forecasters, calls to check what's actually happening on the ground. That runs on trust and judgment between people." }
+ ],
+ "events": {
+  "e_first_warning": "For the first time you call a severe convection event on your own, warning the lead forty minutes ahead. The rainstorm warning goes out, and only then does the rain reach that county. The lead says nothing, just pats you on the shoulder.",
+  "e_typhoon_night": "A strong typhoon makes landfall head-on at Wenchang. You stay in the forecast hall for fifty hours, eyes on the eye taking sharper shape on radar, while colleagues bring your meals to your desk.",
+  "e_miss": "A forecast overshoots: the promised rainstorm never comes, but schools closed and tourists checked out of their hotels. People rage online, and you read through every comment on the bus home.",
+  "e_hit": "A typhoon strengthens two categories just off the coast, and you raise the warning to red a day ahead. Every fishing boat is back in port. Afterwards a fisherman on the docks tells a news camera: they got it right this time.",
+  "e_night_shift": "A week of night shifts in a row. You sleep in the daytime while a renovation drill whines downstairs all afternoon. Eyes shut, you're thinking about tonight's sounding curve.",
+  "e_ai_model": "An AI weather model is plugged into the forecasting platform, and typhoon tracks come out in seconds. The first year it's quite accurate over the South China Sea. Then one typhoon loops, and none of the models saw it coming.",
+  "e_ai_text": "The routine forecast text starts being generated by the system, saving you an hour every morning. You spend that hour looking at where yesterday's forecast went wrong.",
+  "e_fisher": "You go along on a service survey to the fishing port at Tanmen. An old skipper shows you every gale forecast text he's kept on his phone and says: I read it three times before I go out.",
+  "e_love": "At a qingbuliang stall on the old arcade street you meet someone who dispatches ships at the port. They say: from now on, the weather is your department.",
+  "e_date_cancel": "The weekend you'd planned is canceled again because a typhoon got its number. They send you a photo of a coconut palm blown over by the road and ask: was this one yours too?",
+  "e_marry": "You get married, the date picked for January, long after typhoon season. At the banquet your colleagues tease you to forecast the weather for the rest of your life.",
+  "e_house": "You take out a mortgage on an apartment out in Jiangdong, Haikou. Choosing the floor, you make a point of asking how strong a wind the windows are rated for.",
+  "e_child": "The baby is born on the day a typhoon makes landfall. You get the call from home in the forecast hall and only make it to the hospital the next morning, after handing over your shift.",
+  "e_cold": "A cold wave pushes all the way down to Hainan, which almost never happens, and the winter vegetable crops in the south need protecting from frost. You write a service bulletin for the agriculture department and send it out to every city and county overnight.",
+  "e_paper": "You write up a typhoon's sudden near-shore intensification as a paper and publish it in a specialist journal. A reviewer asks a question you can't answer, and you spend another three months in the data.",
+  "e_eyes": "A dozen years of screens and night shifts, and your neck and your sleep are both shot. The doctor prescribes medication and says stay up less. You say typhoons don't pick their hours.",
+  "e_young": "A new second-desk forecaster joins the observatory and, on his first night shift, falls asleep on the desk at three. You drape a jacket over him and watch the radar for him for an hour.",
+  "e_school": "On World Meteorological Day the observatory opens to visitors. A primary schooler asks where typhoons come from. You point to a small white smudge on the satellite image and say: from there.",
+  "e_parent": "Your parents are in hospital back home and you take leave to go. At the bedside you've still got the South China Sea satellite loop open on your phone. Your mother says: rest a bit, the sky isn't going to fall.",
+  "e_post_review": "The post-event review after a typhoon runs a whole day. You lay out every call you made on your shifts. Two were wrong, and you put those in the summary too."
+ },
+ "choices": {
+  "c_xisha": {
+   "title": "A rotation at the Xisha weather station",
+   "situation": "The observatory is sending a young forecaster to the weather station on the Xisha Islands, far out in the South China Sea, for six months: observations, launching radiosonde balloons, forecasts for passing ships. It's far from home and the supply boat comes once a fortnight. But the skies you'd see out there, you'd never see from Haikou in a lifetime.",
+   "options": [
+    { "label": "Go to Xisha", "result": "On the island you launch more than a hundred and eighty radiosonde balloons and see waterspouts over the sea. When you come back, you read satellite images differently." },
+    { "label": "Stay at the observatory", "result": "You give your place to a colleague who wants it more, and stay in the forecast hall to make your shift skills solid." }
+   ]
+  },
+  "c_main": {
+   "title": "Qualifying as Lead Forecaster, going for Engineer",
+   "situation": "To take the lead desk you need to pass the forecaster assessment, write up a weather event, and have a year of forecast scores in the rankings. Your scores are mid-table, so before the assessment you'll need to work through years of typhoon cases one by one.",
+   "options": [
+    { "label": "Go all out", "result": "You compile ten years of typhoon cases into a notebook. In the assessment you're asked about a looping typhoon, and you name its steering flow." },
+    { "label": "Another year on second desk", "result": "You spend another year beside the lead and learn to go over all the data once more before you sign. At the next assessment, nobody gives you a hard time." }
+   ]
+  },
+  "c_ai": {
+   "title": "Taking on the AI correction project",
+   "situation": "The province wants an AI correction model for South China Sea typhoons, fed with decades of typhoon cases and forecast errors so it learns the temper of Hainan's coastal waters. It needs someone who knows forecasting to lead it, label cases and set verification standards. It doesn't count as duty work, and you'd still work your night shifts.",
+   "options": [
+    { "label": "Take it on", "result": "You and two programmers spend a year labeling typhoon cases. By the next typhoon season the corrected track errors have shrunk noticeably, and at the chief's briefing your results are the first thing anyone looks at." },
+    { "label": "Pass, focus on shifts", "result": "You hand the project to the IT center. You use the model once it's out, and now and then at a review you mention: it missed the loop again." }
+   ]
+  },
+  "c_chief": {
+   "title": "Applying for Chief Forecaster, going for Senior Engineer",
+   "situation": "A Chief Forecaster post is open: chairing briefings when a typhoon comes, issuing warnings, briefing flood-control headquarters in person. The responsibility is all yours. Get it wrong, and by the next day everyone knows whose signature was on it.",
+   "options": [
+    { "label": "Apply", "result": "In your application talk you describe that typhoon that intensified near shore: which of your calls were right, and which one nearly went wrong." },
+    { "label": "A few more years as lead", "result": "You recommend a colleague and stay on the lead desk. When typhoons come you sit beside the chief and go over the data one last time for him." }
+   ]
+  },
+  "c_county": {
+   "title": "Going home to the county weather bureau",
+   "situation": "The county weather bureau back home needs a deputy director who can forecast, and your family would love you to come back: close to your parents, fewer night shifts. But the pay is lower, and from then on the sky you watch belongs to one county.",
+   "options": [
+    { "label": "Go back to the county", "result": "You join the county weather bureau and spend the year doing a bit of everything: forecasting, observations, cloud seeding." },
+    { "label": "Stay at the provincial observatory", "result": "You tell your family a few more years. That typhoon season, you pull several more all-nighters in the forecast hall." }
+   ]
+  },
+  "c_company": {
+   "title": "Joining a commercial weather company",
+   "situation": "A company providing weather services for renewable energy and shipping wants to hire you, at one and a half times your pay: wind forecasts for wind farms, weather routing for ocean voyages. No night shifts, and no signing warnings for a whole province.",
+   "options": [
+    { "label": "Join the company", "result": "You hand in your resignation and pass the duty log to whoever takes your shift.", "end": "You went to a commercial weather company, forecasting for wind farms and ocean freighters. Every typhoon season you still wake in the middle of the night out of habit and check the South China Sea satellite loop on your phone." },
+    { "label": "Stay at the observatory", "result": "You turn it down. You want to hold the pen that signs the warnings a few more years." }
+   ]
+  },
+  "c_airport": {
+   "title": "Moving to the airport weather office",
+   "situation": "The airport's weather office is hiring aviation forecasters: visibility, thunderstorms and wind shear for flights. More regular hours, slightly better pay. You'd still be a forecaster, but you'd never again sign for a whole province's typhoon.",
+   "options": [
+    { "label": "Go to the airport", "result": "You finish the transfer paperwork and read one last weather chart in the provincial forecast hall.", "end": "You went to the airport weather office and spent your days giving departing and arriving flights their visibility and thunderstorm forecasts. One year a typhoon shut the airport for a day and a night, and watching the water pool on the runway from the tower, you thought of the old forecast hall." },
+    { "label": "Stay at the provincial observatory", "result": "You recommend a colleague who wants a change of pace and carry on with shifts at the observatory." }
+   ]
+  },
+  "c_phd": {
+   "title": "A part-time PhD",
+   "situation": "A university in Nanjing and the provincial bureau are jointly recruiting part-time PhD students, researching the rapid intensification of South China Sea typhoons. With the degree, going for full professor rank and leading research projects gets easier. But you'd still work typhoon season, and the thesis could only be written in winter.",
+   "options": [
+    { "label": "Do it", "result": "Shifts by day, model runs by night, and you defend in your fifth year. Every case in the thesis is one you watched with your own eyes in the forecast hall." },
+    { "label": "Don't", "result": "You keep your evenings for home. Forecasting, you think, is an eye earned one typhoon at a time." }
+   ]
+  },
+  "c_deputy": {
+   "title": "Becoming Deputy Director of the observatory",
+   "situation": "The old director is retiring and the bureau wants you as deputy director: running operations, the duty rota and emergency response, making the final call on major weather events, and talking to the media. Take it, and you'll rarely sit at a screen and forecast yourself.",
+   "options": [
+    { "label": "Take it", "result": "Your office is upstairs from the forecast hall. When a typhoon comes, you still go down and sit beside the chief, reading the satellite images one by one." },
+    { "label": "Keep forecasting", "result": "You recommend a young chief forecaster and stay in the hall, guiding them through the hardest briefings." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "Your last typhoon season is a quiet one, just two weak storms. At your final handover you write up the South China Sea in the duty log, close the book, and stand in front of the big screen in the hall watching the satellite loop for a while. The young forecaster taking over asks if you'll be in tomorrow. You say you'll come and visit.",
+  "burnout": "After that typhoon season your sleep falls apart completely, and the doctor says no more night shifts. The observatory moves you to forecast verification and archives, scoring old forecasts one by one every day. Outside the window is Haikou's blue sky, and you rarely look up anymore to see if it will change."
+ },
+ "stages": [
+  "You work shifts beside the lead: analyzing several weather charts a day, overlaying numerical and AI model output on the forecasting platform, drafting the short-range forecast, watching convection bubble up on the radar mosaic. You phone city and county bureaus to check conditions and log every call you make in the duty log. The name in the signature box is the lead's.",
+  "You're the lead forecaster now, and short-range forecasts and lightning and rainstorm warnings go out under your signature. You speak at morning and evening briefings, and the second desk hands you their drafts to edit. When the counties call in, it's you they ask for. At night there's only you and one second-desk forecaster, and where the rain falls and whether to warn has to be settled in minutes.",
+  "You're Chief Forecaster. When a typhoon comes you chair several briefings a day, decide which model to trust when they disagree, issue the typhoon warning, then take the charts to the provincial flood-control headquarters and explain in person when it will make landfall and where schools and work should stop. You have to be clear and measured, because every sentence becomes an order.",
+  "You rarely work nights now. What you carry is the observatory's forecasting technique: the review after every event, the verification of every new model, several research projects. You review the chiefs' write-ups, speak for Hainan at national briefings, and guide young forecasters through typhoon research. On the two tightest days of a typhoon, you still sit back down in the hall.",
+  "You're Deputy Director of the observatory, overseeing operations, staff and emergency response: drawing up the typhoon-season rota, deciding when to activate which level of response, dealing with the headquarters, the media and the provincial departments. The last decision on a major event is yours. After you sign, you often go downstairs alone for one more look at the satellite image."
+ ],
+ "work": [
+  "The lead has you draw a surface chart, and you draw the sea-level pressure isobars three times. On the last one, he only nudges the South China Sea line a little to the east.",
+  "Four a.m., and an automatic station in Sanya suddenly jumps to 80 millimeters of rain. You call, and the duty officer says the drain next to the station is blocked.",
+  "In your forecast text you've upgraded \"showers\" to \"thunderstorms.\" The lead catches it before release, you look at the radar together once more, and in the end you change it back to \"showers.\"",
+  "Two a.m., and the echoes over the central mountains suddenly join into a line. You watch for three minutes, issue an orange rainstorm warning, then phone five county bureaus one after another.",
+  "Lin, on second desk, has a county's high temperature two degrees too warm. Instead of fixing it, you have him pull up the sounding curve and look again himself.",
+  "A big conference is on at Boao, and the organizers want an hour-by-hour forecast for the venue at seven every morning. Five days running, you're first into the observatory.",
+  "At the briefing, two AI models send the typhoon north and the numerical models send it west. You pull up every typhoon that took the same track in the past ten years, and settle on west.",
+  "At the flood-control headquarters, someone asks whether school closures can wait a day. You spread the rainfall forecast on the table and say: the heaviest rain comes tomorrow afternoon, right at school pickup.",
+  "After the typhoon passes, you take the chief forecaster team to the Wenchang coast to see the wind damage, matching every downed utility pole against the wind force you forecast.",
+  "Before a new version of the AI model goes live, you have it run on the past five years of typhoons. It doesn't catch a single near-shore intensification, and you put that sentence on page one of the evaluation report.",
+  "One chief's event write-up reads a little too smoothly. In the margin you write: when did you hesitate? Put that in.",
+  "At a national briefing, you and an expert from the neighboring province argue for twenty minutes over a typhoon's landfall point. In the end each of you issues your own call.",
+  "Before typhoon season you redo the observatory's duty rota five times, making sure every shift has someone at the screen who has seen a big typhoon.",
+  "A TV station asks you to talk about typhoon safety. You make just three points: don't go to the seafront to watch the waves, don't go out while the eye passes over, listen to the warnings.",
+  "At a post-typhoon review, you start by describing the time you made a call two hours late, and only then ask everyone else to speak in turn."
+ ],
+ "past": [
+  "You're in ninth grade in Zhanjiang. That summer a typhoon passes through and the big banyan downstairs comes down. You spend the whole night at the window watching the wind.",
+  "For the gaokao (college entrance exam) you put atmospheric science on your application. Your mother asks what that is. You say: learning how to know ahead of time whether a typhoon is coming.",
+  "Second year, your first duty shift at the university's observation field. At two a.m. you go out to read the thermometer in the Stevenson screen, the beam of your flashlight full of bugs.",
+  "After your bachelor's you go on to a master's, working with your advisor on rapid intensification of South China Sea typhoons. You run the model all summer and the results never come out right.",
+  "After your master's defense, you test into the Hainan Provincial Meteorological Observatory. On the day you report for work a typhoon gets its number, and the director says: go and watch in the hall first."
+ ],
+ "late": {
+  "pension_note": "Estimate: the provincial observatory pays pensions under the civil service and public institution scheme plus an occupational annuity, roughly 65 percent of final monthly pay. Night-shift and emergency allowances aren't counted.",
+  "scenes": [
+   "On the day you retire, you photograph the pages you wrote in thirty-odd years of duty logs and leave the originals at the observatory.",
+   "The observatory invites you back to walk new forecasters through typhoon cases. The first one you present is that looping typhoon every model got wrong.",
+   "You take up photography at a senior college, and your favorite subject is cumulonimbus at dusk. Others shoot the sunset; you shoot whether the cloud base is flat or ragged.",
+   "Another typhoon comes. You watch the rain from your window at home and get the warning text on your phone. The forecaster who signed it is the second-desk you trained years ago.",
+   "Away from the forecast hall, you spend your days scoring old forecasts. You give one of your own from years ago a failing grade, and smile.",
+   "At last you can sleep through the night. One morning you wake at three and reach for your phone out of habit, and find there's no wind out there at all.",
+   "Walking in Wanlü Park, you look up at a cumulus growing taller and murmur: rain at three this afternoon. At three that afternoon, it rains.",
+   "You've left the provincial observatory, and for your first typhoon season you aren't on duty. On landfall day you cook a pot of Hainan rice noodles at home and listen to the wind outside, and it feels strange.",
+   "Your new colleagues know you were a forecaster at the provincial observatory and keep asking you whether it will rain tomorrow. You look at the sky and give a number, and it's often pretty close.",
+   "On the news you see the observatory's new forecast hall, the screens twice the size of the old ones. You can name the person sitting in the chief's seat.",
+   "Later the typhoon tracks went to the models and the forecast text to the system. But on the night the models disagree, someone still has to watch the satellite image and decide which page to sign.",
+   "One evening in typhoon season you stand on the shore, watching long streaks of cirrus stretching across the southern sky, and you know something will arrive in a few days."
+  ],
+  "closing": {
+   "retire": "Years later, a grandchild asks why some clouds look like cotton and others like feathers. You take the child's hand, point at the sky and explain them one by one, until the sun goes down.",
+   "burnout": "One afternoon years later, you sit on the balcony watching the Haikou sky, the clouds slowly shifting. You no longer try to guess when it will rain. You just watch.",
+   "end": "Years later, in a drawer, you come across a yellowed surface weather chart, its isobars drawn by your own hand when you were young. You look at it for a long time, then slip it back into a book."
+  }
+ }
+}

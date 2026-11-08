@@ -1,0 +1,152 @@
+{
+ "id": "singer-bj",
+ "occupation": "Musician and Singer",
+ "role": "Resident Bar Singer",
+ "headline": "A music-performance graduate from Hohhot who carries a guitar from bar to bar around Houhai every night, with twenty unreleased songs saved on their phone",
+ "unit": "Several bars around Houhai, Beijing (paid by the set)",
+ "unit_type": "Bar residency · independent musician",
+ "city": "Beijing",
+ "city_tier": "Tier 1",
+ "education": "Junior college diploma (music performance)",
+ "level": "A year of bar residencies. Three hundred songs you can sing on the spot, whatever a customer asks for, steady on acoustic guitar. You've written twenty songs of your own, and haven't properly released a single one.",
+ "intro": "The ice on Houhai hasn't melted yet. You come out of the bar by Yinding Bridge with your guitar on your back, hurrying to the next set. You came to Beijing from Hohhot a year ago and live in a half-basement room near the Drum Tower, with a request list taped to the wall: three hundred songs, and you know them all. On your phone are twenty more you wrote yourself, none of them released. From today, the little chalkboard outside the bar has your name on it, and \"9 p.m.\"",
+ "salary_note": "Estimate: resident singers around Houhai and Sanlitun are paid by the set, a few hundred yuan each, two or three sets a night, plus tips that customers send by scanning a QR code. In the slow season and the cold months there are fewer sets and income drops with them. Taken at 1.1 times the national figure.",
+ "facts": [
+  { "label": "Resident Bar Singer (current level)", "value": "0–3 years, ¥4,000–8,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Band Frontperson (3–6 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Singing live", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Making backing tracks and arrangement demos", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You wake in the half-basement. The window shows only half the world, the feet of people passing. You brew a cup of malva nut tea and don't speak yet, letting your voice wake up.",
+  "Writing with the guitar. You rework one chorus for the sixth time, record it on your phone, listen, delete it, and record it again.",
+  "At the music shop you get a new set of strings. The owner says the frets on that guitar of yours need work. You say next month.",
+  "First set, a bar on the edge of Shichahai lake. Not many customers yet. You sing two of your own songs. Nobody looks up.",
+  "The second set is busier. One table requests the same old love song three times and tips two hundred yuan by QR code. Each time you sing it slower.",
+  "The third set is deep in a hutong lane. For the last song you sing one of your own again. In the corner, someone puts down their glass and listens to the end.",
+  "Done for the night. You and the bass player eat a bowl of offal stew at the mouth of the lane. He says a Livehouse lineup next week is one band short and asks if you're in.",
+  "Back in the half-basement you tick off the songs you sang today in your notebook, then listen to that chorus once more. You don't delete it."
+ ],
+ "ladder": [
+  { "title": "Resident Bar Singer", "stage": "Residency", "focus": "Sing covers and customers' requests in bars, paid by the set, several bars a night. You move up by having a steady voice, a huge repertoire and the ability to hold a room, building up regulars and bar owners who want you." },
+  { "title": "Band Frontperson", "stage": "Band", "focus": "Have a band of your own, play shared bills at live music venues, sing your own songs, record demos and put them on streaming platforms, still doing residencies while you build an audience." },
+  { "title": "Independent Musician", "stage": "Independent", "focus": "Release albums, tour, play festivals, and live on ticket sales, royalties and merchandise, working with a manager or a label." },
+  { "title": "Music Producer", "stage": "Producing", "focus": "Write, arrange and produce for yourself and for others, mentor young musicians, and decide in the studio what a record will be." }
+ ],
+ "ai_tasks": [
+  { "name": "Making backing tracks and arrangement demos", "how": "Hum a melody and name a style, and in a few minutes AI produces a demo backing track with drums, bass and strings. A person picks the version that works, then brings in real musicians to record it." },
+  { "name": "Tuning, mixing and mastering", "how": "AI can correct pitch, tighten timing, mix and master automatically, and a song's post-production shrinks from a week to a night. Which cracked note to keep, and where to push the feeling, a person decides." },
+  { "name": "Writing lyrics, finding melodies, taking other songs apart", "how": "AI can offer rhyming lines and dozens of melodic directions, and take a song's structure apart for you. What this song is trying to say, and which word sung out loud is yours, you can only write yourself." },
+  { "name": "Singing live", "how": "A noisy table in a bar, hundreds of people singing along in a club, what to do when your voice is gone tonight: standing on stage and singing to the people in front of you, AI can't do." },
+  { "name": "Building your own audience", "how": "Which regular comes every Wednesday, who you talk with a little longer after a show, which city on the tour has someone waiting: these relationships are sung into being one set at a time." }
+ ],
+ "events": {
+  "e_regular": "A regular who comes every Wednesday one day requests not the old love song but one you wrote. He says: heard it last week, and I've been humming it ever since.",
+  "e_drunk": "A drunk table insists you sing a song you don't know, and says if you can't, don't take the money. The owner comes over and smooths it out. You're paid that night anyway. You don't say a word.",
+  "e_voice": "After a month of singing without a break your voice is gone. The doctor says vocal nodules and orders two weeks of silence. For those two weeks you don't do a single set, and the rent is borrowed.",
+  "e_winter": "Winter, and most of the tourists have left Houhai. Two bars drop their resident singers. You're down to one set a night, and on the way home the lake is frozen white.",
+  "e_first_live": "You and the band play a live music venue for the first time, third on a shared bill, about a hundred people out front. By the third song someone in the front row sings a line along with you, and you nearly forget the words.",
+  "e_release": "You put your first song on a music platform. The first month it has three hundred plays, half of them yours. The second month a short-video creator uses it as background music.",
+  "e_viral": "A customer posts a video of you singing in the bar, and millions watch it overnight. The next evening there's a queue outside the door.",
+  "e_ai_demo": "You try handing a hummed melody to AI for a backing track. In three minutes it turns out five versions, smoother than anything you and the band ground out in a month. You listen all night and don't use any of them, but you know now where the chorus should go.",
+  "e_ai_voice": "Online you hear a song in a voice exactly like yours, a song you've never sung. Someone trained a model on the songs you've released. You complain to the platform and it's taken down. A few days later another one turns up.",
+  "e_band_split": "The drummer is going home to get married, and the guitarist has taken an office job. At the band's last show you play your first song once more. There are only thirty people out front, and every one of them sings along.",
+  "e_festival": "For the first time you play a small stage at a music festival. Three in the afternoon, the sun fierce, and the crowd grows from a few dozen to several hundred.",
+  "e_tour": "Your first tour: twelve cities, twenty-eight days, one rented van. At one stop you sell only forty tickets, and you still play the full two hours.",
+  "e_mom": "Your mother comes to Beijing to hear you sing for the first time. She sits at the table at the very edge of the bar, orders an orange juice, never drinks it, and claps after every song.",
+  "e_love": "You end up together with someone who often comes to listen. The first time, they came in to get out of the rain. After that they came every week, sitting at that table in the corner.",
+  "e_marry": "You get married. At the wedding you don't sing. Your old bandmates get up and sing the first song you ever wrote, off key, and everyone laughs.",
+  "e_child": "Your child is born. The first lullaby you write is made up at four in the morning while rocking the baby to sleep: just four lines, and the crying stops the moment they hear it.",
+  "e_rent": "The landlord of the half-basement raises the rent, and you move to an urban village outside the Fifth Ring Road. Every night after your sets you take a cab back, and the fare eats one set's pay.",
+  "e_young": "A young singer just arrived in Beijing has a residency at a bar you often go to, and she's singing the song you wrote ten years ago. You sit in the corner, listen to the end, and tip her two hundred yuan.",
+  "e_ears": "Years of singing beside the speakers, and your ears have started to ring. The doctor fits you with custom earplugs. You put them in before going on and feel the world move a little further away.",
+  "e_father": "Your father is in hospital in Hohhot. You cancel two shows to go back. In the ward he asks you to sing one. You didn't bring your guitar, so you sing unaccompanied, a Mongolian long song he loved when he was young."
+ },
+ "choices": {
+  "c_band": { "title": "Form a band or sing alone", "situation": "The bass player and the drummer want to start a band with you and play your songs. Do it, and you rehearse together, split the money together, and carry the rehearsal room's rent together. Alone, gigs are easy to get, and you're free.", "options": [
+   { "label": "Form the band", "result": "You rent a rehearsal room in an urban village with egg cartons on the walls for soundproofing. The first time you get through your song together, none of you says anything, and the drummer counts it in from the top again." },
+   { "label": "Sing alone", "result": "You keep going from bar to bar alone with your guitar, three a night, and your repertoire grows by another hundred songs." }
+  ] },
+  "c_show": { "title": "Go on a TV talent show or not", "situation": "A director from a TV singing competition heard you in the bar and invites you to the open auditions. The show could make you famous overnight, or cut you into one shot of crying as you leave the stage. The contract also says that for three years your gigs would be booked by the show's company.", "options": [
+   { "label": "Go", "result": "At the audition you sing your own song, make the top thirty and get forty seconds in the broadcast. For a month, the people coming to the bar for selfies queue out the door." },
+   { "label": "Don't", "result": "You tuck the director's card into your lyric notebook and go on singing in the hutongs. That winter you finish the last song of your first album." }
+  ] },
+  "c_ai": { "title": "Learn AI arrangement or not", "situation": "Young musicians all use AI for backing tracks, tuning and demos; one person can do a whole song's post-production. You worry that everything made that way sounds the same, but you can't afford an arranger or a studio.", "options": [
+   { "label": "Learn it", "result": "You learn to make demos with AI, then take them to real musicians to record. The cost of making an album drops from fifty thousand yuan to fifteen." },
+   { "label": "Keep grinding it out yourself", "result": "You keep working it out bit by bit on the guitar and arguing with the band in the rehearsal room. It's slow, but every note is one you played yourselves." }
+  ] },
+  "c_label": { "title": "Sign with a record label or not", "situation": "A record label wants to sign you: they'd release an album, book a tour, pay for promotion, and guarantee you a monthly minimum. The price is that the rights go to the label, and what you write and what you release is theirs to decide.", "options": [
+   { "label": "Sign", "result": "For the first time you walk into a real recording studio. The producer asks you to make one chorus \"catchier.\" You do, and the album sells well." },
+   { "label": "Release it yourself", "result": "You turn them down and crowdfund your first album online. Four hundred-odd people chip in, and every one of their names is printed in the liner notes." }
+  ] },
+  "c_home": { "title": "Go back to Hohhot", "situation": "Your mother says a music school has opened back home and needs a voice teacher: steady pay, social insurance, ten minutes from home. In Beijing, sets are harder and harder to get, and the rent keeps rising.", "options": [
+   { "label": "Go back", "result": "You put the guitar in its case and sing one last song by the lake at Houhai, one of your own.", "end": "You teach voice in Hohhot for many years, to students from five to fifty. Every summer you go to a small music festival out on the grasslands and sing a set, the same few old songs." },
+   { "label": "Stay in Beijing", "result": "You tell your mother: two more years. After you hang up you go to the bar and sing a long song she loves, and the room goes quiet." }
+  ] },
+  "c_wedding": { "title": "Switch to corporate gigs and weddings", "situation": "A wedding and events company wants to sign you: weddings, company year-end parties and property launches at weekends, with one gig paying as much as a week in the bars. Everything you'd sing would be chosen by someone else, and there'd be nowhere left to sing your own songs.", "options": [
+   { "label": "Go", "result": "You buy a suit and learn to call out the couple's names in the instrumental break of a wedding standard.", "end": "You sing at weddings and year-end parties for many years, save money and buy a flat back home. Now and then, at the end of a wedding, you sing a song of your own. Nobody knows who wrote it, and somebody always asks its name." },
+   { "label": "Don't", "result": "You turn it down. That weekend you play a live music venue and sell only eighty tickets, but all eighty people know your songs." }
+  ] },
+  "c_album": { "title": "Sell what you have to make an album", "situation": "You have enough songs for an album and want to do it properly: a real band, a good studio, and a tour. It comes to two hundred thousand yuan. You'd have to put in all your savings and sell your best guitar.", "options": [
+   { "label": "Sell the guitar and make the album", "result": "The album takes three months to record, and the day the last song is done you fall asleep on the studio sofa. At the tour's first stop, there are more people than you expected." },
+   { "label": "Do a few singles first", "result": "You release three singles first, building an audience one song at a time. The guitar is still hanging on the wall." }
+  ] },
+  "c_produce": { "title": "Write and produce for someone else", "situation": "A young singer's manager comes to you to produce her whole album: writing, arranging, and sitting in the studio while she sings. Do it well and more and more people will come to you to produce; but your own songs would have to wait.", "options": [
+   { "label": "Take it", "result": "You spend a month in the studio with her, record one chorus forty times, and in the end use the take she sang crying." },
+   { "label": "Do your own first", "result": "You recommend a friend and keep writing your next album. That year you write only five songs, but every one of them stays." }
+  ] }
+ },
+ "endings": {
+  "retire": "Your last show is at a small live music venue, and out front are a few people who've been coming since your bar residency days, their hair all white. After the last song you don't bow. You lean your guitar against the amp and sit on the edge of the stage and talk with them for a while.",
+  "burnout": "Your voice got hoarser every year, and the doctor said your vocal cords couldn't take three sets a night anymore. You stopped the residencies and went back to Hohhot, where you teach old people guitar on a park bench. You don't sing. You only play."
+ },
+ "stages": [
+  "You do two or three bars a night, forty minutes a set. Three hundred songs on the request list, and whatever a customer asks for you play, the chime of QR tips mixing with the clink of glasses; the owner decides from how warm the room is whether he wants you next month. By day you write songs in your rented room, change strings, brew malva nut tea, and at night, as the last song of the third set, you slip in one of your own.",
+  "You have a band of your own. Three afternoons a week you rehearse in the urban-village room, arranging your songs one by one; at weekends you play shared bills at live music venues, negotiating the split with the venue owner and the monitor mix with the sound engineer. You still take residencies, which pay the rent. You've recorded demos and put them on streaming, and you start checking the play counts every day.",
+  "You're an independent musician now. You release albums, book tours, play festivals, and negotiate rights and splits with a manager or a label; two or three months a year are on the road, the van stuffed with guitars and amps. After a show you sign albums at the door and talk with listeners, and back in Beijing you shut yourself in to write the next one. You've started to know that in every city there are a few people waiting for you.",
+  "You spend more time in the studio now than on stage. You write, arrange and produce for yourself and for young singers, sitting at the mixing desk listening to the breath and diction of every line, and settle with the players, the mix engineer and the label what a record will be. You still go on stage now and then, mostly to sing the few songs you wrote many years ago."
+ ],
+ "work": [
+  "A table requests a song you only half know. You have them listen to another one first, look up the chords on your phone during the instrumental, and play it next.",
+  "The bar owner installed the mixing desk himself, and the vocals always sound muffled. You crouch at the front turning knobs for twenty minutes. The owner says: come early tomorrow and show me.",
+  "On a rainy night with few customers, you sing all twenty of your own songs alone to three empty tables. The guy behind the bar listens while drying glasses and says the seventh one's good.",
+  "The venue's sound engineer says your monitor is too loud. You spend five minutes trying it on stage, turning the guitar down and the drums up, and finally you can hear your own voice.",
+  "In the rehearsal room the drummer says there should be a one-beat stop at the chorus. You argue all afternoon, then try it once: with that beat of silence, the whole song comes alive.",
+  "You email a demo of your first song to five labels, with a video of you live in the bar. Three don't reply. One writes back a single line: let us listen again.",
+  "On tour in a small southern city, one of the venue's speakers dies. You and the band change the show to unplugged and sit in a circle on stage. It's the best night of the tour.",
+  "The label wants a cover as the album's lead single. You bring out the song you wrote and hold your ground for a week. In the end both go on, and yours is track one.",
+  "After a show a listener waits for you at the door and says one of your songs got her through a year. You write her name inside the album sleeve, and take a long time over it.",
+  "Producing a young singer's album, you find she always wants to sing higher. You have her sing the chorus once as softly as she can, record it and play it back to her. She doesn't say anything more.",
+  "The AI arrangement demo is smooth, without a rough edge. You delete the drums and replace them with a hand-clapped rhythm, and in the second verse you leave in a stray buzz from the guitar."
+ ],
+ "past": [
+  "You grew up in Hohhot. Your grandfather played the morin khuur, the horsehead fiddle, and at New Year, after a drink, he'd sing long songs. Sitting beside him, for the first time you felt a person's voice could carry so far.",
+  "In your last year of middle school you saved a year's pocket money for a secondhand acoustic guitar and learned your first chord from online videos, until your fingertips blistered.",
+  "Your gaokao (college entrance exam) score wasn't high, so you applied for a music performance diploma at a junior college. For the audition you sang a folk song you'd rearranged yourself. The examiner asked what you wanted to do. You said: sing my own songs.",
+  "After college you sang in a bar in Hohhot for a year, mostly songs other people requested. One night you sang one you'd written, and the owner said: don't sing that, the customers don't like it.",
+  "At twenty-three you packed everything into two suitcases and took the train to Beijing. The first night you auditioned at a bar on the lake at Houhai. When you finished, the owner said: come at nine tomorrow."
+ ],
+ "late": {
+  "pension_note": "Estimate: resident singers and independent musicians are mostly freelancers who pay into Beijing's urban employee pension themselves as flexibly employed workers, and in some years can't keep up. In retirement you get about thirty-five percent of your final monthly pay.",
+  "scenes": [
+   "After retiring you dig out all your request lists from over the years, a dozen-odd sheets. The earliest has three hundred songs on it. The last has only twenty, all your own.",
+   "The neighborhood committee asks you to teach a group of old people to sing. They sing old songs from when they were young, you accompany them on guitar, and now and then someone stops midway and laughs, embarrassed.",
+   "Every evening you walk once around the lake at Houhai. The bars have changed hands several times over, and outside one of them a sign still has a resident singer's name and \"9 p.m.\"",
+   "For your first months back in Hohhot you neither speak nor sing. Every morning you brew a cup of malva nut tea and watch it swell, little by little, in the cup.",
+   "The old people learning guitar with you in the park learn their first song. They play it together, go wrong together, and nobody minds.",
+   "Your voice has recovered somewhat. Your grandfather's horsehead fiddle has come down to you, and you're learning to play it. You sound terrible, but the neighbors say it sounds like the grasslands.",
+   "The first year after you leave the bars, every night at nine you glance at the clock. Sometimes you pick up the guitar and sing a song at home, to yourself.",
+   "In a short video you hear someone covering a song you wrote years ago, and in the comments someone asks who sang the original. You don't comment. You leave a like.",
+   "Your old band reunites in a group chat, and the four of you arrange one rehearsal. You find a rehearsal room, egg cartons still on the walls, and the first song locks in at once.",
+   "Later backing tracks and arrangements were all handed to AI, and one person in a room could make a whole album. But the last song of the last set in a bar still took someone standing there, singing to the one person in the corner.",
+   "In an old lyric notebook you come across the talent show director's card, the paper gone yellow. You think back on it for a moment and tuck it away again.",
+   "Your grandchild learns their first chord on the guitar, fingers hurting so much they shake them out. You hold their hand down on the strings and say: once this hurt passes, it gets better."
+  ],
+  "closing": {
+   "retire": "Many years later, on a summer night, you sit out in the cool at the mouth of the hutong, and from someone's window drifts a song you wrote when you were young. You make no sound, and sing the last line along with it in your head.",
+   "burnout": "Many years later, on a park bench, you play the horsehead fiddle alone as the sun goes down. A child passing by stops to listen. When you finish a phrase, the child claps and runs off.",
+   "end": "Many years later, on top of the wardrobe, you find the old acoustic guitar, its strings all rusted. You put on a new set, tune it, and play the first chord, and all at once the room is full."
+  }
+ }
+}

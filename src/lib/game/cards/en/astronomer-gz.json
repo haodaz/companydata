@@ -1,0 +1,200 @@
+{
+ "id": "astronomer-gz",
+ "occupation": "Radio Astronomy Operations Engineer",
+ "role": "Observing and Operations Engineer at a Radio Telescope Site",
+ "headline": "An observing and operations engineer with a master's in astrophysics, in your second year at a giant radio telescope tucked into a karst valley in southern Guizhou, working rotating shifts and handing over your phone before you can enter the core zone",
+ "unit": "The operations center of a giant radio telescope in Guizhou",
+ "unit_type": "National large-scale science facility",
+ "city": "Pingtang, Qiannan",
+ "city_tier": "County",
+ "education": "Master's degree in Astrophysics",
+ "level": "You can run an observing shift on your own: switching observations to schedule, watching system status, handling routine alarms, filling in the shift log. Big failures in the feed cabin or the reflector you still go up to fix behind the team leader.",
+ "intro": "In your shift bag: a shift log, a flashlight, a pair of work gloves, a pass for the telescope's core zone, and a phone you switched off long ago. Past the gate, it goes into a locker. Your dormitory is in a small town outside the hills. Every day the shuttle bus climbs the switchback road for forty minutes, and around the last bend there it is: the giant dish set into a bowl of karst hills. From today you work night shifts alone. Where the telescope points, and whether the thousands of numbers on the screen look right, are yours to watch through the night.",
+ "salary_note": "Estimate: a permanent post at the operations center of a national research institution, base pay plus performance pay, with field and night-shift allowances for the remote site. Taken at 90 percent of the national figure. Income only rises noticeably with professional rank and research grants.",
+ "facts": [
+  { "label": "Assistant Engineer (Observing Duty Officer) (current level)", "value": "0–3 years, ¥7,000–10,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Engineer (Observing Assistant) (3–8 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "On-site repairs to the reflector, actuators and feed cabin", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Scheduling observations", "source": "AI exposure" },
+  { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The shuttle drives down into the valley. At the gate you lock your phone in a locker, change into work clothes and swipe into the main building.",
+  "Handover. The day shift says two actuators in Zone 3 threw a position-error alarm once and then cleared on their own. You draw a circle in the shift log.",
+  "Per the observing schedule, the telescope moves to a pulsar. You watch the feed cabin glide into place, drawn by its six cables, while a patch of reflector panels shifts beneath it.",
+  "A radio-frequency interference alarm pops up on the monitor, in a very narrow band. You study the spectrum for a long time and note: possible device nearby, day shift to investigate tomorrow.",
+  "The midnight snack is a bowl of sour-soup rice noodles the canteen left for you. You stand at the window with it. Outside there isn't a single light, only the outline of the hills.",
+  "An astronomer far away in Beijing messages to ask about data quality tonight. You grab a screenshot of the live spectrum and reply on the internal network: clean.",
+  "Fog rises at the edge of the sky and the humidity climbs. You take a flashlight down under the reflector for a round, listening to the actuators hum one after another.",
+  "Handover. You walk the next shift through the night's switches, alarms and fixes one by one, board the shuttle, and fall asleep on the switchback road."
+ ],
+ "ladder": [
+  { "title": "Assistant Engineer (Observing Duty Officer)", "stage": "On shift", "focus": "Work rotating shifts on the telescope, watch every system, inspect the reflector, actuators and feed cabin, fill in the shift log, handle routine faults." },
+  { "title": "Engineer (Observing Assistant)", "stage": "Observing support", "focus": "Take charge of a subsystem or an observing mode, help astronomers schedule observations and check data, write technical reports, go for mid-level rank." },
+  { "title": "Senior Engineer (Operations Team Leader)", "stage": "Team leader", "focus": "Lead an operations team, set the annual maintenance plan, review the technical feasibility of observing proposals, deal with users at home and abroad." },
+  { "title": "Professor-level Senior Engineer (Head of Operations)", "stage": "Operations", "focus": "Run operations and observing efficiency for the whole site, lead system upgrade projects, answer for the telescope's annual performance targets." },
+  { "title": "Chief Engineer of the Site", "stage": "Chief", "focus": "Every technical decision on the telescope ends with your signature: upgrades, major maintenance, protecting the radio environment. You represent the site to the outside world." }
+ ],
+ "ai_tasks": [
+  { "name": "On-site repairs to the reflector, actuators and feed cabin", "how": "Climbing onto the reflector to swap a panel, crawling into the feed cabin to check a receiver, inspecting the cable net after rain: someone has to go out with tools and decide whether it can be fixed and whether observing has to stop." },
+  { "name": "Scheduling observations", "how": "AI can slot hundreds of observing proposals into the calendar by sky region, duration and priority and work out the fastest switching order. When an urgent target is squeezed in, or the weather or equipment changes, the duty officer and team leader decide how to adjust." },
+  { "name": "Identifying radio interference and checking data quality", "how": "Models can spot interference from phones, radar and satellites in the data and flag bad stretches far faster than the human eye. People mostly look at the cases it isn't sure about." },
+  { "name": "Sifting huge data volumes for pulsar candidates and the like", "how": "Machine learning can sift millions of candidate signals a day and pick out the few dozen most promising. People confirm them and schedule follow-up observations." },
+  { "name": "Monitoring telescope operations and diagnosing faults", "how": "Monitoring systems and AI can watch thousands of sensors and warn early about anomalies in actuators, cables and temperature. Whether an alarm is a real fault or a broken sensor takes someone going to check." },
+  { "name": "Managing the radio quiet zone and dealing with neighbors", "how": "Radio use around the site is restricted. Tracking down a source of interference means driving door to door with equipment running, and working things out with townships, villagers and construction crews, in person." }
+ ],
+ "events": {
+  "e_first_night": "For the first time you handle a night-time fault on your own: a subsystem freezes, and you restart and recalibrate it by the book. Twenty minutes later observing resumes. The next day the team leader reads the log and says only: every step was right.",
+  "e_pulsar": "In the data from one of your shifts, a new pulsar is later confirmed. The author list on the paper is long and your name is near the end, but you still send a screenshot home.",
+  "e_rfi_hunt": "The narrow-band interference takes three days to track down. You drive through the surrounding villages with an antenna, door to door, and in the end it's the charger for a family's new e-bike. You replace it for them, and they pour you each a bowl of rice wine.",
+  "e_thunder": "A summer thunderstorm crashes over the valley all night, and the telescope parks itself in its safe position per protocol. You watch the monitors without sleeping, and at dawn on your inspection round you find a reflector panel dented by hail.",
+  "e_overhaul": "The annual overhaul: a month walking the reflector on safety lines, checking panels one by one and replacing actuators, until the only pale skin left on your face is the ring around your glasses.",
+  "e_fault": "A cable-net fault shuts the telescope down for five days, and dozens of observations queued behind it all need rescheduling. At the meeting you listen to astronomer after astronomer explain why their target can't wait.",
+  "e_ai_rfi": "The site installs an AI interference-recognition system and night alarms drop by half. Once it deletes a strange, never-before-seen signal as interference, and it's you who finds it again in the raw data.",
+  "e_ai_ops": "The smart maintenance system starts predicting a day ahead which actuator is going to fail, and you replace it during the day. Night shifts go quiet, and you have time to write the shift log in more detail.",
+  "e_isolated": "Days in the hills are long, and the town has only one street. One weekend you take a three-hour bus to Guiyang and wander a mall all afternoon. You buy nothing. You just wanted to hear voices.",
+  "e_love": "At the science museum in town you meet one of the guides. They spend every day explaining the giant dish to tourists, and when you say you go inside it every day, their eyes light up.",
+  "e_marry": "You get married, the banquet at a restaurant in town, eight tables of sour-soup fish. Your colleagues come straight from their shifts, and two of them haven't had time to change out of their work clothes.",
+  "e_house": "You take out a mortgage on an apartment in Guiyang, thinking of your future child's schooling. You do the math: you won't sleep there more than a few nights a month.",
+  "e_child": "The baby is born. You happen to be on night shift, and after handover you take the first bus to the hospital, retrieving your phone from the locker on the way. The screen is full of missed calls.",
+  "e_visitor": "A foreign radio astronomy delegation visits the site, and you explain the feed cabin to them in English. Afterwards an elderly professor writes an equation in your notebook and says: go back and try this.",
+  "e_paper": "You write up your interference-hunting method as a technical paper and publish it in an instrumentation journal. Later someone at another observatory emails to ask for details.",
+  "e_sleep": "Ten years of night shifts, and your sleep and your stomach are both bad. Your checkup results are covered in arrows. The doctor asks if you stay up late a lot. You say you watch the sky.",
+  "e_students": "In summer a science camp of middle schoolers arrives. A child asks: can you hear aliens here? You say: we're listening. We haven't heard any yet.",
+  "e_young": "A new duty officer joins the team, panics at an alarm on his first night shift and phones you. You don't go in. You talk him through it step by step on the phone, and the next day you buy him a bowl of noodles.",
+  "e_parent": "Your parents fall ill back home and you take leave to go. In the ward you show them photos of the giant dish on your phone. They ask: so you look at this every day?",
+  "e_frb": "A fast radio burst repeats dozens of times in observations you support. On the collaboration's video call someone says this dataset will be cited for years, and you think of the shift logs from those nights."
+ },
+ "choices": {
+  "c_phd": {
+   "title": "A part-time PhD",
+   "situation": "The site and the institute have part-time PhD places, researching pulsar searches. With the degree, going for Senior Engineer and applying for grants gets easier, and you could move from operations into research. But night shifts carry on as before, and the thesis would have to be written after you wake up in the daytime.",
+   "options": [
+    { "label": "Do it", "result": "Sleep by day, code in the afternoon, shifts at night, and you defend in your fifth year. In the acknowledgments you thank the shuttle bus on the switchback road." },
+    { "label": "Don't", "result": "You keep your days for sleep and family. Looking after the telescope well, you think, is a discipline in itself." }
+   ]
+  },
+  "c_track": {
+   "title": "Systems or observing",
+   "situation": "The team is dividing up work. One path is to own a single subsystem, the feed cabin or the receivers, and become the person who knows it best. The other is to be an observing assistant, helping astronomers schedule and check their data, closer to the science.",
+   "options": [
+    { "label": "Systems", "result": "You become half-owner of the feed cabin. You know where every wire inside it runs, and when it raises an alarm, yours is the first number everyone calls." },
+    { "label": "Observing assistant", "result": "You deal with astronomers every day, pick up their jargon, and learn how to tell each one: your observation will have to move back." }
+   ]
+  },
+  "c_engineer": {
+   "title": "Going for Engineer",
+   "situation": "Mid-level ranks are being reviewed this year. You need a technical report, ideally a paper too. You have the material from that interference hunt, but it isn't written up yet, and you'd have to do it in the gaps on night shift.",
+   "options": [
+    { "label": "Write it up and apply", "result": "A month of writing in the duty room. At the review someone asks the frequency of that charger, and you rattle it off." },
+    { "label": "Apply next year", "result": "You keep your night-shift gaps for reading and daydreaming. The next year your file is stronger and the review goes smoothly." }
+   ]
+  },
+  "c_ai": {
+   "title": "Leading the smart maintenance project",
+   "situation": "The site wants a smart maintenance system, feeding the history from thousands of sensors and years of shift logs into a model so it can predict faults ahead of time. It needs someone who knows the site to lead the data labeling and set the alarm rules. It won't count as research output, and it'll eat your days off.",
+   "options": [
+    { "label": "Take it on", "result": "You and two programmers spend a year labeling alarm records. The next year, sudden shutdowns in the night are down by more than half." },
+    { "label": "Pass", "result": "You hand it to the IT group. You use the system once it's live, and now and then you note in the shift log: it got it wrong again tonight." }
+   ]
+  },
+  "c_abroad": {
+   "title": "A year at a radio observatory abroad",
+   "situation": "An international collaboration wants to send someone to a radio telescope in the Southern Hemisphere for a year, to learn how they run operations and process data. You'd come back with a lot of new skills, but for that year your partner would have to hold up the home front alone.",
+   "options": [
+    { "label": "Go", "result": "You work shifts through a Southern Hemisphere winter, learn a whole other set of operating rules, and learn to tell bedtime stories over video." },
+    { "label": "Stay", "result": "You recommend someone else on the team and stay at the site. That year your child learns to walk, and you see it." }
+   ]
+  },
+  "c_lead": {
+   "title": "Going for Senior Engineer and operations team leader",
+   "situation": "The operations team leader is stepping back, and the site nominates you for Senior Engineer and the team-leader post: rotas for a dozen-odd people, the maintenance plan, reviewing observing proposals. Take it, and you're not just watching one screen anymore. You answer for every night the whole team works.",
+   "options": [
+    { "label": "Take it", "result": "You bind your years of shift logs and technical reports into a file for the review. From then on, your phone is never on silent at night." },
+    { "label": "A few more years on shift", "result": "You recommend your longtime partner on the team and keep working shifts. When there's a fault nobody's sure about, they still call you first." }
+   ]
+  },
+  "c_planetarium": {
+   "title": "Moving to the planetarium in town",
+   "situation": "The new planetarium in the provincial capital is hiring a technical manager who knows astronomy, to run the dome, the star projector and public stargazing. Nine to five, living in the city, easy for your child's schooling. But you'd never touch a real telescope again.",
+   "options": [
+    { "label": "Go to the planetarium", "result": "You put in your transfer request and enter the core zone one last time, standing by the edge of the reflector for a while.", "end": "You became technical manager at the planetarium, putting the night sky up on the dome for children every day. When someone asked about the giant dish, you told them about its nights, and about the people working shifts down in that valley." },
+    { "label": "Stay at the site", "result": "You recommend a colleague who wants to move back to the city, and the next day you take the shuttle into the hills as usual." }
+   ]
+  },
+  "c_space": {
+   "title": "Joining a satellite ground-station company",
+   "situation": "A commercial space company that builds satellite tracking and ground stations wants to hire you, for your knack with big antennas and hunting interference. One and a half times your pay, working in the city, no more trips into the hills.",
+   "options": [
+    { "label": "Join the company", "result": "You hand in your resignation and pass your shift log to whoever takes over.", "end": "You went to the satellite ground-station company and led teams building ground stations all over the country. Every time an antenna swung up toward the sky, you thought of the giant dish in the valley turning toward a pulsar." },
+    { "label": "Stay at the site", "result": "You turn it down. That pulsar found on your shift, you want to keep listening to it a few more years." }
+   ]
+  },
+  "c_director": {
+   "title": "Applying for Head of Operations, going for full professor rank",
+   "situation": "The site is choosing a new Head of Operations: running the whole site, its observing efficiency and its upgrade projects, and reporting performance targets upward every year. Take it, and your year is meetings, reports and project work. You won't be on the night rota anymore.",
+   "options": [
+    { "label": "Apply", "result": "In your application talk you describe the five-day shutdown: how you fixed it, how you rescheduled, and how you made sure it never happened again." },
+    { "label": "Keep leading the team", "result": "You recommend a younger senior engineer and stay with your operations team. In those years the team never has a single major accident." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "Your last night shift is quiet. The telescope is pointed at an old pulsar, and there isn't a single alarm all night. At handover you finish the shift log, sign the last line, and board the shuttle. Before it rounds the bend, you look back once at the giant dish in its valley.",
+  "burnout": "After that year's checkup, the doctor says no more night shifts. The site moves you to the operations archive, where you spend your days in an office indexing old shift logs. When you leave work it's still light, and sometimes you stand at the door for a while looking at the sky over the valley."
+ },
+ "stages": [
+  "You work rotating shifts on the telescope: switching targets to schedule, watching thousands of numbers for the reflector, actuators, cable net and receivers on the monitors, handling routine alarms, and logging every action. On day shift you follow the team leader on reflector inspections and crawl into the feed cabin to check cabling. When an astronomer messages at night, the first thing you tell them is whether the data is good.",
+  "You take charge of a subsystem or an observing mode, and start working as an observing assistant: slotting astronomers' proposals into the schedule, checking their data for problems, writing technical reports. You pick interference out of spectra and drive the neighborhood with an antenna looking for its source. When a new duty officer calls in the night, it's you they ask for.",
+  "You lead an operations team of a dozen-odd people on rotating shifts. You draw up the rota and the annual maintenance plan, review whether observing proposals are technically doable, and hold video meetings with users at home and abroad. When something big breaks, you direct the repair on site and decide when observing resumes. When your team's shift logs reach you, you read the alarm column first.",
+  "You're Head of Operations, responsible for running the whole site and its observing efficiency. You lead system upgrade projects, report annual performance figures upward, and manage the radio quiet zone with the townships. Meetings follow meetings and you rarely work nights now, but at every overhaul you still walk a round on the reflector.",
+  "You're Chief Engineer of the site, and every technical matter on the telescope ends with your signature: upgrade directions, major maintenance, whether new equipment goes in. You negotiate with partners at home and abroad, review upgrade plans and set the course for young engineers. Every year you still pick one night shift and sit back down in the duty room to watch the screens all night."
+ ],
+ "work": [
+  "The team leader takes you into the feed cabin for the first time. It's cramped and stuffy. He points at a row of receivers: learn the cabling first, all of it, before you touch anything.",
+  "Before dawn two actuators alarm at once. You study the position curves for ten minutes, decide it's the sensors, and log the numbers for the day shift to replace.",
+  "At handover you forgot to log the time of one observation switch. The team leader has you check the whole night's log again, and from then on you read everything back once after you write it.",
+  "An astronomer's data is full of stripes. After a day of digging you find a satellite passed over during that slot, and you help him make up the observation in the time remaining.",
+  "You spend an afternoon driving around town with a test antenna, and stop outside a newly opened internet cafe. The line on the spectrum analyzer shoots up.",
+  "Teaching Luo, the new duty officer, the alarm procedures, you don't make him memorize them. You have him handle every type of fault himself on the simulator.",
+  "On the fifth draft of the annual maintenance plan, you split the reflector into twelve zones, so that on every maintenance day half of it can still observe.",
+  "An observing mode a foreign team has proposed is technically impossible. You write a two-page reply explaining why, and offer an alternative that can be done.",
+  "During a cable-net fault you direct the repair on site for two days and two nights, and finally decide to bring back half the reflector first so the most urgent observations can go ahead.",
+  "In the annual operations report, observing efficiency is two points below last year. You don't touch the number. You write out which faults caused it, and what's being changed.",
+  "The township is building a road outside the site. You take a spectrum analyzer and the contractor out on location and go section by section over where cell towers can and can't go.",
+  "At the review of the receiver upgrade, you ask one question: during the three months of the upgrade, what happens to the observations already scheduled? The plan gets a month of rework.",
+  "At an international collaboration meeting, the partners want to install a new receiver in the feed cabin. You study the drawings and say yes, but it needs a full year of testing on the ground first.",
+  "Before signing off on a major maintenance plan, you have every record of similar faults from the past ten years brought to you, and read them all before you sign.",
+  "You give the first lecture to newly hired engineers. You don't talk about how big the telescope is. You talk about how to write a page of shift log the next shift can actually understand."
+ ],
+ "past": [
+  "You're in ninth grade in a county town in Anshun. On summer nights when the power goes out you lie on the roof counting stars. It's the first time you recognize the Milky Way.",
+  "For the gaokao (college entrance exam) you put physics on your application. Your mother asks what you'll do with it. You say you want to study things in the sky. She asks if that will put food on the table.",
+  "The summer after third year, you go to an observatory's summer school and see Saturn's rings through a telescope for the first time. Back in the dorm you write three pages in your diary.",
+  "You get into a master's program in astrophysics. Your advisor's first assignment is processing a batch of radio data, and it takes you six months just to learn to recognize interference.",
+  "After your master's defense you apply to the giant dish's operations center. The interviewer asks if you can handle long-term night shifts in the hills. You say yes, though you aren't sure.",
+  "Your first year you learn from an old duty officer. The first thing he teaches you: before you go through that door, switch off your phone."
+ ],
+ "late": {
+  "pension_note": "Estimate: national research institutions pay pensions under the civil service and public institution scheme plus an occupational annuity, roughly 65 percent of final monthly pay. The site allowance isn't counted.",
+  "scenes": [
+   "On the day you retire, you hand your stack of shift logs to the archive. The archivist asks if you want to keep one. You choose the first.",
+   "The site invites you back to give a talk to new duty officers. You tell them about the narrow-band interference, and the family who poured you rice wine.",
+   "You volunteer as a guide at the science museum in town, twice a week, standing before the model of the dish and telling visitors what it listens to at night.",
+   "You take your grandchildren to the viewing platform above the site and point at the dish in the valley: I worked thousands of night shifts down there. The child asks: what did it hear?",
+   "Off night shifts, you index old shift logs in the archive. You turn to a page in your own handwriting from the night you handled your first fault alone.",
+   "At last you can sleep at night. One morning you wake at two and reach out to glance at the monitors, out of habit, before remembering you're at home.",
+   "Walking in a park in Guiyang at night, you look up. The city lights are too bright, and only a few stars show. You call each of them by name.",
+   "Your first month away from the site, you wake at two every morning. It slowly gets better. Your body, you say, finally knows there's no shift.",
+   "Your new colleagues know you worked at the giant dish and keep asking if you ever heard aliens. You say you heard a great many pulsars, and every one of them was right on time.",
+   "On the news you see the site has found another batch of new pulsars. In the footage, the person at the duty-room screens is a young officer you trained.",
+   "Later scheduling, interference recognition and candidate sifting all went to the models. But every night someone still has to sit in the duty room down in the valley, watching those thousands of numbers, and stand up when an alarm sounds.",
+   "One moonless night, in a courtyard in the countryside, you see the Milky Way, just as you saw it from that rooftop when you were fifteen."
+  ],
+  "closing": {
+   "retire": "Years later, a grandchild asks which of all the stars in the sky is the one you listened to. You think, then point at an empty patch of sky: there. It's too far for your eyes to see, but it's always pulsing.",
+   "burnout": "One night years later, you sit on the balcony. The city sky shows only a few stars. You close your eyes and remember the dish turning in the valley, the actuators humming one after another.",
+   "end": "Years later, in a drawer, you find your old pass for the core zone. The face in the photo is very young. You look at it for a long time, then put it back."
+  }
+ }
+}

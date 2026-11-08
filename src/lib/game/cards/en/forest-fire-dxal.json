@@ -1,0 +1,199 @@
+{
+ "id": "forest-fire-dxal",
+ "occupation": "Forest Firefighter and Fire Prevention Officer",
+ "role": "Forest Fire Prevention Officer with a Professional Wildland Fire Crew",
+ "headline": "A forest fire prevention officer with a vocational college diploma in forestry, in your second year with a forestry bureau's professional fire crew in the Greater Khingan Mountains of Inner Mongolia, living at a ranger station through the spring and autumn fire seasons, and heading up to the fire line with a leaf-blower extinguisher on your back whenever dry thunderstorms roll in over summer",
+ "unit": "A forestry bureau's professional wildland fire crew in the Greater Khingan Mountains, Inner Mongolia",
+ "unit_type": "Professional forest firefighting crew",
+ "city": "Genhe, Hulunbuir",
+ "city_tier": "County",
+ "education": "Vocational college diploma in Forestry Technology",
+ "level": "You've been on two fires. You can work a forest-fire blower, the No. 2 tool (a beater for flanking fire) and a portable pump, and you've done mop-up and fire-watch. Judging the fire's behavior and which side to attack from is still the squad leader's call.",
+ "intro": "In your locker: an orange flame-resistant suit, a helmet, a pair of high-top fire boots, fire gloves, and a pack holding compressed biscuits and water. Leaning in the corner is a forest-fire blower. Crew headquarters is a row of single-story buildings on the edge of Genhe, and behind it the larch forest of the Greater Khingan runs on past the horizon. From today you guard this forest with the fire squad: in spring and autumn you keep it from catching, and when it does catch, you go and put it out.",
+ "salary_note": "Estimate: pay with a forestry bureau's professional fire crew in the forest region, plus fire-season and fire-line allowances. Local wages aren't high, so taken at 85 percent of the national figure. Income only rises noticeably once you make squad leader or crew captain and earn professional rank.",
+ "facts": [
+  { "label": "Forest Fire Prevention Officer (Crew Member) (current level)", "value": "0–3 years, ¥4,000–5,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Fire Squad Leader (3–7 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Fighting fires and mopping up", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Fire danger warnings and lookout monitoring", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "At the ranger station in fire season, the alarm wakes you. Minus ten outside. The first thing you check on your phone is the fire danger rating: Level 4, high danger.",
+  "Breakfast is steamed buns, rice porridge and salted duck eggs. The squad leader says it's windy today, so check harder at the checkpoint. You give the blower a test pull, and the engine catches smoothly.",
+  "The checkpoint into the mountains. You stop a three-wheeler hauling mushroom-growing logs, check it for anything that could start a fire, and write the plate and the number of passengers in the log.",
+  "You and a crewmate patrol the firebreak road on motorbikes. The dead grass by the road is waist-high and dry enough to go up at a spark. You stamp out a spot where someone has burned paper offerings.",
+  "News over the radio: a lookout-tower camera has flagged smoke. You race over, and it's a family burning leaves in their yard. You help put it out and talk with them for twenty minutes.",
+  "Back at the station, the squad leader runs an afternoon of portable-pump drills, laying hose from the river: a hundred meters, five runs.",
+  "After dinner you stand at the station door looking at the western sky, the clouds hanging low. The squad leader says if dry thunderstorms come this summer, there'll be big work.",
+  "You enter today's checkpoint log and patrol track into the system, check your pack once more, set it by the bed, and put your boots where your hands will find them fastest."
+ ],
+ "ladder": [
+  { "title": "Forest Fire Prevention Officer (Crew Member)", "stage": "Crew", "focus": "Man checkpoints and patrol in fire season; on the fire line, knock down open flame, mop up and stand fire-watch; in winter, fitness and skills training." },
+  { "title": "Fire Squad Leader", "stage": "Squad leader", "focus": "Lead a squad of eight or nine. On the fire line you decide where to attack and when to pull out; you manage the squad's equipment and training." },
+  { "title": "Deputy Crew Captain (Assistant Engineer)", "stage": "Deputy captain", "focus": "Help the captain command on the fire line, manage equipment, training and fire-season rotas for the whole crew, sit for a fire-prevention technical rank." },
+  { "title": "Crew Captain (Engineer)", "stage": "Captain", "focus": "Lead a professional crew of several dozen, answer for the attack on one sector of a fire, liaise with the command post, weather service and aerial firefighting." },
+  { "title": "Director of the Forestry Bureau's Fire Prevention Office (Senior Engineer)", "stage": "Fire office", "focus": "Run forest fire prevention for the whole bureau: fire planning, warning and monitoring, building up the crews, and making the call at the command post during major fires." }
+ ],
+ "ai_tasks": [
+  { "name": "Fighting fires and mopping up", "how": "Carrying a blower and a pump into the fire, reading the wind, the terrain and where the head of the fire is heading, deciding when to attack and when to pull out: someone on the fire line has to judge that on the spot, and carry the responsibility for safety." },
+  { "name": "Fire danger warnings and lookout monitoring", "how": "Satellite hot spots, AI smoke detection on lookout towers and fire danger models can raise alarms and pinpoint locations automatically. Whether it's real fire or sun glinting off a tin roof, whether to turn out and which crew to send, the officer decides after checking." },
+  { "name": "Checkpoint inspections and fire-safety outreach", "how": "Stopping vehicles at the checkpoint to search for ignition sources, turning back people without a forest-entry permit, talking fire safety with forest residents, foragers and herders: someone has to say it face to face." },
+  { "name": "Patrols and controlling ignition sources", "how": "Drones can fly preset routes over the mountains and automatically spot unusual smoke and people. Going in to check and dealing with illegal fires still takes a person." },
+  { "name": "Compiling patrol records and fire reports", "how": "Patrol tracks, checkpoint logs, burned area and burn maps can already be generated automatically by the system and AI. People only check the key numbers and times." }
+ ],
+ "events": {
+  "e_first_fire": "For the first time you hold a stretch of fire line on your own: four hours on the blower, and the fire never crosses the gully you were guarding. The squad leader claps your ash-covered shoulder.",
+  "e_lightning": "One summer night of dry thunderstorms sets seven lightning fires. Your crew is lifted by helicopter to the farthest one, and you fight it in the mountains for five days. When the biscuits in your pack run out, you keep going on airdrops.",
+  "e_rekindle": "The open flame on a fire is out, but the humus layer underground is still smoldering, and three days later it flares up again. You go back and mop up again, feeling the ground for heat inch by inch with your bare hands.",
+  "e_guard": "After the fire's out you stay on fire-watch for two weeks. By day the blackflies bite your face into lumps; at night you sleep in a tent and get up every two hours to patrol.",
+  "e_close_call": "On one fire the wind suddenly shifts and the head of the fire comes at you. The squad leader shouts pull back, and you retreat as planned to a safety zone you'd picked in advance, ground that had already burned. Everyone is safe. Nobody talks that night.",
+  "e_ai_hotspot": "The bureau connects satellite hot spots and AI smoke detection, and one spring brings dozens of alarms. You go out to check each time. Most are sun glinting off tin roofs and smoke from burning straw. One is real, and when you get there the fire covers only a few dozen square meters.",
+  "e_ai_drone": "The crew gets drones with infrared cameras. After a fire you fly one over, and the underground smoldering spots light up one by one on the screen. Mop-up shrinks from a week to three days.",
+  "e_reindeer": "On patrol you pass an Evenki family who herd reindeer. The old man pours you a bowl of hot tea and talks about what the forest was like when he was young. As you leave, he says: the fires, take good care.",
+  "e_winter_train": "Winter fitness training at minus forty: a five-kilometer run through snow with twenty kilos on your back, and at the finish your eyebrows and eyelashes are white with frost.",
+  "e_contest": "You represent your crew at the region-wide fire crew skills competition and take first in portable-pump deployment. The day you get back, the captain has the canteen add a plate of hand-held mutton for your squad.",
+  "e_love": "At a barbecue place in Genhe you meet a nurse from the forestry bureau hospital. Hearing you're on the fire crew, the first thing they say is: then be careful when you're fighting fires.",
+  "e_away": "Spring fire season, autumn fire season, and lightning fires in between: you live at the ranger station more than half the year. Family matters and plans with friends, you turn them down one by one, saying on the phone: after fire season.",
+  "e_marry": "You get married, the date set for December, long after fire season. Your crewmates show up as groomsmen in their flame-resistant suits, and the bride's relatives laugh about it for ages.",
+  "e_house": "You buy an apartment in Hailar, thinking of your future child's schooling. From Genhe it's a four-hour drive.",
+  "e_child": "When the baby is born, you're on a lightning fire. Coming out of the mountains after it's out, you find a photo on your phone: a very small child, fists clenched.",
+  "e_young_leave": "Of the people who joined the crew with you, two go south and one goes back to his hometown. The day you see them off, you stand on the station platform for a long time.",
+  "e_knees": "A dozen years of running the mountains with gear on your back, and your knees and lower back are going. At your checkup the doctor says your spine looks like a fifty-year-old's and tells you to carry less.",
+  "e_rookie": "A new crew member joins your squad and on his first fire his hands shake so badly he can't get the blower started. You crouch, start it for him, and tell him to stay right behind you and not leave your side for a single step.",
+  "e_parent": "The news that your mother is in hospital comes while you're on fire-watch. By the time you get out and reach the hospital she's been discharged and gone home. On the phone she says: do your work, don't worry about me.",
+  "e_no_fire_year": "One spring brings so much rain that the whole fire season passes without a single fire. At the year-end review the captain says this year's greatest achievement is that there's nothing to review."
+ },
+ "choices": {
+  "c_train": {
+   "title": "Rappel training with aerial firefighting",
+   "situation": "The aerial firefighting station is picking people for rappel training. Once trained, you can drop by rope from a helicopter onto remote fires and be first on scene. The training is hard and the risks are high, and whoever's chosen will be first to the most distant fires from then on.",
+   "options": [
+    { "label": "Sign up", "result": "You rappel hundreds of times from a tower a dozen meters high, wear through three pairs of gloves, and earn your rappel certificate." },
+    { "label": "Don't", "result": "You give the place to a crewmate who wants it more, and stay on the ground getting even better on the portable pump." }
+   ]
+  },
+  "c_monitor": {
+   "title": "A fire season on the lookout tower",
+   "situation": "The northernmost lookout tower in the forest region needs someone. In fire season a person lives up there for three months, watching dozens of kilometers of forest every day and reporting smoke. Alone, supplies once a week, good allowances, but no more fire line.",
+   "options": [
+    { "label": "Go up the tower", "result": "Three months watching the forest from the tower, and you know every ridge and every burned patch. One day you report a smoke, and when the crew gets there the fire is no bigger than a table." },
+    { "label": "Stay with the crew", "result": "You say you'd rather be on the fire line and let an old crew member close to retirement take the tower." }
+   ]
+  },
+  "c_squad": {
+   "title": "Becoming squad leader",
+   "situation": "The squad leader is moving up to deputy captain, and the crew wants you to take over: eight or nine lives, and on the fire line you say where to attack and when to pull out. You're still young, and some of the squad have been on the crew longer than you.",
+   "options": [
+    { "label": "Take it", "result": "You make squad leader, and on your first fire leading the squad you call the retreat earlier than anyone. Afterwards one of the old hands says: calling it like that is right." },
+    { "label": "Follow one more year", "result": "You recommend the squad's longest-serving member and fight fire behind him for another year, learning to read a fire's size from the color of its smoke." }
+   ]
+  },
+  "c_ai": {
+   "title": "Learning drones and the fire situation system",
+   "situation": "The forestry bureau is building smart fire prevention: drone patrols, satellite hot spots and live fire maps all in one command system. They need a young person who knows fire to learn to fly drones and send footage from the fire line back to command, with two months of training in Hohhot.",
+   "options": [
+    { "label": "Go and learn", "result": "You get your drone pilot license. On later fires you fly and call out the fire head's position over the radio at the same time, and command says your reports beat the satellite." },
+    { "label": "Pass, keep fighting fire", "result": "You let a new graduate take it and keep carrying the blower to the fire line. Whatever the drone reports about the fire head, you take one more look once you're on scene." }
+   ]
+  },
+  "c_deputy": {
+   "title": "Applying for deputy crew captain, sitting for Assistant Engineer",
+   "situation": "The crew's deputy captain is retiring, and the bureau wants you to apply: running equipment, training and rotas for the whole crew, helping the captain command on the fire line, sitting for a fire-prevention technical rank, and learning to write plans and reports.",
+   "options": [
+    { "label": "Apply", "result": "In your application you talk about the time the wind shifted: how you'd picked the safety zone in advance, and how you got everyone out, nobody missing." },
+    { "label": "Stay squad leader", "result": "You recommend another squad leader and keep leading your squad. In those years, not one person in your squad is hurt on the fire line." }
+   ]
+  },
+  "c_company": {
+   "title": "Joining a firefighting equipment company",
+   "situation": "A company making forest firefighting gear wants to hire someone who's been on the fire line, to test products and train crews, traveling to forest regions to teach people to use blowers and pumps. One and a half times your pay, no more fire line.",
+   "options": [
+    { "label": "Join the company", "result": "You hand in your resignation, fold your flame-resistant suit back into the locker, and leave your helmet to the newest member of your squad.", "end": "You went to the equipment company and traveled to forest regions north and south, teaching people to use the machine you'd carried for a dozen years. After every demonstration you added: watch the wind, watch the terrain, find your way out first." },
+    { "label": "Stay with the crew", "result": "You turn it down. That machine, you say, you want to carry on the fire line a few more years." }
+   ]
+  },
+  "c_ranger": {
+   "title": "Transferring to a forest farm as a ranger",
+   "situation": "Your family has always worried about you. A forest farm has an opening for a ranger station chief, looking after a stretch of forest day to day and doing fire-safety outreach, no more fire line. A bit less pay, but you'd be home every night.",
+   "options": [
+    { "label": "Transfer", "result": "You do the transfer paperwork, run the morning drill with the crew one last time, finish the five kilometers, and wave goodbye to everyone.", "end": "You became chief of a ranger station at the forest farm, riding your motorbike around your own stretch of forest every day. Every fire season, when the fire crew's trucks drove past your station, you stood at the door and watched them go." },
+    { "label": "Stay with the crew", "result": "You tell your family a few more years. That summer the dry thunderstorms come, and you spend another two weeks in the mountains." }
+   ]
+  },
+  "c_captain": {
+   "title": "Becoming crew captain, going for Fire Prevention Engineer",
+   "situation": "The old captain is moving to the fire prevention office, and the bureau wants you to take over: several dozen people, the attack on one sector your responsibility, liaising with the command post, the weather service and aerial firefighting. Take it, and you're the last one on the fire line to call the retreat.",
+   "options": [
+    { "label": "Take it", "result": "You make captain. On every fire, you look at the escape routes first, then at the fire head." },
+    { "label": "Stay deputy captain", "result": "You recommend someone transferred from another crew as captain and keep running equipment and training. Whenever he's unsure on the fire line, he asks you first." }
+   ]
+  },
+  "c_office": {
+   "title": "Moving to the bureau's fire prevention office, going for Senior Engineer",
+   "situation": "The bureau wants you as director of the fire prevention office: fire planning, warning and monitoring, and the crews for the whole bureau, with the final call at the command post in major fires. Take it, and you're off the fire line for good, sitting in front of the big screen at command, deciding which crew goes where.",
+   "options": [
+    { "label": "Go", "result": "You move into an office at the bureau. Whenever a fire comes in, the first thing you ask is: has every crew reported its escape route?" },
+    { "label": "Stay with the crew", "result": "You say you can't leave the fire line and recommend a younger captain. Every year before fire season, he comes to see you, and the two of you go over the map all night." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "Your last fire season is calm, just two small fires. On the last day of the autumn season you wash and fold your flame-resistant suit, wipe down the blower, and hand it to the youngest member of the squad. Walking out of headquarters, you look back once at the forest behind it. The snow has already come.",
+  "burnout": "After a big fire that summer, your back can't carry the gear anymore, and the doctor says no more fire line. The crew moves you to the equipment store, checking blowers, pumps and flame-resistant suits every day. When fire season comes, you test every machine before putting it in a young crew member's hands."
+ },
+ "stages": [
+  "You guard this forest with the fire squad: in fire season stopping vehicles at the checkpoint to search for ignition sources, patrolling the firebreak roads by motorbike, going to check whenever a lookout tower reports smoke. On a fire you carry the blower to knock down open flame, beat the edges with the No. 2 tool, help with mop-up, and stay on fire-watch once it's out. In winter you train in the snow, fitness and pump drills, and when the squad leader says \"one more run,\" you run one more.",
+  "You're a fire squad leader with eight or nine people. On the fire line you read the wind and terrain and decide where to attack, where to cut a firebreak and when to pull out, and the escape route has to be settled before you go in. Day to day you look after the squad's gear and training, check every blower, and teach new members the rules of the fire line. The captain's orders come to you first.",
+  "You're deputy captain, running equipment, training and fire-season rotas for the whole crew, and on the fire line you help the captain command, often holding one sector with half the crew. You write attack plans and fire reports, sit for a fire-prevention technical rank, and work out helicopter bucket drops and rappel insertions with the aerial firefighting station. When a new squad leader hits a fire he isn't sure of, he radios you first.",
+  "You're crew captain, with several dozen people. When a fire comes, you set the plan at the forward command post with the weather service, aerial firefighting and the other crews, answer for the attack on one sector, and you're the last one to call the retreat. The rest of the year you plan training, manage people and budget, and go to meetings at the bureau. On every fire, you walk the fire line yourself.",
+  "You're director of the forestry bureau's fire prevention office, responsible for forest fire prevention across the whole bureau: fire planning, where checkpoints and lookout towers go, satellite and AI warning, building up several crews. In a major fire you sit before the big screen at command and decide which crew goes where. The rest of the time you meet with the weather service, police and townships, and set the rules for the young captains."
+ ],
+ "work": [
+  "The squad leader has you work the fire edge with the No. 2 tool, and you beat it down hard, stroke after stroke. He says: don't beat it, sweep it. Sweep the fire back toward the side that's already burned.",
+  "At the checkpoint a woman going to pick blueberries has no forest-entry permit and insists on going in. You don't just turn her away. You call the forest farm to get her a permit, and have her leave her lighter at the checkpoint.",
+  "During mop-up you press your hand to a patch of ground that looks cold. It's warm. You dig it open with a shovel, and underneath it's still smoking.",
+  "Before going into a fire, you walk the escape route with your squad and tie strips of red cloth to the trees at two forks.",
+  "New crew member Zheng's blower keeps cutting out. You take it apart and find the air filter clogged, and teach him to clean it after every fire.",
+  "A fire head is burning down from a ridge. You don't let your squad meet it head-on. You take them around to the flank and push it back section by section from the tail.",
+  "You redo the fire-season rota five times, making sure every ranger station has an old hand who's been on a big fire paired with a young one who hasn't.",
+  "The aerial firefighting station comes to work out bucket-dip points. You take them to see three rivers, and settle on the one closest to the high-risk zone, with the deepest water.",
+  "Writing up a fire, you include the time your own call came too late, and when you hand it to the captain you say: don't cut that part.",
+  "At the forward command post, someone wants your crew to push uphill through the night. You look at the wind forecast and say the wind will turn after dawn: wait two hours, then go.",
+  "To the crew's annual training plan you add one item: every member strips down a blower and reassembles it with their eyes closed.",
+  "A fire runs three days. You rotate the squads down to rest and stay on the fire line yourself, and only sit down on the fourth morning when it's out.",
+  "At the bureau's fire planning meeting someone wants two more lookout towers. You say fine, but every tower has to be able to see where two others are.",
+  "In a major fire you watch the fire line and every crew's position on the big screen at command, and pull back first the crew closest to the fire head.",
+  "You give the newly appointed captains their first lesson, and teach just one thing: before you go into a fire, tell me where you're getting out."
+ ],
+ "past": [
+  "You're in ninth grade in Genhe. At minus forty in winter you flood the school sports field to make an ice rink, and the first time you put on skates you split your chin.",
+  "Your father is a ranger at the forest farm and is never home in spring fire season. You visit him at the ranger station, and he's bent over a map, showing you which stands catch fire most easily.",
+  "Your gaokao (college entrance exam) score isn't high, and you pick forestry technology at a forestry vocational college. Your father says: study this, and when you come back, the forest will have a use for it.",
+  "The summer after second year your college sends you to intern at a forest farm, and you see a fire crew for the first time. They've just come down off a fire, faces covered in ash, sitting on the ground eating watermelon.",
+  "The year you graduate, the forestry bureau's professional fire crew is hiring, and you sit the test. In the fitness test's five kilometers, you come in third.",
+  "In the autumn fire season of your first year on the crew, you go to your first fire. The squad leader tells you to stay right behind him and not leave his side for a single step, and you really don't leave it for one step."
+ ],
+ "late": {
+  "pension_note": "Estimate: forestry bureau staff are paid pensions under the enterprise employee scheme. Fire crew members count as a special job category and can retire a few years early, at roughly 55 percent of final monthly pay. The fire-line allowance isn't counted.",
+  "scenes": [
+   "On the day you retire, you hand the flame-resistant suit you wore for so many years back to the equipment store. The storekeeper asks if you want to keep one. You keep that pair of worn-through gloves.",
+   "The crew invites you back to give new members a lesson. You tell them about the time the wind shifted, and finish: remember, find your way out before you go in.",
+   "In Genhe you volunteer for fire-safety outreach, handing out leaflets to foragers every spring. Everyone calls you the old firefighter.",
+   "You take your grandchildren to the mountains where you once fought a big fire. A stand of white birch has grown where it burned. The child asks: was there a fire here? You say: many years ago.",
+   "Off the fire line, you check machines in the equipment store every day. You give every blower a pull and listen to whether the engine sounds right.",
+   "Fire season comes, and the crew's trucks drive past the equipment store. You stand at the door and wave to the young ones aboard.",
+   "Walking in a park in Hailar, you catch the smell of someone burning leaves and take a few steps that way without thinking, before you remember this isn't the forest.",
+   "Your first summer off the crew, you still wake on nights with thunder, watching the lightning outside the window and counting which way it strikes.",
+   "Your new colleagues know you used to fight fires in the Greater Khingan and keep asking if you were scared. You say yes. The scared ones live longer.",
+   "On the news you see a great swath of the Greater Khingan forest has greened again. The firebreak road that flashes past on screen, you rode it on a motorbike many times.",
+   "Later smoke detection, fire mapping and the search for smoldering spots all went to satellites, drones and models. But on the fire line someone still has to stand there with a machine on their back, watch the wind, and decide whether to go forward or back.",
+   "One autumn evening you stand on the edge of town looking out at the forest, a whole sweep of larch gone gold. No fire this year. You look for a long time."
+  ],
+  "closing": {
+   "retire": "Years later, a grandchild lights a sparkler in the yard, the sparks crackling and leaping. You watch from beside them, and when it burns out you take the little wire and drop it into a bowl of water.",
+   "burnout": "One winter years later, you sit by the window watching snow settle on the larches outside. In this season there will be no fire, and you can watch for as long as you like.",
+   "end": "Years later, in a cupboard, you find the worn-through fire gloves, still carrying a faint smell of smoke. You breathe it in, and put them back."
+  }
+ }
+}

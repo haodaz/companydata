@@ -1,0 +1,151 @@
+{
+ "id": "director-bj",
+ "occupation": "Director",
+ "role": "Assistant Director on Commercials and Web Series",
+ "headline": "A twenty-six-year-old directing graduate working as assistant director on Beijing commercial shoots and web-series sets, radio in hand, scheduling calls and moving extras, with a feature script saved on their phone",
+ "unit": "A commercials and film production company in Beijing (hired on per project)",
+ "unit_type": "Film and commercials production company",
+ "city": "Beijing",
+ "city_tier": "Tier 1",
+ "education": "Bachelor's degree (film and theater directing)",
+ "level": "Two years as a director's assistant, one year as assistant director. You can put together a call sheet, move two hundred extras, and cover a unit on set for the director. All you've directed yourself is your graduation short and a few ads for small brands.",
+ "intro": "In the notes app on your phone is a feature script, on its ninth draft, about a video hall in the county town where you grew up. By day you're an assistant director on commercials and web series, putting out call sheets, moving extras, calling \"all departments, stand by\" over the radio. At night, back in your rented room in Wangjing, you open that file. From today, half the people on set call you \"director,\" except there's still an \"assistant\" in front of it.",
+ "salary_note": "Estimate: commercial and film production is concentrated in Beijing, and assistant directors, paid by the project or by the month, earn about thirty percent above the national figure. Directors are paid a fee per project, and good years and bad years are far apart.",
+ "facts": [
+  { "label": "Assistant Director (current level)", "value": "2–5 years, ¥10,000–18,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Director (5–10 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Directing actors and departments on set", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Drawing storyboards", "source": "AI exposure" },
+  { "label": "Open positions", "value": "8 related listings nationwide, 4 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Setting off for the studio lot in Huairou. In the car you check today's call sheet once more: eleven scenes, two locations, actors in makeup at seven.",
+  "On arrival you count extras with the line producer. Twelve short. You call the crowd wrangler and have him find more people from the villages nearby.",
+  "First setup. You key the radio and call: \"All departments, stand by—\" and dozens of people go quiet at once. Behind the monitor the director nods.",
+  "At lunch the director asks you to take the second unit out in the afternoon for some cutaways. Holding your boxed lunch, you go through the storyboards with the camera assistant and circle three setups.",
+  "The second female lead's scenes run two hours over, and everything after has to move. You crouch on the ground rewriting the call sheet in pen while calling the casting AD.",
+  "The last scene before wrap is a race against the light. It's nearly dark, and you shout at the extras, \"walk forward, don't look back.\" You finish before the sun goes down.",
+  "Back in Wangjing you post tomorrow's call sheet to the group, and fifty-odd people reply \"received.\" You read every one to make sure each department has answered.",
+  "You open the script file and rework a scene: before the video hall owner turns off the lights, he looks back once at the empty seats."
+ ],
+ "ladder": [
+  { "title": "Director's Assistant", "stage": "Entry", "focus": "Keep continuity notes for the director, organize storyboards, run errands for actors and locations. You move up by seeing what needs doing, remembering everything and lasting through night shoots." },
+  { "title": "Assistant Director", "stage": "Execution", "focus": "Put out call sheets, cast extras and bit parts, run the floor and call stand-by, keep the schedule for the director, and get the director's ideas carried out by every department." },
+  { "title": "Director", "stage": "Directing", "focus": "Direct commercials, web-series episodes or shorts on your own: write the director's treatment, pitch, negotiate with clients and producers. Your work decides your next job." },
+  { "title": "Feature Director", "stage": "Features", "focus": "Direct films or long series: from script development, raising money and casting to the final cut, the decisions are yours, and your name comes first in the opening credits." }
+ ],
+ "ai_tasks": [
+  { "name": "Drawing storyboards", "how": "Give AI the script and in minutes it turns out a full set of storyboard frames and reference images; a pitch deck can be done in one night. A person picks which frames work and which camera position is the right one." },
+  { "name": "Generating previs and test footage", "how": "AI can turn a scene into rough animated previs first, so the client and the cinematographer can see the rhythm and the angles. The people in previs don't breathe; how it really gets shot, the director decides on set." },
+  { "name": "Writing scripts, revising drafts, doing research", "how": "AI can produce story outlines, rework dialogue and gather character and period background. Why this story needs telling, and which line shouldn't be there, the director and writer decide." },
+  { "name": "Directing actors and departments on set", "how": "An actor's off today, rain is coming, the extras are on the wrong marks: the director has seconds to decide how to shoot it, or whether to. Only a person on set can make those calls." },
+  { "name": "Negotiating with clients, producers and investors", "how": "What the client means by \"premium,\" whether to shoot if the budget's cut in half, whether to add the scene an investor wants: this rests on trust and judgment between people." },
+  { "name": "Editing and locking the cut", "how": "AI can do rough cuts, lip sync, color and multiple versions. Which frame the finished film ends on, the director decides, sitting behind the editor." }
+ ],
+ "events": {
+  "e_ad_first": "The director of a small brand's commercial falls ill at the last minute and the producer has you step in. You stay up all night drawing storyboards, and the next day, behind the monitor, the client watches the first take and says: shoot it like that.",
+  "e_overrun": "The web series runs twenty days over schedule, and the producer yells at people on set every day. You sleep four hours a night, rescheduling the remaining scenes again and again.",
+  "e_unpaid": "A web series wraps and the production company never pays the final installment. Three months of your AD fees are stuck in it. You screenshot the chat history and save it in a folder.",
+  "e_ai_board": "The company's pitch team starts drawing storyboards with AI, two hundred frames in a night. You pick out twelve that work and move the people in the rest away from the dead center of the frame.",
+  "e_short_fest": "The short film you paid for yourself is selected for an international short film festival. You borrow money for the plane ticket. At the screening you sit in the back row, and as the end credits come up, someone applauds.",
+  "e_pitch_lost": "Pitching for a car brand, you spend a week writing the director's treatment and lose to a better-known director. The client says your proposal was very good; they just wanted a safe choice.",
+  "e_ai_previs": "Before the shoot you use AI to turn a car chase into animated previs. The cinematographer and the action coordinator watch it three times, and on set you save a day of rigging.",
+  "e_ai_client": "A longtime client says this year their ads will all be AI-generated, no live shoots. You run the numbers for them, then show them an AI-generated clip of a person laughing. They say nothing.",
+  "e_actor": "An actor can't get into a scene however he tries. You clear the set and sit with him in a corner for ten minutes. You don't talk about the scene; you only ask what he had for breakfast. When you roll again, it's one take.",
+  "e_mentor": "An older director you used to assist watches your short and sends back a very long voice message, going from the first shot to the last. At the end he says: let me see the script.",
+  "e_insomnia": "One project after another, and you start lying awake all night, call sheets behind your eyelids. The doctor prescribes pills. You only take half of one after wrap.",
+  "e_love": "You end up together with someone from the art department on a crew. The first time you eat alone together you talk all evening about the video hall, and afterward they go home and draw its storefront.",
+  "e_marry": "You get married. You don't direct the wedding. You let an AD friend run the schedule, and he plans the order of the toasts in more detail than a call sheet.",
+  "e_child": "Your child is born. You turn down a long project out of town and stay in Beijing shooting commercials, and every night after wrap you tell your child a story you've made up.",
+  "e_premiere": "The web series you directed goes live and in its first week breaks into the platform's top ten. You don't dare read the bullet comments scrolling over the video. Later you find the most common one is: who's the director?",
+  "e_flop": "A film you made goes out to a lukewarm reception, and someone in the comments says it drags. You watch it again and think he's right. The second scene should have been cut.",
+  "e_hometown": "You go back to your county town to scout locations. The video hall was torn down long ago, and in its place is a bubble tea shop. You stand at the door for a long time, take a photo, and put it in the script folder.",
+  "e_back": "Years of crouching on set to watch the monitor, and your back and knees have given out. You have the crew get you a tall director's chair.",
+  "e_young": "You produce a short for a film academy graduate. The first time he calls \"action,\" his voice shakes. You stand behind him and say nothing.",
+  "e_parent": "Your father is in hospital back home, and you revise the script in his ward. He asks whether that video hall film has been made yet. You say soon."
+ },
+ "choices": {
+  "c_track": { "title": "Commercials or a drama crew", "situation": "Two producers want you at once: a commercial crew, with short projects, quick money and hard-to-please clients; and a web series, four months in Hengdian, where you'd learn how to tell a long story.", "options": [
+   { "label": "Commercials", "result": "In a year you work on thirty-odd commercials, learning to tell a whole thing in fifteen seconds, and, when a client says \"change it a bit,\" to first ask what he wants." },
+   { "label": "The drama crew", "result": "You spend four months in Hengdian and shoot more than two hundred scenes, watching one actor from his first day to his wrap, and learn how a story grows." }
+  ] },
+  "c_short": { "title": "Pay for a short film yourself", "situation": "You want to shoot one scene from your feature script as a short first and test the waters at festivals. It comes to eighty thousand yuan. You have fifty thousand saved; the rest you'd have to raise from friends, and the cast and crew would be working on favors.", "options": [
+   { "label": "Shoot it", "result": "You borrow thirty thousand, round up a dozen friends and shoot for four days in your hometown. The day the edit is done you watch it alone five times." },
+   { "label": "Save first", "result": "You revise the script one more draft and go on working crews. The money comes slowly, but you keep revising." }
+  ] },
+  "c_ai": { "title": "Learn AI previs or not", "situation": "Young directors are all using AI for storyboards and animated previs, showing clients a \"sample\" before the pitch. You think the thing can't capture a person breathing, but clients are more and more used to seeing images before they pay.", "options": [
+   { "label": "Learn it", "result": "You spend two months building AI previs into your pitch process. The first time you pitch with it, the client watches and asks: has this already been shot?" },
+   { "label": "Keep drawing boards by hand", "result": "You go on drawing storyboards by hand in a notebook and walking clients through them frame by frame. Some clients love it. Some can't wait." }
+  ] },
+  "c_shortdrama": { "title": "Go shoot vertical short dramas", "situation": "A vertical short-drama company offers you a director's fee: a hundred episodes in ten days, and the money comes faster than in commercials. But a few pages into those scripts you want to close them, and shoot too many and your hand changes.", "options": [
+   { "label": "Go", "result": "In a year you shoot twelve short dramas and learn that the last ten seconds of every episode must have a hook. You pay back what you borrowed and move to a bigger flat." },
+   { "label": "Don't", "result": "You turn it down and keep shooting commercials and revising the script. A classmate who went takes you to dinner at year's end and grabs the bill." }
+  ] },
+  "c_pitch": { "title": "Pitch for a major brand", "situation": "A major brand has five directors pitching for its annual commercial, and the producer put you forward: the youngest, with the thinnest reel. Win, and you go from assistant director to director. Lose, and a week's work is gone.", "options": [
+   { "label": "Go all out", "result": "You write a thirty-page director's treatment, and the first page has only a photo of your grandmother. The client asks why, and you talk for ten minutes." },
+   { "label": "Let a veteran have it", "result": "You tell the producer you can't carry this one and recommend a director you've worked under, then go on as his AD. The film turns out beautifully, and he adds your name to the credits." }
+  ] },
+  "c_feature": { "title": "Take the script to a project market", "situation": "A film festival's project market is open for applications, and your video hall script, a dozen-odd drafts in, could go. If it's selected there'd be money, a producer, maybe your first feature. But development would take a year or two, and you'd take few commercials in that time.", "options": [
+   { "label": "Pitch at the market", "result": "You speak for twenty minutes at the market, and a producer in the audience takes notes the whole time. Afterward she comes over and asks: is the video hall still there?" },
+   { "label": "Keep shooting commercials", "result": "You put the script back in its folder and take the next brand. You tell yourself to wait two more years, until you're better prepared." }
+  ] },
+  "c_teach": { "title": "Teach at a university", "situation": "Your old directing department invites you back to teach storyboarding and audiovisual language: a permanent state post, with winter and summer breaks. But as a teacher you could hardly join three or four crews a year anymore.", "options": [
+   { "label": "Go back and teach", "result": "In your first class you show your own graduation short and have the students pick it apart. They find twenty faults, and you write down every one.", "end": "You teach in the directing department for many years, and every year students come knocking with scripts. You always ask the same question first: why does this story have to be told by you?" },
+   { "label": "Stay on set", "result": "You thank the department head and say you want to shoot a few more years. He says the door is always open." }
+  ] },
+  "c_producer": { "title": "Switch to producing", "situation": "A film company wants you as a producer: finding projects, money and directors, managing budgets and schedules. They say you understand directors and you understand money, and people like that are rare. But from then on, the one calling \"action\" won't be you.", "options": [
+   { "label": "Become a producer", "result": "For the first time you sit in a meeting room listening to other directors pitch, and stop yourself from interrupting.", "end": "You spend many years as a producer, helping a dozen-odd young directors make their first films. At every first day of shooting you stand at the farthest point behind the monitor and listen to someone else call it." },
+   { "label": "Stay a director", "result": "You turn it down. That night you open the script file again." }
+  ] }
+ },
+ "endings": {
+  "retire": "On the day your last film wraps, the crew takes a group photo with you in the middle, still holding a radio. After wrap you walk once around the empty set alone, fold up the tall chair in front of the monitor, and lean it against the wall.",
+  "burnout": "After several projects back to back you lay awake night after night, and on set, watching the monitor, the image kept washing white in front of your eyes. The doctor told you to stop. You turned down everything you had and went back to your county town. Every evening you sit for a while in that bubble tea shop and watch the people in the street."
+ },
+ "stages": [
+  "You're the assistant director. The night before, you send out the call sheet; the next morning you're on set before dawn, counting extras and hurrying actors into makeup. Before the roll, one \"all departments, stand by\" over the radio and dozens of people move. The director watches the main camera; you take the second unit for cutaways, move extras, check the continuity sheets. When scenes run over, you're the one who rewrites the call sheet, and the one the producer yells at.",
+  "You're a director now, taking commercials, web-series episodes and shorts. Before the shoot you write the director's treatment, hold pre-production meetings with the client, settle storyboards and look with the cinematographer, and at casting you sit in the middle. On set you sit behind the monitor and say \"good\" or \"again\"; after wrap you watch frame by frame behind the editor. Whether you get the next job depends on how this one turns out.",
+  "You're a feature director. One project takes three or four years: script development, raising money with the producer, casting, scouting, and once shooting starts, dozens of decisions a day go out from you. Editing, mixing, grading, through to the final cut, all need your signature. You also do festivals, roadshows and investor meetings. The first name in the opening credits is yours, and the criticism lands on you first."
+ ],
+ "work": [
+  "The casting AD calls to say the third female lead is stuck on the Beijing–Chengde expressway. You move her two scenes to the afternoon, shoot the male lead's solo scene first, and post the third revision of the call sheet to the group.",
+  "A market scene needs two hundred extras. You stand up high with a megaphone and divide them into zones: vegetable sellers on the left, shoppers to the right, the woman with the baby walks down the middle, don't look at the lens.",
+  "The director has you take the second unit to shoot cutaways in the morning fog. You and the camera assistant go up the mountain at five, wait an hour, and get it all in the ten minutes the fog rises.",
+  "A fifteen-second drinks ad, and the client wants \"young.\" You don't use dancing young people. You shoot an old man in a park finishing a bottle, burping, and laughing. The client signs.",
+  "Day three of the web series, and the male and female leads can't connect in their scenes. You take the two of them to dinner and don't talk about the show; you talk about the houses each of them lived in as children.",
+  "The editor shows you the first rough cut: a hundred and five minutes. You stop at scene seven and say: I love this scene. Cut it.",
+  "Developing the feature, you go back to your county town to scout, and on an old street you find a shopfront much like the old video hall. You have the art department rebuild even the step at the door just as it was.",
+  "The investors watch the first cut and want a reunion scene added at the end. You and the producer talk it through in a meeting room all afternoon. In the end, no scene is added, and the poster is changed to the one they wanted.",
+  "After the premiere, an audience member about your age stops you at the exit and says his county town had a video hall too, also torn down. You shake hands for a long time."
+ ],
+ "past": [
+  "You grew up in a county town in northern Jiangsu. In your first year of middle school you started skipping class for the video hall, five yuan for an afternoon of films. The owner never threw you out, and sometimes poured you a cup of tea.",
+  "In your second year of high school you decided to apply for directing and started filming classmates on the family's old camcorder, cutting little films. Your father said film people were all from rich families.",
+  "The year of the arts entrance exams you lived in a basement in Beijing for a month and sat exams at five schools. In the end you got into the directing department of an arts university, the tuition borrowed by your family.",
+  "Your graduation short was about the video hall in your county town, and it won a prize at the school screening. On the phone, the owner listened to you all the way through, then said: I'm closing.",
+  "After graduating you became assistant to a commercials director and spent twenty hours on set on your first day. The first thing you learned was to remember everyone's name.",
+  "After two years as a director's assistant, a producer said you could see what needed doing and made you second assistant director on a web series. The first time you picked up the radio, your palms were soaked."
+ ],
+ "late": {
+  "pension_note": "Estimate: freelance directors mostly pay into Beijing's urban employee pension as flexibly employed workers or through an affiliated company, on a low base and with gaps, so in retirement you get about forty percent of your final monthly pay.",
+  "scenes": [
+   "After retiring you pack all your call sheets into a few cardboard boxes, labeled by year. The first year's box is the thinnest, and they get thicker and thicker.",
+   "Your county town invites you back for an open-air screening of your feature. The square is packed, some people with folding stools, some with children.",
+   "Every day you go to a small cinema near home and watch one film from the back row. When you see a good shot, you sketch it in a notebook.",
+   "For your first few months back home you sit in the bubble tea shop every evening, watching kids in school uniforms come and go, wanting to film nothing.",
+   "Your sleep slowly comes back. The county middle school asks you to talk to the students about film. You show an old classic, and halfway through you notice the kids in the front row have fallen asleep. You smile.",
+   "You start filming the county town's old streets on your phone, no editing, saving them clip by clip. One day you notice you've saved more than a thousand.",
+   "The first year after you leave the director's chair, you pass a set and hear someone inside call \"all departments, stand by.\" You stop walking and wait for \"action.\"",
+   "An AD you once trained makes his first feature, and at the premiere he calls your name from the stage. From the audience, you wave.",
+   "You've kept that video hall script all along, now on its nineteenth draft. One day you print it, have it bound, and put it on the bookshelf.",
+   "Later storyboards and previs were all handed to AI, and a pitch deck could be done in a night. But on set, someone still had to stand there and call \"action.\"",
+   "The old video hall owner is ninety now, and you go to see him. He can't remember much anymore, but he remembers you: that kid who came to watch films every day.",
+   "Your grandchild asks what making films felt like. You think about it and say: it's a crowd of people waiting for ten minutes before the sun goes down."
+  ],
+  "closing": {
+   "retire": "Many years later, one evening, you take your grandchild to an open-air film in the square. The projector's beam passes over your heads, dust floating in the light. The child looks up at the beam more intently than at the screen.",
+   "burnout": "Many years later you sit at the mouth of the old street in the county town. Of the thousand-odd clips on your phone, you haven't edited one. It gets dark, and the streetlights come on one by one, like the last scene before wrap.",
+   "end": "Many years later you find the bound script on the bookshelf and open it to the first page: before the video hall owner turns off the lights, he looks back once at the empty seats. You close it, and turn off the light."
+  }
+ }
+}

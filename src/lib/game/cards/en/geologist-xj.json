@@ -1,0 +1,202 @@
+{
+ "id": "geologist-xj",
+ "occupation": "Geologist",
+ "role": "Field Geologist with a Geological Survey Team",
+ "headline": "A field geologist with a bachelor's in geology, in your second year with a geological survey team in Xinjiang, heading into the mountains every April and not coming out until October, walking mapping traverses across the gravel desert of the Eastern Tianshan",
+ "unit": "A geological survey team in Xinjiang",
+ "unit_type": "State geological exploration institute",
+ "city": "Urumqi",
+ "city_tier": "Second-tier city",
+ "education": "Bachelor's degree in Geology",
+ "level": "You can carry a mapping traverse on your own: fixing stations, measuring strike and dip, knocking off samples, sketching the route section, and you know the common rocks on sight. Which way to chase a fault is still the project lead's call.",
+ "intro": "In your pack: a rock hammer, a compass, a hand lens, a roll of sample bags, a field notebook and two bottles of water. Camp is three tents and a pickup truck on the gravel desert, and the nearest township is 120 kilometers away. From today you alone are responsible for the four traverses on the west side of the map sheet. How each one runs and where you stop to take a station is your call.",
+ "salary_note": "Estimate: a permanent state post at a Xinjiang exploration institute, base pay plus performance pay, with field allowance and high-altitude and remote-area subsidies on top. The months in the mountains pay more. Taken at 1.05 times the national figure.",
+ "facts": [
+  { "label": "Assistant Engineer (current level)", "value": "0–3 years, ¥5,500–8,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Engineer (3–8 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥15,200 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Field traverses and geological mapping", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Remote-sensing interpretation and picking exploration targets", "source": "AI exposure" },
+  { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The camp generator coughs to life and the cook is boiling milk tea. You read over yesterday's traverse notes once more and pencil today's line onto the topographic map.",
+  "An hour and a half of bouncing across the gravel in the pickup, and the driver drops you and your partner at the mouth of a dry gully. He'll pick you up on the far side of the ridge at five.",
+  "First station. You take a set of strike and dip readings with the compass, knock off a fresh face and study it through the hand lens for a long time. In the notebook you write: gray-green altered andesite.",
+  "Over a ridge, a patch of rust-red limonite staining. You photograph it, fix the position, pick samples and number the bags. Your pack is two kilos heavier.",
+  "Lunch in the shade of a boulder: naan and pickled vegetables. The wind is strong, so you pin the map down with stones while your partner dozes beside you.",
+  "A fault has offset two rock packages. You follow it another 800 meters until you're sure of its trend, and by the time you turn back your phone has no signal.",
+  "The pickup's silhouette appears at the foot of the hill. You toss bag after bag of specimens into the bed. The water is long gone.",
+  "In the tent, by a rechargeable lamp, you load today's stations onto the tablet, finish the route section and log the samples one by one, until your hand is too cold to hold the pen."
+ ],
+ "ladder": [
+  { "title": "Assistant Engineer", "stage": "Traverses", "focus": "Carry traverses for the project: mapping, sampling, logging drill core; in winter, back at base, sorting field notes and inking the maps." },
+  { "title": "Engineer", "stage": "Field crew lead", "focus": "Lead a field crew across a map sheet, manage drilling and samples, write report chapters, go for registration or mid-level rank." },
+  { "title": "Senior Engineer (Project Lead)", "stage": "Project", "focus": "Run a regional survey or exploration project: plan the work, sign off on field checks, write the results report, deal with clients and the natural resources authorities." },
+  { "title": "Professor-level Senior Engineer", "stage": "Technical review", "focus": "Technical oversight across several projects: reviewing reports, assessing resources, studying how ore deposits form, mentoring the next tier of specialists." },
+  { "title": "Chief Engineer of the Team", "stage": "Chief", "focus": "Technical head of the whole team: where to look, which projects to bid for. Every results report ends with your signature." }
+ ],
+ "ai_tasks": [
+  { "name": "Field traverses and geological mapping", "how": "Fixing stations, measuring strike and dip, reading contacts, chasing faults: a person has to walk into the mountains with a pack and work it out by eye and by hammer, one outcrop at a time. AI can only help plan the route beforehand." },
+  { "name": "Remote-sensing interpretation and picking exploration targets", "how": "AI can pull alteration zones and linear structures out of satellite and hyperspectral imagery automatically and suggest targets. Which target is worth a trip into the mountains is the geologist's call, weighed against what they've seen in the field." },
+  { "name": "Processing geophysical and geochemical data and predicting mineralization", "how": "AI can model geochemistry, magnetics and gravity together, outline anomalies and draw up probability maps. Whether an anomaly is ore or noise only counts once someone has been back to look." },
+  { "name": "Core logging and sample management", "how": "Core scanners and image recognition can separate lithologies, measure fractures and draft the log. Where the ore is, how strong the alteration, which interval goes to the lab: that still takes someone crouched over the core box." },
+  { "name": "Writing geological reports and maps", "how": "AI can pull together field notes and lab results, draft report chapters and generate draft maps. Whether the conclusions hold and whether a resource can be reported is for the project lead to review and sign." },
+  { "name": "Field safety and local coordination", "how": "Leading a crew through desert and high mountains, judging weather, roads and water, dealing with herders and claim holders, handling trouble on the spot: that only a person can do." }
+ ],
+ "events": {
+  "e_first_route": "You carry a twenty-kilometer traverse on your own for the first time. The project lead pages through your notebook for a long while and says: you got this contact zone right.",
+  "e_lost": "You and your partner lose your way in a maze of identical gullies. You call camp on the satellite phone, and by the time the pickup finds you it's fully dark.",
+  "e_storm": "A sandstorm flips one of the camp tents. You spend the night squeezed into the pickup, and the next morning you dig the sample bags out of the sand one by one.",
+  "e_shepherd": "A Kazakh herding family in the hills invites you into their felt yurt for milk tea. The old man points to the mountain across the valley and says there's a stone over there that shines when you break it open. You draw a circle on the map.",
+  "e_anomaly": "In a batch of geochemistry samples you sent back, three points show copper at dozens of times background. The team decides to drill there next year, and your name is in the project proposal.",
+  "e_dry_hole": "A hole that took two years to drill reaches total depth, and the core shows only a few intervals of weak mineralization. When you finish presenting at the acceptance meeting, the room goes quiet for a moment.",
+  "e_ai_remote": "The team brings in an AI remote-sensing interpretation system, and a whole map sheet's alteration zones are outlined overnight. You take its results into the mountains to check. Four out of ten are right; the other six are sunburned sandstone.",
+  "e_ai_core": "A scanner arrives at the core shed. Run a box through once and the lithology and fractures are logged automatically. You only stop at the mineralized intervals and crouch for a closer look.",
+  "e_love": "Back in Urumqi for the winter, sorting data, you meet a middle-school geography teacher at a hand-pulled noodle place near the Grand Bazaar. Hearing you spend half the year in the mountains, they say: so all those mountains I teach about, you've actually been there.",
+  "e_far": "Seven months in the field, and camp only gets a signal on the weekly supply run into town. You save up a week's worth of things to say, finish one call beside the gas station in town, and the pickup is ready to go.",
+  "e_marry": "You get married, the date set for November, after the field season. The team's old driver comes to fetch the wedding party in that same pickup, its bed washed spotless.",
+  "e_house": "You take out a mortgage on an apartment in north Urumqi, the balcony facing Bogda Peak. You do the math: you won't live in it five months a year.",
+  "e_child": "News of the baby's birth comes over the camp satellite phone. You're stuck in the mountains another nine days before you make it home, and when you walk in you still smell of the desert.",
+  "e_report": "The results report for a map sheet is finished over the winter: two hundred-odd pages, thirty-some maps. The expert panel rates it excellent, and you go home and sleep a whole day.",
+  "e_mine_found": "The fifth hole in the target you outlined hits a thick ore body. The day the news reaches base, the old chief engineer calls you and says only one thing: keep that notebook safe.",
+  "e_knees": "After a dozen years of climbing, your knees start to hurt, and you have to go downhill sideways. The doctor tells you to carry less. You smile and say nothing.",
+  "e_young": "Two new graduates join the team and peel from sunburn on their first trip into the mountains. One of them comes to your tent that night and asks: how do you recognize skarn at a glance?",
+  "e_restructure": "The exploration institutes are reorganized and part of the team is folded into a state company. In the two lean years that follow, your winters go from writing reports to chasing contracts and writing bids.",
+  "e_parent": "Your father is in hospital back home, and it takes you two days at camp to catch a ride into town. In the ward he asks what you found this year. You say: a little.",
+  "e_specimen": "The team's specimen room gets new display cases, and a piece of malachite you picked years ago goes in the front row. The label gives the collector and the date, in your own handwriting.",
+  "e_drone": "A drone flies the airborne magnetic survey over a cliff face nobody could climb. When the data comes back, you only send people to the three most suspicious points."
+ },
+ "choices": {
+  "c_master": {
+   "title": "A part-time master's degree",
+   "situation": "Your old advisor calls: the university has a part-time master's place, and the research topic happens to be ore deposits in the Eastern Tianshan. With the degree, going for Engineer and bidding for projects gets easier. But with seven months in the field, the thesis can only get written in winter.",
+   "options": [
+    { "label": "Do it", "result": "You send your field samples to the university for dating and defend three years later. Your advisor says your data is more solid than his full-time students'." },
+    { "label": "Not now", "result": "You keep your winters for sorting data and sleeping. In the field it's your notebook that counts, and you think that's enough." }
+   ]
+  },
+  "c_project": {
+   "title": "Regional survey or mineral exploration",
+   "situation": "Two projects need people. One is a public regional geological survey, mapping sheet after sheet. The other is an exploration project with a mining company: more drilling, better allowances, and whether you hit ore or not, the pressure is on you.",
+   "options": [
+    { "label": "Regional survey", "result": "You finish a map sheet in two years and learn dozens of rock types. The geological map you draw is later used by several other projects." },
+    { "label": "Exploration", "result": "You spend two summers beside the drill rig, learning to read core and run a drilling crew, and learning to explain to the client why there's no ore yet." }
+   ]
+  },
+  "c_engineer": {
+   "title": "Going for Engineer",
+   "situation": "The team is reviewing mid-level ranks this year. You need traverses and report chapters done on your own, plus a published paper. Your file is strong enough, but you're one paper short, which means some late nights this winter.",
+   "options": [
+    { "label": "Stay up and write it", "result": "You write about that alteration zone and submit to a provincial geoscience journal, three drafts in all. At the review, someone asks about the fault, and you sketch it for him on paper." },
+    { "label": "Apply next year", "result": "You keep the winter for home. A year later your file is thicker, and no one at the review has any questions." }
+   ]
+  },
+  "c_ai": {
+   "title": "Taking on the AI exploration platform",
+   "situation": "The team is building an AI exploration platform, feeding decades of geological maps, geochemistry, geophysics and remote sensing into one model. They need someone who knows the field to set the labeling rules and review the targets the model picks. It won't count as project output, and it will eat your winter.",
+   "options": [
+    { "label": "Take it on", "result": "You and two younger colleagues spend a winter labeling lithology and alteration. The next year you check the model's targets in the field, and they are noticeably better than before." },
+    { "label": "Pass, keep doing fieldwork", "result": "You hand the platform to the IT center. When you check the targets they produce, you scribble a few notes on the map as you go." }
+   ]
+  },
+  "c_lead": {
+   "title": "Going for Senior Engineer and project lead",
+   "situation": "A new integrated exploration project needs a lead, and the team nominates you for Senior Engineer. If you take it, you'll manage three field crews and two drill rigs and defend the project in the regional capital every year. You'll actually spend less time in the field.",
+   "options": [
+    { "label": "Take it", "result": "You bind your years of traverse notes and reports into a file for the review. From that year on, your field notebook gives way to a project schedule." },
+    { "label": "A few more years in the field", "result": "You put forward a colleague from your year, and take your crew across two more map sheets. You know the mountains better; the promotion comes a few years later." }
+   ]
+  },
+  "c_company": {
+   "title": "Joining a mining company",
+   "situation": "A private company mining in Central Asia wants to hire you. The pay is twice what the team offers: chief geologist at a mine abroad, coming home twice a year.",
+   "options": [
+    { "label": "Go", "result": "You hand in your resignation and return your field notebooks to the archive, one by one.", "end": "You became chief geologist for a mining company and spent many years reading core at a mine in another country. Every trip home, you made a detour to the Eastern Tianshan to look at the gullies you once walked." },
+    { "label": "Stay with the team", "result": "You turn it down. That target hasn't been drilled yet, and you want to see what's down there." }
+   ]
+  },
+  "c_bureau": {
+   "title": "The natural resources department exam",
+   "situation": "A unit under the regional Department of Natural Resources is hiring someone who knows geology, to handle mining-rights approvals and geological archives. An office job, no more fieldwork. Your family would very much like you to go.",
+   "options": [
+    { "label": "Sit the exam", "result": "You pass. On handover day, you leave your compass to the apprentice you trained.", "end": "You went to the natural resources department and spent your days reviewing other people's exploration reports. When you came across solid field notes, you added a line in the comments box: thorough data." },
+    { "label": "Don't", "result": "You tell your family a few more years. That summer you are in the mountains by April, as always." }
+   ]
+  },
+  "c_tibet": {
+   "title": "The high-altitude Kunlun project",
+   "situation": "The team has taken on a high-altitude regional survey in the Kunlun Mountains, above 4,500 meters, with only three workable months a year. Big allowances, big results possible, and your body pays for every bit of it.",
+   "options": [
+    { "label": "Go", "result": "You lead a crew on the plateau for three summers, lips purple the whole time. The map you bring back fills in a blank on the national map." },
+    { "label": "Stay in the Eastern Tianshan", "result": "You give your place to someone younger and finish the exploration project in mountains you know." }
+   ]
+  },
+  "c_chief": {
+   "title": "Becoming the team's Chief Engineer",
+   "situation": "The old chief engineer is retiring and the team wants you to take over. Every project direction and every results report will need your signature, and the year will be meetings, reviews and chasing projects. You'll get into the field twice a year at most.",
+   "options": [
+    { "label": "Take it", "result": "Your desk is piled with reports, and for each one you turn first to the field-notes chapter." },
+    { "label": "Keep leading projects", "result": "You recommend a younger professor-level engineer, and spend a few more years with two apprentices on a fresh map sheet." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "Your last field season is on the edge of the Junggar Basin. On the day the crew packs up, you wipe your hammer clean, slide it into your pack, and stand at the edge of camp looking at the far mountains for a while. The young ones ask if you're coming back next year. You say you'll come and visit.",
+  "burnout": "That summer you slip on a steep slope, and your knee can no longer take the climbing. The team moves you to the core shed, where you spend your days in gloves sorting box after box of drill core. The shed's window faces west, and you often stare that way for a while."
+ },
+ "stages": [
+  "You carry traverses for the project: dozens of kilometers a day, fixing stations, measuring strike and dip, knocking off samples, sketching the route section, numbering the bags and hauling them back to camp. At night in the tent you load the stations onto the tablet; in winter, back at base, you ink the maps and sort the notes. When the project lead says \"chase that line a bit further,\" you walk another half day.",
+  "Now you lead a field crew across a map sheet: three or four people and a pickup, handing out traverses in the morning and collecting notes at night. Once the rig starts turning, you stand by the core boxes logging and picking samples, and negotiate progress with the drilling foreman. In winter you write report chapters, build maps in MapGIS and ArcGIS, and explain the data to clients.",
+  "You run a project: where the work goes, which section is done first, where the holes are drilled. You go into the field to check other people's traverses, then return to Urumqi to write the design and the results report, sitting across the table from mining companies and natural resources officials. When a young geologist hands you a notebook, you read the station descriptions first.",
+  "You carry technical oversight for several projects at once: reviewing designs, reviewing reports, assessing resources, asking at every review meeting where each number came from. You write papers on how the deposits formed, mentor specialists, go to Beijing for conferences. You rarely carry a traverse yourself, but every year you still go to look at the core from the hole that matters most.",
+  "You are Chief Engineer for the whole team. You decide where to look and which projects to bid for over the next few years, and every results report ends with your signature. You chair meetings, sit on review panels, host partners and advise on the regional exploration plan. When a young geologist brings you a target, you ask one thing first: have you been out to look?"
+ ],
+ "work": [
+  "Your partner says the rock is granite. You scratch it with a knife, add a drop of dilute hydrochloric acid, and nothing fizzes. In the notebook you change it to diorite.",
+  "Inking the traverse map back at base in winter, you check a summer's two hundred-odd stations into MapGIS one by one, and find three where a coordinate was copied with one digit wrong.",
+  "In a dry gully you find a fossil-bearing limestone, wrap it in three layers of newspaper and carry it back to camp. The old engineer looks at it and says: the age of this layer needs changing.",
+  "The drilling foreman says core recovery is too low and wants more money. You measure it out for him box by box, and in the end each side gives a little.",
+  "You assign a route to Ma, a new graduate, deliberately picking the easiest one. The notebook he hands in that night doesn't have a single strike or dip wrong.",
+  "The lab results come back and one set of samples doesn't add up. You dig out the sample register and find two labels were swapped when the crates were packed.",
+  "On a field check you walk another two hundred meters along a contact a crew member drew, crack open a fresh face with your hammer, and let him look for himself.",
+  "The mining company wants to move a hole to the roadside to make drilling easier. You spread the cross-section on the pickup's hood and point at the fault: move it and you'll miss it.",
+  "Writing a project design, you rework the chapter on work volumes five times. Every meter of drilling has to say why.",
+  "A resource report lands on your desk and the grade calculation uses two different cutoffs. You circle them in red and send it back to the project team to redo.",
+  "The night before a specialist you mentor defends a project in the regional capital for the first time, you go through every map with him and change only two words.",
+  "The AI exploration platform picks a new target. You dig out a geological map from thirty years ago and find someone drilled two shallow holes there long ago.",
+  "The team's annual project review runs two days. You ask each project just one question, and two of them are told on the spot to redo their plans.",
+  "You negotiate a joint lab with a partner university. They want more data. You say the data can be shared, but the original field notebooks stay with the team.",
+  "You give the first lecture to the new graduates joining the team. No slides. You just bring out a field notebook of your own from more than twenty years ago."
+ ],
+ "past": [
+  "You're in ninth grade in a county town in Changji. The riverbed near home is full of stones of every color, and you've filled a windowsill with them. Your mother says you collect junk.",
+  "For the gaokao (college entrance exam) you put geology on your application. Your homeroom teacher says it's a hard major. You say hard is fine, at least you'll get to go places.",
+  "Second-year field practice at Beidaihe: your first time climbing seaside rocks with a hammer. You spend an afternoon measuring strike and dip, and that night none of the numbers add up.",
+  "Third-year mapping practice in the Qinling Mountains. You wear through a pair of hiking boots in a month. On the last day you hand in your map, and the teacher draws a check mark on it.",
+  "At graduation, classmates go off to banks. You test into a geological survey team back in Xinjiang. On your first day, the HR officer looks at your hands and says: you head into the mountains next April.",
+  "Your first field season is in the Eastern Tianshan, carrying traverses behind an old engineer. He walks faster than you, and the whole way he says only one thing to you: look more, guess less."
+ ],
+ "late": {
+  "pension_note": "Estimate: state exploration institutes pay pensions under the civil service and public institution scheme plus an occupational annuity, roughly 65 percent of final monthly pay. The field allowance isn't counted.",
+  "scenes": [
+   "On the day you retire, you hand thirty-odd field notebooks to the archive. The archivist asks if you want to keep one. You choose the first.",
+   "The team rehires you to review reports two days a week. You still turn first to the field-notes chapter, to see how carefully the stations are described.",
+   "At the community center you talk to primary schoolers about the rocks of Xinjiang, with a box of specimens you picked yourself. The children like the fluorite that glows best.",
+   "You and your spouse drive out to the Eastern Tianshan. There's an asphalt road past the old campsite now. You pull over and point at a ridge: I got lost up there once.",
+   "Your knees can't do the mountains anymore. In the core shed you catalog and photograph box after box of core, and when someone asks about an old hole, you have the answer ready.",
+   "The core shed is quiet. You come across a box you logged yourself years ago. The ink on the label has faded, and you trace it over again.",
+   "You sit sunning yourself by the flowerbed downstairs, naming the pebbles at your feet one by one: quartzite, granite, basalt.",
+   "You've left the survey team, and for the first time you spend a whole summer in Urumqi. Only now do you learn that the apricots downstairs ripen in July.",
+   "Your new colleagues, hearing you did a dozen years of fieldwork, keep asking what treasure you saw. You say what you saw most was rock, and every piece of it was useful.",
+   "On the news you see that the target in the Eastern Tianshan has become a mine. The footage flashes past, and you recognize the ridge you once walked.",
+   "Later, remote sensing, geochemical data and core logging all went to the models. But which way a fault runs, what a given rock is: someone still has to walk into the mountains with a pack and break it open with a hammer.",
+   "One winter morning you watch from the window as the sun lights up Bogda Peak. You've never forgotten what age the rocks up there are."
+  ],
+  "closing": {
+   "retire": "Years later, your grandson brings home a patterned stone from the river and asks what it is. You put on your reading glasses, scratch it with a fingernail and say: this one is older than anybody in our family.",
+   "burnout": "One afternoon years later, you sit on the balcony watching the children in the sandpit below dig for stones. One of them finds a glittering one and holds it up, shouting, and you laugh along.",
+   "end": "Years later, at the bottom of a cupboard, you find the old rock hammer, its handle worn smooth by your hand. You weigh it in your palm, then put it back."
+  }
+ }
+}

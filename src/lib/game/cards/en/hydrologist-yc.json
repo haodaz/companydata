@@ -1,0 +1,200 @@
+{
+ "id": "hydrologist-yc",
+ "occupation": "Hydrological Surveyor",
+ "role": "Hydrological Surveyor at a Yangtze River Gauging Station",
+ "headline": "A hydrological surveyor with a vocational college diploma in hydrology, in your first year at a Yangtze River gauging station in Yichang, going out on the survey boat every day to measure flow and sample sediment, and getting up in the middle of the night in flood season to report the water level",
+ "unit": "A national baseline gauging station on the Yangtze in Yichang",
+ "unit_type": "River basin gauging station",
+ "city": "Yichang",
+ "city_tier": "Third-tier city",
+ "education": "Vocational college diploma in Hydrology and Water Resources",
+ "level": "You can read a staff gauge, run the cableway and the current meter, and on the boat you can call out readings on deck and lower the sounding weight. Boat-mounted ADCP surveys and compiling the station records you're still learning from the old hands.",
+ "intro": "In your locker: an orange life jacket, a pair of tall rubber boots, a survey logbook, a pencil and a stopwatch. The station house sits on the slope above the river. Out the window is a row of staff gauges marked with numbers, and below them the station's white survey boat. From today you go out on the boat with the survey crew. How deep the river runs each day, how fast, how much sand it carries away: some of those numbers will be written down by you.",
+ "salary_note": "Estimate: a permanent post at a gauging station under the river basin authority, base pay plus performance pay, with extra allowances for fieldwork and flood-season duty. Taken at 95 percent of the national figure for Yichang. Pay only rises noticeably with skill grade and a station chief post.",
+ "facts": [
+  { "label": "Hydrological Surveyor (Grade 4 / Intermediate) (current level)", "value": "0–3 years, ¥5,500–7,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Hydrological Surveyor (Grade 3 / Senior) (3–7 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥21,800 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Measuring floods in flood season", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Automatic water level and rainfall monitoring and reporting", "source": "AI exposure" },
+  { "label": "Open positions", "value": "6 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You go down to the riverbank to read the staff gauge, then back to the station house to check it against the automatic station, and write in the logbook: water level, up two centimeters.",
+  "The survey boat pushes off. The old hand takes the helm; you stand on deck in your life jacket, calling out distances from the reference point across the section over the radio.",
+  "First vertical. You lower the sounding weight and watch the steel cable pay out meter by meter. The old hand calls stop, you click the stopwatch and count the signals from the current meter.",
+  "Sediment sampling. You lower the horizontal sampler to the set depth, haul it up, and pour a bucket of muddy yellow river water into a numbered sample drum.",
+  "The boat docks and you eat in the station's small canteen. Today there's Yichang's chilled rice-jelly dessert, and the cook says: eat up, you're back on the river this afternoon.",
+  "In the lab you filter, dry and weigh the morning's water samples. The balance reads to a ten-thousandth of a gram.",
+  "You enter today's flow results into the records system, which draws a stage-discharge curve automatically, and you compare it point by point with last month's.",
+  "Night shift in flood season. Water is coming down from upstream, and every two hours you go to the bank to read the gauge, flashlight on the surface. Far off, a finless porpoise breaks the water for a moment."
+ ],
+ "ladder": [
+  { "title": "Hydrological Surveyor (Grade 4 / Intermediate)", "stage": "On the boat", "focus": "Read gauges, run the cableway, go out with the boat to measure flow and sample sediment, run grain-size analysis, take flood-season reporting shifts, sit the Senior grade exam." },
+  { "title": "Hydrological Surveyor (Grade 3 / Senior)", "stage": "On your own", "focus": "Run boat-mounted ADCP surveys and lead a measurement on your own, compile a station's annual records, sit the Technician exam." },
+  { "title": "Hydrological Survey Technician (Grade 2, Survey Crew Leader)", "stage": "Crew leader", "focus": "Lead a survey crew, direct flood measurements on site, manage the boat and equipment, train apprentices." },
+  { "title": "Senior Hydrological Survey Technician (Grade 1, Station Chief)", "stage": "Station chief", "focus": "Run a station's people, boats, equipment and data quality; answer for flood-season reports to the authorities; review the compiled records." },
+  { "title": "Chief Technician (Head of a Master Craftsman Studio)", "stage": "Master", "focus": "The authority on survey technique for the whole basin: improving methods, coaching skills competitions, writing the standards for new equipment." }
+ ],
+ "ai_tasks": [
+  { "name": "Measuring floods in flood season", "how": "In a big flood, taking the boat out, lowering instruments into fast water, judging whether you can measure and when to pull back: a person on the boat has to decide on the spot, and carry the responsibility for safety." },
+  { "name": "Automatic water level and rainfall monitoring and reporting", "how": "Automatic stations and telemetry already sample water level and rainfall every five minutes and send coded reports on their own. People only go out to check when equipment fails or the data jumps." },
+  { "name": "Flow measurement", "how": "ADCP, radar velocity sensors and video gauging, with AI algorithms, can work out discharge across a section automatically. When the bed has scoured or the flow turns chaotic, whether the result can be trusted is for the surveyor to judge on site." },
+  { "name": "Sediment sampling and grain-size analysis", "how": "Laser particle sizers and image recognition produce grain-size distributions automatically. When to sample, on which vertical, whether a sample is good: someone has to check that on the boat and in the lab." },
+  { "name": "Compiling hydrological records", "how": "Records software and AI can derive flows, fill gaps, generate yearbook tables and flag suspect data. People mainly review the flagged points." },
+  { "name": "Maintaining the survey boat, cableway and gauging works", "how": "Whether the steel cable has been replaced, whether the sounding weight is hung securely, whether the boat engine sounds right: someone has to touch it and listen." }
+ ],
+ "events": {
+  "e_first_measure": "For the first time you complete a flow measurement on your own: twenty verticals, none missed. The old hand checks the result against the automatic station. The error is under two percent, and he nods.",
+  "e_flood": "A major flood comes through and you measure for seven days and nights straight, the boat spinning in the waves. The morning the crest passes, you fall asleep on the bench in the station house, logbook still in your hand.",
+  "e_drift": "A big tree washed down from upstream hits the cableway, and the sounding weight jams in midstream. It takes three hours of wrestling from the boat to get it back.",
+  "e_dolphin": "On the way back, a pod of finless porpoises swims alongside the boat for a stretch. Everyone on board goes quiet. Only the engine keeps talking.",
+  "e_drought": "One summer of severe drought, great sandbars emerge in midriver and the water level falls below a record the station has held for decades. You write the number in the logbook, and your pen stops for a moment.",
+  "e_ai_video": "The station installs video gauging: a camera on the bank films the river and AI calculates the discharge. The first month it's quite accurate. Then come muddy water and fog, and its numbers are off from yours by more than ten percent.",
+  "e_ai_compile": "AI is added to the records system, and a year of data is compiled in a week. You only need to look at the few dozen points it flags in red. Three of them are ones you copied wrong by hand years ago.",
+  "e_mistake": "You swap the numbers on a set of sediment samples and only catch it during compilation, so the measurement has to be redone on the river that same day. The old hand says nothing and gets on the boat with you.",
+  "e_love": "Jogging in the riverside park, you meet someone who teaches at a primary school in town. Hearing you're out on the river every day, they say: then you must know how deep it is today. You give a number, to the centimeter.",
+  "e_flood_season": "Five months of flood season, and no long leave. Family celebrations, nights out with friends, you turn them down one by one, saying on the phone: after October.",
+  "e_marry": "You get married, the date set in the last month of the lunar year, long after flood season. The station chief gives a speech at the wedding: people at our station, he says, pick their dates by the water level.",
+  "e_house": "You take out a mortgage on an apartment in Yichang, with a view of the Yangtze from the balcony. The first thing you do every morning is check the color of the river.",
+  "e_child": "The baby is born in flood season. You take three days off, and on the fourth morning you're back on the boat. The old hand says: what are you doing here, go home. You say: I want to measure this crest.",
+  "e_contest": "You represent the station at the basin-wide hydrological survey skills competition and take second in cableway gauging. The day you get back, the canteen adds a dish to the table for you.",
+  "e_cold_river": "In winter thick fog settles on the river. The boat inches through it while you stand at the bow calling distances, and when you get back your eyebrows are beaded with water.",
+  "e_back": "Years of bending on deck to lower instruments and haul sample drums, and you have a herniated disc. The doctor tells you to bend less. You laugh: then how do I measure the river?",
+  "e_apprentice": "A university graduate is assigned to the station and throws up on his first trip out. You have him stand at the stern and look at the far mountains: look further off and the seasickness goes.",
+  "e_old_book": "Clearing out the archive, you come across a handwritten survey logbook from decades ago, every line neat. The last page reads: flood, measured, everyone safe.",
+  "e_parent": "Your father is in hospital back home, in the middle of flood season. You hear out the doctor on the phone, and it's the next week before you find someone to cover your shift.",
+  "e_dam": "With the reservoir upstream adjusting its releases, the outflow changes three times in one day. Each time a dispatch order comes, you go back out on the river, and by the time you finish the last measurement there's sunset on the water."
+ },
+ "choices": {
+  "c_degree": {
+   "title": "A bachelor's degree by correspondence",
+   "situation": "Your employer and a water-resources college are offering a bachelor's degree by correspondence: weekend classes, with intensive sessions in the winter and summer breaks. It would help with the Technician exam and applying for station chief later. But flood season has no weekends, and the coursework would have to be done in gaps on night shift.",
+   "options": [
+    { "label": "Enroll", "result": "You finish your hydraulics homework between gauge readings on night shift, and three years later you have the degree." },
+    { "label": "Not now", "result": "You keep your free time for the work on the boat and for sleep. Measuring a river, you think, is learned more on the water than in a book." }
+   ]
+  },
+  "c_senior": {
+   "title": "The Senior grade exam",
+   "situation": "The basin is holding skill assessments this year: a theory exam, plus practical tests on the river, ADCP survey, cableway gauging and sediment sampling one after another. The station gives you only two days off to prepare, and flood season is almost here.",
+   "options": [
+    { "label": "Sit it", "result": "On the practical day the wind picks up, and your ADCP run takes three passes to pass. You finish mid-table." },
+    { "label": "Next year", "result": "You spend the two days with your family. The next year you're better prepared, and the examiners don't give you any trouble." }
+   ]
+  },
+  "c_upstream": {
+   "title": "A station on the upper Jinsha River",
+   "situation": "The basin authority has built several new stations in the gorges of the upper Jinsha River and wants experienced young people out there for two years. There's no city, the road washes out whenever it rains, the allowances are good, and you'd get to use every skill you have.",
+   "options": [
+    { "label": "Go", "result": "Two years in the gorges. You measure the fastest water you've ever seen and fix every piece of equipment that can break. When you come back, you're so sunburned you look like someone else." },
+    { "label": "Stay in Yichang", "result": "You give your place to a colleague without a family and stay at the station, doing every measurement more carefully." }
+   ]
+  },
+  "c_ai": {
+   "title": "Taking on the smart hydrology upgrade",
+   "situation": "The station is getting an unmanned online gauging system: radar, video, drones, plus AI algorithms. Someone has to lead the comparison tests, checking the new equipment against traditional methods again and again. It'll take two flood seasons.",
+   "options": [
+    { "label": "Take it on", "result": "You run more than two hundred comparison measurements and write a guide to when the new equipment can and can't be trusted. Later the whole basin uses it." },
+    { "label": "Pass", "result": "You hand the comparisons to the IT center and keep taking the boat out. Now and then the new equipment raises an alarm and you go to look. Often it's a bird sitting on the lens." }
+   ]
+  },
+  "c_tech": {
+   "title": "Going for Hydrological Survey Technician",
+   "situation": "To become a Technician you need a technical write-up, apprentices you've trained, and a defense in the basin-wide assessment. Pass, and you can lead a survey crew, directing flood measurements from the boat.",
+   "options": [
+    { "label": "Apply", "result": "Your write-up is about lowering the sounding weight when the river is full of debris. At the defense, one examiner says: we've had that at our station too." },
+    { "label": "Wait two years", "result": "You let an older hand go first and spend two more years as his deputy, learning when to call a retreat as a flood comes in." }
+   ]
+  },
+  "c_plant": {
+   "title": "Moving to a hydropower plant's hydrology center",
+   "situation": "A large hydropower plant upstream is hiring for its hydrology center: inflow forecasting and reservoir operations data, an office job, noticeably better pay. You'd still work with water, but you'd never go out on a boat again.",
+   "options": [
+    { "label": "Go", "result": "You wash your life jacket and hang it back in the locker, tell the old hand, and report to the plant the following week.", "end": "You went to the hydropower plant's hydrology center and spent your days forecasting inflow from the curves on a screen. When flood water poured over the dam, you often thought of the white survey boat on the river, and the way it spun in the waves." },
+    { "label": "Stay at the station", "result": "You turn it down. Those numbers, you think, still need someone on the river to measure them by hand." }
+   ]
+  },
+  "c_county": {
+   "title": "The county water bureau exam",
+   "situation": "The water resources bureau in your home county is hiring a technician who knows hydrology, to look after the rivers, reservoir safety and flood control. It's right on your doorstep, no more drifting on the Yangtze. Your family badly wants you back.",
+   "options": [
+    { "label": "Sit the exam", "result": "You pass. The day you leave, the station sees you off at the dock, and the survey boat sounds its horn.", "end": "You went back to the county water bureau, looking after your hometown's few rivers and small reservoirs. Every flood season, out of habit, you still go down to the river each morning to read the gauge." },
+    { "label": "Don't", "result": "You tell your family a few more years. That flood season you measure several more floods on the river." }
+   ]
+  },
+  "c_master": {
+   "title": "Applying for station chief, going for Senior Technician",
+   "situation": "The old chief is retiring and the bureau wants you to apply: a dozen-odd people, two boats, decades of station records, and every number reported in flood season on your head. You'd need to pass Senior Technician, and learn to write reports and manage a budget.",
+   "options": [
+    { "label": "Apply", "result": "In your application you talk about that big flood: how you measured, how you pulled out, and how in the end everyone was safe." },
+    { "label": "Stay crew leader", "result": "You recommend your longtime partner on the crew and keep leading measurements on the boat. When the chief isn't sure about something, he often comes to you." }
+   ]
+  },
+  "c_studio": {
+   "title": "Heading a master craftsman studio",
+   "situation": "The basin is setting up a master craftsman studio for hydrological surveying and wants you to head it: improving methods, coaching the basin's competition team, writing standards for new equipment. Take it, and you leave the station for the bureau and a roomful of young people.",
+   "options": [
+    { "label": "Take it", "result": "You make a copy of the station's old logbook, hang it on the studio wall, and make it the subject of your first lesson." },
+    { "label": "Stay at the station", "result": "You say the station can't spare anyone and recommend a younger technician. Every competition season, he brings his team to the station to practice the cableway with you." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "Your last time on the boat is a morning at normal water, the river very still. After the last vertical you haul up the sounding weight, wipe it dry, and hand it to your apprentice. As you dock you look back at the row of gauges, the numbers on them as clear as ever.",
+  "burnout": "After that flood season your back won't bend anymore, and the doctor says no more boat work. The station moves you to records compilation, reviewing suspect data points on a computer all day. The station-house window faces the river, and you often stop to watch the white boat go out and come back."
+ },
+ "stages": [
+  "Every day you go out with the survey crew: lowering the sounding weight on deck, clicking the stopwatch, logging the current meter's signals, drawing sediment samples, then filtering, drying and weighing them in the lab. Morning and evening you read the gauges, and in flood season you take night shifts reporting levels, writing every number in the logbook. When the old hand says \"do that vertical again,\" you lower the weight again.",
+  "Now you can lead a measurement yourself: choosing the verticals, running the ADCP from the boat, judging on board whether the data is good, then working up the results back at the station. In winter you compile a station's records for the year, deriving flows and filling gaps in the records system, and phone the stations upstream and downstream about every suspect point. New surveyors go out on the boat with you, and you teach them how to keep their footing.",
+  "You lead a survey crew, and in flood season you direct the flood measurements from the boat: when to go out, where to add verticals, when to pull back because the waves are too high. You plan maintenance for the boat and cableway and talk every trip through with the skipper and the mechanic. When an apprentice hands you results, you read the notes in the logbook first.",
+  "You're station chief, responsible for a dozen-odd people, two boats and decades of station records. In flood season you answer for every number reported upward and take dispatch calls in the middle of the night. The rest of the year you draw up rotas, manage the budget, review compiled records and host inspections. You rarely lower the weight yourself now, but in every big flood you're at the bow.",
+  "You head the basin-wide master craftsman studio: refining methods, writing standards for new equipment, coaching the competition team, and fielding every station's hardest problems. You lecture at stations up and down the river and sit down with equipment makers to rework instruments. When young people come to ask you something, you often walk them down to the river first to look at the water."
+ ],
+ "work": [
+  "The old hand has you read the staff gauge. You crouch on the steps for a long while and say 2.35 meters. He says: read it once when the wave comes and once when it goes, and take the middle.",
+  "The lab balance keeps jumping. You spend an afternoon looking for the cause and finally find the window isn't quite shut. The river wind is blowing in.",
+  "The first time you lower the sounding weight from the boat, the current drags the cable thirty degrees off vertical. The old hand shows you how to correct the depth for the angle, and it takes you three tries to get it right.",
+  "Halfway through an ADCP run, bottom tracking drops out on the screen. You decide the sand on the riverbed is moving, switch to GPS reference, and run the section again.",
+  "During compilation, the station downstream shows ten percent more flow than yours. You call them, and after an afternoon going through logbooks together, it turns out their section had scoured deeper and hadn't been updated.",
+  "New hand Zhou overfills a sediment drum. You have him tip out half and resample, explaining that too much or too little and the sediment concentration comes out wrong either way.",
+  "The afternoon before the crest arrives, you watch the debris on the river thicken and decide to go out two hours early to get the pre-crest measurement done.",
+  "The cableway's steel cable is due for replacement. You and Liu, the mechanic, check it meter by meter, spot broken strands in one place, and shut the cableway down that same day.",
+  "An apprentice's flow measurement comes out low. You read the note in the logbook: a large ship passed during the measurement. You have him mark it on the results sheet.",
+  "Inspectors come to check data quality and pull a year's compiled records. For every point that was revised, you bring out the original logbook and show them page by page.",
+  "A dispatch call at midnight: can tomorrow's 8 a.m. discharge be reported early? You look at how fast the level is rising, say yes, and wake the survey crew.",
+  "Drawing up the flood-season rota, you make sure every shift pairs someone who has measured a big flood with someone young who hasn't.",
+  "An equipment maker comes to rework a radar velocity sensor. You take them to the river for a day of measurements and show them that in rain it keeps mistaking raindrops for the water surface.",
+  "One of your competition team keeps running over time on cableway gauging. You have him close his eyes and listen to the winch until he can hear when the cable reaches the bottom.",
+  "You write the safety standard for flood measurement for the whole basin. Rule one: when the waves are too high to read the gauge, bring the people back first."
+ ],
+ "past": [
+  "You're in ninth grade in a riverside town in Jingzhou. Every summer when the water rises the adults go up on the levee to patrol, and you trail behind them, watching them measure the water with bamboo poles.",
+  "Your gaokao (college entrance exam) score isn't high, and you pick the hydrology and water resources program at a water-resources college. Your father says: work with water, and you'll never go hungry.",
+  "Your first internship at a gauging station, in your first year. Seeing the old hands standing at the bow in life jackets, you think it beats any classroom.",
+  "You earn the entry-level hydrological surveyor certificate. In the practical you run the cableway yourself for the first time, hands shaking the whole time, and the sounding weight still settles steadily onto the bottom.",
+  "Before graduation the basin authority comes to recruit at your college. The interviewer asks if you can swim and if you get seasick. You say you can swim, but you've never been on a boat. He laughs: the seasickness passes."
+ ],
+ "late": {
+  "pension_note": "Estimate: gauging stations under the basin authority pay pensions under the civil service and public institution scheme plus an occupational annuity, roughly 65 percent of final monthly pay. The flood-season allowance isn't counted.",
+  "scenes": [
+   "On the day you retire, you hand your stack of survey logbooks to the archive. The archivist asks if you want to keep one. You choose the first.",
+   "The station invites you back to give a talk about the seven-day flood. Afterwards the young ones ask if you were afraid. You say: yes, and that's why you pull the people back first.",
+   "Every morning you walk in the riverside park, and when you pass the gauge there you always stop to read it, then check it against the number on your phone.",
+   "You take your grandchildren on a Yangtze cruise. As you pass the station house you point to the bank: there, I measured the water there for more than thirty years.",
+   "No longer allowed on the boat, you review data at a computer all day, one red dot at a time. You recognize one of them. You were on the boat that day.",
+   "From the station-house window you hear the survey boat's engine and know it's going out; when you hear it again, you know it's back.",
+   "You go fishing by the river. When nothing bites, you watch the eddies on the surface and estimate how fast the current is running today.",
+   "Your first flood season after leaving the station, there's no night shift to work. When heavy rain comes in the night, you still get up and stare out the window for a good while.",
+   "Your new colleagues know you measured the Yangtze and keep asking how big the biggest flood was. You give them a discharge figure. They don't follow, so you say: much bigger than now.",
+   "Back in Yichang to see old colleagues, you find the station has a new survey boat, still white. The young ones invite you aboard. You wave them off and watch them leave from the bank.",
+   "Later the water levels, rainfall and flows all went to online sensors and models. But on the day the big flood comes, someone still has to take a boat out, lower the instruments, and see whether the numbers they report are right.",
+   "One autumn evening you stand by the river, the water clear and slow. Far off, a finless porpoise breaks the surface, and you watch for a long time."
+  ],
+  "closing": {
+   "retire": "Years later, a grandchild asks you how deep the Yangtze is. You don't answer right away. You take the child by the hand down to the steps by the river, point to the gauge, and teach them to read the numbers.",
+   "burnout": "One afternoon years later, you sit on the balcony watching the Yangtze below rise little by little. You no longer work out its discharge. You just watch the boats come and go.",
+   "end": "Years later, in a cupboard, you find the old stopwatch. You press it, and it still runs. You listen to it tick for a while, then put it back where it was."
+  }
+ }
+}

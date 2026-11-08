@@ -1,0 +1,151 @@
+{
+ "id": "dancer-gz",
+ "occupation": "Dancer",
+ "role": "Dancer with a Song and Dance Theater",
+ "headline": "A dancer who left home at eleven for a dance academy's affiliated school, joined a Guangzhou song and dance theater after graduating, and now dances in the third row of the corps in an original dance drama",
+ "unit": "A city-run song and dance theater in Guangzhou",
+ "unit_type": "State-owned performing arts company (song and dance theater)",
+ "city": "Guangzhou",
+ "city_tier": "Tier 1",
+ "education": "Bachelor's degree (dance performance, Chinese classical dance)",
+ "level": "Eleven years of training between the affiliated school and university. Your flexibility, control and turns are near the top among the newcomers, and in the dance drama you're third row of the corps. You've quietly learned the lead dancer's section off a video. You haven't danced it yet.",
+ "intro": "One whole wall of the rehearsal hall is mirror, and the barre is wrapped round and round in old tape. You left your home in Hunan at eleven for a dance academy's affiliated school, trained for eleven years, and won a place at this song and dance theater in Guangzhou. Now you dance in the third row of the corps in an original dance drama, and the lead's section you've already quietly learned off your phone. From today your name is on the rehearsal schedule, on the last line.",
+ "salary_note": "Estimate: performers at a city-run song and dance theater are paid on a public-institution or corporatized-company pay scale, plus performance allowances and a share of outside commercial shows. Guangzhou runs a little above the national figure, taken at 1.1 times.",
+ "facts": [
+  { "label": "Grade 4 Performer (current level)", "value": "0–4 years, ¥4,500–7,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Grade 3 Performer (4–9 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Turning the choreographer's design into your own body", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Gathering dance history material and reference videos", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The metro to the theater, and you change into practice clothes. In the rehearsal hall someone is already stretching on the floor, and the air conditioning hasn't quite cooled the room yet.",
+  "Morning class. Barre, center, jumps. The pianist plays the same piece as always, and the ballet master taps your knee with a little stick: open it more.",
+  "Dance drama rehearsal. The choreographer stands in front of the mirror and has every dancer in the third row raise their hands two centimeters. You raise them all morning until, in the mirror, they finally make a line.",
+  "The theater canteen. You eat only half a bowl of rice and a plate of greens. There's an overseas tour next month, and wardrobe says the waistbands can't be let out any further.",
+  "Rehearsal again. The senior dancer in the lead runs her solo, and you stand in the corner watching, your feet tapping her rhythm softly on the floor.",
+  "Ice on your knee. The company physio says your meniscus is a little worn and to do fewer sets of big jumps. You nod.",
+  "In the evening a free community performance at a district cultural center. Backstage is a classroom, and you change between the desks.",
+  "Back in the theater dormitory you roll out your legs on a foam roller, open the lead's section you learned off your phone, and mark through it once in front of the wardrobe mirror."
+ ],
+ "ladder": [
+  { "title": "Grade 4 Performer", "stage": "Corps", "focus": "Dance in the corps of dance dramas and galas: morning class, rehearsal and performance every day, community shows and overseas tours with the company. You move up by being steady and able to fill any position." },
+  { "title": "Grade 3 Performer", "stage": "Lead dancer", "focus": "Dance leads and duets, take named roles in dance dramas, enter competitions, and start helping the choreographer set movement and bringing on newcomers." },
+  { "title": "Grade 2 Performer", "stage": "Principal", "focus": "Intermediate professional rank: dance principal roles, or move from the stage to rehearsal director, refining the whole company's movement, leading revivals and heading overseas tours." },
+  { "title": "Grade 1 Performer", "stage": "Master", "focus": "Senior professional rank: set the direction for new dance dramas, judge competitions, lecture at dance academies. On artistic matters at the theater, your word is final." }
+ ],
+ "ai_tasks": [
+  { "name": "Gathering dance history material and reference videos", "how": "For a new subject, which period's costume, which school's movement, which versions to look at: AI pulls it together with videos in minutes. People pick out what's really useful." },
+  { "name": "Breaking down movement and comparing rehearsal footage", "how": "AI can break rehearsal video down frame by frame and mark each dancer's landing, angle and timing, so you can see at a glance where the corps is out of line. Where it should be together and where it's deliberately not, the choreographer and rehearsal director decide." },
+  { "name": "Drafting choreography and movement references", "how": "AI can generate passages of movement to the music to open up the choreographer's thinking. Half of it a human body can't do, and half of what it can do has no breath in it. In the end it still has to be worked out bit by bit in the rehearsal hall." },
+  { "name": "Turning the choreographer's design into your own body", "how": "When the choreographer says \"this should be like wind across a wheat field,\" how to do it with your waist, your breath, your eyes, only the dancer can find, over and over, in front of the mirror." },
+  { "name": "Dancing on stage for an audience", "how": "Lights, orchestra and the breathing of dozens of people have to land on the same beat with a thousand people watching. For those few minutes it can only be real people standing there." }
+ ],
+ "events": {
+  "e_premiere": "Opening night of the dance drama. At the curtain call all the lights come up at once. From the third row of the corps you can't see the faces out front, only hear the applause rolling up in waves, louder than the air conditioning in the rehearsal hall.",
+  "e_weight": "On the scales before the tour you're half a kilo over. Wardrobe takes your waistband in half an inch and the choreographer says nothing. That week your dinner every night is half an apple.",
+  "e_knee": "Landing from a big jump, your knee gives, and you're taken to hospital. Two months off. You sit in the corner of the rehearsal hall watching the others rehearse, and it's more tiring than dancing.",
+  "e_sub": "The senior dancer in the lead sprains her ankle. The choreographer looks around the room and points at you. That night you dance the solo, and when you come off your hands won't stop shaking.",
+  "e_tour": "The theater takes the dance drama on an overseas tour, eight cities in a month. Backstage you learn to say thank you in three languages, and for the first time, in a theater abroad, you hear an audience rise to its feet to applaud.",
+  "e_contest": "A solo you danced wins a prize at a national dance competition. The day you get back to Guangzhou, the theater puts your name up on the electronic screen outside.",
+  "e_village": "A show in a village in Conghua, out in the northern hills of Guangzhou, on a stage put up in front of the ancestral hall. Afterward a little girl runs backstage to ask if your toes hurt.",
+  "e_ai_video": "The theater starts using AI movement analysis. As soon as a rehearsal is filmed, every dancer's angles and landings are marked in color. For the first time you see that your turns always stop half a beat before everyone else's.",
+  "e_ai_mocap": "The theater is making a digital version of the dance drama and asks you to dance a whole day in a motion-capture suit. The contract says the movement can only be used for this production. You read every clause before you sign.",
+  "e_low_pay": "The theater's performance allowances are two months late. A classmate from the academy teaching at a children's dance school earns twice what you do.",
+  "e_short_video": "You dance a passage of classical dance on the theater roof, a colleague films it and posts it, and hundreds of thousands watch overnight. In the comments someone says: so this is what they mean by shenyun, the inner rhythm of classical dance.",
+  "e_love": "You end up together with a cellist from the theater orchestra. Your first meal alone together is at a sweet-soup shop by the stage door, and they say that at every curtain call you lift your head half a beat after everyone else.",
+  "e_marry": "You get married. At the wedding your friends from the orchestra play music from the dance drama. You don't dance. You sit and cry until your makeup runs.",
+  "e_child": "Your child is born. On your first day back in the rehearsal hall the barre is the same one, and you hold it and stretch for a long time before you step back into the center.",
+  "e_parent": "Your mother comes from Hunan to Guangzhou for the first time and sits in the front row of the theater to watch you. At the curtain call you see she isn't clapping. Both her hands are over her mouth.",
+  "e_back": "The old injury in your back aches whenever the humid spring weather comes, the walls running with damp. The physiotherapist tapes you up, and you train in the tape and peel it off after class.",
+  "e_last_show": "You dance the dance drama's lead role for the last time. At the curtain call you stay two seconds longer. From the next run on, you stand in the wings counting the beat for a younger dancer.",
+  "e_student": "A young dancer you've trained dances a solo at a competition for the first time. Standing in the wings, your feet are tapping her rhythm softly on the floor again.",
+  "e_new_theater": "The theater moves into a new rehearsal building, with sprung wooden floors and mirrors from ceiling to floor. You walk once around the new hall, and miss that barre wrapped in old tape a little.",
+  "e_father": "Your father falls ill back home in Hunan. You rush back from the tour, spend a week with him at the county hospital, and rush back to keep performing."
+ },
+ "choices": {
+  "c_style": { "title": "Stay with classical dance, or learn contemporary", "situation": "The theater has brought in a contemporary dance choreographer for a new work, choosing a few dancers from among the young. Dancing contemporary would mean taking apart eleven years of classical bearing and starting over, but it's something you've never touched.", "options": [
+   { "label": "Learn contemporary", "result": "For the first time you spend a whole afternoon rolling on the floor. The choreographer says you're too beautiful and need to be \"dirtier.\" Three months later you're making movements you don't recognize as your own." },
+   { "label": "Stay with classical", "result": "You stay with the classical group, refining your bearing finer every day. The choreographer says there's something in your eyes, and when the dance drama is revived he gives you a duet." }
+  ] },
+  "c_resort": { "title": "A year's residency at a theme park", "situation": "A large outdoor spectacle at a tourist resort wants to borrow dancers from the theater for a year. More than twice the theater's pay, two shows a day. But for that year you'd miss the theater's new dance drama, and the chance at a lead would go to someone else.", "options": [
+   { "label": "Take the residency", "result": "You dance two shows a day on the outdoor stage by the lake and save up a sum of money. When you come back, the lead in the new dance drama has already been cast." },
+   { "label": "Stay at the theater", "result": "You stay and rehearse the new dance drama through with the choreographer, moving from the third row to the first." }
+  ] },
+  "c_level3": { "title": "Go up for Grade 3 Performer", "situation": "Once a year the theater puts dancers forward for professional rank. Grade 3 looks at number of performances, lead roles and competition results, and requires a written account of creating a role. Five people are up this year, for two places.", "options": [
+   { "label": "Go all out", "result": "You collect your performance programs and competition footage from the past few years into a folder and stay up writing the account. On the day of the review, your solo video is played twice." },
+   { "label": "Let your senior colleague go first", "result": "She gets it and takes you out for dim sum. You're a year behind, and at rehearsal she's always standing beside you watching." }
+  ] },
+  "c_ai": { "title": "Learn AI rehearsal analysis or not", "situation": "The theater has brought in a movement analysis system that breaks rehearsals into frames, marks angles and even suggests choreography. Someone needs to learn it and review rehearsals for the whole company, and to judge which suggestions a human body can't do.", "options": [
+   { "label": "Learn it", "result": "After every rehearsal you watch an hour of footage and write each dancer one note. Of the choreography the system suggests, you strike out most of it." },
+   { "label": "Trust your eyes", "result": "You keep standing in front of the mirror watching and calling stop by feel. When the young rehearsal director explains angles on a tablet, you stand to one side and listen." }
+  ] },
+  "c_school": { "title": "Open a children's dance school", "situation": "More and more parents in Guangzhou are sending their children to dance classes, and a classmate from the academy wants to open a children's dance school with you in Tianhe, the business district. You'd bring the expertise and the name; she'd bring the money and the space. You'd earn more than at the theater, but you'd have no time for its performances.", "options": [
+   { "label": "Resign and open the school", "result": "You hand in your resignation, fold your practice clothes, and leave them in your locker at the theater.", "end": "Your dance school runs for many years and teaches thousands of children. With every new child, the first thing you teach is how to hold the barre, and the second is how to look at yourself in the mirror." },
+   { "label": "Stay at the theater", "result": "You recommend two senior dancers who've just retired from the stage, and stay on dancing yourself." }
+  ] },
+  "c_level2": { "title": "Go up for Grade 2 Performer", "situation": "Grade 2 is an intermediate professional rank, requiring principal roles and prizes, and this year the province also wants a piece of your own choreography. Your knees and your back keep reminding you that your days on stage are numbered.", "options": [
+   { "label": "Choreograph a piece for it", "result": "With a few young dancers you make a small dance drama about your grandmother at her loom, and it takes three months. When the panel has watched it, they ask: who made this?" },
+   { "label": "Not this year", "result": "You give your time to performing and to the young dancers, and your rank stays where it is. At rehearsal the young ones still queue up for you to fix their movement." }
+  ] },
+  "c_college": { "title": "Teach dance at a university", "situation": "The dance department at a Guangzhou university invites you to teach Chinese classical dance bearing: a permanent state post, winter and summer breaks, no more going on stage every night. But leave the theater, and you'll never stand in the light of a dance drama again.", "options": [
+   { "label": "Go and teach", "result": "In your first class you have the students close their eyes, listen to a piece of music, and dance only with their breath.", "end": "You teach classical bearing in the university's dance department for many years, one class after another. At every graduation showcase you sit in the wings, counting the beat for them." },
+   { "label": "Stay at the theater", "result": "You thank the department head and say you want to dance a few more years. That night, you dance especially slowly." }
+  ] },
+  "c_level1": { "title": "Go for Grade 1 Performer", "situation": "Grade 1 is a senior professional rank, and there are only a handful in the province. It takes original work, dancers you've trained who've won prizes, and some national reputation, with the application going to the province. The theater wants someone to carry its name, but it means a year of writing applications and attending reviews.", "options": [
+   { "label": "Go for it", "result": "You collect the dancers you've trained, the works you've made and the prizes you've won into a folder, and go to the provincial capital for the oral defense three times." },
+   { "label": "Let it go, stay in the rehearsal hall", "result": "Every morning you still arrive at nine and stand at the mirror fixing young dancers' movement. Your rank stays where it is, and you don't much mind." }
+  ] }
+ },
+ "endings": {
+  "retire": "At your last morning class you stand at the head of the barre, with the young dancers in a row following you. When the pianist plays the last chord, you turn off the rehearsal hall lights, and at the door you look back once at the mirror.",
+  "burnout": "Your back and knees got worse every year, until one morning you bent to tie your dance shoes and couldn't straighten up for a long time. The doctor said no more dancing, and no more leading morning class. You put your shoes in the locker and went to the theater's archive, where every day you sort and number the old dance drama recordings, one by one."
+ },
+ "stages": [
+  "You dance in the corps. Morning class at nine every day, barre, center, jumps, with the ballet master tapping your knee with a little stick; then dance drama rehearsal, where the choreographer wants every hand in the corps at the same height, raised hundreds of times in a morning. In the evenings, performances or community shows, backstage often a classroom. You're one of dozens, and your job is not to make mistakes and not to stand out.",
+  "You've started dancing leads and duets, with a named role in the dance drama. The choreographer tries new movement on you first; before competitions you and your partner work a duet down to every beat; on overseas tours you're responsible for keeping the corps on their marks. Newcomers have started calling you teacher, and stand behind you at morning class.",
+  "Most of the time you're not at center stage anymore. You stand in front of the mirror. You're the dance drama's rehearsal director: watching everyone's landings, reworking transitions, deciding who dances tonight and who covers. Reviving an old dance drama, you dig out recordings from ten years ago and match them frame by frame. You lead the overseas tours, settling the floor and lighting positions with the stage managers of theaters abroad.",
+  "You're the mainstay of the theater's artistic work. New dance dramas are yours to set the direction for, to bring in choreographers and to raise funding; you judge competitions and lecture at dance academies, and on who should dance the lead and who should move to rehearsal director, your word carries the most weight. Every morning you still go round the rehearsal hall first, and put a hand on that barre."
+ ],
+ "work": [
+  "The choreographer wants the third row's hands two centimeters higher. You raise them in front of the mirror all morning, and in the end he stretches a string above your fingertips before they're finally level.",
+  "Before a show the woman from wardrobe sees the seam on your water sleeve has come loose and spends half an hour sewing it back. After the performance you fold the sleeve and give it back to her. She smiles and says: it held.",
+  "The stage for a community show is concrete. You arrive an hour early, unroll the dance floor one strip at a time and tape every seam before you dare do a big jump.",
+  "A week before the competition you and your partner watch one lift in slow motion on a phone thirty times, put a strip of white tape where you land, and dance to it every day.",
+  "The stage at a theater abroad is raked more steeply than at home. You and the stage manager gesture it out for ages, move the corps' blocking half a meter upstage, and recount the whole thing.",
+  "A new dancer keeps falling to one side in her turns. You stand behind her with your hands on her shoulders and turn with her again and again, until she finds her own center.",
+  "Reviving a dance drama from ten years ago, you can't make out one passage of the corps' blocking in the recording. You find the dancer who danced it then and spend an afternoon marking it through in her living room.",
+  "The choreographer wants a run of consecutive big jumps in the new dance drama. You watch the rehearsal footage three times and say these dancers' knees won't hold up, and change it to a slow turn.",
+  "The provincial dance competition asks you to judge. One solo has very high technique, but the last movement doesn't finish clean. Before scoring, you watch the recording once more.",
+  "You go to plead for funding for a new dance drama. You speak for ten minutes at the meeting, and at the end show a video of the young dancers stretching at the barre in the morning."
+ ],
+ "past": [
+  "You grew up in a small city in Hunan. At eight you learned to dance at the Children's Palace, and the teacher said you had beautiful insteps and told your mother to take you to the provincial capital to audition for a dance academy's affiliated school.",
+  "At eleven you got into the affiliated school of a dance academy in Beijing, more than a thousand kilometers from home. The first month you cried every night. By the second you'd learned to sew your own dance shoes.",
+  "At fourteen your back flexibility came in, but you were shooting up so fast the teachers worried about your proportions. Every day you did an extra hour of control work.",
+  "At your graduation exam from the affiliated school, your solo came first and you went straight on to the university's Chinese classical dance program. On the phone your mother said she'd told all the neighbors.",
+  "Before you graduated, this song and dance theater in Guangzhou came to the school to recruit. You danced a piece from the repertoire, and the recruiting teacher asked if you'd be willing to go south. You said yes."
+ ],
+ "late": {
+  "pension_note": "Estimate: performers at a city-run company draw a pension on the public-institution or urban employee scheme, with long service, so in retirement you get about fifty-five percent of your final monthly pay.",
+  "scenes": [
+   "On the day you retire you sit in the rehearsal hall all morning, watching the young dancers' class. Before you leave, you replace the oldest layer of tape on that barre with new.",
+   "The neighborhood seniors' dance troupe asks you to teach. They dance square dancing, and you show them how to let the breath carry the arms. One woman says: so the arms grow out of your back.",
+   "Every morning you walk along the Pearl River. When you see people doing their morning exercises, you stand at the railing and stretch your legs for a while too. The railing is your barre.",
+   "A dancer you trained becomes the lead in a dance drama touring the country. The night it plays Guangzhou, she gives you a front-row seat, and at the curtain call she bows to you.",
+   "In the archive you sort the old dance drama recordings and number them one by one. Sometimes a passage you danced yourself comes up, and you stop and watch it through before going on to the next.",
+   "Every week you go to the hospital for physiotherapy. The therapist asks what you used to do, and you say you danced. She says she saw your dance dramas as a child.",
+   "In the park near home you teach small children how to stand. No dancing, just standing. When they stand well, you give each of them a sweet.",
+   "For the first few months after you leave the theater you still wake every morning at nine and lie in bed, waiting for the piano piece from morning class.",
+   "The theater revives the dance drama and invites you back to watch the run-through. You sit out front, and your feet are tapping the corps' rhythm softly on the floor again.",
+   "The theater marks its founding anniversary and invites you back. The old ballet master sits in the front row, hair gone completely white, still holding that little stick. You go up on stage and bow to her.",
+   "Later the rehearsal hall had cameras and movement analysis, every frame marked with its angle. But whether a turn had breath in it still took a person standing at the mirror to see.",
+   "In the humid spring weather the walls run with damp. With your finger you draw one of the dance drama's arm positions on the fogged mirror and watch it slowly dissolve."
+  ],
+  "closing": {
+   "retire": "Many years later your granddaughter turns a lopsided circle on tiptoe in the living room and looks back at you. You walk over, put your hands on her shoulders, and say: your eyes go first, and your body follows.",
+   "burnout": "Many years later, one afternoon, you sit in the shade of the trees in the park while a few children in the open space practice the way of standing you taught them, perfectly straight. The wind comes through, and you nod, very slightly.",
+   "end": "Many years later, at the bottom of a box, you find an old pair of dance shoes, the toes worn white. You lay them in your palm, press gently where the instep goes, then wrap them up and put them back."
+  }
+ }
+}

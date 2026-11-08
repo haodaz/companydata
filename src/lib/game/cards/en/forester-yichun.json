@@ -1,0 +1,200 @@
+{
+ "id": "forester-yichun",
+ "occupation": "Forest Ranger and Forestry Technician",
+ "role": "Forest Ranger and Forestry Technician at a State Forest Farm",
+ "headline": "A forest ranger and forestry technician with a bachelor's in forestry, in your first year back home at a state forest farm in Yichun, Heilongjiang. Your father was a logger here; your job, now that natural forests are closed to logging, is patrolling, guarding and counting the Korean pines",
+ "unit": "A state forest farm in Yichun, Heilongjiang",
+ "unit_type": "State forest farm",
+ "city": "Yichun",
+ "city_tier": "Fourth-tier city",
+ "education": "Bachelor's degree in Forestry",
+ "level": "You know the main tree species of the Lesser Khingan Mountains, can run a sample plot survey with a hypsometer and calipers, and know a few of the main valleys from patrolling with the old rangers. Silviculture planning and diagnosing pests, you're still learning.",
+ "intro": "In your kit bag: a pair of tree calipers, a hypsometer, a patrol terminal, a roll of red flagging tape, a chainsaw key and an army canteen full of hot water. The farm headquarters sits by a river, a few rows of red-brick buildings, and behind them Korean pine and white birch as far as you can see. Your father logged these mountains when he was young. You've come back to watch them grow. From today you patrol these slopes behind the old ranger. Which valley, which stand: from now on, you're the one who has to remember.",
+ "salary_note": "Estimate: a permanent post at a state forest farm in Yichun, base pay plus performance pay and a ranger allowance. Local wages are low, so taken at 75 percent of the national figure. Fire season and fieldwork bring extra allowances; pay only rises noticeably with professional rank.",
+ "facts": [
+  { "label": "Forest Ranger / Forestry Technician (current level)", "value": "0–3 years, ¥3,800–5,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Assistant Engineer (Silviculture Technician) (3–7 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥11,500 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Patrolling the forest and stopping damage to it", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Forest fire monitoring", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "In the headquarters canteen, the cook is frying flatbread. You charge the patrol terminal and fill your canteen with boiling water. Outside it's minus twenty-eight.",
+  "The old ranger drives the snowmobile up front and you ride the sled behind it into Compartment 3. The snow is deep and the pines are coated in rime.",
+  "Along the patrol route, the snow shows a line of roe deer tracks and a drag mark. The old ranger looks it over and says: that's a windthrown log, not a person.",
+  "A permanent sample plot in a Korean pine plantation. You take off your gloves to measure diameters with the calipers. After ten trees your hands are numb, and you tuck them inside your coat to warm before going on.",
+  "In the ranger's hut in the woods you light the stove and toast steamed buns and pickles on the lid. The old ranger says a logging crew used to live here.",
+  "At a mountain pass you check the fire-prevention signs put up last winter, and nail the one the wind knocked crooked back into place.",
+  "By a little after three the sun is low, and the forest darkens fast. You follow your own snow track back, and the trail on the terminal draws a big loop.",
+  "Back at headquarters you upload today's patrol track and plot data into the system, then write it all again in the paper patrol log: nothing unusual."
+ ],
+ "ladder": [
+  { "title": "Forest Ranger / Forestry Technician", "stage": "Patrols", "focus": "Patrol the forest, man the checkpoints in fire season, help with sample plot surveys and inspect planting and thinning work; in winter, sort the patrol records." },
+  { "title": "Assistant Engineer (Silviculture Technician)", "stage": "Silviculture", "focus": "Take charge of planting and thinning design and inspection for one management compartment, monitor pests, sit for Forestry Engineer." },
+  { "title": "Engineer (Head of the Farm's Technical Section)", "stage": "Technical section", "focus": "Run silviculture, resource surveys and fire-prevention technique for the whole farm, lead the rangers, liaise with the forestry bureau on projects." },
+  { "title": "Senior Engineer (Deputy Farm Director for Technical Affairs)", "stage": "Deputy director", "focus": "Oversee the farm's forest management plan, fire prevention and understory economy; report up, assign work down, review every design." },
+  { "title": "Professor-level Senior Engineer (Chief Engineer of the Forestry Bureau)", "stage": "Chief engineer", "focus": "Technical lead for several farms: forest management planning, carbon-sink projects, and the technical calls on major pest outbreaks and fires." }
+ ],
+ "ai_tasks": [
+  { "name": "Patrolling the forest and stopping damage to it", "how": "Going into the mountains to check for illegal logging, illicit harvesting and unauthorized fires, stopping it on the spot, gathering evidence, talking it through face to face with whoever is up there: someone has to walk it and say it themselves." },
+  { "name": "Forest fire monitoring", "how": "Cameras and AI on the lookout towers can spot smoke and pinpoint where a fire started, and satellites report hot spots too. Whether it's real fire or cooking smoke, whether to report it and how to fight it takes someone on site to judge." },
+  { "name": "Forest resource surveys", "how": "Drone lidar and remote-sensing models can calculate tree height, timber volume and change across a stand. The diameter, species and health of every tree in a sample plot still need someone with calipers to measure and look." },
+  { "name": "Planting and thinning design", "how": "AI can suggest species and thinning intensity from site conditions and stand data and lay out work maps. Which plot gets Korean pine, which stand should be thinned, is for the technician to decide after seeing it on the mountain." },
+  { "name": "Pest monitoring and early warning", "how": "Traps, image recognition and weather models can give early warning of pests like pine caterpillars. How to survey the larval density, whether to treat it and how, takes someone going into the forest to look." },
+  { "name": "Compiling patrol records and resource ledgers", "how": "Patrol tracks, plot data and work ledgers can already be totaled and turned into reports automatically by the system and AI. People only check the key numbers and anomalies." }
+ ],
+ "events": {
+  "e_first_plot": "You complete a sample plot survey on your own for the first time: a hundred and twenty trees, species, diameter and height, none missed. The technical section head goes over the data once and says: your volume's right.",
+  "e_fire_season": "Spring fire season, and you spend two months at the checkpoint into the mountains, logging every vehicle and checking for anything that could start a fire. An old man going up to pick wild greens hands over his lighter and says: you're even stricter than your dad was.",
+  "e_fire": "A lightning fire flares up on a ridge. You go up with the firefighting crew and spend the night cutting a firebreak. By dawn the fire is out, and half your eyebrows are singed off.",
+  "e_bear": "On patrol in a stand of linden you see a black bear digging at tree roots. You back away slowly, and only after two hundred meters dare to breathe.",
+  "e_pine_nuts": "In autumn, when the pine nuts ripen, people climb the trees to knock down the cones illegally. You keep watch in the woods for several nights and talk three groups down. One of them is a classmate from middle school.",
+  "e_pest": "Pine caterpillars break out in a larch stand and strip the needles bare. You spend a month counting larvae, and in the end decide to release natural predators instead of spraying.",
+  "e_ai_smoke": "AI smoke-detection cameras go up on the lookout towers, and in one spring they raise more than forty alarms. You go out to check each time. Over thirty are farmers burning straw, a few are fog, and one is real.",
+  "e_ai_lidar": "Drone lidar scans the whole farm, and within a month the timber volume for every stand is calculated. You take the results to a few old sample plots to check, and the error is under five percent.",
+  "e_planting": "Planting season in May. You lead the temporary workers in putting thirty thousand Korean pine seedlings into an old logging site. At the autumn inspection, ninety percent have survived, and you look at the head of every row.",
+  "e_people_leave": "There are fewer young people at the farm every year, and several of your classmates have gone south. At a get-together over New Year they ask what you make a month. You tell them, and everyone goes quiet.",
+  "e_love": "At a restaurant in town serving iron-pot stews, you meet someone who teaches at the farm's primary school. Hearing you spend every day in the mountains, they say: then you must know those trees outside our school gate.",
+  "e_marry": "You get married, the banquet in the farm canteen, and the whole farm comes. The old ranger gives you a Korean pine cutting board, made from wood he kept back from his logging days.",
+  "e_house": "You buy a secondhand apartment in Yichun proper. It costs less than a tenth of what it would in the south, and the down payment is five years of savings.",
+  "e_child": "The baby is born in fire season. You take the call at the checkpoint and get three days off. When you come back, there's a little red flag on the checkpoint rail that says: congratulations.",
+  "e_forest_econ": "The farm starts an understory economy, and you help the staff plant a field of blueberries in the woods and keep a few dozen hives of black bees. After the autumn sales, everyone's share is more than a month's pay.",
+  "e_cold": "On a minus-thirty-five morning, the patrol snowmobile dies halfway. It takes four hours on foot to get back to headquarters, and two of your toes are frostbitten.",
+  "e_old_tree": "In a valley nobody goes to, you find a Korean pine several centuries old, so big it takes several people to circle it with their arms. You report the coordinates, and it goes on the heritage tree register.",
+  "e_back": "Years of walking in snow, cold one moment and hot the next, and your back and joints are going. The doctor calls it cold-damp joint pain and tells you to stay out of the cold. You smile.",
+  "e_father": "You take your father back to the valley where he logged when he was young. The slopes he clear-cut are now a forest more than twenty meters tall. He stands there a long time and says: they grew fast.",
+  "e_carbon": "The farm's forest carbon-sink project passes verification, and the first carbon payment comes in. At the meeting the farm director says: this mountain used to earn its money by cutting trees. Now it earns it by not cutting them."
+ },
+ "choices": {
+  "c_south": {
+   "title": "Following classmates south",
+   "situation": "A college classmate is a project manager at a landscaping company in Hangzhou and wants you to come, at three times the farm's pay. Your family won't stop you. But you know that if you go, these mountains lose one more young person.",
+   "options": [
+    { "label": "Go south", "result": "You return the calipers and hypsometer to the technical section and board the train south.", "end": "You went south to do landscaping and spent many years planting trees in city housing estates and parks. Every winter when it snowed, your colleagues ran outside to take photos, and you stood at the window remembering how deep the snow gets in the Lesser Khingan." },
+    { "label": "Stay", "result": "You turn your classmate down. That night you walk a loop through the woods behind headquarters, and the only footprints in the snow are yours." }
+   ]
+  },
+  "c_master": {
+   "title": "A part-time master's in forestry",
+   "situation": "A forestry university in Harbin has part-time master's places, researching the management of Korean pine forests. It would help you go for Engineer and technical section head later. But not a day of winter patrols or spring fire season could be skipped.",
+   "options": [
+    { "label": "Do it", "result": "You turn the farm's permanent plot data into a thesis. At the defense your advisor says he's never seen plot data run unbroken for ten years." },
+    { "label": "Don't", "result": "You keep your free time for family and the mountains. What happens in a forest, you think, isn't all written in books." }
+   ]
+  },
+  "c_engineer": {
+   "title": "Going for Forestry Engineer",
+   "situation": "The mid-level review wants silviculture designs, survey reports and a paper. You have the designs and reports, but you're one paper short, which means writing on winter nights after patrol.",
+   "options": [
+    { "label": "Stay up and write it", "result": "You write about the pine caterpillars and the natural predators and submit to the provincial forestry journal. At the review someone asks about larval density, and you answer without missing a beat." },
+    { "label": "Apply next year", "result": "You keep your winter evenings for your child. The next year your file is thicker and the review goes smoothly." }
+   ]
+  },
+  "c_ai": {
+   "title": "Learning drones and the smart forest farm",
+   "situation": "The forestry bureau is building a smart forest farm: drone patrols, lidar surveys, AI smoke detection, all in one platform. They need a young person who knows the woods to learn to fly drones and lead the data checks, with two months of training in Harbin.",
+   "options": [
+    { "label": "Go and learn", "result": "You get your drone pilot license and match the farm's old sample plots against the lidar data one by one. Later other farms come to learn from you." },
+    { "label": "Pass, keep patrolling", "result": "You let a newly arrived graduate take it and keep riding the snowmobile into the mountains. When the platform flags something, you go and look and send back a photo while you're at it." }
+   ]
+  },
+  "c_chief_tech": {
+   "title": "Heading the farm's technical section",
+   "situation": "The old section head is retiring, and the farm wants you to take over: silviculture design, resource surveys and fire-prevention technique for the whole farm, a dozen-odd rangers to lead, and projects to coordinate with the bureau. Take it, and you'll spend more time in the office than in the mountains.",
+   "options": [
+    { "label": "Take it", "result": "You bind your years of designs and survey reports into a file. From that year on, every planting map for the farm passes through your hands first." },
+    { "label": "A few more years on patrol", "result": "You recommend your longtime partner at the farm and keep leading the rangers in the mountains. When the section isn't sure about a stand, they still send you to look first." }
+   ]
+  },
+  "c_tourism": {
+   "title": "Joining a forest wellness company",
+   "situation": "A company doing forest wellness retreats and winter tourism has opened a resort in Yichun and wants someone who knows the woods as operations manager, leading guests into the forest and designing hiking routes, at more than double the farm's pay.",
+   "options": [
+    { "label": "Join the company", "result": "You do the paperwork to leave and hand your patrol terminal to the ranger taking over.", "end": "You became operations manager at the resort, walking visitors from the south through the Korean pine forest every day. When someone asked who planted these trees, you pointed to one stand and said: this one, I planted." },
+    { "label": "Stay at the farm", "result": "You turn it down and recommend an old colleague who's been wanting a change." }
+   ]
+  },
+  "c_tower": {
+   "title": "A fire season on the lookout tower",
+   "situation": "The farm's most remote lookout tower needs someone. In fire season a person lives up there for three months, watching dozens of kilometers of forest every day and reporting any smoke. Alone, no signal, supplies once a week, good allowances.",
+   "options": [
+    { "label": "Go up the tower", "result": "Three months watching the forest from the tower, and you learn the shape of every ridge. One day you report a smoke, and when the crew gets there the fire is no bigger than a table." },
+    { "label": "Don't", "result": "You let an old ranger close to retirement go. He says he likes the quiet up there. You see out that spring at the checkpoint." }
+   ]
+  },
+  "c_deputy": {
+   "title": "Going for Senior Engineer and Deputy Director for Technical Affairs",
+   "situation": "The forestry bureau wants you to go for Senior Engineer and become the farm's deputy director for technical affairs: the forest management plan, fire prevention, the understory economy, reporting up and assigning work down, with your signature on every design. Take it, and your days in the mountains will be cut in half.",
+   "options": [
+    { "label": "Go for it", "result": "At your defense you talk about that stand of Korean pine: how much it's grown since you planted it, which year the pests came, how you saved it." },
+    { "label": "Stay section head", "result": "You recommend a young person sent down from the bureau as deputy director, and stay in the technical section, watching over that forest with the rangers for a few more years." }
+   ]
+  },
+  "c_chief": {
+   "title": "Becoming Chief Engineer of the Forestry Bureau",
+   "situation": "The bureau's old chief engineer is retiring and they want you to take over: forest management planning for several farms, carbon-sink projects, the technical calls on major pest outbreaks and fires. Take it, and you move from the farm to the city, and will rarely live in the mountains again.",
+   "options": [
+    { "label": "Take it", "result": "You move into an office in the city, a core sample from a Korean pine on your desk, every ring clear enough to count." },
+    { "label": "Stay at the farm", "result": "You say you can't leave these mountains and recommend a younger senior engineer. Every fire season he still calls to ask your advice." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "Your last patrol is on an early-winter morning after the first layer of snow. You walk into the stand of Korean pine you planted when you were young. The trees are several times your height now. You measure one last tree with the calipers, write it in your notebook, and hand the calipers to the young ranger behind you.",
+  "burnout": "After the frostbite that winter, your legs can't manage long walks anymore, and the doctor says no more mountains. The farm moves you to the resource archive, checking compartment after compartment against satellite images at a computer every day. The forest is right outside the window, and you often watch it move in the wind."
+ },
+ "stages": [
+  "You patrol the mountains behind the old ranger: in winter riding the snowmobile into the compartments to look for signs of illegal logging, illicit harvesting and fire, leaving a track on the patrol terminal; in spring fire season, manning the checkpoint and logging every person and vehicle going in. You help the technical section with permanent plot surveys, measuring diameters with calipers and heights with the hypsometer, and at planting and thinning inspections you watch from the back row.",
+  "You run silviculture for one management compartment: which plot to plant, which seedlings, which stand to thin. You go up and look, draw the work design and hand it to the technical section to review. In summer you count larvae and hang traps in the woods; in autumn you inspect planting survival. When temporary workers or contract holders have a problem, they come to you first.",
+  "You're head of the technical section, running silviculture design, resource surveys and fire-prevention technique for the whole farm, with a dozen-odd rangers on your rota. You review every work design, lead the forest inventory survey, and coordinate projects and funding with the bureau's departments. In fire season you sit in the headquarters command room, and wherever smoke rises, you're the first one on the phone.",
+  "You're deputy director for technical affairs, overseeing the farm's forest management plan, fire prevention and understory economy. You report up to the bureau and assign work down to the sections, and every planting and thinning design needs your signature. You negotiate contracts for the blueberry fields and bee yards and deal with the carbon-sink verifiers. Your days in the mountains are cut in half.",
+  "You're Chief Engineer of the forestry bureau, responsible for the technical side of several farms: forest management planning, carbon-sink projects, the technical calls on major pest outbreaks and wildfires. You chair meetings, review plans, assess projects and report to the province for the whole bureau. When a young technician brings you a design, you ask one thing first: have you been to see that stand?"
+ ],
+ "work": [
+  "The old ranger has you name a tree. You say spruce. He snaps off a needle and has you feel it: flat. It's fir. You put a mark in your notebook.",
+  "At the fire-season checkpoint, an SUV tries to push through, and you stand in front of the barrier and don't move. The man gets out and signs in, and you put his lighter in the storage box.",
+  "The hypsometer dies during a plot survey. The old ranger shows you how to estimate with a stick against your own height, and the result is only half a meter off what you measure later.",
+  "Designing the thinning for an overcrowded larch stand, you tie a ring of red tape around every tree to be kept. It takes three whole days.",
+  "A contract holder says a patch of Korean pine seedlings died and wants compensation. You check them one by one, find they were planted too deep, and replant them with him.",
+  "In summer you hang traps in the woods. When you collect them the next day, one holds more than two hundred moths. You report the count that same day.",
+  "For the forest inventory you split the rangers into five groups, each pairing a young person who can use a tablet with an old hand who knows the mountain.",
+  "A bureau project wants the whole farm thinned within three years. You work out the manpower and send back a report: five years, or the quality won't hold.",
+  "One afternoon in fire season, a lookout tower reports smoke. You glance at the wind direction, send the nearest group first, then call the farm director.",
+  "Reviewing a planting design, you find the plot is meadow on the edge of a wetland, no place for pines. You write in the margin: change to wetland restoration.",
+  "The carbon-sink verifier comes to sample plots, and you walk with him for three days. For every plot he picks, you can say what year it was planted.",
+  "The understory contracts are up, and several staff families want to take on more Korean pine for nut harvesting. You work out the yield and what the forest can bear, and approve half.",
+  "At the bureau's forest management planning meeting, someone wants to convert a stand of natural secondary forest into plantation. You say leave it alone, let it grow, and look again in twenty years.",
+  "The province sends people to study carbon sinks. You don't use slides. You take them to a permanent plot you've been measuring since you were young.",
+  "A farm sends up a pest control plan calling for spraying across a large area. You call to ask the larval density, and change it to release predators first and watch for two weeks."
+ ],
+ "past": [
+  "You're in ninth grade at the forest farm's school for staff children in Yichun. Your father is a logger. Those years the forests are closed to logging, and he spends half a year at home fixing motorbikes.",
+  "In your last year of high school you go up the mountain with your father to gather pine cones. Standing under a Korean pine he says: I should have cut this one when I was young. I didn't, and look how big it's got.",
+  "For the gaokao (college entrance exam) you put forestry on your application. Your father asks: they don't let you cut trees anymore, so why study that? You say: to learn how to make them grow.",
+  "Your second-year field practice is on Changbai Mountain, your first plot survey. You measure three hundred trees in a day, and that night back in the dorm you can't lift your arms.",
+  "The year you graduate, your classmates head to cities in the south. You test into a state forest farm back in Yichun. On your first day the director says: your father worked at this very farm."
+ ],
+ "late": {
+  "pension_note": "Estimate: permanent staff at state forest farms are paid pensions under the civil service and public institution scheme plus an occupational annuity, roughly 60 percent of final monthly pay. Ranger and field allowances aren't counted.",
+  "scenes": [
+   "On the day you retire, you hand your stack of patrol logs to the farm archive. The archivist asks if you want to keep one. You choose the first.",
+   "The farm invites you back to give new rangers a lesson. You don't talk about tree species. You talk about what to do when the snowmobile dies at minus thirty-five.",
+   "In a park in the city you tell the old folks at their morning exercises about the trees: this is Korean pine, that's Manchurian ash, and the bark of that cork tree can make bottle stoppers.",
+   "You take your grandchildren back to the farm and walk to the stand of Korean pine you planted as a young ranger. The child asks: you planted trees this tall? You nod.",
+   "No longer allowed into the mountains, you check resource records at a computer all day. One compartment's map lists the person who planted it: you.",
+   "In winter you seldom go out. You sit at the window watching snow settle on the pines downstairs, layer on layer, bending the branches.",
+   "On your balcony you grow a Korean pine seedling in a pot, and measure its height once a year, very carefully.",
+   "Your first winter away from the farm, it doesn't snow where you live. One night you dream you're patrolling in the snow, and wake with your feet still warm.",
+   "Your new colleagues know you were a ranger in the Lesser Khingan and keep asking if you've ever seen a Siberian tiger. You say no, but you've seen a black bear, and backed away very slowly.",
+   "On the news you see Yichun's forests have grown again. The ridge that flashes past on screen, you recognize: Compartment 3, where you used to patrol.",
+   "Later smoke detection, resource surveys and pest warnings all went to cameras, drones and models. But the trees in the forest, one by one, still need someone to walk in and run a hand over their bark.",
+   "One autumn evening the wind comes down off the mountain thick with the smell of pine resin. You stand by the road breathing it in for a long time, as if you were twenty-two again."
+  ],
+  "closing": {
+   "retire": "Years later, a grandchild brings home a pine cone from the woods and asks what's inside. You warm it by the stove for a while, break it open, and shell the nuts one by one for the child to eat.",
+   "burnout": "One afternoon years later, you sit by the window looking at the Korean pine seedling on the balcony. It's grown waist-high. In another hundred years, you think, it will be a big tree too.",
+   "end": "Years later, in a cupboard, you find the old calipers, the markings a little worn. You measure the young tree outside your door with them, then put them back."
+  }
+ }
+}

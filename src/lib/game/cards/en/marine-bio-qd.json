@@ -1,0 +1,201 @@
+{
+ "id": "marine-bio-qd",
+ "occupation": "Marine Biologist",
+ "role": "Marine Biology Research Assistant at an Oceanographic Institute",
+ "headline": "A marine biology research assistant with a master's degree, in your first year on a project contract at a national oceanographic institute in Qingdao, going to sea on the research vessel three or four cruises a year and coming back to count copepods one by one under the microscope",
+ "unit": "A national oceanographic research institute in Qingdao",
+ "unit_type": "National research institute",
+ "city": "Qingdao",
+ "city_tier": "New first-tier city",
+ "education": "Master's degree in Marine Biology",
+ "level": "You can deploy a plankton net from the deck, run the CTD rosette for water samples, split and fix samples, and you know a few dozen common Yellow Sea zooplankton on sight under the microscope. Difficult species, and the conclusions that go into papers, still need the lab head's sign-off.",
+ "intro": "In your sea chest: a waterproof jacket, a pair of non-slip rubber boots, two boxes of seasickness pills, a stack of sample labels, a marker and a waterproof notebook. The lab is on the third floor of the institute, Jiaozhou Bay outside the window, and the cabinets hold rows of sample jars in formalin. From today you go out on every one of the group's cruises. The net goes down, the samples come up, and every last one gets counted. That part is yours.",
+ "salary_note": "Estimate: a project-contract post at a national oceanographic institute in Qingdao, paid out of research grants, with a sea allowance for cruises. Taken at the national figure. Pay only rises noticeably once you move into a permanent post and earn professional rank.",
+ "facts": [
+  { "label": "Research Assistant (Project Contract) (current level)", "value": "0–3 years, ¥5,500–8,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Assistant Research Fellow (3–8 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Going to sea to collect marine organisms and environmental data", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Identifying marine organisms and surveying their distribution", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The research vessel holds steady on station in the central Yellow Sea. On deck you pull on your rubber boots and check the net depth with the winch room over the radio.",
+  "The CTD rosette goes down, and at thirty meters the temperature curve on the screen suddenly drops. The chief scientist says: the cold water mass, early this year.",
+  "You and a colleague tow the plankton net from bottom to surface. In the cod end is a small clump of something translucent. You pour it into a jar, add fixative, write the label.",
+  "The sea gets up and the ship rolls hard. You're splitting samples in the lab cabin, throw up once, rinse your mouth, and come back to keep splitting.",
+  "Lunch on board is mackerel dumplings. You eat three and put down your chopsticks. The cook says: eat more, so you've got something to throw up.",
+  "At the next station you run a bottom trawl. A heap of starfish, shrimp and small fish spills onto the deck, and you crouch to sort, photograph and weigh them one kind at a time.",
+  "At night, under the stereo microscope in the lab cabin, you pick out a few unusually large copepods, photograph them and send the pictures to the lab head ashore.",
+  "You enter the sample list from today's twelve stations into the computer and check the numbers three times. Outside the cabin there's only the engine and the waves."
+ ],
+ "ladder": [
+  { "title": "Research Assistant (Project Contract)", "stage": "On cruises", "focus": "Go to sea and sample, then identify, count and enter data back ashore; look after the lab and the sample store; do a PhD or wait for a permanent post." },
+  { "title": "Assistant Research Fellow", "stage": "Your own project", "focus": "Own the biological sampling plan for a cruise, write papers, apply for your first young scientist grant." },
+  { "title": "Associate Research Fellow", "stage": "Supervising students", "focus": "Lead the biology team on a cruise, run projects, supervise graduate students, review papers, join international joint surveys." },
+  { "title": "Research Fellow (Lab Head)", "stage": "Lab", "focus": "Run a research group: set its direction, raise funding, apply for ship time, serve as chief scientist on cruises." },
+  { "title": "Research Fellow, Grade 2 (Chief Scientist)", "stage": "Chief", "focus": "Lead national-level projects and long-term observation, review grant applications, give scientific advice on marine protection and fisheries policy." }
+ ],
+ "ai_tasks": [
+  { "name": "Going to sea to collect marine organisms and environmental data", "how": "AI can help plan routes, check sea conditions and organize sampling lists, but going into the water, deploying equipment, drawing water and samples, and coping with rough seas and equipment failures all take people on site, doing it by hand." },
+  { "name": "Identifying marine organisms and surveying their distribution", "how": "AI can screen photos, acoustic data or gene sequences and quickly propose candidate species. Difficult species, new records and the final identification are still checked, and answered for, by people." },
+  { "name": "Observing and recording growth, development and behavior", "how": "AI can automatically pick out individuals and tally behavior clips from underwater video and sensor data. Designing the observation, judging what a behavior means and handling the unexpected rely on people." },
+  { "name": "Physiological, biochemical and genetic analysis in the lab", "how": "AI helps process sequencing and mass-spec data, predict results and optimize protocols. Preparing samples, running the instruments, designing experiments and quality control still fall to people." },
+  { "name": "Monitoring marine ecosystems and environmental change", "how": "AI can continuously process satellite, buoy and sensor data, spot anomalies and raise alerts. Deploying and maintaining equipment, working out why an anomaly happened and drawing public conclusions are people's job." },
+  { "name": "Analyzing data and building statistical or ecological models", "how": "AI can clean data, write analysis code, run statistics and models and make the figures. People mainly check whether the model's assumptions are sound and the results fit ecological common sense, by spot check." },
+  { "name": "Writing research reports and papers", "how": "AI can draft literature reviews, methods sections and figure captions and polish the language. The conclusions, the logic of the argument, checking citations and the responsibility of authorship stay with people." },
+  { "name": "Applying for grants and providing outreach and advice", "how": "AI can draft proposals, compile background literature and rewrite specialist material for the public. Choosing the topic, dealing with reviewers and partners, and the judgment behind advice to the public and institutions are done by people." }
+ ],
+ "events": {
+  "e_first_voyage": "Your first cruise lasts twenty-eight days. You're seasick for the first ten, and in the other eighteen you learn to split samples in a rolling lab cabin. The day you dock, the pier still seems to sway under your feet.",
+  "e_new_species": "In a batch of deep-sea samples you pick out a tiny crustacean nobody has seen before. Comparison, sequencing and drawings take a year and a half, and when the paper comes out, the new species description carries your line drawings.",
+  "e_green_tide": "Green algae blooms in the Yellow Sea again and Qingdao's beaches are carpeted green. The institute organizes emergency monitoring, and you go out five times in a month. Your clothes come back reeking of it.",
+  "e_freezer": "The lab building loses power for a night and no one hears the alarm on the minus-80 freezer. A batch of samples waiting for sequencing thaws. They came back from a cruise six months ago.",
+  "e_lost_gear": "A bottom trawl snags on a reef, the steel cable snaps, and a whole set of gear sinks. The chief scientist stands on deck for a long time, then says: as long as nobody's hurt.",
+  "e_typhoon_cancel": "A typhoon comes through and a cruise planned for a whole year is pushed back to next year. The ship time is gone, and the project schedule all has to be redone.",
+  "e_ai_id": "The institute brings in a plankton image-recognition system. The scanner takes a picture and AI sorts and counts the thousands of individuals in a jar. A week of your work done in an afternoon. The few species it gets wrong, you have to pick out and fix every time.",
+  "e_ai_edna": "You start surveying with environmental DNA: bring back a few liters of seawater, sequence it, and the model lists what fish live in that stretch of sea. At one station it reports a fish with no record for years. On the next cruise you trawl there specially, and it's there.",
+  "e_reject": "Your first paper is rejected twice. Before the third submission, you print out the reviews, tape them beside the microscope and work through them point by point.",
+  "e_moon": "Mid-Autumn Festival at sea. The cook bakes a tray of mooncakes, and everyone gathers on the afterdeck to watch the moon rise out of the water. Someone calls home on the satellite phone and gets two minutes before it cuts out.",
+  "e_love": "Walking in the Badaguan old villa quarter, you meet someone who teaches biology at a middle school. You show them the copepods under the microscope on your phone, and they say: it's like they're wearing transparent armor.",
+  "e_away": "More than a hundred days a year at sea. Anniversaries, friends' weddings, birthdays at home: you miss them one after another out on the ship, and the first thing you do when you dock is go and buy the make-up presents.",
+  "e_marry": "You get married at a restaurant at the foot of Mount Lao. The research group gives you a glass dome with a tiny starfish set in resin inside.",
+  "e_house": "You take out a mortgage on an apartment over in Huangdao, with a distant view of the sea from the balcony. Both families pooled the down payment, and the monthly installment takes half your pay.",
+  "e_child": "The baby is born. You'd deliberately skipped one of that year's cruises. Waiting at the hospital for news, you still have an unfinished figure open on your phone.",
+  "e_fisher": "On a survey to a coastal fishing village, an old fisherman tells you that when he was a boy the yellow croaker here could burst a net. You write down every place name he mentions.",
+  "e_joints": "Years of crouching to sort samples on cold wet decks, and your knees and back start to ache. The doctor says it's rheumatism and tells you to wear more layers at sea.",
+  "e_student": "Your graduate student's first cruise, and he's too seasick to get out of his bunk. You deploy the nets for him for two days. On the third day he comes up on deck himself, still pale.",
+  "e_parent": "News of your father's hospitalization comes over the ship's satellite phone. The ship won't dock for another ten days. You stand on deck for a long time. The sea is very flat.",
+  "e_aquarium": "You write a display panel for the aquarium's science exhibition, about copepods being the most numerous animals in the sea. On opening day a small child leans over the microscope for ages and won't leave."
+ },
+ "choices": {
+  "c_phd": {
+   "title": "A PhD, or waiting for a permanent post",
+   "situation": "Your lab head says the institute's permanent posts increasingly want a doctorate, and he can take you on as a part-time PhD student. But for five years your pay would still be the project salary, and you'd still go on every cruise.",
+   "options": [
+    { "label": "Do the PhD", "result": "Identifying samples by day, writing at night, reading papers at sea. You defend in your fifth year, and your advisor says your data was hauled out of the sea one net at a time." },
+    { "label": "Keep working, wait for a chance", "result": "You give all your time to the lab and the cruises, and you get the institute's sample store into perfect order. The permanent post is slow to come, but everyone knows to ask you for a sample." }
+   ]
+  },
+  "c_deep": {
+   "title": "Coastal seas or the deep sea",
+   "situation": "Two programs need people. One is long-term ecological monitoring in the Yellow and East China Seas: fixed cruises, data running unbroken for decades. The other is deep-sea survey in the western Pacific, sending a remotely operated vehicle down thousands of meters: two months away at a time, plenty of discoveries, plenty of risk.",
+   "options": [
+    { "label": "Coastal monitoring", "result": "You take over a transect that's been run for thirty years and go to the same stations every season. Ten years on, your data is the longest curve in other people's papers." },
+    { "label": "Deep-sea survey", "result": "On the ship you watch the ROV's video slowly brighten: mussels at the edge of a cold seep, white crabs. On that cruise you bring back two new records." }
+   ]
+  },
+  "c_polar": {
+   "title": "The Antarctic expedition",
+   "situation": "The national Antarctic expedition needs a marine biologist on the ship for five months, from Qingdao's winter to the Antarctic summer, sampling krill and plankton in the ice zone. A rare chance. For those five months, someone else would have to hold things together at home.",
+   "options": [
+    { "label": "Go to Antarctica", "result": "You sample more than a hundred stations in the Southern Ocean, watch penguins swim alongside the ship, and spend a week seasick in the westerlies. When you get back, your thesis has a new chapter." },
+    { "label": "Not this time", "result": "You recommend a younger student from your group and stay in Qingdao to finish identifying samples. That Spring Festival, you're home." }
+   ]
+  },
+  "c_ai": {
+   "title": "Leading the image-recognition library",
+   "situation": "The institute wants to build an image-recognition library for Yellow Sea plankton: rescanning decades of samples and labeling every image so a model can learn the species. It needs someone with a sharp eye to set the standards and review the labels. It won't count as papers, and it will take two years.",
+   "options": [
+    { "label": "Take it on", "result": "You and your students label more than two hundred thousand images, and you write notes on every species that's easy to confuse. Later several institutes around the country use your library." },
+    { "label": "Pass", "result": "You hand it to the IT center and focus on your papers. You use the model once it's out, and the species it gets wrong, you can spot at a glance." }
+   ]
+  },
+  "c_associate": {
+   "title": "Going for Associate Research Fellow",
+   "situation": "The associate review looks at projects you've led, first-author papers and what you've contributed on cruises, and the institute has only a handful of places a year. Your file is strong enough, except for a general program grant from the national science foundation. You'll apply again this year.",
+   "options": [
+    { "label": "Apply", "result": "You bind your years of cruise records, papers and projects into a file. At the defense someone asks about the cold-water-mass data, and you walk them through ten years of curves." },
+    { "label": "Build up one more year", "result": "You land the grant first and apply the following year. At the defense nobody has extra questions." }
+   ]
+  },
+  "c_farm": {
+   "title": "Joining an aquaculture company",
+   "situation": "A company doing offshore fish farming wants to hire you as head of R&D, someone who knows plankton and disease. One and a half times your pay, overseeing several farming platforms at sea, no more grant applications or papers.",
+   "options": [
+    { "label": "Join the company", "result": "You hand in your resignation and give the sample-store keys to whoever's taking over.", "end": "You became head of R&D at the aquaculture company and spent many years watching fish on the platforms at sea. Whenever a red-tide alert came, you took a jar of seawater back to the lab and looked under the microscope to see which algae it was." },
+    { "label": "Stay at the institute", "result": "You turn it down. That thirty-year transect, you want to keep running it." }
+   ]
+  },
+  "c_aquarium_job": {
+   "title": "Science outreach at an aquarium",
+   "situation": "A big aquarium in Qingdao is hiring a head of education, someone who knows the subject and can talk about it. No more going to sea, though sometimes weekend events. You'd still work with marine life, but you'd no longer do research.",
+   "options": [
+    { "label": "Go to the aquarium", "result": "You slide the sea chest under the bed, and the following week you report to the aquarium.", "end": "You went to the aquarium to do outreach, telling children every weekend about jellyfish, starfish and the invisible copepods. When a child asked if you'd ever been to sea, you told them about the cruise where you were seasick for ten days." },
+    { "label": "Stay at the institute", "result": "You recommend a younger colleague who's a natural teacher, and next month you board the ship as usual." }
+   ]
+  },
+  "c_pi": {
+   "title": "Going for Research Fellow and your own group",
+   "situation": "The institute wants you to run a research group of your own: set the direction, raise money, apply for ship time, recruit students, and have your name as chief scientist on cruises. Take it, and you'll rarely get an afternoon at the microscope yourself.",
+   "options": [
+    { "label": "Take it", "result": "Your calendar fills with meetings and proposals. Before every cruise sets off, you still go down to the pier to look over the nets being loaded." },
+    { "label": "A few more years", "result": "You stay on as deputy in your old mentor's group and run that transect another five years without missing a single point." }
+   ]
+  },
+  "c_chief": {
+   "title": "Leading a national long-term observation program",
+   "situation": "The country is building a decades-long ecological observation network in the Yellow Sea, and the institute puts you forward to lead it, and for Grade 2 Research Fellow: several institutions, several ships, more than a hundred people. You'd set the standards, manage the data and report upward.",
+   "options": [
+    { "label": "Lead it", "result": "At the first coordination meeting you make just one point: the sampling method at every station stays unchanged for thirty years." },
+    { "label": "Recommend someone else", "result": "You recommend a younger research fellow and take charge of the plankton component yourself, still going on one cruise a year." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "Your last cruise runs the transect you've sampled for decades. At the final station you lower the plankton net yourself, haul it up, pour it into a jar, write the label and hand it to a student. As the ship comes in, you stand on the afterdeck and watch the Qingdao coastline draw closer.",
+  "burnout": "At that year's checkup, the doctor says your back and knees can't take the ship anymore. You stay in the lab, identifying the samples your students bring back under the microscope every day. Jiaozhou Bay is right outside the window, and you often look up to see what color the sea is today."
+ },
+ "stages": [
+  "You go out on every one of the group's cruises: deploying plankton nets on deck, running the CTD for water, splitting and fixing samples, writing labels. Back ashore you identify and count jar by jar under the stereo microscope, enter the data, and tend the minus-80 freezers and the sample store. When the lab head says \"look at this species again,\" you pick through it once more.",
+  "You own the biological sampling plan for a cruise: how many stations, which nets, how many samples, settled in a meeting with the chief scientist and the captain before departure. Back ashore you analyze the data yourself, write first-author papers and apply for your own young scientist grant. New research assistants go to sea with you, and you teach them to split samples on a rolling ship.",
+  "You lead the biology team on a cruise, scheduling sampling shifts for seven or eight people on board. You run projects, supervise graduate students, review for journals and join international joint surveys. Back at the institute you sit through several meetings a week, and when students hand you data, you check the raw records first for gaps.",
+  "You run a research group of a dozen-odd people: setting its direction, writing proposals to raise money, applying to the institute for ship time, serving as chief scientist on cruises. On board you decide when the nets go out and whether to pull back in bad weather. Ashore you deal with the science foundation, partner institutions and local ocean authorities, and you rarely count samples yourself anymore.",
+  "You lead national-level projects and the long-term observation network, and several institutions and ships all sample to the standards you set. You review grant applications, give scientific advice on marine protected areas and fishing moratoriums, and speak for this sea at international meetings. When young researchers bring you a plan, you ask first: will this data still join up thirty years from now?"
+ ],
+ "work": [
+  "The lab head has you identify the arrow worms in a jar. You count all afternoon, and two species keep refusing to separate. He shows you the row of spines on the head: count those, and it's clear.",
+  "The meter counter on the ship's winch breaks. You and a deckhand mark the steel cable with a marker every ten meters, and still get the net down to fifty.",
+  "You shelve a cruise's three hundred-odd sample jars in the store by station, photograph every label, and file the photos in the database.",
+  "At the cruise planning meeting, you propose three extra stations along the edge of the cold water mass. The chief scientist asks why, and you pull up last year's temperature profiles to show him.",
+  "The statistics come back with one station's abundance absurdly high. You dig out the raw records and find that tow ran five minutes long, and you flag it in the data.",
+  "Sun, the new research assistant, puts too much fixative in while splitting samples on board. You have him mix a fresh jar and watch him work out the concentration twice.",
+  "The sea gets up and you decide to move the two night stations to the morning, rewriting the shift schedule and taping it to the lab cabin door.",
+  "A manuscript for an international journal comes to you for review, and the authors have taken a common species for a new record. You attach three comparison images to your comments.",
+  "Your graduate student gives his first talk and forgets his lines halfway through. You raise your hand from the audience and ask him the question he knows best, and he carries on to the end.",
+  "At the ship-time meeting, several groups all want the same vessel's summer cruise. You give up half of yours, in exchange for a full autumn cruise.",
+  "Fog comes down at sea and the captain asks whether to deploy the last net. You look at the conditions and say: pack it in, we'll come back for this station next year.",
+  "At a meeting with the local ocean authority you explain where the green algae comes from. You don't start with conclusions. You put up ten years of satellite images and sampling points, one by one.",
+  "At the observation network's standards meeting, one institution wants to switch to a faster sampling net. You agree to a trial, on condition that old and new nets are towed side by side for five years before comparing.",
+  "At a hearing on the fishing moratorium, someone asks what plankton have to do with fish. You say: plankton are what fish eat. Fewer of them, fewer fish.",
+  "You give the first lecture to the institute's new PhDs, taking them down to the pier and pointing at the old research vessel: this is where the data comes from."
+ ],
+ "past": [
+  "You're in ninth grade by the sea in Yantai. At low tide you turn over rocks for crabs and bring them home in water bottles. They never survive, and you cry over it more than once.",
+  "For the gaokao (college entrance exam) you put marine science on your application. Your father runs a fishing boat and says: you don't know how hard the sea is. You say: then I'll go and find out.",
+  "Second year, your first time on the training ship, three days circling the Bohai Sea. You're sick for all three, and on the last day you still haul the net up yourself.",
+  "You get into a master's program in marine biology. The first jar of samples your advisor gives you takes a week of counting under the microscope.",
+  "After your master's defense, a lab head at an oceanographic institute in Qingdao calls: a project contract, would you come? There's a cruise next month. You say yes."
+ ],
+ "late": {
+  "pension_note": "Estimate: once in a permanent post, the pension is paid under the civil service and public institution scheme plus an occupational annuity, a little over 60 percent of final monthly pay, with the sea allowance not counted. The early project-contract years count under the enterprise employee pension scheme.",
+  "scenes": [
+   "On the day you retire, you hand your few dozen cruise logbooks to the institute archive. The archivist asks if you want to keep one. You choose the first, with one page wrinkled where it once got wet with sick.",
+   "The institute rehires you to review species identifications two days a week. Whatever the students aren't sure of, they save for you to look at together.",
+   "At the community center you tell children about the tiny animals in the sea you can't see, bringing an old microscope. One child looks and asks: is all the water in the sea alive?",
+   "On the news you see your transect's data used in a report on ocean protection. At the far left of the curve are the points you sampled when you were young.",
+   "No longer allowed on the ship, you spend your days in the lab waiting for students to bring samples back. For every jar you read the station on the label first and picture what the sea there looks like today.",
+   "At last you have time to turn decades of identification notes into an atlas. On the last page you draw the first copepod you ever identified yourself.",
+   "Walking by the old pier, you crouch at low tide to watch the little crabs in the cracks between the rocks. You watch for a long time, and don't catch any.",
+   "Your first year away from the institute, you don't go to sea once. One day passing the docks, you see the research vessel about to leave, and stand watching until it's far out.",
+   "Your new colleagues know you used to go to sea on research ships and keep asking if you've seen whales. You say yes, but you'd rather tell them about the little things you can't see.",
+   "On a poster at a scientific conference you see the new species you helped describe. In the corner of the specimen photo is the scale bar you drew.",
+   "Later counting, identification and data analysis all went to the models. But someone still has to lower the net from the deck, and someone still has to split the samples by hand in a rolling lab cabin.",
+   "One summer evening by the sea you see a wave glowing faintly: bioluminescent plankton. You stand there watching for a long time, as if seeing the sea for the first time."
+  ],
+  "closing": {
+   "retire": "Years later, a grandchild brings back a bottle of seawater from the beach and asks if there's anything in it. You put a drop under the old microscope, focus it, and let the child lean in. The child gasps, and you laugh.",
+   "burnout": "One afternoon years later, you sit by the window looking out at Jiaozhou Bay, where a ship is slowly heading out. You don't know if it's going sampling. You just watch it go.",
+   "end": "Years later, under the bed, you find the old sea chest. Inside are half a box of expired seasickness pills and a stack of blank labels. You pick one up, look at it, and put it back."
+  }
+ }
+}
