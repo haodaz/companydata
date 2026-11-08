@@ -1,0 +1,162 @@
+{
+ "id": "prefab-hf",
+ "occupation": "Prefabricated Building Construction Worker",
+ "role": "Site Engineer on a Prefabricated Housing Project",
+ "headline": "Two years into the trade after a bachelor's in civil engineering, on a prefabricated housing project in Hefei's Binhu district with a walkie-talkie at the foot of the tower crane: a prefab site engineer who receives precast wall panels one by one, watches each set in place, then makes sure the crew fills every last grout sleeve",
+ "unit": "The Binhu prefabricated housing project office of a general contractor's Hefei company",
+ "unit_type": "Regional company of a state-owned general contractor (about forty people in the project office)",
+ "city": "Hefei",
+ "city_tier": "New first-tier city",
+ "education": "Bachelor's degree in civil engineering",
+ "level": "You can set out lines, read precast shop drawings and receive delivered components, and you've written a lifting plan. But when a wall panel lands five millimeters off, or grout won't come out of an outlet port, you still have to call the production manager to make the call.",
+ "intro": "You studied civil engineering in Hefei and joined this general contractor's Hefei company after graduating, spending your first year on a cast-in-place project learning to set out lines and check rebar from an old site engineer. This year you were moved to this prefabricated housing project in Binhu, where the buildings are made in a factory piece by piece, trucked in and lifted up. As of today you stand at the foot of the tower crane with a walkie-talkie, learning to make a building grow like stacked blocks without ever letting it be as loose as blocks.",
+ "salary_note": "Estimate: general contractors' project offices in Hefei pay site engineers a little below the national average, with meal and project allowances for living on site. Milestone bonuses depend on the schedule; in years when the property market is down and projects stall, the bonuses disappear.",
+ "facts": [
+  { "label": "Site Engineer (Prefab) (current level)", "value": "0-3 years, ¥5,500–8,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Building Lead / Senior Site Engineer (3-6 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Directing the tower crane to lift components into place", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Writing the lifting and installation method statement for precast components", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "At the breakfast stall outside the project office you buy a bowl of beef soup and a duck-fat flatbread and eat while reading today's dispatch list from the precast plant on your phone: twelve exterior wall panels, twenty half-slabs, two stair flights.",
+  "The first truck of components arrives. You climb onto the flatbed and scan the QR codes one by one, checking numbers, cast-in parts and corners for chips. One exterior panel has a small piece missing from a corner; you photograph it and send it back with the driver.",
+  "The surveyor has set out the lines on the deck. You recheck the panel positioning lines and level shims with a tape and agree with the lifting crew's leader which face goes up first today.",
+  "The crane lifts the first exterior panel. You stand on the deck with your walkie-talkie; the signalman calls stop, and workers steady the panel to line up the rebar sticking up below, guiding each bar into its sleeve as it slowly comes down.",
+  "The panel is set, the workers fit the diagonal props, and you check plumb with a straightedge: three millimeters out. You have them give the props another half turn.",
+  "Grouting in the afternoon. You stand watch beside the panel as the grouter pumps in through the lower ports and grout appears at the outlet ports above one by one. You tick each one off on the record sheet as it comes. The last one won't come.",
+  "The supervisor comes to inspect the half-slab joints and rebar, and you walk the deck with him. He stops at the rebar in a pour strip and says the lap isn't long enough: fix it tomorrow before you pour.",
+  "In the prefab office cabin you write the site diary: how many pieces were lifted today, where grouting was done, and how that outlet port that wouldn't flow was dealt with, all set down clearly. Out the window, a red light glows on top of the crane."
+ ],
+ "ladder": [
+  { "title": "Site Engineer (Prefab)", "stage": "On site", "focus": "Receive components, set out lines, watch lifting and grouting, keep the site diary, and lead the crews in putting each floor's components in place. You move up by being meticulous and able to endure." },
+  { "title": "Building Lead / Senior Site Engineer", "stage": "Core staff", "focus": "Run progress, quality and crews for two or three buildings, schedule component deliveries and lifting order, and pass the Grade 2 Constructor exam." },
+  { "title": "Production Manager", "stage": "In charge", "focus": "Run all production on a project: tower cranes, precast plants, crews and schedule. Chair the production meetings and sign off on quality and safety." },
+  { "title": "Project Manager", "stage": "Leading a team", "focus": "Pass the Grade 1 Constructor exam and run a project's people, money, schedule and outside relations, bearing overall responsibility to the developer, the supervisors and the quality inspection station." }
+ ],
+ "ai_tasks": [
+  { "name": "Writing the lifting and installation method statement for precast components", "how": "AI can draft the method statement and simulate the lifting sequence from the component list, lifting parameters and past templates. A person has to revise it for the actual site, crane position and schedule, and sign for the plan." },
+  { "name": "Checking the quality and specs of delivered precast components", "how": "AI can check specs and models against drawings and factory records and spot chips or cracks in photos. A person has to look at the real thing on site, check the cast-in parts and finish, and decide whether to accept it." },
+  { "name": "Organizing setting out and rechecking component positions", "how": "AI with total stations and software can calculate coordinates, produce setting-out data and compare deviations. A person has to set up the instruments on site, judge environmental interference, and answer for the final positions." },
+  { "name": "Directing the tower crane to lift components into place", "how": "At most AI offers lifting sequence prompts and video monitoring. A person has to direct the crane and the signalman on site and deal with wind, sight lines and surprises; the safety responsibility is a person's." },
+  { "name": "Checking grout sleeve connections and supervising grouting", "how": "AI can use imaging and sensors to help judge whether grouting is full and record the process data. A person has to supervise the grouting on site, check the sleeve connections, and vouch for the quality of concealed work." },
+  { "name": "Adjusting component plumb and level and fixing temporary props", "how": "AI can point out the deviation data. Adjusting plumb, correcting levels and fixing props are hands-on site work, done by a person leading the workers and judging by experience." },
+  { "name": "Giving safety briefings and patrolling for hazards", "how": "AI can generate targeted briefing materials and use cameras to spot missing hard hats or unguarded edges. A person has to brief people face to face, patrol the site, and has the authority to stop unsafe work." },
+  { "name": "Coordinating handoffs between trades and following up on progress", "how": "AI can compile progress, warn of sequence conflicts and suggest schedules. A person has to talk with each crew face to face, sort out manpower and disputes, and handle last-minute changes." }
+ ],
+ "events": {
+  "e_offset": "At inspection you missed a wall panel set eight millimeters off, and when the panel for the floor above came up its rebar wouldn't line up. Work stopped for a whole morning. The production manager didn't scold you; he went through every position on that floor with you, piece by piece.",
+  "e_grout_check": "The quality inspection station came to spot-check grout fullness, testing sleeve after sleeve with an instrument, and your entire building passed. As the inspectors left, one of them glanced at the grouting record card you had taped to a wall panel.",
+  "e_wind": "One afternoon the wind suddenly picked up, the anemometer on the crane sounded the alarm, and a wall panel already halfway up started spinning in the air. The signalman had the crane lower it slowly back down, and you watched from below until it touched the ground, your palms soaked.",
+  "e_summer": "Hefei in July, thirty-nine degrees, no shade anywhere on the deck, half-slabs hot enough to fry an egg. Grouting has to be done in the early morning and late afternoon, and you spend twelve hours a day up on the building.",
+  "e_factory_late": "A casting table broke at the precast plant and the stair flights arrived three days late, stopping the lifting on a whole building. You called the plant a dozen times in a day and finally drove out to the plant in Feixi yourself to watch them come out of the molds.",
+  "e_topping": "The building you oversaw topped out twelve days ahead of schedule. The project office planted a red flag on the roof, everyone ate together at the foot of the crane, and after two drinks your face was red.",
+  "e_ai_sim": "The company brought in lifting simulation software: import the component list and a building's lifting sequence and crane paths are scheduled automatically. Checking it against the site, you found it had scheduled an exterior panel to swing over a big tree that hadn't been moved yet.",
+  "e_ai_camera": "The site installed AI cameras and pressure sensors for grouting, and any sleeve not fully grouted shows red on your phone. In the first month it raised three alerts: two were real, and one was a sensor cable someone had stepped on and broken.",
+  "e_leak": "After handover an owner reported water seeping through an exterior panel joint. You went to look: one stretch of sealant hadn't been filled. You took workers up in a gondola and resealed it section by section, marking each spot on the joint location plan.",
+  "e_cert": "You passed the Grade 2 Constructor exam, and the building practice paper happened to include a case question on prefab grouting. You filled the back of the answer sheet too.",
+  "e_halt": "The developer ran into money trouble and the project stopped for three months, with components stacked in the yard gathering a layer of dust. You stayed in the project office minding the site, going out every day to measure whether the panels had warped.",
+  "e_safety": "On patrol you saw a worker without a safety harness standing at the slab edge steadying a panel. You stopped the crane on the spot and waited until he clipped in before lifting again. Afterward the crew leader told you the man was his cousin.",
+  "e_knee": "Dozens of trips up and down stairs every day and your knees have started to hurt; climbing to the eighteenth floor takes two rests. You've started riding the construction hoist, reading the progress chart on your phone on the way up.",
+  "e_wedding": "You got married. Your partner is a process engineer at a display panel plant in Hefei. The wedding was back home in Lu'an, and you worked out the days of leave from the project in advance, not one day more.",
+  "e_house": "You bought an apartment in Baohe, in a prefabricated building. On handover day you went first to look at the exterior panel joints, then knocked on the underside of the half-slabs, and the salesperson asked whether you were in the trade.",
+  "e_child": "Your child was born. You took a few days off, and the first thing you did back on site was change your phone's lock screen: a photo of the baby gripping your finger.",
+  "e_away": "The project is in Changfeng, more than fifty kilometers from home, and you get back once a week. Your child calls for you on video, you answer from the cabin, and outside the crane is still running.",
+  "e_school": "The company won a prefabricated school whose classroom buildings had to be handed over before term started in September. You led the crews through more than two thousand components in three months, and on the first day of school you stood at the gate a while.",
+  "e_ai_site": "Now most of a project's lifting schedule, component tracking and grout monitoring runs automatically, and the project office has fewer site engineers than before. Those who stayed spend their days standing at the foot of the crane, watching the few things the system can't see clearly.",
+  "e_young": "Wang, a new site engineer, held his walkie-talkie and didn't dare call the crane to stop. You stood on the deck with him and had him call it himself once. He said it very quietly, and the signalman stopped anyway.",
+  "e_old_building": "Passing that estate in Binhu from years ago, the trees below have grown tall and the exterior panel joints still run straight, line after line. From across the road you counted: eighteen floors, not one missing."
+ },
+ "choices": {
+  "c_grout": { "title": "Watch every single grout sleeve?", "situation": "A building has thousands of grout sleeves, and the rules say every one must be watched. The grouting crew's leader says they've done dozens of buildings and you don't need to watch each one; you could go deal with other things. If you watch every one, your days disappear beside a single wall.", "options": [
+   { "label": "Watch every one", "result": "You stood watch for a month, ticked thousands of boxes on the record sheets, and learned to see which worker pumps too fast and which batch of grout wasn't mixed evenly. Later, when the quality station spot-checked, your building didn't miss one." },
+   { "label": "Spot-check", "result": "You freed up time to schedule deliveries, and the building rose faster. But once a spot check found an unfilled sleeve, and half a wall had to be chiseled out for rework." }
+  ] },
+  "c_jz": { "title": "Take the Grade 2 Constructor exam, go for Building Lead", "situation": "The project manager says that to become a Building Lead / Senior Site Engineer in charge of two or three buildings, you first need the Grade 2 Constructor certificate. You're up on the building by day and drilling questions in the cabin at night; the project camp turns its lights off after ten, so all you have is a desk lamp.", "options": [
+   { "label": "Sit it", "result": "You passed within a year and filled the answer sheet on the practice paper's case questions. The month the certificate arrived, the project manager handed you two buildings." },
+   { "label": "Master the site first", "result": "You spent another year up on the buildings and wrote every pitfall of lifting and grouting in a notebook. When you sat the exam the next year, you could see the trap in each case question at a glance." }
+  ] },
+  "c_factory": { "title": "Three months stationed at the precast plant", "situation": "The company wants to station a site engineer at the precast plant in Feixi for three months to oversee this project's production: casting tables, rebar cages, cast-in parts, steam curing. You'd understand where the components come from, but you'd be away from the site and have to hand your work to someone else.", "options": [
+   { "label": "Go to the plant", "result": "In three months you came to understand every step of a wall panel from rebar cage to demolding and learned which cast-in parts are most often misplaced. Back on site, those are the spots you check first when receiving components." },
+   { "label": "Stay on site", "result": "You said the site couldn't do without you. In those three months your building didn't lose a single floor, and the colleague at the plant sent you a photo of each demolding every day." }
+  ] },
+  "c_shanghai": { "title": "A Shanghai project needs people", "situation": "The company has won a large prefabricated affordable housing project in Shanghai and is moving a few experienced hands from Hefei, at thirty percent more pay plus a posting allowance. But it would be two or three years away, just as things at home have settled.", "options": [
+   { "label": "Go to Shanghai", "result": "On the Shanghai project you saw a higher share of prefab and stricter acceptance, where even a panel joint is measured with a rule. On weekends you walked alone along the Bund, then went back to the dorm to schedule lifts." },
+   { "label": "Stay in Hefei", "result": "You said your family couldn't spare you. You stayed on Hefei projects, following building after building from foundations to topping out, and Binhu, Baohe and Changfeng all have buildings you watched over." }
+  ] },
+  "c_ai": { "title": "Take charge of the smart construction platform?", "situation": "The company is pushing smart construction on several projects: lifting simulation, QR code component tracking, grout sensors, AI cameras. It needs someone who knows sites to run it, deciding which data can be trusted and who goes to look when an alert fires. It doesn't count as output, and if you do it well nobody will notice.", "options": [
+   { "label": "Take it", "result": "You set a few rules for the platform, the most important being: even if the sensor says a sleeve is full, someone has to see grout come out of the outlet port before signing. Once, when a sensor failed, that rule saved a wall." },
+   { "label": "Pass, stay on site", "result": "You said you still preferred standing at the foot of the crane. The platform went to someone from the company's technical department, and you posted three pitfalls in the group chat that only someone on site would know." }
+  ] },
+  "c_production": { "title": "Apply for Production Manager", "situation": "A new prefabricated resettlement housing project needs a Production Manager to run four tower cranes, two precast plants, more than a dozen crews and the whole schedule. As production manager you'd chair the daily production meeting and sign off on quality and safety, and if anything went wrong, you'd be the first one asked.", "options": [
+   { "label": "Apply", "result": "At the interview you didn't talk about how many days early your building topped out; you talked about the wall panel that was eight millimeters off. The company's chief engineer nodded when you finished." },
+   { "label": "A few more years as Building Lead", "result": "You recommended a colleague who had joined two years before you and kept running the hardest few buildings. When he chaired production meetings, he often had you sit beside him." }
+  ] },
+  "c_factory_job": { "title": "The precast plant wants you as technical supervisor", "situation": "The precast plant in Feixi wants you as its technical supervisor, in charge of shop drawings, production and quality for components, at twenty percent more pay. No living in the project office, no standing under the crane all day; you'd be home for dinner every night. But you'd no longer be on site, and you'd only see the buildings rise from the dispatch lists.", "options": [
+   { "label": "Go to the plant", "result": "The day you left you handed your walkie-talkie to whoever took over and stood at the foot of the crane a while.", "end": "You did technical work at the plant for many years and later ran quality for the whole plant. Whenever a wall panel comes out of its mold, you go look at the cast-in parts, thinking that when it reaches the site, some young site engineer will crouch down and look at the same spot." },
+   { "label": "Stay on the project", "result": "You turned it down. That month you were rushing a school project, lifting more than two thousand components in three months." }
+  ] },
+  "c_pm": { "title": "Pass the Grade 1 Constructor exam and become Project Manager", "situation": "The company wants you as Project Manager on a project, on condition that you pass the Grade 1 Constructor exam and get your safety assessment certificate. A project manager runs a project's people, money and schedule, bears overall responsibility to the developer, the supervisors and the quality station, and has to chase the developer for payment too.", "options": [
+   { "label": "Sit it and take it on", "result": "It took two years. The month the certificate came you took over a new project, and on your first day you listed every high-risk work on one sheet and pinned it to the project office wall." },
+   { "label": "Stay as Production Manager", "result": "You said you still liked running production. That year your project had zero accidents, and at the year-end meeting the project manager said most of that was yours." }
+  ] },
+  "c_home": { "title": "Go back to Lu'an and lead your own crew", "situation": "Your hometown, Lu'an, has been pushing prefab construction too, and someone from back home wants you to come back and run a crew with him that specializes in lifting and grouting, taking subcontracts from general contractors. You'd be close to home, but there'd be no salary, only one job at a time, and you'd chase the money yourself.", "options": [
+   { "label": "Go back", "result": "The day you left, you gave Wang the notebook full of lifting and grouting pitfalls.", "end": "You and your partner's crew took work in Lu'an and a few surrounding counties, installing resettlement housing, schools and hospitals. On every new project, when the first wall panel comes down, you still go check it yourself with a straightedge." },
+   { "label": "Stay with the company", "result": "You turned him down and introduced him to his first subcontract. He often calls to ask you about grouting." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last day you handed in the keys to the project office and stood one last time at the foot of the crane. It was still turning, a wall panel slowly rising, and you watched it set in place while workers steadied it above. You walked out of the site into a Hefei evening, buildings lit up one after another in the distance, some of them ones you had watched grow.",
+  "burnout": "That year your knees and your back gave out together, and the doctor said no more climbing buildings every day. You quit and spent a year at home, walking along Chaohu Lake every day. When you hear a crane's slewing bell in the distance, you still look up to see whether the piece it's carrying has landed steady."
+ },
+ "stages": [
+  "You spend every day between the components and the crane: scanning QR codes to receive wall panels, half-slabs and stairs, rechecking setting-out lines and level shims, watching the signalman guide the crane with your walkie-talkie, checking plumb with a straightedge, standing watch over grouting in the afternoon, and writing the site diary at night. You see the lifting crew, grouters and surveyor every day, and anything you're unsure of goes to the production manager.",
+  "You run two or three buildings: scheduling each day's deliveries and lifting order, agreeing dispatch lists with the precast plant, and pushing the lifting, grouting and aluminum formwork crews upward, while watching the quality and safety officers' inspections. The supervisor comes to you for acceptance, crew leaders come to you for materials, and the project manager asks you first which floor a building has reached and what went wrong where.",
+  "You run all production on a project: how several cranes are scheduled, which of two precast plants dispatches first, which of a dozen crews goes to which building. Every morning you chair the production meeting, sign quality and safety forms, and hold coordination meetings with the supervisors, the plants and the design institute. You go up the buildings less often, and each time it's to the place that matters most.",
+  "You run a project's people, money, schedule and outside relations: reporting progress to the developer, bearing overall responsibility to the supervisors and the quality station, negotiating contracts with subcontractors and plants, and going to the developer to chase payment. Your signatures are few and heavy, and whatever happens on the project, you are the first one asked. When you do go up, you still crouch to look at a grout outlet port."
+ ],
+ "work": [
+  "A half-slab came in, and when you scanned it you found it belonged to Building 7: wrong building. You called the precast plant, the driver made one extra trip, and that building's lifting lost no time.",
+  "Shi, the grouter, was pumping too fast, and the grout coming out of the outlet port had bubbles in it. You had him stop, wait a moment, then pump again, and what finally came out was solid.",
+  "An exterior panel came down and a rebar below jammed against its sleeve. You didn't let the workers force it; you called the rebar fixer to straighten that bar, lifted again, and it landed all the way down.",
+  "The precast plant said the stair flights would be two days late. You reordered the lifting on those two buildings, half-slabs and interior panels first and stairs last, and the crane didn't sit idle for a day.",
+  "At inspection the supervisor said the rebar lap in a pour strip was too short. You didn't argue; you had the rebar crew add to it that day, went up that night to measure it again with a tape, and only then called the supervisor back.",
+  "Two crews were fighting over who got the crane first. You took out the week's lifting plan, split the crane's time by the hour, and posted it at the foot of the crane.",
+  "At a production meeting the precast plant said it couldn't keep up. You worked through the lifting rhythm on four buildings and had them prioritize exterior panels, with interior panels a week later. That month lifting never stopped for a day.",
+  "One crane's tie-ins needed raising. You scheduled it for a rainy day and spread that crane's work across the other three two days in advance.",
+  "The design institute wanted to change the window openings on a batch of exterior panels already half produced. You called the designers, the plant and the supervisors to one meeting, and in the end only the half not yet demolded was changed.",
+  "The developer wanted to cut another month from the schedule. You laid out the plant's capacity and the crane schedule and said half a month could be cut; any more and there wouldn't be enough curing time for the grout.",
+  "Negotiating next year's contracts with two precast plants, you didn't start with price; you started with who signs to inspect the cast-in parts before each batch leaves the plant.",
+  "At the project's safety month assembly you didn't read out documents; you told them about the wall panel spinning in mid-air on that windy day, then had every crew leader say which person on their crew was most likely to skip the harness."
+ ],
+ "past": [
+  "In middle school in Lu'an, a highway was being built past your door. After school you went to watch the bridge-launching machine carry girders across and set them down, an hour at a time.",
+  "Your gaokao (college entrance exam) score got you into civil engineering at a Hefei university. Your father said building houses and roads would always put food on the table, so you chose it.",
+  "In a second-year class the teacher talked about prefab construction and showed a video of wall panels being made in a factory. It was the first time you knew a building could be made in a factory and shipped to the site.",
+  "The summer after your third year you interned at a precast plant, tying rebar cages and placing cast-in parts with the workers. One panel's electrical box was placed off and sent back by inspection, and you remembered that spot.",
+  "After graduating you joined this general contractor and spent your first year on a cast-in-place project, learning to set out lines, check rebar and keep a diary from an old site engineer, getting so sunburned you peeled.",
+  "In your second year the company wanted to push prefab construction in Hefei. When the project manager asked who wanted to go, your hand went up first, and you were moved to this Binhu project."
+ ],
+ "late": {
+  "pension_note": "Estimate: state-owned construction companies pay full social insurance on actual salary and most have an enterprise annuity, so after retirement the basic pension plus annuity comes to about half of your last monthly salary.",
+  "scenes": [
+   "Your first month of retirement, you still wake at half past six, go downstairs for a bowl of beef soup, and only after finishing remember there are no components to receive.",
+   "The company asked you back to give new site engineers a lesson, and you talked about grout outlet ports. Afterward a young person asked why people still need to watch when there are sensors. You said: people step on sensor cables too.",
+   "Your housing estate was adding elevators, and a crew came to lift in steel shafts. You watched from below all afternoon and pointed out that the signalman was standing in the wrong place.",
+   "Your grandchild was stacking blocks on the floor into a tower. You taught him to check, before placing each block, whether the one below was set straight.",
+   "In the early days after you stopped, you walked along Chaohu Lake every day watching the boats, and slowly your knees stopped hurting so much.",
+   "You climbed Dashu Mountain with neighbors, slowly. From the top you could see a field of tower cranes across the city, and you counted them one by one.",
+   "On the day you filed your retirement papers you passed that estate in Binhu. The trees by the gate were tall now, and quilts hung airing on the balconies.",
+   "In your first year on a different path, every time you passed a building site your eyes went first to whatever the crane was carrying.",
+   "At a dinner you ran into Shi, the grouter from years ago, who now runs his own crew. He raised his glass and said: that year you told me to pump slower, and I still remember it.",
+   "Wang, the site engineer you once trained, became a production manager and sent you a photo: a grouting record card taped to a wall panel, every outlet port ticked.",
+   "Hefei has put up several more prefabricated estates. Driving past, you see flatbeds carrying wall panels into the sites one after another, just like back then.",
+   "In a cupboard you found the old site diary. One page read: ninth floor, east exterior panel number three, last outlet port not flowing, regrouted, rechecked and passed."
+  ],
+  "closing": {
+   "retire": "Many years later, one evening, you stood by Chaohu Lake and watched the buildings of Binhu on the far shore light up one after another. Many of the sleeves inside those panels you had watched being filled; sealed in the walls, they quietly hold up floor after floor.",
+   "burnout": "Many years later, on your balcony, you watched children downstairs stacking blocks, stacking them very high without a fall. You watched a while, then got up and went to the kitchen to boil a kettle.",
+   "end": "Many years later, in a drawer, you found the old walkie-talkie, its battery long dead. You pressed the talk button. No sound. You set it gently back in its place."
+  }
+ }
+}

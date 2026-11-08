@@ -1,0 +1,156 @@
+{
+ "id": "supervisor-nn",
+ "occupation": "Construction Supervisor",
+ "role": "On-Site Supervisor at a Construction Supervision Company",
+ "headline": "Two years out of a junior college program in building construction, on a housing site in Nanning's Wuxiang New Area for a supervision company with a tape measure and a rebound hammer: an on-site supervisor who stands watch over concrete pours at night and counts rebar spacing bar by bar during the day",
+ "unit": "The site supervision office of a Nanning construction supervision company, stationed on a housing project in Wuxiang New Area",
+ "unit_type": "Private construction supervision company (about three hundred staff, seven or eight in the project office)",
+ "city": "Nanning",
+ "city_tier": "Second-tier city",
+ "education": "Junior college diploma in building construction technology",
+ "level": "You can measure rebar spacing, concrete cover and formwork plumb, and you know how to write up a pour watch. But when a crew boss says \"we've always done it this way,\" you hesitate, and where the drawings and the codes disagree you still aren't sure whether to sign.",
+ "intro": "You studied building construction technology in Nanning, and after graduating you followed someone from your hometown into this supervision company, spending your first year on a city road counting manhole covers and checking compaction. This year you were sent to the supervision office on a housing project in Wuxiang New Area, and your dorm is a prefab container cabin at the edge of the site. As of today, with a tape measure, a straightedge and a supervision log, you keep watch at the foot of buildings that haven't yet grown tall.",
+ "salary_note": "Estimate: supervision companies in Nanning pay on-site supervisors below the national average, with an allowance for out-of-town projects. Supervision fees come in by installment under the contract, so in years when developers are short of cash, wages are paid late.",
+ "facts": [
+  { "label": "Site Supervisor (current level)", "value": "0-3 years, ¥5,000–7,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Specialist Supervision Engineer (3-6 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥13,500 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Making the contractor actually carry out its safety measures", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Checking the workers, materials and equipment coming on site and recording it", "source": "AI exposure" },
+  { "label": "Open positions", "value": "92 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "At the little shop by the cabins you slurp a bowl of Laoyou noodles, and the sour bamboo shoots jolt you awake. The sky is just getting light and the tower cranes are already turning.",
+  "Morning rounds: hard hat on, you walk from Building 1 to Building 6. At an open edge on Building 3 a stretch of guardrail has been taken down. You photograph it and find the site foreman, who says he'll put it back right away. You write down the time.",
+  "The slab rebar on the twelfth floor of Building 5 needs inspecting. You crouch on the steel mesh measuring the spacing square by square with a tape, and pull a few cover spacers to check. The crew boss hovers beside you: the pump truck arrives this afternoon.",
+  "Two laps are too short. You don't sign the inspection lot and tell them to fix it. The crew boss's face darkens: we've always done it this way. You say: once it's fixed, I'll come back up and look.",
+  "The specialist supervision engineer takes you to the material yard to witness sampling. Off a truckload of new rebar a few lengths are cut, sealed and labeled, and you sign the lab submission form.",
+  "It's the damp season, when the floor of the cabin shines like a mirror and the papers in the filing cabinet feel wet. You spread today's inspection records on the desk and write them up under an electric fan.",
+  "Building 5 starts pouring. You put on a raincoat and stand watch, following the poker vibrator as it plunges in place after place, take one slump test, and write it all, line by line, into the pour watch record.",
+  "The last truck of concrete is in, the pump truck pulls out, and workers trowel the slab. Back in your cabin there is a voice message from your mother in Yulin asking whether you've stayed up all night again."
+ ],
+ "ladder": [
+  { "title": "Site Supervisor", "stage": "Entry", "focus": "Stand watch over pours, make rounds, inspect work lots, write the supervision log and pour records, and learn the codes under a specialist engineer. You move up by being meticulous and willing to speak up." },
+  { "title": "Specialist Supervision Engineer", "stage": "Core staff", "focus": "Pass the registered supervision engineer exam and take charge of one discipline, building or civil: review method statements, inspect concealed work, and issue supervision notices." },
+  { "title": "Deputy Chief Supervision Engineer", "stage": "Second in command", "focus": "Run a project supervision office day to day on the chief's behalf, chair the supervision meetings, watch the high-risk works, and deal with the client and the quality inspection station." },
+  { "title": "Chief Supervision Engineer", "stage": "In charge", "focus": "Take overall responsibility for one or several projects, sign the completion acceptance and key documents, and be the first held accountable if anything goes wrong." }
+ ],
+ "ai_tasks": [
+  { "name": "Checking the workers, materials and equipment coming on site and recording it", "how": "AI can make a first pass at recognizing people, materials and machinery in site photos and video and compile them into inspection records. Whether the rebar and cement are up to standard and whether the tower crane runs properly takes a person on site to look, measure, take samples and sign." },
+  { "name": "Making the contractor actually carry out its safety measures", "how": "Cameras can spot obvious hazards like missing hard hats or unguarded edges. Pointing out the problem face to face, staying on the fix, and stopping work when needed takes a person on site who answers for it." },
+  { "name": "Watching concrete pours and inspecting concealed work", "how": "Once rebar is sealed in concrete it can never be seen again. Someone has to stand beside the pour, and someone has to look at every bar before signing." },
+  { "name": "Writing the supervision log and other site records", "how": "AI can turn voice notes, photos and test data straight into the supervision log and pour records, sorted by progress, quality, safety and disputes. A person only spot-checks that the key items are recorded right and nothing is missing." },
+  { "name": "Collecting, checking and organizing supervision records", "how": "AI can gather and sort records, check that nothing is missing and produce an index for the records clerk. A person only spot-checks that important records agree with one another." }
+ ],
+ "events": {
+  "e_first_stop": "The first time you stopped work on site: the shoring posts under a tall formwork were plainly too far apart, and you refused to let them pour. The contractor called the chief engineer, who came, took one look and said you were right to stop it.",
+  "e_miss": "When the forms came off an infill wall it showed honeycombing, a stretch you had missed on your night watch. The specialist engineer didn't scold you, just told you next time to go along with a flashlight, section by section.",
+  "e_cigarettes": "After you signed off a floor slab, the crew boss slipped a carton of cigarettes into your bag. You said nothing, and when you left work you put the carton back on the passenger seat of his car. The next day he greeted you as usual.",
+  "e_typhoon": "The day before a typhoon, you walked the whole site three times with the chief: tower cranes set to free slew, extra ties on the scaffolding, every stack of material moved away from the edge of the pit. That night you lay in your cabin listening to the wind and didn't dare sleep.",
+  "e_summer": "Nanning in July, sticky and blazing. The rebar is too hot to touch, and you walk back and forth across the deck all afternoon, your shirt soaking and drying until a white crust of salt forms on your back.",
+  "e_road": "The company sent you to watch a city road project separating storm and sewer lines: dig at night, backfill before dawn. You stood at the trench with a flashlight checking pipe joints, and when the neighbors stepped out in the morning, the road was already paved.",
+  "e_ai_log": "The company brought in a smart supervision platform. You tell your phone what you saw today and the supervision log writes itself, photos attached. Reading it through, you found it had you inspecting Building 6, where you never went.",
+  "e_ai_camera": "The site installed AI cameras, and every time someone appears without a hard hat, your phone buzzes. The first week it buzzed more than two hundred times, half of them at the cleaning lady in her straw hat.",
+  "e_unpaid": "The developer ran short of cash, the supervision fee was half a year late, and the company paid wages two months late. The contractor's migrant workers went to the sales office to demand their pay; you watched from a distance, with nothing you could say.",
+  "e_cert": "You passed the building practice paper of the Grade 1 Constructor exam. The test center was by Xiangsi Lake, and when you came out a light rain was falling. Your certificate is registered with the company and brings an extra allowance every month.",
+  "e_handover": "The apartment blocks you had watched over for two years were handed to their owners. People came in with keys; some took photos on the balcony, some crouched to look at the corners of the walls. Walking past below, you looked up and counted: those were the floors you inspected.",
+  "e_complaint": "After handover an owner complained of a leaking bathroom, and the developer called the supervisors to the site too. You dug out the old flood test record, forty-eight hours, with photos and signatures, and only then did everyone sit down to talk about the repair.",
+  "e_quality_station": "The quality inspection station came and spot-checked your supervision log and pour records. The team leader stopped at a page where you had sketched a rebar joint by hand, looked at it a while, said nothing, and turned the page.",
+  "e_back": "Years of crouching on rebar mesh have caught up with your knees, and you hold the handrail going downstairs. You bought a pair of knee braces and wear them even in summer.",
+  "e_wedding": "You got married. Your partner works in the pharmacy of a Nanning hospital. The wedding was back home in Yulin, and although you had worked out every table in advance, relatives added three more at the last minute.",
+  "e_house": "You bought a secondhand apartment in Jiangnan District. At the viewing you knocked on the walls first, then checked the slope to the bathroom floor drain. The agent said you were the toughest buyer he had ever met.",
+  "e_child": "Your child was born. For that month you took no night watches, and in the evenings you walked the baby back and forth on the balcony while people below ate late-night snacks.",
+  "e_metro": "The company won the supervision contract for a metro station's ancillary works. You took two young supervisors down twenty meters to watch pours, no phone signal, and by the time you came up it was dark.",
+  "e_ai_report": "These days AI writes a monthly supervision report in half an hour, data, photos and issue list all in place. The office has fewer people than before, and those who stayed spend their days going on site to look at the few things it can't see.",
+  "e_young": "Qin, a new supervisor, held his tape measure and didn't dare speak to the crew boss. You went up with him to inspect a slab and had him say himself what was wrong, while you just stood beside him.",
+  "e_old_road": "Driving down the city road you once supervised, the bauhinia trees along it have grown tall, the manhole covers still sit flush, and the car passes over without a sound."
+ },
+ "choices": {
+  "c_night": { "title": "Take all the night pour watches?", "situation": "The office is short-handed, most pours happen at night, and the chief asks who will take every night watch this quarter. Night shifts come with an allowance, and you'd see the most work; but there are still rounds and inspections by day, and it will wear you thin.", "options": [
+   { "label": "Take them all", "result": "Over the quarter you watched more than forty pours, and standing by the pump line you could tell whether vibration had been missed or a truckload ran thin. The chief named you at the weekly meeting." },
+   { "label": "Take turns", "result": "You and a colleague alternated weeks. Rested by day, you kept the most orderly inspection records, and when the quality station came to check, it was you who opened the filing cabinet." }
+  ] },
+  "c_exam": { "title": "Take the registered supervision engineer exam, go for Specialist Supervision Engineer", "situation": "To become a Specialist Supervision Engineer you first have to pass the registered supervision engineer exam: theory and regulations, contract management, project control, and case analysis. You're on site by day and drilling questions in your cabin at night, weekends too, and your partner says you haven't taken her to a single movie in a year.", "options": [
+   { "label": "Grit your teeth and sit it", "result": "It took you two years; the case analysis paper passed on the second try. The day the registration came, you sat in your cabin a long time and stacked those dog-eared books at the head of your bed." },
+   { "label": "Wait a year", "result": "You took the constructor exam first and got to know the site better. The supervision engineer books stayed at the head of your bed, unopened until the next year." }
+  ] },
+  "c_qinzhou": { "title": "A project at Qinzhou Port needs people", "situation": "The company has won supervision of a large plant at Qinzhou Port and needs people stationed there for three years, at twenty percent more pay plus an allowance. But it's two hours' drive from Nanning, the sea wind is strong and the project is huge, and you'd get home only a few times a month.", "options": [
+   { "label": "Go to Qinzhou", "result": "At the port you saw steel-frame plant halls dozens of meters tall and fields of storage tanks, with no shortage of codes, procedures and inspections. On weekends you went alone to the shore for a plate of oysters, then back to the dorm to write the monthly report." },
+   { "label": "Stay in Nanning", "result": "You said your family couldn't spare you. You kept watching the Wuxiang housing, following building after building from foundation pit to topping out. You had touched the rebar of every one." }
+  ] },
+  "c_ai": { "title": "Take over the smart site platform?", "situation": "The company has installed AI cameras, tower crane monitors and a smart supervision platform on several projects and wants someone who knows sites to run it: which alerts to trust, which records can be used as they are, and who checks the logs the platform writes. It doesn't count as billable output, and if you do it well, nobody will notice.", "options": [
+   { "label": "Take it", "result": "You set one rule for the platform: in any AI-written log, every item nobody saw in person is flagged yellow, and whoever signs has to add a line themselves. The chiefs grumbled at first; later, when the quality station came to check, that rule helped enormously." },
+   { "label": "Pass, stay on site", "result": "You said you still preferred to go up and look for yourself. The platform went to an IT clerk at head office, and you posted three pitfalls in the group chat that only someone on site would know." }
+  ] },
+  "c_rep": { "title": "Apply for Deputy Chief Supervision Engineer", "situation": "A new resettlement housing project needs a Deputy Chief Supervision Engineer to run the office day to day: chairing supervision meetings, watching deep excavations and tall formwork, dealing with the client and the quality station. You'd go from the one who inspects to the one who decides, and manage several older supervisors.", "options": [
+   { "label": "Apply", "result": "At the interview you didn't talk about seniority; you talked about the tall formwork you stopped that year. The general manager asked whether you were afraid of offending contractors. You said yes, but more afraid of an accident." },
+   { "label": "A few more years as a specialist", "result": "You recommended your old colleague Wei and stayed on as a specialist engineer, watching the hardest few buildings. When Wei chaired meetings, he often had you sit next to him." }
+  ] },
+  "c_developer": { "title": "A developer wants you as its engineer", "situation": "A developer's Nanning company wants you in its engineering department as the owner's engineer, at thirty percent more pay, no prefab cabins and no night watches. But from that day on you'd no longer be the one watching the builders on the owner's behalf; you'd be the one pushing schedules and squeezing costs.", "options": [
+   { "label": "Go to the developer", "result": "You handed your full supervision log to whoever took over, and kept the tape measure on you.", "end": "You worked on the developer side for many years and later ran the projects of a whole district. On every inspection day you still crouch down to look at the rebar yourself, and the supervisors behind you get a little nervous." },
+   { "label": "Stay in supervision", "result": "You turned it down. That month you were watching a foundation pit on a resettlement project through two weeks of rain. The slopes didn't move an inch, and you went to measure them every day." }
+  ] },
+  "c_county": { "title": "The quality station back home is hiring", "situation": "The construction quality and safety supervision station in your home county outside Yulin is hiring: a permanent post at a public institution, near your parents, lower pay, but no more following projects around. After all these years in Nanning, you know every building in Wuxiang New Area.", "options": [
+   { "label": "Go back to the county", "result": "The day you left Nanning you drove one last loop through Wuxiang New Area. The buildings you had inspected were full of people.", "end": "Back at the county quality station, you oversee every active site in the county. Young supervisors hand you their logs when they see you, and you leaf through them page by page, the way the station staff once leafed through yours." },
+   { "label": "Stay in Nanning", "result": "You talked with your parents on video for a long time and decided to stay. On weekends you drive back to Yulin and take the kids for beef jerky noodles." }
+  ] },
+  "c_chief": { "title": "Become Chief Supervision Engineer", "situation": "The company asks you to serve as Chief Supervision Engineer on a large district development, alone in charge of three sections' supervision offices. Yours is the first signature on the completion acceptance report, and if anything goes wrong on the project, you are the first one asked.", "options": [
+   { "label": "Take it", "result": "On your first day you listed every high-risk work across the three sections on one sheet and pinned it to the office wall, each with who watches it and the day it gets checked." },
+   { "label": "Stay as deputy chief", "result": "You said you wanted a few more years on site. That year the sections you watched had zero accidents, and at the year-end meeting the chief said half of that was yours." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last day you handed in the keys to the supervision office and put the tape measure you had used for decades in your pocket. You walked once around Wuxiang New Area. The facades of those buildings had aged, and quilts hung airing on the balconies. You stood below, looked up and counted the floors. Not one missing.",
+  "burnout": "That year your knees and your back failed together, and the doctor said no more scaffolding. You quit and spent a year at home, walking around South Lake every day. When you hear a tower crane turning in the distance, you still look up to see whether it stops steady."
+ },
+ "stages": [
+  "Your days are spent walking between the decks and the material yard: checking edge guards and scaffolding on rounds, crouching on rebar mesh with a tape and a straightedge to measure spacing and cover, standing watch over pours at night, and writing all of it into the supervision log and pour records. You see the site foremen, crew bosses and workers every day. Whether to sign is the specialist engineer's call; your job is to see clearly and say it plainly.",
+  "You are responsible for one discipline: reviewing the method statements the contractor submits, inspecting concealed work and work lots, witnessing samples for testing, issuing supervision notices when you find problems and following up on the replies. The contractor's technical manager now comes straight to you, and once you sign your line, the rebar gets sealed in concrete.",
+  "You run a project supervision office on the chief's behalf: chairing the weekly meeting that brings the client, contractor and design institute to one table; watching deep excavations, tall formwork and lifting equipment; handling inspections by the quality station. The shifts and logs of several supervisors are yours to review. You go up on the decks less often, and each time it's to the place that matters most.",
+  "You are in overall charge of supervision on the project: approving the supervision plan, signing start orders, stop-work orders and completion acceptance reports, with the offices of several sections reporting to you. You deal with the client's executives, the contractor's project managers and the quality station's team leaders, and when there's a problem you're the first one asked. Your signatures are few and heavy, and each one needs you to have seen the site yourself."
+ ],
+ "work": [
+  "Building 4's masonry came up for inspection and you laid the straightedge against wall after wall. One was more than a centimeter out of plumb. The foreman said the skim coat would even it out; you had them tear down that stretch and rebuild it.",
+  "On a night watch, one truck's concrete was plainly too wet. You had the lab technician test it on the spot, and the slump was over the limit. The driver called the batching plant, and that truck went back.",
+  "The specialist engineer had you cross-check a month of pour records against the pour ledger. One night's record said Building 3; the ledger said Building 5. You went through your phone photos: your own mistake. You corrected it and signed.",
+  "The contractor submitted a tall formwork plan. You worked through the post spacing against the calculations, went to look at the ground, and sent back a comment: that's backfill underneath, harden it first.",
+  "The crew wanted to lay the waterproofing membrane on a basement roof slab before the rain. At inspection you lifted a corner: the overlap was less than ten centimeters. You issued a supervision notice, and the next day they relaid it.",
+  "One set of rebar samples failed on yield strength. You had the contractor quarantine the whole batch under red tags, and watched with the manufacturer's people as it was hauled off the site.",
+  "At a supervision meeting the client wanted to rush a milestone and the contractor said it couldn't be done. You took no side, laid out three months of progress and weather records, and settled on a new date both sides signed.",
+  "With the deep excavation dug to the bottom, you checked the monitoring data first thing every morning. One day a point's displacement rose fast. You stopped the soil stockpiling beside it and had the third party monitor more densely; three days later the data steadied.",
+  "On a quality station inspection, the team leader pointed at a tower crane and asked when its tie-ins were added. You pulled the acceptance record and photos from the filing cabinet: dates, signatures, test reports, nothing missing.",
+  "One section's contractor failed to fix its problems three times running. You issued a stop-work order and wrote a formal report to the client. Their executive called; you said that for every day of the stoppage, you would be on site.",
+  "The day before completion acceptance you led several specialists from the basement to the roof, floor by floor, and found a roof gutter sloped the wrong way. You had them fix it overnight and signed only the next day.",
+  "The company wanted induction training for new supervisors. You skipped the code clauses and told them about the honeycombed stretch you missed all those years ago, then sent each of them into the building with a flashlight to look at a length of wall."
+ ],
+ "past": [
+  "In middle school in Yulin, your family built a new house. Your father hired a mason from the village, and every day after school you stood beside him watching the wall rise course by course.",
+  "Your gaokao (college entrance exam) score wasn't high, and you chose building construction technology at a vocational college in Nanning. Your father said there would always be someone who has to build houses.",
+  "In a first-year practical class you tied rebar for the first time and cut your hands on the wire in several places. The teacher said one day you'll be watching other people do this, so first you'd better know how hard it is.",
+  "The summer after your second year you worked as an assistant to a site foreman, setting out lines and keeping ledgers, and saw a supervisor send a whole floor of slab rebar back for rework with a single sentence. You remembered that person.",
+  "At graduation you had your on-site supervisor training certificate, and someone from your hometown at this supervision company passed on your resume. The chief engineer at the interview asked whether you dared to tell a crew boss no. You said you did.",
+  "Your first year you were sent to a city road, checking compaction every day, counting manhole covers, recording asphalt paving temperatures. You burned and peeled twice and learned to write your log under the sun."
+ ],
+ "late": {
+  "pension_note": "Estimate: private supervision companies in Nanning mostly pay pension contributions on the lower-middle range of wages, with no enterprise annuity, so after retirement the basic pension is a little over forty percent of your last monthly salary.",
+  "scenes": [
+   "Your first month of retirement, you still wake a little after six, go downstairs for a bowl of Laoyou noodles, and only after finishing remember there are no rounds to make.",
+   "Your old company asked you back as a technical adviser, one project visit a month. On a young deputy chief's log you wrote one line: this item, did you go up and see it?",
+   "Your housing block was replacing its roof waterproofing and the management company hired a crew. You went up to look at the membrane overlaps and talked with the crew boss for half an hour. After that he called you master whenever he saw you.",
+   "Your grandchild was building a house of blocks on the balcony, and it fell over at the fifth floor. You helped slip one more layer underneath and said: this is called the foundation.",
+   "In the early days after you stopped, you sat by South Lake every morning watching people row, and slowly your knees stopped hurting so much.",
+   "You joined neighbors climbing the steps of Qingxiu Mountain, slowly. From the top you could see the towers of Wuxiang New Area and picked them out one by one.",
+   "On the day you filed your retirement papers you passed your old site. It was a housing estate full of people now, and the mango trees by the gate were bearing fruit.",
+   "In your first year on a different path, every time you walked past a building site your eyes still went first to whether the edge guardrails were up.",
+   "At a dinner you ran into the crew boss who once put cigarettes in your bag. He runs his own company now. He came over with his glass and said: you really did give those cigarettes back that year.",
+   "Qin, the young supervisor you once trained, became a chief engineer and sent you a photo: his supervision log has hand-drawn rebar joint sketches in it too.",
+   "Nanning has opened several more metro lines. Sitting in the carriage, you remember those nights twenty meters down, no signal, nothing but the poker vibrators humming.",
+   "In a cupboard you found a stack of old supervision logs, the pages wrinkled by damp seasons, the writing still legible. One page read: Building 5, twelfth floor, two short laps, corrected."
+  ],
+  "closing": {
+   "retire": "Many years later, one evening, you walked along the Yong River while the towers of Wuxiang New Area across the water lit up window by window. Under those lights is rebar you measured bar by bar, sealed in concrete, quietly holding everything up.",
+   "burnout": "Many years later, the damp season came again and the floor tiles at home shone like mirrors. You took a stool out to the balcony and listened to someone downstairs fixing a bicycle, clink, clink, one tap at a time, steady and sure.",
+   "end": "Many years later, in a drawer, you found the old tape measure. The tape had faded but still pulled out smoothly. You drew it to three meters, let it slowly roll back, and put it away."
+  }
+ }
+}

@@ -1,0 +1,156 @@
+{
+ "id": "bim-cq",
+ "occupation": "Building Information Modeling (BIM) Technician",
+ "role": "BIM Modeler at an Architectural Design Institute's BIM Center",
+ "headline": "Fresh out of a bachelor's in construction management and hired by the BIM center of an old-line design institute in Chongqing: a BIM modeler who spends every day in Revit modeling hillside apartment blocks and running clash checks, and who has to pin down, floor by floor, the levels of a building with three different ground floors",
+ "unit": "The BIM center of an architectural design institute in Chongqing",
+ "unit_type": "State-owned architectural design institute (over a thousand staff, about thirty in the BIM center)",
+ "city": "Chongqing",
+ "city_tier": "New first-tier city",
+ "education": "Bachelor's degree in construction management",
+ "level": "You modeled a teaching building in Revit for a course project, and you can more or less read a CAD drawing. But when sprinklers, ductwork and cable trays all crowd under one beam, you can't yet say who should give way to whom, and on hillside projects with many levels you tend to build a floor in the wrong place.",
+ "intro": "You studied construction management in Chongqing, and in a third-year course project you built a teaching building in Revit for the first time and spent a whole night spinning it around. After graduation you joined the BIM center of this design institute, your desk on the seventh floor of an old building on the Yuzhong peninsula, with the Jialing River outside the window. As of today you start by modeling from drawings and running clash checks, learning to get a building on a mountainside straight, one floor at a time.",
+ "salary_note": "Estimate: design institutes in Chongqing pay BIM staff noticeably below the national average. Bonuses follow each project's billed output, so a year with many projects can mean several extra months at year end, and a year when the property market is slow shrinks them.",
+ "facts": [
+  { "label": "BIM Modeler (current level)", "value": "0-2 years, ¥5,000–7,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "BIM Engineer (2-5 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Settling problems with every discipline and the contractor at the coordination meeting", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Building models from construction drawings and setting up standard components", "source": "AI exposure" },
+  { "label": "Open positions", "value": "2 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Below your rented room in Niujiaotuo you eat a bowl of noodles with peas and minced pork, ride the light rail down to the river, then climb more than two hundred stone steps to the institute. By the time you walk in, your back is soaked.",
+  "You open Revit. A hillside apartment project in Jiangbei: on the street side of one building the entrance is the first floor, and on the uphill side it is already the fifth. You draw a small sketch of every entrance level in a notebook and tape it beside your monitor.",
+  "The clash check for the basement garage turns up more than fourteen hundred clashes, most of them sprinkler branches hitting beams. You go through them one by one, pick out the real problems, take screenshots, number them and enter them in the issue report.",
+  "You take the report to a veteran plumbing designer and tell him this drainpipe runs through a frame beam. He glances at it and says: you fix the model, I don't have time to fix the drawings this week.",
+  "Your mentor takes you to a project coordination meeting. The developer wants 2.2 meters of clear height over the garage ramp, the HVAC designer says the ducts can't go any lower, and the structural engineer says the beams can't change. The meeting runs two hours, and at the end you are told to go back and draw up three options.",
+  "The contractor's BIM technician asks in the group chat when the model will be updated; next week they will cut materials from your combined services drawings. You reply: Thursday.",
+  "After dinner in the canteen you come back to draw services cross-sections. Each one has to mark every pipe's diameter, elevation and spacing, and by the twelfth pipe your eyes start to blur.",
+  "You leave work and take a taxi over the Jialing River bridge. The lights on both banks are stacked layer upon layer, like a model that isn't finished. Your mentor posts in the group: site visit at nine tomorrow to check the retaining wall."
+ ],
+ "ladder": [
+  { "title": "BIM Modeler", "stage": "Entry", "focus": "Build models from construction drawings, run clash checks and compile issue reports. You move up by modeling fast and accurately." },
+  { "title": "BIM Engineer", "stage": "Core staff", "focus": "Run BIM for a whole project on your own: building services coordination, clear-height analysis and combined services drawings, plus coordination meetings with every discipline and the contractor." },
+  { "title": "BIM Discipline Lead", "stage": "In charge", "focus": "Oversee BIM quality on several projects at once, set modeling standards and the family library, review models, report to developers and sign off on BIM deliverables." },
+  { "title": "Deputy Director, Digital Design Studio (BIM Center)", "stage": "Leading a team", "focus": "Manage a studio's people, projects and billed output, carry the institute's digital strategy, and negotiate partnerships with developers, general contractors and drawing review." }
+ ],
+ "ai_tasks": [
+  { "name": "Building models from construction drawings and setting up standard components", "how": "AI and plug-ins can already recognize grids, walls, columns, beams and slabs in CAD drawings and generate a first-draft model. A person only has to check levels and component types and catch places where the drawings contradict each other." },
+  { "name": "Building services coordination and clash detection", "how": "Software runs the clash checks automatically and AI can suggest how to reroute. Which pipe gives way to which, whether there is enough clear height, and whether workers can actually install it have to be worked out by a person, pipe by pipe, with each discipline." },
+  { "name": "Clear-height analysis, combined services drawings and BIM reports", "how": "AI can produce clear-height zoning maps and draft reports automatically. Key spots need a person to recheck, and a person decides whom to report a problem to and how to fix it." },
+  { "name": "Maintaining the family library and modeling standards", "how": "AI can batch-check component names and missing parameters. A person decides what the standards are and which families to keep." },
+  { "name": "Settling problems with every discipline and the contractor at the coordination meeting", "how": "Changing a beam's depth or moving a pipe touches structural safety, cost and schedule. People have to sit at one table and work it out, and when they are done, someone signs." },
+  { "name": "Going to the site to reconcile the model with what's built", "how": "When the slope, a retaining wall or a slab already poured differs from the model, a person has to go look, measure and decide how to change it." }
+ ],
+ "events": {
+  "e_wrong_floor": "You built the equipment floor of a hillside apartment block one level off, so the whole clash report was wrong, and the contractor spent half a day in meetings over it before anyone noticed. Your mentor went through the model with you from the beginning and didn't say a word.",
+  "e_site_wall": "On your first site visit to check a retaining wall, the real slope was a good deal steeper than on the drawings, and the wall was already half poured. You stood in the mud with a tablet, comparing model and site point by point. The yellow mud stayed on your shoes for two days.",
+  "e_clash_save": "In the model you found a main fire line running straight into a primary beam of the garage, before the contractor had cut anything. Moving one pipe saved a hole someone would have had to cut later. The contractor's project manager took your team out for tea.",
+  "e_summer": "Chongqing in August, forty degrees, and two straight weeks checking models on site. Sweat ran from your hard hat down your face, the tablet got too hot to hold, and every evening you drank two bottles of iced sour plum juice.",
+  "e_ai_model": "The institute bought an automatic modeling tool. Feed it a full set of residential drawings and the model is out in an afternoon. What used to take you a week now means checking it floor by floor; it read the half-basement's level as ground.",
+  "e_ai_clash": "AI can now sort the clashes itself and propose reroutes. You found it had pushed all the ductwork down, which left the garage ramp with 1.9 meters of clearance. You rerouted that section yourself and wrote in the report why it couldn't be done that way.",
+  "e_overtime": "A commercial complex was racing to a submission deadline. For three weeks you left after eleven every night and kept revising on weekends. The day it went out you fell asleep at your desk and woke to find someone had put a coat over you.",
+  "e_cert": "You passed the BIM skills certificate, Level 2, building services track. The practical exam was coordinating the services in one corridor, and you handed in your paper forty minutes early.",
+  "e_property": "With the property market down, the institute won fewer residential projects every year. Two developments stopped halfway through, and bonuses shrank by a big chunk. At the year-end meeting the studio head said: let's all hold on a little longer.",
+  "e_rail": "The institute took on a rail station with a development built on top. The station is buried in the mountain, buildings go on top, and trains run beneath. You modeled it for half a year, and for the first time felt a model could hold an entire mountain.",
+  "e_hospital": "You ran services coordination for a hospital's new campus: medical gases, clean-air ductwork and a pneumatic delivery track all crammed into one corridor ceiling. Someone from the nursing department came to look at the model, pointed at a spot and said: beds have to turn the corner here.",
+  "e_review": "In recent years some Chongqing projects have had to submit BIM models for review. Drawing review sent back a comment that the fire compartments in the model didn't match the drawings. You searched all night: the architects had changed the drawings without telling you.",
+  "e_hotpot": "The day a project was handed over, everyone from the center went for hotpot by the river. After two drinks your mentor said that the year he started, he was still tracing drawings by hand, a week for one site plan.",
+  "e_eyes": "Two monitors, ten hours a day. Your eyes ache from dryness and your neck has started to crack. The doctor told you to look into the distance every so often, so you go to the window and watch the boats on the river.",
+  "e_wedding": "You got married. Your partner works at a bank in Guanyinqiao. The wedding was back home in Yongchuan, and you built a little model of the hotel banquet hall to settle where every table would go.",
+  "e_house": "You bought an apartment in Lijia. Touring the show flat, you looked up at the ceiling without thinking and worked out that the ducts in there must be squeezed very hard.",
+  "e_child": "Your child was born. You took a few days off, then came back to revising models, your phone full of photos of the baby asleep that you flipped through at lunch.",
+  "e_old_project": "You passed the hillside estate you worked on years ago, walked in a first-floor door at the bottom of the slope and out a fifth-floor door at the top. The guard at the gate had no idea those two doors were lined up, level by level, by you.",
+  "e_ops_twin": "A hospital asked your team to connect the as-built model to its facilities management platform: which unit has failed, where the valve sits in the ceiling, one click and you know. For the first time you saw a model stay alive after the building was finished.",
+  "e_ai_drawing": "Now when a set of construction drawings comes out, the model and the services drawings come out almost at the same time, mostly AI's work. Your center has half the people it had, and those who stayed spend their days checking, fixing and signing.",
+  "e_back": "Your lower back has started to give out, so you switched to a standing desk. After work you climb the slopes of Eling Park, take one look at the two rivers from the top, and walk slowly back down.",
+  "e_student": "An intern you supervised dug up your old sketch of entrance levels and told you he had drawn one just like it and taped it beside his own monitor."
+ },
+ "choices": {
+  "c_site": { "title": "Six months on site", "situation": "A general contracting project needs the institute to station a BIM technician on site for six months, checking the model against the work with the contractor every day. There is an allowance, but the site is in the hills of Beibei, three hours there and back each day. Stay at the institute and you keep modeling from drawings, faster and faster.", "options": [
+   { "label": "Go on site", "result": "In six months you learned how workers actually hang pipe, and which reroutes look fine in a model and can't be installed at all. Back at the institute, the contractor started asking for your models by name." },
+   { "label": "Stay at the institute", "result": "You became the fastest modeler in the center, able to finish a high-rise in three days. But when the site called with questions, you still had to pass them to the colleague stationed there." }
+  ] },
+  "c_engineer": { "title": "Carry a project alone, go for BIM Engineer", "situation": "The center's director says that to become a BIM Engineer, modeling isn't enough: you have to carry a project yourself, decide how the services are coordinated, run the meetings, and negotiate with the veteran designers of every discipline. Next month a school project has no one to lead it. Do you dare take it?", "options": [
+   { "label": "Take it", "result": "Chairing a coordination meeting for the first time, your palms were wet. The old structural engineer said the beam couldn't change; you laid three sections on the table, he studied them a long while and said: fine, this one can take a sleeve." },
+   { "label": "One more year under your mentor", "result": "You followed him another year and filled a notebook with how he talks and when he gives ground in meetings. When you took on a project the year after, you felt much steadier." }
+  ] },
+  "c_shenzhen": { "title": "A big Shenzhen institute is hiring", "situation": "A large design institute in Shenzhen is hiring BIM Engineers at one and a half times your pay, on supertall towers and developments over metro depots. But your parents are in Yongchuan, your partner is in Chongqing, rent in Shenzhen would eat half your salary, and nobody there makes noodles this spicy.", "options": [
+   { "label": "Go to Shenzhen", "result": "In Shenzhen you saw a three-hundred-meter tower whose services coordination was scheduled by the hour. On weekends you walked alone by the sea, then went back to your rented room to keep revising models." },
+   { "label": "Stay in Chongqing", "result": "You turned it down. On weekends you and your partner went to Nanshan for spring-water chicken, and on Monday you climbed the steps to the institute as usual. Chongqing's projects are smaller, but you know every slope." }
+  ] },
+  "c_ai": { "title": "Take charge of the AI drawing process?", "situation": "More and more tools build models and coordinate services automatically, and the institute wants someone to set the rules: which AI models can be used as they are, which need a person to check, and how templates and the family library should change so it makes fewer mistakes. The job earns no billed output, and if you do it well nobody will notice.", "options": [
+   { "label": "Take it", "result": "You sorted the center's family library from top to bottom and wrote clear parameter and naming rules for every component type. Rework on the tool's models fell by half, and new hires could just follow along." },
+   { "label": "Pass, keep doing projects", "result": "You said you still liked seeing a project through from start to finish. Someone else wrote the rules, and at the review meeting you added five pitfalls that only hillside projects have." }
+  ] },
+  "c_general": { "title": "A general contractor wants you as BIM Manager", "situation": "A general contractor's regional company asks you to be its BIM Manager at thirty percent more pay, in charge of detailing, material takeoffs and schedule on site. But it's another kind of life: living in site offices, dealing every day with workers and subcontractors, no longer drawing for a design institute.", "options": [
+   { "label": "Go to the contractor", "result": "You handed in your institute badge and took with you the little sketch of entrance levels from beside your monitor.", "end": "You did BIM for the contractor for many years and later ran detailed design for a whole region, living in a dozen different site offices. At every new site you still climb to the highest point first and take a look at the mountain." },
+   { "label": "Stay at the institute", "result": "You turned it down. That month you took on a secondary school on a mountain, its sports field cut into the hillside, and you modeled every single step." }
+  ] },
+  "c_lead": { "title": "Apply for BIM Discipline Lead", "situation": "The center is promoting a BIM Discipline Lead to oversee BIM quality on four or five projects at once, sign off on deliverables and report to developers. You would model less and review more, and manage several people with more seniority than you.", "options": [
+   { "label": "Apply", "result": "In your application talk you didn't list how many projects you had done; you told them about the fire main you caught in the model the year before. The chief engineer on the panel nodded." },
+   { "label": "Stay on the technical track", "result": "You recommended a colleague who had joined two years before you and kept carrying the hardest projects yourself. The center's most complicated hillside jobs were still yours to model." }
+  ] },
+  "c_twin": { "title": "A software company comes headhunting", "situation": "A digital twin software company wants you as an industry consultant at double your pay. No more all-nighters before submissions, just explaining to development zones and hospitals how to connect models to facilities management. But it's a software sales job: constant travel, proposals and client entertaining.", "options": [
+   { "label": "Go to the software company", "result": "The last model you submitted at the institute carried one line in its version notes: all levels checked.", "end": "You consulted for the software company for many years and explained to the owners of dozens of buildings how to keep a model useful after the building is done. Now and then you pass the old building on the Yuzhong peninsula and look up at that seventh-floor window." },
+   { "label": "Stay", "result": "You turned it down. That year the institute won its first facilities-management BIM project, and the director handed it to you." }
+  ] },
+  "c_vice": { "title": "Apply for Deputy Director of the Digital Design Studio", "situation": "The institute is upgrading the BIM center into a digital design studio and needs a deputy director to run the projects and output of about thirty people, carry the institute's digital strategy, and negotiate with developers, contractors and drawing review. You would sit in many meetings, drink a lot of tea, and touch models less and less.", "options": [
+   { "label": "Apply", "result": "The first page of your application read: AI can build the models now; what we sell is who takes responsibility. The institute's president kept that page." },
+   { "label": "Keep leading projects", "result": "You didn't apply and kept leading a few young people on the hardest projects. The hospital project your center delivered that year passed review on the first submission." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last day you handed over the project folders on your computer one by one; the oldest was that hillside estate in Jiangbei. You went downstairs and climbed the two hundred stone steps down to the river, your back as soaked as on your first day. Boats moved slowly along the water, and the buildings on both banks rose layer upon layer.",
+  "burnout": "That year your neck and your eyes gave out together, and the doctor told you to stop living in front of a screen like this. You quit and spent a year at home, walking the riverside path every day. You rarely turned on the computer, and when you did, it was only to see whether the sketch of entrance levels was still on the desktop."
+ },
+ "stages": [
+  "Every day you build models from construction drawings: architecture, structure, plumbing, HVAC and electrical, one discipline at a time in Revit, then export to Navisworks to run clash detection, screenshot and number the real problems, and write them into the issue report. When drawings contradict each other you ask each discipline's designer; whether to change them is their call, and your job is to lay the problem out clearly.",
+  "You carry a project on your own: coordinating the building services, producing clear-height analyses and services cross-sections, and chairing the weekly coordination meeting that brings the developer, each discipline's designers and the contractor's BIM staff to one table. From now on you decide which revision a drawing is on and which pipe gives way, and your name goes on the issue report.",
+  "You watch four or five projects at once, modeling less and reviewing more: spot-checking your team's models, setting the center's modeling standards and family library, presenting BIM deliverables to developers, and negotiating the split of detailing work with the contractor's managers on your team's behalf. BIM models submitted for review need your signature, and comments sent back come to you first.",
+  "You run a studio: scheduling, billed output and reviews for about thirty people, the institute's digital direction, and partnerships with developers, general contractors and drawing review. By day you sit in meetings, negotiate contracts and read reports; now and then in the evening you open a model to see how the young people are doing. You sign more and more and touch the mouse less and less."
+ ],
+ "work": [
+  "Your mentor had you model a building's stairs. When you spun it around, the stair on the ninth floor ran into a beam. You went back to the drawings: on the structural sheets that beam sat twenty centimeters higher than on the architectural ones.",
+  "Modeling cable trays for a garage, the power and low-voltage trays sat on top of each other in the drawings. You called the electrical designer; she said stack them, low-voltage on top, and you pulled them fifteen centimeters apart in the model.",
+  "You handed in a clash report and the center's director sent it back: nobody can read a thousand issues. You sorted them again into three tiers of severity and in the end submitted ninety-seven.",
+  "A school corridor had only 2.4 meters of clear height. You stacked the ducts, sprinklers and cable trays in five versions of the section and finally talked HVAC into switching one stretch to flat ductwork, keeping 2.6 meters clear.",
+  "Tan, the contractor's BIM technician, said they couldn't build from your services drawings because there was nowhere to fix the hangers. You spent an afternoon on site, came back, and left room in the model for supports under every group of pipes.",
+  "At a coordination meeting the developer wanted to add an elevator. You dropped the shaft into the model on the spot, three disciplines crowded around the screen, and within ten minutes they could see two beams would have to move.",
+  "Spot-checking a young modeler's work, you found all his fire hose cabinets were families downloaded from the internet, in the wrong size. You didn't scold him; you sent him the center's standard family and added a line to the library notes.",
+  "Presenting to a developer, their engineering director asked how much money BIM had actually saved. You gave no figure. You showed three screenshots of clashes caught early in the model and told him what each would have cost to tear out on site.",
+  "A model submitted for review came back with three comments. You checked each: two were drawing problems and one was the model's. You fixed the model, then took screenshots of the other two to the architectural discipline lead.",
+  "Negotiating full-cycle BIM work with a general contractor, they wanted the institute to take on all the detailing. You counted heads and agreed only to the garage and the plant rooms, with the boundaries written into the contract.",
+  "At year end, two team leads came to you fighting over whose output a hospital project counted as. You spread both teams' timesheets on the table and split it by the work each had actually done. Neither got more.",
+  "At the institute's digital planning meeting you said AI-built models need someone to sign them, and whoever signs has to understand a building site. You proposed that every new hire spend three months on site in their first year, and the president agreed."
+ ],
+ "past": [
+  "In middle school in Yongchuan you spent a summer on site with your uncle, a construction foreman, watching workers reroute a pipe under one beam three times while he cursed the design institute all afternoon.",
+  "Your gaokao (college entrance exam) score got you into the civil engineering programs at a Chongqing university. You wanted architecture but didn't have the points and were moved to construction management. Your uncle said that was fine: you'll manage people.",
+  "In your second year you learned Revit in the department's BIM club and followed an older student into a BIM competition, pulling three all-nighters to model a gymnasium. You won third prize.",
+  "For a third-year course project you built a teaching building in Revit, exported it to Navisworks for the first time and got more than three hundred clashes. You looked at every one of them until dawn.",
+  "In your final year you interned at this institute's BIM center. Your mentor had you model a garage; you got a level wrong by one floor, he told you to rebuild it, and the second time you got it right. When the internship ended he said: come next year."
+ ],
+ "late": {
+  "pension_note": "Estimate: state-owned design institutes pay full social insurance on actual salary and most have an enterprise annuity, so after retirement the basic pension plus annuity comes to about half of your last monthly salary.",
+  "scenes": [
+   "Your first month of retirement, you still wake a little after seven, go downstairs for a bowl of pea noodles, and only after finishing remember you don't have to climb those two hundred steps anymore.",
+   "The institute asked you back to give the new hires a lesson, and you talked about levels on hillside projects. Afterward a young person came up and asked if he could take a photo of your old sketch of entrance levels.",
+   "Your old housing block was getting an elevator added. When the crew came to measure, you watched for a long time and finally couldn't help pointing out: there's a drainpipe under the shaft.",
+   "Your grandchild showed you a block city on a tablet, the houses built up a hillside, layer on layer. You pointed at one and asked: so where is this building's ground floor?",
+   "In the early days after you stopped, you walked the riverside path every day, watched the cable car pass overhead, and slowly your eyes stopped hurting.",
+   "When your neck was a little better you signed up for calligraphy at the senior college. Your strokes were very slow, and your mind was calmer than it ever was while drawing.",
+   "On the day you filed your retirement papers you passed the old building on the Yuzhong peninsula. The facade had been repainted, but the seventh-floor window looked the same. You stood on the steps and watched it for a while.",
+   "In your first year on a different path, you still looked up at the ceiling in every building you entered, guessing how the pipes were laid out inside.",
+   "When you went back to the institute on an errand, the BIM center's sign had been changed to Digital Design Studio. The canteen lady still knew you and gave you an extra spoonful of twice-cooked pork.",
+   "An intern you once supervised became a discipline lead and sent you a photo: a hillside project model, its levels marked floor by floor, clean and clear.",
+   "Chongqing has built several more bridges over the river. Riding across, you look at the piers and quietly work out how deep they go into the riverbed.",
+   "On an old hard drive you found the model of your first project; it took a long time to open. The building still turned on the screen, and by the fifth-floor door on the uphill side was a level you had typed in all those years ago."
+  ],
+  "closing": {
+   "retire": "Many years later, one evening, you stood on the riverside path and watched the buildings on the hill across the water light up floor by floor. You knew that on some screen you couldn't see, their pipes were still laid out in neat rows, each one making way for another.",
+   "burnout": "Many years later, on your balcony, you watched the fog rise off the river and swallow half the buildings on the mountain, leaving only the top few floors. You watched for a while and thought it looked like a model that wasn't finished, and that this was just fine.",
+   "end": "Many years later, in a drawer, you found the sketch of entrance levels, the paper gone yellow: first floor at the bottom of the slope, fifth floor at the top, the arrows still the ones you drew. You looked at it a while, folded it, and put it back."
+  }
+ }
+}

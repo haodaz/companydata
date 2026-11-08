@@ -1,0 +1,155 @@
+{
+ "id": "curtainwall-sz",
+ "occupation": "Building Curtain Wall Designer",
+ "role": "Curtain Wall Designer at a Facade Company's Design Institute",
+ "headline": "Three years into the trade after a bachelor's in civil engineering, at the design institute of a Shenzhen facade company: a curtain wall designer who draws unitized panel details and works out typhoon wind pressures for a two-hundred-meter office tower in Houhai, and every so often rides the hoist up to the fifty-second floor to see how far the cast-in anchors are off",
+ "unit": "The design institute of a building curtain wall company in Shenzhen",
+ "unit_type": "Private facade engineering company (about two thousand staff, over a hundred in the design institute, factory in Dongguan)",
+ "city": "Shenzhen",
+ "city_tier": "First-tier city",
+ "education": "Bachelor's degree in civil engineering",
+ "level": "You draw the standard details for unitized and stick-built curtain walls fluently, produce structural calculations on your own, and your fabrication drawings rarely bounce back from the Dongguan factory. But for freeform curved surfaces, wind loads beyond the code's limits, or arguing panel grids with the architect, you still need the lead designer to step in.",
+ "intro": "You studied civil engineering in Guangzhou and joined this Shenzhen facade company after graduating, spending two years at the design institute drawing details and fabrication drawings before taking on a whole elevation yourself in your third. Your desk is in an old factory building in Nanshan converted into offices, and out the window you can see the Houhai towers whose glass is not yet closed in. As of today you are responsible for the unitized curtain wall on one of them, learning to make thousands of glass panels hold, every last one, through a typhoon.",
+ "salary_note": "Estimate: facade companies in Shenzhen pay designers above the national average, with overtime and project bonuses in quarters racing to deadlines. In years with fewer property projects, bonuses shrink; overseas projects add a posting allowance.",
+ "facts": [
+  { "label": "Curtain Wall Designer (current level)", "value": "2-5 years, ¥8,000–13,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Lead Curtain Wall Designer (Project Design Lead) (5-10 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Giving technical guidance on site and solving design problems there", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Studying the architectural design requirements and settling the curtain wall scheme", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Downstairs in the urban village you buy a plate of rice noodle rolls with egg and squeeze onto the metro, where half the carriage is looking at drawings on their phones.",
+  "You open AutoCAD. The architects have sent the seventh version of the elevation grid, and the corner glass is a hundred millimeters wider again. You redraw the corner mullion in the detail and work out whether the aluminum profile needs a new die.",
+  "You run the structural calculations: Shenzhen's basic wind pressure plus two hundred meters of height makes the corner panels' wind load a good deal bigger than a standard panel's. You switch the mullion to a deeper section, and the deflection just passes.",
+  "The process engineer at the Dongguan factory calls: a bracket hole on your fabrication drawings from last week doesn't line up with the profile, and thirty pieces have already been punched. You check the drawing: you changed versions without syncing it. You hang up and go issue a revision notice.",
+  "A video meeting with the architecture firm. They want the glass more transparent and the vertical aluminum fins thinner. You lay out the calculation showing how thin they can get before they flutter in a typhoon, both sides give a little, and you settle on a thickness.",
+  "You ride the construction hoist to the fifty-second floor. The site project manager says a row of cast-in anchors is forty millimeters off. You crouch at the slab edge and measure it again; back at the office you'll need a detail for retrofitted anchors.",
+  "Back at the institute, the lead designer looks over your corner detail and circles a spot in red pen: the structural silicone isn't wide enough here, and when typhoon season comes you won't be able to sleep.",
+  "You walk out of the building after finishing the revisions. The lights are still on in the Houhai towers, and the floors without glass are dark, like a row of missing teeth."
+ ],
+ "ladder": [
+  { "title": "Curtain Wall Design Assistant", "stage": "Entry", "focus": "Draw details, fabrication drawings and cutting lists, and learn calculations and codes under a designer. You move up by drawing accurately and revising fast." },
+  { "title": "Curtain Wall Designer", "stage": "Core staff", "focus": "Run the detailed design of a project or an elevation: set the details, produce the calculations, work with the architects and the factory, and sign drawings as designer." },
+  { "title": "Lead Curtain Wall Designer (Project Design Lead)", "stage": "In charge", "focus": "Run all the curtain wall design on a large project, lead three to five designers, chair expert reviews and performance tests, and sign drawings as checker." },
+  { "title": "Deputy Head / Design Director of the Design Institute", "stage": "Leading a team", "focus": "Manage the institute's people, projects and technical standards, prepare bid schemes, and negotiate technology and contracts with architecture firms, general contractors and owners' senior management." }
+ ],
+ "ai_tasks": [
+  { "name": "Studying the architectural design requirements and settling the curtain wall scheme", "how": "AI can help sort out the key points in architectural drawings and specifications, compile a list of requirements and offer a few options for reference. A person has to talk with the architect, judge the elevation's look, cost and buildability, and make the final call on the scheme." },
+  { "name": "Drawing curtain wall scheme and construction drawings", "how": "AI and parametric tools can quickly generate elevation grids, standard details and repetitive sheets and make batch changes. A person has to check the drawings' accuracy, coordinate the disciplines, and personally detail irregular elevations and special areas." },
+  { "name": "Selecting panels, framing and hardware", "how": "AI can search and compare specifications and parameters of panels, profiles and hardware against performance requirements and list candidates. A person makes the final choice based on budget, what suppliers can really deliver, schedule and past experience." },
+  { "name": "Calculating curtain wall structural loads and safety", "how": "Calculation software plus AI can build the model, run the usual load cases for stress and deflection, and draft the calculation report. A person has to set the load values and boundary conditions, check whether the results make sense, and sign for structural safety." },
+  { "name": "Refining curtain wall details and system design", "how": "AI can propose and compare detail improvements for thermal, waterproofing and airtightness requirements. A person has to judge from site experience whether it can be built, whether it's easy to install and what it costs, and decide which construction to use." },
+  { "name": "Checking designs against codes and technical standards", "how": "AI can check drawings and calculations against code clauses one by one and mark anything noncompliant or missing. A person only spot-checks key clauses and confirms the code edition and local requirements apply." },
+  { "name": "Running design briefings to explain the design intent", "how": "AI can help prepare briefing materials, detail explanations and 3D walkthroughs. A person has to explain the intent face to face, answer questions from the contractor and supervisors, and make sure the key risks are handed over." },
+  { "name": "Giving technical guidance on site and solving design problems there", "how": "At most AI can look things up and record issues. A person has to go see how installation is really going, talk on site with the installers, general contractor and owner, judge and deal with deviations on the spot, and answer for the result." }
+ ],
+ "events": {
+  "e_typhoon": "The night the typhoon made landfall you kept your phone by you, and every hour the site project manager sent a video: on the dozen or so floors you had installed, not a single panel had moved. You fell asleep at four in the morning.",
+  "e_breakage": "On a finished building a pane of glass broke spontaneously and shattered onto the canopy, hurting no one. The owner called you all to a meeting. You checked that batch's heat soak test records, and back at the office you added a line to the specifications of the next project.",
+  "e_mockup": "Your unitized panel went for the four performance tests, and on water penetration it held under the spray at maximum pressure without a drop inside the glass. The testing engineer signed the report, and you took a photo at the edge of the test rig.",
+  "e_mould": "You drew the wall thickness of a profile section wrong, and a new extrusion die had already been cut, tens of thousands of yuan. The head of the institute didn't scold you; he sent you to the Dongguan factory to apologize to the die maker yourself and watch how they fixed it.",
+  "e_ai_drawing": "The company brought in a parametric drawing workflow: thousands of panels on an elevation, grid, numbering and fabrication drawings, all run out overnight. What used to take you a month now means checking panel by panel; it had reversed the angle on several corner panels.",
+  "e_ai_code": "AI can now check an entire calculation report against the code clause by clause and flag what doesn't comply. Of the twenty-odd items it flagged, most were real, but it didn't catch a wind load shape coefficient taken for a flat face when the building's corner was curved.",
+  "e_overtime": "Racing a bid scheme, you left the office at one in the morning for three weeks running and ate boxed lunches at the institute on weekends. The day the bid went in you fell asleep in the taxi, and the driver woke you to say you'd arrived.",
+  "e_property": "With the property market down, two projects halfway through stopped paying, the company let a batch of people go, and the institute's bonuses were cut in half. You weren't on the list. The colleague at the desk across from you was.",
+  "e_site_climb": "The first time, you rode a gondola with the installation crew down the outside of the thirtieth floor to see how unitized panels interlock. When the wind swung the gondola you gripped the rail and didn't dare move, while Liao, an installer, smoked a cigarette beside you.",
+  "e_expert": "The curtain wall on a tower beyond the code's height limit had to pass an expert review. Five veteran experts questioned your scheme for three hours. The last one said: this corner detail is carefully thought through.",
+  "e_overseas": "The company won the curtain wall for an airport in Southeast Asia, and you spent two months on site. Local workers installed panels while you gestured to each other, and you learned to say \"slower\" in three languages.",
+  "e_cert": "You passed the foundation exam for registered structural engineer, Grade 1. The professional exam is still a long way off, but now you can finally derive every formula in your calculation reports from the start.",
+  "e_eyes": "Twelve hours a day drawing details on two screens: your eyes ache from dryness and your neck has started to crack. You put a pothos plant beside your monitor and look at it whenever you've been staring too long.",
+  "e_wedding": "You got married. Your partner works in product at a company in the Science Park. The wedding was back home in Ganzhou, at a hotel with a stick-built glass curtain wall, and you stood at the entrance a long while looking at the sealant joints.",
+  "e_house": "You bought a small three-bedroom in Guangming, the down payment pooled by both families. On handover day you looked at the windows first: the profile was the one you knew best. You turned the handle. Smooth.",
+  "e_child": "Your child was born. You took a few days off, then came back to revising drawings, flipping through baby photos at lunch while the colleague across from you leaned over to look.",
+  "e_light": "The tower you designed topped out. In the evening, seen from Shenzhen Bay Park, its whole face of glass reflected the sky over the sea, pane fitted tight against pane. You stood there until the park closed.",
+  "e_retrofit": "A twenty-year-old office building in the old city was getting a new curtain wall. You went to look at the panels taken down: the structural silicone had hardened and cracked. In the retrofit plan you wrote out the removal and installation order for every single panel.",
+  "e_bipv": "More and more owners want photovoltaic curtain walls, solar cells laminated in the glass, keeping out the wind and making power at once. For the first time you left a path for cables in the detail, and spent an afternoon working out the wiring with the electrical engineer.",
+  "e_ai_team": "Now most of a project's grid, numbering, fabrication drawings and calculations come from AI, and the institute has thirty percent fewer people. Those who stayed spend their days checking, revising, going to site and signing drawings.",
+  "e_back": "Years of sitting at drawings and your back has started to give. You switched to a sit-stand desk and walk along the Dasha River for an hour after work.",
+  "e_apprentice": "A new design assistant drew the structural silicone at the minimum width. You told him about the red circle the lead designer once drew on your detail, and he went back and revised the whole set."
+ },
+ "choices": {
+  "c_site": { "title": "Six months on site with the project", "situation": "Large-scale installation is starting on the Houhai tower, and the project needs a designer who can revise drawings on site. Would you be stationed there for six months? You'd learn how things are really installed, riding the hoist and eating site food every day. Stay at the institute and you move on to the next bid scheme.", "options": [
+   { "label": "Go on site", "result": "In six months you learned which details look fine on paper and can't be installed at all in the wind on the fiftieth floor. Back at the institute, for every detail you drew, you first pictured how Liao's hand would reach in." },
+   { "label": "Stay at the institute", "result": "You worked on two bid schemes and won one. When the site called with questions about details, you talked them through on the phone line by line and sent a sketch afterward." }
+  ] },
+  "c_param": { "title": "Learn parametric design and take on a double-curved facade", "situation": "The company has won a cultural center with a double-curved facade: thousands of glass panels, every one a different size, far too many to draw by hand. It needs parametric scripts in Rhino and Grasshopper to generate the panels. Few people at the institute know how; you'd learn from scratch and give up your evenings and weekends.", "options": [
+   { "label": "Learn from scratch", "result": "It took three months, and for the first time you had a script cut an entire curved surface into more than three thousand panels, each with its own fabrication drawing generated automatically. The Dongguan factory said it was the cleanest cutting list they had ever received." },
+   { "label": "Leave it to someone else", "result": "The curved surface went to a young designer who had jumped from an architecture firm, and you took the flat elevations. You draw steadily, and you're still the one whose drawings the factory returns least." }
+  ] },
+  "c_overseas": { "title": "A two-year posting to the Middle East", "situation": "The company has won a large commercial complex in the Middle East and needs a designer stationed there for two years, with pay plus a posting allowance at one and a half times what you make now. Summers there reach fifty degrees, the sandstorms are heavy, the codes are British and American, and your partner has just changed jobs in Shenzhen.", "options": [
+   { "label": "Take the posting", "result": "You drew curtain walls on the edge of the desert for two years and learned to calculate wind loads to British standards and keep glass from cracking under a fifty-degree sun. Every Friday you video-called your partner, with a wall of yellow behind you." },
+   { "label": "Stay in Shenzhen", "result": "You turned it down. Those two years you did three towers in Shenzhen and walked the beaches of Dapeng with your partner on weekends." }
+  ] },
+  "c_lead": { "title": "Apply for Lead Curtain Wall Designer", "situation": "The institute needs a Lead Curtain Wall Designer (Project Design Lead) for a three-hundred-meter supertall: leading four designers, chairing the expert review and performance tests, signing every drawing as checker. You'd draw less and sign more, and if anything went wrong, you'd be the first one asked.", "options": [
+   { "label": "Apply", "result": "At the interview you talked about the pane that broke spontaneously and the line you've added to every specification since. The head of the institute said: that's exactly the kind of person who holds a grudge we need." },
+   { "label": "A few more years as designer", "result": "You recommended a colleague who had joined two years before you and went on drawing the hardest corners and canopies. Before signing any drawing as checker, he always brought it to you first for a look." }
+  ] },
+  "c_ai": { "title": "Take charge of the AI drawing and checking process?", "situation": "More and more grids, fabrication drawings and calculations come first from AI, and the institute wants someone to set the rules: which can go straight to the factory, which need a person to check, and how to build a standard detail library so it makes fewer mistakes. It doesn't count as output; if you do it well nobody will notice, and if it goes wrong it's on you.", "options": [
+   { "label": "Take it", "result": "You turned more than a decade of the institute's standard details into a library, each with the wind pressures and glass thicknesses it suits and the cases where it must not be used. Drawings returned by the factory fell by more than half." },
+   { "label": "Pass, keep doing projects", "result": "You said you still liked following a project from bid to topping out. Someone else built the library later, and at the review meeting you added five pitfalls you only learn in typhoon season." }
+  ] },
+  "c_consultant": { "title": "A facade consultancy comes headhunting", "situation": "A curtain wall consultancy wants you as a consultant, reviewing facade companies' drawings and schemes on behalf of owners, at thirty percent more pay. No more racing fabrication drawings or being chased by the factory for revisions. But it's the other side of the table: you'd be finding fault with your former peers.", "options": [
+   { "label": "Join the consultancy", "result": "The day you left you gave the pothos plant to the colleague across from you and took the tape measure you'd used on anchors for five years.", "end": "You worked at the consultancy for many years and reviewed the curtain walls of dozens of towers. Whenever you reach a corner detail, you check the silicone width first: that's where someone once circled your drawing in red when you were young." },
+   { "label": "Stay at the facade company", "result": "You turned it down. That month you were drawing a large airport canopy cantilevered more than twenty meters, and you ran the calculations three times." }
+  ] },
+  "c_director": { "title": "Apply for Deputy Head / Design Director of the Design Institute", "situation": "The institute is promoting a deputy head / design director to manage more than a hundred designers, set the whole institute's technical standards, and negotiate schemes and contracts with architecture firms and owners' senior management. You'd sit in many meetings, attend many dinners, and draw less and less yourself.", "options": [
+   { "label": "Apply", "result": "The first page of your application read: AI can draw now; whoever signs should have ridden a gondola on the fiftieth floor. The head of the institute read that line aloud." },
+   { "label": "Keep leading projects", "result": "You didn't apply and kept leading a few young designers on the hardest supertalls. That year your project passed expert review on the first try." }
+  ] },
+  "c_pv": { "title": "A small solar facade company wants you as a partner", "situation": "A small company making photovoltaic curtain walls wants you as technical partner: equity, no steady salary, and a product still looking for its first owners. A former colleague says it's the work of the next decade; your partner says the child is about to start primary school.", "options": [
+   { "label": "Become a partner", "result": "The day you quit, you printed the first detail you ever drew at the facade company and slipped it into your notebook.", "end": "Your photovoltaic curtain walls went onto the facades of several factories and schools in Shenzhen, and later into a few county towns. Every pane makes power, and you often check on your phone the generation curve that climbs a little each day." },
+   { "label": "Stay", "result": "You turned them down and introduced them to an owner. Later, whenever the company took on a photovoltaic facade project, the head of the institute came to you first." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last day you finished handing over the project folders on your computer; the oldest was the Houhai tower. You took a walk around Shenzhen Bay Park. That tower's glass had been partly replaced, and it still reflected the sky over the sea. You stood and counted: the corner column, not one pane missing.",
+  "burnout": "That year your neck and your eyes gave out together, and the doctor told you to stop grinding like this. You quit and spent a year at home, walking by the sea every day. On typhoon nights you still couldn't sleep, and you got up and stood at the window, watching the glass on the building across the way hold perfectly still in the rain."
+ },
+ "stages": [
+  "You run the detailed design of one elevation: setting the grid and details of the unitized panels in AutoCAD, producing the structural calculations, and sending fabrication drawings and cutting lists to the Dongguan factory. The architect wants the look, the factory wants it easy to make, the site wants it easy to install, and all three call you. Your name is on the drawings as designer; the checker's line is still the lead designer's.",
+  "You run all the curtain wall design on a large project: splitting elevations among three to five designers, chairing the expert review for an over-limit facade, overseeing the performance tests and visual mockup, and signing every drawing as checker. You meet with the architecture firm's design principal, the general contractor's chief engineer and the owner's engineering director, and fight over grids and costs on your team's behalf.",
+  "You run a design institute: assigning projects to and reviewing more than a hundred designers, the institute's standard detail library and technical rules, and its bid schemes. By day you negotiate technical direction and contracts with the senior people at architecture firms and owners; at night you spot-check a few sets of drawings. You ride gondolas less often, and each time it's to see the hardest tower."
+ ],
+ "work": [
+  "The Dongguan factory's process engineer said one aluminum profile's corner was too hard to bend. You spent an afternoon in the workshop, came back, and changed the corner into two spliced pieces, cutting the die cost in half.",
+  "The architect wanted the glass on the top ten floors one size bigger. You reran the wind load and glass thickness and replied by email: it can be bigger, but it has to be laminated, and each pane will weigh forty kilos.",
+  "A row of cast-in anchors on site was forty millimeters off. After measuring at the slab edge, you went back and drew an adjustable connector detail, and the next day the crew installed it as drawn.",
+  "At an expert review, one expert asked whether your interstory drift capacity would survive a major earthquake. You played the performance test video: the panels racking back and forth on the rig, not one sealant joint opening.",
+  "One of your designers had used the wrong terrain roughness category in his calculations. You sent it back at checking and had him redo the wind load for the whole building.",
+  "The owner's engineering director wanted to switch to cheaper glass. You didn't object outright; you made a table: how much it saves, how much worse it insulates, how much more twenty years of air conditioning will cost. He didn't raise it again.",
+  "You led a bid for an airport terminal, and the other side's expert at the evaluation asked how you'd guarantee accuracy on the curved surfaces. You had a colleague open the parametric model on the spot and spin it around once.",
+  "Two lead designers came to you arguing over who would take the new graduate. You sent the new hire to the factory for two months first and decided when they came back.",
+  "You added a line to the institute's technical rules: every AI-produced fabrication drawing must be signed by someone who has worked on site before it goes to the factory."
+ ],
+ "past": [
+  "In middle school in Ganzhou you spent weekends helping your uncle, who did home renovations, install windows. He taught you to look at the sealant bead along the edge of the glass: lay it even, and the rain stays out.",
+  "Your gaokao (college entrance exam) score got you into civil engineering at a Guangzhou university. You wanted architecture, but your family said civil engineering would find you work, so you chose civil.",
+  "In your second year, in Zhujiang New Town, you saw a tower getting its glass, unitized panels lifted up one by one like dressing the building. You stood at its foot for an hour.",
+  "At graduation you applied to this Shenzhen facade company. The head of the institute at your interview had you draw a window frame detail on the spot. When you finished he said: the sealant joint's too narrow. Come on board.",
+  "For your first two years you were a design assistant at the institute, drawing details and fabrication drawings every day. You filled a drawer with drawings the Dongguan factory sent back, and kept every one.",
+  "In your third year you went on site for the first time to watch panels you'd drawn go up. One wouldn't slot in no matter what. Liao tapped it a few times with a rubber mallet, turned around and said: you drew it, you figure it out."
+ ],
+ "late": {
+  "pension_note": "Estimate: private facade companies in Shenzhen mostly pay pension contributions at the low end of the Shenzhen average wage, with no enterprise annuity, so after retirement the basic pension is a little over forty percent of your last monthly salary.",
+  "scenes": [
+   "Your first month of retirement, when a typhoon warning sounds, you still reach for your phone without thinking, looking for the site project manager's videos.",
+   "The institute asked you back to give a lesson, and you talked about the pane that broke spontaneously. Afterward a young person asked how many panes that line in the specification had saved since. You said you don't know: the ones that don't break never tell you.",
+   "Your housing estate was replacing the window seals, and the management company hired a crew. You watched for a while and reminded them to run an extra bead at the corners.",
+   "Your grandchild was making windows on the balcony out of cellophane and tape, all crooked. You showed him how to tape the four corners first, then the middle.",
+   "In the early days after you stopped, you walked by the sea at Shenzhen Bay every day, looking at the hills across the water, and slowly your eyes stopped hurting.",
+   "When your neck was a little better you climbed Wutong Mountain with neighbors. From the top, looking down, all the glass in the city was flashing in the sun.",
+   "On the day you filed your retirement papers you passed Houhai. The tower's corner glared in the sunlight. You watched it a while from across the road.",
+   "In your first year on a different path, every time you passed a glass building your eyes still went first to the sealant joints at the corners.",
+   "On a project you ran into Liao, foreman of an installation crew now. He clapped you on the shoulder and said: that panel you drew back then, how did you ever get it in?",
+   "A design assistant you once trained became a lead designer and sent you a detail, the ring of structural silicone drawn good and wide, with a note beside it: just as you said.",
+   "Shenzhen has raised several more three-hundred-meter towers. At a metro exit you look up and watch them get their glass, a panel rising slowly, and you hold your breath until it slots in.",
+   "In a cupboard you found that drawer of old drawings the factory sent back, the paper yellowed, the red circles still clear. You went through them one by one, and the last was a bracket hole drawn in the wrong place."
+  ],
+  "closing": {
+   "retire": "Many years later, one evening, you sat by the sea at Shenzhen Bay and watched the towers on the far shore light up one after another. On the tallest, pane after pane reflected the sunset, the joints too fine to see. You watched a long time before getting up to go home.",
+   "burnout": "Many years later, the morning after a typhoon passed, you opened the window. The ground below was littered with fallen branches, and the glass on the building opposite was clean, not one pane missing. You made a cup of tea and drank it slowly by the window.",
+   "end": "Many years later, in a drawer, you found the tape measure you used on anchors, a little cement dust still on the tape. You drew it out to forty millimeters, looked at it a while, let it slowly roll back, and put it away."
+  }
+ }
+}

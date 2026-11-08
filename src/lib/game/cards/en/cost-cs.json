@@ -1,0 +1,157 @@
+{
+ "id": "cost-cs",
+ "occupation": "Construction Cost Estimator",
+ "role": "Cost Estimator at a Cost Consulting Firm",
+ "headline": "A year out of a bachelor's in construction cost engineering, doing tracking audits for a Changsha cost consulting firm: a cost estimator who takes a site instruction out to measure a retaining wall by day, checks rebar bar by bar in takeoff software by night, and spends whole afternoons arguing over a few cubic meters with the contractor's estimator",
+ "unit": "A construction cost consulting firm in Changsha",
+ "unit_type": "Private cost consulting firm (about a hundred staff, mostly tracking audits and final account reviews on government-funded projects)",
+ "city": "Changsha",
+ "city_tier": "New first-tier city",
+ "education": "Bachelor's degree in construction cost engineering",
+ "level": "You know the bill-of-quantities code and Hunan's consumption standards by heart, and you can model a whole building in takeoff software. But when the contractor's estimator says \"that's just how it was done on site,\" you have no answer, and whether to accept a site instruction is still something you take to your mentor.",
+ "intro": "You studied construction cost engineering in Changsha. Interning at this consulting firm in your final year, your mentor had you recalculate a building's rebar from scratch; it took you a month, and your total came within half a tonne of hers. After graduation you stayed on, your desk on the fourteenth floor of an office tower in Yuelu District, drawings and final accounts piled half as high as a person on it. As of today you follow projects out to sites in the Meixi Lake area, learning to tell from a site instruction whether a cubic meter is real.",
+ "salary_note": "Estimate: cost consulting firms in Changsha pay estimators a base below the national average, with commission tied to the amount cut in review and to project output. The months of year-end final account rushes pay a little more; in years when government projects pay slowly, commission slips into the following year.",
+ "facts": [
+  { "label": "Cost Estimator (current level)", "value": "0-2 years, ¥5,000–7,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Grade 2 Cost Engineer (2-5 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥15,500 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Final accounts, audits and full-cycle cost consulting", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Preparing bills of quantities, tender ceiling prices, bid prices and contract price documents", "source": "AI exposure" },
+  { "label": "Open positions", "value": "82 related listings nationwide, 1 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "At the rice noodle shop below your rented room you slurp a bowl of shredded pork noodles with a spoonful of chopped chili, then hurry for the metro to the project office out by Meixi Lake.",
+  "In the project office meeting room, Zeng, the contractor's estimator, pushes a stack of site instructions across to you: these are last month's. Spoil haulage, a raised retaining wall, pumping out rainwater, every one of them to be accepted.",
+  "You take the instructions and a tape measure out to the raised retaining wall. The length checks out; the height is twenty centimeters short. You take photos and pencil the measured figure on the back of the instruction.",
+  "Back at your temporary desk in the project office you open the takeoff software to check a building's rebar. The software has dropped the concealed columns in one shear wall. You add them back bar by bar from the structural drawings, and the difference comes to 1.2 tonnes.",
+  "Quantity reconciliation with Zeng. He reports more than four hundred truckloads of spoil hauled away; you produce the tickets from the disposal site, which match only three hundred and ten. The two of you argue over one spreadsheet all afternoon until you're both hoarse.",
+  "Your mentor calls to ask when this month's progress payment review will be in. You say tomorrow morning. She says if the progress payment is late, the contractor's workers get paid late.",
+  "Back at the office for overtime, you look up this month's Changsha material reference prices. Rebar has gone up again, so the price adjustment has to be redone. You change one number in the spreadsheet and thirty-odd pages after it shift.",
+  "Walking home along the Xiang River, someone is setting off fireworks over by Orange Isle. In your phone's notes you write: tomorrow, first get the supervisor's acceptance record for the retaining wall."
+ ],
+ "ladder": [
+  { "title": "Cost Estimator", "stage": "Entry", "focus": "Model and take off quantities, apply bill items and rate standards, check site instructions and variations, and go to site with your mentor to agree quantities. You move up by being accurate and thorough." },
+  { "title": "Grade 2 Cost Engineer", "stage": "Core staff", "focus": "Pass the Grade 2 cost engineer exam and run one project's budget, progress payment reviews and first-pass final account review on your own, agreeing quantities with the contractor yourself." },
+  { "title": "Grade 1 Cost Engineer (Project Lead)", "stage": "In charge", "focus": "Pass the Grade 1 cost engineer exam, lead projects, sign and stamp final account and audit reports, and answer to the client and the audit bureau." },
+  { "title": "Cost Department Manager / Technical Director", "stage": "Leading a team", "focus": "Run a department's projects, people and quality review, bid for work, and set the firm's cost database and review standards." }
+ ],
+ "ai_tasks": [
+  { "name": "Preparing bills of quantities, tender ceiling prices, bid prices and contract price documents", "how": "AI can read drawings, take off quantities automatically, apply bill items and rates and draft the documents. A person has to check the item descriptions and whether the rates applied make sense, judge the tender strategy and how keenly to price, and sign the final documents." },
+  { "name": "Measurement during construction, reviewing variations and site instructions, price adjustments and progress payments", "how": "AI can compare drawings and quantities before and after a change, compile ledgers and calculate price adjustments. A person has to go to site to verify what was actually done, judge whether an instruction is reasonable, and deal with disputes between client and contractor." },
+  { "name": "Final accounts, audits and full-cycle cost consulting", "how": "AI can organize records, check figures and flag anomalies in a final account. But haggling over quantities, answering auditors, carrying responsibility for the review and coordinating all sides all depend on people." },
+  { "name": "Assessing the economics of design and construction options and suggesting savings", "how": "AI can quickly estimate cost differences between options and suggest alternatives. A person has to weigh site conditions, design intent and the client's needs to judge which option is truly workable." },
+  { "name": "Maintaining the cost database and researching material and equipment prices", "how": "AI can scrape and organize price information, clean historical project data and produce price trends and comparisons. A person only spot-checks whether sources are reliable and adds the local market knowledge and quotes AI can't get." },
+  { "name": "Modeling, taking off quantities and producing reports with takeoff and pricing software and BIM models", "how": "AI and software can already do most of the drawing reading, modeling, takeoff and report output. A person mainly checks the model for missing items or misapplied components and handles special details and anomalies." }
+ ],
+ "events": {
+  "e_first_cut": "On the first final account you reviewed, you cut more than two million yuan from the forty-odd million the contractor claimed, most of it spoil counted twice. Your mentor read it, corrected two typos, and said: it's good.",
+  "e_miss": "You missed a design change, and a progress payment overpaid the contractor by several hundred thousand yuan; it only came out at final account. Your mentor spent an afternoon with you explaining it to the client, and afterward had you re-sort every variation by date.",
+  "e_yearend": "At year end the fiscal review office was pressing for final accounts, and everyone at the firm had three or four projects piled up. For a month you left after eleven every night and ate takeout at the office on weekends, staring at spreadsheets until your eyes glazed.",
+  "e_steel_price": "That year rebar prices rose thirty percent in a single quarter, and contractors on several live projects came asking for price adjustments. You went through the adjustment clauses in each contract line by line and worked out exactly how much each project was owed. Neither side had anything to argue.",
+  "e_ai_count": "The firm brought in AI drawing recognition and takeoff: feed in a set of drawings and the bill of quantities is out by lunchtime. What used to take you a week is now checking it item by item; it counted one basement level's walls as solid and added several hundred cubic meters.",
+  "e_ai_audit": "AI can now compare a final account against the drawings, site instructions and contract and flag suspicious items in red. Most of what it flags turns out to be real, but it missed a site instruction whose date was plainly filled in after the fact.",
+  "e_pressure": "You cut a lot from one final account, and the contractor's boss sent someone to invite you to dinner. You didn't go. The next day, in a meeting at the client's office, he said you didn't understand sites, and you put up your site photos and measurements for everyone, one by one.",
+  "e_cert2": "You passed the Grade 2 cost engineer exam. The practical paper was preparing a bill of quantities for a building project, and when you walked out of the exam hall your wrist still ached.",
+  "e_slow_pay": "Consulting fees on a government project were a year overdue, and this year's commission came at half. The head of the firm said the money was going through procedures; you did the sums and saw this month's rent would have to come from savings.",
+  "e_school": "A new primary school you had tracked through construction was finished. Passing on the first day of term, you saw children running on the rubber track you had checked square meter by square meter.",
+  "e_hearing": "A final account dispute went to arbitration, and you attended for the consultant to explain the basis of the review. You tied every cut to a drawing, a site instruction or a contract clause and spoke for two hours, and the arbitrator never interrupted.",
+  "e_summer": "Changsha in July, forty degrees. On a city road project you were measuring sidewalk paving, the sun had baked the tiles hot, and you could barely read the laser measure's screen.",
+  "e_neck": "Years of staring at spreadsheets on two screens and your neck and eyes are protesting together. You put a timer on your desk and every forty minutes stand up and go to the window to look at Yuelu Mountain.",
+  "e_wedding": "You got married. Your partner teaches math at a Changsha middle school. The wedding was in Changde; you did the accounts for the banquet and it came in one table under budget.",
+  "e_house": "You bought an apartment in Yanghu. Before signing you checked the developer's published fit-out standard against the show flat item by item, and the salesperson said you seemed to have come to audit them.",
+  "e_child": "Your child was born. That month you did no overtime, and in the evenings you held the baby on the balcony watching the lights come on across the way, while your mind was still working through a site instruction.",
+  "e_data": "You spent half a year turning the quantities and unit prices of more than two hundred past projects into a database: so much per square meter for schools, for roads, for resettlement housing. New hires doing estimates open that database first.",
+  "e_rework": "A report of yours came back from the audit bureau saying the basis for one material price was insufficient. You searched all night, found the three quotes you had collected back then, photographed them and added them in.",
+  "e_ai_team": "Now AI finishes a project's takeoff, pricing and comparison in a day, and the firm has half the estimators it used to. Those who stayed spend their days measuring on site, talking with people, and signing reports.",
+  "e_apprentice": "Peng, a new estimator, was stuck over whether to accept a site instruction. You didn't give him the answer; you told him to bring a tape measure and come with you to measure it once.",
+  "e_old_bridge": "Driving over a river bridge whose final account you once reviewed, you saw the lamp posts at the end were the same batch. You remembered agreeing quantities with the contractor three times that year over the unit price of those posts."
+ },
+ "choices": {
+  "c_onsite": { "title": "Station yourself in the project office for a tracking audit", "situation": "A resettlement housing project needs the firm to station someone on site for a year, checking site instructions with the contractor every day, looking at concealed work and measuring what was actually done. You'd learn the most on site and work the hardest: the project office is on the edge of the city, and you'd deal with the contractor's people all day. Stay at the office and you keep reviewing final accounts, faster and faster.", "options": [
+   { "label": "Go on site", "result": "In a year you learned to read a site: which stretch of wall was really raised, which load of soil came from the site next door. Zeng later said you were the hardest young person to fool he had ever met." },
+   { "label": "Stay at the office", "result": "You reviewed more than a dozen final accounts that year and became the fastest report writer on the team. But going to site still meant waiting for your mentor to take you." }
+  ] },
+  "c_level2": { "title": "Take the Grade 2 cost engineer exam", "situation": "The firm says that to become a Grade 2 Cost Engineer and run projects yourself, you first need the certificate: two papers, fundamentals and practical measurement and pricing. You agree quantities by day and work on final accounts at night, so the only time left is to get up at five to drill questions.", "options": [
+   { "label": "Sit it", "result": "You passed in a year, with a higher practical score than your mentor got back in her day. You clipped a copy of the certificate into the first report you issued on your own." },
+   { "label": "Do the work well first", "result": "You followed your mentor another year and filled a notebook with her tricks for checking site instructions. When you sat the exam the year after, you could see the trap in each case question at a glance." }
+  ] },
+  "c_shenzhen": { "title": "Shenzhen offers big money", "situation": "A large cost consulting firm in Shenzhen is hiring for full-cycle consulting on supertall towers and metro lines, at half again your current pay. But your parents are in Changde, your partner is in Changsha, rent in Shenzhen would eat half your salary, and no one there makes noodles this spicy.", "options": [
+   { "label": "Go to Shenzhen", "result": "On Shenzhen projects you saw general contracts worth billions for the first time, where a single variation ran to tens of millions. On weekends you walked alone by the sea, then went back to your rented room to keep agreeing quantities." },
+   { "label": "Stay in Changsha", "result": "You turned it down. On weekends you and your partner hiked Yuelu Mountain and ate stinky tofu on Pozi Street in the evening, and on Monday you went back to the project office to agree quantities." }
+  ] },
+  "c_level1": { "title": "Take the Grade 1 cost engineer exam, go for project lead", "situation": "To become a Grade 1 Cost Engineer (Project Lead) and sign and stamp reports, you have to pass the Grade 1 exam: four papers with a low pass rate, and many people take years. It would cost you two or three years of evenings and weekends, and your child is still small.", "options": [
+   { "label": "Grit your teeth and sit it", "result": "It took three years; case analysis passed on the third try. The day your registration stamp arrived you stamped your first signed report, then held it up to the light and looked at it a long time." },
+   { "label": "Not yet", "result": "You said you'd wait a few years and make your current projects solid first. The head of the firm signed the reports, but the toughest findings in them were the ones you wrote." }
+  ] },
+  "c_ai": { "title": "Take charge of the AI takeoff review process?", "situation": "More and more of the firm's takeoff, pricing and comparison is done first by AI, and it wants someone to set the rules: which results can be used as they are, which a person must check, and how to feed the firm's price database to it. There's no commission in it, and if you do it well nobody will notice.", "options": [
+   { "label": "Take it", "result": "You wrote a review checklist: every AI-produced quantity has to pass twenty manual spot checks, especially retaining walls, earthworks and site instructions. Reports sent back for rework fell by more than half." },
+   { "label": "Pass, keep doing projects", "result": "You said you still liked going out to measure yourself. Someone else wrote the rules, and at the review meeting you added four pitfalls only someone who has agreed quantities would know." }
+  ] },
+  "c_contractor": { "title": "A contractor wants you as cost manager", "situation": "A contractor's Hunan company wants you as its commercial cost manager at forty percent more pay. But it means switching sides: where you used to guard the client's money, you'd now fight for the contractor's, agreeing quantities against your former peers.", "options": [
+   { "label": "Go to the contractor", "result": "The day you left, you gave Peng the notebook full of quantity-agreeing tricks and took the tape measure with you.", "end": "You did cost work for the contractor for many years and later ran the commercial side of a branch. When a young estimator across the reconciliation table picks up a tape measure to go check on site, you don't stop them, and you think of yourself back then." },
+   { "label": "Stay in consulting", "result": "You turned it down. That month you were reviewing the final account for a river bridge, and for the unit price of one batch of lamp posts you got quotes from three factories." }
+  ] },
+  "c_manager": { "title": "Apply for Cost Department Manager / Technical Director", "situation": "The firm is promoting a Cost Department Manager / Technical Director to run the projects and quality review of about twenty people, bid for work and set the firm's review standards. You'd calculate less and look more, sit in more meetings, dine with clients and chase payments.", "options": [
+   { "label": "Apply", "result": "In your application you didn't talk about how much money you had cut; you talked about the reports that were sent back, and why each one was. When you finished, the general manager said: it's you." },
+   { "label": "Keep doing projects", "result": "You didn't apply and kept taking the hardest final accounts. That year, not one report you signed was sent back by the audit bureau." }
+  ] },
+  "c_own": { "title": "Start your own consulting firm", "situation": "Over the years you've met many county-level clients who say they want a cost consultant they can trust at a lower price. A former colleague wants to go out on his own with you. No base salary, only one job at a time, and the qualifications have to be applied for from scratch.", "options": [
+   { "label": "Go for it", "result": "The day you quit, you handed over the half-person-high pile of final accounts on your desk one by one; the last was the primary school's.", "end": "Your firm opened in an old office building west of the river, taking mostly county schools, roads and water projects. Every year you still go out to a few sites yourself and measure a stretch of retaining wall with a tape." },
+   { "label": "Stay", "result": "You introduced your former colleague to his first job and stayed. He often sends photos from county building sites with one line: cut some more." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last day you finished handing over the project folders on your computer; the oldest was the first final account you ever reviewed. You walked along the Xiang River. Yuelu Mountain across the water looked the same, and a few new towers had gone up on the bank. Looking at them, you caught yourself estimating the cost per square meter, and laughed.",
+  "burnout": "That year your neck and your eyes gave out together, and the doctor said you couldn't keep grinding over spreadsheets like this. You quit and spent a year at home, walking through the Yanghu wetlands every day. The calculator on your phone went unopened for a long time, and when you did open it, it was only to add up the grocery bill."
+ },
+ "stages": [
+  "Every day you model and take off quantities in the software, apply bill items and Hunan's consumption standards, check the site instructions, variations and progress payment claims the contractor sends in, and go to site with your mentor to measure what was actually built with a tape. The contractor's estimator agrees quantities with you daily, the figures count only once your mentor has seen them, and your job is to be accurate, photograph everything and keep the record.",
+  "You run a project on your own: preparing the budget and tender ceiling price, reviewing progress payments every month, checking each site instruction against the site, and producing the first-pass final account review yourself. The contractor's commercial manager starts coming straight to you, the client's engineering department asks you for figures, and the name you sign on review comments starts to carry weight.",
+  "You are a project lead: your registration stamp goes on final account and audit reports, and whatever the audit bureau, the fiscal review office or the client wants to know, you answer. You lead two or three estimators, review their calculations, chair the hardest quantity meetings, and when a dispute goes to arbitration, you are the one who explains the basis.",
+  "You run a department: assigning projects to about twenty people, reviewing report quality, bidding for work, and keeping the firm's cost database and review standards. You deal with clients' leaders, section chiefs at the audit bureau and contractors' bosses, sit in meetings and read contracts by day, and spot-check a few reports at night. You do less takeoff yourself and issue more reports."
+ ],
+ "work": [
+  "Your mentor had you check a site instruction for pumping out rainwater. You went through the weather records and supervision logs for those days: on two of them it hadn't rained at all. You struck those two out and wrote the dates beside the instruction.",
+  "Calculating a building's formwork area in the software, you came out more than a thousand square meters below the contractor. After an afternoon of reconciling, it turned out they had counted the stairwell formwork twice.",
+  "You went with your mentor to measure a road's sidewalk paving, and she told you not to look at the drawings but measure it yourself first and compare after. You came up thirty-odd meters short of the drawings: one stretch had been turned into a planted strip.",
+  "In one progress payment claim, the contractor had billed half the price of elevators that hadn't arrived on site. On the review form you wrote: equipment not on site, not measured this period.",
+  "The client wanted to switch a retaining wall from concrete to a lattice slope protection and asked how much it would save. You costed both options with their schedules and handed over a comparison table. The client decided that day.",
+  "Agreeing the final account with the contractor's commercial manager, he had priced the soil haulage at fifteen kilometers. You produced the disposal site's address and a map screenshot: nine. He looked for a while, then signed the reconciliation.",
+  "Before an audit report went out you rechecked a team member's calculations item by item and found a wrong rebar wastage rate that cut over four hundred thousand yuan too much. You had him put it back and told him a bigger cut isn't a better one.",
+  "A section chief from the audit bureau came to ask the basis for a material price adjustment. You laid out the contract clause, the reference prices and three quotes together and went through them point by point until he closed his notebook.",
+  "A quantity meeting ran until nine at night, and the contractor's boss slammed the table. You didn't respond; you had the minutes printed first, read them out item by item, and then asked him which one he disputed.",
+  "Bidding for a district's full-cycle consulting contract, a panel member asked how you could price so low. You said: we have quantity data from more than two hundred similar projects, and our estimates are never more than three percent off.",
+  "Two people in your department came to you fighting over the commission on a project. You laid out each person's hours and the reports they produced and split it by the work actually done.",
+  "At a firm meeting on whether anyone still needs to go to site now that AI does takeoff, you said yes: on every project, at least one site instruction has to be measured by a person with a tape. It went into the firm's review procedures."
+ ],
+ "past": [
+  "In middle school in Changde, your family ran a building materials shop. After school you minded it, working out what a truckload of tiles cost or how many bags of cement a wall needed, faster than your father.",
+  "When it came to choosing a major after the gaokao (college entrance exam), your father said study cost engineering: whoever builds a house will need you to do the accounts. You chose construction cost engineering at a Changsha university.",
+  "In your second year, studying bill-of-quantities pricing, you modeled a dormitory in takeoff software for the first time and got almost twice the teacher's rebar quantity. You hunted all night: you'd entered the wrong unit.",
+  "The summer after your third year you interned at a contractor and went with its estimator to agree quantities with a consulting firm. A young woman from the other side measured the retaining wall with a tape and cut your site instructions in half.",
+  "In your final year you interned at that consulting firm, and the person who mentored you was that same woman. She had you recalculate a building's rebar from scratch; it took a month, and you came within half a tonne of her figure.",
+  "Your first year after graduating, you reviewed final accounts at the firm, facing stacks of accounts and site instructions every day, and learned to look first at the date, then the signature, and only then the figure."
+ ],
+ "late": {
+  "pension_note": "Estimate: private cost consulting firms in Changsha mostly pay pension contributions on the lower-middle range of wages, with no enterprise annuity, so after retirement the basic pension is a little over forty percent of your last monthly salary.",
+  "scenes": [
+   "Your first month of retirement, you still go for a bowl of noodles every morning, and afterward reach for your phone without thinking to see if anyone wants to agree quantities.",
+   "Your old firm asked you back to do technical review, a few reports a month. On an AI-produced final account you wrote one line: has anyone measured this site instruction on site?",
+   "Your housing estate wanted to use the maintenance fund to replace its elevators, and the owners' committee asked you to look at the quotes. You spent an evening on them and struck out an installation fee counted twice. Everyone said you knew more than the management company.",
+   "Your grandchild was doing arithmetic on a calculator, punching keys fast. You told him to estimate roughly what the answer should be before pressing. He asked why, and you said: that way you'll know if the machine is wrong.",
+   "In the early days after you stopped, you walked through the Yanghu wetlands every day, watching egrets stand motionless in the water, and slowly your eyes stopped aching.",
+   "When your neck was a little better you hiked Yuelu Mountain with neighbors, sitting a while at Aiwan Pavilion and watching people come up in waves below.",
+   "On the day you filed your retirement papers you passed the primary school you had tracked. The track had been replaced once, lighter in color than before.",
+   "In your first year on a different path, whatever document you saw, you still looked at the date and signature first, and only then the figure.",
+   "At a dinner you ran into Zeng, retired now, who raised his glass and said: those four hundred truckloads of soil that year, how did you ever catch that?",
+   "Peng, whom you once mentored, passed the Grade 1 cost engineer exam and sent you a photo of his first stamped report. He said that after stamping it he too held it up to the light for a long time.",
+   "Changsha has built several more metro lines. Sitting in the carriage watching the tunnel lights go by one after another, you quietly estimate what each kilometer cost.",
+   "In a cupboard you found your first notebook from agreeing quantities, the paper yellowed, the pencil smudged. One page read: retaining wall measured twenty centimeters lower than the instruction, photographed."
+  ],
+  "closing": {
+   "retire": "Many years later, one evening, you walked along the Xiang River and watched the towers on the far bank light up floor by floor. Some of their accounts you had worked through figure by figure, and because you got them right, no one ever mentioned them again.",
+   "burnout": "Many years later, you were sorting vegetables on your balcony while a vendor downstairs called out his prices. You listened a while, worked it out in your head, decided he wasn't charging too much, and closed the window.",
+   "end": "Many years later, in a drawer, you found the old tape measure. The tape was a little rusty but still pulled out smoothly. You drew it to twenty centimeters, paused, let it slowly roll back, and put it away."
+  }
+ }
+}

@@ -1,0 +1,158 @@
+{
+ "id": "interior-cd",
+ "occupation": "Interior Designer",
+ "role": "Interior Designer at a Home Renovation Company",
+ "headline": "Two years into the trade after a bachelor's in environmental design, at a Chengdu home renovation company's showroom: an interior designer who measures flats in old housing blocks with a laser distance meter, leaves room for a mahjong table, and still has to sweat over the contract count at the end of every month",
+ "unit": "The High-Tech Zone showroom of a home renovation company in Chengdu",
+ "unit_type": "Private home renovation company (a dozen-odd showrooms in Chengdu, about thirty designers per showroom)",
+ "city": "Chengdu",
+ "city_tier": "New first-tier city",
+ "education": "Bachelor's degree in environmental design",
+ "level": "You can produce the survey, floor plan, renderings and construction drawings yourself, and you know how to ask homeowners what they need, point by point. But one owner saying \"I can't really say, you decide\" can cost you ten rounds of revisions, and when it comes to negotiating the quote, you still can't talk the way the veteran designer at the next desk does.",
+ "intro": "You studied environmental design in Chengdu and joined this home renovation company after graduating, spending two years as a design assistant measuring flats, drawing and walking sites behind a veteran designer. This year you started taking clients of your own. Your desk is on the second floor of the High-Tech Zone showroom, with a few tile samples and a laser distance meter on it. As of today you walk into other people's homes one after another, learning to draw how a family lives into a few dozen square meters of plans.",
+ "salary_note": "Estimate: home renovation companies in Chengdu pay designers a base below the national average, and most income comes from commission on signed contracts. In peak season you can sign several a month; in the off season and in years when the housing market is cold, commission drops and the base barely covers rent.",
+ "facts": [
+  { "label": "Interior Designer (current level)", "value": "2-5 years, ¥6,000–10,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Senior Designer (5-10 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥22,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Briefing the crew on site and handling problems there", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Setting the design direction from the home and the family", "source": "AI exposure" },
+  { "label": "Open positions", "value": "6 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Below your rented room in Yulin you eat a bowl of sweet-sauce noodles, then take the metro to the showroom. At the morning meeting the manager reads out everyone's contracts signed this month, and your name falls in the middle.",
+  "You go to measure a flat in a 1990s housing block, where paint flakes off the stairwell walls in patches. The owners are a retired couple. You measure wall after wall with the laser distance meter, sketch in your notebook, and mark the old water pipe that runs crooked.",
+  "The old lady says the living room needs space for a mahjong table, because the children come home to play on weekends. The old man says he'd like to turn the balcony into a place for tea. You write it all down, then ask one more thing: at night, how many steps is it from the bedroom to the toilet?",
+  "Back at the showroom you draw the floor plan. You turn the toilet door around so the night trip is three meters shorter, and move the TV wall back forty centimeters so the mahjong table fits with room for four people to turn.",
+  "The owner of another, new flat comes in to see renderings. She pulls out her phone: a picture she generated with AI. She wants that feeling. You look closely: the big glass wall in the picture is her flat's load-bearing wall.",
+  "You go to a site under construction for the plumbing and electrical inspection. Gou, the site foreman, shows you the conduits and runs the pressure test. You photograph the route of every conduit and post them in the owner's group chat.",
+  "Back in your rented room, eating mala hotpot takeout, you revise the quote. The old couple's budget is 150,000 yuan; your figure comes to 170,000, and you're trying to work out where to save twenty thousand without saving it somewhere no one can see.",
+  "In the group chat the owner of the new flat sends three more pictures, asking whether the living room can look like this. You reply: let's talk in person tomorrow."
+ ],
+ "ladder": [
+  { "title": "Design Assistant", "stage": "Entry", "focus": "Measure flats with a designer, draw in CAD, model and produce renderings, and compile material lists. You move up by drawing fast and showing up." },
+  { "title": "Interior Designer", "stage": "Core staff", "focus": "Take your own clients: survey, design scheme, quote negotiation and contract, then the site briefing, site visits and material selection with the owner. Base pay plus commission on signed contracts." },
+  { "title": "Senior Designer", "stage": "Team lead", "focus": "Lead three to five designers and assistants, take large flats and villas, review your team's schemes and quotes, and handle the difficult complaints." },
+  { "title": "Chief Designer / Design Director", "stage": "Showroom", "focus": "Run the design of a showroom or a product line, set styles and standards, create show flats and brand schemes, and negotiate targets with the company and projects with major clients." }
+ ],
+ "ai_tasks": [
+  { "name": "Setting the design direction from the home and the family", "how": "AI can quickly offer several styles and directions for reference from the floor plan and requirements. A person has to weigh the family's situation and budget and make the call on the main direction." },
+  { "name": "Understanding what the owners want and defining how the space must work", "how": "AI can organize chat records and summarize a list of needs. A person has to sit with the owners and see how they live now to understand the habits they never put into words." },
+  { "name": "Drawing floor layouts, circulation and furnishing plans", "how": "AI can generate draft zoning, circulation and furniture layouts in several versions. A person has to check dimensions, ergonomics and codes and make sure the place can really be lived in and really works." },
+  { "name": "Producing renderings, visualizations and scheme presentations", "how": "Renderings, visualizations and walkthrough animations AI can now produce quickly. A person only spot-checks that materials and dimensions match what can actually be built." },
+  { "name": "Drawing construction drawings, revising them and producing quotes", "how": "AI can help draw and annotate, catch contradictions in the drawings, and update the quote as drawings change. A person answers for the drawings and the quote and reviews construction details and site conditions." },
+  { "name": "Briefing the crew on site and handling problems there", "how": "When an old flat is opened up and doesn't match the drawings, which is common, a person has to go see the real thing, talk it over with the foreman and workers, and decide on the spot." },
+  { "name": "Final inspection and walking owners through handover", "how": "A person has to go through it on site item by item and confirm with the owners and the builders; if something fails, who fixes it and how has to be negotiated and carried by people." }
+ ],
+ "events": {
+  "e_first_sign": "You signed your first contract on your own, a seventy-square-meter old flat. After signing, you treated yourself to dinner at the hole-in-the-wall place below the showroom and added a plate of pork intestines.",
+  "e_wall": "When an old flat was opened up, the wall your drawings said to knock down turned out to hide the building's main drainpipe. The work stopped for a week; you drew a new version and apologized to the owners in person.",
+  "e_quota": "Two months running you didn't sign a single contract. The manager didn't call out your name at the morning meeting, but everyone knew. That month your pay slip showed only the base, and you counted every item at the vegetable market.",
+  "e_mahjong": "The old couple's flat was finished, and at New Year the children came home and a mahjong table went up in the living room. The old lady sent a video: four people around the table, the TV wall behind them set back just enough.",
+  "e_ai_render": "The company brought in AI renderings. You feed in the floor plan and a few reference images and ten minutes later there's a full set, where it used to take two late nights. The owners loved it. Going through it, you found it had put the floor drain on the door threshold.",
+  "e_ai_client": "More and more owners come into the showroom with pictures they generated with AI, all of them lovely. You spend less time producing drawings and more time explaining to people what can be built and what it will cost.",
+  "e_complaint": "At handover an owner found the tile joints didn't line up and posted about it online. You went to look tile by tile: they really were laid crooked. You stayed with the workers through three days of rework, and the owner took the post down.",
+  "e_summer": "Chengdu in August is muggy and hot, and sites without air conditioning are steamers. You go to three sites a day, your clothes soaking and drying, and at night you fall asleep right after your shower.",
+  "e_overtime": "In the year-end renovation rush you had seven sites going at once, and the owners' group chats buzzed from morning till midnight. You went a month without a day off, lost your voice, and could only answer the phone in a whisper.",
+  "e_cat": "An owner with three cats asked you to leave routes for them. You cut cat doors into the cabinets, put a row of shelves up the wall for jumping, and added a rail around the windowsill. On handover day the three cats leaped up one after another.",
+  "e_slump": "The housing market cooled, fewer new flats were handed over, and the showroom's orders dropped thirty percent in a quarter. The company closed two showrooms, and a few colleagues moved into sales at custom furniture companies.",
+  "e_cert": "You earned the Grade 2 certificate in interior decoration design. The exam was a scheme and construction drawings for a small flat, and you were finishing the last sheet just as the bell rang.",
+  "e_award": "An old-flat renovation you did was picked as one of the company's cases of the year and hung on the wall by the showroom entrance. In the photo the balcony tea room has afternoon light, and the old man sits there reading the paper.",
+  "e_eyes": "Years of revising drawings on a screen, with the owners' group chats never letting up, and your neck and eyes are protesting together. You put a little succulent on your desk and glance at it after every drawing.",
+  "e_wedding": "You got married. Your partner does software testing in the High-Tech Zone. The wedding was in Nanchong; you drew a floor plan of the banquet hall to place every table, and saved one table in the corner for mahjong.",
+  "e_house": "You bought an apartment in Tianfu New Area, the down payment pooled by both families. When it came to doing your own home you went through more than twenty versions, until your partner asked: do you revise this many times for your clients too?",
+  "e_child": "Your child was born. In your own living room you left a space for crawling, laid soft mats on the floor, and rounded off every corner.",
+  "e_elder": "More and more people in old housing blocks want their homes adapted for old age. For an old man living alone you put in grab bars, removed the door sills and lowered the stove by five centimeters. He walked once around the kitchen and said: now I can reach.",
+  "e_ai_scheme": "Now, after a survey, AI produces three schemes with renderings and quotes in half an hour, and the showroom has fewer designers than before. Those who stayed spend their days sitting on owners' sofas listening to them talk, then going to sites to see whether that wall can really come down.",
+  "e_old_client": "The old couple's daughter bought a new flat and asked for you by name. She said that when she was little, her mother told her about the designer who asked how many steps it was to the toilet at night.",
+  "e_apprentice": "Dai, a new design assistant, measured only the walls on surveys. You told him that next time he should look at the owners' slippers, teacups and mahjong table too, and only then draw."
+ },
+ "choices": {
+  "c_sales": { "title": "Push packages for the numbers, or slow down?", "situation": "The manager says the showroom is well short of target this month and wants every designer to push packages and add-ons, with a bonus for whoever signs fastest. You have an old flat on a tight budget; selling it as a package would earn you extra commission, but two of the items are things the old couple will never use.", "options": [
+   { "label": "Sell the package", "result": "That month you made the top five for contracts signed, and your bonus was well above usual. But at handover, the old man pointed at the device he'd never use and asked you how to turn it off." },
+   { "label": "Sell only what they need", "result": "You struck those two items, and the quote dropped by more than ten thousand yuan. The couple told everyone how honest you were, and later three households in their building came to you." }
+  ] },
+  "c_site": { "title": "Walk the sites yourself?", "situation": "The showroom's rule is that once work starts, it's handed to the foreman and the site supervisor, and the designer only visits two or three times. But you've found your designs often drift once they reach the site, and you want to visit every site once a week. That would leave you less time for new clients, and less commission.", "options": [
+   { "label": "Walk them yourself", "result": "Within a year you knew which cabinets look fine on paper and won't fit through the door on site, and which tiles the workers dread laying. Gou the foreman said your construction drawings were the least trouble of anyone's." },
+   { "label": "Leave it to the foreman", "result": "You spent your time on new clients and schemes and signed more than others that year. But twice at handover, owners pointed to places that had drifted and asked you why, and all you could say was: next time." }
+  ] },
+  "c_ai": { "title": "Bring AI into the whole process?", "situation": "The company wants a few designers to pilot a new workflow: after the survey, AI produces the scheme, renderings, construction drawings and quote, and the designer only checks, revises and talks with the owners. The pilot designers would spend a few months learning the tools and writing rules first, and would sign fewer contracts in that time.", "options": [
+   { "label": "Join the pilot", "result": "It took you three months to draw up a checklist for AI drawings: load-bearing walls, plumbing, sockets, cabinet door swings, missing items in the quote. Later every new hire at the showroom checked drawings against that list." },
+   { "label": "Keep drawing yourself", "result": "You said you still liked drawing every line yourself. Your drawings take a little longer, but owners say they can tell you've been to their home." }
+  ] },
+  "c_shanghai": { "title": "A high-end Shanghai studio is hiring", "situation": "A Shanghai studio doing high-end homes is hiring designers. The design fee on one of its homes equals ten contracts in Chengdu, and the pay is half again yours. But the pace is fast, the owners are picky, rent would eat half your salary, and there'd be no bowl of sweet-sauce noodles downstairs.", "options": [
+   { "label": "Go to Shanghai", "result": "In Shanghai you did several large flats and saw imported stone and whole-home automation, where even the molding on a curtain box went through five revisions. On weekends you walked alone along Wukang Road, then went back to your rented room to keep revising." },
+   { "label": "Stay in Chengdu", "result": "You turned it down. On weekends you and your partner drank lidded-bowl tea in People's Park, watching the people beside you play mahjong, and on Monday you went back to measuring flats in old blocks." }
+  ] },
+  "c_elder": { "title": "Specialize in old flats and aging-in-place", "situation": "More and more of Chengdu's old housing blocks need renovating and adapting for older residents. The jobs are small, the budgets tight and the problems many: open a wall and anything might be inside, and the commission is lower. But you've found it's the work you like best, and the fewest people at the showroom want it.", "options": [
+   { "label": "Specialize in it", "result": "You became the person at the showroom who knows old flats best; before a wall comes down, you can guess what's buried in it. When the subdistrict office came to the showroom about aging-in-place adaptations, they asked for you by name." },
+   { "label": "Take anything", "result": "You did new flats and old ones, lots of contracts, steady commission. Some of the old-flat jobs you passed to younger designers." }
+  ] },
+  "c_lead": { "title": "Apply for Senior Designer", "situation": "The showroom is promoting a Senior Designer to lead three to five designers and assistants, take villas and large flats, review the team's schemes and quotes, and own the most difficult complaints. As senior designer you'd draw less yourself and spend more time in meetings and at dinners with owners.", "options": [
+   { "label": "Apply", "result": "At the interview you didn't talk about how many contracts you'd signed; you talked about the wall that hid a drainpipe. When you finished, the manager said: this one knows what it feels like to get it wrong." },
+   { "label": "A few more years as designer", "result": "You recommended a colleague who had joined two years before you and kept doing old flats. When he reviewed his team's schemes, whenever an old flat came up he called you over to take a look." }
+  ] },
+  "c_studio": { "title": "Open your own studio", "situation": "Over the years old clients have introduced plenty of new ones, and a friend who does soft furnishings wants to open a small studio with you on an old street in Yulin, specializing in old flats. No base pay; rent, utilities, workers and collecting payment would all be on you.", "options": [
+   { "label": "Strike out", "result": "The day you left the showroom you took the tile samples from your desk, and the laser distance meter, which you had bought yourself.", "end": "Your studio is on the ground floor of an old building in Yulin, with a pot of bougainvillea at the door. Most of the people who come are from old housing blocks, and at every home you still ask first: at night, how many steps is it to the toilet?" },
+   { "label": "Stay at the showroom", "result": "You introduced your friend to his first client and stayed. He often sends photos of old flats opened up, asking what to do about the pipe inside the wall." }
+  ] },
+  "c_chief": { "title": "Apply for Chief Designer / Design Director", "situation": "The company is promoting a Chief Designer / Design Director to run a showroom's design, set styles and standards, create show flats, and negotiate targets with the company and fitted-out projects with developers. You'd sit in many meetings, travel a lot, and measure flats yourself less and less.", "options": [
+   { "label": "Apply", "result": "The first page of your application read: AI can draw now; what we sell is someone who has been to the owner's home. The general manager kept that page." },
+   { "label": "Keep leading your team", "result": "You didn't apply and kept leading a few young designers on old flats. That year your team had the fewest complaints in the company." }
+  ] },
+  "c_brand": { "title": "A custom furniture brand wants you as design supervisor", "situation": "A whole-home custom furniture company wants you as design supervisor: a steady salary thirty percent above your current base plus commission, and no more worrying about contracts signed. But there you'd only design cabinets, no longer how a whole home is lived in.", "options": [
+   { "label": "Go to the furniture company", "result": "The day you left, you gave Dai your survey sketchbook, full of other people's slippers and teacups.", "end": "You worked at the custom furniture company for many years and designed thousands upon thousands of cabinets. In every wardrobe you leave a slot at the bottom for slippers, something you learned from old flats." },
+   { "label": "Stay in home renovation", "result": "You turned it down. That month you were working on a flat from the 1980s, and when a wall came down it was woven bamboo filled with mud. You stood on site looking at it a long time." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last day you finished handing over the project folders on your computer; the oldest was the old couple's flat. You took a walk along the old streets of Yulin. The housing block was still there, the stairwell freshly painted. Standing below, you saw someone on that balcony drinking tea.",
+  "burnout": "That year your neck and eyes gave out together, and every buzz from the owners' group chats set your heart racing. You quit and spent a year at home, walking along the Jin River every day and spending afternoons at a teahouse, watching other people play mahjong."
+ },
+ "stages": [
+  "You take your own clients: surveying with a laser distance meter, drawing floor plans and renderings, sitting at the showroom's consultation table to go through needs and quotes with owners line by line, producing construction drawings once the contract is signed, briefing the foreman on the first day of work, inspecting at the plumbing and electrical, tiling, carpentry and painting stages, and going with owners to the building materials market to choose tiles and flooring. Your contracts signed decide your income, and both the foreman and the owners call you.",
+  "You lead a team: you review the schemes and quotes of three to five designers and assistants, and villas, large flats and the most difficult old flats are yours to do yourself. Owner complaints, delays, material problems: you're the one who goes to talk. You sit in target meetings with the manager and argue schedules with the construction department's manager, and you draw less and sign more.",
+  "You run a showroom's design: the styles and standards of dozens of designers, the show flats, the cases of the year, and the fitted-out projects negotiated with developers. By day you're in meetings, traveling and seeing major clients; at night you spot-check a few schemes. You rarely survey a flat yourself anymore, but every quarter you still pick an old flat and go sit in the owners' home."
+ ],
+ "work": [
+  "An owner said her kitchen always felt cramped. You went and watched her cook a meal and saw the fridge, sink and stove were too far apart. You moved the fridge, and she said she no longer bumped into anyone when she turned.",
+  "At the plumbing and electrical inspection you found a socket conduit run up the wall where wall cabinets would go. Gou the foreman said it was fine. You had him move it and said: whoever drives a nail there later won't know there's power in it.",
+  "Choosing floor tiles with a young couple at the building materials market, the two of them started arguing over color. You held two sample tiles against photos of their flat, and in the end you settled on one they both said was fine.",
+  "A designer on your team left demolition and debris removal out of the quote for an old flat, and the owner found out only after signing. You went to talk to the owner and the company absorbed half; back at the office you added a check line to every quote on the team.",
+  "The owner of a villa changed the staircase three times after work started. You didn't redraw again; you met him on site, chalked the three options on the floor at the foot of the stairs, and he chose the first.",
+  "The construction department said a site would be half a month late. You went through the schedule: the kitchen cabinet factory was behind. You spent an afternoon on the phone with the factory, got the delay down to five days, and wrote the owner an explanation.",
+  "Negotiating a fitted-out project with a developer, they wanted the cheapest package. You made a table of which savings would bring the most complaints at handover, and after reading it their engineering director added a tier to the budget.",
+  "The showroom's show flat was getting a new style, and several senior designers argued all afternoon. You had each bring a home they had designed whose owners had lived in it three years or more, talk about it, and only then decide.",
+  "You added a line to the showroom's design rules: before any AI-produced scheme is delivered, the designer must have sat in the owners' home for at least an hour."
+ ],
+ "past": [
+  "In middle school in Nanchong, the roof of your family's old house leaked, and your father hired a carpenter to fix it. You crouched beside him watching him push the plane stroke after stroke, the shavings curling into rings.",
+  "Your gaokao (college entrance exam) score got you into a Chengdu university. You loved drawing but feared an art degree wouldn't find you work, and in the end you chose environmental design.",
+  "For a second-year course project you redesigned a little noodle shop next to campus, and the owner really did rearrange his tables to your plan, fitting in two more.",
+  "After graduating you joined this home renovation company as a design assistant. On your first day you measured a flat behind a veteran designer, your measurements came out five centimeters off his, and he made you measure it again.",
+  "In your two years as an assistant you drew CAD, built models and produced renderings every day, followed the work on site through plumbing, wiring and tiling, and filled three notebooks with things the workers said.",
+  "At the end of your second year, the veteran designer who trained you passed you an old flat on a very tight budget and said: you negotiate this one yourself. It took three meetings, and you signed it."
+ ],
+ "late": {
+  "pension_note": "Estimate: private home renovation companies in Chengdu mostly pay designers' pension contributions on the low end of the base salary, not on commission, with no enterprise annuity, so after retirement the basic pension is about forty percent of your last monthly income.",
+  "scenes": [
+   "Your first month of retirement, you still go for a bowl of sweet-sauce noodles every morning, and only after finishing remember you've left all those owners' group chats.",
+   "Your old showroom asked you back to give new hires a lesson, and you talked about what to look at on a survey. Afterward a young person said: so you measure the slippers too.",
+   "A neighbor downstairs was renovating and asked you to look at the drawings. You spent an evening on them and turned her toilet door around. She said nights were much easier now.",
+   "Your grandchild made a house for the kitten out of a cardboard box, but the door was too small for the cat to get in. You helped him cut it bigger, and the cat slipped inside.",
+   "In the early days after you stopped, you spent every afternoon at a teahouse by the Jin River with your phone on silent, and slowly your eyes stopped aching.",
+   "When your neck was a little better you began painting watercolors at home, all of them homes you had been in: balconies, tea rooms, mahjong tables.",
+   "On the day you filed your retirement papers you passed that old housing block in Yulin. The stairwell walls had been painted white, and the tea table was still on the old couple's balcony.",
+   "In your first year on a different path, whenever you walked into someone's home you still looked first at which way the toilet door opened.",
+   "On the street you ran into Gou, the old foreman, who has stopped working and opened a hardware shop by a housing estate gate. The moment he saw you he said: that conduit you made me move that year, later it saved someone driving a nail.",
+   "Dai, your old design assistant, became a senior designer and sent you a survey sketch with the owners' slippers and teacups drawn on it.",
+   "Chengdu's old housing blocks are being renovated one district at a time, getting elevators and fresh facades. Walking past, you look up and guess how each household lives inside.",
+   "In a cupboard you found the old tile samples, chipped at the corners, their colors still there. You set them on the table and looked at them a while, then put them away."
+  ],
+  "closing": {
+   "retire": "Many years later, one evening, you walked through an old housing block as its windows lit up one by one, and from one of them came the clatter of mahjong tiles being shuffled. You stopped below for a while, listening, then walked slowly home.",
+   "burnout": "Many years later, you made a pot of tea on your balcony. Afternoon light slanted in through the window and fell on the little tea table you had made yourself. You sat there thinking of nothing, and the tea slowly went cold.",
+   "end": "Many years later, in a drawer, you found the old laser distance meter. You pressed the button and the red dot still lit. You measured the wall, 3.2 meters, switched it off, and put it back."
+  }
+ }
+}

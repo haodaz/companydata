@@ -1,0 +1,159 @@
+{
+ "id": "steel-xs",
+ "occupation": "Steel Structure Assembly Worker",
+ "role": "Assembly Worker in a Steel Structure Plant's Assembly Shop",
+ "headline": "Two years after leaving trade school in Fuyang for Xiaoshan, in the assembly shop of a steel structure plant with soapstone, a steel square and a welding torch: a steel assembly worker who fits plate after plate into box columns and factory roof trusses and is paid by the tonne",
+ "unit": "The assembly shop of a steel structure fabrication plant in Xiaoshan, Hangzhou",
+ "unit_type": "Private steel structure company (about eight hundred staff, making members for factories, stadiums and high-rises)",
+ "city": "Hangzhou (Xiaoshan)",
+ "city_tier": "New first-tier city",
+ "education": "Trade school (welding technology)",
+ "level": "You can read the drawings, mark out, fit and tack-weld H-beams and ordinary columns on your own, and inspection rarely sends your dimensions back. But for the diaphragms inside a box column, the saddle cuts on truss tubes, or using a flame to straighten a member that's warped, you still call the team leader over.",
+ "intro": "You studied welding at a trade school in Fuyang, and after graduating you followed an uncle from your village to Xiaoshan and into this steel structure plant. Your first year you were an apprentice, hauling stock, grinding bevels and handing your master the steel square; this year you collect your own drawings, do your own fitting and get paid by the tonne. As of today, on a thirty-meter assembly platform in the shop, you fit plates of steel into the bones that hold up factories and stadiums.",
+ "salary_note": "Estimate: assembly workers at Xiaoshan steel structure plants are paid piece rate by the tonne, so in peak season with night shifts they can earn well above the national average; in slow months with few orders they get only the guaranteed minimum. The plant provides a dorm and subsidizes meals.",
+ "facts": [
+  { "label": "Assembly Worker (Grade 4 / Intermediate) (current level)", "value": "1-4 years, ¥6,000–8,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Senior Assembler (Grade 3 / Advanced) (4-8 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Marking out and setting the assembly reference lines on the members", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Reading steel structure drawings and assembly process documents", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You wake in the plant dorm. Downstairs in the canteen a big pot of congee is simmering, and you eat two steamed buns with pickled radish before pulling on the work clothes pocked with tiny holes from sparks.",
+  "The pre-shift meeting: the team leader reads out today's job sheet, a batch of H-beams for a factory and four box columns. You collect your drawings and circle the member numbers, dimensions and weld symbols in red.",
+  "The overhead crane sets a cut web plate on your platform. With soapstone and a steel square you mark lines on the flange plate, measuring every so often; the error can't be more than two millimeters.",
+  "You stand the web on the flange's centerline, square it up with a jack, check plumb with a bob, then tack it in place. Sparks spit off your gloves, crackling.",
+  "The inspector comes with a tape to measure the beam you fitted this morning: length, diagonals, where the brackets sit. He sticks a passed QR code on the member.",
+  "After the diaphragms go into a box column, you notice the column has a slight twist. You call the team leader. He takes one look, says don't weld it yet, and sends you for the heating torch.",
+  "The shop is still thirty-seven or thirty-eight degrees, the big fans roaring. You tally today's tonnage: 1.2 tonnes more than yesterday.",
+  "After your shift, outside the dorm, you video-call home. Your mother asks if it's hot in Xiaoshan. You say it's fine, and keep the blister on the back of your hand out of the frame."
+ ],
+ "ladder": [
+  { "title": "Assembly Apprentice (Grade 5 / Entry)", "stage": "Apprentice", "focus": "Help your master haul stock, clean bevels and hand over tools, and learn to read drawings and mark out. You move up with steady hands and hard work." },
+  { "title": "Assembly Worker (Grade 4 / Intermediate)", "stage": "Skilled hand", "focus": "Read drawings, mark out, fit, position and tack-weld H-beams and ordinary members yourself, paid by the tonne." },
+  { "title": "Senior Assembler (Grade 3 / Advanced)", "stage": "Senior hand", "focus": "Fit box columns, trusses and irregular members, straighten with a flame, take on one or two apprentices; the hard pieces come to you." },
+  { "title": "Assembly Team Leader (Grade 2 / Technician)", "stage": "Team leader", "focus": "Run production, quality and safety for a team of a dozen or more, set assembly sequences from the process documents, and have the final say on trial assembly of large members." },
+  { "title": "Deputy Shop Director (Grade 1 / Senior Technician)", "stage": "Shop", "focus": "Run the output, quality and equipment of several teams in the assembly shop, work with the technical and project departments, bring in new lines and set processes." }
+ ],
+ "ai_tasks": [
+  { "name": "Reading steel structure drawings and assembly process documents", "how": "AI can pull the member list, dimensions and weld symbols out of the drawings and flag contradictions with the process documents. A person has to understand the drawing against the real situation, spot what the drawing doesn't make clear, and confirm with the technician." },
+  { "name": "Checking member specs and numbers and cleaning surfaces for assembly", "how": "AI can scan codes or photos to compare member numbers and specs with the list and catch wrong or missing pieces. A person has to move, look at and clean off rust and oil by hand, and judge whether a surface is good enough." },
+  { "name": "Marking out and setting the assembly reference lines on the members", "how": "Marking has to be done on the actual steel by skill and experience, allowing for how the member has really deformed and the conditions in the shop. At most AI supplies reference line data or a projected guide; laying down and rechecking the line is still done by people." },
+  { "name": "Positioning and joining members with cranes and fixtures", "how": "Lifting and fitting means working with the crane on the spot, watching the member and adjusting its position as you go, with personal safety and split-second judgment at stake. AI can help simulate the lift plan or flag risks, but people operate and give the signals." },
+  { "name": "Tack-welding members and working with welders to complete the welds", "how": "Tack welding takes skill in the hands and on-the-spot coordination with the welder. AI can't lend a hand; at most it can look up welding parameters or process requirements." },
+  { "name": "Measuring assembly dimensions, plumb and flatness", "how": "Laser scanners, total stations and image recognition can collect dimensions automatically, compare them with the design and produce inspection records. A person sets out the measuring points, judges whether an anomaly is a measuring problem or a member problem, and signs for the result." },
+  { "name": "Straightening and adjusting members to meet assembly tolerances", "how": "Straightening uses flame, jacks and the like, judging by experience which way the forces and distortion run, and it is risky work. AI can point out where and how big the deviation is from the measurements; how to correct it and by how much is a person's call and a person's hands." },
+  { "name": "Maintaining assembly tools and equipment and following safety rules", "how": "AI can remind you of maintenance intervals from usage records and equipment status, check for hazards and generate safety checklists. A person has to actually inspect and maintain the equipment and follow and enforce the safety rules in the shop." }
+ ],
+ "events": {
+  "e_send_back": "A batch of beams you fitted went to site, and on one the holes in the connection plate were off, so the erection crew couldn't fit it and it came back for rework. The team leader didn't scold you; he had you go to the site with him and see how the crew waited thirty meters up for that one beam.",
+  "e_summer": "Two straight weeks of thirty-eight degrees in Xiaoshan in July. The steel plate is too hot to touch, you drink eight bottles of water a day, your work clothes soak through until you could wring them out, and the plant hands out two mung bean ice pops a day.",
+  "e_burn": "While you were tack welding, a bit of slag jumped into the cuff of your glove and raised a blister on your wrist. You got it dressed at the clinic and the next day switched to gloves with long cuffs.",
+  "e_peak": "At year end the orders pile up and the shop runs two shifts. In one month you fitted more than a hundred tonnes, and the figure on your pay slip was half again your usual. You sent some home and saved the rest.",
+  "e_slack": "With the property market down, the plant's high-rise orders fell by more than half. One month the shop ran only half the month, and you got the guaranteed minimum. A few people in the dorm packed their bags and went home.",
+  "e_stadium": "The plant won the long-span trusses for a stadium, trial-assembled in the yard first. For three days you and your team adjusted against the total station readings until the error at both ends of the truss was within three millimeters, and someone from the technical department took photos.",
+  "e_robot": "The plant installed an automatic fit-up and welding line. H-beams go from fit-up to welding all by machine, with three people per shift to watch it. You were moved to fit the box columns and irregular members it can't handle.",
+  "e_scan": "Inspection switched to laser scanning: scan a column once and the deviations show red and green on screen. The first time they scanned your work there was a small patch of red in a field of green: a bracket you hadn't jacked tight before tacking.",
+  "e_cert": "You earned your Grade 3 / Advanced assembler certificate. The practical exam was fitting a section of truss with saddle-cut joints, and while you marked out, the examiner stood behind you a long time.",
+  "e_contest": "The district held a steel structure assembly skills contest, and you went for the plant and took third prize, an electric scooter. You rode it once around Xianghu Lake.",
+  "e_back": "Years of bending over the platform marking out and hauling stock and your back has started to hurt; in the morning you have to hold the bed frame to sit up slowly. An old hand at the plant told you about a massage place, and you go once a week.",
+  "e_ears": "All these years of grinders and hammers in the shop and your ears have started to ring; you need the phone loud to hear. The doctor at your checkup told you to wear earplugs every single day.",
+  "e_tide": "Around Mid-Autumn you and a few dorm mates rode out to the Qiantang River to watch the tidal bore. The wave came in a single line, and everyone on the bank was shouting. You told your family it was much fiercer than the Huai River back home.",
+  "e_marry": "You got married. Your partner is from back home and works at a textile mill in Xiaoshan. The wedding was in Fuyang, and you built an arch of steel tube for your own wedding car; relatives were still praising it years later.",
+  "e_rent": "You moved out of the plant dorm and rented a room with a kitchen in the village by the plant. The first meal was stir-fried on an induction cooker, and you ate three bowls of rice.",
+  "e_child": "Your child was born and stays in Fuyang with the grandparents. Every night after work you video-call. The baby can't talk yet, only stares at the screen.",
+  "e_house": "You bought an apartment in the county town back in Fuyang, the down payment saved tonne by tonne over these years. You didn't go back for the handover; your family filmed it, and you watched it again and again.",
+  "e_apprentice": "Kong, a new apprentice, kept marking crooked lines. You gave him the steel square you'd used for years and told him to measure both ends before every line. A month later his beams passed inspection first time.",
+  "e_ai_plan": "Now when a batch of members comes into the shop, the system schedules which one to fit first, which crane to use and when to be at which platform. As team leader, your mornings are spent checking whether it got it right; once it split two columns that had to be trial-assembled together across two days.",
+  "e_old_steel": "Walking past a tower in Qianjiang Century City, you looked up at its steel columns and remembered that some of the box columns were fitted by you in the shop that year. You still remembered their numbers.",
+  "e_safety": "As the crane lifted a beam, you saw a frayed spot on the sling, shouted to stop, and had it swapped. The safety officer mentioned it at the pre-shift meeting and gave you a two-hundred-yuan reward."
+ },
+ "choices": {
+  "c_night": { "title": "More piece rate on nights, or stay on days?", "situation": "In peak season the shop runs two shifts. Night rates are ten percent higher and you could fit several more tonnes. But at night the shop lights don't show your lines clearly, you're tired, and the dorm is too noisy to sleep in by day. Days are steady, with less money.", "options": [
+   { "label": "Work nights", "result": "Over one peak season you saved more than ten thousand yuan extra, and learned to read lines under the lights at night: mark the soapstone thicker, measure once more." },
+   { "label": "Stay on days", "result": "Rested by day, your members passed inspection first time more often than anyone's. The team leader started sending the harder pieces your way." }
+  ] },
+  "c_cert": { "title": "Get the Grade 3 / Advanced certificate, go for Senior Assembler", "situation": "The plant says that to become a Senior Assembler and fit box columns and trusses, you first need the Grade 3 / Advanced certificate, with a written exam and a practical, and two months of evening classes at the district training school. After work you'd have half an hour's ride to get there.", "options": [
+   { "label": "Sit it", "result": "The written exam took you two tries; the practical passed the first time. The day the certificate came, the team leader handed you the hardest truss in the shop." },
+   { "label": "Push the tonnage first", "result": "You skipped the classes and kept fitting in the evenings. That year your tonnage was first on the team, and the certificate waited until the next year." }
+  ] },
+  "c_robot": { "title": "Learn welding robots and digital measurement", "situation": "The plant's new automatic fit-up line and welding robots need people to watch and program them, and someone has to know the laser scanner. The technical department asks who in the assembly shop wants to learn. You'd be watching screens and adjusting parameters instead of marking lines with soapstone every day, and you'd go from piece rate to a monthly salary.", "options": [
+   { "label": "Learn it", "result": "After three months of study you programmed a weld seam for the robot yourself for the first time. You crouched beside the first beam it welded and watched for half an hour." },
+   { "label": "Stick with the soapstone", "result": "You said what your hands do, machines can't. Box column diaphragms, saddle cuts on trusses: the plant's hardest pieces still come to your platform." }
+  ] },
+  "c_site": { "title": "Follow the members to site for erection", "situation": "The project department is short of people and asks whether anyone in the assembly shop will follow a batch of steel members to a site out of province for erection work: day rates thirty percent above the shop, room and board included. But it means working dozens of meters up, for most of a year, without seeing your family.", "options": [
+   { "label": "Go to site", "result": "You spent eight months on a factory site, walking steel beams in a safety harness and watching members you had fitted lifted up one by one. Only then did you understand what those two millimeters become up in the sky." },
+   { "label": "Stay in the shop", "result": "You said the shop couldn't spare you. That year, not one member you fitted was sent back from site." }
+  ] },
+  "c_leader": { "title": "Become Assembly Team Leader", "situation": "The old team leader is moving to run the new line, and the shop wants you to take over as Assembly Team Leader (Grade 2 / Technician), in charge of production, quality and safety for more than a dozen people. As leader you'd fit less yourself, spend each day assigning work, watching inspection and managing older hands than you, and your piece rate would follow the whole team's.", "options": [
+   { "label": "Take it", "result": "On your first day as leader you wrote down what each person was best at fitting on one sheet and stuck it by the platform. That month the team's rework fell by half." },
+   { "label": "Fit a few more years", "result": "You recommended an old hand who'd come three years before you and kept fitting the hardest pieces. When he assigned work, he always asked you first about the toughest one." }
+  ] },
+  "c_home": { "title": "Open a steel fabrication shop back in Fuyang", "situation": "The county back home has been building an industrial park, and its factories need steel members. Your cousin says he's found a yard and wants to open a small fabrication shop with you. You'd be close to your child, but there'd be no piece rate and no guaranteed minimum: you'd find your own jobs and chase your own payments.", "options": [
+   { "label": "Go back", "result": "The day you left, you folded the work clothes pocked all over with spark holes and put them in your bag.", "end": "Your cousin's and your shop sits at the edge of the county industrial park, making steel members for nearby factories and farm greenhouses. After school your child runs over to the shop, and you teach him to draw a straight line on steel plate with soapstone." },
+   { "label": "Stay in Xiaoshan", "result": "You talked with your family on video a long time and decided to work a few more years. Your cousin got it running anyway, and often calls to ask how to fit a joint." }
+  ] },
+  "c_install_team": { "title": "An erection crew wants you as a crew lead", "situation": "A steel erection crew that often works with the plant wants you as a crew lead, at forty percent more pay, working sites all over the country. You can fit and you can read drawings; you're exactly what they lack. But from then on you'd no longer be in the shop.", "options": [
+   { "label": "Join the erection crew", "result": "You left the sheet listing what each person was best at for whoever took over, and took the steel square with you.", "end": "You traveled with the crew to more than a dozen provinces, erecting factories, stadiums and bridges. At every site, on the first day the members arrive, you take a tape to one of them first to see which plant, which team fitted it." },
+   { "label": "Stay at the plant", "result": "You turned it down. That month the plant won the steel roof of an airport, and you led your team in fitting more than forty trusses." }
+  ] },
+  "c_workshop": { "title": "Apply for Deputy Shop Director", "situation": "The assembly shop is promoting a Deputy Shop Director (Grade 1 / Senior Technician) to run the output, quality and equipment of several teams, meet with the technical and project departments, bring in new lines and set processes. You'd spend less time on the platform and more in the office reading reports, and you'd be the one explaining to the boss why output dropped this month.", "options": [
+   { "label": "Apply", "result": "At the interview you didn't talk about how many tonnes you'd fitted; you talked about the beam sent back from site. When you finished, the plant director said: that's the kind of person who should remember it." },
+   { "label": "Stay as team leader", "result": "You said you still liked being by the platform. That year your team had zero returns, and the plant director raised a glass to you at the year-end party." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last day you gave the steel square you'd used for decades to the youngest person on the team and stood by the platform a while. The crane still ran back and forth overhead, sparks still crackled. You walked out of the shop into a Xiaoshan evening, where in the distance the steel columns of a new building had just gone up.",
+  "burnout": "That year your back would no longer bend, and the doctor said no more hauling stock. You quit, went back to Fuyang and rested at home for a year, walking along the river in the county town every day. Whenever you hear welding somewhere, you still stop and watch the blue light."
+ },
+ "stages": [
+  "Every day you collect your own drawings: reading member numbers and weld symbols, marking lines on plate with soapstone and a steel square, having the crane lift webs and flanges onto the platform, squaring them up with jacks and clamps, checking plumb with a bob, then tacking them and passing them to the welder. The inspector measures your pieces with a tape, the team leader assigns the work, and the tonnage goes down under your own name.",
+  "You fit the shop's hardest pieces: box column diaphragms, saddle-cut truss joints, twisted irregular members. When a member warps you take the heating torch, read the color and straighten by feel. New apprentices follow you, and you teach them to mark out, read drawings, and know when to stop and call someone. Before a technician changes a process, he comes to your platform to ask you first.",
+  "You run a team of a dozen or more: holding the pre-shift meeting every morning to assign work, watching inspection and safety, setting the assembly sequence for large members from the process documents, and leading the whole team through trial assembly of stadium trusses and airport roofs. You deal with the technical department, inspection and the crane crew's leader. You pick up soapstone less often; what you sign is the team's output sheet.",
+  "You run several teams in the assembly shop: output, quality, equipment, shifts for dozens of people. You set processes for new lines with the technical department, agree delivery milestones with the project department, and explain the month's numbers to the boss. You rarely go up on the platform anymore, but before every batch of large members leaves the plant, you still go and measure one."
+ ],
+ "work": [
+  "The bracket position on a beam was marked vaguely on the drawing. You didn't guess; you took the drawing to the technical department and asked. The technician checked the model and said you were right to ask: a dimension was missing from the drawing.",
+  "Lu, the welder, said your tacks were too close together and he had to grind them off before welding. You changed to one tack every three hundred millimeters, and the next day he handed you a cigarette.",
+  "When you finished fitting an H-beam, you measured the diagonals yourself first: four millimeters out. You broke the tacks, jacked it again and remeasured: one millimeter. Only then did you call inspection.",
+  "A box column came out bent after welding. With the torch you heated a few triangular zones on the bulging side, stopping when the steel turned cherry red, and when it cooled the column was straight.",
+  "The saddle cut on a truss tube came out a little large. You traced around the tube with soapstone again and again and ground it all afternoon until every gap was within two millimeters.",
+  "Kong, the new apprentice, fitting his first box column, forgot the diaphragms and closed the cover plate. You didn't scold him; you cut the plate open with him and went through it again step by step.",
+  "The stadium trusses had to be trial-assembled in the yard, and you set the order: both ends first, then the middle. Where the total station would stand, who would read it, who would torque the bolts, all written on one sheet.",
+  "Two old hands on your team fought over who would fit a column with a high piece rate. You laid out everyone's tonnage for the month and gave it to the one with less.",
+  "The technical department sent a new process document calling for welding before straightening. You said that would push the box column diaphragms out of line, took the technician to the platform to try one, and they changed the document.",
+  "The boss wanted to cut a month off a stadium schedule. You worked through the shop's platforms, cranes and people and replied: half a month can be cut; any more and quality can't be guaranteed.",
+  "Setting the new laser scanning acceptance process with the technical department, you added one rule: wherever the machine shows red, an old hand must measure it again with a tape.",
+  "At the year-end awards you didn't nominate the person with the most tonnage in the shop; you nominated the team leader who hadn't had a single member sent back all year."
+ ],
+ "past": [
+  "In middle school in the Fuyang countryside, your grades were middling, and after school you went to the bicycle repair stall at the village entrance to watch the man weld. You watched that ball of blue light all summer.",
+  "You didn't get into the county's top high school, and your father said learn a trade. You went to the county trade school and chose welding, because of that blue light.",
+  "In a trade school practical class you welded your first straight seam, and it came out looking like a caterpillar. The teacher said no hurry: a welder first learns to keep his hand steady. You practiced a whole term, and the seams came out straight.",
+  "After graduating you welded brackets for a year at an auto parts plant in Hefei, hundreds a day on the line. You found it dull and wanted to make something bigger.",
+  "An uncle from your village was a team leader at a steel structure plant in Xiaoshan, and at New Year he said they were short of people. You followed him on an overnight train to Xiaoshan and went into the assembly shop as an apprentice the next day.",
+  "In your apprentice year you handed your master the steel square, ground bevels and hauled stock every day, and at night in the dorm you studied weld symbols on the drawings one by one until you could draw them yourself."
+ ],
+ "late": {
+  "pension_note": "Estimate: private steel structure plants in Xiaoshan mostly pay workers' pension contributions at the minimum base, and after going home you have to keep paying in yourself, so after retirement the basic pension is about forty percent of your last monthly wage.",
+  "scenes": [
+   "Your first month of retirement, you still wake at six forty, and only after rolling over remember there's no pre-shift meeting.",
+   "The plant asked you back to give the new apprentices a lesson, and you talked about how to hold a steel square. Afterward a young man said: master, your hands are steadier than the machine.",
+   "A neighbor back home wanted a steel-frame carport and hired the village welder. You watched all afternoon, then couldn't help taking the soapstone and marking the lines again yourself.",
+   "Your grandchild built a bridge of blocks that kept collapsing in the middle. You added two diagonal braces underneath and said: this is called a truss.",
+   "In the early days after you stopped, you walked by the river in the county town every day, and slowly you could bend down to tie your shoes again.",
+   "You set up a little repair stall by your door: fixing bicycles, patching pots, welding the odd iron gate. Not much work, but enough to give your day something to do.",
+   "On the day you filed your retirement papers you took a bus to Xiaoshan. The plant had a new gate, but the cranes in the assembly shop were still there, sounding just the same.",
+   "In your first year on a different path, every time you walked into a steel-framed building, your eyes still went first to the welds and brackets on the beams.",
+   "On a site you ran into Lu the welder, retired now and minding his son's site. The moment he saw you he said: did you ever change the spacing on your tacks?",
+   "Kong, your old apprentice, became a team leader and sent you a photo: a sheet stuck by the platform, listing what each person is best at fitting.",
+   "Hangzhou has raised several more steel-framed towers. When you see the lifts on the news, you quietly count how many diaphragms are in that column.",
+   "In a cupboard you found the old work clothes pocked with spark holes, more holes than you remembered. You counted a while, didn't finish, folded them and put them back."
+  ],
+  "closing": {
+   "retire": "Many years later, one evening, you sat outside your door back home while in the industrial park in the distance the steel frame of a new factory had just gone up, the sunset leaking through the gaps in its trusses, square by square. Looking at it, you thought those squares were fitted pretty true.",
+   "burnout": "Many years later, you watched people fishing by the river while on the far bank someone welded an iron fence, the blue light flickering. You watched a long time, until he finished and packed up, and then you walked slowly home.",
+   "end": "Many years later, in a drawer, you found the old steel square, its edge markings worn almost too faint to read. You laid it against the tabletop: still straight. You put it back."
+  }
+ }
+}
