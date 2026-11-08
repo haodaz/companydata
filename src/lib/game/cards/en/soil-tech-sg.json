@@ -1,0 +1,164 @@
+{
+ "id": "soil-tech-sg",
+ "occupation": "Soil and Fertilizer Technician",
+ "role": "Soil and Fertilizer Technician for Vegetable Greenhouses",
+ "headline": "A young soil and fertilizer technician fresh from an agricultural resources and environment degree, riding an electric three-wheeler from one winter greenhouse to the next for a soil testing company in Shouguang: taking samples, measuring salt, digging up roots to look for nematodes, writing fertilizer prescriptions for vegetable growers",
+ "unit": "The agronomy service department of a soil testing and fertigation company in Shouguang, Shandong",
+ "unit_type": "Agricultural technical services company (soil and fertilizer)",
+ "city": "Weifang (Shouguang)",
+ "city_tier": "Third-tier city",
+ "education": "Bachelor's degree (Agricultural Resources and Environment)",
+ "level": "You can take soil samples, measure EC and pH with a quick-test meter and read a lab report. A fertilizer plan for a whole greenhouse season still has to go past your mentor.",
+ "intro": "Ride twenty minutes south out of Shouguang and both sides of the road are lined with winter greenhouses, row after row of earth walls, steel frames and padded quilts, as far as you can see. This soil has grown vegetables for twenty or thirty years, and when you open some of the greenhouses the ground shines with a layer of salt like frost. From today your job is to go into these greenhouses, crouch down and work out what's wrong with the soil.",
+ "salary_note": "Estimate: technicians at a Shouguang agricultural services company get a base wage plus service commission, with local pay a little below the national figure. Once you've built up a group of growers who trust you, commission can be half your income.",
+ "facts": [
+  {"label": "Agronomy Service Technician (current level)", "value": "0–2 years, ¥4,500–6,500 a month (national average, estimated)", "source": "Common in the trade"},
+  {"label": "Next level up", "value": "Soil and Fertilizer Technician (Assistant Agronomist) (2–5 years)", "source": "Common in the trade"},
+  {"label": "What AI can't take", "value": "Going into the greenhouse to sample soil, dig up roots and talk it through with the grower", "source": "AI exposure"},
+  {"label": "Where AI is moving in", "value": "Calculating fertilizer formulas from soil test reports", "source": "AI exposure"},
+  {"label": "Open positions", "value": "1 related listing nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings"}
+ ],
+ "day": [
+  "In the company yard you load the electric three-wheeler: soil auger, sample bags, quick-test meter, a crate of fertilizer samples. Into your pocket go two packs of cigarettes, for offering to the growers.",
+  "First greenhouse: old Liu's, fifteen years of cucumbers. The quilts have just rolled up and the inside is thick with steam. Your glasses fog white the moment you step in.",
+  "You walk an S-shaped line across five points, drilling twenty centimeters at each, mix the soil in one bag and write the greenhouse number and date. Old Liu squats beside you and says it's like watching someone weigh out herbal medicine.",
+  "In the next greenhouse a whole patch of tomatoes has wilted. You pull one up and the roots are covered in strings of little knots. You tell the grower: nematodes. More fertilizer won't help.",
+  "Lunch at the restaurant by the village entrance: a bowl of mutton soup and two flatbreads. Over the table your mentor goes through the root photos you took this morning and points at one: that's root rot, not nematodes.",
+  "Back at the company lab you spread the morning's samples out to air-dry and sieve them, test EC and pH on the quick-test meter first, then send them on for organic matter and nitrogen, phosphorus and potassium.",
+  "The lab report comes back: old Liu's salt is three times the normal level. You write the fertilizer plan on the computer: stop the chicken manure, cut the compound fertilizer, flush the salt with drip irrigation. You print it out.",
+  "You answer messages in the growers' group chat. Someone sends a photo of yellowing leaves and asks if it's iron deficiency. You tell him to send you his greenhouse number tomorrow, and you'll go and look before you say."
+ ],
+ "ladder": [
+  {"title": "Agronomy Service Technician", "stage": "Trainee", "focus": "Go round the greenhouses with your mentor sampling soil, testing salt and acidity, digging up roots to diagnose, and drafting prescriptions from lab reports for your mentor to check."},
+  {"title": "Soil and Fertilizer Technician (Assistant Agronomist)", "stage": "Own patch", "focus": "Cover two or three hundred greenhouses across several villages, write and sign your own prescriptions, run technical meetings in the villages."},
+  {"title": "Technical Supervisor (Agronomist)", "stage": "Team lead", "focus": "Lead a dozen technicians, set the soil testing plan and review prescriptions, take on government projects and run product trials."},
+  {"title": "Regional Technical Manager", "stage": "Region", "focus": "Run technical services in protected vegetable areas across several provinces, adapting the Shouguang methods to local conditions."},
+  {"title": "Technical Director (Senior Agronomist)", "stage": "Director", "focus": "Set formula direction, trial design and service standards, lead joint research with universities, sign off technical documents."}
+ ],
+ "ai_tasks": [
+  {"name": "Calculating fertilizer formulas from soil test reports", "how": "Photograph a lab report and AI can work out a full season's fertilizer formula and fertigation schedule for the crop, the planting cycle and the target yield. A person only spot-checks for numbers that are way off."},
+  {"name": "Reading sensor data and tuning the fertigation units", "how": "Sensors in the soil and a cloud platform can watch moisture, EC and soil temperature around the clock and open the valves to feed automatically. When a sensor is buried too shallow, broken or reading wrong, someone has to go into the greenhouse to look and recalibrate."},
+  {"name": "Diagnosing dying plants, yellow leaves and fertilizer burn", "how": "From a photo, AI can list the possibilities: nutrient deficiency, salt damage, nematodes, disease. Which one it actually is gets settled by someone in the greenhouse digging up roots, splitting stems and rubbing soil between their fingers."},
+  {"name": "Going into the greenhouse to sample soil, dig up roots and talk it through with the grower", "how": "Where to take the samples, whether the knots on a root are nematodes or nodules, has to be seen by someone crouching in the greenhouse. Getting a grower with twenty years in the trade to stop using chicken manure takes a person explaining it face to face until he believes it."},
+  {"name": "Writing soil testing and farmland quality reports", "how": "AI can compile hundreds of lab reports, draw fertility maps and write a first draft. Whether an outlier is a sampling mistake, and whether the conclusions can be signed, someone has to check one by one."},
+  {"name": "Running field trials of fertilizers and microbial products", "how": "AI can help design the trial, run the statistics and write the report. Choosing the trial greenhouses, setting up the controls, judging the roots and the yield: someone has to watch over it for a whole season."}
+ ],
+ "events": {
+  "e_salt": "Old Liu flushed the salt twice following your plan and skipped a season of chicken manure, and the next year his cucumbers came in better with every flush. He tells everyone in the village that the young technician in glasses knows his stuff.",
+  "e_burn": "One grower didn't listen and fed double the dose of high-nitrogen water-soluble fertilizer in one go. By day three half his seedlings were burnt. He phoned to curse you and said your fertilizer was no good. You went and looked for a long time, and didn't argue with him.",
+  "e_nematode": "In one village you dug up the roots of twenty tomato plants in a row, and every one had nematodes. You held a meeting for the whole village about summer solarization, sealing the greenhouses up in the heat. A dozen households did it, and the next year the problem was down by more than half.",
+  "e_summer": "In July, solarization season, you went into a greenhouse at over forty degrees to bury a thermometer. When you came out everything went dark and you crouched for a long while holding on to the door.",
+  "e_cold": "Ten overcast days in a row in January, and the soil temperature in the greenhouses wouldn't come up. Several growers' bell peppers got root rot. You went round every one, and all you could do was tell them to water less and wait for the sun.",
+  "e_ai_report": "The company launched a mini-app: a grower photographs the lab report and a fertilizer plan comes out by itself. You can cover five or six more greenhouses a day. The prescriptions are the system's job now; you just look at the roots.",
+  "e_ai_wrong": "The mini-app prescribed heavy potassium for one greenhouse. You went in and saw that the soil had been replaced with fresh topsoil just last year, and the numbers on the lab report were from before. You rejected the plan and had him take new samples.",
+  "e_ai_machine": "More and more greenhouses have smart fertigation units, with sensors in the soil showing moisture and EC on a phone. Your job has gone from writing prescriptions to tuning machines and calibrating sensors.",
+  "e_expo": "At the spring vegetable expo, the company built a soil profile display in the hall, and you stood beside it explaining for three days. Plenty of growers from other provinces took your number.",
+  "e_debt": "At the year-end reckoning, a few growers still hadn't paid for fertilizer bought on credit. The boss sent you to collect. You went three times, and the last household settled with two crates of bell peppers.",
+  "e_live": "The company had its technicians livestream farming tips on short video. You held up your phone in a greenhouse and explained how to read roots, and one video got over two hundred thousand views. Half the comments were people asking about their own greenhouses.",
+  "e_love": "Someone your age worked at the quality inspection station of the vegetable wholesale market, where you often dropped off samples for pesticide residue testing. One day in a downpour the two of you waited an hour at the lab door and never stopped talking.",
+  "e_wedding": "You held the wedding in Shouguang town. Several old growers sent tomatoes and cucumbers from their greenhouses, and every cold dish on the banquet tables was theirs.",
+  "e_house": "You bought a two-bedroom flat in Shouguang, the down payment pooled from both families, the mortgage a little over three thousand a month. On the balcony you set out a few foam boxes, all growing cherry tomatoes for experiments.",
+  "e_kid": "The baby was born in winter. You took a few days off, and on your first day back the growers heard and stuffed a bag of just-picked cherry tomatoes into the basket of your three-wheeler.",
+  "e_knee": "Years of crouching to dig roots and kneeling to take samples, and your knees ache whenever it's overcast. The doctor said meniscus wear and told you to squat less. You bought a little folding stool and hung it on the back of the three-wheeler.",
+  "e_fake": "Someone used your company's name to sell cheap fertilizer in the villages, and several greenhouses ran into trouble after using it. You went round sampling and testing every one, and helped the growers report it to market regulators.",
+  "e_lab": "For three years in the company's trial greenhouse you compared straw incorporation and microbial fertilizers, taking hundreds of samples, and the organic matter column crept upward. You compiled the data into a booklet.",
+  "e_young": "Most of the people growing in greenhouses are in their fifties and sixties now, and the young won't come back to the villages. A few old growers leased their greenhouses to outside farming companies, and you lost several regular clients in a year.",
+  "e_parent": "Your father's slipped disc flared up back home and he was in bed for a month. You went back every weekend and helped bring in the watermelons in the family greenhouse.",
+  "e_apprentice": "A young technician you trained was sent to the company's base in Yunnan. The first time he took samples in that red earth, he video-called you to show it and asked if you'd ever seen soil like this."
+ },
+ "choices": {
+  "c_asst": {"title": "Applying for Assistant Agronomist", "situation": "The company encourages technicians to earn professional titles. As an Assistant Agronomist your prescriptions carry more weight with growers, and it counts when bidding for government soil testing projects. But you need a technical summary and a few service case studies, and since you spend all year in the greenhouses, you can only write them at night.", "options": [
+   {"label": "Apply, and write at night", "result": "You wrote up old Liu's greenhouse, from salt crust to recovery, as a case study with three lab reports attached. The day it passed review, your mentor took you out for barbecue."},
+   {"label": "Cover more greenhouses first", "result": "That year you covered more than four hundred greenhouses, and the growers all knew your three-wheeler on sight. The title, you said, could wait until next year."}
+  ]},
+  "c_sell": {"title": "Push the package, or prescribe by the lab report", "situation": "This season the company is pushing an expensive soil conditioning package, with commission for technicians who sell it. But in quite a few greenhouses you've tested, stopping the chicken manure and flushing the salt would be enough. They don't need it.", "options": [
+   {"label": "Push the package", "result": "Your commission that quarter was in the top three, and your supervisor praised you at the meeting. One grower who bought the package switched to another company's technician the next year."},
+   {"label": "Prescribe by the lab report", "result": "Your package numbers looked bad and your supervisor had a word with you. But the old growers started sending you their relatives' and friends' greenhouse numbers."}
+  ]},
+  "c_ai": {"title": "Taking on the fertigation units", "situation": "The company is rolling out smart fertigation units in Shouguang: sensors, a cloud platform, phone control. It needs technicians to install them, tune them and teach growers to use them, and to learn to read the data curves on the platform. Lots of work, low commission, but few people understand it yet.", "options": [
+   {"label": "Take it on", "result": "You learned to read a greenhouse's moisture and EC curves over a day on the platform, and to spot at a glance which sensor was buried too shallow. The next year the company had you teach the new hires."},
+   {"label": "Stick with soil and roots", "result": "The machines went to the manufacturer's people, and you kept crouching in greenhouses looking at roots. When a grower asked you how to read the numbers on his unit, you had to phone someone else."}
+  ]},
+  "c_lead": {"title": "Applying for Technical Supervisor", "situation": "The agronomy service department's Technical Supervisor has moved to headquarters, and the department will pick one of its technicians: lead a dozen technicians, set the year's soil testing plan, review prescriptions, and answer for the sales numbers. You're a candidate. So is a veteran technician who has worked for the boss for eight years.", "options": [
+   {"label": "Put your name forward", "result": "At the selection meeting you didn't talk about sales. You showed one chart: how salt levels had changed over the years in the two hundred greenhouses you look after. The boss looked at it a long time."},
+   {"label": "Step aside for the veteran", "result": "You said you'd spend a few more years in the greenhouses. The veteran became supervisor, and whenever he wasn't sure about a prescription, he brought it to you first."}
+  ]},
+  "c_far": {"title": "A big farming base far from home", "situation": "A farming company with tens of thousands of mu of vegetable bases in Xinjiang and Yunnan wants you to run soil and fertilizer for a base: forty percent more pay, living on the base, home two or three times a year.", "options": [
+   {"label": "Go", "result": "You spent your first Spring Festival on the base, video-calling home with endless desert and greenhouses behind you.", "end": "You look after the soil and fertilizer for tens of thousands of mu and write thousands of prescriptions a year. Every time you take a sample you still crouch and rub a pinch of soil between your fingers first, just as you did in the greenhouses in Shouguang."},
+   {"label": "Stay in Shouguang", "result": "You said no. That winter you covered a hundred more greenhouses than the year before, and your regular growers said who would they turn to if you left."}
+  ]},
+  "c_shop": {"title": "Opening your own supply shop with soil testing", "situation": "Your name is good in several villages now, and some growers urge you to open your own farm supply shop with soil testing: choose your own stock, write your own prescriptions. It means putting in most of your savings and fronting credit to growers who pay later.", "options": [
+   {"label": "Open the shop", "result": "You rented a shopfront in town, set up a quick-test meter and a small drying oven in the back room, and hung a sign at the door: Free Soil Testing.", "end": "Your shop sits at the crossroads in town, with rows of soil sample bags stacked in the back room. When a grower comes in for fertilizer, you ask his greenhouse number first and pull up his last lab report, and sometimes you talk him into buying one bag less."},
+   {"label": "Stay with the company", "result": "You said you'd think about it. Later three supply shops with soil testing opened in town, and one of the owners was a technician you'd trained."}
+  ]},
+  "c_project": {"title": "Leading a government farmland quality project", "situation": "The county put out a tender for farmland quality monitoring and a soil census, and the company won one section: sampling, testing and reporting on hundreds of points. It's handed to you to lead. The work is heavy, the standards are strict, the report has to be signed, and you'll spend most of the year going from point to point.", "options": [
+   {"label": "Lead it", "result": "You and six others spent eight months on it, photographing, geolocating and sampling hundreds of points one by one. On acceptance day the experts rechecked twenty points at random. Not one was wrong."},
+   {"label": "Let someone else lead", "result": "You kept to your greenhouses and helped review the project data. At the year-end awards, the colleague who led it went up on stage."}
+  ]},
+  "c_region": {"title": "Applying for Regional Technical Manager", "situation": "The company is expanding into the protected vegetable areas of Hebei and the northeast and needs a Regional Technical Manager to run technicians and demonstration greenhouses across several provinces, on the road half of every month. You're one of the candidates.", "options": [
+   {"label": "Apply", "result": "You wrote a plan. Page one listed the soil problems in several northern vegetable areas, exactly the same as Shouguang's twenty years ago."},
+   {"label": "Stay with Shouguang", "result": "You said you hadn't seen enough of Shouguang's greenhouses yet. In his first month, the new regional manager came looking for you and asked for your data booklet."}
+  ]},
+  "c_lab": {"title": "Moving to the lab and the trial greenhouse", "situation": "You're past fifty and your knees won't let you crouch anymore. The company offers to take you off the front line to run the lab and the trial greenhouse and train young staff, for less pay.", "options": [
+   {"label": "Go to the lab", "result": "You spend your days on soil samples in the lab and your afternoons recording data in the trial greenhouse. Every lab report the young technicians bring you, you sign one by one."},
+   {"label": "Keep going round the greenhouses", "result": "You sit on your folding stool in the greenhouses looking at roots. The growers bring you a chair and pour you tea, and say the old technician is here."}
+  ]}
+ },
+ "endings": {
+  "retire": "On your last day you went to old Liu's greenhouse. Old Liu stopped growing long ago; his son runs it now, growing bell peppers. You took one last bag of soil, wrote the greenhouse number and date, and put it in your own pocket. As you came out, the quilts were coming down, layer by layer.",
+  "burnout": "That winter, crouching in a greenhouse to look at roots, your knee gave way as you stood and you went down on the ground and couldn't get up for a long time. After the surgery, the company had you review prescriptions and manage client records in the office. Every day you watch the three-wheelers leave through the window."
+ },
+ "stages": [
+  "You go round the greenhouses with your mentor: S-pattern soil sampling, quick tests for salt and acidity, digging up roots to check for nematodes and root rot, then back to the lab to air-dry, sieve and send off samples, and finally a prescription from the lab report for your mentor to check. You deal most with growers in their fifties and sixties who trust their own eyes, not the lab report. You have to crouch beside them and explain what's going on in the soil, one sentence at a time.",
+  "You have your own villages now, two or three hundred greenhouses. You write and sign the fertilizer plans yourself and take twenty or thirty calls from growers a day. You've started holding technical meetings in the villages, talking solarization and salt flushing at the greenhouse door. You used to follow and watch; now your word goes, and when something goes wrong in a greenhouse, you're the first person the grower calls.",
+  "You lead a dozen technicians, set the year's soil testing plan, review their prescriptions and go yourself to the difficult greenhouses. You reconcile numbers with sales, negotiate product trials with manufacturers and take on government soil testing projects. You spend more time at a computer than crouching in greenhouses now.",
+  "You run technical services for protected vegetable areas in Hebei and the northeast, on the road half of every month. In a new area you first pick a few greenhouses and take samples, then meet the local technicians and dealers, and rework the Shouguang approach into something that works there.",
+  "You're the company's Technical Director. You set the direction for product formulas, trial designs and service standards for the whole company. You run research with universities and institutes, speak on technical matters at dealer conferences and sign the company's technical documents. You rarely take samples yourself now, but before any new product launches, you go to the trial greenhouse to look at the roots."
+ ],
+ "work": [
+  "Your mentor has you sample a greenhouse and you take five points. He glances at it and says the one by the door doesn't count: people have trodden that spot for years and the soil is packed hard.",
+  "Your first diagnosis on your own: calcium deficiency, you say. Your mentor splits the stem, looks at the vascular tissue and says it's fusarium wilt. Your face goes red.",
+  "In the lab you lay thirty samples out in a row to air-dry, each bag marked with a greenhouse number. The label on one has been smeared by water, and you ride back to the village to sample it again.",
+  "An old eggplant grower doesn't trust your prescription, so you make a bet: half his greenhouse the old way, half yours. Two months later he calls you into the greenhouse, says nothing, and points at your half.",
+  "Over the village loudspeaker you explain summer solarization. Afterward someone asks how much calcium cyanamide to spread, and you draw a table on the wall: so many jin per mu, sealed for so many days.",
+  "A grower's cucumber leaves are yellowing and everyone says it's lack of fertilizer. You take a sample and the EC is frighteningly high. You tell him to stop feeding and water heavily, and ten days later the new leaves come in green.",
+  "Reviewing a young technician's prescription, you see he's added another round of compound fertilizer to a greenhouse already over the salt limit. You don't reject it in the system. You take him to the greenhouse.",
+  "A fertilizer manufacturer wants to trial a new microbial product with you. You set the design: ten greenhouses, five treated and five control, look at roots and yield after three months.",
+  "For the government soil testing project report you go through hundreds of lab reports one by one for outliers, pick out a dozen suspect ones and send people to resample.",
+  "In a new vegetable area in the northeast, the local soil tests come back with salt levels just like Shouguang's twenty years ago. At the dealer meeting you project the two lab reports side by side on the wall.",
+  "A technician in Hebei says local growers don't believe in soil testing. You stay three days in one village with him, sampling greenhouse after greenhouse. On the third day someone comes to ask the price.",
+  "On a video call with technicians from several provinces you go through the root photos they've uploaded, one by one, explaining the common misdiagnoses province by province.",
+  "You discuss a joint research project on soil remediation in protected vegetable fields with a professor from an agricultural university. On the day you sign, you take him to see the trial greenhouse you've run for over ten years.",
+  "At the review meeting before a new product launch, you read the trial data and say the control ran only one season, which isn't enough: do another year. The sales director doesn't look pleased.",
+  "You write the company's service standard for technicians. Rule one: before writing a prescription, you must go into the greenhouse and you must look at the roots."
+ ],
+ "past": [
+  "Your family lived in the county next to Shouguang and had two watermelon greenhouses. The winter you were fifteen you helped haul the quilts, and your hands froze and split. Your father said study hard, don't spend your life in a greenhouse like me.",
+  "After the gaokao (college entrance exam) you chose Agricultural Resources and Environment at an agricultural university in the province. Your father said that's still dealing with dirt. You said it was dealing with the reasons inside the dirt.",
+  "On the soil science field course in your second year you dug a profile a meter and a half deep, and saw for the first time that soil comes in layers, each one a different color.",
+  "Home in the summer of your third year, you tested your family's greenhouse with a meter borrowed from the university and the salt was frightening. You got your father to skip a season of chicken manure. He grumbled all summer.",
+  "At graduation you applied for sales jobs at a few fertilizer plants, and in the end joined this soil testing company in Shouguang. At the interview the boss had you rub a handful of soil between your fingers and tell him what it was."
+ ],
+ "late": {
+  "pension_note": "Estimate: the company pays basic pension contributions as an enterprise employee, based on the base wage, with commission under-contributed. In retirement that comes to roughly 40 percent of the final monthly pay.",
+  "scenes": [
+   "The first winter after you retire you still wake at seven. You ride your e-bike round the south of town and watch the quilts roll up on row after row of greenhouses.",
+   "The son of an old client calls: his tomatoes are dying again, could you come and look? You take your folding stool, dig up the roots and say it's nematodes.",
+   "In the yard of your old family home you build a little greenhouse and grow a few rows of tomatoes. You put in the drip line yourself, and flush the salt once a year.",
+   "Your knees are gone and you can't get into a greenhouse. Your grandchild films the roots on a phone for you. You put on your reading glasses, look, and say those are good roots.",
+   "You review prescriptions and keep the records in the office, and leave on time. When you pass the lab you go in to watch how the young ones sieve.",
+   "Once your knee has healed a bit, the company asks you to teach the new hires. Your first lesson: in the greenhouse, look at the roots first, not your phone.",
+   "At the age, you retire. At the handover you leave your data booklet in the lab cabinet.",
+   "The first year after leaving Shouguang, whenever you crouch to pick up a handful of soil somewhere else, you think of those rows of earth-walled greenhouses south of town.",
+   "Old Liu's son adds you on WeChat and every so often sends photos from his greenhouse, asking what's wrong with this leaf. You answer every one.",
+   "On the news you see that Shouguang's greenhouses have all become smart greenhouses, machines opening the vents and feeding the plants on their own. In the footage, a young person is crouching on the ground digging up roots.",
+   "Later a photo of a lab report could produce a prescription, and sensors in the soil reported their own numbers. But why the plants in a greenhouse were wilting still took someone crouching down to dig up the roots and look.",
+   "Your grandchild plants a little tomato in a pot on the balcony and asks why the leaves have gone yellow. You rub a pinch of soil from the pot and say: too much water."
+  ],
+  "closing": {
+   "retire": "Many years later, one winter morning, you stand by the road south of town and watch the quilts on row after row of greenhouses roll up together, the mist on the plastic melting away little by little in the sun.",
+   "burnout": "Many years later, you sit on the balcony watering the cherry tomatoes in a few foam boxes. When you're done you touch the soil, neither dry nor wet, and sit on for a while in the sun.",
+   "end": "Many years later, in a drawer, you find photos from the soil profile course at university, layer upon layer of earth, each a different color. You look at them a long time and think of the handful of soil the boss had you rub between your fingers."
+  }
+ }
+}

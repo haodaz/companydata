@@ -1,0 +1,166 @@
+{
+ "id": "florist-sh",
+ "occupation": "Floral Designer",
+ "role": "Floral Assistant at a Boutique Flower Shop",
+ "headline": "A floral assistant trained in visual communication design, up from a small city in Jiangxi to a French-style flower shop on a plane-tree-lined lane in Shanghai: collecting and conditioning flowers before dawn, wrapping bouquets by day, and building wedding arches in hotel ballrooms by night beside the shop's owner",
+ "unit": "A French-style boutique flower shop in Xuhui, Shanghai",
+ "unit_type": "Boutique flower shop (retail, weddings and commercial floristry)",
+ "city": "Shanghai",
+ "city_tier": "First-tier city",
+ "education": "Bachelor's degree (Visual Communication Design)",
+ "level": "You can condition flowers, strip thorns and wrap standard bouquets on your own, and you have an eye for color. For large wedding pieces and commercial displays, you still trail behind the owner adding filler flowers and hauling buckets.",
+ "intro": "The shop is on the ground floor of an old villa, a plane tree by the door, this season's peonies and lisianthus in the window. In the back room: a two-meter workbench, three flower coolers, rows and rows of buckets, and a floor that's never free of trimmed leaves. The owner has done flowers for over ten years. She says little and her shears are fast. From today, the first thing you learn is this: when the flowers arrive, let them drink their fill first.",
+ "salary_note": "Estimate: florists at a Shanghai boutique shop get a base wage plus commission on holidays and weddings, with city pay about 20 percent above the national figure. Valentine's Day, Qixi (Chinese Valentine's Day) and peak wedding season can add a month or two of pay; the slow season is base only.",
+ "facts": [
+  {"label": "Floral Assistant (Florist Level 5) (current level)", "value": "0–2 years, ¥4,500–6,500 a month (national average, estimated)", "source": "Common in the trade"},
+  {"label": "Next level up", "value": "Florist (Florist Level 4) (2–4 years)", "source": "Common in the trade"},
+  {"label": "Pay after 10+ years", "value": "¥16,800 a month (national average)", "source": "Pay by experience"},
+  {"label": "What AI can't take", "value": "Conditioning and arranging flowers, building the installation on site", "source": "AI exposure"},
+  {"label": "Where AI is moving in", "value": "Writing social media posts and product copy", "source": "AI exposure"},
+  {"label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings"}
+ ],
+ "day": [
+  "Still dark, and you cycle to the wholesale flower market to collect the order. Roses and lisianthus airfreighted from Yunnan are stacked on the ground in boxes. You open them, check the heads, and send back two bunches that got crushed.",
+  "Back at the shop you condition the flowers: trim the stems, cut on the slant, strip every leaf below the waterline, and plunge them bucket by bucket into deep water. You run each rose through the thorn stripper, and still end up with two nicks on your fingers.",
+  "The first customer of the day is an older woman buying a bunch of white lisianthus, for her husband, she says. You pick the ten most open stems and wrap them in kraft paper. She says it's beautifully plain.",
+  "Seven orders come in on the delivery app. You make them up to the slips, wrap them and attach the cards. One card says \"I'm sorry,\" and you add an extra sprig of eucalyptus.",
+  "At the workbench the owner is making a sample centerpiece for a wedding and has you watch. She uses only three kinds of flower, staggered high and low, with lots of space left open. You sketch it in your notebook.",
+  "The bride comes in to see the sample, scrolling through pictures on her phone and saying she wants \"that really ethereal kind.\" The owner asks her three questions: which hotel, what time dinner starts, and what color she loves most.",
+  "You go with the owner to set up in a hotel ballroom, building from nine at night until two in the morning. You stand on a ladder pushing roses into the arch, and the shears in your hand get heavier and heavier.",
+  "After the strike you take a cab back to your rented room, smelling of green flower stems. You pin your centerpiece sketch to the wall above your bed."
+ ],
+ "ladder": [
+  {"title": "Floral Assistant (Florist Level 5)", "stage": "Assistant", "focus": "Collect and condition flowers, strip thorns, wrap standard bouquets, and help the owner set up weddings with filler flowers."},
+  {"title": "Florist (Florist Level 4)", "stage": "Independent", "focus": "Make walk-in bouquets, subscriptions, wedding centerpieces and bridal bouquets on your own, and discuss designs with couples."},
+  {"title": "Senior Florist (Florist Level 3)", "stage": "Projects", "focus": "Take sole charge of whole weddings and commercial displays: design, quote, flower orders, staffing and directing on site."},
+  {"title": "Principal Floral Designer (Florist Level 2)", "stage": "Principal", "focus": "Set and sign off designs for every wedding and brand project, deal with major clients and growers, and lead the team of florists."},
+  {"title": "Floral Design Director", "stage": "Director", "focus": "Run floral teams across several cities and set design style, supply chain and pricing standards."}
+ ],
+ "ai_tasks": [
+  {"name": "Writing social media posts and product copy", "how": "From a photo of each bouquet, AI can write posts, product descriptions and holiday posters, several a day. A person only picks through them and cuts the overblown lines."},
+  {"name": "Producing renderings for weddings and displays", "how": "Upload a photo of the hotel or mall and AI produces several layout renderings and color schemes in minutes. Whether those flowers are in season, whether the budget stretches, whether real stems can stand up like that, a florist has to turn it into a design that can actually be made."},
+  {"name": "Scheduling orders, calculating flowers and quoting", "how": "The system can work out how many stems of each flower an order needs, place orders with suppliers and produce a quote. How open the heads are, which box got crushed, what to substitute when something's out of stock gets decided by a person at the market and at the workbench."},
+  {"name": "Conditioning and arranging flowers, building the installation on site", "how": "Trim, strip, deep water; how far a flower has opened today, whether it goes high or low, how much space to leave, someone has to hold it and look. Climbing a ladder in a ballroom at two in the morning to build an arch can only be a person."},
+  {"name": "Talking designs through with couples and brands", "how": "AI can distill a client's reference pictures into style keywords. What she actually means by \"a bit ethereal,\" and which three things matter most to her, a florist has to sit down and ask."},
+  {"name": "Choosing flowers and dealing with growers and suppliers", "how": "Opening boxes at the market before dawn to check the heads, contracting a whole season's varieties and bloom stage with a grower in Yunnan: it takes eyes, hands and trust built up year after year."}
+ ],
+ "events": {
+  "e_valentine": "Over the three days of Valentine's the shop made more than four hundred bouquets, and you slept nine hours in total. When the last one went out you sat amid the leaves and petals on the floor and ate a bowl of cold wontons.",
+  "e_wedding_good": "At the first lawn wedding you ran on your own, the bride stopped dead as she walked in and covered her mouth, crying. The next day she wrote a long post online with nine photos, all of your flowers.",
+  "e_wilt": "An outdoor summer wedding at over thirty degrees, and the hydrangeas drooped in under two hours. You crouched backstage misting and swapping them one by one. The families didn't look pleased, and ten percent was docked from the final payment.",
+  "e_hands": "Conditioning flowers in cold water every day all winter, your fingers cracked into little cuts that sting at every touch of water. The owner tossed you a tub of hand cream and said everyone's hands in this trade look like that.",
+  "e_regular": "An elderly translator living upstairs signed up for a bouquet every week, on condition that you made it. Every Thursday you choose him something seasonal. Once you added a few stems of wild foxtail grass, and he messaged back: good.",
+  "e_ai_render": "The shop started using AI to produce wedding renderings for couples. Upload a photo of the hotel and in minutes there are three layouts. Couples decide much faster from the pictures, and you save most of the time you used to spend on proposals.",
+  "e_ai_gap": "A bride came in with an AI rendering: an arch covered in blue hydrangeas and white lily of the valley, in July. You spent half an hour explaining that in that season, on that budget, it couldn't be done with real flowers.",
+  "e_ai_copy": "Social media posts and product copy went to AI, five posts a day. The shop's traffic went up, but customers who came in said they still wanted to see the kind of photos you took yourself.",
+  "e_brand": "A luxury brand held a launch on the Bund and hired the shop to do all the florals. You went three days and nights without going home, and ten minutes before it began you were still filling gaps in the main backdrop. When the lights came up, you stood motionless backstage.",
+  "e_loss": "A flower cooler broke down overnight, and in the morning half its roses had dropped their heads. They were for a wedding. You went back to the wholesale market before dawn and paid double.",
+  "e_funeral": "A family came to order flowers for a farewell service, saying the old man had loved white peonies. You didn't make a wreath; you made a very low arrangement of peonies and white chamomile. When they left, they bowed to you.",
+  "e_contest": "You entered an industry floral design competition with a piece built from bare branches and moss, and won a bronze. The owner said nothing, and made the photo of your piece the shop's profile picture.",
+  "e_love": "A wedding photographer who often came to collect flowers always lingered a little by the workbench. After one wedding strike, the two of you walked the early-morning streets together until daybreak.",
+  "e_married": "Your own wedding was tiny: twenty people in a garden restaurant. You arranged every flower yourself the night before. The owner came, and moved the head table's centerpiece five centimeters for you.",
+  "e_rent": "The landlord raised the rent, and you moved from an old flat in the city to the edge of the outer ring road. Every morning it's a bike and the metro, an hour and a half, to the shop.",
+  "e_kid": "The baby was born. You held her out on the balcony, with a little bottle of leftover chamomile from the shop on the windowsill, and she stared at it for a long time.",
+  "e_back": "Years of standing to wrap bouquets, climbing ladders at midnight to build arches and hauling buckets weighing dozens of jin, and your back and shoulders have both given out. The massage therapist says your shoulder blades are like a board.",
+  "e_slow": "That year weddings suddenly fell off and the malls cut their display budgets too. The shop went a month without a big order. The owner let the part-timers go, and your base pay was cut by ten percent.",
+  "e_student": "The shop started weekend floristry classes, and you taught them. A young woman who works at a bank came every week and said those two hours were the only time all week she didn't look at her phone.",
+  "e_parent": "Your mother had an operation back home, and you took a week off to be there. On the ward windowsill you put a few carnations from the stall outside the hospital in a little bottle.",
+  "e_apprentice": "An assistant you trained opened her own shop in Chengdu. On opening day she sent a photo: the color scheme of the arrangement in her window was so clearly something she'd learned from you."
+ },
+ "choices": {
+  "c_study": {"title": "Florist Level 4, or a design course", "situation": "The owner says it's time for you to move up. You could spend a few hundred yuan on the Level 4 florist certificate, which carries weight in the trade. Or you could grit your teeth and spend thirty thousand on a course with a foreign floral designer, learning structure and design, which is about half a year of your savings.", "options": [
+   {"label": "Take the Level 4 exam", "result": "You practiced the exam pieces in the back room after work. The practical was an Eastern-style vase arrangement, your hands were steady, and you passed first time."},
+   {"label": "Take the design course", "result": "Three weeks of classes. The teacher had you make a piece from a single branch. You stood looking at the branch in your hand for half an hour. Back at the shop, the flowers came out differently under your hands."},
+   {"label": "Neither for now", "result": "That year you did more than forty weddings with the owner, and your hands got faster and faster. The certificate and the course, you said, could wait until you'd saved more."}
+  ]},
+  "c_peak": {"title": "Taking the big Qixi order", "situation": "Before Qixi, a company wants three hundred bouquets for its clients. The unit price isn't high, but the volume is, and it has to be done in one day. The shop's staff are already fully booked; take it and it's an all-nighter, turn it down and this month's commission takes a big hit.", "options": [
+   {"label": "Take it and work through the night", "result": "Five of you worked from evening until dawn, three hundred bouquets filling the whole shop. When the last van left, you fell asleep with your head on the workbench."},
+   {"label": "Turn it down", "result": "You did the shop's ordinary orders as usual, every bouquet wrapped with care. That month's commission was lower, but not one customer returned anything."}
+  ]},
+  "c_ai": {"title": "Learning AI renderings", "situation": "The owner wants to use AI renderings for weddings and commercial displays. Someone has to learn the software, organize years of the shop's work photos for it, and know how to turn AI images into designs real flowers can achieve. It's a lot of work, and not much to do with arranging flowers.", "options": [
+   {"label": "Learn it", "result": "You labeled five years of the shop's work photos with flowers and seasons, and after that eight in ten AI renderings could actually be built. Couples decided as soon as they saw the pictures, and your proposals had the highest acceptance rate."},
+   {"label": "Keep sketching by hand", "result": "You kept showing couples pencil sketches in your notebook. Some couldn't read them and went off to shops that could produce renderings."}
+  ]},
+  "c_wedding_co": {"title": "Wedding florals at a wedding company", "situation": "A big wedding company wants you as a wedding floral designer, doing large events at five-star hotels, twenty percent more pay, over a hundred weddings a year. But it's a production line; most of the designs are set in advance, and someone else's name goes in front of your flowers.", "options": [
+   {"label": "Join the wedding company", "result": "You did over a hundred weddings in a year and learned to dress an eight-hundred-square-meter ballroom in three hours. Only, very few of them looked the way you'd have wanted."},
+   {"label": "Stay at the shop", "result": "You stayed. The shop didn't do many weddings that year, but for every one, you talked with the couple from beginning to end."}
+  ]},
+  "c_chief": {"title": "Becoming Principal Floral Designer", "situation": "The owner is opening a second shop and wants you as Principal Floral Designer: you'd set the designs for every wedding and commercial project, lead three florists, handle the major clients, and the signature would be yours. You'd arrange less, sit in more meetings and talk money with clients more.", "options": [
+   {"label": "Take it on", "result": "The first time you presented a design in a brand's meeting room, eight people sat across from you. When you finished, they changed the color of one flower."},
+   {"label": "You'd still rather arrange", "result": "You said you'd rather stay at the workbench. The owner hired a principal designer from outside, and still had you make the samples for the big projects."}
+  ]},
+  "c_own": {"title": "Opening your own floral studio", "situation": "You have a group of regulars who trust you and a few brand partnerships, and people urge you to go out on your own: rent the second floor of an old house, no retail, just weddings, displays and subscriptions. It means putting in most of your savings, and the first year likely won't make money.", "options": [
+   {"label": "Open it", "result": "You rented the upstairs of an old house on a small lane, a plane tree outside the window here too, with only a small wooden sign by the door.", "end": "Your studio is you and two assistants, one or two weddings a week, and every Thursday you still make up a bouquet for the old gentleman. Back from a strike at night, you arrange the leftover flowers into a little bottle on the workbench and set it on the windowsill."},
+   {"label": "Stay at the shop", "result": "You took those regulars out to dinner and said you'd wait a while. The owner later raised your commission and said don't go."}
+  ]},
+  "c_home": {"title": "A flower shop back home", "situation": "Your mother's health isn't good, and the family wants you back in your small city in Jiangxi. The rent there is a tenth of Shanghai's, but few people in a small city buy flowers, and the biggest orders all year are opening-day flower baskets and wedding car decorations.", "options": [
+   {"label": "Go home", "result": "You opened a flower shop on an old street in town. The first thing you see through the door is a bucket of seasonal flowers, not a basket.", "end": "Your shop stays open on the old street for many years, and people in town gradually learn that flowers don't have to be tied into baskets. Every Valentine's Day, you still make one bouquet just like the ones at the Shanghai shop and put it in the window."},
+   {"label": "Stay in Shanghai", "result": "You go home once a month and take a bunch of flowers each time. Your mother puts them in old wine bottles around the house and says they look better than a flower shop's."}
+  ]},
+  "c_director": {"title": "Becoming Floral Design Director", "situation": "A high-end events company wants you as Floral Design Director, running floral teams in several cities, setting design style and supply chain, flying over a hundred times a year. And at your shop in Shanghai, the owner would like you to take over from her.", "options": [
+   {"label": "Become director", "result": "At your first national team meeting you didn't talk about style. You talked about conditioning: when the flowers arrive, let them drink their fill first."},
+   {"label": "Take over from the owner", "result": "You took over the shop, and the plane tree by the door grew another ring. You hung her old shears above the workbench."}
+  ]},
+  "c_teach": {"title": "Teaching floristry at a vocational school", "situation": "You're just past fifty, your shoulder won't lift and you can't climb ladders to build arches anymore. A vocational school's landscape and floriculture program wants you to teach floristry: winter and summer holidays, and less pay.", "options": [
+   {"label": "Go and teach", "result": "In your first class you didn't have the students arrange anything. Each took a bucket of flowers to condition: trim the stems, strip the leaves, into water. You said: first learn to look after them."},
+   {"label": "Stay at the shop", "result": "You don't climb ladders anymore. You sit at the workbench making centerpieces and bouquets and leave the big installations to the young ones."}
+  ]}
+ },
+ "endings": {
+  "retire": "On your last day you got up at half past five and went once more to the wholesale flower market, chose a bunch of peonies, and back at the shop trimmed each stem and put them in water. You arranged them in the glass vase by the door that had been there all those years, the shadows of plane leaves falling across the flowers. You locked the door and didn't look back.",
+  "burnout": "That winter, coming down a ladder at a wedding, your shoulder suddenly wouldn't lift, and the shears dropped from your hand. The doctor said a torn rotator cuff: surgery, and six months' rest. The shop had you come back to handle orders and suppliers. You sit at the front counter, listening to the shears snip, snip in the back room."
+ },
+ "stages": [
+  "Your work starts before dawn: collecting and choosing flowers at the wholesale market, then back at the shop trimming, slant-cutting, stripping and deep-water conditioning, running roses through the thorn stripper one by one, wrapping bouquets to the orders and attaching cards. You deal most with the owner and the suppliers. The owner only looks at the bouquet you've made, never at how you made it; every box from a supplier, you open and check the heads.",
+  "You're a florist who can hold your own now. Walk-in bouquets, delivery orders and weekly subscriptions you make up yourself, and wedding centerpieces and bridal bouquets too. You've started sitting down with couples to talk through designs, asking about the hotel, the lighting and her favorite color. You used to follow instructions; now you decide which flowers to use.",
+  "You can run a whole wedding or a mall display on your own: design, quote, flower orders, staffing, and on setup night you stand in the middle directing. You lead one or two assistants and teach them conditioning and color. Less time wrapping bouquets, more time doing budgets and haggling with suppliers.",
+  "You're the shop's Principal Floral Designer, setting and signing off every wedding and brand project. You present in brands' meeting rooms, negotiate load-in times with hotels, contract a whole season's flowers from growers in Yunnan, and lead three florists. You arrange less now, but for every event you make the sample yourself.",
+  "You run floral teams in several cities, setting design style, supply chain and pricing standards, and reviewing every major project. You meet with brand executives, fly to Yunnan to see the flower fields, and teach florists across the trade. You rarely stand on a ladder anymore, but in every new city, the first thing you do is walk round the local flower market."
+ ],
+ "work": [
+  "The owner has you make a pink bouquet, and you use six kinds of flower. She pulls out three and says: empty space is a flower too.",
+  "The first time you condition hydrangeas, they're still limp after a night in water. The owner has you plunge the heads upside down right into the water, and half an hour later they've plumped up.",
+  "At one in the morning on a setup, the owner has you top up every vessel on the head table. You fill each to two fingers below the rim. She comes over, looks, and says nothing.",
+  "A young man comes in to buy flowers to apologize and asks which flower best says sorry. You tell him there isn't one, ask what color his girlfriend likes, and wrap a bouquet in it.",
+  "A bride wants a cascading bouquet. On your third try you wire and glue every stem in place, then have her carry it for a walk round the shop. Not a petal falls.",
+  "A subscription customer says last week's flowers were too plain. You go back through six months of her orders, notice she always likes a touch of orange, and add two stems the next week.",
+  "A mall wants a spring display in its atrium on a budget of only fifty thousand. You build a \"forest\" from masses of branches and a few fresh flowers, and the flowers come to only thirty percent of the cost.",
+  "The day before a setup, the supplier says peonies are out. Overnight you make seven calls and get half from another market, swapping the rest for spider chrysanthemums. The couple never notices.",
+  "Your assistant conditions flowers for the first time and strips every leaf off a bucket of roses. You don't scold him. You pick one up and show him: leave two leaves, so the flower can still drink.",
+  "A brand wants twenty thousand white roses for a launch. You run the numbers and say half is enough; put the rest of the budget into lighting and it'll look better. They go with your version.",
+  "You contract a whole season of lisianthus from a grower in Yunnan, specifying variety, color and bloom stage at harvest. After signing you spend an afternoon standing in his greenhouse.",
+  "A florist's wedding proposal relies on imported flowers and comes in half over budget. You don't reject it. You take her to the flower market and find domestic substitutes one by one.",
+  "You write a pricing standard for the teams in several cities. Rule one: every flower on a quote must state where it's from and how many stems.",
+  "You fly to Yunnan to see a newly bred garden rose. The grower asks whether city people will like the color. You hold a stem and look at it a long time, then say: keep fifty thousand for me next year.",
+  "At a big industry conference you give a talk, not about trends, but about how to condition a bucket of flowers: trim, slant-cut, strip, deep water, not one step skipped."
+ ],
+ "past": [
+  "Your family lived in a small city in Jiangxi, where your grandmother grew a whole wall of roses in her courtyard. The summer you were fifteen, you crouched at the foot of that wall after school every day drawing them, and filled a whole sketchbook.",
+  "You tested into visual communication design at a university in the provincial capital, studying posters, type and color. On your dorm windowsill you kept a pot of hydrangea, and killed it.",
+  "For your graduation project in your third year you made a series of posters on plants. Your advisor said your colors had \"the smell of earth.\" It was the first time you felt your eye was good for something.",
+  "After graduating you spent half a year drawing e-commerce banners at a design firm, at the screen until midnight every day. One day you passed a flower shop and stood at its window for twenty minutes.",
+  "You quit and came to Shanghai. On social media you saw this shop was hiring an assistant, and went to the interview with your sketchbook full of roses. The owner turned two pages and said: start tomorrow."
+ ],
+ "late": {
+  "pension_note": "Estimate: the shop pays basic pension contributions under Shanghai's enterprise employee scheme, based on the base wage, with commission under-contributed. In retirement that comes to roughly 40 percent of the final monthly pay.",
+  "scenes": [
+   "The first morning after you retire you wake at half past five and lie there listening to the birds. Later you get up and go to the market, and pick up a bunch of daisies while you're there.",
+   "Before her own wedding, a florist you once trained asks you to look over her bridal bouquet. You move just one stem, pressing it a little lower.",
+   "You fill your balcony with climbing roses, a whole wall of them, much like the one in your grandmother's courtyard. Neighbors passing below often look up.",
+   "Your knuckles have thickened and you can't grip the shears anymore. When your grandchildren visit, you teach them to put wildflowers in jam jars. They come out crooked, and you say they're beautiful.",
+   "You handle orders and suppliers at the front counter, dozens of calls a day. When flowers arrive, you still walk into the back room to look at the heads.",
+   "Once your shoulder has healed a bit, the shop asks you to give the new assistants their first lesson. It's still about conditioning flowers.",
+   "At the age, you retire. On your last day you put a bunch of peonies in the glass vase by the door, just as on your first day.",
+   "The first year after leaving the shop, you walk down that plane-tree lane. The window holds flowers you've never seen there before, arranged very well.",
+   "The old gentleman who had flowers every week for so many years sends you a letter through a friend. Tucked inside the envelope is a pressed eucalyptus leaf.",
+   "Online you come across a wedding video: the flowers on the arch staggered high and low, with plenty of space. Someone in the comments says that's the style of that old flower shop in Shanghai.",
+   "Later AI made the renderings, AI wrote the copy, and the system scheduled the orders. But how far a flower had opened today, and where it should go, still took someone holding it and looking.",
+   "Your grandchildren ask which of all the arrangements you made was the most beautiful. You think about it and say: the ones on my grandmother's wall, that nobody arranged, that bloomed by themselves."
+  ],
+  "closing": {
+   "retire": "Many years later, one spring afternoon, you sit on the balcony watching the wall of roses open one flower at a time. A breeze comes, a few petals fall on your knees, and you don't brush them off. You just sit.",
+   "burnout": "Many years later, you stop at a little flower stall outside the market where the owner is stripping thorns from a bucket of roses. You watch for a while and say: leave two leaves. The owner looks up and smiles.",
+   "end": "Many years later, in a drawer, you find the old sketchbook full of roses, the pencil lines gone faint. You turn the pages one by one, and between the last two is a dried petal. You don't remember which year you put it there."
+  }
+ }
+}

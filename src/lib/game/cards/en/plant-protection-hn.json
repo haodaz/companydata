@@ -1,0 +1,165 @@
+{
+ "id": "plant-protection-hn",
+ "occupation": "Plant Protection Officer",
+ "role": "Plant Protection Officer (Pest Forecasting) at a County Station",
+ "headline": "A trainee plant protection officer who studied the subject and came home to a major grain county in eastern Henan, keeping watch on the light trap, counting wheat aphids with the old station chief, and taking pest bulletins out to the villages",
+ "unit": "The Plant Protection and Quarantine Station of the Agriculture Bureau in a major grain county in Zhoukou, Henan",
+ "unit_type": "County agricultural public institution (plant protection and quarantine station)",
+ "city": "Zhoukou (county town)",
+ "city_tier": "County town",
+ "education": "Bachelor's degree (Plant Protection)",
+ "level": "You can tell the common pests and diseases in a wheat field, run a systematic survey and sort the insects from the light trap. You haven't written a pest bulletin on your own yet, and on pesticide inspections you still go along with the senior staff.",
+ "intro": "The plant protection station is a two-story building in the back courtyard of the county Agriculture Bureau, with a light trap on the roof and a pickup in the yard with half its paint gone. Over a million mu (about 165,000 acres) of wheat in this county, and when the aphids in a given field pass the treatment threshold, or which day a bulletin should go out, the word goes out from here. From today you have to learn to crouch down between the wheat rows and count, one plant at a time.",
+ "salary_note": "Estimate: a permanent public-institution post in a county town in eastern Henan, base pay plus performance pay and a township work allowance, about 40 percent below the national figure. Pay rises slowly with professional title and grade; no commission, and little chance of being let go.",
+ "facts": [
+  {"label": "Technician (Probation) (current level)", "value": "0–1 years, ¥5,000–7,000 a month (national average, estimated)", "source": "Common in the trade"},
+  {"label": "Next level up", "value": "Assistant Agronomist (1–5 years)", "source": "Common in the trade"},
+  {"label": "What AI can't take", "value": "Surveying the fields and deciding whether to spray", "source": "AI exposure"},
+  {"label": "Where AI is moving in", "value": "Light trap counts, spore identification, data aggregation", "source": "AI exposure"},
+  {"label": "Open positions", "value": "4 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings"}
+ ],
+ "day": [
+  "First you climb to the roof and tip last night's catch from the light trap into a white porcelain tray, then sort through it with tweezers: three armyworm moths, a heap of chafers. You log the count in the forecasting notebook.",
+  "The old station chief drives you out in the pickup to the survey fields. On the way he asks: when is head blight most afraid of rain? You say at flowering. He grunts.",
+  "In the wheat you take five sample points, fifty plants each, turning the leaves over to look for aphids underneath. The dew soaks your trouser legs through, and you fill in the survey form on your phone one cell at a time.",
+  "A large grain grower wanders over from the field's edge: should I spray? You look at the numbers you've just counted and say it's not at the threshold yet, wait three days. Not quite convinced, he lights a cigarette.",
+  "A noodle shop in town, a big bowl of Henan braised noodles each. The chief tells you how when he was young he cycled to the villages to check for pests, four townships a day, and came home with legs like jelly.",
+  "You go with the county agricultural law enforcement team to sample pesticides at a farm supply shop. You check registration numbers against the labels, bag and seal three samples, and have the owner sign.",
+  "Back at the station you enter today's survey data into the national crop pest forecasting system. In the provincial station's group chat, the forecaster in the next county has already reported a stripe rust outbreak point.",
+  "In the dormitory you leaf through your dog-eared copy of the crop pest forecasting standards and circle in red the thresholds the chief mentioned today."
+ ],
+ "ladder": [
+  {"title": "Technician (Probation)", "stage": "Probation", "focus": "Run systematic surveys and light trap counts with the station chief, enter forecasting data, go along on pesticide inspections."},
+  {"title": "Assistant Agronomist", "stage": "Forecasting", "focus": "Run the forecasting points in several townships, write pest bulletins on your own, do plant quarantine and pesticide sampling."},
+  {"title": "Agronomist", "stage": "Core staff", "focus": "Draft the county's pest control plan, direct the unified spraying campaigns, write research projects and train young forecasters."},
+  {"title": "Senior Agronomist", "stage": "Sign-off", "focus": "Sign off major bulletins and control plans, lead demonstration projects, join city and provincial consultations."},
+  {"title": "Agricultural Extension Researcher", "stage": "Expert", "focus": "Take part in provincial pest consultations and project reviews, and teach forecasters across the city."}
+ ],
+ "ai_tasks": [
+  {"name": "Light trap counts, spore identification, data aggregation", "how": "Smart light traps and spore samplers can photograph, identify and count automatically, turning data from dozens of points across the county into curves. A person only spot-checks misidentified insects and whether a curve looks absurd."},
+  {"name": "Writing pest warnings and bulletins", "how": "AI can draft warnings and bulletins from forecasting data, weather and years of outbreak patterns. What severity grade to give, which days are the window for control, which townships don't need to spray: someone has to check in the field before signing it off."},
+  {"name": "Identifying pests for farmers and suggesting treatments", "how": "A farmer photographs a diseased leaf and AI gives a name and a pesticide suggestion. When the photo is wrong, the diagnosis is wrong, or the dose is too heavy, a plant protection officer has to go and look at the field's edge and correct it."},
+  {"name": "Surveying the fields and deciding whether to spray", "how": "Five-point sampling, turning leaves to count aphids, checking the share of diseased plants: whether a field reaches the treatment threshold has to be counted by someone crouched between the rows. Whether the whole county sprays is a decision someone signs and answers for."},
+  {"name": "Plant quarantine and pesticide oversight", "how": "AI can cross-check registration records, identify photos of intercepted pests and catch label problems. Taking samples on site, confirming a quarantine identification and handling enforcement need a licensed person there to take responsibility."},
+  {"name": "Training farmers and settling drift disputes", "how": "Explaining the combined spray to farmers under the village office eaves, or standing between two families to inspect herbicide damage and write an opinion: it works because a person is there and people believe what they say."}
+ ],
+ "events": {
+  "e_rust": "At the end of March you were the first to find a stripe rust outbreak center in a wheat field, orange stripes of spores along the leaves. You photographed and reported it that day, and the county held its control meeting a week early.",
+  "e_scab": "That year the wheat flowered into days of overcast rain, and head blight took hold. You sent out the bulletin, but some farmers thought spraying cost too much and didn't. At harvest some of their grain came in pale and shriveled, and the grain station knocked down the price.",
+  "e_faw": "The summer fall armyworm moved north, you spent nights with flashlights in the corn looking for egg masses; open a whorl and there was a clump. You didn't sleep through a single night that month.",
+  "e_drone": "The county ran a unified spraying campaign: dozens of crop-spraying drones covered over a hundred thousand mu in one day. In the command post you watched the flight tracks on screen, and when a plot was missed you phoned the pilot to go back.",
+  "e_heat": "In July the corn was so close you could barely breathe. You went in to check for corn borer and came out dizzy, then sat at the field's edge and threw up. The old chief poured a bottle of herbal heatstroke tonic down you.",
+  "e_ai_lamp": "The station switched to a smart pest light trap: insects land on a conveyor belt and are photographed, identified and counted automatically, with the data sent straight to your phone. You no longer climb to the roof every morning to count bugs.",
+  "e_ai_miss": "The smart trap identified a batch of cotton bollworm moths as armyworms, and the curve in the system shot up. You went to the roof, tipped out the tray and looked, then corrected the result in the back end.",
+  "e_ai_app": "Farmers can now photograph a sick leaf on their phones and get the disease identified. Fewer people come to ask you what it is, but more come asking: the phone says it's this, is that right?",
+  "e_fake": "A batch of herbicide from the sampling turned out to contain an unlisted ingredient, and the enforcement team opened a case. The shop owner was the uncle of a middle school classmate of yours, and he had people make quite a few phone calls.",
+  "e_drift": "One farmer's herbicide drifted onto the neighbor's peanut field, and the two families argued all the way to the village committee. You went to inspect the damage, took photos and wrote an assessment, and both families thought you were siding with the other.",
+  "e_bumper": "Pests were light that year and the county's wheat yield hit a record. At the station's dinner after the summer harvest, the old chief broke his own rule and drank two liang of baijiu, and said that in forecasting, a quiet year is the achievement.",
+  "e_train": "Under a village loudspeaker you were explaining the combined spray for wheat to farmers when it started to rain halfway through. Everyone crowded under the eaves of the village office and you finished the talk there.",
+  "e_love": "Someone your age at the county seed station did field inspections of seed plots with you during the summer harvest. After that, the two of you often walked in the county town park after work.",
+  "e_wedding": "You held the wedding at a restaurant in the county town, on a day after the wheat was in. The old chief officiated, and halfway through his speech he drifted onto wheat aphids.",
+  "e_house": "You bought a three-bedroom flat in the new part of the county town on a housing fund loan, a little over two thousand a month. The balcony faces south, and in flowerpots you grow a few wheat plants to show people diseased leaves.",
+  "e_kid": "The baby was born in May, the busiest month for wheat forecasting. You were in the fields by day and at the hospital by night, still with wheat awns on your clothes when you held the baby.",
+  "e_paper": "You turned five years of stripe rust survey data into a paper, published in the province's plant protection journal. The old chief photocopied that page and stuck it on the office wall.",
+  "e_short": "Two senior staff at the station retired and the posts were never refilled. Forecasting that used to take four people now falls to you and one young colleague, and you can't get round all the township points.",
+  "e_quarantine": "A batch of corn seed came in from another province, and on the transport quarantine check you sifted a few suspicious diseased kernels out of one bag and sent them to the province for identification. They were fine, and the trip wasn't wasted either.",
+  "e_parent": "Your mother back in the village was diagnosed with diabetes and will need medication and injections for good. Every weekend you drive back to see her, and take a look at the village wheat while you're there.",
+  "e_apprentice": "A young forecaster you trained moved to the city plant protection station. The first time he issued a pest bulletin on his own, he called you right after to ask whether he'd got the treatment threshold right.",
+  "e_eyes": "Years of looking at spores under the microscope wore your eyes out early. In your forties you got reading glasses, and in the field you push them up onto your forehead to look at aphids."
+ },
+ "choices": {
+  "c_asst": {"title": "End of probation: qualifying as Assistant Agronomist", "situation": "After a year's probation you have to hand in a work summary and a pest survey report, and pass the station's assessment, to qualify as Assistant Agronomist. The chief tells you to pick a topic: you could write about wheat aphids, which you know well, or the new corn pest that has just turned up and that nobody is sure about yet.", "options": [
+   {"label": "Write about the new pest", "result": "You covered more than twenty points and photographed insects by flashlight in the corn at night. The report ran to thirty pages. On assessment day the expert from the city station asked you a few extra questions."},
+   {"label": "Write about the wheat aphids", "result": "A solid report with complete data, and you passed without trouble. You spent the time you saved going out to a few more townships with the chief."}
+  ]},
+  "c_ai": {"title": "Taking charge of smart forecasting", "situation": "The province is piloting smart forecasting in the county: light traps with automatic identification, spore samplers, field cameras, data from dozens of points flowing into one platform. Someone has to look after the equipment, review the data and correct the platform. It's a lot of work and a lot to learn, and you're the youngest at the station.", "options": [
+   {"label": "Take it on", "result": "You learned to review identification results in batches in the back end, and which insects the system gets wrong most often. The next year the provincial station asked you to give a talk on using smart forecasting."},
+   {"label": "Leave it to the vendor's people", "result": "The vendor's technician looks after the equipment, and you keep surveying the old way. You look at the platform's data, but you don't really trust it."}
+  ]},
+  "c_shop": {"title": "A problem at a friend's supply shop", "situation": "On a sampling visit you find a farm supply shop selling insecticide whose registration has expired. The owner has sold pesticide in the township for twenty years, and you often stop at his shop for a rest and a drink of water on your rounds. The rules say you hand it to the enforcement team.", "options": [
+   {"label": "Hand it over by the book", "result": "The enforcement team came, the stock was pulled and he was fined. He stopped saying hello when he saw you. But the next year, his shop had the most complete paperwork in the township."},
+   {"label": "Have him pull it himself first", "result": "You had him take the stock off the shelves in front of you and photographed it for the record. Nothing more came of it, but it never quite left your mind."}
+  ]},
+  "c_agro": {"title": "A field technical job with a pesticide company", "situation": "A regional manager at a big agrochemical company asks you to do technical extension for them, running demonstration plots and farmer training across several counties in eastern Henan, at twice your pay, with a car allowance. But you'd give up your permanent post, and every day you'd be talking up their own products.", "options": [
+   {"label": "Join the company", "result": "You resigned, and on day one you were handed a box of samples and a stack of leaflets.", "end": "In the company car you cover every county town in eastern Henan, running field days beside demonstration plots one after another. When you get to pre-harvest intervals you always say a little more than you have to, a habit left over from the station."},
+   {"label": "Stay at the station", "result": "You said no. That month your payslip had an extra township work allowance on it: three hundred yuan."}
+  ]},
+  "c_office": {"title": "A transfer to the bureau as a staff member", "situation": "The crop production section at the county Agriculture Bureau is short-handed and wants to bring you up: writing reports, preparing for inspections, managing projects. You'd be close to the leadership, with a wider road up. But you'd be in the fields less, and someone else would take over forecasting.", "options": [
+   {"label": "Go to the bureau", "result": "You learned to write briefing reports and project applications, and prepared for seven or eight inspections a year. Driving past a wheat field now and then, you'd still get out and turn over a leaf."},
+   {"label": "Stay at the station", "result": "You told the bureau head forecasting can't do without people. He nodded, and after that, at every control meeting, he had you speak first."}
+  ]},
+  "c_agronomist": {"title": "Applying for Agronomist", "situation": "You've served the required years as Assistant Agronomist and can apply for Agronomist. You need a paper, an extension result and the county's professional assessment. There are only two places this year, and three others at the bureau are applying.", "options": [
+   {"label": "Apply, with solid materials", "result": "You compiled your forecast accuracy over the years and every early warning you'd issued into one volume, with the stripe rust survey attached. After the review panel, your name was on the list."},
+   {"label": "Give way this year", "result": "You said you'd apply next year and left the place to an older colleague close to retirement. When he got it, he gave you his thirty years of forecasting notebooks."}
+  ]},
+  "c_service": {"title": "Starting a crop protection service cooperative", "situation": "A few drone pilots and large grain growers want to set up a specialized crop protection cooperative to handle drone spraying and unified pest control for the whole township, with you as technical lead. If it goes well you'd make far more than your salary, but you'd have to give up your permanent post, and in a lean year you'd carry it yourself.", "options": [
+   {"label": "Go out on your own", "result": "You resigned and rented a courtyard in the township, parked eight drones in it and hung a map you'd drawn of every plot in the township on the wall.", "end": "Your cooperative sprays hundreds of thousands of mu a year, and in peak season you sleep on a camp bed in the courtyard. You still go and count the pests before a spray. The pilots laugh and say even the drones are less impatient than you."},
+   {"label": "Stay at the station", "result": "You introduced them to the county's unified control program and stayed put yourself. That autumn they sent the station a silk banner of thanks."}
+  ]},
+  "c_senior": {"title": "Applying for Senior Agronomist", "situation": "Senior Agronomist is reviewed at city level: papers, research projects, trainees you've mentored, and a defense in person. Preparing the materials takes the better part of a year, and you already carry the whole county's forecasting and control.", "options": [
+   {"label": "Apply", "result": "Over several winters you finished a project report on monitoring and controlling fall armyworm. At the defense, when the experts asked about checking for egg masses at night, you gave the most detailed answer."},
+   {"label": "Don't bother, stay with forecasting", "result": "You said title or no title, you'd be in the same fields. That year you and the young staff laid out the county's forecasting points all over again."}
+  ]},
+  "c_second": {"title": "Stepping back to train the young ones", "situation": "You're past fifty and pushing through cornfields in summer is getting harder. The station has two new staff with master's degrees, and the chief asks whether you'd step off the front line to train them and review bulletins.", "options": [
+   {"label": "Step back", "result": "You go out to the fields with them once a week and spend the rest of the time in the office editing bulletins. Where they write \"control window,\" you go over every word."},
+   {"label": "Stay on the front line", "result": "You're still first out the door every morning. The young ones follow behind and learn from you to check the underside of the leaf as you crouch."}
+  ]}
+ },
+ "endings": {
+  "retire": "For your last systematic survey you went alone to the wheat field you'd walked for more than thirty years. You crouched and counted fifty plants. The aphids weren't at the threshold. You wrote the number in your notebook and closed it. On the way back, the light trap came on up on the roof.",
+  "burnout": "That summer you got heatstroke in the corn, and then high blood pressure on top of it. The chief told you to stay out of the fields and moved you to pesticide registration and records. You sit in the office and hear the young ones start the pickup and head out."
+ },
+ "stages": [
+  "You learn forecasting from the old station chief: five-point sampling in the survey fields, counting aphids and checking diseased leaves, counting insects under the light trap, entering the forms into the forecasting system. You deal most with the chief and the farmers at the field's edge. The chief asks and you answer; the farmers ask whether to spray, and you give them the count, never a guess.",
+  "You run the forecasting points for several townships and write the pest bulletins yourself, stating severity, the control window and recommended products, then send them to the bureau for release. In spring you watch for stripe rust and head blight; in summer, corn borer and fall armyworm. What's different now is that your name is on the bulletin, and if it's wrong, it's on you.",
+  "You draft the county's pest control plan, and the drone spraying teams and township extension staff take their direction from you. You run control meetings, do plant quarantine, join pesticide enforcement, and also write research projects and train young forecasters. Fewer days in the fields, more meetings, but at the big outbreak periods you're still at the field's edge.",
+  "You're the station's technical sign-off. Major bulletins and control plans carry your signature. You attend the city and provincial meetings, lead research and demonstration projects, and mentor the new graduates. Farmers call you the expert; you still say the same thing: go and look at the field first.",
+  "You're a plant protection expert known across the city. You take part in provincial pest consultations, review extension projects and teach county forecasters. You rarely count aphids alone anymore, but every year you still go in person to see the first stripe rust outbreak point."
+ ],
+ "work": [
+  "The chief has you sort and count a tray from the light trap, and you report your number. He counts it again and picks out three insects you'd taken for armyworm moths.",
+  "For the first time you work out a treatment threshold for a large grower: five hundred aphids per hundred plants, and his field is at three hundred, so you tell him to wait. Three days later you count together and reach six hundred.",
+  "On an enforcement sampling visit you check the registration numbers on pesticide labels against the national pesticide database on your phone, one by one, and find one that doesn't match.",
+  "Your first pest bulletin goes out: wheat aphids moderately heavy, control window around April 25. The township loudspeakers read it all day.",
+  "A township extension worker reports a head blight rate that's absurdly high. You drive over and survey again: he'd counted dry tips as diseased heads.",
+  "On a slide from the spore sampler you see the first stripe rust urediniospores, little orange-yellow spheres under the microscope. You photograph them and post them to the provincial station's group.",
+  "Before the county's unified spraying begins, you brief more than twenty drone pilots: the product for each township, the rate per mu, the beekeeping sites to avoid. You hand out the maps one by one.",
+  "You show a new forecaster how to set out pheromone traps, hanging the lure half a foot above the corn tassels. Any lower and it won't catch anything.",
+  "On a quarantine check of incoming seed you run a seed-borne pathogen test in the lab. A ring of suspicious colonies grows in a petri dish, and you run one more round to confirm.",
+  "At a control meeting the bureau head wants one county-wide spray. You say three townships in the north aren't at threshold and it would be money wasted. The plan is changed to spraying by area.",
+  "At the green pest control demonstration zone you led, using natural enemies, trapping and biopesticides, you turn the pages of three years' pest counts for the experts on inspection day.",
+  "A new graduate's bulletin cites a pile of literature. You strike out half of it and leave one line: which townships, which days, what to spray.",
+  "At the provincial pest consultation, from the forecasting data of several counties in eastern Henan, you predict stripe rust will be on the heavy side this year. Some disagree. What happens turns out close to what you said.",
+  "You teach forecasters across the city, not about new technology, but about how to talk to farmers at the field's edge: first the count, then the money, and only last the pesticide.",
+  "You're asked to review an extension project. On the trial data page you see the control field and the treated field differ far too much in soil fertility, and you write that in your review."
+ ],
+ "past": [
+  "The year you were fifteen, your family's wheat got a disease. The heads went white and you lost half the crop. Your father said they'd sprayed too late. You didn't yet know the disease was called head blight.",
+  "Choosing majors after the gaokao (college entrance exam), you saw the words \"Plant Protection\" in the list for an agricultural university in the province, and thought of those white wheat heads.",
+  "For the entomology practical in your second year you caught more than two hundred insects on campus for specimens. The dorm reeked of mothballs, and your roommates cursed you every day.",
+  "In the summer of your third year you interned at the provincial plant protection station and saw for the first time the whole province's forecasting data on one map. Only then did you realize that in every county someone was out in the wheat counting bugs.",
+  "In your final year you sat the county's public institution exam, third on the written test. At the interview they asked you the treatment threshold for wheat aphids, and you got it word for word."
+ ],
+ "late": {
+  "pension_note": "Estimate: county public institutions pay into the public-sector pension scheme plus an occupational annuity, which in retirement comes to roughly 60 percent of the final monthly pay.",
+  "scenes": [
+   "The first April after you retire, you can't help riding your e-bike out to the wheat fields at the edge of town and crouching at the field's edge to turn over a few leaves.",
+   "When the young staff at the station aren't sure about a disease, they send you a photo. You put on your reading glasses, zoom in and reply: it's leaf blight, not rust.",
+   "You grow a small vegetable patch on a spare bit of ground in your housing estate. No spraying; when bugs come, you pick them off by hand. The neighbors say you garden more carefully than anyone.",
+   "You walk slowly now and can't get into the fields. Every year when the pest bulletins come out, you still open them on your phone to see whether the thresholds are right.",
+   "You look after pesticide registration and records in the office. The cabinets hold decades of forecasting notebooks, and you put them in order, year by year.",
+   "Once your blood pressure settles, the station asks you to speak at the spring control meeting about the summer when fall armyworm first arrived.",
+   "At the age, you retire. On the day you hand in your keys, you climb to the roof one last time to look at the light trap.",
+   "The first year after leaving the station, you run into the old chief in the county town. He asks whether they still spray aphids by the old threshold, and you say yes.",
+   "A township extension worker you once hunted egg masses with calls to say a pest nobody's seen before has turned up this year, and asks if you know it.",
+   "On the news you see the county's smart forecasting network has reached every township. The old light trap the camera pans across is the one you once changed the bulb in.",
+   "Later the traps counted their own insects, a phone photo could name a disease, and drones sprayed a hundred thousand mu in a day. But whether to spray still took someone crouching in the wheat rows to count.",
+   "Your grandchild runs up holding a seven-spot ladybird to show you. You explain that it's a good bug, it eats aphids, and to put it back."
+  ],
+  "closing": {
+   "retire": "Many years later, one May, you sit on a field ridge at the edge of town and watch a great expanse of wheat turn from green to gold. The wind comes, and the waves roll out into the distance, layer after layer. You couldn't count them, and you don't need to anymore.",
+   "burnout": "Many years later, on the balcony, you watch the wheat in your few pots come into ear. You lean in and look under the leaves. Not a single bug. You just look for a while.",
+   "end": "Many years later, you find the insect specimen box you made at university in a drawer. Under the glass every insect is still where you pinned it, and the ink on the labels has faded."
+  }
+ }
+}

@@ -1,0 +1,166 @@
+{
+ "id": "village-mgr-zj",
+ "occupation": "Rural Collective Economy Manager",
+ "role": "Professional Manager of a Village Collective Economy",
+ "headline": "A professional manager who quit a Hangzhou internet company and came back to a bamboo-forest village in Anji, on a base salary plus a share of above-target earnings, to bring the village's idle old factory, old village school and several hundred mu of bamboo back to life",
+ "unit": "The joint-stock economic cooperative of a mountain village in Anji, Huzhou, Zhejiang",
+ "unit_type": "Village collective economic organization (joint-stock economic cooperative)",
+ "city": "Huzhou (Anji)",
+ "city_tier": "Third-tier city",
+ "education": "Bachelor's degree (Marketing)",
+ "level": "Three years in online operations: you can write a plan, run a campaign and calculate conversion rates. You're only starting to learn the village's ledgers, contracts, land plots and relationships, and anything that needs signing needs a nod from the village committees and the villagers' representatives.",
+ "intro": "The village sits in a fold of the hills, bamboo on three sides and a stream running past its entrance. On the second floor of the village office they've cleared a room for you. On the desk: a stack of yellowed ledgers and a hand-drawn map of the village showing a shuttered bamboo products factory, an old village school merged away ten years ago, and twenty-odd old houses nobody lives in. The village's operating income is under ¥500,000 a year. The Party secretary says now that you're here, that number has to go up.",
+ "salary_note": "Estimate: professional managers in Zhejiang mountain villages usually get a base annual salary plus a share of collective operating income above target. The base is about the national figure; in a year when projects take off the share can double it, and when they don't there's only the base.",
+ "facts": [
+  {"label": "Rural Operations Officer (Trainee Manager) (current level)", "value": "0–2 years, ¥5,000–7,000 a month (national average, estimated)", "source": "Common in the trade"},
+  {"label": "Next level up", "value": "Professional Manager of the Village Collective Economy (2–5 years)", "source": "Common in the trade"},
+  {"label": "What AI can't take", "value": "Working with government, companies and cooperatives to bring resources together", "source": "AI exposure"},
+  {"label": "Where AI is moving in", "value": "Auditing the collective's assets and resources and building the ledgers", "source": "AI exposure"},
+  {"label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings"}
+ ],
+ "day": [
+  "At the breakfast stall by the village entrance you eat a bowl of noodles with dried bamboo shoots. The owner asks who that old factory is going to be rented to, and you say you're still talking. He says don't rent it to anyone who pollutes.",
+  "In the village office you check contracts against the ledgers one by one: bamboo forest leases, pond rentals, old house lets. Three expired two years ago and were never renewed.",
+  "A campsite operator drives in from Shanghai to see the old village school. You walk him from the playground to the classrooms. He films the whole place on his phone and asks how water, power and parking would work.",
+  "Lunch at the Party secretary's house: home-grown bamboo shoots and cured pork. He says a few old households believe the land by the old factory sits below their ancestral graves, and you'll have to talk to them first.",
+  "You visit those old households and sit in their front rooms while they tell you about that land fifty years ago. The tea is topped up four times. When they're done, you've filled two pages of your notebook.",
+  "A township meeting on the village-run enterprises: each village's manager reports their numbers in turn. The village next door built a study-trip camp last year and doubled its income.",
+  "On the way back you detour past the bamboo forest. A few villagers are selling bamboo shoots by the road for less than two yuan a jin. You take a photo, wondering whether it could go on a livestream.",
+  "In the old house you rent, you revise the investment pitch, version three. The stream runs loud outside all night. When you reach the page headed \"Why this village,\" you stop for a long time."
+ ],
+ "ladder": [
+  {"title": "Rural Operations Officer (Trainee Manager)", "stage": "Trainee", "focus": "Check ledgers, renew contracts, show investors houses and land, and write plans for the village committees and representatives to review."},
+  {"title": "Professional Manager of the Village Collective Economy", "stage": "Manager", "focus": "Run the village's projects and assets: negotiate with investors, draft contracts, calculate dividends and present the accounts to the villagers' representative assembly."},
+  {"title": "General Manager of a Village Enterprise Company", "stage": "Village company", "focus": "Coordinate the joint assets and tourism projects of several villages, and negotiate project funding, loans and partnerships."},
+  {"title": "General Manager of a District Village Enterprise Company", "stage": "District", "focus": "Run investment and major projects for a dozen-odd villages and review each village's income distribution."},
+  {"title": "General Manager of the County Rural Operations Platform", "stage": "County", "focus": "Deploy and assess every village manager in the county, write plans for the county and negotiate with state firms and outside capital."}
+ ],
+ "ai_tasks": [
+  {"name": "Auditing the collective's assets and resources and building the ledgers", "how": "AI can read contracts, ledgers and receipts, compile them automatically, catch duplicates and find where the books don't match reality. Checking plot boundaries and the state of buildings on the ground, and ruling on ownership disputes, still takes a person walking it and signing for it."},
+  {"name": "Bringing idle land, houses and facilities back into use and leasing them out", "how": "AI can draft rental notices and contract templates, suggest a rent range from local market rates and screen applicants' paperwork. Negotiating price, showing people round, judging whether a tenant is reliable and winning the villagers' consent are a person's work."},
+  {"name": "Planning and assessing distinctive local industries and collective projects", "how": "AI can quickly find comparable projects, gather market information, estimate costs and returns and write a first draft of a feasibility study. Making the call and setting direction in light of the village's land, people, character and policy is the responsibility of a person."},
+  {"name": "Running project construction and following progress and quality", "how": "AI can build the schedule, compile daily site reports and photos and flag delays and overspending. Inspecting the site, mediating between the builders and villagers and answering for quality need a person there."},
+  {"name": "Organizing production, processing and branded sales of farm produce", "how": "AI can write product copy, make posters, generate livestream scripts and analyze orders and stock. Keeping real quality in growing and processing, dealing with buyers and channels and handling emergencies come down to a person's experience and hands."},
+  {"name": "Working with government, companies and cooperatives to bring resources together", "how": "AI can help sort policy documents, look up application criteria and draft materials and talking points. What actually makes government, companies and cooperatives willing to work with you is trust, relationships and talking face to face, and that's mostly a person."},
+  {"name": "Setting income distribution and publishing the accounts to villagers", "how": "AI can calculate dividend options by the rules and produce accounts and explanations people can follow. Deciding what's fair, and explaining it at the villagers' meeting until people accept it, is a person's responsibility."},
+  {"name": "Getting villagers involved in the business and creating jobs", "how": "AI can help with job registration, training materials and matching people to work. Mobilizing villagers, settling disagreements and getting people to take part and trust you is face-to-face work, and that's mostly a person."}
+ ],
+ "events": {
+  "e_camp": "The campsite in the old village school opened. Over the May Day holiday it was full every night, and the collective took in more than ¥200,000 in rent and revenue share in one month. The Party secretary read the accounts out at the villagers' meeting, and some people clapped.",
+  "e_flop": "The bamboo-weaving craft shop you led stayed open a year. Lots of tourists looked, few bought, and it closed. At the representatives' meeting someone said people from the city just love to stir things up.",
+  "e_jam": "Over National Day the cars backed up all the way to the township, and several villagers found their gates blocked by parked cars and phoned to yell at you. You stood at the junction for two days and borrowed three auxiliary police from the township to direct traffic.",
+  "e_dividend": "At year end the village's joint-stock cooperative paid its first dividend to every shareholder in the village, a few hundred yuan a share. You watched villagers in their eighties put on reading glasses and press their thumbprints on the register.",
+  "e_bamboo": "Bamboo prices dropped again; cutting the poles didn't cover the labor, and several households let their bamboo slopes go. You went round three bamboo processors and got twenty yuan more a tonne.",
+  "e_ai_contract": "You had AI read and cross-check photos of hundreds of old contracts and ledgers, and in a week it turned up more than forty places where the books didn't match the ground. That used to take the accountant half a year.",
+  "e_ai_plan": "In half an hour AI wrote you a feasibility study for a cluster of boutique guesthouses, with handsome numbers. When you checked it on the ground, half the old houses were in a landslide-risk zone, and the report never said so.",
+  "e_ai_live": "Using an AI-written script and posters, you livestreamed the village's white tea and sold three hundred orders in an evening. An old tea grower looked at the orders on the phone and said it was more than he sold in a whole spring.",
+  "e_flood": "One rainstorm in the plum rain season and the stream overflowed into the campsite. You and the village cadres moved the guests to the village office overnight, and half the tents were washed away. The next morning you spent hours picking tent pegs out of the mud.",
+  "e_tenant": "The man renting the old factory couldn't keep his business going and disappeared owing six months' rent. You started legal proceedings while looking for a new tenant, and your assessment numbers that half year looked terrible.",
+  "e_youth": "The village's café and guesthouses drew seven or eight young people back from the city. On weekend evenings they show films in an old house by the stream, and the old folks carry over bamboo chairs to watch.",
+  "e_audit": "The county came to audit the village's collective assets. You carried three years of contracts, invoices and dividend records into the meeting room box by box. The audit took a week and found nothing wrong.",
+  "e_love": "The design institute doing the village plan sent someone your age to live in the village for three months drawing. The two of you walked every old lane and measured every old house.",
+  "e_wedding": "You held the wedding in the village's old ancestral hall, thirty tables, the food cooked by the village aunties. The Party secretary said it was the first wedding banquet held in the hall in ten years.",
+  "e_house": "You bought a flat in the county town. On weekdays you live in the old house you rent in the village, and at weekends drive half an hour back to town. In the old house's courtyard you've grown a trellis of loofah.",
+  "e_kid": "The baby was born. At the one-month celebration several village households sent red eggs, and one old man brought a little bamboo chair he'd woven himself.",
+  "e_quarrel": "Two families fell out over how to split the rent from an old house and took it to the village office. You dug out a property division agreement from forty years ago and spent an afternoon going through it with the village's old accountant.",
+  "e_tired": "Over three hundred days a year in the village, projects by day, meetings by night, and your stomach was the first thing to go. Your health check came back with a column of arrows, and the doctor told you to eat at regular times.",
+  "e_leave": "The manager in the next village quit before his term was up, saying the targets were too much and his family was getting no time. You drank together in the township, and he said you're young, hang on a bit longer.",
+  "e_parent": "Your father fell at home in the county town and spent two weeks in hospital. By day you were out in the village on projects; at night you drove to the county hospital to sit by his bed.",
+  "e_apprentice": "A young person you trained became manager of a mountain village in Lishui. The day his first project opened, he sent you a photo: a banner over the village entrance and a row of old villagers standing beneath it."
+ },
+ "choices": {
+  "c_renew": {"title": "The first-term review", "situation": "Your first term is two years, judged on how much collective operating income has grown and how satisfied villagers are. You have two projects: turning the old village school into a campsite pays off fast; bamboo carbon credits and forest-floor crops are slow but would last ten years. You only have the people to go all in on one.", "options": [
+   {"label": "Campsite first", "result": "By the second year the campsite had more than doubled the collective's income. You passed the review and signed a second term. The bamboo plan stayed in your drawer."},
+   {"label": "Bamboo first", "result": "You spent more than a year on the bamboo: forest tenure, surveying, the cooperative, all sorted out one by one, but the income hadn't come in yet. You scraped through the review, and the Party secretary put in several words for you."}
+  ]},
+  "c_factory": {"title": "Who gets the old factory", "situation": "Two tenants want the old bamboo products factory. One does bamboo processing, pays higher rent and would employ thirty villagers, but brings dust and noise. The other runs artist residencies and study trips, pays half the rent, and brings tourists and young people.", "options": [
+   {"label": "The bamboo processor", "result": "The factory opened and thirty-odd villagers in their fifties and sixties had work. Only, in summer with the windows open, the neighbors could always hear the machines."},
+   {"label": "The art and study-trip center", "result": "The old factory filled with painters, potters and teachers bringing classes. The rent was lower, but the village shop and the farm restaurants started doing good business."}
+  ]},
+  "c_ai": {"title": "Putting the village's accounts and affairs online", "situation": "The county is pushing a digital village platform: collective assets, contracts, dividends and project progress all online, so villagers can see the accounts on their phones. You'd lead the job of entering decades of paper ledgers and teaching the cadres and old folk to use it. Heavy work, but it would save a lot later.", "options": [
+   {"label": "Lead it", "result": "You and two college students photographed, digitized and checked decades of ledgers and put them online line by line. At the year-end dividend, old villagers saw on their phones for the first time how their share was worked out."},
+   {"label": "Leave it to the township technician", "result": "The platform went live, but most of the village's old accounts never made it in, and villagers found little when they opened it. You still explained the paper ledgers to people in the village office."}
+  ]},
+  "c_parking": {"title": "A car park on five families' private plots", "situation": "Visitors keep increasing and the village entrance needs a car park. The best site is five families' private garden plots. Three agree to lease, two don't, and one says the land was left by the old folks and they won't sell at any price.", "options": [
+   {"label": "Talk to each family", "result": "You sat in that old couple's house for seven evenings. In the end you agreed: a strip beside the car park kept for them to grow vegetables, and a share of the income every year."},
+   {"label": "Use a plot farther away", "result": "The car park went in at the foot of the hill a kilometer from the entrance, and visitors walk the last stretch. Some complain; others say it keeps the village quiet."}
+  ]},
+  "c_back": {"title": "Back to the company in Hangzhou", "situation": "Your old boss calls: a new division is building an online platform for rural tourism and wants you to head it, at more than twice your pay. You're worn out in the village, the targets are pressing, and your family is urging you back to the city.", "options": [
+   {"label": "Go back to Hangzhou", "result": "You resigned to the Party secretary, and on handover day left the hand-drawn map of the village on your desk.", "end": "In a Hangzhou office tower you run a rural tourism platform with hundreds of villages in its back end. Whenever you see your village's name you click in to look, and this year the campsite's rating has gone up a little again."},
+   {"label": "Stay in the village", "result": "You said no. That evening you sat a while by the stream and heard children singing at the campsite over at the old school."}
+  ]},
+  "c_gm": {"title": "Becoming General Manager of the Village Enterprise Company", "situation": "Your village and two neighbors are setting up a joint company to run all three villages' idle assets and tourism projects, and need a general manager. You're a candidate. So is a neighboring village's accountant of ten years, whom villagers know better.", "options": [
+   {"label": "Put your name forward", "result": "You spoke for forty minutes at the shareholders' representative assembly of all three villages, all about each village's accounts. On voting day the neighboring accountant said he'd keep the books for you."},
+   {"label": "Let the accountant have it", "result": "You said you still had your own village to run. The accountant became general manager, and whenever there was investment to negotiate, he took you along."}
+  ]},
+  "c_own": {"title": "Opening your own guesthouse in the village", "situation": "You've got your eye on an old house by the stream that you could rent and turn into a guesthouse, making more than your share of earnings. But you're the manager, and with your own business tangled up with the collective's, you're not sure what villagers would think.", "options": [
+   {"label": "Step down and do it yourself", "result": "You resigned and rented the house at the village's public listing price, with the contract posted on the village noticeboard for a month.", "end": "Your guesthouse has six rooms, and the stream is right outside the windows. When guests ask what there is to do in the village, you start with the old school and go on to the old factory, and by the time you're done it's dark."},
+   {"label": "Don't, keep to your role", "result": "You recommended the house to a young newcomer and helped him through the rental process. On opening day he poured you the first cup of coffee."}
+  ]},
+  "c_area": {"title": "Applying for General Manager of the District Company", "situation": "The county wants to merge the village companies of a dozen-odd villages in one district, with joint investment and operations, under a district general manager. The job means meetings every day with the county, state firms and outside investors, a long way from the villages.", "options": [
+   {"label": "Apply", "result": "Page one of your plan was an inventory of idle assets across a dozen-odd villages: which house, which plot, what condition, every item listed clearly."},
+   {"label": "Stay with the three villages", "result": "You said you were more at home walking the villages. In his first month the new district manager came to you for your asset ledgers for the three villages."}
+  ]},
+  "c_handover": {"title": "Handing over to the young", "situation": "You're past fifty and running projects and late-night meetings is getting harder. A young person you trained can hold their own now, and the township asks whether you'd step back as an advisor and hand them the job.", "options": [
+   {"label": "Hand over and advise", "result": "You compiled every project's contracts, accounts and lessons from all those years into one volume and gave it to your successor. Turning to the page on the bamboo-weaving shop, he asked why it closed."},
+   {"label": "A few more years", "result": "You still go to the breakfast stall at the village entrance every morning to hear the owner's news of who's dealing with what. The young one runs the projects; you handle the people."}
+  ]}
+ },
+ "endings": {
+  "retire": "On your last day you gave the office keys to your successor and walked along the stream: the campsite at the old school, the studios in the old factory, the strip of vegetables the old couple grows beside the car park. At the edge of the bamboo, a few villagers were still selling shoots by the road. You bought a jin.",
+  "burnout": "That winter, driving back from a meeting in the township, you stopped halfway and lay over the steering wheel for a long time without moving. The doctor said you'd worn yourself out and told you to rest for six months. The township gave you a job keeping ledgers. You sit in the office and listen to the tourists' cars driving into the village, one after another."
+ },
+ "stages": [
+  "You learn as you go: checking ledgers, renewing contracts, showing investors houses and land, writing plans for the village committees and representatives to review. You deal most with the Party secretary, the old accountant and the old villagers. The secretary clears the way for you, the accountant teaches you to read the books, and every story the old folks tell about where a plot came from, you have to write down.",
+  "You've signed a proper term and run several projects. You negotiate with investors, draft the contracts, watch progress, and at year end you calculate the income distribution and present it item by item at the villagers' representative assembly. You used to run errands; now your signature is on every contract, and whether it gains or loses, villagers come to you.",
+  "You run a company jointly owned by three villages, coordinating their idle assets, tourism projects and produce sales. You negotiate project funds with the county, loans with banks and partnerships with outside investors, and lead a few young operations staff. You spend less time walking the village and more in meetings.",
+  "You're general manager of the village enterprise company for a district of a dozen-odd villages, answering to the county and the shareholding villages. You set the district's investment direction, approve major projects, review each village's income distribution and settle accounts between villages. When young managers hit something hard, the last call is always to you.",
+  "You run the county's rural operations platform, deploying and assessing village managers across dozens of villages. You write plans for the county, negotiate with provincial state firms and travel to other provinces to share experience, signing deals worth tens of millions. But every month you still pick a village and eat a bowl of noodles at the breakfast stall by its entrance."
+ ],
+ "work": [
+  "The first time you present the investment plan for the old school at the representatives' meeting, an old man asks halfway through: once it's rented out, can the village kids still play ball on the playground when they come home? You promise to keep a patch.",
+  "The old accountant teaches you to read a bamboo forest lease from thirty years ago, its fountain-pen ink faded. You photograph it and type it into the computer word by word.",
+  "You show a guesthouse owner from Shanghai an old house, and he complains the stairs are too steep. You point out the beams are old fir; just change the stairs. He goes back up for another look.",
+  "Drafting the campsite lease, you add a clause after the guaranteed rent: above a certain turnover, the collective takes another ten percent. The operator hesitates for a week, then signs.",
+  "Working out the year-end dividend, you prepare three versions: by household, by person, by share. The representatives argue for two hours and settle on shares, and you post all three versions on the noticeboard.",
+  "A villager says the campsite's speakers keep him awake. At ten at night you stand outside his door listening for half an hour, and the next day you set a rule with the operator: speakers off after nine thirty.",
+  "The three villages' bamboo is leased together to a bamboo company. At the negotiating table you lay out each village's forest tenure certificates one by one and get a price fifteen percent above selling separately.",
+  "The loan officer asks what the company can put up as collateral. You slide over the inventory of the three villages' operating assets, then take him to see the fully booked campsite.",
+  "One of your operations staff writes a plan for a study-trip camp with lovely numbers. You ask: where do the kids go when it rains? He goes away and reworks it for a week.",
+  "Two villages argue over who should run a pond on their border, and it lands with you. You pull up decades of both villages' ledgers, find an old agreement, and divide it accordingly.",
+  "An outside tourism group wants to take the old houses of five villages in the district in one go. You say you can talk, but each village keeps thirty percent for its own people to run.",
+  "At the quarterly meeting for the district's village managers, you don't let them report numbers. Each has to describe one thing they got badly wrong this year.",
+  "A provincial state firm comes to discuss partnering on rural operations across the county. You put up a map of idle assets in dozens of villages and go plot by plot: which can be developed, which mustn't be touched.",
+  "Speaking to village cadres in another province, the first thing you talk about isn't projects. It's how to sit in an old couple's front room, how to listen, and how many cups of tea to wait before you speak.",
+  "At the year-end review of the county's managers, one young manager's income figures are the lowest but villager satisfaction is the highest. You write a paragraph for him on the assessment form."
+ ],
+ "past": [
+  "Your family was from the hills of Anji, where your grandparents kept the old house and a few mu of bamboo. The summer you were fifteen you helped dig shoots on the hill, and your grandfather said he had planted this bamboo stand one by one when he was young.",
+  "You tested into a university in Hangzhou for marketing. The day you left, your grandfather walked you to the village entrance and said the city is good, so don't come back.",
+  "After graduating you joined a Hangzhou internet company in user operations, staring at dashboards all day and working late enough to catch the last metro.",
+  "The year your grandfather died you came home for the funeral and saw the village school playground overgrown with grass and the bamboo factory gate rusted shut. You stood at the village entrance for a long time.",
+  "The county advertised for professional managers of village collective economies, and you sent in your CV. At the interview the Party secretary asked how much you made a month in the city. You told him, and he said the village couldn't pay that."
+ ],
+ "late": {
+  "pension_note": "Estimate: the village company pays the manager's basic pension contributions as an enterprise employee, based on the base salary, with the earnings share not counted. In retirement that comes to roughly 40 percent of the final monthly pay.",
+  "scenes": [
+   "The first month after you retire, you still go to the breakfast stall at the village entrance every morning for noodles. The owner's son runs it now and asks where you're off to today. You say nowhere.",
+   "When your successor hits something hard to negotiate, he comes round in the evening with a bag of dried bamboo shoots. You hear him out and say go and sit in that family's house first, and don't bring a contract.",
+   "In the courtyard of the old house you grow a loofah trellis and a few rows of greens. When your grandchildren come at weekends, you take them into the bamboo to dig for shoots.",
+   "You can't manage the hill paths anymore and sit in the sun on a bamboo chair by the stream. Passing tourists ask what there is to do in the village, and you start with the old school and talk all afternoon.",
+   "You keep ledgers at the township, going through dozens of villages' contracts and accounts every day and leaving on time. Some contracts are ones you drafted years ago, and when you come across them you smile.",
+   "Once you've recovered, the township asks you to tell the new managers how you got through that first term.",
+   "At the age, you retire and move back to the village. You still go to the villagers' meetings, sitting in the back row, saying nothing.",
+   "The first year after leaving the manager's job, you pass the village office and see the light still on in that second-floor room, a pot of orchids new on the windowsill.",
+   "The old village accountant calls to say the dividend went up again this year, and asks if you want to come back and watch the thumbprints.",
+   "Online you find someone's travel piece about your village. In the photos, beside the old school playground, the patch kept for the kids to play ball is still there.",
+   "Later AI drafted the contracts, the platform did the accounts, and posters and livestream scripts came out in a minute. But to get an old couple to nod, someone still had to sit in their front room drinking tea.",
+   "Your grandchildren ask what you used to do. You think a long while and say: I helped the village put the things it wasn't using back to use."
+  ],
+  "closing": {
+   "retire": "Many years later, one spring morning, you stand at the edge of the bamboo and watch new shoots that broke through the earth overnight. The stream sounds the same as ever, and over at the campsite in the old school, someone is pitching a tent.",
+   "burnout": "Many years later, you sit in the courtyard of the old house, the loofah vines all over the trellis. A child runs past the gate, turns and calls out to you. You don't know whose child it is, and you wave anyway.",
+   "end": "Many years later, you find the hand-drawn map of the village in a cupboard, its edges gone soft. You spread it on the table and touch each place with a finger: the old school, the old factory, twenty-odd old houses, every one of them with a name now."
+  }
+ }
+}

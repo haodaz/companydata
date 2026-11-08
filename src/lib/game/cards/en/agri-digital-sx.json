@@ -1,0 +1,164 @@
+{
+ "id": "agri-digital-sx",
+ "occupation": "Agricultural Digital Technician",
+ "role": "Agricultural Digital Technician at an Apple Cooperative",
+ "headline": "An agricultural digital technician with an IoT diploma, back on the Luochuan tableland at a three-thousand-mu apple cooperative: climbing weather station masts, burying soil moisture probes, fixing drip lines, minding the computer on the fruit grading line, and teaching old growers to read their phones",
+ "unit": "An apple growers' cooperative in Luochuan, Yan'an, Shaanxi",
+ "unit_type": "Farmers' specialized cooperative (apples)",
+ "city": "Yan'an (Luochuan)",
+ "city_tier": "County town",
+ "education": "Vocational college diploma (Internet of Things Applications)",
+ "level": "You can wire things up, set up sensors and read the curves in the platform's back end. Apple trees you learned by watching in your family's orchard as a kid. But the irrigation and fertilizer plans, and the settings on the grading line, still come from the technical supervisor and the old growers.",
+ "intro": "The Luochuan tableland is flat as a tabletop, ringed by deep gullies, and on top it's apple trees as far as you can see. In the cooperative's yard stand a controlled-atmosphere cold store and an optical fruit grading line, and on the wall a big screen flickers with temperature, humidity and soil moisture for three thousand mu (about 500 acres) of orchard. The screen went in last year, and nobody here can fix it yet. From today, that's you.",
+ "salary_note": "Estimate: technicians at a Luochuan cooperative get a fixed monthly wage plus a year-end bonus, with county pay about 20 percent below the national figure. In a year when apples sell well the bonus is bigger; in a year of hail or frost there's only the base.",
+ "facts": [
+  {"label": "Agricultural Digital Technician (Trainee) (current level)", "value": "0–2 years, ¥4,500–6,500 a month (national average, estimated)", "source": "Common in the trade"},
+  {"label": "Next level up", "value": "Agricultural Digital Technician (2–5 years)", "source": "Common in the trade"},
+  {"label": "What AI can't take", "value": "Installing and repairing equipment, and getting it all to work together", "source": "AI exposure"},
+  {"label": "Where AI is moving in", "value": "Grading apples on the line by sugar, size and skin", "source": "AI exposure"},
+  {"label": "Open positions", "value": "3 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings"}
+ ],
+ "day": [
+  "You ride the e-bike out to Orchard 3 to check the weather station first: last night's data dropped out for two hours. You climb the three-meter mast and open the box. Birds have pecked through the solar panel cable.",
+  "In the cooperative office you go through every orchard's soil moisture curve on the big screen. The probe in Orchard 5 has read zero all along, and you make a note.",
+  "You shoulder a spade to Orchard 5 and dig out the probe: sure enough, a field mouse has chewed through the wire. You splice it, bury it again, and crouch under the tree waiting for the reading to pop up on your phone.",
+  "An old grower stops you at the edge of his rows: half a row of drip line is blocked and nothing's coming out. You take the filter apart. It's full of silt, and you flush it three times.",
+  "Lunch in the cooperative canteen: a bowl of shredded potato steamed with flour, with chili. The technical supervisor says bagging starts next week and has you draw up the labor schedule for every orchard on the platform.",
+  "At the grading line's control computer you adjust the settings, sugar content, diameter, color coverage, trying each threshold bit by bit as the apples on the conveyor roll into boxes by grade.",
+  "In the village office courtyard you teach a dozen growers to use the platform on their phones: how to check their orchard's soil moisture, how to get frost warnings. One old man says the text is too small.",
+  "At home you scroll the platform's forecast: the night after tomorrow, a low of minus one, right at blossom. You message the technical supervisor and he replies in a second: meeting tomorrow."
+ ],
+ "ladder": [
+  {"title": "Agricultural Digital Technician (Trainee)", "stage": "Trainee", "focus": "Look after the weather stations, soil moisture probes, drip lines and grading line for several orchards, and learn to read the data from the technical supervisor."},
+  {"title": "Agricultural Digital Technician", "stage": "Orchard block", "focus": "Take sole charge of a block's equipment and data: plan fertigation, issue frost warnings, set grading standards and train growers."},
+  {"title": "Digital Agriculture Supervisor", "stage": "Supervisor", "focus": "Run all the cooperative's equipment, data and technicians, decide equipment purchases and file the county's digital agriculture projects."},
+  {"title": "Head of Digital for the Cooperative Union", "stage": "Union", "focus": "Run the county apple cooperatives' shared platform: warnings, grading standards and traceability codes."},
+  {"title": "Director of the County Digital Agriculture Service Center", "stage": "County", "focus": "Run digital agriculture services for the whole county: write plans, lead research, sign platform contracts."}
+ ],
+ "ai_tasks": [
+  {"name": "Grading apples on the line by sugar, size and skin", "how": "A grading line with AI vision can look at several apples a second, reading sugar, diameter, color, small spots and faint bruises, and roll each into the right grade's box. A person only sets the standards, spot-checks and cleans the lenses."},
+  {"name": "Reading soil moisture and weather data and planning fertigation", "how": "The platform can watch soil moisture, temperature and rainfall around the clock and calculate how much water and fertilizer to deliver. A broken probe, a local shower, a block just regrafted to a new variety: someone has to go and look before deciding whether to carry it out."},
+  {"name": "Drone yield estimates and disease identification", "how": "After one drone pass, AI can count the fruit on every tree and spot canker and early leaf drop. What it gets wrong or misses, someone has to check in the orchard, and the figures given to buyers and insurers need a person's signature."},
+  {"name": "Installing and repairing equipment, and getting it all to work together", "how": "Climbing a three-meter mast to change a battery, digging up a probe wire a mouse has chewed, taking apart a drip filter to flush the silt, getting weather stations, frost fans and the platform working in concert: all of it needs a person in the orchard, hands-on."},
+  {"name": "Issuing frost warnings and deciding the frost plan", "how": "AI can work out the chance of frost tonight from the weather and the orchard temperatures. Whether to run every fan or only those in the hollows, whether to spend tens of thousands on electricity, a person has to decide in the night and answer for."},
+  {"name": "Teaching old growers to use phones and new equipment", "how": "Teaching seventy-year-old growers to read warnings again and again in the village office courtyard, setting phone-call reminders on their basic handsets, talking people out of buying dodgy equipment: it takes a person going face to face, time after time."}
+ ],
+ "events": {
+  "e_frost_saved": "One April night the platform issued a frost warning. You switched on every frost fan in advance and had smoke piles lit in the hollows. At daybreak ninety percent of the blossom had survived. In the neighbors' unprepared orchards, every flower had gone black.",
+  "e_hail": "A July hailstorm hit the tableland, and several hundred mu of apples without hail nets were pitted all over. You went plot by plot with the insurance assessors and took thousands of photos for the platform.",
+  "e_canker": "On the camera feed from an old orchard you noticed a few trees whose bark had darkened. In the field it turned out to be canker. The technical supervisor's crew spent a week scraping it out, and it never spread.",
+  "e_drip": "You converted your family's ten mu of old orchard to drip fertigation. Your father wouldn't have it at first: generations had flood-irrigated. The next year the apples came in even-sized, and he squatted at the edge of the rows smoking for a long time without a word.",
+  "e_ai_sort": "The grading line got new cameras with AI vision that pick out tiny skin spots and faint bruises, and grading got far more accurate. Customer returns halved in a year.",
+  "e_ai_water": "The platform recommended a heavy watering for one block based on soil moisture. You went and looked: a local shower had passed over the day before, and the spot where the probe was buried happened to stay dry. You stopped the command.",
+  "e_ai_yield": "One drone pass over the orchards and AI counted the fruit on every tree. Its total estimate was only three percent off the autumn harvest. For the first time, buyers settled volumes with the cooperative before the scales opened.",
+  "e_bagging": "In bagging season the cooperative hired over two hundred people, and you scheduled every orchard's labor on the platform, changing it eight times in one day. When the last day ended, you'd lost your voice.",
+  "e_power": "The cold store's control cabinet tripped in the night, and the alarm text reached your phone at three in the morning. You rode over and stayed in the store until dawn. The temperature held for several hundred thousand jin of apples.",
+  "e_live": "The cooperative started livestream sales, and you stood by the grading line explaining how sugar content is measured and how to scan the traceability code. That night you sold two thousand boxes, the word \"Luochuan\" scrolling across the screen in rows.",
+  "e_price": "That year apples had a bumper harvest nationwide and the buying price fell fifty fen a jin. The cooperative's cold store was full, you checked the market on the platform eight times a day, and the year-end bonus was halved.",
+  "e_old": "One grower in his seventies couldn't learn to read the warnings on his phone after three tries. You set up his basic handset so that when frost was coming, it would phone him automatically.",
+  "e_love": "A technician your age at the county fruit industry center often came to collect data from the cooperative. Once the two of you calibrated probes together in an orchard. The sun was lovely that afternoon, and you sat under the trees a long time.",
+  "e_wedding": "You held the wedding at a restaurant in the county town, on a day after the apples were picked. The cooperative sent a box of apples labeled with both your names, every one through the grading line.",
+  "e_house": "You bought a flat in the county town, the down payment from two years of the family's apple sales. Every morning you ride your e-bike out of town up to the tableland, twenty minutes.",
+  "e_kid": "The baby was born while the apple trees were in flower. You stayed two days at the hospital. On the third the platform issued a frost warning, and you went back to the cooperative in the middle of the night.",
+  "e_wrist": "Years of climbing masts, digging up probes and twisting filters open, and you've got tendinitis in your right wrist; even turning a screw hurts. You've added an electric screwdriver to your tool bag.",
+  "e_scam": "A company came to the village selling a \"smart orchard package,\" promising thirty percent more yield. Several growers were tempted. You looked at their equipment specs and told everyone not to buy.",
+  "e_young": "Most apple growers on the tableland are in their fifties and sixties, and of your classmates, you're the only one who came back to the land. The cooperative has been hiring technicians for two years, and only three people have come to interview.",
+  "e_parent": "Your father fell off a ladder picking apples and hurt his back. That year you ran the family orchard after work, and at weekends the whole family picked.",
+  "e_apprentice": "A young technician you trained moved to an apple cooperative in Jingning, Gansu. The first time he set up a weather station on his own, he sent you a video: the mast stood dead straight."
+ },
+ "choices": {
+  "c_cert": {"title": "Sitting the Agricultural Digital Technician skill grade", "situation": "The province is running its first skill grade certification for agricultural digital technicians. Pass, and you can take sole charge of a block's equipment and data, and the cooperative will raise your pay. But the training is in winter, half a month in Xi'an, right when the cold store is busiest shipping out.", "options": [
+   {"label": "Go and sit it", "result": "You spent half a month in a training room in Xi'an. The practical was wiring and networking a soil moisture monitoring station, and you finished first."},
+   {"label": "Mind the cold store first", "result": "That winter the cold store shipped everything without a hitch, not a box spoiled. The certificate, you said, could wait until next year."}
+  ]},
+  "c_frost": {"title": "The night of the frost warning", "situation": "The platform says frost tonight is possible, sixty percent. Running every frost fan across three thousand mu all night costs tens of thousands in electricity. Run only the hollows and you save the money, but if frost settles on the flat too, the blossom is lost. The technical supervisor is away and leaves it to you.", "options": [
+   {"label": "Run them all", "result": "You didn't sleep, walking the orchards checking thermometers. The low that night was minus half a degree, and the blossom survived. When the electricity bill came, the chairman studied it a long while and said it was worth it."},
+   {"label": "Only the hollows", "result": "On the flat the temperature stopped at zero and no frost settled, and you saved tens of thousands on electricity. But for that hour at four in the morning you gripped your phone with sweating palms."}
+  ]},
+  "c_ai": {"title": "Learning AI yield estimation and disease identification", "situation": "An agritech company wants to pilot drone yield estimation and disease identification at the cooperative and needs someone to fly with them, label data and check results: tens of thousands of tree photos a quarter. It's a lot of work and not quite your job, but before long the whole tableland will use it.", "options": [
+   {"label": "Sign up", "result": "You labeled tens of thousands of photos, teaching the model to tell canker from sunscald and bagged fruit from unbagged. The next year the company asked you to teach other cooperatives."},
+   {"label": "Stick to your own equipment", "result": "You kept to your sensors and the grading line, and left yield estimation to the company's people. When their report came out at year end you leafed through it and didn't really follow it."}
+  ]},
+  "c_xian": {"title": "An agritech company in Xi'an", "situation": "The agritech company from the pilot wants to hire you in Xi'an as an implementation engineer, traveling the country installing systems in orchards, at one and a half times your pay. But your family's orchard and your parents are in Luochuan.", "options": [
+   {"label": "Go to Xi'an", "result": "You resigned, rented a room in Xi'an, and in your first month went to Aksu in Xinjiang and Yantai in Shandong.", "end": "You install systems in orchards all over the country, in Aksu, Yantai, Zhaotong, on the road all year. Wherever you go, you first walk through the orchard and run your hand over the bark, and only then open the laptop."},
+   {"label": "Stay in Luochuan", "result": "You said no. That evening you sat a long time in front of the cooperative's big screen, three thousand mu of curves flickering across it."}
+  ]},
+  "c_lead": {"title": "Applying for Digital Agriculture Supervisor", "situation": "The cooperative has grown to five thousand mu and is creating a Digital Agriculture Supervisor post: all equipment, data, the grading line and the technicians, the annual equipment purchasing, and reporting digital agriculture projects to the county. You're a candidate. So is an engineer hired away from a company elsewhere.", "options": [
+   {"label": "Put your name forward", "result": "You spoke to the board for twenty minutes, showing three years of frost warnings and the yields they saved. The chairman said: you kept these numbers by yourself."},
+   {"label": "Step aside for the outside engineer", "result": "You said you were more at home fixing things in the orchard. In his first month the new supervisor came to you for your equipment fault log."}
+  ]},
+  "c_net": {"title": "Hail nets or not", "situation": "The cooperative wants hail nets over every orchard: several thousand yuan a mu, borrowed money, years to pay back. The board wants your data: how often it's hailed on the tableland in recent years and what each storm cost. However you present the numbers, that's more or less how the decision will go.", "options": [
+   {"label": "Give the honest numbers and suggest doing it in stages", "result": "You checked ten years of weather data against insurance claims line by line and recommended starting with the North Tableland, where hail hit most. The board did. In the third year a big hailstorm hit the North Tableland, and not one apple under the nets was damaged."},
+   {"label": "Recommend netting everything", "result": "You said hail could come any year, so netting everything at once was safest. The loan weighed on the cooperative for years, there was no big hail in that time, and some said you'd been working for the net manufacturer."}
+  ]},
+  "c_shop": {"title": "Selling apples online yourself", "situation": "Your livestreams about apples have earned you some followers, and people urge you to open your own online shop, buying apples from your family and relatives, grading and shipping them yourself, making more than your wage. But you'd have to leave the cooperative, and in a year when prices fall, the stock in storage is all yours.", "options": [
+   {"label": "Resign and do it yourself", "result": "You set up a small grading table in the family courtyard, bought a second-hand sugar meter, and hung your shop's name over the gate.", "end": "Your online shop sells tens of thousands of boxes a year, each with a little card inside saying which orchard the apples came from, the day they were picked and the sugar content. Every morning you still ride up to the tableland and look at the sky."},
+   {"label": "Stay with the cooperative", "result": "You steered your followers to the cooperative's shop. At year end the chairman gave you an extra bonus and said you'd done it for everyone."}
+  ]},
+  "c_union": {"title": "Applying for Head of Digital for the Cooperative Union", "situation": "Dozens of apple cooperatives in the county are joining up on one digital platform: shared weather warnings, shared grading standards, shared traceability codes. They need a head of digital for the union, in meetings every day with the county, the platform company and dozens of cooperatives.", "options": [
+   {"label": "Apply", "result": "Page one of your plan was an equipment inventory for every cooperative in the county. Half the weather stations were already broken and nobody was fixing them."},
+   {"label": "Stay with your own cooperative", "result": "You said you'd still rather work in the orchards. In the first month after taking over, the new head came to your cooperative to see how you'd tuned the grading line."}
+  ]},
+  "c_second": {"title": "Stepping back to train the young ones", "situation": "You're past fifty, your wrist can't turn a screw and you can't climb a weather mast anymore. The cooperative wants you off the front line, in the office watching data and training young technicians, for less pay.", "options": [
+   {"label": "Take the office", "result": "Every day you watch the tableland's curves on the big screen. When a probe looks wrong, you phone a young technician to go and check, and when they get back, you ask what they saw."},
+   {"label": "Stay in the orchards", "result": "You still ride up to the tableland every day. You can't climb the masts, so you stand at the bottom and talk the young ones up."}
+  ]}
+ },
+ "endings": {
+  "retire": "On your last day you rode out to Orchard 3. The weather station you'd fixed all your working life had been replaced, but the mast was the same mast. You stood beneath it for a while reading the numbers on your phone: temperature, humidity, wind speed, all correct. On the way back, a stretch of the tableland had come into apple blossom.",
+  "burnout": "That winter you kept watch in the cold store three nights running. On the fourth morning everything went black and you sat at the cold store door unable to stand. The doctor said it was exhaustion, and your blood pressure was high. The cooperative moved you to the equipment register. You sit in the office watching the curves flicker across the big screen."
+ },
+ "stages": [
+  "You look after the equipment in several orchards: climbing weather stations to change batteries and splice cables, digging up soil probes to fix wires the mice have chewed, taking drip filters apart to flush out silt, minding the grading line's computer and adjusting its settings. You deal most with the technical supervisor and the old growers. The supervisor tells you which numbers matter; the growers tell you which numbers are wrong; you go out into the orchard between them and check each one.",
+  "You take sole charge of the equipment and data for a block of orchards. You schedule fertigation from the soil moisture curves, you issue the frost warnings, you set the grading standards. You've started running training for growers, teaching them over and over in the village office courtyard how to read their phones. You used to fix equipment; now you argue with data, and if the numbers are wrong, the growers come to you first.",
+  "You're the cooperative's Digital Agriculture Supervisor, with several technicians and all the equipment and data for five thousand mu. You decide each year's purchases, negotiate prices and service with suppliers, file digital agriculture projects with the county and reconcile volumes and grades with buyers. Less time fixing things, more time in meetings.",
+  "You run the shared digital platform for dozens of apple cooperatives across the county: unified weather warnings, grading standards and traceability codes. You meet with the county, the platform company and dozens of chairmen, review the data each cooperative submits and set county-wide equipment standards. When young technicians hit something hard, the last call is always to you.",
+  "You direct the county's Digital Agriculture Service Center, covering digital services for apples, corn and minor grains across the county. You write plans for the county, run research with provincial institutes, host visitors from other provinces and sign the county's platform contracts. But every year at blossom time, you still watch the frost warnings all night."
+ ],
+ "work": [
+  "The technical supervisor has you calibrate a soil moisture probe. You take a soil core beside it with an auger, oven-dry and weigh it to get the water content, find it four points off the probe reading, and change the coefficient in the back end.",
+  "The grading line has put a whole batch of Red Fuji into grade two. You take ten apples and look at each one: there's a film of dust on the camera lens. You clean it and run the batch through again.",
+  "A grower's drip line is leaking. You crouch along the tree row feeling your way meter by meter until you find a cut where a hoe caught it, and fit a connector.",
+  "You draw up a fertigation plan for a block: less at blossom, more as the fruit sizes, adjusted weekly by the moisture curve. That autumn its apples are the most even-sized in the cooperative.",
+  "In the village office you explain how to read frost warnings. Afterward an older woman asks: so when the phone rings, do I get up or not? You say: get up, and light the smoke piles.",
+  "A buyer complains a batch isn't sweet enough. You pull up that batch's test records from the grading line and show him box by box, and in the end he takes it at the agreed price.",
+  "The cooperative is replacing its weather stations and three suppliers are bidding. You have each send one unit, set all three up in the same spot on the tableland for three months, and see whose numbers are right.",
+  "For the county's digital agriculture project you write up the equipment layout, data interfaces and three years of results for five thousand mu into one volume, with a table of the harvests it saved.",
+  "A young technician has raised the frost warning threshold by a degree, saying there are too many false alarms. You call him over and bring up the temperature curve from that night four years ago.",
+  "When the county sets a single grading standard, the big cooperatives each want their own. You lay out grading data from dozens of them and set a line everyone can reach.",
+  "The platform company wants to add a paid new feature for every orchard in the county. At the meeting you ask one question: can the old growers actually use it? Afterward the feature becomes a free trial.",
+  "Reviewing the yield figures cooperatives have submitted, you find one twenty percent above the drone estimate. You don't name it at the meeting. The next day you go to that cooperative's orchards yourself.",
+  "With an agricultural university in the province you run a research project on predicting blossom frost, using more than a decade of the county's weather station data. Half those stations are ones you once repaired.",
+  "Visiting officials from another province ask what the hardest part of digital agriculture is. You say it isn't the equipment. It's getting a seventy-year-old grower to get out of bed when the phone rings at night.",
+  "The county wants sensors in all its cornfields too. At the review meeting you say pick three villages and try it for a year first; don't roll it out all at once."
+ ],
+ "past": [
+  "Your family had ten mu of apple orchard on the Luochuan tableland. The spring you were fifteen a late frost blackened every blossom. Your father sat at the edge of the orchard all day, and the family had no income that year.",
+  "In high school you got hooked on taking radios apart and building computers, and classmates brought you their broken phones. Your father said: if only you could fix the weather.",
+  "Your gaokao (college entrance exam) score wasn't high, and you applied for Internet of Things Applications at a vocational college in the province. What you were thinking was: could a sensor know a little earlier that frost was coming?",
+  "In a practical class in your second year you installed an environmental monitoring system in the college greenhouse. For the first time you watched a temperature curve on your phone falling from afternoon until dawn.",
+  "Before graduation an apple cooperative from the county came to recruit, saying they'd installed a digital orchard system and had no one to run it. You signed up. At the interview the chairman asked whether you could prune a tree. You said yes."
+ ],
+ "late": {
+  "pension_note": "Estimate: the cooperative pays technicians' basic pension contributions as enterprise employees, based on the fixed wage; the year-end bonus isn't counted. In retirement that comes to roughly 40 percent of the final monthly pay.",
+  "scenes": [
+   "The first April after you retire, you still check the forecast every night. One night the temperature drops and you phone the young technician at the cooperative. He says: don't worry, they're already on.",
+   "When your successor hits a strange equipment fault, he sends you a video. You glance at it and say it's a bad ground connection, nothing to do with the data.",
+   "In your family orchard you keep twenty old trees with no sensors and no drip line. Every year you prune them and bag the fruit yourself, and the apples you pick are only for giving away.",
+   "You walk slowly now and can't ride the e-bike. Your child drives you up to the tableland, and through the car window you see rows of new weather stations, every mast painted white.",
+   "You keep the equipment register in the office: every weather station's and every probe's installation date and repair history, logged line by line.",
+   "Once your blood pressure settles, the cooperative asks you to tell the new technicians about that frost night years ago, and how the fans were switched on one by one.",
+   "At the age, you retire. At the handover you leave the equipment fault log you kept for over a decade in the drawer.",
+   "The first year after leaving the cooperative, you pass Orchard 3 on the tableland and see that the weather station has a new solar panel, gleaming.",
+   "An old grower calls to say his basic handset still rings with frost reminders, and asks if that's still something you set up. You say yes.",
+   "On the news you see that Luochuan's orchards use robot pickers now. The grading line the camera pans across is the same one whose settings you once tuned.",
+   "Later drones counted the apples themselves, cameras graded them, and the platform sent its own warnings. But whether to run every fan on a night of frost still needed someone to make the call.",
+   "Your grandchild holds up a tablet and asks why this line on the screen drops in the middle of the night. You say: that means frost is coming, and you have to get up."
+  ],
+  "closing": {
+   "retire": "Many years later, one spring night, you sit at the edge of your family's orchard watching the stars come out one by one. The phone in your pocket doesn't ring. You touch the buds on a branch beside you, and they're still warm.",
+   "burnout": "Many years later, you sit on a balcony in the county town with a Luochuan apple in your hand, peeling it slowly with a small knife. The peel comes off in one long unbroken strip, and you hang it on the windowsill.",
+   "end": "Many years later, in a drawer, you find the greenhouse monitoring board you built at college, the solder joints still shiny. You plug it in, a temperature comes up on the screen, and you look at it for a long time."
+  }
+ }
+}

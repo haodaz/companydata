@@ -1,0 +1,166 @@
+{
+ "id": "farm-mgr-hlj",
+ "occupation": "Agricultural Manager",
+ "role": "Agricultural Manager at a Farming Cooperative",
+ "headline": "A young agricultural manager back on the Sanjiang Plain after agricultural college, learning from the cooperative's chairman how to grow soybeans, corn and rice on thirty thousand mu of black soil, and how to do the sums on land rent and inputs",
+ "unit": "A mechanized farming cooperative in Fujin, Heilongjiang",
+ "unit_type": "Farmers' specialized cooperative (crops)",
+ "city": "Jiamusi (Fujin)",
+ "city_tier": "Fourth-tier city",
+ "education": "Bachelor's degree (Agronomy)",
+ "level": "You've followed one full growing season and had your hands on seedling raising, field prep, drone spraying and yield surveys. You've just got your Level 4 Agricultural Manager certificate. What goes on which field, and how much fertilizer to order, still needs the chairman's nod.",
+ "intro": "In the cooperative's yard stand a dozen high-horsepower tractors, two grain dryers tower over the threshing floor, and the map on the wall cuts thirty thousand mu (about 5,000 acres) into dozens of numbered plots. The land comes from more than a hundred member households who pooled or leased it, and your own family's twenty mu is in there too. From today, which plot gets sown when and which one needs spraying, you'll have to carry in your head, one plot at a time.",
+ "salary_note": "Estimate: managers at a Fujin cooperative get a monthly wage plus an autumn bonus tied to yield, and local pay runs a notch below the national figure. In a good year the year-end bonus adds several months' pay; in a disaster year there is only the base.",
+ "facts": [
+  {"label": "Agricultural Manager, Level 4 (current level)", "value": "0–2 years, ¥5,270–7,750 a month (national average, derived from pay by experience)", "source": "Common in the trade"},
+  {"label": "Next level up", "value": "Work Zone Leader (Agricultural Manager, Level 3) (2–5 years)", "source": "Common in the trade"},
+  {"label": "Pay after 10+ years", "value": "¥15,000 a month (national average)", "source": "Pay by experience"},
+  {"label": "What AI can't take", "value": "Walking the fields and making the call at the field's edge", "source": "AI exposure"},
+  {"label": "Where AI is moving in", "value": "Gathering input prices, grain prices and weather and sending them to members", "source": "AI exposure"},
+  {"label": "Open positions", "value": "3 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings"}
+ ],
+ "day": [
+  "In May the light comes early, and by half past four you're at the seedling greenhouse. You lift the plastic and look at the rice seedlings, drops of water on the leaf tips. The thermometer reads 22 degrees, and you open the vent another finger's width.",
+  "The machinery chief and seven or eight drivers are overhauling the rice transplanters in the yard. You hand out the plot map: five machines to Zone 3, three to Zone 7, whoever goes out first fuels up first.",
+  "You drive the pickup to the edge of Zone 3, crouch down and grab a handful of mud to check how deep the harrowing went, then photograph the water gauge on the ridge and post it to the cooperative's group chat.",
+  "The owner of the farm supply shop calls about the fertilizer you bought on credit. You go through your ledger and tell him it will all be settled when the grain money comes in after harvest. He sighs on the other end.",
+  "Lunch at the field's edge. The women ladle pickled cabbage stewed with glass noodles and big steamed buns out of insulated buckets. An old member asks how much the rice subsidy is this year, and you say the document hasn't come down yet.",
+  "The drone pilot arrives and you trace flight paths along the plot boundaries on your phone. He doesn't like the power lines on the north side, so you walk the ridge with him and mark each obstacle.",
+  "Back at the cooperative, the chairman is smoking in his office over today's progress sheet. He points at Zone 7 and says it's slow. Tomorrow you're watching it.",
+  "In the dormitory you enter today's acreage, fuel and labor into the spreadsheet. Outside the window, tractor lights still flicker on and off out in the fields."
+ ],
+ "ladder": [
+  {"title": "Agricultural Manager, Level 4", "stage": "Trainee", "focus": "Follow the production manager around one work zone, get hands-on with seedlings, field prep, spraying and yield surveys, and sit the Level 3 exam."},
+  {"title": "Work Zone Leader (Agricultural Manager, Level 3)", "stage": "Work zone", "focus": "Run five or six thousand mu and a dozen drivers: schedule sowing and harvest, inspect inputs, reconcile yield surveys."},
+  {"title": "Cooperative Production Manager (Agricultural Manager, Level 2)", "stage": "Production", "focus": "Set the whole cooperative's planting plan, schedule machinery, order inputs, negotiate loans and sell the grain."},
+  {"title": "Professional Manager of the Cooperative (Agricultural Manager, Level 1)", "stage": "Operations", "focus": "Answer to the board: present plans, budgets and dividends, and handle project applications, insurance and outside partners."},
+  {"title": "General Manager of the Cooperative Union", "stage": "Union", "focus": "Run joint purchasing, grain sales and machinery for a dozen cooperatives in the county, and negotiate with the county and with companies."}
+ ],
+ "ai_tasks": [
+  {"name": "Gathering input prices, grain prices and weather and sending them to members", "how": "AI can pull weather, grain prices, input markets and subsidy notices every day and turn them into a bulletin members can read in the group chat. A person only spot-checks whether the sources hold up and fit local conditions."},
+  {"name": "Reading satellite crop maps and writing fertilizer and spraying prescriptions", "how": "From satellite and drone images, AI can flag the weak plots every week and write a variable-rate fertilizer prescription. Whether a plot is short of nitrogen, was flooded, or has the wrong variety, someone has to walk it before deciding whether to change anything."},
+  {"name": "Setting the planting plan and crop rotation", "how": "AI can work out several plans for what to plant and how much from heat units, soil tests, past yields and grain prices. Which one to pick means weighing subsidies, contracts, members' opinions and the land's strength, and someone has to answer for the harvest."},
+  {"name": "Walking the fields and making the call at the field's edge", "how": "When to sow, which plot to harvest first, whether to spray when disease shows up: that gets decided by someone crouching at the edge of the field with a handful of soil and a leaf turned over. When things go wrong, it's a person who explains to the members and the board."},
+  {"name": "Scheduling field machinery and drivers", "how": "BeiDou navigation and dispatch systems can plot routes, calculate fuel and let driverless tractors run straight lines through the night. A tractor stuck in mud, a breakdown, who goes first when the weather window is closing: someone on the ground still sorts that out."},
+  {"name": "Signing land leases, negotiating loans, holding members' meetings", "how": "Lease contracts get negotiated door to door, dividends get explained line by line at the general meeting, banks and processors get met in person. AI can draft the contracts and the spreadsheets; what makes people trust them is still a person."}
+ ],
+ "events": {
+  "e_frost": "An early frost in mid-September, and the late-maturing corn fields weren't fully ripe yet. The yield survey came in more than a hundred jin (about 50 kg) a mu short. You explained it item by item at the meeting. The chairman said nothing.",
+  "e_bumper": "A year of good wind and rain, and soybeans topped four hundred jin a mu. On dividend day the members lined up at the cooperative to sign for their money, and one old man counted his three times.",
+  "e_flood": "It rained for more than ten days straight in July and two thousand mu of low ground went under. You and your crew dug drainage ditches and set up pumps through the night. When the water went down a week later, a wide stretch of soybeans had turned yellow. The insurance company came to assess, and you went with them for three days.",
+  "e_blight": "August was close and humid, and in one rice field you spotted spindle-shaped lesions on the leaves: rice blast was coming on. You sent two drones to spray that same day. A few neighbors who didn't spray lost a fifth of their crop.",
+  "e_rent": "Lease-signing season in spring. A few member households said the cooperative next door was paying fifty yuan more per mu and they wanted their land back. You sat in their homes all afternoon and kept half of them.",
+  "e_ai_map": "The cooperative signed up for a satellite remote-sensing platform that sends a crop vigor map every week. Which plots are going yellow or red, you can see at a glance. Over your morning porridge you check the map first, then decide where to go.",
+  "e_ai_wrong": "The platform said Zone 12 was short of nitrogen and issued a top-dressing prescription map. You went out and looked: that field had flooded last year and the roots were shallow, so more fertilizer wouldn't help. You rejected the prescription in the system and typed one line explaining why.",
+  "e_ai_brief": "Every morning the members' group chat now gets an automatic farm bulletin: tomorrow's wind force, whether drones can fly, how many fen the grain price moved. The old members stopped phoning you one by one, and you gained an hour in the fields.",
+  "e_hail": "A June hailstorm swept the north plots and shredded the corn leaves into strips. You stood at the edge of the field and did the sums: the full-cost insurance would pay back most of it, but this year's crop was as good as gone.",
+  "e_back": "Two months of spring sowing bouncing across fields in the pickup, and your back wouldn't straighten. The county hospital said lumbar muscle strain and told you to drive less. You put a firm cushion on the driver's seat and kept going.",
+  "e_order": "You brokered a contract with a grain processor for high-protein soybeans at fifteen fen a jin above market. When the beans were delivered after harvest, every line on the protein test cleared the bar.",
+  "e_love": "The township agricultural extension station got a new technician. That winter the two of you went to a black-soil conservation training course in the city, and on the bus back you sat in the same row and talked the whole way.",
+  "e_wedding": "You held the wedding at a restaurant in town, in November, once the field work was done. The cooperative's drivers turned their tractors into the wedding procession, red silk flowers tied to the hoods.",
+  "e_house": "You bought a two-bedroom flat with central heating in Fujin town, the down payment pooled from both families. In winter you live in town; for spring sowing and autumn harvest you move back into the cooperative's dormitory. You move house twice a year.",
+  "e_kid": "The baby was born just before spring sowing. You stayed at the hospital for three days. Early on the fourth the machinery chief called to say two transplanters were broken. You handed the baby to the grandparents and drove back to the fields.",
+  "e_young_leave": "A young driver you trained left for an electronics factory in the south, saying a year in the fields was going nowhere. You saw him onto the bus in the yard, then looked back at the tractors: one fewer person to drive them.",
+  "e_debt": "Grain prices fell for a year and the loan the cooperative took out in spring came due. The chairman sent you to the bank to roll it over. You sat in the credit department all afternoon with lease contracts for thirty thousand mu and the yield reports.",
+  "e_straw": "After harvest all the straw goes back into the soil, and not a single fire is allowed. You patrol the field edges at night with a crew. When you see a glow in the distance you drive over: someone burning leaves to roast potatoes.",
+  "e_soil": "For five years you kept no-till and straw mulch going on a few plots, taking soil samples for testing, and the organic matter crept back up. An expert from the province came to look, dug out a spadeful of black earth, crumbled it in his hand and smelled it.",
+  "e_parent": "Your father slipped sweeping snow in the yard one winter and ended up in the county hospital. It was lease-signing season, so by day you went from member to member, and at night you slept on a folding bed in his ward.",
+  "e_apprentice": "A college graduate you trained became production manager at a cooperative in the next county. In his first spring sowing he phoned to ask how to set the transplanting window, and you spent half an hour on the phone explaining heat units.",
+  "e_robot": "The cooperative replaced a batch of tractors with driverless ones that steer by BeiDou and can run straight lines on their own at night. The drivers went from twelve to five, and the ones who stayed all learned to read a tablet."
+ },
+ "choices": {
+  "c_cert": {"title": "Sitting the Level 3 Agricultural Manager exam", "situation": "The city is running a Level 3 Agricultural Manager course: three winter months of cooperative finance, farm produce marketing and project applications, and you need to pass before you can run a work zone. But winter is when you visit members, sign leases and order inputs. The chairman says if you go, you'll have to make up that work at night.", "options": [
+   {"label": "Take the course", "result": "Days in class in the city, evenings phoning one household after another. For the final exam you wrote a business plan for a cooperative, and the cooperative was your own thirty thousand mu."},
+   {"label": "Not this year", "result": "That winter you signed all seventy-odd lease contracts, and the members said you were someone who got things done. The certificate, you said, could wait until next year."}
+  ]},
+  "c_more_land": {"title": "Leasing another ten thousand mu", "situation": "The landholders in the next village want to lease out, and the chairman wants to take on another ten thousand mu in one go and has asked you to negotiate. If it works, the cooperative becomes the biggest in the county and you get a new work zone to run. But the rent is paid up front with borrowed money, and if grain prices fall it's a big hole.", "options": [
+   {"label": "Go and get the land", "result": "You spent a whole winter in that village and signed up more than eight thousand mu. In spring the boundary stakes for the new plots went in one by one, and standing at the field's edge you felt your shoulders get heavier."},
+   {"label": "Talk the chairman into slowing down", "result": "You put the last few years of costs and grain prices into one table for him. He looked at it half the night and said they'd try two thousand mu first."}
+  ]},
+  "c_ai": {"title": "Taking charge of remote sensing and prescription maps", "situation": "The cooperative bought a digital farming platform: satellite imagery, drone field patrols, variable-rate fertilizer maps. The chairman says you're young, so it's yours. Running it means learning the data and dealing with the platform's technicians every day, and plenty of the old drivers don't believe in any of it.", "options": [
+   {"label": "Take it on and learn", "result": "You learned to read the vegetation index, and to fix the unreliable squares on a prescription map one by one. The next year, on the variable-rate plots, you used over ten percent less fertilizer."},
+   {"label": "Leave it to the platform people", "result": "You still covered the fields on foot and glanced at the platform's maps now and then. At the year-end meeting on going digital, you said the least."}
+  ]},
+  "c_crop": {"title": "More soybeans or more corn this year", "situation": "Soybeans get a producer subsidy, but yields are low and the price follows imports. Corn yields more and pays steadily, but after a few years of it the land gets tired. The chairman wants a plan from you, and every member has an opinion.", "options": [
+   {"label": "Rotate soybeans and corn, half and half", "result": "You drew up a three-year rotation plot by plot. That year's returns weren't the highest, but the next year those fields were noticeably easier to farm."},
+   {"label": "More corn, protect the income first", "result": "Corn prices were good that year and members got bigger dividends. But looking at the seedlings on a few plots in their third year of corn, you felt uneasy."}
+  ]},
+  "c_mgr": {"title": "Applying for Cooperative Production Manager", "situation": "The old production manager is moving to the cooperative union, and the Cooperative Production Manager post is open: the planting plan for all thirty thousand mu, machinery dispatch and input purchasing, with a year-end bonus tied to yield. The other candidate is the machinery chief who has worked with the chairman for fifteen years.", "options": [
+   {"label": "Put your name forward", "result": "You spoke for twenty minutes at the members' representative assembly, all about each plot's yields and costs over the years. On voting day the old machinery chief clapped you on the shoulder."},
+   {"label": "Step aside for the machinery chief", "result": "You said you were still young and would run a work zone a few more years. The machinery chief became production manager, and when he scheduled the machines for spring sowing he always asked you first."}
+  ]},
+  "c_south": {"title": "A planting manager job with a company in the south", "situation": "An agribusiness running winter vegetable bases in Hainan and Yunnan wants to hire you as planting manager, at one and a half times your pay, with work all year round. But it means leaving this black soil, and your parents and child are in Fujin.", "options": [
+   {"label": "Go south", "result": "In the vegetable fields of Hainan you spent your first winter without snow.", "end": "At the southern base you run several thousand mu of chili peppers and long beans, sowing in every season. In winter you video-call home, and your child points the phone out the window at the heavy snow. You watch it for a long time."},
+   {"label": "Stay in Fujin", "result": "You deleted that number. At the cooperative's year-end dinner you had two drinks and said you still hadn't figured this land out."}
+  ]},
+  "c_family_farm": {"title": "Leasing land of your own for a family farm", "situation": "You've saved some money and you know everyone who farms in the county. An old classmate working away from home has over a thousand mu at home to lease out and asks if you'd farm it yourself: be the owner, keep what you make, and eat what you lose.", "options": [
+   {"label": "Do it yourself", "result": "You bought two second-hand tractors, put up a steel-sheet shed at the field's edge and painted your farm's name on it.", "end": "Your family farm is twelve hundred mu of soybeans and rice, with three hired drivers. Every year when the last plot is harvested you stand at the field's edge for a while, watching the white vapor rise from the dryer."},
+   {"label": "Stay with the cooperative", "result": "You found your classmate a reliable large grower to take it over. Every spring after that, the man sent you a bag of soybean flour he'd ground himself."}
+  ]},
+  "c_union": {"title": "Applying for General Manager of the Cooperative Union", "situation": "Several cooperatives in the county are forming a union to buy inputs together, sell grain together and share machinery, and they need a general manager. You're a candidate, but the job means meetings every day with the county, the banks and the processors, a long way from the field's edge.", "options": [
+   {"label": "Apply", "result": "You wrote a business plan for the union. Page one listed what each of the dozen cooperatives was paying for inputs: the gap was as much as two hundred yuan a tonne."},
+   {"label": "Stay with your own thirty thousand mu", "result": "You said you were more at home in the fields. The first thing the new general manager did was come to your cooperative to learn how you did things."}
+  ]},
+  "c_advisor": {"title": "Stepping back to be a technical advisor", "situation": "You're past fifty and your back aches every winter. The cooperative wants a younger person in your seat and asks you to become technical advisor: no more watching daily field progress, and less pay.", "options": [
+   {"label": "Step back and advise", "result": "You compiled every plot's yields, diseases and fertilizer records from all those years into one thick book and handed it to your young successor. He leafed through it a long time and said some of this wasn't on the platform."},
+   {"label": "A few more years", "result": "That spring sowing you were at the field's edge every day with a back brace on. The young people handled the data; you looked at the seedlings."}
+  ]}
+ },
+ "endings": {
+  "retire": "On your last harvest you drove the pickup through all thirty thousand mu from south to north, stopping at every plot number. The dryer lights stayed on all night. You didn't go back to town but slept in the cooperative's dormitory until morning. The next day brought the year's first snow.",
+  "burnout": "That spring sowing, at the field's edge, everything went black and you sat on the ridge for a long time unable to get up. The doctor said it was exhaustion, your blood pressure was high too, and you had to stop pushing like this. The cooperative moved you to the accounts and contracts. You sit in the office and listen to the tractors pull out of the yard, one after another."
+ },
+ "stages": [
+  "You follow the production manager around one work zone. In the seedling greenhouse you check temperatures and open vents; during field prep you measure harrow depth with a ruler; before spraying you agree flight paths with the drone pilot; every night you enter acreage, fuel and labor into the spreadsheet. You deal most with drivers and old members: the drivers think you're too young, the old members treat you like one of their own kids and ask you everything.",
+  "You lead a work zone now, five or six thousand mu and a dozen drivers. You decide which day this land is sown and which plot is harvested first, and you reconcile the yield surveys line by line. When inputs arrive you sign for them and check them, and when something's wrong you take it up with the manufacturer. From following to scheduling, you've learned the hardest part of the day is making the decision.",
+  "The planting plan for thirty thousand mu is yours. In winter you work out rents, order seed and fertilizer and negotiate loans with the bank; in spring you schedule every machine in the cooperative; in autumn you haggle with processors and book rail wagons with the grain depot. You go to more meetings than fields now, but every month you still drive past every plot.",
+  "You're the professional manager the cooperative hired, answerable to its board. At the start of the year you present the planting plan and budget to the members' representative assembly, and at the end the dividends. You negotiate full-cost insurance with insurers and project applications with the county. You no longer run daily field work; you have three zone leaders, and you back them up.",
+  "You run the union of a dozen cooperatives across the county: joint purchasing, joint grain sales, shared machinery, more than two hundred thousand mu on one spreadsheet. Half your week is meetings in the county and city; the other half is in the cooperatives' yards, listening to their chairmen argue."
+ ],
+ "work": [
+  "The machinery chief sends you to measure plant spacing on a transplanter. You crouch in the mud with a steel rule and measure hill by hill, then report it's half a centimeter too dense. He mutters and shifts the gear up a notch.",
+  "On yield survey day you go into the fields with the county extension station staff: five sample points, count the ears, thresh, weigh. You sign the survey sheet with your own name for the first time.",
+  "An old member brings his phone to ask whether these yellow spots on the leaves are disease. You study it a long time and say it's potassium deficiency, then take him to the supply shop to pick out a bag of potash.",
+  "In spring you make a sowing schedule for your zone, splitting the plots into three batches by heat-unit band. The night before the second batch, the temperature drops, and you push it back three days.",
+  "A truck of fertilizer arrives at the threshing floor. You weigh three sacks at random and one is two jin short. You take photos and phone the manufacturer's sales rep to come and make it up the next day.",
+  "A new driver flattens a stretch of field ridge with his tractor. You don't shout. You shoulder a spade with him and rebuild the ridge, and tell him to check the navigation screen before he turns.",
+  "In winter you go through the cooperative's input accounts, seed, fertilizer, pesticide, diesel, comparing each line with last year. You get several fertilizer makers in one room to bid, and knock eighty yuan off every tonne.",
+  "The rail wagons booked with the grain depot are five days late, and corn is piled like a mountain on the threshing floor. Overnight you line up two drying plants and send the wet grain out to be dried first. Not one truckload spoils.",
+  "In the bank's credit department you walk through this year's planting plan. The loan officer asks what happens if grain prices drop twenty percent, and you slide the full-cost insurance policy across the desk.",
+  "At the members' representative assembly someone asks why this year's dividend is lower than the cooperative next door's. You put the cost sheet up on the wall and go through it line by line until nine at night.",
+  "For the county's high-standard farmland project application, you and your zone leaders map every field, ditch and road. The paperwork fills two archive boxes.",
+  "A zone leader's top-dressing plan doesn't match the platform's prescription map. You spend half a day in the field with him and in the end go with his.",
+  "For the union's first joint grain sale you sit at one table with three processors. After two days of talks you get sixty yuan more per tonne than any cooperative got selling alone.",
+  "Two cooperatives fight over the same batch of machinery and the dispute lands on your desk. You spread both field plans out, order them by when each plot ripens, and nobody says another word.",
+  "The city sends people to study black-soil conservation. You take them to the union's first no-till plots and walk them through ten years of organic matter test results."
+ ],
+ "past": [
+  "The autumn you were fifteen, your father was picking twenty mu of corn by hand on his own. You skipped two days of school to help, and the leaves left thin bloody cuts all over your hands.",
+  "Your gaokao (college entrance exam) score was middling, and you put down agronomy at an agricultural university in the provincial capital. Your father asked why anyone needs college to farm. You said farming now means doing the numbers.",
+  "The summer after your second year you worked in the university's trial fields, helping a professor compare soybean varieties, recording plant height and pod counts every day until you were as brown as any farmer.",
+  "At graduation your classmates went off to sell for agricultural supply companies in the cities. You went back to Fujin and joined this cooperative in your village. The chairman said you'd start in the seedling greenhouse.",
+  "After your first full season, you passed the Level 4 Agricultural Manager exam at a winter training course. You brought the certificate home; your father looked at it a long time and hung it on the wall."
+ ],
+ "late": {
+  "pension_note": "Estimate: the cooperative pays the manager's basic pension contributions as an enterprise employee, based on the base wage; the autumn bonus isn't counted. In retirement that comes to roughly 40 percent of the final monthly pay.",
+  "scenes": [
+   "The first spring after you retire, you still wake before five. You ride your e-bike to the cooperative's seedling greenhouse, lift the plastic for a look, and let it fall again.",
+   "Every year before spring sowing, the young manager who took over comes and sits at your house with a tablet to show you this year's prescription map. You put on your reading glasses, point at a few squares and say that field can't take fertilizer like this.",
+   "You dig a small plot behind your own yard: potatoes, green beans and a few rows of corn, no spraying, every weed pulled by hand.",
+   "Your back is bent and you can't drive anymore. At harvest your child drives you to the field's edge, and through the car window you watch the combine pass, again and again.",
+   "You handle accounts and contracts in the office and leave on time. Walking past the threshing floor in the evening, you still can't help grabbing a handful of grain to check how dry it is.",
+   "Once your blood pressure settles, they bring you back to teach the young ones: heat units, black soil, which year the hail flattened which field.",
+   "At the age, you retire. The cooperative invites you to its year-end meeting, and you sit in the back row listening to the new manager report this year's yields.",
+   "The first year after leaving the cooperative, you pass the yard and see that the dryer has been repainted a different color.",
+   "An old member calls to say rice blast is back this year and asks how you sprayed those fields back then. You walk him through it on the phone, step by step.",
+   "In a young person's short video you see the field where you started no-till all those years ago. The video says it was the first black soil in the county to recover.",
+   "Later the tractors drove themselves, the drones flew themselves, and the platform wrote its own prescription maps. But to decide the day to sow, someone still had to crouch down and pick up a handful of soil.",
+   "Your grandchild comes to Fujin for the summer holidays, and you take them to the field's edge to tell soybeans from weeds. They ask what you used to do. You say: I farmed."
+  ],
+  "closing": {
+   "retire": "Many years later, one autumn, you sit in the yard shelling this year's green beans. Out in the fields a combine works with its lights on, back and forth, and the wind smells of new grain.",
+   "burnout": "Many years later, you open a window high up in a town apartment block and see that someone has planted a few rows of scallions on the empty ground below. You go down and stand beside them for a while, and say: these need earthing up.",
+   "end": "Many years later, you find the old notebook in a cupboard, filled with plot numbers and yields, its pages gone yellow. You turn them one by one until you reach the first spring sowing, and stop there a long time."
+  }
+ }
+}

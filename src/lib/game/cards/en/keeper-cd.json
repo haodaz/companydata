@@ -1,0 +1,166 @@
+{
+ "id": "keeper-cd",
+ "occupation": "Zookeeper",
+ "role": "Zookeeper at a City Zoo",
+ "headline": "A new zookeeper with a vocational diploma in animal husbandry and veterinary science, at an old zoo in Chengdu, in the night quarters of the red pandas and Sichuan golden snub-nosed monkeys before dawn every day, sweeping enclosures, cutting fruit and hiding bamboo shoots",
+ "unit": "The Southwest Rare Animals section of a city zoo in Chengdu",
+ "unit_type": "City zoo",
+ "city": "Chengdu",
+ "city_tier": "New first-tier city",
+ "education": "Vocational college diploma (Animal Husbandry and Veterinary Science)",
+ "level": "You can clean and disinfect enclosures, prepare feeds and write the husbandry log, and you've learned the names and moods of about half the red pandas and golden monkeys. Behavioral training and going into the big-cat section are still beyond you; you do those alongside your mentor.",
+ "intro": "The zoo is on the north side of the city and nearly seventy years old. Under the old banyan trees, half the enclosures are still brick walls and iron bars; the other half have been rebuilt as exhibits with trees and water. Your section is home to eleven red pandas and a troop of golden snub-nosed monkeys, with a photo and name for each one taped to the doors of the night quarters. From today, what they eat, what they pass, and whether they're in good spirits all goes past your eyes first.",
+ "salary_note": "Estimate: a contract zookeeper in Chengdu's parks system, base pay plus performance pay and holiday overtime, about the national figure. Once you move onto a permanent establishment post and qualify as a technician, it rises a notch.",
+ "facts": [
+  {"label": "Zookeeper (Junior Grade) (current level)", "value": "0–3 years, ¥4,000–5,500 a month (national average, estimated)", "source": "Common in the trade"},
+  {"label": "Next level up", "value": "Zookeeper (Intermediate Grade) (3–6 years)", "source": "Common in the trade"},
+  {"label": "Pay after 10+ years", "value": "¥7,000 a month (national average)", "source": "Pay by experience"},
+  {"label": "What AI can't take", "value": "Going into the enclosure, feeding, behavioral training", "source": "AI exposure"},
+  {"label": "Where AI is moving in", "value": "Writing the husbandry log, compiling weights and food intake", "source": "AI exposure"},
+  {"label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings"}
+ ],
+ "day": [
+  "You pull on rubber boots and overalls and go to the night quarters for the count. The red pandas poke their heads out of their wooden boxes one by one, and you tick them off against the photos on the door: eleven, all here.",
+  "Sweep, hose down, pick up droppings. With tongs you bag each animal's droppings separately and check the color and shape. One bag is on the loose side, and you note it in the log under that animal's name.",
+  "In the feed room you weigh out apples, steamed cornbread and bamboo leaves portion by portion, the digital scale matched gram by gram to the diet sheet. Your mentor says a fat red panda is hard to treat when it's ill.",
+  "Before opening you hide food in the exhibit's tree hollows and bamboo tubes, stuffing apple chunks into tubes with holes drilled in them and hanging them in the branches. It's called enrichment: letting them find their own food.",
+  "The crowds build. A grown man pokes a crisp through the railing, and you walk over and tell him not to feed them, it'll upset their stomachs. He pulls his hand back.",
+  "Twice-cooked pork over rice in the staff canteen. Your mentor tells you about the old golden monkey the zoo had over ten years ago, who in his last years would only take food from him.",
+  "You stand outside the golden monkey enclosure for behavioral observation, noting every five minutes who's doing what: grooming, playing, sitting. The male called Abao stares at you the whole time.",
+  "After closing you bring the animals in from the exhibits, then you and your mentor go door by door checking the locks and signing off. In the old banyan by the entrance, the crows are coming home to roost."
+ ],
+ "ladder": [
+  {"title": "Zookeeper (Junior Grade)", "stage": "Trainee", "focus": "Clean, prepare feeds, do enrichment and behavioral observation, and double-check locks with your mentor; sit the intermediate grade exam."},
+  {"title": "Zookeeper (Intermediate Grade)", "stage": "Independent", "focus": "Take charge of several enclosures on your own, fine-tune diets and enrichment, do behavioral training and work with the vets."},
+  {"title": "Team Leader (Senior Grade)", "stage": "Team", "focus": "Run rotas, feeds and safety protocols for five or six keepers in a section, and set its enrichment and training plans."},
+  {"title": "Head of Animal Care Group (Technician)", "stage": "Large section", "focus": "Run husbandry and welfare assessment for one of the zoo's large sections, join negotiations on acquisitions and exchanges, lead research projects."},
+  {"title": "Head of Animal Department (Senior Technician)", "stage": "Department head", "focus": "Set husbandry standards, safety protocols and welfare assessment for the whole zoo, and approve acquisition plans."}
+ ],
+ "ai_tasks": [
+  {"name": "Writing the husbandry log, compiling weights and food intake", "how": "A keeper speaks into a phone once and the system turns it into a log, charting weight, food intake and droppings as curves. A person only spot-checks for numbers recorded wrong."},
+  {"name": "Watching the cameras and assessing behavior overnight", "how": "Cameras with behavior recognition can watch the night quarters all night and flag pacing, stereotypic behavior and long stretches without movement. Whether an animal is really unwell or just sleeping deeply, the keeper only knows after going to look in the morning."},
+  {"name": "Planning diets and feed ratios", "how": "AI can work out diets and ratios by species, age, weight and season. What this one left today, or that one who's teething and can't chew, a keeper has to watch and adjust day by day."},
+  {"name": "Going into the enclosure, feeding, behavioral training", "how": "When to go through the door, where to stand, whether the animal's temper is right today, has to be judged by someone on the spot. Teaching an animal step by step with a target stick to stand on the scale or hold out an arm depends on trust built up between a person and that animal."},
+  {"name": "Designing enrichment and redesigning exhibits", "how": "AI can look up enrichment from zoos everywhere and sketch exhibit plans. What the animal will actually play with, and what's a safety risk, gets decided only after a keeper hangs it up and watches for a few days."},
+  {"name": "Talking to visitors and students, stopping people feeding the animals", "how": "Telling a grown man holding a crisp not to feed them, crouching down to explain the rings on a tail to a child: it works because a person is standing there."}
+ ],
+ "events": {
+  "e_birth": "One early summer morning you saw a damp little red panda cub in the nest box, its mother licking it. You kept watch outside the door all day, hardly daring to breathe, and that evening you filled a whole page of the log.",
+  "e_bite": "Feeding a golden monkey, you reached in too fast and it bit the back of your hand. You went for rabies and tetanus shots, and your mentor gave you an earful, saying you'd broken the rules yourself.",
+  "e_heat": "Chengdu's dog days are close and hot. The red pandas can't take the heat and lie still in the night quarters. You change the ice in their air-conditioned room three times a day, and your own clothes never dry.",
+  "e_old": "The zoo's oldest red panda died, at nineteen, a great age. In its last days it would only eat the bamboo shoot tips you peeled for it. You took its name card down from the door and kept it in a drawer.",
+  "e_train": "Over three months, with a target stick and a spoonful of honey water, you taught a red panda to walk onto the electronic scale by itself and hold out a front paw for the vet. Weighing it used to take three people to catch it.",
+  "e_ai_cam": "The zoo put cameras with behavior recognition in the night quarters. Which animal paced back and forth at night, which didn't move all night, the system reports the next morning. You no longer go out at midnight with a flashlight to check.",
+  "e_ai_miss": "The system said a golden monkey's activity overnight was normal. In the morning you saw it had hidden its food without eating it and hadn't groomed. You called the vet, and it turned out to have inflamed gums.",
+  "e_ai_log": "The husbandry log is now something you say once into your phone, and the system turns it into a table and charts weight and food intake. You spend half an hour less writing every day and half an hour more standing outside the enclosures.",
+  "e_holiday": "Over the seven days of the National Day holiday the zoo had tens of thousands of visitors a day. You stood by the exhibit railings from morning to night and asked people a hundred times not to feed the animals or bang on the glass. By the last day your voice was gone.",
+  "e_video": "A visitor filmed you feeding a red panda an apple and it went viral. For days people came to the exhibit specifically to look for you, calling out your nickname. The zoo had you do a livestream.",
+  "e_transfer": "A male monkey you'd raised for five years was sent on exchange to a zoo in another province to breed. You rode with the transport truck, and at the door of his new night quarters you told the new keeper what he likes to eat and what noises frighten him.",
+  "e_school": "A class of primary schoolchildren came for a nature lesson, and you crouched by the railing explaining why red pandas have rings on their tails. One child asked whether it misses home. You thought about it and said it is at home.",
+  "e_love": "A new veterinary assistant at the zoo hospital often came to your section to take samples. One day vaccinating the red pandas the two of you worked together so smoothly that after work you went out for chuanchuan skewers.",
+  "e_wedding": "You held the wedding in Chengdu. The invitations were printed with a red panda you'd drawn yourself. Colleagues said you were the zoo's third in-house couple.",
+  "e_house": "You bought a small two-bedroom flat on the north side, a twenty-minute bike ride from the zoo. The down payment was pooled from both families, and the mortgage takes most of your pay, so you've started taking more holiday shifts.",
+  "e_kid": "The baby was born. You held her exactly the way you hold a red panda cub on the scale, and your family laughed about it for ages.",
+  "e_waist": "Years of bending to hose floors, hauling feed sacks and climbing trees to hang enrichment, and the strain in your lower back keeps getting worse; on rainy days you can't straighten up. You hang a back brace behind the feed room door.",
+  "e_renovate": "The zoo turned the old enclosures into an immersive exhibit with a stream and a bamboo grove. You helped draw the routes through the night quarters, and on moving day the red pandas spent the whole afternoon climbing their new trees.",
+  "e_young": "When the zoo hires keepers now, most applicants have bachelor's degrees in animal science, a few even master's degrees. Watching them, you remember yourself on your first day in rubber boots.",
+  "e_parent": "Your mother back home was diagnosed with high blood pressure and heart trouble. Once a month you go back to Leshan and sort her month of pills into daily doses.",
+  "e_apprentice": "A young keeper you trained gave a talk at a national zoo behavioral training exchange on how to teach golden monkeys to hold out an arm for blood draws. The last slide had your name on it."
+ },
+ "choices": {
+  "c_cert": {"title": "Sitting the Zookeeper Intermediate Grade exam", "situation": "The zoo encourages keepers to earn vocational skill grades. At intermediate grade you can take sole charge of an enclosure, and it's one of the requirements for a permanent post later. It means studying animal nutrition, behavior and signs of illness: books in the evening, training at weekends. But every holiday this year you're on the rota.", "options": [
+   {"label": "Sit the exam", "result": "For three months in the dorm you memorized feed ratios and disease symptoms. The practical was scoring a rabbit's body condition, and your hands were steady."},
+   {"label": "Get the work down first", "result": "That year you came to know all eleven red pandas inside out: which one eats first, which one needs feeding alone, you could tell with your eyes closed. The certificate could wait until next year."}
+  ]},
+  "c_carnivore": {"title": "A transfer to the big-cat section", "situation": "The carnivore section is short-handed and the zoo wants to move you there: tigers, leopards and black bears. The rules are strict there, two people and two locks, not one wrong step. You'd learn a lot, and that's where the commendations go. But you hate to leave your red pandas, and your mentor says you're too impatient; he wouldn't feel easy with you there.", "options": [
+   {"label": "Go to the big cats", "result": "Your first month in the carnivore section you were only allowed to watch, not touch. The first time you passed meat to a tiger through the mesh, your hand was steady and your heart was racing."},
+   {"label": "Stay with the red pandas", "result": "You stayed. That winter two of the red pandas paired successfully, and the next summer there were twin cubs in the nest box."}
+  ]},
+  "c_ai": {"title": "Learning the behavior monitoring system", "situation": "The zoo is piloting AI cameras for behavior monitoring and welfare assessment and needs keepers to work with the tech company: labeling videos, setting rules, reviewing reports. It's a fair amount of work and you'd have to learn to read data, but the whole zoo's welfare assessments will depend on it.", "options": [
+   {"label": "Sign up", "result": "You labeled hundreds of video clips, teaching the system to tell grooming from scratching and play from fighting. The next year your section's reports were the most accurate in the zoo."},
+   {"label": "Stick with your own eyes", "result": "You kept standing outside the enclosures every day, your notebook packed with writing. You leafed through the system's reports and believed about half."}
+  ]},
+  "c_handrear": {"title": "Hand-rearing: taking it on or not", "situation": "A golden monkey mother won't look after her baby, and the vet says it will have to be hand-reared: a bottle every two hours, temperature and weight logged, no full night's sleep for three months. The zoo asks who's willing.", "options": [
+   {"label": "I'll do it", "result": "You set up a camp bed in the nursery room and gave more than a thousand bottles over three months. The day the little monkey first grabbed a branch by itself, you crouched outside the door and cried."},
+   {"label": "Let someone experienced do it", "result": "You said you'd never done it and were afraid of getting it wrong. The veteran keeper who took it on had you come and help half of every day, and you learned to mix the formula and burp a baby monkey."}
+  ]},
+  "c_lead": {"title": "Applying for Team Leader (Senior Grade)", "situation": "Your section's old team leader has retired, and the zoo will choose a Senior Grade keeper from the intermediate keepers to lead the team: rotas, feeds, training new hires, setting enrichment and training plans, and the first signature when anything goes wrong. The other candidate started five years before you.", "options": [
+   {"label": "Put your name forward", "result": "At the selection meeting you talked about the three months it took to get that red panda onto the scale by itself and played a video. The old vet on the panel nodded."},
+   {"label": "Step aside for your senior", "result": "You said you'd keep animals a few more years. Your senior became team leader, and when planning enrichment always asked your opinion first."}
+  ]},
+  "c_private": {"title": "A job at a wildlife park", "situation": "A big new wildlife park in another province wants you as head of its animal department: forty percent more pay, dozens of keepers under you. But the park does a lot of animal shows and visitor encounters, and that gives you pause.", "options": [
+   {"label": "Go", "result": "You resigned and took the high-speed train out of the province, your target stick packed in your suitcase.", "end": "At the wildlife park you oversee dozens of keepers and over a hundred species. Every time the show schedule comes up at a meeting, you put in the same word: if the animal doesn't want to go on, it doesn't."},
+   {"label": "Stay in Chengdu", "result": "You said no. After work that day you stood a little longer by the red panda exhibit, watching them sleep in the new bamboo."}
+  ]},
+  "c_study": {"title": "An adult bachelor's degree", "situation": "Moving to a permanent post and qualifying as a technician at the zoo both depend on qualifications. A nearby university runs an adult bachelor's in animal science: weekend classes, two and a half years, tuition out of your own pocket.", "options": [
+   {"label": "Enroll", "result": "You went to class at weekends and studied animal nutrition in the feed room in between. Your thesis was on enrichment for red pandas, and the data came from your own logs."},
+   {"label": "Don't bother", "result": "You kept your weekends for your family. You did every bit of the work as before; your name just wasn't on the list for permanent posts."},
+   {"label": "Quit and sit the master's exam in wildlife conservation", "result": "You resigned, studied for a year in a rented room, and got into a forestry university's program in wildlife conservation and management.", "end": "Later you did field monitoring in a nature reserve in western Sichuan, hiking up mountains with camera traps on your back and living at the ranger station most of the year. Once a camera caught a wild red panda, and you stared at the photo all night."}
+  ]},
+  "c_head": {"title": "Applying for Head of Animal Care Group (Technician)", "situation": "The zoo is choosing a head of animal care for one of its large sections from among the team leaders: husbandry, training and welfare for the whole section, plus a seat in negotiations on acquisitions and exchanges. It means qualifying as a technician, a defense, and leading a research project.", "options": [
+   {"label": "Apply", "result": "You turned over a decade of behavioral training records into a research project. At the defense, when the experts asked about safety procedures with big cats, you went through them point by point."},
+   {"label": "Stay with your own section", "result": "You said you'd still rather be beside the enclosures every day. After the new head took over, the training plans still came to you to look at first."}
+  ]},
+  "c_edu": {"title": "Moving to the education department", "situation": "You're past fifty and your back can't carry feed sacks anymore. The education department would like you to give talks and run programs, telling schools and visitors about the animals. The pay is about the same, and no more hosing floors.", "options": [
+   {"label": "Join education", "result": "You give three talks a day beside the exhibits, about red panda tails and golden monkey noses. Whatever the children ask, you've already seen the answer beside an enclosure."},
+   {"label": "Stay on the front line", "result": "You still go into the night quarters at seven every morning to count. The young keepers carry the feed for you, and you teach them how to read droppings."}
+  ]}
+ },
+ "endings": {
+  "retire": "On your last day you went into the night quarters at seven, counted them one by one and drew the last tick in the log. You peeled a handful of bamboo shoot tips and passed them out one at a time. As you left through the gate the crows were coming home to the old banyan. You looked back once and didn't go in again.",
+  "burnout": "That winter, carrying a sack of feed, your back suddenly gave out, and you sat on the feed room floor for a long time unable to stand. After surgery the zoo moved you to logistics to handle feed purchasing. Every day you walk past that exhibit and watch them sleeping through the glass."
+ },
+ "stages": [
+  "You look after a row of enclosures with your mentor: the morning count, cleaning, checking droppings; weighing feed gram by gram to the diet sheet in the feed room; hiding food and hanging enrichment before opening; behavioral observation outside the enclosures in the afternoon; bringing the animals in and double-checking locks at dusk. You deal most with your mentor and the vets. Your mentor teaches you to read an animal's face; when the vets come for samples, you pass things and record numbers.",
+  "You take sole charge of several enclosures now: diet tweaks, enrichment ideas and training progress are your call. With a target stick you teach animals to stand on the scale, hold out a paw, open their mouths, so the vets can examine them without anesthetic. When visitors and students ask, you explain; when something's a little off with an animal, you're the first to phone the vet.",
+  "You're team leader for a section, responsible for rotas, feeds and safety protocols for five or six keepers, and you set the section's enrichment and training plans. You train the new hires, sign the incident reports, and draw routes with the designers when an exhibit is rebuilt. You do less feeding yourself and more watching others feed.",
+  "You oversee husbandry and animal welfare for one of the zoo's large sections, with several team leaders reporting to you. You join negotiations on acquisitions and exchanges, review the sections' welfare assessments, lead research projects and visit other zoos. More meetings, but every morning you still walk through the night quarters.",
+  "You're head of the animal department, setting the zoo's husbandry standards, safety protocols and welfare assessment methods, with dozens of keepers and hundreds of animals in your care. You meet with the zoo hospital, the education department and outside conservation organizations, approve acquisition plans, and teach keepers from zoos across the country."
+ ],
+ "work": [
+  "Your mentor has you score a red panda's body condition. After a lot of feeling you say it's on the thin side. He feels once and says: winter coat's thick. Did you actually reach the bone?",
+  "You make your first enrichment device, drilling five holes in a bamboo tube and stuffing them with apple. Less than ten minutes after you hang it in the tree, a red panda has pulled the whole thing down.",
+  "Checking locks at closing, you find a connecting door's bolt not fully home. You and your mentor go over the whole row of doors again, and you write a line in the handover book.",
+  "With a target stick you teach a golden monkey to hold out its arm, one raisin each time it touches the tip. On day forty the vet draws its blood for the first time without anesthetic.",
+  "A red panda has left food two days running. You lay its droppings, weights and observation notes in front of the vet, who reads them and says: check its teeth.",
+  "A visitor complains the golden monkeys are \"locked up and miserable.\" You take her to see the climbing frames in the night quarters and the enrichment records. When she leaves she says she'll bring her kids next time.",
+  "You make an enrichment calendar for the whole section, something different every day of the week: ice blocks, pine cones, scent cloths, hide-the-food boxes, each with its safety checkpoints written out.",
+  "A new keeper goes into the night quarters without first confirming where the animals are. You don't shout. You take him back to the door and walk through the procedure again, door by door.",
+  "During an exhibit rebuild, the designer wants a big glass wall in the red panda exhibit. You point out that glass bakes in summer and they'll hide and never come out. It ends up as mesh and tree shade.",
+  "A zoo in another province wants to trade a pair of golden monkeys for your red pandas. At the negotiating table you bring out both sides' studbooks and check them line by line for any risk of inbreeding.",
+  "Reviewing a section's welfare assessment, you see an old black bear's stereotypic behavior hasn't decreased in three months. You call in the team leader and the two of you spend an afternoon watching outside its enclosure.",
+  "The research project you led is presented at an industry conference: the effect of enrichment on stereotypic behavior in red pandas, the data drawn from twelve years of husbandry logs.",
+  "You write a new safety protocol for the zoo's carnivore section. Rule one: at all times, see the animal before you open the door.",
+  "The zoo wants to bring in a new species. At the review meeting you ask three questions: are the night quarters big enough, who will look after it, how will it be kept cool in summer. Nobody can answer, so you don't sign.",
+  "You teach visiting keepers from other zoos, and it isn't about technique. It's about how to stand outside an enclosure for an hour doing nothing at all, only watching."
+ ],
+ "past": [
+  "Your family lived in the countryside outside Leshan, with two pigs and a flock of chickens behind the house. The year you were fifteen, the sow farrowed, and you kept watch by the pigsty at midnight with a flashlight and delivered eleven piglets.",
+  "Your high school grades were ordinary. At weekends you often cycled to the township vet station to watch them inject cattle. The vet said you had nerve and asked if you wanted to learn the trade.",
+  "Your gaokao (college entrance exam) score just cleared the line for vocational college, and you applied for animal husbandry and veterinary science at a vocational college. Your family said it would be useful for raising pigs. You had more than pigs in mind.",
+  "In the summer of your second year you interned at the Chengdu zoo, and on day one were sent to sweep the aviary. You saw an old keeper whistle at a hornbill, and it flew straight to him.",
+  "At graduation the zoo was hiring contract keepers, and you went back to interview. Asked why you'd come, you said: to look at them every day."
+ ],
+ "late": {
+  "pension_note": "Estimate: after moving from contract to a permanent post you pay into the public-sector pension scheme, with enterprise-scheme contributions from the earlier years. Together that comes to roughly half the final monthly pay in retirement.",
+  "scenes": [
+   "The first morning after you retire you wake at seven and reach toward the bedside for the husbandry log. You get up, make a cup of tea, and drink it by the window.",
+   "You buy an annual pass to the zoo and go twice a week, standing outside the red panda exhibit like any other visitor. The young keepers spot you and wave across the railing.",
+   "You teach nature classes to primary schoolchildren in your neighborhood, bringing an old target stick to explain how to teach a red panda to step onto a scale by itself. The children laugh themselves silly.",
+   "Your back is bent and you need a wheelchair to visit the zoo. Your child pushes you past the golden monkey enclosure. You don't know a single monkey in there anymore, and you look for a long time.",
+   "You handle feed purchasing in logistics, checking the orders for apples, bamboo and cornbread every day. When a truckload of bamboo isn't fresh, you know from the smell.",
+   "Once your back is a little better, the zoo asks you back to tell the new keepers about those three months of hand-rearing.",
+   "At the age, you retire. On your last day you stand a while by the red panda exhibit. Every name card on the doors is a new name.",
+   "The first year after leaving Chengdu, whenever you see a photo of a red panda somewhere, you lean in to look at the rings on its tail and count them.",
+   "Your old mentor calls to say the little monkey you hand-reared has become a mother and is raising her baby herself, and doing it well.",
+   "Online you come across a livestream from that zoo in Chengdu. In the frame a young keeper holds up a target stick, teaching a red panda to step onto the scale.",
+   "Later the cameras reported for themselves which animal slept badly, and the log organized itself once you'd spoken into a phone. But whether an animal was in good spirits today still took someone standing outside the enclosure, watching.",
+   "Your grandchildren ask which animal you liked best of all the ones you looked after. You think a long time and say you remember every one of their names."
+  ],
+  "closing": {
+   "retire": "Many years later, one spring afternoon, you sit on a bench at the zoo watching a red panda asleep in the fork of a tree, its tail hanging down and swaying. Sunlight leaks through the bamboo leaves, and you doze off too.",
+   "burnout": "Many years later, you're watering a few pots of bamboo on your balcony. A sparrow lands on the railing and cocks its head at you. You don't move, and it doesn't leave, and you stay like that for a while.",
+   "end": "Many years later, in a drawer, you find your first year's husbandry log. The first page has eleven ticks and eleven names beside them. You read them aloud one by one, and at the last one you close the book."
+  }
+ }
+}
