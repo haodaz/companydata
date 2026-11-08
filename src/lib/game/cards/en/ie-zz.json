@@ -1,0 +1,150 @@
+{
+ "id": "ie-zz",
+ "occupation": "Industrial Engineer",
+ "role": "Assistant IE Engineer (Phone Assembly Division)",
+ "headline": "In your first year out of an industrial engineering degree, standing by an assembly line at a phone contract manufacturer in Zhengzhou's Airport Economy Zone with a stopwatch on a screw-driving station, after a week of wearing down a line leader to get thirty more phones an hour out of one line",
+ "unit": "A phone contract manufacturer in Zhengzhou's Airport Economy Zone: the manufacturing engineering section of the assembly division",
+ "unit_type": "Electronics contract manufacturer (phone assembly)",
+ "city": "Zhengzhou (Airport Economy Zone)",
+ "city_tier": "New first-tier city",
+ "education": "Bachelor's degree (Industrial Engineering)",
+ "level": "Stopwatches, MOD, line balance rates and ECRS you've all been examined on, and you're quick with Excel pivot tables and Visio flowcharts. But you can't yet lay out a sixty-station line, a line leader can stump you just by saying go on, you do it, and how to staff a new model during trial runs you're still learning from your mentor.",
+ "intro": "You studied industrial engineering at a university in your home province and signed with this contract manufacturer in the Airport Economy Zone, posted to the manufacturing engineering section of the assembly division. Tens of thousands of people work on this campus. A line has sixty stations, each station one motion, and a phone travels from a bare circuit board to a packed box along the flowchart your section draws on paper. From today, how many seconds each person on this line takes for each motion is partly up to the stopwatch in your hand.",
+ "salary_note": "Estimate: base pay for engineers at big contract manufacturers in Zhengzhou is a little below the coast; with overtime and the year-end bonus it comes to about 90 percent of the national figure. In peak season (the months a new model ramps up) overtime can be half your pay; in the slow season it's base only.",
+ "facts": [
+  { "label": "Assistant IE Engineer (current level)", "value": "0–2 years, ¥5,780–8,500 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "IE Engineer (2–5 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥15,800 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Getting the line to accept improvements, at the line", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Time studies and setting standard times", "source": "AI exposure" },
+  { "label": "Open positions", "value": "42 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "A long queue for the factory bus snakes from under the dormitory, everyone ahead and behind you in the same work smock. You buy an egg-stuffed pancake from a street stall, with a sausage added.",
+  "At the morning meeting the section chief reads out yesterday's UPH, units per hour. The line you follow came up forty short, and the customer's resident engineer has asked about it twice in the group chat.",
+  "You stand behind the screw-driving station with a stopwatch and time each motion twenty times. The operator is a girl even younger than you. She doesn't look at you, and her hands are faster than your stopwatch.",
+  "The numbers show Station 17 is three seconds slower than the rest: the bottleneck. You chart the line balance in Excel, one tall red bar in the middle.",
+  "The canteen is a sea of people. You carry a bowl of braised noodles around for ages looking for a seat. Your mentor waves from a corner: new model trial run this afternoon, come and lay out the line with him.",
+  "On the trial line, the operator is slow seating the new model's display ribbon cable and takes three tries to get it in. Your mentor tells you to note it: split this step into two stations, or build a jig.",
+  "You take the revised work instructions to the line leader. He glances at them and says, go on, you do it. You do, at half the speed. He laughs and says, fine, change it like that for now.",
+  "Back at the dormitory after overtime, you list the ten stations you'll time tomorrow. Downstairs another night shift bus pulls out."
+ ],
+ "ladder": [
+  { "title": "Assistant IE Engineer", "stage": "Stopwatch", "focus": "Time studies, SOPs, line balance and the data behind improvement proposals; help lay out lines for new models and learn how to talk at the line." },
+  { "title": "IE Engineer", "stage": "Line layout", "focus": "Own line layout, standard times and capacity for one model or several lines, make error-proofing and fixture improvements, earn a Lean Six Sigma Green Belt." },
+  { "title": "Senior IE Engineer", "stage": "Projects", "focus": "Lead the IE side of new model launches and automation projects, do the headcount and cost math, supervise two or three engineers, earn a Black Belt." },
+  { "title": "IE Section Chief", "stage": "Section", "focus": "Run a division's IE section: the standard time system, capacity planning and headcount budget, settling numbers with production, finance and the customer's resident engineers." },
+  { "title": "Manufacturing Engineering Manager", "stage": "Manager", "focus": "Run IE and process engineering for several divisions, set layouts and automation roadmaps for new campuses and lines, report cost and efficiency to the plant director." }
+ ],
+ "ai_tasks": [
+  { "name": "Getting the line to accept improvements, at the line", "how": "Changing a station's motions or moving a fixture means explaining it face to face to the line leader, team leader and operator, doing it yourself first and watching how people react. AI can offer the plan; persuading people and owning it if the change goes wrong is human work." },
+  { "name": "Time studies and setting standard times", "how": "Cameras with motion recognition can break down the motions and compute every station's time automatically. Which differences are normal skill variation and which are bad motion design, and how much allowance to give, is for the IE to go and see and decide." },
+  { "name": "Line layout and line balancing for new models", "how": "AI can generate several line balance plans from the process steps and times and compute the balance rate. During trial runs, which step is hard, whose hands are new and whether materials are on time take someone on the floor watching and adjusting." },
+  { "name": "Capacity, headcount and cost reports", "how": "Working out capacity, headcount and labor cost per unit from orders and standard times, and producing daily and weekly reports, is now mostly done by the system and AI. People just check definitions and the key numbers." },
+  { "name": "Fixture, error-proofing and workstation improvements", "how": "AI can find the stations that need error-proofing from defect data and look up similar fixture designs. How to build the fixture, and whether it feels right in the hand, the IE and operators work out together." },
+  { "name": "Pitching plans to management and settling numbers across departments", "how": "Headcount budgets, capacity commitments and whether to invest in automation have to be argued out in meetings with production, finance and the customer, under pressure. AI can only help prepare the materials." }
+ ],
+ "events": {
+  "e_first_balance": "For the first time you balance a line on your own: split one station, merge two, and the balance rate goes from 78 to 86 percent. Your mentor looks at your chart and says, the numbers are right. Tomorrow go see if the people are.",
+  "e_peak": "For the three months a new model ramps up you work six days a week, twelve hours a day. The campus is as bright at night as by day. You lose three kilos and bank a pile of overtime pay.",
+  "e_line_leader": "A motion you changed has an operator taking an extra half step, and the line leader tells you in front of a whole row of people that you've never stood a shift. You go back and retime the station, and the next day you apologize to him.",
+  "e_greenbelt": "You earn a Lean Six Sigma Green Belt. Your project cut bubble defects at a screen-film station from 2.1 percent to 0.6 in three months.",
+  "e_offseason": "The slow season comes. Orders halve and half the lines stop. You're sent to optimize the plant layout and spend your days with a tape measure in empty workshops.",
+  "e_ai_motion": "A row of cameras goes up over the line, and the motion recognition system computes every station's time automatically, to a tenth of a second finer than your stopwatch. You no longer spend all day timing. But it counted a girl rubbing her eyes into the standard time, and you're the one who fixes it.",
+  "e_ai_report": "Daily and weekly capacity and headcount reports are handed to the system and land in the group chat at seven every morning. You used to spend an hour each morning on the spreadsheet; now you only check whether any number looks wrong.",
+  "e_jig": "With the old hand in the jig shop you make a small fixture for pressing ribbon cables, an aluminum plate and two locating pins. Once it's in use, that station's defects drop to zero, and the operator says her wrist doesn't hurt anymore.",
+  "e_customer": "The customer's resident engineer wants proof within a week that a line can produce 20 percent more. You stay up four nights running simulations, and he can't fault the number you give him.",
+  "e_automation": "The plant brings in automatic screwdrivers and film applicators, and a line goes from sixty people to thirty-eight. You're the one laying out the new line. For a few days you'd rather not go to the canteen.",
+  "e_house": "You buy a new flat on the edge of the zone, your parents covering half the down payment. It's fifteen minutes from the plant, and out the window are towers still under construction.",
+  "e_neck": "Years of standing by the line looking down at stations, and your neck starts to hurt; sometimes your fingers go numb. The doctor tells you to look down less. You tell him that's impossible.",
+  "e_overseas_line": "The company's new plant overseas is copying one of your lines, and you're sent for a month to get it running, teaching local engineers to read a line balance chart. You come back with a few words of the local language.",
+  "e_mentor": "The new hire you're training lays out a line on his own for the first time and runs over to tell you: 89 percent balance. You tell him not to celebrate yet. Tomorrow, seven a.m., come to the line with me.",
+  "e_budget_cut": "Headquarters hands down a cost target: cut labor cost by 10 percent. You work on it for a week, and half of the plan you submit comes from fixtures and workstation improvements, not from cutting people.",
+  "e_family": "You get married to someone you met at the plant, in quality. Neither of you can get leave for the wedding, so the banquet waits for the slow season.",
+  "e_order_shift": "A major customer moves part of its orders elsewhere, and your division's capacity is suddenly half empty. The three-year capacity plan you wrote has to be redone overnight.",
+  "e_ai_sim": "The new campus layout is run through a digital twin first, and AI produces dozens of options overnight. You pick three, and the next day you take a tape measure into the empty building and walk through each one.",
+  "e_hometown_kid": "An operator recognizes you: she's from the village next to yours back home, ten years younger. She says she's worked this line for three years, and she still uses that fixture you made.",
+  "e_ulcer": "That year two new models ramp back to back, and your stomach gives out; you spend a week in hospital. The day you're discharged, the section's group chat fills with a row of hug emojis."
+ },
+ "choices": {
+  "c_standard": { "title": "A loose standard time or a tight one", "situation": "You've timed a line, and by the data its standard time should come down another two seconds. The line leader catches you privately: this line has lots of new people, tighten it and half of them won't make quota and lose their bonus this month. Your section chief wants the number.", "options": [
+   { "label": "Tighten it by the data", "result": "UPH goes up. The line leader doesn't speak to you for a month. The section chief praises you by name at the weekly meeting." },
+   { "label": "Give allowance now, tighten in three months", "result": "You add a little allowance and write it into the report, with a retime scheduled in three months. In the canteen the line leader puts a piece of meat in your bowl." } ] },
+  "c_ai_motion": { "title": "Learning motion recognition and data analysis", "situation": "The company is rolling out camera-based motion analysis plant-wide, and the IE section must send a few people to learn how the model is labeled, how data is cleaned and how results are checked, then own the system for the whole division. Classes are in the evenings, three months straight.", "options": [
+   { "label": "Sign up", "result": "You learn to read the recognition confidence and missed detections, and later every standard time in the division goes through you." },
+   { "label": "Let someone else go", "result": "You keep standing at the line with your stopwatch. You think that look you give a person is something a camera can't." } ] },
+  "c_blackbelt": { "title": "A Black Belt, and a shot at Senior IE Engineer", "situation": "To make Senior IE Engineer, the section chief says, you'd better have a Black Belt project: a big cross-department one with savings you can put a figure on, six months at least, defended in front of the division's general manager.", "options": [
+   { "label": "Do it", "result": "Your project cuts changeover time across the division from ninety minutes to forty, and at the defense you read out what it saves in a year." },
+   { "label": "Not yet", "result": "You want to master the lines you have first. The Black Belt textbook goes in a drawer." } ] },
+  "c_overseas": { "title": "Posted to the new plant in Southeast Asia", "situation": "The company is building a plant in Southeast Asia and needs a few IEs on site for two years. Pay plus the overseas allowance is one and a half times what you make now, with priority for promotion when you return. Your family is uneasy.", "options": [
+   { "label": "Go", "result": "Over there you lay out lines starting from an empty shell of a building and teach local engineers to time stations. In two years you come home twice." },
+   { "label": "Stay", "result": "You stay in Zhengzhou. The slot goes to a colleague from the next section, and you see him off the day he leaves." } ] },
+  "c_ev": { "title": "Lean work at an EV plant", "situation": "An electric vehicle plant in Zhengzhou is hiring lean engineers and says it wants people who've timed phone lines. Twenty percent more pay, a less frantic pace, but a car's takt time and processes are nothing like a phone's, and you'd be starting over.", "options": [
+   { "label": "Go to the car plant", "result": "From a phone line's tens of seconds you move to a car line's one-minute takt. For the first month you walk the final assembly line every day.", "end": "You rose to lean manager at the car plant and could walk the final assembly line with your eyes closed. Now and then you saw an old phone model on the street and still remembered which station seated its display cable." },
+   { "label": "Stay at the contract manufacturer", "result": "You turn it down. Phone lines change fast, and you like that speed." } ] },
+  "c_kezhang": { "title": "Running for IE Section Chief", "situation": "The old section chief is moving to another division and the IE Section Chief post is open. It means a dozen engineers, carrying the headcount budget, meetings with production and finance every day; your own projects would have to go to someone else.", "options": [
+   { "label": "Run for it", "result": "At the selection meeting you show one chart: how the labor seconds per phone came down, bit by bit, over three years." },
+   { "label": "Keep doing projects", "result": "You say you want a few more years on the floor. The general manager nods and hands you an automation project." } ] },
+  "c_shenzhen": { "title": "A transfer to headquarters in Shenzhen", "situation": "The manufacturing engineering office at headquarters in Shenzhen wants someone who knows mass-production lines to build the standard time system. Thirty percent more pay, but housing costs several times Zhengzhou's, and your child's schooling has to be rethought.", "options": [
+   { "label": "Go to Shenzhen", "result": "You rent a small two-bedroom in Shenzhen and take the family to the beach on weekends. At work there are more meetings and fewer trips to the line." },
+   { "label": "Stay in Zhengzhou", "result": "You stay in the zone. On weekends you fly kites with your child in the park while a cargo plane climbs overhead." } ] },
+  "c_consult": { "title": "Going into lean consulting", "situation": "A lean consulting firm wants you as a consultant, teaching and running diagnostics at small and midsize factories around the country. About the same pay, no output to carry, but half the year on the road.", "options": [
+   { "label": "Become a consultant", "result": "You turn your years at the contract manufacturer into a course. Your first stop is a shoe factory in Wenzhou.", "end": "You spent many years as a lean consultant, in shoe factories, furniture factories, food plants. In every workshop you first stood by the line for half an hour, saying nothing, and then took out your stopwatch." },
+   { "label": "Stay", "result": "You say you'd rather keep your own lines. The firm's owner says the door stays open." } ] }
+ },
+ "endings": {
+  "retire": "In your last week before retirement you go and stand at the line once more. Cameras glow in rows overhead, operators have turned over generation after generation, and the station numbers are still the scheme you laid out years ago. You didn't bring a stopwatch. You watch for half an hour, jot down one station number and hand it to the youngest engineer in the section.",
+  "burnout": "After that hospital stay the doctor says no more grinding. You move from the section to the training center, teaching line balancing and ECRS to new IEs. You speak slowly, and when you get to the principles of motion economy you always use that little ribbon-cable fixture as the example."
+ },
+ "stages": [
+  "Every day you time stations at the line, twenty runs each, then go back to compute standard times in Excel, draw line balance charts and bring revised work instructions to the line leader to sign. In your hands are a stopwatch, the station number sheet and a binder of SOPs. You deal most with line leaders and team leaders. They know the line better than you; you know the numbers better than them. You're learning to make the two meet.",
+  "You run several lines for one model on your own: when a new model arrives you lay out the line and set standard times, stay at the line during trial runs adjusting it station by station, and after ramp-up watch UPH and headcount. You start proposing fixture and error-proofing improvements, running between the jig shop, quality and production. You used to call the line leader; now he calls to ask how many people you need tomorrow.",
+  "You lead the IE side of new model launches and automation improvements: in project meetings you say how many people a line needs, what it costs and how long until payback, negotiate takt times for automated stations with equipment vendors, and supervise two or three engineers. You spend less time on the floor and more on reports and meetings, but you still pick one day a week to stand at the line for an hour at seven a.m.",
+  "You run the IE section of a division, a dozen engineers. You set the rules for standard times, draw up next year's capacity and headcount budget, and settle numbers at one table with production, finance and the customer's resident engineers. Behind every number are the shifts of several hundred people. The headcount budget you sign decides how many are hired next quarter.",
+  "You run IE and process engineering for several divisions, and the layouts and automation roadmaps for new campuses and lines are yours to approve. You report cost and efficiency to the plant director, negotiate capacity commitments with headquarters and customers, and visit new plants overseas to look at their lines. The question you ask most in meetings: has anyone on the line actually tried this?"
+ ],
+ "work": [
+  "Your mentor sends you to time the packing station. Of twenty runs, three are very slow. You ask the operator; she says those were the times the tape ran out. You log tape changes as a separate element.",
+  "You rewrite the work instructions for a film-application station, five steps cut to three, with two photos. The line leader reads it and says: now that I can follow.",
+  "Old Ma from the next section asks you to check a new model's time sheet. You find two stations' motions counted twice, and he buys you a bottle of iced tea.",
+  "First day of a new model's trial run, Station 17 can't get the ribbon cable in. You and the old hand from the jig shop crouch by the line and make a guide slot from a piece of acrylic. It's in use by afternoon.",
+  "The production manager asks if you can staff five fewer people tomorrow. You spread the line balance chart on his desk and point to two bottleneck stations: five fewer is fine, and UPH drops by eighty.",
+  "Xiao Chen from quality brings a week of defect data, and the two of you go through it line by line in the MES. Every scratch traces back to one transfer cart. A different pad and they're gone.",
+  "An equipment vendor pitches an automatic screwdriver at four seconds a cycle. You have him run a hundred units on the spot and time it at 5.2 on average. The takt clause in the contract gets rewritten.",
+  "The new hire's headcount estimate has every number right but forgets changeover and training time. You add a column to his sheet, say nothing, and hand it back.",
+  "At a project review, finance asks how many years until the automated station pays for itself. You pull a year of data from three lines: two years and four months, assuming orders hold.",
+  "Working on next year's headcount budget, you and the head of production argue all afternoon over three hundred heads in one division, then each give a little and write it into the budget.",
+  "The customer's resident engineer wants a capacity report for the whole division. You have your team generate it in the system first, then check it line by line yourselves, and correct seven numbers.",
+  "The new campus layout is spread on the conference table. You widen the logistics aisle from three meters to four: forklifts and people have to be able to pass, or there'll be a fight every day.",
+  "Visiting the new plant overseas, the local manager shows you their balance rates. You skip the charts, stand at the line for an hour, and come back pointing at two stations."
+ ],
+ "past": [
+  "You're in your last year of middle school in a county town in eastern Henan. Your family grows wheat and peanuts. Your father goes off to construction sites in other provinces each winter, and one New Year he brings you a calculator.",
+  "Your gaokao (college entrance exam) score clears the first-tier university line, but not by much. You spot Industrial Engineering on the application list, think it sounds like a way into a big factory, and put down a university in your province.",
+  "In your second year, in Basic Industrial Engineering, the teacher plays a video of an assembly line and has you count a worker's wasted motions in one minute. You count eleven, the most in the class.",
+  "The summer after third year you intern at an e-bike factory and time a line for the first time. An old hand barks at you: out of the way.",
+  "At autumn recruiting, at an information session, you hear that one IE at this contract manufacturer oversees hundreds of stations. You figure you'll learn something, and you sign."
+ ],
+ "late": {
+  "pension_note": "Estimate: basic pension for enterprise employees, on Zhengzhou's contribution base and some thirty-plus years of service, roughly 40-odd percent of final monthly pay; overtime and year-end bonuses don't count.",
+  "scenes": [
+   "On the day you retire, the young people in the section give you a stopwatch engraved with your employee number. You laugh: who uses one of these anymore.",
+   "Standing in line at the market outside your compound, you can't help watching the cashier: scan, bag, change. In your head you give her a standard time.",
+   "A small-appliance factory opens in your home county and asks you to come look at its lines. You stand there all morning, point out three stations, and the factory head insists on taking you to dinner.",
+   "Your grandson builds an assembly line out of blocks and asks what's wrong with it. You move one block in the middle: it's jammed here.",
+   "In your years at the training center you teach line balancing to thousands of new hires. Some later become section chiefs, and when they pass you in the corridor they still call you teacher.",
+   "Every morning you take a slow walk through a park in the zone, cargo planes passing overhead one after another. You no longer wonder what they're carrying.",
+   "You gather your improvement cases from all those years into a small booklet, print twenty copies and give them to people from your old section.",
+   "The day you leave the contract manufacturer, you go to the canteen one last time. The braised noodles taste the same. Ahead of you in line is a crowd of new arrivals, their smocks still new.",
+   "In the new place you still check the previous day's numbers first thing each morning. Colleagues say it's a habit left over from the contract manufacturer. You don't argue.",
+   "The news says the zone's phone output has changed again. In a shiny line on screen you recognize the way the stations are laid out.",
+   "Later, timing, standard times and reports all went to cameras and the system, and fewer people worked the lines each year. But whenever a new line started up, someone still had to stand beside it and watch whether one person's one motion came easily.",
+   "One winter evening you watch a new phone launch on TV, the camera sweeping across its back. You think about how many screws are probably inside, and then about the hands that drove them."
+  ],
+  "closing": {
+   "retire": "Many years later you find the engraved stopwatch in a drawer and press it. It still runs. You watch the second hand go around once, then press it to a stop.",
+   "burnout": "One afternoon many years later you sit on the balcony shelling peanuts, one by one, neither fast nor slow. You realize you're counting. At a hundred you stop, and smile.",
+   "end": "Many years later, in a little shop, you watch the owner's wife making dumplings: pinch one, set it down. You watch for a long time and decide not a single one of her motions is wasted."
+  }
+ }
+}

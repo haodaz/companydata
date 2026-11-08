@@ -1,0 +1,150 @@
+{
+ "id": "fab-tech-xa",
+ "occupation": "Semiconductor Processing Technician",
+ "role": "Process Technician (Lithography, Rotating Shifts)",
+ "headline": "A vocational college graduate in microelectronics, on four-crew, two-shift rotation in the yellow-light bay of a memory chip fab in Xi'an's high-tech zone, twelve hours in a cleanroom suit minding six lithography tools, who at three one morning put a lot of wafers on hold for the first time on your own call",
+ "unit": "A memory chip fab in Xi'an's high-tech zone: the lithography bay, manufacturing department",
+ "unit_type": "Semiconductor wafer fab (memory chips)",
+ "city": "Xi'an (High-tech Zone)",
+ "city_tier": "New first-tier city",
+ "education": "Vocational college diploma (Microelectronics Technology)",
+ "level": "You know the cleanroom rules by heart, can dispatch, track out and hold lots in the MES, and can see which point on an SPC chart has crossed the control limit. But when a tool alarms you still look up the manual and then call your crew lead, you only dare look at the coat-and-develop recipes, never touch them, and when an equipment engineer talks to you, you can't yet tell which chamber he means.",
+ "intro": "You studied microelectronics at a vocational college, passed the exam into this memory chip fab in the high-tech zone, and were placed in lithography. A wafer here passes through hundreds of process steps over several months before it leaves, and of the tens of billions of memory cells on it, layer upon layer, several layers are printed under this yellow light of yours. From today, twelve hours a shift, every pod of wafers your lithography tools turn out gets a first look from you.",
+ "salary_note": "Estimate: Xi'an fabs pay technicians slightly lower base than the coast; with shift allowance, night pay and the year-end bonus it comes to about the national figure. Shift money is a big share of take-home pay, and moving to straight days costs a good chunk of it.",
+ "facts": [
+  { "label": "Process Technician (current level)", "value": "0–2 years, ¥5,500–7,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Senior Process Technician (2–5 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Working with equipment engineers to tune and calibrate tools", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Running the tools by the process spec to process wafers", "source": "AI exposure" },
+  { "label": "Open positions", "value": "52 related listings nationwide, 4 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The factory bus pulls out from the dormitories in Chang'an District before it's fully light. You eat a roujiamo, braised pork in a flatbread, and the smell of the meat spreads through the bus.",
+  "Into the cleanroom suit: hood, mask, coverall, booties, two pairs of gloves, a turn through the air shower, and when the door opens the whole room is yellow light.",
+  "Shift handover. The night crew says Tool 3 threw an alignment offset in the small hours; the engineer came and adjusted it and ran two monitor wafers, data within limits. You sign the handover log.",
+  "The overhead transport drops a pod of wafers at the load port. You check the lot number and recipe in the MES and start the run. On the screen beside you the SPC chart inches forward point by point.",
+  "You take turns going out to eat, and only out of the suit do you notice the film of sweat on your face. The canteen has biangbiang noodles today, wide and hand-pulled, and you eat a big bowl.",
+  "One linewidth measurement on Tool 5 sits right against the control limit. You watch it and run another wafer. It doesn't cross, but you leave a note in the system anyway.",
+  "An equipment engineer comes to bring a tool back up after maintenance, and you hand him tools and run test wafers. As he works he explains why this chamber has to wait for the temperature to settle.",
+  "When you come out after handover it's dark again. Everyone on the bus is asleep. You lean against the window and watch the towers of the high-tech zone, lit one after another."
+ ],
+ "ladder": [
+  { "title": "Process Technician", "stage": "Minding tools", "focus": "Mind tools in one bay, load and unload, run monitor wafers and log data, hold lots and report anomalies, help engineers bring tools back after preventive maintenance." },
+  { "title": "Senior Process Technician", "stage": "Owning tools", "focus": "Own daily running and anomaly handling for several tools, decide whether to stop a tool, support engineers' tuning and experiment wafers, train newcomers." },
+  { "title": "Technician Crew Lead", "stage": "Leading a crew", "focus": "Lead a shift's technicians: staffing, handovers, every anomaly in the bay at night, reviewing each tool-down with equipment and process engineers." },
+  { "title": "Shift Supervisor", "stage": "Running a shift", "focus": "Own output, yield and safety for the whole manufacturing department on one shift; when something goes wrong at night you make the first call, and by day you reconcile numbers with bay managers." },
+  { "title": "Deputy Manager, Manufacturing", "stage": "Running the department", "focus": "Run people, capacity and automation upgrades across several bays, set the shift system and technician development path, report output to the fab." }
+ ],
+ "ai_tasks": [
+  { "name": "Running the tools by the process spec to process wafers", "how": "Automated tools and the dispatch system can already run wafers by recipe, and AI can optimize scheduling and prompt steps. Loading, handling anomalies and judgment calls on the spot still rest on technicians' hands." },
+  { "name": "Testing process parameters at each step and logging results", "how": "Collecting, logging and archiving parameters can basically be done by the system and AI. People only spot-check that the data looks reasonable and nothing was missed." },
+  { "name": "Working with equipment engineers to tune and calibrate tools", "how": "AI can suggest adjustments and point to past cases. Actually turning, measuring and calibrating at the tool, and confirming face to face with the engineer, depends on hands-on skill and judgment on the spot." },
+  { "name": "Collecting and analyzing key process data", "how": "AI is good at pulling data together, cleaning it and producing trend charts and first-pass analysis. People make sure the sources are reliable and understand what the results mean for the process." },
+  { "name": "Watching critical parameters and reporting anomalies promptly", "how": "AI watches parameters in real time and detects anomalies faster and more completely than human eyes. A person decides whether it's real or a false alarm, whether to stop the tool and report it, and answers for that." },
+  { "name": "Sampling product periodically to track quality", "how": "AI can plan sampling, interpret some measurements and defect images automatically and summarize quality data. People take the samples, run the metrology tools and recheck suspicious results." },
+  { "name": "Working out with engineers how to keep tool parameters stable", "how": "AI can find patterns in parameter drift from historical data and propose causes. People bring what they've seen on the floor into the discussion and decide with the engineers how to adjust." },
+  { "name": "Gowning by the rules and keeping the cleanroom clean", "how": "Wearing the suit, following cleanliness rules and keeping the area clean are physical acts. AI can at most monitor and remind; doing it, and doing it without being told, is up to people." }
+ ],
+ "events": {
+  "e_first_hold": "Three in the morning, a lot's overlay data crosses the control limit. Your crew lead is out, so you put the lot on hold in the system yourself and phone the on-call engineer awake. The next day he writes in the group chat: right call.",
+  "e_night": "After a full rotation of nights, you can't sleep in the dormitory by day even with the blackout curtains drawn. You start getting through four a.m. on a cup of black coffee.",
+  "e_mistake": "Tracking in a lot, you pick the wrong recipe. The system blocks it and it never runs. Your crew lead has you write a report and walks you through the error-proofing steps from the start.",
+  "e_cert": "You pass qualification on every tool in the lithography bay. The last is the coat-and-develop track, and the examiner has you recite the order of every step with your eyes closed. You get it right.",
+  "e_ramp": "The fab's next-generation product is ramping, and lithography runs at full load for months; you're often called back on rest days. The year-end bonus is a good deal bigger than last year's.",
+  "e_downturn": "Memory chip prices fall, the fab cuts output, and technicians take turns on leave. In those idle weeks you read the equipment manuals again in the dormitory.",
+  "e_ai_fdc": "Tool data is wired into the fault detection system, and AI watches thousands of parameters, flagging any drift. You used to page through SPC charts one by one; now you only look at the few it flags and judge whether they're real.",
+  "e_ai_dispatch": "Dispatch and scheduling go to the system, and the overhead transport carries wafers to the right tool on its own. You no longer push carts around. The tools you watch per shift go from six to twelve.",
+  "e_pm": "You join an equipment engineer on a major preventive maintenance and get down to the lithography tool's wafer stage. He has you put it back yourself, and the first wafer after restart aligns better than before the maintenance.",
+  "e_skin": "Years in two pairs of gloves, and the skin on your hands peels and itches; there's a mask mark across your face. You keep a tube of hand cream in your locker and put it on every time you come out.",
+  "e_house": "You buy a flat in Chang'an District, your parents scraping the down payment together back home. The day you get the keys you're off a night shift, and you sleep on the floor of the empty flat.",
+  "e_family": "You get married, to someone from another bay at the fab. Your schedules always clash; it took getting others to cover shifts to find one day for the wedding.",
+  "e_scrap": "A tool's cooling water fails one night, you catch it twenty minutes late, and two pods of wafers are scrapped. The investigation doesn't put the main responsibility on you, but you sleep badly for a whole week.",
+  "e_apprentice": "The new hire you're training puts a lot on hold by himself for the first time and runs to ask if it was right. You look at the data and say yes. Then: next time don't ask me first. Hold it, then ask.",
+  "e_improve": "An improvement you proposed is adopted: check one more item, the tool's temperature control log, at every handover. That year unplanned tool-downs in lithography fall by a tenth, and the fab gives you a certificate.",
+  "e_ai_review": "AI starts proposing tool adjustments by itself: which parameter, which way, how much. The engineer has you try them on experiment wafers first. You try three, and one is right.",
+  "e_new_fab": "The fab's phase two is finished, and you're pulled in to help start up lithography in the new building, beginning with an empty floor and watching dozens of tools go in and light up one by one.",
+  "e_sleep": "After more than a decade of shifts your sleep grows shallower by the day, and your checkup report sprouts several arrows. The doctor asks whether you can stop working nights. You say you'll see.",
+  "e_parents": "You bring your parents from home to stay in Xi'an for a month. The day you take them to the fountain show at the Big Wild Goose Pagoda, you're just off nights, and you fall asleep sitting on the steps.",
+  "e_ai_lights_out": "Night shifts thin out until each bay keeps two or three people and the rest is left to the system and the overhead transport. You sit in the central control room watching a wall of screens, only now and then going down to walk the yellow-light bay."
+ },
+ "choices": {
+  "c_degree": { "title": "Upgrading to a bachelor's", "situation": "The fab runs a part-time bachelor's upgrade with a university in Xi'an, in Electronic Science and Technology, classes on weekends. It helps with moving to engineer or making crew lead, but people on rotation don't always get weekends off.", "options": [
+   { "label": "Enroll", "result": "For two years you swap shifts with colleagues to free up weekends for class, and your thesis is on overlay error in the lithography bay." },
+   { "label": "Don't", "result": "You keep your days off for sleep. You think you learn more beside the tools than from textbooks." } ] },
+  "c_hefei": { "title": "A new memory fab in another province", "situation": "A newly built memory chip fab in another province is poaching experienced technicians: 30 percent more pay and a relocation bonus. But the lines have only just opened, everything is chaotic, and you'd be adjusting from scratch.", "options": [
+   { "label": "Go", "result": "You board the high-speed train with two suitcases. Half the tools in the new fab's lithography bay aren't installed yet, and you're the most senior technician on your crew." },
+   { "label": "Stay in Xi'an", "result": "You stay. On the way home from work you have a bowl of paomo, mutton soup over bread you tear yourself, and you tear it very fine." } ] },
+  "c_ai_fdc": { "title": "Learning data and the fault detection system", "situation": "The fab is picking a few technicians to learn how fault detection rules are set, how false alarms are judged and how data is pulled, then own alarms for the whole bay. Night classes, and an SQL exam.", "options": [
+   { "label": "Learn it", "result": "You learn to pull thousands of parameters from the system and compare them, and later half the alarm rules in the bay are ones you tuned." },
+   { "label": "Pass", "result": "You say you still prefer listening and watching at the tool. Let people who like screens handle the alarms." } ] },
+  "c_fse": { "title": "Field engineer for an equipment maker", "situation": "The China branch of a foreign lithography equipment maker is hiring field service engineers for tools like yours. Forty percent more pay, no shifts, but on call at any hour, traveling to fabs all over the country.", "options": [
+   { "label": "Go", "result": "You go from the person minding the tools to the person fixing them. The first time you're called to another fab, you recognize the alarm in their yellow-light bay at a glance.", "end": "You became a senior field engineer for the equipment maker and worked in a dozen-odd fabs around the country. Every time you put on someone else's cleanroom suit and walked into their yellow-light bay, you still looked at the handover log first." },
+   { "label": "Stay", "result": "You turn it down. You like your own tools; on days they're in a mood, you know it the moment you walk in." } ] },
+  "c_leader": { "title": "Running for Technician Crew Lead", "situation": "Your shift's crew lead has transferred out and the post is open. A crew lead handles staffing and handovers for a dozen-odd people and is first in line for anything that goes wrong in the bay at night. You'd touch the tools less.", "options": [
+   { "label": "Run for it", "result": "At the selection meeting you go through your shift's tool-downs this year, how each was caught and handled." },
+   { "label": "Pass", "result": "You say you want a few more years with the tools. The manager nods and gives you the installation of a new tool." } ] },
+  "c_dayshift": { "title": "Moving to straight days", "situation": "Engineering needs an engineering assistant on permanent days, running experiment wafers and sorting data. No rotation, but no shift allowance either, two or three thousand less a month, and a different path upward.", "options": [
+   { "label": "Move to days", "result": "For the first time you lie down at ten at night and wake at seven, and your whole body feels lighter." },
+   { "label": "Stay on rotation", "result": "You keep working four crews, two shifts. You fold up the checkup report and put it in a drawer." } ] },
+  "c_supervisor": { "title": "Taking over as Shift Supervisor", "situation": "The fab is promoting one crew lead to Shift Supervisor, owning output and safety for the entire manufacturing department on one shift. When any bay has trouble at night, you decide whether to stop and whether to hold; by day there are meetings with bay managers to reconcile numbers.", "options": [
+   { "label": "Take it", "result": "Your first night in that chair in the central control room, one bay alarms. You study the data for five minutes and say stop. It turns out stopping was right." },
+   { "label": "Decline", "result": "You say you want to keep leading your crew. The post goes to another crew lead, and on his first night shift you sit with him until dawn." } ] },
+  "c_hometown": { "title": "Going home to Baoji", "situation": "An old state-owned electronic components maker in your hometown of Baoji is hiring a production supervisor. No shifts, 60 percent of your pay here, close to your parents, who could look after the child.", "options": [
+   { "label": "Go back", "result": "You hand in your cleanroom suit and take the bus home to Baoji. The wind off the Wei River is just as it was.", "end": "You were production supervisor at the components plant back home for many years. Its workshops had no yellow light, but you still insisted every shift write its handover log clearly. Visiting Xi'an now and then, passing the high-tech zone, you looked up at that windowless building." },
+   { "label": "Stay in Xi'an", "result": "You stay and bring your parents to live with you. On weekends you ride bikes with your child on the city wall." } ] }
+ },
+ "endings": {
+  "retire": "Your last shift is a day shift. At handover you leave the notebook you kept for decades in a drawer in the central control room; the last page says: Tool 3, winter, check cooling water first. You take off the cleanroom suit, step out of the air shower, and outside is the Xi'an sun, so bright you squint.",
+  "burnout": "After all those years of shifts, the doctor says no more nights. The fab moves you to the training center, teaching new technicians cleanroom rules and how to judge an anomaly. When you get to hold it, then ask, someone in the room writes it down."
+ },
+ "stages": [
+  "You mind a few tools in lithography: check lot numbers, run lots and monitor wafers, watch the SPC charts, and when something crosses a control limit you hold the lot in the MES and phone the engineer. In your hands are the handover log, metrology reports and a walkie-talkie. You deal most with technicians on your shift and on-call engineers you wake at night, and you're learning to say which tool, which lot and which number in three sentences.",
+  "You own several tools on your own. When an alarm comes, you judge first: a sensor false alarm or real drift, stop the tool or not. When engineers tune tools or run experiment wafers you run tests and log data beside them, and your signature is on restarts after major maintenance. You start training newcomers: how to gown, how to read the handover log, not to be afraid of putting a lot on hold.",
+  "You lead a crew of a dozen-odd technicians: staffing, handovers, watching every alarm in the bay at night, and reviewing every tool-down with equipment and process engineers. You seldom run lots yourself; mostly you walk the bay and watch screens in the central control room. When someone takes leave, falls sick or breaks down in tears, they come to you first too.",
+  "You run the whole manufacturing department on one shift: lithography, etch, thin film, diffusion. When any bay has trouble at night, whether to stop, whether to hold and whether to call the manager are your calls. By day you reconcile output and yield with bay managers and write anomaly reports. Every tool-down you sign for involves millions of yuan of wafers.",
+  "You run people, capacity and automation upgrades across several bays: setting the shift system and the technicians' training and qualification path, meeting with the fab's leadership and the phase two planning group. The thing you say most in meetings: does the night shift know about this change?"
+ ],
+ "work": [
+  "Old Zheng at the next tool asks you to glance at a lot's recipe. You check it twice in the MES and find he's called up the previous generation's. He breaks into a sweat.",
+  "The first time you help an engineer restart a tool, he has you run three monitor wafers. The third one's linewidth is a little off. He says wait ten minutes for the temperature to settle and run it again.",
+  "Two in the morning, the overhead transport jams at a port in lithography. You phone the automation on-call and reset the panel step by step as he tells you, until the pod finally comes down.",
+  "Tool 4 throws an exposure dose alarm and the system calls it drift. You look at the data for ten lots either side, judge it a sensor false alarm, and ask the engineer to confirm. He says you're right.",
+  "An engineer wants a set of experiment wafers, three parameters at two levels each. You run them one by one per the experiment sheet and hand him the metrology data in a single table.",
+  "Xiao Lei, a new technician, puts a lot on hold for the first time and his hand shakes a little. You stand behind him as he types the reason in the system and say: clearly written. The day shift will understand it.",
+  "Drawing up next month's rota, you see a colleague's child needs surgery, and you swap his night shifts for your own.",
+  "In a tool-down review the equipment engineer blames operation. You lay out that night's handover log and alarm records and go through them line by line. The verdict is a faulty spare part.",
+  "Four a.m., etch and lithography alarm at the same time. You have etch stop and lithography hold its lots, make two phone calls, and twenty minutes later engineers from both bays are there.",
+  "At the morning output meeting the manager asks why the night shift came up two hundred wafers short. You put the data for that one hour of downtime on the screen and walk through it sentence by sentence.",
+  "The phase two planning group brings a new shift plan that halves night staffing. On the plan you write: every bay keeps at least one person who can hold a lot.",
+  "You set a new qualification path for technicians with one added item: everyone must try an AI tuning suggestion on experiment wafers with their own hands and write down whether it was right."
+ ],
+ "past": [
+  "You're in your last year of middle school in a county town near Baoji. Your father is a lathe operator at a machine tool plant, and you often wait at his workshop door for him to finish, listening to the machines inside.",
+  "In your second year of high school, your homeroom teacher says Xi'an is building chip fabs and will need people. You spend a whole night searching online for how chips are made and find a photo of a yellow-light bay.",
+  "Your gaokao (college entrance exam) score isn't high, and you choose Microelectronics Technology at a vocational college in Xi'an. Your father says: a skilled trade is nothing to be ashamed of.",
+  "In your second year you wear a cleanroom suit for the first time, in the school's training cleanroom. Twenty minutes in, the teacher says your hair is showing, and you gown all over again.",
+  "In your final year this memory fab comes to recruit at the school. The written test covers semiconductor process flow; at the interview they ask if you can work nights. You say yes."
+ ],
+ "late": {
+  "pension_note": "Estimate: basic pension for enterprise employees, on Xi'an's contribution base and some thirty-plus years of service, roughly 40-odd percent of final monthly pay; shift and night allowances don't count.",
+  "scenes": [
+   "On the day you retire, your crew takes a photo of you at the air shower door, in a cleanroom suit with only your eyes showing. You use it as your profile picture ever after.",
+   "At last you can sleep through every night. For the first month you still wake at three a.m. and lie listening to the wind outside.",
+   "You take up calligraphy by the city wall, writing slowly, stroke by stroke. The teacher says your hand is steady. You say it's from all those years in two pairs of gloves.",
+   "Your grandchild holds up a phone and asks if you made the chip inside. You say you don't know. Maybe one layer.",
+   "In your years at the training center you teach the cleanroom to more than a thousand new technicians. Some later become shift supervisors and still call you master when they see you.",
+   "Every afternoon you walk through the park at Qujiang. Under the sun the colors are white and green, no longer yellow. You walk very slowly.",
+   "People from your old crew start a group chat, and late at night someone sometimes posts an alarm screenshot asking whether anyone's seen it. If you're awake, you reply.",
+   "The day you leave the fab, you take off your cleanroom suit for the last time, fold it and drop it in the laundry bin. Out the gate, you look back once at that windowless building.",
+   "In the new place you still check a handover log first thing every day, even when nobody has written in it. Colleagues call you conscientious. You say it's an old habit.",
+   "On the news you see memory chips have moved to another generation, with twice as many layers as in your day. You think of all that was printed, layer by layer, under the yellow light.",
+   "Later, dispatching, parameter watching and tuning suggestions all went to the system, and the night shifts grew emptier. But whenever something really went wrong, one person still had to stand in front of the tool and decide whether to hold or not.",
+   "One summer evening the sky over Xi'an turns orange-yellow. You stand on the balcony a long while, remembering that yellow light and the days of twelve-hour shifts."
+  ],
+  "closing": {
+   "retire": "Many years later you find the handover notebook in a drawer. The first page is in your twenty-two-year-old hand, very neat: Tool 3, alignment offset, back up. You look at it for a while, then close it.",
+   "burnout": "One morning many years later you sleep until you wake on your own, sunlight across the bed. You lie still, trying to remember whether today is a day or a night shift, and then you smile.",
+   "end": "Many years later you see the red safelight of a darkroom in a photo studio and stop to look. The owner asks if you want something developed. You say no, just looking."
+  }
+ }
+}

@@ -1,0 +1,149 @@
+{
+ "id": "cell-process-cz",
+ "occupation": "Battery Cell Process Engineer",
+ "role": "Assistant Process Engineer (Cell Front End: Coating and Calendering)",
+ "headline": "In your first year out of a materials science master's, at an EV battery plant in Jintan, Changzhou, watching a coating line more than a hundred meters long, after half a night crouched in the dry room over electrode areal weight that was 1 percent off, cutting open your first lithium-plated cell",
+ "unit": "An EV battery plant in Jintan, Changzhou, Jiangsu: the cell process department (front end)",
+ "unit_type": "EV battery plant",
+ "city": "Changzhou (Jintan)",
+ "city_tier": "Second-tier city",
+ "education": "Master's degree (Materials Science and Engineering, lithium batteries)",
+ "level": "You can explain lithium battery chemistry, cathode and anode materials and electrolytes, and you've built coin cells and pouch cells in the lab. But this is the first production coating line you've seen, when slurry viscosity shifts you don't know where to look first, and while you can design a DOE, you've never once persuaded production, maintenance and quality to give you line time to run one.",
+ "intro": "Your master's was on cycle fade in silicon-carbon anodes, and you signed with this battery plant in Jintan, posted to the front end of the cell process department. Your cells go into electric cars of many brands. A cell starts as a drum of slurry and is coated into electrodes, pressed, slit, wound, cased, filled with electrolyte and formed, a journey of several days. From today, how many grams go on each square meter of electrode on that coating line, and how evenly, is partly yours to watch.",
+ "salary_note": "Estimate: battery plants in Jintan, Changzhou pay process engineers close to the national figure, with master's graduates starting a little higher, plus project bonuses and a year-end bonus. In price-war years the year-end bonus is cut in half, though there's no shortage of overtime.",
+ "facts": [
+  { "label": "Assistant Process Engineer (current level)", "value": "0–2 years, ¥7,225–10,625 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Process Engineer (2–5 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥22,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Tuning equipment in the plant and getting every department to put the process into practice", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Setting process parameters for coating, calendering, electrolyte filling and formation", "source": "AI exposure" },
+  { "label": "Open positions", "value": "57 related listings nationwide, 1 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You ride your e-bike from your rented flat to the plant, past block after block of factory buildings and roadside trees not yet grown tall. At the gate you buy a bowl of noodles with shrimp dumplings; the broth is rich.",
+  "At the morning meeting the process supervisor reads yesterday's numbers: areal weight on Coating Line 2 is swinging wide again, and the customer audit is next month. He glances at you.",
+  "In your antistatic suit you enter the coating shop and stand at the head of the line looking at the slurry, lifting it on a spatula to see how it flows, then take a sample for viscosity and solids content.",
+  "On the areal weight gauge trace, the edges of the electrode always come out a little thicker than the middle. You and maintenance adjust the die shims three times. The edges thin out, and a ridge appears in the middle.",
+  "The canteen has whitebait omelet and pork noodles. You eat looking at the SPC chart on your phone. The equipment engineer beside you says: stop looking while you eat. It won't fix itself.",
+  "Into the dry room to open a cell that came out of formation with low capacity. Dew point minus 40, and your hands go cold inside the gloves. There's a grayish-white patch on the anode. Your mentor says: lithium plating.",
+  "You write up a DOE: calendering speed and temperature at three levels each, taking half a shift of line time. The production manager reads it and says next week, orders are tight this week.",
+  "Back in your flat you zoom in on the teardown photos one by one and sketch where the plating sits in your notebook. By the third photo you see it's always on the tab side."
+ ],
+ "ladder": [
+  { "title": "Assistant Process Engineer", "stage": "On the line", "focus": "Follow the daily running of one process step (coating, calendering or formation): watch parameters and SPC, handle anomalies, tear down failed cells, help run DOEs and write process documents." },
+  { "title": "Process Engineer", "stage": "Owning a step", "focus": "Own the process window, SOPs and PFMEA for one step, lead defect analysis and improvement, support trial production of new products, earn a Six Sigma Green Belt." },
+  { "title": "Senior Process Engineer", "stage": "Projects", "focus": "Lead mass-production launches of new cell chemistries (high nickel, silicon anode, sodium-ion), own process specs for the whole front end, defend them in carmaker audits, supervise a few engineers." },
+  { "title": "Process Supervisor (Principal Process Expert)", "stage": "Team", "focus": "Run the cell process team for a plant or product platform, set process routes and cost-down directions, lead on major quality problems and replicating the process at new sites." },
+  { "title": "Process Department Manager", "stage": "Department", "focus": "Run the company's cell process department, set the process route for the next platform, negotiate with R&D, equipment makers, customers and overseas sites, and answer for yield and cost overall." }
+ ],
+ "ai_tasks": [
+  { "name": "Tuning equipment in the plant and getting every department to put the process into practice", "how": "Debugging fixtures, adjusting equipment parameters on the line, coordinating face to face with maintenance, production and quality, getting SOPs into every shift: it all happens on the plant floor and takes people to talk, to do it by hand and to own it." },
+  { "name": "Setting process parameters for coating, calendering, electrolyte filling and formation", "how": "AI can model the process window from historical data and recommend parameters, and areal weight can be controlled in a closed loop. The state of the slurry, the look of the electrode and how the equipment actually behaves take someone to go and see, and a person makes the final call." },
+  { "name": "Analyzing defects like lithium plating, shorts, low capacity and swelling", "how": "AI can run data correlations, design DOEs and recognize plating and wrinkles in teardown images. Which cause holds up, and how to fix it, takes someone cutting cells open and checking on the line." },
+  { "name": "Bringing new cell chemistries into trial production", "how": "AI can draft the PFMEA, control plan and work instructions and check them against older chemistries. High nickel, silicon anodes and sodium-ion have no mature track record; judging risk and deciding on trial runs rests on people." },
+  { "name": "Compiling process documents, BOMs and audit materials", "how": "Version comparisons of process documents, BOM checks, database entry and first drafts of audit materials AI can basically do. People spot-check key clauses and answer questions in the audit room." },
+  { "name": "Pilot runs and technology transfer for new materials and processes", "how": "AI can search the literature, compile pilot data and write transfer reports. Which experiments to run, how to read anomalies and whether it can scale to mass production are for people to decide." }
+ ],
+ "events": {
+  "e_first_doe": "You get your first DOE done on the line: calendering temperature up five degrees, compaction density up, springback down. At the weekly meeting your supervisor puts your interaction plot on the screen.",
+  "e_dryroom": "That month you're in the dry room tearing down cells almost every day. Your lips crack, the skin on your hands peels, and at home two big glasses of water don't quench your thirst.",
+  "e_audit": "A carmaker customer comes for a process audit. The auditor stands at the coating line for an hour and asks what you do when areal weight crosses the control limit. You walk through the reaction plan start to finish, and he nods.",
+  "e_scrap_roll": "You change an oven temperature and release production before the confirmation is done. A roll of electrode wrinkles and the whole roll is scrapped. Your supervisor doesn't come down hard; he has you present it yourself at the next weekly meeting.",
+  "e_greenbelt": "You earn a Six Sigma Green Belt. Your project cut slitting burr defects from 8 per thousand to 2 in three months.",
+  "e_ai_closed_loop": "The coating line gets AI closed-loop control of areal weight: when the thickness gauge sees a deviation, the die adjusts itself. You no longer stand at the head of the line turning screws bit by bit. But the day a new batch of cathode material comes in, it spends a whole morning failing to settle, and you're the one who switches it off and pulls it back by hand.",
+  "e_ai_teardown": "Teardown photos start going to an image model that circles plating, wrinkles and flaking one by one. It saves you most of a day, which you spend on the line finding out why they appear.",
+  "e_price_war": "Battery prices fall 30 percent in a year, and the company hands down a cost target. You work on it for a month and squeeze a few fen per watt-hour out of slurry solids content and coating speed.",
+  "e_smoke": "A cell in the aging room starts smoking and the fire suppression system goes off on its own. No one is hurt. You spend a week with the investigation team and trace it to a batch of electrodes with burrs from winding.",
+  "e_house": "You buy a flat in Jintan town, ten minutes from the plant. Prices are far below Nanjing's, and from the balcony you can see Maoshan Mountain in the distance.",
+  "e_family": "You get married, the wedding back in your hometown. Your supervisor approves a week's leave, and before you go you write three pages of handover notes for the coating line.",
+  "e_sodium": "The company is going into sodium-ion cells and you're pulled onto the launch team. The slurry behaves nothing like lithium's, and for the first two months the electrodes shed powder at a touch.",
+  "e_overtime": "A new car model's cells are ramping, and for two months you never leave before ten at night, weekends included. That year your running app sits untouched for a whole season.",
+  "e_patent": "An improvement you proposed for thinning the coating edge goes in as a patent application with your name under inventors, and the company pays you a bonus.",
+  "e_mentee": "The new hire you're training locates the plating in a teardown on his own for the first time and runs to tell you it's on the tab side. You smile and say: go check the overhang on that side.",
+  "e_ai_sim": "The process window for a new platform is run through a model first, and AI produces hundreds of parameter sets overnight. You pick ten to verify on the line. Two do better than the model said; three can't be made at all.",
+  "e_recall": "A carmaker customer reports poor consistency in a batch of battery packs and wants you on site. You ride all night with your data and talk for four hours in the customer's meeting room.",
+  "e_neck": "Years of looking down at electrodes and data, and your neck starts to hurt; sometimes you're dizzy. You put a cushion at your desk and get up for a walk every hour.",
+  "e_base_copy": "The company has built a new site in Sichuan and wants Jintan's process replicated there wholesale. You spend two months there, from the first roll of electrode to the first cell off the line.",
+  "e_car": "You buy an electric car with a battery from your plant. The day you pick it up you stare at the range on the dashboard for ages, then open the hood and look. You can't see a thing."
+ },
+ "choices": {
+  "c_section": { "title": "Move to formation, or stay in coating", "situation": "Formation at the back end needs a process engineer, and your supervisor asks if you'll go. Formation is closest to cell performance and has the most data; coating is what you've only just learned, and moving means starting over.", "options": [
+   { "label": "Go to formation", "result": "You go from looking at electrodes to looking at curves, and start remembering every inflection in the charge and discharge." },
+   { "label": "Stay in coating", "result": "You stay. Six months later you can hear with your eyes closed which oven fan on the coating line is off." } ] },
+  "c_ai_data": { "title": "Learning process data and modeling", "situation": "The company is building a process data platform from mixing to formation and wants a few process engineers to define data standards with IT, learn modeling and own the AI parameter recommendations. A lot of work, Python to learn, and your line targets still on your back.", "options": [
+   { "label": "Learn it", "result": "You learn to pull hundreds of parameters together and look at them as one, and later no process window model for the front end goes live without your signature." },
+   { "label": "Pass", "result": "You say you still trust what you find when you cut a cell open. You let a colleague who likes writing code take the modeling." } ] },
+  "c_oem": { "title": "Joining a carmaker's battery center", "situation": "An electric vehicle maker's battery center is hiring cell engineers for cell selection and supplier management. Twenty percent more pay, in Shanghai, but you'd no longer make cells on a line; you'd audit cells others make.", "options": [
+   { "label": "Go to the carmaker", "result": "You move to Shanghai, and the first time you come back to Jintan it's as the customer, sitting on the other side of the meeting room.", "end": "You rose to cell development manager at the carmaker and audited many battery plants. Every time you walked into a plant's coating shop, you went first to the head of the line, lifted the slurry on a spatula and looked." },
+   { "label": "Stay at the battery plant", "result": "You stay. You like the feel of taking a cell from slurry all the way off the line yourself." } ] },
+  "c_senior": { "title": "Leading a new chemistry launch, a shot at Senior Process Engineer", "situation": "The company is bringing a silicon-anode fast-charge cell into mass production and needs someone to lead the process launch: the PFMEA, control plan, dozens of DOEs, and the pre-production defense in front of the carmaker. Your supervisor says if it works, you're Senior Process Engineer.", "options": [
+   { "label": "Lead it", "result": "You run between the dry room and meeting rooms for six months, and the customer passes the pre-production defense on the first try." },
+   { "label": "Not yet", "result": "You say you want to master your current step first. The project goes to a colleague in the next group, and you help him with the coating side." } ] },
+  "c_europe": { "title": "Posted to the plant in Europe", "situation": "The company has built a plant in Europe and wants a few process engineers on site for two years. Pay plus allowances is more than double what you make now, but you'd be tuning lines from scratch alongside local engineers and workers, and family matters would have to wait.", "options": [
+   { "label": "Go", "result": "Over there you start tuning from the first roll of electrode and teach local engineers to read an areal weight trace. In two years you come home twice." },
+   { "label": "Stay", "result": "You stay in Jintan. On weekends you take the family to Changdang Lake to eat crabs." } ] },
+  "c_supervisor": { "title": "Taking over as Process Supervisor", "situation": "The old supervisor has moved to the new site and the Process Supervisor post is open. It means a dozen engineers, carrying the plant's yield target, meetings and customers every day, and handing your own projects to someone else.", "options": [
+   { "label": "Take it", "result": "At your first department meeting you show one chart: how front-end yield climbed point by point over five years." },
+   { "label": "Stay technical", "result": "You say you want a few more years of cutting cells open. The manager hands you process research for the next-generation solid-state cell." } ] },
+  "c_equipment": { "title": "Moving to a coating equipment maker", "situation": "A company that makes coating machines wants you as process director, tuning lines for its customers. Thirty percent more pay, but from then on you'd be the person selling and tuning machines, most of the year in other people's plants.", "options": [
+   { "label": "Go to the equipment maker", "result": "You go from using coating machines to making them, and in the first month you visit three battery plants.", "end": "You were process director at the equipment maker for many years, and your coating machines went into many battery plants at home and abroad. At each one you stood at the head of the line for a while, watching the slurry flow from the die like a thin sheet of black silk." },
+   { "label": "Stay", "result": "You say you'd rather make a cell from start to finish on your own line." } ] },
+  "c_ship": { "title": "Release this lot or not", "situation": "A small cluster of cells in one lot shows high self-discharge, still within spec, but it feels wrong to you. The customer is pressing for delivery, and the production manager says in-spec means it ships. Your process opinion decides.", "options": [
+   { "label": "Hold it and retest", "result": "You hold it three days, retest and tear down, and find an aging seal on one electrolyte filling machine. Forty cells are pulled from the lot." },
+   { "label": "Release it per spec", "result": "The lot ships on time. Six months on the customer has said nothing, and you have the filling machine's seal replaced anyway." } ] }
+ },
+ "endings": {
+  "retire": "In your last week before retirement you go and stand in the coating shop for a while. The coating machines have been through several generations, but the slurry flowing from the die is the same, a glossy black layer spreading slowly. You lift a little on a spatula and say: good viscosity today. The young engineer beside you smiles and writes it down.",
+  "burnout": "After that year's checkup the doctor says no more late nights and no more running to the dry room at every phone call. The company moves you to the technical training center, teaching cell process to new engineers. When you reach the lesson on lithium plating, you always put that first teardown photo up on the screen."
+ },
+ "stages": [
+  "You follow the daily running of coating and calendering: watching the areal weight gauge and thickness gauge traces and the SPC charts, sampling slurry whenever viscosity shifts, handling anomalies with maintenance and production. When formation sends low-capacity or plated cells, you tear them down in the dry room. In your hands are a spatula, a micrometer, areal weight reports and a binder of process documents, and you're learning how to tell an old shift foreman this parameter has to change.",
+  "You own the process window for one step: the SOPs, PFMEA and control plan are yours, and parameter changes need your signature. When the line has defects you lead the root cause work, set up DOEs and push improvements through; during new product trials you stay on the line. Production, maintenance and quality all come to you. You used to beg for line time; now people wait for your parameters.",
+  "You lead mass-production launches of new cell chemistries: talking risk and milestones in project meetings, tearing down cells and running DOEs with two or three engineers, defending the process before carmaker auditors. You translate between R&D and the line; what works in the lab, you have to judge whether the line can make.",
+  "You run the cell process team for a product platform, a dozen engineers. You set the process route and cost-down direction, go through every item at the monthly yield meeting, lead investigations into major quality problems, and go to new sites to replicate the process wholesale. The process changes you sign decide how several lines run next month.",
+  "You run the company's cell process department, and the process route for the next platform is yours to decide: dry or wet electrodes, stacking or winding. You meet with R&D, equipment makers, carmaker customers and the heads of overseas sites, and answer for yield and cost overall. The question you ask most in meetings: how many cells of this have you cut open in the dry room?"
+ ],
+ "work": [
+  "The old foreman on the coating line says today's slurry is a bit thin. You sample it and the viscosity is two thousand low, traced back to a mixing tank that wasn't pulled to full vacuum.",
+  "In the dry room you tear down a swollen cell, and the moment you cut the pouch film a smell rushes out. Your mentor has you note where the gas was before sending it for analysis.",
+  "Xiao Zhou on the calendering line next door says the electrode web keeps breaking. The two of you crouch at the end of the line all afternoon and find a roller bearing catching slightly.",
+  "You rewrite the coating PFMEA, raise the risk rating for thick edges and add an inline inspection. The quality people read it and say: should have been written this way long ago.",
+  "The production manager asks if coating speed can go up 10 percent. You run three trials on the line and tell him 8 percent; any more and the ovens can't dry it through.",
+  "Formation sends a batch of low-capacity cells. You open ten and seven have a pressure mark along the anode edge. With the photos you go to the calendering line and find the roller with a scratch.",
+  "The carmaker's auditor asks how you control silicon anode expansion. You spread three months of cycling data and teardown photos on the table and talk for forty minutes.",
+  "R&D says the new formulation cycled two thousand times in the lab without trouble. You point out the line's mixing time is half the lab's: run a pilot batch first.",
+  "At the monthly yield meeting you put three lines' defect Pareto charts side by side and point at the top two: next month, each of these comes down by half.",
+  "Replicating the process at the new Sichuan site, the engineers say the local humidity keeps the dry room dew point just short. You stay a week and rewrite the dehumidification procedure.",
+  "At the review for the next platform, on the page for dry electrodes, you write: build one pilot line first, run it a full year, then talk mass production.",
+  "Visiting the European site, the local manager shows you their yield reports. You don't finish reading; you go to the dry room first and have them open a cell for you."
+ ],
+ "past": [
+  "You're in your last year of middle school in a county town in northern Jiangsu. Your family runs a little e-bike shop. When your father repairs bikes he often takes the batteries out and says they don't last in winter.",
+  "For the gaokao (college entrance exam) application you choose Materials Science and Engineering. Your father asks what it's for. You say making batteries, so they last in winter too.",
+  "In your third year you join a research group working on lithium battery anodes. The first time you assemble coin cells in a glovebox the gloves are too big, and you ruin seven before one works.",
+  "Your master's is on cycle fade in silicon-carbon anodes. Over two years you test hundreds of cells, and one is still not fading at its 800th cycle. You save a screenshot.",
+  "At autumn recruiting you get offers from several battery makers and choose this one in Jintan, because the interviewer took you to see the coating shop, a machine so long you couldn't see the end."
+ ],
+ "late": {
+  "pension_note": "Estimate: basic pension for enterprise employees, on Changzhou's contribution base and some thirty-plus years of service, roughly 40-odd percent of final monthly pay; project and year-end bonuses don't count.",
+  "scenes": [
+   "On the day you retire, the department gives you a spatula engraved with your name, in a wooden box. You take it out and mime lifting slurry in the air.",
+   "You take up fishing at Changdang Lake, sitting all afternoon without a word. The old man beside you asks what you used to do. Batteries, you say. Then take a look at my electric tricycle, he says.",
+   "On the coldest days of winter you drive the electric car out and glance at the range. It hasn't dropped much. To yourself you say: not bad.",
+   "Your grandchild's toy car is dead. You open the battery compartment and explain that inside a battery there's a cathode, an anode and a very thin separator. The child listens very seriously.",
+   "In your years at the training center you teach cell process to more than a thousand new engineers. Some later become supervisors and still call you teacher when they see you.",
+   "Every morning you walk at the foot of Maoshan. The air is a little damp, and remembering the painfully dry air of the dry room, you take a deep breath.",
+   "You gather your teardown photos from all those years into an album, each captioned with how the cell failed, and give it to the training center.",
+   "The day you leave the battery plant, you go to the coating shop one last time and stand at the head of the line for a while. The slurry is still flowing, the line still moving, and nobody turns to look at you.",
+   "In the new place you still look at the distribution of any data set first. Colleagues say you can tell you came from a battery plant. You don't deny it.",
+   "On the news you see how many batteries Jintan exported this year. A coating shop flashes past on screen, and you recognize the shape of the die head.",
+   "Later, models recommended the parameters, closed loops set the areal weight and image models judged the teardowns, and there were fewer engineers on the lines each year. But every time a new material came in, someone still had to stand at the head of the line and see whether the slurry flowed right.",
+   "One winter morning you see a row of electric cars charging by the roadside, their screens blinking. You stand there a while and remember the rows of indicator lights on the formation racks."
+  ],
+  "closing": {
+   "retire": "Many years later you open the wooden box and the spatula is still bright. You lift it, look at the edge in the sunlight by the window, then put it back and close the lid.",
+   "burnout": "One afternoon many years later you sit on the balcony watching children downstairs ride little electric cars in circles, round and round, without stopping. You think: the power in those started as a drum of slurry too.",
+   "end": "Many years later you're mixing batter in the kitchen. You pour it into the pan and push it out slowly with a spatula, one thin layer. Watching its edge, you think of the coating die, and smile."
+  }
+ }
+}

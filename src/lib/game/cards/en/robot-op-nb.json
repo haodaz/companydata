@@ -1,0 +1,151 @@
+{
+ "id": "robot-op-nb",
+ "occupation": "Industrial Robot System Operator",
+ "role": "Industrial Robot System Operator (Sheet Metal and Brazing Shop)",
+ "headline": "A vocational college graduate in industrial robotics, working rotating day and night shifts at a refrigerator and freezer plant in Cixi, Ningbo, running six robots off one teach pendant, who once crouched by the line for an hour over a brazing point that was off by a millimeter",
+ "unit": "A refrigerator and chest freezer plant in Cixi, Ningbo: the sheet metal and brazing shop",
+ "unit_type": "Home appliance plant",
+ "city": "Ningbo (Cixi)",
+ "city_tier": "New first-tier city",
+ "education": "Vocational college diploma (Industrial Robotics Technology)",
+ "level": "You hold the teach pendant steadily, can teach points and edit programs yourself, and never skip a pre-start check. But when a robot throws a servo fault you still call the shift lead first, you have only touched offline programming software at school, and when a new freezer model comes in you can't yet get the fixtures and programs right on your own.",
+ "intro": "You studied industrial robotics at a vocational college, interned at this plant in your final year, and stayed on in the sheet metal and brazing shop. Half of your refrigerators and freezers go abroad. Their cabinets are stamped and bent in your shop, and the ring of copper evaporator tubing on the back is brazed on by robots, one joint at a time. From today, whether each grab and each joint of the six robots on this line is right is the business of the teach pendant in your hand.",
+ "salary_note": "Estimate: a frontline technician at an appliance plant in Cixi, Ningbo, paid base plus piece rate, night shift allowance and a skills allowance, about 10 percent above the national figure. In peak season (before summer and during the year-end export rush) overtime adds two or three thousand yuan a month; in the slow season it's base pay only.",
+ "facts": [
+  { "label": "Industrial Robot System Operator (Level 4 / Intermediate) (current level)", "value": "0–3 years, ¥5,000–7,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Industrial Robot System Operator (Level 3 / Senior) (3–7 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Running robots through welding, assembly, handling and sorting", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Writing and debugging robot programs to the process spec", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The factory shuttle pulls out from under the dormitory. Along the road, one plant after another, flattened cartons drying outside. You eat a preserved-vegetable flatbread on the bus.",
+  "Shift handover. The night shift says Robot 3 threw a gripper vacuum alarm in the small hours and they changed a suction cup. You nod, open the checklist, and go down it item by item: light curtain, emergency stop, fixture locating pins, air pressure. You sign.",
+  "The scheduler comes by: changeover this afternoon to a chest freezer for export. You call up the program on the teach pendant, swap fixtures with the old hand, then dry-run it three times to see whether the gripper clips the rack.",
+  "Robot 4 has stopped, a collision alarm on the screen. Holding the enable switch, you inch the arm back and find that a bent side panel sprang back a few millimeters and the gripper hit its edge.",
+  "The canteen has braised hairtail and rice cakes stir-fried with greens. Over lunch the shift lead asks whether you've handed in the form for the Level 3 certificate. You say tonight.",
+  "A point on the brazing cell has drifted and filler is running out around the tube. You crouch by the line for an hour before you see this batch of copper tubing is a millimeter long. You nudge the point back on the pendant and watch it braze ten more units.",
+  "Quality calls: the helium leak test caught a slow leak, and the barcode traces it to your line. You and the young inspector pull the evaporator off together. One joint didn't penetrate.",
+  "Back at the dormitory you work through the Level 3 theory question bank: coordinate frames, tool center point, payload settings. Next door, a neighboring plant's night shift is still running."
+ ],
+ "ladder": [
+  { "title": "Industrial Robot System Operator (Level 4 / Intermediate)", "stage": "On the line", "focus": "Pre-start checks, loading, calling up programs at changeover, touching up points, handling common alarms like leaking suction cups and missed grabs; sit for Level 3." },
+  { "title": "Industrial Robot System Operator (Level 3 / Senior)", "stage": "Lead operator", "focus": "Lead operator of a robot cell: teach and debug programs and modify fixtures for new models, set brazing and bending parameters, train newcomers, sit for Technician." },
+  { "title": "Level 2 / Technician (Robot Team Leader)", "stage": "Team leader", "focus": "Run a team and several lines for output, yield and safety; draw up shifts, TPM and inspection standards; work with process, maintenance and quality." },
+  { "title": "Level 1 / Senior Technician (Automation Lead for the Shop)", "stage": "Shop lead", "focus": "Own every robot and automation upgrade in the shop: review new line designs, sign off vendors, run offline simulation and line balancing, lead the technicians." },
+  { "title": "Chief Technician (Automation Process Expert)", "stage": "Chief", "focus": "Set the automation roadmap and skills training for several shops plant-wide, run a master technician's studio, and have the final word on line designs for new plants." }
+ ],
+ "ai_tasks": [
+  { "name": "Running robots through welding, assembly, handling and sorting", "how": "The robots follow their programs, but loading and unloading, swapping parts and dealing with inconsistent incoming material still need someone standing by and stepping in. AI can't lend a hand with the hands-on part." },
+  { "name": "Writing and debugging robot programs to the process spec", "how": "AI can draft programs from a process description, simulate them offline and flag logic gaps. A person has to check them against the real equipment, fixtures and safety requirements, then debug and confirm on the actual robot." },
+  { "name": "Teaching and correcting robot paths and work points", "how": "Vision guidance and automatic path planning can generate and fine-tune paths and points. A person teaches the key points on site and judges interference, accuracy and real part deviation." },
+  { "name": "Adjusting speed, force, welding current and other parameters", "how": "AI can recommend parameter ranges from historical data and quality results. A person makes the call based on the material batch and how the actual weld or assembly looks, and answers for the quality." },
+  { "name": "Pre-start checks of the robot, fixtures and safety devices", "how": "Before start-up someone has to look at and touch the robot, fixtures and safety devices with their own eyes and hands. That is where safety responsibility sits. AI can supply a checklist and reminders at most; it can't confirm for you." },
+  { "name": "Patrolling robot status and logging anomalies", "how": "Sensor data plus AI monitoring can patrol running status automatically, flag anomalies and write the log. People only spot-check whether the alarms are accurate and deal with what gets flagged." },
+  { "name": "Troubleshooting common, simple robot faults", "how": "AI can suggest causes and fixes from alarm codes and past cases. A person goes to the line, checks and swaps parts by hand, and decides whether to escalate to maintenance or the manufacturer." },
+  { "name": "Working with upstream and downstream stations to keep takt time steady", "how": "AI can analyze takt data and warn of bottlenecks and scheduling clashes. A person coordinates face to face with the teams up and down the line and handles material shortages and jams as they happen." }
+ ],
+ "events": {
+  "e_first_teach": "For the first time you teach every point on a new fixture by yourself, and the dry run, trial brazing and first-article inspection all pass. In your handover log the shift lead writes one word: fine.",
+  "e_night_shift": "Peak season means a straight month of nights. You can't sleep properly in the dormitory by day; someone is always walking the corridor. Your stomach starts to bother you.",
+  "e_cert3": "You pass Industrial Robot System Operator Level 3. The practical is teaching a handling path against the clock. Your hands are steady and you hand in four minutes early.",
+  "e_near_miss": "A new loader reaches into the cell before the robot has fully stopped, and the light curtain freezes it. You take him aside and speak slowly. When you're done your palms are soaked.",
+  "e_export_peak": "Export orders surge and the shop runs flat out for two months. You take your line's cycle time from 42 seconds down to 38, and at year end there's a sizable bonus.",
+  "e_slow_season": "The slow season arrives. Orders are thin and the shop runs four days a week. Pay drops to base, and you and a few others take turns helping out in packing.",
+  "e_vision": "The brazing cell gets vision guidance: a camera photographs the tube position and the robot finds its own points. Half your teaching work disappears, and in its place you calibrate the camera every day.",
+  "e_ai_program": "The offline programming software now has an assistant that can read process sheets, and a draft program for a new model comes out in half a day. But on the real line it doesn't know this batch of side panels springs back hard, and you still fix it point by point.",
+  "e_ai_monitor": "Robot run data is wired into the shop's monitoring system, and an alarm goes off the moment a reducer's vibration looks wrong. You no longer go and listen every two hours, but whether each alarm is real, you still go and see.",
+  "e_contest": "You represent the plant at the city's workers' skills competition and take second prize in robot system operation. Back at work the shop manager reads your name out at the morning meeting. You stand in the back row and can't quite look up.",
+  "e_back": "Years of crouching by the line to look at joints and bending to change fixtures, and your lower back starts to hurt. The doctor calls it lumbar muscle strain and tells you to stop crouching so much.",
+  "e_house": "You put a down payment on a 90-square-meter secondhand flat in Cixi town, twenty minutes from the plant by e-bike. The day you get the keys you stand in the empty rooms for a long time.",
+  "e_apprentice": "Your first apprentice passes Level 3. He treats you to a seafood dinner and, a little drunk, says: Master, you never once yelled at me while teaching.",
+  "e_new_line": "The plant installs a brand-new flexible line, a dozen robots plus AGVs, from stamping to brazing without a part touching the floor. You spend three months commissioning it with the vendor's people, and when you sign the acceptance form your hand shakes a little.",
+  "e_dark_shift": "Nights become a skeleton shift: two people for the whole line, the system watching the rest. You're the one who stays. Twenty-odd green dots on the screen, and when one turns red you run.",
+  "e_audit": "A foreign customer comes to audit the plant and stands at your line for half an hour, asking three questions about the safety interlocks. You answer each one before the interpreter can get a word in.",
+  "e_layoff": "An old line is shut down and a dozen operators must transfer or leave. You help a few of them put their certificates in order and see them off to interviews at other plants.",
+  "e_family": "You get married, the banquet back in your hometown, and the shop fills a whole table. The shift lead hands you a red envelope and says he'll cover your nights next week.",
+  "e_ears": "Your hearing test at the annual checkup drops a grade. You have listened to the stamping line for over a decade. You start wearing earplugs in the shop, properly.",
+  "e_master": "The city puts up a plaque for a skills studio in your name. It is really a room in the corner of the shop with two old robots. On weekends vocational students come in to practice."
+ },
+ "choices": {
+  "c_shift": { "title": "Straight days or rotating shifts", "situation": "Assembly needs an equipment hand on permanent days. No nights, but no night allowance either, a thousand-odd yuan less a month. The shift lead says if you stay on the brazing line, you'll be first on the new line next year.", "options": [
+   { "label": "Take straight days", "result": "You can sleep through the night now, but you see less of what's new on the robot lines." },
+   { "label": "Stay on the brazing line", "result": "You keep rotating. The next year the new line arrives and you are in the first group commissioning it." } ] },
+  "c_integrator": { "title": "Commissioning for a systems integrator", "situation": "The robot integrator that built your lines needs commissioning engineers. Thirty percent more pay, but over two hundred days a year at client plants around the country: auto parts today, solar panels tomorrow.", "options": [
+   { "label": "Go", "result": "You leave with a toolbox and a laptop, and for many years after you commission other people's lines in other people's plants.", "end": "You became commissioning lead at an integration firm and passed through industrial parks in a great many cities, always finding the canteen first. Now and then, passing through Cixi, you thought of that freezer line and its six robots." },
+   { "label": "Stay", "result": "You stay at the plant. You like watching a line go from cold to running, from shaky to steady, all under your own eyes." } ] },
+  "c_offline": { "title": "Learning offline programming and the AI assistant", "situation": "The plant brings in someone to teach offline simulation and drafting programs with an AI assistant, on weekends for two months straight. The old hand says he's not bothering: teaching by hand beats anything.", "options": [
+   { "label": "Learn it", "result": "You learn to run a whole line in the computer first. When a new model comes in, you need two fewer days than anyone else." },
+   { "label": "Skip it", "result": "You keep your weekends. You trust the work in your hands; the software will catch up sooner or later." } ] },
+  "c_tech_exam": { "title": "Sitting for Level 2 / Technician", "situation": "Level 2 / Technician means writing a technical summary, defending it, and leading an improvement project. You have a brazing cycle-time improvement you could write up, but the paperwork will eat a lot of evenings.", "options": [
+   { "label": "Sit for it", "result": "You chart half a year of point data and defect rates, and you answer every question the panel asks." },
+   { "label": "Not yet", "result": "You want two more years, until what you know is more solid." } ] },
+  "c_hometown": { "title": "A new plant back home", "situation": "Your home county has lured a new small-appliance plant that needs people who know robots. They offer you a team leader post at about 80 percent of your pay here, but close to your parents.", "options": [
+   { "label": "Go home", "result": "You go back to the county with your luggage and two certificates. The new plant has fewer robots, but everything is yours to decide." },
+   { "label": "Stay in Ningbo", "result": "You call your parents and say a few more years. After you hang up you stand by the line for a while." } ] },
+  "c_lead": { "title": "Running for robot team leader", "situation": "The shop is choosing a robot team leader, the Level 2 / Technician rung, with twenty-some people and four lines. In that job you barely touch a teach pendant; it's shift rosters, meetings and reports every day.", "options": [
+   { "label": "Run for it", "result": "At the selection meeting you explain how you cut changeover from forty minutes to twenty-five, and the old hands in the audience nod." },
+   { "label": "Stay on the line", "result": "You say you'd rather keep your hands on the work. The shop manager says nothing and puts your name on the list of key technical staff." } ] },
+  "c_teacher": { "title": "Teaching at a vocational college", "situation": "A vocational and technical college in Ningbo is hiring practical instructors for industrial robotics. Permanent posts are few; this one is a contract post, 20 percent less than the plant, with winter and summer breaks and no shifts.", "options": [
+   { "label": "Go", "result": "You take a decade-plus of fault notebooks from the shop to the college. Your first lesson: if the robot hasn't stopped, keep your hands out.", "end": "You taught many classes at the college, and your students scattered into factories in Ningbo, Suzhou and Dongguan. Every year a few of them sent a photo: a new robot, and a line saying, Master, look." },
+   { "label": "Stay at the plant", "result": "You say there's a new line waiting for you to commission. School can wait." } ] },
+  "c_retrofit": { "title": "Domestic robots for the old line?", "situation": "The plant is retrofitting a ten-year-old line on a tight budget. A supplier pitches domestic robots with AI vision, 40 percent cheaper, but never run on brazing stations like yours; the imported ones are proven and expensive. You have to sign the technical opinion.", "options": [
+   { "label": "Try the domestic ones", "result": "The first three months bring plenty of trouble. You and the supplier fix it together, and by month four the yield matches the old line." },
+   { "label": "Play safe with imports", "result": "The line settles quickly, the budget overruns, and finance calls you in twice." } ] }
+ },
+ "endings": {
+  "retire": "Your last shift is a day shift. At handover you leave the fault notebook you kept for decades in the tool cabinet, the new line's point backups on the top page. The bell rings, and the robots go on grabbing, one stroke after another, sounding just as they did when you were twenty-one.",
+  "burnout": "After that year's checkup, the doctor tells you no more nights and no more crouching. The plant moves you to the spare parts store, minding suction cups, brazing tips and reducers. Now and then a young technician comes in with an alarm code. You say a few words and they run back to the line."
+ },
+ "stages": [
+  "You keep one robot cell running: the pre-start check, topping up the racks, calling up programs and swapping fixtures at changeover, fixing missed grabs and leaking suction cups yourself, and calling the shift lead when you can't. In your hands are a teach pendant, hex keys and a checklist. You deal most with the loaders and quality: one says you stop the line too often, the other that your joints are weak.",
+  "When a new model comes in, the process engineer hands you drawings and process sheets, and you teach it point by point on the pendant. You set brazing temperature, wire feed and dwell time, and nothing ramps up until quality signs the first article. You start training two newcomers. You used to ask the shift lead; now they ask you, and you run it through your head before you answer.",
+  "You run a shift of twenty-odd people and four lines. At the morning meeting you go over yesterday's output, yield and safety hazards; by day you walk between the MES dashboard and the line, write TPM plans, revise inspection standards and argue it out with process, maintenance and quality. You seldom touch a pendant now, but you can hear from the corridor which robot sounds wrong.",
+  "You own every robot and automation upgrade in the shop. Before a new line goes in, you run its cycle times through offline simulation with the integrator, review the design and cut features that won't earn their keep, and on acceptance day go down the checklist item by item. Your signature decides whether a line is handed over, and you start writing the plant's skills training plans.",
+  "What you own now is the next ten years of automation across several shops: which lines to replace, which stations to leave to people. With the technicians from your skills studio you draw up line designs for a new plant, recruit at vocational schools and set competition problems. The thing you say most in meetings: spend a day at the line first, then draw."
+ ],
+ "work": [
+  "Old Zhou on the next line asks why his robot keeps missing its grab. You dig through the tool center point on the pendant for ages and find nobody recalibrated it after the last gripper change.",
+  "Xiao Fang, a loader, says two side panels in the rack are in backwards. You pause the line, flip the stack with her and restart. The takt log shows a three-minute gap.",
+  "On the first freezer cabinet after changeover, you measure the bends with calipers. All four corners are in tolerance. You sign the first-article sheet and hand it to quality.",
+  "The process engineer brings drawings for a new evaporator. You teach 120 brazing points on the pendant, and spend an afternoon on the last ten until the filler finally stops running out.",
+  "The first time your new apprentice holds the enable switch, the robot stops the instant his hand slackens, and he jumps. You tell him that's right: when you're scared, let go. It listens better than you do.",
+  "You reset a robot's payload settings after switching to a heavier gripper and run it overnight. By morning the reducer temperature is back to normal.",
+  "At the month-end yield meeting quality brings out a Pareto chart: brazing leaks are half of all defects. You line up the data from all four lines and find it's all in the first hour after night shift changes the brazing tips.",
+  "You draw up next month's rota. Three people need wedding leave and one has an exam, so you put yourself down for three nights.",
+  "Old Lin from maintenance says a robot's reducer is due for replacement. You say hold out a month until the slow season. The two of you study vibration curves in the MES all afternoon and settle on next Sunday.",
+  "The integrator delivers an offline simulation of the new line. Going through it frame by frame, you see Robot 7 will sweep the AGV parking spot when it turns, and you make them change the layout.",
+  "On acceptance day for the new line, you have the integrator's engineer hit the emergency stop in front of you, then break the light curtain. All twelve robots freeze, and only then do you sign.",
+  "The line design for the new plant is on the table. You strike out two fully automated stations and write beside them: too many changeovers, keep people.",
+  "Recruiting at a vocational school, you watch a student teach slowly, but every point lands right. You circle his name on the list."
+ ],
+ "past": [
+  "You miss the cutoff for academic high school by twenty points. Your father runs a punch press at an auto parts plant. He says go to vocational school and learn a trade, so you won't spend your days minding a press like him.",
+  "Your first vocational year is mechatronics. The school has just bought two robots that nobody dares touch. You stay after class every day and try them button by button with the practical instructor.",
+  "You take third prize in the provincial vocational skills contest, and on the strength of that and the vocational track of the gaokao (college entrance exam) you get into an industrial robotics program at a vocational college in Ningbo.",
+  "In your second year you pass Industrial Robot System Operator Level 4. When a junior wrecks a fixture on the lab robot, you're the one who fixes it.",
+  "In your final year you're placed at this freezer plant as an intern, working nights in the brazing shop under an old hand. When it ends, the shop manager asks if you'll stay. You say yes."
+ ],
+ "late": {
+  "pension_note": "Estimate: basic pension for enterprise employees, on Ningbo's contribution base and some thirty-plus years of service, roughly 40-odd percent of final monthly pay; night allowances and piece-rate pay don't count.",
+  "scenes": [
+   "On the day you retire, your apprentices take a photo of you at the shop door with the line you commissioned behind you. All twelve robots are moving; in the picture they're a blur.",
+   "A vocational college hires you as a part-time practical instructor, two afternoons a week. When a student's hand shakes on the pendant, you stand behind him and say nothing.",
+   "The refrigerator at home is from your plant. One look at the ring of copper on the back and you know which year's line brazed it.",
+   "You do tai chi in a park in Cixi, slowly, landing each position on its point. The other old folks say your hands are very steady. You smile and don't say why.",
+   "In your years at the parts store, you label every kind of suction cup and brazing tip with the robot and station it suits.",
+   "When your back improves, you walk by the river every evening, slowly, watching the plants on the far bank light up one window at a time.",
+   "Old colleagues add you to a group chat where someone posts an alarm code every day asking what to do. When you see one, your first reply is usually: don't touch it yet, send a photo.",
+   "The day you leave the freezer plant, you give your teach pendant lanyard to your apprentice. He says the strap has worn white. You say it listens better than I do.",
+   "In the new place you still dream of alarms by the line now and then, and when you wake it takes a moment to remember that line isn't yours anymore.",
+   "On the news you see how many appliances Cixi exported this year. A robot flashes past on screen and you recognize the brazing motion.",
+   "Later, programming, patrols and point-finding all went to software and cameras, and the shop held fewer and fewer people. But the day each new line starts up, someone still has to stand outside the fence and watch whether its first grab lands.",
+   "Your grandson's toy robot gets its arm stuck mid-turn. You pick it up, look it over and say: the travel limit's set wrong."
+  ],
+  "closing": {
+   "retire": "Many years later you find your Level 3 certificate in a drawer. In the photo you're barely past twenty, hair cropped short. You put it back under the fault notebook.",
+   "burnout": "One evening many years later you sit on the balcony while someone downstairs moves in a new refrigerator. You watch them stand the box upright and remember the bang of the stamping line.",
+   "end": "Many years later, passing an industrial park, you hear from behind the wall the faint hum of a robot changing direction. You stop and listen for a while before walking on."
+  }
+ }
+}

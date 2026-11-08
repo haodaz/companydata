@@ -1,0 +1,149 @@
+{
+ "id": "laser-wh",
+ "occupation": "Laser Processing Engineer",
+ "role": "Assistant Laser Process Engineer (Applications Lab)",
+ "headline": "In your first year out of an optoelectronics degree, in the applications lab of a laser equipment company in Wuhan's Optics Valley, making samples on battery top covers behind laser safety goggles, after an afternoon at the polishing wheel over a tenth of a millimeter of weld depth, out with sales for the first time to tune spatter blowouts on a customer's shop floor",
+ "unit": "A laser welding and cutting equipment company in Optics Valley, Wuhan: the applications lab",
+ "unit_type": "Laser equipment manufacturer",
+ "city": "Wuhan (Optics Valley)",
+ "city_tier": "New first-tier city",
+ "education": "Bachelor's degree (Optoelectronic Information Science and Engineering)",
+ "level": "You can explain fiber lasers, galvo scanners, spot size and power density, and you can section, grind, polish and etch a metallographic sample. But you can't yet find the process window for a new material, you can't tell from a flash on the camera whether the melt pool is stable, and when a customer says on the phone it blew out again, you don't know which question to ask first.",
+ "intro": "You studied optoelectronics, signed with this laser equipment company in Optics Valley, and were placed in the applications lab. Customers send in what they need welded, cut or marked: battery top covers, phone frames, car body panels. You make samples on your own machines, cut them open, polish them flat and put them under the microscope, and tell the customer whether this machine can do the job. From today, part of what happens in those fractions of a millisecond when an invisible beam meets metal is yours to set.",
+ "salary_note": "Estimate: laser equipment companies in Optics Valley pay process engineers about 10 percent below the national figure, with travel allowances and project bonuses. Months on customer sites bring noticeably more; in years of equipment price wars, project bonuses shrink.",
+ "facts": [
+  { "label": "Assistant Laser Process Engineer (current level)", "value": "0–2 years, ¥6,800–10,000 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Laser Process Engineer (2–5 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥26,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Tuning machines on customer sites and tracking down cold welds and blowouts", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Running process experiments and setting the process window", "source": "AI exposure" },
+  { "label": "Open positions", "value": "16 related listings nationwide, 1 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You cycle from your rented room near Optics Valley Square to the office, past building after building with photonics and laser in their names. At a roadside stall you buy a mianwo, Wuhan's fried rice-batter ring, and a cup of soy milk.",
+  "In the lab your mentor sets a box of battery top covers on your desk: a battery maker wants to trial welding the safety vent, report due next week. You put on your goggles and warm up the laser.",
+  "The first parameter set leaves a row of small pores on the weld surface. You adjust the wobble amplitude and shielding gas flow and run ten more. Fewer pores, but a little spatter along the edge.",
+  "You section a sample and grind it at the polishing wheel, one grit after another, to a mirror finish, etch it and measure the weld depth under the metallographic microscope: 0.42 millimeters. The customer wants 0.5.",
+  "The canteen has Wuchang bream and pickled lotus shoots. A salesman sits down and asks when the top cover samples will be ready; the customer is comparing three equipment makers. You say give it two more days.",
+  "Your mentor looks at your micrograph and says don't add any more power, any more and it'll blow out. He has you move the defocus a little further negative. You do, and the depth comes up to 0.51.",
+  "The customer's process engineer calls on video to ask how much pull strength the weld has. You send a screenshot of the curve from the tensile tester. He says: do thirty more, we want to see consistency.",
+  "You write the test report in the lab, laying in every parameter set and every micrograph. Outside, the towers of Optics Valley are lit, and the laser in the next lab is still humming."
+ ],
+ "ladder": [
+  { "title": "Assistant Laser Process Engineer", "stage": "Sampling", "focus": "Make customer samples in the applications lab, run metallography and pull tests, write test reports, go with your mentor to tune machines on customer sites." },
+  { "title": "Laser Process Engineer", "stage": "Independent", "focus": "Own process development and on-site commissioning for one application (battery welding, cutting or marking), write SOPs, give R&D process requirements." },
+  { "title": "Senior Laser Process Engineer", "stage": "Hard problems", "focus": "Lead engineering rollout of new processes and light sources and technical breakthroughs for major customers, write presales proposals, supervise a few engineers, manage the company's process library." },
+  { "title": "Applications Lead (Head of the Applications Lab)", "stage": "Running the lab", "focus": "Run the applications lab and the nationwide field process team, set process and inspection standards, decide the direction of new machines with sales and R&D." },
+  { "title": "Director of Applications Engineering", "stage": "Director", "focus": "Own the company's applications engineering and process roadmap, answer to key industries and overseas customers, decide which processes the next generation of machines will do." }
+ ],
+ "ai_tasks": [
+  { "name": "Tuning machines on customer sites and tracking down cold welds and blowouts", "how": "You have to go to the customer's shop, tune the machine by hand, look at the melt pool and weld, find the real cause of cold welds and blowouts, and explain it face to face to the customer's process, equipment and quality people, and own it. AI can at most look up cases and suggest what to check." },
+  { "name": "Running process experiments and setting the process window", "how": "AI can search the literature, recommend starting parameters, design experiments and fit the process window. Making the samples on the machine, watching the melt pool and weld and judging whether a sample is good still take a person." },
+  { "name": "Writing SOPs, work instructions and test reports", "how": "From experiment records and templates, AI can draft SOPs and test reports and lay out the charts. The engineer only checks that parameters, safety requirements and conclusions are right." },
+  { "name": "Building the company's process library and inspection standards", "how": "AI can structure process data into the library, search and compare it, and make a first pass at reading micrographs and inspection images. How to set the standards and whether the data can be trusted are for people to decide." },
+  { "name": "Giving R&D process requirements and joining machine development", "how": "AI can compile lists of process constraints and look up similar designs. The process engineer has to set requirements from experience and make trade-offs in cross-team discussions." },
+  { "name": "Presales proposals and after-sales process training", "how": "AI can draft proposals, course materials and Q&A. Whether a proposal will work, how to talk to the customer and how to run hands-on training take a person going there." }
+ ],
+ "events": {
+  "e_first_window": "For the first time you work out a material's process window on your own: a new aluminum alloy top cover, three parameters, power, speed and wobble, forty sample runs. The customer reads the report and orders three machines.",
+  "e_onsite": "A machine on a customer's line keeps blowing out welds. You take the overnight high-speed train there with the salesman, spend five days on the shop floor, and finally trace it to a change in the incoming parts' plating thickness.",
+  "e_goggles": "While aligning the beam path your goggles slip a little, and your mentor hits the emergency stop at once and sends you out to stand for ten minutes. When you come back he says nothing and hands you a pair with a head strap.",
+  "e_lost_bid": "You spend a month on samples, and in the end the customer chooses another company's machine, quoted 20 percent cheaper. The salesman posts a sighing emoji in the group chat, and you put the box of samples away in a cabinet.",
+  "e_cert": "You earn a Six Sigma Green Belt. Your project took cold welds on battery tabs from 1 percent to 2 per thousand, and the customer uses your report as internal training material.",
+  "e_travel": "That year you're on the road 160 days: Ningde, Changzhou, Yibin, Hefei, every budget hotel beside every battery plant. Your suitcase holds a work uniform and a packet of dried noodles all year round.",
+  "e_ai_monitor": "The machines get melt pool monitoring: a camera captures the pool at every weld, and AI judges it in real time. Calls from customer sites drop by half. But it judges the normal melt pool on a new plating as a blowout, and you're the one who goes on site to relabel it.",
+  "e_ai_params": "The company's process library is hooked up to AI: enter the material and thickness and it suggests starting parameters. Your first sample run is no longer guesswork, but three times in ten its suggestion still has to be tuned from scratch.",
+  "e_ai_report": "Test reports now start as AI drafts, the micrographs measured and laid out automatically. A report used to take you an evening; now you can check one in an hour.",
+  "e_ultrafast": "The company adds ultrafast lasers for micromachining glass and ceramics. You learn from zero, and over three months shatter hundreds of glass pieces before you make the first one without edge chipping.",
+  "e_house": "You buy a flat on the south side of Optics Valley, twenty minutes from work. The day you get the keys, from the balcony you can see the big characters for Optics Valley of China on a distant tower.",
+  "e_family": "You get married. The day before the wedding you're still on a customer site; you catch the last high-speed train back, and the next morning, putting on your suit, there's still a little metal dust under your fingernails.",
+  "e_overseas": "You go to tune machines for an overseas customer for the first time. In an unfamiliar shop you gesture and translate-app your way through a week with the local engineers. In the end the welds pass, and they buy you a coffee.",
+  "e_back": "Years bent over the polishing wheel and crouched by machines on customer floors, and your back starts to hurt. You buy a back brace and take it on trips too.",
+  "e_mentee": "The new hire you're training goes to a customer site alone for the first time and calls you that night to say it's solved: the shielding gas nozzle was crooked. You tell him: send me the photo tomorrow and write it into the report.",
+  "e_price_war": "Laser equipment makers fall into a price war, and a welding machine's price halves over a few years. The company wants fewer free sample runs, but customers won't buy without samples, and you're caught in the middle.",
+  "e_patent": "A dual-beam welding process you proposed goes in as a patent application with your name under inventors. That machine later becomes the company's best seller.",
+  "e_ai_remote": "Machines on customer sites are networked now, weld data streaming back to the company in real time; AI judges first, then you look. You can find the cause of many problems from your office in Wuhan, and your travel days are halved.",
+  "e_eyes": "Years of watching melt pools and peering into the metallographic microscope, and your eyes go long-sighted earlier than other people's. You keep reading glasses in a lab drawer and put them on for micrographs.",
+  "e_burnout_trip": "For a major customer's new line acceptance you stay up two weeks straight on site, and when you come back you run a high fever and spend five days in bed."
+ },
+ "choices": {
+  "c_direction": { "title": "Battery welding or cutting", "situation": "The lab is splitting into specialties, and your mentor asks which you want: battery welding has the most orders, the most travel and the most pressure; precision cutting and marking has fewer orders, but you'd stay in the lab more and learn a wider range.", "options": [
+   { "label": "Battery welding", "result": "You travel with the battery welding team to battery plants all over, and weld depth, porosity and spatter you can read at a glance." },
+   { "label": "Cutting and marking", "result": "In the lab you cut glass, ceramics and carbon fiber, trying every material once, and travel much less." } ] },
+  "c_ai_lib": { "title": "Running the process library and AI parameter recommendations", "situation": "The company wants to turn a decade-plus of sample data into a process library hooked up to AI for parameter recommendations, and needs a process engineer to lead: set the data format, clean the old data, validate what the AI suggests. Scattered work, and you'd have to learn scripting.", "options": [
+   { "label": "Lead it", "result": "You turn thousands of runs' parameters, micrographs and pull data into one big table, and later every starting parameter in the company comes from it." },
+   { "label": "Pass", "result": "You say you'd rather watch melt pools at the machine. The process library goes to a colleague who likes writing code." } ] },
+  "c_battery_plant": { "title": "Welding process at a battery plant", "situation": "An EV battery plant wants you as laser welding process engineer, running the very machines your company sold them. Thirty percent more pay, no constant travel, but from then on you'd use the machines rather than make them.", "options": [
+   { "label": "Go to the battery plant", "result": "You move from the selling side to the buying side, and at your first machine acceptance you see at a glance the galvo calibration is off.", "end": "You rose to welding process supervisor at the battery plant, minding hundreds of laser welders. Whenever a young engineer from an equipment maker came to tune a machine, you'd stand behind him a while, then say: move the defocus a little further negative." },
+   { "label": "Stay", "result": "You turn it down. You like meeting a different material and a different problem every day." } ] },
+  "c_senior": { "title": "Leading a major customer push, a shot at Senior Laser Process Engineer", "situation": "A major customer wants a new battery structure with welding specs twice as strict, and three equipment makers are competing. The manager says lead it and win, and you're Senior Laser Process Engineer; lose, and the customer is gone.", "options": [
+   { "label": "Lead it", "result": "You shuttle between the lab and the customer's shop for four months, and in the end a dual-beam approach brings weld depth consistency to the customer's number." },
+   { "label": "Not yet", "result": "You say you still have two customers to wrap up. The manager gives the project to another colleague, and you help him with the metallography." } ] },
+  "c_sales": { "title": "Moving into presales", "situation": "Sales wants a presales engineer who understands the process, meeting customers with the salespeople and writing proposals. The commission is good and pay would rise a fair bit, but there's drinking and entertaining, and no more lab work.", "options": [
+   { "label": "Move to presales", "result": "You start wearing a dress shirt to meet customers and present proposals in meeting rooms. In the first year you sign several big orders, and drink yourself into a stomach problem." },
+   { "label": "Stay in process", "result": "You say you'd rather be at the machines. The sales manager says it's a pity; for big customers they'll still need you to come and present." } ] },
+  "c_lab_head": { "title": "Taking over as Applications Lead (Head of the Applications Lab)", "situation": "The old head has been promoted, and the Applications Lead post, head of the applications lab, is open. It means running the lab and the nationwide field process team, scheduling people, meetings every day and arguing with sales over sample priorities; you'd rarely be at a machine yourself.", "options": [
+   { "label": "Take it", "result": "At your first department meeting you show one table: how each customer's sample turnaround was cut from three weeks to one." },
+   { "label": "Stay technical", "result": "You say you want a few more years of process work. The manager hands you process research on ultrafast lasers." } ] },
+  "c_startup": { "title": "Opening a laser job shop", "situation": "An old customer wants to go into partnership with you on a laser precision job shop on the edge of Optics Valley, taking outsourced work for battery and medical device makers. He puts up the money, you bring the technology for a 30 percent stake, but your savings would go in too.", "options": [
+   { "label": "Strike out", "result": "You resign and install four machines in a rented workshop. Your first order is cutting heart stents for a medical device maker.", "end": "Your job shop ran for many years, growing from four machines to twenty. The day each new machine arrived, you made its first sample yourself, cut it open, polished it flat and put it under the microscope." },
+   { "label": "Don't", "result": "You turn him down. You say you'd rather be somewhere you can see the next generation of machines." } ] },
+  "c_spec": { "title": "Promising the customer a number", "situation": "A major customer's tender specifies 99.5 percent weld yield. You know your machines can do it in the lab, but on a line like theirs, with incoming parts that vary a lot, it's hard. Sales says write it down and sort it out after signing. The technical proposal needs your signature.", "options": [
+   { "label": "Write what you can deliver", "result": "You write 99 percent and add a page of requirements for incoming parts. You lose this order, and the next year the customer comes back to you." },
+   { "label": "Write the tender's number", "result": "The order is signed. For the next six months you and your team grind away on the customer's line point by point, and in the end come just short." } ] }
+ },
+ "endings": {
+  "retire": "In your last week before retirement you make one more sample in the applications lab: a battery top cover, one ring of weld. You cut it open, polish it to a mirror and put it under the microscope: 0.53 millimeters deep. You save the micrograph to the process library with a single note: wear your goggles properly.",
+  "burnout": "After that fever the doctor says no more travel like that and no more all-nighters. The company moves you to the technical training center, teaching laser processing to new engineers and customers' operators. Before every session you have everyone put their goggles on and check them one by one."
+ },
+ "stages": [
+  "You make samples for customers in the applications lab: setting power, speed, wobble and shielding gas for the parts they send, then sectioning, grinding, polishing and etching the samples, measuring weld depth under the metallographic microscope, testing strength on the tensile tester and writing test reports. In your hands are goggles, sandpaper, the microscope and a fiber laser welder, and you deal most with your mentor and salespeople chasing samples.",
+  "You own one application: when a customer's new material arrives you find the process window, and once a machine is sold you commission it on site and deal with cold welds and blowouts, writing SOPs for the customer's operators. You start making demands of R&D: this galvo isn't fast enough, that nozzle needs changing. Your mentor used to take you on site; now customers ask for you by name.",
+  "You lead technical pushes for major customers and the rollout of new processes and light sources: presenting proposals in customers' meeting rooms, setting process requirements for new machines with R&D, managing the company's process library, supervising two or three engineers. You spend less time at the machines and more reading other people's micrographs and taking the heat for them in front of customers.",
+  "You run the applications lab and the nationwide field process team: setting sample priorities and who goes to which customer, setting process and inspection standards, and meeting with sales and R&D to decide next year's machines. The sample reports you sign decide whether a customer buys. You rarely polish samples yourself now, but you still look at every key micrograph.",
+  "You own the company's applications engineering and process roadmap: which light sources and which industries the next generation of machines will serve is your call in meetings. You meet major customers in key industries and abroad, present new processes at trade shows, and pick the people to lead process directions. The question you ask most in meetings: has anyone cut this sample open and looked?"
+ ],
+ "work": [
+  "Your mentor has you run a set of tab welds, and on the twelfth one it suddenly blows out. He has you examine that piece: an oil smudge on the plating, a problem with the incoming part.",
+  "You spend an afternoon polishing a cross-section, and the last polishing step rounds the edge so the depth won't measure true. Your mentor glances at it and says start over, lighter hand this time.",
+  "Xiao Hu from sales asks if this machine can cut 0.2-millimeter stainless steel. You cut twenty pieces in the lab and send him photos of the kerf: yes, with burrs this big.",
+  "A machine on the customer's floor keeps making cold welds. You spend an afternoon on it and find the fixture's clamping force too low, leaving an invisible gap between the part and the top cover.",
+  "You write the customer an SOP, start-up, focusing and changing the protective lens in twelve steps, with photos. The customer's operator says: this time I can follow it.",
+  "R&D brings a new welding head. You test it in the lab for three days and say the shielding gas angle is wrong; spatter will cake the lens. The drawing gets revised.",
+  "At a major customer's technical review, their chief engineer asks why your weld depth is more consistent than the others'. You plot metallography data from three hundred samples as a distribution and put it on the screen.",
+  "Xiao Lin, an engineer on your team, writes a site report concluding the customer operated it wrong. You have him delete that and write exactly which step went wrong, and why.",
+  "Sales sends five sample requests at once, all urgent. You put the five customers' purchase dates on one sheet, set the order, and call the sales manager to explain it.",
+  "You set a new inspection standard for field engineers nationwide: every on-site commissioning must keep micrographs of three samples, filed in the process library.",
+  "At the review for the next machine, R&D wants a higher-power source. You say battery customers want consistency, not power, and steer the meeting back.",
+  "At a trade show you explain dual-beam welding to a group of overseas customers. Afterward an old engineer comes up and asks whether you polished that micrograph yourself. You say yes."
+ ],
+ "past": [
+  "You're in your last year of middle school in a county town in Hubei. Outside your door is a little shop that welds iron gates, and after school you often stand watching the blue arc until the owner shoos you off: it'll hurt your eyes.",
+  "For the gaokao (college entrance exam) application you choose Optoelectronic Information Science and Engineering at a university in Wuhan. You've heard Optics Valley is full of laser companies, and you think of lasers as a kind of welding that doesn't hurt your eyes.",
+  "In second-year laser principles, the teacher etches your class's names into a piece of wood with a low-power laser. You lean in and catch a fragrant, scorched smell.",
+  "In your senior year you intern at a laser equipment company and for the first time see a weld's cross-section under the metallographic microscope, like an almond cut in half.",
+  "At graduation you have several offers and choose this one, because on interview day the applications lab mentor let you make a sample yourself."
+ ],
+ "late": {
+  "pension_note": "Estimate: basic pension for enterprise employees, on Wuhan's contribution base and some thirty-plus years of service, roughly 40-odd percent of final monthly pay; travel allowances and project bonuses don't count.",
+  "scenes": [
+   "On the day you retire, the lab prints the micrograph you were proudest of over the years, frames it and gives it to you. The weld's cross-section looks like an almond cut in half.",
+   "Outside your compound you see a mechanic at a repair stall welding, and you can't help going over to watch. He looks up: what are you looking at, it'll hurt your eyes. You laugh and step back.",
+   "You go back to your home county. The little gate-welding shop is still there; the owner has grown old and switched to a handheld laser welder. You stand at the door watching for a long time.",
+   "Your grandchild asks what color a laser is. You think about it and say some you can see and some you can't, and the ones you can't see are the strongest.",
+   "In your years at the training center you teach lasers to more than a thousand engineers and operators. You can't remember their names, but you remember whose goggles sat crooked.",
+   "Every evening you walk by South Lake and no longer read the customer group chats on your phone. The sunset light on the water doesn't sting your eyes at all.",
+   "An engineer you once trained becomes head of the lab and visits every holiday. He says he still makes every new hire learn to polish a cross-section first.",
+   "The day you leave the equipment company, you leave the strapped goggles in a lab cabinet with a note for your successor: put these on properly, then switch on.",
+   "In the new place you still want to cut open anything welded you get your hands on. Colleagues call it an occupational habit. You say it is.",
+   "On the news you see Optics Valley's laser equipment selling to more countries, and an applications lab flashes past on screen. You recognize the shape of the metallographic microscope.",
+   "Later, models suggested the parameters, cameras judged the melt pools and AI wrote the reports, and the lab held fewer people each year. But whenever a new material came in, someone still had to put on goggles, make the first sample and cut it open to look.",
+   "One summer night you watch lightning outside, a white flash lighting half the sky. You work out its energy in your head, laugh at yourself, and go close the window."
+  ],
+  "closing": {
+   "retire": "Many years later you sit in your study looking at the framed micrograph. Sunlight slants in and falls across the weld's cross-section. You look at it a while and decide it is still beautiful.",
+   "burnout": "One afternoon many years later, on the balcony, you hold a magnifying glass to the sun and burn a tiny black dot into a fallen leaf. Your grandchild shrieks beside you, and you laugh and put the glass away.",
+   "end": "Many years later you're cutting a winter melon in the kitchen, and the cut face is white and flat. Looking at it, you remember those afternoons at the polishing wheel, and smile."
+  }
+ }
+}

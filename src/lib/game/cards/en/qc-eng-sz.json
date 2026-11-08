@@ -1,0 +1,148 @@
+{
+ "id": "qc-eng-sz",
+ "occupation": "Quality Inspection Engineer",
+ "role": "Assistant Quality Engineer (Quality Department, Electronics Plant)",
+ "headline": "In your second year out of a measurement and instrumentation degree, in the quality department of a Bluetooth earbud plant in Bao'an, Shenzhen, after half an hour arguing on a video call with a supplier over sink marks on a batch of housings you could only just see, writing your first 8D report on your own",
+ "unit": "An electronics plant in Bao'an, Shenzhen, making Bluetooth earbuds and smartwatches: the quality department",
+ "unit_type": "Consumer electronics plant (mostly export)",
+ "city": "Shenzhen (Bao'an)",
+ "city_tier": "First-tier city",
+ "education": "Bachelor's degree (Measurement and Control Technology and Instrumentation)",
+ "level": "You know the AQL sampling tables by heart, can use calipers, a 2D vision measuring machine and a hi-pot tester, and your incoming inspection reports are tidy. But your supervisor still sends an 8D back three times, you're never sure whether to pass a borderline sample, and when an auditor asks how you run your MSA, you still glance at your supervisor first.",
+ "intro": "You studied measurement and instrumentation and joined the quality department of this electronics plant in Bao'an. Most of your earbuds and smartwatches are sold abroad. For one pair of earbuds, from the plastic housing, battery, speakers and circuit board to the box, every part coming in, every process step and every carton going out needs someone to say: acceptable. From today, part of saying it is yours, and the name signed is yours.",
+ "salary_note": "Estimate: electronics plants in Bao'an, Shenzhen pay quality engineers about 15 percent above the national figure, with overtime and a year-end bonus. Customer audit months and shipping crunches mean lots of overtime; in quiet months you get weekends off.",
+ "facts": [
+  { "label": "Assistant Quality Engineer (current level)", "value": "0–2 years, ¥6,000–8,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Quality Engineer (2–5 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Investigating major quality incidents and settling liability with customers and suppliers", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Judging whether products and incoming parts pass", "source": "AI exposure" },
+  { "label": "Open positions", "value": "361 related listings nationwide, 23 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You walk from your rented room in an urban village to the factory gate, buying rice noodle rolls with egg on the way. The guard nods at you and you swipe your badge.",
+  "An incoming inspector brings a batch of earbud housings: some have sink marks. You turn them under the inspection lamp for ten minutes against the limit sample. One is over, two you can't call.",
+  "On a video call with the housing supplier, he says it's normal; you say the limit sample spells it out. Half an hour later he agrees to send people to sort them.",
+  "You patrol the SMT shop and look over the reflow oven profile. The AOI has flagged three cold joints; the re-judge operator says two are false calls. You check with a magnifier and agree.",
+  "At lunch in the canteen your supervisor sits down and says a European customer is coming to audit next week; pull together the last three months of MSA reports. Your chopsticks pause.",
+  "In the reliability lab a batch of watches is going through salt spray and drop tests. You open the ones dropped from 1.5 meters, check whether the display cable has worked loose, and note it down.",
+  "A customer abroad emails a complaint: one earbud in a batch has a dead left side. You pull retained samples from the same lot from the warehouse and test them one by one. You can't reproduce it.",
+  "After overtime, in your rented room, you revise the 8D your supervisor marked up for the third time. In the root cause box you delete, write, write, delete."
+ ],
+ "ladder": [
+  { "title": "Assistant Quality Engineer", "stage": "Inspection", "focus": "Own one slice of incoming, in-process or outgoing inspection: judge samples, issue inspection reports, chase problems on the line, learn to write 8Ds and work instructions." },
+  { "title": "Quality Engineer", "stage": "QE", "focus": "Own quality for one product line: complaint analysis and 8Ds, supplier part problems, inspection standards and MSA; sit for the intermediate quality engineer qualification." },
+  { "title": "Senior Quality Engineer", "stage": "Projects", "focus": "Run quality planning for new product launches, reliability test plans and major complaints, supervise two or three QEs, answer for the plant in customer audits." },
+  { "title": "Quality Section Chief", "stage": "Section", "focus": "Run one quality section (inspection or QE) plant-wide, its people and standards; set inspection specs and the judgment rules for AI inspection equipment; handle major incidents." },
+  { "title": "Quality Manager", "stage": "Manager", "focus": "Own the plant's quality system, customer relations and cost of quality, answer to the general manager and customers, and be the first to sign when something big goes wrong." }
+ ],
+ "ai_tasks": [
+  { "name": "Investigating major quality incidents and settling liability with customers and suppliers", "how": "Gathering evidence on the line and at suppliers, sitting down face to face with customers and suppliers: whose fault it is, who pays, whether to recall. A person has to reach the conclusion, sign it and own it. AI can help sort the timeline and data." },
+  { "name": "Judging whether products and incoming parts pass", "how": "AOI and AI vision can read cosmetic defects and dimensional data automatically and lean pass or fail. Borderline samples, concessions and disputed calls still need a quality engineer holding the part in hand and deciding." },
+  { "name": "Writing inspection procedures, work instructions and record forms", "how": "From drawings, standards and old documents, AI can already draft inspection procedures and forms. People check only the key parameters and whether the line can actually do it." },
+  { "name": "Analyzing complaints and writing 8D reports", "how": "AI can pull defect data together, list likely causes and draft an 8D. Which cause is the real one, and whether the countermeasure will hold, takes someone on the line taking it apart and reproducing it." },
+  { "name": "MSA, SPC and quality data analysis", "how": "Statistical software and AI can compute repeatability and reproducibility, draw control charts and flag anomalies automatically. Which gauge to replace and which process is truly out of control takes someone on the floor." },
+  { "name": "Escorting customer audits and on-site acceptance", "how": "Customer auditors ask in person and look for themselves. A person has to answer, walk them through and sign off. AI can only help prepare the documents and checklists." }
+ ],
+ "events": {
+  "e_first_8d": "You finish your first 8D on your own: oxidized charging contacts on a batch of earbuds, traced to one tank of solution at the plating supplier. The customer emails back: root cause clear, accepted.",
+  "e_border": "You passed a batch of housings on concession. After shipping, the customer sends a carton back for color mismatch. Your supervisor doesn't yell; he just has you make a fresh set of limit samples.",
+  "e_audit_pass": "A European customer audits the plant. The auditor spends an hour at incoming inspection and asks you five questions. In the final report, the incoming inspection section has not one nonconformance.",
+  "e_overtime": "In the year-end shipping season you don't leave before nine any night for a month, and your hand aches from signing outgoing inspection reports.",
+  "e_cqe": "You pass the intermediate quality engineer qualification. The case question on exam day is a control chart, and you spot the seven rising points in a row at a glance.",
+  "e_ai_aoi": "The cosmetic inspection line gets an AI vision system that judges scratches, sink marks and color mismatch on its own, and re-judge operators go from six to two. But it calls all the glare on a batch of matte housings scratches, and you're the one who teaches it, sample by sample.",
+  "e_ai_docs": "Inspection procedures and work instructions now start as AI drafts. One used to take you two days to write; now you can check it in half a day. You spend the time saved standing on the line a little longer.",
+  "e_recall": "Batteries swell on a batch of watches and the customer demands a full recall inspection. You and your team spend three days and nights opening units in the warehouse, and trace it to one batch of cells. The supplier admits it.",
+  "e_supplier": "You spend a week on site at a speaker supplier in Dongguan, helping them add an acoustic test to inspection that had been all eyeballs. When you leave, the owner gives you a box of lychees.",
+  "e_pressure": "One item in a shipment fails inspection. Sales says the customer is waiting to stock the shelves; can you release it first? You don't sign. The sales manager has it out with you in the corridor.",
+  "e_eyes": "Years of staring at cosmetics under the inspection lamp, and your eyes turn dry; you squint at things far off. You get glasses and keep a bottle of eye drops on your desk.",
+  "e_house": "You buy a flat in Huizhou and ride an hour and a half back on weekends. It's not far from the sea; from the balcony you can see a sliver of it.",
+  "e_family": "You get married, the wedding back in your hometown, and the quality department pools a big red envelope. Your supervisor says he'll answer that week's complaints for you.",
+  "e_mentee": "The new hire you're training answers a question in a customer audit on his own for the first time, steadily. Out of the meeting room he lets out a long breath, and you clap him on the shoulder.",
+  "e_ai_8d": "The complaint system is hooked up to AI. When an email arrives it lists likely causes, pulls data for the same lot and drafts an 8D. Of the five causes it lists, the real one is fourth.",
+  "e_orders_move": "A major customer moves half its orders to a plant in Southeast Asia, and several lines suddenly stand empty. Two people leave your section, and you write them reference letters.",
+  "e_big_incident": "A batch of exported earbuds fails a restricted substances spot check by the customer's test lab. For two weeks you run between the plant, suppliers and a third-party lab, and trace it to a purchased adhesive.",
+  "e_new_product": "A new earbud you did the quality planning for goes into mass production, and the first shipments draw zero complaints. In a mall you see someone wearing a pair and can't help looking twice.",
+  "e_ai_sign": "Most outgoing inspection is judged by machine now, and the reports come out of the system. But the last box, release, still needs you to click confirm and type your name.",
+  "e_back": "After several years of audit seasons and shipping crunches back to back, your checkup shows high blood pressure. The doctor tells you to stay up less. You mute one of the customer group chats on your phone."
+ },
+ "choices": {
+  "c_border": { "title": "Release the borderline parts or not", "situation": "A tenth of a batch of housings sits right at the limit. Sorting them means stopping the line for half a day, and the production manager says the customer will never notice. Your supervisor is off today, and the call is yours to sign.", "options": [
+   { "label": "Stop the line and sort", "result": "The line stops for half a day, and the production manager is frosty with you for a week. The batch ships without a single complaint." },
+   { "label": "Concession, documented", "result": "You sign a concession, spell out the scope and reasoning on the form and copy your supervisor. In the customer's month-end report, this batch never comes up." } ] },
+  "c_ai_vision": { "title": "Taking charge of AI vision inspection", "situation": "The plant is putting AI vision on every cosmetic inspection station and needs a quality engineer to set the judgment criteria with the equipment vendor, collect defect samples and own the false-call rate. Lots of work, lots of responsibility: if something slips through, you're the first one they come to.", "options": [
+   { "label": "Take it", "result": "You build a defect library of tens of thousands of images and bring false calls down from 10 percent to 2. Later every judgment standard in the plant comes from you." },
+   { "label": "Pass", "result": "You stick with complaints and suppliers. How a defect comes about seems to you more important than whether it gets seen." } ] },
+  "c_brand_sqe": { "title": "Supplier quality at a brand", "situation": "A smart hardware brand is hiring supplier quality engineers, overseeing factories like yours. Thirty percent more pay and an office tower in Nanshan, but half the year on the road visiting suppliers.", "options": [
+   { "label": "Go to the brand", "result": "You switch from the side being audited to the side doing the auditing. At your first factory audit you spot the rejects they'd hidden at a glance.", "end": "You rose to supplier quality manager at the brand and audited hundreds of factories. Whenever you walked into a plant's incoming inspection, you first went to look at their limit samples, to see how seriously they'd been made." },
+   { "label": "Stay at the plant", "result": "You stay. You like being close to the line, where you can take a problem apart yourself." } ] },
+  "c_senior": { "title": "Going for Senior Quality Engineer", "situation": "To make Senior Quality Engineer, your supervisor wants you to lead quality planning for a new watch: the reliability test plan, the PFMEA and the control plan are all yours, plus defending it to the customer before mass production. No easy days for six months.", "options": [
+   { "label": "Lead it", "result": "You revise the drop, waterproofing and salt spray test plans three times, and the customer passes the pre-production review on the first try." },
+   { "label": "Finish what you have first", "result": "You say you want to master complaints first. Your supervisor gives the planning to a colleague, and you help him with the reliability part." } ] },
+  "c_dongguan": { "title": "Following the plant to Dongguan", "situation": "The company is moving some lines to a new campus in Dongguan that needs a quality lead. Fifteen percent more pay, housing at half the price, but far from your friends and the life you've built these years.", "options": [
+   { "label": "Go to Dongguan", "result": "At the new plant you write the inspection specs starting from a blank page, and in the first year you bring its complaint rate below the old plant's." },
+   { "label": "Stay in Shenzhen", "result": "You stay in Bao'an. On the weekend you walk along the shore at Xixiang. It's very windy." } ] },
+  "c_kezhang": { "title": "Running for Quality Section Chief", "situation": "The QE section chief has been promoted and the Quality Section Chief post is open. It means a dozen people, carrying the plant's complaint rate target, and most of your time in meetings and with customers.", "options": [
+   { "label": "Run for it", "result": "At the selection meeting you show one chart: every month's complaints for three years, and the root cause behind each." },
+   { "label": "Stay technical", "result": "You say you want to take apart more earbuds. The manager hands you the job of building a reliability lab." } ] },
+  "c_lab": { "title": "Moving to a third-party test lab", "situation": "A third-party testing and certification body is hiring electronics test engineers. Nine to five, no fights with sales, 10 percent less pay, but from then on you write reports for other people and no longer own a line.", "options": [
+   { "label": "Go to the lab", "result": "In the lab you run safety and reliability tests, and every report gets an official stamp. For the first time it's still light when you leave work.", "end": "You rose to technical director at the lab and signed thousands of reports. Now and then a pair of earbuds came in for testing, and when you opened it, the first thing you looked for was sink marks on the housing." },
+   { "label": "Stay at the plant", "result": "You say you still like the energy in a factory when something breaks and everyone takes it apart together." } ] },
+  "c_blame": { "title": "How to write the incident report", "situation": "A major complaint: half the root cause is your own inspection letting it through, half is the supplier. The boss wants the report to say more about the supplier and less about you, to keep the customer happy. You have to sign it.", "options": [
+   { "label": "Write it as it was", "result": "You put both causes in, your own half first. The customer deducts a sum, but next year's orders don't shrink." },
+   { "label": "Write it the boss's way", "result": "The report goes in and the customer accepts it. In your own notebook you write down the real cause." } ] }
+ },
+ "endings": {
+  "retire": "On the day you retire, you hand the quality department every limit sample you made over the years, each with a slip on the back: which year, which customer, why the line was drawn there. The last one is an earbud housing with a sink mark you once studied under the lamp for ten minutes.",
+  "burnout": "After that year's checkup the doctor says no more late nights and no more rushing to the plant at every phone call. You move from quality to the systems office, handling documents, internal audits and training. When something goes wrong on the line, the young ones still come to you, and you pick up the magnifier and look with them."
+ },
+ "stages": [
+  "You own one slice of inspection: incoming parts at IQC, patrols on the SMT and assembly lines, sampling before shipment, your signature on every report. In your hands are the AQL tables, calipers, the inspection lamp and the limit samples. You deal most with inspectors and suppliers, one waiting for your call, the other waiting for you to give. You're learning to say no without burning the bridge.",
+  "You own quality for one product line: complaint emails from abroad land with you first, and you pull retained samples, tear down rejects, write 8Ds and go on site at suppliers. The inspection standards and MSA plan are yours. Production, sales and purchasing all come to you, and you're learning to ask on the phone what are you seeing there before deciding whether to go.",
+  "You run quality planning for new product launches: reliability test plans, PFMEA, control plans, and defending them to customers before mass production. You lead on major complaints, tearing down and writing up with two or three QEs. What you say in design reviews starts to carry weight. Before, you caught problems; now you stop them on the drawing.",
+  "You run a quality section of a dozen people: you set inspection specs and the judgment thresholds for AI vision inspection, staffing and budget, and lead the investigation when a major incident hits. You see customers more than samples now, and your signature weighs more: when you sign, a shipment goes on the boat.",
+  "You own the plant's quality system and cost of quality, answering to the general manager and customers. In annual customer audits, major recalls and compensation talks with suppliers, you are the last to speak in the meeting and the first to sign. You rarely open earbuds yourself now, but every month you still stand at incoming inspection for an hour and pick up a limit sample to look at."
+ ],
+ "work": [
+  "Ah Zhen, an inspector, brings you a housing and asks whether this scratch counts. You turn it through three angles under the lamp, compare it to the limit sample, and say: it counts. Reject.",
+  "The first time you hi-pot test a batch of charging cases, one breaks down. You open it and find a wire pinched against a screw boss inside.",
+  "On a video call the supplier's salesman says the speakers are fine. You send him a screenshot of the frequency response curve. After a silence he says he'll send someone right away.",
+  "A customer abroad complains one earbud is quiet. You test fifty retained samples from the same lot one by one, and at number 37 you find a dust mesh mounted crooked.",
+  "You run MSA on a new 2D vision measuring machine: three inspectors, ten readings each. Repeatability is out, and you find the fixture wasn't clamping tight.",
+  "Purchasing says a new battery supplier is 20 percent cheaper. You audit their plant for a day and come back with twelve corrective actions in your audit report.",
+  "In a design review you point at the new watch's structure drawing and say this snap fit will break when dropped. Engineering says it won't. The prototypes are dropped ten times and four break. The drawing changes.",
+  "Xiao Wu, a QE you supervise, writes an 8D with the root cause as operator error. You strike the line and send him back to the floor for another day.",
+  "The AI vision false-call rate creeps back up. You and the vendor's engineer go through a week of images together and reset the judgment thresholds for three defect types.",
+  "At the customer's annual audit, the auditor asks how responsibility for escapes is assigned. You put the new human-machine re-judge procedure on the screen and walk through it page by page.",
+  "Negotiating compensation for a bad batch, the supplier's owner slams the table. You lay three test reports in front of him without raising your voice, and in the end he signs.",
+  "In the annual cost of quality report you double the prevention line, and spend twenty minutes at the general manager's meeting explaining why the money is worth it."
+ ],
+ "past": [
+  "You're in your last year of middle school in a county town in Hunan. Your family runs a little phone repair stall. Your father won't let you touch the phones he takes apart, so you watch.",
+  "For the gaokao (college entrance exam) application you choose Measurement and Control Technology and Instrumentation. Your father says with that you can get into a big factory instead of minding a little counter.",
+  "In second-year error theory, the teacher has each of you measure the same part ten times with the same calipers, and no two people get the same number. For the first time you see how hard the word accurate is.",
+  "In your senior year you intern in the quality department of an electronics plant in Shenzhen, judging incoming parts for three months and learning to read the AQL tables.",
+  "After graduating you sign with this earbud plant. On your first day your supervisor hands you a limit sample and tells you to get to know it first."
+ ],
+ "late": {
+  "pension_note": "Estimate: basic pension for enterprise employees, on Shenzhen's contribution base and some thirty-plus years of service, roughly 40-odd percent of final monthly pay; overtime and year-end bonuses don't count.",
+  "scenes": [
+   "On the day you retire, the quality department gives you a magnifier with three characters engraved on the rim that mean judge it right. You hold it in the sun and study the lines of your palm for a long time.",
+   "You become known in your compound's residents' group chat: whenever someone's new appliance has a problem, they come to you. You tell them this one's a design flaw, that one got knocked in shipping.",
+   "You go back home to Hunan. Your father's phone repair stall closed long ago. You stand at the door of the room for a while; there's still a screw on the floor from back then.",
+   "Your grandchild gets new earbuds. You take them and, without thinking, turn them once under the lamp, looking for sink marks. None. You hand them back.",
+   "In your years at the systems office you go through every quality document in the plant and delete more than three hundred forms nobody used.",
+   "Every evening you walk the greenway by the sea for an hour and watch the sun go down, no longer checking complaint emails on your phone.",
+   "A QE you once trained becomes a quality manager. Every holiday he messages you to say that whenever he signs something, he thinks of that line you struck out.",
+   "The day you leave the plant, you give the limit sample you used for years to your successor and say: behind every mark on this there's a customer.",
+   "In the new place you still can't break the habit of turning things under the light to look at them. Colleagues laugh that you inspect an apple before you buy it.",
+   "At a trade show you see your old plant's new earbuds, completely redesigned. You pick a pair up, weigh it in your hand, listen, and put it down.",
+   "Later, cosmetics, dimensions and electrical tests mostly went to machines and models, and there were fewer inspectors each year. But whenever something big went wrong, someone still had to go to the line or the supplier, open the bad one and explain exactly how it failed.",
+   "One rainy afternoon you find a printout of your first 8D in a drawer, your supervisor's red pen on it, three rounds of edits. You look at it for a long time and put it back."
+  ],
+  "closing": {
+   "retire": "Many years later you sit by the window and rest the engraved magnifier on a book. Sunlight passes through and gathers into a small bright point on the page. You watch it move, slowly.",
+   "burnout": "One evening many years later you pick up a piece of sea glass worn smooth by the waves and turn it once against the sunset. Not a single mark on it. You put it in your pocket.",
+   "end": "Many years later, in a little shop, you buy a bowl the owner says is handmade, no two alike. You turn it under the light and find a tiny bubble, and buy it anyway."
+  }
+ }
+}

@@ -1,0 +1,150 @@
+{
+ "id": "yield-wh",
+ "occupation": "Yield Engineer",
+ "role": "Assistant Yield Engineer (Flexible OLED Panel Fab)",
+ "headline": "In your first year out of an electronic science master's, in the yield improvement department of a flexible OLED panel fab in Wuhan's Optics Valley, laying a defect map over a dozen-odd tools before eight every morning, after three weeks chasing a dark line that only shows up once the screen has been folded",
+ "unit": "A flexible OLED panel fab in Optics Valley, Wuhan: the yield improvement department",
+ "unit_type": "Display panel fab (flexible OLED)",
+ "city": "Wuhan (Optics Valley)",
+ "city_tier": "New first-tier city",
+ "education": "Master's degree (Electronic Science and Technology, displays)",
+ "level": "You can explain how a TFT works and how an OLED emits light, and you're quick at pulling data and plotting it with Python and SQL. But a screen passes through hundreds of steps from array to module, and you can't yet match which step's problem grows into which defect. You have to queue and beg for cross-sections and electron microscope time in failure analysis, and when an array engineer says that's not our section in a meeting, you don't yet know how to answer.",
+ "intro": "Your master's was on OLED device lifetime, and you signed with this flexible screen fab in Optics Valley, posted to yield improvement. Your screens go into a great many phones; they bend and they fold. A screen is built through hundreds of steps on a glass substrate, then peeled off the glass. How many in every hundred come out bad, and at which step, is the question your department answers every morning. From today, some of the red dots on that defect map are yours to chase.",
+ "salary_note": "Estimate: the pay-by-experience figures for yield engineers lean toward chip fabs in Shanghai and Beijing; panel fabs in Wuhan pay about 20 percent less, master's graduates start a little higher, and there's a shift allowance (yield has to cover nights too) and a year-end bonus. In industry downturns the year-end bonus shrinks.",
+ "facts": [
+  { "label": "Assistant Yield Engineer (current level)", "value": "0–2 years, ¥10,200–15,000 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Yield Engineer (2–5 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥32,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Planning yield ramps for new products and making the call across departments", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Monitoring daily yield reports and defect trends", "source": "AI exposure" },
+  { "label": "Open positions", "value": "8 related listings nationwide, 1 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You walk from your rented room in Guanshan to the metro, buying a bowl of reganmian, Wuhan's hot dry noodles, and mixing it as you go. September in Wuhan is still hot, and sesame paste ends up on your sleeve.",
+  "At your desk you pull yesterday's yield report first. One kind of dark spot from the evaporation section has doubled since the day before. You lay the defect map over four evaporation tools, and the red dots crowd into one corner of one of them.",
+  "At the morning meeting you raise that evaporation tool. The evaporation engineer says it's incoming material; the array engineer says his section has been fine all week. The section chief tells you to come back this afternoon with cross-sections.",
+  "You queue at the failure analysis lab to have three bad screens cross-sectioned and put under the electron microscope. The woman at the lab says seven are ahead of you today. In the logbook you write: urgent.",
+  "The canteen has pork rib and lotus root soup, the lotus root soft and floury. Your mentor sits down and says: on those dark spots, first check whether that tool had its mask changed last week.",
+  "You page through the tool's maintenance log in the system: a fine metal mask was changed last Thursday. You plot the defect rate before and after the change on one chart, and the line bends on Thursday.",
+  "The microscope images come back: under the dark spot is a tiny particle. You take them to the evaporation engineer. He looks for a long time and says: I'll go check that mask.",
+  "Before you leave you write today's analysis into the yield tracking system and set the status to pending verification. Outside, Optics Valley's towers are all lit, and on the fab roofs a row of lights runs off into the distance."
+ ],
+ "ladder": [
+  { "title": "Assistant Yield Engineer", "stage": "Data", "focus": "Produce the daily yield report and defect maps, trace defects by overlay to steps and tools, help with failure analysis, learn to lay a problem out clearly in cross-department meetings." },
+  { "title": "Yield Engineer", "stage": "Chasing defects", "focus": "Own yield for one defect type or one section, lead root cause analysis and DOEs, and pull process and equipment engineers through to closed-loop improvement." },
+  { "title": "Senior Yield Engineer", "stage": "Projects", "focus": "Lead yield projects for new product ramps and new tool introductions, set interception strategy, present yield to the customer's resident engineers, supervise a few engineers." },
+  { "title": "Yield Section Chief", "stage": "Section", "focus": "Run a yield section, set the fab's yield targets and tracking system, and negotiate every point of yield with section heads at fab-level meetings." },
+  { "title": "Head of Yield Improvement", "stage": "Department", "focus": "Run the fab's yield improvement department, set yield ramp plans for new products and lines, and answer to the fab director and customers for yield and cost." }
+ ],
+ "ai_tasks": [
+  { "name": "Planning yield ramps for new products and making the call across departments", "how": "A ramp plan involves customer milestones, capacity and every section's resources, and has to be negotiated in meetings with process, equipment, production and the customer, holding firm under pressure. AI can only offer historical curves for reference." },
+  { "name": "Monitoring daily yield reports and defect trends", "how": "AOI and electrical test data and defect maps can now be compiled around the clock by the system and AI, which flag abnormal lots and push alerts. People spot-check false and missed alarms and decide which deserve escalation." },
+  { "name": "Tracing defects to steps and tools", "how": "AI can overlay maps, run correlations and list suspect tools and chambers. Which is the real cause and which is mere coincidence takes judgment from the process and the failure analysis cross-sections." },
+  { "name": "Running DOEs with process and equipment for improvement", "how": "AI can help design experiments, cut down combinations and analyze results. How to test, whether to spend capacity on it and whether to adopt the outcome, people negotiate with each section's engineers." },
+  { "name": "Classifying and judging defect images", "how": "Image models can sort bright spots, dark spots, line defects and mura automatically. New defects nobody has a name for yet need a person at the microscope to look and define them." },
+  { "name": "Assessing yield for new tools and materials", "how": "AI can gather data from similar past introductions and flag risks. The real risk of a new material or tool takes people to set interception conditions with the supplier and every department, and to own the introduction." }
+ ],
+ "events": {
+  "e_first_root": "For the first time you trace a defect to its root on your own: an evaporation tool whose mask change wasn't followed by proper cleaning. The evaporation section changes its cleaning procedure, and a week later that dark spot is back to its old level.",
+  "e_wrong_call": "In a meeting you declare a line defect to be array's problem. The array engineer spends a week on it and finds it's lamination damage from module. You go to his desk to apologize. He says it's fine; next time look at the cross-section first.",
+  "e_ramp": "A new foldable screen is ramping, the customer wants yield numbers every day, and for three months you arrive at seven and leave at ten, weekends included. The day the ramp ends, the department head treats everyone to crayfish.",
+  "e_ai_map": "The yield system gets AI: every morning it overlays the maps, finds suspect tools and drafts the daily report by itself. You no longer rush to pull numbers by 7:50. But for three days running it takes a test machine's misjudgments for real defects, and you're the one who spots it.",
+  "e_ai_classify": "Defect images all go to a classification model, and hundreds of thousands are sorted overnight. One new mura, like ripples on water, fits none of its classes. You spend an afternoon at the microscope and give it a name.",
+  "e_greenbelt": "You earn a Six Sigma Green Belt. Your project cut a bubble defect at the laser lift-off step from 1.5 percent to 0.4.",
+  "e_fa_friend": "You get friendly with the failure analysis lab, and urgent jobs no longer need the word urgent; a phone call gets you bumped up the queue. Every time you go, you bring them a bag of spicy braised duck neck.",
+  "e_downturn": "Panel prices fall, the fab cuts utilization, and several lines run at half. The department's target changes from raising yield to cutting cost, and you start working out what each percentage point is worth in money.",
+  "e_house": "You buy a flat on the east side of Optics Valley, twenty minutes from the fab. The day you get the keys you stand on the balcony and see your fab's roof in the distance, stretching farther than you can see.",
+  "e_family": "You get married by East Lake. Your colleagues give you a foldable phone: we made the screen ourselves, they say. You know the yield.",
+  "e_customer": "The phone brand's resident engineer wants you to explain within one day where the fold-induced dark lines on a batch of screens come from. You put three months of data and a dozen cross-section images into one report. When he finishes reading he says: this time it's clear.",
+  "e_eyes": "Screens, microscopes and electron images all day, and your eyes go painfully dry; at night you squint at your phone. You get a pair of blue-light glasses and find it funny yourself.",
+  "e_mentee": "The new hire you're training presents a defect at the morning meeting for the first time and gets pushback from the evaporation engineer. He doesn't panic; he puts the cross-section on the screen. In the back row you nod.",
+  "e_new_tool": "The fab brings in a new evaporation tool and its yield assessment is yours. For three months its defect rate is double the old tools'. You and the vendor's engineers pull more than twenty all-nighters before it's good enough for production.",
+  "e_ai_rca": "AI starts writing first drafts of root cause analyses: suspect parameters, suspect tools, suggested experiments. Of the five it lists, one is real and two are just parameters that happened to change together. You strike those two and write in why.",
+  "e_flood": "That summer Wuhan has days of torrential rain, and the water at your compound gate is knee-deep. You wade to the fab, and that day's yield report isn't a minute late.",
+  "e_paper": "You write up what causes that ripple-like mura as a paper and present it for fifteen minutes at an industry conference. Afterward engineers from other fabs come up to add you on WeChat.",
+  "e_insomnia": "The yield target rises every year, and you start waking at night with that patch of red dots from the defect map in your head. Your checkup report sprouts a few arrows.",
+  "e_ai_dashboard": "Yield tracking across the fab becomes an automated dashboard, and the system chases overdue issues by itself. But behind every issue, who should take it and who refuses, you still sort out one by one in meetings.",
+  "e_parents": "You bring your parents from home to stay for a month and take them to the Yellow Crane Tower. Your mother takes photos with the foldable phone made at your fab, folding it shut and opening it: so you made this."
+ },
+ "choices": {
+  "c_fa": { "title": "A rotation in the failure analysis lab", "situation": "Your department has a six-month rotation slot in the failure analysis lab, where you'd learn cross-sectioning, electron microscopy and focused ion beam work and look at defects with real confidence afterward. But your yield projects would go to someone else for six months, and your performance rating would suffer.", "options": [
+   { "label": "Take the rotation", "result": "You cut hundreds of screens in the lab and learn to tell particles, broken lines and corrosion apart at a glance under the microscope. When you come back, people in meetings believe what you say." },
+   { "label": "Stay on your projects", "result": "You stay and finish your projects, and get an A rating at year end. For cross-sections, you still queue and beg." } ] },
+  "c_ai_model": { "title": "Learning yield modeling and machine learning", "situation": "The fab is building its own AI platform for yield analysis and wants a few yield engineers to build models and define data standards with IT, then own model releases fab-wide. A lot to learn, with your old yield targets still on your back.", "options": [
+   { "label": "Learn it", "result": "You learn to put thousands of parameters and yield into one model, and later no yield model in the fab goes live without your signature." },
+   { "label": "Pass", "result": "You say you still trust cross-sections and the microscope. The modeling goes to a colleague who likes writing code." } ] },
+  "c_chip": { "title": "Yield at a chip fab in Shanghai", "situation": "A wafer fab in Shanghai is hiring yield engineers and says it wants people who've chased panel defects. Forty percent more pay, but going from panels to chips means relearning the process, defects and data from scratch, and Shanghai housing is beyond you.", "options": [
+   { "label": "Go to Shanghai", "result": "You go from looking at a screen to looking at a wafer, and for the first month you study process flow charts every night.", "end": "You rose to yield manager at the chip fab and looked at tens of thousands of wafer maps. Now and then, using a foldable phone, you'd bend it slowly against the light and check for dark lines near the crease." },
+   { "label": "Stay in Wuhan", "result": "You stay. You like screens, and you like a defect you can see with your own eyes." } ] },
+  "c_senior": { "title": "Leading a foldable ramp, a shot at Senior Yield Engineer", "situation": "The fab has won an order for a new foldable screen and needs someone to lead the yield ramp: interception strategy, weekly reports to the customer, fixing things alongside every section. The department head says if it works, you're Senior Yield Engineer; if not, the customer comes to you first.", "options": [
+   { "label": "Lead it", "result": "You run between the customer and the sections for six months, and yield climbs from just over 30 percent to 80. The customer's weekly report says: yield ramp in line with expectations." },
+   { "label": "Not yet", "result": "You say you want to master the evaporation section first. The project goes to a colleague in the next section, and you help him with the evaporation part." } ] },
+  "c_hefei": { "title": "Starting up a new line", "situation": "The company has built a new OLED line in another city and needs a few experienced yield engineers to start it up. Twenty percent more pay and half a grade up, but two years there, starting from the first substrate.", "options": [
+   { "label": "Go", "result": "On the new line you chase defects from the very first substrate, and over two years watch yield climb from zero to mass-production level." },
+   { "label": "Stay in Wuhan", "result": "You stay. On the weekend you take the family cycling around East Lake, a long loop." } ] },
+  "c_kezhang": { "title": "Running for Yield Section Chief", "situation": "The yield section chief has moved to the new line and the post is open. It means a dozen engineers, carrying the fab's yield target, and at the fab-level meeting every day you speak for every defect.", "options": [
+   { "label": "Run for it", "result": "At the selection meeting you show one chart: the fab's yield losses over these years, and how each piece was won back bit by bit." },
+   { "label": "Stay technical", "result": "You say you want a few more years at the microscope. The department head nods and gives you yield research for the next-generation under-display camera." } ] },
+  "c_aoi_vendor": { "title": "Moving to an inspection equipment company", "situation": "A domestic maker of AOI inspection equipment wants you as applications director, helping panel fabs connect inspection to yield analysis. Thirty percent more pay, but from then on you'd sell equipment and design solutions, most of the year at customers' fabs.", "options": [
+   { "label": "Go", "result": "You go from using inspection equipment to making it, and in the first month you visit four panel fabs.", "end": "You were applications director at the inspection equipment company for many years, and your machines went into several panel fabs. At each one you went to look at the morning yield report, to see where the red dots crowded on the defect map." },
+   { "label": "Stay", "result": "You say you'd rather chase a defect to the bottom in your own fab." } ] },
+  "c_report": { "title": "How to report the yield number", "situation": "Quarter end, and one product's yield is two points short of target. Someone suggests counting a repairable defect as good. On paper the target would be met and the customer satisfied. You have to sign the report.", "options": [
+   { "label": "Report it straight", "result": "You report it straight and take a dressing-down in the meeting, then split those two points of loss into three projects and win them back the next quarter." },
+   { "label": "Count it their way", "result": "The report goes through. In your own tracking sheet you flag that defect separately, and you never delete it." } ] }
+ },
+ "endings": {
+  "retire": "On your last day before retirement you pull the morning yield report once more. The system has drawn the defect maps by itself for years now, and the red dots still crowd into one corner. You look for a while and type into the tracking system: first check whether this tool had its mask changed last week. Then you shut down the computer and walk out of the fab.",
+  "burnout": "After that year's checkup the doctor says no more late nights and no more being woken by yield alarms at midnight. The department head moves you to the technical training center, teaching yield analysis to new engineers. When you reach the lesson on overlays, you always show the defect map of the first problem you traced to its root."
+ },
+ "stages": [
+  "Every morning you produce the yield report: pulling AOI and electrical test data from the system, drawing defect maps, laying them over each section's tools to find the suspect one. Bad screens go to the failure analysis lab for cross-sections and electron microscopy, and you take the images to each section's engineers. In your hands are SQL, Python, the yield tracking system and a process flow binder, and you're learning to get people to own a defect in a meeting.",
+  "You own yield for one defect type or one section: you lead root cause analysis, plan the DOEs and persuade the sections to run them, and watch whether improvements close the loop. You deal with evaporation, array and module engineers every day. You used to go looking for them; now when they have an anomaly they call you first for the data.",
+  "You lead yield projects for new product ramps and new tool introductions: setting interception strategy, presenting yield every week to the customer's resident engineers, negotiating resources and capacity with sections in project meetings. You supervise two or three engineers, spending less time on your own analysis and more reviewing theirs and covering for them in meetings.",
+  "You run a yield section of a dozen engineers. The fab's yield targets and tracking system are yours to set, and at the fab-level meeting every day you speak for every defect: whose it is, when it will be fixed, how much it's costing. The yield reports you sign are read by both the customer and the fab director.",
+  "You run the fab's yield improvement department, and yield ramp plans for new products and lines are yours to approve. You answer to the fab director and customers for yield and cost, attend meetings at the new lines and at customers, and negotiate yield clauses for new tools with equipment makers. The question you ask most in meetings: has anyone looked at a cross-section for this conclusion?"
+ ],
+ "work": [
+  "Your mentor has you overlay a bright-spot defect map on twenty tools. At the seventeenth, the red dots finally match the shape of one chamber.",
+  "Old He from failure analysis shows you an electron image: under the dark spot is a broken metal line. You save it to your own folder and name it First One.",
+  "You write a SQL query that joins data from three systems, and a daily report that used to take half a day now takes twenty minutes. The section chief looks it over and says: check the numbers again.",
+  "Xiao Luo from module says line defects keep appearing after lamination. The two of you spend an afternoon at the microscope and find a dab of adhesive stuck to the press head.",
+  "You plan a DOE for evaporation, three parameters at two levels, taking half a day on one tool. The evaporation engineer says no. You show him what that dark spot cost in a month, and he agrees.",
+  "One mura appears only on night shift. You pull the shop's temperature and humidity records and find that in the hour the air conditioning switches modes at night, the temperature jumps two degrees.",
+  "The customer's resident engineer asks why yield dropped three points this week. You split the loss into five pieces and go through them one by one. At the fourth he says: we need to check that on our side too.",
+  "Xiao Fang, an engineer on your team, writes a root cause report concluding equipment abnormality. You send him back to find out exactly which part, which day and why.",
+  "At the acceptance meeting for the new evaporation tool, the vendor wants the yield clause at 90 percent. You spread out the old tools' data and say 95. It settles at 93.",
+  "At the fab-level meeting, array and evaporation argue over a defect for twenty minutes. You put the cross-section on the screen and say: this is array's. Countermeasure by next Wednesday.",
+  "You set new tracking rules for the section: every issue must state who owns it and the day it closes, and overdue owners get named at the weekly meeting.",
+  "The yield ramp plan for a new line is on the table. You circle the point at month three and write: leave a month here for evaporation tuning. Don't promise it to the customer.",
+  "At the customer's annual meeting they ask for next year's yield target. You don't give the highest number; you give one you're sure of, and say: anything above that is on us."
+ ],
+ "past": [
+  "You're in your last year of middle school in a county town in Hubei. Your family runs a little TV repair shop. Your father fixes the old bulky tube sets, and when a screen comes on, snow jumps across all of it.",
+  "For the gaokao (college entrance exam) application you choose Electronic Science and Technology. Your father says TVs are all flat now; go learn how those screens are made.",
+  "In your third year you join a research group working on OLEDs, and for the first time you evaporate a device in a glovebox that lights up: green, no bigger than a fingernail.",
+  "Your master's is on OLED device lifetime. Two years of testing, and the longest-lived sample glows for three thousand hours. At your defense you show a photo of its last second.",
+  "At autumn recruiting you interview at several panel makers and choose this one in Optics Valley. The interviewer asks if you know what a yield engineer does. You say: someone who finds out why screens go bad."
+ ],
+ "late": {
+  "pension_note": "Estimate: basic pension for enterprise employees, on Wuhan's contribution base and some thirty-plus years of service, roughly 40-odd percent of final monthly pay; shift allowances and year-end bonuses don't count.",
+  "scenes": [
+   "On the day you retire, the department prints the defect map of the first problem you traced to its root, frames it and gives it to you. Its red dots crowd into one corner.",
+   "You take up photography by East Lake. You shoot a night scene, zoom in, and find a bright spot. You study it a long while and laugh: a dead pixel in the camera, not the screen.",
+   "In your home county, your father's TV repair shop closed long ago. You stand at the door of the room for a while, remembering that screen full of jumping snow.",
+   "Your grandchild brings a foldable phone and asks whether the crease will break. You bend it slowly against the light and say: it will, but not that soon.",
+   "In your years at the training center you teach yield to more than a thousand new engineers. Some later become section chiefs and still call you teacher when they pass you in the corridor.",
+   "Every evening you walk along the riverbank and watch the towers across the water light up one by one. You no longer wonder whether any of their screens have dark spots.",
+   "You gather the defects you chased over the years into an album, each cross-section captioned with how it came about, and give it to the failure analysis lab.",
+   "The day you leave the panel fab, you pull the yield report one last time and save the defect map to your own computer, numbered after the files in your First One folder.",
+   "In the new place you still look at the previous day's numbers first thing each morning, the distribution, the outliers. Colleagues say you can tell you came from a panel fab. You don't deny it.",
+   "On the news you see Optics Valley's flexible screens have reached another generation; they roll up now. You think of those ripples you spent whole afternoons studying under the microscope.",
+   "Later, overlays, classification, daily reports and first-draft root causes all went to models, and the yield department grew smaller every year. But whenever a defect appeared that no one had ever seen, someone still had to look at it under the microscope for a long time and give it a name.",
+   "One winter night you watch an old film on TV, and there's a faint flicker in the picture. Watching, you forget to work out which line it's coming from."
+  ],
+  "closing": {
+   "retire": "Many years later you look at the framed defect map on your study wall, its red dots a little faded now. You walk over and tap that corner with your finger, the way you once pointed at a screen for someone else.",
+   "burnout": "One afternoon many years later you sit on the balcony as sunlight falls across the screen of an old phone, throwing back a small patch of light. You look at it a long time. There's nothing in it, clean all the way through.",
+   "end": "Many years later, by a lake, you watch children skipping stones, rings of ripples slowly spreading across the water. You think of that mura and the name you gave it, and smile."
+  }
+ }
+}

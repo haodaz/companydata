@@ -1,0 +1,145 @@
+{
+ "id": "calibration-tj",
+ "occupation": "Calibration Technologist",
+ "role": "Calibration Technician (Mechanical Metrology Lab)",
+ "headline": "In your first year out of an applied physics degree, in the mechanical metrology lab of a metrology institute in Tianjin, lifting weights with tweezers in white gloves, after redoing one precision pressure gauge's hysteresis three times, with your first calibration certificate still waiting for your mentor to check and sign",
+ "unit": "A municipal metrology institute in Tianjin (a public institution): the mechanical metrology lab",
+ "unit_type": "Metrology institute (calibration laboratory)",
+ "city": "Tianjin",
+ "city_tier": "New first-tier city",
+ "education": "Bachelor's degree (Applied Physics)",
+ "level": "You learned error theory and data processing thoroughly and can recite the operating procedures for the piston gauge and electronic balance. But you have never done a calibration start to finish on your own, your mentor still walks you through each term of an uncertainty evaluation, and when a customer asks on the phone whether this gauge is still usable, you don't know what to say.",
+ "intro": "You studied applied physics, passed the exam into this metrology institute in Tianjin, and were assigned to the mechanical lab. Pressure gauges from factories, balances from hospitals, load cells from the port all come here at intervals to be compared against your standards: how far off, still fit for use or not. Your standards in turn go up to a higher institute to be compared, level by level, until they reach the national primary standard. From today, one short link of that chain is yours to hold, in white gloves.",
+ "salary_note": "Estimate: Tianjin's metrology institutes are public institutions, paying base salary plus performance pay, about 10 percent above the national figure. Raises come slowly, mostly through professional rank and the registered metrologist qualification; on-site calibrations at companies come with travel allowances.",
+ "facts": [
+  { "label": "Calibration Technician (Assistant Engineer) (current level)", "value": "0–3 years, ¥4,500–6,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Engineer (Registered Metrologist, Grade 2) (3–8 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Running the standards by hand to calibrate", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Evaluating measurement uncertainty", "source": "AI exposure" },
+  { "label": "Open positions", "value": "4 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "From the breakfast stall downstairs you buy jianbing guozi, Tianjin's crepe wrapped around a crisp fritter, with an extra egg. You finish it on the bus and step off holding only the plastic bag.",
+  "In the lab you check the temperature and humidity log first: 20 degrees, 45 percent humidity. You change into your lab coat and wait another half hour for the air conditioning and equipment to settle.",
+  "A box of pressure gauges arrives from a petrochemical plant, thirty-two of them. You check each serial number against the submission form and look them over. One has a cracked glass; you photograph it and log it.",
+  "On the piston gauge you load weights, raising and lowering pressure step by step, taking readings, eyes fixed on the needle of the gauge under test, afraid to blink. Your mentor says beside you: tap the case lightly, then read.",
+  "The canteen has guobacai, Tianjin's pancake strips in gravy. Your mentor says you got one point wrong in that gauge's hysteresis this morning. Redo it this afternoon.",
+  "You redo the gauge and the numbers agree, then do it once more to be sure. Every number in the raw record you write in fountain pen. A mistake can only be struck through once, with your signature beside it.",
+  "Your mentor walks you through the uncertainty: from the standard, from reading resolution, from temperature, from repeatability, each term listed on paper. Looking at the table, you feel how many things stand behind a single number.",
+  "Before you leave, the customer calls to ask whether the gauge with the cracked glass can still be used. You don't dare answer and pass the phone to your mentor, standing by to hear how he puts it."
+ ],
+ "ladder": [
+  { "title": "Calibration Technician (Assistant Engineer)", "stage": "Assisting", "focus": "Calibrate pressure, mass and force alongside a mentor, write raw records and compute uncertainty, qualify on specific metrology items, earn Assistant Engineer." },
+  { "title": "Engineer (Registered Metrologist, Grade 2)", "stage": "Independent", "focus": "Own several calibration items, check other people's certificates, calibrate large equipment on site at companies, manage intermediate checks and traceability for the standards." },
+  { "title": "Senior Engineer (Technical Lead for a Standard)", "stage": "Sign-off", "focus": "Own the establishment and re-examination of one class of measurement standard, write calibration methods and work instructions, lead the team through proficiency testing and accreditation." },
+  { "title": "Professor-level Senior Engineer (Head of the Metrology Lab)", "stage": "Lab head", "focus": "Run a metrology lab's people, standards and projects, lead development of new standard apparatus and drafting of calibration specifications, issue important reports." }
+ ],
+ "ai_tasks": [
+  { "name": "Running the standards by hand to calibrate", "how": "Loading weights, raising pressure, taking readings, watching whether the instrument under test sticks or misbehaves: someone has to do it step by step in the climate-controlled lab. AI can prompt the steps; it can't stand in for the hands." },
+  { "name": "Evaluating measurement uncertainty", "how": "Software and AI can combine uncertainty from the model automatically and produce the evaluation report. Which components to include, and which are peculiar to this particular instrument, the technician has to judge." },
+  { "name": "Compiling raw records and issuing certificates", "how": "Data flows into the system automatically, and AI generates certificates from templates and checks the format and figures. People verify the key data and sign." },
+  { "name": "Managing intermediate checks and traceability for the standards", "how": "The system can schedule traceability, track trends in check data and flag drift. Whether a standard goes up to a higher institute or is taken out of service is for a person to decide." },
+  { "name": "Advising customers on calibration intervals and use", "how": "AI can recommend intervals from years of past results. How the gauge is actually used at the customer's site, and what a deviation would affect, takes a person to explain." },
+  { "name": "Facing accreditation assessments and proficiency testing", "how": "Assessors watch, ask and have you do it again on the spot. Proficiency test samples have to be measured by hand, and someone answers for the result." }
+ ],
+ "events": {
+  "e_first_cert": "For the first time you complete a calibration and issue a certificate on your own. The checker is your mentor. He studies it for twenty minutes, moves one decimal point, and signs.",
+  "e_qualify": "You qualify to calibrate two items, pressure and mass. The theory exam is on uncertainty; the practical is calibrating a precision pressure gauge in front of the examiner.",
+  "e_temp_fail": "In the days when winter heating comes on, the lab keeps wavering around 22 degrees, out of spec. A whole day's data has to be voided, and you do it all again from the start.",
+  "e_routine": "For an entire quarter, every day is the same kind of pressure gauge. You start counting how many weights you load each day, and at night in bed you're still raising and lowering pressure in your head.",
+  "e_field": "You go along to calibrate on site at a petrochemical plant in Dagang, testing pressure transmitters one by one in a control room in the process area. You wear a hard hat all day and come back with a line across your forehead.",
+  "e_registered": "You pass the Grade 2 registered metrologist exam. The case question that day is a calibration certificate full of errors. You find six, and back home learn the answer key had seven.",
+  "e_ai_cert": "The lab switches to a new information system: data goes straight from the instruments into the record, and AI produces certificates from templates and checks format and figures automatically. You used to issue six certificates a day; now you can check twenty.",
+  "e_ai_camera": "Readings on dial pressure gauges move to cameras, several calibrated at once, the system raising pressure, reading and calculating by itself. But it passes a gauge with a slightly bent needle, and you're the one who spots it.",
+  "e_pt": "The national proficiency testing results come out: your set of weights scored satisfactory. The lab head reads it out at the lab meeting, and you write the date in your notebook.",
+  "e_customer_ask": "An equipment supervisor at a factory calls to ask whether the deviation on their balance's certificate could be written a bit smaller; they need it for an audit. You tell him the number was measured and can't be changed. He hangs up, and the next year sends the balance to you again.",
+  "e_house": "You buy a small two-bedroom in Xiqing with a housing fund mortgage. On the weekend you choose a desk at the furniture mall and set it under the window.",
+  "e_family": "You get married. Your colleagues in the lab give you a kitchen scale as a wedding gift, with a note: calibrated.",
+  "e_accreditation": "At the accreditation reassessment an assessor stands at your bench for an hour and has you perform a calibration and explain the uncertainty on the spot. As he leaves he says one thing: very clean records.",
+  "e_standard_drift": "The intermediate check data for a set of standard weights starts drifting one way. You take it out of service and go back through every certificate issued with it in the past three months, rechecking each one. Fortunately all are still within range.",
+  "e_eyes": "Years of staring at needles and scales, and your eyes go long-sighted earlier than other people's. You get reading glasses and keep them in your lab coat pocket.",
+  "e_apprentice": "The new hire you're training issues a certificate on his own for the first time. You check it for twenty minutes, change one significant figure and sign. He lets out a long breath, and you remember yourself back then.",
+  "e_new_device": "A new force standard apparatus your lab led the development of passes its evaluation, so the large-capacity load cells that used to go to Beijing can now be calibrated here. On acceptance day you take a photo in front of it.",
+  "e_ai_interval": "The system starts recommending calibration intervals to customers based on each instrument's history. A hospital doubles an interval on its recommendation. You call them: this one sees heavy use, you can't stretch it.",
+  "e_back": "Twenty years of lifting weights, and your back gives out. The heaviest set, twenty kilos apiece, the lab now moves with two people.",
+  "e_spec": "A calibration specification you helped draft is published. On the cover, under drafters, is your name, in very small print. You mail a copy to your parents."
+ },
+ "choices": {
+  "c_master": { "title": "A part-time master's in instrument science", "situation": "A university in Tianjin has part-time master's places in precision measurement. With it, making Engineer and Senior Engineer gets easier; but for two years every weekend goes to classes, and none of the lab work goes away.", "options": [
+   { "label": "Enroll", "result": "Your thesis is on temperature compensation for a pressure sensor, every data point gathered in your own lab." },
+   { "label": "Don't", "result": "You keep your weekends. You think the calibrations you've done with your own hands count for more than a thesis." } ] },
+  "c_third_party": { "title": "Joining a private calibration company", "situation": "A private third-party calibration company comes poaching. Forty percent more pay, but out at customers and sites every day, hundreds of companies a year, heavy targets, and no permanent state post.", "options": [
+   { "label": "Go", "result": "You leave the permanent post behind. In the first month you visit twenty factories and fall asleep in the car more than once.", "end": "You rose to technical manager at the calibration company and led a team through industrial parks all over the Beijing-Tianjin-Hebei region. At every plant, the first thing you asked was the temperature in their lab." },
+   { "label": "Stay", "result": "You turn it down. You like the quiet of the lab, where you wait for a number to settle before you read it." } ] },
+  "c_ai_system": { "title": "Learning automated calibration and the data system", "situation": "The institute is installing an automated calibration system: camera readings, automatic pressurization, auto-generated certificates. A few young staff are to learn it from the manufacturer, then own the lab's system and data validation. Lots of work, and a mountain of validation reports to write.", "options": [
+   { "label": "Learn it", "result": "You validate the data at every link in the system, and when the assessors ask about it, you're the only one in the lab who can answer." },
+   { "label": "Pass", "result": "You keep loading weights at the piston gauge. You think the feel in your hands is something the system can't learn." } ] },
+  "c_engineer": { "title": "Making Engineer, sitting for Grade 2 registered metrologist", "situation": "Making Engineer takes papers, a track record and ideally the Grade 2 registered metrologist certificate. The exam means memorizing a stack of specifications, the lab is busy, and for months you can only study at night.", "options": [
+   { "label": "Sit for it", "result": "Every night you study the specifications for two hours in the meeting room next to the lab, until the guard comes to lock up." },
+   { "label": "Next year", "result": "You give this year to your projects. The specifications sit by your bed; a few pages in, you fall asleep." } ] },
+  "c_beijing": { "title": "A national institute in Beijing", "situation": "A national metrology research institute in Beijing is hiring, working on standards a level higher, with 20 percent more pay. But you can't afford a home in Beijing; you'd commute weekly or move the whole family.", "options": [
+   { "label": "Go to Beijing", "result": "You ride the intercity train back and forth for years, working at standards a level higher. For the first time you see where your old institute's standards trace back to." },
+   { "label": "Stay in Tianjin", "result": "You stay. On weekends you walk the family along the Haihe River and watch the Ferris wheel turn slowly." } ] },
+  "c_senior": { "title": "Making Senior Engineer, taking over as technical lead", "situation": "The old technical lead is retiring, and the lab wants you to take over the pressure standard. Making Senior Engineer requires a record of establishing and re-examining standards, plus running a proficiency test, with all the responsibility on you.", "options": [
+   { "label": "Take it", "result": "You run the re-examination of the standard, revising a technical report of several hundred pages page by page, and on evaluation day the examiner can't fault a thing." },
+   { "label": "Not yet", "result": "You say you want a few more years of frontline calibration. The lab head nods and gives it to a colleague in the next group." } ] },
+  "c_auto_plant": { "title": "Running the metrology room at a carmaker", "situation": "A car plant in Tianjin needs a supervisor for its metrology room, minding thousands of gauges and inspection fixtures plant-wide, at 30 percent more pay. But you'd be company staff from then on, doing in-house calibration with no certificates issued to outsiders.", "options": [
+   { "label": "Go to the carmaker", "result": "You walk into the shop and for the first time see thousands of calipers hanging on a wall, every one of them yours to mind.", "end": "You ran the carmaker's metrology room for many years, and every car off the line carried dimensions measured by gauges in your care. Now and then you went back to your old institute to look in on the piston gauge in the mechanical lab." },
+   { "label": "Stay", "result": "You say you'd rather issue certificates to others and sign your own name." } ] },
+  "c_pressure": { "title": "Deadlines and procedure", "situation": "A big company's certification audit is next week, and they want more than two hundred instruments calibrated in three days. By procedure, the lab temperature has to settle long enough before readings; three days isn't enough. Your superiors say this customer matters.", "options": [
+   { "label": "Follow procedure, deliver in batches", "result": "You call the customer: a hundred now, the rest next week. They aren't pleased, but at the audit not one of those hundred certificates has a problem." },
+   { "label": "Whole lab works overtime", "result": "The whole lab works past midnight three days running, skipping not a single step of the procedure. On the last day, when you get home, it's already light." } ] }
+ },
+ "endings": {
+  "retire": "On your last day before retirement you calibrate one more gauge on the piston gauge, loading weights step by step, tapping the case, reading. The numbers agree. You sign the raw record and put your fountain pen back in its holder. The lab is still at 20 degrees, just as it was on your first day.",
+  "burnout": "That year your back is badly hurt, and the doctor says no more lifting weights and no long hours on your feet. The lab moves you to the quality system and archives, where every day you check other people's certificates and sort decades of raw records. Now and then a young technician brings you an uncertainty that won't come out right, and you take a sheet of paper and list the terms for him one by one."
+ },
+ "stages": [
+  "You calibrate alongside your mentor: in the climate-controlled lab, with the piston gauge, standard weights and electronic balance, you calibrate pressure gauges and balances sent in by factories and hospitals, write raw records in fountain pen and compute uncertainty, and your mentor checks and signs the certificates. You deal most with submission forms from the front desk and customers calling for results, and you're learning to make a number clear without saying too much.",
+  "You own several calibration items and start checking other people's certificates; your signature weighs more now. You take portable standards to petrochemical plants and power stations to calibrate on site, and manage intermediate checks and traceability for several of the lab's standards. You used to wait for your mentor to sign; now new hires wait for you, and customers call you directly.",
+  "You are technical lead for one class of measurement standard: establishing and re-examining it, writing calibration methods and work instructions, leading the group through proficiency tests and accreditation assessments. You explain uncertainty to assessors and fight for a new standard's budget at lab meetings. You calibrate less yourself and read other people's records more.",
+  "You run a metrology lab's people, standards and projects: planning the year's new standards, reviewing important reports, leading development of new standard apparatus and drafting calibration specifications, attending the national technical committee. Some of the reports you issue are used in arbitration. You rarely touch a weight now, but whenever you pass the lab you glance at the thermohygrometer on the wall."
+ ],
+ "work": [
+  "Your mentor has you clean a set of weights. In white gloves you lift each one with tweezers and wipe it with chamois. The smallest is a single milligram; you hold your breath and need three tries to pick it up.",
+  "A hospital sends an electronic balance that won't read steadily. After calibrating it you realize it was sitting under an air conditioning vent, and you add a line to the remarks on the certificate.",
+  "You finish your first uncertainty evaluation by yourself, eight components, and the combined result comes out a little larger than your mentor's. He looks it over: you counted the temperature term twice.",
+  "On site at a power station, one pressure transmitter in the control room won't calibrate. You follow its impulse line all the way around and find water collected in the tube.",
+  "Checking a certificate from Xiao Sun in the next group, you find a unit conversion off by one place, and the whole certificate is voided and reissued. He thanks you, red-faced. You tell him to do the same when it's you.",
+  "You plot the intermediate check data for a standard on a control chart. Three years of points all inside the limits, except one last winter that touches the edge. Beside it you write: heating.",
+  "At the accreditation assessment, the assessor asks why this item's uncertainty is smaller than last year's. You spread the new standard's traceability certificate and check records on the table together.",
+  "You write a new calibration method for the group and have the youngest colleague follow it once. He gets stuck at step five, and you split that step into two.",
+  "The proficiency test sample arrives, a pressure transducer. You have three people in the group measure it in turn, compare their data, then measure it once more yourself before filling in the form.",
+  "At the annual budget meeting you argue for an hour for a new large-capacity force standard. It goes into the three-year plan, with only half the money in year one.",
+  "A calibration report for an arbitration case lands on your desk. You read the raw records start to finish and ask the technician when two of the readings were taken before you issue it."
+ ],
+ "past": [
+  "You grow up in an old housing compound in Tianjin. Your father is a fitter at a machine tool plant, and there's a vernier caliper at home he's used for twenty years. He won't let you play with it.",
+  "Your high school physics teacher, explaining error, says nothing in the world is perfectly accurate, only things that know how far off they are. You copy the line into your notebook.",
+  "For the gaokao (college entrance exam) application you choose applied physics. Your mother says physics makes it hard to find work. You say then you'll find work that has to do with being accurate.",
+  "The summer after third year you intern at a metrology company and see a piston gauge for the first time. It reminds you of a delicate little balance, weights stacked on one by one, very quiet.",
+  "You sit the public institution recruitment exam, third on the written test and first at interview, and join this metrology institute. On the day you report, the lab head tells you to stand in the lab for a day and touch nothing."
+ ],
+ "late": {
+  "pension_note": "Estimate: public institutions pay pensions under the civil service and public institution scheme plus an occupational annuity, roughly 60 percent of final monthly pay; travel allowances don't count.",
+  "scenes": [
+   "On the day you retire, the lab gives you a small weight, 100 grams, in a wooden box. On the lid is written: passing on the value, not a hair off.",
+   "You become known in your compound: whenever someone's blood pressure monitor or kitchen scale seems off, they bring it to you. You test it with the 100-gram weight and tell them how far off it is.",
+   "The institute asks you back to give the new hires a lesson. You skip the specifications and talk about the days the heating comes on in winter: how to read the lab temperature and how to judge the data.",
+   "You watch people fishing by the Haihe River. Someone lands one and says it's a full jin, half a kilo. You look it over and think: four hundred grams.",
+   "In your years in the archives you sort decades of raw records volume by volume and number them. One is from your first year, the pen strokes pressed hard into the paper.",
+   "When your back is a little better you take a slow walk in the park every morning, as far as the electronic sign, and glance at its temperature and humidity.",
+   "A young technician you once trained becomes lab head and visits every holiday with a box of pastries. Master, he says, I weighed the box. Full weight.",
+   "The day you leave the institute, you leave your white gloves and tweezers at your bench with a note for your successor: the smallest weight, hold your breath when you lift it.",
+   "In the new place you still can't break the habit of pausing before every reading. Colleagues say you're slow. You say: wait for it to settle.",
+   "On the news you see the definition of another unit of measurement has changed, and a precision apparatus flashes across the screen. You think of that chain, compared level by level all the way up.",
+   "Later, readings went to cameras, pressurizing to the system and certificates to models, and the lab held fewer people each year. But at the end of every certificate, one person still had to look over every number and sign their own name.",
+   "Your grandchild asks what you used to do. You say you looked after whether things were accurate. Then measure how tall I am, says the child. You get the tape: 1.23 meters, plus or minus half a centimeter."
+  ],
+  "closing": {
+   "retire": "Many years later you open the wooden box. The 100-gram weight is still there, its surface bright enough to reflect your eyes. You don't touch it. You look for a while, then close the lid.",
+   "burnout": "One afternoon many years later you sit by the window looking at a glass of water on the table, its surface perfectly still. You wait a long time before picking it up to drink.",
+   "end": "Many years later at the market, the vendor sets down the scale pan, and you glance at the needle, smile, say nothing and hand over the money."
+  }
+ }
+}
