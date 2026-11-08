@@ -75,7 +75,7 @@ function Home({ busy, err, onEnter, resume, onResume, archive }: { busy: boolean
           <span className="g-back b1"><i>入职登记卡</i><b>{busy ? '…' : '?'}</b><em>{busy ? '正在分配' : '点一下，入行'}</em></span>
         </button>
         <div className="g-actions center">
-          <button className="g-btn primary big" disabled={busy} onClick={onEnter}>{busy ? '正在分配…' : '入行'}</button>
+          <button className="g-btn primary big" disabled={busy} onClick={onEnter}>{busy ? '正在分配…' : resume ? '重开一行' : '入行'}</button>
           {resume && <button className="g-btn big" onClick={onResume}>接着过 · {resume.life.name}，{resume.life.age} 岁</button>}
         </div>
         {err && <div className="g-err">{err}</div>}
