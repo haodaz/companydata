@@ -1,0 +1,198 @@
+{
+ "id": "legal-counsel-sz",
+ "occupation": "Corporate Counsel",
+ "role": "Legal specialist at a smart-hardware company",
+ "headline": "Two years running to court for a law firm, newly moved in-house at a hardware company in Shenzhen's Nanshan district that sells robot vacuums and cameras in dozens of countries: you review twenty-odd contracts a day and get chased by the business side asking \"can we sign this?\"",
+ "unit": "A consumer smart-hardware company in Nanshan, Shenzhen, about two thousand people, seventy percent of revenue from overseas; the legal department has five people covering contracts, intellectual property, overseas compliance and disputes",
+ "unit_type": "Smart hardware company",
+ "city": "Shenzhen",
+ "city_tier": "Tier 1",
+ "education": "Master's degree (Juris Master), passed the national bar exam",
+ "level": "You write complaints, evidence lists and purchase contracts quickly and solidly. But when a sales director asks \"how big is this risk, do we sign or not,\" you still tend to start by listing three possibilities",
+ "intro": "In your two years at the law firm, every contract you saw was one the parties had already fallen out over. Now you sit at the end where the contract hasn't been signed yet: procurement is waiting on you, sales is waiting on you, the overseas warehouses are waiting on you. As of today, everyone in the company will come to you with the same question: can we sign this?",
+ "salary_note": "Estimate: legal jobs at Nanshan hardware companies in Shenzhen pay thirty to fifty percent above the national figure, and the year-end bonus depends on that year's shipments and profit.",
+ "facts": [
+  { "label": "Legal Specialist (current level)", "value": "0-3 years, ¥7,000–11,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Senior Legal Counsel (3-6 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Laying out the risk clearly and letting the boss make the call", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "First-pass review and version comparison of standard contracts", "source": "AI exposure" },
+  { "label": "Open positions", "value": "6 related listings nationwide, 1 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Nanshan Science Park. You badge into the building and open the contract management system: twenty-three awaiting review. At the top, flagged red as urgent, is procurement's annual framework agreement with an injection molding plant.",
+  "In that framework agreement the supplier has written ownership of the molds over to themselves. You change it back in a comment and add a line: the molds must be engraved with the company's asset number.",
+  "Sales is pressing for an agreement with a European distributor. The other side's lawyer has sent back an English draft covered in redlines. You go through them one by one; the hardest is the exclusivity period they're asking for.",
+  "In the canteen line, a product manager comes over with his tray: the new model with the camera, if we sell it in Europe, where are we allowed to store the footage? You say come and find me after lunch.",
+  "A patent infringement warning letter from an American law firm lands in your inbox, over twenty pages. You paste the patent numbers and claims into a spreadsheet and forward it to R&D, asking them to check whether you actually use it.",
+  "A long queue of seal approvals. You open each one in the system and check it against the final version. One stamped copy differs from the reviewed version by a payment milestone, and you send it back.",
+  "A video call with outside counsel about a domestic distributor who owes for goods. The lawyer asks whether to apply for a freeze on their assets. You say you need to ask finance first whether there's still money in their accounts.",
+  "On the metro you read the third version of the distributor agreement on your phone. Just before your stop, the sales director tags you in the group chat: can we sign tomorrow morning?"
+ ],
+ "ladder": [
+  { "title": "Legal Specialist", "stage": "Entry", "focus": "Review contracts, answer the business side's questions, manage seals and records, and liaise with outside counsel on cases." },
+  { "title": "Senior Legal Counsel", "stage": "Core", "focus": "Own legal support for a business line, lead major contract negotiations and IP and compliance projects." },
+  { "title": "Legal Manager", "stage": "Team lead", "focus": "Lead a legal team, set contract templates and approval flows, manage litigation, arbitration and the outside counsel budget." },
+  { "title": "Legal Director", "stage": "Director", "focus": "Run the whole legal and compliance department, sit in on business reviews, and advise the company on financing, listing and overseas litigation." },
+  { "title": "General Counsel", "stage": "Executive", "focus": "Join senior management with overall responsibility for the company's legal and compliance risk; few get this far." }
+ ],
+ "ai_tasks": [
+  { "name": "First-pass review and version comparison of standard contracts", "how": "For templated contracts like purchasing, NDAs and distribution, AI can read one in minutes, flag clauses that depart from the template and suggest edits. A person only spot-checks that its changes are right and that it hasn't skipped an annex." },
+  { "name": "Answering everyday legal questions from the business side", "how": "AI can field the common questions first and pull up the law and the company's past positions. What's really going on in the business, and whether this one can be let through, a lawyer has to find out before answering." },
+  { "name": "Tracking product compliance requirements in overseas markets", "how": "AI can watch certification, data protection, battery and packaging rules across dozens of countries and turn them into checklists and update alerts. Which ones actually affect your products, and when fixes get scheduled, takes a person's judgment." },
+  { "name": "Handling patent infringement warnings and IP disputes", "how": "AI can compare the other side's patents with your products, search prior art and draft a reply. Whether to fight or negotiate, and what figure to settle at, the lawyer decides with R&D and the boss." },
+  { "name": "Organizing evidence for litigation and arbitration and working with law firms", "how": "AI can sort emails, chat logs and contracts into a timeline and an evidence list. Litigation strategy, how work is split with the law firm, and whether to settle need a person to decide and answer for it." },
+  { "name": "Laying out the risk clearly and letting the boss make the call", "how": "Not saying \"no,\" but saying plainly what the worst case is if you sign and whether there's another way to write it, then looking the boss in the eye and waiting for the decision. Nothing replaces this." }
+ ],
+ "events": {
+  "e_ip_clause": "In the annex of an outsourced R&D contract, you find the supplier has made IP in any improvements jointly owned. You change it back. Two years later that improvement becomes the heart of a new product, and the head of R&D stops you in the corridor to say thanks.",
+  "e_ship_first": "Sales shipped a container before the contract had finished approval. On receipt the buyer claimed quality problems and refused the final payment. All you had were a few chat screenshots. You chased it for a year and recovered half.",
+  "e_warning_letter": "A patent company in the US sues over one of your products there. For a year you're on transpacific calls with American counsel, poring over evidence lists at two in the morning, and in the end you negotiate a settlement well below what they first demanded.",
+  "e_eu_notice": "A market regulator in a European country writes to say one product's manual is missing a battery recycling notice. You check through it overnight with product and the warehouse, and thirty thousand units get relabeled.",
+  "e_boss_no": "At a business review the boss quips: legal is the department whose job is saying no. Everyone laughs, and so do you. After the meeting you read the rejected contract again and find another way to write it that can be signed.",
+  "e_win_case": "The judgment comes down in the unpaid-goods case. The debtor's accounts had been frozen in advance, and over ¥3,000,000 comes back to the company in full. For the first time, the CFO posts a thumbs-up for the legal department in the group chat.",
+  "e_corp_lawyer": "The company sponsors your application for a corporate lawyer's practice license. The day it arrives you look at the first page for a long time. At the law firm you never got as far as this booklet; now it bears the company's name.",
+  "e_ai_review": "The company brings in AI contract review: three minutes for an opinion on a purchase contract, and for the first time the review queue hits zero. Your job becomes reading its opinions and dealing with the few clauses it flags as \"needs human judgment.\"",
+  "e_ai_fake_case": "A colleague's AI-drafted defense cites a precedent that looks entirely real. You search the national court judgments database and can't find it. The brief never goes out, and you set a rule for the department: every citation comes with a link.",
+  "e_data_export": "Whether overseas users' data may leave the country, and where it can be stored: when new rules come out, the app's back end has to be reworked. You spend a month in meetings with engineers and, for the first time, draw a data flow map from beginning to end.",
+  "e_trademark": "Just as you're entering a South American country, you find your company's trademark has already been squatted there. You hire local counsel, spend eighteen months, and in the end buy it back, which is faster than suing.",
+  "e_ipo": "The company starts preparing for its listing, and the underwriters and law firms move in for due diligence. You sort through three hundred-odd material contracts and every lawsuit and patent, and for six months you don't get to bed before midnight.",
+  "e_layoff": "Shipments are down and the company wants to slim down a business unit. You draw up the contract termination plan for HR and calculate everyone's severance. On the list is a product manager you pulled a lot of late nights with.",
+  "e_overwork": "The month before a big overseas sales event, distribution agreements, platform terms and promotion rules all land at once. For three straight weeks you leave the office after midnight. On your checkup report, several items have arrows next to them.",
+  "e_rent": "You move from a single room in the urban village at Xili to a two-bedroom apartment, at double the rent. From the window you can see Tanglang Mountain, and on rainy evenings you edit contracts by the window.",
+  "e_house": "You buy a flat where Shenzhen meets Dongguan and drive an hour to work each day. The day you sign the purchase contract, out of habit you read the supplementary agreement from start to finish while the salesperson watches.",
+  "e_mentor": "The new legal hire you've been training goes to the negotiating table alone for the first time. When she gets back she says the other side's lawyer kept pushing on payment terms and she held firm. You say nothing, and change that contract template to her version.",
+  "e_board": "You start attending board meetings. The first time, sitting at the far end of the long table, you speak only once, about an employee resettlement clause missing from an overseas acquisition. It was added later.",
+  "e_young_ai": "The new legal hires all review contracts with AI at their elbow, three times faster than you were. What they bring to you now is a different kind of question: this supplier, does the boss actually want to keep them?",
+  "e_old_case": "An overseas lawsuit that dragged on for years is finally closed. Filing the case binders, you turn to the first page; the notes on it are in your younger handwriting, written in a hurry."
+ },
+ "choices": {
+  "c_redline": {
+   "title": "The agreement on the last day of the quarter",
+   "situation": "Last day of the quarter. The sales director wants to sign a new distributor who's asking to pay ninety days after delivery and won't provide a guarantee. Sign it, and the quarter's target is met. He's standing by your desk, waiting.",
+   "options": [
+    { "label": "Sign, but add late-payment interest", "result": "You added a clause for interest on late payment and suspension of supply, and signed. Six months later the distributor did drag its feet on payment, and that clause let finance chase it with a straight face." },
+    { "label": "No guarantee, no signature", "result": "You spelled out the risk in your approval note and sent it back. The sales director went to the boss, and the boss said do what legal says. For that quarter, people in sales barely spoke to you." }
+   ]
+  },
+  "c_back_firm": {
+   "title": "The call from the law firm",
+   "situation": "The partner who trained you at the law firm calls. His team has landed several big commercial arbitrations and he wants you back on the practicing lawyer track, with a shot at partner in a few years. In a company, he says, you'll only get narrower the more you review.",
+   "options": [
+    { "label": "Go back to the firm", "result": "You were back on the twenty-seventh floor of that office tower, your desk piled with case files again. At your first hearing you found you understood far better why companies sign the clauses they do.", "end": "You went back to the firm as a litigator, arguing contract disputes for companies. Before every hearing, you first think it through: what situation was the in-house lawyer in when they clicked approve on this contract?" },
+    { "label": "Stay at the company", "result": "You thanked him. When you hung up, the product manager came by about the camera, and you pulled up a chair for him." }
+   ]
+  },
+  "c_overseas_comp": {
+   "title": "Overseas compliance, or domestic litigation",
+   "situation": "The department is dividing up work. One path is overseas compliance: data protection, product certification and export controls across dozens of countries, reading regulations in English, with frequent meetings in the middle of the night. The other is domestic litigation and contracts, which you know and do well.",
+   "options": [
+    { "label": "Take overseas compliance", "result": "You signed up for an online data protection course and in six months read several hundred pages of English regulation. The first time you wrote a compliance opinion for a new product in Europe on your own, it ran to twelve pages." },
+    { "label": "Hold the domestic work", "result": "You took on every domestic case. That year you went to court eight times, won six, and the other two were settled by mediation." }
+   ]
+  },
+  "c_senior": {
+   "title": "The review presentation for Senior Legal Counsel",
+   "situation": "At year-end grading you're eligible to apply for Senior Legal Counsel. It means preparing a review presentation that sets out what you steered the company away from this year and what you saved it. But those months are the busiest of the American patent case.",
+   "options": [
+    { "label": "Prepare the presentation", "result": "You turned the year's reviewed contracts, negotiated clauses and recovered money into one table. In the presentation the legal director asked you one question: which one were you least sure of? You told him honestly." },
+    { "label": "Put the case first", "result": "You sat this round out. In the small hours when the case settled, you were on the call editing the settlement agreement word by word." }
+   ]
+  },
+  "c_ai_flow": {
+   "title": "Who builds the AI contract review",
+   "situation": "The company is bringing in an AI contract review system. Someone has to feed it the review rules, the company's bottom lines and past positions for a dozen contract types, one by one, and decide which situations must have human eyes. The legal director asks who wants to lead it.",
+   "options": [
+    { "label": "I'll build it", "result": "You spent three months writing four hundred-odd rules and deleting half. Once live, purchase contract review went from two days to two hours, and the few times it got something wrong, you knew exactly which rule was badly written." },
+    { "label": "Let someone else lead", "result": "You kept reviewing your contracts. Later, with some of the system's opinions, you couldn't tell which rule it had applied." }
+   ]
+  },
+  "c_bigtech": {
+   "title": "The call from a tech giant",
+   "situation": "The legal department of a big internet company approaches you to do compliance for its overseas business, at forty percent more a month. Their legal team has a hundred-odd people with a fine division of labor, and you'd be a very specialized cog. Here there are five of you and you handle everything.",
+   "options": [
+    { "label": "Go to the big company", "result": "You swapped badges and now read just one kind of contract and one kind of regulation each day. In the first year you became the person on the team who knew that area best, and didn't touch a lawsuit for a long time." },
+    { "label": "Stay", "result": "You didn't go. That year you handled everything: contracts, patents, layoffs, pre-listing fixes. Your name was on the cc line of nearly every important email in the company." }
+   ]
+  },
+  "c_manager": {
+   "title": "Whether to take Legal Manager",
+   "situation": "The legal manager has left for another company, and the director asks if you'll take over. If you do, you lead three people, manage the outside counsel budget and meet with the heads of each business line. If not, you're the expert who knows overseas compliance best.",
+   "options": [
+    { "label": "Take it", "result": "You started assigning everyone's work, and for the first time took the blame for a subordinate's mistake in front of the business side. You reviewed fewer contracts and sat in twice as many meetings." },
+    { "label": "Stay the expert", "result": "You recommended a colleague from your team. You kept digging into new overseas regulations, and every time a new country was on the table, the first call still came to you." }
+   ]
+  },
+  "c_startup": {
+   "title": "Head of legal at a startup",
+   "situation": "A robotics startup has just raised a big round and wants you as head of legal: twenty percent less cash than now, plus stock options, and they say they'll list in three years. You've seen too many that never did.",
+   "options": [
+    { "label": "Go", "result": "You became the company's first lawyer. In your first week you read the agreement between the founder and the investors three times and drew a very thick line under the valuation adjustment clause." },
+    { "label": "Don't go", "result": "You stayed. Three years later that company still hadn't listed, and you read in the news that it had raised another round." }
+   ]
+  },
+  "c_teach": {
+   "title": "Going back to teach",
+   "situation": "Your old law school wants a teacher with practical experience to run courses on in-house legal work and compliance. The pay is half what you earn now, and winter and summer breaks are your own. You've done the sums: eight years left on the mortgage.",
+   "options": [
+    { "label": "Go and teach", "result": "The first case you taught from the lectern was that framework agreement that had handed mold ownership to the supplier. The students listened more closely than you'd expected.", "end": "You became the law school teacher for in-house legal practice. Every year some students go into companies, and at their first New Year they message you: Professor, today the boss asked me whether we can sign this." },
+    { "label": "Keep at it", "result": "You declined and promised to give one lecture a semester. For the first one, you brought along a contract covered in annotations." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you hand over your access to the contract management system, and other people's names fill the seal approval list. All you take with you is a red pen you've used for years. Walking out of the science park, several floors upstairs are still lit, and you know someone up there is waiting on a contract.",
+  "burnout": "Back from that year's checkup, the doctor had been blunt. You told the director you wanted to stop for a while and handed over your cases. On the first morning with no email to read, you sat in the breakfast shop downstairs for an hour, and nobody asked whether they could sign."
+ },
+ "stages": [
+  "Every day you review twenty-odd contracts in the contract management system: purchasing, sales, outsourced R&D, mostly templated, the hard part being the annexes and side agreements. When colleagues ask \"can we sign this?\" you're learning to first ask what they actually want. On cases you're the contact for outside counsel, sorting evidence and checking documents; the manager makes the call.",
+  "The overseas business line is yours now: distribution agreements, platform terms and product compliance for Europe and North America, followed through yourself from negotiation to signature. You've started stating the company's position in emails, and opposing lawyers know your name. Compared with your specialist years, when you say \"no\" now you must also offer a version that works.",
+  "You lead three people. Every Monday you divide up contracts and cases, and you set the contract templates and approval limits. Outside counsel quotes, whether to fight a case, what figure to settle at: you form a view first, then take it to the director. You review fewer contracts and spend more time reading your team's comments; the line you write most is: check this one with the business side again.",
+  "You run the whole legal and compliance department and sit in the weekly business review. Financing, listing, overseas litigation, big layoffs: you have to set out the risks and propose solutions in the room. You negotiate budgets with law firm partners and deal with regulators, and you are the one who signs. You rarely read contracts line by line now, but you know which clause in each kind is most likely to go wrong.",
+  "You're the company's general counsel, at the senior management table. Which country to enter next, whether to do an acquisition, what to say first in a crisis: the boss looks to you first. You answer to the board. You sign very little, but everything you sign carries weight. Most of your time goes on choosing people, developing them, and saying what needs saying when nobody else will."
+ ],
+ "work": [
+  "Annex 3 of an outsourced R&D contract says \"improvements jointly owned by both parties.\" You flag the line in red, attach the company's template clause, and write in your approval note: please confirm with the business side and the supplier before resubmitting.",
+  "HR brings a non-compete agreement and asks whether to pay compensation to a departing engineer. You check his role and the confidentiality agreement he signed, and reply in three lines with the amount that has to be paid.",
+  "Outside counsel sends a draft complaint. You check the amount owed and the shipping dates against the original contract and find one invoice number off by a digit, fix it and send it back.",
+  "The European distributor wants five years' exclusivity. On a video call you talk their lawyer down to three and add a clause: miss the annual sales target and exclusivity lapses automatically. The lawyer goes quiet for a moment, then says that works.",
+  "Before the new camera launches, you go over the data flow map with product and the engineers, and beside the \"cloud storage\" box you write the requirement that European users' data be stored separately.",
+  "An overseas e-commerce platform suddenly delists your product over alleged infringement. You dig out the patent search report and write an appeal in English, and four days later the product is back up.",
+  "You pull three years of contract disputes into a spreadsheet and find half arose from acceptance clauses. You rewrite the acceptance chapter of the purchase contract template and walk your team through it, clause by clause, at the department meeting.",
+  "Outside counsel sends a budget for an overseas suit. You question it line by line down to who works each hour and on what, cut it by a fifth, and still keep their lead lawyer on the case.",
+  "The business side complains that a contract your report reviewed is taking too long. You read his comments, and every one is sound. You go to the business director, explain those three risks, and the contract is signed on your report's terms.",
+  "The regulator's pre-listing inquiry letter asks about a patent suit from three years ago. You and the law firm and finance go through seven drafts of the reply, and before the last one goes out, you check every figure once more.",
+  "The company wants to build a plant in Southeast Asia. You fly out for a week of talks with local counsel and the industrial park, and come back with a risk list on land, labor and tax; the business review sets the contracts by it.",
+  "A business unit is closing. At the business review you insist severance be one month above the legal standard, and show the boss the math: the cost of arbitration and the cost to reputation come to more than that month.",
+  "At the very end of an overseas acquisition the other side demands an indemnity cap you can't accept. You stand outside the negotiating room with the boss for ten minutes, and when you go back in, that clause gets rewritten.",
+  "A product draws a safety complaint abroad and the media start asking. At the crisis meeting you decide which things can go in the first statement and which can't be said yet, then hand it to PR to write.",
+  "You interview a young lawyer who wants to move in-house. Your last question: if the boss insists on signing, what will you say? She thinks for a long time and answers badly. You hire her anyway."
+ ],
+ "past": [
+  "You grew up in a prefecture-level city in Hunan, where your parents ran a hardware shop and were always being stiffed on payments. You helped keep the books and first learned what an IOU really meant.",
+  "Filling in your gaokao (college entrance exam) choices, you chose law, because you wanted to know whether there was any way to get back the money people kept refusing to pay.",
+  "The year you finished your bachelor's you failed the bar exam, studied at home another year and passed the next. You got into a Juris Master program at a political science and law university in the south.",
+  "After your master's you joined a Shenzhen law firm as a litigator, following a partner to court and writing complaints, and in a year saw dozens of contracts the parties had fallen out over.",
+  "One case you worked on began because a company's in-house lawyer missed a single line in a payment clause. The day it closed you thought, if only someone had caught that line earlier. Six months later, you applied for in-house jobs."
+ ],
+ "late": {
+  "pension_note": "Estimate: enterprise employee pension. Shenzhen caps the contribution base, and your later pay was far above the cap, so the pension comes to about forty percent of final monthly pay, plus some from an enterprise annuity.",
+  "scenes": [
+   "Your first month retired, a neighbor knocks with a renovation contract and asks if you'd take a look. You make a pot of tea, put on your reading glasses, read it through on his coffee table and change three things.",
+   "You volunteer at a community legal aid station two mornings a week. Most who come are chasing unpaid wages or in rental disputes, and you listen very patiently, just as you did when the business side came to you.",
+   "You start learning Chaoshan cooking, making a master braise from videos. You note down the grams for every step as if they were statutes, and your family says you cook like you're reviewing a contract.",
+   "In the first months after stopping you still open your inbox every morning, and there's nothing but a few ads. You turn off the notifications and go down to buy groceries.",
+   "You take up climbing Tanglang Mountain. At first you're out of breath halfway; later you make the summit in one go. From the top you can see the science park, and you can pick out your old building.",
+   "You take on a few small companies as their retained legal adviser, a little money each month, one visit a week, no overtime. One boss asks why you don't go back to a big company. You say: this is just right.",
+   "A year into your new path, you see in the news that your old company has launched another product. You look at the product photo and remember that the data storage for that camera line follows a flow map you drew.",
+   "Former colleagues take you to dinner. They say contracts all go through AI first now, legal is still five people, and the work has doubled. You talk until late, and nobody brings up whether you'd come back.",
+   "You speak on corporate compliance at an industry forum, the audience full of young in-house lawyers. In the Q&A someone asks what you regret most. You say: a few times when I should have held my ground, I didn't.",
+   "Now contracts are reviewed by AI, regulations watched by AI, the first drafts of replies to warning letters written by AI. But at the moment the boss asks \"sign or not?\" in a meeting, someone still has to speak.",
+   "In a cabinet in your study you find an old contract covered in red notes in your younger handwriting, small and dense. You turn every page and find that most of what you changed back then was right."
+  ],
+  "closing": {
+   "retire": "One evening many years later, you sit on the balcony watching the lights come on one by one along Shenzhen Bay. Your granddaughter brings her rental contract and asks what the deposit clause means. You push your reading glasses up and say: come on, let's start from clause one.",
+   "burnout": "Many years later you sit in the pavilion at the top of the mountain in a strong wind. The city below is much bigger than when you arrived. You look for your old building among the towers for a while, don't find it, and stop looking.",
+   "end": "Many years later, in a drawer, you find an old work badge with a note tucked behind it in your own handwriting: mold ownership, Annex 3. You can't remember what year you wrote it, and you tuck it back where it was."
+  }
+ }
+}

@@ -1,0 +1,166 @@
+{
+ "id": "quant-sh",
+ "occupation": "Quantitative Researcher",
+ "role": "Junior researcher at a quant hedge fund (first year)",
+ "headline": "A junior quant researcher fresh from a master's in statistics, mining factors on the equities team of a quant hedge fund on Shanghai's Xuhui riverfront, watching backtest curves after every close, with a first factor still waiting for the research committee's nod",
+ "unit": "A quant private fund managing several billion yuan on the Xuhui riverfront, Shanghai",
+ "unit_type": "Mid-sized quant private fund",
+ "city": "Shanghai",
+ "city_tier": "First-tier",
+ "education": "Master's degree (statistics)",
+ "level": "You know Python, pandas and the whole machine learning toolkit, and you've read dozens of factor papers. The first time you got ten years of minute-level market data, you produced a backtest curve too beautiful to be true, and later found it used data from the future.",
+ "intro": "You finished a master's in statistics in Shanghai, interviewed at a dozen firms in the autumn hiring season, and landed on the equities team of a quant private fund on the Xuhui riverfront. Sixty-odd people, half of them researchers, the server room in another building with hundreds of GPUs turning day and night. From today you'll be looking through decades of market data for a sliver of pattern, small enough that nobody else has found it, and big enough to make money in live trading next month.",
+ "salary_note": "Estimate: base pay for researchers at Shanghai quant funds runs about 30 percent above the national figure. The year-end bonus depends on your strategies' excess returns and the firm's year: in good years several times base pay, in bad years very little. Only monthly pay is counted here; the bonus swings show up as events.",
+ "facts": [
+  { "label": "Junior Quant Researcher (current level)", "value": "0–2 years, ¥10,000–18,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Quant Researcher (2–5 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥50,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Deciding whether a strategy goes live, and whether to switch it off", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Mining factors, writing factor code, running backtests", "source": "AI exposure" },
+  { "label": "Open positions", "value": "93 related listings nationwide, 38 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You wake in a shared flat near Caohejing, check the US close and the overnight futures session on your phone, then ride a share bike to the office along the river.",
+  "Fifteen minutes before the open, everyone on the team is watching their screens. You have no live positions, but you watch too, to see what signals last night's model has produced for today.",
+  "Writing factor code. You want to build an earnings-quality factor from a line item in the notes to the financial statements. The coding assistant writes the data interface, and you spend an hour checking it pulls the field you actually mean.",
+  "Lunch in the company canteen. The researchers sit together with their trays, talking about a new paper and how badly a factor on the next team over has been decaying.",
+  "Running backtests. The cluster queue is long and yours is somewhere past fortieth. While you wait you read half a paper on transaction costs.",
+  "The close. The live team starts reviewing today's excess return, and the senior researcher who supervises you posts an attribution chart in the chat. The portfolio beat the index by 0.3 points today.",
+  "Your backtest results are in: a lovely Sharpe ratio, absurdly high turnover. The senior researcher glances at it and asks: how much is left after market impact? You can't say, and go back to recalculate.",
+  "In the taxi home you check the cluster job on your phone. It finishes just before you arrive. After costs, the curve has gone flat."
+ ],
+ "ladder": [
+  { "title": "Junior Quant Researcher", "stage": "Mining factors", "focus": "Under a senior researcher, mine factors, clean data, run backtests and write research notes. A factor has to pass the research committee to go live." },
+  { "title": "Quant Researcher", "stage": "Own research", "focus": "Own a family of factors or a sub-model end to end, from idea to live trading, with a share of the live excess return credited to you." },
+  { "title": "Senior Quant Researcher", "stage": "Leading a direction", "focus": "Lead two or three researchers on one direction: set the research agenda, review others' factors, and share responsibility for the portfolio's overall performance." },
+  { "title": "Portfolio Manager (Strategy Lead)", "stage": "Running a strategy", "focus": "Run the strategy and portfolio for a product line: capacity, risk, turnover, trading costs. Defend the strategy at the investment committee and answer for its net asset value." },
+  { "title": "Investment Partner", "stage": "Partner", "focus": "A partner in the firm: set the overall investment direction and risk limits, manage the research team, meet distributors and large investors, and share in the firm's profit." }
+ ],
+ "ai_tasks": [
+  { "name": "Mining factors, writing factor code, running backtests", "how": "AI can generate hundreds of candidate factors overnight, write the code and batch the backtests. Which have real economics behind them and which just happen to look good in historical data, a person has to ask, one by one: why?" },
+  { "name": "Cleaning market and financial data", "how": "Adjusting for splits, aligning, filling gaps and removing outliers is now almost entirely done by pipelines and AI. A person only watches the alerts to see whether a data source has gone wrong." },
+  { "name": "Working with alternative data: text, sentiment, supply chains", "how": "Large models can read announcements, broker reports and news into sentiment and event tags. Whether the data can be used compliantly, and how soon the signal will fade, is a person's call." },
+  { "name": "Monitoring live trading and attributing performance", "how": "The system watches the market, produces attribution reports and alerts on drawdowns and style exposure. Why you underperformed and whether to cut positions, a person decides from the report." },
+  { "name": "Deciding whether a strategy goes live, and whether to switch it off", "how": "Going live means testing with real money; switching off means admitting the last few months' judgment was wrong. AI can supply every number, but the one who presses the button and answers for the NAV can only be a person." },
+  { "name": "Writing strategy documentation and research reports", "how": "AI can draft most of a report from backtest results and code. Defending it at the research committee and getting the partners to trust you is still on you." }
+ ],
+ "events": {
+  "e_future_data": "You produce a backtest curve with over 30 percent annualized return and excitedly post it to the team. The senior researcher looks for five minutes and points out that you aligned the financial data by reporting period, not by release date. The curve collapses that night.",
+  "e_first_live": "Your first factor passes the research committee and goes into the live portfolio with a tiny weight. In the first month it contributes a sliver of excess return. You screenshot the attribution table and keep it on your phone.",
+  "e_drawdown": "One January small-cap stocks fall several days running, and nearly every quant product's excess return draws down. Nobody at the firm raises their voice. The partners sit in the meeting room until midnight every day, and you check again and again which exposure got away.",
+  "e_big_bonus": "That year every product the firm runs does well, and your year-end bonus comes to several times your base pay. You buy your family a new fridge and leave the rest untouched in your account.",
+  "e_small_bonus": "That year excess returns are poor, and the year-end bonus is loose change next to last year's. In the pantry someone is browsing job sites. Nobody mentions it.",
+  "e_ai_factor": "The team gets an AI factor-mining tool, and overnight it produces over three thousand candidates. You look at the top fifty. Forty are the same thing written different ways. Among the other ten is one you'd never have thought of.",
+  "e_ai_overfit": "An AI-generated factor with a beautiful backtest loses money for three months straight in live trading. After a week's post-mortem you find it learned one particular policy window from one particular year, a window that will never come again.",
+  "e_ai_report": "Most research reports are now written automatically by AI from the backtests, charts included. Writing a report has gone from three days to half a day, and you spend the rest thinking: why should this factor make money at all?",
+  "e_ai_juniors": "The firm hires only two junior researchers this year, far fewer than in your year. The data cleaning and backtesting newcomers used to do now runs itself in the pipeline.",
+  "e_regulation": "Regulators issue new reporting and restriction rules for algorithmic trading. The trading desk rewrites systems overnight, your high-turnover factors have to be re-evaluated, and two are pulled outright.",
+  "e_paper": "In an academic journal you read a paper describing exactly the factor you built six months ago, now running live. You share it with the team. Someone replies: it's going to get crowded now.",
+  "e_server": "At 9:20 one trading morning, a network card fails on a trading server. Operations, the traders and your team cram into the server room, and at 9:29 you fail over to the backup.",
+  "e_insomnia": "After months of watching drawdowns you start sleeping badly. At two in the morning, the first thing you do on waking is check the NAV on your phone. You download a meditation app, and three minutes in you open the market data.",
+  "e_love": "At a tech talk you meet someone who does chip verification. Afterward you walk a long way along the riverfront, talking about nothing but data. The next year you move in together, and at weekends you each sit at your own computer.",
+  "e_house": "You buy an old flat in Shanghai, the down payment two years of bonuses plus a bit from your family. The day you sign, out of habit you start working out its Sharpe ratio, and halfway through you laugh at yourself.",
+  "e_scale_cap": "The firm's assets grow too fast for its strategies' capacity, and the partners decide to close to new money. The sales people are unhappy. The researchers all breathe a sigh of relief.",
+  "e_poached": "Headhunters call you five times in a month, each offer higher than the last. You don't take any, but you note every offer in your phone.",
+  "e_mentor_leave": "The senior researcher who trained you leaves for a bigger fund under a non-compete and has to sit at home for a year first. Before going he organizes his research notes into a folder and leaves it to you.",
+  "e_kid": "Your child is born. You take two weeks off and don't look at the market once. When you get back you find your factors had their best stretch in exactly those two weeks.",
+  "e_teach_intern": "A summer intern produces a beautiful backtest curve and rushes over to show you. You look for five minutes and ask him what date he aligned the financial data to."
+ },
+ "choices": {
+  "c_direction": { "title": "Which direction to dig first", "situation": "The team lead tells you to pick one direction and go deep. Fundamental factors are slow and solid, with logic you can explain. High-frequency price-volume factors are fast and data-heavy, earning more but decaying faster. Or try using large models to read announcements and broker reports, which no one at the firm has made work yet.", "options": [
+   { "label": "Fundamental factors", "result": "You spend a year buried in the notes to financial statements. Your factor's returns aren't high, but it barely decays in three years. The team lead says people like you are suited to managing big money." },
+   { "label": "High-frequency price-volume", "result": "You start working with tick-by-tick trade data, dozens of gigabytes a day. Your factor contributes a lot in its first live quarter, and by the second the market has flattened half of it." },
+   { "label": "Large models reading text", "result": "You spend six months teaching a model to read the phrasing in company announcements and build an event factor. Out of sample it's middling, but everyone at the firm starts coming to ask you how you did it." }
+  ] },
+  "c_researcher": { "title": "Make Quant Researcher, with live results to show", "situation": "Firm rules say a junior researcher needs at least two factors live and contributing steadily before becoming a quant researcher with a line of their own. You have one live; the other is nearly there: a great backtest, a bit shaky out of sample.", "options": [
+   { "label": "Push that factor to the committee", "result": "You present for forty minutes. A partner asks about out-of-sample performance and you don't fully answer it, but he gives it a tiny weight to try anyway." },
+   { "label": "Polish it six more months", "result": "You take the factor apart and rebuild it on a different data source, and it steadies out of sample. Your promotion comes six months later. The factor runs for five years." }
+  ] },
+  "c_jump": { "title": "Jump to a top-tier fund", "situation": "A top-tier fund several times larger tries to poach you: 40 percent more base, more research resources and data. You'd sign a one-year non-compete, and your current firm would have you sit at home for that year. Not a line of your factor code goes with you.", "options": [
+   { "label": "Jump, and sit out the year", "result": "You spend a year at home reading dozens of papers and arrive at the new firm full of ideas. In your first month you discover its factor library is ten times bigger than you imagined." },
+   { "label": "Stay", "result": "You don't go. When the partners find out, they give you a little more money and bring you in on a new product line." }
+  ] },
+  "c_ai_pipeline": { "title": "Lead the AI research pipeline", "situation": "The partners want the whole research process plugged into AI: automatic factor generation, automatic backtests, automatic reports, automatic overfitting checks. One researcher has to lead it with the engineering team for a year, and your own research would be on hold for that year.", "options": [
+   { "label": "Lead it", "result": "You spend a year turning a dozen researchers' habits into a pipeline. The most important part is the overfitting check, which you rewrite seven times. Once it launches, a newcomer can test in a week what used to take one person a year." },
+   { "label": "Don't, do your own research", "result": "You say you'd rather keep thinking through problems yourself. Someone else builds the pipeline. You find it easy to use, though a few of its definitions never quite seem right to you." }
+  ] },
+  "c_public_fund": { "title": "Do quant at a mutual fund", "situation": "A mutual fund company is hiring an assistant portfolio manager for quant funds: 30 percent less pay, no wild bonus swings, stable assets, a good reputation, and the chance later to manage a public fund under your own name.", "options": [
+   { "label": "Go to the mutual fund", "result": "You move to an office tower in Lujiazui. More meetings, more compliance procedures, and you sleep at night. Two years later your name appears for the first time in a fund's prospectus." },
+   { "label": "Stay at the private fund", "result": "You don't go. You say at a private fund an idea goes from your head to live trading in two weeks, and you can't give up that speed." }
+  ] },
+  "c_pm": { "title": "Bid for Portfolio Manager on a product line", "situation": "The firm is launching an index-enhancement product line and needs a portfolio manager (strategy lead). It means answering for the NAV, giving roadshows to distributors and clients every week, taking calls at midnight during drawdowns, and no more time to mine factors yourself.", "options": [
+   { "label": "Bid for it", "result": "You take it on, and for the first time defend a whole product line at the investment committee. That year you write far less code and meet far more clients." },
+   { "label": "Stay in research", "result": "You say you'd rather stay with the data. The partners nod and give you the hardest research, and your business card still says senior researcher." }
+  ] },
+  "c_bigtech": { "title": "Work on large models at a tech giant", "situation": "A university classmate trains large models at a big internet company and says they need people who understand statistics and low signal-to-noise data. Generous stock options, and no NAV to watch every day.", "options": [
+   { "label": "Go work on large models", "result": "You hand over your factors and delete the market app from your phone. On your last day a partner tells you the door is open if you ever want to come back.", "end": "You went to a big internet company to work on large model evaluation and data, facing a different kind of noise every day. Now and then a headline says something about quant funds, and you open the market app for a look, then close it again." },
+   { "label": "Stay in quant", "result": "You don't go. You say everyone is doing large models, but the market tells you every single day how wrong you were." }
+  ] },
+  "c_own_fund": { "title": "Start your own fund", "situation": "Two former colleagues want you to start a quant fund with them: registering with the industry association, finding the first money, setting up servers, running risk yourselves. If it works it's your own firm; if not, years of savings go in with it.", "options": [
+   { "label": "Start the fund", "result": "You rent a small office. From registration to your first product launching takes eleven months. The first money comes from an old client: ¥10 million.", "end": "You and your former colleagues started a small quant fund, modest in size, able to survive. The first thing you teach every new researcher is how to align financial data by release date." },
+   { "label": "Stay at the firm", "result": "You stay. You say there's still unfinished work for you here, and later the partners give you some equity." }
+  ] },
+  "c_partner": { "title": "Become an Investment Partner", "situation": "The firm is promoting one portfolio manager to investment partner, joining the investment committee, setting overall direction, managing the research team, and carrying the firm's size and reputation. The partners look at your NAV curve over the years, and at what you did in the hardest months.", "options": [
+   { "label": "Go for it", "result": "That year you re-map the risk exposures of every strategy at the firm and present for an afternoon at the partners' meeting. Someone asks why you didn't switch off in the worst month, and you explain your judgment at the time." },
+   { "label": "Don't, run your own line well", "result": "You say you'd rather stay close to the market. You keep running your product line. Its curve isn't the highest, but it's there every year." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last trading day you switch off your screens ten minutes before the close. The young people in the office are all watching attribution charts, and nobody notices. You go to the window. A cargo boat is moving slowly downstream on the river. You watch a while and don't wonder whether its speed could be a factor.",
+  "burnout": "That year brings two deep drawdowns back to back, you barely sleep for most of it, and one day at the investment committee your hands start shaking mid-sentence. The doctor tells you to get away from the screens. You step down from front-line research and move to the firm's risk department to review models, leaving at five every afternoon, no longer checking the NAV at night."
+ },
+ "stages": [
+  "Every day you write code on the servers: pull data, compute factors, run backtests, check the IC and turnover, then write the results up in a one-page note for the senior researcher supervising you. His questions are always the same: did you use future data, how much is left after costs, why should it make money? Your factor has to pass the weekly research committee to go live.",
+  "You own a family of factors now, from idea and data to code and live trading. After every close you check your factors' contribution, and at the weekly meeting you explain why they didn't work this week. When trading or operations has a problem, they tag you by name in the chat.",
+  "You lead two or three researchers on one direction, decide what each of them studies each quarter, review their code and backtests, and at the research committee speak up for their factors or stop them. You write less code yourself and read more of other people's, and a piece of the portfolio's overall performance is credited to you.",
+  "You run a product line: how the portfolio is built, how big it gets, how much it turns over, how risk exposure is controlled. Every week you meet distributors and give roadshows, and during drawdowns you call clients to explain. At the investment committee you defend the whole strategy and answer for the NAV.",
+  "You're an investment partner. At the investment committee you set the overall direction and risk limits: when to grow, when to close, what money not to take. You run hiring and allocation for the research team, meet the largest investors, and in the hardest days you're the last to leave the meeting room."
+ ],
+ "work": [
+  "You neutralize a factor by industry and more than half its return vanishes. The senior researcher says: then what it was earning was the industry's money, not yours.",
+  "An engineer on the next team tells you cluster jobs can be split by date and run in parallel. You change your script, and a backtest that took all night is done in forty minutes.",
+  "The first time you present your own factor at the research committee, on page three a partner asks: how would this have done in a market like 2015? You pull up the backtest for that year.",
+  "One of your factors stops working for two weeks running. You split it into its long and short legs and find the short side thrown off by a batch of newly listed stocks. You add a filter.",
+  "A trader posts in the chat that your signal had unusually high market impact when orders went in today. You pull up the fills and find one small stock's order book too thin, and halve its weight cap.",
+  "An intern uses AI to generate two hundred factors and hands them to you. You first have him write one sentence explaining each. The hundred-plus he can't explain, you delete.",
+  "A researcher on your team has a great backtest, and in his code you find a line filling suspended stocks' returns with zero. You ask him: on a suspension day, could you really have sold?",
+  "At the research committee two researchers argue over how much weight each of their factors should get. You put their correlation and each one's capacity on one chart and set a ratio. Neither is very happy.",
+  "You set a rule for the team: every AI-generated factor must be run again on an unused sample before going to the research committee. In the first month, eight in ten are stopped.",
+  "An account manager from a big distributor asks why this quarter's excess return trails other funds'. You open the attribution table and go through it line by line. He says: you've explained it so I understand, but my clients won't.",
+  "Assets are nearing the strategy's capacity, and at the investment committee you propose suspending subscriptions on this line. The sales director stands with you in the corridor for a long time afterward.",
+  "In the deepest week of a drawdown you pull up the portfolio's risk exposures one by one every night, and on the fifth day decide to halve the small-cap exposure. The orders go in before the open the next morning.",
+  "A very large investor wants to put in money and asks for a custom high-leverage version. You hear the proposal through, say we don't do that, then take them to dinner.",
+  "At the year-end researcher review you don't look at the ranking of return contributions. You first read the failure post-mortems each of them wrote, to see who can say where they went wrong.",
+  "At the firm's annual party you tell a story: someone new to the business produced a curve with over 30 percent annualized return and later found it used future data. The young people in the audience laugh, and so do you."
+ ],
+ "past": [
+  "You're in middle school in a prefecture-level city in Hunan and win a provincial prize in a math competition. Your father runs a hardware shop at the entrance to your housing compound and does the accounts on a calculator every night. You do the sums in your head beside him, faster than the calculator.",
+  "Your gaokao (college entrance exam) gets you into the math department of a Shanghai university. The first time you take the subway under the river, you get off at Lujiazui and stare up at those towers a long time.",
+  "In your third year you place in a quant competition and learn for the first time that people make money finding patterns in data, and don't even need to be good talkers.",
+  "After your bachelor's you go straight on to a master's in statistics. Your supervisor works on high-dimensional data, but you spend most of your time on financial data. Your supervisor says: you'll leave sooner or later.",
+  "In your second year of the master's you intern at a quant fund, and in your first week you're told to replicate a factor from a paper. Your result is half the paper's. Your supervisor there says: that's the right one.",
+  "In the autumn hiring season you interview at a dozen firms. The last interview is a single question: given a beautiful backtest curve, what do you check first? You say whether it uses future data, and get the offer."
+ ],
+ "late": {
+  "pension_note": "Estimate: private funds pay into Shanghai's standard enterprise employees' pension, capped at the maximum base in the high-salary years, so the pension is only about 30 percent of the last monthly salary. Real security in later life, in this line, is the bonuses saved from the good years.",
+  "scenes": [
+   "At 9:15 on the first trading morning after you retire, you sit on your balcony and don't open the market data. You make a cup of coffee and watch people below heading to work.",
+   "Your old university asks you to give graduate students a lecture course on the traps in quant research. Your first class is on future data, and you put your own old curve up on the screen.",
+   "A researcher you trained is now a partner at another fund, speaking at an industry forum on overfitting in AI-generated factors. Half the rules he lays out are ones you set back then.",
+   "Your grandchild asks what you used to do. You say you looked for patterns in lots and lots of numbers. Did you find any? Some, you say, and later they all stopped working.",
+   "Days in the risk department are quiet. You review other people's models every day and shut your computer at five. It takes you a whole year to break the habit of checking the NAV at midnight.",
+   "A young researcher whose factor you stopped in review comes to argue with you. You don't argue. You run the problem sample separately for him, and after watching it he goes quiet.",
+   "You retire at the official age and take up running by the river, no watch, no pace. At the second bridge you stop and look at the water a while.",
+   "In your first year out of quant you still glance at the time at 9:15 every morning without meaning to. Later the habit fades, and you never notice which day it stopped.",
+   "Evaluating a model at your new job, you see a beautiful curve, and the first thing you do is still check whether it used data from the future. A colleague asks why you're so nervous.",
+   "The senior researcher who trained you is in Shanghai on business, and you have dinner on the riverfront. He asks whether you still have that folder. You say you do.",
+   "Most factors are mined by AI now, and strategies look more and more alike. But after every deep drawdown, a roomful of people still sits there working out what got away.",
+   "On an old computer you find the code for your first factor to go live, two hundred-odd lines, carefully commented. You don't run it. You copy it into a folder called \"keep.\""
+  ],
+  "closing": {
+   "retire": "Many years later, walking the Xuhui riverfront one evening, you see that building still there, lights on a dozen floors up. You stand by the river a while, guessing some young person inside is waiting for a backtest to finish. You turn and walk back without looking at your phone.",
+   "burnout": "Many years later you find a printed attribution table in a drawer: your first factor's first month of live trading, a column of tiny numbers, positive. You fold it and put it back.",
+   "end": "Many years later you happen to open a market app on your phone, the screen flickering red and green. You watch a few seconds, like watching rain from long ago, then close it."
+  }
+ }
+}

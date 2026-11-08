@@ -1,0 +1,189 @@
+{
+ "id": "journalist-gz",
+ "occupation": "News Reporter",
+ "role": "City news reporter at a metro daily's media center",
+ "headline": "Two years covering breaking news and everyday city life for the city desk of an old Guangzhou metro daily, newly confirmed as a full reporter: you wade through floodwater on stormy nights, knock on doors in urban villages, and after filing a story still have to cut a vertical video",
+ "unit": "An established metro daily in Guangzhou, turned into a converged media center a few years ago; the print edition runs about twenty pages a day, while the app and short-video accounts are where the readers are; the city news desk has eighteen people",
+ "unit_type": "Metro daily media center",
+ "city": "Guangzhou",
+ "city_tier": "Tier 1",
+ "education": "Bachelor's degree (journalism)",
+ "level": "You can be on the scene within half an hour of a tip, file an 800-word news story in forty minutes, and cut a vertical video too. But when someone on the phone says \"I don't want to talk about it anymore,\" you still don't know what to say next",
+ "intro": "The year you joined, the newsstand outside the paper's building had just been torn down. Now your work phone holds thirty-odd tip groups, an editorial system and an editing app, and you rarely leaf through the next day's paper yourself. As of today you're a reporter on the city news desk, and every rainstorm, every blackout, every door that won't open in this city could be yours.",
+ "salary_note": "Estimate: reporters at Guangzhou metro dailies earn base pay plus story fees and reach bonuses, about ten percent above the national figure. Print revenue has been falling for years, and story fee rates haven't risen in a long time.",
+ "facts": [
+  { "label": "Reporter (current level)", "value": "1-5 years, ¥7,000–11,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Senior Reporter (5-10 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Going out to investigate, interview and observe in person", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Planning story ideas and interview plans", "source": "AI exposure" },
+  { "label": "Open positions", "value": "3 related listings nationwide, 1 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You wake in your rented room in an urban village and check the tip groups first: one says a water main burst on some road in the small hours, one says a cat is stuck on a third-floor air conditioner bracket. You pass the first to the duty editor.",
+  "At the scene the water has half drained, and a slab of road surface has lifted. You take a few photos and ask the breakfast shop owner, the woman sweeping the street and the repair crew. All three give different times.",
+  "You call the water utility's publicity office to confirm, and they say it has to go through procedure; they'll reply this afternoon. Meanwhile you post a 200-word news flash in the editorial system, spelling out what's confirmed and what's still being checked.",
+  "Desk lunch is roast meat rice from downstairs, char siu with a fried egg. Over it the desk chief says yesterday's piece on the care home didn't get the numbers; the headline was too flat.",
+  "You go to an old walk-up in the old town to interview a ninety-year-old woman who's lived there sixty years, about getting an elevator installed. She pours you herbal tea and talks for an hour, half of it in Cantonese, and back at the office you'll need a colleague to help with the recording.",
+  "The water utility's reply arrives. You expand the morning's flash into an 800-word story, then cut a forty-second vertical video on your phone, add subtitles and hand it to the new media editor.",
+  "You eat a boxed overtime dinner at the paper and start on the elevator story. There's one thing the old woman said that you want at the top, and you rewrite it three times.",
+  "The night editor has left two notes on your story in the system. You make the changes and send it back, and as you get home to your room another tip pops up in a group: at some intersection, the traffic lights are out."
+ ],
+ "ladder": [
+  { "title": "Trainee Reporter", "stage": "Entry", "focus": "Follow veteran reporters to the scene, take tips, write news items, learn the rules of verification and interviewing, and pass the review at the end of the year." },
+  { "title": "Reporter", "stage": "Reporter", "focus": "Cover a beat on your own, handle breaking news, write city-life and investigative stories, do video and livestreams too, assessed on story quality and reach." },
+  { "title": "Senior Reporter", "stage": "Core", "focus": "With the senior professional title, focus on in-depth and series reporting and mentor young reporters and interns; the one on the desk who can carry a big story." },
+  { "title": "City News Editor", "stage": "Desk lead", "focus": "Run a desk's story list, rota and copy, sign off before publication, and answer for every story the desk puts out." },
+  { "title": "Deputy Editor-in-Chief", "stage": "Editorial board", "focus": "Sit on the editorial board, oversee several desks and night sign-off, and set coverage priorities and new media plans; few get this far." }
+ ],
+ "ai_tasks": [
+  { "name": "Planning story ideas and interview plans", "how": "AI can map out what's trending, sum up what readers care about, and list possible angles and draft interview questions. Which story to do, whether it's worth doing and whether the angle has news value depend on the reporter's judgment and feel for the ground." },
+  { "name": "Researching background material for interviews", "how": "AI can quickly pull together public information, lay out a timeline of events, and summarize people's backgrounds and earlier coverage. A person only spot-checks the sources, so it doesn't invent or misquote anything." },
+  { "name": "Contacting and setting up interviews", "how": "AI can draft interview requests, organize contact details and schedule times. But whether someone can be persuaded to talk depends on the reporter's credibility, contacts and repeated conversations, and sensitive subjects especially need the reporter to reach out in person." },
+  { "name": "Going out to investigate, interview and observe in person", "how": "AI can't replace being on the scene to look, listen, ask and follow up, nor capture people's expressions, the details of a place and how they react in the moment. The person observes and asks; at most AI helps transcribe recordings and take notes." },
+  { "name": "Getting to the scene first when something breaks", "how": "Getting there, judging whether it's safe and grabbing first-hand information must be done by a person. AI can help monitor leads and gather scattered posts online, but it can't go to the scene for you or answer for judgment calls there." },
+  { "name": "Sorting interview material and verifying facts", "how": "AI can transcribe recordings, pull out key points and spot contradictions across materials. Whether facts are true, whether sources are reliable and whether it can run, the reporter has to cross-check and answer for." },
+  { "name": "Writing stories or producing news video", "how": "AI can draft formulaic items like news briefs and flashes, and help with editing and subtitles. The purpose and narrative of in-depth reporting, its living detail and its voice, still depend on the reporter's judgment and craft." },
+  { "name": "Submitting stories and revising after editing", "how": "AI can do a first pass of rewrites from the editor's notes and check typos and house style. How to respond to edits, what to stand firm on and what to change, the reporter decides after talking it through with the editor." }
+ ],
+ "events": {
+  "e_typhoon": "The night the typhoon passes, you run in a raincoat between flooded intersections, shielding your phone, and file six news flashes and two livestreams. Back at the paper at dawn you pour half a cup of water out of each shoe, and the desk chief orders you a hot milk tea.",
+  "e_found": "You write a missing-person story about an elderly man, with photos and the places he usually goes. The next evening the owner of a sweet soup shop calls to say the old man sat outside his shop all afternoon. The family finds him and sends you a photo.",
+  "e_fake_photo": "A photo of a mall ceiling collapse is going round the tip groups, and several accounts have already run it. You go to the mall and it's fine. Back at your desk you zoom in and find the photo is AI-generated: the reflections of the lights point the wrong way. You write a debunk.",
+  "e_killed": "A story you'd spent two weeks on: the day before publication your most important source calls to say he doesn't want to appear in it, not even anonymously. Without him the story doesn't stand up, so it doesn't run. You put your interview notes away in a drawer.",
+  "e_traffic_kpi": "Performance pay is changed so every story's views and completion rate tie straight to your story fee. The piece you worked hardest on, about getting an elevator into an old walk-up, gets a tenth of the views of the one about a cat trending online.",
+  "e_cut_pages": "The print edition is cut from twenty-odd pages a day to twelve, and half the printing plant's night shift is gone. Several reporters with twenty years on the job are moved to event planning. The day they leave, everyone has a late-night supper together downstairs.",
+  "e_award": "Your series on where tenants went after their urban village was redeveloped wins a provincial journalism award. Sitting in the audience at the ceremony, you think of the people who talked to you beside their moving vans.",
+  "e_ai_brief": "News flashes on weather, traffic and sports scores are switched to AI, generated automatically from data and published after an editor's glance. The desk does far fewer simple scene calls, and the chief puts the freed-up people on in-depth work.",
+  "e_transcribe": "Transcription goes to AI, which even gets Cantonese mostly right. Checking it, you find it heard the old woman's \"don't have\" as \"have\" and flipped the meaning of a whole sentence. From then on you listen again yourself to every key quote.",
+  "e_complaint": "A shop owner mentioned in one of your stories says you got his opening hours wrong and it hurt business, and he calls the paper to complain. You dig out the recording and you did mishear it. You write a correction, and go to the shop to apologize in person.",
+  "e_old_source": "A man who's run a hardware shop in the old town for thirty years becomes your neighborhood source. Where something's being torn down, which building leaks, which old shop is closing, he's always the first to call, and every time he says: young one, come and have a look.",
+  "e_rent": "You move from the urban village to an old housing compound in Haizhu and get a room with space for a desk. On moving day, the rice noodle roll shop owner downstairs says nobody will come in early for two portions now.",
+  "e_sleep": "Months of sleeping at one or two and being woken at seven by tips, and you start getting insomnia: close your eyes and you hear the phone's alert. You move the work phone to the living room, but still get up in the night to check it.",
+  "e_live": "For the first time you do a two-hour livestream alone with your phone, covering a Lunar New Year flower market on an old street. In the comments someone asks if you're local, and you answer in your newly learned Cantonese, \"hai a,\" yes, and the comments dissolve in laughter.",
+  "e_intern": "The intern you're supervising goes out alone for the first time and comes back with a story containing one unverified claim. You don't cut it; you have her make three more calls. The next day she comes running to say the claim was wrong.",
+  "e_series": "You spend six months on a series about older people living alone in the city, visiting dozens of homes. When the last installment runs, several neighborhood offices contact the paper wanting to visit the households named in it.",
+  "e_family": "Your parents visit from home and you take them for dim sum. You've only just sat down when your phone rings: an accident at an intersection. You push the order sheet at your mother and say back in two hours. When you get back the shrimp dumplings are cold, and your mother orders another basket.",
+  "e_young_ai": "The young reporters joining now use AI to research, draft and make video, each turning out as much as three people used to. What they come to you for is mostly something else: how do you get this person to want to talk?",
+  "e_night_shift": "You start taking turns on night sign-off, two nights a week in the newsroom reading story after story until two in the morning. When the last one is signed off, you go down for a bowl of wonton noodles, the street empty but for the sanitation trucks.",
+  "e_old_story": "The old walk-up you wrote about when you were young, the one waiting for an elevator, finally has one. You go back to look. The old woman has passed away, and her son recognizes you at the elevator door."
+ },
+ "choices": {
+  "c_beat": {
+   "title": "Stay on breaking news, or take a beat",
+   "situation": "The desk is reshuffling, and the chief asks you: stay on breaking news and go wherever something happens, seeing a lot and running yourself ragged; or take the urban development and transport beat, keeping watch on the metro, redevelopment and roads, slower, but building up contacts and deeper stories over time.",
+   "options": [
+    { "label": "Stay on breaking news", "result": "You kept heading out the moment the phone rang. That year you covered two hundred-odd scenes, and the people you knew best were the taxi drivers of the small hours." },
+    { "label": "Take urban development and transport", "result": "You started going to briefing after briefing and site after site, adding dozens of engineers and residents on WeChat. Six months on, you wrote your first story that nobody else had." }
+   ]
+  },
+  "c_headline": {
+   "title": "Whether to change the headline",
+   "situation": "The new media editor has retitled your elevator story: \"Woman, 90, trapped on sixth floor for a decade while neighbors...\" She isn't trapped, and the neighbors haven't done anything wrong; they just haven't come to an agreement yet. The change could get ten times the views.",
+   "options": [
+    { "label": "Run it like that", "result": "The story went out and passed a hundred thousand views. The next day neighbors from the building called to curse you, saying you'd made it up, and none of them would give interviews again." },
+    { "label": "Change it back", "result": "You argued with the editor for twenty minutes, and the headline became \"On the sixth floor, she waits for an elevator.\" The views were ordinary, and later everyone in the building was willing to talk to you." }
+   ]
+  },
+  "c_video": {
+   "title": "Moving to the video team",
+   "situation": "The paper's short-video account is expanding and wants a few reporters who can write and shoot. From then on you'd mainly be on camera, filming and editing, paid by views, which is more than for writing. You love writing, and you also know fewer and fewer people read it.",
+   "options": [
+    { "label": "Join the video team", "result": "You learned lighting, sound and editing, and your voice was tight the first time you were on camera. Six months later a video you made about the arcaded shophouses on an old street had more views than everything you'd ever written put together." },
+    { "label": "Stay and write", "result": "You stayed with the writers and kept on with long stories. There was less and less space for them, but you wrote every one with care." }
+   ]
+  },
+  "c_ai_check": {
+   "title": "Who leads AI verification",
+   "situation": "Fake images and videos are multiplying online, and the paper wants a small team to check pictures and videos in tips with tools and by hand, and to publish debunks for readers. It's extra work, with a pile of new software to learn and late nights.",
+   "options": [
+    { "label": "I'll do it", "result": "You learned to read image metadata, run reverse searches and compare light and shadow. In the first year your team exposed forty-odd fake tips, and readers started sending suspicious pictures straight to you." },
+    { "label": "Keep covering scenes", "result": "You kept going wherever things happened. Once you nearly put a composited image into a story, and an editor caught it." }
+   ]
+  },
+  "c_pr": {
+   "title": "The offer from a PR department",
+   "situation": "The brand and PR department of a big company approaches you to run content and media relations, at one and a half times your pay, nine to six, no rushing to scenes at midnight. Several former colleagues you know have already gone over.",
+   "options": [
+    { "label": "Go to PR", "result": "You handed in your press card and joined the company. Your first month you wrote a press release for a product launch, quickly, and when it was done you found you rather missed the people who wouldn't open their doors.", "end": "You became head of content in a company's brand PR department, writing the side others want people to see. Now and then a reporter calls to ask about something, and you always start by telling them the parts that can be verified." },
+    { "label": "Stay at the paper", "result": "You thanked them. That night another tip popped up in a group, and you put on your shoes and went out." }
+   ]
+  },
+  "c_title": {
+   "title": "Applying for Senior Reporter",
+   "situation": "In this year's journalism title review you're eligible to apply for Senior Reporter. You need to submit representative work and a professional paper, and pass an oral defense. You have the urban village series; you haven't written a word of the paper.",
+   "options": [
+    { "label": "Apply", "result": "You spent two months of late nights writing a paper on verification methods in city-life reporting. At the defense a panelist asked: which story are you least sure of? You named the one that never ran." },
+    { "label": "Apply next year", "result": "You spent the time on a new series, visiting a dozen-odd old housing compounds. The paper could wait until next year." }
+   ]
+  },
+  "c_desk": {
+   "title": "Running the desk, or staying in the field",
+   "situation": "The city news editor is being moved to the new media center, and the editor-in-chief asks if you'll take over. If you do, you'll set the rota, decide stories and sign off copy, and rarely go out to a scene yourself. If not, you're still the veteran who can carry a big story.",
+   "options": [
+    { "label": "Take it", "result": "You started running the story meeting every morning and reading copy every night. The first time you signed off someone else's investigation, you listened to every interview recording first." },
+    { "label": "Stay in the field", "result": "You recommended an old colleague from the desk. You kept on with the stories others couldn't crack, and every year there were still one or two that made readers call the paper." }
+   ]
+  },
+  "c_teach": {
+   "title": "Teaching journalism at a university",
+   "situation": "A Guangzhou university's journalism school wants a teacher with frontline experience for courses in news reporting and writing: a permanent state post, winter and summer breaks, about what you earn now. The paper has been shrinking for years, and you don't know how many more years you can keep running.",
+   "options": [
+    { "label": "Go and teach", "result": "Your first lecture was about the story your source pulled. You told them: sometimes a reporter's most important skill is knowing when not to publish.", "end": "You became a journalism lecturer, and every year you take students into an urban village for an interviewing assignment. One graduate joined a paper, and the first time she covered a typhoon she messaged you: Teacher, my shoes are wet." },
+    { "label": "Stay at the paper", "result": "You agreed to give one lecture a semester at the school and stayed in the newsroom. On the day, you brought a photo of your old waterlogged shoes." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last night shift before retiring, you sign off the last story and leave your press card on the desk. The newsroom is far quieter than when you arrived; most people read copy remotely from home. You walk out of the building into a light rain, glance out of habit at the intersection for standing water, see none, and walk home.",
+  "burnout": "That year you fell ill, and the doctor told you to stop staying up all night. You told the desk chief you couldn't keep running, and left the tip groups one by one. When you'd left the last, the phone went quiet, and you sat by the window listening to the rain below for a long time."
+ },
+ "stages": [
+  "Your days run between the tip groups and the editorial system: take a lead, call to verify, rush to the scene, post a flash, then build it into a story and cut a vertical video. You deal most with the people involved, the neighbors, and the publicity offices of various departments; the first need your patience, the second need asking again and again. Unlike your trainee year, the byline is yours alone, and so are the mistakes.",
+  "You focus on in-depth and series reporting, months on a single subject, dozens of interviews, stories running past ten thousand characters. The desk's toughest subjects come to you first, and young reporters and interns follow you to scenes. You've started fighting for space for a story at the story meeting, and checking other people's copy too: how many sources have you verified this sentence with?",
+  "You run the city desk's dozen-odd people: the story meeting and rota every morning, reading and signing off copy in the editorial system every night. When news breaks, you decide who goes, what runs first and what can't run yet. You rarely go to a scene yourself now, but any story signed off by you is yours if it goes wrong.",
+  "You sit on the editorial board, overseeing several desks and night sign-off, two nights a week until the small hours. Most of your time goes on meetings: setting coverage priorities, staffing new media, negotiating budgets with the advertising side. You rarely write now, but any story the desk editors can't make up their minds about ends up on your desk."
+ ],
+ "work": [
+  "An apartment block in an urban village loses power in the night. In the stairwell, by your phone's flashlight, you knock floor by floor asking tenants how many hours it's been out, and finally catch the duty electrician at the switch room door and find out why.",
+  "You interview a renovation worker chasing unpaid wages. He brings out an old notebook full of figures. You photograph every page and spend an evening checking it against the transfer records on his phone.",
+  "Before filing in the editorial system, you check the seven numbers and four place names in your story one by one, and find a street name written with the wrong character for \"creek.\"",
+  "For the series on older people living alone, you go with community volunteers delivering meals every morning for three weeks. At the twelfth home, an old man for the first time is willing to tell you about his younger years.",
+  "An intern's story contains the phrase \"according to a person familiar with the matter.\" You ask who that is, and she says she saw it online. You cut the line and have her find someone who'll go on the record.",
+  "A story on old-town redevelopment needs a then-and-now picture. You dig out a thirty-year-old photo from the paper's archive, stand in the same spot at the same angle, and take another.",
+  "On a stormy night in the newsroom you track four field reporters at once, deciding which story goes out as a flash first and which waits for verification, clicking sign-off in the system on every one.",
+  "Before signing off an investigation, you have the reporter mark the source behind every claim. Two have only one source. You hold the story three days until he adds a second.",
+  "At the story meeting a young reporter wants to do a topic trending online. You ask: which street, which building in Guangzhou? He can't answer. The next day he comes back with a specific address.",
+  "Discussing next year's staffing at the editorial board, you insist on keeping four in-depth reporting posts, backed by a table you bring: the stories readers mention most in their comments are those series.",
+  "On night sign-off you notice an image is an AI-generated illustration with no label. You call the new media editor back in, and only let it through once \"illustration\" has been added.",
+  "You give new reporters their first lesson, about the story your source pulled. You tell them: sometimes the story that never ran matters more than the one that did."
+ ],
+ "past": [
+  "You grew up in a county town in northern Guangdong. Your family took an evening paper, and every night after dinner your father read it from the front page to the last, then folded it and put it on top of the TV.",
+  "Filling in your gaokao (college entrance exam) choices, you put down journalism. Your homeroom teacher said jobs were hard to find in it. You said: I want to go and see the places in the papers.",
+  "In your second year you reported for the campus paper and wrote about canteen prices going up. Students shared it over a thousand times, and for the first time you learned how many people could read one story.",
+  "In your final year you interned at this metro daily and covered breaking news with a veteran reporter for three months. The first thing he taught you: at a scene, ask three people before you rush to take pictures.",
+  "At graduation the paper was hiring only three trainee reporters, and you were one. The day you signed, the veteran said: this trade isn't what it used to be, are you sure? You said you were.",
+  "In your trainee year, the first scene you covered alone was a small fire in the middle of the night, no one hurt. You stood by the road and wrote three hundred characters, and after you filed it, your hands shook for a long time."
+ ],
+ "late": {
+  "pension_note": "Estimate: the paper paid pension contributions on the Guangzhou base, and reporters' pay isn't high, so the pension comes to about half of final monthly pay.",
+  "scenes": [
+   "Your first typhoon day in retirement, you stand at the window watching the rain, itching to go out. In the end you open the paper's app and read the young reporters' flashes one by one, and spot a typo.",
+   "You start sorting your interview notebooks from all these years, more than thirty, in order by year. You write a table of contents for each, and as you write, some people's faces come back clearly.",
+   "Every morning you go for dim sum at a teahouse in the old town, sharing a table with a few old neighbors. When they talk about something on the street, out of habit you still ask: what time was that?",
+   "In the first months after leaving the tip groups, you go to bed on time and wake on time, and the phone hardly rings all day. It feels strange, so you go walking in the park downstairs.",
+   "You join a Cantonese opera class and learn to sing with a group of aunties and uncles. You don't sing well, but for the first time you sing, line by line, the Cantonese those old neighbors once spoke to you.",
+   "You write for a neighborhood community paper, one piece a month, about the old shops in the lanes. The fee is small; you write slowly, and for each one you go and sit in the shop for an afternoon.",
+   "A year into your new path, on the metro you see a young man holding up his phone filming an intersection, and you know he's a reporter. You watch him for a while, then get off at your stop.",
+   "Old colleagues from the paper take you out for a late supper. The print edition has lost a few more pages, they say, and half the desk's stories are now drafted by AI. You talk until the small hours, and in the end everything you talk about is the scenes you once covered.",
+   "At a talk you run into the family of that missing elderly man. She says he lived many more years, and she's always kept the screenshot of that missing-person story on her phone.",
+   "Now flashes are written by AI, recordings transcribed by AI, fake images screened by tools first. But in front of a door that won't open, someone still has to stand and wait for it to open.",
+   "In a cupboard you find an old newspaper with your first front-page story, the paper gone yellow, your name printed very small. You spread it on the table and look at it for a long time, then carefully fold it up again."
+  ],
+  "closing": {
+   "retire": "One evening many years later you sit in an herbal tea shop under the arcades, watching people pass on the street. A young man holding up a phone is asking passersby questions. You recognize the stance, smile, and finish your bowl of herbal tea.",
+   "burnout": "Many years later, walking by the Pearl River, the pleasure boats lit up on the water, you think of the rainy nights you once ran through and the people who were willing to talk to you, and sit on a bench for a long time.",
+   "end": "Many years later, in a drawer, you find your old press card: very short hair in the photo, an urgent look in the eyes. You look at it for a while, then tuck it back into your oldest interview notebook."
+  }
+ }
+}

@@ -25,7 +25,7 @@ const key = (k: string) => (LANG === 'en' ? `${k}:en` : k);
 type Peer = ReturnType<typeof simulatePeer>;
 type Save = { card: GameCard; life: Life; peers: PeerCard[] };
 type Archive = { at: string; name: string; role: string; headline: string; title: string; years: number; peak: number; how: string; endText: string };
-const SAVE = 'game:life', ARCHIVE = 'game:archive';   // 英文版存在 :en 后缀下，两边互不串
+const SAVE = 'game:life', ARCHIVE = 'game:archive', SEEN = 'game:seen';   // SEEN：抽过的卡 id，抽卡时先避开   // 英文版存在 :en 后缀下，两边互不串
 const SPEEDS = [{ k: 1, ms: 3000, t: '1×' }, { k: 2, ms: 1500, t: '2×' }, { k: 4, ms: 700, t: '4×' }];
 const read = <T,>(k: string): T | null => { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch { return null; } };
 const write = (k: string, v: any) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* 无痕模式记不住，照样能玩 */ } };
@@ -60,10 +60,12 @@ export default function GameApp({ lang = 'zh', shared }: { lang?: Lang; shared?:
 
   const enter = async () => {
     setBusy(true); setErr('');
-    const j = await fetch(`/api/game/draw?lang=${LANG}${save?.card ? `&not=${save.card.id}` : ''}`).then(r => r.json()).catch(() => null);
+    const seen = read<string[]>(key(SEEN)) || [];
+    const j = await fetch(`/api/game/draw?lang=${LANG}${save?.card ? `&not=${save.card.id}` : ''}${seen.length ? `&seen=${seen.slice(-300).join(',')}` : ''}`).then(r => r.json()).catch(() => null);
     setBusy(false);
     if (!j?.ok) { setErr(tr('没抽成，网络好像断了，再试一次', 'Could not draw a card — the network seems down. Try again.')); return; }
     const s: Save = { card: j.card, life: newLife(j.card, j.seed, LANG), peers: j.peers };
+    write(key(SEEN), seen.includes(j.card.id) ? [j.card.id] : [...seen, j.card.id]);   // 又抽到抽过的，说明全抽过一遍了，从这张重新记
     setSave(s); write(key(SAVE), s); setPhase(j.card.past?.length ? 'past' : 'card'); scrollTo(0, 0);
   };
   const go = (p: typeof phase) => { setPhase(p); scrollTo(0, 0); };

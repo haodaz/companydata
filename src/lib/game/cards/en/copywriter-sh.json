@@ -1,0 +1,189 @@
+{
+ "id": "copywriter-sh",
+ "occupation": "Advertising Copywriter",
+ "role": "Copywriter at a 4A advertising agency",
+ "headline": "Two years in the creative department of a foreign-owned 4A agency in Shanghai's Jing'an district, just promoted from junior copywriter: every day you and your partner come up with a hundred ideas for one brief and rework the twentieth version of a script",
+ "unit": "A foreign-owned 4A advertising agency in Jing'an, Shanghai, about four hundred people; the creative department has sixty, working in pairs, and your pair handles a car brand and a dairy brand",
+ "unit_type": "4A advertising agency",
+ "city": "Shanghai",
+ "city_tier": "Tier 1",
+ "education": "Bachelor's degree (advertising)",
+ "level": "Give you a brief and you can come up with forty headlines and a thirty-second script in a night. But when a client in a pitch meeting asks \"what does this have to do with selling my car?\" you still can't field it",
+ "intro": "In college you copied a lot of classic slogans out of your textbooks. Now the words you write get printed on light boxes in metro stations and play on the screens in elevator lobbies, and get struck out one word at a time by clients in meeting rooms. As of today you're a copywriter at this 4A agency, and behind every brief there's something someone wants other people to remember.",
+ "salary_note": "Estimate: creative jobs at foreign-owned 4A agencies in Shanghai pay twenty to forty percent above the national figure. The year-end bonus depends on whether the agency lost clients that year; years with lots of pitches mean lots of overtime, not necessarily more money.",
+ "facts": [
+  { "label": "Copywriter (current level)", "value": "2-4 years, ¥9,000–14,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Senior Copywriter (4-7 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Taking part in team meetings and client pitches", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Understanding what target consumers really think and want", "source": "AI exposure" },
+  { "label": "Open positions", "value": "4 related listings nationwide, 2 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The creative department drifts in late. You sit down with your coffee, and account services forwards a new brief: a new yogurt from the dairy brand, target audience \"health-conscious urban white-collar workers aged 25 to 35.\" You draw a line under it.",
+  "Shut in a small meeting room with your art director partner to brainstorm, the whiteboard covered in sticky notes. She draws, you write. In an hour you put up sixty and cross out fifty.",
+  "The salad place downstairs, ¥35 a bowl. You and a copywriter from the next team talk about the pitch they lost, and he says the other agency turned out two hundred images overnight with AI.",
+  "The car client sends back its fourteenth round of changes: make the headline more \"premium,\" make the car bigger, and cut the line you like best. You stare at it a long time, then open version fifteen.",
+  "Internal review. The creative director leafs through your deck, stops at page seven and says this one's interesting, drop everything else. Your partner glances at you, and neither of you says a word.",
+  "Alone with that one idea, you write thirty headlines, filling two pages of a notebook. Outside, the lights come on one by one along Huaihai Road, and you keep none of them.",
+  "Overtime dinner arrives, and as you eat you rework the thirty-second video script, changing a shot from \"Mom watches her child laugh\" to \"the child hands Mom the spoon.\" Your partner says: that's good.",
+  "In the taxi back to your room in an old garden villa, you think of another headline and put it in your phone's notes. At home the cat is waiting by the door, and you open a can for it."
+ ],
+ "ladder": [
+  { "title": "Junior Copywriter", "stage": "Entry", "focus": "Write headlines, body copy and social posts under senior copywriters, join brainstorms, and learn to pitch and revise." },
+  { "title": "Copywriter", "stage": "Copywriter", "focus": "Partner with an art director, handle a brand's day-to-day projects on your own, and write scripts and copy for integrated campaigns." },
+  { "title": "Senior Copywriter", "stage": "Core", "focus": "Carry big projects and pitches, mentor junior copywriters, and start presenting your own ideas to clients." },
+  { "title": "Associate Creative Director", "stage": "Group lead", "focus": "Lead several creative teams and control everything that goes out for one or more clients; the last check before sign-off." },
+  { "title": "Creative Director", "stage": "Director", "focus": "Answer for the work of a major client or the whole creative department, lead pitches and set creative direction; few get this far." }
+ ],
+ "ai_tasks": [
+  { "name": "Understanding what target consumers really think and want", "how": "AI can quickly gather reviews, research and social media chatter and sum up what an audience cares about. Real insight takes people interviewing and observing, judging which words reflect a real need and which are just surface talk." },
+  { "name": "Reading the client's needs and sorting out product selling points", "how": "AI can read the brief and product materials, list the selling points, rank them and point out gaps in the information. A person only checks that it matches the client's real intent and the facts." },
+  { "name": "Coming up with creative ideas and distilling the campaign theme", "how": "AI can offer dozens of directions and angles at once and break a creative block. A person picks the one that's memorable, fits the brand and that the client will dare to buy, and polishes it into a theme." },
+  { "name": "Writing slogans, promotional copy and other campaign text", "how": "AI can turn out slogans, headlines, promotional pieces and versions for different platforms in bulk. A person spot-checks tone, facts and compliance, and polishes the key pieces further." },
+  { "name": "Working with clients and revising copy from their feedback", "how": "AI can organize feedback into a list and turn out several revised versions quickly. A person has to hear the client's unspoken worries and decide which comments to accept and which to push back on." },
+  { "name": "Taking part in team meetings and client pitches", "how": "AI can take minutes and list to-dos. But communicating in the meeting, presenting live, reading the client's reactions and adapting on the spot are mostly human." },
+  { "name": "Tracking industry and market trends and adjusting creative direction", "how": "AI can keep tracking industry news, competitors' moves and trending topics, and produce briefings. A person only reads the briefings and judges which trends justify a change in creative direction." },
+  { "name": "Coordinating outside vendors to get the work produced", "how": "AI can help write job orders and schedules. But talking with vendors, checking the quality of what comes back and sorting out problems on site are mostly human." }
+ ],
+ "events": {
+  "e_first_line": "A yogurt slogan you wrote goes up on a metro station light box. You get off at that stop on purpose and stand in front of it for a while. A girl stops to take a photo, and you nearly go up and talk to her.",
+  "e_pitch_lost": "A pitch: the whole team pulls three weeks of late nights for an eighty-page deck. The result comes in and you've lost; the agency the client chose quoted half your price. You sit for a while in the convenience store downstairs, then save the deck into a folder called \"Never ran.\"",
+  "e_twenty": "The copy for one poster goes through twenty-three versions, and in the end the client picks version one. You and your partner laugh in the meeting room for a long time, then get on with revising the next one.",
+  "e_shoot": "Out at a suburban studio shooting the car commercial, from afternoon to the next morning. The director changes three of your lines, and the moment the actor says them, you see he was right.",
+  "e_award": "A film you and your partner made for a charity wins bronze at an international advertising festival. In the audience that night your partner cries, and you keep wondering how the old man in the film is doing now.",
+  "e_ai_volume": "In a meeting the client says other agencies can turn out a hundred lines and fifty images overnight with AI, so why do you need two weeks? The creative director explains for a long time. Afterwards the department starts using AI for a first round of directions, and your job becomes picking the one out of a hundred, then writing it well.",
+  "e_ai_partner": "You start brainstorming with AI. It gives you forty directions, mostly flat. Once, a word it tossed out in passing led you to a completely different idea, and that one ended up running.",
+  "e_lost_client": "The agency loses the car client after seven years. Within a month a dozen-odd people leave the creative department, and your team is merged into another. On the last day you pack every asset for that car onto a hard drive.",
+  "e_partner_leave": "The art director you'd partnered with for three years leaves for a creative hot shop. The day she goes she leaves you her markers, saying your storyboard sketches are hideous and you'll need them.",
+  "e_similar": "After one of your ideas runs, people online say it looks a lot like an old foreign ad. You look it up, and it is a bit similar, though you'd never seen it. You and the creative director write a statement, and for those few days you hardly speak.",
+  "e_viral": "A set of social posts you wrote for the yogurt brand suddenly takes off, and people online start making up their own lines in the same pattern. The client posts three thumbs-ups in the group chat and raises the budget the next week.",
+  "e_insomnia": "Two straight months of pitches and you start having insomnia: close your eyes and it's sticky notes on a whiteboard. You get some medication at the hospital. The doctor asks what you do, you say you write ads, and he says: that explains it.",
+  "e_parents": "Home for New Year, your mother asks what exactly your job is. You find one of your ads on TV and point it out. When it's over she says: all that time for one sentence?",
+  "e_rent": "The landlord of the old garden villa wants the place back, and you move to a new compound: there's an elevator, but no plane tree. The cat sits on the windowsill of the new flat all day.",
+  "e_intern": "The intern you're supervising writes her first headline the client approves on the first pass, and she spins around in her chair. You think of your own first line on a light box, and buy her a coffee.",
+  "e_age": "The department keeps getting younger, and in meetings you have to go and look up their jokes afterwards. Once a client asks for you by name to present, saying people believe what you say. At the meeting room door you take a deep breath.",
+  "e_young_ai": "The new copywriters can turn out hundreds of lines a day with AI, fast and tidy. What they come to you for is mostly something else: of these hundred, which one will the client buy, and which one will people remember?",
+  "e_big_pitch": "A pitch you led is won: a national new-energy brand, a year's budget. The day the result comes in, you take the whole team for hot pot downstairs, and drink very little yourself.",
+  "e_old_line": "On the wall of an old housing compound you see a faded poster you wrote over ten years ago. The line reads a little naive now. You stand there looking at it for a long time, and don't take a photo.",
+  "e_back": "Years of sitting and late nights, and your back starts to hurt; you can't sit for long. You put a yoga ball at your desk and bounce on it in meetings."
+ },
+ "choices": {
+  "c_weekend": {
+   "title": "The weekend pitch",
+   "situation": "A pitch is due Monday, and the creative director asks who can come in over the weekend. You've already gone three weekends without a break, and your mother is coming from home to see you in Shanghai, arriving this very weekend.",
+   "options": [
+    { "label": "Go in to the office", "result": "You sent your mother off to see the Bund and spent two days at the office. At Monday's pitch the creative director used your line. That evening you took her for Shanghainese food, and she said you'd lost weight." },
+    { "label": "Stay with your mother", "result": "You spent two days with her: the City God Temple, Wukang Road, the Bund. Back at work on Monday, the pitch used someone else's idea. You didn't regret it." }
+   ]
+  },
+  "c_overclaim": {
+   "title": "That line about results",
+   "situation": "A health supplement client wants the copy to say \"better sleep in seven days.\" They can't produce any test report backing the claim, and the account manager says everyone writes it that way; run it first and see.",
+   "options": [
+    { "label": "Write it as asked", "result": "The ad ran and sold well. Three months later regulators summoned the client and ordered it taken down and fixed, and the client blamed the agency for not warning them." },
+    { "label": "Change it to something you can say", "result": "You wrote a note citing the advertising law and suggested \"keeping you company through a good night's sleep.\" The client hesitated for two days, then used it." }
+   ]
+  },
+  "c_ai_flow": {
+   "title": "Whether to bring AI into the creative work",
+   "situation": "The agency is setting up an AI creative workflow: AI generates directions, images and hundreds of lines, and people choose and revise. The creative department splits into two camps, one calling it cheating, the other saying you'll be left behind if you don't. The creative director asks if you'll try it first.",
+   "options": [
+    { "label": "Try it first", "result": "You ran twenty old briefs through AI, set its output beside what had actually run, and wrote a report. Your conclusion: it's very good at writing the second-best line. The department started using it your way." },
+    { "label": "Don't touch it", "result": "You stuck with pens and sticky notes. Slow, but what you write tastes like you. It's just that when a client asks \"why two weeks?\" it gets harder and harder to answer." }
+   ]
+  },
+  "c_hot_shop": {
+   "title": "Going to a creative hot shop",
+   "situation": "Your old partner wants you at the creative hot shop where she works: twenty-odd people, all making things that go viral on social media, twenty percent more pay, fewer layers of hierarchy. But there are no TV spots for big brands, and it may not survive three years.",
+   "options": [
+    { "label": "Go to the hot shop", "result": "You changed jobs and in the first month did three projects that ran, more than in a year at the 4A. The office was in an old factory building and had a dog." },
+    { "label": "Stay at the 4A", "result": "You stayed and took on a big new client. That year you wrote a long film that aired during Spring Festival." }
+   ]
+  },
+  "c_senior": {
+   "title": "The portfolio for Senior Copywriter",
+   "situation": "At year-end review you can apply for Senior Copywriter. You need to hand in a portfolio and speak for twenty minutes in front of the creative director and several associate creative directors. You don't have much work that ran; you have a whole folder of work that never did.",
+   "options": [
+    { "label": "Present", "result": "You put in both what ran and what didn't. When you reached the lost pitch, an associate creative director asked: if you did it again, what would you change? You talked for five minutes." },
+    { "label": "Build it up another year", "result": "You decided to get more work out into the world first. That year you volunteered for several small projects nobody wanted, and one of them later took off." }
+   ]
+  },
+  "c_client_side": {
+   "title": "Going client-side",
+   "situation": "The dairy brand's marketing department wants you as brand content manager: from then on you'd write the briefs for agencies and give them the feedback. Thirty percent more pay, nine to six, no pitches.",
+   "options": [
+    { "label": "Go client-side", "result": "You swapped badges. At your first briefing with an agency, you looked at the young creative pair across the table and saw yourself. Your first round of feedback to them was very short.", "end": "You became head of content at a dairy brand, on the other side of the pitch table. Every time an agency comes to present, the first thing you ask is: which one is your favorite?" },
+    { "label": "Stay at the agency", "result": "You thanked them. The next year their briefs still came to your team." }
+   ]
+  },
+  "c_acd": {
+   "title": "The Associate Creative Director job",
+   "situation": "An Associate Creative Director post has opened in the department, and you and a senior art director from the design side are both in the running. As an ACD you'd lead three or four teams, have far less time to write, and get many more calls from clients.",
+   "options": [
+    { "label": "Go for it", "result": "You volunteered for the hardest client and in three months cleared away two years of bad blood between them and the agency. The day it was announced, that art director was the first to come and shake your hand." },
+    { "label": "Keep writing", "result": "You told the creative director you still wanted to write. He looked at you for a moment and said: then write. A film you wrote that year was the most widely shared thing the department made." }
+   ]
+  },
+  "c_studio": {
+   "title": "Opening a shop with your old partner",
+   "situation": "Your old partner is leaving to start her own creative company and wants you in, fifty-fifty. Two longtime clients have said they'll follow. Your position at the agency is senior, and you have over ten years left on the mortgage.",
+   "options": [
+    { "label": "Do it together", "result": "You rented a floor in an old factory building and started with four people. The first year you won three pitches and lost seven, and the books just about balanced.", "end": "You and your old partner run a tiny creative company. She painted the sign by the door; you wrote the words. You don't make much, and before anything goes out, the two of you always have a fight about it." },
+    { "label": "Stay", "result": "You wished her well. On her opening day you sent a huge pothos, and on the card wrote a line you'd never been willing to spend on an ad." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you wipe clean the whiteboard you've used for years and write one line on it for whoever takes your place. Everyone in the office is much younger than you. They've ordered you a cake with your old light-box slogan on it. You cut a slice, and leave only after you've finished it.",
+  "burnout": "Back from that year's checkup, the doctor had been blunt. You told the creative director you wanted to stop for a while and handed your clients over one by one. On the last day you copied the folder called \"Never ran\" onto your own drive, and deleted the one on the office computer."
+ },
+ "stages": [
+  "You and your art director partner make one team, handling a brand's day-to-day projects: get the brief, shut yourselves in a small meeting room to brainstorm, write headlines on sticky notes, write thirty-second video scripts and social posts, then build it into a pitch deck. You deal most with account services and the creative director: the first bring back the client's comments, the second decides which line lives. Compared with your junior years, your name has started appearing on the credits page of the deck.",
+  "You carry big projects and pitches, with a junior copywriter under you, and have started standing in front of clients yourself to present ideas. On shoots you have to be there, settling every line with the director and producer; in revisions you have to judge which comments to take and which to push back on. You write less and rework other people's work more, and the thing you say most is: push it one step further.",
+  "You lead three or four creative teams and control everything that runs for one or two big clients, reviewing work a dozen-odd times a week and signing off every deck. You meet clients' marketing directors, fight with account services over budgets, and are the first to speak in pitch meetings. You have less time to write yourself, but for every line that goes out you can explain why it's that line.",
+  "You're the creative director, answering for the whole creative department's work. Most of your time goes on pitches, meeting clients' senior executives, choosing and developing people, and fighting for resources for good ideas in internal meetings. You rarely write headlines now, but the line the young ones can't decide on always ends up on your desk, and you glance at it and say yes or no."
+ ],
+ "work": [
+  "You write a headline for a new car, forty versions in your notebook. Your partner circles three in red, and you argue for half an hour before going with the second one she circled.",
+  "Your thirty-second script has to finish in twenty-nine seconds. You read it again and again against a stopwatch, cut two particles and an adjective, and come in at exactly twenty-eight and a half.",
+  "At a pitch the client says the line is \"too arty.\" You don't argue; you go back and write five plainer versions, and the next day put the original back in as number six. The client picks number six.",
+  "On the shoot, the actor keeps stumbling on one word of your line. Crouched by the monitor, you change three words, the actor nails it in one take, and the director turns to look at you.",
+  "Your junior copywriter hands in twenty headlines. You read every one, pick one, and write beside it: right direction, not said fully yet, write ten more.",
+  "The night before a pitch you rehearse alone in the meeting room three times to an empty chair, timing it, cutting six slides and moving the best line up to page three.",
+  "You look at one team's idea for a long time and tell them that if it runs, people will be furious. You explain why; they rework it all night, and the version they bring the next day, you sign off.",
+  "In a meeting the client's marketing director kills your best idea. You don't rush to argue; you ask him three questions, and in the end he says: then do another version along those lines and let's see.",
+  "For the department's year-end review you cover a whole wall with the year's work that ran, and have each team stand by their own work for a minute and talk about what they didn't get right.",
+  "A pitch for a national brand: you lead thirty people for a month, and on the day you present for forty minutes. The last slide has a single line, and the client's boss stares at it for a long time.",
+  "You interview a graduate who wants to be a copywriter and have her write a line for a bottle of mineral water on the spot. She writes a very ordinary one, then says: I can write ten more. You let her.",
+  "At a department meeting someone proposes switching entirely to AI for first drafts. You agree, and add one rule: every team, every month, must have at least one line written from a blank page."
+ ],
+ "past": [
+  "You grew up in a county town in Jiangsu. What you loved most on TV were the ads, and you could recite every one; your mother said you learned ads faster than your lessons.",
+  "Filling in your gaokao (college entrance exam) choices, you put down advertising. Your homeroom teacher had never heard of the major and asked if you'd end up painting walls.",
+  "In your second year you entered a college advertising competition and won second prize for a line about laundry powder. The prize was a fat advertising annual, which you read to pieces.",
+  "The summer after your third year you interned at a small Shanghai agency writing e-commerce product pages, dozens of lines a day. For the first time you learned that most slogans are remembered by nobody.",
+  "At graduation you brought a portfolio you'd made yourself to an interview at this 4A. The creative director reached the last page and asked why the one that never ran was at the end. You said: because it's my favorite. You were hired.",
+  "In your first year as a junior copywriter you wrote several hundred headlines, and three of them ran. At the year-end dinner, the senior copywriter who trained you said three is already a lot."
+ ],
+ "late": {
+  "pension_note": "Estimate: the agency paid pension contributions on the Shanghai base, and later in your career creative pay was far above the contribution cap, so the pension comes to about forty percent of final monthly pay.",
+  "scenes": [
+   "In retirement you walk in the park every morning, and passing the billboard at a bus stop you always stop to see what's changed today, and give the line a score in your head.",
+   "Your old university invites you back to teach the advertising students a class. You talk about the work that never ran, and a student asks if you regret it. You say: those are the best things I ever wrote.",
+   "You start writing short poems, showing them to nobody, in a notebook just like the old ones. When you finish one, out of habit you count the characters.",
+   "In the first months after stopping, you can finally sleep through to morning. On waking you notice you're no longer thinking up headlines, and it feels a little empty, and a little light.",
+   "You sign up for a pottery class, and your first bowl comes out lopsided. The teacher says you want it too perfect, and you laugh, thinking of the poster revised to version twenty-three.",
+   "As your health improves, now and then you write a shop sign or a short description for a friend's little business, for no fee, in exchange for a meal. The line outside that noodle shop is the shortest you ever wrote.",
+   "A year into your new path, you see a new set of ads in the metro and can tell at once which agency made them. In your head you pick two faults with them, and admit they're better written than yours.",
+   "Old colleagues take you to dinner and say that now, in pitches, the first round is all AI, and what clients end up buying is still the line a person wrote. You raise a glass to that.",
+   "At an industry forum you meet that intern from years ago, a creative director now. She says that when she interviews new people, she also has them write a line for a bottle of mineral water on the spot.",
+   "Now put a brief in and AI gives a hundred lines in a minute. But which one deserves to be printed on a light box, for a stranger to stop and photograph, still takes a person to decide.",
+   "On an old hard drive you find the folder called \"Never ran\" and open them one by one. Some look very naive now. A few, you still think, are really well written."
+  ],
+  "closing": {
+   "retire": "One evening many years later you sit in a rattan chair at the mouth of your lane, and your grandson brings his essay to ask how to write the opening line. You look at it for a long time and say: first tell me which sentence you most want people to remember.",
+   "burnout": "Many years later you're walking under the plane trees when a leaf lands on your shoulder. You think of the thousands of lines you wrote over those years, most of them forgotten, but the girl who stopped to take a photo in that metro station, you've always remembered.",
+   "end": "Many years later, in a drawer, you find a yellowed sticky note in your younger handwriting: a single line, with a circle drawn after it. You can't remember which brand it was for, and you stick it on the fridge."
+  }
+ }
+}

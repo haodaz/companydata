@@ -1,0 +1,198 @@
+{
+ "id": "hr-suzhou",
+ "occupation": "Human Resources Specialist",
+ "role": "Line-worker recruiter at an electronics factory",
+ "headline": "A year into the HR department of a 3,000-worker electronics factory in Suzhou's high-tech zone, posted day after day at the recruiting tent by the factory gate: in peak season you have to bring in over a thousand line workers a month, and in the slow season you see them off one by one",
+ "unit": "An electronics factory in Suzhou's high-tech zone making camera modules and structural parts for phone brands, about 3,000 people normally and 5,000 at peak; twelve people in HR, four of them in recruiting",
+ "unit_type": "Electronics manufacturing plant",
+ "city": "Suzhou",
+ "city_tier": "New Tier 1",
+ "education": "Bachelor's degree (human resource management, a provincial second-tier university)",
+ "level": "You can tell which labor agencies are reliable and which ID card looks wrong, and you could do the onboarding paperwork with your eyes shut. But when a workshop director calls wanting thirty people on the line by tomorrow morning, all you can do is panic",
+ "intro": "You've spent a year in the HR office of this electronics factory in Suzhou's high-tech zone, and the ID card reader on your desk beeps more often than your computer. The plant has three thousand people; half of them leave every year, and half again get hired back. As of today, some of the five thousand heads needed for peak season are yours to find.",
+ "salary_note": "Estimate: HR jobs at Suzhou manufacturing plants pay about ten percent above the national figure. In peak season there's a recruiting bonus based on how many people actually show up for work; in the slow season it's base pay only.",
+ "facts": [
+  { "label": "Recruiting Assistant (current level)", "value": "0-2 years, ¥4,500–6,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Recruiting Specialist (2-4 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Talking people into staying, face to face, at the recruiting tent", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Writing hiring ads and blasting them across every channel", "source": "AI exposure" },
+  { "label": "Open positions", "value": "499 related listings nationwide, 13 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The recruiting tent at the factory gate. You set up the roll-up banner: all-in monthly pay ¥6,000 to 7,500, housing included. With a marker you strike out \"day shift only\" and write \"two rotating shifts\", which is what the workshop director said yesterday.",
+  "The first to sign up are a couple from Henan. The husband asks whether there are married couples' rooms. You say there's a waiting list, and for now they'll each go into an eight-bed dorm. They look at each other, and they stay.",
+  "You walk twenty-odd people to the community clinic for their medicals and wait in line outside. You have a stack of exam forms and check each one against an ID card. One young man looks rather unlike his ID photo.",
+  "The labor agency boss sends a spreadsheet: thirty-eight people delivered today, referral fees payable once each has worked forty-five days. You open the attendance system and go through last month's batch one employee number at a time.",
+  "Onboarding. In the training room you play the safety video and explain how pay is calculated, how overtime is calculated, and what time the dorm lights go out. Someone in the back row has fallen asleep. You let him be; he's on the line this afternoon.",
+  "The director of the surface-mount workshop calls: six more have walked off the SMT line and they must be replaced by tomorrow morning. You look at the sign-up sheet, still a dozen short, and call three agencies in turn.",
+  "The factory's short-video account goes live to recruit. You tell the phone the dorms have air conditioning and a canteen meal costs seven or eight yuan. In the comments someone asks if this is a sweatshop. You blur the name on a pay slip and hold it up for everyone to see.",
+  "Back in your rented room at the edge of the industrial park, today's exit interview forms still aren't entered. In the reason column, the most common answer is three words: family matters back home."
+ ],
+ "ladder": [
+  { "title": "Recruiting Assistant", "stage": "Entry", "focus": "Staff the recruiting tent, process onboarding, take people to medicals, check attendance, and learn every step from sign-up to the line." },
+  { "title": "Recruiting Specialist", "stage": "Core", "focus": "Run a few recruiting channels and labor agencies on your own, and answer for the workshops' staffing needs and show-up rates." },
+  { "title": "Recruiting Supervisor", "stage": "Team lead", "focus": "Lead the recruiting team, plan peak-season hiring, manage agency fees and the recruiting budget, and negotiate headcount with production." },
+  { "title": "HR and Administration Manager", "stage": "Manager", "focus": "Run recruiting, pay, employee relations, dorms and canteen for the whole plant, and handle customer factory audits and labor disputes." },
+  { "title": "Plant HR Director", "stage": "Director", "focus": "Oversee HR across several plants, set headcount and staffing models, take part in choosing new sites and relocating lines; few get this far." }
+ ],
+ "ai_tasks": [
+  { "name": "Writing hiring ads and blasting them across every channel", "how": "AI can write a hiring ad for each job, rework it for short-video platforms, job sites and hometown group chats, and post on a schedule. A person only spot-checks that the pay and shifts are right and nothing is exaggerated." },
+  { "name": "Phone outreach and scheduling interviews", "how": "AI calling can make over a thousand calls a day, ask age, whether someone can do nights and when they can come, and book interviews and medicals. The hesitant ones, and anyone with special circumstances, still need a person to take over the conversation." },
+  { "name": "Reconciling headcounts and referral fees with labor agencies", "how": "AI can match an agency's list against attendance and resignation records and flag anyone who claimed a fee without working the required days. Disputed accounts need a person to negotiate, and the agency relationships need a person to keep up." },
+  { "name": "Tracking staffing needs and turnover", "how": "AI can roll up show-ups, resignations and leave by line and shift into a daily report and forecast next week's shortfall. Whether a workshop's numbers are padded, and which line to fill first, takes a person walking the floor." },
+  { "name": "Talking people into staying, face to face, at the recruiting tent", "how": "Whether a couple decides to join comes down to the dorm, the coworkers, and whether you talk straight. Walking them through the workshop and doing the math with them honestly is something nothing replaces." },
+  { "name": "Exit interviews and the first conversation in a labor dispute", "how": "Pay calculated wrong, a falling-out with a line leader, trouble at home: someone has to sit down, hear it out, check the facts and give a first answer. AI can only help pull up the records." }
+ ],
+ "events": {
+  "e_peak": "September peak season: orders for a new phone model arrive, and you need to hire twelve hundred people in a month. You go three weeks without a day off, ride a coach out to a vocational school in Henan, and come back with a voice that stays hoarse for two weeks.",
+  "e_fake_head": "Checking attendance, you find that of thirty people one agency sent, nine worked two days and never came back, yet the agency billed for all of them. You screenshot every clock-in record, and that money never goes out.",
+  "e_offseason": "The orders move to another factory and the slow season comes early. The workshops let a hundred-odd hourly workers go, and you call each one about collecting their final pay. One asks whether you'll be hiring after New Year.",
+  "e_station": "The eighth day of the Lunar New Year. You and a colleague hold up a sign at the exit of Suzhou North Station to meet returning workers, and greet more than sixty in one morning. One woman recognizes you: \"You're the one who hired me last year.\"",
+  "e_overtime_pay": "A worker who quit says his overtime was underpaid and files for labor arbitration. You pull the attendance records and find the system really did count two months of weekends as weekdays. You and finance make up the pay, then you go through the whole rule set from the top.",
+  "e_students": "A batch of vocational school interns arrives, their teacher living in the dorms with them. One student's parent calls from Guizhou to ask whether the kid can stomach the food. You go and look in the canteen and call back: there's chili.",
+  "e_cert": "You pass the Level 3 Enterprise HR Manager certificate, and while studying you read the Labor Contract Law cover to cover for the first time. The things you used to say from experience, now you know where they come from.",
+  "e_house": "You put a down payment on a small two-bedroom in the west of Suzhou, with a mortgage of over ¥4,000 a month. The day you sign, you stand outside the sales office doing sums for a long time, working out what this year's peak-season bonus might come to.",
+  "e_neighbor_poach": "A big factory next door raises its hourly rate by two yuan and sends people to hand out flyers under your dorms. Eighty-odd people leave in a week, and at the morning meeting the workshop director looks straight at you.",
+  "e_line_leader": "A young man you hired at the recruiting tent five years ago has become a line leader. He messages you that his line is short, and asks you to tell people when you're recruiting that nobody gets yelled at on his line.",
+  "e_ai_call": "The plant brings in AI calling, two thousand outreach calls a day asking ages and whether people can do nights. You go from the person making calls to the person listening to recordings, and as you listen you notice it has logged several people's \"let me think about it\" as \"yes.\"",
+  "e_ai_live": "The recruiting livestream is taken over by a digital avatar that never goes offline. Sign-ups rise; people actually showing up for work barely do. You add a step to the system: anyone who signs up gets a call back from a person first.",
+  "e_automation": "The plant installs two automated assembly lines and demand for line workers drops by a third. Recruiting becomes hiring equipment technicians and robot maintenance staff, and you start learning to make sense of a job description that mentions PLCs.",
+  "e_audit": "An overseas customer sends auditors to check social compliance: working hours, dorms, any underage workers. You spend a month preparing the records. The auditor leafs through the age-verification sheet you built for onboarding and doesn't raise a single question.",
+  "e_sick": "Two peak seasons with no rest, and one day standing in the recruiting tent your vision goes black. Two days on an IV drip; the doctor says it's exhaustion. From the hospital bed you're still answering agency messages.",
+  "e_home": "A call from home: your father is in the hospital. You take a week off to go back, and in the ward you review thirty onboarding files on your phone. The day he's discharged he says, \"That factory of yours, it's hard to find people, isn't it.\"",
+  "e_cut_line": "A production line is moving to Southeast Asia, and three hundred-odd people must either transfer or have their contracts ended. You talk to them one by one, calculating severance and issuing certificates. For that month you don't quite dare eat in the canteen.",
+  "e_apprentice": "The new hire you trained gets through a peak season on her own for the first time, and her month-end show-up rate beats yours from back then. She takes you to dinner, and you order the fried noodles from the stall that used to be next to the recruiting tent.",
+  "e_old_style": "The younger people in the department watch turnover curves in the system; you still walk the workshops once a week. Which line leader has a loud voice, which dorm room's air conditioner is broken: the curves don't show it, but one walk-through does.",
+  "e_new_park": "The group opens a new plant in northern Jiangsu, and you're sent to build the HR department from scratch. For the first three months you live in a prefab on site. Half of the first batch you hire are old hands from your previous factory."
+ },
+ "choices": {
+  "c_channel": {
+   "title": "Agencies, or recruit it yourself",
+   "situation": "Peak season, three hundred short. An agency can deliver in a week at a referral fee of ¥1,500 a head. Or you can work the hometown group chats, livestreams and vocational schools yourself for half the cost, but slower, and whether you'll fill it by month-end is anyone's guess.",
+   "options": [
+    { "label": "Lean on the agencies", "result": "The people arrived on time, and the workshops stopped calling to yell at you. At month-end finance came over with the fee invoices and asked why the bill was double last year's." },
+    { "label": "Build your own channels", "result": "You set up a dozen hometown group chats and rode the coach out to vocational schools two weekends running. You ended that month forty short, but the next peak season, a third of new hires were brought in by old hands." }
+   ]
+  },
+  "c_ad": {
+   "title": "Whether the ad says ¥8,000",
+   "situation": "The workshop director wants the hiring ad to say \"¥8,000 a month.\" Full attendance plus weekend overtime really does get there, but in the slow season there's no overtime and take-home is just over ¥6,000. The factory next door words it the same way.",
+   "options": [
+    { "label": "Write it his way", "result": "Sign-ups jumped by half. Three months later, in the slow season, several people came to HR holding their pay slips and said you'd lied. You had nothing to say." },
+    { "label": "Spell out base pay and overtime", "result": "You wrote the base pay, hourly rate and overtime multiplier, and roughly what take-home looks like in the slow season. Fewer signed up, more stayed, and the director grumbled a bit." }
+   ]
+  },
+  "c_cert2": {
+   "title": "Weekend classes for Level 2",
+   "situation": "The Level 2 Enterprise HR Manager course is downtown, every weekend for six months. Your supervisor says passing it counts for points when promotions come up, but peak-season weekends are exactly when the recruiting tent is shortest of hands.",
+   "options": [
+    { "label": "Take the course", "result": "For six months you never slept in, and the chapters on performance management and pay design were the hardest going. The day you passed, you photographed the certificate on the metro and sent it to your mother." },
+    { "label": "Keep the tent covered first", "result": "You held that peak season together with the best show-up rate on the team. The course can wait until next year, and next year there'll be another peak season." }
+   ]
+  },
+  "c_supervisor": {
+   "title": "Applying for Recruiting Supervisor",
+   "situation": "The recruiting supervisor has been moved up to group headquarters and the post is open. Both you and Lao Zhang, eight years on the team, can apply. Lao Zhang knows every agency; you can work the systems and the data.",
+   "options": [
+    { "label": "Apply", "result": "You put together a twenty-page peak-season hiring plan, and on the turnover slide the plant manager looked up at you. Lao Zhang didn't speak to you for days." },
+    { "label": "Let Lao Zhang have it this time", "result": "Lao Zhang became supervisor, and the first thing he did was hand you the most difficult agency. \"You're better at the numbers than I am,\" he said." }
+   ]
+  },
+  "c_ai_system": {
+   "title": "Who leads the AI recruiting system",
+   "situation": "The group is rolling out an AI recruiting system that screens sign-ups, makes the calls, books medicals and calculates agency fees. The plant needs one person to lead the pilot. It's extra work, and any mistakes are yours.",
+   "options": [
+    { "label": "I'll do it", "result": "In the first two months the system double-booked medicals three times, and you swore at it while fixing the rules. Six months later the four-person team was doing what six people used to." },
+    { "label": "Let the young ones take it", "result": "You stuck with the agencies and the workshops. After the system went live, you found there were reports you could no longer read." }
+   ]
+  },
+  "c_shanghai": {
+   "title": "The headhunting firm in Shanghai",
+   "situation": "A Shanghai headhunting firm comes for you: mid- to senior-level hiring for manufacturers, base plus commission, and done well it pays twice what you earn now. But it's a different job: phone calls, courting candidates, chasing clients for payment.",
+   "options": [
+    { "label": "Go to Shanghai", "result": "You handed in your notice and spent your last afternoon sitting in the recruiting tent. Your first month in Shanghai you closed nothing; in the third you placed a factory general manager.", "end": "You became a headhunter for manufacturers. On the phone now you talk to plant managers earning hundreds of thousands a year, but the first thing you ask is still whether they can live on site." },
+    { "label": "Stay at the factory", "result": "You thanked them, hung up and went for a walk through the workshops. The surface-mount line leader told you three more are leaving next week." }
+   ]
+  },
+  "c_overseas": {
+   "title": "Setting up HR at the plant in Southeast Asia",
+   "situation": "The group has built a plant in Southeast Asia and needs someone who knows line-worker hiring to set up HR there, a two-year posting at double pay. You know nothing about the local labor law, the religious holidays or how the workers do things.",
+   "options": [
+    { "label": "Go for two years", "result": "You learned to say \"welcome\" and \"see you tomorrow\" in the local language. Only half of the first five hundred workers you hired stayed. In the second year, eighty percent did." },
+    { "label": "Stay in Suzhou", "result": "The supervisor from the plant next door went instead. You stayed in Suzhou and took over his patch." }
+   ]
+  },
+  "c_manager": {
+   "title": "The HR and Administration Manager job",
+   "situation": "The HR and Administration Manager is retiring, and the plant manager asks if you'll take it. If you do, recruiting, pay, dorms, canteen and labor disputes are all yours, and you'll get calls at ten at night when the dorm water goes off. If not, you stay the supervisor who knows hiring best.",
+   "options": [
+    { "label": "Take it", "result": "Your first week in the job the canteen changed contractors, and three thousand people ate boxed lunches for three days. Every noon you stood at the canteen door and let each one finish complaining." },
+    { "label": "Stick to recruiting", "result": "You recommended the colleague who handles pay. You kept leading recruiting, and every peak season you're still the first to know how many people are missing." }
+   ]
+  },
+  "c_hometown": {
+   "title": "Going home to start a labor agency",
+   "situation": "An old classmate back in your home county wants to partner on a labor dispatch firm sending workers to Suzhou and Kunshan. You know half the factories, and you know which money shouldn't be made. Your mother is getting old and lives alone.",
+   "options": [
+    { "label": "Go back and start it", "result": "You moved back to the county seat and rented a storefront across from the bus station. The first year you sent out two thousand people, and you gave every one of them your own phone number.", "end": "You run a labor agency in your home county, its storefront facing the bus station. Every New Year you stand at the coach door calling the roll, just as you once met people at Suzhou North Station." },
+    { "label": "Stay in Suzhou", "result": "You introduced your classmate to two reliable factories and stayed in Suzhou. On weekends you drive back to see your mother, three hours each way." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you wipe down the ID card reader you've used for years and hand it to the young person taking over. The recruiting tent at the gate was torn down long ago and replaced by an electronic screen. Walking out, you stop and read the hiring notice scrolling across it, all the way through.",
+  "burnout": "That year's checkup, the doctor told you to stop running on empty. You quit and slept for a whole week at home, and the first thing you did on waking was still to check your phone for agency messages. There were none. You switched off the work phone and put it in a drawer."
+ },
+ "stages": [
+  "Your days run between the recruiting tent and the HR office: collect sign-up forms, swipe ID cards, take people to medicals, enter them into the HR system, hand out badges and dorm keys. You deal most with applicants and agency runners, and you have to talk straight while also knowing when to say no. When you get something wrong, the supervisor takes the heat; you don't have an agency of your own yet.",
+  "You now have three agencies, two vocational schools and a string of hometown group chats. Every Monday you get the workshops' shortage list and plan where to find people that week. At month-end you reconcile with the agencies, marking on the attendance sheet everyone who didn't work their days. Workshop directors have started calling you directly, and the show-up rate is part of your performance review.",
+  "You lead a four-person recruiting team. Every August the peak-season hiring plan and budget have to be ready, and you negotiate headcount with production line by line. You set the agency contracts and fee terms, and you sign them. You rarely sit in the tent now, but once a month you still stand there for a morning to see who's coming in.",
+  "Recruiting, pay, employee relations, dorms and canteen are all yours. Every Monday you report last week's turnover at the production meeting; every quarter there's a customer audit to get through; arbitration files cross your desk for a final read and a signature. You have a dozen-odd people under you, and the thing you say most is: go and look on site first.",
+  "You run HR for several of the group's plants and spend half the year on the road. Where to put a new plant, whether to move a line, whether to hire directly or outsource: in those meetings you have to bring the numbers. You hardly ever meet applicants now; you read labor cost sheets. But you always remember that behind every figure is a bed in a dorm."
+ ],
+ "work": [
+  "A girl signing up says she's eighteen; the birthday that pops up on the ID card reader is two months short. You hand back the card, tell her to come back after her birthday, and give her a card with your number on it.",
+  "One medical form shows elevated liver enzymes. You take it to the plant doctor to ask whether the person can start; he looks it over and says to retest. You push that hire's start date back three days.",
+  "The dorm manager says two beds have opened up in a third-floor room. In the HR system you put the two people from the same village who started today in together, and they grin when they get the keys.",
+  "An agency runner brings a handwritten headcount list. You check it against the attendance system one employee number at a time, cross out seven, write the reasons on the back, and have him sign it before he takes it back.",
+  "You give a recruiting talk at a vocational school in Changzhou, with a tablet full of workshop photos. A boy in the audience asks if he can do fewer night shifts. You tell him truthfully how many there are a month.",
+  "A workshop says it'll be fifty short next week. You walk the lines and count only thirty. Back at your desk you change the number and send the director a photo of every line.",
+  "You pull three years of exit interviews into one spreadsheet, broken out by days on the job, and find half the leavers go around day seven. You work out with the workshops that a new hire's first week will now be spent shadowing a veteran.",
+  "Before peak season you renegotiate fees with five agencies one by one. The last boss slams the table and says you're squeezing too hard. You print out his retention rate from last season and slide it across, and he stops slamming the table.",
+  "The new recruiting assistant staffs the tent alone for the first time. You watch from the HR office window and stop yourself from going down. At noon she comes up and says: twenty-three hired.",
+  "The customer's auditor wants a year of working-hour records for every employee. You have the timekeeping clerk export the data and spot-check a hundred people yourself first, finding two cases of excess overtime.",
+  "A worker who had a run-in with someone in the dorm comes to HR the next day to quit. You sit him down with a cup of water first and hear him out, and that afternoon you move him to a different dorm block.",
+  "Setting next year's pay increases at year-end, you take a table of hourly rates at five nearby factories to the business review and say that without this one-yuan raise, four hundred fewer people will come back after Spring Festival.",
+  "The group wants to open a plant in central China. You take two people to spend a week there looking at vocational schools, the labor market and county-town rents, and come back with a staffing feasibility report.",
+  "At the quarterly meeting you vote down a plan to outsource all line work, with last year's turnover and rework rates from the outsourced plant: both double those of directly hired staff.",
+  "A line worker you once hired is now HR manager at a new plant and comes to group HQ for a meeting. Afterwards he stops you in the corridor and says he still has that card with your number on it."
+ ],
+ "past": [
+  "You grew up in a county town in northern Jiangsu. Your parents both worked in factories in Suzhou and only came home at New Year. You lived with your grandmother and every spring watched them shoulder their bags and board the coach.",
+  "Your gaokao (college entrance exam) score was middling, and on the application form you put human resource management, because your mother said hiring people from an office beats standing on an assembly line.",
+  "The summer after your second year, you worked two months on the line at your mother's factory, driving screws. For the first time you understood that someone calculates every line on a pay slip.",
+  "The year you graduated you sent out thirty-odd résumés and ended up in the HR department of an electronics factory in Suzhou. The interviewer asked why you wanted a factory. You said: I know why they leave.",
+  "In your first month you sat in the recruiting tent twenty-six days. The first person you ever hired quit after three. On the exit form you wrote the reason: dorm too far."
+ ],
+ "late": {
+  "pension_note": "Estimate: enterprise employee pension, paid in for thirty-odd years at a contribution base in the middle-to-upper range for Suzhou; the pension comes to about half of final monthly pay.",
+  "scenes": [
+   "Your first September after retiring, you reach for the calendar on your phone without thinking, to see when peak-season hiring starts this year. There's nothing on it. You go to the market and buy a pound of hairy crabs.",
+   "An old colleague adds you to a group chat full of people from the factory. Someone posts a group photo from twenty years ago, and you search it for a long time before finding yourself crouching in the front row.",
+   "You help out at the community center with pension identity checks for the elderly, and one by one they hand you their ID cards. The way you take each card is exactly the way you did in the recruiting tent.",
+   "In the first months without work you still wake at seven-thirty. You go for a walk around the compound, and passing a shop with a hiring notice in the window, you stop to see whether it's honestly worded.",
+   "The doctor tells you to walk more, so you take to strolling along the Grand Canal. Barges carry freight past, and you count the containers on them, unable to remember whether those factories are still short of people.",
+   "Slowly your health comes back, and you take on a little side work, reading over labor contracts and employee handbooks for a small factory. Twice a month, paid by the visit, enough for the groceries.",
+   "Your first Spring Festival in a different line of work, you don't have to go to the station on the eighth day. You watch TV at home. The news runs a piece on the return-to-work rush, and you watch until it ends.",
+   "Your new job pays more than the factory did, and you renovate your parents' house back home and put in an air conditioner. Your father asks if it's the same as the one in your factory dorms. You say: better than that.",
+   "Once you pass your old electronics factory and see the recruiting tent at the gate has been replaced by a self-service sign-up kiosk. You stand off to the side for a while. A young man taps at it for a long time, and nobody comes over to ask him anything.",
+   "Now the hiring calls are made by AI, the ads written by AI, the show-up rate calculated by the system. But who in the dorm can't get along with whom, whose family has run into trouble, still takes someone to go and ask.",
+   "On an old phone you find a photo: you at twenty-four behind the plastic table in the recruiting tent, a pile of sign-up forms in front of you, the banner behind you knocked crooked by the wind. You look at it for a long time."
+  ],
+  "closing": {
+   "retire": "One spring many years later, you sit on the balcony shelling edamame. Down below, a young couple dragging suitcases is looking for a building number. You lean out and ask which block, and they say they're looking for a place to rent; they've just come to Suzhou for work. You point the way and watch them go.",
+   "burnout": "Many years later, on a bench by the Grand Canal, you're teaching your grandchild to read, and he points at the factory buildings across the water and asks what they are. You tell him: a factory. There are lots of people inside, and every one of them came from far away.",
+   "end": "Many years later, in a drawer, you find an old work badge. The face in the photo is very young, and stuck to the back is a yellowed note: 8 a.m. tomorrow, SMT line needs thirty. You smile and put it back."
+  }
+ }
+}

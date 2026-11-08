@@ -1,0 +1,163 @@
+{
+ "id": "realtor-bj",
+ "occupation": "Real Estate Agent",
+ "role": "Resale agent at a chain brokerage branch (first year)",
+ "headline": "A resale agent at a chain brokerage branch in Beijing, up from a three-year college in Baoding, Hebei, sleeping in the staff dorm above the shop, who has ridden an e-bike round dozens of Huilongguan housing compounds until every building number is memorized, and has yet to close a first deal",
+ "unit": "A chain real estate brokerage branch in Huilongguan, outside Beijing's northern Fifth Ring Road",
+ "unit_type": "Chain real estate brokerage branch",
+ "city": "Beijing",
+ "city_tier": "First-tier",
+ "education": "Three-year college diploma (property management)",
+ "level": "You know about half of Huilongguan's compound names, subway stations and schools by heart, and you have a rough idea of how online contract filing, mortgages and title transfer work. On your first showing you opened the wrong door and led the client into the neighbors' stairwell.",
+ "intro": "You finished a three-year college in Baoding and followed someone from your hometown to Beijing, where you joined a chain brokerage branch in Huilongguan. The branch gave you two suits, an e-bike and a bed in the staff dorm upstairs, eight to a room. From today you'll ride round this place where hundreds of thousands of people live, learning it building by building, finding the right door for people who want to buy, sell or move.",
+ "salary_note": "Estimate: base pay for agents in Beijing is ¥3,000–4,000, and most of the income is commission on closed deals, a bit over 10 percent above the national figure. You might go several months in a year without a deal, or close three in a month. In the cold years of the market, branches close in waves and people leave in waves.",
+ "facts": [
+  { "label": "Agent (current level)", "value": "0–2 years, ¥5,000–9,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Senior Agent (2–4 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Showings, negotiating price, seeing buyer and seller through signing", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Entering listings, shooting VR tours, writing listing descriptions", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You wake in the dorm above the branch, the colleague in the bunk above still snoring. You buy a jianbing crepe downstairs, button your suit, and ride to a compound gate to hand out listing flyers.",
+  "Branch morning meeting. The branch manager reads out yesterday's showings and new listings. You did two showings and no new listings. He says you must bring in two sellers today.",
+  "Walking the patch. In an old compound you go building by building, noting which have elevators, which face the subway, which entrance always has a group of old men playing chess outside.",
+  "Boxed lunch at the branch's little table while you write the description for a new listing in the system. The AI's version calls a ground-floor flat with a small yard a \"garden villa.\" You change it back.",
+  "A showing. A newly married couple, budget ¥3 million, want two bedrooms near the subway. You show them three flats. At the third they stand on the balcony a long time. You don't say a word.",
+  "Follow-up calls to sellers. The twelfth picks up, says \"another agent,\" and hangs up. The thirteenth says if you can sell it for ¥3.2 million, he'll sign an exclusive.",
+  "Your mentor takes you to a seller's home to negotiate. The seller brews tea and talks for an hour about his son abroad, and in the end agrees to drop ¥50,000. Outside your mentor says: tonight we talked about his son, not the flat.",
+  "Back in the dorm you enter today's showings and seller details into the system. The colleague in the top bunk has just closed a deal and is video-calling his family from bed. You put in earphones and sleep."
+ ],
+ "ladder": [
+  { "title": "Agent", "stage": "Walking the patch", "focus": "Walk the patch, enter listings, photograph flats, make calls, do showings, learn negotiating and signing from your mentor, and check the sales ranking at month's end." },
+  { "title": "Senior Agent", "stage": "Closing deals", "focus": "With your own repeat clients and sellers, negotiate and sign on your own, follow mortgages and transfers through, and bring on one or two newcomers." },
+  { "title": "Branch Manager", "stage": "Running a branch", "focus": "Run a branch of a dozen or more: morning meetings, schedules, training newcomers, watching numbers, and stepping in when sellers and buyers can't agree." },
+  { "title": "Area Manager", "stage": "Running an area", "focus": "Run five or six branches across one neighborhood: where to open and close, which branch managers stay or go, and the area's listings and deals are all yours." },
+  { "title": "Regional Director", "stage": "Running a region", "focus": "Run a region of dozens of branches and hundreds of agents: set the playbook, manage risk, negotiate targets and policy with the company." }
+ ],
+ "ai_tasks": [
+  { "name": "Showings, negotiating price, seeing buyer and seller through signing", "how": "AI can plan showing routes and flag each flat's selling points and problems. Standing in the flat answering the questions clients are embarrassed to ask, edging buyer and seller toward a price, and settling two families down on signing day takes a person." },
+  { "name": "Entering listings, shooting VR tours, writing listing descriptions", "how": "Listing details are read and entered automatically, VR footage is stitched by the system, and AI writes the description and floor plan notes in seconds. A person just visits once to shoot and checks it for mistakes." },
+  { "name": "Valuing flats and writing up comparable sales", "how": "AI gives a price range from the compound's past sales, current listings, floor and orientation. A flat's light, noise, neighbors and how badly the seller needs to sell, you only know by going." },
+  { "name": "Finding clients online and answering inquiries", "how": "AI can answer most inquiries on the platforms, pick out serious buyers and book viewings. Whether a client is willing to go and look with you still comes down to the person on that first call." },
+  { "name": "Following mortgages, contract filing, escrow and title transfer", "how": "The system reminds you what documents each step needs and when, and many procedures can be done online. When a credit check goes wrong, a down payment falls a little short, or someone gets cold feet on transfer day, a person has to run around and sort it out." },
+  { "name": "Handling disputes and after-sale problems", "how": "AI can pull up contract clauses and organize the message history. Sitting between two families until tempers cool and the matter is settled still takes a person." }
+ ],
+ "events": {
+  "e_first_deal": "You close your first deal: that couple, the flat where they stood so long on the balcony. At signing, his hand shakes as he writes and she quietly wipes her eyes beside him. You send a big red envelope to the branch group chat, and everyone who grabs a share says congratulations.",
+  "e_no_deal": "Four months without a deal, on base pay alone. You call home and say everything's fine, then hang up and smoke half a pack below the dorm.",
+  "e_peers_leave": "Of the ten who joined the branch with you, three are left a year later. The empty beds in the dorm soon fill with newcomers, and the questions they ask you are exactly the ones you asked your mentor.",
+  "e_jump_deal": "A client you showed flats to five times ends up going around you and buying directly from the seller. You see the two of them coming out of the compound together. You don't go over. You turn and ride away.",
+  "e_market_down": "Prices fall over 10 percent in a quarter. Buyers are all waiting and sellers are all anxious. The branch's monthly deals drop from a dozen-plus to two or three. The branch next door closes, and on the day its sign comes down you stand at the door watching.",
+  "e_policy_up": "Purchase restrictions are partly lifted, and at weekends the branch is full. In a month you do over eighty showings, lose your voice, and close four deals.",
+  "e_ai_listing": "The company brings in an AI tool. You shoot the VR tour and it writes the description, floor plan notes and neighborhood amenities on its own, and can even look up when a building's elevator was last replaced. You can enter twice as many listings a day.",
+  "e_ai_price": "A client comes to negotiate with an AI valuation, saying the flat is worth ¥2.8 million at most. You take him to stand on the flat's balcony for five minutes. Across the way is a park. The AI's valuation had no park in it.",
+  "e_ai_online": "More and more viewings and signings happen online, and some clients meet you for the first time on transfer day. You find your work has changed: fewer showings, more explaining what can't be seen online.",
+  "e_ai_fewer": "The company hands entering listings, answering inquiries and scheduling showings to the system, and a branch goes from fifteen people to eight. Everyone who stays has to be able to take a deal from start to finish alone.",
+  "e_old_couple": "An elderly couple in their eighties sell the old flat they've lived in for forty years to move in with their daughter. On handover day the old woman stands a while in every room. You help them take the old photos down from the walls one by one and wrap them in newspaper.",
+  "e_loan_fail": "On a flat already under contract, the buyer's mortgage isn't approved, leaving the down payment ¥400,000 short. You try three banks and two guarantee companies, and in the end the contract is cancelled. The seller rants in the branch for an hour. You stand the whole time.",
+  "e_license": "You pass the real estate agent professional qualification. The day the certificate arrives, the branch manager pins it on the branch wall beside your photo. Every time you walk past, you pretend not to see it.",
+  "e_winter": "That winter is especially cold. Riding your e-bike round the patch, your hands crack open. With gloves on you can't use your phone; with them off your fingers won't work it. You warm up a while in a compound's gatehouse, and the old guard pours you a cup of hot water.",
+  "e_love": "You find a one-bedroom rental for a young person newly arrived in Beijing for work, and after the lease is signed you add each other on WeChat and start having meals together. The next year you marry. You choose the flat yourself, in a compound you've walked a hundred times.",
+  "e_own_home": "You buy a small flat in Yanjiao, just across the Beijing line in Hebei. After selling hundreds of flats for other people, you're a buyer for the first time. On signing day you sit on the other side of the table, look at the agent opposite, and think of that couple from your first deal.",
+  "e_school": "The school-district policy changes, and a batch of flats people used to fight over sit listed for six months without a single inquiry. One seller comes to the branch every day asking what to do. You spend an afternoon running the numbers with him and advise him to lower the price.",
+  "e_stomach": "Not one of your three meals a day is on time, and your stomach starts to hurt. You keep a box of biscuits in your e-bike basket and eat a couple on a compound bench between showings.",
+  "e_referral": "The couple from your first deal have a child and want a bigger three-bedroom, so they come to you again. They bring two colleagues along and say: if you're buying, go to this one. Reliable.",
+  "e_kid": "Your child is born. That day at the hospital you take two client calls, then switch your phone to silent. That night your colleagues answer every message in the branch group chat for you."
+ },
+ "choices": {
+  "c_mentor": { "title": "Whom to learn from", "situation": "Two veteran agents at the branch are willing to take you on. One has the most deals in the branch: aggressive, constantly on the phone, hard at closing. The other is a ten-year veteran with fewer deals, whose old clients all come back to him. You can only follow one.", "options": [
+   { "label": "Follow the top closer", "result": "You make two hundred calls a day with him and learn how to push once more when a client hesitates. In your third month you close two deals, and get one complaint." },
+   { "label": "Follow the veteran", "result": "You go with the veteran to sellers' homes to drink tea and chat about family, and close deals more slowly than the others. Six months later, two sellers ask for you by name to sell their flats." }
+  ] },
+  "c_hide": { "title": "Do you tell the client?", "situation": "A flat at a very good price, a delighted client, just the signature left. A neighbor has told you the flat upstairs has leaked for years. The seller didn't mention it, and it's not in the system. If you say so, the deal will most likely fall through.", "options": [
+   { "label": "Tell him", "result": "You tell the client. He goes upstairs to look, and the deal is off. A month later he buys another flat through you, and introduces his cousin." },
+   { "label": "Let the client ask the neighbors", "result": "You don't say it outright, only suggest he talk to the neighbors above and below before signing. He doesn't, and signs. Six months later he calls, and you go with him to the seller and negotiate a sum for repairs." }
+  ] },
+  "c_senior": { "title": "Go for Senior Agent", "situation": "Making senior agent takes two straight quarters on target plus the assistant real estate agent certificate. This quarter you're one deal short. The branch manager says there's a big client in the area wanting to move up, a difficult one nobody wants.", "options": [
+   { "label": "Take the big client", "result": "He views over twenty flats in a month and finds three faults with every one. With the last he finds two, and signs. Back at the branch you sit in your chair a long time." },
+   { "label": "Pass, keep it steady", "result": "You say you can't handle him and let someone else take him. You work your own repeat clients steadily, and your promotion comes a quarter late." }
+  ] },
+  "c_new_house": { "title": "Switch to new-build sales", "situation": "The company has started selling new developments, taking clients out to new projects in the suburbs. Developers pay high commissions and deals close fast, with no sellers to wear down one by one. But the projects are far, a hundred-plus kilometers of driving a day, and once a project sells out, that's the end of it.", "options": [
+   { "label": "Switch to new builds", "result": "You drive the company car to Shunyi and Daxing and back twice a day. New builds close fast, and in one quarter you earn more than in the previous six months. Six months later those projects have all sold out." },
+   { "label": "Stay in resale", "result": "You stay. You say resale is built up one seller at a time, and the people who've built it up can't walk away." }
+  ] },
+  "c_ai_tools": { "title": "Learn to use AI to find clients online?", "situation": "Some at the branch have started using AI to make short videos, write compound reviews and answer inquiries around the clock, and they get more clients online in a month than from walking the patch. The branch manager wants you to lead training for the whole branch. You'd spend months learning, and your own deals would drop.", "options": [
+   { "label": "Learn it, and teach the branch", "result": "Every evening after work you shoot a video on a compound: which building gets good light, which entrance is noisy below. Three months later your account has tens of thousands of viewers, and half the branch's new clients come from it." },
+   { "label": "Don't, keep walking the patch", "result": "You say you trust your legs more. You keep walking compound by compound, and take online clients too, but you still take them to see what the videos can't show." }
+  ] },
+  "c_store_mgr": { "title": "Bid for Branch Manager", "situation": "A branch manager in the area has left, and the area manager wants you to take over. As branch manager, a dozen people's numbers, the morning meetings, schedules and which newcomers stay are your business. Your own time on deals will mostly go, and if the branch does badly you're the first one called to account.", "options": [
+   { "label": "Take the branch", "result": "The first time you stand at the branch whiteboard to run the morning meeting, you're reading out other people's showings. That year you close only five deals yourself, and the branch comes second in the area." },
+   { "label": "Decline, be a top agent", "result": "You say you still want to do showings yourself. You stay on the front line and become the area's top closer. Sellers all recognize your number." }
+  ] },
+  "c_home": { "title": "Go back to Baoding", "situation": "Your mother's health isn't good, and a classmate back home has opened a small brokerage in Baoding and wants you to join him. He says flats in Baoding are cheap, you could buy one as soon as you're back, ten minutes from home. But deals are fewer there, and commissions much lower.", "options": [
+   { "label": "Go back to Baoding", "result": "You hand your Beijing clients to colleagues and take one last ride round Huilongguan on your e-bike, looking at those buildings one by one.", "end": "You went back to Baoding and opened a small brokerage branch with your classmate, handwritten listing sheets taped to the door. Every evening after work you ride to your mother's for dinner, now and then noticing on the way which building has put up a new for-sale sign." },
+   { "label": "Stay in Beijing", "result": "You don't go back. You send home a bit more money each month and visit every quarter. On the phone your mother says: you get on with your work." }
+  ] },
+  "c_open_own": { "title": "Open your own franchise branch", "situation": "You've saved some money, and a stock of repeat clients and sellers. A brand is recruiting franchisees, and you could be the owner yourself: rent, wages and brand fees are on you, and so is the profit from deals. In a good market you can make money; in a bad one, a year can wipe out your savings.", "options": [
+   { "label": "Open a branch as owner", "result": "You rent a shopfront at the gate of a big compound, hire six people, and set off a string of firecrackers on opening day. In the first month the branch closes one deal, just enough to cover rent.", "end": "You became the owner of a small branch, doing your own hiring, your own showings, paying your own rent. At every month-end tally you think of the colleague who snored in the bunk above you in the dorm, and wonder where he ended up." },
+   { "label": "Don't, stay with the company", "result": "You run the numbers all night and don't. You say half the people opening branches now are betting on the market, and you don't want to bet." }
+  ] },
+  "c_district": { "title": "Bid for Area Manager", "situation": "The company is promoting an area manager to run the six branches across Huilongguan. They'll look at your branch's numbers, the people you've brought on, and whether you've had any major complaints over the years. As area manager, opening and closing branches and who runs each one are your decisions.", "options": [
+   { "label": "Bid for it", "result": "You spend a week poring over three years of data from the six branches, and at the selection meeting explain which two should merge and which one should move. Afterward the panel asks you a lot of questions about people." },
+   { "label": "Don't, stay with your branch", "result": "You say you want to keep watching over your own branch and its dozen people. For three years running, your branch keeps more people than any other in the area." }
+  ] }
+ },
+ "endings": {
+  "retire": "In your last month before retiring you go back to Huilongguan. The dorm building you lived in is still there; the branch has a new sign, and a young person in a suit stands outside handing out listing flyers. You take one, look at the prices, say thank you, and ride off.",
+  "burnout": "That year your stomach gets worse and worse, just as the market hits its coldest, the branch closes, and for months you can't eat or sleep. The doctor tells you to stop. You leave the front line for the company's transaction service center, preparing contract filing and title transfer paperwork for others behind a counter every day, no longer chasing after clients."
+ },
+ "stages": [
+  "Your work each day is walking the patch, entering listings, photographing flats, making calls and doing showings. In the system you record every flat's floor, orientation, fit-out and seller's number, and go out with the VR camera to shoot it. When a client books a viewing you arrive half an hour early to turn on the lights and open the windows. When your mentor negotiates you sit beside him, listening for when he speaks and when he doesn't.",
+  "You're a senior agent with dozens of repeat sellers and a stock of returning clients. You negotiate and sign yourself, then follow the mortgage, contract filing, escrow and transfer step by step, and buyers and sellers come to you first with problems. When a newcomer at the branch does a first showing, you wait downstairs and afterward tell him which line came too early.",
+  "You're the branch manager, running a dozen or more people. Every morning you hold the meeting, schedule showings and read out the numbers; every evening you go over where each person's deal got stuck. When sellers and buyers fall out, you step in. You face the area manager's targets, your staff's moods and the reputation of the sign over the door.",
+  "You're the area manager, running five or six branches across Huilongguan. You rarely do showings yourself now. Each day you move between branches: reading numbers, holding meetings, negotiating rent, deciding which branch to open or close and which branch manager to replace. Clients' big complaints all end up with you.",
+  "You're the regional director, running dozens of branches and hundreds of agents across northern Beijing. You negotiate targets and policy with the company and decide how the region plays the year. When the market goes cold, which branches close and which people stay is, in the end, your signature."
+ ],
+ "work": [
+  "Walking the patch in an old compound, counting elevators building by building, you find a little path between buildings 7 and 8 that leads straight to the subway entrance. It's not in the system. You note it in your notebook.",
+  "The seller is away and tells you to get the key from property management for a showing. You open the wrong flat's door and lead the client into the neighbors' stairwell. The neighbors' dog barks for five minutes.",
+  "Your first VR shoot of a flat, you forget to put the toilet lid down. The branch manager glances at it in the system and makes you reshoot.",
+  "Buyer and seller deadlock in the branch for an hour over ¥50,000. You take the seller outside and ask what the money from the flat is for. He says his son's down payment. You go back and talk with the buyer another twenty minutes, and each side gives ¥25,000.",
+  "On transfer day the buyer has left his ID card at home. You ride back for it on your e-bike, forty minutes there and back, and get the documents in before the real estate registration center closes at noon.",
+  "A newcomer quotes a client an out-of-date price from the system. You overhear, wait until the client has gone to tell him, then sit with him while he calls to apologize.",
+  "At the morning meeting you don't read numbers. You have everyone describe a deal that fell through last month, and why. By the fifth one, no one is laughing.",
+  "A seller complains that an agent from your branch dirtied his floor during a showing. You buy a bottle of floor cleaner and go to his flat to mop it yourself.",
+  "Two agents at the branch argue over who showed a client first. You pull up the showing records in the system, check the times, decide, then take both of them out for a bowl of noodles.",
+  "One branch in the area has lost money three months running. You go and sit there a whole day watching who comes and goes. That night you email the company: this branch's problem isn't its location, it's its manager.",
+  "You negotiate shopfront rent with a big compound's property management. The manager says another brokerage has offered more. You say we've been here eight years without one serious complaint. He thinks about it and takes 10 percent off.",
+  "After a sale the buyer finds a big problem in the flat that wasn't written into the contract, and it ends up at the branch. You sit with buyer and seller for three hours and arrive at compensation both families can accept.",
+  "At the region's quarterly meeting you ask each area manager how the oldest agent in their area is doing now. Two of them can't say.",
+  "In the coldest winter of the market the company tells you to close ten branches. You go over every branch's numbers and every person's situation three times. You close eight, and spend an afternoon with the company arguing for the other two.",
+  "At induction for a new batch of agents you give the first class, about opening the wrong door on your first day and leading a client into the neighbors' stairwell."
+ ],
+ "past": [
+  "You're in middle school in a village outside Baoding. Your family grows a few mu of wheat, and in the slack season your father works on building sites in the county town. Your favorite thing is going to town with him to look at the new buildings going up.",
+  "Your gaokao (college entrance exam) goes badly, so you go to a three-year college in Baoding to study property management. At a campus job fair you see Beijing brokerages recruiting, their flyers promising: over ¥10,000 a month.",
+  "The summer of your second year you intern with property management at a Baoding housing compound, fixing residents' pipes and collecting fees. One resident is selling, and you spend an afternoon watching how the agent who brings buyers round talks.",
+  "In your graduation year someone from your hometown who went to Beijing to be an agent calls to say he made ¥12,000 a month and you should come. Your mother says flats in Beijing are so expensive, and you're going to help people buy them? You say that's exactly why.",
+  "Your first night in Beijing, your hometown friend walks you round the streets of Huilongguan, pointing at building after building: every flat in these could be your deal one day. On the top bunk in the dorm you lie awake all night, thinking."
+ ],
+ "late": {
+  "pension_note": "Estimate: agents pay into Beijing's standard enterprise employees' pension, mostly at the minimum base, so the pension comes to a little over a third of the last monthly income. With income swinging so much, later life depends on what you saved in the good years, and whether you bought a place of your own back home or around Beijing.",
+  "scenes": [
+   "On the first morning of retirement you don't button a suit. You take a slow walk round your compound, counting how many flats in your building have brokers' for-sale signs up, and laugh when you finish.",
+   "A neighbor wants to sell and asks whether the AI's valuation is right. You go round his flat and tell him the north-facing bedroom is cold in winter, so he should come down a bit. He takes your advice.",
+   "A newcomer you once trained is now a regional director and tells the story of you opening the wrong door at the company's annual meeting, with hundreds of young people laughing. He sends you a video of it, and you watch it several times.",
+   "Your grandchild asks what you used to do. You say you helped people find homes. Did you find them? Hundreds, you say, and you remember which building every one was in.",
+   "Days at the transaction service center are regular. You check paperwork and stamp it behind a counter and leave at five. Your stomach slowly heals, and you start eating on time.",
+   "A young agent brings a buyer and seller in for a transfer, a document missing, sweating with panic. You make a few calls for him and get it done before closing. He says he'll buy you a meal sometime.",
+   "You retire at the official age and go back to Baoding for a while. The old village house has been renovated. Standing in the yard, you think of all the homes you sold for other people, while this one your father built brick by brick.",
+   "Away from the Beijing branch, you still sometimes dream of the morning meeting, the branch manager reading out that your showings are zero. You wake, remember no one reads them anymore, and roll over.",
+   "Somewhere new you run into a young agent doing a showing, fumbling at the door, trying three keys. You stand beside him, wait for him to open it, and don't say a word.",
+   "The veteran who trained you retires, and you go to see him. He takes out an old notebook with the name of every repeat client from his thirty years. In the last few pages are some you sent his way.",
+   "These days many people buy a home after a VR tour, a look at past sale prices and a question to AI on their phones. But on signing day there still has to be someone sitting between the two families, passing the pen across.",
+   "In an old wardrobe you find your first suit, the cuffs worn shiny, one button missing. You fold it and put it back at the very bottom."
+  ],
+  "closing": {
+   "retire": "Many years later, passing a Huilongguan compound one evening, you see the building from your first deal, children's clothes drying on the balcony. You stop your e-bike at the roadside and look a while, remembering that couple standing on the balcony so long, and you saying nothing.",
+   "burnout": "Many years later you find the certificate that once hung on the branch wall in a drawer, your photo very young, hair neatly combed. You wipe it off and put it in a box of old photos.",
+   "end": "Many years later, scrolling on your phone, you come across a Huilongguan flat for sale. In the VR tour, that little path between buildings 7 and 8 is still there. You watch a long time, and save the video."
+  }
+ }
+}

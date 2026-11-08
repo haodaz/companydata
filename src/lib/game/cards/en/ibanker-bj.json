@@ -1,0 +1,164 @@
+{
+ "id": "ibanker-bj",
+ "occupation": "Investment Banker",
+ "role": "Investment banking analyst at a brokerage (first IPO deal)",
+ "headline": "An investment banking analyst at a Beijing brokerage, fresh from a master's in finance, stationed in a meeting room at a precision parts factory in Jiangsu, checking thousands of bank transactions a day and revising the prospectus for the thirty-seventh time",
+ "unit": "The investment banking division of a mid-sized brokerage on Financial Street, Beijing",
+ "unit_type": "Investment banking division of a mid-sized brokerage",
+ "city": "Beijing",
+ "city_tier": "First-tier",
+ "education": "Master's degree (finance)",
+ "level": "You can do the three financial statements and a valuation model, and you've just passed the securities qualification exam. On your first on-site posting you can't tell which working papers need a company seal and which need the client's signature, and when you interview suppliers you read your questions as if reciting them.",
+ "intro": "You finished a master's in finance in Beijing and joined the investment banking division of a brokerage on Financial Street. On your third day you were sent to a prefecture-level city in Jiangsu, where a precision parts factory wants to go public. The deal team has borrowed a meeting room at the plant, its table stacked with dozens of boxes of vouchers and contracts. From today you'll spend most of a year in that room, checking every yuan and every customer of the past three years, one by one, and writing it all into a prospectus several hundred pages long.",
+ "salary_note": "Estimate: analyst pay at Beijing brokerages' investment banking divisions is about 10 percent above the national figure. In recent years the industry has cut pay and deferred bonuses, and only a deal that completes brings a decent bonus. If a deal is withdrawn or rejected, that year's bonus is thin.",
+ "facts": [
+  { "label": "Investment Banking Analyst (current level)", "value": "0–2 years, ¥15,000–22,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Senior Associate (2–5 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥92,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "On-site due diligence, visiting customers and suppliers", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Drafting the prospectus and responses to regulators' inquiries", "source": "AI exposure" },
+  { "label": "Open positions", "value": "125 related listings nationwide, 32 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You wake in a budget hotel near the factory, where the deal team has booked six rooms. You eat a bowl of noodles downstairs and take a cab to the plant with a colleague, already answering email on the way.",
+  "In the factory meeting room you open your laptop and first check yesterday's adjusting entries from the auditors. Three figures in the prospectus have to change with them.",
+  "Checking bank statements. The controlling shareholder has over a dozen personal bank cards, thousands of transactions a year. You mark every one over ¥50,000 and note the questions to ask beside it.",
+  "Lunch in the factory canteen among workers in overalls. The CFO sits down with his tray and asks how much more material you need. You say there's still one list.",
+  "You go with the senior associate to interview a downstream customer. You read the questions; he watches the person. The customer's purchasing manager answers fluently. On the way out the senior associate says: he knows our numbers better than we do. Check them when we get back.",
+  "Back in the meeting room you file the interview working papers: notes, a copy of the business card, site photos, the signature page, nothing can be missing. One signature page has no date, and you add it to your to-do list.",
+  "Revising the business section of the prospectus. The deal lead has left twenty-odd comments in the file. One says only: source?",
+  "In the taxi back to the hotel you glance at the work chat. Someone in Beijing is asking for figures on another deal. You don't reply, and close your eyes."
+ ],
+ "ladder": [
+  { "title": "Investment Banking Analyst", "stage": "Working papers", "focus": "Stationed on site for due diligence and working papers: check bank statements, interview customers and suppliers, write sections of the prospectus, fix formatting, follow the deal team." },
+  { "title": "Senior Associate", "stage": "Running the site", "focus": "Lead on site: plan due diligence, manage analysts, write the bulk of inquiry responses, align figures with auditors and lawyers, and sit the sponsor representative exam." },
+  { "title": "Vice President (Sponsor Representative)", "stage": "Signing", "focus": "Registered as a sponsor representative, you sign the sponsorship documents and answer for them. Lead deal teams, negotiate compliance and deal structure with company owners, deal with the exchange." },
+  { "title": "Executive Director", "stage": "Leading a team", "focus": "Lead a business team running several deals at once: find new clients, win mandates, defend deals at internal review, and answer for the team's revenue and quality." },
+  { "title": "Managing Director", "stage": "At the helm", "focus": "Run an industry group or a division: set which mandates to pursue, meet local governments and the owners of large companies, and answer for the division's revenue, risk and reputation." }
+ ],
+ "ai_tasks": [
+  { "name": "Drafting the prospectus and responses to regulators' inquiries", "how": "AI can write most sections of a prospectus from the working papers and templates, draft inquiry responses and catch inconsistent figures. Whether the key facts are true, how much to disclose, and how to answer the regulator's follow-up question is for a person to decide and sign." },
+  { "name": "Organizing working papers, checking figures and formatting", "how": "Filing and indexing working papers, reconciling numbers across hundreds of pages and standardizing formats are now mostly done by systems and AI. A person only looks at the inconsistencies it flags." },
+  { "name": "Checking the bank statements of the company and its owner", "how": "AI can categorize tens of thousands of transactions, find large and unusual flows and match counterparties. What a payment really was, and whether to chase it one layer further, takes a person asking and looking at the vouchers." },
+  { "name": "On-site due diligence, visiting customers and suppliers", "how": "Seeing the production line at the plant, checking orders at customers, sitting in a supplier's meeting room listening to how he tells it, and judging whether the company is what the documents say: this takes a person standing there." },
+  { "name": "Negotiating compliance and the listing plan with the owner", "how": "Getting an owner to pay back taxes, clean up related-party dealings and break years of habit, and finding a workable path between him and the regulator: AI can make the lists, but the one sitting across from the owner has to be a person." },
+  { "name": "Valuation and setting the offer price", "how": "AI can quickly find comparable companies, run valuation models and compile investors' bids. The final price has to be negotiated by people, with the company and with investors." }
+ ],
+ "events": {
+  "e_flow_find": "In the controlling shareholder's statements you find a fixed sum paid every quarter to a private individual. You ask three times before the CFO admits it's a \"consulting fee\" for a longtime customer's purchasing manager. The deal team meets all night, the company remediates, and your verification memo runs twelve pages.",
+  "e_hotel_life": "This year you spend over two hundred nights in that budget hotel. The front desk staff know you and give you an extra egg at breakfast. You spend fewer than five nights a month in the flat you rent in Beijing.",
+  "e_inquiry": "The exchange's first round of inquiries arrives: forty-eight questions. The team divides them up in the meeting room and you get seven. For three weeks you sleep four hours a night, and the response draft goes to its ninth version.",
+  "e_listed": "The deal passes review, is registered and prices, and on listing day you go to the exchange to watch the bell. After ringing it the owner turns and looks for your deal team first, shaking hands one by one. When he reaches you he says: those bank statements, that was you, wasn't it.",
+  "e_withdraw": "A deal you've worked for two years withdraws its application during the inquiry stage. The company's results have slipped, and going further would be hard. You seal dozens of boxes of working papers and ship them back to Beijing, writing one word on the waybill: archive.",
+  "e_paycut": "The industry cuts pay. Half the division's bonuses are deferred three years, and several colleagues are let go. Nobody talks about it in the pantry. Everyone talks about whether the next deal can be filed.",
+  "e_ai_draft": "The division adopts an AI writing tool. Feed it the working papers and in an afternoon it drafts the prospectus's business and technology section. You spend two days checking every sentence against the papers and delete an \"industry number one\" it made up.",
+  "e_ai_flow": "Bank statement checks now go through the system first: tens of thousands of transactions sorted overnight, two hundred-odd flagged as unusual. You no longer drag cells in Excel one by one, but those two hundred you still have to ask about one by one.",
+  "e_ai_fake": "A company preparing to list hands in several customer contracts, format, seals and signatures all complete. Something about them bothers you, so you call the customer named on one. They say they never signed it. Someone made those contracts with software.",
+  "e_juniors_fewer": "The division hires only three analysts this year. The formatting, reconciliation and filing analysts used to do is mostly the system's job now. The newcomer you supervise starts writing inquiry responses in his first year. At that point you were still numbering pages.",
+  "e_pressure": "Over dinner a company owner tells you that if you write those few customer issues a bit vaguely, they'll slide through. You say you can't. He sets down his glass, and nobody speaks for the rest of the meal.",
+  "e_regulator_check": "The regulator inspects the division on site and picks a deal you worked on. The inspectors go through working papers for a week and make two comments in the end, neither serious. They photograph your bank statement verification memo.",
+  "e_back_pain": "Years of hard meeting room chairs and your lower back starts to hurt. You pack a cushion in your suitcase and carry it from deal to deal.",
+  "e_love": "On a deal you meet someone from the audit firm. You reconcile figures in the same meeting room for six months and eat two hundred meals together in the factory canteen. The day the deal wraps, you make a date for a meal that isn't in the canteen.",
+  "e_missed": "Your best friend gets married, and on the high-speed train there you get revisions to an inquiry response. You go straight from the station to the hotel to rework the draft. You watch the wedding on a video call and send a very large red envelope.",
+  "e_house": "With several years of bonuses you put a down payment on a small flat in Beijing. On signing day, out of habit, you glance at the seller's bank statements too. The agent does a double take.",
+  "e_ipo_slow": "The pace of IPOs slows, and half the deals lined up in the division can't be filed. You're moved onto mergers and convertible bonds, and discover for the first time that investment banking isn't only about listings.",
+  "e_founder_thanks": "The company you sponsored has been listed five years without serious trouble, its results steadier every year. At New Year the owner sends a photo from the groundbreaking of a new plant, a row of workers standing behind him.",
+  "e_kid": "Your child is born. You take two calls in the hospital corridor, then switch your phone off for a whole day, the first time since you joined.",
+  "e_penalty": "A deal you signed gets a warning letter from the regulator for insufficient verification of one customer. You dig out the old working papers and read them page by page, and come to the step where you hesitated back then and didn't push further."
+ },
+ "choices": {
+  "c_onsite": { "title": "Stay on site or go back to Beijing", "situation": "The deal needs a full year on site, and the deal lead asks if you're willing to stay there the whole time. If not, you can go back to Beijing and work on materials for a few small deals: easier, but you'll learn more slowly.", "options": [
+   { "label": "Stay on site", "result": "You spend a whole year in that factory meeting room. From the line to the warehouse to the finance office, you could walk it blindfolded. The deal lead says the next site is yours." },
+   { "label": "Back to Beijing for paperwork", "result": "You go back to Beijing and prepare filings for three small deals, and see friends at weekends. At the year-end rating, you land in the middle." }
+  ] },
+  "c_cpa": { "title": "The CPA, or the sponsor exam first", "situation": "Senior colleagues say if you want to go far you'll have to pass the sponsor representative competency exam sooner or later, and the CPA's accounting and audit papers are very useful too. On site two hundred days a year, you can only squeeze in time to prepare properly for one.", "options": [
+   { "label": "Sponsor exam first", "result": "Six months of practice questions under a hotel desk lamp, and you pass the sponsor competency exam on the first try. The qualification sits there until you have enough deal experience to register." },
+   { "label": "CPA accounting and audit first", "result": "You pass two papers, and on your second deal you win an argument with the auditors over revenue recognition for the first time." }
+  ] },
+  "c_manager": { "title": "Make Senior Associate and take a site", "situation": "The division is promoting a batch of senior associates, looking at how many complete deals you've done, how well you write inquiry responses, and whether you can hold a site. A new IPO deal needs an on-site lead, at an industrial park in the southwest, for at least two years.", "options": [
+   { "label": "Take the site", "result": "You go to the southwest with two analysts and plan everything from the first due diligence list. That year you have your first fight with a company's CFO, and are invited to his home for dinner for the first time." },
+   { "label": "Wait for one nearer Beijing", "result": "You say you'll wait. Six months later a deal in Tianjin comes up and you take it, promoted a year after your intake." }
+  ] },
+  "c_ai_tools": { "title": "Lead the division's AI tools", "situation": "The division wants to plug working papers, verification and document drafting into AI, and needs someone who knows the business to spend a year with the fintech department turning deal teams' experience into rules and templates. Doing it would halve your time on deals.", "options": [
+   { "label": "Lead it", "result": "You turn the pitfalls you've hit on site over the years into more than a hundred verification rules. After the tool launches, newcomers checking bank statements for the first time know which categories to look at first." },
+   { "label": "Don't, stay on deals", "result": "You say deals can't do without people. Someone else leads the tool. You find it easy to use and now and then send them a rule only someone on site would know." }
+  ] },
+  "c_pe": { "title": "Jump to private equity", "situation": "A private equity fund wants you as an investment manager: sourcing deals, doing due diligence, investing in companies, for about the same pay, without as much time on site, and with a chance at carried interest later. But your sponsor qualification and deal record won't count for much there.", "options": [
+   { "label": "Go to PE", "result": "You hand in your resignation and hand over your deals in the working paper system one last time. The division head says if a company you invest in wants to list, remember to call us.", "end": "You went to a private equity fund. Instead of standing behind companies helping them list, you sat across from them deciding whether to give them money. The first thing you do with any file is still to go through the owner's bank statements." },
+   { "label": "Stay in banking", "result": "You don't go. You say you want to sign a deal from start to finish, with your name printed on the last page of the prospectus." }
+  ] },
+  "c_sponsor": { "title": "Register as a sponsor representative and make VP", "situation": "Your deal record is enough now to register as a sponsor representative and become vice president. Once you sign, if a deal goes wrong you'll be held accountable and penalized, and it won't wash off for years. If you don't, you'll always be behind someone else's name.", "options": [
+   { "label": "Register and sign", "result": "Your name is printed on a sponsorship letter for the first time. The night you sign, you read that company's bank statement verification memo from the start once more." },
+   { "label": "One more deal first", "result": "You say you'll follow one more deal and fill in the parts you're unsure of. You sign two years later. On your first signed deal, the exchange sends only one round of inquiries." }
+  ] },
+  "c_dongmi": { "title": "Become a listed company's board secretary", "situation": "A company you took public wants you as board secretary, handling disclosure, investor relations and capital markets work: higher pay, equity incentives, no travel, a life in one city.", "options": [
+   { "label": "Become board secretary", "result": "You leave as the rules require and join the company. At your first earnings call you sit beside the owner and field a pointed question from an analyst for him.", "end": "You became board secretary of a listed company, writing the annual report, running shareholder meetings, taking investors' calls every year. Now and then young investment banking analysts come to work on site, and you give them a meeting room with a window." },
+   { "label": "Stay in banking", "result": "You turn it down. The owner says then we'll come to you for our next raise. You say fine, and I'll bring an analyst more careful than I was." }
+  ] },
+  "c_ed": { "title": "Make Executive Director and lead your own team", "situation": "The division wants to make you executive director with your own team, whose revenue depends on you winning mandates: finding companies, meeting owners, visiting local financial affairs offices. You'd go from someone who does deals to someone who finds them.", "options": [
+   { "label": "Lead the team, go win mandates", "result": "That year you visit twenty-odd cities, meet sixty-odd owners and sign three pre-IPO advisory agreements. You finish the team's annual plan on a high-speed train." },
+   { "label": "Be a full-time quality gatekeeper", "result": "You say you'd rather guard deal quality. You move to the division's quality control role, and the hardest deals all have to get past you first." }
+  ] },
+  "c_md": { "title": "Go for Managing Director", "situation": "The division is promoting a managing director to run an industry group. They'll look at your deals over the years, your revenue, your team, and whether anything you signed ever went wrong. As MD you answer for the livelihoods and reputation of dozens of people in the group.", "options": [
+   { "label": "Go for it", "result": "That year you comb through the group's pipeline, cut three deals you don't think will go far, and visit the site of every one you keep." },
+   { "label": "Don't", "result": "You say you still prefer the few deals you sign yourself. You stay an executive director, leading your team, slow and steady." }
+  ] }
+ },
+ "endings": {
+  "retire": "On the day your last deal before retirement lists, you don't go to the exchange. You send the young people on your team. In your office you shelve the sponsorship letters of all those years, one by one. On the bottom shelf is your first deal, the bank statement verification memo still tucked inside, twelve pages. You turn off the light and walk down into the evening breeze on Financial Street.",
+  "burnout": "That year you're on site for three deals in a row, and a pinched nerve in your lower back leaves you unable to get up one day in a factory meeting room. The doctor tells you to stop. You leave front-line deals for the division's internal review team, checking other people's working papers and filings every day, no more travel, sleeping in your own bed at night."
+ },
+ "stages": [
+  "You're stationed in the company's meeting room, the table covered in voucher boxes, contracts, bank statements and a laptop connected to the working paper system. You check statements, conduct interviews, take site photos, index working papers and write the prospectus sections assigned to you. The senior associate reviews every page, and when the auditors and lawyers want data, you go and chase the company's finance team.",
+  "You're the on-site lead, deciding how the deal moves forward at the company and what the analysts do each day. You write the hardest questions in the inquiry responses yourself and align the wording with the auditors and lawyers line by line. The company's CFO and board secretary come to you first. At night you review the analysts' working papers, and the next morning you go through them point by point.",
+  "You're a vice president and a registered sponsor representative, and the last page of the sponsorship letter carries your signature. You watch two or three deals at once, negotiate compliance and structure with owners, deal with the exchange on inquiries, and defend deals at internal review. You no longer check statements yourself, but you spot-check.",
+  "You're an executive director leading a team of ten or so. Half your time is outside winning mandates: meeting owners, visiting local financial affairs offices, dining with investors. The other half goes back and forth between internal review and deal sites. The team's revenue, deal quality and whether the young ones stay or go are written after your name.",
+  "You're a managing director running an industry group. You decide which deals the group takes and which it doesn't, meet local officials and the owners of large companies, and make the call at the firm's investment banking committee. You sign fewer things, and each signature weighs more."
+ ],
+ "work": [
+  "You go to a supplier for confirmations, and their accountant says the seal will have to wait for the boss. You sit at their front desk for three hours. The boss comes back, looks at you once, and stamps it.",
+  "The same customer's sales figure differs by over ¥10,000 between the front and back of the prospectus. You search the whole document and find four different numbers, and trace each one back to the working papers.",
+  "Your first customer interview on your own. When the purchasing manager has answered the last question he asks: are all you bankers this young? You say: we have older ones too; next time.",
+  "The inquiry asks why the company's gross margin is five points above its peers'. You and an analyst spend three days on the production line and break one part's process into fourteen steps for the response.",
+  "The auditors want to move a piece of revenue into next year, and the company refuses. You lay the contract, acceptance certificate and shipping records out in one table, and the three sides look at it in the meeting room all afternoon. In the end it moves.",
+  "A new analyst writes beautiful interview notes, but you notice the date on the signature page is a week after the interview. You have him call to ask, and it turns out the other side signed later, which has to be noted in the working papers.",
+  "An owner wants to keep a company controlled by a relative outside the listed group. You spend an hour in his office explaining why that won't work, and he doesn't budge. The following week he calls and says: do it your way.",
+  "On the phone, an official at the exchange asks a question none of you anticipated. You don't answer on the spot. You say give us two days, hang up, and call the deal team into the meeting room.",
+  "The night before you sign the sponsorship letter, you read the company's three years of bank statement verification once more, and beside one counterparty you've never been quite easy about, you call an analyst to go there again the next day.",
+  "You give a roadshow at a prefecture-level city's financial affairs office to twenty-odd business owners. You spend half an hour on listing requirements and the second half on which companies shouldn't be coming to you yet.",
+  "At internal review a quality control colleague presses on customer concentration in one of your team's deals. You don't answer for the young banker. You let him explain, and add two sentences when he's done.",
+  "An owner brings another brokerage's proposal to push your fee down, saying they charge half. You read it and say their plan can't be done, then tell him exactly which step can't be done.",
+  "At the industry group's annual meeting you go through the five deals you're dropping this year, one by one, and why. When you finish, someone in the room lets out a breath.",
+  "The owner of a large company invites you to dinner and wants you to lead a very big acquisition. You hear him out and say we can do this, but there's one part we don't know well, and I'll recommend someone.",
+  "A new batch of analysts joins, and in their first class you tell them about the payment that went out every quarter on your first deal, and how you asked about it a third time."
+ ],
+ "past": [
+  "You're in middle school in a prefecture-level city in Hebei, where your father is a workshop director at a bearing factory. The factory later tries to go public; a group of people in suits spends a year at the plant, and in the end it doesn't happen.",
+  "Your gaokao (college entrance exam) gets you into a university of finance and economics in Beijing to study finance. In your first year you come across a prospectus in the library, several hundred pages, and read it cover to cover, finding in the notes something that looks like your father's factory.",
+  "The summer after your third year you intern in a brokerage's investment banking division. Your first job is numbering the pages of a prospectus, which takes three days. On the last day the deal lead takes the interns to dinner and says you'll miss the days of numbering pages.",
+  "After your bachelor's you get into a master's in finance, pass the securities qualification in your first year, and in your second spend six more months interning at another brokerage's investment bank, including a stint stationed at a factory.",
+  "In the autumn hiring season you send out twenty-odd applications. In the final interview you're asked: if a company's owner asks you to write a sentence a bit vaguely, what do you do? You think and say: first ask him why. You get the offer."
+ ],
+ "late": {
+  "pension_note": "Estimate: brokerages pay into Beijing's standard enterprise employees' pension, at the capped base in the high-salary years, and with the firm's enterprise annuity the pension comes to a little over a third of the last monthly salary. Security in later life in this line rests more on the deal bonuses saved over the years.",
+  "scenes": [
+   "On the first morning of retirement you don't open the work chat. You walk a loop of the park downstairs, then read a financial paper on the balcony. In it is a company you once sponsored, its results up again.",
+   "A provincial association of listed companies invites you to speak on proper governance, with dozens of board secretaries in the audience. Halfway through you notice one in the front row is an analyst you once trained.",
+   "You go back to Jiangsu to see your first deal. The factory has tripled in size, the old meeting room is now a showroom, and on the wall hangs a photo from listing day. You're at the very edge of it.",
+   "Your grandchild asks what you used to do. You say you helped factories go public. What does going public mean? You think a long time and say: getting lots of people who don't know it to trust it anyway.",
+   "In your first months on the internal review team you leave on time every day and sleep in your own bed. You read working papers more closely than ever, and the young deal teams fear your comments.",
+   "A young deal lead brings you an inquiry response you sent back, eyes red. You work through it with him until ten at night and say: tomorrow you present it yourself, don't be afraid.",
+   "You retire at the official age, your back somewhat better. Every afternoon you sit for a while in a teahouse near home with a group of retired accountants. You understand every set of books they talk about.",
+   "In your first year out of banking you still sometimes dream of inquiry letters, forty-eight questions with only half answered. You wake, remember they're not yours to answer anymore, and lie there a while.",
+   "Once, bankers come to do due diligence on you. A young one sits in the meeting room checking your bank statements, reading his questions as if reciting them. You pour him a glass of water and say: take your time.",
+   "The deal lead who trained you retires, and you go to see him. He digs out an old photo of all of you outside that budget hotel. Everyone is very thin.",
+   "Most of the prospectus is written by AI now, and bank statements are checked in minutes. But in the year before a listing, a group of young people still lives in a hotel by the factory and stays up past midnight in a meeting room.",
+   "In an old suitcase you find a flattened cushion, the one you carried from site to site. You pat off the dust and put it on the chair on your balcony."
+  ],
+  "closing": {
+   "retire": "Many years later, walking past Financial Street one afternoon, you see a group of young people with suitcases come out of a building and wait for cars at the curb, one still on the phone about working papers. You stand across the street a while, remember the extra egg that budget hotel gave you at breakfast, smile, and walk on.",
+   "burnout": "Many years later you find the badge from your first deal in a drawer, printed with the factory's name and the words \"temporary visitor.\" You hang it on your study wall, next to a picture your grandchild drew.",
+   "end": "Many years later you take your first prospectus down from the shelf and turn to the last page. The signature isn't yours, but the bank statement verification table on page 137 is your work. You look at it a while, then put it back."
+  }
+ }
+}

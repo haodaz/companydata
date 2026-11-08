@@ -1,0 +1,161 @@
+{
+ "id": "vc-sz",
+ "occupation": "Venture Capitalist",
+ "role": "Investment manager at a deep-tech venture firm (just promoted)",
+ "headline": "A Shenzhen venture capitalist with a master's in microelectronics and three years as a chip engineer, just promoted to investment manager at a deep-tech venture firm by Shenzhen Bay, reading twenty pitch decks a week and yet to lead a single deal",
+ "unit": "A venture firm near Shenzhen Bay in Nanshan investing in semiconductors, robotics and energy storage",
+ "unit_type": "Deep-tech venture capital firm",
+ "city": "Shenzhen",
+ "city_tier": "First-tier",
+ "education": "Master's degree (microelectronics)",
+ "level": "You understand chip design flows and process nodes, and you can build a financial model, a valuation and the main terms of an investment agreement. You can talk shop with engineers, but you've never presented a deal from start to finish at the investment committee and held up under the partners' questioning.",
+ "intro": "You spent three years drawing chip layouts at a semiconductor company before a senior from your university, now in investing, pulled you to Shenzhen Bay, where you spent two years as an analyst at this deep-tech venture firm. Last month a partner said at the weekly meeting that from next quarter you're an investment manager: find your own deals, take them to the investment committee yourself. From today you'll be looking through piles of pitch decks and laboratories for the few companies that will still be alive in ten years, and doing well.",
+ "salary_note": "Estimate: investment managers at Shenzhen venture firms earn about 20 percent above the national figure, with a year-end bonus tied to fund performance and management fees. The real money is carried interest after exits, which takes many years, and many people never see any in a whole career.",
+ "facts": [
+  { "label": "Investment Manager (current level)", "value": "2–5 years, ¥16,000–26,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Vice President, Investments (5–8 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Judging founders, and vouching for a deal at the investment committee", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Reading pitch decks and mapping industries", "source": "AI exposure" },
+  { "label": "Open positions", "value": "6 related listings nationwide, 1 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You wake in the one-bedroom you rent near Nanshan Science Park and scroll through last night's funding news forwarded in various group chats. A company you met last month has been snapped up by another fund.",
+  "Monday deal meeting. A dozen investment managers take turns presenting this week's companies, and the partners question each one. When it's your turn you present a power-chip packaging company. At the valuation, a partner frowns slightly.",
+  "To a robotics company's lab in Bao'an. The founder shows you their dexterous hand, and you ask them to perform the move from the demo video right there. They do it three times. It works twice.",
+  "You eat a bun in the car, dictate the morning's interview to AI to turn into notes, and while you're at it have it check the company's patents.",
+  "Coffee with an engineer who spent twenty years in packaging at a big manufacturer, whom you've asked to look at a company's technology roadmap. He says: they can do it in the lab; yield in mass production is another matter.",
+  "Back at the office revising an investment memo. An analyst used AI to build a competitor comparison, and you change three figures back. It took numbers from papers as mass-production numbers.",
+  "A portfolio company's founder calls: the lead investor in the next round wants to cut the valuation, what do you think? You stand at the office's floor-to-ceiling window and listen for forty minutes.",
+  "At home you read an industry report on energy storage batteries. Halfway through, three more pitch decks arrive on your phone. You open the one with the plainest title first."
+ ],
+ "ladder": [
+  { "title": "Investment Analyst", "stage": "Industry research", "focus": "Read pitch decks, map industries, build financial models, assemble due diligence files, and follow investment managers on deals." },
+  { "title": "Investment Manager", "stage": "Sourcing deals", "focus": "Find your own deals, do due diligence, write investment memos, present at the investment committee, and manage the companies after the money goes in." },
+  { "title": "Vice President, Investments", "stage": "Leading deals", "focus": "Lead a deal from discovery to committee to closing, negotiate valuation and terms, sit on portfolio company boards, and supervise one or two analysts." },
+  { "title": "Investment Director (Executive Director)", "stage": "Owning a sector", "focus": "Own a sector: decide where to invest and what not to, manage a small team, take part in fundraising, and answer for a batch of exits." },
+  { "title": "Partner", "stage": "Partner", "focus": "A vote on the investment committee: raise money, manage the fund, answer to investors, and share in the fund's carried interest as well as its losses." }
+ ],
+ "ai_tasks": [
+  { "name": "Reading pitch decks and mapping industries", "how": "Overnight AI can read a hundred pitch decks, tag them by technology and team background, and draw a map of the supply chain and competitors. A person only picks out the few worth meeting." },
+  { "name": "Building financial models and valuations", "how": "Analyzing financial statements, breaking down revenue, valuation ranges and sensitivity tests: AI can produce a complete first draft. A person looks at whether the few key assumptions hold up." },
+  { "name": "Technical due diligence and expert interviews", "how": "AI can compile patents, papers and competitor specs and draft interview outlines. Whether a technology can be mass-produced, and where yield is stuck, takes a person in the lab and on the line, talking to people who have really done it." },
+  { "name": "Judging founders, and vouching for a deal at the investment committee", "how": "Whether this person will run when things are hardest, whether the team will scatter, whether you dare stake your own name on him: only a person sitting across from him for months can see it, and then carry it at the committee." },
+  { "name": "Post-investment support: finding customers and the next round", "how": "AI can watch portfolio companies' operating data and produce quarterly reports and risk alerts. When a company is short of orders, money or people, the one making calls, pulling in contacts and sticking it out with them is a person." },
+  { "name": "Fundraising and talking with investors", "how": "AI can write fundraising materials, compile track records and answer routine questions. Getting investors to keep trusting you for ten years takes a person showing up, explaining and delivering, again and again." }
+ ],
+ "events": {
+  "e_first_lead": "The first deal you championed passes the investment committee: ¥30 million into a small maker of semiconductor inspection equipment. On closing day the founder asks you to pose for a photo in front of their production line. You stand very stiffly.",
+  "e_ic_reject": "A deal you've followed for six months is voted down at the investment committee, three against. Outside the room you call the founder. He says it's fine, let's keep talking. Six months later another fund invests at double the valuation.",
+  "e_blowup": "A company you invested in can't raise its next round. The founder lays off half the staff, and still it closes. You go to handle the liquidation and stand a long time in the empty lab. The roadmap you drew up together is still on the wall.",
+  "e_exit": "A company you backed goes public and doubles on its first day of trading. You watch the screen in the office, remembering your first visit to their leaky factory five years ago. Your share of carry will only come when the fund winds up. You buy yourself a coffee.",
+  "e_fundraise_hard": "Fundraising is hard this year. Market money is drying up, and most new funds are backed by the state, which wants investment kept local, in a set proportion. The partners spend half their time crisscrossing the country to government guidance funds.",
+  "e_ai_bp": "The firm brings in an AI deal-screening tool, and the hundreds of pitch decks each week arrive tagged and ranked. You can meet twice as many people a week, but most of those on the first page are companies that are good at writing decks.",
+  "e_ai_dd": "An AI-written industry report calls a company's chip performance world-leading. You go to their lab and run the tests yourself. The numbers come out at half the report's. It cited the best single result in their paper.",
+  "e_ai_moat": "Within a year, general-purpose large models catch up with the core algorithm of an industrial vision software company you backed. You sit through three all-night meetings with the founder, and they decide to shift their focus to their own hardware and data.",
+  "e_ai_analyst": "The firm hires no analysts this year. The industry research, financial models and diligence notes analysts used to do are mostly done by AI now. The newcomer you supervise has to meet founders alone in his first year.",
+  "e_redemption": "A portfolio company misses the agreed listing deadline, and under the agreement must buy back your shares. Even with his house mortgaged the founder can't raise enough. A partner sends you to negotiate, and you spend three afternoons in a teahouse below his flat.",
+  "e_founder_night": "At one in the morning a portfolio founder messages you: a big tech company is about to poach three people from his core team. You sit up in bed, make two hours of calls, and the next day take those three to breakfast.",
+  "e_flight": "This year you take over eighty flights: to Hefei for displays, Suzhou for materials, Xi'an for optoelectronics, Chengdu for power devices. Your suitcase gets new wheels once.",
+  "e_expert": "The veteran engineer becomes your regular adviser, and before every packaging deal you buy him a coffee. Once, after seeing a company's line, he says only: this one you can back.",
+  "e_love": "At an industry forum you meet someone who works on robotics algorithms. Afterward the two of you walk by the sea at Shenzhen Bay until late, talking about nothing but motors and gear reducers. The next year you marry, and half the wedding guests are engineers.",
+  "e_house": "You buy a small flat in Shenzhen, the down payment your years of savings plus what your family put together. On signing day you think: this is the biggest investment of your life, with a thirty-year exit horizon.",
+  "e_conflict": "At a portfolio company's board meeting the founder wants to put a large sum into a new direction, and the two other investors oppose it. You vote in favor, and afterward write the partners a very long email explaining why.",
+  "e_insomnia": "Two portfolio companies run into trouble back to back and you start sleeping badly, still reading their cash flow statements at two in the morning. The doctor says look at your phone less. You say fine, and put the phone by your pillow.",
+  "e_kid": "Your child is born. At the one-month celebration several founders you've backed send a pile of gifts. One sends the first chip his company ever made, in a small glass box.",
+  "e_mna": "A company you backed is acquired by a listed company. The return isn't high, but the whole team stays on and the product goes into bigger production lines. The founder takes you to dinner and says they didn't make it to listing, but they didn't let anyone down either.",
+  "e_mentor_talk": "A newly hired analyst asks what the most important skill in this business is. You think a while and say: remembering why you believed in someone in the first place, and thinking it through again when things are hardest for him."
+ },
+ "choices": {
+  "c_track": { "title": "Which sector to dig into first", "situation": "A partner tells you to pick one direction and go deep, and from now on deals in it go through you first. Semiconductor equipment and materials are slow, with high barriers, ten years to see a return. Robotics is hot, with lots of companies and valuations rising fast. AI chips and compute are the hottest, and even people who don't understand them are investing.", "options": [
+   { "label": "Semiconductor equipment and materials", "result": "You visit materials plants all over the Yangtze and Pearl River deltas and make only one investment in a year, but you can name every gas that company uses." },
+   { "label": "Robotics", "result": "In a year you meet over a hundred robotics companies, watch dozens of demos and invest in three. One later does very well. One is gone within two years." },
+   { "label": "AI chips and compute", "result": "You squeeze into the hottest circle, valuations climbing with every round, and win an allocation in one deal. A partner says it's expensive, but invests anyway." }
+  ] },
+  "c_against": { "title": "Take an overlooked founder to the investment committee", "situation": "You've taken to a founder in his forties who spent twenty years in process engineering at a big manufacturer. His team is eight people, no glittering credentials, a clumsily written deck. The analyst's AI score puts him on the last page. A partner says: if you take it to committee, you carry it yourself.", "options": [
+   { "label": "Take it to committee and carry it", "result": "You talk for an hour at the committee, not about the market but about every process parameter on his line. It's approved, for not much money. Three years later their equipment is on the lines of two major manufacturers." },
+   { "label": "Hold off and follow him six more months", "result": "You don't take it to committee, but spend an afternoon a month at his company. Six months later he lands his first big order and the valuation doubles. You still invest, for half the stake." }
+  ] },
+  "c_vp": { "title": "Make Vice President and lead a deal", "situation": "The firm is promoting a batch of vice presidents, looking at deals you've led, how you present at committee and how portfolio companies are doing. There's a semiconductor materials deal whose valuation and terms have to be negotiated from scratch. A partner says if you can take it from first talks to closing, the slot is yours.", "options": [
+   { "label": "Take it, from talks to closing", "result": "Four months of talks with the founder. You take a fifth off the valuation and rewrite the redemption clause more gently. On signing day he says: negotiating with you is more tiring than with anyone else, but I feel safe." },
+   { "label": "Give it to a senior colleague and learn", "result": "You say the deal is too big and let a veteran vice president lead, with you assisting. You watch how he negotiates terms, and your promotion comes a year later." }
+  ] },
+  "c_state_fund": { "title": "Move to a state-backed fund", "situation": "A local state-owned industrial fund wants you: plenty of money, steady deals, the government as investor, a bit less pay, and no daily worry about fundraising. But what to invest in and where has to fit local industrial planning, and decisions take a long time.", "options": [
+   { "label": "Go to the state fund", "result": "You go, and start sourcing deals with the district's investment promotion bureau, persuading an equipment company from another province to set up locally. Approval takes three months, but every yuan is invested soundly." },
+   { "label": "Stay at the market-driven firm", "result": "You don't go. You say you want to invest in things the government's plans haven't got round to yet." }
+  ] },
+  "c_ai_lab": { "title": "Lead the firm's AI research system", "situation": "The partners want to feed all the firm's years of deal, diligence and portfolio data to AI and build their own investment research system: screening deals, doing diligence, watching the portfolio. It needs someone who understands both technology and investing to lead it for a year, and you'd invest less yourself that year.", "options": [
+   { "label": "Lead it", "result": "You turn more than a decade of the firm's deal reviews, committee minutes and failures into a library. After launch, every new deal that comes in gets a note: ten years ago we backed one very like this; it died at mass production." },
+   { "label": "Don't, keep sourcing deals", "result": "You say investing is about meeting people. Someone else builds the system. You use it for research, and the final call still rests on the judgment you've built up on the road." }
+  ] },
+  "c_join_startup": { "title": "Join a portfolio company as an executive", "situation": "That semiconductor inspection equipment company you backed is pushing to list, and the founder asks you to come over as CFO and board secretary, with options and about the same pay. You'd go from someone who looks at companies to someone who builds one.", "options": [
+   { "label": "Join the company", "result": "You resign and recuse yourself as the rules require and join. In your first month, in an office beside the line, you learn for the first time how many hands a machine passes through from order to delivery.", "end": "You became CFO of a semiconductor equipment company, in charge of the money, the listing and every conversation with investors. Whenever a young investment manager comes for due diligence, you take them to stand on the production line for a while." },
+   { "label": "Stay at the firm", "result": "You turn it down and promise to sit on their board, attending a meeting every month. The founder says that works too: from outside, you can help me see what I can't." }
+  ] },
+  "c_director": { "title": "Make Investment Director and own a sector", "situation": "The firm is promoting an investment director (executive director) to own the whole semiconductor line: where to invest, what not to, how the team divides the work, and joining the partners in fundraising. You'd go from investing in deals one by one to answering for a batch of them.", "options": [
+   { "label": "Take the sector", "result": "That year you visit every one of the line's twenty-odd portfolio companies, cut a few planned follow-ons, and decide the next three years go only to equipment and materials." },
+   { "label": "Stay on the front line leading deals", "result": "You say you still want to meet founders yourself. You keep leading deals, and the young ones on the team come to you with their hardest diligence." }
+  ] },
+  "c_own_fund": { "title": "Start a fund of your own", "situation": "Two former colleagues want you to start your own venture firm with them: registering with the industry association, finding the first investors, deciding for yourselves what to back. Your track record and name are your only capital.", "options": [
+   { "label": "Start the fund", "result": "It takes you a year and a half to raise your first fund, not large. The first investor is a founder you once backed. He says: my turn to invest in you.", "end": "You and your former colleagues started a small venture firm investing only in equipment and materials. Your office is in an industrial park with a factory downstairs, and you eat lunch in the factory canteen every day." },
+   { "label": "Stay at the firm", "result": "You stay. You say this firm gave you your first deal, and you want to see this fund through to the last investment and the last exit." }
+  ] },
+  "c_partner": { "title": "Become a partner", "situation": "The firm is naming a new partner, who votes on the investment committee, puts in some of their own money alongside the fund, and carries the fund's performance and fundraising. The investors will look at how many of your deals have exited, how many are alive, how many are dead, and how you talk about them.", "options": [
+   { "label": "Go for it", "result": "At the partners' meeting you go through every deal you've made, and spend longest on the ones that died. Afterward the oldest partner tells you: the ones you told best were those." },
+   { "label": "Don't, stay investment director", "result": "You say you want to stay closer to the companies. You keep running your sector, two or three investments a year, staying with them a bit further." }
+  ] }
+ },
+ "endings": {
+  "retire": "You sit at the investment committee table one last time, cast your last vote, and give your seat to a young partner. Afterward you go out to Bao'an. That equipment company that once had eight people now has a building of its own. The founder walks you along the line without saying much, and at the door shakes your hand.",
+  "burnout": "That year three portfolio companies run into trouble one after another, and in an airport lounge you suddenly can't catch your breath and are taken to hospital. The doctor tells you to stop. You step back from front-line investing and become an adviser in the firm's portfolio management team, no more flying around, visiting a few old companies each month to sit and hear about their latest troubles."
+ },
+ "stages": [
+  "You find your own deals: read pitch decks, watch demos in labs, buy veteran engineers coffee, do due diligence, write investment memos, then present them from start to finish at the investment committee and hold up under the partners' questions. For every company you back, you join its post-investment chat, read its accounts every quarter, and take calls at midnight when something happens.",
+  "You're a vice president and can lead a deal from discovery to closing: negotiating valuation and terms like redemption and liquidation preference with founders, coordinating diligence with the law firm and auditors, and joining the portfolio company's board after closing. You supervise one or two analysts and revise their research and models page by page.",
+  "You're an investment director owning a sector. You decide where this line invests and what it doesn't, and who on the team follows which deal. Half your time is on portfolio company boards, half with the partners meeting investors. A batch of exits is written after your name.",
+  "You're a partner, voting on the investment committee and investing your own money alongside the fund. Every year you meet dozens of investors to explain the fund's performance, including the deals you got wrong. You also decide what the firm's next fund invests in, how big it should be, and whether to take a particular sum of money. What you sign is a ten-year promise."
+ ],
+ "work": [
+  "Doing diligence at a laser company, you ask for their last three months of shipping orders. The founder says it's all in the system. You say then let's look together. Halfway through, he calls a halt himself.",
+  "At the committee a partner asks: what if this company's first big customer doesn't renew? You turn to page twenty-three of your memo, your notes from an interview with that customer's head of purchasing.",
+  "A portfolio company's quarterly report shows receivables doubled. You call their finance lead, who says customers are paying late. You ask her to send you the names of those customers.",
+  "The founder insists on a very high valuation. You don't haggle over it. You rewrite the redemption clause to tie it to performance instead, and when he reads it he says: this I can accept.",
+  "At a portfolio company's board meeting the founder wants half the money for a new production line. You ask him to bring customers' letters of intent first and take it up again at next month's board.",
+  "An analyst used AI to draw a competitive landscape, twenty-odd companies in tidy rows. You strike out five and say: I've been to all five. The lines are empty.",
+  "At the annual review you lay out the dozen-plus deals this line made in five years by current status: three exited, six alive, four dead. You go through what was missed at the start on each of the four that died.",
+  "You go with a partner to meet an insurer's investment arm, who asks why the semiconductor line has had no exits in three years. You explain how long equipment takes from qualification to mass production. When you finish they nod and don't ask again.",
+  "Two investment managers on your team each fall for one of two competing companies in the same niche. You have each present at the weekly meeting and decide to back only one. The other young one is crestfallen, and you buy him a drink.",
+  "At the briefing for the new fund you finish the track record and put up one last slide: the deals we got wrong, and what we learned from them. An investor in the audience stands to take a photo of it.",
+  "A very large sum wants to come in, on condition that you invest in one particular company. At the partners' meeting you say we won't take this money. The room is silent a moment. No one objects.",
+  "A portfolio company is about to close, and the founder comes to the firm to apologize for losing everyone's money. You say the money was our own choice, then ask him what he plans to do next."
+ ],
+ "past": [
+  "You're in middle school in a prefecture-level city in Hubei, where your family runs a little phone repair shop. You've loved taking things apart since you were small: the family radio, the television, and later a phone your father was halfway through fixing.",
+  "Your gaokao (college entrance exam) gets you into electronic science and technology at a university in Wuhan. In your second year you see a silicon wafer in the lab for the first time and stand at the microscope a long while.",
+  "After your bachelor's you do a master's in microelectronics, working on analog circuits for your supervisor through three years of late nights. The first chip you send for fabrication comes back and tests as working.",
+  "After the master's you join a chip design company in Shenzhen drawing layouts. In three years you go through four tape-outs. One fails, and the whole team sits in a meeting room all afternoon without speaking.",
+  "A senior from your university who works in investing comes to find you, saying they need people who understand chips, come and have a look. You go, sit in on an investment committee for the first time, and find you could answer half their questions.",
+  "You spend two years as an analyst at the firm, mapping industries, building models, following investment managers on deals. At the year-end review a partner says next year you can find your own deals."
+ ],
+ "late": {
+  "pension_note": "Estimate: venture firms pay into Shenzhen's standard enterprise employees' pension, at the capped base in the high-salary years, so the pension is only about 30 percent of the last monthly salary. Later life depends on whether any deals exited over the years and how much carry came of it. Some people are very comfortable; some have nothing.",
+  "scenes": [
+   "On the first Monday of retirement you don't go to the deal meeting. You walk along the sea at Shenzhen Bay and slow down passing a group of young people on a bench revising a pitch deck on a laptop.",
+   "A university asks you to teach engineering PhD students about starting companies. You talk for an hour, and the last five minutes are about the companies that died. Afterward a student comes to ask for your contact details.",
+   "The founder of that eight-person equipment company you once backed retires, handing the company to a young engineer you met back then. He invites you to the handover. You sit in the back row.",
+   "Your grandchild asks what you used to do. You say you put money behind other people's dreams. Did the dreams all come true? Some did, you say, and the ones that didn't were all worked at in earnest.",
+   "In your first months in portfolio management you stop flying and take the subway to and from work. On the subway you watch people and guess which companies made the things in their hands.",
+   "The founder of an old portfolio company comes to see you, saying in his hardest times he just wanted someone to talk to. You sit on the roof of his factory all afternoon. You give no advice. You just listen.",
+   "You retire at the official age and fill your balcony with flowers. Each time something blooms you take a photo and send it to the few founders you're still in touch with.",
+   "In your first year out of investing you still reflexively scroll the funding news every morning. When you see a familiar name you look a moment longer, then close it.",
+   "Once a young investment manager comes to do diligence on you and asks exactly the questions you used to ask. You answer carefully, and at the end add: you could ask a bit more.",
+   "The senior who brought you into the business retires, and the two of you eat at a Chaoshan beef hot pot place. He says you got that eight-person company right. You say it was his money; you just talked for an hour.",
+   "Deal screening and diligence are mostly left to AI now, and pitch decks are read overnight. But when it's time to actually invest, someone still has to go to the lab and watch the demo done on the spot.",
+   "In your desk drawer you find that little glass box with a tiny chip inside, the first one a company ever made. The company is gone now. The chip still has its metallic gleam."
+  ],
+  "closing": {
+   "retire": "Many years later, walking through an industrial park in Bao'an one afternoon, you pass a factory building whose sign bears a name you've never heard. You glance inside. Someone is adjusting a machine. You stand by the door a while, and don't go in.",
+   "burnout": "Many years later, on an old computer, you find your first investment memo, forty-odd pages, its conclusion rewritten seven times. You don't open the body. You look only at the conclusion, and close the laptop.",
+   "end": "Many years later, at an airport, you see a young person pulling a suitcase, a printed pitch deck in hand, underlining as they walk. You watch them through security and think of that first morning you flew to Hefei."
+  }
+ }
+}

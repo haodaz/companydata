@@ -1,0 +1,163 @@
+{
+ "id": "loan-officer-wz",
+ "occupation": "Small Business Loan Officer",
+ "role": "Small business loan officer at a city commercial bank branch (first year under a mentor)",
+ "headline": "A small business loan officer at a city commercial bank branch in Wenzhou, back from a finance degree in Hangzhou, riding an e-bike behind a mentor through every shoe factory and eyeglass workshop and copying down the water and power meters on the shop floor",
+ "unit": "A branch of a city commercial bank in Lucheng district, Wenzhou",
+ "unit_type": "City commercial bank branch",
+ "city": "Wenzhou",
+ "city_tier": "Second-tier",
+ "education": "Bachelor's degree (finance)",
+ "level": "You can read the three financial statements and pull a credit report, and you understand about half of the Wenzhou dialect. The first time on a shop floor, you couldn't tell which machines were running and which were just for show.",
+ "intro": "You're from Rui'an. You studied finance in Hangzhou for four years, and the year you graduated you came back to Wenzhou to do small business lending at a city commercial bank. The branch gave you a mentor, an e-bike and a backpack full of blank site-visit forms. From today you follow your mentor down the lanes of Lucheng and Ouhai, into the workshops of shoe, eyeglass and valve makers, to look for what the statements don't show.",
+ "salary_note": "Estimate: base pay for small business account managers at Wenzhou's city commercial banks isn't high. Most of it is performance pay based on loan balances managed, new lending and interest income, which puts it a good deal above the national figure. When loans go bad, performance pay is docked, and some of it is deferred and subject to clawback for years.",
+ "facts": [
+  { "label": "Assistant Account Manager (current level)", "value": "0–2 years, ¥5,000–8,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Small Business Account Manager (2–5 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Visiting the factory, sizing up the owner, reading the water and power meters", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Entering documents, pulling credit reports, analyzing bank statements", "source": "AI exposure" },
+  { "label": "Open positions", "value": "8 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You wake in the flat near the branch you share with a colleague and buy a sticky rice roll downstairs. Your mentor has posted today's four factories in the group chat. The farthest is in an Ouhai industrial park.",
+  "Branch morning meeting. The branch president reads last month's lending and bad loans, singles out your mentor for praise, and says this year's target for first-time small borrowers is nowhere near met, so everyone has to go out canvassing.",
+  "First stop is a small shoe-sole factory, where the owner's wife brews a pot of tea. Your mentor chats about family while you note it down: how many machines, how many workers, how much stock in the warehouse. On the way out your mentor glances at the power meter on the wall.",
+  "Second is an eyeglass factory. The owner says export orders are down 30 percent this year. Going through the statements he gave you, you find a fixed sum transferred each month to a personal account. Your mentor says: ask him who that is.",
+  "A plate of fried rice noodles at a canteen by the industrial park gate. Your mentor says when you look at a factory, look at the toilets and the canteen first. Whether the workers eat well is more accurate than the books.",
+  "A post-loan check at an existing client. You photograph the building, equipment and stock and compare them item by item with last time. Stock has doubled. The owner says he's stockpiling materials.",
+  "Back at the branch you upload today's photos and documents to the lending system, which produces a statement analysis on its own. You flag that transfer to the personal account.",
+  "In your room you draft your first credit report. At the line for \"primary source of repayment\" you stop for a long time and call your mentor. He says: what do you think he'll repay it with?"
+ ],
+ "ladder": [
+  { "title": "Assistant Account Manager", "stage": "Shadowing", "focus": "Canvass with your mentor, do site visits, assemble credit files, run post-loan checks, and learn to read people, factories and the three meters and statements." },
+  { "title": "Small Business Account Manager", "stage": "Own book", "focus": "Find, investigate, write up, disburse and monitor your own loans, one or two hundred borrowers, every balance and bad loan under your name." },
+  { "title": "Senior Account Manager", "stage": "Big accounts", "focus": "The large, tangled accounts: one owner with several companies, several mortgaged properties, several guarantee chains. The hard investigations and renewal plans are yours." },
+  { "title": "Small Business Team Lead", "stage": "Leading a team", "focus": "Lead seven or eight account managers: review their reports, go on visits with them, speak for them at the credit committee, and carry the team's lending and bad loans." },
+  { "title": "Branch President", "stage": "In charge", "focus": "A branch's deposits, loans, bad debt and dozens of staff are all yours. You deal with the local chambers of commerce, subdistrict offices, courts and business owners." }
+ ],
+ "ai_tasks": [
+  { "name": "Visiting the factory, sizing up the owner, reading the water and power meters", "how": "AI can run the bank statements, invoices, tax and electricity data first and flag what looks wrong. But whether the machines are really running or just for show, where the owner's eyes go when he talks, whether the stock in the warehouse is really his, takes a person standing on the shop floor." },
+  { "name": "Entering documents, pulling credit reports, analyzing bank statements", "how": "Once IDs, contracts and statements are uploaded, the system reads and enters them, pulls the credit report and sorts a year of transactions by supplier and customer, producing an analysis in minutes. A person only checks the few odd entries." },
+  { "name": "Writing the credit report and sizing the loan", "how": "AI drafts the report from the visit notes and data and suggests a limit. What the business actually lives on, what the money is really for and how much to cut the limit, the loan officer has to write in and sign." },
+  { "name": "Post-loan checks and risk alerts", "how": "The system watches a company's registration, court, tax and electricity records and pushes an alert at any change. Whether an alert is real and whether to call the loan early, a person decides after going to see." },
+  { "name": "Canvassing and looking after existing clients", "how": "AI can list prospects by industrial park and sector, write product pitches and remind you of renewal dates. Walking in, drinking tea and getting a Wenzhou boss willing to show you his books takes a person." },
+  { "name": "Chasing overdue loans and recovering bad debt", "how": "The system sends reminders and generates demand letters and court filings. Sitting across from an owner who owes money to agree a repayment plan, tracing his assets, shuttling between the court and the guarantors, still takes a person." }
+ ],
+ "events": {
+  "e_first_loan": "The first loan you investigated on your own is approved: ¥500,000 over three years to a husband-and-wife shop making valve parts. On disbursement day the owner invites you to dinner and, per the rules, you decline. The next day he sends someone over with a bag of home-dried fish, and you send that back too.",
+  "e_dialect": "An owner from Yongjia talks for half an hour in Wenzhou dialect, and you catch only \"good\" and \"cheap.\" Your mentor translates line by line beside you, and outside he says: three months, and you'll understand it.",
+  "e_fake_stock": "A garment factory's warehouse is stacked with cartons. You casually open the bottom one, and it's empty. Your mentor says nothing, draws a circle on the visit form, and the loan never goes up for approval.",
+  "e_npl": "A lighter factory on your book runs out of cash, and the owner switches off his phone. The loan goes bad. You're held accountable and lose a year of performance pay, and every month you're back and forth between the court and the guarantors.",
+  "e_guarantee_chain": "A big borrower you don't manage goes under. He had guaranteed five small companies, which in turn guaranteed each other. The whole branch works overtime for three weeks untangling the guarantee circle borrower by borrower, and the relationship map you draw goes up on the meeting room wall.",
+  "e_ai_flow": "The lending system gets AI statement analysis. Load a year of transactions and in minutes it sorts them by supplier and customer, even matching receipts that went into the owner's personal account. You used to spend an evening dragging cells in Excel for that.",
+  "e_ai_warning": "The risk system pushes an alert: a shoe factory on your book used 70 percent less electricity last month. You go over and find them swapping in new machines, the old ones taken out, the new ones not yet installed. You take photos and close the alert in the system.",
+  "e_ai_auto": "Unsecured loans under ¥300,000 now take a client one tap on a phone; the model sets the limit and the money arrives in minutes. A batch of small borrowers drops off your book. What's left is what the model can't call, the ones someone has to go and see.",
+  "e_model_wrong": "The model approves an eyeglass factory for a ¥1 million online credit line. On a visit you learn the owner guaranteed someone else's debts earlier this year, and the lawsuit hasn't reached the system yet. You freeze the line and write an explanation for the risk department.",
+  "e_typhoon": "After a typhoon passes, several factories along the Ou River take in water. Early next morning you go from one to the next, help an owner fish his ledgers and contracts out of the muddy water and spread them on a table to dry, then file for repayment extensions for them.",
+  "e_tea": "In one month you drink over a hundred pots of tea, because every owner brews tea first. Your stomach starts acting up, and your health check report gains a line: chronic gastritis.",
+  "e_npl_recover": "The owner of that failed lighter factory comes back and opens a small workshop on the edge of town. You go to see him, and he says he'll pay it back, a little each month. In the third year he pays off the last of it and sends you a very long voice message.",
+  "e_love": "At a bank-business matchmaking event you meet a young person in the export trade, and afterward the two of you talk late on the steps outside the venue. The next year you get engaged, and the bride price takes two months of negotiating, Wenzhou style.",
+  "e_house": "You buy a secondhand flat in Ouhai, with the mortgage from a different bank. On signing day you watch the loan officer flip through your bank statements and think of yourself doing the same to other people every day.",
+  "e_exam": "You come first in the branch on the bank's internal credit qualification exam. The scores are posted in the corridor. Your mentor glances at them on his way past and says: first in the exam is no use, first at reading factories is.",
+  "e_overtime": "In the year-end lending push you make over twenty loans in a month, revising reports at the branch until eleven every night. The last one goes out on December 31, while fireworks are already going off downstairs.",
+  "e_second_gen": "A shoe factory you've looked after for eight years is handed by its owner to his son, back from studying abroad. The son wants an automated line and cross-border e-commerce, and comes to discuss a loan with a business plan in English.",
+  "e_fewer_officers": "Head office moves all small loan approvals online, and the branch's small business account managers go from twelve to seven. Some of those who leave go to other banks, some to run finance at companies.",
+  "e_court": "For a bad loan you sit a whole morning in a court corridor waiting for the hearing. The defendant is an owner you lent to yourself. He has no lawyer. When he sees you, he nods.",
+  "e_kid": "Your child is born. Several owners from your book come to the one-month banquet. You don't accept a single red envelope, and go from table to table offering tea."
+ },
+ "choices": {
+  "c_mentor": { "title": "Your mentor sends you to handle one alone", "situation": "Your mentor says there's a small eyeglass-frame factory he's followed for two years, an honest owner, but no financial statements, all cash books. He tells you to negotiate and write the report yourself, and he won't step in. Write it well and it's a strong start; get it wrong and your first loan is the bad one.", "options": [
+   { "label": "Take it, spend three days at the factory", "result": "You spend three days at the factory, turning the owner's wife's handwritten ledger into a spreadsheet page by page, then checking payments with two of his customers. When the report goes in, the approver asks only one question." },
+   { "label": "Write it with your mentor", "result": "You ask to shadow one more, and your mentor nods. You write this one up with him and learn where to start when there are no statements. Your first loan of your own comes half a year later." }
+  ] },
+  "c_hard_case": { "title": "An owner with an envelope wants your help", "situation": "The owner of a struggling shoe factory comes to you for a renewal, saying once it's renewed his export payments arrive next month. On his way out he slips an envelope into your bag. You know if it's renewed he might survive; if not, his factory closes next month.", "options": [
+   { "label": "Return the envelope, write it straight", "result": "You return the envelope that day, and your report lays out his orders and his shortfall, recommending renewal at half the amount. The credit committee agrees. The owner doesn't say thank you, but he pulls through." },
+   { "label": "Return the envelope, recommend against", "result": "You return the envelope and recommend against renewal. A month later his factory closes, and the bank recovers its money from the collateral. Passing that lane, you see seals pasted across the factory gate." }
+  ] },
+  "c_credit_mgr": { "title": "Qualify as Small Business Account Manager", "situation": "The branch has two small business account manager slots this year. You have to pass the bank's qualification exam and have at least ten loans you investigated and disbursed yourself, with no problems. As an account manager you run your own book and your performance pay doubles, and every bad loan is under your name too.", "options": [
+   { "label": "Go for a slot, canvass on weekends", "result": "For six months you spend weekends in the industrial parks and make up the ten loans, the last two disbursed a week before the deadline." },
+   { "label": "No hurry, keep the loans sound", "result": "You say you'd rather wait a year than make a loan you're not sure of just to hit a number. The next year you make it, and not one loan on your book goes wrong." }
+  ] },
+  "c_ai_model": { "title": "Build the small business risk model at head office", "situation": "Head office wants to build the model for online small business loans and is picking a few people from the branches who know the business to work with the data team on rules, samples and bad-loan reviews. You'd learn SQL and modeling, be based in Hangzhou, and be far from clients.", "options": [
+   { "label": "Go build the model", "result": "Two years in a Hangzhou office, you turn the branch's homespun methods, \"check the toilets, read the meter,\" into features in the model. One rule you write later blocks several hundred loans that shouldn't have been made." },
+   { "label": "Stay at the branch, keep visiting", "result": "You don't go. You say a model has to be fed, and what it's fed has to be brought back from the shop floor by someone. You write the data team twenty pages of factory-visit notes to work from." }
+  ] },
+  "c_big_bank": { "title": "Corporate banking at a state-owned bank", "situation": "A large state-owned bank's Wenzhou branch tries to poach you as a corporate account manager, handling sizable companies with loans in the tens of millions, by-the-book processes and somewhat less pressure, for about the same pay. Your small business book would go to someone else.", "options": [
+   { "label": "Go to the big bank", "result": "You go. You handle a few listed companies and large firms, with lots of meetings and lots of forms, and never again copy down a power meter on a shop floor." },
+   { "label": "Stay with small business lending", "result": "You stay. You say big companies have no shortage of people lending to them; these little factories do. Your book grows from a hundred-odd borrowers to two hundred." }
+  ] },
+  "c_team_lead": { "title": "Bid for Small Business Team Lead", "situation": "The branch's small business team lead has moved up to the city branch, and the president wants you to take over: seven or eight people, reviewing their reports, going on visits with them, speaking for them at the credit committee. Half your own book would be handed out, and you'd share the blame for anyone's bad loans.", "options": [
+   { "label": "Take the team", "result": "Every day you go on visits with the young ones, listen in the car as they talk through their investigations, and revise their reports at night. That year you lend half as much yourself, and the team's bad loan ratio is the lowest in the city branch." },
+   { "label": "Decline, stay an expert account manager", "result": "You say you still prefer going onto the shop floor yourself. You stay on the front line, the hardest accounts all come to you, and the young ones on the team come to you with their problems." }
+  ] },
+  "c_cfo": { "title": "Run finance at a client's factory", "situation": "A valve company you've looked after for five years is expanding and preparing to list on the small-cap board. The owner asks you over as chief financial officer, double the pay and a small stake. You know every loan the factory has, and how tight its cash flow is.", "options": [
+   { "label": "Become the CFO", "result": "You resign and recuse yourself as the rules require, and join the factory. In your first month you sit in a bank meeting room and, for the first time, answer a loan officer's questions from the borrower's side.", "end": "You became CFO of a valve company, keeping the books, managing cash and negotiating credit with the banks. Whenever a young loan officer comes to see the factory, you take him to the workers' canteen first." },
+   { "label": "Stay at the bank", "result": "You turn the owner down. He says then he'll still come to you for his loans. You say by the rules, even if he does, you'll hand it to someone else to review." }
+  ] },
+  "c_president": { "title": "Bid for Branch President", "situation": "The city branch is promoting someone to branch president, at a branch in Yueqing, in the electrical equipment belt, with many borrowers, large limits and tangled relationships. As president, the deposits, loans, bad debt and dozens of people's livelihoods rest on you, and you'd be back in Wenzhou for meetings every week.", "options": [
+   { "label": "Go to Yueqing as president", "result": "You rent a room in Yueqing, visit over forty electrical factories in the first month, get to know a roomful of owners over chamber of commerce dinners, and go back to comb through the branch's bad loans from the beginning." },
+   { "label": "Don't, stay in Lucheng", "result": "You say your child is in middle school and you don't want to shuttle back and forth every week. You keep leading your team and get home for dinner." }
+  ] },
+  "c_leave": { "title": "Leave lending", "situation": "Bad loans have come in waves these past years. You've been held accountable twice, and part of each month's performance pay is deferred for years. A law firm wants you as a recovery consultant for distressed financial assets, saying your experience is exactly what they need.", "options": [
+   { "label": "Join the law firm as a recovery consultant", "result": "You hand over your book borrower by borrower and sign the last post-loan check form. The day you leave, your mentor lights you a cigarette at the branch door.", "end": "You joined a law firm, helping banks and asset managers deal with bad loans. You look at money other people lent and couldn't get back, and can often tell at a glance what the original investigation missed." },
+   { "label": "Stay", "result": "You don't go. You say people who make loans fear bad debt the way drivers fear crashes, but someone still has to drive." }
+  ] }
+ },
+ "endings": {
+  "retire": "In your last month before retirement you visit the valve-parts shop that was your very first loan. The couple have grown old and handed it to their daughter, and there's a CNC machine by the door now. You sit and drink a pot of tea together. You don't look at the power meter on the wall.",
+  "burnout": "That year your stomach gives out, just as a big loan goes bad, and you can't sleep for six months straight. The doctor tells you to stop. You apply to move to the back-office disbursement center, reviewing contracts and checking collateral in the system every day, with no more tea to drink with business owners."
+ },
+ "stages": [
+  "You're the shadow, going wherever your mentor goes: canvassing with business cards, walking factories to look at equipment and stock, copying down water and power meters, taking photos, and stuffing the statements and invoices owners give you into your backpack. Back at the branch you enter the documents into the lending system and draft the credit report, which your mentor returns covered in red. Every three months you also do a round of post-loan checks for him.",
+  "You run your own book now, a list of over a hundred borrowers under your name. You canvass, investigate and write up on your own, present your loans at the credit committee, and do post-loan checks each quarter after disbursement. The system pushes a few alerts every day, and you check them one by one. You know your clients' renewal dates better than they do.",
+  "Your book is the branch's most complicated borrowers: one owner with three companies, several factory buildings mortgaged, several guarantee relationships. You untangle related-party dealings, design renewal and restructuring plans, and go back and forth with the risk department, legal and the valuers. When young account managers hit a hard case, they bring it to you first.",
+  "You lead a small business team of seven or eight. Each morning you decide who goes to which factory; in the afternoon you go along with whichever young one is least sure; at night you revise their reports. At the weekly credit committee you sit in the front row and answer the risk department's questions on the team's loans. The team's lending, bad loans and appraisals are all written after your name.",
+  "You're the branch president, carrying the deposits, loans, bad debt and dozens of staff. You see a dozen owners a week and show your face at chamber of commerce, subdistrict and industrial park meetings. The biggest loans and the thorniest bad debts you negotiate yourself. What you sign for is a whole branch's year of risk."
+ ],
+ "work": [
+  "Your mentor sends you to count a shoe factory's workers. You stand by the canteen door until lunch and count them in one by one: twenty fewer than the owner said.",
+  "Your first post-loan check report of your own. You compare the stock photos one by one with those from three months ago and write \"stock broadly stable.\" Your mentor strikes out \"broadly\" and asks: stable or not stable?",
+  "An owner offers a property deed as collateral. As your mentor taught you, you check it at the real estate registry. It's already pledged to another bank.",
+  "An eyeglass factory wants a renewal. You go through a year of its customs declarations; the export figures match, but the payments coming in are short. The owner says they went through a Hong Kong account. You ask him to bring the Hong Kong statements too.",
+  "At the credit committee the risk department asks what this lighter factory's primary source of repayment really is. You put its three biggest customers' orders and payment cycles on the screen, talk for five minutes, and it's approved.",
+  "One borrower's guarantor is the owner's cousin. You go to his home for the signing, and he sits on the sofa saying nothing. You read him the joint liability clauses in the guarantee contract one by one. When you finish, he signs.",
+  "An owner's three companies lend to each other. You merge their statements into one sheet and draw a map of the money moving between them, and find over ¥10 million that went round in a circle and came back where it started.",
+  "A company's factory building needs revaluing, and the valuer's figure is 30 percent higher than last time. You check nearby sales yourself and send the valuation report back.",
+  "One borrower can't get a renewal. You, the risk department and legal design a restructuring: half the limit, an extra flat as collateral, repayment stretched by two years. The owner listens in the meeting room and lets out a long breath.",
+  "A young team member's report is beautifully written, but in the photos you see a layer of dust on that factory's machines. You say nothing, and the next day go back with him.",
+  "At the quarterly review you lay out the team's three bad loans this year, each with what the original investigation missed written clearly. The last one is one you reviewed yourself.",
+  "You take the team canvassing at a new industrial park, over thirty companies in a day. That night at a noodle shop by the park gate you sort the business cards by industry into five piles.",
+  "At the chamber of commerce annual meeting an old chairman takes your arm and says that in their generation's hardest years, it was small banks like yours that didn't pull their loans. You hold up your teacup and don't take it further, only saying those were hard years for everyone.",
+  "A ¥30 million bad loan is going to court, and the borrower is a well-known local owner. You hear legal's view at the meeting, sign the litigation approval form, set the pen down, and say nothing.",
+  "A new batch of graduate hires reports for duty. In their first class you don't teach the rules. You teach how to read a workshop: first the toilets, then the canteen, and last the power meter."
+ ],
+ "past": [
+  "You're in middle school in Rui'an. Your parents run a small workshop making auto and motorcycle parts, and the living room is always piled with parts. At the end of every year your father goes round several banks for renewals, and comes back looking worse each time.",
+  "Business is hard in those years, and one of your father's guarantors skips town. The family workshop barely survives. It's a small bank that doesn't pull the loan and renews it.",
+  "You pass the gaokao (college entrance exam) into a university of finance and economics in Hangzhou and choose finance. Your father says finance is good, so no one can come and pull our loans again.",
+  "The summer after your third year you intern at a bank in Hangzhou, entering documents in an office for two months. In one credit report you see the words \"site visit\" and think of your father on his shop floor.",
+  "In your graduation year you get an offer from a brokerage in Hangzhou and one from this city commercial bank in Wenzhou. You choose Wenzhou. Your mother says good, come back, it's close to home."
+ ],
+ "late": {
+  "pension_note": "Estimate: city commercial banks pay into the standard enterprise employees' pension, Wenzhou's contribution base is upper-middle, and with the bank's enterprise annuity the pension comes to a little over 40 percent of the last monthly salary. Deferred performance pay is paid out over the first few years of retirement.",
+  "scenes": [
+   "For the first month of retirement you still wake at half past seven every morning, then remember there's no factory to visit today. You go downstairs, buy a sticky rice roll, and eat it slowly on a bench in the compound.",
+   "A small business owner from your hometown comes to see you, wanting a loan and not knowing what the bank will ask for. You help him turn three years of accounts into one spreadsheet and tell him: understand it yourself first, then take it to the bank.",
+   "A young officer you trained is now a branch president and asks you back to teach the new hires a class. Halfway through you realize the system on their phones can even show a workshop's electricity curve.",
+   "At home you find a stack of old site-visit forms with meter readings in your handwriting. You go through them one by one. Some of the factories are still there; some were torn down long ago and turned into housing.",
+   "Days at the disbursement center are regular. You review dozens of contracts a day and leave at five sharp. Your stomach slowly heals, and you start cooking for yourself at home.",
+   "A young account manager sends you a contract with one character wrong in the collateral's address. You phone him, and he says thank goodness. You say: did you go and see it?",
+   "You retire at the official age and often walk along the Ou River. A new row of factory buildings has gone up by the water. Watching the smoke from the chimneys, you guess how far their power meters turn in a month.",
+   "In your first year away from the bank you still sometimes dream of the credit committee, the risk department asking you a question you can't answer. You wake, remember it's not yours anymore, and go back to sleep.",
+   "At your new job you run into an owner you once lent to, who is the debtor in one of your cases. You stand and talk in the corridor a while. He says the factory's gone, but he's still here.",
+   "Your old mentor has retired, and you go to see him. He takes out a notebook listing every factory he saw in thirty years, and several pages are ones you visited together.",
+   "These days most small factory loans are approved with a few taps on a phone. But in the lanes of Wenzhou, someone still rides an e-bike with a backpack into a workshop to drink a pot of tea.",
+   "Your grandchild asks what you used to do. You say you lent people money to start factories. Did they pay it back, the child asks. You think about it and say most of them did."
+  ],
+  "closing": {
+   "retire": "Many years later, one afternoon, you pass an old lane in Lucheng. A shoe factory's door is open and the machines are running. A young man in work clothes is smoking outside. You glance at the power meter on the wall, spinning fast. You smile and walk on.",
+   "burnout": "Many years later you find the key to that old e-bike in a drawer. On the key ring hangs a tiny lighter, a gift from some factory owner. You flick it, and it still lights.",
+   "end": "Many years later, in an old bag, you find a sheet of paper covered in numbers, the first meter readings you ever copied, in very neat handwriting. You fold it and put it back in the bag's inner pocket."
+  }
+ }
+}

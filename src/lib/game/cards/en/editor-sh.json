@@ -1,0 +1,198 @@
+{
+ "id": "editor-sh",
+ "occupation": "Editor",
+ "role": "Assistant editor in humanities at a publishing house",
+ "headline": "A Chinese literature master's graduate, two years as an assistant editor in the humanities department of an old Shanghai publishing house: you read proofs with senior editors, chase authors and run to the printers, waiting for the first book to carry your name as its responsible editor",
+ "unit": "A seventy-year-old general publishing house in Xuhui, Shanghai; its humanities and social sciences department has eight people and publishes sixty or seventy titles a year, split between academic books, general nonfiction and translated works",
+ "unit_type": "Publishing house",
+ "city": "Shanghai",
+ "city_tier": "Tier 1",
+ "education": "Master's degree (modern and contemporary Chinese literature)",
+ "level": "You could draw the proofreading marks with your eyes shut, and you can pick a set of proofs clean of typos and inconsistencies. But when the department head asks at the acquisitions meeting \"who's this book for, how big a first printing?\" you still have no answer",
+ "intro": "In grad school you leafed through many of this publisher's books in the library, and of all the names listed as responsible editor on their copyright pages, you didn't know a single one. Now you sit on the fourth floor of an old building in Xuhui, three sets of proofs piled on your desk, and on the windowsill an asparagus fern a senior editor has kept for over a decade. As of today, you have to learn how a stack of paper becomes a book.",
+ "salary_note": "Estimate: editors at Shanghai's state-owned publishers earn base pay plus performance pay tied to list-price sales and profit, about ten percent above the national figure; a year with a bestseller adds a bit more to the bonus.",
+ "facts": [
+  { "label": "Assistant Editor (current level)", "value": "0-3 years, ¥6,000–8,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Editor (3-7 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Revising a book with its author, and signing your name to it", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Proofreading for typos, punctuation and house style", "source": "AI exposure" },
+  { "label": "Open positions", "value": "4 related listings nationwide, 1 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You arrive at the department and water the asparagus fern on the windowsill first; the senior editor said it hates to dry out. On your desk are the second proofs from the printer, 320 pages. You take out a red pen and a ruler.",
+  "On page 47 a quotation's page number doesn't match the earlier one. You borrow the old book from the reference room to check, and find the author mixed up two editions. You draw a big question mark in the margin of the proof.",
+  "You call a university professor to chase his manuscript. It's a year late already, and he says the last chapter just needs a little more. You say there's no rush, while working out next year's publishing schedule in your head.",
+  "The publishing house canteen: two meat dishes and a vegetable for eight yuan. You share a table with the designer, who shows you three versions of a cover. You point to the second and ask if the title could be a bit bigger.",
+  "You read the translation of a foreign book against the English original, paragraph by paragraph. A whole paragraph in chapter three has been left out. You mark it, wondering how to write the email to the translator without hurting her.",
+  "The marketing editor asks how to pitch your new book on a livestream; the host is giving it five minutes. You write three sentences, cut two, and the one you keep is something the author wrote in the afterword.",
+  "The senior editor takes you down to the copy room and teaches you to read the press proofs from the printer: where the ink is too heavy, where the colors are out of register. Once the book is out, he says, all of this is on you.",
+  "Back in your rented flat in an old walk-up, you carry on with the translation while someone below plays the erhu. In chapter five you copy a beautifully translated sentence into your own notebook."
+ ],
+ "ladder": [
+  { "title": "Assistant Editor", "stage": "Entry", "focus": "Review manuscripts, read proofs and liaise with authors and printers under senior editors, take the publishing qualification exams, and learn every step from manuscript to finished book." },
+  { "title": "Editor", "stage": "Responsible editor", "focus": "With the intermediate publishing qualification, serve as responsible editor: propose your own titles and manage a book's editing, design, printing and marketing." },
+  { "title": "Associate Senior Editor", "stage": "Core", "focus": "With the associate senior title, do second-level reviews, mentor young editors, and keep your own circle of authors and several lines of books." },
+  { "title": "Department Head (Senior Editor)", "stage": "Department lead", "focus": "Run an editorial department's list, sales and people, provide the check before final review, and answer for every book the department publishes." },
+  { "title": "Deputy Editor-in-Chief", "stage": "Leadership", "focus": "Join the publisher's leadership, oversee several departments and final review, and set the house's publishing direction; few get this far." }
+ ],
+ "ai_tasks": [
+  { "name": "Proofreading for typos, punctuation and house style", "how": "AI proofreading can get through a 300,000-character manuscript in minutes, flagging typos, punctuation, citation format and inconsistencies. A person only checks whether what it flagged is right, then spot-checks what it didn't flag." },
+  { "name": "Writing blurbs, marketing copy and livestream scripts", "how": "AI can write several versions of the blurb, belly-band copy and livestream patter from a manuscript. Which line really moves readers and which one oversells, the editor has to choose and rework." },
+  { "name": "First review of manuscripts and suggesting revisions", "how": "AI can read the manuscript first and point out loose structure, doubtful facts and unsourced quotations. Which chapter to cut, and how to tell the author, the editor judges." },
+  { "name": "Planning titles and analyzing the market", "how": "AI can gather sales of similar books, reader reviews and gaps, and produce a string of title ideas. Which is worth doing and who should write it depend on the editor's eye and relationships with authors." },
+  { "name": "Assessing foreign books and checking translations", "how": "AI can read a foreign sample copy quickly and write an assessment, and compare a translation paragraph by paragraph to flag omissions and errors. Whether the translation is good and whether to change translators, the editor reads and decides." },
+  { "name": "Revising a book with its author, and signing your name to it", "how": "Sitting across from an author and explaining why this chapter should go, staying with him until the book is fit to publish, signing your name to the review report: nothing replaces this." }
+ ],
+ "events": {
+  "e_first_book": "The first book you've served as responsible editor on comes off the press. The printer sends the advance copies; you open to the copyright page and see your name after \"Responsible Editor.\" You hold it close and breathe in. It smells of fresh ink.",
+  "e_typo": "A reader writes in to point out that a book you edited gets a historical figure's birth and death years wrong by one. You dig out the proofs: you'd been over that spot three times. You write a long reply of thanks, and it's corrected in the reprint.",
+  "e_pulp": "An academic book you championed had a first printing of three thousand and sold eight hundred in two years. The warehouse sends notice that the stock is being disposed of. You go to look: the books are bundled together, the type on their covers still fresh.",
+  "e_reprint": "A small, obscure book you thought nobody would read gets an episode from a book blogger and goes back to press three times in a month. You go to the warehouse and watch the new copies hauled away by the box, then call the author, who laughs on the other end for a long time.",
+  "e_late_author": "One author's manuscript has dragged on three years, the title moving from \"planned\" to \"postponed\" to \"on hold.\" This spring, out of the blue, a package arrives: a stack of handwritten pages, the first one reading, \"Sorry to keep you waiting.\"",
+  "e_translator": "A foreign book's translation has too many errors, and after talking it over with the department head you change translators and wait another year. The old translator calls, angry. You hear her out, and say you're sorry.",
+  "e_bookfair": "At the August book fair you stand at the stand for five days, helping authors sign books, finding books for readers, hauling dozens of boxes of copies. On the last day, as you're packing up, a middle school student brings one of your books and asks whether the author will write another.",
+  "e_ai_proof": "The publisher brings in AI proofreading: one pass through a manuscript takes minutes, and the proofreading section goes from six people to three. You find it loves to change the archaic characters an author chose on purpose into common ones, so you add a line to the style sheet: these characters must not be changed.",
+  "e_ai_manuscript": "A submission arrives, fluent and neatly structured, and in chapter three you find two of the books it cites don't exist. You write to the author, who admits most of it was written by AI. You decline it, and write the department a checklist for vetting manuscripts.",
+  "e_live_sale": "A book goes onto a big livestreamer's channel and sells twenty thousand copies in one night, at half price. At month-end the profit comes to less than selling three thousand normally. The department head says: but now twenty thousand people know this book exists.",
+  "e_handover": "The senior editor who trained you retires and hands you several authors he's worked with for twenty years. At the handover he gives you an old notebook recording what tea each author likes and after what hour you mustn't call.",
+  "e_list": "A general nonfiction book you edited lands on several best-of-the-year lists, and the author is invited onto TV for the first time. On the show he mentions that the book went through seven drafts, and the editor was pickier than he was.",
+  "e_kpi": "The publisher changes its assessments: every editor has a yearly target for list-price sales and profit. Not one of your academic books makes money. The department head speaks up for you at the meeting, and afterwards tells you to do two books next year that will sell.",
+  "e_neck": "Years of bending over proofs, and your neck starts to ache and your eyes blur after a while. You get a new desk lamp and raise your desk five centimeters.",
+  "e_house": "You buy a small flat out by the outer ring road, the down payment pooled by your parents. On moving day the heaviest things are the dozen-odd boxes of books, and the movers ask if you run a bookshop.",
+  "e_young": "The new editor you trained serves as responsible editor for the first time, and the day the book comes out she brings you an advance copy, her eyes red. You turn to the copyright page, point to her name and say: from now on, everything in this line is yours.",
+  "e_young_ai": "The new editors read manuscripts, write blurbs and analyze the market with AI, each managing a dozen-odd books at once. What they bring to you is mostly a different kind of question: what's this author's temper like, should this sentence be cut?",
+  "e_author_gone": "An elderly author you worked with for over ten years passes away, and his family gives you his last, unfinished manuscript and asks whether it can be published. You read it for a month, decide to publish it as it stands, and write an editor's afterword.",
+  "e_final_review": "You start doing final reviews, a dozen-odd books a month passing through your hands one last time. Once, on the last page of a book that had been through five people, you find a typo.",
+  "e_old_building": "The publisher is moving to a new building. Clearing out the department, at the very bottom of a cabinet you find a stack of rejection letters from more than twenty years ago, on the house's old letterhead, written by hand."
+ },
+ "choices": {
+  "c_exam": {
+   "title": "The intermediate publishing qualification",
+   "situation": "To serve as responsible editor you first need the intermediate publishing qualification. The exam is in October, two papers, with publishing regulations, editorial practice and a pile of proofreading standards to memorize. Those months coincide with the book fair and the year-end rush to send books to press.",
+   "options": [
+    { "label": "Take it this time", "result": "Every day after work you studied in the publisher's reference room until nine, sat both papers and passed. The day the results came out, the department head put a manuscript on your desk and said: you're responsible editor on this one." },
+    { "label": "Take it next year", "result": "You got your three books off to the printer first. The exam slipped to next year, and so did the first book you'd be responsible editor on." }
+   ]
+  },
+  "c_topic": {
+   "title": "Follow the trend, or do something obscure",
+   "situation": "At the acquisitions meeting you have to propose next year's titles. You could follow a hot topic with a general nonfiction book sure to sell. Or you could propose an obscure academic book you've wanted to do since grad school, by a little-known elderly scholar who's been writing it for twenty years.",
+   "options": [
+    { "label": "Follow the trend", "result": "You found a young scholar who could write, and the book was out in six months, a first printing of ten thousand that sold well. At the book fair you saw several other publishers' stands displaying much the same book." },
+    { "label": "Propose the obscure one", "result": "At the meeting someone asked who the book was for, and you said: readers twenty years from now. The department head laughed and approved two thousand copies. When the old scholar got his advance copy, he wrote you a letter with a brush." }
+   ]
+  },
+  "c_celebrity": {
+   "title": "The influencer's manuscript",
+   "situation": "Marketing has signed a blogger with millions of followers who wants to publish a book. His team wrote it, cobbled together, much of it unreadable to you. But a first printing would be fifty thousand copies, enough to fill half a year of the department's sales.",
+   "options": [
+    { "label": "Take it and fix it", "result": "You reworked the manuscript from start to finish, cut a third and added a dozen-odd sources. The book sold very well, and on his livestream the blogger said it was the best thing he'd ever written. You said nothing." },
+    { "label": "Turn it down", "result": "You put five reasons in your review report and recommended against it. The department head looked at it for a long time and said: I'll talk to marketing. The blogger later published with another house and sold over a hundred thousand." }
+   ]
+  },
+  "c_ai_tool": {
+   "title": "Who tries out the AI editing workflow",
+   "situation": "The publisher wants to trial AI for reading manuscripts, proofreading and marketing copy in your department, and needs a young editor to master it first and write the department's usage rules, including which parts of an author's manuscript may go into it and which may not.",
+   "options": [
+    { "label": "I'll try it", "result": "You tested it on five already published books for two months, logging what it got right, got wrong and changed for no reason. Once the rules were out, editing time per book in the department fell by thirty percent, and not one author's manuscript leaked." },
+    { "label": "Stick with the red pen", "result": "You kept reading proofs page by page. Slow, but you knew the reason for every change. Later, there were steps in the department's new workflow you had to ask the young ones to explain." }
+   ]
+  },
+  "c_platform": {
+   "title": "The offer from a content company",
+   "situation": "A company doing paid knowledge content and audiobooks wants you as content director, turning books into audio courses and short videos, at one and a half times your pay. Nobody will read paper books anymore, they say.",
+   "options": [
+    { "label": "Go", "result": "You went, and in the first month made three audio courses, each outselling any book you'd edited. You still go to bookshops now and then, and stand for a while in front of the shelf with the books you used to edit.", "end": "You became content director at a content company, turning book after book into voices in people's earbuds. Every time you sign an author, you still read their book from start to finish first, with a red pen." },
+    { "label": "Stay at the publisher", "result": "You thanked them. That afternoon, the elderly author three years late called to say the last chapter was done." }
+   ]
+  },
+  "c_import": {
+   "title": "Bidding for a foreign book's rights",
+   "situation": "A foreign book has won a big prize abroad, and several publishers are fighting over the Chinese rights, the agent's price climbing higher and higher. You've read the sample copy and love it, but the department's budget for the year is nearly spent.",
+   "options": [
+    { "label": "Fight for it", "result": "You wrote an eight-page assessment and persuaded the publisher to put up an extra advance. You got the rights, spent a year finding a translator and revising, and the book went back to press five times." },
+    { "label": "Let it go", "result": "You didn't bid. The book came out with another publisher, with a lovely cover. You bought a copy and put it on your shelf." }
+   ]
+  },
+  "c_senior": {
+   "title": "Applying for Associate Senior Editor",
+   "situation": "In this year's publishing title review you're eligible to apply for Associate Senior Editor. You need to submit representative work, review reports and a professional paper, and pass an oral defense. You have the translated book that went back to press five times; the paper hasn't been started.",
+   "options": [
+    { "label": "Apply", "result": "You spent two months of late nights writing a paper on reviewing translations of imported books. At the defense a panelist asked: which book do you regret most? You named the one that sold eight hundred copies in two years." },
+    { "label": "Apply next year", "result": "You gave those two months to an author instead, staying with him as he revised a book from the first chapter to the last." }
+   ]
+  },
+  "c_director": {
+   "title": "Taking over as department head",
+   "situation": "The department head is retiring, and the publisher asks if you'll take over. If you do, the titles, sales and assessments of eight people are yours, you sign every second review, and your own editing time shrinks by more than half. If not, you stay the editor with a fine circle of authors.",
+   "options": [
+    { "label": "Take it", "result": "You started running the acquisitions meeting every week, reading everyone's sales sheets, and talking to difficult authors on behalf of young editors. The books you edited yourself dropped to two a year." },
+    { "label": "Keep editing books", "result": "You recommended an old colleague from the department. You kept making your books, five or six a year, following each from proposal to the printer." }
+   ]
+  },
+  "c_studio": {
+   "title": "Starting your own book studio",
+   "situation": "Several longtime authors urge you to leave and start a book studio, developing books yourself and publishing them with partner houses, keeping whatever you earn or don't. At the publisher you have a permanent state post, and another dozen-odd years would see you retire in comfort.",
+   "options": [
+    { "label": "Go out on your own", "result": "You quit and rented a little room in a lane, three of you. The first year you made eight books: two lost money, one sold very well. You went to the printer yourself for every press run.", "end": "You run a tiny book studio in an old Shanghai lane, a wooden sign by the door. You don't make many books, and on the copyright page of every one, the name in the line for acquiring editor is yours." },
+    { "label": "Stay at the publisher", "result": "You thanked them and asked them to let you see any good manuscripts first. The next year an elderly author sent his best manuscript to the publisher." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On the day you retire, you hand the asparagus fern on the windowsill to the newest editor and tell her it hates to dry out. All you take is a red pen worn down to a stub and an old notebook of authors' phone numbers. Walking out the publisher's gate, you look back: the department's lights upstairs are still on.",
+  "burnout": "That year your eyes and neck were in bad shape, and the doctor told you to read less. You asked to be moved to the reference room, and later took early retirement. On the last day you put the proofs on your desk in order, sheet by sheet, handed them to the person taking over, and didn't open them again."
+ },
+ "stages": [
+  "Every day you read proofs, check quotations, chase authors and go back and forth with printers and designers under senior editors, red pen and ruler always in hand. You deal most with authors and the proofreading section: the first need your patience, the second need you to explain every change. The responsible editor printed in the book isn't you yet, but the densest notes on the proofs are already in your handwriting.",
+  "You have your own responsible editor certificate and propose your own books at the acquisitions meeting. From signing the contract, editing, typesetting and three rounds of proofs to settling the cover, applying for the ISBN and going to press, you follow a book from start to finish. You've started working out first printings and prices with marketing and sales, and getting grilled in meetings over a book that won't sell.",
+  "You have a few lines of your own and a circle of longtime authors, make five or six books a year, and do the second reviews for young editors, signing below their review reports. Rights negotiations for foreign books and new books by important authors come to you first. Compared with your years as responsible editor, more of your time goes on other people's manuscripts.",
+  "You run an editorial department, holding the acquisitions meeting every week to decide what gets published and what doesn't, reading the sales sheet once a month, negotiating budget and staff with the house. You're the last check before final review, and when something goes wrong, you're the first one the publisher calls. You edit fewer books yourself, but you leaf through the advance copy of every book the department puts out.",
+  "You've joined the publisher's leadership, overseeing several departments and final review and signing off on a hundred-odd titles a year. Most of your time goes on meetings: setting next year's publishing direction, negotiating targets with the publishing group, discussing channels with bookshops and platforms. You rarely pick up a red pen now, but for every book signed off by you, you know why it deserves to exist."
+ ],
+ "work": [
+  "You check thirty-odd quotations in a manuscript, borrowing a dozen old books from the reference room and turning to each page, and find that in two places the author quoted a different edition. You mark the sources clearly on the proofs.",
+  "The senior editor sends you to deliver third proofs to an eighty-year-old author. You ride the metro for an hour and spend the afternoon beside his rattan chair going through them with him: he changes something, you note it down.",
+  "The printer sends a cover proof, and you study it against the color swatch for a long time, deciding the red has drifted toward orange. You call the pressman, who says: you've got a sharp eye.",
+  "On the title proposal form you write up your first book of your own: who the readers are, how similar books have sold, how big a first printing you plan. The department head changes \"first printing\" from five thousand to three.",
+  "Before a book goes to press you check the ISBN and the cataloging-in-publication data in the system, and find the author's name on the copyright page is missing a middle dot, fixing it just before the press run.",
+  "In the café below the publisher you sit with an author explaining why chapter six should go. He says nothing, finishes a cup of coffee, and finally says: cut it then. You're right.",
+  "Doing a second review on a young editor's book, you find his review report says only \"fluently written.\" You send the manuscript back and have him write another, explaining at the very least where this book falls short.",
+  "On a video call with a foreign rights agent you negotiate an advance. They name a high figure; you lay out the real sales of similar books in the Chinese market, and get it down by thirty percent.",
+  "A longtime author wants to write a new book. You spend an afternoon drinking tea at his home, and on a sticky note you write three possible titles. Later you use the second.",
+  "At the acquisitions meeting you turn down a title a young editor badly wants to do. Afterwards you call her into your office, tell her about your book that sold eight hundred copies in two years, and then help her rework the proposal.",
+  "Setting next year's publishing plan at year-end, facing a spreadsheet dozens of rows long, you pair three academic books with two bestsellers and say that's how the department can afford the three.",
+  "After a book is printed, a labeling error on a map is found. That day you halt shipping and, with the printer and sales, recall the copies already sent out and reprint that page.",
+  "At the publishing group's assessment meeting you fight to keep the house's academic publishing budget, with a table: of the most reprinted books of the past ten years, half had first printings of under three thousand.",
+  "Before signing off a book you turn to the editor's afterword on the last page, written by a young editor, and very well. You pause at the signature line and send her a message.",
+  "You interview a graduate who wants to be an editor and give her a page of proofs with errors. She finds seven, and beside one sentence writes: the author may have done this on purpose. You hire her."
+ ],
+ "past": [
+  "You grew up in a small county town in Zhejiang with a state bookstore near home. After school you'd often stand there reading, and the woman behind the counter never shooed you away.",
+  "Filling in your gaokao (college entrance exam) choices, you put down Chinese literature. Your mother said you'd become a teacher; you said, I want to make books.",
+  "In your third year you interned at a publisher, and your first job was making an index for a book: three hundred-odd entries, a month's work. When the book came out your name wasn't on that page, and you bought a copy anyway.",
+  "After your bachelor's you got into a master's program at a Shanghai university, studying modern and contemporary literature. Your advisor had you proofread one of his manuscripts; you found forty-odd problems, and he said you were cut out to be an editor.",
+  "After your master's you applied to five publishers and ended up at this one. At the interview the deputy editor-in-chief asked your favorite book, and the one you named had been published by this very house thirty years earlier."
+ ],
+ "late": {
+  "pension_note": "Estimate: the publisher paid pension contributions on the Shanghai base, some with an enterprise annuity as well, and editors' pay is middling, so the pension comes to a little over half of final monthly pay.",
+  "scenes": [
+   "Your first month retired, you rearrange all the books at home, by publisher and then by year. When you reach the shelf of books you edited yourself, you count them: a hundred and twenty-odd.",
+   "The publisher asks you back to help review a few key manuscripts, two or three a month. You still use a red pen, and when the young editors come for the manuscripts they leaf through your notes and say: so you can revise it like that.",
+   "You volunteer at the community library, sorting donated old books and mending spines. One is a book you edited thirty years ago, its spine split, and you carefully glue it back together.",
+   "In the first months after stopping, the doctor tells you to read less, so you listen to audiobooks. One day you hear a book you edited and the narrator mispronounces a character, and you laugh out loud in the living room.",
+   "You start growing plants in the little garden at the mouth of your lane, beginning with an asparagus fern, remembering it hates to dry out. A neighbor asks what you used to do. You say: I made books.",
+   "As your eyes improve you read for an hour a day, just reading, not correcting. When you hit a typo your hand itches, but you hold back and draw a very small circle in the margin.",
+   "A year into your new path, you pass your old publisher and see a new book in the window of the bookshop by the gate, its responsible editor the young person you trained. You go in and buy a copy.",
+   "Colleagues from your old department take you to dinner. Proofreading is all AI now, they say, and the department is still eight people but has to publish a hundred books a year. You talk for a long time, and in the end it's still those elderly authors you talk about.",
+   "At a reading group you meet a reader who brings an old book for you to sign: the obscure academic book you once championed. She says she's read it three times.",
+   "Now proofreading is done by AI, blurbs written by AI, title ideas screened by AI first. But when an author sits across from you asking whether this chapter really should go, someone still has to answer him.",
+   "In a drawer you find the first book you were responsible editor on, your name tiny on the copyright page. You open it and breathe in; the smell of ink is long gone, and the paper has yellowed a little."
+  ],
+  "closing": {
+   "retire": "One afternoon many years later you're reading by the window, and when you reach a fine sentence you pick up a pen out of habit and draw a line beside it. Outside the plane tree leaves cover the ground, and you turn the page.",
+   "burnout": "Many years later you're watering the asparagus fern in the little garden while your granddaughter writes an essay at the stone table and asks how to write a character. You write it once in the margin of her notebook, then point to one of her mistakes and draw a small circle.",
+   "end": "Many years later you find on a shelf a book you edited when you were young, a sticky note tucked in its pages in your own handwriting: page 47, check edition of quotation. You look at it for a while, then tuck it back in."
+  }
+ }
+}

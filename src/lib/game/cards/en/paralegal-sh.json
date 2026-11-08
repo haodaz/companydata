@@ -1,0 +1,200 @@
+{
+ "id": "paralegal-sh",
+ "occupation": "Paralegal",
+ "role": "Paralegal in a law firm's disputes group",
+ "headline": "A year as a paralegal in the disputes group of a mid-sized law firm in Shanghai's Jing'an district, finally through the bar exam this year: you file cases, bind case files and build evidence lists for a partner, waiting for the firm to register you as a trainee lawyer",
+ "unit": "A full-service law firm in Jing'an, Shanghai, with about sixty lawyers; the disputes group has twelve people handling contract disputes, shareholder disputes and commercial arbitration",
+ "unit_type": "Law firm",
+ "city": "Shanghai",
+ "city_tier": "Tier 1",
+ "education": "Bachelor's degree (law), passed the national bar exam",
+ "level": "A year of filing cases, binding case files and building evidence lists, and the clerks at the court's filing window know you by sight now. But you only passed the bar this year: you can't appear in court yet, and you can't tell a client a single conclusion",
+ "intro": "The day you passed the bar exam, you cried in your rented room. Now you sit on the twenty-second floor of an office tower in Jing'an, your desk holding the files for three cases, a binding machine and a stack of evidence labels not yet stuck on. As of today you're two years from a lawyer's practice license, and every page in those two years passes through your hands first.",
+ "salary_note": "Estimate: paralegals and salaried associates at mid-sized Shanghai firms earn thirty to fifty percent above the national figure. Once you make partner, income depends on the clients you bring in, and a good year and a bad one can differ by double.",
+ "facts": [
+  { "label": "Paralegal (current level)", "value": "0-1 years, ¥5,000–7,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Trainee Lawyer (1-2 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Running to courts and archives, and sitting in with the lawyer when clients come", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Sorting, naming and filing case materials", "source": "AI exposure" },
+  { "label": "Open positions", "value": "10 related listings nationwide, 1 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Metro Line 7 to Line 2. On the train you read through the complaint you're filing today once more on your phone, checking the defendant's name three times.",
+  "The district court's litigation service center. You take a number and wait toward the back. A middle-aged man in front of you, holding a thick stack of papers, borrows your pen.",
+  "At the filing window the clerk says you're one set of evidence copies short. You copy them at the print shop outside the court, stamp the seal across the page edges, and get them in before eleven-thirty.",
+  "The convenience store under the firm's building. You buy a rice ball and eat it at your desk. Lawyer Lin, who supervises you, messages: client meeting at three, you're taking notes.",
+  "You sort two hundred-odd chat screenshots from the client by date into an evidence list, numbering the bottom right corner of every page. The printer jams twice.",
+  "In the meeting room the client describes how he fell out with his business partner, and halfway through he slams the table. You keep your head down writing. Now and then Lin glances at you, and you mark the sentence just said.",
+  "People drift off home, and you stay to bind the files for tomorrow's hearing. Three volumes, over a hundred pages each; the binding machine's drill bit gets too hot to touch.",
+  "Back in your shared flat, you log today's hours in the firm's timekeeping system: filing 2.5, sorting evidence 3, meeting notes 1.5. About half of it can be billed to the client."
+ ],
+ "ladder": [
+  { "title": "Paralegal", "stage": "Entry", "focus": "File cases, pull archive records, bind case files and build evidence lists, learning the procedure for each kind of case under a supervising lawyer." },
+  { "title": "Trainee Lawyer", "stage": "Trainee", "focus": "A year registered with the bar association as a trainee: you can go to court and meet clients with a lawyer and write the main documents, then pass the bar association's assessment when the year is up." },
+  { "title": "Practicing Lawyer", "stage": "Licensed", "focus": "With a practice license, handle cases and appear in court on your own as a salaried associate, and start having clients of your own." },
+  { "title": "Senior Associate (Salaried Partner)", "stage": "Core", "focus": "Lead big cases with two or three junior lawyers, answer for case strategy and quality, and start bringing in your own business." },
+  { "title": "Equity Partner", "stage": "Partner", "focus": "Buy in as a partner and share profits, carrying a team on your clients and reputation; few get this far." }
+ ],
+ "ai_tasks": [
+  { "name": "Sorting, naming and filing case materials", "how": "AI can automatically sort and name the hundreds of screenshots, contracts and invoices a client sends, pull out key dates and amounts and lay out a timeline. A person only spot-checks that nothing crucial is missing." },
+  { "name": "Drafting complaints, evidence lists and legal arguments", "how": "AI can produce a first draft from a template in minutes. Whether the facts are right, how the claims are framed, and whether the statutes and cases cited are real need a person to check word by word, and the supervising lawyer signs and answers for it." },
+  { "name": "Finding similar cases and doing legal research", "how": "AI can find similar cases, summarize how courts have ruled and write research memos. Which cases are actually usable, and how the local court tends to decide, take a person reading the originals and asking experienced lawyers." },
+  { "name": "Tracking deadlines and procedural milestones", "how": "Evidence deadlines, appeal periods and hearing dates the system can calculate and remind you of. When the court reschedules or the other side challenges jurisdiction, a person has to decide right away what to do." },
+  { "name": "Running to courts and archives, and sitting in with the lawyer when clients come", "how": "Filing at the window, pulling company registration archives, delivering originals, sitting next to the lawyer in the meeting room taking down every word the client says: these need someone physically there." }
+ ],
+ "events": {
+  "e_first_filing": "Your first case filed successfully on your own. Handing out the acceptance notice, the clerk at the window remarks, \"Your papers are pretty complete.\" You stand outside the court for a while and take a photo of the notice.",
+  "e_deadline": "You got a case's evidence deadline wrong by a day, and Lawyer Lin caught it. That night the two of you rushed the evidence out at the office and delivered it to the court first thing next morning. Lin said nothing. You didn't sleep all night.",
+  "e_archive": "You go to the market regulation bureau to pull more than ten years of a company's registration records, spend an afternoon leafing through them in the archive reading room, and turn up an equity transfer agreement nobody had noticed. Lin looks at it and says: now this case has legs.",
+  "e_overnight": "An arbitration defense is due Monday and the whole group spends the weekend at the office. You build the evidence comparison table until three in the morning, and it's raining when you take a cab home.",
+  "e_rent": "The landlord raises the rent and you move to an older compound farther out, adding forty minutes to your commute. You read judgments on the metro and miss your stop.",
+  "e_client_thanks": "A small business owner chasing payment for goods wins his case and gets the money enforced. He comes to the firm with a silk banner of thanks and seeks you out specifically: you were the one who sorted out all those delivery notes for him.",
+  "e_first_court": "During your trainee year you sit at the counsel table for the first time, Lin beside you. The judge asks where a piece of evidence came from, and you answer. Your voice wavers a little, but you don't get a word wrong.",
+  "e_ai_docs": "The firm brings in an AI drafting system, and evidence lists and first-draft complaints appear in minutes. Your nights of binding and numbering drop by half, and Lin starts sending you to sit in on other teams' hearings.",
+  "e_ai_case": "AI research hands you five similar cases. You check each original in the national court judgments database, and one case number doesn't exist at all. You raise it at the team meeting, and from then on every research memo in the group has to link to the original rulings.",
+  "e_loss": "You lose the first case you handled on your own. The judgment arrives at the firm and you read it alone in a meeting room. When you call the client, there's a long silence before he says: you did your best.",
+  "e_own_client": "Your college roommate refers a contract dispute from her company to you. It's the first case you've brought in yourself, and the day you sign the engagement letter you rewrite your fee quote three times.",
+  "e_billing": "At year-end review your billable hours are two hundred below the group average. The head of the group sits you down and says it isn't that you work less; it's that much of your work can't be billed. You understand, and it sits badly with you.",
+  "e_move": "You rent a one-room flat near the firm, at a third of your income. For the first time you can spread case files across your own desk instead of fighting your flatmates for the living room.",
+  "e_sick": "Three hearings in a row, and on the fourth morning your voice is gone. You go to court to deliver papers anyway with a fever. On the way back you fall asleep in the taxi.",
+  "e_big_case": "A shareholder dispute you lead has over ¥100,000,000 at stake. Five hearings, and the other side goes through three sets of lawyers. It ends in mediation, and when you sign the mediation agreement your hand is steady.",
+  "e_young_ai": "The new paralegal runs everything through AI first, fast and neat. The first thing you teach her is to go and file one case at the window, and stand in the line herself.",
+  "e_family": "Your family keeps urging you to come home and sit the civil service exam; being a lawyer is too hard and too unstable, they say. At New Year, at the dinner table, you tell them about a case you won. Your mother listens and says: you still have to eat on time.",
+  "e_partner_vote": "For the first time you're invited to sit in on the partners' meeting, where next year's profit split is on the table. From a corner you watch several senior partners argue for an afternoon over two percentage points.",
+  "e_old_trainee": "A trainee lawyer you once supervised now runs his own small firm. He takes you to dinner and says the binding machine in his office is the same model as the one you had back then.",
+  "e_online_court": "More and more hearings move online, the court's system producing the transcript automatically. You make your submissions to a screen, keeping your eyes on the camera. Once the opposing party's connection dropped, and the judge waited twenty minutes for him.",
+  "e_old_partner": "Lawyer Lin, who trained you, retires from the partnership and hands several of his longtime clients to you. On the day of the handover he passes you a contact book he's used for twenty years, and says some of the numbers in it are now answered by the clients' children.",
+  "e_knee": "Years bent over a desk have worn out your neck and back. You switch to a standing desk in your office and take conference calls on your feet, the way you once stood in front of the filing window."
+ },
+ "choices": {
+  "c_litigation": {
+   "title": "Litigation, or transactional work",
+   "situation": "The firm's transactional group is short of people: equity investment, compliance and contracts for companies, more overtime, billed by the hour, better pay. Your litigation group means running to court and grinding through case files, but you love hearings. The head of the group lets you choose.",
+   "options": [
+    { "label": "Stay in litigation", "result": "You stayed. The next month you went to three hearings with Lin and filled a whole notebook from the gallery." },
+    { "label": "Move to transactional", "result": "You switched groups and started on due diligence checklists and shareholder agreements, facing a spreadsheet hundreds of rows long each day. Your pay went up, and you didn't set foot in a court for a long time." }
+   ]
+  },
+  "c_contract": {
+   "title": "How many years to sign for a trainee license",
+   "situation": "The firm can register you as a trainee lawyer, but you have to sign a three-year employment contract, and if you leave before the trainee year ends you repay the training costs. Another firm offers ¥1,000 more a month but hasn't said when it would register you.",
+   "options": [
+    { "label": "Sign for three years and stay", "result": "You signed, and the firm registered you as a trainee with the bar association. When you got the trainee card, you put it in the same envelope as your bar exam certificate." },
+    { "label": "Go to the other firm", "result": "You went to the other firm for a bit more pay. Your registration dragged on for six months, and in that time you worked lots of cases alongside one lawyer and learned a great deal." }
+   ]
+  },
+  "c_exam_interview": {
+   "title": "The bar association assessment for Practicing Lawyer",
+   "situation": "A full year since registration, and you need to apply for your practice license: the bar association's assessment includes an interview, plus a written summary of the year's cases and the case files. You have hearings in two cases at the same time, so preparing means squeezing in the nights.",
+   "options": [
+    { "label": "Grind through the nights", "result": "You reviewed every case of the year one by one and wrote a forty-page summary. In the interview an examiner asked you a question on professional conduct; when you'd answered, the examiner nodded." },
+    { "label": "Hearings first, assessment next round", "result": "You handled both hearings well and pushed the assessment to the next round. Lin said: no rush. The license can come six months late; the cases can't." }
+   ]
+  },
+  "c_civil": {
+   "title": "The civil service exam, or the firm",
+   "situation": "Your family mails you a recruitment notice from the court back home: judge's assistants wanted, a permanent state post, twenty minutes from home. On the phone your mother says girls or boys, it's all the same: stability matters most. You've just taken on the first case you can lead yourself.",
+   "options": [
+    { "label": "Go home and sit the court exam", "result": "You left the firm, studied at home for four months and passed. On your first day at the court you looked out from the other side of the window at the lawyers lining up to file.", "end": "You went home and became a judge's assistant, sitting on the inside of the filing window. Every time a young lawyer's papers get sent back, you write what's missing on a sticky note and pass it out to them." },
+    { "label": "Stay in Shanghai", "result": "You had a long phone call with your mother and said give me three more years. Then you hung up and went back to writing the brief." }
+   ]
+  },
+  "c_ai_tool": {
+   "title": "Who figures out the AI research tools",
+   "situation": "The firm has bought an AI legal research and drafting system, and the head of the group wants a few young people to learn it inside out first and write the group's usage rules. Many senior lawyers don't trust it: if something goes wrong, who answers for it?",
+   "options": [
+    { "label": "I'll try it", "result": "You used it to redo the research on three old cases, listing everything it got right, got wrong and made up, and turned that into eight pages of rules. The senior lawyers started coming to you to ask how to use it." },
+    { "label": "Stick to the old way", "result": "You kept going through cases one at a time. Slower, but you knew where every conclusion came from. Later, more and more of the group's research memos were written by other people." }
+   ]
+  },
+  "c_firm": {
+   "title": "The offer from a big firm",
+   "situation": "The disputes department of a national firm comes for you: salaried associate, forty percent more pay, bigger cases, but you'd be one person handling one piece of a large team's work. Lin says if you leave, nobody will be left to take his shareholder case.",
+   "options": [
+    { "label": "Go to the big firm", "result": "You moved to the fortieth floor of a tower in Lujiazui. That first year everything you did was part of a big case. You saw more of the world, and had fewer clients of your own." },
+    { "label": "Stay with Lin", "result": "You stayed, took the shareholder case and led it from start to finish. At the dinner after it closed, Lin said that from next month, cases would go out under your name." }
+   ]
+  },
+  "c_inhouse": {
+   "title": "Going in-house",
+   "situation": "One of your client companies wants you as its head of legal: nine to six, no business development, steady income, a bit more than now. You also know that once you go in-house, you'll rarely be in court again.",
+   "options": [
+    { "label": "Go in-house", "result": "You transferred your practice license and joined the company. In the first month you found the hardest part wasn't the law; it was getting the business people to come and ask you first.", "end": "You became head of legal at a company and stopped going to court. When a case occasionally has to go out to a law firm, the first thing you look at when choosing lawyers is whether their evidence lists are tidy." },
+    { "label": "Stay at the firm", "result": "You thanked them and said to call if they ever had a case. Three months later the company did hire you for a lawsuit." }
+   ]
+  },
+  "c_salary_partner": {
+   "title": "Applying for salaried partner",
+   "situation": "This year the firm has opened a few places for Senior Associate (Salaried Partner), judged on your clients, your hours and how you develop juniors. You don't bring in much business, but your casework is acknowledged as the best in the group.",
+   "options": [
+    { "label": "Apply", "result": "You wrote a summary of three years of cases and spoke for twenty minutes at the partners' meeting. A senior partner asked: where are the cases you brought in yourself? You named two, and he asked nothing more." },
+    { "label": "Wait two more years", "result": "You decided to build up some clients of your own first. For those two years you were at industry salons nearly every weekend and handed out hundreds of business cards." }
+   ]
+  },
+  "c_equity": {
+   "title": "Buy in, or go out on your own",
+   "situation": "The firm invites you to join as an equity partner. You'd put in a capital contribution and from then on carry your own profit and loss: good years pay well, bad years you dip into your own pocket to pay the team. An old colleague asks you to leave with him and start a boutique firm.",
+   "options": [
+    { "label": "Buy in", "result": "You raised the capital and signed the partnership agreement. Your first year you took home less than as a salaried associate; the second year it doubled." },
+    { "label": "Start your own firm", "result": "You rented a floor of a small office building by Suzhou Creek: four lawyers, two paralegals. The first month open, you went down to the print shop and bound the case files yourself, and the first year you barely broke even." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "Your last court appearance is a mediation. Both sides sign, and the clerk hands you the mediation agreement. You fold your lawyer's robe into the cabinet and tell the young people at the firm not to throw out that binding machine; it still works. Leaving the court, a young man on the steps with a bag of papers asks the way, and you point him to the filing hall.",
+  "burnout": "That year you fell ill twice in a row, and the doctor said you couldn't keep grinding like this. You handed your cases over one by one. When the last handover was done, you sat in the empty meeting room and watched the office towers outside light up, one window at a time."
+ },
+ "stages": [
+  "Most of your work is on paper and on the road: filing at court, pulling registration records from the archives, numbering evidence pages, binding case files, filling in the timekeeping system one cell at a time. You deal most with Lawyer Lin, who supervises you, and with the clerks at the court window: you write down whatever Lin says, and for every set of papers the clerks send back you need to understand why. You can't appear in court, and you can't tell a client any conclusion.",
+  "The bar association's trainee card is in hand: you can sit beside a lawyer in court and go with them to meet clients. You write the first drafts of complaints, briefs and evidence responses, and Lin corrects them in red pen, less and less each time. You've started calling clients yourself to update them, but every judgment call still goes to him first.",
+  "Your own practice license is up, and your business card says \"Lawyer.\" You go to hearings alone, talk to judges alone, face clients' questions alone, and it's your name at the end of the brief. You have a paralegal now, and the filing tricks you teach her are exactly the ones you learned two years ago by getting sent back.",
+  "You lead cases worth tens of millions and supervise two or three junior lawyers, dividing up the work at Monday's team meeting and reading their drafts. Whether to fight a case, how to fight it, when to talk settlement: you put the plan together first. You've started going to industry salons and teaching seminars for companies, handing out business cards by the box, because part of the group's livelihood next year is in your hands.",
+  "You're an equity partner at the firm, with the livelihood of a team of a dozen-odd resting on you. Most of your time goes not on drafting but on meeting clients, negotiating fees, reviewing your team's plans and arguing over the split at partners' meetings. You appear in court less yourself, but for the hardest few hearings you're still in the front row."
+ ],
+ "work": [
+  "At the market regulation bureau's archive window you hand over the firm's letter of introduction and a copy of a lawyer's license, pull fifteen years of a company's shareholder changes, and photograph each page for the case file.",
+  "Lin asks you to extract every clause about breach from a two-hundred-page lease. You highlight thirty-odd places and turn them into a one-page table.",
+  "The day before a hearing you put the original evidence into file boxes in list order, with a colored tab on each. The next day the judge asks for number seventeen, and Lin has it in hand the moment he reaches for it.",
+  "Lin rewrites half of the first brief you draft, and on the last page writes: put your argument up front; the judge doesn't have time to get to page five. You rewrite it, and on the third draft he changes only two characters.",
+  "A client on the phone asks if you can guarantee a win. You say what Lin taught you: what we can guarantee is that every piece of evidence gets used well. After a pause, the client says all right.",
+  "In court the opposing lawyer suddenly submits new evidence. You quickly write three doubts in your notebook and slide it to Lin, and he follows up on the second.",
+  "Your first time alone at a court in another city, three hours on the high-speed train. After the hearing the judge stops you to say the calculation table you submitted was very clear and might be cited directly in the judgment.",
+  "A client is two months late on your fees. You don't chase him; you first transfer to his account the money you'd recovered for him in enforcement. The next day your fees arrive too.",
+  "Your paralegal's first filing gets sent back and she comes back red-eyed. You read the reason for the rejection, take her back there yourself, and on the way tell her about the two times you were sent back.",
+  "A shareholder case needs an asset preservation order. You and two junior lawyers spend the night tracing the other side's property, shareholdings and bank accounts, and first thing next morning you file the application with the guarantee letter.",
+  "You give a talk on contract management to a manufacturer's middle managers, and afterwards someone asks: what if we ship before the contract is signed? You tell them about a case you half won. Three months later the company becomes a retained client.",
+  "A junior lawyer's response to the evidence is too aggressive. You cut two paragraphs and tell him: leave a little room in court; you'll need it when it comes to mediation.",
+  "The chairman of a longtime client calls to say the company has been sued and asks what you think. On the phone you ask only three questions, then say: I'll bring a team over tomorrow morning.",
+  "At the partners' meeting, discussing whether to take a very risky case, you vote no, on the grounds that the team has been worn out for six months. After the meeting two junior lawyers message you.",
+  "Interviewing a paralegal fresh through the bar exam, you have her find the errors in a complaint on the spot. She spots that the defendant's street number is wrong by one digit. You say there and then: start next Monday."
+ ],
+ "past": [
+  "You grew up in a county town in Anhui, where your parents ran a building materials shop. One year a construction foreman stiffed the shop for a large sum, and your father chased him for six months before finally hiring a lawyer to get it back.",
+  "On your gaokao (college entrance exam) application you put down law for every choice. Your father said that's good: then when the family has trouble, we won't have to beg anyone.",
+  "The summer after your second year you interned at a law firm in your county town, following an old lawyer to hearings at township courts. One court was in a small two-story building with a dog tied up by the door.",
+  "In your third year you started studying for the bar exam, moving to the study room when the library closed and memorizing the Civil Code into the small hours.",
+  "The year you graduated, you passed the multiple-choice part and missed the written part by four points. You dragged your suitcase onto the high-speed train to Shanghai and started at a law firm as a paralegal, working while you studied to sit it again.",
+  "The first time you filed a case on your own, you were sent back from the window twice, and only learned afterwards that a complaint needs an extra copy for each defendant. That autumn, when the written exam results came out, you cried in your rented room."
+ ],
+ "late": {
+  "pension_note": "Estimate: the firm paid social insurance on the Shanghai contribution base, and as a partner you mostly paid in yourself at a lower base, so the pension comes to about forty percent of final monthly pay. What you saved in the high-earning years is your other pension.",
+  "scenes": [
+   "The first Monday morning of retirement, you wake and reach for your phone without thinking, to check what time today's hearing is. The calendar is empty. You get up and go to the park to do a round of tai chi.",
+   "You staff the neighborhood legal aid station one afternoon a week. An old woman asks what she can do about a son who won't support her. You talk with her for a long time, and when she leaves she leaves a bag of tangerines on the desk.",
+   "The firm invites you back to teach the new hires a class. You teach them how to build an evidence list, and a young man raises his hand: doesn't AI do that now? You say: you need to know why it orders things the way it does.",
+   "For the first few months after stopping, you sleep until you wake naturally, look at the sky outside first, then remember there's nothing you have to do today. It takes you a long time to get used to the feeling.",
+   "You join a calligraphy class at the community center, and the first piece you write is two characters meaning \"vigilant when alone.\" The teacher says your strokes are too tight; loosen up.",
+   "As your health improves you take on a few old clients as their legal adviser, two visits a month, drinking tea, chatting, reading contracts. No court, and enough to live on.",
+   "Your first year on a new path, you pass the district court and see a long line at the door. You stand across the road for a while and recognize the old print shop, still open.",
+   "Lawyer Lin, who trained you, retires, and you go to his retirement dinner. He drinks too much, grabs your arm and says he's always remembered your face the first time you were sent back from the filing window.",
+   "At an industry forum you run into several of the young people from your old firm, all partners now. They still call you their senior, and you laugh and say: I stopped going to court long ago.",
+   "Now filing takes a few clicks online, evidence lists are ordered by AI, similar cases found by AI. But when a client is slamming the table in the meeting room, someone still has to sit across from him and write down every word.",
+   "In your bookcase you find an old notebook from your paralegal year. The first page says: one extra copy of the complaint for each defendant. You laugh out loud."
+  ],
+  "closing": {
+   "retire": "One afternoon many years later you sit in the sun on your balcony, an unfinished volume of case reports at your elbow. Downstairs someone is arguing over a parking space. You listen for a while, push the window a little more closed, and turn the page.",
+   "burnout": "Many years later, walking along Suzhou Creek, you see a young man hurry past hugging a stack of case files, the handles of his bag about to give out. You want to call after him and tell him to get a sturdier bag, but in the end you don't, and watch him go.",
+   "end": "Many years later, in a drawer, you find your old trainee lawyer card, the face in the photo with short hair and very bright eyes. You look at it for a while, then put it back in the envelope with your bar exam certificate."
+  }
+ }
+}

@@ -1,0 +1,198 @@
+{
+ "id": "logistics-linyi",
+ "occupation": "Logistics Specialist",
+ "role": "Logistics clerk at a dedicated-line freight company",
+ "headline": "A year in a Linyi logistics park of several thousand storefronts, minding a dedicated freight line to Chengdu and Chongqing: by day you write waybills for wholesale market traders and take in their goods, by night you watch the forklifts fill a 17.5-meter semi-trailer before you sign it off",
+ "unit": "A dedicated-line freight company in one of Linyi's big logistics parks: one storefront, one freight yard, about twenty people, sending two or three truckloads of less-than-truckload freight a day each to Chengdu and Chongqing, mostly for wholesale market traders in hardware, boards and household goods",
+ "unit_type": "Dedicated-line freight company",
+ "city": "Linyi",
+ "city_tier": "Tier 3",
+ "education": "Associate degree (logistics management)",
+ "level": "You're fluent now at writing waybills, collecting freight charges and checking cash-on-delivery amounts, and you know the stall numbers of the few dozen regular traders by heart. But how to load a truck so nothing gets crushed and half the space isn't wasted, you still wait for Lao Zhou the dispatcher to come and take a look",
+ "intro": "You grew up in Linyi, and as a child, riding the bus past the logistics park, all you saw were endless trucks and roller shutters. Now you sit behind one of those shutters, with a dot-matrix printer, a stack of waybills and a phone that never stops ringing on your desk. As of today, a stretch of the 1,700 kilometers from Linyi to Chengdu is yours to watch over.",
+ "salary_note": "Estimate: clerks and dispatchers at dedicated-line freight companies in Linyi's logistics parks earn a little over ten percent below the national figure, with a per-truck bonus in peak season. Food and lodging in the park are cheap, and many people rent rooms at its edge.",
+ "facts": [
+  { "label": "Logistics Specialist (current level)", "value": "0-2 years, ¥4,000–5,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Dispatcher (2-5 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Watching the loading in the yard, and dealing face to face with traders and drivers", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Entering waybills and filing delivery receipts", "source": "AI exposure" },
+  { "label": "Open positions", "value": "126 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "At a stall by the park gate you have a bowl of hot sa soup, Linyi's peppery breakfast broth, with an egg. The storefront shutter goes up. The two trucks that left last night are already past Zhengzhou, and Lao Ma, one of the drivers, sends a voice message: all smooth.",
+  "Wholesale market traders start arriving on cargo tricycles to ship: two cartons of hardware, five rolls of vinyl flooring, twenty plastic basins. You weigh, measure and write a waybill for each, the dot-matrix printer screeching, and ask: how much cash on delivery?",
+  "The Chengdu depot sends a photo of a delivery receipt with a smudged signature. You call and have your colleague there take another, and mark it \"receipt pending\" in the system.",
+  "The little restaurant beside the yard: a plate of Linyi stir-fried chicken and two steamed buns, at a table with the loaders. The forklift driver says this afternoon's tiles go on the bottom. You say you know.",
+  "In the yard you follow the forklift with the waybills, checking each label: heavy goods at the bottom, tiles to the front, foam boxes on top. Halfway through loading a 17.5-meter semi-trailer, you find you're three cubic meters short of a full load.",
+  "You look for a truck to Chengdu on the freight-matching platform and make three calls. The last driver says ¥8,500 for 1,700 kilometers; you say ¥8,000, and he says you Linyi people really know how to haggle.",
+  "The truck is full. You walk once around it, take photos, seal it, and sign the handover sheet together with the driver. He lights a cigarette and says he'll be in Chengdu tomorrow afternoon. You tell him to rest along the way.",
+  "Back at the storefront you reconcile the day: freight charges, cash on delivery, what's owed to drivers, line by line. One trader's COD is twenty yuan off. You dig out the waybill: you wrote a digit wrong yourself."
+ ],
+ "ladder": [
+  { "title": "Logistics Specialist", "stage": "Entry", "focus": "Write waybills and take in goods, track shipments, reconcile accounts and cash on delivery, handle delivery receipts, and get to know the traders, the drivers and the whole route." },
+  { "title": "Dispatcher", "stage": "Dispatch", "focus": "Find and assign trucks, plan loads, watch shipments in transit, handle delays and damage, and answer for each day's departures and arrivals." },
+  { "title": "Line Supervisor", "stage": "Supervisor", "focus": "Run one line's intake, rates, trucks and the depots at both ends, and answer for its profit and timeliness." },
+  { "title": "Operations Manager", "stage": "Manager", "focus": "Run several of the company's lines plus the yard, fleet and customer service; set rates, negotiate with big customers, manage costs." },
+  { "title": "Branch General Manager", "stage": "General manager", "focus": "Run a branch in another city or buy in as a partner, open new lines, strike partnerships, and answer for a whole business's profit and loss; few get this far." }
+ ],
+ "ai_tasks": [
+  { "name": "Entering waybills and filing delivery receipts", "how": "The system can read handwritten waybills and photos of receipts, enter them automatically, file them by line and flag which receipts haven't come back. A person only spot-checks that amounts and consignees' phone numbers are right." },
+  { "name": "Load planning and loading schemes", "how": "Smart load planning can lay out the loading order and position by each item's weight, volume and destination. Whether the tiles will hold up, and which item a trader gave special instructions about, need a person in the yard watching and adjusting." },
+  { "name": "Finding trucks, comparing prices, assigning loads", "how": "Freight-matching platforms can automatically find backhaul trucks and suggest a rate. Whether a driver is reliable, and whether the price can come down, take a person who makes the call and knows the people." },
+  { "name": "Reconciling accounts and settling cash on delivery", "how": "The system can calculate freight, COD and driver pay from each waybill and flag what doesn't match. The few amounts traders and consignees are wrangling over need a person to sort out." },
+  { "name": "Damage claims and customer complaints", "how": "AI can gather photos, documents and chat records and calculate compensation by the rules. How much to pay so the trader keeps shipping with you, and how to split this one with the driver, need a person to decide." },
+  { "name": "Watching the loading in the yard, and dealing face to face with traders and drivers", "how": "Standing in the yard while the forklift stacks each piece, sealing and signing off the truck, talking things through in person with the trader who came on a tricycle and the driver who drove all night: nothing replaces this." }
+ ],
+ "events": {
+  "e_snow": "A heavy snow in the last month of the lunar year shuts the expressway for two days, with three truckloads stuck on the road and in the yard. Trader after trader calls, and you explain again and again. At night you go back to the yard and move a few frost-sensitive items into the warehouse.",
+  "e_tiles": "A truckload of tiles arrives in Chongqing with a dozen-odd boxes broken. You pull up the loading photos and see some iron racks were stacked on top that shouldn't have been. You spend an afternoon with the shipper; the company pays half. You write a loading checklist and pin it to the yard wall.",
+  "e_cod": "A consignee takes delivery but keeps stalling on the ¥30,000-odd cash on delivery, and stops answering his phone. You and a colleague at the Chengdu depot make three trips, finally find his shop in a wholesale market, and get the money back in two installments.",
+  "e_peak": "Year-end peak season: traders are stocking their southwestern customers for New Year, and the yard is too packed to walk through. You go a month without a day off, sending five or six trucks a day, and your month-end bonus is double the usual.",
+  "e_driver": "In the middle of the night an old driver calls from the expressway to say he's been driving for over ten hours straight and wants to push on a bit further. You talk him round for ten minutes, and he stops at the next service area and sleeps for four hours. When he arrives the next day, he thanks you.",
+  "e_old_ma": "Lao Ma, who's driven this line for ten years, brings you a pack of Sichuan cured pork at New Year. He says your waybills are the clearest, and at the other end he never has to hunt for anything when unloading.",
+  "e_system": "The company brings in a new logistics system: photograph a handwritten waybill and it's entered automatically, and missing receipts trigger reminders. Reconciliation that used to take you all evening now takes an hour.",
+  "e_ai_load": "The system starts planning loads automatically, a truck on screen cut into little cells. Once it puts a batch of foam boxes under steel pipes. One look in the yard and you stop the forklift, then go back and add a rule to the system.",
+  "e_overweight": "A truck gets weighed at an overload checkpoint on the road and found more than a ton over. It's fined and has to unload. The boss yells down the phone. Back at the office you check the waybills: one trader declared half the real weight.",
+  "e_big_network": "A national express freight company builds a big distribution hub at the edge of the park and slashes prices. Within six months your less-than-truckload freight is down by a third, and several longtime traders have switched.",
+  "e_online_order": "You spend a month going storefront by storefront in the wholesale market teaching the owners to book shipments on their phones. A woman who sells pots and bowls learns it three times, then says: you just write it for me. The next month, she books her first one herself.",
+  "e_waist": "Short of hands in peak season, you help haul freight one afternoon, and the next day you can't straighten your back. You put a cushion on your chair at the storefront and wear pain-relief patches for a week.",
+  "e_house": "You buy a flat in Lanshan district, twenty minutes from the park. The down payment is your savings from these years plus what your parents gave. The day you sign, you go back to the park and write waybills all afternoon.",
+  "e_new_truck": "The company switches some short-haul runs to new-energy heavy trucks and hands off trailers for the long-haul legs. You rework every departure time, and in the first month the trucks run twenty percent more than before.",
+  "e_live_stream": "Lots of traders in the wholesale market start selling by livestream, and what they ship shifts from full cartons to single small parcels. The company partitions off a corner of the yard just for packing small items, and you learn to use express shipping labels.",
+  "e_family": "Your parents, who've farmed in the county all their lives, come to the logistics park to see you for the first time. You walk them around the yard, and your father looks at the 17-meter trucks and says: you're in charge of all these? You say: some of them.",
+  "e_apprentice": "The new logistics specialist watches a loading alone for the first time and comes back to say the truck is packed full, not a cubic meter wasted. You go and look in the yard, nod, and have her post the loading photos in the group chat.",
+  "e_young_ai": "The young dispatchers assign trucks by the screen: whichever driver the system says, that's who goes. You still ask one more question: how many runs has this driver done this month? Is he tired?",
+  "e_old_route": "Lao Ma retires, and you see him off on his last run. From the cab he hands you an old notebook recording which noodle place is good at every service area along this line.",
+  "e_park_change": "The logistics park is redeveloped: the old storefronts are torn down and replaced by rows of new warehouses and automated sorting lines. From the window of your new office you can't find where that roller shutter used to be."
+ },
+ "choices": {
+  "c_half_truck": {
+   "title": "Half a load: send it or not",
+   "situation": "Today's freight to Chongqing only fills half a truck, and a big trader needs his goods urgently, saying they must arrive tomorrow. Leave on time and this run loses over ¥2,000. Wait a day to fill up and he might move to another line.",
+   "options": [
+    { "label": "Leave on time", "result": "The truck left on schedule. The trader got his goods the next day, called to say thanks, and gave you all his freight for the next three months. The boss looked at that run's numbers and said nothing." },
+    { "label": "Wait for a full load", "result": "You called trader after trader asking for more freight and filled the truck by the next afternoon. The big trader's goods were a day late, and he lost his temper on the phone." }
+   ]
+  },
+  "c_overload": {
+   "title": "Two more tons",
+   "situation": "Peak season, lots of freight and few trucks. The boss says load two more tons on this one; the driver's agreed, and it's over a thousand more for the run. You know the overload checkpoints on the road are strict, and you know what those two extra tons mean for the truck.",
+   "options": [
+    { "label": "Load it as the boss says", "result": "The truck left and wasn't stopped the whole way. The boss clapped you on the shoulder. For those few days you checked the truck's location every few hours." },
+    { "label": "Don't; find another truck", "result": "You told the boss about the checkpoints and the brakes, and spent the night finding a small truck on the platform for those two tons. The boss grumbled, and the next day told you: from now on, we do it your way." }
+   ]
+  },
+  "c_big_company": {
+   "title": "Joining a big express freight company",
+   "situation": "The national express freight company's hub at the edge of the park is hiring dispatchers: full social insurance and housing fund, twenty percent more pay, training and a clear promotion track. But the work there is finely divided, and you might not see a single trader all year.",
+   "options": [
+    { "label": "Join the big company", "result": "You put on a uniform with the company logo and spent your days watching a big screen, scheduling hundreds of trucks. In the first year you learned a whole new system, and didn't go to the wholesale market for a long time." },
+    { "label": "Stay on the line", "result": "You stayed. That autumn the boss had you start learning dispatch from Lao Zhou, and for the first time you sent off a truck to Chengdu yourself." }
+   ]
+  },
+  "c_ai_dispatch": {
+   "title": "Who runs the smart dispatch system",
+   "situation": "The company is bringing in a smart dispatch and load planning system that matches trucks, plans loading and calculates rates automatically. The boss asks who'll lead the trial: all these years of waybills need entering, and Lao Zhou's know-how needs writing into rules. Lao Zhou says he doesn't believe in it.",
+   "options": [
+    { "label": "I'll do it", "result": "You stood in the yard with Lao Zhou for a month, writing down how he stacks freight and picks drivers, and built it into the system. Six months later each truck was carrying an extra cubic meter and a half on average, and Lao Zhou said: the thing learns pretty well." },
+    { "label": "Let someone else", "result": "You kept finding trucks with a notebook and a phone. Once the system went live, the young ones handled lots of things in a few taps on a screen, and sometimes you had to ask them how." }
+   ]
+  },
+  "c_new_line": {
+   "title": "Going to set up the Xi'an end",
+   "situation": "The company is opening a new Linyi to Xi'an line and needs someone in Xi'an to set up a depot, find consignees and work the market, for at least two years. Go, and you'll likely run this line when you come back. But you've just bought a flat in Linyi, and your family is all here.",
+   "options": [
+    { "label": "Go to Xi'an", "result": "You rented a small storefront in a Xi'an logistics park, and in the first month only half a truckload a day came in. You handed out business cards at building materials markets one by one, and by the second year the line was sending two trucks a day." },
+    { "label": "Stay in Linyi", "result": "Another dispatcher went. You stayed in Linyi and took over his work, calling the Xi'an end several times a day." }
+   ]
+  },
+  "c_supervisor": {
+   "title": "Applying for Line Supervisor",
+   "situation": "The Chengdu line's supervisor is retiring, and the boss wants to pick one of the dispatchers to take over. Whoever does will own the line's rates, trucks, depots at both ends and profit. You and Xiao Liu, the dispatcher next to you, both want it.",
+   "options": [
+    { "label": "Go for it", "result": "You put together three years of the line's accounts, showing which traders were most profitable and which time slots ran emptiest. The boss read it and gave you the Chengdu line the next day. Xiao Liu took you out for a drink and said he was fine with it." },
+    { "label": "Let Xiao Liu have it", "result": "Xiao Liu became supervisor, and the first thing he did was hand you the most difficult few traders. You can talk to them, he said." }
+   ]
+  },
+  "c_own_truck": {
+   "title": "Buying a truck and hauling for yourself",
+   "situation": "Lao Ma is changing trucks and asks if you want to take over his semi-trailer: hire a driver or get your own license, and register it with the company to run the Chengdu line. In a good year you could make double what you do now, but the loan, the fuel and the risks on the road would all be yours.",
+   "options": [
+    { "label": "Take the truck", "result": "You took a loan for the truck, hired a young driver, and found loads for your own truck at the Linyi end. The first year it broke down twice, and the books just about balanced.", "end": "You became a truck owner with two semi-trailers on the Chengdu run. Every night before they leave, you walk once around each one, just as you used to in the yard." },
+    { "label": "Keep dispatching", "result": "You found Lao Ma a buyer and stayed with the company. The day he handed over the truck, he gave you the worn cover off its steering wheel." }
+   ]
+  },
+  "c_ecommerce": {
+   "title": "Running an e-commerce warehouse",
+   "situation": "A livestream seller has built a big e-commerce warehouse in the park and wants someone who knows logistics as warehouse supervisor, shipping tens of thousands of small parcels a day, at forty percent more than you earn now. But it's a different kind of work: picking, packing, shipping labels, returns.",
+   "options": [
+    { "label": "Go to the warehouse", "result": "You went, and on the first big sales day the warehouse shipped eighty thousand orders while you stood by the packing line for sixteen hours. When your pay came through at month-end, you sent some to your parents.", "end": "You became supervisor of an e-commerce warehouse, watching tens of thousands of small parcels slide off the conveyor every day. Now and then a truckload of big freight heads for the southwest, and you still go downstairs to watch it loaded." },
+    { "label": "Stay on the line", "result": "You thanked them. That night, as always, you stood in the yard and watched the last truck sealed." }
+   ]
+  },
+  "c_partner": {
+   "title": "Buying into a branch",
+   "situation": "The boss wants to set up a branch company at the Chengdu end and asks if you'll put in money as a shareholder and go as general manager. It means several hundred thousand yuan; if it makes money you share the profits, if it loses you share that too. Your position in Linyi is rock steady.",
+   "options": [
+    { "label": "Buy in and go to Chengdu", "result": "You mortgaged part of your flat to raise the money and moved your family to Chengdu. The first year the branch lost a little; by the third year it had opened two new lines." },
+    { "label": "Stay in Linyi", "result": "You said you'd rather keep watch over the yard in Linyi. The boss sent someone else to Chengdu, and the two of you talk on the phone every day, matching the freight at both ends." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On the night you retire, you sign a handover sheet for the last time and watch that truck pull out through the park gate. The new dispatcher taps the system, and a moving dot appears on the screen. You stand by the yard for a while, buy a bowl of sa soup, and only go home after you've slowly finished it.",
+  "burnout": "That year your back and stomach were in bad shape, and the doctor told you to stop staying up all night. You told the boss you couldn't keep going, and handed your traders and drivers over one by one. On the last day you switched off the work phone that had rung for more than ten years. Across the park, the truck headlights were still on."
+ },
+ "stages": [
+  "You keep to the counter behind the storefront: weigh and measure goods for traders arriving on tricycles, write waybills, collect freight charges, record cash on delivery, reconcile accounts at night and handle the receipts sent back from Chengdu and Chongqing. You deal most with trader-owners and loaders: the first need you to remember their goods, the second need you to read their hand signals. Dispatch and load planning are still Lao Zhou's call.",
+  "You're now in charge of each day's departures: finding trucks on the freight platform and by phone, negotiating with drivers, planning loads, and at night watching the forklift fill a 17-meter semi-trailer in the yard before you seal and sign it off. With a truck on the road you watch its location, and when there's a delay, damage or a roadside inspection, the first call comes to you. Compared with your waybill years, what you say now decides whether a truckload goes.",
+  "The Chengdu line is yours: what freight to take, what rate to charge, which drivers to use, how the depots at both ends work together, all your call. Every week you go over the line's accounts, negotiate annual rates with big traders, and supervise two dispatchers and a logistics specialist. You rarely write waybills now, but walk past a badly loaded truck in the yard and you can see it at a glance.",
+  "You run the company's several lines, the yard, the fleet and customer service, holding a short meeting every morning to review yesterday's departures and arrivals on each line. You set rates with the boss, negotiate with big customers, work out fuel prices and tolls, and handle the thorniest claims and disputes. You know hundreds of people in the park, and one call from you can get a truck moving half a day sooner.",
+  "You run a branch company, or have bought in as a partner, answering for the profit and loss of a whole business. Whether to open a new line, which big company to partner with, whether to buy new trucks, whether to keep an old customer: in the end it's your call. You rarely go to the yard to watch the loading now, but every year when the first snow falls you still call to ask: are all the trucks on the road parked up safe?"
+ ],
+ "work": [
+  "A trader selling plastic buckets ships fifty pieces. Measuring them, you find he's declared three fewer than there are. You count again and correct the waybill, and with a sheepish grin he pays the extra freight.",
+  "The Chongqing depot says a piece is missing. You pull up the loading photos and check each label, and finally find it in the corner of one shot: during unloading it had ended up buried under another shipper's goods.",
+  "An old trader can't use his phone to track shipments and calls every day to ask where his goods are. You write his tracking number on a slip of paper, stick it beside his counter, and show him how to scan it.",
+  "Halfway through loading you find two cubic meters still empty. You ask around in the group chat; one trader happens to have a batch of brooms that aren't urgent, and you have the forklift squeeze them into the top layer.",
+  "A driver calls from the road to say his truck has broken down. You find the nearest repair shop on the map and arrange an empty truck to transfer the freight at a service area, and the goods reach Chengdu only six hours late.",
+  "Working with a new driver for the first time, his quote is ¥500 below everyone else's. You ask a few more questions about which lines he's run and check his vehicle papers, and in the end use someone else.",
+  "You pull a year of the Chengdu line's waybills and find Tuesday and Wednesday trucks never fill up. You agree with a few big traders to shift some of their freight to those two days, in exchange for a slightly lower rate.",
+  "A big trader wants next year's rate cut by ten percent. You walk him through the numbers on fuel, tolls and drivers' pay, and in the end cut five percent and sign a one-year contract.",
+  "The dispatcher you're training handles a damage claim alone for the first time, and organizes the photos, documents and chat records before coming to you. You read it all through and say: you decide; I'll sign.",
+  "At the morning meeting, looking at yesterday's departures and arrivals for each line on the screen, you see one has arrived late three days running, and you call that line's supervisor on the spot to ask whether it's the trucks or the people.",
+  "A trader's shipment suffers major damage on the road, a claim of over ¥100,000. You take the photos and loading records to talk with him, then with the insurer. In the end insurance covers most of it, and the next month the trader ships with you as usual.",
+  "Fuel prices go up, and you and the boss spend an evening doing the numbers to decide how much each line's rate rises. The next day you go storefront by storefront to tell the longtime traders in person.",
+  "You negotiate a partnership with a national express freight company that wants to use your southwestern lines for its less-than-truckload freight. At the table you work out the cost of every cubic meter, and keep your longtime traders' place secure.",
+  "Whether to open a new line to Kunming: you study three months of data, then spend a week walking Kunming's wholesale markets yourself, and come back to tell the meeting: open it, but start with one truck a day.",
+  "You interview a new logistics graduate and have him find the error on a waybill. He spots that the cash-on-delivery amount in figures doesn't match the amount written out in words. You say: start at the storefront tomorrow."
+ ],
+ "past": [
+  "You grew up in a county under Linyi, where your parents farmed. In the slack season your father went to the logistics park in the city to load and unload, and came home at night smelling of cardboard boxes.",
+  "Your gaokao (college entrance exam) score wasn't high, so you applied for logistics management at a local vocational college, because your father said Linyi may not have much, but it has plenty of logistics parks; you won't go hungry.",
+  "In your second year you interned at an express freight company in the park and worked the sorting line for three months, learning to tell at a glance how heavy a package is.",
+  "The year you graduated you went storefront to storefront in the park handing out your résumé, and ended up at this company running dedicated lines to Chengdu and Chongqing. The boss asked if you could write waybills. You said no, but I learn fast.",
+  "In your first year you learned under Lao Zhou the dispatcher. The first time you checked a whole truckload's cash on delivery yourself, forty-odd waybills, you went over it three times and didn't miss a fen. Lao Zhou said: this kid will do."
+ ],
+ "late": {
+  "pension_note": "Estimate: the company paid enterprise employee pension contributions on the Linyi base, some years only at the minimum tier, so the pension comes to a little over half of final monthly pay.",
+  "scenes": [
+   "Your first winter retired, heavy snow falls before New Year. The first thing you do on waking is check the forecast to see whether the expressway is closed, and only then remember those trucks aren't yours to worry about anymore.",
+   "You often go for sa soup at the little stall beside the logistics park, now run by the owner's son. A few of the old drivers are there too, and on the low stools you still talk about which roads are easy and which service area has good noodles.",
+   "For your grandson's birthday you buy him a toy online, and the shipping label says it left from Linyi. You watch the tracking update stop by stop, working out in your head when it will arrive.",
+   "In the first months after stopping, you walk along the Yi River every morning, and slowly your back stops hurting. Someone is flying a kite on the bank, and you stand watching for a long time, realizing you'd never been out here in daylight.",
+   "In your housing compound you take in and send off parcels for the neighbors, and when someone's package is misdelivered, one glance tells you whose it is. The property management people joke that you know it better than the couriers.",
+   "As your health improves, now and then you help a few old traders check whether the freight lines they've found are reliable, making a few calls, asking prices. You take no money, and at New Year they bring you a box of jianbing pancakes.",
+   "Your first year in a different line of work, you drive past the logistics park and see familiar license plates heading out one after another. You pull over for a while, and don't go in.",
+   "Old colleagues take you out for stir-fried chicken and say finding trucks, load planning and reconciliation are all done by the system now, and the storefront has half the people it did. You drink until late, talking about Lao Ma, and about that year's big snow.",
+   "Once, in a Chengdu wholesale market, you see a batch of Linyi hardware on a trader's shelves. You check the freight label on the box: it's your old company's.",
+   "Now waybills are entered by the system, trucks assigned by the platform, loads planned by the computer. But when a driver in the middle of the night says he wants to push on a bit further, someone still has to be on the other end of the line telling him to stop.",
+   "In a drawer you find a sheaf of yellowed waybills you wrote in your first year, the handwriting crooked, every one with a cash-on-delivery figure. You look through them one by one, then bundle them again with a rubber band."
+  ],
+  "closing": {
+   "retire": "One winter evening many years later you sit on your balcony at home. On the distant expressway the truck headlights form a line running off toward the southwest. You watch for a long time, wondering how far those trucks have got, then draw the curtains.",
+   "burnout": "Many years later, on a bench by the Yi River, your granddaughter asks what you used to do. You point to a big truck crossing the bridge in the distance and say: I helped trucks like that take things to faraway places.",
+   "end": "Many years later, in an old wallet, you find a faded slip of paper in Lao Ma's handwriting: Chengdu line, third service area, beef noodles. You smile and put it back."
+  }
+ }
+}

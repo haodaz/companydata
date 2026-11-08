@@ -1,0 +1,164 @@
+{
+ "id": "actuary-bj",
+ "occupation": "Actuary",
+ "role": "Actuarial assistant at a life insurer (studying for the associate exams)",
+ "headline": "An actuarial assistant at a Beijing life insurer, fresh out of a master's in actuarial science, four of the eight associate exams passed, running reserves at a desk near Financial Street late into the night at the start of every month and drilling life contingencies problems in a rented room at weekends",
+ "unit": "The actuarial department of a mid-sized life insurer near Financial Street, Beijing",
+ "unit_type": "Actuarial department of a mid-sized life insurer",
+ "city": "Beijing",
+ "city_tier": "First-tier",
+ "education": "Master's degree (actuarial science)",
+ "level": "You've studied life tables, discounted cash flows and life contingencies, and you're fluent in Excel and Python. The first time you opened the company's reserving model, hundreds of thousands of rows long, it took you an afternoon to find which sheet the assumption tables hung off.",
+ "intro": "You finished a master's in actuarial science in Beijing with four of the eight associate actuary exams behind you, and in the autumn hiring season you joined the actuarial department of a life insurer near Financial Street. Fourteen people in the department, desks along the windows, and outside, row after row of bank and insurance towers. From today, at the start of every month you'll feed several hundred thousand policies through the model and see, in the numbers, what this company actually owes everyone it insures.",
+ "salary_note": "Estimate: starting pay for actuarial roles at Beijing insurers runs about 30 percent above the national figure. The company pays a bonus for each exam passed, and salary jumps by grade once you qualify as an associate and then a fellow. Year-end bonuses follow company profit, and with the industry cutting costs these past few years, they haven't risen fast.",
+ "facts": [
+  { "label": "Actuarial Assistant (current level)", "value": "0–2 years, ¥8,000–13,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Actuarial Analyst, Associate Actuary (2–5 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Setting actuarial assumptions and signing the actuarial report", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Running pricing and reserving models and producing reports", "source": "AI exposure" },
+  { "label": "Open positions", "value": "7 related listings nationwide, 2 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You wake in the second bedroom of a shared flat near Xizhimen and spend twenty minutes on the subway memorizing actuarial formulas. The carriage is packed, so you hold your phone above your head to read.",
+  "At your desk you first check the monthly reserves that ran automatically overnight. One product's reserve is a chunk higher than last month. You flag it red in an email to the actuarial manager who supervises you.",
+  "Finding out why. You split the policy data by product line and by channel, and at the third level down you find a batch of annuities sold through banks all hitting their premium payment period at once.",
+  "Lunch with a few colleagues in the canteen downstairs. Everyone talks about next month's exams and the quarterly solvency report, and nobody talks about anything else.",
+  "The product team comes to a meeting to design a new retirement annuity. You sit at the far end of the table noting the guaranteed rate and payout options they want. Back at your desk you'll do the first profit test.",
+  "Revising a piece of model code. You have the coding assistant write a function to read the new assumption table, and the result differs from your hand calculation by three in a thousand. You check line by line until you find a rounding.",
+  "Your manager comes over to look at your reserve analysis and asks two questions. You answer one. He says give me the other tomorrow, and goes off to another meeting.",
+  "In your rented room you work through past life actuarial exam papers. Your answer to the fourth question is off by one decimal place. You redo it and find you've mixed up an annuity-due and an annuity-immediate."
+ ],
+ "ladder": [
+  { "title": "Actuarial Assistant", "stage": "Entry", "focus": "Run reserving and pricing models, prepare experience data, build and check reports, and study for the associate exams alongside the job." },
+  { "title": "Actuarial Analyst (Associate Actuary)", "stage": "Own models", "focus": "With all eight exams passed and associate status, take sole charge of pricing for one product line or one block of reserves, writing the models and the documentation." },
+  { "title": "Actuarial Manager (Fellow, China Association of Actuaries)", "stage": "Signing reports", "focus": "Qualified as a fellow, lead two or three people and own a block of pricing, valuation or solvency. Your name goes on actuarial reports and regulatory filings." },
+  { "title": "Senior Actuarial Manager", "stage": "Leading a team", "focus": "Run an actuarial team: set assumptions, review models, meet with finance, product, investment and reinsurance, and make the company's calls where numbers are concerned." },
+  { "title": "Chief Actuary", "stage": "Signing and answering for it", "focus": "The chief actuary must be approved by the regulator. Final judgment on products, reserves, solvency and policyholder dividends carries your signature, and you answer to the board and the regulator." }
+ ],
+ "ai_tasks": [
+  { "name": "Running pricing and reserving models and producing reports", "how": "Model runs, sensitivity tests, generating and reconciling dozens of reports are now mostly done overnight by automated workflows and AI. A person only looks at the few odd numbers and asks why." },
+  { "name": "Writing and revising actuarial model code", "how": "AI can write most of the model code from a spec, change formulas and find errors. Whether the cash flow definitions are right, and what else a changed parameter will pull on, needs someone who knows the business to read it section by section and own it." },
+  { "name": "Experience studies of mortality, morbidity and lapse rates", "how": "AI can clean, group and fit curves to data from millions of policies. Whether a curve is a real trend or a one-off fluctuation, and whether it belongs in the assumptions, takes a person weighing it against the business." },
+  { "name": "Setting actuarial assumptions and signing the actuarial report", "how": "How loose or tight to set interest, incidence, expense and lapse assumptions directly decides profit and solvency. AI can give ranges and evidence, but which one to choose, and who answers if it goes wrong, can only be the actuary who signs." },
+  { "name": "Designing new products and testing profit", "how": "AI can compare similar products on the market, draft the policy wording and run profit tests. Who the product is sold to, whether it invites adverse selection, how the sales force will pitch it, has to be argued out by people in a meeting room." },
+  { "name": "Explaining the numbers to management and regulators", "how": "AI can turn results into clear charts and notes. Explaining to the board and the regulator why a number changed, and holding up under questioning, still takes a person." }
+ ],
+ "events": {
+  "e_exam_pass": "The spring results come out: two exams passed at once. The company posts the exam bonus notice in the department chat, your manager replies \"good\" underneath, and you send a screenshot to your mother.",
+  "e_exam_fail": "You score in the fifties on asset-liability management, just short. You got one duration wrong and the next three questions all followed it. Six months of evenings, to be done again.",
+  "e_model_bug": "You find that an expense assumption in the model has been pointing at a column from three years ago, and no one ever noticed. You write a one-page note for your manager. He reads it for a long time, then says this month's numbers have to be rerun.",
+  "e_year_end": "Year-end valuation plus the annual report: four weeks of never leaving before eleven at night. On the last night every report reconciles. Someone in the department puts on a song. Nobody speaks; everyone is packing up.",
+  "e_ifrs": "The company switches to the new accounting standard for insurance contracts, and actuarial and finance have to rebuild the measurement models for every product. You spend six months in a meeting room with the project team and redefine one group of contracts seven times.",
+  "e_ai_code": "The department starts using AI to write model code. An experience-study script that used to take you a week, it writes in an afternoon. You spend two days checking every definition in it and change four.",
+  "e_ai_overnight": "Monthly valuation is fully automated: the data comes in, the model runs, the reports generate, the variance analysis writes itself, and in the morning an email lands in your inbox. Your job has gone from running numbers to reading that email and finding the one number that's off.",
+  "e_ai_fewer_juniors": "The department hires no new actuarial assistants this year. The runs and checks newcomers used to do now mostly run themselves. You look at the row of empty desks and remember you started at the one by the window.",
+  "e_ai_bias": "Underwriting brings in a machine learning model, and the regulator asks whether it treats people in certain occupations or regions unfairly. Nobody can say. In the end you and two others spend three months taking apart every variable in it and explaining each one.",
+  "e_rate_cut": "Market interest rates drop another notch, and the spread losses on several of the company's old high-guarantee products keep growing. Your stress test results go up on the screen at the management meeting. The room is very quiet.",
+  "e_regulator": "The regulator does an on-site inspection of the company's reserves and picks the block you're responsible for. You pull out the basis for each assumption, the experience study and the model documentation one by one. At the end the inspector writes one line on your note: well supported.",
+  "e_product_fight": "The sales channel wants to nudge up a product's guaranteed rate, saying it won't sell otherwise. You argue with them for an hour in the meeting, armed with the profit test and solvency results, and in the end each side gives a little.",
+  "e_neck": "Your neck starts to hurt, and long stretches at the screen make you dizzy. You buy a standing desk and run models on your feet for an hour a day. Colleagues tease that you look like you're giving a briefing.",
+  "e_love": "In an exam study group chat you meet someone who does non-life actuarial work. You meet to study at the National Library, each drilling your own questions, quizzing each other on breaks. The next year you pass your final exams together.",
+  "e_house": "You buy a small two-bedroom outside Beijing's Fifth Ring Road, the down payment emptying your savings and your family's. On the day you sign the mortgage, out of habit you work out the thirty-year cash flow, and the interest it comes to keeps you quiet for a while.",
+  "e_claim_letter": "Customer service forwards a letter from a customer who made a claim, writing to the company that the money saved her family. It goes round the department. You look at the policy number on it. You priced that product.",
+  "e_mortality_shift": "The new experience study shows the company's policyholders living more than two years longer than the assumption from ten years ago. For annuities, that means many more years of payments. Writing the result into the report, you think of your grandmother, ninety-two this year.",
+  "e_merger": "The company is bought by a large insurance group, and the actuarial department has to merge with theirs. Your models, assumptions and reports all have to be redone on their basis. Three colleagues leave before the merger is through.",
+  "e_kid": "Your child is born. Looking at the birth certificate in the hospital, the first thing that pops into your head is: on the current life table, this one will live past ninety. You don't tell anyone.",
+  "e_teach": "Your old university asks you back to give the actuarial students a class. You don't teach formulas. You tell them about the expense assumption you found in your first year that no one had seen for three years. Afterward a student runs after you to ask if you're hiring next year."
+ },
+ "choices": {
+  "c_exam_pace": { "title": "How many exams a year", "situation": "Four associate exams to go, and the company says only with all eight do you get graded as an associate, with a big raise. But the annual report, quarterly reports and the new accounting standard come one after another, and you have two hours left each night when you get home.", "options": [
+   { "label": "Sit all four and finish in a year", "result": "For six months you don't go out a single weekend. The day of the last exam you walk out of the hall and sit by the road for a long time. You pass three of the four." },
+   { "label": "Two at a time, steadily", "result": "You sit two each time, pass them steadily, and still get to hike the Fragrant Hills at weekends. Someone in your intake becomes an associate a year ahead of you." }
+  ] },
+  "c_soa": { "title": "Also take the North American exams?", "situation": "Someone in the department is studying for the North American actuarial exams, saying that credential travels further if you want to move to a foreign firm or a reinsurer later. But sitting both systems is like doing another degree, with the fees out of your own pocket.", "options": [
+   { "label": "Sit both", "result": "You start memorizing English textbooks in the small hours, and the two systems' notation often fights in your head. Three years later you have the associate-level credential on both sides, and a few more gray hairs." },
+   { "label": "Only the Chinese exams", "result": "You say you'll master one system first. You put the time saved into the company's models, and the oldest code in the department is understood only by you and your manager." }
+  ] },
+  "c_track": { "title": "Pricing or valuation", "situation": "The department is splitting into tracks. The pricing team follows the products, meets product and sales every day, always something new. The valuation team handles reserves and solvency, reporting monthly, quarterly and yearly: solid, and close to the regulator and finance.", "options": [
+   { "label": "Go to pricing", "result": "Every week you meet product and sales and hear what customers want, then turn it into rate tables. The day your first product goes live, you buy a policy of it yourself on your phone." },
+   { "label": "Go to valuation", "result": "You stay in valuation, running reserves at the start of each month and the solvency report each quarter. You know better than anyone how much each of the company's products owes its policyholders." }
+  ] },
+  "c_ai_platform": { "title": "Lead the actuarial automation and AI platform", "situation": "The company wants to move all the actuarial department's runs, checks and reports onto an automated platform, then hook up AI to write code and variance analysis. It needs someone who knows both actuarial work and technology to lead it with the tech department for eighteen months. If it works, the department will need far fewer people.", "options": [
+   { "label": "Lead it", "result": "For eighteen months you shuttle between tech and actuarial, writing the definitions behind dozens of reports into rules one by one. The month it goes live, the monthly valuation is out before eight in the morning for the first time." },
+   { "label": "Don't, keep to your products", "result": "You say you want to do the actuarial work itself well. Someone else leads the platform. After it launches you find it easy to use, though many of the definitions weren't set the way you'd have set them." }
+  ] },
+  "c_fellow": { "title": "Sit the fellowship and qualify as a Chinese actuary", "situation": "After associate come the fellowship exams and professional courses, with a thesis and a specialty exam. With it you can make Actuarial Manager and sign reports. But you're also one of the department's mainstays now, working overtime every annual report season.", "options": [
+   { "label": "Sit it, done in eighteen months", "result": "You run back to back between annual reports and exams for eighteen months, with a thesis on longevity risk in the company's annuities. The day you qualify, your manager takes the department out for hot pot." },
+   { "label": "Hold off a while", "result": "You say this year you'll finish the new accounting standard project first. You qualify two years later, and in those two years you build the company's measurement model into something other insurers come to see." }
+  ] },
+  "c_reinsurer": { "title": "Move to a foreign reinsurer", "situation": "The Beijing branch of a foreign reinsurer tries to poach you to price life reinsurance: 30 percent more pay, working in English, frequent meetings with overseas head office, and data from many insurers to look at.", "options": [
+   { "label": "Go to the reinsurer", "result": "Every day you write emails in English and meet head office at midnight. In a year you see experience data from twenty-odd companies. Your horizons widen at once, and your sleep shrinks at once." },
+   { "label": "Stay where you are", "result": "You don't go. You say you want to see one company's numbers from start to finish, and how they change over ten years." }
+  ] },
+  "c_quant": { "title": "Move into fintech data work", "situation": "A university classmate builds risk models at an internet company and says they need people who understand probability and insurance: double the pay, no more exams, no quarterly solvency reports. It's just that their models change several times a year.", "options": [
+   { "label": "Go to the internet company", "result": "You hand in your resignation, run the monthly reserves one last time, and hand the model documentation, neatly arranged, to whoever is taking over.", "end": "You went to an internet company to build risk models, tuning features and reading curves with engineers every day. You still write the basis for every assumption on the first page of the model document. Colleagues say that's the actuary in you." },
+   { "label": "Stay in actuarial work", "result": "You say you like the slowness of it: one assumption, ten years of data, decades of consequences." }
+  ] },
+  "c_chief": { "title": "Go for Chief Actuary", "situation": "The company's chief actuary is retiring. The board will look both inside and outside, and the appointment must be approved by the regulator. As chief actuary, the final signature on products, reserves, solvency and dividends is yours, and if something goes wrong you're the one who explains it to the regulator.", "options": [
+   { "label": "Put yourself forward and prepare for approval", "result": "That year you revisit every major assumption the company has made in the past decade, write a sixty-page explanation, and present it once to the board and once at the regulator's interview." },
+   { "label": "Don't, be the technical lead", "result": "You say you respect the signing, but you'd rather stay beside the models. When the new chief actuary meets the hardest judgments, he comes and sits in your office for a while first." }
+  ] },
+  "c_teach_leave": { "title": "Go back to teach actuarial science", "situation": "Your old university's school of statistics wants you back as an associate professor, teaching life contingencies and risk theory and supervising master's students. Half the pay, no annual report season, winter and summer breaks, and the longevity risk research you've always wanted to do.", "options": [
+   { "label": "Go back to the university", "result": "You hand over the last quarterly solvency report and leave Financial Street carrying a box of books. In your first class you teach the life table, and halfway through you notice the students are all looking at you.", "end": "You became an associate professor at a university school of statistics, teaching life contingencies and supervising students' longevity risk research. Year after year your students go off to insurers, and every New Year they message to tell you how many exams they've passed." },
+   { "label": "Stay at the company", "result": "You turn it down, promising to come back and give a class every semester. You say you want a few more years in real numbers." }
+  ] }
+ },
+ "endings": {
+  "retire": "Before retiring you sign your last annual actuarial report and put the pen back in its holder. Outside the window is the same row of towers along Financial Street, their lights on, people at many desks waiting for models to finish running. You shut down your computer, think of that expense assumption pointing at the wrong column more than thirty years ago, and smile.",
+  "burnout": "That annual report season you can't sleep for two months straight, and one day in a meeting room you lose track of what's on the next slide in the middle of speaking. The doctor tells you to stop. You ask to move to the company's training department, teaching newcomers actuarial basics, leaving on time every day, able to sleep again at night."
+ },
+ "stages": [
+  "Every day you face several big screens: one with the actuarial modeling software, one with Excel and Python, one with email. You run reserves and pricing tests and prepare claims and lapse data, turning the results into tables for your manager. He circles things on your tables and you go back to find out why. Days are for the work; nights are for exams.",
+  "With your associate exams complete, you take sole charge of pricing for a product line or one block of reserves. You write the models, set the definitions and write the documentation yourself. When product or finance has a question they come straight to you, not to your manager first. When newcomers can't follow the code, you explain it.",
+  "You're an actuarial manager leading two or three people, responsible for a big block of pricing or valuation. Every quarterly solvency report and every new product's actuarial report carries your name. You have far more meetings: arguing rates with product, reconciling reports with finance, explaining variances to the regulator. Your time writing code is halved.",
+  "You run an actuarial team and set the company's actuarial assumptions: interest, mortality, lapse, expenses. You rarely run models yourself now. More often you review others' results and explain at management meetings why a number changed and how it will change next year. People from investment and from reinsurers often come to your office.",
+  "You're the company's chief actuary. Every product launch, every year's reserves and solvency, every dividend ends with your signature. Several times a month you go between the board, the risk committee and the regulator, turning complicated numbers into one sentence someone can make a decision on."
+ ],
+ "work": [
+  "Your manager has you check a solvency report, and you find the same figure differs by a few dozen between two tables. You chase it all afternoon and track it to a unit conversion: yuan versus ten-thousands of yuan.",
+  "Your first experience study for a critical illness product: you group five years of claims by age and the incidence curve you plot takes a strange turn at forty. Your manager says: go and see whether the underwriting rules changed that year.",
+  "Old Zhang from finance next door asks why a reserve figure changed, and you click down through the model layer by layer to show him. When you're done he says: in your line of work, there's a whole tree behind every number.",
+  "Profit testing a retirement annuity, you run over a dozen interest rate scenarios, and in the worst one the company loses money. On the first page of the report you write one line: this product's guaranteed rate cannot go any higher.",
+  "A new colleague uses AI to write code fitting lapse rates, and the result looks beautiful. You take one look and see it has counted cancellations during the cooling-off period too, and have him rerun it.",
+  "Product asks whether the waiting period can be cut from ninety days to sixty. You pull out the policies with claims inside ninety days over the past three years and show them. They don't ask again.",
+  "The night before the quarterly solvency report goes for review, you go through every table from the start once more, change a footnote on table thirty-seven, then sign.",
+  "The head of the sales channel asks at a meeting why this product can't pay agents a bit more commission. You lay out the expense assumptions and the profit test. When you finish he says: then work out how much you can squeeze.",
+  "The analyst you supervise passes his associate exams, and at the department meeting you put his first model documentation on the screen and go through it page by page, pointing out what he wrote well.",
+  "At the annual assumptions review you propose lowering the long-term interest rate assumption by half a point. Finance runs the numbers and says this year's profit will drop sharply. The room argues for two hours, and in the end it goes your way.",
+  "A reinsurer comes to discuss a longevity risk deal. You lay the company's twenty years of annuity data beside the curve they've brought and point out that theirs is too optimistic past eighty-five.",
+  "The day before the board meeting you compress your twelve pages into three. The first page is a single chart: for every point interest rates fall, how much more the company has to set aside.",
+  "In a regulatory interview you're asked why one product's dividend is lower than last year. You go through investment returns, expenses and policyholders' reasonable expectations point by point, and finish: this is the figure we can responsibly stand behind.",
+  "A new product sales badly wants to launch shows a risk twenty years out in the projections. You write \"defer\" on the approval form. The next day the general manager comes and sits in your office for an hour.",
+  "At an industry conference you speak on governing AI models, with young actuaries from several companies in the audience. You say: the model can be written by a machine; the signature has to be a person's."
+ ],
+ "past": [
+  "You're in middle school in a prefecture-level city in Shandong, always top of your class in math. Your father looks after equipment at a state-owned enterprise and says you can study anything later, just not his line.",
+  "In your second year of high school your grandfather falls seriously ill, and the family scrapes together the hospital fees. Later the insurance company pays out, and for the first time you learn that some people's job is to calculate the odds of such things.",
+  "Your gaokao (college entrance exam) score gets you into a university of finance and economics in Beijing, where you choose mathematics and applied mathematics, then the actuarial track in your second year. Your mother asks what an actuary does. After a long explanation she says: so, accounting.",
+  "The summer after your third year you intern in an insurer's actuarial department and are put on five years of claims data in your first week. In one table you see a man in his forties, a very large payout after his name, and you stare at it a long time.",
+  "After your bachelor's you go on to a master's in actuarial science and start the associate exams in your first year, passing one the first time and three the second.",
+  "In the autumn hiring season you interview at six insurers. The final round is a single question: if interest rates keep falling, what does this company fear most? You answer for ten minutes and get the offer."
+ ],
+ "late": {
+  "pension_note": "Estimate: insurers pay into Beijing's standard enterprise employees' pension, at the capped contribution base in the high-salary years, and with the company's enterprise annuity the pension comes to about 40 percent of the last monthly salary. The annuity you once arranged for yourself starts paying monthly too.",
+  "scenes": [
+   "At the start of your first month of retirement you don't open a single model. You brew yourself a pot of tea at home and work out how many more years your own annuity will pay. When you finish, you laugh.",
+   "The actuarial association asks you to write exam questions. Yours is about an expense assumption pointing at the wrong column, unnoticed for three years. The markers say it has the lowest pass rate.",
+   "An actuarial assistant you once trained becomes a company's chief actuary and mentions you in a speech at an industry conference. You listen from the audience and don't stand up.",
+   "Your grandchild asks whether the numbers you calculated were accurate. You say for one person, no; for ten thousand people, very. The child thinks a while and asks: then which one am I?",
+   "Days in the training department are regular. Twice a week you teach newcomers, life tables, cash flows. You sleep seven hours a night now, though sometimes you still dream of annual reports.",
+   "After class a newcomer asks whether to give up on the exam he's failed three times. You say you failed too, and lend him your old notebook of mistakes.",
+   "You retire at the official age and walk a loop of the park every morning. On the third loop you sit on a bench a while, watch people come and go, and think about their policies.",
+   "In your first year out of actuarial work you still wake early at the start of every month, reflexively wanting to check whether the reserves have finished running. Then you remember you don't need to, and lie back down.",
+   "In a meeting at your new job you hear someone say they'll \"just pick a number\" for an assumption. You can't help asking what the basis is. The room goes quiet for a moment.",
+   "The actuarial manager who supervised you retires, and you go to see him. He takes out a stack of old model documents. One is yours, still marked with his red circles.",
+   "Nearly every model is run by AI now, and the reports are ready overnight. But the meeting where the year's assumptions are set still takes a roomful of people arguing all afternoon.",
+   "Your grandmother celebrates her ninety-ninth birthday. That night you look at the life table: those who reach that age are a very small share. You fold down the corner of that page."
+  ],
+  "closing": {
+   "retire": "Many years later, tidying your bookshelf one afternoon, you find an old life contingencies textbook with a sheet of scrap paper inside: an annuity problem worked twice. You check the answer. The first attempt was right.",
+   "burnout": "Many years later you find the results slip from the first exams you passed in a drawer: two subjects, neither score high. You smooth it out and tuck it into your dog-eared life table.",
+   "end": "Many years later you pass Financial Street and look up at that tower. The row by the windows is still lit. You stand a while, guessing which table they're running tonight, then take the subway home."
+  }
+ }
+}

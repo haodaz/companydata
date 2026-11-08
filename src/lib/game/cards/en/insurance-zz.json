@@ -1,0 +1,168 @@
+{
+ "id": "insurance-zz",
+ "occupation": "Insurance Agent",
+ "role": "New life insurance agent at a sales office (first year)",
+ "headline": "A new life insurance agent in Zhengzhou who sold children's clothes in the Erqi shopping district for five years, got talked into the business by a regular customer, and has about three hundred people in the phone worth pitching to",
+ "unit": "The sales office of a large life insurer, in an office tower on Jinshui Road, Zhengzhou",
+ "unit_type": "Sales office of a large life insurer",
+ "city": "Zhengzhou",
+ "city_tier": "New first-tier",
+ "education": "Three-year college diploma (marketing)",
+ "level": "Just through pre-job training; you stumble through the terms of critical illness, medical and annuity policies. You can talk to anyone and read a room, but the moment sums insured and waiting periods come up you tense. Your first policy came from your cousin.",
+ "intro": "For five years you sold children's clothes in a mall in the Erqi district, and a woman who often came in to shop said you were sweet-tongued and never forgot a face, so why not try her company. You quit, sat through two weeks of pre-job training in an office tower on Jinshui Road, and were handed a zip folder with the company logo on it. From today, at half past eight every morning you will stand in line at the morning meeting, then go out the door and get to know everyone you know all over again.",
+ "salary_note": "Estimate: agents have no fixed salary. Pay is first-year commission, renewal commission and assorted allowances. Premiums in Zhengzhou run a little below the national figure. In the first two years income swings hard: some months under ¥2,000, and over ¥10,000 in the January sales push.",
+ "facts": [
+  { "label": "Sales Agent (current level)", "value": "0–1 years, ¥3,000–7,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Sales Supervisor (1–3 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Walking clients through a claim after something happens, and speaking up for them", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Calculating premiums and producing policy proposals", "source": "AI exposure" },
+  { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You wake in the small two-bedroom you rent in Zhongyuan district and scroll through the feeds of the three people you added yesterday, noting whose child just started primary school.",
+  "Morning meeting at the sales office. After the chant, the unit manager reads yesterday's sales board off the whiteboard. Your name is on the bottom line, followed by a zero.",
+  "Your mentor drills you on the script. She plays the client, and one line, \"I already have social insurance,\" stops you dead. She makes you start over: don't rush to the product, ask how many people are in his family.",
+  "You ride your e-bike to a middle-school classmate's nail salon on Huayuan Road. You wait while she does two customers, never mention insurance, and help her sort out the shop's membership list.",
+  "Back at the office you build a proposal in the system for your cousin's child, children's critical illness plus medical. You circle the waiting period and the exclusions in red, meaning to read them out to her line by line.",
+  "You sit through a recorded sale with a regular client, the camera on both of you while you read the disclosures word by word. His third signature strays outside the box and you have to start again.",
+  "Dinner at a distant uncle's. Nobody picks up when you mention policies. At the end your aunt says buy one for yourself first, and we'll see.",
+  "You fill in today's visits on your activity sheet: five. You are two policies short of the monthly quota, so you scroll your contacts from top to bottom one more time."
+ ],
+ "ladder": [
+  { "title": "Sales Agent", "stage": "New", "focus": "Learn the terms from your mentor, work through friends and family, and clear the monthly bar on policy count and premium, or be let go." },
+  { "title": "Sales Supervisor", "stage": "Supervisor", "focus": "Your own numbers are steady; you start recruiting, with two or three new agents under you to take to meetings and pull through their quotas." },
+  { "title": "Unit Manager", "stage": "Leading a unit", "focus": "Run a unit of a dozen or more: chair the morning meeting, manage activity, develop supervisors. Your own policies and the unit's premium count together." },
+  { "title": "Senior Unit Manager", "stage": "Leading a group", "focus": "Several units you developed now sit under you. You answer for a whole group's headcount, premium and quality, and negotiate plans and office space with the company." },
+  { "title": "Sales District Director", "stage": "Director", "focus": "A district of over a hundred people. What counts is headcount growth, renewal rates and complaints across the district, and you set the year's plan with the branch's channel department." }
+ ],
+ "ai_tasks": [
+  { "name": "Calculating premiums and producing policy proposals", "how": "Enter age, sex and sum insured, and the system produces an illustrated proposal in seconds and compares several products. A person only checks it once and picks out the page this client will actually understand." },
+  { "name": "Analyzing what a family needs covered", "how": "AI can turn a family's income, mortgage and existing policies into a \"policy check-up\" sheet and flag the gaps. Who the money should go to first, and which policy they shouldn't buy, takes a person sitting down and going through it item by item." },
+  { "name": "Keeping policy files, renewal reminders, holiday greetings", "how": "Policy records, renewal payment reminders, birthday and holiday messages are all scheduled and sent by the client management system. A person glances at the list and picks out who needs a call in person." },
+  { "name": "Recording the sale and compliance checks", "how": "The system guides the audio and video recording, and AI checks whether the exclusions were skipped or returns oversold. Wherever it gets kicked back, a person has to sit down and explain it properly again." },
+  { "name": "Walking clients through a claim after something happens, and speaking up for them", "how": "AI can list the documents needed and pre-check the paperwork, and many small medical claims now pay out automatically. But when something happens in a client's family, the one running between the hospital and the company and explaining it all is still a person." },
+  { "name": "Recruiting and training new agents", "how": "AI can screen CVs, make training slides and role-play scripts with newcomers. Who is cut out for this work, who should be talked out of it, and how to pick a newcomer up after the first client says no, takes a person." }
+ ],
+ "events": {
+  "e_first_stranger": "Your first policy from someone who isn't family or a friend comes from a regular at the nail salon. After hearing you explain the waiting period twice, she says you're the only one who started with what isn't covered. Her hand is steady when she signs.",
+  "e_kaimenhong": "For the whole month of the January sales push, the office plays music every morning like firecrackers going off, and at ten at night people are still working on proposals. You sign eleven policies and go more than twenty days without getting to bed before midnight.",
+  "e_relatives_cold": "Over New Year someone in the family group chat forwards an article titled \"Insurance Is All a Scam,\" followed by a string of likes. You don't reply. You mute the group.",
+  "e_peers_leave": "Of the twenty people in your training class, six are left by the end of the year. The girl who sat next to you leaves her zip folder on the desk the day she goes. Her first proposal is still inside.",
+  "e_claim_first": "Your cousin's child runs a high fever in the night and is admitted. After discharge you photograph the receipts and fill in the claim form, and the money arrives in four days. She posts the screenshot in the family chat. The person who forwarded that article messages you privately.",
+  "e_surrender": "In the third year a client can't make his premium and wants to surrender. You show him the cash value is only half of what he has paid in. He surrenders anyway. You click \"Accept\" in the system, and your hand stays there a moment.",
+  "e_complaint": "A client complains that you never made clear the dividends weren't guaranteed. On the follow-up recording you clearly did. The quality department still has you write an explanation, and half that month's allowance is docked.",
+  "e_commission_cut": "Regulators require commissions to match what was filed, and on the same annuity your cut drops sharply overnight. Nobody speaks at the morning meeting. The unit manager says from now on it's renewals and referrals.",
+  "e_ai_plan": "The company's sales app gets an AI assistant. You say \"man, 35, ¥800,000 mortgage, two kids,\" and it produces a plan with a gap analysis. You change two things and retell it in your own words.",
+  "e_ai_claims": "Clients now claim small outpatient bills by photographing them in the app, sometimes paid in minutes. People used to send you receipt photos at midnight. Now they only call when it's something serious.",
+  "e_ai_compare": "A young client brings you a comparison table an AI made, a dozen products in tidy rows. You point out that two of them measure the sum insured differently. He thinks for a moment and says he'll go with you, then.",
+  "e_ai_dualrecord": "AI now checks the recorded sales. You leave out the line \"full refund if you cancel during the cooling-off period,\" the system flags it red on the spot, and you say it again in front of the client. The client laughs and says you're strict these days.",
+  "e_big_claim": "A long-time client is diagnosed with a serious illness. You go with his family three times to the hospital and the branch office, filling in the pathology report and diagnosis papers one by one, and the ¥500,000 critical illness payout comes through. His wife doesn't say thank you. She fills a bag with steamed buns she made at home and hands it to you.",
+  "e_peak_meeting": "For the first time you qualify for the company's annual top-performers' conference and spend three days in a hotel in Sanya listening to people on stage. On the flight home you keep thinking that the client story you most want to tell can't be told in three minutes.",
+  "e_family": "You get married. At the wedding the host asks you to say a few words, and the first thing out of your mouth is \"get covered early.\" The room bursts out laughing, and so do you.",
+  "e_voice": "One winter you give hundreds of pitches and lose your voice for over a month. Several boxes of throat lozenges do nothing. The doctor says talk less. You nod, walk out, and take three calls.",
+  "e_team_member_quit": "A newcomer you've trained for a year makes five sales in her first month. In her second month all her clients are relatives. In her third month she stops coming. You message her. She writes back: I just can't open my mouth anymore.",
+  "e_renewal": "This year, for the first time, your renewal commission is larger than your new business commission. The few hundred policies you signed years ago are like a field that grows by itself, chiming every month in a text that says the payment went through.",
+  "e_fewer_agents": "The company's agent force shrinks another notch, and the average age of those who stay is several years older than when you joined. There are fewer people at the morning meeting, and the numbers on the whiteboard look better than they used to.",
+  "e_parents": "Your father is admitted to hospital. You sit with him in the corridor, taking client calls in between. At checkout, the medical policy you badgered him into buying years ago pays the bulk of the bill.",
+  "e_old_clients_kids": "The child you sold a children's policy to graduates from university and comes to you himself, wanting cover of his own. You dig out his application from ten years ago. His height is still written as 1.2 meters."
+ },
+ "choices": {
+  "c_first_month": { "title": "Two short of the quota at month's end", "situation": "The new-agent bar is three policies a month. Two days to go and you have one. The unit manager hints you could buy one for yourself and one for your mother to make up the count. Your mentor says she did the same back in the day.", "options": [
+   { "label": "Pay for two yourself", "result": "You buy critical illness cover for yourself and your mother, over ¥10,000 a year in premium, on a credit card. You make quota. Your mother asks what the thing actually covers, and you explain all evening." },
+   { "label": "Don't pad it, try next month", "result": "You don't, and get marked as below target. The unit manager looks sour. Your mentor pats your shoulder and says fine, people like you last." }
+  ] },
+  "c_market": { "title": "Friends and family are used up. Where next?", "situation": "You've pitched everyone in your contacts who will listen. Some at the office hand out free eggs outside housing compounds, some explain insurance on short videos, and some work only the small traders in the shopping district, one stall at a time.", "options": [
+   { "label": "Dig into the Erqi district traders", "result": "You go back to your old mall and work it floor by floor, old colleagues and shop owners. They trust you, but their money is tied up in stock, so you start several of them on the cheapest medical cover." },
+   { "label": "Explain policy terms on short videos", "result": "Every night you explain one clause to your phone: waiting periods, exclusions. The views are low, but the people who message you all mean to buy." },
+   { "label": "Join the egg stall outside the compounds", "result": "You stand at a compound gate for three months, give away over two hundred boxes of eggs, add more than a hundred contacts, and four of them end up buying." }
+  ] },
+  "c_cert": { "title": "Study for a financial planning certificate?", "situation": "The company is pushing \"family financial planning\": annuities, retirement, education funds, and clients ask about these more and more. A financial planning certificate means six months of study at your own expense, but you'd speak with a different kind of confidence.", "options": [
+   { "label": "Sign up, study at night", "result": "Nights in your rented room you work through tax law and investment planning. A client asks about individual income tax deductions and for the first time you don't freeze." },
+   { "label": "Skip it, rely on what the road teaches", "result": "You don't take it. You say clients don't want a certificate, they want you there when something happens. You said it once at a morning meeting and everyone remembered." }
+  ] },
+  "c_zhuren": { "title": "To make Sales Supervisor, recruit first", "situation": "Making Sales Supervisor takes, beyond your own numbers, two direct recruits who have passed their quotas. You think of two people you worked with at the mall, but you also know how hard the first year in this line is.", "options": [
+   { "label": "Bring in your old coworkers", "result": "They both come. One quits after eight months, one stays and outsells you in her second year. The one who left doesn't talk to you much afterward." },
+   { "label": "Only recruit strangers", "result": "You set up interviews with twenty-odd people from a job site. Five show up, one passes the quota. Your promotion comes a year late, but you don't owe anyone." }
+  ] },
+  "c_broker": { "title": "Move to an insurance brokerage?", "situation": "An insurance brokerage tries to poach you: products from dozens of insurers, no daily morning meeting, paid by the policy at a higher rate. But your renewal commission stays behind, and you'd have to explain the move to a few hundred clients.", "options": [
+   { "label": "Jump to the brokerage", "result": "You sign with the new firm and spend the first month calling old clients one by one. Some follow you, some say they only trust the old company. You don't push." },
+   { "label": "Stay at the sales office", "result": "You stay. You say clients bought you and also the company's name, and you can't take the name with you. That year your renewal rate is the best in the unit." },
+   { "label": "Become an online adviser for an internet insurance platform", "result": "You put the zip folder in a cupboard and join an internet insurance platform, headset on all day, taking dozens of inquiries. You never see a single client's face.", "end": "You became an online adviser for an internet insurance platform, answering strangers' questions about waiting periods and deductibles dozens of times a day. Sometimes the voice on the line has a Zhengzhou accent, and you chat a little longer." }
+  ] },
+  "c_ai_tools": { "title": "Let AI work your online leads?", "situation": "The company rolls out an AI prospecting tool that messages potential clients, writes social posts and books meetings on its own. People at the office who use it well get dozens more leads a month. Some clients complain about being pestered.", "options": [
+   { "label": "Learn it, but decide what goes out", "result": "You let it write first drafts and edit every message before sending, and keep it away from old clients entirely. You get somewhat more leads, and you become choosier about whom you meet." },
+   { "label": "Don't use it, keep talking one by one", "result": "You never switch it on. You say half your clients are over fifty, and what they want is a person on the other end of the line." },
+   { "label": "Become a trainer for the AI tool", "result": "Head office likes how well you use it and moves you to teach it to agents across the province. The first slide of your deck says: don't let it speak for you.", "end": "You left the sales office to become a trainer at an insurance technology company, teaching agents in sales offices around the country to write proposals and book clients with AI. At the end of every session you add: on the day of the claim, it has to be you who goes." }
+  ] },
+  "c_manager": { "title": "Bid for Unit Manager and lead your own unit", "situation": "The office is splitting off a new unit, you have enough people under you, and you can bid for Unit Manager. As manager you chair the morning meeting every day, and a dozen people's activity, quotas and moods are yours. Your own time with clients will be halved.", "options": [
+   { "label": "Bid, lead the unit", "result": "The first time you stand at the whiteboard to chair the meeting your palms are soaked. That year your own sales drop and the unit grows, and at ten at night you're still going over with newcomers why they got turned down." },
+   { "label": "No unit, be a top individual seller", "result": "You say you're better suited to a client's sofa. You stay on the individual top-seller track, your policies get bigger, and at the morning meeting you listen to other people chant." }
+  ] },
+  "c_bank": { "title": "A steady job close to home", "situation": "Over these years it's been up and down: some months tens of thousands, some under ¥3,000. A community bank branch is hiring a wealth manager, with base pay, social insurance and nine-to-five hours. Your spouse says take the steady one, the kid is starting school.", "options": [
+   { "label": "Become a bank wealth manager", "result": "You hand your clients over one by one to people on your team. At your last morning meeting you write one line on the whiteboard: be there when they claim.", "end": "You became a wealth manager at a community bank branch, sitting behind a glass partition every day working out interest for retirees putting money in fixed deposits. Now and then someone asks about insurance, and you spend an extra ten minutes on waiting periods." },
+   { "label": "Stay and ride it out", "result": "You stay. That year you call back every client with a renewal, and the next year more referrals come in than in the three years before combined." }
+  ] },
+  "c_director": { "title": "Go for Sales District Director", "situation": "The branch is setting up a new sales district. They'll look at how many units you've developed, your group's headcount and renewal rate, and whether you've had major complaints over the years. As director you answer for the livelihoods of over a hundred people, and carry a full year's targets.", "options": [
+   { "label": "Go for director", "result": "That year you crisscross Zhengzhou's offices, east, west, north and south, giving morning meetings unit by unit, and pull three units that were falling apart back together." },
+   { "label": "Don't, keep your own patch in order", "result": "You say managing forty or fifty people is enough for one life. You keep more time for your old clients, and for your own family." }
+  ] }
+ },
+ "endings": {
+  "retire": "At your last morning meeting you don't stand at the whiteboard. You sit in the back row. The young people chanting are more in unison than you ever were. Afterward you visit an old client's home, sort through the family's policies one more time and hand them to whoever is taking over. You ride your e-bike home with the old zip folder clipped to the back seat.",
+  "burnout": "That winter your voice goes completely, and the doctor says not to speak for at least three months. At home you type replies to clients on your phone, one at a time, slowly. In spring you don't go back to the office. You hand your clients to the apprentice you trained, keeping only a few elderly households, whom you visit once a year."
+ },
+ "stages": [
+  "Your days run by the activity sheet: see at least three people, pitch twice, book one sit-down meeting, fill in the sheet back at the office at night. A signed policy goes through underwriting, a medical exam, the recorded sale and a follow-up call, one to two weeks from a client's nod to the policy taking effect. Your mentor is the only person at the office you can ask stupid questions. Most clients are relatives, classmates and old faces from the mall.",
+  "You've become someone's mentor. Besides your own clients, you go with the two or three newcomers under you to their first sit-down meetings, sitting beside them without cutting in, and tell them outside which line came too early. In the system you see their activity and policy status, and at month's end you know better than they do who is how many short.",
+  "You lead a unit of a dozen or more. At half past eight every morning you chair the meeting: one case, yesterday's numbers read out, who goes with whom today. You no longer look at your own sales but at the unit's headcount, policy count, renewal rate and complaints. Interviewing recruits, supervisor reviews and fighting the office manager for training slots are all yours.",
+  "Three or four units you developed sit under you, and you're responsible for a group's people and a whole year's plan. You rarely write proposals yourself now. More of your time goes on one-to-ones with unit managers: whose team is about to fall apart, whose quality has slipped. At the branch's channel meetings you sit along one side of the table.",
+  "You're the district director. Where an office of over a hundred people rents its space, how the January push is fought, which units to split and which to merge, all need your nod. You give dozens of large meetings a year and also handle the thorniest complaints. What you sign is a whole district's performance plan."
+ ],
+ "work": [
+  "You spread the proposal on a client's coffee table while her husband keeps watching TV. You turn past the critical illness page and ask him first: how much is your mortgage each month? He turns the TV off.",
+  "The medical center calls to say your client's blood pressure is high and he'll be accepted at an extra premium. You wait half an hour outside his workplace and go through every line of the underwriting notice with him.",
+  "On the follow-up call, customer service asks your client whether he understands the cooling-off period, and he says no. That night you go to his home again and explain it once more. The next day he calls back himself to finish the follow-up.",
+  "At his first client meeting a newcomer gets so nervous he says the waiting period means half pay after ninety days. You nudge his foot under the table, take over, and afterward go through the clause with him again in the car.",
+  "Pulling up your newcomers' policies in the client management system, you find one with the beneficiary's ID number wrong, and you call that night to send the newcomer back for a new signature.",
+  "A man who sells fruit outside a housing compound wants cover for his whole family on ¥5,000 a year. You and a newcomer work the numbers behind his fruit stall for half an hour and sort out his own policy first.",
+  "At the morning meeting you tell a claims story. You don't mention a product, only how long you waited in a hospital corridor that day. When you finish the room is quiet. You say: that's all for today, off you go.",
+  "One supervisor's team hasn't kept a single newcomer for three months. You pull up their interview notes and find he's been hiring people who want quick money. You strike out half his recruitment plan.",
+  "The quality department audits failed follow-up calls, and two policies from your unit are picked. You take the two newcomers to the clients' homes to explain everything again, then mention it at the morning meeting without naming anyone.",
+  "At the planning meeting for the January push the branch wants your group to do one and a half times last year in a month. You lay each unit's headcount and renewal list on the table and say you can do 1.2. The extra will turn into next year's cancellations.",
+  "Two unit managers bring you their fight over whose referral a client is. You hear both out, pull up the client's original registration form, look at the time stamp, and decide.",
+  "You go with a unit manager to sort out a claims dispute. The client's son pounds the table and calls you all crooks. You wait until he's finished, then point to the pre-existing condition on the denial letter.",
+  "Choosing a new office, you look at three towers and pick the one closest to the subway exit, because you know that newcomers just starting out mostly don't have cars.",
+  "At the annual meeting you speak for forty minutes. The last five are about that night at the end of your first month, two policies short of quota.",
+  "A unit manager you developed ten years ago is retiring. At his farewell you read out the names of everyone he has brought up over the years. It takes nearly two minutes."
+ ],
+ "past": [
+  "You go to middle school in a town in Xinxiang, where your family runs a little corner shop. You can do sums from a young age and chat with the men who come in for cigarettes. Your mother says you were born to trade.",
+  "Your gaokao (college entrance exam) score isn't high, so you go to a three-year college in Zhengzhou to study marketing. The first time you walk into the Erqi district you spend an afternoon on Dehua Street and decide this is what a city is.",
+  "In the summer of your second year you do promotions at a children's clothing counter in a mall and outsell the regular staff in a month. The store manager keeps you on straight after graduation.",
+  "Five years at the counter, from clerk to store manager. Online shopping drains the foot traffic bit by bit. The counter moves twice, deeper inside each time.",
+  "A woman who often comes in to buy clothes for her grandson talks about her ten-plus years at an insurance company. Listening to her talk about the money paid out to other families, for the first time you think selling something could be more than selling something.",
+  "That autumn a whole floor of the mall clears out, and your shop is on the list. You call that woman. She says: come along, sit in on two weeks of classes, and leave if it's not for you."
+ ],
+ "late": {
+  "pension_note": "Estimate: agents pay into the pension as individuals or as flexible workers through the company, mostly at the lowest contribution base, so the pension comes to a little over a third of the last monthly income. The renewal commission built up over the years mostly stops after leaving the company; later life rests on savings and annuities bought for yourself.",
+  "scenes": [
+   "After retirement the annuity you bought for yourself starts paying. The day the first payment lands, you send a screenshot to the woman who brought you into the business. She's past eighty now, and replies with a thumbs-up.",
+   "You join the square dancing in your compound, and everyone knows you used to sell insurance. Whose family bought what, whether to renew, they all ask you. You always say: bring me the terms and I'll look.",
+   "A newcomer you once trained has become a sales district director and asks you back to give new agents a class. You talk for an hour without a single slide.",
+   "At home you find a box of old proposals, the paper gone yellow. Some of the clients in them are gone; some of the children have families of their own. You feed them into the shredder one by one and keep the first.",
+   "For the first few months away from the office you still wake at half past eight. You lie listening to e-bikes outside the window, thinking the meeting would be reading the sales board about now.",
+   "Your voice slowly comes back. You keep a dozen or so old clients and go over their policies once a year. When their children marry or their parents go into hospital, you know.",
+   "At retirement age you sign the papers. It isn't much money. You join a calligraphy class at the community seniors' college, and the two characters you write most are \"ping an,\" safe and well. You laugh at yourself when you finish.",
+   "Out of insurance, you still have a few hundred clients in your phone. In the first year people still call at midnight about claims, and you find out for them and tell them whom to ask.",
+   "At your new job a colleague comes round selling insurance. You listen for half an hour and ask only one thing: how long is the waiting period? He stops short.",
+   "The man from the fruit stall recognizes you on the street, pushes a bag of mandarins into your hands, and says the medical cover you set up for him helped a lot last year.",
+   "These days many people buy insurance with a few taps on their phone, and AI reminds them what they missed. But on the day something happens, people still want someone to ask.",
+   "Your grandson asks what you used to do. You say you helped families get an umbrella ready. He asks if it rained. You say for some families it did, and for some it never did."
+  ],
+  "closing": {
+   "retire": "Many years later, one morning, you walk past that tower on Jinshui Road. Downstairs a row of young people in suits wait for the elevator, zip folders under their arms. You stand across the street a while, buy a sesame flatbread, and walk on.",
+   "burnout": "Many years later you find your first month's activity sheet in a drawer: five, three, six, written hard into the paper. You smooth it out and tuck it into the old product handbook.",
+   "end": "Many years later you find the zip folder with the company logo in a cupboard, its zipper rusted. You open it and look. A dried-out pen is still clipped inside."
+  }
+ }
+}

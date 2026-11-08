@@ -1,0 +1,197 @@
+{
+ "id": "patent-bj",
+ "occupation": "Intellectual Property Professional",
+ "role": "Patent attorney in telecoms and electronics",
+ "headline": "A communications engineering master's graduate, two years writing patent claims at an agency in Beijing's Haidian district and newly qualified as a patent attorney last year: every day you turn an engineer's three-page invention disclosure into a thirty-page patent application",
+ "unit": "An intellectual property agency of about eighty people in Haidian, Beijing, two metro stops from the national patent office; its telecoms and electronics department has twenty patent attorneys, with clients among telecoms equipment makers, chip companies and several universities",
+ "unit_type": "Intellectual property agency",
+ "city": "Beijing",
+ "city_tier": "Tier 1",
+ "education": "Master's degree (communication and information systems)",
+ "level": "Give you a disclosure on channel coding and you can write the claims and the specification on your own. But when an examiner's office action lands with three prior-art references, it still takes you two days of digging to know where to push back",
+ "intro": "In grad school you plotted a great many channel simulation curves, and never imagined you'd one day use words to fence one in, tightly enough that nobody could get around it. Now there's a stack of invention disclosures on your desk, each one months of some engineer's work. As of today, every claim you write is something others will come at with a ruler.",
+ "salary_note": "Estimate: Beijing patent agencies pay commission per case, twenty to forty percent above the national figure. Income peaks at year-end when companies rush to hit filing targets, and drops in years when clients push prices down.",
+ "facts": [
+  { "label": "Patent Attorney (current level)", "value": "2-5 years, ¥9,000–15,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Senior Patent Attorney (5-8 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Talking with inventors to draw out the technical solution", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Drafting patent applications", "source": "AI exposure" },
+  { "label": "Open positions", "value": "13 related listings nationwide, 3 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Metro Line 10 to Xitucheng. On the train you finish reading an office action: the examiner holds that your first claim lacks inventive step, and attaches three prior-art references.",
+  "You open a new invention disclosure, three pages, half block diagrams, half formulas. At the end the inventor has written: for the specific implementation, see the attached code. The attachment never came.",
+  "In the patent search system you enter twenty-odd combinations of keywords and classification codes, go through sixty-some documents and find two that look very close. In your notebook you draw a feature comparison table.",
+  "The noodle shop downstairs: a bowl of zhajiang noodles each with a colleague from the mechanical department next door. She says today she's writing up a hinge for a folding screen, and after a whole morning she still hasn't got the gears counted.",
+  "A video call with the inventor, an algorithm engineer at an equipment maker who talks very fast. You press him point by point: if you drop this step, does it still work? Is there another way to do it? He thinks and says: good question.",
+  "You start writing the claims. You rework the independent claim five times, rereading the two references after each pass, cutting a feature, then putting it back.",
+  "Ten days left to reply to that office action. You print the drawings from all three references, spread them on the desk, and circle in red the one step none of them has.",
+  "Back in your shared flat in Huilongguan, you log today's hours in the system and update progress on two applications. Outside, the elevated trains pass one after another, and you open that disclosure again."
+ ],
+ "ladder": [
+  { "title": "Patent Attorney Assistant", "stage": "Entry", "focus": "Write applications, run searches and learn to answer office actions under a senior attorney, while studying for the patent attorney qualification exam." },
+  { "title": "Patent Attorney", "stage": "Licensed", "focus": "Practice under your own license: draft applications, answer office actions and work with inventors on your own, with workload counted per case." },
+  { "title": "Senior Patent Attorney", "stage": "Core", "focus": "Handle key clients and hard cases, including reexamination, invalidation, foreign filings and patent portfolio planning, and mentor one or two juniors." },
+  { "title": "Department Manager", "stage": "Team lead", "focus": "Run a technical department's caseload, quality and clients, review your team's filings, and take part in pricing and negotiations with big clients." },
+  { "title": "Partner", "stage": "Partner", "focus": "Buy into the firm and share profits, carry a department on your clients and reputation, and represent the firm externally; few get this far." }
+ ],
+ "ai_tasks": [
+  { "name": "Drafting patent applications", "how": "From an invention disclosure, AI can draft the claims and specification, standardize terminology and check internal consistency. The attorney decides how to shape the scope of protection and which features belong in the independent claim, and answers for the final text." },
+  { "name": "Searching prior art and assessing novelty", "how": "AI can run semantic searches, screen documents in bulk, do a first comparison of technical features and produce a report. A person sets the search strategy, judges whether a reference really defeats novelty or inventive step, and gives the conclusion." },
+  { "name": "Handling trademark registrations and copyright filings", "how": "Trademark conflict searches and similarity comparisons, form filling, document preparation, submission and progress tracking can largely be taken over by AI and workflow tools. A person only spot-checks similarity calls and class choices, and steps in for difficult refusals or oppositions." },
+  { "name": "Responding to office actions", "how": "AI can interpret the examiner's objections, lay out the differences from the cited references, and draft a response and amendments. A person decides whether to argue or amend and how much to give up, weighing the client's scope of protection against speed to grant." },
+  { "name": "Drafting and reviewing IP contracts and agreements", "how": "AI can draft clauses from templates, compare versions, and flag risky or missing terms. A person decides what to keep or concede based on the deal, the bargaining position and the client's bottom line, and answers for the legal risk." },
+  { "name": "Talking with inventors to draw out the technical solution", "how": "AI can help prepare interview outlines and notes. But sitting with an inventor, pressing for technical detail and finding what's protectable in a few offhand words depends on technical understanding and trust, and that's mostly human." },
+  { "name": "Handling infringement disputes and litigation", "how": "AI can help organize evidence, search cases and draft documents. But setting litigation strategy, appearing in court, negotiating settlements, facing clients and judges and bearing responsibility are mostly human." },
+  { "name": "Monitoring patent and trademark deadlines and annuity payments", "how": "Deadline reminders, annuity notices, status tracking and scheduling can be handled almost automatically by software and AI. A person only spot-checks key milestones and handles exceptions such as restoring lapsed rights." }
+ ],
+ "events": {
+  "e_first_grant": "The first invention patent you drafted entirely on your own receives its notice of grant. You print it and read it through: not a word of the claims was changed. You sit at your desk for quite a while.",
+  "e_examiner_call": "The examiner calls to say one point in your response wasn't clear, and asks whether you'd fold the feature of claim 3 into claim 1. You explain for ten minutes on the phone, and he says keep it then, just file a replacement page.",
+  "e_reject": "An application you'd worked on for over a year is finally refused. You read the decision three times and think the examiner misread one point, but the client doesn't want to pay for reexamination. The application just stops there.",
+  "e_year_end": "November: to hit year-end filing targets, several clients send forty-odd disclosures at once, all to be filed by the end of December. For five weeks you write until midnight every day, and the day the last one is filed you sleep past your stop on the metro.",
+  "e_bad_disclosure": "A disclosure runs to one page, reading \"an optimization method based on artificial intelligence,\" with not a single step. You call the inventor four times, and on the fifth he says: just write whatever you think.",
+  "e_price_cut": "A big client puts its work out to tender and pushes the fee per case from ¥8,000 to ¥5,000, and the firm accepts. You'll need to write a dozen-odd more cases a year to earn what you did before.",
+  "e_ai_draft": "The firm brings in an AI drafting tool. Feed it a disclosure and ten minutes later there's a first-draft specification, with consistent terminology too. Your job becomes fixing it, and its most common mistake is writing things the inventor never said in a way that sounds entirely real.",
+  "e_ai_search": "AI search can read thousands of documents at a go and pick out the twenty closest. Once it missed an old Japanese patent that you dug up because you remembered one of its drawings, and the client reshaped its whole portfolio because of it.",
+  "e_invalid": "A competitor files an invalidation request against a patent you handle. At the oral hearing in the patent office's hearing room, the other side brings three attorneys. You and a senior partner sit on your side and defend the claims one by one, and the patent is upheld.",
+  "e_pct": "A client wants an application you wrote taken through an international filing into the US and Europe. You trade dozens of English emails with the foreign associates, and learn for the first time that an American examiner will argue with you over the word \"comprising.\"",
+  "e_hukou": "At last you qualify for a Beijing household registration through the residence points scheme. After two years in the queue, the day the list comes out you search the spreadsheet for your name three times.",
+  "e_house": "You buy a two-bedroom flat in Changping, the down payment emptying your savings and your parents'. The day you sign, you go back to the office and carry on writing an application about antenna arrays.",
+  "e_neck": "Years of staring at screens and drawings, and your neck starts to ache and your right wrist isn't right. The doctor tells you to stand and move every hour, and you set an alarm on your computer.",
+  "e_inventor_thanks": "An old university professor whose patent a company has just licensed calls you. He says the questions you pressed him with on the phone back then are now claims written into the license contract.",
+  "e_litigation": "A client sues a company for infringement and asks you for the technical comparison. You take apart the other side's product manuals and packet captures and build a claim chart a hundred-odd rows long, and the lawyer argues from it in court.",
+  "e_new_standard": "The telecoms standard moves to a new generation, and several of your client's proposals are adopted into it. Overnight you go back through the related patents against the standard text and draw a map of what corresponds to what.",
+  "e_mentor": "The first application from the junior you're mentoring comes back from you covered in comments. Six months later, on one of his applications you draw a single question mark, and he's already fixed it himself.",
+  "e_young_ai": "The new attorneys write first drafts with AI and can turn out two applications a day. What they bring to you is mostly a different kind of question: where is this client's product heading next year, and which way should the claims leave room?",
+  "e_old_patent": "A patent you wrote when you were young reaches the end of its twenty-year term. You see its status in the system change to \"patent right terminated,\" and remember the winter you wrote it, when the heating in Huilongguan never got very warm.",
+  "e_eyes": "You start wearing reading glasses for the drawings; those tiny reference numerals have to be held close to make out. You have your assistant print every drawing one size larger."
+ },
+ "choices": {
+  "c_focus": {
+   "title": "Specialize, or write everything",
+   "situation": "Your department head says you could specialize in patents tied to telecoms standards, following one big client, reading standards texts and tracking proposals: fewer cases, but hard ones, and more per case. Or you can keep taking whatever comes in, getting faster and doing more volume.",
+   "options": [
+    { "label": "Specialize in telecoms standards", "result": "You started reading a standards proposal every week and meeting with the client's standards engineers. The first year your caseload fell by a third; the second, the client was asking for you by name." },
+    { "label": "Write whatever comes", "result": "That year you wrote seventy-odd applications, everything from base stations to earbuds. You became the fastest in the department, and began to feel every case was much the same." }
+   ]
+  },
+  "c_quantity": {
+   "title": "Forty filings at year-end",
+   "situation": "To hit its year-end filing target, a client wants forty applications from you in a month. The disclosures are thin, and a few you don't think are worth filing at all. Take them all and the money is good; talk them into filing fewer and you might talk the client away.",
+   "options": [
+    { "label": "Take them all", "result": "You filed forty in a month. The next year half of them were refused, and the client asked why your grant rate was so low." },
+    { "label": "Talk them into choosing", "result": "You wrote an assessment of each one and recommended filing only twenty. The client's IP manager thought about it for a week and filed twenty-five. The next year twenty were granted." }
+   ]
+  },
+  "c_examiner": {
+   "title": "Becoming an examiner",
+   "situation": "The patent office's examination cooperation center is hiring examiners in electronics, at somewhat lower pay than now, stable, with no per-case pay. A grad school classmate got in last year and says that now every day she reads applications from the other side.",
+   "options": [
+    { "label": "Sit the exam", "result": "You passed and moved into the examination center's dormitory. The first time you examined someone else's application, you could tell at a glance which sentence an attorney had rushed out at year-end.", "end": "You became a patent examiner, on the other side of the office action. When you write one, you always add a sentence telling the attorney exactly where you got stuck." },
+    { "label": "Stay at the firm", "result": "You didn't sit the exam. After answering that office action, you noted down the examiner's reasoning in your notebook, and next time you examined your own application first." }
+   ]
+  },
+  "c_law_exam": {
+   "title": "The bar exam, and moving into invalidation and litigation",
+   "situation": "The firm wants to do patent litigation and is short of people who understand the technology and can appear in court. If you pass the national bar exam, you can join the lawyers on infringement suits and invalidations. It's a year of study, eating up weekends and evenings.",
+   "options": [
+    { "label": "Sit it", "result": "It took you two attempts, and for those two years your weekends were spent in study rooms. The first time you went to court with the lawyers, the moment the other side's technical expert opened his mouth you knew where he was wrong." },
+    { "label": "Focus on writing applications", "result": "You didn't sit it, and spent the time making every application solid. Of the applications you wrote those two years, fewer than one in ten was refused." }
+   ]
+  },
+  "c_ai_flow": {
+   "title": "How far to go with AI drafting",
+   "situation": "The firm has bought an AI drafting and search system, and the director wants a few young attorneys to master it first and set up an \"AI writes, people revise\" workflow, plus rules on which clients' material can't go into it. Many senior attorneys don't trust it.",
+   "options": [
+    { "label": "I'll set up the workflow", "result": "You tested it on twenty old cases for three months and listed the mistakes it likes to make. Once the new workflow went live, drafting time per application in the department halved, and not one client confidentiality clause was breached." },
+    { "label": "Keep writing it myself", "result": "You kept writing from the first word. Slow, but you knew why every sentence was written the way it was. After the department cut its prices, your caseload started falling behind." }
+   ]
+  },
+  "c_senior": {
+   "title": "Applying for Senior Patent Attorney",
+   "situation": "Once a year the firm assesses for Senior Patent Attorney, looking at grant rates and client feedback, and you submit two representative cases to the panel. You have one that you turned around in reexamination, and one you defended at an invalidation hearing.",
+   "options": [
+    { "label": "Apply", "result": "You wrote up the full story of those two cases in twenty pages. At the review a senior partner asked: if you wrote it again, which sentence would you change? You answered, and he smiled." },
+    { "label": "Maybe next year", "result": "That year you put your energy into a new client, building them a patent portfolio from scratch." }
+   ]
+  },
+  "c_inhouse": {
+   "title": "Joining a company's IP department",
+   "situation": "One of your clients, a telecoms equipment maker, wants you in its IP department doing portfolio planning and licensing negotiations, at thirty percent more pay and with no per-case counting, but the application writing would go to outside agencies.",
+   "options": [
+    { "label": "Go in-house", "result": "You went. In your first month, sitting on the client side reviewing applications from agencies, you found the problems you picked out were exactly the ones people used to pick out in yours.", "end": "You became a patent manager in a telecoms company's IP department. You no longer write applications; you manage the planning and licensing of thousands of patents. Every time you choose an agency, the first thing you check is how tightly they write their claims." },
+    { "label": "Stay at the firm", "result": "You thanked them and said keep sending me the cases to write. The next year they gave your department thirty." }
+   ]
+  },
+  "c_manager": {
+   "title": "Whether to take Department Manager",
+   "situation": "The manager of the telecoms and electronics department is leaving to open a branch office, and the director asks if you'll take over. If you do, the caseload, quality and client complaints of twenty people are yours, and you review everyone's filings. If not, you stay the senior attorney who writes the hard cases.",
+   "options": [
+    { "label": "Take it", "result": "You started reviewing your team's filings every day, a dozen-odd at a time, and writing less yourself. The first time you went to a client to apologize for someone on your team, you stood in that meeting room for a long time." },
+    { "label": "Keep writing the hard cases", "result": "You recommended an old colleague from the department. You kept writing the applications nobody else wanted to touch, and every year there were one or two where the examiner said on the phone that they were clearly written." }
+   ]
+  },
+  "c_partner": {
+   "title": "Buying in",
+   "situation": "The firm invites you to become a partner. You'd put in money and from then on share the profit and loss, bringing in clients yourself. Two longtime clients have already said that wherever you go, they'll follow.",
+   "options": [
+    { "label": "Buy in", "result": "You signed the partnership agreement, and in the first year your share was less than your pay as a manager. By the third year, clients you brought in made up half the department's revenue." },
+    { "label": "Don't buy in", "result": "You said let's wait. You kept running the department, and every New Year you called those two longtime clients." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "The last application you handled was for a young engineer, his first invention. You read the claims once more, signed, and passed it to the next attorney. Leaving the firm, you found the noodle shop downstairs still open, went in and ordered a bowl of zhajiang noodles.",
+  "burnout": "That year's checkup flagged your neck and your eyes in red. You told the director you wanted to stop, and handed your cases over one by one. When the last was done, you packed the stack of drawings on your desk into a cardboard box and carried it onto the metro home."
+ },
+ "stages": [
+  "Every day you take an inventor's disclosure, look for prior art in the search system, write the claims and specification line by line in Word, and answer the examiners' office actions. You deal most with inventors and examiners: the first need you to press out the step they didn't write down, the second need you to explain why nobody else has that step. Unlike in your assistant days, the attorney who signs the filing is you.",
+  "You handle several key clients and the hardest cases: reexaminations, oral hearings in invalidation proceedings, foreign filings taken through international applications into the US and Europe. You've started planning next year's portfolio with clients' IP managers, marking competitors' gaps on a big spreadsheet. You have one or two juniors, and their filings pass your eyes first.",
+  "You run a technical department of twenty, reviewing your team's applications every day, scheduling caseloads, handling client complaints. Big clients' annual fee proposals and tender presentations are yours to negotiate. You write fewer applications and read more, and the comment you write most often is: this claim is too narrow, take it up a level.",
+  "You're a partner at the firm and represent it externally. Most of your time goes on meeting clients, negotiating annual framework agreements, and arguing for your department's budget and headcount at partners' meetings. For big invalidations and lawsuits you still sit in the front row, but the pen for writing applications has passed to the young."
+ ],
+ "work": [
+  "A disclosure describes a power control method. You press the inventor three times and draw out a step he thought went without saying. That step later became the most important feature of the independent claim.",
+  "The examiner's reference is a conference paper from ten years ago. You work through its formulas one by one and point out in your response that its preconditions differ from this application's, attaching a side-by-side derivation table.",
+  "Filing an application in the patent office's electronic filing system, you check the drawings' reference numerals against the specification once more before uploading and find figure 5 is missing a 108. You add it.",
+  "The night before an invalidation hearing, you and the partner work through the five combinations the other side might argue, one by one, in the meeting room. The next day they use the third, and you turn to that page and start speaking.",
+  "The American examiner says your claims are indefinite. On a 7 a.m. call with your US attorney you rework one qualifying term into wording they can accept.",
+  "You build a competitor patent map for a chip client, plotting three years of the other side's filings by technical branch on one big chart and marking in red two gaps nobody has filed in.",
+  "Reviewing a junior's application, you find he's lifted the inventor's own words straight into the claims, a scope so narrow that changing one parameter gets around it. You don't fix it; you write three questions in the comments and have him rewrite it himself.",
+  "A big client is tendering for agencies. You present your department's grant rate and average examination time, and the last question is how you use AI. You explain the \"AI writes, people revise\" workflow and the confidentiality rules.",
+  "A client complains about a refused application. You pull up all the correspondence and find the client deleted a key embodiment themselves. You take the records over in person, and in the end the client decides to pay for reexamination.",
+  "A university's technology transfer office wants to license out several hundred patents as a package. With two departments you spend two months picking out the forty that are actually valuable, and put them on the first page of the valuation report.",
+  "At the partners' meeting, on whether to cut prices to land a big client's annual framework, you vote no: at that price, young attorneys can only churn out volume, and what they churn out won't hold up.",
+  "You interview a new communications master's graduate, hand him a disclosure, and ask what he'd most want to press the inventor on. He names three questions, and the second is exactly the one you asked back then."
+ ],
+ "past": [
+  "You grew up in a prefecture-level city in Hebei, where your father was a line worker for the telecoms bureau. As a child you often stood at the foot of the ladder below a telegraph pole, watching him splice wires.",
+  "Filling in your gaokao (college entrance exam) choices, you picked communications engineering, because your father said one day every phone signal would depend on it.",
+  "After your bachelor's you got into a master's program at a Beijing university, working on channel coding with your advisor and plotting simulation curves in the lab for two years.",
+  "In your second year of the master's, one of your advisor's results was going to be patented. You helped write the disclosure, and someone from a patent agency came to the lab and talked with you for an afternoon. For the first time you learned an algorithm could be written into a dozen-odd claims.",
+  "At graduation, instead of becoming an engineer at an equipment maker, you joined a patent agency as an assistant, which your classmates found odd. You said: I like explaining a thing clearly.",
+  "Writing applications while you studied, you sat the patent attorney qualification exam, patent law and practice, and passed both first time. The day the results came out, the senior attorney who'd trained you took you out for hot pot."
+ ],
+ "late": {
+  "pension_note": "Estimate: the agency paid enterprise employee pension contributions on the Beijing base, and as a partner your income was far above the contribution cap, so the pension comes to a little over forty percent of final monthly pay.",
+  "scenes": [
+   "Your first winter retired, you start taking apart old radios at home, laying the parts out one by one on newspaper. You label every part, the way you used to number drawings.",
+   "Your old university invites you back to teach graduate students how to turn their research into patents. After class a student brings you his disclosure. You glance at it and ask: if you drop this step, does it still work?",
+   "You take to playing Chinese chess in the park and often lose to a retired engineer. He says you play too intent on blocking every possible path. You laugh and say it's an occupational hazard.",
+   "For the first few months after stopping, you walk two laps of the park downstairs every morning, and your neck slowly stops hurting so much. You delete the alarm on your computer that went off every hour.",
+   "You sign up for a traditional painting class at the seniors' university, and your first picture is a pine tree. The teacher says your lines are too straight. You say: I used to draw block diagrams.",
+   "As your health improves you advise a few small companies on their patent portfolios, two or three times a month, writing nothing, just giving ideas. Enough for books and tea.",
+   "A year into your new path, you see in the news that a big client of your old firm has launched a new product. Looking at the product photo, you remember there's a power control feature inside, and you wrote its claims.",
+   "Over dinner with colleagues from the old firm, they say AI writes the first draft of every application now, and fees have dropped again. You talk for a long time, and in the end you all agree the hardest part is still pressing the inventor on that one step.",
+   "You speak on patent quality at an industry forum, the audience full of young attorneys and examiners. In the Q&A one man says he was the opposing attorney in your invalidation case years ago.",
+   "Now disclosures are read by AI, first drafts written by AI, searches run by AI. But when an engineer on the phone says \"that goes without saying,\" someone still has to keep pressing.",
+   "In your bookcase you find a yellowed patent certificate, for the first invention patent you wrote. Your name isn't on it, only the inventor's. You look at it for a while, then put it back in its folder."
+  ],
+  "closing": {
+   "retire": "One afternoon many years later, your grandson brings you a little robot he's built and asks whether it can be patented. You put on your reading glasses and look at it for a long time, then say: first tell me how it's different from other robots.",
+   "burnout": "Many years later you sit on a park bench watching people fly kites, the lines pulled taut. You think of the claims you wrote all those years, just like this: a little slack and it flies away, a little too tight and it snaps.",
+   "end": "Many years later, in a drawer, you find your old patent attorney qualification certificate, the photo of you in black-rimmed glasses. You look at it for a while, close it, and put it back."
+  }
+ }
+}

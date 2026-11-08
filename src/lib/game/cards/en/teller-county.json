@@ -1,0 +1,167 @@
+{
+ "id": "teller-county",
+ "occupation": "Bank Teller",
+ "role": "Teller at a county rural commercial bank branch (first year at the counter)",
+ "headline": "A teller at the town-center branch of a rural commercial bank in a county in southern Jiangxi, back home after a finance degree in Nanchang, whose banking hall fills with retirees collecting their pensions around the tenth of every month",
+ "unit": "The town-center branch of a rural commercial bank in a county under Ganzhou",
+ "unit_type": "County rural commercial bank branch",
+ "city": "A county under Ganzhou, Jiangxi",
+ "city_tier": "County town",
+ "education": "Bachelor's degree (finance)",
+ "level": "You've just passed the cash-counting test, single finger, single note, 170 notes a minute. You know half the transaction codes in the core banking system. You understand Hakka but speak it slowly, and you still need your supervisor to walk you through balancing at the end of the day.",
+ "intro": "You studied finance in Nanchang for four years, and the year you graduated you passed the exam for the rural commercial bank back in your home county. The bank assigned you to the town-center branch and gave you a cash box, a personal name seal and a key to the counter. From today you sit behind the bulletproof glass at window three, counting this county town's money for it, one transaction at a time.",
+ "salary_note": "Estimate: in the county, a job at the rural commercial bank counts as respectable, and a teller takes home noticeably more than the county average, though a bit less than the national figure for tellers. Part of the pay is a year-end performance bonus and deposit-target bonus, docked if the target isn't met.",
+ "facts": [
+  { "label": "Teller (current level)", "value": "0–3 years, ¥3,800–5,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Senior Teller (3–8 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥7,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Assessing damaged banknotes and exchanging them", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Handling cash deposits and withdrawals", "source": "AI exposure" },
+  { "label": "Open positions", "value": "38 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "In your family's home on the county town's old street you eat the rice noodles your mother cooked, then ride your e-bike ten minutes to the branch. Two old people are already sitting on the steps waiting for it to open.",
+  "Morning meeting and check: you and your supervisor open the vault together, two people as the rules require, take out your cash box, count the cash and blank forms, sign the register, and switch on the light at your counter.",
+  "Doors open. It's the tenth, the day pensions are paid in, and the hall fills at once. The first old man has a passbook from twenty years ago, and you try three printers before one can read it.",
+  "A woman wants to transfer ¥80,000 to an unfamiliar account in another province, a deposit, she says, for a friend she met online. You stop, call your supervisor over, and the two of you talk with her for forty minutes. In the end she keeps her money.",
+  "You take turns eating in the back, dishes the branch's cook stir-fries in a little kitchen. Halfway through, the queue machine out front chimes again. You shovel in two more mouthfuls and go back to your window.",
+  "A man brings in a wad of ten-yuan notes that got soaked, kept in a crack in the wall and chewed by rats. You put on gloves, lay them out one by one and measure the remaining area against the damaged-note rules. You exchange what can be exchanged and explain the rest clearly.",
+  "Doors shut. At end-of-day balancing, the system ledger and the cash in your box are ¥50 apart. You and your supervisor go through today's slips one by one and find it somewhere past the sixtieth.",
+  "Before leaving you report today's deposit sales in the work chat: zero. The branch president posts a line: two months to the New Year deposit drive, everyone think of something."
+ ],
+ "ladder": [
+  { "title": "Teller", "stage": "At the counter", "focus": "Keep a cash box; handle deposits and withdrawals, new accounts, transfers, social security cards and payroll; balance at the end of the day and track down every overage and shortage." },
+  { "title": "Senior Teller", "stage": "Lead teller", "focus": "The complex counter business and the check before authorization are yours. Train new tellers, and fill in for the lobby and deposit sales when needed." },
+  { "title": "Operations Supervisor", "stage": "Running operations", "focus": "The branch's appointed accountant: the vault cash, the seals, the key blank forms and every authorization. Trace errors, face inspections, and sign as the one responsible." },
+  { "title": "Deputy Branch President", "stage": "Deputy", "focus": "Oversee one line, deposits, loans or operations; go out to villages, manage the account managers, carry the branch's targets." },
+  { "title": "Branch President", "stage": "President", "focus": "Head of a township or town branch: deposit and loan targets, risk, the people and the branch's security are all yours, with the county head office above you and dozens of staff and several townships below." }
+ ],
+ "ai_tasks": [
+  { "name": "Handling cash deposits and withdrawals", "how": "Self-service machines and smart counters can already handle routine deposits and withdrawals, with AI verifying identity, checking amounts and keeping records. Large sums, unusual cases and customers who can't use the machines are still handled in person, by someone who answers for them." },
+  { "name": "Handling transfers, remittances and settlement", "how": "AI can fill in forms, validate account details and flag unusual transactions. A person confirms what the customer actually intends, spots fraud and suspicious situations, and answers for whether the money goes through." },
+  { "name": "Counting and checking notes, spotting counterfeits", "how": "Counting and detection machines already do the counting and first-pass authenticity checks. A person only deals with notes the machine flags and spot-checks." },
+  { "name": "Opening, closing and updating accounts", "how": "AI does ID recognition, face matching and automatic data entry. A person verifies identity face to face, judges the purpose and risk of an account, handles incomplete or doubtful paperwork, and signs as the one responsible." },
+  { "name": "Printing and checking slips and receipts", "how": "The system generates and prints slips and receipts and checks that the details match. A person only spot-checks the ones with errors or that get sent back." },
+  { "name": "Answering customers' questions about services and products", "how": "AI answers routine questions about services and products and gives directions. A person handles complicated needs, upset customers, and anything that needs explaining or advice." },
+  { "name": "Assessing damaged banknotes and exchanging them", "how": "Whether a damaged note can be exchanged, and how, comes down to the note in hand, experience and the rules, and AI can't help much. A person makes the call and explains the result to the customer." },
+  { "name": "Balancing the day and reconciling the vault and the books", "how": "The system reconciles automatically, lists discrepancies and suggests likely causes. A person counts the actual cash, tracks down and resolves errors, and signs off on the check." }
+ ],
+ "events": {
+  "e_short": "Your first shortage: ¥300, and two hours of searching turns up nothing. By the rules you make it up out of your own pocket. That night you toss and turn, wondering which bundle you counted too fast.",
+  "e_counterfeit": "The counting machine beeps: a counterfeit hundred. By the rules you confiscate it in front of the customer, stamp it and write a confiscation slip. The man argues with you for a quarter of an hour, saying the vegetable market gave it to him as change.",
+  "e_fraud_stop": "You talk someone out of another transfer. This time it's a young man just out of college, about to send money to \"customer service\" to unfreeze a loan. You have him call the official hotline there and then. He hangs up and stands at the counter a long while without speaking.",
+  "e_old_man": "An old man from the countryside comes in each month for his pension, always taking his passbook out of the same handkerchief. One month he doesn't come. You call the village committee and learn he's in hospital. With the papers for a power of attorney, you and your supervisor go to the hospital.",
+  "e_deposit_task": "The New Year deposit target is split per head, and yours is ¥3 million. You ask every relative, classmate and high-school teacher you have, and in the end the gap is filled by your father, who moves the money he'd saved to fix up the old family house into a one-year fixed deposit.",
+  "e_smart_counter": "The branch gets two smart counters. Opening cards, replacing social security cards, printing statements: customers swipe their ID, tap the screen a few times, and they're done. You're moved to the lobby to stand beside the machines, showing old people again and again how to point their face at the camera.",
+  "e_window_cut": "The branch goes from five windows to two. Half the tellers moved off the counter become account managers; the other half go to village banking service points. You stay, and a new sign goes up on the counter: cash business at window two.",
+  "e_ai_review": "The back office brings in AI post-transaction review, and every transaction you do is checked again behind you. One day it flags the image on an account you opened as unclear. You look: the customer's ID photocopy was photographed crooked.",
+  "e_ai_queue": "The mobile banking voice assistant can now understand Hakka, and the people who come in to ask their balance or the interest rate have fallen by more than half. Most of those in the hall now can't use a phone, or don't trust one.",
+  "e_typhoon": "One summer there's a flood and several branches in the countryside take in water. You go out with colleagues, set up a table in an office borrowed from the township government, and make emergency withdrawals for flood-hit families from morning until dark.",
+  "e_inspection": "A joint inspection by the central bank's local office and the county head office goes through three months of the branch's slips. Not one red circle in the stack you handled. One of the inspectors asks offhand: whose seal is this?",
+  "e_blind_date": "Your mother has someone set you up, and the first thing said about you is \"works at the bank.\" At the dinner, the other side's mother asks how much you make a month. You tell her. She says it's less than she thought.",
+  "e_marry": "You get married, to someone who teaches at the county's No. 1 High School. Your branch colleagues fill a table at the wedding, and the branch president hands you a red envelope and says next month's deposit target starts with this banquet.",
+  "e_back_pain": "Eight hours a day in a chair, and your lower back and neck give out first. You put a cushion under the counter and stand up every hour to count a bundle of notes, by way of exercise.",
+  "e_village_credit": "The bank runs a whole-village credit drive, and you're sent with an account manager to go house to house recording how many mu of navel oranges each family has, how many pigs, how many working away. At night you enter data at the long table in the village committee office. The mosquitoes are fierce.",
+  "e_rob_drill": "The branch runs a robbery drill. You press the alarm under the counter, drop the bulletproof shutter and push your cash box into the safe. Afterward Old Liu the guard says you were five seconds faster than last year's lot.",
+  "e_fewer_young": "This year the bank hires only three new people, and not one teller. You look through the branch staff list. The youngest on it is you, five years ago.",
+  "e_old_client_gift": "The old man who wrapped his passbook in a handkerchief has passed away, and his daughter comes in to handle the inheritance. When it's done she takes a jar of pickled radish out of her bag and says her father once told her that young one at the bank was all right.",
+  "e_kid": "Your child is born. You've spent your working life counting other people's money, and for the first time you open a passbook for your own child, depositing the red envelopes from the one-month celebration.",
+  "e_audit_error": "A large withdrawal you checked turns out to have a power of attorney missing a page. Post-transaction review catches it. No money went astray, but you still write a self-criticism and lose that quarter's bonus."
+ },
+ "choices": {
+  "c_marketing": { "title": "The deposit target lands on you", "situation": "The New Year target is ¥3 million a head, and the veteran tellers each have their ways: some rally relatives, some set up stalls at country markets, some use connections to win the payroll of county work units. You've only just come back and don't know many people.", "options": [
+   { "label": "Set up a stall on market days", "result": "Every market day you carry a folding table to the township, show old people how to use mobile banking, hand out calendars and rice. In three months what comes in is mostly a few thousand or tens of thousands at a time, but everyone knows you now." },
+   { "label": "Use family connections", "result": "Your father calls an old classmate who's a section chief in a county office, and ¥1 million arrives in one phone call. The branch president praises you at the morning meeting. You smile, and feel uneasy." },
+   { "label": "Miss it and take the pay cut", "result": "You don't go begging, and your year-end bonus is cut. Your supervisor says that way you'll last at the counter, but the account manager track will be hard." }
+  ] },
+  "c_licence": { "title": "Take the banking qualification and wealth management exams?", "situation": "The bank wants tellers to get the banking professional qualification within three years, and anyone heading toward the lobby or wealth management also needs a financial planning certificate. After a full day at the counter, you'd be studying at home every night.", "options": [
+   { "label": "Do them all in a year", "result": "You drill practice questions in your room at night and take exams in Nanchang at weekends. Four certificates in one year, and when the internal job posting goes up, you're on the list." },
+   { "label": "Just the required ones, slowly", "result": "You take only the two that are required and still walk with your mother in the square in the evenings. You have fewer certificates than others, and you don't make a single mistake at the counter." }
+  ] },
+  "c_customer_mgr": { "title": "Become an account manager", "situation": "With windows closing, the bank is encouraging tellers to move into account management: chasing loans and deposits for noticeably more pay, but with lending and recovery targets, and you answer for any loan that goes bad. Staying at the counter means slow promotion, but steady.", "options": [
+   { "label": "Move to account management", "result": "You start riding your e-bike out to the townships' navel orange groves and pig farms, reading account books in farmers' homes, measuring orchards. In the first year you make thirty-odd loans, and two of them you chase for three months when they fall due." },
+   { "label": "Stay at the counter", "result": "You stay. There are fewer and fewer people at the counter, the hard cases all get sent to your window, and you become the person in the branch who knows the rules best." }
+  ] },
+  "c_city": { "title": "Try for a big bank in the provincial capital", "situation": "A university classmate works at a large state-owned bank in Nanchang and says they're hiring experienced staff: 30 percent more pay than the county, but rent is expensive and it's three and a half hours from home. Your parents are in the county, and here you have a cash box and a crowd of regulars.", "options": [
+   { "label": "Go to Nanchang", "result": "You pass and go to a branch in the east of the city. The customers there don't speak Hakka and deposit bigger sums, and it takes you six months to learn every colleague's name again." },
+   { "label": "Stay in the county", "result": "You don't apply. You say in the county the bank is the brightest light on the street, and you'd like to sit under it." }
+  ] },
+  "c_ai_ops": { "title": "Train in remote authorization and smart operations", "situation": "The county head office is building a centralized operations center: counter authorizations, checks and post-transaction review from every branch will go there, screened first by the system and AI, then by a person. They're picking people from the branches for training, and whoever trains stays at the center.", "options": [
+   { "label": "Go to the center", "result": "Every day you face three screens of images and transactions from dozens of branches across the county. What AI marks yellow you check; what it marks red you phone about. You see more business in a day than you did in a year at the counter." },
+   { "label": "Stay at the branch", "result": "You stay at the branch. You say the center looks at images and the branch looks at people, and you'd never have spotted the woman sending ¥80,000 from an image." }
+  ] },
+  "c_yunying": { "title": "Apply for Operations Supervisor", "situation": "The operations supervisor at a neighboring township branch has retired, and the county head office is filling it internally. The operations supervisor is the branch's appointed accountant, responsible for vault cash, seals and every authorization, and first in line when something goes wrong. You'd be going to that township branch, an hour's round trip every day.", "options": [
+   { "label": "Apply", "result": "You sit the written test, present the branch's risk points, and get it. In your first month you count every key blank form at the township branch from the start and find two that were never logged." },
+   { "label": "Don't, stay in town", "result": "You don't apply. You say the child is still small and you don't want that country road every day. The post goes to a colleague who joined two years after you." }
+  ] },
+  "c_civil": { "title": "Sit the civil service exam", "situation": "Registration for the county civil service exam is open, and all your high-school classmates are applying. Bank targets get heavier every year and there are fewer tellers every year. A civil servant's pay isn't higher than yours, but there are no deposit targets and retirement is secure.", "options": [
+   { "label": "Sit it, and leave if you pass", "result": "You work the counter by day and study for the aptitude and essay papers at night, and land a post at the county finance bureau. The day you leave you hand your cash box to the new teller and show her which register to check first when opening the vault.", "end": "You became a clerk at the county finance bureau, spending your days with budget sheets and disbursement orders. When you go to the bank, you still glance at the teller's hands out of habit, to see how fast she counts." },
+   { "label": "Don't sit it", "result": "You don't register. You say bank work is a hard living, but you've come to like the taste of it. That New Year drive, you're the first to hit your target." }
+  ] },
+  "c_vice": { "title": "Apply for Deputy Branch President", "situation": "The county head office is promoting deputy branch presidents, looking at business, risk and what people say about you. A deputy oversees deposits or loans, goes out to villages, manages account managers and carries targets, and can't dodge the branch's web of favors.", "options": [
+   { "label": "Apply", "result": "You write ten pages on your years at the counter and in operations and speak for fifteen minutes at the selection meeting. Halfway through you lose your place in the script, so you finish with what's in your head." },
+   { "label": "Don't, keep running operations well", "result": "You say you're someone who keeps the books, not someone who manages favors. You make your operations a model for the whole county, and the inspection team comes to see your branch every year." }
+  ] },
+  "c_leave_bank": { "title": "Go home and help run the orange grove", "situation": "Your older brother has leased two hundred mu of navel orange groves in the countryside and sells them well online. He needs someone to keep the books, manage the money and deal with the banks. He says come over, I'll give you shares, better than grinding away at the bank.", "options": [
+   { "label": "Go to the grove", "result": "You resign and set up a desk in the grove's prefab hut, account books, shipping slips and loan contracts covering it. For the first time you negotiate interest rates with a bank from the other side of the counter.", "end": "You became second-in-command at a navel orange grove, keeping the books, the money and the shipping. Every November when the fruit comes down, you count stock in the warehouse as fast as you once counted notes." },
+   { "label": "Stay, help him with a loan", "result": "You stay and help your brother get his agricultural loan paperwork in order, recusing yourself as the rules require and handing it to another account manager to review. The day it's approved your brother sends you a box of oranges." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last day, in the branch office, you hand the seals, keys and a pile of registers to your successor and sign the final handover list. On the way out you stand a while before window three at the town-center branch. Behind the glass a teller in her early twenties is counting money for an old man. You don't disturb her. You push the door open and step out; the streetlights are on.",
+  "burnout": "That year your lumbar spine pinches a nerve, and after less than an hour at the counter you shake with pain. The doctor says rest, and the bank moves you to the archives in the back office. Every day you sort slips from decades ago, the paper gone brittle, and some of the name seals stamped on them belong to people you know."
+ },
+ "stages": [
+  "You do over a hundred transactions a day: deposits and withdrawals, new cards, social security card swaps, reporting lost cards, paying out pensions. Each one means checking the ID, looking at the face, counting cash, printing a slip and getting a signature. In front of you are the core banking system's transaction screen, a note counter and detector, and an old printer. Mornings you open the vault with your supervisor; evenings you balance down to the fen.",
+  "You're the senior teller, and the hardest counter business, inheritances, proxies, large sums, replacing lost documents, all comes to your window. Before any new teller's transaction goes for authorization you check it and show her where each seal goes. Deposit sales, gaps in the lobby, rotations to village service points also come your way.",
+  "You're the branch's operations supervisor. Every authorization a teller makes, every bundle in the vault, every seal and every blank form ends with your signature. Each day you open and check the vault and read the error sheets from post-transaction review, and once a month there's an inspection. When a teller is over or short, you go through the slips with her.",
+  "You're the deputy branch president, overseeing deposits and operations. You rarely sit behind the counter now. More of your time is spent out in the townships: village committees, navel orange cooperatives, the township schools, talking payroll. At the branch meeting every Monday you read out each outlet's deposits and errors from the report.",
+  "You're the branch president: one town branch plus three township outlets, dozens of staff. Deposit and loan targets, bad loans, branch security and your staff's family troubles are all on your mind. Several times a month you go to meetings at the county head office, then come back and divide the targets down level by level, knowing as you do who stands behind each person."
+ ],
+ "work": [
+  "An old man insists on withdrawing ¥100,000 in cash to deposit at another bank, which is giving away a bottle of cooking oil. You count it three times, band it in bundles of ten thousand, put it in the cloth bag he brought and tell him to take a pedicab home.",
+  "The week of the mass social security card replacement you swap over two hundred a day. One afternoon an old man's fingerprint simply won't read. You have him soak his hand in hot water, and it goes through on the third try.",
+  "End-of-day balancing comes out ¥20 over. You find the afternoon withdrawal and call the customer, who says he doesn't remember. You book it to a suspense account by the rules, and the next day he rides over on his motorbike to collect it.",
+  "A family comes in to inherit their late father's deposits, four of the five children present. You read the notarized certificate page by page and explain whose signature is still missing. They start arguing in the hall. You wait for them to finish.",
+  "A new teller processes an early withdrawal from a fixed deposit as a matured one, overpaying the interest by more than ¥100. You catch it at the check and say nothing in front of the customer, then show her after closing.",
+  "On rotation at a village service point, you set up a farm-banking terminal in a little shop and spend a morning helping village elders withdraw small sums, photographing every transaction for the record.",
+  "At the month-end vault check you and a teller count bundle by bundle, and one bundle of fifties is a note short. You pull the security footage and watch for forty minutes until you see it stuck in the counting machine's exit slot.",
+  "The county head office comes to inspect key blank forms. You lay out the register, the requisition slips and the voided forms one by one, every serial number accounted for. The inspector ticks the box and asks if you'd like some tea.",
+  "A teller is about to make a large transfer for a man in his eighties. Before authorizing you go over and ask him who it's for. He says his grandson, for a flat. You call the grandson, it's true, and only then press authorize.",
+  "You take an account manager to the township navel orange cooperative and spend an afternoon watching the sorting line in the warehouse. Back at the branch you set up a ¥2 million agricultural loan with the repayment date after the fruit is sold.",
+  "At the quarterly meeting one outlet's error rate is near the bottom of the county again. You don't criticize. The next day you go and work the counter there yourself all day, and before leaving you write three problems on the whiteboard.",
+  "The county's No. 1 High School is looking to move its payroll bank. You talk with the principal in his office for an hour, not about rates, but about whether the teachers have to queue on the tenth of every month.",
+  "A loan is six months overdue. The borrower is a primary school classmate who lost money working in another province. You go to his home with the account manager, see how things stand, and set up an installment plan.",
+  "At the start of the year the county head office raises your branch's deposit growth target by a fifth. You spread every outlet's report on the table and phone them one by one, and the first thing you ask is whose family is going through something this year.",
+  "A new outlet opens after its fit-out, and you cut the ribbon at the door. The first person through it is an old woman with a passbook. You sit down at the counter yourself and handle that first transaction."
+ ],
+ "past": [
+  "You go to middle school in the county town. Your family lives on the old street, right above the rural commercial bank. At the start of every month you watch your grandparents' generation queue at its door, a whole morning at a time.",
+  "Your gaokao (college entrance exam) score is in the county's top fifty, and you choose finance at a university of finance and economics in Nanchang. Your father says finance is good, you can come back and work at a bank in the county, close to home.",
+  "In the summer after your third year you intern at a bank branch in Nanchang, where the lobby manager has you stand by the door handing out queue numbers. Two months there teach you to tell at a glance who's come on business and who's come for the air conditioning.",
+  "In your graduation year you apply to two banks in the provincial capital and the rural commercial bank in your county. The capital ones interview you and say no. In the county's written exam you come third.",
+  "Before starting you train for a month at the county head office: counting, counterfeit detection, the core system, counter regulations. In the final counting test you get through 170 notes in a minute, and the edge of a note slices your finger."
+ ],
+ "late": {
+  "pension_note": "Estimate: the rural commercial bank pays into the standard enterprise employees' pension, and county wage bases aren't high, so the pension comes to a little over half the last monthly salary. The bank has an enterprise annuity that adds a bit each month.",
+  "scenes": [
+   "On the first tenth of the month after you retire, you still wake at seven. You ride your e-bike past the old branch. A few old people sit on the steps waiting for it to open, fewer than in your day.",
+   "You volunteer at the community seniors' center, teaching old people mobile banking one button at a time. One man gets the hang of it, and the first thing he does is send ¥200 to his grandson working in Guangdong.",
+   "The new teller you once trained is now operations supervisor at the town-center branch. She visits and says the branch has only one counter left now. The rest is machines and her.",
+   "Your grandchild finds an old counter key in your house and asks what it opens. You say a little box for money, opened every morning and locked every night.",
+   "Days in the archives are quiet. You sort old slips, tie them in bundles and label them. Now and then you come across a seal you stamped yourself and look a moment longer.",
+   "Your back slowly improves, and every evening you walk by the river for an hour. When you tire you sit on the embankment and watch people fishing on the far bank.",
+   "You retire at the official age. The pension isn't much, but it's enough. The old woman next door always asks you along when she has bank business. With you there, she says, she feels at ease.",
+   "In your first year away from the bank you slow down a little every morning as you pass the branch. When the lights come on behind the glass door, you know someone inside is opening the vault.",
+   "Once, at the branch on an errand, the old man in front of you is about to send money to a stranger. You touch the teller's arm lightly. She glances at you and nods.",
+   "Old Liu, the branch's former guard, comes over for tea and says nobody stays on duty at the branch at night anymore, it's all cameras and remote monitoring. He sighs partway through saying it.",
+   "The county's bank branches keep getting fewer and the village service points more, and money moves fast through phones. On the tenth of every month, someone still sits on the steps with a passbook in their pocket, waiting for the doors to open.",
+   "At New Year you fill red envelopes for the grandchildren, all crisp notes with consecutive serial numbers. Watching you count, they think it's a magic trick."
+  ],
+  "closing": {
+   "retire": "Many years later, buying rice noodles on the old street one morning, you hear someone behind you call your name. It's the woman who once came to send ¥80,000. Her hair is completely white, and she insists on buying you a bowl. You sit at a little roadside table, and neither of you mentions that day.",
+   "burnout": "Many years later you find your personal name seal in a drawer, your name carved on it, the red ink paste long dry. You breathe on it and press it to the edge of an old newspaper. The mark is very faint.",
+   "end": "Many years later, counting some cash at home, you give the stack a flick and the notes riffle past. You stop and smile, remembering that little room behind the bulletproof glass."
+  }
+ }
+}
