@@ -1,0 +1,163 @@
+{
+ "id": "ai-pm-bj",
+ "occupation": "AI Product Manager",
+ "role": "AI Product Manager (in-app AI Q&A assistant)",
+ "headline": "Two years as an associate product manager on the search team after a computer science degree, just handed the AI Q&A assistant inside a content-community app, and reading two hundred bad cases every morning before the first meeting: an AI product manager in Xierqi, Beijing",
+ "unit": "The AI assistant product team at an internet company in Xierqi, Beijing, that runs a content-community app",
+ "unit_type": "Internet company",
+ "city": "Beijing (Xierqi, Haidian)",
+ "city_tier": "First-tier city",
+ "education": "Bachelor's degree in computer science",
+ "level": "You write a PRD fast, pull your own numbers in SQL, and can explain how prompts and retrieval-augmented generation work. But how big a model a feature needs, or what makes an eval set test a real problem, you still can't say for sure, and you still lose your arguments with the algorithm team.",
+ "intro": "You studied computer science and couldn't out-code your classmates, so you moved into search products and spent two years as an associate product manager at this content-community company in Xierqi. Last month a reorganization left the app's AI Q&A assistant without an owner, and your boss named you in the group chat. From today on, when tens of millions of people type a question into the search box, how the AI answers, and whose fault it is when the answer is wrong, starts with you.",
+ "salary_note": "Estimate: the pay-by-experience figures for AI product managers already lean toward the biggest tech firms. This mid-to-large Beijing internet company pays about ten percent below them, over fifteen months a year. The year-end bonus follows the product line's numbers, and the stock options wait on an IPO.",
+ "facts": [
+  {"label": "AI Product Manager (current level)", "value": "2-4 years, ¥35,700–52,500 a month (national average, derived from pay by experience)", "source": "Industry norm"},
+  {"label": "Next level up", "value": "Senior AI Product Manager (4-7 years)", "source": "Industry norm"},
+  {"label": "Pay after 10+ years", "value": "¥92,000 a month (national average)", "source": "Pay by experience"},
+  {"label": "What AI can't take", "value": "Deciding whether an AI feature is ready to ship", "source": "AI exposure"},
+  {"label": "Where AI is moving in", "value": "Sorting user feedback and drafting PRDs", "source": "AI exposure"},
+  {"label": "Open positions", "value": "188 related listings nationwide, 59 in this city (mostly campus hiring and internships)", "source": "Job listings"}
+ ],
+ "day": [
+  "The Changping Line from Shahe to Xierqi, packed so tight you can't lift your elbows. One-handed, you scroll last night's user feedback. One says: it told me the shop was open, I went all the way there, and it had closed long ago.",
+  "At your desk, the bad-case spreadsheet first. Of yesterday's two hundred sampled answers, the annotators have marked right and wrong. You go through the wrong ones and sort them into three piles: invented shop names, stale prices, and answers to a different question.",
+  "Prompt review with the algorithm team. You want it to say \"I don't know\" first and then offer suggestions; the algorithm engineer says satisfaction will drop. The two of you stare at the same answer on the screen, each saying your own piece.",
+  "In line at the campus canteen, the people ahead are talking about who launched a new model and whose prices got cut in half again. In your head you work out how much that would knock off your daily token bill.",
+  "Writing a PRD: in follow-up questions, the assistant has to remember the city and budget the user mentioned earlier. You draw three flowcharts, then add a section at the end: \"When it should keep quiet.\"",
+  "Weekly meeting. The data analyst puts up a chart: people who use the assistant retain two points better, but customer-service complaints are up too. Your boss asks you whether those two points are real.",
+  "The eval set finishes on the new version. Accuracy is up, but one category is all wrong: the user asks about this week, and it answers about last year. You pull that category out and build a new eval subset for it.",
+  "Back at the shared flat in Shangdi, you use the assistant yourself for half an hour, asking where to get a bike fixed nearby. It answers well. You take a screenshot, and also note down a spot where it never asked your budget."
+ ],
+ "ladder": [
+  {"title": "Associate Product Manager (AI)", "stage": "Entry", "focus": "Write PRDs, sort bad cases, run evals and see features through to launch. You move up by carrying one small feature from start to finish."},
+  {"title": "AI Product Manager", "stage": "Junior", "focus": "Own one AI feature on your own: set the prompt and retrieval approach, build the eval set, iterate on the data."},
+  {"title": "Senior AI Product Manager", "stage": "Mid-level", "focus": "Own a product line, set the metrics and choose the models, balance quality, cost and risk, and bring on newcomers."},
+  {"title": "AI Product Lead / Head of Product", "stage": "Senior", "focus": "Lead a product team, set the roadmap, and make the return on investment clear to management."},
+  {"title": "AI Product Director", "stage": "Principal", "focus": "Run several AI product lines and their teams, answerable for revenue, cost and risk."}
+ ],
+ "ai_tasks": [
+  {"name": "Sorting user feedback and drafting PRDs", "how": "AI can read hundreds or thousands of pieces of feedback, group the problems and write a first-draft PRD with flowcharts. A person only needs to pick the one or two things truly worth doing and pin down the scope and priority."},
+  {"name": "Designing the prompts, retrieval and agent workflows", "how": "AI can draft prompts and rough out retrieval and agent orchestration. Where the business boundaries lie, and how to trade quality against cost, takes a person's judgment, and a person answers for the final design."},
+  {"name": "Building eval sets and scoring the model's answers", "how": "AI can generate test questions in bulk, score answers and summarize error types. What to measure, what counts as a good answer, and whether the scoring model is biased, a person has to settle by spot-checking one answer at a time."},
+  {"name": "Finding AI use cases worth building", "how": "AI can comb through competitors, industry material and user feedback and list candidate use cases. Which one is really worth doing, and whether it can work inside the business, takes a person going out to look and talking to users."},
+  {"name": "Deciding whether an AI feature is ready to ship", "how": "Before launch you weigh quality, cost, safety and compliance, and you answer for what happens if it goes wrong. AI can write the report and run red-team tests; the call, and the responsibility, can only be a person's."},
+  {"name": "Explaining AI's return on investment to management", "how": "AI can help with the numbers and draft the presentation. Persuading management, drawing the line between the technical and the business problem, and earning trust take a person who shows up and stands behind it."}
+ ],
+ "events": {
+  "e_hallu_viral": "The assistant said a clinic that had moved long ago was still open at its old address. A user posted the screenshot and it was shared tens of thousands of times overnight. PR, legal, the algorithm team and you sat in a meeting room until the small hours, and added one rule: anything about seeing a doctor or opening hours must carry the date and source of the information.",
+  "e_thanks": "A retired woman left a message with customer service: alone in another city for medical treatment, she'd had the assistant walk her step by step through booking an appointment, which bus to take, which building to go to. Customer service forwarded you the screenshot, and you pinned it to the top of the team chat.",
+  "e_model_price": "The base model got cheaper again: the same quality, a call costing a third of what it did last year. You put all the savings into follow-up questions, and for the first time you didn't have to do the math on whether to let it ask one more thing.",
+  "e_feature_eaten": "A new generation of models arrived, and the query-rewriting module your team spent half a year on was something it now did by itself, and better. In the retrospective you took the module offline, and your throat was a little dry as you said it.",
+  "e_ai_prd": "The company's in-house AI tool can read a hundred pieces of user feedback and write a first-draft PRD with the flowcharts done. Now half your time goes into editing what it writes, and the other half into arguing with it: it always wants to build every request.",
+  "e_ai_judge": "Evaluation switched to models scoring models, a hundred thousand answers a night. You hand-checked three hundred and found the scoring model had a soft spot for long answers. You wrote a one-page scoring rubric aimed squarely at that habit.",
+  "e_demo_fail": "At an open day for partners, someone asked a tricky question and the assistant froze for over ten seconds, then gave a circular non-answer. Someone in the audience laughed. Back at the office you added the question to the eval set and named it Open Day.",
+  "e_launch_night": "The week before a major release, you left the campus at one in the morning every night, when the only things under the Xierqi streetlights were ride-hailing cars. The launch numbers were good. You fell asleep in the cab, and the driver had to call you three times.",
+  "e_bonus": "The assistant's daily active users doubled, the product line won the company's project of the year, and the year-end bonus came to six months' pay. You bought your parents a new fridge and saved the rest.",
+  "e_reorg": "Another reorganization moved your team from the search line to the large-model platform group. New reporting line, new weekly-report format, even meeting rooms in a different building. You spent a month going over again with everyone who actually had the final say.",
+  "e_minor": "The data showed that a good number of people asking the assistant things after ten at night were secondary-school students, asking about homework and what was on their minds. You and the safety team changed the policy: in these conversations it should talk more slowly, and suggest finding an adult when that's called for.",
+  "e_interview": "You started interviewing for the team. A fresh graduate explained retrieval-augmented generation more clearly than you could have at his age. You asked him: if the model gets it wrong, who does the user come to first? He thought for a long time. You passed him.",
+  "e_house": "You bought an old two-bedroom in Huilongguan, Changping. The down payment emptied your savings from all these years, and you borrowed some from family too. On the subway the night you signed, you did the math: the mortgage would eat half your pay every month.",
+  "e_wedding": "You got married. The night before the wedding you were still revising the assistant's launch copy while the wedding party played cards in the next room. You shut the laptop, went over, and lost two hands.",
+  "e_child": "Your child was born. You took a few days off, and while you held the baby your phone kept buzzing. You shoved it into a drawer, and for the first time went three days without looking at the dashboard.",
+  "e_thyroid": "The company health check said thyroid nodule, straightened cervical spine, early signs of fatty liver. You folded the report into your bag, and that weekend, for the first time, you didn't bring your laptop home.",
+  "e_parents": "A call from home: your father was in hospital. You took a week off and went back, ran two online meetings from the corridor outside the ward, then hung up and stood at the window for a long time.",
+  "e_overseas": "The company wanted to take the assistant to Southeast Asia, and you flew to Jakarta, eating with local users and watching how they used their phones. When you got back you redesigned half of it: people there would rather send voice messages than type.",
+  "e_35": "A round of company \"optimization\" layoffs, with a list made up mostly of people around thirty-five. You weren't on it this time, but the veteran product manager from the next team, the one who once trained you, was. You spent an evening helping him fix his CV, and the next day neither of you mentioned it.",
+  "e_agents": "The assistant went from answering questions to getting things done for users: booking tables, comparing prices, filling in forms. What you look at most every day now isn't whether an answer is right, but whether the step it's about to take for someone needs it to stop and ask first.",
+  "e_mentor": "The first associate product manager you ever trained took sole charge of a new feature. The first slide he showed at the launch was the one you drew by hand years ago: \"When it should keep quiet.\"",
+  "e_back": "Years of meetings and sitting caught up with your lower back. You bought a standing desk and stood at the back of meeting rooms, and in time everyone knew the person standing at the back was the one who made the call."
+ },
+ "choices": {
+  "c_eval": {"title": "Build the eval set first, or rush the launch?", "situation": "Your boss wants a new feature live next month: the assistant summarizing the hundreds of comments under a post. You could spend three weeks building a proper eval set and test each type of question thoroughly, or launch first and fix things from user feedback as you go.", "options": [
+   {"label": "Build the eval set first", "result": "You launched two weeks late and got an earful for it. But after launch that eval set saved you three times: every time you swapped models, you knew overnight what had got worse."},
+   {"label": "Launch first", "result": "The feature went out on time, the numbers looked good, and your boss posted a thumbs-up in the group. Only, from then on, every model swap meant learning what had broken from user complaints."}
+  ]},
+  "c_cost": {"title": "The token bill blew the budget", "situation": "Finance comes to you: the assistant's API costs this quarter ran forty percent over. You could move most questions to a cheap small model and lose a little quality, or go to your boss for money and make clear what the expensive part is worth.", "options": [
+   {"label": "Switch to a small model and route traffic", "result": "You and the algorithm team built a router: easy questions go to the small model, only hard ones to the big one. Costs fell sixty percent, satisfaction dipped half a point, and Finance sent you a thank-you email."},
+   {"label": "Ask for the budget", "result": "You made a one-pager: how much more the assistant's users stay and post, and what that's worth a month. Your boss signed off, but said he'd want to see results next quarter."}
+  ]},
+  "c_senior": {"title": "Promotion review: Senior AI Product Manager", "situation": "The mid-year promotion window has opened, and your manager says you could try for Senior AI Product Manager: owning a whole product line, setting the metrics, choosing the models, and managing two associates. At the review you'll have to explain what you've achieved in these two years, and which call you got wrong.", "options": [
+   {"label": "Go for the review", "result": "At the review you didn't talk about daily users. You talked about the clinic incident and the rule you added afterwards. One of the panel, the director in charge of safety, wrote a sentence on the scoring sheet."},
+   {"label": "Give it another year", "result": "You said you'd wait and get follow-up questions right first. That year you wrote a very thick document on evaluation methods, which later became required reading for every new hire on the team."}
+  ]},
+  "c_startup": {"title": "A former colleague wants you for his startup", "situation": "A former colleague has left a big tech firm with an angel round to build an AI customer-service agent for small merchants, and wants you as a co-founder running product. Half your current pay, plenty of options. You've seen their demo: it's rough, but in the first month three hundred shops were already paying.", "options": [
+   {"label": "Join the startup", "result": "You handed in your notice, and on your last day put your badge on your manager's desk. Your manager said: the door's always open.", "end": "From then on you built AI products at startups. You saw winters with two months of payroll left in the bank, and springs when a thousand shops signed up overnight. You said later that only in those years did you really learn what a feature is worth."},
+   {"label": "Stay", "result": "You stayed, and looked over their plans twice for free. Half a year later their agent was running in one small restaurant after another, and you recognized its voice when you ordered takeaway."}
+  ]},
+  "c_agent": {"title": "Turn the assistant into an agent that gets things done?", "situation": "The new models can call tools and finish a task step by step. Your boss wants the assistant not just to answer, but to book tables, compare prices and place orders for users. That means learning agent orchestration, permissions and fallback flows from scratch. Or you could pass, and polish today's Q&A experience to its best.", "options": [
+   {"label": "Make it an agent", "result": "You spent half a year drawing hundreds of flowcharts of where it should stop and ask a person. The first time it booked a weekend table for a user, the user wrote back: faster than I could have done it myself."},
+   {"label": "Make the Q&A the best it can be", "result": "You held on to Q&A and pushed accuracy up another five points. The team next door built an agent and had two wrong-booking incidents; your assistant became the company's product with the fewest complaints."}
+  ]},
+  "c_expert": {"title": "Apply for AI Product Lead / Head of Product", "situation": "The company is merging several AI features into one business unit and needs an AI Product Lead / Head of Product: managing a dozen-plus product managers, setting the roadmap, and presenting the return on investment to management every quarter. If you get it, you'll rarely read bad cases yourself; it'll be more meetings, fighting for resources, and taking the blame for the team.", "options": [
+   {"label": "Apply", "result": "At the panel you showed only three charts: how much was spent in a year, what it bought, and which money was wasted. Management asked a lot of questions, and the last was: the wasted money, who answers for that? You said: me."},
+   {"label": "Stay a hands-on expert", "result": "You said you wanted to stay closer to users. You became the person on the team who knew evaluation best, and every time models changed, every team came to ask you first."}
+  ]},
+  "c_layoff": {"title": "The layoff round after thirty-five", "situation": "The business line is shrinking and your team has to be cut in half. You could stay and choose who goes yourself, taking on a smaller, harder patch. You could take the severance and become head of AI transformation at a manufacturing group, good money, slower pace. Or you could go back to your home province's capital and join the digital department of a state-owned company.", "options": [
+   {"label": "Stay", "result": "You talked to each person who had to go, and helped several of them find their next job. The ones left followed you into a new direction, and you drew the first diagram on the whiteboard."},
+   {"label": "Join the manufacturing group", "result": "For the first time you walked onto a factory floor. Nobody there cared how big the model was. They asked one thing: can this mean one less night shift for quality inspection?"},
+   {"label": "Go home to a state-owned company", "result": "You rented out the Beijing flat and moved back to the provincial capital. The new job starts at eight-thirty and ends at five-thirty, and for the first time you could take your child downstairs to ride a bike on a weekday evening.", "end": "You spent many years on digital transformation at the state-owned company back home, hooking old system after old system up to AI. Young colleagues called you teacher and asked what Beijing had been like. You said: like always running to catch a train."}
+  ]},
+  "c_vc": {"title": "An investment firm wants you to look at deals", "situation": "An investment firm is looking for someone who understands AI products to do sector research, specifically to judge whether users will actually use what an AI company makes. About the same pay, no more release crunches, but you'll never again have a product of your own.", "options": [
+   {"label": "Go into investing", "result": "For the first time you sat across from a founder and heard the kind of story you had told many times yourself. You asked one question, and he was silent for a long time.", "end": "From then on you looked at AI deals for an investment firm, meeting hundreds of founders a year. The question you asked most was still the same: if it gets it wrong, who does the user come to first?"},
+   {"label": "Stay in product", "result": "You turned it down, and on Monday morning opened the bad-case spreadsheet as usual. That week one answer was especially good, and you posted a screenshot of it to the group."}
+  ]},
+  "c_director": {"title": "Go up for AI Product Director", "situation": "The business unit is creating an AI Product Director post: three product lines, forty-odd people, answerable for a year's revenue and risk. You'd negotiate budgets with the boss, compliance with legal and revenue shares with outside partners, and be the first to pick up the phone the night something goes wrong.", "options": [
+   {"label": "Go for it", "result": "On the day of your review, your last slide was: the features we decided not to build, and why. The boss looked at it for a long time and said that page was worth the most."},
+   {"label": "Don't apply; run your own line well", "result": "You said you'd rather stay close to the product. In their first week the new director came to find you and asked how this line had got to where it was."}
+  ]}
+ },
+ "endings": {
+  "retire": "On your last day you peeled the hand-drawn flowchart \"When it should keep quiet\" off your cubicle partition, folded it and put it in your bag. In the meeting room, young product managers were arguing about a prompt, their voices coming through the glass. You walked out of the campus. The Xierqi subway entrance was as crowded as ever. A push notification from the assistant popped up on your phone, and you didn't open it.",
+  "burnout": "After that year's health check, the doctor talked to you for a long time. You quit and rested at home for the better part of a year, taking your child to school each morning and then walking a loop of the Olympic Forest Park. The assistant is still on your phone. Now and then you ask it about the weather and it answers well, and you've stopped wondering how it comes up with the answer."
+ },
+ "stages": [
+  "You own one feature in the assistant on your own: reading bad cases every day, tuning prompts and retrieval, running the eval set, watching the dashboard. You work most with the algorithm, annotation and data teams. They build from your PRDs, but how the model is trained isn't your call, and you can only win people over with eval results.",
+  "You own a whole product line: setting the metrics, choosing the models, deciding which questions go to the big model and which to the small one. You manage two or three associates and meet weekly with the algorithm lead, the safety team and Finance. What you sign is no longer a one-page PRD but a quarter's token budget and a launch risk assessment.",
+  "You lead a product team of a dozen-plus, set the six-month roadmap, explain ROI to management and risk boundaries to legal. You rarely read bad cases yourself now, just twenty a week. More of your time goes to staffing, resources and shielding the team. The final \"ship it or not\" is yours.",
+  "You run several AI product lines and forty-odd people, answerable for a year's revenue, cost and risk. You negotiate budgets with the boss, revenue shares with partners, and explain your safety mechanisms to visiting regulators. When something goes wrong, the first call comes to you. You've kept one habit: one day a month you are a user, start to finish."
+ ],
+ "work": [
+  "A young annotator came over to say the same question had been labeled three times with three different verdicts. You looked: the phrase \"basically correct\" in the labeling rules wasn't defined. You fixed the standard that day and added twenty examples.",
+  "The algorithm engineer said the new prompt made answers thirty percent longer. You showed fifty long and fifty short answers to real users. They preferred the short ones, and you added a column to the eval sheet: surplus words.",
+  "The data analyst showed you the tracking data: half the users left after reading the assistant's first sentence. You changed the first sentence to give the conclusion straight away, and the next week dwell time was clearly longer.",
+  "The safety team brought a red-line list of forty items. You went through them one by one: which to block with rules, which to leave to the model's judgment, which must go to a human. One spreadsheet took two full days.",
+  "A new associate product manager wrote a PRD with twelve features. You had him keep one, and spell out when and why a user would need it.",
+  "Two base models came in for a price comparison: one thirty percent cheaper, one two points more accurate. You ran just the hardest category from the eval set. The cheap one got all of them wrong, and you wrote your reasons into the model-selection report.",
+  "Management wanted one page on why you should spend this much again next year. You deleted every technical term and kept three lines: how much time users saved, how much more the company earned, and where things could still go wrong.",
+  "Two teams fought their way up to you over who would build the voice assistant. You heard both plans and gave voice to the team that wanted it less but had the more solid evals.",
+  "Legal came with a new regulatory requirement. You and three product managers went through every feature, and you took down one with great numbers whose data sources couldn't be clearly explained.",
+  "A partner wanted to plug your assistant into their app and offered a high price, on condition that user data be shared. At the negotiating table you struck out the data clause. The price, you said, was open to discussion.",
+  "At year-end budgeting you cut a line that had run two years without making money. You went to tell that team's lead yourself, and afterwards helped him find a new direction.",
+  "At one in the morning the assistant got a whole category of medication questions wrong somewhere. The phone woke you. First you took that category of answers offline, then called people in, then wrote the incident note, all of it done before dawn."
+ ],
+ "past": [
+  "You went to middle school in a prefecture-level city in Shandong, and the family's first computer was one you nagged your parents into buying. You installed games on it, took the system apart, and asked your first question on an online forum. A stranger answered it with great care.",
+  "Your score in the gaokao (college entrance exam) just cleared the first-tier university line, and you put down computer science at an engineering university in Beijing, figuring it would be easy to find work.",
+  "In your second year you failed data structures once and only passed on the resit. You found you cared more about why a piece of software was hard to use, and often lectured your roommates in the dorm about which button was in the wrong place.",
+  "In your final year you applied for dozens of developer jobs and got just one internship, as a product assistant. You took it. Your first week was tagging search results, two thousand a day.",
+  "The internship turned into a job, and you became an associate product manager on the search team, writing PRDs and reading data under a mentor. The first time a feature you proposed went live, you used it twenty times in your dorm room.",
+  "The large-model wave hit and the team started on AI search. You taught yourself prompting and retrieval-augmented generation, built a small Q&A tool on your own computer at night, and showed it to your mentor, who said: this can go into the plan for the second half of the year."
+ ],
+ "late": {
+  "pension_note": "Estimate: internet companies pay pension contributions near the ceiling of the social-insurance base, but that ceiling sits far below actual pay, so the basic pension comes to roughly thirty to forty percent of your last monthly salary. Options and savings from your younger years matter more.",
+  "scenes": [
+   "For the first month of retirement, the first thing you did every morning was reach for your phone to check the dashboard. You came up empty, and then remembered the account had been closed.",
+   "A university invited you to talk to students about AI products. You didn't use slides. You had each of them ask the assistant a question, and then you all hunted together for what it got wrong.",
+   "You helped the older people in your housing compound set up the AI assistant on their phones and taught them how to ask. One old man asked whether his blood-pressure pills were all right to take with pomelo. You listened to its answer beside him and nodded.",
+   "In the first few weeks after quitting, you slept until you woke on your own, then just lay there, watching the light through the gap in the curtains slowly move across the room.",
+   "You took up running in the Olympic Forest Park, working up from three kilometers to ten. The AI coach in the running app wrote you a few lines of encouragement every day, and you could tell what kind of prompt had written them.",
+   "At a reunion of old colleagues someone brought up that assistant, saying it now answered hundreds of millions of questions a day. You listened and slid a plate of lamb into the hotpot.",
+   "In your first year on a different path, every time you opened that app you asked the assistant a question without thinking, to see how well it answered.",
+   "At an industry conference you ran into your old algorithm colleague, now head of technology at a company. You stood in the corridor and argued for ten minutes, again, about whether an answer should be long or short.",
+   "You passed through Xierqi. That building had a different company's sign on it now. The subway entrance was still full of people with laptop bags, and standing in the crowd you felt you were watching yourself from many years ago.",
+   "Your child asked an AI assistant for help with homework. Watching, you couldn't help saying: go and check where that sentence came from. Your child said you were nagging.",
+   "On an old hard drive you found your first PRD. The last section was headed \"When it should keep quiet.\" The writing was green, but the point hasn't changed to this day."
+  ],
+  "closing": {
+   "retire": "One evening many years later, you sat on the balcony and asked the speaker in the living room whether it would rain tomorrow. It said yes, after three in the afternoon. You said thank you, it said you're welcome, and you smiled a little and asked nothing more.",
+   "burnout": "Many years later you sat by the lake in the Olympic Forest Park with your phone left at home. Wind moved through the reeds, and someone was flying a kite in the distance. You looked nothing up, and there was nothing you wanted to know.",
+   "end": "Many years later you found your old staff badge in a drawer. The person in the photo was still young; the lanyard had faded. You put it with that hand-drawn flowchart and closed the drawer."
+  }
+ }
+}

@@ -1,0 +1,189 @@
+{
+ "id": "marine-eng-zs",
+ "occupation": "Marine Engineer",
+ "role": "Fourth Engineer on a Coastal Bulk Carrier",
+ "headline": "Raised in a fishing village on a Zhoushan island, a marine-engineering graduate of a maritime vocational college who has just got his certificate after a year as an engine rating, now running the boiler and purifiers in the engine room of a bulk carrier on coastal and Southeast Asian routes",
+ "unit": "A Zhoushan shipping company (a bulk carrier on coastal and Southeast Asian routes)",
+ "unit_type": "Shipping company",
+ "city": "Zhoushan",
+ "city_tier": "Third-tier",
+ "education": "Associate degree (marine engineering technology)",
+ "level": "You have stripped a purifier, lit a boiler and handed tools at a main-engine overhaul. Keeping the alarm screen in the control room alone, and judging at night whether to wake the second engineer, you are still learning.",
+ "intro": "Your home is on an island in Zhoushan. Your father has run a fishing boat for half his life, and you grew up with the sound of the diesel in its engine room. The main engine on the ship you've joined is taller than your house. The chief engineer hands you the engine-room key ring and points towards the boiler: that corner is yours from today.",
+ "salary_note": "Estimate: engineers with Zhoushan shipping companies are paid for the months on board, noticeably more than shore-based marine engineers with the same experience, with only a basic wage during leave. Taken at 1.3 times the national figure.",
+ "facts": [
+  { "label": "Fourth Engineer (current level)", "value": "0–2 years, ¥7,000–11,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Third Engineer (2–5 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥18,600 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Hands-on overhauls and emergency repairs in the engine room", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Reading alarms and diagnosing faults", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "After breakfast, down to the engine room. First you check the boiler's water gauge and the burner flame, then the purifier's outlet pressure, and write the first line in your notebook.",
+  "Engine-room morning meeting. The second engineer writes out the jobs on the whiteboard in the control room: No. 2 purifier overhaul today, fourth engineer plus one rating. You nod and go to the tool store for spanners.",
+  "The purifier is open, the disc stack coated in black sludge. You scrape the discs clean one by one and wash them in kerosene while the rating counts for you: a hundred and twenty in all.",
+  "Back together, test run, outlet pressure back to normal. You're covered in oil. You take out your earplugs, and the first sound you hear is still the main engine.",
+  "In the afternoon you check the bilges, run the oily water separator and read the 15 ppm alarm. The figure jumps; you wait five more minutes before you enter it in the Oil Record Book.",
+  "The four-to-eight watch. The engine room is over forty degrees. You walk the length of the main engine, touch each cylinder's exhaust pipe, and glance at the crankcase oil-mist detector.",
+  "Off watch, you shower twice and still can't get the oil out from under your nails. You phone home; your mother says your father has been telling people on the quay again that his son runs the machines on a big ship.",
+  "The alarm bell in your cabin rings: boiler low water level. You pull on your coveralls and run down. A float has stuck. By the time it's sorted and you're lying down again, it's nearly dawn."
+ ],
+ "ladder": [
+  { "title": "Fourth Engineer", "stage": "Watchkeeper", "focus": "Look after the boiler, purifiers, pumps and emergency equipment, keep engine-room watches with the second engineer, and build up sea time for the next certificate." },
+  { "title": "Third Engineer", "stage": "Generators", "focus": "Look after the diesel generators, air compressors and bunkering, keep your own engine-room watch, and direct a rating." },
+  { "title": "Second Engineer", "stage": "Main engine", "focus": "Look after the main engine and shafting, plan the engine room's daily work and maintenance, lead three or four engineers and ratings, and sit for chief engineer." },
+  { "title": "Chief Engineer", "stage": "The whole engine room", "focus": "Carry overall responsibility for all machinery, fuel consumption, spares and people below, deal with the captain, the company's superintendents and shipyards, and sign." }
+ ],
+ "ai_tasks": [
+  { "name": "Hands-on overhauls and emergency repairs in the engine room", "how": "Lifting cylinder heads, changing injectors, fixing pumps, stopping leaks: it takes someone with a spanner and a micrometer in an engine room over forty degrees. Data can tell you where something is wrong; turning the bolts and deciding whether it can go back together is still a person's job." },
+  { "name": "Reading alarms and diagnosing faults", "how": "The engine-room monitoring system throws up dozens of alarms a day, and AI can rank the likeliest causes from trends in vibration, temperature and pressure. Whether it's a real fault or a dead sensor, an engineer still has to go down, look, listen and feel." },
+  { "name": "The engine log and machinery readings", "how": "Temperatures and pressures on the main engine, generators and boiler are collected every hour and turned into reports automatically. The engineer only checks the key items and signs." },
+  { "name": "Planned maintenance and ordering spares", "how": "The maintenance system flags by running hours which machine is due and which spares to order. What to fix first and what can hold until the next dry dock is for the chief and second engineers to decide." },
+  { "name": "Fuel management and pollution prevention", "how": "Consumption, sulphur content and the oily water separator readings can all be logged and flagged automatically. During bunkering, sounding the tanks, taking samples and standing at the valves still needs someone there." },
+  { "name": "Emergencies and leading people", "how": "In a blackout, flooding or fire in the engine room, someone has to decide in seconds who starts the emergency generator and who shuts which valve. Bringing on a new rating is a human job too." }
+ ],
+ "events": {
+  "e_heat": "Your first summer on the Southeast Asia run, the engine room hits fifty degrees. After two hours by the boiler everything goes black, and a rating helps you up to the control room. It takes two bottles of salt water before you come round.",
+  "e_overhaul": "Your first time lifting a main-engine cylinder head with the second engineer. The overhead crane carries a two-tonne cover while you steady the guide below; when he says slow, you call slow. The day it goes back, you write down the torque on every bolt.",
+  "e_blackout": "A blackout in the middle of the night, the engine room pitch dark except for the emergency lights. You feel your way down the ladders to the control room and follow the third engineer in putting the standby generator on the board. Four minutes, and the lights come back one by one.",
+  "e_cert": "You go back to Zhoushan to sit the Third Engineer's certificate. The practical is diesel fault-finding. On the simulator the examiner sets you a fuel-pump pressure loss, and you find the cause in five minutes.",
+  "e_fishing": "Home on the island on leave, your father's fishing-boat diesel won't start. You squeeze into that tiny engine room and have it fixed in half an hour. He stands on the quay telling everyone who passes that his son did it.",
+  "e_typhoon": "Typhoon weather, the ship at a sheltered anchorage with the main engine on standby. You sit in the control room for thirty hours watching each cylinder's exhaust temperature, standing up for a walk whenever you get drowsy.",
+  "e_burn": "Opening the flange on a steam line, there's still a little steam left inside, and a patch of your wrist is scalded red. The chief engineer doesn't shout at you. He just goes through the lockout-tagout rules again with everyone.",
+  "e_love": "You go out for two years with a teacher at the island's primary school, and marry her on leave. On the day of the banquet an old rating from the ship takes time off specially and comes over by boat from Ningbo.",
+  "e_dock": "The ship goes into dry dock at a Zhoushan repair yard, and you go through the repair list item by item with the yard's fitters. Tail shaft, steering gear, sea valves: for twenty days you walk the dock floor several times a day.",
+  "e_oil_spill": "During bunkering one tank's level gauge reads wrong and the tank nearly overflows. On deck you see a little oil at a vent pipe and shout to the bunker barge to stop. Not a drop goes into the sea, but you don't sleep at all that night.",
+  "e_hearing": "At your medical, the high frequencies on your hearing test have dropped. The doctor asks if you work somewhere noisy. You say yes: ten years standing beside a main engine.",
+  "e_child": "Your child is born while you're discharging cargo at a Vietnamese port. You take the call in the engine control room with the main engine roaring around you. You can't make out anything except one sentence: mother and baby are fine.",
+  "e_ai_alarm": "The company fits a condition-monitoring system in the engine room, and it flags a rising trend in No. 3 cylinder's exhaust temperature. You go down and pull the injector, and one nozzle hole is carboned up. It was right, a week before you would have spotted it.",
+  "e_ai_false": "In the middle of the night the system flags an abnormal main-bearing temperature, and the superintendent ashore phones to tell you to stop the engine at once. You go down and feel it: the temperature is normal, a sensor wire shaken loose. You write a paragraph in your report with photos.",
+  "e_autolog": "The engine log goes over to automatic data collection, and the dozens of readings you used to copy out every watch now come out as a printed table. With the bit of time it frees up, you do your rounds below more often.",
+  "e_young": "The new fourth engineer, overhauling a purifier for the first time, puts it back one disc short. You don't tell him off. You take it all apart again with him and have him do the counting.",
+  "e_crankcase": "The oil-mist detector alarms. You have the bridge slow down and stop at once, and wait forty minutes before opening the crankcase doors. One bearing shell shows a bright wear mark. As you change it, your hands are remarkably steady.",
+  "e_house": "You buy a flat in Dinghai, on Zhoushan's main island, forty minutes by boat from your parents' island. The mortgage comes out of your salary card each month, and at sea you read the text message and work out how many years are left.",
+  "e_back": "Years of bending double to crawl among the pipes, and your back starts to hurt. On the engine-room ladders you pause for a moment before lifting each leg.",
+  "e_spare": "The company squeezes the spares budget and your request for a set of main-engine piston rings is cut. You write the superintendent three pages laying out the wear figures on every cylinder, and the next month the spares arrive on board.",
+  "e_lng": "The company starts building dual-fuel ships that burn LNG. You train in Shanghai for two weeks, and for the first time see engine-room pipes at minus a hundred and sixty degrees, coated in white frost."
+ },
+ "choices": {
+  "c_ocean": {
+   "title": "Stay on coastal ships or go deep-sea",
+   "situation": "The company's ships run the coast and Southeast Asia on six-month contracts, so you get back to the island often. An old classmate at a crewing agency says fourth engineers on big ocean-going ships earn thirty percent more in dollars, but it's nine months away at a time, with foreign crew and unfamiliar engines.",
+   "options": [
+    { "label": "Go deep-sea", "result": "You join a Capesize bulk carrier with an electronically controlled main engine you've never seen before. You spend a month working through the English manual, and your pay slip is in dollars." },
+    { "label": "Stay coastal", "result": "You stay on the company's ships and get back to the island every six months. Your father says nearer is better; he can hear your ship going past the island." }
+   ]
+  },
+  "c_second": {
+   "title": "Take over as Third Engineer",
+   "situation": "The third engineer has signed off for good, and the chief asks whether you dare take over: generators, compressors and bunkering all yours, and a watch of your own. You've only just got the certificate, and your sea time is thin.",
+   "options": [
+    { "label": "Take it", "result": "For the first time you keep the midnight-to-four engine watch alone, and learn the load curves of all three generators by heart. A month later the chief stops coming down at night to check on you." },
+    { "label": "One more contract learning", "result": "You say you'd like one more contract as you are. The company sends an old third engineer, who teaches you to tell which cylinder of a generator is off just by its sound." }
+   ]
+  },
+  "c_shipyard": {
+   "title": "Go ashore as a yard superintendent",
+   "situation": "A ship-repair yard in Zhoushan is hiring superintendent engineers and likes that you've repaired main engines at sea. Home every day, no more six months off the island; thirty percent less pay, and the ships are other people's.",
+   "options": [
+    { "label": "Go to the yard", "result": "You sign off your last ship and walk into the dry dock for the first time in yard overalls, looking up at the ships waiting for repair.", "end": "You become a superintendent at the Zhoushan repair yard, writing repair lists for ship after ship as they come into dock. When the ship's engineers hear you name the faults in their main engines, they're always glad to talk a while longer." },
+    { "label": "Stay at sea", "result": "You say you still want to go further, to be a chief engineer once. That night you stay in the control room a little longer." }
+   ]
+  },
+  "c_chief_ae": {
+   "title": "Step up to Second Engineer",
+   "situation": "The company is promoting one third engineer to second engineer, in charge of the main engine and shafting and the engine room's daily work. The chief says you can try, but this contract's cylinder overhaul plan is yours to draw up and lead.",
+   "options": [
+    { "label": "Lead the overhaul", "result": "You draw up an overhaul schedule down to the order of every bolt. All six units done, the main engine starts first time on trial, and the chief puts your name on the report." },
+    { "label": "Two more years as third", "result": "You say the baby is nearly due and you want to keep things steady. The post goes to an older colleague, who always calls you over to help when he lifts a cylinder." }
+   ]
+  },
+  "c_ai": {
+   "title": "Learn condition monitoring and predictive maintenance or not",
+   "situation": "The company is rolling out condition monitoring on its ships and wants one engineer from each to train, then read the data, liaise with the superintendents ashore and teach the others. Once you've learnt it, half your work will be in front of a screen.",
+   "options": [
+    { "label": "Go and learn", "result": "You learn to read vibration spectra, and learn to argue with the superintendents ashore about which alarms are real and which are a sensor talking nonsense." },
+    { "label": "Don't", "result": "You say machines still need touching and listening to. Once the system is in, the young engineers sometimes come to ask you: what do you make of this one it's flagging?" }
+   ]
+  },
+  "c_family": {
+   "title": "Longer contracts or more time with the family",
+   "situation": "The child is small and your father's health isn't what it was. The company offers an eight-month contract with a bigger bonus; or you can ask to move to a harbour tug in Zhoushan and be home every day, but a tug's engine room is small and the road up is narrow.",
+   "options": [
+    { "label": "Sign the long contract", "result": "You sign for eight months. On the quay the day you come home, your child doesn't recognise you and stares at you from behind its mother for a long time." },
+    { "label": "Move to the tugs", "result": "You go to the harbour tugs and are home for dinner every evening. Less money, but in the fortnight your father is in hospital, you're the one sitting with him every day." }
+   ]
+  },
+  "c_chief_eng": {
+   "title": "Sit for Chief Engineer",
+   "situation": "You have the sea time as second engineer, and the company tells you to sit the chief engineer's certificate. Pass, and the next ship's engine room is yours: every machine, the fuel, the spares, every person, all under your signature.",
+   "options": [
+    { "label": "Sit it", "result": "You shut yourself in at home for two months and work through the conventions, the pollution rules and engine-room management chapter by chapter. On assessment day the examiner asks: total blackout, what's your first order? You answer straight away." },
+    { "label": "A few more years as second", "result": "You say you haven't had enough of the hands-on work yet. The old chief on your next ship is close to retirement, and he photocopies thirty years of his fault notes for you." }
+   ]
+  },
+  "c_surveyor": {
+   "title": "Become a classification society surveyor",
+   "situation": "A classification society's Zhoushan branch is recruiting surveyors with chief or second engineer's sea time. Every day you'd board ships at yards and quays to inspect other people's engine rooms and sign survey reports. Home every day, never again New Year at sea.",
+   "options": [
+    { "label": "Become a surveyor", "result": "You put your seaman's book away and walk into someone else's engine room for the first time with a survey checklist.", "end": "You become a surveyor, going back and forth between the quays and dry docks of Zhoushan. One breath of someone else's engine room and you know whether the ship has been well kept." },
+    { "label": "Stay at sea", "result": "You say you want a few more years at sea. You take a photo of the job advert and keep it on your phone, and never delete it." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "Your last contract ends when you're sixty. You sign off in Zhoushan and hand the engine-room key ring and the fault notes you've kept half your life to the chief engineer relieving you, with one line: check No. 3's injector every two thousand hours. You walk down the gangway with the main engine still in your ears. It takes several days to stop.",
+  "burnout": "Your hearing and your back gave out together, and that year you failed two items at your medical. You put your seaman's book in a drawer and went to a small repair yard on the island, fixing fishing-boat diesels. The engine rooms are small, the noise is small, and you work slowly. Nobody hurries you."
+ },
+ "stages": [
+  "The boiler, purifiers, pumps and emergency equipment are yours. Each morning you check the boiler water level and flame first, then the purifiers, and when one is due you strip it with a rating. You keep watches with the second engineer, watching the alarm screen in the control room and walking round the main engine every hour. What you're still learning is to hear which sound is wrong, and when at night to wake someone.",
+  "The three diesel generators, the air compressors and bunkering are yours: you decide which generator needs new filters and which to parallel on, and before bunkering you sound the tanks, do the figures and stand at the valves. You keep your own engine-room watch with a rating, and any alarm the fourth engineer isn't sure of is phoned to your cabin first.",
+  "The main engine and shafting are yours, and so is the engine room's daily work: at the morning meeting you write on the whiteboard who does what, and for the big jobs, lifting cylinders, changing bearings, you set the plan and lead the work. You schedule the maintenance system and order spares, and agree with the chief what to fix first; when a young engineer opens something up for the first time, you stand beside him and watch.",
+  "You no longer keep a watch, but everything in the engine room is your business. You agree speed and fuel with the captain, talk spares and dry docks with the company's superintendents on the phone, and sign off yard work item by item. The engine log, the Oil Record Book, every report carries your signature last. When the alarm bell rings at night, you still wake."
+ ],
+ "work": [
+  "The boiler burner won't light. You open it up and find the flame eye coated in soot. You clean it with fine sandpaper, try again, and the flame catches at once.",
+  "A seawater pump's shaft seal is leaking, and the second engineer tells you to change it. You follow the manual all morning, put it back and test it: not a drop. The rating gives you a thumbs-up.",
+  "The lifeboat engine has to be tested every week. It takes three pulls to start, so you check the fuel line and find water in the diesel. Once it's drained, it starts first pull.",
+  "The bunker barge comes alongside. On deck you sound every tank, work out how much goes where and which valves to open. Near the top you call slow, the barge eases off, and not a drop spills.",
+  "No. 2 generator runs thirty degrees hotter on the exhaust than the other two. You stop it, pull an injector and pressure-test it on the bench: the spray is lopsided. A new one sorts it.",
+  "An air compressor's safety valve lifts, and the new rating runs up in a fright to fetch you. You go down, shut the intake, strip the valve with him and show him why the spring has gone slack.",
+  "The piston rings on one main-engine unit are due. You lay out the wear figures for all six cylinders in one table and decide to change two this time and leave the rest for the next port.",
+  "At the morning meeting you pin a month's maintenance plan on the control-room wall, a name beside every machine. The fourth engineer says his column is the longest. You say that's because you trust him.",
+  "The stern-tube seal is weeping oil. Before dry dock you and the chief decide to add a ring of packing to hold it for a month. When the yard opens it up, your call turns out right.",
+  "The company's superintendent says on the phone they want slow steaming next quarter to save fuel. You spend an evening working out the carbon build-up and liner wear at low load, and next day send him a very long email.",
+  "The yard's repair list runs to a hundred and twenty items. You go through each one, cut a dozen that shouldn't be done, and add two they missed.",
+  "A port state control inspector comes down to the engine room and asks to see the emergency fire pump. You send the fourth engineer to start it, and it starts first time. The inspector ticks his notebook."
+ ],
+ "past": [
+  "You're in your last year of middle school on an island in Zhoushan, and your family has a small fishing boat. Every fishing moratorium, you help your father fix the old diesel on the quay, hands black with oil.",
+  "Your high school entrance exam goes so-so. Your father doesn't want you fishing; he says if you're going to earn a living at sea, a big ship is steadier than a small one. You enrol in marine engineering at a maritime vocational college.",
+  "In the college workshop you strip a real marine diesel for the first time, ten times the size of your father's. You take it apart and put it together again and again, and your teacher says your hands are steadier than the others'.",
+  "You earn your basic safety certificates and spend two months along the coast on the college training ship. On your first engine-room watch you wear earplugs, and the main engine still shakes you awake all night.",
+  "After graduating you join a Zhoushan shipping company and go to sea first as an engine rating: wiping machinery, changing filters, handing tools to the engineers. In a year you've had your hands on every pipe in the engine room.",
+  "With enough sea time as a rating, you go back to college to sit the fourth engineer's certificate. The day you get it, you take the boat back to the island, and your father is waiting for you on the quay."
+ ],
+ "late": {
+  "pension_note": "Estimate: the company paid crew social insurance on part of the sea-going wage. After thirty-odd years of contributions, the pension comes to a little over forty percent of your last monthly pay at sea, enough to live on in Zhoushan.",
+  "scenes": [
+   "Your first morning back on the island, you're woken by a fishing boat starting up. You lie and listen for a while, and hear that one of its cylinders isn't quite right.",
+   "The fishermen on the quay all know you can fix a diesel. You won't take money, so they bring you fish, and the fridge is always full.",
+   "You take your grandson to see the sea-crossing bridge, and a bulk carrier happens to pass beneath it. You point at the funnel: down under there is where Grandpa used to work.",
+   "The old ratings from the ships don't walk so fast now. Once a year you all meet at a little restaurant in Dinghai, and all the talk is about which ship's main engine, in which year.",
+   "You fix fishing-boat engines at the small repair yard on the island. Each morning before work you stand on the quay for a moment and look at the day's wind.",
+   "Your back is better; your hearing hasn't come back. Your grandson has to speak up, and sometimes you pretend you heard and just smile and nod.",
+   "The small yard has a new owner, and the young people read fishing boats' fault codes on a tablet. Sometimes one of them brings the tablet over to you; you listen to the engine and tell him where it is.",
+   "Your first few months ashore, you always wake once in the night, waiting for the alarm bell. The house is quiet except for the fridge.",
+   "You do well in the new place. Every time you walk into someone else's engine room, you stand for a moment first and listen to the main engine.",
+   "The ship where you were fourth engineer is sold abroad and renamed. You find her on a ship-tracking app, heading across the Indian Ocean.",
+   "In later engine rooms the readings logged themselves, alarms ranked themselves and maintenance reminded itself, and people ashore saw the data before anyone on board. But pulling an injector to look at the nozzle, or climbing into the crankcase to feel a bearing, still took one person going down.",
+   "You sit by the old quay on the island looking at your father's old fishing boat. It hasn't gone to sea in years, but every year you still change the oil in its diesel."
+  ],
+  "closing": {
+   "retire": "One evening many years later you sit in your yard on the island as a ship passes along the far channel. The wind carries the sound of its main engine over, very faint, very steady, and you listen with your eyes closed for a long time.",
+   "burnout": "Many years later, at the bottom of your toolbox, you find a torque wrench you used for decades, its scale worn almost unreadable. You wipe it off and put it back where it was.",
+   "end": "Many years later you find the old engine-room keys in a drawer, with a little brass tag that says Boiler. You hang them on the key rack at home."
+  }
+ }
+}

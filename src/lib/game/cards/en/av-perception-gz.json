@@ -1,0 +1,157 @@
+{
+ "id": "av-perception-gz",
+ "occupation": "Autonomous Driving Perception Engineer",
+ "role": "Autonomous Driving Perception Engineer (robotaxi fleet)",
+ "headline": "Three years in after a master's in vehicle engineering, working on the perception team of a robotaxi company in Nansha, Guangzhou, specializing in obstacles at night and in the rain, and starting every morning with the clips of last night's safety-driver takeovers: a perception engineer",
+ "unit": "The perception algorithms team of a robotaxi company in Nansha, Guangzhou",
+ "unit_type": "Autonomous driving company",
+ "city": "Guangzhou (Nansha)",
+ "city_tier": "First-tier city",
+ "education": "Master's degree in vehicle engineering",
+ "level": "Your bird's-eye-view detection and multi-sensor fusion models have run on the cars, and you can read lidar point clouds against the camera images. But on a stormy night, when a puddle on the road throws back a reflection and the model sees something that isn't there, you're often still unsure whether to fix the data, the model or the fusion.",
+ "intro": "You studied vehicle engineering for your master's, with a thesis on fusing lidar and cameras, and after graduating joined this robotaxi company in Nansha. This is your third year on the perception team. Your company's few hundred cars drive the streets of Nansha and Huangpu with a safety driver in the front seat, and passengers can hail one from their phones. From today on, whether a car sees the person with an umbrella at the roadside on a rainy night is partly on you.",
+ "salary_note": "Estimate: Guangzhou's leading autonomous driving companies pay perception engineers about thirty percent above the national average, plus options. The company lives on its fundraising; in bad fundraising years, raises and hiring both stop, and the options are only money on paper.",
+ "facts": [
+  {"label": "Perception Engineer (current level)", "value": "2-4 years, ¥19,380–28,500 a month (national average, derived from pay by experience)", "source": "Industry norm"},
+  {"label": "Next level up", "value": "Senior Perception Engineer (4-7 years)", "source": "Industry norm"},
+  {"label": "Pay after 10+ years", "value": "¥41,000 a month (national average)", "source": "Pay by experience"},
+  {"label": "What AI can't take", "value": "Designing multi-sensor fusion and validating it on real rainy nights", "source": "AI exposure"},
+  {"label": "Where AI is moving in", "value": "Auto-labeling and mining long-tail clips", "source": "AI exposure"},
+  {"label": "Open positions", "value": "108 related listings nationwide, 3 in this city (mostly campus hiring and internships)", "source": "Job listings"}
+ ],
+ "day": [
+  "Driving from home in Panyu onto the Nansha Port Expressway, you run alongside one of your company's cars for a stretch. It's on your right, the lidar on its roof spinning, and without thinking you ease off a little.",
+  "You open the takeover data platform: seventeen takeovers across the fleet last night, five tagged \"perception.\" You go through them clip by clip. In one, in a downpour, the car brakes sharply at an empty intersection.",
+  "You overlay that frame's point cloud on the six camera feeds: a wide sheet of standing water, and the reflection of a streetlight that the model took for a person crossing. You screenshot it into the \"puddles\" folder, which already holds over three hundred.",
+  "Meeting with the planning and control team. They say perception reports too much and the car keeps hesitating; you say better to over-report than to miss. Both sides watch the same clip for twenty minutes.",
+  "Roast goose rice in the campus canteen. The safety driver at your table says that intersection gave him a fright last night: the car stopped, and there was nothing ahead, only rain.",
+  "Mining rainy-night clips from the data loop: auto-labeling goes through first, then you spot-check frame by frame. The AI has labeled reflections as people, and you fix them one by one. By frame two hundred your eyes are stinging.",
+  "The new model finishes regression in simulation: puddle false detections halved, but detection of one category, people on e-bikes with rain canopies, down two points. You pull that category out and add another thousand samples.",
+  "You ride along on a night test drive, in the back seat, watching live perception output on your laptop. The car crosses a flooded intersection and doesn't brake. The safety driver glances back at you, and you nod."
+ ],
+ "ladder": [
+  {"title": "Junior Perception Engineer", "stage": "Entry", "focus": "Mine takeover data, spot-check labels and train detection models under a mentor. You move up by solving one class of false detection on your own."},
+  {"title": "Perception Engineer", "stage": "Junior", "focus": "Own perception for one class of driving conditions on your own, from data and models to simulation regression and on-car validation."},
+  {"title": "Senior Perception Engineer", "stage": "Mid-level", "focus": "Own the perception solution and on-car deployment for a whole class of extreme conditions, mentor newcomers, and take part in incident investigations."},
+  {"title": "Perception Expert / Head of Perception", "stage": "Senior", "focus": "Set the perception technical roadmap and sensor configuration, lead the team, and sign the perception conclusions for each city launch."},
+  {"title": "Director of Autonomous Driving Perception", "stage": "Principal", "focus": "Run perception and the data loop, answerable for the perception conclusions in launches and incident investigations."}
+ ],
+ "ai_tasks": [
+  {"name": "Auto-labeling and mining long-tail clips", "how": "Large models can label 3D boxes, lane lines and drivable areas overnight, and automatically mine long-tail scenarios from vast amounts of road-test data. A person sets the labeling rules, spot-checks quality, and judges which long-tail cases are worth the effort."},
+  {"name": "Reproducing papers and building detection and segmentation baselines", "how": "AI can help read papers, reproduce open-source implementations of bird's-eye-view and occupancy networks, and run ablations. Which architecture suits the company's compute, data and production timeline is a person's judgment, as is actually getting it onto the car."},
+  {"name": "Generating simulation scenarios and augmenting extreme conditions", "how": "Generative simulation can conjure downpours, typhoons and wrong-way vehicles out of nothing. Where the generated differs from the real, and whether it can count as evidence, takes a person comparing it against real data clip by clip."},
+  {"name": "Compressing models onto in-car chips", "how": "AI can generate pruning, quantization and distillation scripts and help find bottlenecks. Measuring latency and power on the actual chip, and dealing with unsupported operators and accuracy drops, need a person to sign off."},
+  {"name": "Designing multi-sensor fusion and validating it on real rainy nights", "how": "How radar and cameras each go wrong in rain, fog, glare and occlusion has to be designed around the sensors' physics, then validated again and again from a seat in the car on real rainy nights. AI can only help search for approaches."},
+  {"name": "Answering for perception conclusions in launches and incident investigations", "how": "Whether a version can go to the fleet, and what perception actually saw in an incident, have to be worked out together with planning, mapping and calibration, and signed off for safety. AI can organize the logs; the one who answers for it is a person."}
+ ],
+ "events": {
+  "e_puddle": "Half a year of collecting rainy-night data finally added up, and false detections from puddle reflections fell to a fifth of what they had been. A safety driver posted in the fleet group that it had rained all week and not once had a car braked for nothing.",
+  "e_scrape": "At an intersection one of your cars lightly scraped an e-bike that cut in. No one was hurt. The investigation team pulled those ten seconds of data and asked you frame by frame: what did perception see at that moment? You answered for an afternoon, and at home that night didn't want to say a word.",
+  "e_autolabel": "Auto-labeling in the data loop keeps getting more accurate: 3D boxes, lane lines, drivable area. In one night a large model labels what used to take a whole team a month. What takes most of your time now is setting the rules: what counts as a person, what counts as an umbrella.",
+  "e_e2e": "The company started rolling out an end-to-end large model that goes straight from cameras to a driving trajectory, with none of your layers of detection boxes in between. Half the perception modules you'd spent five years writing were about to become one training target for the large model.",
+  "e_simgen": "Generative simulation can conjure downpours, typhoons and wrong-way delivery bikes, tens of thousands of clips a night. You picked a hundred and compared them against real data, and found the generated puddles were all too clean. You added a rule to the evaluation standard: generated data can't count as evidence on its own.",
+  "e_typhoon": "Before the typhoon, the whole fleet was pulled off the road. The day after, the streets were covered in broken branches and leaves. You rode out in the first car back in service, and it came to a smooth stop in front of a big branch lying across the road.",
+  "e_humid": "During the weeks of the humid spring \"return of the south wind,\" fog formed inside the camera lenses of several cars and the images turned to mush. You and the hardware team traced it, and in the end fitted every camera with a ring of heating wire.",
+  "e_driverless": "The company got a permit to remove safety drivers in one zone. The day the first car with an empty driver's seat drove out of the campus, you stood at the gate watching it turn the corner, your palms soaked with sweat.",
+  "e_funding": "Fundraising went badly, the company cut its fleets in two cities, and a third of the perception team left. You stayed, but no one got a raise that year, and a batch of newly bought lidars went back.",
+  "e_oem": "The company won a production contract with a carmaker: your perception would go into hundreds of thousands of private cars. At your first meeting at the carmaker's R&D center, a row of engineers with twenty years of building cars sat across from you, and their first question was: what happens at thirty below?",
+  "e_chip": "The model had to move from servers onto the in-car chip, with a tenth of the compute. You pruned, quantized and distilled, lost three points, and won one back on small distant targets. On the day it went onto the car, latency came in just under the limit.",
+  "e_passenger": "In the fleet's passenger feedback you found a message from an old man who rode your cars to the hospital for a check-up every week, saying they drove more steadily than his own son. You shared the screenshot with the whole team.",
+  "e_options": "The company went public, and you could finally sell some of your options. You moved to a bigger flat in Panyu, and on moving day, from the new balcony, you saw one of your cars drive past below.",
+  "e_house": "You bought a secondhand flat in Panyu. The down payment emptied your savings, and you borrowed some from family too. It's half an hour's drive from Nansha, and every day on the way to work you count how many of your company's cars you pass.",
+  "e_wedding": "You got married. One of the wedding cars was a company test car a colleague borrowed: the safety driver sat in the driver's seat in a suit, and a red silk flower was tied onto the lidar on the roof.",
+  "e_child": "Your child was born. The first time you got into one of your company's cars holding the baby, your hands were much slower than usual doing up the seat belt.",
+  "e_checkup": "The health check said straightened cervical spine and a herniated lumbar disc. Years in the back seat of test cars staring at a laptop. The doctor told you to spend less time in cars. You smiled and said that was your desk.",
+  "e_parents": "Your father went into hospital back home in Zhanjiang, and you took a week off to go. In the ward you still had the takeover platform open, and when a rainy-night clip came up, you stopped and watched it twice more.",
+  "e_35": "Once end-to-end arrived, a group of veterans who only wrote rules and post-processing had no place left. The senior colleague who brought you into the field was on the list. On the day he left, he gave you a hard drive full of rainy-night data.",
+  "e_mentor": "The newcomer you mentor presented rainy-night perception at a review, and his first slide was your old \"puddles\" folder. Afterwards he told you he'd looked at every one of those three hundred images.",
+  "e_eyes": "Years of watching video frame by frame left your eyes dry every evening. When you drive and see a streetlight's reflection in standing water, your foot touches the brake without thinking, then lifts."
+ },
+ "choices": {
+  "c_e2e": {"title": "Move to end-to-end, or stay in perception?", "situation": "The company is pulling people into a team for an end-to-end large model that goes straight from cameras to trajectories. Go, and you'll learn large-model training and planning from scratch, and might not get on a car once all year. Stay in perception, and the rainy-night detection in your hands is about to come together.", "options": [
+   {"label": "Go end-to-end", "result": "Your first year was training runs on the cluster every day, rarely out on road tests. The second year the whole company switched, and you were among the first who understood it."},
+   {"label": "Stay in perception", "result": "You finished rainy-night detection. Once it was on the cars, rainy-day takeovers across the fleet fell forty percent, and for the first time the planning team bought you milk tea."}
+  ]},
+  "c_senior": {"title": "Promotion review: Senior Perception Engineer", "situation": "Your team lead says you can apply for Senior Perception Engineer this year: owning the perception solution for one class of extreme conditions on your own, from data and models to fusion and on-car deployment, and mentoring a newcomer. At the review you'll present a long-tail problem you've solved, and why it still isn't fully solved.", "options": [
+   {"label": "Go for the review", "result": "You talked about that puddle, and the three hundred reflections after it. A veteran safety expert on the panel asked: what if a real person is standing in the puddle? You pulled up a clip of data and answered."},
+   {"label": "Wait another year", "result": "You said rainy nights weren't done yet. That year you turned typhoon days, humid-season fog and night-time road works into one evaluation set, which became a gate every model had to pass before going on the cars."}
+  ]},
+  "c_oemjob": {"title": "A carmaker wants you for production perception", "situation": "A carmaker's intelligent driving R&D center in Guangzhou wants you for production perception: a little over ten percent more pay, a stable company that doesn't live on fundraising. But what they build is driver assistance for private cars, with costs and suppliers to wrangle, a step further from true driverless driving.", "options": [
+   {"label": "Join the carmaker", "result": "Your first winter calibration run at the carmaker's proving ground was at thirty below, with frost on the cameras. Back home you told colleagues: so southern rain was only half of what's hard."},
+   {"label": "Stay in robotaxi", "result": "You turned it down. On that week's stormy nights, not one fleet takeover was put down to perception."}
+  ]},
+  "c_release": {"title": "Push the new version out on time?", "situation": "The new perception model has passed simulation and closed-course testing, and the company wants it on the whole fleet before an important launch event. But on one type of night-time road works you've seen a few suspicious missed detections, very few, cause still unknown.", "options": [
+   {"label": "Release on time", "result": "You spelled out that risk in the release report and added a temporary rule: slow down at road works. The launch went smoothly. It took you two more months to trace those misses to their root."},
+   {"label": "Insist on another month of testing", "result": "At the review you insisted on another month of testing, and the boss's face went dark. A month later you found the cause, a new kind of reflective traffic cone, and the version only went out once the data was added."}
+  ]},
+  "c_expert": {"title": "Apply for Perception Expert / Head of Perception", "situation": "The company is creating a Perception Expert / Head of Perception post, setting the technical roadmap for perception and leading a dozen-plus people: deciding the sensor setup, what goes to end-to-end, and what must keep an explainable detection layer. If you get it, you'll rarely go through takeover clips yourself; it'll be meetings, reviewing designs, and standing behind the team at safety reviews.", "options": [
+   {"label": "Apply", "result": "Your pitch was one table: where each type of takeover had come from over the years, which were gone and which remained. Management asked what to do about the ones that remained. You said: write them honestly into the safety report."},
+   {"label": "Stay hands-on", "result": "You recommended a colleague and kept chewing on the hardest long-tail cases. Whenever newcomers hit a rainy-night clip they couldn't make sense of, they sent it to you first."}
+  ]},
+  "c_robot": {"title": "A robotics company wants you to build its eyes", "situation": "A humanoid-robot company in Shenzhen wants you to run visual perception, for thirty percent more pay, saying the multi-sensor fusion you honed on the road is exactly what robots most lack. But it's another world: not intersections and rainy nights, but kitchens, warehouses and a hand reaching for a cup.", "options": [
+   {"label": "Go build robots", "result": "You copied the \"puddles\" folder and took it with you, thinking it might come in handy someday.", "end": "From then on you did perception at a robotics company, teaching robot after robot to see the cup on the table, the cable on the floor and the person standing at the door. Many years later, you saw a car with an empty driver's seat go by in the street, and you stopped and watched for a long time."},
+   {"label": "Stay in autonomous driving", "result": "You turned it down. That month the zone where the fleet ran without safety drivers grew again, and you went over the map square by square."}
+  ]},
+  "c_testing": {"title": "A testing and certification body wants you to set standards", "situation": "A testing and certification body for connected and autonomous vehicles wants you as technical lead, to help write the test procedures for autonomous driving perception that every company's cars must pass. Twenty percent less pay, stable, no overtime; but you'll never again write a model that goes on a car.", "options": [
+   {"label": "Go set the standards", "result": "The first test procedure you wrote was a flooded intersection on a stormy night, a streetlight reflected in the water, and beside the reflection, a real person standing.", "end": "From then on you set standards and tested cars at the certification body, each year watching dozens of companies' cars drive through the flooded intersection you designed. For the ones that failed, you'd capture that frame and send it to them."},
+   {"label": "Stay at the company", "result": "You turned it down, but agreed to review a draft of their procedures. You added one line: generated data can't count as evidence on its own."}
+  ]},
+  "c_director": {"title": "Go up for Director of Autonomous Driving Perception", "situation": "The company wants a Director of Autonomous Driving Perception over the perception and data-loop departments, fifty or sixty people, answerable for every city launch and for the perception conclusions in every incident investigation. You'd negotiate budgets with the boss, explain safety to regulators, discuss production with carmakers, and when something happens, you're the first to stand before the investigators.", "options": [
+   {"label": "Go for it", "result": "At the review you covered three things: which sensors could go, which modules should go to large models, and where we still don't dare say we can see. The boss asked why you'd bring up the last one. You said: because it's true."},
+   {"label": "Don't apply; lead your own team well", "result": "You said you'd rather stay close to the data. In their first month the new director came to see you every day, to hear about every rainy night of all those years."}
+  ]}
+ },
+ "endings": {
+  "retire": "On your last day you handed the \"puddles\" folder, tens of thousands of images by now, to the youngest person on the team. When you left it was raining, and you hailed one of your company's cars. You sat in the back; the driver's seat was empty. It crossed a flooded intersection without braking, and you watched the streetlights' reflections in the water out the window until the wheels broke them apart.",
+  "burnout": "That year you rode night test drives for months on end, and one morning your back hurt so badly you couldn't get out of bed. You quit and rested at home for most of a year, walking every evening on Dafu Mountain in Panyu. On rainy nights you stopped going out, and sat by the window listening to the rain, looking at nothing."
+ },
+ "stages": [
+  "You own perception for one class of conditions on your own: going through takeover data, mining long-tail clips, spot-checking auto-labels, training bird's-eye-view models, running regression in simulation, riding test cars to validate. You work most with planning, data and the fleet's safety drivers. Whether your model goes out to the fleet has to clear your team lead and the safety review.",
+  "You own the perception solution for a whole class of extreme conditions, rainy nights, typhoons, road works, from data rules and model architecture to fusion strategy and in-car deployment. You mentor one or two newcomers and review their designs; you set release criteria with the planning lead, and when the investigation team has questions, you're the first one called in.",
+  "You set the perception technical roadmap and lead a dozen-plus people, deciding the sensor setup, what goes to end-to-end, and what must keep an explainable detection layer. You meet with carmakers, chip vendors and the simulation team, and review designs more than you write code. The perception conclusion for every city launch carries your signature.",
+  "You run the perception and data-loop departments, fifty or sixty people, answerable for every city's launch and the perception conclusions in every incident investigation. You negotiate budgets with the boss, explain safety to regulators, discuss production with carmakers; when something happens, you stand before the investigators. One habit remains: every stormy night, you ride in a fleet car."
+ ],
+ "work": [
+  "Old Chen, a safety driver, said the car always slowed in front of one bus shelter. You went through twenty clips and found the billboard there showed a life-size picture of a person. You added it to the negatives.",
+  "Planning said your model's heading estimate for delivery e-bikes kept jumping. You reworked the heading loss and added three thousand wrong-way samples, and the jumps fell by more than half.",
+  "Calibration swapped in a batch of new lidars, and your fusion model dropped two points. You spent an afternoon checking extrinsics with them, and finally found one lidar mounted 0.3 degrees off.",
+  "The newcomer you mentor handed in a new model that gained across the board on the test set. You had him look at the thousand frames of stormy night. He came back and said there was one class, e-bikes with rain canopies, his model hadn't detected even once.",
+  "The investigation team pulled the data from a scrape. You and they broke those ten seconds into three hundred frames, and the report set out what perception saw, when it saw it, and why it didn't report.",
+  "A carmaker asked for a statement of perception's capability limits. You didn't write accuracy figures. You wrote twenty scenarios: what it can see, what it sees but not reliably, what it can't see.",
+  "The boss wanted to take one lidar off the cars to save cost. You had the team compare three months of rainy-night data. In the end the side unit came off and the front one stayed.",
+  "The end-to-end team wanted to remove perception's detection layer entirely. You didn't block them. You gave them one zone as a pilot, on condition that every takeover could be explained in terms of what wasn't seen.",
+  "Before launching in a new city, you took the team through the local intersections one by one and found there were a great many three-wheelers. The launch slipped two weeks, and the cars only went out once the data was added.",
+  "Regulators came asking about perception's conclusion in an incident. You went with the raw data and not one slide, and went through it frame by frame for an hour and a half.",
+  "At year-end budgeting Finance wanted to cut data collection in half. You listed how, over the years, long-tail problems had been worn away one by one by real data. In the end the cut was twenty percent.",
+  "A carmaker wanted you to promise production-car perception would be reliable in all weather. On that page of the contract you struck out the word \"all,\" and replaced it with an annex setting out the limits."
+ ],
+ "past": [
+  "You went to middle school in Zhanjiang. Your father drove a truck to Hainan, and in the holidays you often rode in the passenger seat. On the night ferry across the Qiongzhou Strait, he said the thing drivers fear most is not being able to see in the rain.",
+  "In the gaokao (college entrance exam) you got into vehicle engineering at a university in Changsha. You wanted to learn how to build cars, and found it was mostly engines and chassis.",
+  "In your second year you joined the university's driverless Formula Student team, in charge of getting the race car to recognize the cones along the track. On race day it rained, your model took a puddle for a cone, and the car swerved around it.",
+  "You got into a master's program at a university in Shanghai, under an advisor in intelligent driving. Your thesis was on fusing lidar and cameras, and you spent many nights in the campus garage where the test car was parked.",
+  "In your second year of the master's you interned at an autonomous driving company in Guangzhou. The first time you rode in a car with no one touching the wheel, you stared at the steering wheel from the back seat the whole way, not daring to blink.",
+  "After graduating you stayed at the company and chose the perception team. On your first day, your team lead's first assignment was to watch a hundred takeover clips and write down what the car got wrong in each."
+ ],
+ "late": {
+  "pension_note": "Estimate: autonomous driving companies in Guangzhou mostly pay R&D staff's pension contributions at the upper-middle band of the social-insurance base, well below actual income, so the basic pension comes to around forty percent of your last monthly salary. Options and savings from your younger years matter more.",
+  "scenes": [
+   "For the first month of retirement, on rainy evenings you'd stand on the balcony for a while, watching whether any of your old company's cars went by below, and whether they braked.",
+   "Your old university invited you to talk to students about autonomous driving. You didn't talk models. You played ten rainy-night takeover clips and had them guess, one by one, what the car got wrong.",
+   "Your grandchild sat on your knee and asked how a car knows there's someone ahead. You said: a car has to see many, many rainy nights before it learns not to fear the lights in the water.",
+   "In the first months after quitting, you stopped watching any video at all, and rarely even turned on the television. You found that for the first time you could just look out of the window without wondering what was in the frame.",
+   "You started walking in the woods on Dafu Mountain. After rain the paths were full of puddles, and you stepped through them, water splashing your shoes, without going around.",
+   "An old colleague came to see you and said the cars now covered most of Guangzhou and were steady in the rain. You made him a pot of tea and asked whether the puddles folder was still there. He said yes, and it kept getting thicker.",
+   "In your first year on a different path, every time you saw a car in the street with a lidar spinning on its roof, you stopped to watch it cross the intersection.",
+   "On an errand back in Nansha you hailed a car with no safety driver. It drove smoothly. Sitting in the back, you couldn't help glancing at the empty seat in front.",
+   "Driverless cars reached your hometown of Zhanjiang too. Your father rode in one and phoned to tell you it drove more steadily in the rain than he ever had.",
+   "On an old hard drive you found the video of that second-year race: the car swerving around a puddle, your classmates at the trackside laughing. Watching it, you laughed too.",
+   "Driving home one rainy night, the streetlights drew long streaks of light in the standing water. You slowed down, drove through, and nothing happened."
+  ],
+  "closing": {
+   "retire": "One rainy night many years later you sat by the window. The intersection below had flooded, and the streetlights' reflections trembled in the water. A car went through, gently, without stopping. You watched the light slowly close back together, and turned off the lamp.",
+   "burnout": "Many years later you sat halfway up Dafu Mountain. The rain had just stopped and the woods were dripping. You listened a while, unable to tell which tree it was, and not wanting to.",
+   "end": "Many years later you found the reflective vest the fleet once issued you in a cupboard, \"Road Test\" printed on the back. You folded it and put it at the very bottom."
+  }
+ }
+}

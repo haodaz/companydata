@@ -1,0 +1,161 @@
+{
+ "id": "cv-eng-sz",
+ "occupation": "Computer Vision Engineer",
+ "role": "Assistant Computer Vision Engineer (on-camera detection)",
+ "headline": "In the second year after a master's in pattern recognition, building on-device detection models at a security-camera company in Bao'an, Shenzhen, and going through thirty thousand images to tell a stroller in a lift from an e-bike: a computer vision engineer",
+ "unit": "The on-device algorithms department of a security-camera and machine-vision company in Bao'an, Shenzhen",
+ "unit_type": "Security camera / machine vision company",
+ "city": "Shenzhen (Bao'an)",
+ "city_tier": "First-tier city",
+ "education": "Master's degree in pattern recognition and intelligent systems",
+ "level": "You've trained detection and segmentation models and know PyTorch and OpenCV well. But when a model drops accuracy once it's quantized for the camera's chip, or starts throwing false alarms at a customer site the moment it rains, you can't yet say whether the data or the chip is to blame.",
+ "intro": "Your master's was in object detection, and you signed with this camera company in Bao'an to train detection models in the on-device algorithms department. Your model sits in the cameras of residential lifts: when it sees an e-bike come in, it sounds the alarm, holds the doors and plays a voice message, so the bike doesn't go upstairs. From today on, whether that one glance is right, in hundreds of thousands of lifts, is partly on you.",
+ "salary_note": "Estimate: Shenzhen's security and machine-vision companies pay vision algorithm engineers about twenty percent above the national average, over fourteen months a year. The company's business follows government and real-estate projects; in the cold years, the bonus shrank by half.",
+ "facts": [
+  {"label": "Assistant Computer Vision Engineer (current level)", "value": "0-2 years, ¥13,600–20,000 a month (national average, derived from pay by experience)", "source": "Industry norm"},
+  {"label": "Next level up", "value": "Computer Vision Engineer (2-4 years)", "source": "Industry norm"},
+  {"label": "Pay after 10+ years", "value": "¥48,000 a month (national average)", "source": "Pay by experience"},
+  {"label": "What AI can't take", "value": "Debugging on site and settling designs with the hardware team", "source": "AI exposure"},
+  {"label": "Where AI is moving in", "value": "Reading papers, writing technical reports, drafting patents", "source": "AI exposure"},
+  {"label": "Open positions", "value": "227 related listings nationwide, 42 in this city (mostly campus hiring and internships)", "source": "Job listings"}
+ ],
+ "day": [
+  "You walk from the urban village in Xixiang to the office. At the mouth of the alley there's already a queue at the rice-noodle-roll stall. You take one with egg to go and eat as you walk. Outside the building, a whole row of e-bikes is parked.",
+  "You open last night's false-alarm uploads: over three hundred. You click through them one by one: strollers, wheelchairs, someone pushing a suitcase, and one that's an e-bike advert stuck up inside the lift.",
+  "Meeting with the annotation team, an outsourced crew in Henan. On the video call their lead says last week's boxes were drawn too loose. You put ten examples on the screen and go through each: where the handlebar counts, where the wheel counts.",
+  "Roast duck rice in the canteen. The embedded engineer across from you says your model is over its memory budget again: on that chip, you've only been left eight megabytes.",
+  "You convert the newly trained model into a format the chip can run and quantize it to INT8. Accuracy drops from 94 to 87. You compare the outputs before and after quantization layer by layer until you find the one that blew up.",
+  "The test department sends up a camera. You flash the model onto it, carry it down to the freight lift and have the security guard wheel his e-bike in and out, over forty times in one afternoon.",
+  "The product manager posts in the group: a residential compound is complaining that its lift alarms every evening. You pull up that camera's footage. The low evening sun comes through the gap in the doors and lays a shadow on the floor that looks like a bike.",
+  "Back in your rented room, you make a list in your notebook: shadows, reflections, strollers, wheelchairs, adverts. After each one you write how many more images it needs."
+ ],
+ "ladder": [
+  {"title": "Assistant Computer Vision Engineer", "stage": "Entry", "focus": "Train detection models, sort false alarms and handle quantized deployment under a senior colleague. You move up by shipping a release on your own."},
+  {"title": "Computer Vision Engineer", "stage": "Junior", "focus": "Own the algorithms for one product type, from setting metrics to on-chip deployment to customer acceptance."},
+  {"title": "Senior Computer Vision Engineer", "stage": "Mid-level", "focus": "Own the algorithms for a product line, mentor newcomers, and answer the hardest questions at customer sites."},
+  {"title": "Computer Vision Expert", "stage": "Senior", "focus": "Set the technical direction for on-device algorithms and the split between large and small models, lead the team, and settle compute with the chip vendors."},
+  {"title": "Chief Algorithm Expert / Director of Algorithms", "stage": "Principal", "focus": "Run the vision algorithm teams, answerable for the next product generation's technical roadmap, budget and data boundaries."}
+ ],
+ "ai_tasks": [
+  {"name": "Reading papers, writing technical reports, drafting patents", "how": "AI can quickly search and summarize papers, compare methods, and write first drafts of technical reports and patents. A person only needs to pick the directions worth investing in and check that the conclusions and claims are accurate."},
+  {"name": "Pre-labeling images and generating synthetic data", "how": "Vision foundation models can draw boxes automatically and generate synthetic data and augmentation strategies in bulk. How to set the labeling standard, how to fix what spot checks turn up, and where synthetic images differ from real sites take a person's judgment."},
+  {"name": "Training detection models and running tuning experiments", "how": "AI can write model code, build baselines and run tuning experiments. How to define the problem, whether the metrics reflect the real site, and what exactly went wrong in the failed images take a person looking at them one by one."},
+  {"name": "Quantizing and deploying models to the camera's chip", "how": "AI can generate export and quantization scripts and recognize common operator errors. Measuring latency and accuracy on the actual chip and working around the vendor toolchain's pitfalls take a person's hands, and a person answers for the result in production."},
+  {"name": "Debugging on site and settling designs with the hardware team", "how": "Rain, glare, the evening shadow: you only understand them standing at the site. Aligning face to face with the embedded, hardware and product teams, weighing trade-offs and owning them, is a person's job."},
+  {"name": "Answering for false alarms, misses and data boundaries", "how": "AI can tally false alarms and suggest fixes. But what to promise a customer, which scenarios to turn down, how long data is kept and who may see it, a person has to decide, and when something goes wrong it's a person who steps forward."}
+ ],
+ "events": {
+  "e_stroller": "A resident posted a video in the compound's group chat: she pushed a stroller into the lift, the camera alarmed, the doors wouldn't close, and she stood there five minutes holding her baby. The video made its way to you. You went through thirty thousand images and, for the first time, labeled strollers as a class of their own.",
+  "e_lantern": "Before Spring Festival, smoke-and-fire detection at several industrial parks went off over a hundred times in one night: all red lanterns hung at the gates, and sunset glow. On the second-to-last day of the lunar year you stayed at the office adding a batch of lantern negatives, and only caught the high-speed train home on the afternoon of New Year's Eve.",
+  "e_quant": "You chased the quantization accuracy drop for two weeks and finally found the chip vendor's toolchain was mishandling one operator. You sent the vendor a dozen-page reproduction report. They replied that the next version would fix it, and put your name in the acknowledgments.",
+  "e_fall": "Your fall-detection model went into a care home. The director phoned to say an elderly resident had slipped in the corridor in the middle of the night, and the night carer was there within two minutes. You told the whole team about that call.",
+  "e_ai_label": "Vision foundation models can pre-label images now, drawing boxes more accurately than the outsourced crew. The annotation team went from twenty people to five, the rest doing only spot checks and hard cases. You called the team lead in Henan. She said they were learning how to review boxes drawn by AI.",
+  "e_ai_open": "A new generation of vision foundation models can find things from a single sentence: find people in red riding bikes, find where there's smoke. You used to train a small model per scenario; now one large model on a server does the work of dozens, and your job has become distilling it down into the camera.",
+  "e_ai_code": "The coding assistant can write the model export, quantization and format-conversion scripts in one go, and it recognizes the common operator errors too. You spend the time saved carrying cameras out to sites.",
+  "e_typhoon": "The night the typhoon passed, outdoor perimeter cameras threw thousands of false alarms: raindrops, swaying trees, plastic bags lifted by the wind. The next day at the site, you found the lens caked in mud. You wiped it with a tissue and brought back over a hundred photos.",
+  "e_onsite": "Defect detection at a lithium battery plant in Dongguan ran into trouble before launch, and you spent three weeks stationed on the factory floor in an anti-static suit, photographing cells on the line every day. On the day you left, the line's shift leader pressed a box of lychees on you.",
+  "e_patent": "Your method for ruling out false alarms using shadow direction was granted an invention patent. The company paid a bonus, and your name came first on the certificate.",
+  "e_market_cold": "Real-estate and project business went cold, company orders fell by thirty percent, the bonus shrank by half, and the department next door was cut entirely. Your team survived, but no one got a raise that year.",
+  "e_overseas": "The company's cameras were sold to the Middle East, and the customer there said smoke-and-fire detection kept false-alarming. You flew out and stood on a building site in forty-plus degrees for a week, and found it was dust. Back home you added a new class to the model: wind.",
+  "e_hqb": "At the weekend you went to the Huaqiangbei electronics market and picked up a few dev boards and a secondhand infrared module, and built a little rig in your rented room to test night footage. In the small hours the neighbor's cat walked across the windowsill, and your model boxed it as a person.",
+  "e_house": "Shenzhen was out of reach, so you bought a flat in Fenggang, Dongguan, just across one road from Shenzhen. Every morning on the bus over the border stretch, you read the previous day's false-alarm uploads.",
+  "e_wedding": "You got married. The wedding was in a restaurant back home. The emcee asked you to say a few words, and nervous, you said: I promise our lift will never false-alarm. Everyone laughed.",
+  "e_child": "Your child was born. The first time you pushed the stroller into the lift at home, you glanced up at the camera without thinking. It stayed quiet. You stood there in the lift and smiled.",
+  "e_checkup": "The health check said straightened cervical spine, and your eyesight down another two diopters. The eye doctor told you to stop staring at night-vision footage in the middle of the night. You nodded, and that night you still watched a little.",
+  "e_35": "Another round of company \"optimization\" layoffs, with a few veterans around thirty-five on the list who'd never moved over to large models. The senior colleague who once trained you was one of them. On the day he left, he gave you a drawerful of dev boards.",
+  "e_parents": "Your father went into hospital back home, and you stayed with him for ten days. There was a camera in the ward corridor. You looked at it for a long time, wondering what it was watching.",
+  "e_mentor": "The newcomer you mentor shipped his first model on his own. At the customer's acceptance meeting, the customer asked what he did about evening shadows. He said: we have a whole class of negatives just for that, called Evening. You sat at the back and said nothing.",
+  "e_eyes": "Years of watching surveillance footage, and when you close your eyes you see boxes, frame after frame. You started walking the seaside path every evening, looking at the ships far out, boxing nothing."
+ },
+ "choices": {
+  "c_vlm": {"title": "Learn vision foundation models, or stay deep on the device?", "situation": "The company has formed a small group to try vision foundation models for open-world detection. Go, and you learn multimodal models, prompting and large-scale training from scratch. Stay on the device side, and you're close to mastering quantization and deployment on the chip in your hands.", "options": [
+   {"label": "Go learn the large models", "result": "Your first year was all large-model experiments on servers, and you rarely touched a camera. The second year the company wanted to distill the large models onto devices, and everyone came to ask you."},
+   {"label": "Stay deep on the device", "result": "You learned that chip inside out, and squeezed the quantization drop from seven points to under one. The embedded team said: anything comes up, ask you first."}
+  ]},
+  "c_onsite": {"title": "Out to the customer sites, or stay in the office?", "situation": "A big project is installing smoke-and-fire and perimeter detection at thirty industrial parks, and the customer wants an algorithm person to travel with the installation crew for three months. Go, and you'll be climbing poles and adjusting angles in the sun every day. Stay, and you can train the next version of the model in the office.", "options": [
+   {"label": "Go out to the sites", "result": "Three months left you a shade darker and your phone full of thousands of site photos. The data you brought back cut the next model's false alarms by half."},
+   {"label": "Stay in the office", "result": "You delivered the next model on time with good metrics. At the sites, the customer said it still went haywire whenever it rained, and you spent a night going through the photos the crew sent back."}
+  ]},
+  "c_senior": {"title": "Promotion review: Senior Computer Vision Engineer", "situation": "The department's promotion window is open, and your manager says you could apply for Senior Computer Vision Engineer: owning a product line's algorithms on your own, from setting metrics to running on the chip to passing customer acceptance, and mentoring a newcomer. At the review you'll present the hardest site problem you've solved.", "options": [
+   {"label": "Go for the review", "result": "You talked about the evening shadow, and how you later used shadow direction to rule it out. A veteran hardware expert on the panel asked you a question about lens distortion, and you answered it."},
+   {"label": "Give it another year", "result": "You said you hadn't hit all the pitfalls at the sites yet. That year you compiled an encyclopedia of false alarms, over a hundred types with photos, which later became the whole department's onboarding material."}
+  ]},
+  "c_robot": {"title": "A robotics company in Nanshan comes headhunting", "situation": "A service-robot company in Nanshan is hiring vision engineers for thirty percent more, to build a robot's eyes: depth estimation, grasping, obstacle avoidance. A faster pace and a company not yet profitable, but everyone says it's the next decade.", "options": [
+   {"label": "Join the robotics company", "result": "The first time you saw your model guide a robot hand to lift a cup steadily out of a pile of clutter, you stood in the lab for a long time."},
+   {"label": "Stay in security", "result": "You turned it down. That month your e-bike detection went into its millionth lift, and the department had a roast-goose dinner downstairs."}
+  ]},
+  "c_presales": {"title": "Move over to solutions", "situation": "The company's solutions department needs a lead who understands algorithms: meeting customers with sales, writing proposals, giving demos, answering technical questions at tender meetings. Twenty percent more pay, twice the travel, and you'll never train a model yourself again.", "options": [
+   {"label": "Go into solutions", "result": "The first time you stood on stage at a tender meeting, a row of customers sat below. You didn't talk about accuracy. You talked about that stroller video.", "end": "You spent many years in solutions, traveling to industrial parks and housing compounds all over the country. You've seen far more cameras than you ever trained models, and every time you step into a lift, you still glance up."},
+   {"label": "Stay in algorithms", "result": "You turned it down. That week you flashed a new model onto a camera and carried it down to the freight lift one more time."}
+  ]},
+  "c_expert": {"title": "Apply for Computer Vision Expert", "situation": "The department is creating a Computer Vision Expert post: setting the overall technical direction for on-device algorithms, leading about ten people, deciding which scenarios get large models and which small ones, and settling the next camera generation's compute with the chip vendors, embedded and product teams. If you get it, you'll rarely tune a model yourself; it'll be reviewing designs, meetings, and standing behind your team to customers.", "options": [
+   {"label": "Apply", "result": "Your pitch was one table: where each type of false alarm had come from over the years, how it went away, and which still had no fix. The director asked what to do about those. You said: tell the customer honestly."},
+   {"label": "Stay hands-on", "result": "You recommended a colleague and kept chewing on night vision and rain. The young engineers all liked sending you screenshots of their strangest false alarms."}
+  ]},
+  "c_teach": {"title": "A vocational college asks you to teach", "situation": "A vocational college in Shenzhen has opened an artificial intelligence program and wants you as a full-time teacher, guiding students through vision projects. Thirty percent less pay, winter and summer holidays, no more being woken at midnight by false alarms. But you'd be leaving the cameras, and the sites.", "options": [
+   {"label": "Become a teacher", "result": "The first time you stood at the lectern, you brought an old camera. You had the students walk past it in turn, to see whom it boxed and whom it missed.", "end": "You taught at the vocational college for many years, and your students went on to factories, housing compounds and robotics companies. Every year someone sends a photo: teacher, have you ever seen a false alarm like this?"},
+   {"label": "Stay at the company", "result": "You turned it down, but agreed to give two lectures a semester. The first time, you spent a whole afternoon on shadows and lanterns."}
+  ]},
+  "c_chief": {"title": "Go up for Chief Algorithm Expert / Director of Algorithms", "situation": "The company wants a Chief Algorithm Expert / Director of Algorithms over all its vision algorithm teams, seventy or eighty people, answerable for the next product generation's technical roadmap. You'd negotiate budgets with the boss, partnerships with chip vendors, and the boundaries of data and privacy with customers. When a big false alarm happens, you're the first to step forward.", "options": [
+   {"label": "Go for it", "result": "At the review you covered three things: which models to hand to large models, which people to move into data work, which scenarios we won't take. The boss asked why not those. You said: if we can't explain it, we don't take it."},
+   {"label": "Don't apply; lead your own team well", "result": "You said you'd rather stay close to the cameras. In their first month the new director came to see you every day, to hear about the false alarms of all those years."}
+  ]}
+ },
+ "endings": {
+  "retire": "On your last day you took the handwritten false-alarm list out of your drawer. The paper had yellowed, and the first page said: shadows, reflections, strollers, wheelchairs, adverts. You gave it to the youngest person on the team. Going downstairs you took the freight lift. The camera's red light came on for a moment, then went out.",
+  "burnout": "That year you were called up in the middle of the night to look at sites for months on end, and one day at your desk you were too dizzy to stand. You quit and rested at home for most of a year, walking every evening through the Xiwan mangroves. You took up photographing birds on your phone. Many came out blurred, and you didn't delete a single one."
+ },
+ "stages": [
+  "Under a senior colleague you own one scenario's detection model: reviewing false-alarm uploads, writing rules for the annotators, training, quantizing, flashing it onto cameras to test. You work most with the annotation team, the embedded engineers and the test department. Whether a model ships needs your senior's signature, and at customer sites you're the one tagging along.",
+  "You own the algorithms for one product type: setting metrics from customer requirements, adding data, training, squeezing the model until it runs on the chip, then going out with the project for acceptance. You deal daily with product managers, embedded engineers and the chip vendor's support staff. On the release sign-off, for the first time, the name is yours.",
+  "You own a product line's algorithms, smoke-and-fire, perimeter, lifts, one type after another. You mentor one or two newcomers, reviewing their data and designs; you set the next version's metrics with product, answer the hardest questions at customer acceptance meetings, and when a site has a big false alarm, the call comes to you first.",
+  "You set the overall technical direction for on-device algorithms and lead about ten people, deciding which scenarios use large models on servers and which get distilled into cameras. You settle next-generation compute with chip vendors and the roadmap with product, and review others' designs far more than you tune models. Technical commitments on big projects need your nod.",
+  "You run all the company's vision algorithm teams, seventy or eighty people, answerable for the next generation's technical roadmap and compute budget. You talk money with the boss, partnerships with chip vendors, and with customers and Legal, how data is used, how long it's kept, who may see it. You've kept one habit: a site visit every quarter."
+ ],
+ "work": [
+  "A woman in the test department said your model took her folding bicycle for an e-bike. You photographed her bike two hundred times and added it to the negatives. The next version left it alone.",
+  "An embedded colleague said your model took ninety milliseconds a frame on the chip, over budget. You cut the input from 640 to 416 and swapped in a lighter backbone, and got it down to forty.",
+  "The annotation lead called to ask: someone carrying an e-bike battery into the lift, does that count as an e-bike? You thought about it all evening, then added a rule to the labeling document: battery only, label it separately.",
+  "A customer said night perimeter detection kept missing people. You crouched on site for two nights and found the infrared fill light bouncing off a wall, smearing anyone walking past into a blur. You had the crew tilt the camera down ten degrees.",
+  "The chip vendor released a chip with double the compute. With an engineering sample in hand, you merged three models into one multi-task model, and for the first time ran e-bike, smoke-and-fire and hard-hat detection together on a single chip.",
+  "The product manager wanted the model to recognize pet dogs in lifts. You went through the false-alarm uploads and found dogs appeared only a few hundred times a year. You told him to hold off and put the effort into strollers.",
+  "A newcomer handed in a model with 98 percent accuracy on the test set. You had him carry a camera down to the freight lift for an afternoon of testing. When he came back he said that test set didn't have a single evening image in it.",
+  "A major customer wanted you to promise a false-alarm rate under one in a thousand. You did the math all evening, and wrote back three in a thousand, attaching the source of every type of false alarm and the plan for the next version.",
+  "Using the vision foundation model on the server as a teacher, you distilled a small model of just four megabytes into the camera, and missed detections in open-world scenes fell by half.",
+  "The chip vendor came to discuss the next generation and wanted you on their toolchain. You had the team run three real-scenario models through it, and put the page showing the accuracy drops on the negotiating table.",
+  "Two teams both wanted to do fall detection, one with a large model, one with a small one. You gave each a care-home pilot, and decided who would build it after three months of real-world missed detections.",
+  "A customer wanted a feature added to the cameras. Reading the requirements, you saw it meant identifying people in public places. You brought Legal in to review it, and wrote the customer a letter spelling out what could be done and what would need authorization first.",
+  "At year-end budgeting the boss wanted to cut annotation spending by half. You brought out the table tracing every big false alarm over the years to its root. In the end the cut was twenty percent, and the money saved went to travel for collecting data on site.",
+  "A care-home director wrote a thank-you letter saying fall detection had halved the night-shift rounds. You forwarded it to the newcomer who'd built that model years ago, who now leads a team of his own.",
+  "One typhoon night, outdoor cameras in several cities false-alarmed en masse at the same time. You sat in the office all night, first having every region turn sensitivity down, then restoring it city by city."
+ ],
+ "past": [
+  "You went to middle school in Shaoyang, Hunan, where your family ran a small photo studio. Your favorite thing was watching pictures slowly appear in the darkroom. Later the studio switched to digital printing, and you learned to retouch photos on the computer.",
+  "In the gaokao (college entrance exam) you got into automation engineering at a university in Wuhan. You chose it because you'd heard it covered a bit of everything, so it would be easy to switch later.",
+  "In your second year you entered a robotics competition, in charge of getting a little car to recognize colored patches on the floor with its camera. On competition day the hall lights were too bright, your car misread them and spun in place three times.",
+  "You stayed on at the same university for a master's in pattern recognition, under an advisor in object detection. The first time you trained a model that could find people in photos, you excitedly showed your father at the studio. He said: but I can see that at a glance.",
+  "In your second year of the master's you interned at a company in Shenzhen. On your first customer site visit you stood on a building site all day, watching your model mistake a passer-by in a yellow cap for a worker without a hard hat.",
+  "In autumn recruiting you got several offers and picked this camera company in Bao'an, because the interviewer took you downstairs to a lift fitted with one of their cameras and said: what you build, tens of millions of people walk past every day."
+ ],
+ "late": {
+  "pension_note": "Estimate: private tech companies in Shenzhen mostly pay R&D staff's pension contributions at the upper-middle band of the social-insurance base, well below actual pay, so the basic pension comes to around forty percent of your last monthly salary.",
+  "scenes": [
+   "For the first month of retirement, every time you went in and out of the lift at home, you glanced up at the camera to see whether it was a new model.",
+   "You helped the neighborhood committee set up an elderly fall-alert system, and afterwards explained to the women downstairs what it could see, what it couldn't, and how long the footage was kept.",
+   "Your grandchild was photographing the puppy on a phone, and the camera boxed the dog's face automatically. He asked how it did that. You said: lots of people looked at lots and lots of dogs.",
+   "In the first months after quitting, you'd still wake suddenly in the middle of the night thinking your phone had rung, reach for it, and find nothing there.",
+   "In the mangroves you photographed a black-faced spoonbill. The picture was blurred, but you knew it was one. You didn't need any model to tell you.",
+   "An old colleague came over for tea and said one chip could run a hundred scenarios now. You listened, refilled his cup, and asked whether evening shadows still set it off. He laughed and said: now and then.",
+   "In your first year on a different path, at every intersection you passed, you counted without meaning to how many cameras were on the poles.",
+   "You went back to Bao'an on an errand and passed the old company. The rice-noodle-roll stall downstairs was still there. The owner recognized you and asked whether you still wanted egg.",
+   "At a trade show you saw the newest generation of cameras. The person at the booth was explaining its false-alarm rate, and when he got to strollers, you nodded at the back of the crowd.",
+   "You went back to Shaoyang. The photo studio had long since closed, and the shopfront was a bubble-tea shop now. You stood at the door and remembered the red lamp in the darkroom.",
+   "On an old hard drive you found the result images from your first detection model as a student. The boxes were crooked, but it had found the person in the corner of the photo."
+  ],
+  "closing": {
+   "retire": "One evening many years later you sat on your balcony as the low sun slanted into the living room and drew a long shadow across the floor. You looked at it, remembered that lift from long ago, smiled, and got up to turn on the light.",
+   "burnout": "Many years later you walked the seaside path as ships went by far out, one after another. You didn't take your phone and didn't count them. You just watched until it grew dark and the lighthouse came on.",
+   "end": "Many years later you found that old camera in a cupboard, the one you'd carried down to test so many times, its lens under a layer of dust. You wiped it with the corner of your shirt and put it back where it was."
+  }
+ }
+}

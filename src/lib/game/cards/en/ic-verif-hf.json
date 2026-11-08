@@ -1,0 +1,165 @@
+{
+ "id": "ic-verif-hf",
+ "occupation": "Digital IC Verification Engineer",
+ "role": "Junior Digital IC Verification Engineer (display driver chips)",
+ "headline": "A master's in integrated circuit engineering, a campus hire into the verification department of a display-driver chip company in Hefei's high-tech zone, starting each morning by checking how many regression tests failed overnight, paid to find the bugs in other people's RTL: a digital IC verification engineer",
+ "unit": "The verification department of a chip design company in Hefei's high-tech zone that makes display driver chips and microcontrollers",
+ "unit_type": "Chip design company",
+ "city": "Hefei (high-tech zone)",
+ "city_tier": "New first-tier city",
+ "education": "Master's degree in integrated circuit engineering",
+ "level": "You've been through the SystemVerilog and UVM books twice, can build agents, drivers and monitors from a template, and aren't afraid of chasing waveforms in Verdi. But which sentences in a chip spec hundreds of pages long are likeliest to be implemented wrong, and how to close the last few percent when coverage is stuck at ninety-five, you still have to ask your mentor.",
+ "intro": "You finished your master's in integrated circuit engineering in Hefei. Your advisor said plenty of people do design and few do verification, so the jobs are easy to find. You signed with this display-driver chip company in the high-tech zone and joined the verification department. Your job is finding the mistakes in circuits other people wrote: once a chip tapes out, millions of yuan in mask costs are spent, and one missed bug can make millions of screens flicker in some corner case. From today on, how many errors are still hiding in this chip before tape-out is partly yours to find.",
+ "salary_note": "Estimate: Hefei's chip companies have been competing hard for people in recent years and pay master's graduates in verification a little over ten percent above the national average, with housing a third of Shanghai's price. In lean years for the industry raises stop, and the bonus follows tape-out milestones.",
+ "facts": [
+  {"label": "Junior Digital IC Verification Engineer (current level)", "value": "0-2 years, ¥10,200–15,000 a month (national average, derived from pay by experience)", "source": "Industry norm"},
+  {"label": "Next level up", "value": "Digital IC Verification Engineer (2-4 years)", "source": "Industry norm"},
+  {"label": "Pay after 10+ years", "value": "¥35,000 a month (national average)", "source": "Pay by experience"},
+  {"label": "What AI can't take", "value": "Running FPGA prototypes and emulation, debugging on the hardware", "source": "AI exposure"},
+  {"label": "Where AI is moving in", "value": "Sorting regression failures and reading logs for clues", "source": "AI exposure"},
+  {"label": "Open positions", "value": "39 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings"}
+ ],
+ "day": [
+  "Hefei Metro Line 3 is packed shoulder to shoulder. In the carriage you check last night's regression on your phone: two thousand tests, forty-three failed.",
+  "At work you first pick up a bowl of Huainan beef soup with a sesame flatbread downstairs and bring it up. Eating, you sort the failed tests by error message: thirty are the same assertion.",
+  "You pull the first failing test's waveform into Verdi and trace back from the clock edge where the assertion fired. An hour later you find it's your own reference model that got one pixel's gamma value wrong.",
+  "You go to a design engineer about another issue. He looks at your waveform and says this is the behavior the spec describes, not a bug. You go back to page 127 of the spec. He's right; your reference model is wrong again.",
+  "The canteen is crowded. Your mentor, at your table, says that in your first year of verification, half your bugs are your own. You eat with your head down, feeling he means you.",
+  "Writing new constrained-random stimulus: random combinations of screen resolution, refresh rate and data format. You run a hundred seeds, and one of them hangs the design. This time it's a real bug.",
+  "You file it in the defect tracker: steps to reproduce, waveform screenshots, severity. Design replies quickly: confirmed, fixing tomorrow. Looking at that line, you feel a little glad.",
+  "Reading the coverage report, functional coverage is stuck at ninety-four percent, and the remaining holes are all in one low-power mode. You draw a state diagram in your notebook, thinking about how to push the chip into that corner."
+ ],
+ "ladder": [
+  {"title": "Junior Digital IC Verification Engineer", "stage": "Entry", "focus": "Verify one block under a mentor: write the reference model, build UVM components, chase waveforms, file defects. You move up by finding real bugs on your own and seeing a tape-out through."},
+  {"title": "Digital IC Verification Engineer", "stage": "Junior", "focus": "Own a subsystem's verification on your own, from the verification plan to coverage closure."},
+  {"title": "Senior Digital IC Verification Engineer", "stage": "Mid-level", "focus": "Own the verification strategy for several key subsystems, mentor newcomers, and sign the sign-off report."},
+  {"title": "Verification Expert / Verification Manager", "stage": "Senior", "focus": "Lead the team, own the whole chip's verification strategy and sign-off, and decide when it can tape out."},
+  {"title": "Director of Verification", "stage": "Principal", "focus": "Run verification, emulation and prototyping, answerable for the sign-off before every tape-out."}
+ ],
+ "ai_tasks": [
+  {"name": "Sorting regression failures and reading logs for clues", "how": "AI can read the whole overnight regression log by itself, group dozens of failures into a few issues, and point to the likely block and whether it resembles a bug seen before. A person only needs to check that its grouping is right."},
+  {"name": "Building the UVM environment from the spec", "how": "AI can read the spec and generate boilerplate for agents, drivers, monitors and scoreboards along with an environment skeleton. How to architect the verification, whether the reference model is right, and whether it misread the spec take a person's judgment."},
+  {"name": "Writing test cases and constrained-random stimulus", "how": "AI can generate first drafts of tests and constrained-random stimulus in bulk, and fill coverage gaps. Which scenarios are the real risks, whether constraints are too loose or too tight, and which corners it can't think of, a person has to pick out."},
+  {"name": "Closing coverage and writing covergroups", "how": "AI can draft covergroups, summarize reports, point out holes and add stimulus automatically. Whether the coverage model truly reflects the spec, which holes can be waived, and whether ninety-nine counts as done are for a person to decide."},
+  {"name": "Running FPGA prototypes and emulation, debugging on the hardware", "how": "Prototyping platforms and emulators involve hardware, toolchains, timing and environment, and problems often take repeated trials in the machine room and digging alongside several teams. AI can help look up documents and write scripts; the debugging and the judgment are a person's."},
+  {"name": "Signing the sign-off report before tape-out", "how": "How to scope the verification, whether the remaining risk is acceptable, and whether this chip can go to tape-out stand behind millions in mask costs and months of schedule. AI can draft the report; the signature and the responsibility are a person's."}
+ ],
+ "events": {
+  "e_first_bug": "You found your first bug that could have caused real trouble after tape-out: a register that got corrupted on wake-up from power-down, making the screen glitch. The design lead read out your name at the weekly meeting, and your mentor beside him said: that one wasn't easy to find.",
+  "e_escape": "A chip came back from the fab, and the customer's screens flickered at one particular refresh rate. It was traced to a scenario you'd written a coverage point for but never actually hit. At the retrospective you spoke alone for twenty minutes, then went back and rewrote that covergroup from scratch.",
+  "e_tapeout": "In the last week before tape-out you left the office at one or two every morning, regression after regression running. On sign-off day you signed the verification report, and when you went downstairs it was already light.",
+  "e_first_pass": "The chip you helped verify came back and lit up first time; the customer's sample screen showed an image on the first try. Design and verification went out for crayfish together downstairs, and the design lead raised his glass and said: this one's thanks to verification.",
+  "e_ai_tb": "The company brought in a large model for verification that reads the spec and generates UVM boilerplate and a batch of tests. An environment that used to take you a week now has its skeleton in a day; you spent three days finding the place where it read a timing requirement in the spec backwards.",
+  "e_ai_triage": "AI now sorts the overnight regression results first: which failures share a cause, which block it's likely in, whether it looks like a bug seen before. What you see in the morning is no longer forty failures but five issues. Once it lumped two different bugs together, and you added a rule.",
+  "e_ai_cov": "AI can now add stimulus automatically to fill coverage holes, and coverage rose from ninety-four to ninety-nine overnight. You looked at the points it had hit: half were combinations the spec would never produce. You marked them as waived, and wrote three scenarios by hand it hadn't thought of.",
+  "e_spec_fight": "You and a design engineer argued for two days over whether a behavior counted as a bug, the spec being ambiguous. Finally you brought in the architect, who read it and said: you're both wrong, the spec needs changing. The three of you laughed in the meeting room.",
+  "e_emu": "The first time you ran the whole chip on the hardware emulator, a scenario that took three days in simulation finished in twenty minutes. In the machine room, watching the lights on that machine flicker, you thought it was more tired than you were.",
+  "e_market": "The display panel market went cold, a customer cut its orders in half, and the company stopped one new chip project. No one got a raise that year, three people left verification, and your regression load doubled.",
+  "e_poach": "Several new chip companies opened in Hefei, and in one month you took five headhunter calls, all looking for verification engineers with tape-out experience. You told your manager, who gave you a raise the next day.",
+  "e_summer": "Hefei's summer was a steamer, and the air conditioning in your rented room was broken for a week. You simply stayed at the office until midnight every day, regressions running, and at your desk finished a book on formal verification.",
+  "e_house": "You bought a flat in Binhu, Hefei, half the down payment from the housing fund and your parents' savings. On handover day you stood on the balcony and could see Chaohu Lake in the distance.",
+  "e_wedding": "You got married. The night before the wedding you were still reading regression results, until your best friend grabbed your laptop and said: not one bug tonight.",
+  "e_child": "Your child was born. For those months you got up in the night for feeds and glanced at the regression on your phone while you were at it. Once you couldn't tell whether you'd been woken by the baby crying or by the buzz of a failed regression.",
+  "e_checkup": "The health check said straightened cervical spine and your eyesight down another diopter. You started climbing Dashu Mountain at weekends; from the top you could see the whole city, and coming down, your eyes felt a little looser.",
+  "e_parents": "Your father went into hospital back home in Anqing, and you took a few days off to go. In the ward corridor you were still checking regressions on your phone. A nurse walking past thought you were playing a game.",
+  "e_designer_fight": "Three days before tape-out you reported a bug the design lead said couldn't happen. You didn't argue. You sent him the reproduction test and waveform. He looked at it half the night, and at three in the morning replied: confirmed, fixing.",
+  "e_master_leave": "Your mentor left for a big company in Shanghai. On the day he went, he copied you a document of every bug he'd ever missed in ten years and the checks he added afterwards, titled \"I Missed Some Too.\"",
+  "e_apprentice": "The newcomer you mentor found his first real bug and ran over to show you the waveform. You looked and said: that one wasn't easy to find. Then you remembered it was what your mentor once said to you.",
+  "e_eyes": "Years of chasing waveforms in Verdi tire your eyes more and more easily; after a little while at the screen you have to close them and rest. With them closed, you can still see the clock edges, one cell after another."
+ },
+ "choices": {
+  "c_formal": {"title": "Learn AI-assisted verification, or get UVM solid first?", "situation": "The department is trialing a flow where a large model reads the spec and generates tests and assertions automatically, and your manager asks who'll work out how to use it and set the review rules. But your mentor says you haven't yet built a UVM environment from scratch yourself; don't rush to let the machine write it for you.", "options": [
+   {"label": "Learn AI-assisted verification first", "result": "In half a year you compiled a checklist, \"What to check in AI-generated verification code\": misread specs, loose constraints, inflated coverage points, each spelled out. Afterwards every newcomer in the department learned that checklist first."},
+   {"label": "Get UVM solid first", "result": "You listened to your mentor, and that year built two verification environments from scratch, every component written yourself. Later, reading AI-written environments, you could see at a glance where it was cutting corners."}
+  ]},
+  "c_senior": {"title": "Promotion review: Senior Digital IC Verification Engineer", "situation": "Your manager says you can apply for Senior Digital IC Verification Engineer this year: owning a subsystem's verification on your own, from the verification plan, environment and coverage model through to sign-off, and mentoring a newcomer. At the review you'll present the hardest bug you've found, and one you missed.", "options": [
+   {"label": "Go for the review", "result": "You talked about the screens that flickered only at one refresh rate, and the covergroup you rewrote afterwards. The panel asked how you now make sure coverage points are really hit. You pulled up your checking scripts."},
+   {"label": "Give it another year", "result": "You said you wanted to see one more tape-out through. That year you owned the MCU's low-power block on your own, it passed on first silicon, and the next year's review file was twice as thick."}
+  ]},
+  "c_shanghai": {"title": "A big Shanghai company makes a big offer", "situation": "A big phone-chip company in Zhangjiang, Shanghai, wants you for verification: thirty percent more pay, chips ten times the size of yours, the most advanced process nodes. But you'd be leaving Hefei and the flat you just got the keys to, and Shanghai housing costs three times as much.", "options": [
+   {"label": "Go to Shanghai", "result": "In Shanghai you verified a chip with billions of transistors, and learned for the first time that one full-chip regression runs for a week. At weekends you took the two-hour high-speed train back to Hefei, and stepped off into the Binhu wind."},
+   {"label": "Stay in Hefei", "result": "You turned it down. That weekend you took the family to Chaohu Lake for a meal of whitebait, then came home and went over the next chip's verification plan again."}
+  ]},
+  "c_emu": {"title": "Take over the emulation and FPGA prototyping platform", "situation": "The company has bought a hardware emulator and wants an FPGA prototyping platform too, so the software team can run code before the chip comes back. Your manager wants you to lead it: you'd need to understand hardware and toolchains and deal daily with the machine room, the software team and the vendor's engineers, and there'll be plenty of pitfalls.", "options": [
+   {"label": "Lead it", "result": "You lived in the machine room for most of a year. The day the prototyping platform came up, the software team ran the whole driver stack before the chip was back for the first time, and their lead took you out for barbecue."},
+   {"label": "Stay in simulation", "result": "You stayed on the simulation side and took subsystem verification deeper. You became the person in the department who found the most bugs."}
+  ]},
+  "c_signoff": {"title": "Sign it or not?", "situation": "The tape-out date is fixed and fab capacity is booked. But the subsystem you own still has two coverage holes unclosed. You don't think they're likely to cause trouble, but you can't be sure. The project manager says: sign it; put the holes in the risk report.", "options": [
+   {"label": "Sign, and put it in the risk report", "result": "You wrote the two holes and your judgment into the risk report point by point, and signed. When the chip came back, nothing went wrong there, but in the week of silicon testing you didn't sleep well once."},
+   {"label": "Ask for three more days", "result": "At the review you insisted on three days, and the project manager's face went dark. The next night, in one of those holes, you really did find a bug."}
+  ]},
+  "c_expert": {"title": "Apply for Verification Expert / Verification Manager", "situation": "The department is creating a Verification Expert / Verification Manager post: leading about ten people, owning the whole chip's verification strategy and sign-off, deciding who verifies which subsystem and when it can tape out. If you get it, most of your waveform-chasing time goes, replaced by reviewing verification plans, meetings, and signing for the whole department at tape-out reviews.", "options": [
+   {"label": "Apply", "result": "Your pitch was one table: where each chip's missed bugs had slipped through over the years, and which processes changed afterwards. The director asked where things could still slip through now. You named three places."},
+   {"label": "Stay hands-on", "result": "You recommended a colleague and kept chewing on the hardest areas, low power and clock-domain crossings. Whenever newcomers got waveforms they couldn't make sense of, they brought them to you first."}
+  ]},
+  "c_eda": {"title": "An EDA tools company wants you as an applications engineer", "situation": "An EDA company that makes verification tools wants you as an applications engineer, helping chip companies get the most out of their simulators and AI verification tools. Twenty percent more pay, lots of travel, no more racing for tape-out; but you'll never again sign your name on a verification report.", "options": [
+   {"label": "Join the EDA company", "result": "You took a copy of the \"I Missed Some Too\" document with you, and the first time you visited a customer, that was what you talked about.", "end": "From then on you were an applications engineer at the EDA company, traveling to chip companies all over the country and helping one verification team after another get the tools working. Many years later, someone at a conference said their chip had succeeded on first tape-out using your tools, and in the audience you applauded for a long time."},
+   {"label": "Stay in verification", "result": "You turned it down. That week the regression came back without a single failure, which made you uneasy instead, so you added three more random seeds."}
+  ]},
+  "c_teach": {"title": "A university's school of integrated circuits wants you to teach", "situation": "The school of integrated circuits at a university in Hefei wants you as a senior engineer, guiding graduate students through verification projects and running the school's EDA platform. Thirty percent less pay, winter and summer holidays; but there'll never again be a chip waiting for your signature the night before tape-out.", "options": [
+   {"label": "Go to the university", "result": "In your first class for graduate students you didn't teach UVM. First you had them look for the bug in a piece of code. Very few found it. You said: that's right, that's why you're here to learn.", "end": "You spent many years at the school, training class after class of verification students. Every year someone messages after graduating: teacher, I found my first real bug."},
+   {"label": "Stay at the company", "result": "You turned it down, but agreed to give two lectures a semester. The first time, you spent an afternoon on \"I Missed Some Too.\""}
+  ]},
+  "c_director": {"title": "Go up for Director of Verification", "situation": "The company wants a Director of Verification over verification, emulation and prototyping for every chip, forty or fifty people, answerable for the sign-off before every tape-out. You'd negotiate budgets with the boss, tools with EDA vendors, and the quality bar with design and architecture; when a bug escapes, you're the first to stand before the customer.", "options": [
+   {"label": "Go for it", "result": "At the review you covered three things: what verification to hand to AI, what people still have to think of, and which money can't be saved. The boss asked what you feared most. You said: coverage at a hundred, and everyone thinking that means there are no bugs."},
+   {"label": "Don't apply; lead your own team well", "result": "You said you'd rather stay close to the waveforms. In their first month the new director came to see you every day, to hear about every bug that slipped through over the years."}
+  ]}
+ },
+ "endings": {
+  "retire": "On your last day you gave your mentor's \"I Missed Some Too\" to the youngest person on the team, dozens of pages of your own added at the end. You took one last look at last night's regression: not a single failure. It didn't make you feel safe; you just smiled and shut the laptop. Outside, Hefei's plane-tree leaves covered the ground, and you walked over them to the metro station.",
+  "burnout": "That year brought three tape-outs in a row. After the last sign-off, going downstairs, everything went black, and you sat on the steps a long time until it passed. You quit and rested at home for most of a year, walking around Swan Lake every day. One day you noticed a piece missing from the reflection on the water, and after a moment realized a tree had been cut down. You smiled, and didn't file a report."
+ },
+ "stages": [
+  "Under your mentor you own one block's verification: writing the reference model from the spec, building UVM components, writing constrained-random stimulus, chasing failing waveforms in Verdi, filing defects in the tracker. You work most with your mentor and the design engineers; your bugs only count once design confirms them, and the name on the verification report is your mentor's.",
+  "You own a subsystem's verification on your own: writing the verification plan, building the whole environment, defining the coverage model, running regressions, chasing bugs until design confirms them. You deal daily with design engineers and architects, arguing half a day over one sentence of the spec; at the pre-tape-out verification review, for the first time, you present yourself.",
+  "You own the verification strategy for several key subsystems in a chip: low power, clock-domain crossings, high-speed interfaces. You mentor one or two newcomers and review their plans and coverage models; you sign the pre-tape-out sign-off report, and when silicon has a problem, you're the first called into the retrospective.",
+  "You lead about ten people and own the whole chip's verification strategy and sign-off: deciding who verifies which subsystem, setting coverage targets and waiver rules, deciding when it can tape out. You review others' plans more than you write code, and at tape-out reviews you sign for the whole verification department.",
+  "You run verification, emulation and prototyping for all the company's chips, forty or fifty people, answerable for the sign-off before every tape-out. You negotiate budgets with the boss, tools with EDA vendors, the quality bar with design and architecture; when a bug escapes, you stand before the customer. One habit remains: the night before tape-out, you look at the regression results."
+ ],
+ "work": [
+  "Your mentor had you write a scoreboard for the display interface. You wrote it and a hundred tests all passed. Your mentor flipped one bit in the design and your scoreboard still passed everything, so you went back and rewrote the comparison logic.",
+  "A design engineer said a bug you reported was a stimulus problem. You walked him through the stimulus and waveform frame by frame until he admitted the design was wrong, and clicked confirm on the defect.",
+  "The first time you wrote assertions, you wrote twenty and they fired three hundred times. Your mentor took one look and said you'd got the timing relationship one cycle off. After the fix only two fired, and both were real.",
+  "You verified the MCU's interrupt controller for three weeks with coverage stuck at ninety-six percent. You drew a state diagram of nested interrupts and found one nesting order that had never been hit. You added a directed test, and it turned up a bug.",
+  "An architect changed a register definition in the spec without telling you, and two hundred of your regression tests failed overnight. You spent a morning tracking it down, and at the review proposed a rule: spec changes must be reported to verification.",
+  "Gate-level simulation turned up an error the RTL simulation never showed. You went through the timing with the back-end engineer and found a reset signal with an extra stage of delay in the gate-level netlist.",
+  "The newcomer you mentor used AI to generate a whole suite of tests and reached ninety-eight percent coverage in a day. You had him explain what each test was checking. Halfway through, he realized half of them tested the same thing.",
+  "A week before tape-out, the design lead wanted to change a block's logic. You worked out how long the regressions would take, and said at the review: you can change it, but give verification five more days, or I won't sign.",
+  "After a chip came back, it hung intermittently at the customer. You ran the FPGA prototype for two days and nights until it reproduced once, and caught the clock-domain-crossing problem that only appeared at low temperature.",
+  "A new chip's verification plan came up for review with over three hundred test points. You went through every one, cut forty duplicates, added twelve on low-power transitions, and marked an owner on each.",
+  "Two subsystems' verification both said they were clean, but run together, the bus deadlocked. You set a rule for the team: before a subsystem signs off, it must run one round in the full-chip environment.",
+  "The boss asked whether the verification cycle could be squeezed by another month. You charted, for every escaped bug over the years, in which week of verification it had been found. In the end it was squeezed by one week.",
+  "An EDA vendor came pitching a new AI verification tool at a high price. You had the team try it on the bug your last chip had missed. It found it, and only then did you sign the purchase order.",
+  "A chip in mass production had a bug escape at a customer. You went to the customer's factory with the reproduction test and a fix, talked for an afternoon, and the customer agreed to work around it in firmware.",
+  "At year-end headcount planning, the boss wanted to cut the ratio of verification to design from one-to-one to one-to-two. You didn't argue. You put every chip's silicon results and verification staffing in one table, and it was settled at one-to-one-point-five."
+ ],
+ "past": [
+  "You went to middle school in Anqing. Your favorite game was spot-the-difference: put two pictures side by side and you were always first to find the cat missing a whisker.",
+  "In the gaokao (college entrance exam) you got into electronic science and technology at a university in Nanjing. You chose it because your homeroom teacher said it would lead to chips, and chips were short of people.",
+  "In second-year digital circuits, the teacher had everyone write a counter. When you finished, instead of handing it in, you wrote a test for it first, and caught two of your own mistakes. The teacher wrote on your homework: has the makings of a verification engineer.",
+  "You got into a master's in integrated circuit engineering at a university in Hefei, under an advisor in chip design. The first time you did verification on a project, you found a bug in a block a classmate wrote, and he bought you canteen meals for a week.",
+  "The summer after your first year you interned at a chip company. Your mentor's first assignment was to read a three-hundred-page spec and write down the ten places you thought were likeliest to go wrong. You wrote twenty.",
+  "In autumn recruiting you got offers in Shanghai and Hefei, the Shanghai one paying twenty percent more. You compared housing prices in both, thought about the two-hour train ride home to Anqing, and signed with the company in Hefei."
+ ],
+ "late": {
+  "pension_note": "Estimate: chip companies in Hefei mostly pay R&D staff's pension contributions at the upper-middle band of the social-insurance base, well below actual pay, so the basic pension comes to around forty percent of your last monthly salary.",
+  "scenes": [
+   "For the first week of retirement, the first thing you thought on waking was still how many tests had failed in last night's regression. After a moment you remembered you'd handed in your server account.",
+   "Your old university invited you to talk to graduate students about verification. You didn't use slides. You wrote ten lines of code on the blackboard and had them find the errors. After half an hour, no one had found them all.",
+   "Your grandchild brought you a spot-the-difference book. You put on your reading glasses and found the cat missing a whisker at a glance. Not to be outdone, he turned the page.",
+   "In the first months after quitting, you turned off every notification on your phone, and for the first time went a whole month without being buzzed awake in the night.",
+   "You took to climbing Dashu Mountain at weekends, sitting a while at the top to look at the city's buildings standing in rows, looking for nothing.",
+   "An old colleague came over for tea and said regressions now ran, sorted and reported themselves with AI, but it was still a person who signed. You said good, and refilled his cup.",
+   "In your first year on a different path, every time you saw a screen flicker, you couldn't help thinking: which refresh rate, and who missed it?",
+   "At an industry conference you ran into your old design lead, now vice president of technology at a company. He said he'd always remembered that three a.m. \"confirmed, fixing.\"",
+   "On an errand in the high-tech zone you passed the old company. The beef soup shop downstairs was still there. The owner recognized you and asked whether it was still two flatbreads.",
+   "Back home in Anqing, in a box of old books, you found that spot-the-difference book from childhood. Every page had your pencil circles on it, and on one page you'd missed one.",
+   "On an old hard drive you found the first testbench you wrote as a graduate student. The code was clumsy, but it had found the bug in that classmate's block."
+  ],
+  "closing": {
+   "retire": "One evening many years later you sat on a bench by Chaohu Lake. The water was flat, not a single ripple. You looked for a long time and found nothing wrong, and went on looking until it was dark.",
+   "burnout": "Many years later you walked slowly around Swan Lake, the trees in its reflection standing in a row, one after another. You didn't count them, or look for the one that was missing.",
+   "end": "Many years later you found a printout of the first verification report you ever signed in a drawer, the paper yellowed, the signature pressed hard into it. You looked at it a while and put it back."
+  }
+ }
+}

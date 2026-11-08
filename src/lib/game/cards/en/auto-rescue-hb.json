@@ -1,0 +1,189 @@
+{
+ "id": "auto-rescue-hb",
+ "occupation": "Roadside Rescue Technician",
+ "role": "Expressway Breakdown and Recovery Technician",
+ "headline": "Baoding-born, a vehicle-repair vocational school graduate who spent five years fixing cars at a dealership and has just switched to riding recovery trucks out to breakdowns from a rescue station on the Hebei stretch of the Beijing–Hong Kong–Macau Expressway",
+ "unit": "A Baoding expressway clearance and recovery company (a rescue station on the Hebei stretch of the Beijing–Hong Kong–Macau Expressway)",
+ "unit_type": "Expressway clearance and recovery company",
+ "city": "Baoding",
+ "city_tier": "Third-tier",
+ "education": "Vocational secondary school (vehicle operation and repair)",
+ "level": "The mechanic's skills you already have: jump starts, tyre changes and fault codes need no teaching. But setting out cones on an expressway, working at the edge of moving traffic, riding out in a recovery truck of over twenty tonnes with your mentor: all of that is new.",
+ "intro": "Five years fixing cars at a dealership, and the grease in your hands never quite washed out. The rescue company issues you an orange hi-vis vest, a helmet and a radio. Your mentor, Zhao, has driven recovery trucks for over ten years. He says: fixing cars, you deal with a car; on the expressway, you deal with the traffic. From today, wherever a car breaks down on these few dozen kilometres of the Beijing–Hong Kong–Macau Expressway, that's where you go.",
+ "salary_note": "Estimate: expressway recovery companies in Baoding pay a base wage plus a cut per call-out, a bit more in months with lots of night and holiday call-outs. Taken at about 90 percent of the national figure.",
+ "facts": [
+  { "label": "Rescue Technician (current level)", "value": "0–2 years, ¥4,500–6,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Recovery Truck Driver, lead operator (2–5 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Getting to the scene and setting out warning signs to keep the work safe", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Answering rescue calls and logging the driver's request", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Shift handover. The night crew say a lorry blew a tyre before dawn and kept them until four. You walk round the recovery truck checking the boom's wire rope, the underlift hydraulics, and the cones and jump pack on board.",
+  "The dispatch platform sends a job: a car with a flat battery on the hard shoulder. Location and route already worked out by the system; you're on scene in seven minutes.",
+  "First thing out of the truck isn't the car, it's the cones. You walk back towards the oncoming traffic setting them out one by one over a hundred and fifty metres, lorries whooshing past behind you.",
+  "The driver and family of three are standing behind the barrier. You clip on the jump pack and it starts first time; you also glance at the battery's manufacture date and tell him to get it replaced once he's off the expressway.",
+  "A semi-trailer's brakes have locked and it's stopped on the shoulder, smoking. Zhao has you chock the wheels while he and the driver work out how to tow it, and you take photos and fill in the work order.",
+  "Back at the station for a cup of instant noodles. The whiteboard shows this month's call-outs: a hundred and eighty-seven, with twenty-one on the busiest day.",
+  "Evening rush hour, two cars in a rear-end shunt, nobody hurt, one lane blocked. Once the traffic police have taken photos, you underlift them one at a time to a car park past the next exit.",
+  "Off shift. You hang your vest by the truck door; one of its reflective strips has already worn dull. You message home: safe today."
+ ],
+ "ladder": [
+  { "title": "Rescue Technician", "stage": "Riding along", "focus": "Ride out with the recovery truck: set out cones, jump-start and change tyres, hook up tows, and keep the scene photos and work orders." },
+  { "title": "Recovery Truck Driver (Lead Operator)", "stage": "Driving and operating", "focus": "Drive your own recovery truck and operate the underlift, flatbed and boom; how each scene is handled is your call." },
+  { "title": "Rescue Team Leader", "stage": "Leading a team", "focus": "Lead two or three trucks and seven or eight people, plan big incident scenes with the traffic police and road administration, draw up rosters and bring on new people." },
+  { "title": "Rescue Station Manager", "stage": "Running a station", "focus": "Run a station's trucks, people and response times over a few dozen kilometres, liaise with expressway police, road administration and insurers, and sign." }
+ ],
+ "ai_tasks": [
+  { "name": "Answering rescue calls and logging the driver's request", "how": "AI voice assistants can answer automatically, pick out the location and fault the driver describes and create a work order. People only handle callers who are upset or in complicated situations, and spot-check the orders." },
+  { "name": "Confirming location and fault and planning the route", "how": "Combining location, traffic and vehicle data, AI can judge the rough type of fault, plan the fastest route and send the nearest truck. People step in only on unusual stretches or when the information doesn't add up." },
+  { "name": "Getting to the scene and setting out warning signs to keep the work safe", "how": "On arrival, reading the traffic, placing warning triangles and cones, protecting yourself and the driver: all of it depends on a person's judgement on the spot. AI can at most remind you of the standard procedure." },
+  { "name": "Checking and tracing the cause of a fault", "how": "AI can rank likely causes from the driver's description, fault codes and diagnostic data. You still have to look, listen and feel for yourself to confirm what's actually broken." },
+  { "name": "Jump starts, spare wheels and other roadside repairs", "how": "Jump-starting, changing tyres and simple repairs all need hands-on work, and every car and scene is different. AI can only bring up the steps or flag what to watch for; doing the work and keeping it safe is on people." },
+  { "name": "Operating tow equipment to load and haul broken-down vehicles", "how": "Loading, securing and towing take judgement about the vehicle type, the ground and the slope, plus responsibility for any damage. AI can't lend a hand here; people do it all the way through." },
+  { "name": "Getting stuck vehicles out", "how": "Cars bogged down or wedged fast come in endless variations, and it takes experience to judge the forces and the method. AI can offer suggestions; the decisions and the work on the spot are people's." },
+  { "name": "Maintaining trucks and equipment and keeping rescue records", "how": "AI can generate rescue records from work orders, photos and voice notes and flag when equipment is due for maintenance. People still physically check the equipment and verify the records are true." }
+ ],
+ "events": {
+  "e_cones": "For the first month you always set your cones too close, and Zhao uses the radio to have you move them back one by one. He says: the cones are for the cars behind to see, not for you.",
+  "e_fog": "Winter patches of dense fog, visibility under fifty metres. You set out two hundred metres of cones behind a broken-down car with the strobes on the whole time, and everyone waits behind the barrier until the fog thins a little before going out to tow.",
+  "e_thanks": "Chinese New Year's Eve, a car driving home for the holiday runs out of fuel near a service area. You bring fuel and get it started, and the old lady inside insists on giving you a bag of dumplings, still warm.",
+  "e_fee": "A driver thinks the towing fee is too high, won't let you move the car and films you, saying you're overcharging. You show him the fee schedule and the official guide price and have dispatch send him an electronic receipt, and then he goes quiet.",
+  "e_license": "You get your heavy-vehicle licence, then pass the company's recovery-truck operator test. The first time you work the boom yourself, you right a van lying on its side, steady as anything. Zhao says nothing beside you and smokes a cigarette.",
+  "e_snow": "Heavy snow closes the road, and dozens of vehicles are stuck on an uphill stretch, some slewed across the carriageway. Your three trucks work all night pulling them out one by one, and at dawn your gloves are frozen to the steering wheel.",
+  "e_near": "Working on the hard shoulder, a car comes through without slowing and shoots past just clipping the last cone. You stand there stunned for a long time. That night at home you hold your child and don't say a word.",
+  "e_truck": "A semi-trailer carrying cabbages overturns, spilling them across half the carriageway. You bring in a crane and a crew to unload, get the cabbages off basket by basket, then lift the truck. Five hours in all, and the driver stands by rubbing his hands the whole time.",
+  "e_ev": "There are more and more electric cars. One runs out of charge on the expressway and can't be towed on its wheels, so for the first time you load a whole car onto the flatbed and secure it step by step following the maker's manual.",
+  "e_ai_dispatch": "The company brings in smart dispatch: as soon as a driver calls, the system identifies the location and fault and sends the nearest truck. Average arrival time drops from twenty minutes to twelve, and your number of call-outs goes up.",
+  "e_ai_wrong": "The system classes one breakdown as a tyre problem and sends the small jump-and-tyre van. You arrive and find a broken driveshaft that needs an underlift truck. You add a line to the work order and call dispatch.",
+  "e_remote": "A driver calls at three in the morning, stuck on the hard shoulder with a car that won't start. Over video you talk him step by step to the fuse box and he changes a fuse. The car starts, and nobody has to go out.",
+  "e_marry": "You marry your partner of three years, a cashier at a Baoding supermarket. You take one day off for the wedding, and the lads at the station say the expressway was especially quiet that day.",
+  "e_child": "Your child is born. You're on nights a lot, and when you get home by day you fall asleep holding the baby. You wake to find the baby asleep on your chest too.",
+  "e_back": "Years of bending to hook up, carrying chocks and lifting jacks, and your back starts to hurt. On overcast days you put a cushion on the recovery truck's seat.",
+  "e_ear": "One summer noon you work for two hours on an exposed road surface and come down dizzy and sick. It takes half an hour in the truck with the air conditioning on before you come round.",
+  "e_award": "Over the Spring Festival travel rush your station has no complaints and no secondary accidents, and the company presents you with a silk banner that goes up on the wall behind the dispatch desk.",
+  "e_apprentice": "On his first call-out the new lad sets his cones too close. You use the radio to have him move them back one by one: the cones are for the cars behind to see. As you say it you remember: those were Zhao's words.",
+  "e_house": "You buy a flat in Baoding, twenty minutes' drive from the station. The mortgage is over ¥3,000 a month, so you pick up a few more night shifts.",
+  "e_platform": "The province sets up a unified expressway rescue platform, and every station's response time is ranked on one big screen. Yours comes third. You take a screenshot on your phone and post it in the station's group chat."
+ },
+ "choices": {
+  "c_back4s": {
+   "title": "Back to the dealership, or stay on the expressway",
+   "situation": "Three months on the expressway and you've lost two and a half kilos, and at night you dream of cones. Your old dealership manager phones to say they need a technical supervisor; the company also says if it's too much, you could work city roadside rescue for a while, off the expressway, and ease into it.",
+   "options": [
+    { "label": "Stay on the expressway", "result": "You say you like heading out the moment the phone rings. When Zhao hears, he gives you the passenger seat the next day so you can watch how he drives the recovery truck." },
+    { "label": "City rescue for a while", "result": "You ask to work in the city for six months: jump starts, tyres, towing small cars, working under traffic lights. It feels far steadier. Six months later you're back on the expressway, and Zhao says: good to have you back." }
+   ]
+  },
+  "c_driver": {
+   "title": "Get a heavy-vehicle licence and become lead operator",
+   "situation": "The company is short of recovery truck drivers. First you need a heavy-vehicle licence, then the company's operator assessment: underlift, flatbed, boom, no weak spots allowed. Pass, and how each scene is handled is your call.",
+   "options": [
+    { "label": "Go for it", "result": "Call-outs by day, driving school by night, for three months. On assessment day you lift a scrapped car with the boom and set it down again without a sound as it touches the ground." },
+    { "label": "One more year riding along", "result": "You say you want another year with Zhao to see every kind of scene. That year you see rollovers, rear-end shunts and car fires, and write each kind down in your notebook." }
+   ]
+  },
+  "c_insurance": {
+   "title": "Become an insurance claims assessor",
+   "situation": "An insurer in Baoding is hiring motor claims assessors and likes that you know cars and have seen accident scenes. You'd drive round the city inspecting, photographing and assessing damage, no more standing on the expressway, ten percent more pay; but every day haggling with drivers and repair shops.",
+   "options": [
+    { "label": "Join the insurer", "result": "You hand your radio to the station manager, sit in the recovery truck's cab one last time, and sound the horn.", "end": "You become a motor claims assessor, inspecting, photographing and assessing cars all over Baoding. Sometimes at an expressway exit you meet a recovery truck coming off with a car in tow, and you wave at the cab." },
+    { "label": "Stay at the station", "result": "You say you still like being out at the scene. The station manager claps you on the shoulder: then do it well." }
+   ]
+  },
+  "c_night": {
+   "title": "More night shifts for money, or time with the family",
+   "situation": "Night shifts mean more call-outs and a bigger cut, two thousand more a month; but the child is small, your partner is coping alone, and when you get home by day all you want is sleep. The station has a fixed day-shift post you could apply for.",
+   "options": [
+    { "label": "More nights", "result": "You take the most night shifts going, and your commission slips get longer. The day your child learns to walk, you're towing a lorry on the expressway; your partner sends you the video." },
+    { "label": "Apply for days", "result": "You move to a fixed day shift, a chunk less money. In the evenings you can tell your child bedtime stories now, all about the cars on the expressway." }
+   ]
+  },
+  "c_leader": {
+   "title": "Become Rescue Team Leader",
+   "situation": "The station is promoting a team leader for two or three trucks and seven or eight people. At big incident scenes you'd plan with the traffic police and road administration, and the rosters, new people and complaints would all be yours.",
+   "options": [
+    { "label": "Take it", "result": "For the first time you direct three trucks at a big incident, over the radio, line by line: truck one close the lane, truck two underlift, truck three stand by with the crane. When the scene is clear, the traffic police captain shakes your hand." },
+    { "label": "Keep driving", "result": "You say you'd still rather operate yourself. The post goes to someone else, and at big scenes he always hands the boom to you first." }
+   ]
+  },
+  "c_ai": {
+   "title": "Learn remote assistance and smart dispatch or not",
+   "situation": "The company is setting up a remote assistance post at the station: when a driver calls, look at the car over video first and talk them through fixing it, and only send a truck if that fails. The post also oversees smart dispatch and double-checks the system's calls. Afterwards, half your time would be at the dispatch desk.",
+   "options": [
+    { "label": "Go and learn", "result": "You learn to tell at a glance on video whether a driver's \"smoke\" is steam or fire, and to correct the system the moment it sends the wrong truck." },
+    { "label": "Stay on call-outs", "result": "You say you need to see it on scene before you're happy. When the dispatchers aren't sure, they pass the call to you: have a listen, what's wrong with it?" }
+   ]
+  },
+  "c_own": {
+   "title": "Buy your own truck and go independent",
+   "situation": "A friend from home who does recovery says buy your own truck, register it under a company and take jobs, and if it goes well you'll make a hundred thousand more a year. But the truck means a loan of over half a million, and accidents and lean months are all on you.",
+   "options": [
+    { "label": "Go independent", "result": "You take out a loan for a secondhand recovery truck, stick your phone number on the door and pay the registration fee.", "end": "You take jobs in your own recovery truck, out on Hebei's expressways all year round. The day the loan is paid off, you wash the truck and sit in the cab for a long time." },
+    { "label": "Stay with the company", "result": "You say you still like working with a crew. Your friend goes his own way, and at New Year he phones to say he's tired, and that he's earning plenty." }
+   ]
+  },
+  "c_chief": {
+   "title": "Compete for Rescue Station Manager",
+   "situation": "The old manager is moving to head office, and the post is open for competition: run a station's trucks and people over a few dozen kilometres, watch response times, liaise with expressway police, road administration and insurers. If there's a secondary accident, the first one held responsible is you.",
+   "options": [
+    { "label": "Compete for it", "result": "At the selection meeting you present your ten rules for scene safety, each one backed by a scene you lived through. The company manager listens and says: you're the one." },
+    { "label": "Keep leading a team", "result": "You say you still want to be at the scene. The post goes to someone else, and when a big incident comes in, you're the first person he calls." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last shift you take your last call-out: a small car out of fuel. You bring fuel, get it started, the driver says thanks and drives off. Back at the station you fold your hi-vis vest and lay it on the dispatch desk, hand your radio to the young one taking over, and tell him: the cones are for the cars behind to see. As you walk out of the station gate, a recovery truck is pulling out with its lights on.",
+  "burnout": "Your back and knees went together, and the doctor said no more bending to hook up. The company moved you to the dispatch desk, where every day you sit at a screen sending trucks, answering calls and talking drivers through fixes over video. When a caller's voice is shaking, you always say first: don't panic, get behind the barrier."
+ },
+ "stages": [
+  "You ride in the passenger seat of the recovery truck with Zhao: out of the cab, the first thing is setting cones back towards the oncoming traffic and switching on the strobes, and only then the car. Jump starts and tyres you can do; hooking up, chocking wheels, taking scene photos and filling in electronic work orders you learn one by one. When drivers are panicking, your job is to get them behind the barrier first.",
+  "You drive your own recovery truck now. When a job comes in you read the location and fault description first, and on scene you decide how to do it: underlift for small cars, flatbed for electric ones, the boom for rollovers. You explain the charges and where the car is going to the driver, confirm the scene with the traffic police, sign the work order when it's done, and check the truck's equipment yourself every day.",
+  "You lead two or three trucks and seven or eight people. At big incidents you stand at the front and plan with the traffic police and road administration: where to close lanes, which vehicle to move first, whether to call in a crane, handing it out line by line over the radio. Back at the station you draw up rosters, review work orders and deal with complaints, and when a new person goes out for the first time, you sit in his passenger seat.",
+  "A station's trucks, people and response times over a few dozen kilometres are yours to run. Every day you look at the arrival-time rankings on the platform and meet and settle accounts with expressway police, road administration and insurers; trucks need servicing, people need training, and the Spring Festival rush and heavy snow need plans drawn up in advance. At big scenes you still go out, standing behind the barrier, watching your people work."
+ ],
+ "work": [
+  "A car with a blowout on the hard shoulder, and the spare is flat too. You get the puncture kit out of the truck, plug it in five minutes and pump it up. The driver says he's never seen it done so fast.",
+  "When Zhao hooks up, you hold a torch behind the car and watch how he finds the towing point behind the bumper. He says every model is different, and you go back and copy out the twenty most common ones.",
+  "Scene photos: following the work order, you take the front, the rear, all four wheels and the dashboard, twelve shots in all. Dispatch glances at them on the platform and says: complete this time.",
+  "A car has gone into the roadside drainage ditch, front wheels in the air. You park the truck, put down the outriggers and slowly winch it out with the boom without so much as scratching the bumper.",
+  "An electric car has broken down, and the driver says the maker doesn't allow towing. You check its manual, confirm it can only be carried whole, load it onto the flatbed and secure it with eight straps before you drive off.",
+  "A lorry stalls on an uphill stretch, and the driver says it's out of fuel. You listen to the engine and judge there's air in the fuel line. You bleed it, and the engine starts.",
+  "A multi-vehicle shunt. On arrival you stay in the cab at first and hand out jobs over the radio: truck one close the lane five hundred metres back, truck two take the outermost car first, truck three stand by.",
+  "A new man comes back from his first solo call-out with a hopeless work order. You don't shout; you take his work order and photos and go through it item by item with him.",
+  "A driver complains you overcharged. You pull up the scene video and the bill and check line by line, and find you did charge one item too many. You refund it the same day and phone to apologise.",
+  "A heavy snow warning. The day before, you check every truck at the station, snow chains, de-icer, generators, and write on the dispatch whiteboard which stretch each truck covers.",
+  "The expressway traffic police commander comes to a station meeting and says you were late to two scenes last month. You pull up the dispatch records for both days: once the system sent the wrong truck, once you were stuck at a toll plaza.",
+  "You hold a safety meeting for the station, and instead of the regulations you talk about the car that shot past clipping the cones that year. When you finish, the meeting room is very quiet."
+ ],
+ "past": [
+  "You're in your last year of middle school on the outskirts of Baoding, with a car repair shop right by your front door. After school you crouch there watching them work, and the owner has you pass spanners. You're quicker than his apprentice.",
+  "Your high school entrance exam goes badly, and you enrol in vehicle operation and repair at a vocational education centre. Your father says learn a trade and you'll never go hungry anywhere.",
+  "In the school workshop you take an engine apart for the first time and read fault codes with a diagnostic tool for the first time. Your teacher takes you to a provincial skills competition, and you come third.",
+  "After graduating you start as an apprentice at a Baoding car dealership, washing cars and changing oil. Two years on, you can do services and fix wiring on your own.",
+  "You make intermediate technician at the dealership, the grease in your hands never quite washing out. One day the workshop takes in a car towed off the expressway, and you watch the recovery driver hooking up in the pouring rain for a long time.",
+  "An old classmate working for an expressway rescue company says they need people who know cars, the pay is no worse than a dealership, it's just hard. You think about it for a month and hand in your notice."
+ ],
+ "late": {
+  "pension_note": "Estimate: the rescue company paid social insurance at the local minimum base, and the dealership years weren't high either. The pension comes to about forty percent of your last monthly pay, enough to live on in Baoding.",
+  "scenes": [
+   "The first snowy day of your retirement, you wake early and glance at your phone out of habit. No jobs. You get up and go downstairs to brush the snow off your own car.",
+   "Driving your grandchild to Beijing, you pass your old rescue station and slow down. Two recovery trucks are parked by the gate, orange.",
+   "Whenever someone's car on the estate won't start, they knock on your door. You take your jump pack down and get it going; they try to pay and you wave it away.",
+   "Zhao is eighty, and you go to see him. He asks: do they still use cones on the expressway now? You say yes, still a hundred and fifty metres. He laughs.",
+   "You sit at the dispatch desk, red dots blinking across the screen. You send a truck, then say into the headset: don't panic, get behind the barrier first.",
+   "Your back is a little better. At the weekend you take your child to fly a kite in the park, see a car by the road with a blowout, and go over and change it. Five minutes.",
+   "Your child gets a driving licence, and before their first time on the expressway you have them set out a warning triangle by your front door, a hundred and fifty metres back.",
+   "For the first few months after leaving the station, whenever you drive on the expressway and see a car on the hard shoulder, you want to stop and take a look.",
+   "You do well in the new place. Whenever you see cones on a hard shoulder, you count them, to see if they're set far enough back.",
+   "The old station crew are still in a group chat. Someone posts a photo of a scene in heavy snow, and underneath a row of people reply: stay safe.",
+   "Later on, rescue calls were answered by the system, jobs were dispatched by the system, routes worked out by the system, and plenty of small faults were fixed by drivers talked through it on video. But at the scene, the first cone set out towards the oncoming traffic still had to be put down by a person.",
+   "One winter night you're driving home in snow on the expressway. Ahead on the hard shoulder a recovery truck has its strobes flashing. You slow down and move over to the furthest lane."
+  ],
+  "closing": {
+   "retire": "One evening many years later your grandchild shows you a toy recovery truck and asks what the hook is for. You set their toy car on the floor, hook it on gently, and tow it round in a circle.",
+   "burnout": "Many years later you still have the orange hi-vis vest, not one of its reflective strips still shining. You hang it on the garage wall, beside an old traffic cone.",
+   "end": "Many years later you find the old radio in the storeroom, its battery long dead. You press the talk button. Nothing. You still say it to yourself: copy that."
+  }
+ }
+}

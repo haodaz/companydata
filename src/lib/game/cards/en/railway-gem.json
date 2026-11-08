@@ -1,0 +1,186 @@
+{
+ "id": "railway-gem",
+ "occupation": "Railway Trackman",
+ "role": "Trackman on the Qinghai–Tibet Railway",
+ "headline": "A farm kid from Haidong in Qinghai, fresh out of a railway vocational college and assigned to the Golmud track maintenance depot, walking the line, tamping ballast and gauging rails at a section camp 4,500 metres up on the Qinghai–Tibet Railway",
+ "unit": "A railway track maintenance depot in Golmud (a track section camp on the Golmud–Lhasa stretch of the Qinghai–Tibet line)",
+ "unit_type": "Railway track maintenance depot",
+ "city": "Golmud",
+ "city_tier": "County-level city",
+ "education": "Associate degree (railway engineering technology)",
+ "level": "You can use a track gauge and an offset gauge, and you know the tolerances for gauge, cross-level and top by heart. But at 4,500 metres one swing of a tamping pick leaves you gasping, and how to look after track laid on permafrost, you've only just started learning.",
+ "intro": "From Golmud you ride a track motor car up the mountain for five hours, and outside the window the gobi turns to snow peaks, then to grassland as far as you can see. The section camp is a row of blue-roofed single-storey buildings, with a sign by the door: Altitude 4,520 m. The first thing the foreman hands you is an oxygen bag; the second is a tamping pick. From today, these few dozen kilometres of line are yours to walk, one step at a time.",
+ "salary_note": "Estimate: trackmen on the Golmud–Lhasa stretch get a railway post wage plus high-altitude allowance, a hardship allowance for remote regions and field-work pay, taken at 1.3 times the national figure. Months up the mountain pay a bit more, rotation months below a bit less.",
+ "facts": [
+  { "label": "Trackman, Junior Grade (current level)", "value": "0–3 years, ¥4,500–6,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Trackman, Intermediate / Senior Grade (3–7 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Tamping, lifting and lining track, and replacing components", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Patrolling and inspecting the track and line", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You wake with a bit of a headache and breathe oxygen for twenty minutes first. Outside it's ten-odd below, the far snow peaks turned gold by the sun, and the camp dog is circling by the door.",
+  "Pre-shift meeting. The foreman reads out today's possession window: eleven to half past one, tamping and gauge adjustment at such-and-such kilometre. The lookout draws a radio and signal flags.",
+  "A track motor car takes you to the worksite. You walk the embankment with a tamping pick on your shoulder and have to stop for breath every fifty metres. Your lips are purple. Your mentor says it gets better.",
+  "The window opens. You and your mentor take a rail each, driving the tamping picks into the ballast stroke by stroke to pack the stones firm under the sleepers. Every twenty strokes you have to straighten up and rest.",
+  "Your mentor measures gauge and cross-level with the track gauge and calls out each figure while you write it down. One spot is two millimetres out, so you lift and tamp again until he says: that'll do.",
+  "Off the track and count the tools: nothing missing. A passenger train comes by, and someone at a window is holding up a phone to film the snow peaks, catching the lot of you standing by the line too.",
+  "Back at camp to eat: noodles from the pressure cooker, beef stewed with potatoes. You have two bowls, and the foreman says if you can eat you can work; you'll last up here.",
+  "The camp's phone signal comes and goes. You hold your phone up and walk to a corner of the yard before you get through to home. Your mother asks if you're cold. You say no, the rooms are heated."
+ ],
+ "ladder": [
+  { "title": "Trackman (Junior Grade)", "stage": "On the gang", "focus": "Patrol, tamp, lift and line track and tighten fastenings with the gang, working shovel by shovel and pick by pick in the possession windows, and sit for intermediate grade." },
+  { "title": "Trackman (Intermediate / Senior Grade)", "stage": "Mainstay", "focus": "Survey the track on your own, judge defects, act as site lookout, and take the most critical position when rails and sleepers are changed." },
+  { "title": "Track Gang Leader", "stage": "Leading a gang", "focus": "Lead a work gang of seven or eight in the possession windows to plan, check the work, keep the records and answer for safety on site." },
+  { "title": "Track Section Foreman", "stage": "Running a section", "focus": "Run a few dozen kilometres of line and twenty or thirty people: draw up monthly plans, watch the permafrost defects, deal with the workshop's dispatchers, and sign." }
+ ],
+ "ai_tasks": [
+  { "name": "Tamping, lifting and lining track, and replacing components", "how": "Tamping picks, crowbars, spanners, rails and sleepers changed one at a time, track on permafrost lifted level and lined straight: it takes people working pick by pick through the few hours of a possession window." },
+  { "name": "Patrolling and inspecting the track and line", "how": "Track recording cars, inspection drones and image recognition can screen out suspected rail flaws, missing fastenings and cracks in the formation first. Someone still has to walk out along the line, crouch down, look and tap with a hammer to confirm it." },
+  { "name": "Checking and adjusting track geometry", "how": "Track recording data can calculate deviations in gauge, cross-level and top automatically and give the adjustments. Checking it with a gauge and putting it right with tools is still a person's job." },
+  { "name": "Monitoring permafrost formation and frost heave", "how": "Temperature sensors and settlement monitoring in the formation can report automatically which stretch is heaving or thawing. Where to pack first and what to report up is decided by an experienced foreman on the spot." },
+  { "name": "Site protection and emergencies", "how": "Who acts as lookout during work on the line, how to clear the track when a train comes, what to do when something happens on the line in a blizzard: someone has to be there watching, shouting and carrying it." },
+  { "name": "Work records and the defect register", "how": "Work records and the defect register can be generated automatically from test data, photos and voice notes; the foreman only checks and signs." }
+ ],
+ "events": {
+  "e_altitude": "Your first week up the mountain, the headaches keep you awake, and at night you wake again and again fighting for breath. An old hand at the camp swaps your oxygen cylinder for a bigger one and sits by your bed talking until midnight.",
+  "e_antelope": "On patrol, a herd of Tibetan antelope crosses through the wildlife passage under the line. You stop and stand stock still on the shoulder until the last one is through before walking on.",
+  "e_snow": "A blizzard buries the line and packs the points with snow. You work all night with brooms and shovels, snow melting on your faces and freezing again. At dawn the first train runs through on time.",
+  "e_cert": "You sit the intermediate grade exam. The practical is a track geometry check. The examiner has tampered with two spots on a stretch of line, and measuring metre by metre with the gauge and a stringline, you find them both.",
+  "e_frost": "In spring the permafrost thaws and a stretch of track sinks a few millimetres. For ten days running you lift and pack ballast in every window, and the foreman measures it daily in his notebook. On the tenth day he says it's holding.",
+  "e_down": "Your two months up the mountain end, and you ride the track car down to Golmud for your rotation. Your first meal is a big plate of hand-pulled mutton, and that night in a guesthouse you sleep twelve hours without waking once.",
+  "e_newyear": "You're on duty up the mountain over New Year. The camp puts together a table of dishes, and the foreman brings out a bottle and pours everyone a small cup, saying at this altitude that's all you get. At midnight a train passes, sounding its horn.",
+  "e_lips": "Years of UV and wind have given your cheeks the red flush of the plateau, and your lips are cracked in several places. Home on leave, the neighbours' child stares at you for a long time.",
+  "e_love": "You start going out with a primary school teacher in Golmud, and you can only see each other once a month. She says you come down thinner every time, and fills a fridge with dumplings for you to take back up.",
+  "e_wedding": "You hold the wedding back home in Haidong. Some of the lads at the camp can't get leave and send a video from the mountain: a row of them standing on the embankment, snow peaks behind, shouting together: happy wedding!",
+  "e_drone": "The depot starts patrolling the line by drone. It flies the route, and image recognition marks three possible missing fastenings. You walk out to look: two are hidden by snow, one is real.",
+  "e_sensor": "A batch of temperature sensors goes into the formation, and you can see the permafrost changing clearly on a screen. One point's reading hasn't moved in a month. You dig it out and find the cable frozen through.",
+  "e_machine": "The big track machines arrive, and one tamping machine does more track in a single window than your gang does in a week. You stand and watch for a while, then turn round and go to tamp the points it can't reach.",
+  "e_heart": "At your medical the doctor says your haemoglobin is high and your heart a little enlarged, from too long on the plateau. He suggests spending more time down below each year.",
+  "e_child": "Your child is born while you're up the mountain, and snow has closed the road down. You walk round the camp yard holding up your phone for a signal, and the video call finally connects to a small wrinkled face.",
+  "e_tourist": "A tourist train makes an unscheduled stop at the passing loop near your camp, and a child behind a window gives you a salute. The few of you on the shoulder are taken aback for a second, then raise your hands and salute back.",
+  "e_crack": "On a pre-dawn patrol you feel a fine crack in the foot of a rail. You radio the workshop at once and set up protection, the freight train behind runs through at caution, and as soon as the window opens the rail is changed.",
+  "e_apprentice": "A newly assigned graduate comes up the mountain for the first time, and his headache is so bad he cries. You give him your oxygen cylinder and sit by his bed telling him how you got through your own first week.",
+  "e_house": "You buy a flat in Xining, at 2,200 metres, where your child goes to school. On rotation you go down to Golmud first, then take the overnight train to Xining.",
+  "e_knee": "Years of bending to work on permafrost, and your knees and back have given out. On overcast days you know it will snow before the forecast does."
+ },
+ "choices": {
+  "c_stay": {
+   "title": "Apply to move to a camp lower down",
+   "situation": "A year up the mountain, and your body still hasn't fully adjusted. The depot has one place at a low-altitude section near Golmud: lighter work, less allowance, closer to family. Stay up the mountain and you learn more and the allowance is higher.",
+   "options": [
+    { "label": "Stay up the mountain", "result": "You say you'll give it another year. When you go up in the second year, you can carry a tamping pick a whole kilometre without stopping." },
+    { "label": "Move lower down", "result": "You move to a section near Golmud and get into town once a week. Less allowance, and no more waking at night gasping for breath." }
+   ]
+  },
+  "c_mid": {
+   "title": "Sit for intermediate grade and learn to be lookout",
+   "situation": "The foreman says your hands are ready: you can sit for intermediate grade and learn to be site lookout, standing out in front watching for trains during work on the line. The one who shouts clear the track is you. Big responsibility; the smallest mistake is a serious matter.",
+   "options": [
+    { "label": "Sit it and learn lookout", "result": "You learn the operating rules backwards. On your first day as lookout, radio pressed to your ear, your eyes never leave the far end of the line." },
+    { "label": "Get the hand work solid first", "result": "You say you want to get your tamping, lifting and lining as good as they can be first. You sit it the year after, and you're the one in the gang whose tamping packs firmest." }
+   ]
+  },
+  "c_contractor": {
+   "title": "Join a construction firm as a track technician",
+   "situation": "A railway construction company building new lines in the west is hiring track technicians with field experience. Forty percent more than you earn now, but you go wherever the line is being built, for years at a time, and it isn't a post with the depot.",
+   "options": [
+    { "label": "Join the construction firm", "result": "You hand in your tools, take a photo of the sign with the altitude on it, and get on the track car going down.", "end": "You become a track technician with the construction firm, following new lines from one site to the next. Every time a stretch of rail is laid, you go over it with a track gauge, just as you did up the mountain." },
+    { "label": "Stay with the depot", "result": "You say you know this line now and don't want to leave. Your partner says: then I'll wait for you to come down." }
+   ]
+  },
+  "c_leader": {
+   "title": "Become Track Gang Leader",
+   "situation": "The old gang leader's health has gone and he's moving down the mountain. The workshop wants to promote one of the mainstays: lead seven or eight people, work to plan in the possession windows, check the work, keep the records, with safety on site resting on you.",
+   "options": [
+    { "label": "Take it", "result": "Handing out the jobs at the pre-shift meeting for the first time, your voice shakes a little. When that day's window closes, you count the tools three times. Nothing missing." },
+    { "label": "Let your senior have it", "result": "You recommend the man who came two years before you. He becomes gang leader, and for the hardest stretches of permafrost he always calls you along." }
+   ]
+  },
+  "c_family": {
+   "title": "Move the family to Golmud or keep them in Xining",
+   "situation": "Your child is about to start primary school. Move to Golmud and you'll see them as soon as you're down the mountain, but it's 2,800 metres up with less choice of schools. Stay in Xining and the schooling is better, but every rotation means another night on the train.",
+   "options": [
+    { "label": "Move to Golmud", "result": "You rent a flat in Golmud and your child goes to school there. The day you come down, they're waiting outside the station holding up a drawing." },
+    { "label": "Stay in Xining", "result": "Your child goes to school in Xining and does well. Every time you come down it's a night on the train, and by the time you're home they're asleep." }
+   ]
+  },
+  "c_ai": {
+   "title": "Learn smart inspection and permafrost monitoring or not",
+   "situation": "The depot is bringing smart inspection to the Qinghai–Tibet line: drone patrols, automatic analysis of track recording data, a permafrost monitoring platform. Each section sends one person to Xining to train, then watch the data, double-check alarms and maintain the equipment. Afterwards, half your time would be at a screen.",
+   "options": [
+    { "label": "Go and learn", "result": "You learn to read the frost-heave curve for every kilometre of line on the platform, and to argue with the technicians: is this stretch's alarm the track's problem or the sensor's?" },
+    { "label": "Keep walking the line", "result": "You say you still trust your own feet and eyes. When the platform raises an alarm, the young ones come to ask you first: you've walked that stretch, haven't you?" }
+   ]
+  },
+  "c_foreman": {
+   "title": "Compete for Track Section Foreman",
+   "situation": "The section's old foreman is retiring, and the workshop will choose a replacement from the gang leaders: a few dozen kilometres of line and twenty or thirty people, monthly plans, permafrost defects, and your signature on the safety of a whole section. The camp is your home, and you're the head of a household of twenty or thirty.",
+   "options": [
+    { "label": "Compete for it", "result": "At the selection meeting you talk through every stretch of permafrost you've walked: which year it sank, which year it heaved, how you packed it. The workshop director listens and writes a line in his notebook." },
+    { "label": "Stay a gang leader", "result": "You say you still like being out on the line with your people. The post goes to someone else, who comes to ask you first every time he draws up a plan." }
+   ]
+  },
+  "c_inland": {
+   "title": "Transfer to a depot near Xining",
+   "situation": "Over ten years up the mountain, and every one of your health numbers is heading down. Under depot policy, people with enough years on the plateau can apply to transfer to a depot near Xining: lower altitude, nearer home, but a line you don't know, and starting everything again.",
+   "options": [
+    { "label": "Transfer to Xining", "result": "You ride the track car down the mountain for the last time and look back once at the sign with the altitude by the camp door.", "end": "You transfer to a depot near Xining, looking after a stretch of line at a little over two thousand metres. You don't get out of breath at work any more, but whenever you see a train heading towards Golmud, you watch it a little longer." },
+    { "label": "Stay up the mountain", "result": "You say the line can't do without you, a few more years. After that year's medical, you write your name on your oxygen bag." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you walk the line one last time, from the camp to the next kilometre post and back. You hand your track gauge and tamping pick to the young foreman taking over, and stand in the camp yard a while, looking at the far snow peaks. As the track car pulls away, the camp dog chases it a little way, and you wave to it.",
+  "burnout": "Your heart and knees went together, and the doctor said no more plateau. The depot moved you to the materials store in Golmud, issuing rails, sleepers and fastenings. Every day you count and log in the storeroom, and when the young ones come to draw supplies, you always tell them: take an extra oxygen bag up the mountain."
+ },
+ "stages": [
+  "You work the possession windows with the gang: packing the ballast under the sleepers with a tamping pick, lifting and lining track with a crowbar, tightening the fastenings one by one with a spanner. Your mentor measures with the track gauge and you write it down; on patrol you walk behind him, learning to read the rails, the formation, and the fine cracks in the permafrost.",
+  "You can survey the track on your own now with a gauge and stringline, judging and reporting where the gauge is out or the cross-level wrong. When the gang is on the line you're site lookout, radio to your ear, watching the far end; when rails and sleepers are changed, you take the critical end.",
+  "You lead a work gang of seven or eight. At the pre-shift meeting you hand out the jobs: who tamps, who lifts, who keeps lookout. In the window you walk up and down the line seeing where everyone has got to. Once you're clear of the track you count the tools, check the quality of the work and sign the record, and in the evening go over the next day's plan with the foreman.",
+  "A few dozen kilometres of line and twenty or thirty people are yours to run. You draw up the monthly plan, watch every curve on the permafrost monitoring platform, and argue for possession windows with the workshop dispatcher and the technical office on the phone. You see to the camp's food, oxygen and heating, and when someone's health is failing, you're the first to send them down. The signature is yours, and so is the walk out at night when something is on your mind."
+ ],
+ "work": [
+  "Your mentor has you gauge a stretch of line. Of ten points you measure, one reads two millimetres more than the rest. He has you measure again; same figure. He says: write it down, we tamp here tomorrow.",
+  "On patrol you find a fastening bolt half a turn loose. You crouch and tighten it with a spanner and note the kilometre post. Your mentor glances back and nods.",
+  "The window is only two and a half hours and you have ten sleepers to change. You and your mentor carry a sleeper of over fifty kilos along the embankment, a breath for every step. The tenth goes in just as you clear the track.",
+  "You're lookout, and the station liaison's voice comes over the radio: train approaching. You blow your whistle, wave the flag and shout clear the track, and watch until the last person and the last tool are off the line.",
+  "A new crack appears in a stretch of formation. You measure its length and width with a tape, photograph it, mark the kilometre post and report it to the foreman. The next day the technician arrives.",
+  "Changing a rail, you stand at the joint end with a crowbar lining up the gap. The foreman shouts: is it lined up? You lie down for a look and say: lined up, not a hair's gap.",
+  "Just as the window opens, hail starts. You look at the sky, have your people finish tamping the most critical stretch first and put the rest down for tomorrow. Nobody works on through the hailstones.",
+  "Checking the work on the line afterwards, you find one spot lifted three millimetres too high. You don't shout. You call the young man over and have him measure it himself with the gauge and put it right himself.",
+  "In the evening you spread the line diagram on the camp table and go over the next day's plan with the foreman: which stretch to tamp first, where sleepers need changing, who goes as lookout.",
+  "On the permafrost platform the curve for one stretch of line is heading down. You take two people out to look at it for an afternoon, decide on a speed restriction first and then packing, and write the workshop a report.",
+  "The workshop dispatcher says next month's possession windows are being cut. On the phone you work it through for him: which permafrost defects, left untreated, will cause what problems come spring. In the end he leaves you two extra.",
+  "A young worker has a bad headache and his blood oxygen has dropped below eighty. You don't wait for him to say anything; that same day you send him down on the track car and phone his family to tell them he's all right."
+ ],
+ "past": [
+  "You're in your last year of middle school in a village in Haidong, Qinghai, where your family grows a few mu of highland barley and potatoes. The village is on a hillside, and since you were small you could see the distant road and, further off, the railway.",
+  "Your gaokao (college entrance exam) score isn't high, and your father says the railway puts food on the table. You apply to the railway engineering technology course at a railway vocational college that trains students under contract for the railway bureau.",
+  "On the college's training track you pick up a tamping pick for the first time and gauge a rail for the first time. Your teacher says doing this work down here and doing it up the mountain are two different things.",
+  "Before graduating you do a placement in Golmud and ride the Qinghai–Tibet line for the first time. Over the Kunlun Pass your head aches so much you want to throw up. You look out at the section camps and can't imagine how anyone lives there.",
+  "At graduation you're assigned to the Golmud track depot. Medical, pre-job training, altitude acclimatisation, one by one, and you're issued a padded greatcoat with the railway emblem."
+ ],
+ "late": {
+  "pension_note": "Estimate: nearly forty years of railway social insurance and company annuity contributions, with extra recognition for years worked on the plateau. The pension comes to a little over half your last monthly pay, enough to live on in Xining.",
+  "scenes": [
+   "After retiring you live in Xining, and for the first month you wake every morning feeling the air is too thick and breathing too easy. It takes some getting used to.",
+   "You take your grandchild to the station to watch a Qinghai–Tibet train leave, and tell them this train goes over the Kunlun Mountains, and Grandpa mended the track up there.",
+   "Your wife comes with you on a tourist train to Lhasa. Passing your old camp, you press against the window and see the row of blue-roofed buildings is still there.",
+   "The old hands from the camp meet in Xining once a year, and all the talk is about which year's blizzard, which stretch of permafrost. Partway through, someone always goes quiet.",
+   "You look after rails and fastenings in the Golmud materials store. Whenever a track car takes supplies up the mountain, you go out to the platform to watch.",
+   "One heart pill every morning. You walk in a park in Golmud, slowly, but you don't get out of breath any more.",
+   "Your child gets into university to study civil engineering and says they want to build railways one day. You say go on then; learn to gauge track first.",
+   "For the first few months away from the mountain, something feels missing when you sleep. Later you work out what it is: the sound of the oxygen machine.",
+   "You do well in the new place. Whenever a train goes by, you glance at the track, to see whether it's straight and level.",
+   "Someone posts a photo in the camp group chat: a herd of Tibetan antelope running through the wildlife passage. You look at it for a long time and save it on your phone.",
+   "Later, on the Qinghai–Tibet line, drones flew along the track, permafrost changes showed up on screens, and big machines tamped long stretches in a single window. But for the loose fastening under the snow, someone still had to walk out, crouch down and tighten it.",
+   "One winter morning you see a blizzard on the Qinghai–Tibet line on the news, a few people in orange clearing snow from the track on camera. You don't recognise any of them, and yet you seem to know every one."
+  ],
+  "closing": {
+   "retire": "One evening many years later you sit on the balcony at home in Xining as a train leaves the distant station, heading towards Golmud. You watch its lights grow smaller and smaller, and think of that sign: Altitude 4,520 m.",
+   "burnout": "Many years later you still have the padded greatcoat with the railway emblem, its collar worn through. In winter you still wear it to walk downstairs, and when people ask what kind of coat it is, you say: for going up the mountain.",
+   "end": "Many years later you find the old track gauge in a drawer, its markings still clear. You use it to measure the door frame at home. Two millimetres out. You laugh."
+  }
+ }
+}

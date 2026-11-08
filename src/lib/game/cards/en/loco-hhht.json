@@ -1,0 +1,187 @@
+{
+ "id": "loco-hhht",
+ "occupation": "Railway Locomotive Driver",
+ "role": "Trainee Driver at a Locomotive Depot",
+ "headline": "A farm kid from Ulanqab, fresh from a railway vocational college's locomotive course, just assigned to the operations workshop of a Hohhot locomotive depot and riding coal trains on the Beijing–Baotou line beside his mentor",
+ "unit": "The operations workshop of a railway locomotive depot in Hohhot",
+ "unit_type": "Railway locomotive depot",
+ "city": "Hohhot",
+ "city_tier": "Third-tier",
+ "education": "Associate degree (railway locomotives)",
+ "level": "You can recite the locomotive diagrams and you scored in the eighties on the driving simulator. But in a real cab, with signals rushing at you one after another, your mouth still can't keep up with the call-outs.",
+ "intro": "Your work pass says Trainee, and you carry a crew bag stamped with the railway emblem: a driver's logbook, a torch and a pair of white gloves inside. Your mentor is Master Wang, who has driven trains for over twenty years. His first words: sit on my right, keep your hands still and your mouth busy. From today, on coal train after coal train along the Beijing–Baotou line, you ride in the cab beside him.",
+ "salary_note": "Estimate: locomotive crews at the Hohhot depot get a post wage plus performance pay by kilometres and trips, a bit more for night shifts and long runs. Taken at about 85 percent of the national figure.",
+ "facts": [
+  { "label": "Trainee Driver (current level)", "value": "0–1 years, ¥4,500–6,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Assistant Driver (1–4 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥16,500 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Handling abnormal situations on the line", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Driving the train", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Eight hours before duty, you're in compulsory rest at the crew hostel. Outside the window is the depot's servicing yard, electric locomotives lit up one after another, and your sleep comes in fits and starts.",
+  "Sign on. In the crew dispatch office you take a breath test and collect your IC card and logbook while the duty clerk reads out today's bulletins: which section has a speed restriction, which station has engineering work. You copy them down one by one.",
+  "Checking the locomotive with Master Wang. It's more than twenty below; you tap each brake block with an inspection hammer and look over the sand pipes, your breath coming in clouds through the torchlight.",
+  "Coupled up: fifty-odd coal wagons. Master Wang eases the handle forward, the couplers pull tight wagon by wagon, and you call out every signal as the rules require: green, leaving!",
+  "A long downhill grade. Master Wang holds the speed with the rheostatic brake, eyes on the speedometer and the LKJ screen. You keep calling out, palms sweating. He doesn't even turn his head.",
+  "Daybreak, and the grassland and the windbreak fences along the line turn pale yellow together. You stop in a loop at a small station, and a passenger train roars past.",
+  "At Baotou you hand over the locomotive and sign off. The analyst pulls the LKJ data and points to one spot: you were slow easing off the handle at a neutral section. Master Wang says: noted.",
+  "A bowl of mutton noodles at the Baotou hostel, then straight to sleep. Tonight you ride a train back to Hohhot with Master Wang."
+ ],
+ "ladder": [
+  { "title": "Trainee Driver", "stage": "Learning in the cab", "focus": "Ride with your mentor, learn the call-outs, locomotive checks and train handling, and sit for assistant driver." },
+  { "title": "Assistant Driver", "stage": "Second seat", "focus": "Sit on the driver's right keeping lookout, calling signals and checking the locomotive, watch signals and gauges for the driver, and sit for the driving licence." },
+  { "title": "Driver", "stage": "On the controller", "focus": "Hand on the master controller, alone responsible for a train, thousands of tonnes of freight and every signal on the way, signing on and off each trip." },
+  { "title": "Instructor Driver", "stage": "Leading a group", "focus": "Lead twenty or thirty drivers: ride along, analyse running data, teach new drivers, and stop safety problems before they happen." }
+ ],
+ "ai_tasks": [
+  { "name": "Handling abnormal situations on the line", "how": "When the locomotive fails, something is on the track, the weather turns, or a signal is unclear, whether to stop, how to stop and how to talk to the dispatcher and stations is the driver's judgement in seconds, and the driver's responsibility." },
+  { "name": "Driving the train", "how": "On heavy-haul lines, automatic train operation can already handle traction, speed and neutral sections by itself. On long down grades, when to apply the brakes and how to avoid breaking a coupler still needs a driver watching, ready to take the handle." },
+  { "name": "Lookout and call-and-response", "how": "Cab cameras and the train-control system can read signals and warn of speed limits. Whether there is a person, an animal or fallen rock ahead still takes the driver's eyes and voice." },
+  { "name": "Analysing running data", "how": "After sign-off, the system can analyse the train-control recorder's data and flag overspeeding or poor handling automatically; the instructor only checks a few key sections." },
+  { "name": "Checking the locomotive before departure", "how": "Running gear, brakes, sanders, pantograph: even at thirty below, someone has to tap and look at each point with an inspection hammer. Sensors can't replace that walk round." },
+  { "name": "Trip reports and running records", "how": "Sign-on and sign-off times, kilometres and reasons for delay can be filled in automatically; the driver checks and signs." }
+ ],
+ "events": {
+  "e_mouth": "For the first month your call-outs are always half a beat late. Master Wang doesn't scold; he just calls each one again after you. In the second month he starts waiting for you to call first.",
+  "e_cold": "At thirty-two below one night the train stops in section with a frozen air pipe. You climb down with the driver and work at it with a torch and a hot-water bottle. It takes forty minutes, and your gloves freeze into stiff shells.",
+  "e_sheep": "At dawn a flock of sheep pushes through a gap in the fence onto the track. You see them and shout, the driver throws the emergency brake, and the train stops a few dozen metres short. The old herdsman stands below the embankment, bowing to you again and again.",
+  "e_cert_assist": "You sit the assistant driver's exam: rules of operation in theory, locomotive inspection in practice. The examiner gives you fifteen minutes to check a locomotive, and you find the pin he loosened on purpose.",
+  "e_newyear": "New Year's Eve you're on a train. Passing a small station, the duty man on the platform holds up his signal lamp and waves at you with his other hand. In the cab you say into the radio: happy New Year.",
+  "e_license": "You pass your railway locomotive driving licence. The day you collect it, Master Wang presses the pocket watch he has used for over ten years into your hand and says a driver has to keep to the minute.",
+  "e_sleep": "Twenty nights a month are night shifts and your body clock goes haywire. You can't sleep at home by day and don't dare get drowsy on the train by night. You start getting through on strong tea.",
+  "e_analysis": "At the post-trip analysis, the system flags you two kilometres an hour over the limit in one section. You look into it: momentum just before a speed change point. You write half a page of explanation and still lose assessment points.",
+  "e_marry": "You marry your partner, a nurse at the railway hospital who understands shift work, and understands that nobody makes a noise when you leave in the middle of the night. The wedding is set for the day between two of your trips.",
+  "e_sand": "A spring sandstorm sweeps in and everything ahead is yellow, the signal no more than a blurry point of light. The driver brings the speed down to thirty, and the two of you stand all the way to the next station, calling every signal.",
+  "e_fault": "In section, the locomotive's main circuit breaker trips and won't reset. You report to the dispatcher while working through the fault manual line by line. Twelve minutes later you have traction back, and the passenger train behind isn't held up.",
+  "e_kid": "Your child is born. You wait outside the delivery room half the night and still have to sign on before dawn. As you take your breath test in the dispatch office, the duty clerk hands you a packet of celebration sweets; everyone chipped in.",
+  "e_ai_drive": "The depot's heavy-haul locomotives get automatic train operation: on straight, level track it regulates its own speed and handles neutral sections by itself. You sit in the cab with your hand beside the controller, more tired than if you were driving, because you have to watch it all the time.",
+  "e_ai_takeover": "Before a long down grade the automatic system doesn't slow down in time. The speed looks wrong to you, and you grab the handle and take over. In the data review afterwards, the instructor says: you took it early, and you took it right.",
+  "e_autoanalysis": "Post-trip analysis becomes an automatic report, with every trip's handling scored. One of yours scores very low, and only on a close look do you find the system didn't recognise that day's temporary speed restriction.",
+  "e_back": "Over ten years of a shaking cab seat, and your lower back starts to give trouble. At your medical the doctor says you should stand up and move more. You say you can't stand while driving.",
+  "e_house": "You buy a flat near the Hohhot depot, ten minutes' walk from the dispatch office. When you sign on in the middle of the night, you don't need a taxi any more.",
+  "e_apprentice": "The depot assigns you a trainee who sits on your right, calling out signals in a small voice. You don't scold him; you just call each one again after him.",
+  "e_eyes": "At the annual medical your eyesight and colour vision still pass, but the doctor says to keep an eye on your blood pressure. You swap strong tea for plain water, and your crew bag gains a pill box.",
+  "e_safe": "You reach a million kilometres of safe driving, and the depot holds a meeting to honour you with a commemorative badge and a vacuum flask. You give the badge to your father, who shows it to everyone in the village."
+ },
+ "choices": {
+  "c_route": {
+   "title": "Freight trains or the passenger fleet",
+   "situation": "The depot's passenger fleet is short of assistant drivers. Passenger trains run on time on regular rosters, but the standards are stricter and one late arrival means a written analysis. Freight is rough work with lots of nights, but riding with old hands teaches the hardest skills, and pays a bit more.",
+   "options": [
+    { "label": "Join the passenger fleet", "result": "You start working passenger trains from Hohhot towards Beijing. At every station the train has to stop on the stopping mark, less than a metre off." },
+    { "label": "Stay on freight", "result": "You keep hauling coal with Master Wang and learn, bit by bit, how to hold five thousand tonnes on a long grade." }
+   ]
+  },
+  "c_assistant": {
+   "title": "Sit for assistant driver early",
+   "situation": "The workshop says places in this year's assistant driver exam are limited, and trainees at the top of the list go first. To be near the top you need the best report from your mentor, and the rule book word-perfect.",
+   "options": [
+    { "label": "Go all out", "result": "Every night in the hostel you study the rules until midnight, and in the cab you write every handling move in a little notebook. In his report Master Wang writes four words: ready to let go." },
+    { "label": "Take it steady", "result": "You learn at the normal pace and sit the exam in your second year. Master Wang says slower is fine; the foundations are solid." }
+   ]
+  },
+  "c_driver": {
+   "title": "Sit for driver, take the controller alone",
+   "situation": "You have the years as assistant, and the workshop puts you forward for the railway locomotive driving licence. Pass, and you're a driver, alone responsible for the whole train; fail, and you wait another year.",
+   "options": [
+    { "label": "Sit it", "result": "You practise every fault scenario on the simulator three times. On your first day driving alone, Master Wang doesn't come to see you off. Later you learn he stood outside the dispatch office for a long time." },
+    { "label": "One more year as assistant", "result": "You say you want a few more long runs. That year in the right-hand seat, you write the controller notch for every grade into your logbook." }
+   ]
+  },
+  "c_emu": {
+   "title": "Apply to drive high-speed trains",
+   "situation": "The high-speed line towards Beijing has opened, and the railway bureau is selecting high-speed train drivers: young, clean safety record, strict medicals, and the chosen go away for most of a year's training. High-speed driving is clean, punctual and pays noticeably more, but it is a different road from the coal trains you drive now.",
+   "options": [
+    { "label": "Apply", "result": "You pass selection and spend most of a year at a training base in another province. The day you come back in your new uniform, you have your photo taken at the door of a high-speed cab.", "end": "You become a high-speed train driver, running back and forth between Hohhot and Beijing. At two hundred-odd kilometres an hour the grassland and mountains flash past, and you still murmur a call-out as you pass every signal." },
+    { "label": "Stay at the depot", "result": "You say you like the big coal trains, the feeling of five thousand tonnes slowly getting moving under your hand. The place goes to a classmate." }
+   ]
+  },
+  "c_long": {
+   "title": "Long runs for more money, or short runs for family",
+   "situation": "The child is small and you spend half of every month in hostels at other depots. The workshop has a short-run post: home every day, but fewer kilometres, and two or three thousand less in performance pay.",
+   "options": [
+    { "label": "Keep the long runs", "result": "You keep running the long turns from Hohhot to Baotou and Jining. The day your child learns to walk you're in Baotou, watching the video again and again." },
+    { "label": "Switch to short runs", "result": "You switch to short runs and after signing off can collect your child from kindergarten. Less money, but for the first time you spend a whole weekend at home." }
+   ]
+  },
+  "c_ai": {
+   "title": "Be a trial driver for automatic train operation",
+   "situation": "The depot is trialling automatic train operation on a heavy-haul line and needs drivers for the trial: sit in the cab watching the system, note every time it judges wrong, then write reports and teach the others. It isn't light work, and it means dealing with the manufacturer's engineers every day.",
+   "options": [
+    { "label": "Join the trial", "result": "You run trials for a year and fill two notebooks. The manufacturer's engineers like reading yours best, because you write clearly: which grade, what weather, why it went wrong." },
+    { "label": "Keep driving yourself", "result": "You say you're used to holding the controller. A few years later the whole depot has the system, and you learn it from page one of the manual." }
+   ]
+  },
+  "c_mentor": {
+   "title": "Compete for Instructor Driver",
+   "situation": "The workshop's old instructor driver is retiring, and one driver will be chosen to replace him: leading twenty or thirty drivers, riding along, analysing data, giving classes, no longer driving one locomotive. In that post, you're the last line of defence before somebody else's mistake.",
+   "options": [
+    { "label": "Compete for it", "result": "You speak for twenty minutes, about every brake application you have made on the long grades over the years. Master Wang is on the panel. He says nothing from start to finish, and is the last to give his score." },
+    { "label": "Keep driving", "result": "You say you still want to be in the cab. The post goes to someone else, who always likes to ride along on your train." }
+   ]
+  },
+  "c_mine": {
+   "title": "Drive on a coal mine's private line",
+   "situation": "A coal mine in Ordos is paying well for licensed drivers on its private railway line, half again what the depot pays. But it's a company, not a railway post, and the pension and what comes after are uncertain.",
+   "options": [
+    { "label": "Go to the mine", "result": "You hand in your resignation and put the pocket watch away in a drawer with the depot's crew bag.", "end": "You drive on the mine's private line in Ordos, hauling train after train of coal from the pits to the loading station. The line is short, the trains slow, and at every level crossing you still call out, the old depot way." },
+    { "label": "Stay at the depot", "result": "You say you've held a railway job this long and won't change now. Your partner says: good." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "Your last trip is a freight train from Baotou back to Hohhot. At the depot you walk into the dispatch office, put your IC card, your logbook and the pocket watch on the desk, and sign the sign-off book for the last time. The duty clerk stands up and says: thank you, master. As you go out the door, a locomotive in the servicing yard happens to sound its horn.",
+  "burnout": "Your back and your blood pressure went together, and you failed that year's crew medical. The workshop moved you to the ground, as an inspector in the locomotive servicing yard, walking round locomotives all day with an inspection hammer. Before others go out on their trips, you look the engine over for them."
+ },
+ "stages": [
+  "You learn from the assistant's seat on your mentor's right: checking the locomotive and copying the bulletins before departure, and on the move calling out every signal you pass, finger pointing, eyes on it. When he drives you watch his hands and note the controller position for every grade; after sign-off you study his LKJ curves in the analysis room while the analyst goes through them point by point.",
+  "The right-hand seat is yours now. You check the locomotive before departure, and on the move you keep lookout, call signals and watch the gauges and LKJ screen while the driver drives, covering the side he can't see. You warn him early about temporary speed limits and engineering work at stations; if the locomotive makes a strange noise, you're the one who climbs down to look.",
+  "Your hand is on the master controller: a train of over five thousand tonnes, dozens of signals and every grade along the way are yours. You talk to stations and dispatchers by radio and confirm every stop and start; after sign-off you sit in the analysis room writing explanations against your own curves, and the assistant on your right is now yours to teach.",
+  "You no longer drive one locomotive; you lead twenty or thirty drivers. Several times a week you ride along, sitting in other people's cabs watching how they drive; every day you look at the system's data, pick out the bad stretches and talk to the drivers concerned. In the workshop classroom you teach accident cases and rule changes, and when a new driver goes out alone for the first time, you see him off at the dispatch office door."
+ ],
+ "work": [
+  "Checking the locomotive, you find a sand pipe blocked. You clear it bit by bit with wire and test the sander again; sand hisses onto the rail, and Master Wang nods.",
+  "Master Wang has you draw the gradient profile of the whole run in your logbook. It takes three evenings, and you mark the kilometre post of every long down grade and neutral section.",
+  "Passing a station, you misread a shunting signal and call it wrong. Master Wang says nothing, eases the speed a little, and waits until you correct yourself before carrying on.",
+  "On a pre-dawn down grade you notice the signal ahead looks dim and report it at once. The driver slows, and only close up can you see it's yellow. At the station you report it to the signalling department.",
+  "The locomotive's air compressor sounds wrong. At a stop you climb down to listen and find a slack belt. You agree with the driver to report it as a fault on arrival so the servicing crew can change it.",
+  "The bulletin lists a temporary speed restriction, and you circle it in red in your logbook. Coming up to it you remind the driver, and he starts slowing two kilometres early.",
+  "On a long down grade with a sudden speed restriction ahead, you combine the rheostatic and air brakes and bring five thousand tonnes down to forty, without a single surge in the couplers.",
+  "The station controller radios an order to take the loop. You repeat it back, check the points once more, and only when you're sure do you push the handle.",
+  "Your assistant is a young man just qualified, and you let him drive a level stretch. He opens the controller too fast and the train lurches; you put your hand over his and help him ease it back.",
+  "The data flags one driver as slow easing off at the same neutral section three trips running. You ride along once and find his seat is set too low for him to see the neutral-section sign.",
+  "Before winter comes you give your whole group a class on the cold: keeping air pipes from freezing, handling a stop in section. Everything in it comes from the nights you froze yourself.",
+  "A new driver is going out alone for the first time, and you wait for him at the dispatch office door. He comes out from his breath test, and you say only: steady hands, busy mouth."
+ ],
+ "past": [
+  "You're in your last year of middle school in a village in Ulanqab, where your family grows potatoes and naked oats. The railway runs not far from the village, and since you were small you have counted the wagons on passing trains.",
+  "Your gaokao (college entrance exam) score isn't high, and your father says the railway is an iron rice bowl, a job for life. You apply to the locomotive course at a railway vocational college that trains students under contract for the railway bureau.",
+  "At college you learn how electric locomotives are built and the rules of operation, and drive hundreds of hours on the simulator. The first time you run a red on the simulator, your heart pounds for ages.",
+  "Before graduating you do a placement at a depot and climb into a real electric locomotive for the first time. The cab is smaller than you imagined and the gauges more numerous. The driver says: sit tight, don't touch.",
+  "After graduation you're assigned to the depot in Hohhot. Medical, background check, pre-job training, one by one, and you get the work pass that says Trainee and are assigned to Master Wang."
+ ],
+ "late": {
+  "pension_note": "Estimate: nearly forty years of railway social insurance and company annuity contributions. The pension comes to a little over half your last monthly pay, enough to live on in Hohhot.",
+  "scenes": [
+   "At two in the morning on your first night of retirement you wake and reach for the crew bag by the bed, and find nothing. You lie there, listening to a train pass in the distance.",
+   "You take your grandson to the park by the railway. A freight train goes by, and you count the wagons and tell him this one has fifty-eight.",
+   "You and your partner take a high-speed train to Beijing. You sit in the first carriage and watch ahead the whole way, more intently than when you drove.",
+   "Master Wang can't get about any more, and you go to see him. The first thing he asks is: anything happened at the depot lately? You say no, and he nods.",
+   "You're an inspector in the servicing yard, walking round locomotives with an inspection hammer all day. When a young driver comes to take over, you read him the problems you found, one by one.",
+   "Your back is a little better. After work you walk the path beside the railway, and wherever you can see a signal, you stand a while.",
+   "You've retired, and the young people at the depot post photos of their first solo trips in the group chat. Someone tags you underneath: Master, look.",
+   "For the first few months after leaving the depot you keep waking in the night, and you check your phone as if waiting for the dispatch office to call.",
+   "You do well in the new place. At level crossings you still glance both ways without thinking.",
+   "At a reunion of your old depot classmates, everyone brings up Master Wang and his line: sit on my right, keep your hands still and your mouth busy. You all laugh.",
+   "Later locomotives drove themselves on level track, analysed their own data and wrote their own trip reports. But on a night at thirty below, when an air pipe froze in section, it still took one person climbing down with a torch.",
+   "Early one winter morning you stand on the balcony as a coal train moves slowly along the Beijing–Baotou line in the distance, its headlight flickering in the mist."
+  ],
+  "closing": {
+   "retire": "One night many years later your grandson asks whether you were scared driving trains. You think and say: yes, that's why you have to keep calling out. He copies you, points out of the window and calls: green!",
+   "burnout": "Many years later you still have the inspection hammer, its head worn shiny. You hang it on the balcony wall beside a photo of you and Master Wang in front of a locomotive.",
+   "end": "Many years later you find the pocket watch in a drawer, long stopped. You wind it and listen to it start again: tick, tick."
+  }
+ }
+}

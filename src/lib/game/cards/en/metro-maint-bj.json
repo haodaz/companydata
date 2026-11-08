@@ -1,0 +1,187 @@
+{
+ "id": "metro-maint-bj",
+ "occupation": "Urban Rail Transit Maintenance Technician",
+ "role": "Train Maintenance Technician at a Metro Depot",
+ "headline": "From Xingtai in Hebei, fresh out of a rail-transit vocational college and just started at a Beijing metro depot, crawling into the inspection pit every night after the last train comes in to do the daily checks",
+ "unit": "The maintenance workshop of a Beijing metro operator's train depot",
+ "unit_type": "Metro train depot",
+ "city": "Beijing",
+ "city_tier": "First-tier",
+ "education": "Associate degree (urban rail vehicle technology)",
+ "level": "You've memorised the drawings of bogies, brakes and doors, and stripped a plug door in the college workshop. But alone in the pit under a six-car train, getting it all checked in four hours, your hands are still slow.",
+ "intro": "Your badge carries the depot's name; in the photo your hair is cropped short. Your tool bag is workshop issue: an inspection hammer, a head torch, insulated gloves, a book of job cards. The team leader, Liu, takes you down into the pit on your first night and says: the train is over your head and you're underneath it, so your eyes get there before your hands. From today, the hours between the last train coming in and the first one going out in the morning are yours.",
+ "salary_note": "Estimate: maintenance technicians at a Beijing metro operator get a post wage plus night-shift allowance and performance pay, taken at 1.35 times the national figure. The employer pays full social insurance and housing fund, and months with more nights pay a bit more.",
+ "facts": [
+  { "label": "Maintenance Technician, Grade 5 / Junior (current level)", "value": "0–2 years, ¥5,500–7,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Maintenance Technician, Grade 4 / Intermediate (2–5 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Repairing and replacing worn or faulty parts", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Daily train checks and scheduled inspections", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You arrive at the depot, change into work clothes and draw your tools. At the pre-shift meeting the team leader reads out tonight's plan: twelve trains on daily checks, two on fortnightly checks, and a door alarm to chase on the train in shed three.",
+  "The last trains come back one by one and pull into the maintenance shed. The third rail is switched off, tested dead, earthing rods attached, tags hung, and the team leader calls out: into the pit.",
+  "Head torch on, you crawl into the pit and start at the first car, tapping the bogie bolts with your inspection hammer, listening to the sound, checking that the anti-loosening marks still line up.",
+  "Up in the cars to check the doors. Eight doors a car, and you open and close each one, timing it, listening for noises, ticking the job card.",
+  "On the train with the door alarm, you and your mentor plug in a laptop and download the fault log, and find a loose limit switch on a door controller. Tightened, tested twenty times, fixed.",
+  "The night meal is steamed buns and millet porridge from the canteen. You eat crouched by the shed door. Beijing is quiet at night; you can hear the traffic on a distant ring road.",
+  "Earthing rods off, power back on, and the team leader signs the handover sheet. The first train sounds its horn and rolls slowly out of the shed to pick up the day's first passengers.",
+  "Off shift. You ride back to the dorm on the line you've just serviced, people already dozing in the carriage. You glance at the doors: they close smoothly."
+ ],
+ "ladder": [
+  { "title": "Maintenance Technician (Grade 5 / Junior)", "stage": "On the team", "focus": "Work nights alongside your mentor on daily and fortnightly train checks, in the pit and on the roof, going through job cards item by item, and sit for intermediate grade." },
+  { "title": "Maintenance Technician (Grade 4 / Intermediate)", "stage": "Working alone", "focus": "Take sole charge of one system (doors, brakes or air conditioning): find faults, change parts and sign the job cards." },
+  { "title": "Maintenance Team Leader (Grade 3 / Senior)", "stage": "Running a team", "focus": "Lead a team of about ten: plan the night's work, assign trains, sign off the work, and sign the handover sheet before trains go out." },
+  { "title": "Technician (Grade 2)", "stage": "Technical expert", "focus": "Crack the hard faults, write work instructions and train apprentices: one of the few people in the workshop whose word settles things." }
+ ],
+ "ai_tasks": [
+  { "name": "Repairing and replacing worn or faulty parts", "how": "Taking apart, replacing and adjusting door mechanisms, brake units and current collectors takes skilled hands and experience on the job. AI can at most pull up drawings and process requirements; doing the work and checking the quality is a person's job." },
+  { "name": "Daily train checks and scheduled inspections", "how": "Undercarriage inspection robots and trackside imaging can photograph the underside and running gear first and mark possible loose parts or foreign objects. A person still crawls into the pit to look and feel and confirm whether there's really a problem." },
+  { "name": "Checking bogies, brakes, doors and other key parts", "how": "Vibration, temperature and door-timing data can flag abnormal trends. Whether a part can stay in service or needs replacing is judged by a technician taking it apart and measuring it on the spot." },
+  { "name": "Downloading and analysing on-board fault logs", "how": "Fault records in the train network system can be downloaded and sorted automatically, and AI can suggest steps to trace them. Which fault code is a real problem and which is a false alarm takes someone with experience." },
+  { "name": "Handling sudden faults before departure and in service", "how": "When a train throws a fault before dawn as it's about to go out, or a door won't close on the main line by day, someone has to decide in minutes whether it can run and what to do, and carry the responsibility." },
+  { "name": "Filling in maintenance records and job cards", "how": "Maintenance records can be generated automatically from test data, barcode scans and voice notes; the technician only checks the key items and signs." }
+ ],
+ "events": {
+  "e_night": "For the first month you can't sleep by day, and at night in the pit your eyelids keep drooping. Your mentor shows you how to tape foil over the dorm window, wear earplugs and leave your phone alone before bed. By the second month you can sleep until three in the afternoon.",
+  "e_bolt": "On a daily check you notice a bolt on a bogie whose anti-loosening mark is two millimetres out. You report it to the team leader; he tries it with a torque wrench and it is loose. At the end-of-shift meeting he mentions you by name.",
+  "e_cert_mid": "You sit the intermediate grade exam. The practical is tracing a door fault within a time limit. The examiner has tampered with a wire on the door controller, and you find it in twelve minutes.",
+  "e_late_out": "Four in the morning, a train's power-up self-test reports a brake fault, and it looks like it will miss its departure. Five of you work on it for twenty minutes, change a pressure sensor and hand it over with a minute to spare.",
+  "e_miss": "You skip one car's air-conditioning filter, and next day passengers on the main line complain the carriage is stuffy. The workshop holds a review meeting, and you read out your own self-criticism.",
+  "e_winter": "Beijing's first heavy snow, and ice forms on the current collectors of trains parked outside the shed. You knock it off car by car with wooden mallets until four in the morning, hands too cold to grip the handle.",
+  "e_hukou": "The company gets you a Beijing work residence permit, which means your future children can go to school in Beijing. You phone home, and your mother asks three times: really?",
+  "e_overhaul": "You're lent to the overhaul shed for three months, and for the first time see a whole train lifted up, the bogies rolled out and the couplers taken off. You write every step down in your notebook.",
+  "e_marry": "You marry someone introduced by a friend from home, a nurse at a Beijing hospital who also works nights. Your two rosters are stuck on the fridge, marked in two colours of pen.",
+  "e_rent": "There's no more room in the company dorm, so the two of you rent a one-bedroom place in a village near the depot for ¥3,200 a month, ten minutes to work by e-bike.",
+  "e_robot": "The workshop brings in an undercarriage inspection robot that drives itself along the pit, taking photos, and on screen it marks a possible crack. You crawl down to look: it's a smear of grease.",
+  "e_robot_right": "The inspection robot reports an abnormal gearbox temperature. People check and find nothing; the next week it reports it again. You open it up and the bearing already has pitting. At the end-of-shift meeting you say: it was right this time.",
+  "e_epaper": "Job cards become electronic work orders on a tablet: scan, photograph, record generated automatically. You write much less, but the tablet often loses signal in the pit, and you learn to save offline first.",
+  "e_ear": "Years of compressors and fans in the shed, and at your medical one of your hearing results isn't good. The doctor says to always wear earplugs in the shed from now on.",
+  "e_knee": "Over ten years of crawling into pits, and your knees and back start hurting together. Every time you climb out, you have to hold the edge of the pit and stand for a moment.",
+  "e_newline": "A new line opens and the depot takes delivery of new trains, fully driverless, with no cab. You run static commissioning on them train by train with the manufacturer's people, two months of nights.",
+  "e_child": "Your child is born. You hold the baby by day and go down the pit by night, and once you fall asleep standing up at the pre-shift meeting. The team leader taps you on the shoulder and sends you to check doors on the trains instead of the pit.",
+  "e_contest": "The company holds a skills contest and you represent the workshop in door fault-finding. In the final you clear three faults in eight minutes and come second. The certificate goes up on the team's wall.",
+  "e_apprentice": "A new apprentice goes down the pit for the first time and bangs his head on a bogie. You give him your old hard hat, with a band of reflective tape round the brim you added yourself.",
+  "e_house": "You buy a flat in Yanjiao, just over the Hebei border, and ride the commuter bus into Beijing for night shifts. The mortgage weighs on you, but your child has a room of their own.",
+  "e_book": "A door fault work instruction you led on is adopted by the company and used at several depots. Your name isn't on the title page, but every team knows who wrote it."
+ },
+ "choices": {
+  "c_system": {
+   "title": "Which system to specialise in",
+   "situation": "After a year the workshop has newcomers choose a specialism. Doors fail most often, so there's work every night and you learn fast; brakes and running gear matter most, mistakes there are serious, and it's slow to learn; air conditioning and electrics are a bit cleaner, but summer is mayhem.",
+   "options": [
+    { "label": "Doors", "result": "You join the door team, and in a year take apart and refit over a hundred door controllers. You can feel which wire is wrong with your eyes shut." },
+    { "label": "Brakes", "result": "You join the brake team and learn air circuits and brake units under an old master. It's slow, but before every departure the words everyone most wants to hear from you are: brakes are fine." }
+   ]
+  },
+  "c_mid": {
+   "title": "Sit for intermediate grade, work alone",
+   "situation": "Each year the workshop picks a group to sit the intermediate grade. Those who pass take sole charge of a system and sign their own job cards. Studying means reading by day, but after a night shift all you want is sleep.",
+   "options": [
+    { "label": "Squeeze in study by day", "result": "Every day after your shift you sleep until noon, then study for two hours before sleeping again. Team leader Liu lends you his own exam notes, the margins full of writing." },
+    { "label": "Sit it next year", "result": "You say this year you'll get the work down first. When you sit it the year after, the door fault question is one you've handled for real three times." }
+   ]
+  },
+  "c_day": {
+   "title": "Transfer to the day-shift overhaul shed",
+   "situation": "The overhaul shed is short of people. It's day shift, whole-train overhauls, a broader skill set and no more nights; but no night allowance, a thousand or two less a month, and promotion starts from the back of the queue.",
+   "options": [
+    { "label": "Go to days", "result": "For the first time you walk into the depot in sunshine and see that the shed roofs are green. Less money, but you can have dinner at home now." },
+    { "label": "Stay on nights", "result": "You say night work is quiet and you're used to it. You tape another layer of foil over the dorm window." }
+   ]
+  },
+  "c_leader": {
+   "title": "Compete for Maintenance Team Leader",
+   "situation": "Team leader Liu is moving to become a workshop technician, leaving his post open: leading about ten people, planning the night's work, signing off the work, signing the handover sheet before departures. You need the senior grade, and a presentation in front of the workshop.",
+   "options": [
+    { "label": "Compete for it", "result": "In your presentation you go through every hazard you've found in the pit over the years. The workshop director asks whether you can manage people older than you. You say: I'll show them by doing it first." },
+    { "label": "Hold back for now", "result": "You say you want more practice with your hands first. The post goes to an old master, who always saves the hardest door faults for you when he hands out the work." }
+   ]
+  },
+  "c_oem": {
+   "title": "Become an after-sales engineer at a rolling-stock maker",
+   "situation": "A rolling-stock maker that supplies metro trains is hiring after-sales service engineers and likes that you know the trains and can trace faults. Thirty percent more pay and no night shifts, but travel all over the country, wherever a city's trains have trouble.",
+   "options": [
+    { "label": "Go to the maker", "result": "You hand in your work clothes and tool bag, climb out of the pit one last time, and pat the train's bogie.", "end": "You become an after-sales engineer for the train maker and spend half of each year in other cities' depots. Every time you go down into their pits, you look first at the anti-loosening marks, just as Master Liu taught you." },
+    { "label": "Stay at the depot", "result": "You say you like these Beijing lines; you know every train on them. Your partner says: then don't go stirring things up." }
+   ]
+  },
+  "c_ai": {
+   "title": "Learn smart maintenance or not",
+   "situation": "The company is pushing smart maintenance: inspection robots, trackside imaging, a fault-prediction platform. The workshop wants a few people to learn it and then watch the platform, double-check alarms and look after the equipment. Afterwards, half your time would be spent at a screen.",
+   "options": [
+    { "label": "Go and learn", "result": "You learn to read each train's health curve on the platform, and to argue with the vendor's engineers: is this alarm the train's problem, or your algorithm's?" },
+    { "label": "Stay in the pit", "result": "You say you still trust your own eyes and hammer. When the platform raises an alarm, the young ones come to ask you first: Master, should we go down and look?" }
+   ]
+  },
+  "c_tech": {
+   "title": "Sit for Technician",
+   "situation": "You have the years at senior grade, and the workshop puts you forward for Technician: a technical paper, a problem-solving project and an oral defence. Pass, and you're one of the few people in the workshop everyone comes to with the hard faults.",
+   "options": [
+    { "label": "Sit it", "result": "You turn years of door fault records into a paper. At the defence the experts question you for twenty minutes, and your smoothest answers are about the ones you fixed with your own hands." },
+    { "label": "Keep leading the team", "result": "You say writing papers is no match for fixing trains. You keep leading your team: planning the nights, signing off the work, signing your name." }
+   ]
+  },
+  "c_home": {
+   "title": "Go back to Hebei for Shijiazhuang's new metro",
+   "situation": "Shijiazhuang's metro is recruiting experienced maintenance hands. It's near your home in Xingtai, flats cost a fraction of Beijing's, and you'd start as technical supervisor; twenty percent less pay, and everyone and everything you've built up in Beijing all these years left behind.",
+   "options": [
+    { "label": "Go to Shijiazhuang", "result": "You resign, give up the Beijing flat, and the family takes the high-speed train back to Hebei.", "end": "You become technical supervisor at a Shijiazhuang metro depot, taking a crowd of fresh graduates down into the pits. At weekends you drive back to Xingtai to see your parents; it's only an hour." },
+    { "label": "Stay in Beijing", "result": "You say your child is already at school in Beijing, so a few more years. That night you stay in the pit a little longer." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last night shift you finish the daily check on the last train, sign the job card, and give your inspection hammer and head torch to an apprentice you trained. At five in the morning the train rolls out of the shed, and you stand at the door watching it go. Riding it home, you close your eyes and listen to the doors closing smoothly, stop after stop.",
+  "burnout": "Your knees and back went together, and the doctor said no more pits. The workshop moved you to the stores, issuing and receiving spare parts. Every day you stack door controllers, brake pads and sensors on the shelves one by one, and when the young ones come to draw parts, you always add one more word of advice."
+ },
+ "stages": [
+  "You work nights alongside your mentor: the last train comes in, and once the third rail is off and earthed, you crawl into the pit to tap the bogies with your hammer, look at the brake discs and check the current collectors, then go up into the cars to try each door. You hold a book of job cards and tick every item, and your mentor checks again behind you. What you're still learning is to listen to the hammer.",
+  "One system is yours now, doors, brakes or air conditioning, and your name goes on the job cards. When a train reports a fault at night you plug in a laptop, download the fault log, and diagnose, replace and test it yourself; when you're not sure, you go to the team leader, rather than him coming to you.",
+  "You lead a team of about ten. At the pre-shift meeting you plan the night: who checks which trains, who takes which fault. In the small hours you walk between the sheds seeing how everyone is getting on. At four thirty you sign the handover sheet, watch the first train go out, then go to the controller to hand over.",
+  "The hardest faults in the workshop come to you: an intermittent door alarm nobody has traced in three months, a noise nobody can explain. By day you meet the technical department and the manufacturers; by night you go into the sheds with the teams. You write work instructions, bring on two or three apprentices, and now and then teach at the company, always about things in the pit."
+ ],
+ "work": [
+  "Your mentor has you crouch by a bogie while he taps along its bolts with the inspection hammer. At the sixth one the sound is a little duller. He has you tap it too, and you hear it.",
+  "Testing doors in a car, the fifth door closes half a second slow. You mark it on the job card, and your mentor comes over and adjusts the door controller's settings.",
+  "Before going down the pit you check the earthing rods and tags and find one earth lead with a clamp not fully closed. You clamp it properly before following everyone down.",
+  "A train reports the same door fault three days running, yet by day on the main line it's fine. You export three days of fault logs and compare them: always at the same station, where the platform screen door is slightly out of line.",
+  "Changing a brake unit, you find the old pads have worn on one side. You write a line in the handover book suggesting that bogie be checked at the next scheduled overhaul.",
+  "The first week of summer, the air conditioning reports faults on seven trains in one night. You and the team take out the filters one by one and wash them until dawn, your hands smelling of dust.",
+  "Three in the morning, a newcomer in the pit reports a crack. You go down and look for ages with a torch and then a magnifier: it's a scratch in old paint. You still have him photograph it and log it.",
+  "Before departure a train's air compressor won't build pressure, twenty minutes before it's due out. You decide on the spot to swap in the standby train, have the controller change the running plan, and keep the faulty one back to check properly.",
+  "At the end-of-shift meeting you read out the month's missed items one by one, without naming anyone. Then you say: next month, I'd like this list to be empty.",
+  "An intermittent door alarm has gone untraced for three months. You and two apprentices ride the train on the main line at night, and on one curve you finally catch it: a wire to the door controller gets pinched as the train takes the bend.",
+  "The manufacturer's engineer comes to a workshop meeting and says their part is fine. You put a table of fault logs from over a dozen trains in front of him. He studies it for a long time and says they'll look into it again.",
+  "You give new apprentices their first lesson without opening a book. You take them down into the pit and have each of them tap a loose bolt with the hammer, and listen to the sound."
+ ],
+ "past": [
+  "You're in your last year of middle school in a county town near Xingtai, Hebei, where your family runs a little shop repairing bicycles and e-bikes. After school you help out there, and you can turn a screw faster than you can do your homework.",
+  "You miss the county's best high school and go to an ordinary one. In your second year of high school you visit Beijing for the first time and ride the metro, staring at the doors the whole way, wanting to know how they close.",
+  "Your gaokao (college entrance exam) score isn't high, and you apply to the urban rail vehicle technology course at a rail-transit vocational college. Your father says fixing big vehicles beats fixing small ones.",
+  "In the college workshop you take apart and refit a metro plug door for the first time, and learn the torque wrench on an old bogie. Your teacher says you have steady hands and sharp eyes.",
+  "Before graduation a Beijing metro operator comes to recruit. Written test, interview, medical, you pass them one by one and get the offer, and the first person you phone is your father."
+ ],
+ "late": {
+  "pension_note": "Estimate: the Beijing metro operator paid over thirty years of social insurance and company annuity at a fairly high base. The pension comes to about half your last monthly pay, enough for life in the Beijing suburbs or back in Hebei.",
+  "scenes": [
+   "On your first night of retirement you wake at eleven thirty, the time the last train comes back to the depot. You lie awake until four thirty before you fall asleep again.",
+   "You take your grandchild on the metro, and they lean by the doors looking out. You tell them Grandpa used to fix this door.",
+   "You go back to Xingtai. Your father's little shop closed long ago, but the sign is still up. You stand at the door and think of all the screws you turned as a child.",
+   "An apprentice you trained has become a Technician, and messages you at New Year to say he's started giving apprentices their first lesson too, still having them tap that loose bolt.",
+   "You manage spare parts in the stores, working days, and for the first time notice how long a Beijing day is.",
+   "Your knees are better. Walking round the estate, slowly, when you see a neighbour's e-bike has broken down, you crouch to take a look.",
+   "Your child gets into university to study mechanical engineering, and asks why you went into maintenance. You say: because I wanted to know how the doors close.",
+   "For the first few months after leaving the depot, you come alive every evening and lie awake until the small hours.",
+   "You do well in the new place. Every time you ride the metro, you find yourself timing the doors.",
+   "Your old team are still in a group chat. Someone posts a photo of an inspection pit with the words: the old place. Underneath, a row of people reply with the same emoji.",
+   "In later depots, robots drove themselves along the pits, screens marked where to look, and work orders wrote themselves. But for the bolt that had worked loose, someone still had to crawl down and tap it with a hammer.",
+   "One winter morning you stand on a metro platform as the first train comes in, its lights brightening the tunnel. The doors open, then close again, steady."
+  ],
+  "closing": {
+   "retire": "One night many years later you watch from your balcony as the last train runs along a distant elevated line, lit up, heading for the depot. You watch a while, then go in and turn off the light.",
+   "burnout": "Many years later you still have the inspection hammer, its handle worn shiny by your hand. You keep it on top of your toolbox, and now and then take it out to tap the balcony railing.",
+   "end": "Many years later you find your old hard hat in a drawer, half the reflective tape gone from the brim. You run a finger over it and put it back where it was."
+  }
+ }
+}

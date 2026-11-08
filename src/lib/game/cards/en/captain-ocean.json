@@ -1,0 +1,188 @@
+{
+ "id": "captain-ocean",
+ "occupation": "Ship's Master",
+ "role": "Third Officer on an Ocean-going Bulk Carrier",
+ "headline": "Raised in Dalian, a nautical-science graduate of a maritime university who has just earned his certificate after a year as a deck cadet, now keeping his first eight-to-twelve watch as third officer on a Capesize bulk carrier",
+ "unit": "The ocean-going bulk fleet of a Dalian shipping company",
+ "unit_type": "Ocean shipping company",
+ "city": "Dalian",
+ "city_tier": "Second-tier",
+ "education": "Bachelor's degree (nautical science)",
+ "level": "You know the collision regulations backwards and you have had your hands on the ECDIS and the radar. But keeping the bridge alone, and whether to call the captain in the middle of the night, you are not yet sure of.",
+ "intro": "You joined the ship at Dalian port. You walked up the gangway with third officer's epaulettes you had sewn on yourself in your dorm. The captain, in his fifties, shook your hand and said: the eight-to-twelve is yours; if anything comes up, call me, don't be afraid to call. From today, for eight hours every day, this hundred-and-eighty-metre ship moves under your eyes alone.",
+ "salary_note": "Estimate: ocean-going officers are paid for the months on board, with only a small basic wage during shore leave. Taken at the national rate for ocean-going crew. With seven or eight months a year at sea, the yearly total comes out somewhat lower.",
+ "facts": [
+  { "label": "Third Officer (current level)", "value": "0–2 years, ¥12,000–17,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Second Officer (2–5 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Overall responsibility for the crew, the ship and the cargo", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Navigational watch and collision avoidance", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Before breakfast, a round of the lifeboat deck. You go down the weekly checklist: boat engine, equipment, the pressure gauges on the extinguishers, signing your name against each line.",
+  "You take over from the second officer. He shows you the planned track on the chart and says there will be a fishing ground around ten. You draw a ring round it on the ECDIS.",
+  "Seven or eight echoes appear on the radar, two of them with no AIS. You mark each one and look at each one through the binoculars. For the closest, you tell the helmsman starboard five.",
+  "The captain comes up to the bridge with his tea and stands behind you studying the chart for five minutes. He asks the closest point of approach of that nearest fishing boat. You know the answer. He says nothing.",
+  "You hand over to the chief officer and enter position, weather, course and speed in the logbook. In the afternoon you correct two charts, drawing in this week's Notices to Mariners one by one.",
+  "Fire drill. You take the roll call and check the breathing-apparatus cylinders. A new sailor has his mask on the wrong way, and you refit the straps for him.",
+  "Your second watch of the day. The sea is black; the only light is the radar screen. You glance at the captain's Night Order Book. The last line reads: call me if visibility drops below three miles.",
+  "Before handing over, you write in the log: 2310, fishing vessel crossed ahead, altered course to avoid, resumed course. Going down the stairs, your palms are still a little damp."
+ ],
+ "ladder": [
+  { "title": "Third Officer", "stage": "Watchkeeper", "focus": "Keep the eight-to-twelve watch, look after life-saving and firefighting equipment and the nautical publications, and work the engine telegraph and its log beside the captain when berthing." },
+  { "title": "Second Officer", "stage": "Navigator", "focus": "Keep the midnight-to-four watch, plan the passages, correct the charts, look after the bridge equipment, and take the stern when berthing." },
+  { "title": "Chief Officer", "stage": "Deck and cargo", "focus": "Run cargo stowage, ballast, the deck crew and maintenance, keep the four-to-eight watch, take the bow when berthing, and sit for the master's certificate." },
+  { "title": "Master (Captain)", "stage": "The whole ship", "focus": "Carry overall responsibility for crew, ship and cargo: deal with the company, charterers, ports and pilots, and put the last signature on every document." }
+ ],
+ "ai_tasks": [
+  { "name": "Overall responsibility for the crew, the ship and the cargo", "how": "AI can suggest routes, fuel use and weather options. But whether to steer round a typhoon, whether to sail, whether to save the people or the ship first when something goes wrong: that is the master's call, and the master's signature." },
+  { "name": "Navigational watch and collision avoidance", "how": "ARPA radar, AIS and collision-avoidance aids can calculate each ship's closest point of approach and suggest how to give way. In dense fishing grounds, in poor visibility, or when the other ship ignores the rules, the officer of the watch has to judge and manoeuvre by hand." },
+  { "name": "Position fixing and dead reckoning", "how": "Satellite positioning and the electronic chart give position, speed and cross-track error automatically. Officers only cross-check by radar or celestial fix as the rules require." },
+  { "name": "Passage planning and weather routing", "how": "Weather-routing software can work out several recommended routes by weather, currents and fuel. Which one to take, and when to change, is decided by people who know the ship's condition, the cargo and the port schedule." },
+  { "name": "Cargo stowage and stability calculations", "how": "The loading computer calculates draft, stability and hull stresses automatically. Whether the cargo is really what the papers say, whether it can be loaded and how far, still takes the chief officer at the hatch, sending samples and negotiating with the terminal." },
+  { "name": "Leading the crew, safety meetings and emergency command", "how": "With twenty-odd crew from several countries, someone has to notice who is exhausted, who has fallen out with whom, who fumbles in drills. When something really happens, commanding the ship is a human job." }
+ ],
+ "events": {
+  "e_first_call": "Fog comes down before dawn, and visibility drops to two miles at once. You hesitate for half a minute, then ring the captain's cabin. He is up in three minutes and says: right to call. Next time, skip the half minute.",
+  "e_psc": "Port state control in Australia. The inspector heads straight for the lifeboats and the chart-correction records, both of them in your name. He leafs through for twenty minutes and doesn't write up a single deficiency.",
+  "e_psc_bad": "Another inspection writes up three deficiencies, one of them a slow-starting emergency fire pump. The ship sails a day late, and the company's emails come in one after another.",
+  "e_typhoon_route": "The typhoon's track suddenly bends north, and you are a hundred-odd miles off the weather-routing company's recommended route. The captain decides to alter early and steer clear. It costs a day and a half and the fuel report looks bad, but ship and cargo come through fine.",
+  "e_gulf": "Crossing the Gulf of Aden, you rig razor wire on deck as the rules require, sail blacked out at night and drill retreating to the citadel once a day. Nobody sleeps well. Once you are through, people talk more in the mess.",
+  "e_newyear": "Chinese New Year's Eve in the Pacific. The cook lays on a feast and the captain raises his glass: next year at this time, at home. Everyone laughs, because next year at this time nobody can say where they'll be.",
+  "e_cert_2": "You sit the Second Officer's certificate in Dalian. The assessment is radar plotting and emergency manoeuvring, and the examiner gives you a three-ship crossing situation. You talk it through as you put the helm over, your heart beating faster than it ever has at sea.",
+  "e_marry": "You marry your girlfriend of three years, a nurse at a hospital in Dalian. The wedding photos are taken at Xinghai Square, and a cargo ship happens to pass in the background. She says that's one of your colleagues.",
+  "e_birth": "Your child is born while you are at a Brazilian anchorage waiting for cargo. Your wife sends a video a dozen seconds long. You watch it on the bridge, and the second officer taking over says: congratulations, cigarette? You say no, you'll watch it again.",
+  "e_liquefy": "Loading nickel ore in Southeast Asia, you grab a handful at the hatch and squeeze it, and your palm comes away wet. You stop the loading and demand a retest of the moisture content. The terminal is unhappy, the charterer phones to push, and the captain backs you.",
+  "e_engine_stop": "The main engine stops for four hours in mid-ocean and the ship lies beam-on, drifting with the swell. The chief engineer's people work on it below; on the bridge you hoist the not-under-command lights and send the company your position every ten minutes.",
+  "e_crewchange": "Crew changes were supposed to be allowed at this port; at the last minute nobody is let ashore. Your contract grows by three months. Your wife says on the phone it's fine. After you hang up you sit in your cabin for a long time.",
+  "e_ecdis_ai": "The company fits a collision-avoidance aid, and every approaching ship comes up on screen with a suggested direction to give way. Once it tells you to turn to port. You look at the other ship's lights and track, judge it is about to alter, and turn to starboard instead.",
+  "e_weather_ai": "The weather-routing system pushes a new route every six hours and calculates fuel more finely than any person. You notice it doesn't know this ship rolls badly when fully laden, and write a paragraph in your report. Its next version steers clear of that swell.",
+  "e_shore_monitor": "The company sets up a shore-based monitoring centre, and fuel, speed and main-engine data are all visible from land. In the middle of the night you get an email asking why you have slowed down. You reply: five-metre swell, slowed for the cargo.",
+  "e_young_officer": "The new third officer, on his first night watch, phones you at two in the morning to ask whether a cluster of fishing boats means calling the captain. You go up to the bridge and say nothing, just stand behind him for twenty minutes.",
+  "e_kid_school": "You have never once been to a parents' meeting. This time you happen to be home, and sit on a little chair at the back of the classroom as the teacher reads out the title of your child's essay: My Dad Is at Sea.",
+  "e_sleep": "Over the years your sleep gets lighter and lighter. When any sound on the ship changes, engine revs, steering gear, wind, you wake in your bunk. Home on leave, you lie awake all night.",
+  "e_parents": "Your father goes into hospital for an operation while you're in the Indian Ocean and can't get back. Your wife takes leave and sits with him alone for five days, sending you a photo of the view from the ward window each day.",
+  "e_eyes": "At the seafarer's medical your eyesight just misses the standard, and the doctor sends you off to get glasses. Back on the bridge in your new pair, you notice for the first time how clear the far-off navigation lights are.",
+  "e_master_first": "The first time you sign a cargo document as master, you look at it afterwards. You have pressed harder than usual."
+ },
+ "choices": {
+  "c_ship": {
+   "title": "Stay in the state fleet or go foreign-flag",
+   "situation": "Your company's fleet is steady, with full social insurance and housing fund, but promotion means queuing. A crewing agency approaches you: third officers on foreign-flagged ships earn noticeably more in dollars and make second officer faster, but owners, crews and companies keep changing, and nobody plans your career for you.",
+   "options": [
+    { "label": "Go foreign-flag", "result": "You move to a crewing agency and join a Greek-owned ship. Your pay slip is in dollars, your second officer is Ukrainian, and your English leaps ahead within a month." },
+    { "label": "Stay with the company", "result": "You stay. HR lines up your next ship and writes your leave dates into the contract, more reliably than any agency would." }
+   ]
+  },
+  "c_second": {
+   "title": "Go for Second Officer",
+   "situation": "The second officer is being transferred, and the captain says he can promote from aboard or have the company send someone. He gives you a condition: you plan this voyage's passage, from the plan to the chart corrections, and he will check every sheet.",
+   "options": [
+    { "label": "Take on the voyage", "result": "You stay up several nights drawing and correcting the track on forty-odd charts, writing a reason beside every waypoint. The captain reads it through and signs the plan." },
+    { "label": "One more year on watch", "result": "You say you want to get your watchkeeping solid first. The company sends a second officer, and a year of learning passage planning from him teaches you faster than working it out alone." }
+   ]
+  },
+  "c_pilot": {
+   "title": "Sit the exam for harbour pilot",
+   "situation": "Dalian port is recruiting pilots. You need chief officer's sea time or above, you start as a trainee pilot, and in a few years you bring ships in on your own. Home every day, no more half a year away, but the road up through the ranks at sea is left behind.",
+   "options": [
+    { "label": "Sit the pilot exam", "result": "You turn down your next ship, study at home for three months and get into the pilot station.", "end": "You become a Dalian harbour pilot, riding the pilot boat alongside one incoming ship after another and climbing their pilot ladders. Standing on someone else's bridge, you always look first at their third officer." },
+    { "label": "Stay at sea", "result": "You say you still want to be a captain once. Your wife says then be one; I've got things at home." }
+   ]
+  },
+  "c_chief": {
+   "title": "Step up to Chief Officer",
+   "situation": "The company is promoting a batch of second officers to chief officer. That means cargo, ballast and the deck crew, and the bow when berthing; the pay almost doubles, your sleep halves, and if the cargo goes wrong, you're the first one they come to.",
+   "options": [
+    { "label": "Take it", "result": "Your first stowage plan, you run it five times on the loading computer and then work the stability through by calculator. When that cargo is loaded, the trim is two centimetres off your figure." },
+    { "label": "Two more years as second", "result": "You say the child is still small and you'd like to wait two years. The company says nothing, and your name is on the next list too." }
+   ]
+  },
+  "c_family": {
+   "title": "Transfer to near-sea routes",
+   "situation": "Your child has started primary school, your wife works rotating shifts, and the grandparents' health isn't good. The company has near-sea ships on Japan, Korea and Southeast Asia: short contracts, home two or three times a year, but smaller ships, thirty percent less pay and slower promotion.",
+   "options": [
+    { "label": "Go near-sea", "result": "You get home three times a year and make two of the parents' meetings. The money is less, and your wife says she finally isn't carrying it all alone." },
+    { "label": "Keep going deep-sea", "result": "You keep running Brazil and Australia. Each time you sign off your child is taller, and you have to get to know each other all over again." }
+   ]
+  },
+  "c_ai": {
+   "title": "Join the pilot crew of a smart ship",
+   "situation": "The company has a newbuilt smart bulk carrier with collision-avoidance aids, remote monitoring and automatic berthing, and wants a group of officers to train for six months and then write up how it works in use. You'd learn new things, and it also means many decisions get made jointly with people ashore.",
+   "options": [
+    { "label": "Join the trial", "result": "You put two hundred hours into the simulator and then a year on the ship. Half of the report you write is about when not to listen to the system." },
+    { "label": "Stay on the old ships", "result": "You say you're used to seeing and judging for yourself. A few years later every ship you join has the system, and you learn it starting from the manual." }
+   ]
+  },
+  "c_master": {
+   "title": "Sit for the master's certificate and take command",
+   "situation": "You have the sea time as chief officer, and the company tells you to sit the master's certificate. Pass, and you command the next ship. From then on, for twenty people and eighty thousand tonnes of cargo, the last signature is yours.",
+   "options": [
+    { "label": "Sit it", "result": "You shut yourself in at home for two months and work through maritime law, the conventions and the master's duties book by book. On assessment day the examiner's last question is: when would you give the order to abandon ship?" },
+    { "label": "A few more years as chief officer", "result": "You say you want to learn from a few more old captains. The captain on your next ship is close to retirement, and he lets you read thirty years of his Night Order Books." }
+   ]
+  },
+  "c_shore": {
+   "title": "Go ashore as a marine superintendent",
+   "situation": "The company's marine department needs someone senior to handle safety inspections, accident investigations and crew training for a dozen ships. An office job, home every day, a big drop in income; and you know that once you're ashore, it's hard to get back to the bridge.",
+   "options": [
+    { "label": "Go ashore", "result": "You sign off your last ship and get a desk by the window in the company building, with the port right outside.", "end": "You become a superintendent in the marine department, responsible for the safety of a dozen ships. When a ship calls in the middle of the night, you are still the first one awake." },
+    { "label": "Stay at sea", "result": "You say a few more years, until the child is at university. That night you delete the photo of the desk." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "Your last voyage ends at Dalian port. You sign the last name on the handover sheet and give the captain relieving you the keys, the ship's stamp and the Night Order Book, with one line: if anything comes up, call me, don't be afraid to call. You don't look back going down the gangway. You know the ship is already getting ready to sail.",
+  "burnout": "Those years you slept less and less, and once on the bridge you looked at the radar screen and your mind went completely blank. At your medical the doctor said to watch your heart. You didn't go back to sea. You went to a maritime training school instead, sitting by the simulator teaching young people to keep a watch, and teaching them when to call the captain."
+ },
+ "stages": [
+  "You keep the eight-to-twelve, your eyes moving between the radar, the ECDIS and the window. Off watch you look after the things that save lives: lifeboats, extinguishers, breathing apparatus, one checklist a week. Berthing, you stand beside the captain working the engine telegraph, logging each of his orders in the bell book. What you're still learning is when to pick up the phone and call him.",
+  "You keep the midnight-to-four, the hardest watch, and by day you plan passages: from this port to that one, every waypoint and every stretch of safe water on dozens of charts drawn by you, signed by the captain. The radar, GMDSS and gyro compass are yours too. Berthing, you stand aft, reporting lines and tugs to the bridge over the radio.",
+  "You run the cargo, the ballast and a dozen deck crew. Before loading you work out on the loading computer how much goes in each hold; during loading you keep reading the drafts and arguing with the terminal planner. Every morning you set the day's maintenance with the bosun, and berthing you stand at the bow. You start studying for master, and start going up to take a look when the third officer phones at night.",
+  "You no longer keep a watch, but whatever goes wrong on any watch is yours. You trade emails with the company, charterers, agents and port authorities and put the last signature on every document. Entering and leaving port you stand on the bridge conferring with the pilot; at safety meetings you look at the crew one face at a time. At night you write a few lines in the Night Order Book before you go to your cabin to sleep."
+ ],
+ "work": [
+  "Correcting charts in the afternoon, you come to a notice announcing a new light buoy. You draw it in red, add its number, and check it again on the ECDIS. Both match.",
+  "At the monthly lifeboat drill, the davit brake sticks halfway down. You stop, write it on the defect list, and lower the boat again once the engineer has greased it.",
+  "Entering port, the captain gives seven engine orders in a row. You put each one on the telegraph and log each time. Once alongside, he glances at the bell book and doesn't change a word.",
+  "Next voyage goes through the Strait of Malacca. In the plan you mark every speed limit and reporting point in the traffic separation scheme, and the captain adds one line: call me before the Singapore Strait.",
+  "During a GMDSS alarm test, one item on the satellite station fails. You spend an afternoon with the manual and find seawater has got into the antenna plug. Once it's dried, all is well.",
+  "Berthing, you're aft and the tug's line has gone on crooked. You radio the bridge: stern tug made fast, line at a bad angle, suggest going easy. The captain says: OK.",
+  "Down to the last two holds of iron ore, the terminal wants to fill them in one pour. Going by the stress curve from the loading computer, you insist on trimming in two passes, and the hull stresses stay in the green the whole time.",
+  "The bosun says a wire mooring rope is fraying but will do one more voyage. You walk to the bow with him to look and say: change it now; the next port may not have one.",
+  "The charterer's cargo surveyor says there's residue in the holds and won't allow loading. You go down with him and look bay by bay, handing over the cleaning records and photos one at a time. The holds pass that afternoon.",
+  "Something has happened at home for one of the crew, and he needs to sign off early. You email the company and phone the agent, and three days later, at the next port, you put him on a plane home.",
+  "Entering an unfamiliar port, you can barely follow the pilot's English. You have the second officer repeat every helm and engine order beside you, and the whole way in, nothing on the bridge is left unclear.",
+  "The night before the typhoon, the company and the weather router each send a route. You study the weather charts for two hours, choose a third one, write your reasons in the logbook and sign your name."
+ ],
+ "past": [
+  "You're in your last year of middle school in Dalian, living in an old block where you can see the cranes of the port. Your father is a stevedore with the port authority and comes home every day smelling of iron ore.",
+  "Your gaokao (college entrance exam) score is good enough for several universities in the provincial capital, but you put down nautical science at a maritime university. Your father says: life at sea is hard. You say: I know; I want to see where all those ships go.",
+  "Freshman military training is stricter than at other universities: quilts folded into neat blocks, drill at five thirty in the morning. The first time you put on the cadet's uniform, you stand in front of the mirror for a long time.",
+  "A month at sea on the university's training ship: your first night watch, your first star caught in a sextant. You work out that day's celestial fix three times.",
+  "You graduate, and the company's campus recruitment takes only twelve nautical students. You're one of them. You join your first ship as a deck cadet, learning watchkeeping from the third officer.",
+  "In your cadet year you sail to Australia and South America, then come back to sit the third officer's certificate. The day you get it, you photograph it and send it to your father."
+ ],
+ "late": {
+  "pension_note": "Estimate: the company paid your social insurance at a fairly high base for over thirty years. The pension comes to about forty to fifty percent of your last monthly pay at sea, which, with the company annuity, makes for a comfortable life in Dalian.",
+  "scenes": [
+   "On your first morning of retirement you still wake at seven forty and want to go and walk round the lifeboat deck. You get up and water the plants on the balcony.",
+   "Walking by Xinghai Square, you see a bulk carrier at the anchorage waiting for a berth. You glance at her waterline and say she's loaded pretty deep.",
+   "Your wife has retired too. You take a cruise, and the captain invites you up to the bridge. You stand there the whole time with your hands clasped behind your back.",
+   "A third officer you once trained is now a captain, and at New Year he sends a photo of the Night Order Book he wrote on the bridge. The last line says: call me if anything comes up.",
+   "You sit by the simulator at the maritime training school, watching a young man lose his way in the fog on the screen. You wait half a minute before you say anything.",
+   "One heart pill every morning. You learn to take an afternoon nap, and learn not to wake at night because of the wind.",
+   "Class after class graduates from the school, and some of them send you postcards stamped in Brazil, Australia, South Africa.",
+   "Your first year ashore, every morning you check the typhoon tracks around the world before you go to work.",
+   "You do well in your new position. The port is right outside your office window, and you can tell the type of every ship coming in.",
+   "The old ship you served on as third officer is retired and sent for scrap. You see her last photo in the news and save it on your phone.",
+   "On later bridges, collision avoidance came with system prompts, routes were worked out by a centre ashore, and berthing could be automatic. But on a foggy night, someone still had to pick up the phone and say: Captain, to the bridge, please.",
+   "You take your grandson to the beach and he asks how a ship that big stops. You crouch down and draw an anchor in the sand."
+  ],
+  "closing": {
+   "retire": "One evening many years later you stand on your balcony as the lights of the port come on one by one. A ship is heading out, and you watch her navigation lights, red to port, green to starboard, until she clears the mouth of the bay.",
+   "burnout": "Many years later you still have the glasses you first wore on the bridge. You keep them on your desk, beside a worn copy of the collision regulations.",
+   "end": "Many years later you find in a drawer the third officer's epaulettes you sewed yourself, a loose thread still showing. You take them out and hold them in your palm."
+  }
+ }
+}

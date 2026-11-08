@@ -1,0 +1,166 @@
+{
+ "id": "recsys-hz",
+ "occupation": "Recommender Systems Engineer",
+ "role": "Junior Recommender Systems Engineer (e-commerce home feed)",
+ "headline": "A master's in statistics, a campus hire onto the home-feed recommendation team of an e-commerce platform in Hangzhou, hunting every day through A/B test dashboards for a few tenths of a point of conversion, and about to work the midnight shift of Singles' Day for the first time",
+ "unit": "The home-feed recommendation algorithm team of an e-commerce platform in Future Sci-Tech City, Yuhang, Hangzhou",
+ "unit_type": "E-commerce platform",
+ "city": "Hangzhou (Future Sci-Tech City, Yuhang)",
+ "city_tier": "New first-tier city",
+ "education": "Master's degree in statistics",
+ "level": "You can use PyTorch and Spark, and reproduce the models in papers. But why an offline gain doesn't show up online, or why a feature that was fine yesterday is leaking future data today, you can't see yet, and your mentor goes over your code three times before it's merged into the main branch.",
+ "intro": "Your master's was in statistics, your thesis on causal inference. The year you graduated, everyone was fighting for algorithm jobs, and you landed an offer from the home-feed recommendation team at this e-commerce platform in Hangzhou. You're responsible for a set of user-interest features in the fine-ranking model. Your mentor says what gets sold in every slot on the home page is, in the end, decided by the handful of models your team runs. From today on, what hundreds of millions of people see first when they open the app is, in some small part, something you calculated.",
+ "salary_note": "Estimate: the leading e-commerce platforms in Hangzhou pay algorithm engineers about thirty percent more cash than the national average, over roughly sixteen months a year, plus stock. In big-sale years the bonus follows gross merchandise volume; in lean years for the industry, raises stop.",
+ "facts": [
+  {"label": "Junior Recommender Systems Engineer (current level)", "value": "0-2 years, ¥15,300–22,500 a month (national average, derived from pay by experience)", "source": "Industry norm"},
+  {"label": "Next level up", "value": "Recommender Systems Engineer (2-4 years)", "source": "Industry norm"},
+  {"label": "Pay after 10+ years", "value": "¥55,000 a month (national average)", "source": "Pay by experience"},
+  {"label": "What AI can't take", "value": "Trading off conversion, diversity and how users feel", "source": "AI exposure"},
+  {"label": "Where AI is moving in", "value": "Reading papers, reproducing new models, writing baseline code", "source": "AI exposure"},
+  {"label": "Open positions", "value": "37 related listings nationwide, 1 in this city (mostly campus hiring and internships)", "source": "Job listings"}
+ ],
+ "day": [
+  "You ride your e-bike from the rented room in Xianlin to the campus. West Wenyi Road is full of young people wearing staff badges. You buy a soy milk downstairs, badge in at the door, then scan your face.",
+  "On the experiment platform, you check the test that went live yesterday: click-through up 0.3 points, but order conversion down 0.1. You split the data into new and returning users. All of the drop is in returning users.",
+  "Team meeting. Your mentor has each person present one bad case from production. Yours is someone who had just bought a stroller, and whose home feed showed strollers for three days straight.",
+  "The campus canteen is packed. Tray in hand, you look for a seat. The engineers at your table are talking about whose promotion review failed again. You eat with your head down and go back to the feature logs.",
+  "Writing a Spark job to stitch users' last seven days of browsing into a new feature. It runs for an hour and a half, then throws a line of memory error you can't make sense of.",
+  "The offline AUC finally goes up, and you go to your mentor, pleased. He takes one look and asks whether the feature uses any data that only exists after an order is placed. You go back and check. It does.",
+  "You clean the features again and submit another training job, somewhere in the forties in the GPU queue. You order takeaway and eat at your desk, reading a paper on sequential recommendation.",
+  "Back in your rented room, a message pops up in the on-call group: real-time features are ten minutes behind. You're not on call, but you read to the end before going to sleep."
+ ],
+ "ladder": [
+  {"title": "Junior Recommender Systems Engineer", "stage": "Entry", "focus": "Build features, run training and A/B tests under a mentor. You move up by shipping an experiment with a real gain on your own."},
+  {"title": "Recommender Systems Engineer", "stage": "Junior", "focus": "Own one retrieval channel or ranking model, from setting the target to full rollout."},
+  {"title": "Senior Recommender Systems Engineer", "stage": "Mid-level", "focus": "Own the full pipeline for one recommendation scenario, mentor campus hires, and set targets with the business."},
+  {"title": "Recommender Systems Expert", "stage": "Senior", "focus": "Set the technical direction for the whole recommendation pipeline, lead a team, review designs and own the contingency plans."},
+  {"title": "Principal Recommender Systems Expert / Head of Recommendation", "stage": "Principal", "focus": "Run recommendation technology and teams across several lines, and set the technical roadmap and compute budget."}
+ ],
+ "ai_tasks": [
+  {"name": "Reading papers, reproducing new models, writing baseline code", "how": "AI can quickly search and summarize the latest papers and stand up runnable models and feature scripts. A person only needs to spot-check whether the conclusions hold up and pick the directions truly worth trying in the business."},
+  {"name": "Building features and tuning model architecture", "how": "AI can generate feature-processing scripts, run hyperparameter searches and suggest architecture changes. What the business should actually optimize, and whether a feature is using future data, a person has to judge against what happens in production."},
+  {"name": "Running A/B tests and writing experiment reports", "how": "AI can generate reports automatically, run significance tests and flag suspicious segments. How to design the experiment, whether the traffic is contaminated, and whether a gain is real are for a person to decide, along with whether to roll it out."},
+  {"name": "Deploying models and handling production incidents", "how": "AI can write deployment configs and interface code and troubleshoot routine errors. Coordinating schedules with engineering, the data platform and product, and keeping things stable and handling emergencies during big sales, falls to a person."},
+  {"name": "Trading off conversion, diversity and how users feel", "how": "AI can simulate different strategies and offer alternatives. But balancing relevance, freshness and commercial goals touches the platform's values and its responsibility to users, and only a person can make that call and own it."},
+  {"name": "Designing user profiles and item representations", "how": "AI can produce first drafts of embedding and retrieval designs. How to define the profiles, what to trade off under latency and cost limits, and how to chase down data-quality problems take a person working with the company's own data."}
+ ],
+ "events": {
+  "e_double11": "Midnight on Singles' Day, and for the first time you were on duty in the war room as the curves on the screens shot straight up. At one in the morning the real-time features fell three minutes behind, and you and an engineer switched to the backup pipeline. At dawn you realized you hadn't had a sip of water.",
+  "e_leak": "A model you shipped was up a full point offline and dragged online conversion down twenty percent in a day. After the rollback you spent the night digging: one feature used data from the future. At the retrospective you spoke alone for twenty minutes, and your mentor beside you didn't say a word in your defense. Afterwards he bought you a bowl of noodles.",
+  "e_ab_win": "Your multi-interest retrieval ran for two weeks in an A/B test and lifted orders per user by a point, with clean confidence intervals. On the day of full rollout, your team lead sent a digital red envelope to the group chat, with your name in the note.",
+  "e_ab_dirty": "You found that an experiment on the next team was sharing traffic with yours, and both your conclusions from last month were wrong. You kept it quiet, spent an afternoon reconciling the data with him first, and the two of you wrote up a correction together.",
+  "e_ai_code": "The coding assistant can now build a paper's model in an afternoon, feature scripts included. Reproductions that used to take you two weeks run in a day, and you spend the time saved on bad cases from production.",
+  "e_ai_report": "The experiment platform now has AI built in: when a test ends, it writes the report, runs the significance tests and flags suspicious segments. You only check whether it's right. Once it credited a holiday effect to the model, and you wrote a note on the report.",
+  "e_generative": "The team started trying generative recommendation, a large model producing the sequence of items to show directly, squeezing retrieval, pre-ranking and fine ranking into a single layer. Half the feature set you'd maintained for three years was going offline.",
+  "e_cocoon": "Customer service forwarded a long letter from a user saying the home feed got narrower the more they scrolled, like being shut in a room. You added an exploration channel to the model. Conversion dropped 0.2 points, and in your weekly report you wrote why those 0.2 points were worth it.",
+  "e_patent": "A paper on sequence modeling you wrote with your mentor was accepted at an international conference. Your first conference abroad: you spent half an hour at your poster explaining it to a foreign professor, who finally asked: do you really use this in production?",
+  "e_promo_fail": "Your promotion review failed. The panel said you \"didn't explain the business value clearly.\" You walked by West Lake all night, and the next day rewrote your materials from the start, cutting half the formulas.",
+  "e_oncall": "Three in the morning on a Saturday, the on-call phone woke you: the whole home feed was showing one shop's products. You got up to look. Bad data from one merchant had skewed the model. You added a filter, and after daybreak filed an incident report.",
+  "e_reorg": "A restructuring merged home-feed recommendation and search into one big department. New team lead, and your model now shared a foundation with the search model. You spent three months aligning the feature definitions on both sides, one by one.",
+  "e_stock": "Your first batch of stock vested right as the share price hit a low, and you received half of what you'd imagined. You didn't sell. You let it sit.",
+  "e_bonus": "That year the models you owned held up through the big sale, the department scored well, and the bonus came to seven months' pay. You booked your parents back home onto a tour group to Yunnan.",
+  "e_house": "You won the housing lottery for a new flat in Yuhang, twenty minutes by bike from the campus. On handover day you walked around the bare concrete rooms imagining a rice field outside the study window. Later that field became another tech park.",
+  "e_wedding": "You got married. The wedding was back in your hometown. Your teammates sent gift money, and not one of them could make it: nobody could get away the week before the big sale.",
+  "e_child": "Your child was born. When you opened your own company's app to pick out baby formula, the whole home feed turned into baby products at once. You stared at those slots and remembered that stroller bad case from years ago.",
+  "e_checkup": "The health check said reversed cervical curve, high uric acid. You started running twenty minutes every lunchtime in the campus gym, kept it up for three months, and then a big sale broke the streak.",
+  "e_35": "A round of company \"optimization\" let go a few veterans around thirty-five, people with children who couldn't do overtime. You referred one of them to a small cross-border e-commerce company. On the day he left, he gave you his mechanical keyboard.",
+  "e_parents": "Your mother fell at home and spent two weeks in hospital. You took leave and went back, reading experiment reports on your laptop at her bedside. The nurse asked you to turn the screen down.",
+  "e_mentor": "The first campus hire you ever mentored presented a mistake you'd once made at his promotion review: feature leakage. Afterwards he told you he'd taken the example from your old incident write-up.",
+  "e_eyes": "Years of staring at screens left your eyes dry, and you had to bump the font up two sizes to read reports. You made yourself a rule: after ten at night, only the dashboard on your phone, no more opening the laptop."
+ },
+ "choices": {
+  "c_track": {"title": "Stay on fine ranking, or try generative recommendation?", "situation": "The team is pulling people into a small group to try having a large model generate recommendations directly. Join, and you'll learn a whole new stack from scratch and may not ship a single experiment all year. Stay on fine ranking, and the features in your hands are about to pay off.", "options": [
+   {"label": "Join the new group", "result": "None of your experiments reached full rollout that first year, but you became one of the first on the team to really understand the new approach. The second year, when the department changed course, everyone came to you."},
+   {"label": "Stay on fine ranking", "result": "You finished the features, and after launch conversion rose half a point. Your mentor named you in the weekly report, and you got an A rating that year."}
+  ]},
+  "c_paper": {"title": "Write the paper, or chase the metrics?", "situation": "Your mentor says your multi-interest retrieval idea could be a paper for next year's international conference, at the cost of three months of evenings. But the team is under heavy pressure on this quarter's metrics, and you still have two experiments unfinished.", "options": [
+   {"label": "Write the paper", "result": "Three months of writing until the small hours, and the paper went out. On the metrics you got only halfway, and took a B for the quarter."},
+   {"label": "Chase the metrics", "result": "Both experiments finished, and one went to full rollout. The paper went onto your to-do list, and later another company published the idea first."}
+  ]},
+  "c_senior": {"title": "Promotion review: Senior Recommender Systems Engineer", "situation": "Your team lead says you can apply for Senior Recommender Systems Engineer this year: owning one scenario's model on your own from target to launch, and mentoring a campus hire. The review lasts just twenty minutes, and the panel's favorite question is: what would have happened without you?", "options": [
+   {"label": "Go for the review", "result": "You didn't talk about model architecture. You talked about that feature leakage, and the check you later added for the whole team. One panelist asked how many times the check had caught something. You said: eleven."},
+   {"label": "Wait another year", "result": "You said you hadn't finished with your scenario. That year you rebuilt cold start for the home feed, and new users' first-order conversion rose two points."}
+  ]},
+  "c_shortvideo": {"title": "A short-video company in Beijing makes a big offer", "situation": "A short-video company in Beijing wants you for feed recommendation: over thirty percent more cash, a faster pace, three or four experiments a week. But you'd be leaving Hangzhou and the flat you just got the keys to, and you hear people there start worrying about their future at thirty.", "options": [
+   {"label": "Go to Beijing", "result": "In Beijing you ran over a hundred experiments in a year and learned to see at a glance where a curve was wrong. Coming home to Hangzhou on weekends, you'd fall asleep on the high-speed train and wake up there."},
+   {"label": "Stay in Hangzhou", "result": "You turned it down. That weekend you cycled around Xixi Wetland all afternoon, then came back and revised the cold-start plan once more."}
+  ]},
+  "c_value": {"title": "Conversion, or how users feel?", "situation": "The business side wants the home feed to push more high-priced items. Change the model and GMV rises at once, but during the trial days feedback saying \"recommendations are too expensive\" doubled. You can do as asked, or take the data to the business side and argue for keeping part of the traffic for what users are actually looking for.", "options": [
+   {"label": "Do as asked", "result": "GMV looked great that quarter and the department won an award. You saved the feedback in a folder and never opened it again."},
+   {"label": "Make the case", "result": "You brought three months of repeat-purchase data and argued that push enough expensive things and people stop coming back. The business side wasn't pleased, but agreed to keep thirty percent of the traffic for diversity."}
+  ]},
+  "c_quant": {"title": "A quant fund in Shanghai comes headhunting", "situation": "A quantitative hedge fund in Shanghai is looking for people with large-scale recommendation experience to mine trading factors, offering twice your current pay plus a profit share. But it's another world: no users, only the market, and you know within a day whether you made money.", "options": [
+   {"label": "Go quant", "result": "On the last page of your handover document you wrote one line: don't trust offline metrics.", "end": "From then on you worked in quant trading in Shanghai, watching markets and factors for many years. Some nights you still opened that e-commerce app to see what the home feed was showing, and guessed which model was doing the ranking now."},
+   {"label": "Stay in recommendation", "result": "You turned it down. That week your model beat the baseline in a small scenario, and you sent a screenshot to the mentor who trained you."}
+  ]},
+  "c_expert": {"title": "Apply for Recommender Systems Expert", "situation": "The department is creating a Recommender Systems Expert post: setting the technical direction for the whole home-feed pipeline, leading seven or eight people, and setting targets every quarter with the business and product teams. If you get it, most of your coding time goes, replaced by reviewing designs, meetings, and fielding the panel's questions for your team.", "options": [
+   {"label": "Apply", "result": "Your pitch was one chart: where every point of home-feed gain in recent years had come from, and which ones were fake. The director asked who'd done the fake ones. You said two of them were yours."},
+   {"label": "Stay hands-on", "result": "You recommended a colleague and kept chewing on cold start, the hardest problem. The young engineers all liked bringing you their toughest bad cases."}
+  ]},
+  "c_hometown": {"title": "Go home to run data at a clothing company", "situation": "A clothing company in your hometown of Ningbo wants to build its own online channels and data team, and asks you to lead it. Twenty percent less pay, but cheap housing, your parents nearby, and your child could eat dinner at the grandparents' place.", "options": [
+   {"label": "Go back to Ningbo", "result": "The first time you walked into the company's warehouse, tens of thousands of garments hung on the racks and not one of them knew who it should be shown to. You smiled and said: we start here.", "end": "You spent many years in retail data in Ningbo, putting an old clothing factory's stock, piece by piece, in front of the right people. You often said you'd built a home feed for hundreds of millions, and a single shop's shelves were the hardest."},
+   {"label": "Stay in Hangzhou", "result": "You stayed, and drove back to Ningbo once a month. Your parents' fridge was always stuffed with things you'd brought from Hangzhou."}
+  ]},
+  "c_lead": {"title": "Go up for Principal Recommender Systems Expert / Head of Recommendation", "situation": "The company needs a Principal Recommender Systems Expert / Head of Recommendation to run recommendation technology across home feed, search and ads, with forty or fifty people, answerable for the year's technical roadmap and stability during big sales. You'd set targets with the business heads, negotiate compute with Finance, and sit in the front row of the war room at midnight every big sale.", "options": [
+   {"label": "Go for it", "result": "At the review you covered three things: which models to merge, which people to keep, which money to save. The last panelist asked whether you feared something going wrong during a sale. You said yes, which is why you personally drill the backup pipeline once a year."},
+   {"label": "Don't apply; lead your own team well", "result": "You said you'd rather stay close to the models. In their first month the new head came to find you every day, to hear how the home feed had got to where it was."}
+  ]}
+ },
+ "endings": {
+  "retire": "On your last day you took the big-sale souvenirs you'd collected over the years out of your desk drawer one by one: T-shirts, badges, a mug printed with a date. The young engineers were discussing a new model. You listened for a while and didn't cut in. Outside the campus, West Wenyi Road was as full of e-bikes as ever. The app's home feed on your phone was recommending reading glasses. You looked at it and thought it had got that right.",
+  "burnout": "After that year's big sale, everything went black at your desk and colleagues took you to hospital. After you were discharged you quit and rested at home for most of a year, walking every day around the Liangzhu ancient city ruins park. You still use that app. You've stopped thinking about what the home feed shows you: you buy what you like and swipe past what you don't."
+ },
+ "stages": [
+  "Under your mentor you own a set of features in the fine-ranking model: writing Spark jobs to build features, submitting training, launching A/B tests, reading the experiment platform's dashboards. You work most with your mentor and the engineers. Code is reviewed before it's merged, and whether an experiment goes to full rollout is the team lead's call.",
+  "You own one retrieval channel or one ranking model for the home feed: set the target, build features, tune the architecture, run experiments, write the rollout report, and deliver a gain you can explain every quarter. You start working big-sale shifts and deal daily with product, engineering and the data platform. Your mentor no longer reviews every line.",
+  "You own a complete recommendation scenario on the home feed, the whole pipeline from retrieval to re-ranking. You mentor one or two campus hires, reviewing their designs and experiments; you set quarterly targets with the business side and explain at reviews why a gain is real. What you sign off is a scenario's launches and rollbacks.",
+  "You set the technical direction for the whole home-feed pipeline and lead seven or eight people, deciding who does retrieval, who does ranking, who explores generative methods. You meet business, product and engineering weekly, and review others' designs more than you write code. Pre-sale load tests and contingency plans all need your nod.",
+  "You run recommendation technology across several lines and forty or fifty people, setting the year's technical roadmap and compute budget. You negotiate targets with the business heads, GPUs with Finance, and algorithm filings and users' right to know with Legal. At midnight on sale day you sit in the war room's front row, and when something breaks, everyone looks at your face first."
+ ],
+ "work": [
+  "Your mentor had you reproduce a sequential recommendation paper. When you'd built it, the offline metrics fell well short of the paper's. Three days of digging: you'd put the user behavior sequence in reverse order.",
+  "An engineer said your new feature slowed online inference by eight milliseconds. You compressed it from fifty dimensions to sixteen with almost no metric loss, and he gave you a thumbs-up in the code review.",
+  "The first A/B test you ran yourself took five percent of traffic. By day three you wanted to roll it out; your mentor said wait. On day seven the gain vanished.",
+  "The product manager said the home feed was a mess for new users. You pulled the clicks from new users' first three visits, built a small dedicated cold-start model, and first-order conversion rose noticeably.",
+  "In a pre-sale load test your model timed out at peak traffic. You and an engineer moved part of the computation offline, ran the test again at two in the morning, and it held.",
+  "In an experiment report you found the entire gain came from one category in one city. Instead of rushing to roll out, you dug in: that city had an offline promotion running that week.",
+  "The campus hire you mentor handed in a design with a beautiful model architecture. You asked: why would a user click on what this channel retrieves? He couldn't answer, and went back to spend a week reading logs.",
+  "The business side wanted extra home-feed traffic for a new channel. You worked out the numbers: the traffic you could give, the conversion you'd lose, the days you'd need to watch it. One page, signed by both sides, before the experiment started.",
+  "With the new generative model up against your old pipeline head to head, you designed a two-month long-term experiment just to see whether users' feeds narrowed over time, and the results went into the department's methods document.",
+  "Two teams each claimed a gain on the home feed as their own. You overlaid their experiments and recalculated, gave each half the credit, and made a rule: from now on, experiments are registered before they go live.",
+  "Not enough compute, with three directions fighting over the same batch of GPUs. You cut the direction you liked best but were least sure of, and gave the cards to the team most likely to ship before the big sale.",
+  "A newly hired senior expert wanted to tear out the home feed's entire feature set. You didn't stop him. You gave him two percent of traffic and three months, and agreed that if he lost, he'd come back and help fix the old pipeline.",
+  "Regulators required recommendation algorithms to be filed, and users to be given a switch to turn off personalization. You went through every model with Legal and Product, and wrote an explanation a layperson could follow.",
+  "At year-end budgeting Finance wanted to cut GPUs by thirty percent. You listed what each card had brought in that year in GMV. In the end the cut was fifteen percent, and your own new project was the first to pause.",
+  "Ten minutes before midnight on sale day, a retrieval channel's data source went down. In the war room you said one thing, switch to backup, then watched the curve until it rose steadily."
+ ],
+ "past": [
+  "You went to middle school in a county town in Anhui, good at math and physics too, and loved best the probability problems at the back of the textbook: dice, drawing balls from a bag, a whole evening gone working them out.",
+  "In the gaokao (college entrance exam) you got into a university in Nanjing to study statistics. Your homeroom teacher said it would be easy to find work. You didn't really know what statistics was for.",
+  "In your second year you entered your first data-mining competition, running models on an old laptop whose fan roared all night, and came away with a third prize.",
+  "You were admitted without exams to a master's in statistics at a university in Hangzhou, under an advisor in causal inference. For the first time you learned that correlation is not causation, and that in recommender systems that sentence is worth a great deal of money.",
+  "The summer after your first year you interned on a company's recommendation team and saw real production data for the first time: hundreds of millions of clicks. Your laptop couldn't even hold one day of it.",
+  "In autumn recruiting you ground through three hundred algorithm problems, interviewed at a dozen-plus companies and got three offers. You chose this one in Hangzhou because the interviewer's last question was: how do you know a gain is real?"
+ ],
+ "late": {
+  "pension_note": "Estimate: e-commerce platforms pay pension contributions near the ceiling of Hangzhou's social-insurance base, but that ceiling sits far below actual income, so the basic pension comes to roughly thirty to forty percent of your last monthly salary. The stock and the flat you built up when young matter more.",
+  "scenes": [
+   "In your first week of retirement you still checked your phone before eleven at night, wanting to see the big-sale curve, before remembering you weren't on duty this year.",
+   "You started a class at the community university for seniors, teaching older people how to read the recommendations on their phones. You told them: what it shows you isn't always what you want. Swipe past it, and it remembers.",
+   "Your grandchild asked how the phone knew he liked dinosaurs. You took a sheet of paper and drew him the simplest model there is. He listened halfway and ran off to play.",
+   "In the first months after quitting, you left every work group chat on your phone. On the last one, your finger hovered for a long time.",
+   "You started walking the ridges between the rice fields at Liangzhu, two hours at a stretch. When the rice ripened, people were out cutting it, and you stood at the edge and watched for a long time.",
+   "Your old team lead took you to dinner and said the home feed was all generative now; not one of your features was left. You said that was good, and poured him a drink.",
+   "In your first year on a different path, every November you still opened that app before midnight, looked at what the home feed was showing, and closed it again.",
+   "At an industry conference you heard a young man speak on recommender systems. His example of feature leakage sounded a little familiar.",
+   "You drove past Future Sci-Tech City. The area had long since filled with buildings, and that rice field was nowhere to be found. You waited at the intersection a while, and only went on when the light turned green.",
+   "On an old computer you found the code from your first competition as a student. The variable names were a mess, and reading it, you laughed out loud.",
+   "Your child chose statistics at university and called to ask what it was good for. You thought for a long time and said: for knowing whether something is true."
+  ],
+  "closing": {
+   "retire": "One afternoon many years later you sat on a bench by Xixi Wetland with your phone face down on your knee. An egret landed at the water's edge. You watched it, and didn't try to guess where the next one would land.",
+   "burnout": "Many years later you sat at the edge of a field at Liangzhu. The rice had been cut, leaving rows of stubble. The wind came across, and you calculated nothing, and sat there until dark.",
+   "end": "Many years later you found that big-sale mug with the date on it in a drawer, a tea ring on the bottom that would never wash out. You wiped it off and put it back on the shelf."
+  }
+ }
+}

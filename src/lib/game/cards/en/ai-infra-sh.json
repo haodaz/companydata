@@ -1,0 +1,161 @@
+{
+ "id": "ai-infra-sh",
+ "occupation": "AI Infrastructure Engineer",
+ "role": "AI Infrastructure Engineer (large-model training cluster)",
+ "headline": "A computer science master's, two years on a cloud provider's container platform, then a jump to a large-model company in Shanghai to run a thousand-GPU training cluster, with a ringtone on the phone reserved for \"training job down\": an AI infrastructure engineer",
+ "unit": "The training infrastructure team of a large-model company on the Xuhui Riverside, Shanghai (cluster in a data center in Zhongwei, Ningxia)",
+ "unit_type": "Large-model company",
+ "city": "Shanghai (Xuhui Riverside)",
+ "city_tier": "First-tier city",
+ "education": "Master's degree in computer architecture",
+ "level": "You know Kubernetes, schedulers and distributed storage well, and can read about half of NCCL's error messages. But why a thousand-GPU job suddenly freezes at dawn on day three, and exactly which card or which cable is to blame, still takes you a long time to chase down, and you haven't yet touched kernel-level optimization.",
+ "intro": "You spent two years on a cloud provider's container platform, where the job was keeping tens of thousands of small services running steadily. Last year a former senior classmate brought you to this large-model company on the Xuhui Riverside to run the training cluster: thousands of GPUs, a single job running for over a month, and every time it breaks, millions of yuan of electricity burned for nothing. From today on, whether the researchers' models train through in one go is half up to you.",
+ "salary_note": "Estimate: the pay-by-experience figures for AI infrastructure already lean toward the leading companies, and this large-model company in Shanghai pays roughly that in cash, plus options. Until an IPO the options are money on paper, and in years when fundraising goes badly, raises and hiring both stop.",
+ "facts": [
+  {"label": "AI Infrastructure Engineer (current level)", "value": "2-4 years, ¥32,300–47,500 a month (national average, derived from pay by experience)", "source": "Industry norm"},
+  {"label": "Next level up", "value": "Senior AI Infrastructure Engineer (4-7 years)", "source": "Industry norm"},
+  {"label": "Pay after 10+ years", "value": "¥95,000 a month (national average)", "source": "Pay by experience"},
+  {"label": "What AI can't take", "value": "Chasing the strangest failures in distributed training", "source": "AI exposure"},
+  {"label": "Where AI is moving in", "value": "Reading logs, isolating bad GPUs, restarting failed jobs", "source": "AI exposure"},
+  {"label": "Open positions", "value": "195 related listings nationwide, 43 in this city (mostly campus hiring and internships)", "source": "Job listings"}
+ ],
+ "day": [
+  "Your phone rings: the tone you set for \"training job down.\" In the dark you feel for your laptop and check the monitoring. A GPU on node 1,024 has dropped out, and the whole job is stuck on communication.",
+  "You kick the bad node out, restart the job from the latest checkpoint, and wait until the loss curve is moving again before going back to bed. Outside on Longhua Middle Road, a street-sprinkler truck drives past.",
+  "Subway to the riverside. The coffee shop downstairs has a long queue, and the researchers ahead of you are saying last night's job stopped again. They don't recognize you as the one who got up in the night.",
+  "Stand-up. A researcher says training throughput is ten percent lower than last week and asks if you changed something. You pull up the utilization dashboard and go down it node by node, and find checkpoint reads on the storage side have slowed.",
+  "A bowl of scallion-oil noodles downstairs. A teammate is saying the air conditioning at the Ningxia data center can't keep up in summer: when the racks run hot, more GPUs fail.",
+  "Writing an automatic fault-tolerance script: when a GPU errors, isolate it, swap in a standby node, resume from the checkpoint. On the test cluster you pull a node on purpose to see whether it can pick itself back up.",
+  "Video call with the on-site operations crew in Zhongwei, Ningxia, rows of racks blinking behind them. You have them replace every network cable on the three servers that keep acting up.",
+  "Home again, you open the config for a new job going live next week: eight thousand GPUs, two hundred billion parameters. You sketch the parallelism strategy on paper and work out the memory three times before you dare hit submit."
+ ],
+ "ladder": [
+  {"title": "Junior AI Infrastructure Engineer", "stage": "Entry", "focus": "On-call, handle alerts, maintain the training platform and scheduling. You move up by tracking a cluster failure to its root cause on your own."},
+  {"title": "AI Infrastructure Engineer", "stage": "Junior", "focus": "Own scheduling, fault tolerance and efficiency for training jobs on a thousand-GPU cluster, restarting failed jobs in the middle of the night."},
+  {"title": "Senior AI Infrastructure Engineer", "stage": "Mid-level", "focus": "Own the stability and efficiency of a ten-thousand-GPU cluster on your own: parallelism strategy, communication tuning, bad-GPU management, mentoring newcomers."},
+  {"title": "Cluster Technical Lead / AI Infrastructure Expert", "stage": "Senior", "focus": "Set the technical direction for the training and inference clusters, decide procurement, data centers and GPU-hour allocation, and lead the team."},
+  {"title": "Chief Architect (AI Infrastructure)", "stage": "Principal", "focus": "Run all compute and its budget, answerable for whether the next generation of models can be trained at all."}
+ ],
+ "ai_tasks": [
+  {"name": "Reading logs, isolating bad GPUs, restarting failed jobs", "how": "An AI operations assistant can read monitoring and logs on its own, locate bad GPUs, isolate nodes and resume from checkpoints, so most night-time alerts no longer need a person. A person only needs to check that it handled things correctly, and decide what it may and may not touch."},
+  {"name": "Writing code for schedulers, training platforms and inference services", "how": "AI can write large amounts of glue code, interfaces, tests and docs, and help read the source of open-source frameworks. How the platform is designed, how it aligns with what research teams need, and whether it stays stable in production are a person's responsibility."},
+  {"name": "Writing kernels, fusing operators and quantizing", "how": "AI can write first-draft kernels and suggest fusion and quantization approaches. Pushing them to the limit on real hardware, judging whether an accuracy loss is acceptable and working around compiler pitfalls take a person to tune and verify."},
+  {"name": "Planning clusters: choosing GPUs, networking, sizing capacity", "how": "AI can draft cluster topologies, estimate capacity and generate deployment scripts. Where to put the data center, how to trade off network and storage, and where hundreds of millions of budget go, a person has to decide and answer for."},
+  {"name": "Chasing the strangest failures in distributed training", "how": "Hung jobs, exploding memory, jittery communication often span software, hardware, network and algorithm layers, and take repeated trials on site and asking around across teams. AI can help sift logs; the one who actually finds the root cause and answers for it is a person."},
+  {"name": "Dividing compute among research teams", "how": "There are never enough GPUs. Who gets them, how many, who has to give way touches every team's direction and relationships. AI can produce utilization reports; making the call, offending people and living with the consequences falls to a person."}
+ ],
+ "events": {
+  "e_bigrun": "The big training job that had run for forty-odd days finally finished. It broke seventeen times along the way, and every time you had it back up within two hours. On release day the researchers popped champagne in the meeting room. Someone remembered to call you over; you had a sip, then went back to the schedule for the next job.",
+  "e_hang": "For three days running, a job froze a little after two every morning with no error at all. You and the network team staked it out for three nights and finally found a port on one switch running a scheduled self-test. You wrote a dozen-page post-mortem whose title was just three words: Two A.M.",
+  "e_ai_ops": "The cluster got an AI operations assistant that reads logs, finds bad GPUs, isolates nodes and restarts jobs by itself. Eighty percent of night alerts no longer need a human. For the first time you slept through the night for a whole week. Waking up, the first thing you do is check what it handled overnight, and whether it got any of it wrong.",
+  "e_ai_kernel": "The coding assistant can write first-draft kernels now. They run twenty percent slower than yours, but took half an hour. Your job has become pushing and reworking them on real hardware, and judging where that twenty percent is worth clawing back.",
+  "e_ai_agents": "Researchers started letting swarms of AI agents run experiments on their own, submitting hundreds of small jobs a night. The scheduler was swamped twice. You gave the agents their own queue with a budget and a circuit breaker: a cap on how many GPU-hours they can burn in one night.",
+  "e_ningxia": "A week's work trip to the Zhongwei data center: by day squeezing between racks swapping optical modules, by night eating lamb by the Yellow River. Outside the data center is open desert, and when the wind blows, your mouth fills with sand.",
+  "e_summer": "That summer was especially hot, the data center's cooling couldn't cope, and dozens of GPUs failed in one week. You had to throttle by day and run full speed at night, and every day researchers came to ask why training was so slow.",
+  "e_scarce": "Not enough compute: three research teams fought over the same batch of GPUs, all the way up to the boss. The boss asked you for an allocation plan. You made a table ranking each team by last month's effective utilization, and took back cards from whoever left them idle. That table cost you two friendships.",
+  "e_oss": "You submitted a patch to an open-source distributed training framework fixing a communication deadlock, and it was merged into the main branch. A maintainer left a thank-you in the comments. You took a screenshot and kept it in your phone's photos.",
+  "e_flop": "The new model the company spent months training scored below the competition on release, and fundraising faltered with it. A round of layoffs took half the research team, a third of the cluster sat empty, and looking at the great gray patch of idle nodes on the dashboard, you found it very quiet.",
+  "e_options": "A new funding round doubled the company's valuation, and on paper your options were worth a down payment on a flat. You worked out the tax you'd owe on exercising them, said nothing, and the next day went back to the bad-GPU list as usual.",
+  "e_poach": "In one week you took five headhunter calls, all looking for people who'd run thousand-GPU training. You told your team lead, who gave you a raise the next day.",
+  "e_storage": "While saving a checkpoint, the storage cluster filled up, and none of the three latest checkpoints were written. The job died again and rolled back sixteen hours. At the post-mortem you made no excuses, and that same day wrote a script that automatically verifies every checkpoint once it's written.",
+  "e_house": "Shanghai was too expensive, so you bought a flat in Jiashan, twenty-odd minutes by high-speed train to Shanghai South. Every morning on the train, you first go through the previous night's alerts.",
+  "e_wedding": "You got married. Halfway through the ceremony, that ringtone went off in your pocket. You silenced it, and that once, a colleague got up in your place.",
+  "e_child": "Your child was born. When the baby cried in the night, you woke at the same moment as that ringtone, and after a while you couldn't tell which had sounded first.",
+  "e_checkup": "The health check said irregular heartbeat and sleep apnea. The doctor asked how many hours you slept a night. You said it depended on whether the cluster behaved that day. The doctor didn't laugh.",
+  "e_parents": "Your mother had an operation back home, and you took leave to go. In the ward you kept the cluster monitoring open. When she woke and saw you watching those curves, she asked whether that was a heart monitor.",
+  "e_35": "A new graduate knew the new GPUs and frameworks better than you, and in one week refactored scheduling logic you'd spent half a year writing. You read through his code, approved it, and added three edge cases underneath that he hadn't thought of.",
+  "e_mentor": "The first newcomer you ever trained became the cluster lead at another company. He messaged you: we've set up that ringtone here too, the same clip you used.",
+  "e_ears": "Years in data centers left a hum in your ears, louder whenever it gets quiet. You started sleeping in noise-cancelling headphones, but you can still hear the ringtone."
+ },
+ "choices": {
+  "c_kernel": {"title": "Dive into kernels, or stay on the platform?", "situation": "The team needs someone who can write low-level kernels, clawing speed out of attention computation and the overlap of communication and compute. Go, and you'll be working through CUDA and hardware manuals from scratch, maybe without one shippable kernel in six months. Stay on the platform, and your fault tolerance and scheduling are about to become the company standard.", "options": [
+   {"label": "Dive into kernels", "result": "Six months of hardware manuals, and your first shipped kernel made training six percent faster. A researcher said six points wasn't much; you worked it out for him: on a month of training, that saves nearly two days."},
+   {"label": "Stay on the platform", "result": "You finished automatic fault tolerance, and night-time manual alerts fell by more than half. Your team lead wrote in the weekly report: from this month on, nobody gets out of bed for a bad GPU."}
+  ]},
+  "c_senior": {"title": "Promotion review: Senior AI Infrastructure Engineer", "situation": "Your team lead says you can apply for Senior AI Infrastructure Engineer this year: owning the stability and efficiency of a ten-thousand-GPU cluster on your own, from parallelism and fault tolerance to communication tuning, and mentoring a newcomer. At the review you'll have to say how far you raised the cluster's effective utilization, and which incident was your fault.", "options": [
+   {"label": "Go for the review", "result": "You talked about that switch at two in the morning and the port inspection routine you added afterwards. A veteran network expert on the panel pressed you with three questions, then gave you a high score."},
+   {"label": "Wait another year", "result": "You said the cluster wasn't stable yet. That year you pushed the bad-GPU rate from eight per thousand to three, and wrote a bad-GPU handbook that circulated across the whole company."}
+  ]},
+  "c_domestic": {"title": "Take on porting to domestic accelerators", "situation": "The company has decided to train a mid-sized model on a batch of Chinese-made AI accelerators, and needs someone to lead the move of the whole training stack: kernels, communication libraries, frameworks, one by one. Go, and you'll spend a year side by side with the vendor's engineers, with more pitfalls than you can count. Stay, and you keep clawing efficiency out of the cluster you know.", "options": [
+   {"label": "Lead the port", "result": "You lived in the vendor's lab for most of a year and hit over two hundred pitfalls. In the end the model finished training on the new accelerators, less than a point behind the old cluster. The vendor's engineers gave you a staff badge printed with your name."},
+   {"label": "Stay on the old cluster", "result": "You raised the old cluster's effective utilization another five points, and for the first time researchers said training was faster than expected."}
+  ]},
+  "c_cloud": {"title": "The big cloud provider comes back for you", "situation": "The cloud provider you used to work for is building a cloud service for large-model training and wants you back as a core engineer: twenty percent more pay, a stable company, no option debts, no bad fundraising years. But what they build is a platform for other people to use, and you'll never again watch over a big job of your own until it finishes.", "options": [
+   {"label": "Go back to the big firm", "result": "You went back to build the training cloud, and in a year set up clusters for dozens of customers. Every time a customer's job finished, you thought of that unfinished bottle of champagne."},
+   {"label": "Stay here", "result": "You turned it down. That month's big job didn't break once, and a researcher sent a red envelope to the group with the note: for Infra."}
+  ]},
+  "c_inference": {"title": "Move to inference, or stay on training?", "situation": "The company's model is live, daily calls are growing faster than training, and inference cost has become the boss's biggest headache. The inference team wants you to bring latency and cost down. But training of the next-generation model is about to start, and your team lead doesn't want to let you go.", "options": [
+   {"label": "Go to inference", "result": "In a year on the inference team you cut the cost per thousand calls by more than half. The boss read out the figure at an all-hands without reading out your name, and you thought that was fine."},
+   {"label": "Stay on training", "result": "You stayed and led the start of the next-generation run. On launch night you watched all night as the curve went down, smooth and steady."}
+  ]},
+  "c_expert": {"title": "Apply for Cluster Technical Lead", "situation": "The company is creating a Cluster Technical Lead post, setting the technical direction for both the training and inference clusters and leading a dozen-plus people, deciding each year which GPUs to buy, how big a data center to build and how to divide it among research teams. If you get it, you'll rarely get up in the night yourself, but after every major incident, you'll be the one explaining it to the boss.", "options": [
+   {"label": "Apply", "result": "Your pitch was a single chart: over these years, for every GPU and every hour, how much was actually computing. Management looked at it for a long time and asked where the rest of the time went. You went through it item by item for twenty minutes."},
+   {"label": "Stay hands-on", "result": "You recommended a colleague and kept working on communication and kernels. Whenever the young engineers hit the strangest hang, they came to you first."}
+  ]},
+  "c_chipco": {"title": "A chip company wants you to run its software stack", "situation": "A company making AI chips wants you as head of its software stack, so that large-model companies can all train on their accelerators. Thirty percent more pay and more options, but a different kind of work: moving from the side that uses the chips to the side that makes them.", "options": [
+   {"label": "Join the chip company", "result": "You deleted that ringtone from your phone, thought for a moment, and set a new one.", "end": "From then on you ran the software stack at a chip company, taking your team from one large-model company to the next to port their training. Many years later, someone at a launch event said their model had been trained on your chips, and in the audience you applauded for a long time."},
+   {"label": "Stay", "result": "You turned it down, but reviewed their architecture twice. You told them: get the communication library stable first; nothing matters more."}
+  ]},
+  "c_chengdu": {"title": "Back to Chengdu, to a state-owned computing center", "situation": "Your hometown of Chengdu has built a new state-owned AI computing center and wants you as technical lead. Twenty percent less pay, stability almost like a permanent state post, no more fundraising or layoffs; your parents are getting older, and your child could eat dinner at the grandparents'. But that cluster is rented out to others, and there won't be any more nights of training a big model straight through.", "options": [
+   {"label": "Go back to Chengdu", "result": "The first time you walked into that data center, the rows of new racks didn't have a single GPU running yet. You stood there a while, then said: let's start here.", "end": "You spent many years at the Chengdu computing center, scheduling GPUs and building clusters for dozens of universities and companies. Late at night, with the data center lights blinking, you sometimes still thought of that meeting room on the riverside where the champagne was opened."},
+   {"label": "Stay in Shanghai", "result": "You stayed, and went back to Chengdu once a quarter. When your parents asked what exactly you did, you said: I guard the door of a very, very big computer."}
+  ]},
+  "c_chief": {"title": "Go up for Chief Architect", "situation": "The company wants a Chief Architect over all its compute: several data centers, tens of thousands of GPUs, a budget of billions a year, answerable for whether the next generation of models can be trained. You'd present compute plans to the boss and investors, negotiate prices with chip vendors, settle quotas with the power company and data centers, and when something big breaks, the first call comes to you.", "options": [
+   {"label": "Go for it", "result": "At the review you covered three things: which GPUs to buy next year, which data center to close, which money shouldn't be spent. An investor asked what you feared most. You said: the day nobody wakes up in the night anymore, because that means nobody's watching."},
+   {"label": "Don't apply; lead your own team well", "result": "You said you'd rather stay close to the cluster. In their first month the new architect came to see you every day to hear about every two a.m. of all those years."}
+  ]}
+ },
+ "endings": {
+  "retire": "On your last day you set that ringtone back to the default, and the last page of your handover document listed the version number of the bad-GPU handbook. The young engineers were looking over the config for a new job, tens of thousands of GPUs. You glanced at the parallelism strategy and said nothing. Outside, the wind off the Huangpu was strong. You put your phone in your pocket, and it didn't ring all night.",
+  "burnout": "That year you went months without a full night's sleep, and once on the high-speed train your chest tightened; you went straight from the station to the hospital. You quit and rested at home for most of a year, deleted that ringtone, and walked along the river every morning. One night you still woke up, and lay in bed listening for a long time. The house was very quiet."
+ },
+ "stages": [
+  "You own scheduling and fault tolerance for training jobs on a thousand-GPU cluster: restarting dead jobs at night, isolating bad GPUs, watching the utilization dashboard, working problems through with the storage and network teams. You deal most with researchers and the on-site operations crew. When you say swap a server, the site does it, but stopping a big job needs your team lead's nod.",
+  "You own the stability and efficiency of a ten-thousand-GPU cluster on your own: setting parallelism strategy, tuning communication, pushing down the bad-GPU rate, load-testing before big runs start. You mentor one or two newcomers and review their changes; you plan training with the research leads, and on the night a big run starts, the one watching the monitors is you.",
+  "You set the technical direction for both the training and inference clusters and lead a dozen-plus people. You decide which GPUs to buy each year, how big a data center to build, how many GPU-hours each research team gets, and settle quotas with chip vendors, data centers and the power company. You rarely get up at night now, but the final signature on every major post-mortem is yours.",
+  "You run all the company's compute: several data centers, tens of thousands of GPUs, a budget of billions a year. You present compute plans to the boss and investors, negotiate prices and roadmaps with chip vendors, explain energy use and safety to regulators and data centers. Whether the next generation can be trained is, in the end, your judgment. One habit remains: on the night a big run starts, you're there."
+ ],
+ "work": [
+  "A researcher said his job slowed down every six hours. In the logs you found that at every checkpoint, all the nodes wrote to storage at once. You staggered the writes, and the curve flattened immediately.",
+  "The on-site crew sent a photo of a fiber connector gone black. You checked the monitoring: that node had dropped offline nine times this month. You had them replace every connector in that row.",
+  "A new researcher's jobs never got scheduled. You looked at his config: he'd asked for two thousand GPUs when three hundred would do. You fixed it, and ten minutes later the job was running.",
+  "Before the next-generation run, you load-tested on five hundred GPUs for a week, deliberately pulling cables, cards and storage, rehearsing every failure you could think of, and wrote it all into the launch plan.",
+  "A newcomer you mentor changed one scheduler parameter, and the next day the whole cluster's queue was in chaos. You didn't scold him. You rolled back the change with him, then wrote a rule together: scheduler changes run on a small cluster for three days first.",
+  "A research team wanted to make the model's context four times longer, and memory wasn't enough. You worked with them to change how the model was split in parallel, moved part of the activations to host memory, and in the end it took only twenty percent more GPUs.",
+  "Year-end procurement, and three chip vendors came with quotes. You had the team train the same model on each vendor's hardware for a week, and put the real effective compute and failure rates in one table. The cheapest came last.",
+  "Two research teams fought their way up to you over next month's GPUs. You didn't divide them by who shouted loudest, but by whose GPU-hours last quarter had produced usable results, and left the losing team a guaranteed minimum.",
+  "Power rationing was coming to the Ningxia data center again for summer. After three rounds of talks with the data center and the power company, you moved training to full load at night and throttled by day, and the whole summer you were never cut off once.",
+  "Investors asked whether to build another ten-thousand-GPU data center next year. You didn't talk specs. You gave them three numbers: how much time each GPU now sits idle, how many GPU-hours the next model needs, and the cost difference between renting and building.",
+  "Three days into a big run, a whole row of racks lost power. On the phone you first told everyone not to touch anything, worked out the loss from the checkpoint, then brought the rows back one by one. By the next morning the job was running again.",
+  "You set one rule for the whole company: any training job submitted by an AI agent has a cap on GPU-hours per night, stops automatically when it hits it, and can't restart until a person has looked the next morning."
+ ],
+ "past": [
+  "You went to middle school in Chengdu, and took the family's old computer apart and put it back together again and again. Your proudest moment was installing the operating system yourself; you remembered the sound it made when it booted for years.",
+  "In the gaokao (college entrance exam) you got into computer science at a university in Xi'an. You chose it because you'd heard its computer labs were open twenty-four hours a day.",
+  "In your second year you worked as a student assistant at the university's supercomputing center. Your job was watching rows of racks and rebooting whichever one raised an alarm. For the first time you felt that keeping machines running without stopping was an interesting thing.",
+  "You got into a master's program at a university in Shanghai, in computer architecture, under an advisor in distributed storage. Your thesis was about keeping a storage system writing even with three disks failed.",
+  "After graduating you joined a cloud provider's container platform. On your first big-sale shift you watched tens of thousands of services scale up at once, your palms soaked with sweat.",
+  "When the large-model wave hit, your former senior classmate, now at this company on the riverside, called to say their training cluster went down several times a week and they needed someone who understood fault tolerance. You thought about it for a weekend and handed in your resignation."
+ ],
+ "late": {
+  "pension_note": "Estimate: large-model companies in Shanghai mostly pay pension contributions near the ceiling of the social-insurance base, which sits far below actual income, so the basic pension comes to roughly thirty to forty percent of your last monthly salary. Options and savings from your younger years matter more.",
+  "scenes": [
+   "For the first week of retirement you still woke at three every morning and lay waiting for that ringtone, and while you waited, fell back asleep.",
+   "A university invited you to talk to graduate students about large-scale training. You spent an afternoon on bad GPUs and two in the morning, and the students listened more closely than they did to the algorithms.",
+   "Your grandchild asked what you used to do. You said you guarded the door of a very, very big computer. He asked how big. You thought and said: about as big as a football field.",
+   "In the first months after quitting, you slept through to daylight for the first time. When you woke, the sun was already on the pillow, and you lay there stunned for a long time.",
+   "You took up cycling along the river on the Xuhui Riverside, from the Long Museum to under the Lupu Bridge, then sat on the steps watching the boats on the river.",
+   "At a reunion, old colleagues said bad GPUs were all fixed by AI now and no one got up at night anymore. You said that was good, then asked: so who's watching the AI?",
+   "In your first year on a different path, whenever a new model was released, you found its technical report and turned to the end to see how many GPUs they'd used and how many times it broke.",
+   "At an industry conference you ran into one of the old researchers, now chief scientist at a company. He said that forty-day run, he'd always remembered who got up in the night.",
+   "On a work trip through Zhongwei you went out of your way to look at the data center from outside. The sign at the gate had changed. The desert was the same desert, and when the wind blew, your mouth still filled with sand.",
+   "On an old computer you found the post-mortem titled Two A.M., a dozen-plus pages, the diagrams ugly, but every step written out clearly.",
+   "The old family computer in Chengdu was long gone. On a visit home you found one of its network cables in a cupboard, neatly coiled. You didn't know who had put it away."
+  ],
+  "closing": {
+   "retire": "One night many years later you woke at home. It was quiet outside and the phone on the bedside table made no sound. You listened to your own breathing for a while, even and steady, like a loss curve heading down. You turned over and went back to sleep.",
+   "burnout": "Many years later you sat on the steps by the Huangpu as boats passed one after another and lights came on one by one. Your phone was at home, and nothing would ring. You just sat there until the cool wind came up.",
+   "end": "Many years later you found the access card from that data center trip in a drawer, the name Zhongwei printed on it. You ran a finger over it. Its edges had worn round. You put it back."
+  }
+ }
+}

@@ -1,0 +1,186 @@
+{
+ "id": "drone-pilot-xj",
+ "occupation": "Drone Pilot",
+ "role": "Crop-spraying Drone Pilot in the Cotton Fields",
+ "headline": "Raised in Aksu's cotton country, with a family farm of over a hundred mu of cotton, just licensed as a drone operator and riding a pickup between cotton fields with the lead pilot through a first spraying season",
+ "unit": "An agricultural drone crop-protection service team in Aksu",
+ "unit_type": "Agricultural drone spraying team",
+ "city": "Aksu",
+ "city_tier": "Fourth-tier",
+ "education": "Associate degree (modern agricultural technology)",
+ "level": "You have your licence, and your figure-eights on the simulator are rock steady. But at the edge of a real cotton field, reading the wind, mixing the spray, changing batteries, and explaining to a farmer what it costs per mu, you're half a beat behind on everything.",
+ "intro": "Your home sits among Aksu's cotton fields, and as a child you watched grown-ups walk the rows all day with sprayers on their backs. Now you're in the passenger seat of the spraying team's pickup, and in the back are two folded crop-spraying drones, eight batteries, a generator and some drums of pesticide. The lead pilot, Ma, is six years older than you. He says: the machine flies itself, but whether it flies is your call. From today, the cotton fields around Aksu are yours to fly, one field at a time.",
+ "salary_note": "Estimate: Aksu's spraying teams pay a base wage plus a cut per mu sprayed. In the May-to-September season of spraying, topping and defoliating, a month can bring two or three times a normal month, and winter has little work. Taken at the national figure.",
+ "facts": [
+  { "label": "Spraying Pilot, Ground Crew Assistant (current level)", "value": "0–1 years, ¥4,000–6,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Lead Spraying Pilot (1–3 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Surveying the site and deciding whether to fly", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Mapping fields and planning flight paths", "source": "AI exposure" },
+  { "label": "Open positions", "value": "4 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You set off before dawn; the early morning, when the wind is lowest, is the best time to spray. The pickup runs down a dirt road with cotton on both sides, insects flitting through the headlights.",
+  "At the field edge you launch the mapping drone for one circuit first. A three-hundred-mu cotton field slowly appears on the screen, the power pole at the end of the field marked as a red dot.",
+  "Mixing. The farmer, Old Zhou, brings a bag of mepiquat and a drum of foliar feed. You weigh them out to the sheet, add water and stir, then fill the tank wearing a mask and gloves.",
+  "Ma taps the ground station, and the drone lifts off with a hum, spraying its way along the planned path row by row. You mind the generator, charging the next battery.",
+  "The wind gets up and the anemometer on your phone jumps to force four. Ma looks over at the watermelons in the next field and says: stop, we'll see this afternoon. You bring the drones back in.",
+  "Naan and cold noodles under the poplars at the field edge. Old Zhou brings a pot of tea and asks how long after spraying he'll see results. You say a week, and he nods.",
+  "The sun dips and the wind drops again. You fly the remaining hundred-odd mu, and by the time it's fully dark the pickup's headlights are lighting the drones in to land one after another.",
+  "Back at your lodgings you strip the nozzles, wash out the tanks, check the propellers and plug all eight batteries in to charge. The platform on your phone shows: 420 mu sprayed today."
+ ],
+ "ladder": [
+  { "title": "Spraying Pilot (Ground Crew Assistant)", "stage": "With the lead pilot", "focus": "Mix and load spray, swap batteries, mind the generator, help map fields and check flight paths with the lead pilot, and build up flying hours." },
+  { "title": "Lead Spraying Pilot", "stage": "Flying your own", "focus": "Run your own drone with one ground crew: from mapping and path planning to finishing and checking the job, hundreds of mu a day, settling up with the farmers." },
+  { "title": "Spraying Fleet Leader", "stage": "Leading a fleet", "focus": "Lead five or six drones and about ten people, schedule the work for a state farm or several townships, agree the spray programme with the agronomists, and be the first one they come to when something goes wrong." },
+  { "title": "Spraying Service Station Manager", "stage": "Running a county", "focus": "Run a county's fleet, orders and equipment, negotiate prices with cooperatives, farm-supply shops and manufacturers, and train new pilots for their licences." }
+ ],
+ "ai_tasks": [
+  { "name": "Surveying the site and deciding whether to fly", "how": "How strong the wind is, where the power poles and windbreaks are at the field edge, whether the next field is growing melons or vegetables that can't take the spray: the pilot has to stand at the edge and see. Whether to fly, and when, is a person's call and a person's responsibility." },
+  { "name": "Mapping fields and planning flight paths", "how": "A mapping drone can produce a field map in one circuit, and the ground-station software lays out flight paths automatically by row spacing, spray width and obstacles. The pilot only checks that the boundaries and obstacles are right." },
+  { "name": "Autonomous spraying flights", "how": "With RTK positioning and autonomous routes, the drone flies, sprays and returns to swap batteries by itself. When the ground rises and falls, the wind suddenly gusts or the signal drops, the pilot still has to be watching the screen, ready to take over." },
+  { "name": "Setting spray rates by crop growth", "how": "Multispectral images can produce prescription maps of the cotton's growth and pests, showing where to spray more and where less. How to mix the chemicals and whether they can be combined is decided with the agronomist and the farmer." },
+  { "name": "Batteries, nozzles and airframe maintenance", "how": "The system can count battery cycles and warn of blocked nozzles. Whether a propeller is cracked, a nozzle needs stripping and cleaning or a battery has swollen, the pilot checks item by item after every day's work." },
+  { "name": "Dealing with farmers and state farms", "how": "How much per mu, whose fault it is if the spraying doesn't work, how to compensate when spray drifts onto a neighbour's land: someone has to explain it face to face and take it on." }
+ ],
+ "events": {
+  "e_crash": "The first time you take manual control yourself, you miss a guy wire at the field edge. A propeller catches it and the drone plunges into the cotton. Nobody's hurt; one arm is broken. Ma doesn't shout at you. He just says: next time, look for the wires first.",
+  "e_season": "In the twenty days of July topping, you leave at five every morning and pack up at eleven at night, each of you flying six or seven hundred mu a day. That month's commission slip comes to more than your father clears from a year of cotton.",
+  "e_drift": "The day you spray defoliant, the wind shifts and a little drifts into the jujube orchard next door, curling the leaves on a few trees. You pay compensation, and in your notebook you write: defoliant, no flying if the wind's wrong.",
+  "e_mite": "Spider mites break out, and tens of thousands of mu of cotton on a state farm all need spraying at once. Your five drones fly ten days straight, and farmers at the field edges film you on their phones, saying it's far faster than people with backpack sprayers.",
+  "e_home": "You spray your own family's hundred-odd mu of cotton, done in an hour. Your father stands at the field edge watching the drone pass row by row and says nothing for a long time. Then: I used to walk three days with a sprayer on my back.",
+  "e_heat": "July noon, the ground over forty degrees, and you're changing batteries at the field edge with your protective suit full of sweat. That afternoon you get heatstroke and lie on the back seat of the pickup for an hour.",
+  "e_battery": "A battery swells and starts smoking while charging. You grab it, carry it out to open ground and bury it in sand. That night you check every battery and retire three more.",
+  "e_license2": "You pass a higher grade of operator licence and can fly bigger machines now. You photograph the certificate and send it to your father, who forwards it to the village group chat.",
+  "e_winter": "There's no work in the cotton fields in winter, so some of the team go to fly rice in Hainan and sugarcane in Guangxi. You go along for one winter, and see the sea for the first time, and fly over a cane field with your heart in your mouth for the first time.",
+  "e_marry": "You marry your partner, who works at a farm-supply shop in the town. The wedding is in October, after the cotton is all in and there's no work in the fields, and the whole team comes.",
+  "e_child": "Your child is born in the middle of spraying season. You spend two days at the hospital, and before dawn on the third you're back at the field edge, with a bag holding a baby bottle on the back seat of the pickup, for the drive home.",
+  "e_swarm": "The team brings in swarm flying, and you watch three drones flying at once on a tablet, the system telling you which needs a battery swap and which should give way. That day you fly twelve hundred mu on your own, and at night when you close your eyes all you see is flight paths.",
+  "e_rx": "The company starts using multispectral prescription maps, which show clearly which fields are growing strong and which have pests, cutting spray use by a fifth. One patch on the map is marked as disease. You walk over and find a dip that has filled with water.",
+  "e_auto": "The new drones map, plan, spray and come back to swap batteries by themselves. More and more of your time at the field edge is spent watching a screen, and one day you realise you haven't touched the remote controller all day.",
+  "e_debt": "A cooperative leaves its spraying bill unpaid for six months. You go five times and before New Year get half of it back. The other half, they say, they'll pay in cotton next year.",
+  "e_lungs": "Years of mixing chemicals and standing near spray mist, and your throat is always sore. At your medical the doctor tells you to wear a proper respirator without fail. You buy a better one, and in summer it's so stifling you can hardly breathe.",
+  "e_dust": "A sandstorm blows in from the south and the sky turns yellow at once. You put the drones in the pickup and wait in the cab for three hours. When you get out, the cotton leaves are coated in dust.",
+  "e_teach": "A new pilot takes manual control for the first time and doesn't see a guy wire at the field edge. You shout; he climbs, and the drone skims over the wire. He's gone white. You say: next time, look for the wires first.",
+  "e_house": "You buy a flat in Aksu city so your child can go to school in town. The balcony faces south, and on clear days you can see the cotton fields in the distance.",
+  "e_eyes": "Years of staring at screens and squinting into the sun at drones overhead, and your eyesight starts to go. You get a pair of sunglasses and a pair of reading glasses and swap between them at the field edge."
+ },
+ "choices": {
+  "c_city": {
+   "title": "Go to the city to fly power-line inspections",
+   "situation": "A classmate flies power-line inspections for a company in Urumqi and says they need licensed pilots: no pesticide smell, work all year round, steady pay. But you're only just getting the hang of the cotton fields, and your home is here.",
+   "options": [
+    { "label": "Stay in the cotton fields", "result": "You say you like field work, watching the land you've flown turn green and then white. When Ma hears, he has you take a drone out on your own the next day." },
+    { "label": "Go and have a look", "result": "You spend a winter in Urumqi flying inspections with your classmate, a whole winter of pylons. In spring you come back and say the cotton fields are more interesting after all." }
+   ]
+  },
+  "c_captain": {
+   "title": "Become a lead pilot",
+   "situation": "The team has two new drones and needs lead pilots. Ma says you can try: run your own drone and one ground crew, from mapping to finishing and checking the job, and settle up with the farmers yourself. If something goes wrong, that's yours too.",
+   "options": [
+    { "label": "Take it", "result": "Your first day leading, you fly three hundred mu, half what Ma does. That night you go over every field's flight path again, and the next day you fly four hundred and fifty." },
+    { "label": "One more season learning", "result": "You say you'd like one more season with Ma, to see defoliation and topping through. That season you write down how to mix every chemical and how the wind blows on every field." }
+   ]
+  },
+  "c_buy": {
+   "title": "Buy your own drones and go independent",
+   "situation": "A crop-spraying drone with batteries and a generator costs a hundred thousand or so, part of it covered by the farm-machinery subsidy. With your own drones you could take the work in your village and a few around it, and everything you earn is yours; and so is every breakdown, every lean spell and every unpaid bill.",
+   "options": [
+    { "label": "Buy your own drones", "result": "You take out a loan, buy two drones, and have your phone number sprayed on the pickup door.", "end": "You become your own lead pilot, flying Aksu's cotton fields all year round. Everyone in the village has your number saved, and when someone needs spraying, they first ask which day you're free." },
+    { "label": "Stay with the team", "result": "You say the team is steadier: people to work with, someone else to chase the bills. Ma says: then do it well; one day the fleet will be yours." }
+   ]
+  },
+  "c_ai": {
+   "title": "Learn prescription maps and swarm flying or not",
+   "situation": "The company is bringing in multispectral prescription maps and one-pilot, many-drone swarm work, and wants a few pilots to train with the manufacturer over the winter. Afterwards you could watch three or four drones at once, but you'd spend most of your time staring at a tablet and reading maps with the agronomists.",
+   "options": [
+    { "label": "Go and learn", "result": "You learn to tell on a prescription map which patch really has pests and which is just short of water, and to swap batteries on three drones at once on your own." },
+    { "label": "Keep flying one at a time", "result": "You say you still like one drone to one field; it flies steadier. A few years later the whole team has switched to swarms, and you learn it from page one of the manual." }
+   ]
+  },
+  "c_lead": {
+   "title": "Become Spraying Fleet Leader",
+   "situation": "The company has won a year's crop protection for tens of thousands of mu of cotton on a state farm and needs a fleet leader for five or six drones and about ten people: schedule the work, agree the spray programme with the agronomists, handle the billing. If spray drifts or results are poor, the farm comes to you first.",
+   "options": [
+    { "label": "Take it", "result": "For the first time you sit in the state farm's meeting room planning the work with agronomists and company heads, your phone filling up with thirty-odd company commanders' numbers. That season, you don't miss a single mu." },
+    { "label": "Keep flying yourself", "result": "You say you'd still rather be flying at the field edge. The post goes to someone else, and he always sends you to the hardest fields." }
+   ]
+  },
+  "c_family": {
+   "title": "Fly the whole peak season, or keep time for family",
+   "situation": "Your child is small, and every spraying season you're away for a month at a time. The company says take more jobs in the peak, double commission; or you could take only the work around the city and be home every day, for a lot less money.",
+   "options": [
+    { "label": "Fly the whole season", "result": "That summer you're in the fields the whole time. The day your child learns to say Dad, you're changing batteries on a state farm three hundred kilometres away." },
+    { "label": "Only take work nearby", "result": "Every evening you come home and walk round the estate with your child in your arms. Less money, but when your child says Dad for the first time, you're right there." }
+   ]
+  },
+  "c_station": {
+   "title": "Become Spraying Service Station Manager",
+   "situation": "The company is setting up a crop-protection service station in the county to run all its fleets, orders and equipment, negotiate prices with cooperatives, farm-supply shops and manufacturers, and train new pilots for their licences. More time in the office, less at the field edge.",
+   "options": [
+    { "label": "Take it", "result": "For the first time you hang a map of the whole county on the station wall and circle every cooperative in red. That year, your station sprays two hundred thousand mu." },
+    { "label": "Keep leading the fleet", "result": "You say you can't leave the field edge. The post goes to someone else, and whenever he hits a difficult cooperative, he phones you first." }
+   ]
+  },
+  "c_farm": {
+   "title": "Go home and lease cotton land",
+   "situation": "Your father is getting old and can't manage the family's hundred-odd mu any more, and several households in the village want to lease out their land. You know the chemicals, the machines and the land. Lease a thousand mu, grow it and fly it yourself; but cotton prices and the weather are out of your hands.",
+   "options": [
+    { "label": "Go home and farm", "result": "You quit the company, sign the lease contracts, and park your own drone in your family's yard.", "end": "You become one of the village's big growers, with a thousand mu of cotton, every pass from sowing to defoliation flown by your own drones. In autumn, as the cotton pickers roll into the fields, you stand at the edge, just like your father once did, saying nothing for a long time." },
+    { "label": "Keep flying", "result": "You say you still like flying. You help your father lease his land to a big grower in the village, and every year you're still the one who flies it." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "At the end of your last spraying season you fly the last field and watch the drone settle slowly at the edge. You hand the controller and the mixing notebook you kept for decades to a young pilot at the station, and tell him: the machine flies itself, but whether it flies is your call. You drive the pickup back, the cotton white on both sides.",
+  "burnout": "Your throat and your eyes went together, and the doctor said you can't stand by spray mist any more. You stopped going to the fields and looked after batteries and parts in the station's storeroom, plugging them in one by one every day and logging their cycles. On spraying-season mornings you stand at the storeroom door watching the pickups drive out one after another."
+ },
+ "stages": [
+  "You're Ma's ground crew: at the field edge you launch the mapping drone first, then mix and load spray to the sheet and mind the generator charging batteries, and the moment a drone lands you rush in to swap its battery and refill. When Ma watches the screen you watch too, seeing where he stops and why; after work you strip the nozzles, wash the tanks and check the propellers, missing nothing.",
+  "You run your own drone with one ground crew. At the field edge you check the wind, the power poles and what's growing next door before you decide whether to fly; you check the path on the ground station and watch the screen in flight, ready to take over. When the spraying is done you walk the field with the farmer, then write his bill and settle up on your phone.",
+  "You lead five or six drones and about ten people. Every evening you plan the next day's work on a tablet: which drone goes to which farm company, which field gets flown first. By day you drive the pickup back and forth between fields checking each drone's progress. You agree spray programmes with the agronomists and reconcile the area sprayed with the state farm's people; if spray drifts or results are poor, the first call comes to you.",
+  "A county's fleets, orders and equipment are yours to run. You negotiate year-round contracts with cooperatives, chemical prices with farm-supply shops, and new drones and after-sales service with manufacturers. In winter you teach new pilots at the station and take them through their licences; in spraying season you still drive out to the field edges to look round and watch your people fly."
+ ],
+ "work": [
+  "Ma has you mix a drum of defoliant. You weigh it out to the sheet twice and check the dilution against the label again before pouring it into the tank. He glances at it and says: right.",
+  "A drone lands with one nozzle's flow lower than the others. You take it off and find the filter caked with residue. Rinsed clean and refitted, it's fine.",
+  "After the mapping drone finishes a field, you notice on the screen that a newly planted poplar at the edge hasn't been marked. You add an obstacle point by hand, and Ma nods.",
+  "A farmer asks why his field costs one yuan more per mu. You open the flight map and show him: the ground rises and falls a lot, so it needs two extra passes. He looks it over and signs.",
+  "Halfway through a field a gust comes, and on screen you see the drone pushed half a metre off line. You take manual control at once, climb, hover, and wait for the gust to pass before carrying on.",
+  "After spraying a field you walk into the middle with the farmer and crouch to turn over a few cotton leaves and look at the droplets. They're on the undersides too, and you say this pass went on evenly.",
+  "In the evening you plan five drones' work for the next day on the tablet, grouping the nearby fields together, saving the pickup forty kilometres and leaving enough batteries.",
+  "A state farm company commander says there are still pests in a field you sprayed. You go with an agronomist to look, and find it rained the day after spraying. You respray it free of charge.",
+  "A new ground crew mixes two chemicals in the wrong order and the drum curdles. You have him pour it out and start again, and write the order on the mixing sheet once more in red.",
+  "A cooperative wants to sign a year's contract for thirty thousand mu and pushes the price right down. You spend an evening working out batteries, labour and fuel, show them a table the next day, and the price comes back up.",
+  "In winter you teach a dozen new pilots at the station, and instead of the textbook you talk about every wire and every gust you've met at field edges over the years.",
+  "A manufacturer comes to sell a new model, saying one does the work of two. You have them fly it over the hardest field you know, look at the data, and order only half as many."
+ ],
+ "past": [
+  "You're in your last year of middle school in a village in Aksu, where your family grows over a hundred mu of cotton. Every summer you go into the fields with your parents to top the plants and spray with backpack sprayers, and get burnt dark by the sun.",
+  "In your second year of high school, a crop-spraying drone comes to the village for the first time, humming over the cotton all morning. You follow it across several fields, watching the pilot tap a tablet at the field edge.",
+  "Your gaokao (college entrance exam) score isn't high, and you apply to the modern agricultural technology course at an agricultural vocational college. You study crops and pesticides, and take an elective in agricultural drones.",
+  "In your college summer holidays you go home to work as ground crew for the village spraying team, mixing spray and changing batteries. One summer earns you a term's living costs.",
+  "After graduating you sit the drone operator licence, passing the theory on the second try. The day you get the licence, the Aksu spraying team phones you."
+ ],
+ "late": {
+  "pension_note": "Estimate: the team paid social insurance at the local minimum base, with gaps in the early years. The pension comes to a little over thirty percent of your last monthly pay, which with rent from the family land is enough to live on in Aksu.",
+  "scenes": [
+   "Your first summer of retirement, you wake at five in the morning and hear a drone passing outside the window. You lie and listen a while, and can tell which model it is.",
+   "You take your grandchild to the edge of a cotton field to watch a drone spraying, and they chase after it the way you once did.",
+   "When the village's young pilots run into trouble with their drones, they still drive over to ask you. You stand at the field edge, look at the wind, and say: wait half an hour.",
+   "Ma has retired too. The two of you eat pilaf at a restaurant in Aksu, and all the talk is about which year's spider mites and which year's gales.",
+   "You look after batteries in the station storeroom, plugging them in to charge one by one every day. On spraying-season mornings you stand at the door watching the pickups go out.",
+   "Your throat is a little better. You plant a few cotton plants in the flowerbed on your estate, and when they flower, the neighbours all come to look.",
+   "Your child gets into university to study agricultural engineering and says they want to build better spraying drones one day. You say: then teach it to see wires first.",
+   "Your first summer away from the team, you wake at five every morning and check the wind speed on your phone.",
+   "You do well in the new place. Whenever you pass a cotton field, you glance at the leaves to see whether there are many pests this year.",
+   "The old team are still in a group chat, and when spraying season comes round the photos start: field edges before dawn, a row of drones.",
+   "Later, in the cotton fields, the drones mapped, planned, sprayed and came back to swap batteries by themselves, and prescription maps told them where to spray more and where less. But the new power pole at the field edge, the melon seedlings next door that couldn't take the spray, still needed someone standing there looking.",
+   "One autumn evening you stand at the edge of a cotton field as a cotton picker moves slowly through it, leaving white behind. There isn't a single drone in the sky. It's very quiet."
+  ],
+  "closing": {
+   "retire": "Early one morning many years later you sit on the balcony as a few drones fly over the distant cotton fields, passing row by row, the way you used to fly. You watch them until the sun is up.",
+   "burnout": "Many years later you still have the first battery you ever retired, its cycle count written on the casing in marker pen. You keep it on the bookshelf, beside the mixing notebook.",
+   "end": "Many years later you find in a drawer the licence you passed that first time, your face in the photo burnt dark by the sun. You look at it a while, then put it back where it was."
+  }
+ }
+}

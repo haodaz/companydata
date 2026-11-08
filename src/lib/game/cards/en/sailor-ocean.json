@@ -1,0 +1,197 @@
+{
+ "id": "sailor-ocean",
+ "occupation": "Sailor (Deck Rating)",
+ "role": "Trainee Sailor on an Ocean-going Bulk Carrier",
+ "headline": "A farm boy from southwest Shandong, sent by a Qingdao crewing agency onto a foreign-flagged ocean bulk carrier, signing his first nine-month contract as a trainee sailor",
+ "unit": "A crewing agency in Qingdao (posted to a foreign-flagged ocean bulk carrier)",
+ "unit_type": "Crewing agency",
+ "city": "Qingdao",
+ "city_tier": "New first-tier",
+ "education": "Vocational college (navigation, deck rating track)",
+ "level": "You have just got your four basic safety certificates and your watch-rating training. You can tie the knots and you know the helm orders by heart, but on a real ship chipping rust, handling lines and standing at the wheel all start from zero.",
+ "intro": "Your luggage is one thirty-inch suitcase, half of it instant noodles, pickled mustard tuber and pancakes from home. The agency's van takes you from Qingdao to the airport; you are flying to Singapore to join a Panama-flagged bulk carrier with twenty people aboard, twelve of them Chinese. From today, a nine-month contract: once you are up the gangway, that ship is where you live.",
+ "salary_note": "Estimate: crew posted to foreign-flagged ocean ships are paid on a US-dollar contract, only for the months on board; shore leave is unpaid. Taken at the national rate for ocean-going crew. With eight or nine months a year at sea, the yearly total comes out somewhat lower.",
+ "facts": [
+  { "label": "Trainee Sailor, Ordinary Seaman (current level)", "value": "0–2 years, ¥6,500–9,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Able Seaman, watch rating (2–6 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Handling lines, mooring, berthing and unberthing", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Lookout on navigational watch", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The bosun blows a whistle on deck. You pull on your coveralls and steel-toed boots, put on your hard hat and pick up a chipping hammer.",
+  "Breakfast is congee cooked by the Filipino chief cook, with a dish of pickles brought from China. On the whiteboard by the mess door the chief officer has written today's job: derust the edges of No. 2 hatch cover.",
+  "You crouch at the hatch cover chipping rust, one stroke at a time, flakes bouncing off your goggles. Once the sun is up, you can feel the heat of the steel through your gloves.",
+  "Forty minutes' sleep after lunch. Your cabin is aft, and the main engine's vibration runs from the bunk boards right up under your pillow. You can sleep through it now.",
+  "Primer. Old Sun, an able seaman, shows you: roll across first, then down, and touch up the welds with a small brush, or in three months that is where the rust starts first.",
+  "The four-to-eight watch. You go up to the bridge with the third officer to steer. He says \"port five\", you answer \"port five\", and watch the rudder indicator needle creep across.",
+  "Off watch, a quick shower; fresh water is rationed. In the crew lounge someone is playing table tennis, the table leaning slowly to one side with the ship.",
+  "The satellite connection gives you a few dozen megabytes a day. You send home a photo of a sunset at sea, and it takes ages to go through."
+ ],
+ "ladder": [
+  { "title": "Trainee Sailor (Ordinary Seaman)", "stage": "Learning", "focus": "Chip and paint, handle lines, steer and keep lookout beside a watch rating, and build up sea time for the Able Seaman exam." },
+  { "title": "Able Seaman (Watch Rating)", "stage": "On watch", "focus": "Keep one watch with an officer: steering, lookout and gangway duty, and look after your own stretch of deck maintenance." },
+  { "title": "Carpenter (Senior Deck Rating)", "stage": "Deck machinery", "focus": "Look after the windlass, mooring winches, soundings, ballast and fresh-water tanks, and stand at the bow during anchoring, taking orders from the chief officer." },
+  { "title": "Bosun", "stage": "Running the deck", "focus": "Hand out the deck crew's work every morning, manage paint, ropes and stores, and lead the sailors while keeping them from getting hurt." }
+ ],
+ "ai_tasks": [
+  { "name": "Handling lines, mooring, berthing and unberthing", "how": "How the lines go out, when to heave them tight, where to stand so you are not caught by a snapback: all of it is done on deck by sailors watching the ropes and listening to the chief officer. The system can at most flag wind, current and line tension." },
+  { "name": "Lookout on navigational watch", "how": "Radar, AIS and cameras can pick out nearby ships and obstacles and raise alerts. Whether a light on the night sea is a fishing boat or a buoy, and whether to report it, still takes the watch rating's eyes and voice." },
+  { "name": "Steering", "how": "On the open ocean the autopilot has long held the helm. Entering and leaving port, in narrow channels or with a pilot aboard, a sailor still takes the wheel by hand: one order, one reply." },
+  { "name": "Chipping, painting and deck maintenance", "how": "Steel soaked in seawater every day has to be opened up wherever it blisters or rusts through. Greasing winches and replacing hatch-cover seals still need someone with tools, one patch at a time." },
+  { "name": "Soundings, ballast and the deck log", "how": "Level sensors and the electronic logbook record tank levels, course, speed and weather automatically. Sailors only spot-check with a sounding tape and report readings that look wrong." },
+  { "name": "Emergency drills and launching lifeboats", "how": "Abandon-ship, fire and man-overboard drills mean getting into gear, lowering the boat and taking a roll call on a rolling deck. The system can only provide the checklist." }
+ ],
+ "events": {
+  "e_seasick": "Your first time through heavy weather, the ship rolls past twenty degrees and you throw up for three days, whatever you eat. At every meal the bosun brings you a bowl of plain congee and two soda crackers and says it passes once you get through it.",
+  "e_wire": "Old Sun teaches you, hand over hand, to splice an eye into a wire rope: one marlinspike, one mallet. You splice all afternoon and the last strand never lies flat. On the third try he nods.",
+  "e_newyear": "On Chinese New Year's Eve the ship is in the Indian Ocean. The Chinese crew gather in the mess to make dumplings, the dough kneaded with the cook's help, the filling pork and cabbage frozen for two months. At midnight you wish the bridge a happy new year over the walkie-talkie.",
+  "e_noshore": "The ship loads iron ore at an Australian port for three days and the terminal won't let crew ashore. You stand at the rail looking at the streetlights on land and work it out: a hundred and twenty days since you last stood on solid ground.",
+  "e_typhoon": "A typhoon follows the ship for two days. A lashing on a hatch cover works loose, and you and two others go out in life jackets, tied to safety lines, to make it fast again. The waves come over and you can barely open your eyes.",
+  "e_drill": "A port state control inspector comes aboard and calls an abandon-ship drill. You are the first into your life jacket, and your hands are steady as the boat goes down. The inspector ticks his form, and up on the bridge the captain gives you a thumbs-up.",
+  "e_extend": "Your contract is almost up, but your relief's visa hasn't come through, and the agency asks you to stay two more months. You phone home to say you won't make it back for Spring Festival, and there is a long silence on the other end.",
+  "e_cert_ab": "With enough sea time, you sit the Able Seaman exam in Qingdao. The practical is steering and knots. The examiner has you tie a bowline blindfolded, and you do it in three seconds.",
+  "e_back": "Carrying a twenty-litre drum of paint below, the ship lurches and your back gives. You spend a week in your bunk, and the chief officer puts you on bridge watch with no heavy work.",
+  "e_wedding": "In four months of shore leave you get married, to a primary school teacher from your home county town. At the banquet your cousin eggs you on to talk about the sea. You say there's mostly water out there, and everyone laughs.",
+  "e_baby": "Your child is born while you wait for a berth at a South American anchorage. The photo arrives a week later, and under the blanket you zoom in on it again and again.",
+  "e_crew": "A new batch of Myanmar sailors joins the ship. With no common language, you use your hands and draw on the deck to show them how to coil a line in a figure eight. A month later they call you big brother.",
+  "e_ai_watch": "The new ship has a smart lookout system whose cameras draw boxes around nearby vessels on a screen. On the night watch it boxes a floating fishing net as a \"small craft\", and misses a wooden boat with no AIS. You saw that one first, through the binoculars.",
+  "e_autolog": "Soundings and ballast readings are now uploaded by sensors, and the morning round of dipping each tank with a tape is half gone. You still dip twice a week, and once you catch a sensor that has drifted twenty centimetres.",
+  "e_mooring": "During berthing a line suddenly goes as taut as a bowstring. You shout at the new boy to stand back and step back two paces yourself. The line holds, the ship comes alongside cleanly, and the chief officer comes down and claps you on the shoulder.",
+  "e_pay": "The shipowner runs into money trouble and wages are two months late. The agency negotiates and advances part of it, and for those two months hardly anyone talks at meals.",
+  "e_house": "After a few years' savings you buy two flats in the county town, one for your parents and one for yourself, a hundred and twenty square metres each. You pay the deposits; the rest comes out of your dollar wages every month.",
+  "e_kid_call": "Your child has started primary school and asks on a video call: Dad, has your ship gone round to the back of the Earth? You say yes, and the child says, so when it's daytime here, it's night where you are.",
+  "e_bosun_young": "The new trainee sailor, barely twenty, is so seasick on his first day he can't stand. You bring him a bowl of plain congee and two soda crackers, exactly as you once got.",
+  "e_knee": "Twenty years of climbing vertical ladders, and your knees start to hurt. The ship's medicine chest gives you a tube of ointment; the doctor ashore gives you an X-ray and one sentence: fewer ladders.",
+  "e_physical": "At the seafarer's medical, every five years, your blood pressure is high. The doctor prescribes pills and says if it's higher next time you won't pass. Back aboard, you give up half the pickles.",
+  "e_autoship": "At a company meeting someone talks about reduced-crew ships: automatic mooring, remote monitoring, maybe a dozen people per ship one day. Back on deck, you look at the line in your hands and decide it can't do without people just yet."
+ },
+ "choices": {
+  "c_first_contract": {
+   "title": "First contract over: back to sea or not",
+   "situation": "Nine months, five kilos lighter, hands covered in calluses. The agency calls to ask when you can join the next ship. Your father says the corn needs bringing in, the logistics park in the village is hiring forklift drivers, so stay home a while and see.",
+   "options": [
+    { "label": "Back to sea", "result": "Two months at home, then you wheel the thirty-inch suitcase to the airport again. This time there are half as many noodles in it, and an Able Seaman question bank." },
+    { "label": "Stay home six months", "result": "You drive a forklift at the logistics park for half a year, home for dinner every night. After New Year you phone the agency anyway, with a six-month gap in your sea-time record." }
+   ]
+  },
+  "c_shiptype": {
+   "title": "Move to tankers or stay on bulk carriers",
+   "situation": "The agency says a product tanker needs an able seaman: twenty percent more than a bulk carrier, but you'd need the tanker endorsement first, and the ship runs on rules: tank cleaning, explosion protection, a checklist for every step.",
+   "options": [
+    { "label": "Go to tankers", "result": "One more certificate, and on your first gangway watch on a tanker even your phone goes off into an explosion-proof box. Your pay slip gets longer." },
+    { "label": "Stay on bulkers", "result": "You say bulk carriers are rough work but you know them. The next one is another Capesize, running iron ore from Brazil to Qingdao." }
+   ]
+  },
+  "c_ab": {
+   "title": "Go for the Able Seaman (watch rating) berth",
+   "situation": "One of the able seamen is signing off, and the chief officer says a trainee can step straight up, provided he passes this voyage's steering and lookout assessments and gets his own Able Seaman certificate.",
+   "options": [
+    { "label": "Go for it", "result": "All voyage you are on the bridge ten minutes early for every watch, and you answer the third officer's helm orders more clearly than anyone. Before you sign off, the chief officer signs your assessment sheet." },
+    { "label": "One more year learning", "result": "You say your hands aren't steady enough yet and you want another year with Old Sun. The berth goes to another young man, and Old Sun gives you his treasured knot book." }
+   ]
+  },
+  "c_officer": {
+   "title": "Sit for third officer, move up to the bridge",
+   "situation": "The company has a rating-to-officer route: two years of distance-learning college, a few months of shore training, then the certificate of competency. Pass, and you are an officer on twice the pay. But it means slogging through English charts and regulations, and a few years with no income.",
+   "options": [
+    { "label": "Go for third officer", "result": "You take out your savings for the fees and sit all day at a training school in Dalian, looking up the English on the charts word by word.", "end": "You pass your third officer's certificate and walk onto the bridge for the first time in a uniform with epaulettes. The man at the wheel is a new sailor, and his voice answering the orders is as nervous as yours once was." },
+    { "label": "Stay on deck", "result": "You say you like working on deck, where you can see and touch the job. You fold the course brochure and slip it inside your Able Seaman certificate." }
+   ]
+  },
+  "c_rotation": {
+   "title": "Long contracts for more money, or less time at sea",
+   "situation": "The baby is small and your wife is raising it alone. The agency offers an eleven-month contract with a bigger bonus, or a switch to near-sea ships on six-month rotations: thirty percent less pay, but home twice a year.",
+   "options": [
+    { "label": "Sign the long contract", "result": "You stick the baby's photo above your bunk and tear off three hundred-odd calendar pages in eleven months. When you sign off the child can say Dad, learnt from the phone." },
+    { "label": "Switch to near-sea ships", "result": "You run Japan, Korea and Southeast Asia and get home twice a year. Less money, but when your child first rides a bike, it's you holding the back of the seat." }
+   ]
+  },
+  "c_carpenter": {
+   "title": "Take over as carpenter",
+   "situation": "The old carpenter is retiring and the captain asks if you'll take over: windlass, mooring winches, ballast and fresh-water tanks, standing at the bow for every anchoring. More work and more responsibility; one anchor-chain accident is a serious matter.",
+   "options": [
+    { "label": "Take it", "result": "You go over every brake band and every shackle of chain at the bow with the old carpenter and fill half a notebook. The day he signs off, he leaves you a spanner he has used for twenty years." },
+    { "label": "Stay an able seaman", "result": "You say you want a few more years on the bridge. The job goes to a Filipino, and at anchoring you listen from the bridge as he reports the shackles." }
+   ]
+  },
+  "c_ai_learn": {
+   "title": "Learn the smart mooring and monitoring screens or not",
+   "situation": "New ships come with automatic mooring and a full deck monitoring system, and the company wants one deck hand from each ship to train in Shanghai for two weeks, then watch the screens, report faults and teach the others. It eats into your leave, and the work aboard is no lighter.",
+   "options": [
+    { "label": "Go and learn", "result": "You learn to read each line's tension curve on the screen, and to tell at a glance which reading means a sensor caked with salt." },
+    { "label": "Don't go", "result": "You give the place to a young able seaman. When the screen raises an alarm, he runs over to ask you: is that line really that tight?" }
+   ]
+  },
+  "c_bosun": {
+   "title": "Become bosun",
+   "situation": "The old bosun has signed off for good, and the captain and chief officer want you to step in: hand out work every morning, manage paint, ropes and stores, lead sailors from three countries. You have to manage people, and be first on deck when something goes wrong.",
+   "options": [
+    { "label": "Take it", "result": "For the first time you blow the whistle at six in the morning and watch seven or eight people come out of the accommodation, waiting for you to give out the work." },
+    { "label": "Let a younger man have it", "result": "You recommend the young man who has worked under you for five years. He becomes bosun, and before he hands out the jobs he always comes to check with you first." }
+   ]
+  },
+  "c_ashore": {
+   "title": "Go ashore as a port linesman",
+   "situation": "Your knees keep getting worse, and your wife says the child is starting middle school and the family needs someone at home. A mooring company at Qingdao port is hiring and likes that you know lines. Half the money, but home every night.",
+   "options": [
+    { "label": "Go ashore", "result": "You walk down the gangway for the last time, glance back at the name on the bow, and get into the agency's van.", "end": "You become a linesman at Qingdao port, catching the lines thrown down from ships every day. Sometimes you look up at a young sailor on deck and shout one extra time: stand clear!" },
+    { "label": "A few more years at sea", "result": "You say there's still some money short for university and you'll go a few more years. That year you pack your knee braces at the very top of the suitcase." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "Your last contract runs out at sixty. You sign off at Qingdao port and leave your chipping hammer, your marlinspike and your dog-eared knot book with the ship's bosun, carrying only the thirty-inch suitcase. At the terminal gate you look back once; the ship is already loading.",
+  "burnout": "Your knees and your back give out together, and you fail the seafarer's medical. The agency man says on the phone: brother, take a rest. You put your seaman's book in a drawer, and later watch a warehouse for a logistics firm in the county town, on night shift, listening to the trucks coming and going outside like the sound of the main engine."
+ },
+ "stages": [
+  "You're the youngest on deck and do whatever the bosun says: go after the rust on the hatch-cover edges with a chipping hammer and a needle gun, roll on primer and topcoat, and help with the lines aft when the ship berths. On watch you stand behind the third officer; he gives the helm order, you repeat it, hands on the wheel, eyes on the compass.",
+  "You keep your own watch now: four hours with one officer, steering, lookout, logging the weather, and on gangway duty in port, checking the papers of everyone who comes aboard. Nobody has to watch your maintenance work; the bosun hands you a stretch of deck and you bring a trainee along.",
+  "The bow is yours. At anchoring you stand at the windlass, releasing the brake on the chief officer's word and reporting the shackles. Every morning you sound the ballast and fresh-water tanks with a tape and enter it in the maintenance log. People start calling you Chippy, and your spanner is older than anyone's.",
+  "At six every morning you hand out the deck work: who chips, who paints, who checks the lifeboats, all on the whiteboard. Paint, ropes and wire are yours to count and requisition, and you plan each voyage's maintenance with the chief officer. With sailors from three countries aboard, you have to make sure all of them understand you and all of them accept it."
+ ],
+ "work": [
+  "The chief officer sends you to check an old mooring line. You run your hands along it inch by inch and find three broken strands near the eye. You chalk a circle round it, and he has the line replaced.",
+  "A pilot is coming aboard, and for the first time you rig the pilot ladder with Old Sun. You check the knot at every step. The pilot climbs up and gives you a nod.",
+  "Painting the topsides in the afternoon, you hang on a bosun's chair three metres above the water. Old Sun holds the safety line above and calls for you to shift left a bit; you have missed a stripe there.",
+  "On the three a.m. watch you see a flashing white light through the binoculars. You report it to the second officer: twenty degrees to starboard, possible fishing boat. He checks the radar and alters course five degrees.",
+  "On gangway watch in port, a man selling phone cards tries to slip aboard. You block the top of the gangway: nobody comes up without the captain's signature. He goes off muttering.",
+  "Entering the Yangtze estuary, the pilot gives a dozen helm orders in a row. You repeat each one and put each one on exactly. Past the narrowest stretch, he says: good steering.",
+  "Heaving anchor in the roads, the anchor breaks the surface with a fishing net wrapped round its flukes. You stop the windlass and clear it with two men, bit by bit, with hooks and knives.",
+  "One fresh-water tank's reading hasn't moved in a fortnight. You go down and find the sounding pipe choked with rust flakes. You spend a morning clearing it with wire, and the reading finally matches.",
+  "Before dry dock the chief officer asks you for a deck repair list. You write down the winch brake bands, the hatch-cover rollers, the windlass oil seals, line by line, two pages of it.",
+  "A Myanmar sailor is hanging over the side to paint for the first time, his legs shaking. You put on a harness and go over with him, and stay until that patch is done, without a word.",
+  "At the end-of-voyage stock check six drums of paint are missing. You go through the requisition slips all night and finally find them in a corner of the No. 2 store, never logged last voyage.",
+  "The chief officer brings the next voyage's maintenance plan, and you change three things: which deck to derust first, which line to replace early, and which hatch-cover seal won't last until the next dry dock."
+ ],
+ "past": [
+  "You're in your last year of middle school in a village in southwest Shandong, where your family grows about ten mu of corn and wheat. You have never seen the sea, only warships on television.",
+  "Your high school entrance exam score is middling, and the county high school wants an extra fee. Your teacher says a maritime vocational college in Qingdao takes students for the sailor course, with reduced fees and guaranteed placement on ships.",
+  "The first time you see the sea is on a college trip to the docks. A bulk carrier is berthed there, longer than your whole village, and you stand looking up at it for a long time.",
+  "At college you learn knots, helm orders and English phrases like \"hard a-port\". PE is swimming, and you go from a non-swimmer to fifty metres in a life jacket.",
+  "You earn the four basic safety certificates: survival, firefighting, first aid, personal safety. Your teacher says with those you're half a seafarer.",
+  "Two months along the coast on the college training ship: your first time at the wheel, your first sky full of stars at sea. When it ends, a Qingdao crewing agency signs you up."
+ ],
+ "late": {
+  "pension_note": "Estimate: crew on foreign postings mostly pay social insurance themselves at the local base rate, with gaps in the early years and some backpayments after coming ashore. The pension comes to about forty percent of your last monthly pay at sea, far less than before, but enough in a county town.",
+  "scenes": [
+   "Your first month back in the county town, you wake once every night at four, the watch you kept for half your life. You lie there listening to the breakfast shop downstairs opening up.",
+   "By the flowerbed downstairs you tie knots for people, and teach your grandson the bowline and the clove hitch. You praise every one he ties.",
+   "Your wife has retired too. The two of you go to Qingdao and sit by the sea for an afternoon. She says it's the first time she has watched the sea with you.",
+   "Old shipmates post photos in the group chat: who has a new grandchild, who has had a knee replaced. You open every one and like them all.",
+   "You watch a warehouse for a logistics firm in the county town, nights. Before dawn you walk the building looking for leaks, the way you used to make rounds of the holds.",
+   "Your knee operation goes well, the doctor says. Every evening you walk two kilometres along the river embankment, slowly.",
+   "Your child gets into university to study logistics management, and asks if you want to go and look round a ship. No, you say, you've seen them.",
+   "Your first year off the ships you never sleep well. The room is too steady; it doesn't move at all.",
+   "You're doing well in the new place. On rainy days you glance out of the window and, out of habit, guess the wind force.",
+   "Old Sun has retired and phones to say he has hung a lifebuoy on his balcony as decoration. The two of you laugh about it for a long time.",
+   "On later ships the steering was mostly automatic, the lookout had cameras and the tanks had sensors. But when a ship came alongside, someone still had to catch the line, take it round the bollard and call out \"all fast\".",
+   "In a park in the county town you watch some young people flying a kite, the string pulled tight. You stand and watch for a while, and think of that line taut as a bowstring."
+  ],
+  "closing": {
+   "retire": "One evening many years later, your grandson brings an atlas and asks how big the Pacific is. You turn to the page and run your finger from Qingdao to Brazil: Grandpa went this far. He holds your finger down on the line and won't let you lift it.",
+   "burnout": "Many years later you sit on the balcony at home in the county town while the radio reads the marine weather forecast. You listen to the whole thing through before you switch it off.",
+   "end": "Many years later, at the bottom of a trunk in the old house, you find your seaman's book, stamped full with ports from every country. You leaf through every page, put it back, and lay it on top."
+  }
+ }
+}
