@@ -65,7 +65,7 @@ export function newLife(card: GameCard, seed: number, lang: 'zh' | 'en' = 'zh'):
   l.salary = monthly(card, l.stage, l.inStage, 1, 1);
   l.log.push({ y: 0, age: l.age, kind: 'start', text: card.intro });
   const st0 = card.stages?.find(x => x.stage === l.stage);
-  if (st0) l.log.push({ y: 0, age: l.age, kind: 'stage', source: '职业地图', text: st0.text });
+  if (st0) l.log.push({ y: 0, age: l.age, kind: 'stage', source: card.ladder_src || '职业地图', text: st0.text });
   l.rows.push(row(l));
   return l;
 }
@@ -111,7 +111,7 @@ export function step(card: GameCard, l: Life): Life {
       apply(l, { rep: 5, joy: 4 });
       l.promos.push({ y: l.y, age: l.age, title: s.title });
       const day = card.stages?.find(x => x.stage === l.stage)?.text || s.focus;   // 有「这一级的日常」就用它（真活、人、工具），没有退回职业库的一句话
-      l.log.push({ y: l.y, age: l.age, kind: 'promo', mood: 'good', source: '职业地图', text: l.lang === 'en' ? `You became ${s.title}. ${day}` : `你成了${s.title}。${day}` });
+      l.log.push({ y: l.y, age: l.age, kind: 'promo', mood: 'good', source: card.ladder_src || '职业地图', text: l.lang === 'en' ? `You became ${s.title}. ${day}` : `你成了${s.title}。${day}` });
     }
   }
 
@@ -133,7 +133,7 @@ export function step(card: GameCard, l: Life): Life {
   if (card.work?.length && rand(l) < 0.35) {
     const used = (l.usedWork ||= []);
     const i = card.work.findIndex((w, k) => w.stage === l.stage && !used.includes(k));
-    if (i >= 0) { used.push(i); l.log.push({ y: l.y, age: l.age, kind: 'work', mood: 'plain', source: '职业地图', text: card.work[i].text }); }
+    if (i >= 0) { used.push(i); l.log.push({ y: l.y, age: l.age, kind: 'work', mood: 'plain', source: card.ladder_src || '职业地图', text: card.work[i].text }); }
   }
 
   // 5. 随机事件：一年最多两件

@@ -78,6 +78,8 @@ export interface GameCard {
   /** 这个身份的一天（6–8 格） */
   day: { time: string; text: string }[];
   ladder: LadderStep[];
+  /** 阶梯的出处：库里有职业地图的不写；职业库没有阶梯、按行业惯例手写的写「行业常见」 */
+  ladder_src?: string;
   /** 本卡相对全国口径的薪资系数（城市 × 单位），和一句说明 */
   salary_factor: number; salary_note: string;
   /** 成长快慢（0.5–1.5）、每年身心消耗（0–1） */

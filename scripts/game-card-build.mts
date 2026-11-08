@@ -35,7 +35,9 @@ async function build(id: string) {
   const d: any = JSON.parse(fs.readFileSync(path.join(DRAFTS, `${id}.json`), 'utf8'));
   const { data: o } = await db.from('occupations').select('id, key, name, career_map').eq('key', d.occ).single();
   if (!o) throw new Error(`职业库里没有 ${d.occ}`);
-  const ladder: LadderStep[] = (o.career_map?.ladder || []).map((l: any) => ({ title: String(l.title), stage: String(l.stage || ''), years: String(l.years || ''), min: +(String(l.years || '').match(/\d+/)?.[0] || 0), salary: parseSalary(l.salary), focus: String(l.focus || '') }));
+  // 职业库没有阶梯的（511 个，11-07）：草稿里按行业惯例手写 ladder_override（title / stage / years / focus，salary 可不填，按年限薪资推），出处标「行业常见」
+  const own = !(o.career_map?.ladder?.length) && Array.isArray(d.ladder_override) && d.ladder_override.length >= 3;
+  const ladder: LadderStep[] = (own ? d.ladder_override : o.career_map?.ladder || []).map((l: any) => ({ title: String(l.title), stage: String(l.stage || ''), years: String(l.years || ''), min: +(String(l.years || '').match(/\d+/)?.[0] || 0), salary: parseSalary(l.salary), focus: String(l.focus || '') }));
   const { data: sal } = await db.from('occupation_salaries').select('year, salary').eq('occupation_id', o.id).eq('if_delete', false);
   const { data: ex } = await db.from('occupation_ai_exposure').select('tasks, new_tasks').eq('occupation_id', o.id).order('version', { ascending: false }).limit(1);
   const jd = (await db.from('jobs').select('id', { count: 'exact', head: true }).contains('related_career_ids', [o.key])).count || 0;
@@ -48,13 +50,16 @@ async function build(id: string) {
     let prev = 0; derived = true;
     for (const l of ladder) if (!l.salary[1]) { const b0 = band(l.min); const base = Math.max(b0.v, prev * (b0.exact ? 1.15 : 1.3)); /* 越往上不能越少（第一级是城市口径、后面是全国年限薪资时会倒挂） */ l.salary = [Math.round(base * 0.85), Math.round(base * 1.25)]; prev = base; } else prev = l.salary[0];
   }
+  if (!ladder.length) throw new Error(`${d.occ} 职业库里没有阶梯：草稿里写 ladder_override（至少 3 级）`);
+  if (ladder.some(l => !l.salary[1])) throw new Error(`${d.occ} 有的级没有薪资、库里也没有年限薪资：在 ladder_override 里写 salary [下限, 上限]（全国口径月薪，按行业常见估）`);
+  const SRC = own ? '行业常见' : '职业地图';
   const st = Math.max(0, Math.min(ladder.length - 1, +d.start.stage || 0)), cur = ladder[st], nxt = ladder[st + 1];
   const top = (sal || []).sort((a: any, b: any) => a.year.localeCompare(b.year)).pop();
   const human = (ai.tasks || []).find((t: any) => t.kind === 'human'), soft = (ai.tasks || []).find((t: any) => t.kind !== 'human');
   // 登记卡上的数据：全由代码按库里的数写，人不写数字
   const facts = [
-    { label: `${cur.title}这一级`, value: `${cur.years}，月薪 ${yuan(cur.salary[0])}–${yuan(cur.salary[1])}（全国口径${derived ? '，按年限薪资推算' : ''}）`, source: derived ? '年限薪资' : '职业地图' },
-    ...(nxt ? [{ label: `往上一级`, value: `${nxt.title}（${nxt.years}）`, source: '职业地图' }] : []),
+    { label: `${cur.title}这一级`, value: `${cur.years}，月薪 ${yuan(cur.salary[0])}–${yuan(cur.salary[1])}（全国口径${derived ? '，按年限薪资推算' : own ? '，估算' : ''}）`, source: own ? '行业常见' : derived ? '年限薪资' : '职业地图' },
+    ...(nxt ? [{ label: `往上一级`, value: `${nxt.title}（${nxt.years}）`, source: SRC }] : []),
     ...(top ? [{ label: `入行${YEARS[top.year] || ''}月薪`, value: `${yuan(top.salary)}（全国口径）`, source: '年限薪资' }] : []),
     ...(human ? [{ label: 'AI 拿不走的', value: human.name, source: 'AI 替代性' }] : []),
     ...(soft ? [{ label: 'AI 开始插手的', value: soft.name, source: 'AI 替代性' }] : []),
@@ -62,7 +67,7 @@ async function build(id: string) {
   ];
   const card: GameCard = {
     id, occupation: { key: o.key, name: o.name }, role: d.role, headline: d.headline, unit: d.unit, unit_type: d.unit_type, city: d.city, city_tier: d.city_tier, education: d.education, ...(d.gender === 'f' || d.gender === 'm' ? { gender: d.gender } : {}),
-    start: { age: +d.start.age, years_in_field: +d.start.years_in_field || 0, stage: st, level: d.start.level }, intro: d.intro, facts, day: d.day, ladder,
+    start: { age: +d.start.age, years_in_field: +d.start.years_in_field || 0, stage: st, level: d.start.level }, intro: d.intro, facts, day: d.day, ladder, ...(own ? { ladder_src: '行业常见' } : {}),
     salary_factor: +d.salary_factor || 1, salary_note: d.salary_note || '', growth: +d.growth || 1, load: Math.max(0, Math.min(1, +d.load || 0.5)), retire_age: +d.retire_age || 60,
     ai: { from_year: 3, tasks: (ai.tasks || []).map((t: any) => ({ name: t.name, kind: t.kind, how: t.how })), new_tasks: ai.new_tasks || [] },
     events: d.events.map((e: any, i: number) => ({ ...e, id: String(e.id || `e${i + 1}`), from: +e.from || 0, to: +e.to || 40, chance: Math.max(0.02, Math.min(0.8, +e.chance || 0.2)) })),
