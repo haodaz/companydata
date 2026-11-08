@@ -13,8 +13,11 @@ export const cardById = (id: string): GameCard | null => CARDS.find(c => c.id ==
 export function draw(seed: number, exclude?: string, lang: Lang = 'zh', seen: string[] = []): { card: GameCard; peers: PeerCard[] } {
   const enCards = CARDS.filter(c => EN[c.id]);
   const all = lang === 'en' && enCards.length ? enCards : CARDS;   // 英文一张都还没有时退回中文卡，免得抽不到
-  const fresh = all.filter(c => c.id !== exclude && !seen.includes(c.id));
-  const pool = fresh.length ? fresh : all.filter(c => c.id !== exclude);
+  // 先出没抽过的职业，其次没抽过的卡（同职业换个城市 / 单位），都抽过了再从头
+  const seenOcc = new Set(all.filter(c => seen.includes(c.id)).map(c => c.occupation.key));
+  const notSeen = all.filter(c => c.id !== exclude && !seen.includes(c.id));
+  const newOcc = notSeen.filter(c => !seenOcc.has(c.occupation.key));
+  const pool = newOcc.length ? newOcc : notSeen.length ? notSeen : all.filter(c => c.id !== exclude);
   const card = (pool.length ? pool : all)[seed % (pool.length || all.length)];
   const rest = all.filter(c => c.id !== card.id).sort((a, b) => Number(b.occupation.key === card.occupation.key) - Number(a.occupation.key === card.occupation.key) || ((seed >> 3) % 7) - 3);
   const peers = rest.slice(0, 3).map(c0 => localize(c0, lang)).map((c, i) => ({ id: c.id, name: randomName(seed * 7 + i * 13 + 5, c.gender, lang), role: c.role, headline: c.headline, city: c.city, unit_type: c.unit_type, start: c.start, ladder: c.ladder, salary_factor: c.salary_factor, growth: c.growth, load: c.load, retire_age: c.retire_age }));
