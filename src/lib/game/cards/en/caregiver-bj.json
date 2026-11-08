@@ -1,0 +1,195 @@
+{
+ "id": "caregiver-bj",
+ "occupation": "Medical Care Aide (Inpatient Caregiver)",
+ "role": "Inpatient Caregiver on an Orthopedic Ward at a Grade 3A Hospital",
+ "headline": "A caregiver who, with her child at university and the farm work handed to relatives, followed a fellow villager from Zhoukou to Beijing, and now takes bookings by the day on the orthopedic ward of a top-tier hospital, sleeping at night on a folding chair beside the patient's bed",
+ "unit": "The orthopedic ward of a top-tier (Grade 3A) hospital in Beijing (assigned through the hospital's contracted caregiving company)",
+ "unit_type": "Contracted caregiving company at a Grade 3A hospital",
+ "city": "Beijing",
+ "city_tier": "First-tier city",
+ "education": "Middle school",
+ "level": "Turning, washing and helping patients out of bed after hip and knee surgery are second nature now, and you have your Level 5 certificate; reading the numbers on the monitor and telling the senior doctor clearly what happened in the night, you are still learning.",
+ "intro": "When you came to Beijing with a woman from your village, you brought a woven plastic sack, a thin quilt and a thermos. The caregiving company has a small office in the hospital basement, with a roster on the wall and four big characters: certified staff only. The team leader hands you two sets of pale blue caregiver uniforms. The orthopedic ward is on the eleventh floor of the inpatient building, forty beds, half of them old people who have had a fall. From today your bed is the folding chair that pulls out beside a hospital bed.",
+ "salary_note": "Estimate: one-on-one inpatient care at a Beijing Grade 3A hospital runs two or three hundred yuan a day; the company takes a cut and you take home around seven thousand a month, about 1.4 times the national average. No bookings means no money, there are almost no days off, and social insurance is mostly something you pay yourself back home.",
+ "facts": [
+  { "label": "Medical Care Aide (Level 5) (current level)", "value": "0-3 years, ¥4,000–6,000 a month (national average, estimated)", "source": "Industry norm" },
+  { "label": "Next level up", "value": "Medical Care Aide (Level 4) (3-6 years)", "source": "Industry norm" },
+  { "label": "What AI can't take", "value": "Turning, washing and helping patients out of bed", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Filling in care records and handover sheets", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You wake on the folding chair, fold it away, and go to the hot water room to fill two flasks. The corridor lights aren't all on yet, but at the nurses' station they're already laying out tubes for the morning blood draws.",
+  "You wash the face, brush the teeth and wipe the back of the old lady in Bed 9. It's the third day after her hip replacement; turning her takes one hand under her shoulder and one under her hip, with a soft pillow between her knees.",
+  "You fetch breakfast from the hospital canteen: millet congee, steamed egg custard, a twisted steamed roll. You feed her spoon by spoon; she eats half a bowl and says she's full, and you write in your notebook: half a bowl.",
+  "The senior doctor's rounds, a roomful of white coats. You step back to the window and wait until the resident asks: how was the night? You say: up twice to pee, around three she cried out that her leg hurt, I rang, and the nurse came and gave her an injection.",
+  "The physiotherapist comes to get her on her feet. You and the therapist hold her one on each side; the old lady pushes her walker six steps, and you follow behind pushing the IV pole.",
+  "The old lady naps. You squat outside the hot water room eating the steamed buns and pickles you brought, and send a voice message to your daughter at university in Zhengzhou: have you eaten?",
+  "Her son comes after work and asks how many meals she ate today and whether she's had a bowel movement. You go through it all, and when you're done he presses a bag of fruit on you. You push it back twice, then take it.",
+  "After lights out you pull open the folding chair and cover yourself with your thin quilt. The alarm is set for midnight, two and four, to get up and turn her and check the urine bag."
+ ],
+ "ladder": [
+  { "title": "Medical Care Aide (Level 5)", "stage": "Entry", "focus": "Takes one-on-one or shared bookings, handles patients' eating, toileting, turning, washing and walking, and keeps watch at night; passing Level 4 and building a good name bring more bookings" },
+  { "title": "Medical Care Aide (Level 4)", "stage": "Experienced", "focus": "Can take post-surgical critical cases, patients with severe disabilities or dementia, uses monitoring and call devices; head nurses and families ask for you by name" },
+  { "title": "Medical Care Aide (Level 3) and Ward Caregiver Team Leader", "stage": "Leading a team", "focus": "Runs bookings and rosters for a dozen caregivers on one ward, trains newcomers, handles complaints, works with the head nurse" },
+  { "title": "On-site Manager for the Caregiving Company", "stage": "Managing people", "focus": "Hires, trains, evaluates and settles pay for dozens or a hundred caregivers across a hospital, and negotiates contracts with the hospital's facilities and nursing departments" }
+ ],
+ "ai_tasks": [
+  { "name": "Filling in care records and handover sheets", "how": "Turns, how much was eaten, fluid in and out, how many times up in the night: smart mattresses and voice notes can generate these; the caregiver checks them and tells the nurse in person if something's wrong." },
+  { "name": "Watching the monitors and calling the nurse when something's off", "how": "Bed-exit alarms and heart and breathing monitors can give early warning; a patient's color, sweating, or speech not being right is something the caregiver at the bedside has to notice and ring for straight away." },
+  { "name": "Preparing and feeding meals to doctors' orders and dietary rules", "how": "AI can list what a patient can and can't eat from their condition and orders; how fast to feed, whether they're choking, whether they have an appetite, a person has to watch mouthful by mouthful." },
+  { "name": "Turning, washing and helping patients out of bed", "how": "Where the hands go, how much force, where it hurts: it's all in the hands. A machine can't do it, and can't bear the responsibility for a fall." },
+  { "name": "Keeping watch at night and talking with the patient", "how": "After surgery, unable to sleep, homesick, afraid, a patient needs someone awake beside them." }
+ ],
+ "events": {
+  "e_thank": "The day an old man is discharged, he holds your hand and tells his son: this caregiver is more careful than any of you. His son gives full marks on the company's feedback form.",
+  "e_complaint": "A family member complains to the company that you feed too slowly, and the team leader docks you fifty yuan. You say nothing, and the next day you still wait for every mouthful to go down.",
+  "e_no_sleep": "You take on an old man with post-operative delirium. For three days and nights he keeps trying to pull out his IV or go home, and you barely close your eyes. On the fourth day he recognizes you and calls you \"young comrade.\"",
+  "e_level4": "You pass Medical Care Aide Level 4. The written test is on a phone and you memorized for a month; the practical is oral care on a mannequin, and the examiner says your hands are steady.",
+  "e_spring": "At Spring Festival the rate for one-on-one care doubles, so you stay in Beijing. On New Year's Eve the Spring Festival Gala plays on the ward, and you and the old lady in the bed each eat a dumpling a nurse brought round.",
+  "e_daughter": "Your daughter gets into a master's program and calls in tears: Mom, stop working. A few more years, you say, until you graduate.",
+  "e_waist": "Turning a patient who weighs ninety kilos, you wrench your back. You wear pain-relief plasters for a week and don't dare take a day off.",
+  "e_code": "The hospital now requires caregivers to accept bookings by scanning a code and to get into the wards by face recognition, with every booking rated in the system. You have your daughter teach you three times over video until you can tap \"start service\" on your phone.",
+  "e_mattress": "The ward gets smart mattresses: when a patient sits up, your phone buzzes. At night you can finally sleep a whole hour at a stretch, though once it went off just because the patient rolled over.",
+  "e_catch": "At four in the morning you think the old man's breathing sounds wrong, though the numbers on the monitor are still in the normal range. You ring, the doctor on duty comes, and he's moved to intensive care. Later the head nurse makes a point of telling you: you did right.",
+  "e_red_envelope": "A family member presses a red envelope of cash on you at discharge. Company rules say you can't accept it, so you chase him to the elevator and give it back. He says you're stubborn.",
+  "e_home_house": "With years of savings, you and your husband rebuild the house back home as a two-story. You don't go back for the roof-beam ceremony; you watch it on video and cry.",
+  "e_company_change": "The hospital re-tenders and a new caregiving company takes over. New contracts, new training, and a commission two points higher. You put your thumbprint on the contract.",
+  "e_dementia": "The head nurse asks for you by name to look after a retired professor with dementia. Every day he asks you the same questions and every day you give him the same answers; on the tenth day he says: you answer very well.",
+  "e_hands": "Years of disinfectant and wringing towels, and your finger joints have swollen; in winter the skin cracks. You buy a tube of hand cream and keep it in your uniform pocket, using it sparingly.",
+  "e_robot": "A robot that delivers medicine and meals arrives on the ward, moving slowly down the corridor saying \"excuse me, please.\" You make way for it; it has never made way for you.",
+  "e_grandchild": "You become a grandmother. You take five days off to go back to Zhoukou for the baby's one-month celebration, and when you return, the old patient you were caring for has another caregiver.",
+  "e_hip_lady": "The old lady you cared for after her hip surgery three years ago is admitted again, for the other side. The first thing she asks on the ward: is that caregiver from Henan here?",
+  "e_insurance": "Beijing pilots bringing some inpatient care into long-term care insurance reimbursement, and the company now wants proper care records for every booking. That handwritten notebook of yours comes in useful.",
+  "e_tired": "You start finding it too hard to get up three times a night; in the day you doze off on your feet. The team leader moves you to a few daytime shared bookings.",
+  "e_train_new": "Among the company's new caregivers is a lad in his early twenties. You teach him to speak first and then move when turning a patient. A month later, patients ask for him by name."
+ },
+ "choices": {
+  "c_one_or_many": {
+   "title": "One-on-one or shared care",
+   "situation": "The team leader asks: next month, do you want a one-on-one booking with an old patient after surgery, or shared care on the ward? One-on-one pays a hundred-odd more a day and you never leave the bed for twenty-four hours; shared care means four beds, and at night you can sleep in the caregivers' rest room.",
+   "options": [
+    { "label": "Take one-on-one", "result": "You're back to sleeping on the folding chair. At month's end the pay slip is thicker than last month's, and you've lost weight." },
+    { "label": "Do shared care", "result": "You cover four beds, running back and forth, and at night you can lie down in the rest room. The money is less, and for the first time you sleep right through till morning." }
+   ]
+  },
+  "c_cert": {
+   "title": "Sit for Medical Care Aide (Level 4)",
+   "situation": "The company says with the Level 4 certificate your daily rate goes up twenty or thirty yuan, and the head nurse gives critical cases to certified aides first. But you have to take two weeks of classes first, two weeks with no bookings, which means over two thousand yuan less.",
+   "options": [
+    { "label": "Take two weeks off for the course", "result": "In the training room you learn for the first time how many stages a pressure sore has and why patients must be turned every two hours. You copy it all into your notebook and take it back to the ward to check against." },
+    { "label": "Earn first, maybe later", "result": "You keep taking bookings. No certificate; the work in your hands is the same, it's just that the critical cases always go to someone else first." }
+   ]
+  },
+  "c_private": {
+   "title": "Become a live-in caregiver in someone's home",
+   "situation": "The son of an old man being discharged wants you to come and live in as his father's caregiver: nine thousand a month, room and board, not through the company. But there's no contract, and the day the old man is gone, so is the job.",
+   "options": [
+    { "label": "Go to his home", "result": "You move into a small room in an old flat in Haidian and wheel the old man downstairs into the sun every day. A year later he moves into a care home and you go back to the hospital." },
+    { "label": "Stay at the hospital", "result": "You say there are doctors and nurses at the hospital and that settles your nerves. The son hires someone else, and at New Year he still sends you greetings." }
+   ]
+  },
+  "c_home": {
+   "title": "Go back to Zhoukou or not",
+   "situation": "Your husband's back is bad and he can't manage the fields any more; he calls to ask whether you can come home this year. The county hospital has started hiring caregivers too, a hundred and twenty a day, ten kilometers from home.",
+   "options": [
+    { "label": "Go back to the county hospital", "result": "You go home to Zhoukou and take bookings on the county hospital's orthopedic ward, home for dinner every night. You earn less than half as much, and your back doesn't hurt so much." },
+    { "label": "A few more years in Beijing", "result": "You send home two thousand extra so he can hire help for the wheat harvest. After you hang up, you stand in the hot water room for a while." }
+   ]
+  },
+  "c_smart": {
+   "title": "Learn to use the new machines",
+   "situation": "The ward is piloting smart care equipment: monitoring mattresses, voice records, a patient-transfer robot. The head nurse wants two caregivers to learn first and then teach the others. No extra money, but critical cases would come to you first afterward.",
+   "options": [
+    { "label": "Sign up to learn", "result": "You learn slowly, so you have the engineer say every step twice and record it on your phone. Six months later, you're the one everyone on the ward shouts for when something's wrong." },
+    { "label": "No, hands are enough", "result": "Still one hand under the shoulder, one under the hip. You can switch the machines on and off; the rest you leave to the young ones." }
+   ]
+  },
+  "c_leader": {
+   "title": "Become Ward Caregiver Team Leader",
+   "situation": "Orthopedics' old team leader has gone home, and the company wants you to pass Level 3 and take over as Medical Care Aide (Level 3) and Ward Caregiver Team Leader: bookings, rosters and complaints for twelve caregivers. You'd be watching the booking system on your phone all day and dealing with a head nurse younger than you.",
+   "options": [
+    { "label": "Take team leader", "result": "You move from the folding chair to a top bunk in the caregivers' rest room. In your first month you handle three complaints, and each time you go to the ward and look before you say a word." },
+    { "label": "Keep taking bookings", "result": "You say you don't know how to manage people, only patients. The job goes to a woman from the northeast, who often comes to ask you what temper some patient's family has." }
+   ]
+  },
+  "c_nursing_home": {
+   "title": "A care home comes recruiting",
+   "situation": "A newly opened care home is short of experienced carers and offers a fixed wage, full social insurance, a dormitory and four days off a month. But the pay is over a thousand less than you get now.",
+   "options": [
+    { "label": "Go to the care home", "result": "For the first time you have a social insurance card and regular days off, and for the first time you care for the same group of old people year after year in one place.", "end": "You went to a care home as a carer, with social insurance, a dormitory and regular days off; the old people you look after are never discharged, and every morning you knock on their doors one by one." },
+    { "label": "Stay at the hospital", "result": "You say patients at the hospital come and go, and watching them leave one by one gives you something to look forward to." }
+   ]
+  },
+  "c_supervisor": {
+   "title": "Become On-site Manager for the Caregiving Company",
+   "situation": "The company is opening at another Grade 3A hospital and asks if you'll go as its on-site manager: hiring, training, negotiating rates with the hospital's facilities department, and settling pay for seventy or eighty caregivers. You'd need to use a computer and sit in meetings.",
+   "options": [
+    { "label": "Go", "result": "In your fifties you start learning spreadsheets, your daughter teaching you over video every night. In the new site's first month, six of the caregivers you hire are from Zhoukou." },
+    { "label": "Stay on orthopedics leading the team", "result": "You say you've given your life to this one floor. The new manager is a university graduate the company hired from outside; in his first week he spends three days on orthopedics learning from you." }
+   ]
+  },
+  "c_retire_early": {
+   "title": "Go home to look after your grandchild",
+   "situation": "Your daughter-in-law is going back to work and asks whether you can come home to look after the baby. You do the sums: a few more years of work means a few more years of pension contributions, but the child won't wait.",
+   "options": [
+    { "label": "Go home to the grandchild", "result": "You pack the woven sack and the thin quilt, fold your uniforms and hand them back to the company.", "end": "You went home to Zhoukou to look after your grandchild, pushing the stroller round the village entrance every day, and when someone has a fall or falls ill, they still come and ask you to lend a hand." },
+    { "label": "Two more years", "result": "You have your daughter-in-law hire a nanny and pay for it yourself. You take on a few more night shifts." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "Your last booking is an old lady with a broken hip. On the day she's discharged she holds on to you and says next time she falls she'll ask for you. Don't fall, you say. You fold your uniforms and hand them back to the company; in the woven sack are still the thin quilt and the thermos. On the train home to Zhoukou you sleep the whole night through without waking once.",
+  "burnout": "That winter, turning a patient, your back gave way and you went down on your knees by the bed. The team leader sent you home to rest; you rested a month and could never do nights again. You carry your woven sack out of the inpatient building and look back once at the eleventh floor, every window lit."
+ },
+ "stages": [
+  "You take one-on-one or shared bookings, revolving around patients twenty-four hours a day: washing, feeding, bedpans, turning, helping them out of bed, up every two hours at night. You deal with patients, families, nurses and the team leader who assigns bookings; at hand are a basin, towels, a urinal, a little notebook, and the booking app on your phone. Whatever you don't know, you ask a nurse.",
+  "The head nurse starts sending you the heavy bookings: patients who can't move after surgery, patients with dementia, those likely to have trouble at night. You can read a few numbers on the monitor, use the bed-exit alarm and the patient lift, and at handover tell the doctor clearly what happened in the night and how often. Families ask for you by name, and your daily rate is a notch above the newcomers'.",
+  "You manage a dozen caregivers on the orthopedic ward: in the morning you check bookings on your phone, who takes which bed and who does nights, and when a family complains you go to the ward and look first. You train newcomers, teaching them to speak first and move second when turning a patient, and every week you go over the caregivers with the head nurse. You take fewer bookings yourself and handle more of everything else.",
+  "You manage dozens of caregivers across a hospital: hiring, training, evaluations, month-end pay, and contracts and rates negotiated with the hospital's facilities and nursing departments. What you look at most are booking reports and complaint logs on the computer; the people you deal with are hospital section chiefs, the company's managers and one fellow villager after another reporting for work. Every week you still walk the wards, looking at everyone's hands and backs."
+ ],
+ "work": [
+  "You put a cold compress on an old man after knee replacement, the ice pack wrapped twice in a towel and changed every fifteen minutes. He says the cold feels good, and you tick it off in your notebook.",
+  "An old lady hasn't had a bowel movement in three days and is in tears over it. As the nurse told you, you massage her belly in slow circles, then go to the canteen for a bowl of soft-boiled pumpkin.",
+  "A family brings a big bag of takeout fried chicken. You glance at the diet card at the head of the bed, quietly swap it for the canteen's steamed egg, and spend ages explaining to the family the low-fat diet the doctor ordered.",
+  "You walk a patient fresh from lumbar spine surgery out of bed for the first time: sit, then stand, then walk, waiting at every step for him to say \"OK.\" Three meters take twenty minutes.",
+  "The first time you use the patient lift's sling, you measure it against the patient three times before buckling it. He goes from bed to wheelchair without a twinge of pain and says: that beats you carrying me.",
+  "At handover you tell the resident: Bed 7 was talking nonsense last night, worst at two, asleep by four. The doctor notes it in the chart and changes the evening medication.",
+  "A new caregiver has been shouted at by a family until she cried, and is hiding in the hot water room. You go to the ward and apologize to the family first, take the booking yourself, and the next day bring her along with you.",
+  "In the booking system you set the night shift as a three-person rotation, with anyone who has done three nights in a row moved to days. The head nurse looks at it and says it's a good system.",
+  "A new head nurse arrives and asks which caregivers can handle critical cases. You flip through your notebook and give her four names, saying after each one what that person is good at.",
+  "You give twenty new caregivers their pre-job training, and the first lesson is handwashing: seven steps, fifteen seconds each, and you watch every one of them wash.",
+  "The hospital's facilities department wants to cut the caregiving rate. You bring out a table of last year's complaint rate, fall rate and repeat-booking rate and negotiate all afternoon. The rate stays.",
+  "At month-end, one caregiver's bookings are three days short. You check them against the handwritten handover book, make up the pay, and add a reminder in the system."
+ ],
+ "past": [
+  "You finish middle school in the countryside outside Zhoukou. Your family can't afford high school for two children, so you give your place to your younger brother and go to work a sewing machine at a garment factory in the township.",
+  "You marry into the next village, growing wheat and peanuts, and in the slack season you wash dishes at a restaurant in the county town.",
+  "Your mother-in-law has a stroke and is bedridden for six years, and you care for her alone. People in the village say you turn a patient better than the nurses at the county hospital.",
+  "Your daughter gets into university: over twenty thousand a year in fees and living costs. Your husband injures his leg on a construction site, and suddenly there isn't enough money.",
+  "A woman from your village works as a caregiver in Beijing; home for New Year, she says you can earn seven or eight thousand a month. You follow her onto an overnight slow train and see Beijing for the first time.",
+  "The caregiving company first has you shadow a veteran caregiver on the internal medicine ward for a month, then sends you to training and the Level 5 exam. The day you pass, you call home and say: I have a certificate."
+ ],
+ "late": {
+  "pension_note": "Estimate: most caregiving companies don't pay social insurance. You paid into the rural and urban residents' pension scheme back home, later topped up a few years as a flexible worker, and in retirement you draw about thirty percent of your final monthly pay; the rest comes from savings and your children.",
+  "scenes": [
+   "Your first morning back in Zhoukou you wake at half past five and reach for the folding chair, and touch the edge of your own bed.",
+   "Someone in the village comes home after surgery and the family asks you to come and show them how to care for him. You spend an afternoon teaching, and before you leave you crank the head of the bed up a little.",
+   "Your daughter has married in Beijing and has you to stay for a month. Passing that hospital, you stand at the gate looking for a long time.",
+   "You lie at home for half a year before your back slowly straightens. Your husband learns to cook; he cooks very salty.",
+   "You find work stocking shelves at a supermarket in the township, eight hours a day, and at night you sleep straight through. For the first time in your life, you say, you know what a full night's sleep tastes like.",
+   "You hear the orthopedic ward has a new batch of young caregivers, some trained by the people you once trained.",
+   "You still wake before dawn, and when you wake you look at the person beside you and listen to whether the breathing is even.",
+   "A family member of a patient you once cared for finds you online and says his father, before he passed, still talked about that caregiver from Henan. When you've heard him out, you lie still for a while with the phone on your chest.",
+   "You keep the two pale blue uniforms, one worn thin, one still new. Keep the new one, you say, in case someone needs it one day.",
+   "The TV says there are robot beds now that can turn patients on their own. You smile and say: then it had better know where it hurts.",
+   "Your daughter says she wants to keep the little notebook you wrote in for years. Line after line it says: half a bowl. Turned. Cried out at three.",
+   "You're admitted to hospital yourself once, and your caregiver is a woman twenty years younger. Before she turns you, she tells you: I'm going to move you now."
+  ],
+  "closing": {
+   "retire": "One summer many years later, you sit in the doorway of the new house shelling peanuts when your grandson runs over and falls. You don't rush to pick him up; first you ask: where does it hurt? Doesn't hurt, he says, and runs off again.",
+   "burnout": "Many years later, at the township market, you buy a new thermos. On the way home you wash the old one clean and put it in the cupboard, next to the thin quilt.",
+   "end": "Many years later, sitting under the big locust tree at the village entrance, you hear the wind moving through the wheat, so like the even breathing on the ward at night. You close your eyes and listen for a long time."
+  }
+ }
+}

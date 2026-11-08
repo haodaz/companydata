@@ -1,0 +1,201 @@
+{
+ "id": "speech-km",
+ "occupation": "Speech Therapist",
+ "role": "Speech Therapist at a Children's Rehabilitation Center",
+ "headline": "A speech therapist with a bachelor's in rehabilitation therapy, one year into the job, who spends every day in a tiny training room at a Kunming children's rehabilitation center designated by the Disabled Persons' Federation, with a mirror and a stack of picture cards, helping autistic and late-talking children push out one sound at a time",
+ "unit": "A private children's rehabilitation center in Kunming designated by the Disabled Persons' Federation (forty-odd training rooms, half the children from outlying prefectures and counties)",
+ "unit_type": "Private children's rehabilitation center",
+ "city": "Kunming",
+ "city_tier": "Second-tier city",
+ "education": "Bachelor's degree (Rehabilitation Therapy, speech and hearing track)",
+ "level": "You can do articulation assessments, oral motor training and picture exchange communication on your own, seven one-on-one sessions a day; with children who won't look at you at all, and parents who ask \"how long until he talks,\" you're still feeling your way.",
+ "intro": "You interned at this center for six months and have worked here for six more, and now you take seven one-on-one sessions a day. The center is on the third floor of an old office building in north Kunming, with little training rooms of four or five square meters on both sides of the corridor, each door with a small window so parents can watch from outside. In your room are a mirror, a little table, two little chairs, and in the drawer tongue depressors, chew sticks, bubble mix and a stack of laminated picture cards. From today you've taken on a boy of three and a half who can't yet say \"Mama.\"",
+ "salary_note": "Estimate: a private children's rehabilitation center in Kunming pays base salary plus a per-session fee, around five thousand a month, about 0.85 times the national average; session fees follow the children's attendance, so months when many are off sick pay less.",
+ "facts": [
+  { "label": "Speech Therapist (Junior) (current level)", "value": "0-3 years, ¥3,800–6,000 a month (national average, estimated)", "source": "Industry norm" },
+  { "label": "Next level up", "value": "Senior Speech Therapist (3-7 years)", "source": "Industry norm" },
+  { "label": "What AI can't take", "value": "Oral motor and articulation training", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Writing session notes and gathering literature", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "When you get to the center, the corridor is already full of parents. A mother from Zhaotong dozes with her child in her arms; families like hers rent rooms in the urban village nearby and stay for two years.",
+  "Morning meeting. The supervisor reads out today's schedule and reminds you the child in Room 7 had a fever yesterday, so hold off on oral motor work.",
+  "First session, the boy of three and a half. He doesn't look at you, only at the toy car on the table. You hold the car in your hand and wait for him to look up at you once before you roll it to him. In forty minutes, you wait it out six times.",
+  "Second session is a five-year-old girl who talks but says \"duo-duo\" for \"ge-ge,\" big brother. You have her face the mirror, press the tip of her tongue gently with a tongue depressor, and make the \"g\" again and again.",
+  "Lunch is rice noodles downstairs; your throat is a bit hoarse, and you add a spoonful of pickled greens. On your phone a parent asks: teacher, can my child start kindergarten this year?",
+  "Afternoon sessions use picture exchange communication. The child wants a biscuit, so first he has to put the biscuit card in your hand. For the first time he does it, and at once you give him the biscuit and say loudly: biscuit!",
+  "Parent class. You have three mothers take turns playing the child, to feel what it's like when you ask, he doesn't answer, and you ask again. When one mother finishes, her eyes are red.",
+  "Session notes. How many sounds each child made today and how many times they reached out to communicate go into the center's rehabilitation management system, and then you send each parent the day's homework."
+ ],
+ "ladder": [
+  { "title": "Speech Therapist (Junior)", "stage": "Entry", "focus": "Seven or eight one-on-one sessions a day: assessment, oral motor work, articulation, language comprehension and expression, picture exchange communication; writes session notes and teaches parents home practice; needs the intermediate exam to move up" },
+  { "title": "Senior Speech Therapist", "stage": "Core staff", "focus": "With the intermediate certificate in rehabilitation therapy, takes severe and difficult cases, runs group sessions, mentors new therapists and teaches parent classes" },
+  { "title": "Speech Therapy Team Lead", "stage": "Leading a team", "focus": "Manages a speech team's schedule and quality, sets assessment and training standards, reviews individual plans, handles the Disabled Persons' Federation inspections" },
+  { "title": "Clinical Director of the Center", "stage": "Technical sign-off", "focus": "Oversees the technique and training of the center's speech, occupational, physical therapy and special education lines, goes for the associate chief therapist title, partners with hospitals and schools" },
+  { "title": "Director of the Rehabilitation Center", "stage": "Running the center", "focus": "Answers for an institution's accreditation, designated status, enrollment and accounts; deals with the Disabled Persons' Federation, health authorities, parents and investors" }
+ ],
+ "ai_tasks": [
+  { "name": "Writing session notes and gathering literature", "how": "Each session's notes, progress summaries and literature searches, AI can draft from recordings and scores; the therapist checks them and adds how the child was that day." },
+  { "name": "Making picture cards, social stories and homework materials", "how": "AI can produce a set of picture cards and social stories around a child's interests in minutes; which picture the child will look at and which word to teach first, the therapist decides." },
+  { "name": "Articulation and language assessment", "how": "Assessment software can detect error sounds and calculate scores; whether a child can't or won't, is tired or shy of strangers, the therapist has to see in the room." },
+  { "name": "Teaching parents and guiding home practice", "how": "AI can produce handouts and video talking points; how parents do it at home and whether they're doing it right, the therapist has to demonstrate and correct in person." },
+  { "name": "Oral motor and articulation training", "how": "Where the tongue depressor goes, how much pressure, where the child resists: the therapist has to do it by hand and adjust on the spot." },
+  { "name": "Building a relationship with the child and drawing out communication", "how": "Whether a child who won't look at anyone will hand you a picture card depends on trust built up session by session." }
+ ],
+ "events": {
+  "e_mama": "In a session in the fourth month, the boy of three and a half looks at the little window in the door and mumbles \"Ma.\" Outside, his mother covers her mouth and sinks to a crouch.",
+  "e_promise": "A father wants you to guarantee his child will talk within six months, or he'll switch centers. You say you can't guarantee that, only that you'll give every session your all. He moves the child the next month.",
+  "e_voice": "Seven or eight sessions a day, and you're hoarse for two weeks. The ENT doctor says it's vocal nodules and tells you to talk less. In the training room you use more gestures and picture cards.",
+  "e_bite": "During oral motor work a child suddenly bites down hard on your finger. You don't pull away; you wait for him to let go, and afterward write in his notes: very sensitive to touch in the mouth, start from the cheeks.",
+  "e_mid_title": "You pass the intermediate exam in rehabilitation therapy. The center raises your per-session fee, and you treat the team to wild mushroom soup.",
+  "e_quack": "A parent comes to you with her phone: online they say there's a therapy that can \"cure\" autism in three months, for fifty thousand yuan. You go through the ad with her line by line and talk for two hours.",
+  "e_salary_late": "The Disabled Persons' Federation subsidy arrives two months late, and the center's wages are held back a month too. Two colleagues on the team leave, and you take on six more children.",
+  "e_study": "At your own expense you spend a month in Beijing training in oral motor therapy and swallowing, living in a basement room near the hospital. When you come back, you give your team three lessons.",
+  "e_ai_cards": "You start using AI to make picture cards and social stories: a child interested only in dinosaurs gets a whole set called \"Dinosaurs Go to School.\" For the first time he turns every page of a book by himself.",
+  "e_ai_app": "A parent downloads a pronunciation assessment app and tests her child at home every day, sending you a screenshot whenever the score drops. You teach her to look only at the week's trend, not the daily score.",
+  "e_kindergarten": "A child you've worked with for two years starts at a mainstream kindergarten. You spend an afternoon handing over to his class teacher and leave a card saying \"covers his ears when he doesn't understand.\"",
+  "e_inspection": "The Disabled Persons' Federation's annual inspection of designated centers goes through six months of your session notes and assessments. An inspector asks: why hasn't this child's goal changed in three months? Because he hasn't reached it yet, you say.",
+  "e_love": "You start seeing someone who works at the bookshop next to the center. On weekends you go to Dianchi Lake to feed the gulls; you don't want to say a word, and they don't ask.",
+  "e_marry": "You marry and buy a small two-bedroom flat in Chenggong. In the study you keep one cabinet for all the drawings the children have made you over the years.",
+  "e_swallow": "A child with cerebral palsy arrives who always chokes on water. With the rehab doctor you do a swallowing assessment, thicken his water and change the angle of the spoon, and a month later he can drink half a cup by himself.",
+  "e_county": "You go with a Disabled Persons' Federation outreach program to Nujiang and assess more than a dozen children at a township clinic. Eight hours of bouncing on the road, and you come back to write a twenty-page report.",
+  "e_tired_parent": "A mother who has brought her child to rehab for four years tells you in the corridor she can't go on. You don't say \"keep going\"; you sit with her, then give her the number of the center's social worker.",
+  "e_letter": "A child who couldn't speak back then is now in middle school and writes an essay about \"the teacher who taught me to talk.\" His mother sends you a photo of it, and you read it over and over.",
+  "e_knees": "Years of sitting on little chairs and kneeling on floor mats to play with the children, and your back and knees aren't what they were. You switch your training room chair for one that adjusts in height.",
+  "e_new_policy": "The province raises the age limit for rehabilitation aid for autistic children to fourteen, and suddenly the center has a wave of older children and not enough training rooms.",
+  "e_mentor": "A new therapist you're training gets a child to hand her a picture card on his own for the first time, and she rushes out of the training room to find you, eyes shining. I know, you say; I ran out just like that."
+ },
+ "choices": {
+  "c_mid": {
+   "title": "Sit the intermediate exam and become Senior Speech Therapist",
+   "situation": "With the intermediate certificate in rehabilitation therapy, you could take severe cases, train newcomers and become a Senior Speech Therapist. But half the exam covers adult neurological rehab you barely studied, and after work there are still parents' messages to answer.",
+   "options": [
+    { "label": "Study every night", "result": "You copy out the chapters on aphasia and swallowing disorders and sit in on hospital rehab rounds a few weekends. The day of the exam, you're too hoarse to speak." },
+    { "label": "Look after the children first", "result": "You keep your evenings for the parents waiting on replies. The certificate comes a year late, and that year every one of your children starts to talk." }
+   ]
+  },
+  "c_hospital": {
+   "title": "Join a public hospital's rehab department",
+   "situation": "A provincial hospital's rehabilitation department is hiring speech therapists on non-permanent contracts. A little less pay than now, but evening classes, advanced training and a path to professional titles. Most patients there are adults and older people with aphasia or swallowing problems after a stroke.",
+   "options": [
+    { "label": "Go to the hospital", "result": "You start helping old stroke patients practice speaking at the bedside, and often the first word they say is the name of their husband or wife. Now and then you still think of the boy staring at the toy car.", "end": "You joined a provincial hospital's rehabilitation department as a speech therapist for adult aphasia and swallowing, spending each day at the bedside helping old people relearn to talk and to drink after a stroke." },
+    { "label": "Stay in children's rehab", "result": "You say you still want to be there for children's first words. The supervisor hears and gives you a newly arrived child with severe needs." }
+   ]
+  },
+  "c_shanghai": {
+   "title": "Move to a center in Shanghai",
+   "situation": "A university classmate works at an upscale children's rehab center in Shanghai. Six or seven hundred yuan a session, she says, and therapists earn over fifteen thousand a month; would you like to come? But you have nine children, some of whom have been with you for two years.",
+   "options": [
+    { "label": "Go to Shanghai", "result": "The training rooms in Shanghai are bigger, the toys newer, the parents more anxious. Every weekend you call the new therapist looking after those children in Kunming." },
+    { "label": "Stay in Kunming", "result": "You say you'll think about it once these children are in kindergarten. Later they are, and you take on new children, and you never bring it up again." }
+   ]
+  },
+  "c_ai_tool": {
+   "title": "Learn the AI assessment and card tools or not",
+   "situation": "The center wants to bring in an AI system for articulation assessment and training materials, and needs a few therapists to trial it, compare it with human assessments and revise the training templates. After-hours work, no extra pay.",
+   "options": [
+    { "label": "Sign up for the trial", "result": "You compare over three hundred recordings and find it often misjudges children with Yunnan dialect accents. You help add a dialect sound comparison table, and later the whole center uses it." },
+    { "label": "Leave it alone and trust your ears", "result": "You still listen with your own ears and write notes by hand. When the system goes live you can use it, but you still listen through every child's assessment again yourself." }
+   ]
+  },
+  "c_group": {
+   "title": "Apply for Speech Therapy Team Lead",
+   "situation": "The speech team's old lead has moved away, and the center wants to promote a Speech Therapy Team Lead from within: scheduling a dozen-plus people, reviewing individual plans, setting assessment standards, handling Federation inspections. You'd keep half your sessions.",
+   "options": [
+    { "label": "Apply", "result": "You pitch one idea: every new child spends the first two weeks on assessment and building a relationship only, no rush into training. The director hears you out and says: do it your way." },
+    { "label": "Focus on the children", "result": "You say you'd rather stay in the little training room. The new lead comes from a hospital, and often uses your notes as examples for newcomers." }
+   ]
+  },
+  "c_studio": {
+   "title": "Open a studio of your own",
+   "situation": "A few parents say if you open your own studio, they'll follow you. A sixty-square-meter shopfront at the foot of a housing estate is up for rent; renovation, teaching materials and licensing would take all your savings.",
+   "options": [
+    { "label": "Rent it, under the center's name", "result": "You strike a deal with the center: the studio runs as a satellite under its name. You paint the walls yourself, buy little tables and chairs yourself, and the first month there are just five children. Six months later you're booked with twenty, and for the first time you lose sleep over rent and licensing inspections." },
+    { "label": "Stay at the center", "result": "You persuade those parents to stay, saying the center has occupational and physical therapy that you couldn't offer. When the director hears, he raises your session fee a grade." }
+   ]
+  },
+  "c_director_tech": {
+   "title": "Become Clinical Director of the Center",
+   "situation": "The center is opening a second branch and needs a Clinical Director of the Center to oversee the technique and training of the speech, occupational, physical therapy and special education lines, and to go for the associate chief therapist title. You'd rarely have children of your own in sessions.",
+   "options": [
+    { "label": "Take it", "result": "You write the center's first assessment and training manual, a hundred and twenty pages, every page with photos. On their first day, every new hire gets a copy." },
+    { "label": "Stay with the speech team", "result": "You say you can't leave that mirror. The post goes to a colleague from physical therapy, who checks with you first every time she revises the speech standards." }
+   ]
+  },
+  "c_special_school": {
+   "title": "Move to a special education school",
+   "situation": "A newly built public special education school is hiring speech rehabilitation teachers: a permanent state post, summer and winter holidays, about the same pay as now. The children are all school age, ten or so to a class.",
+   "options": [
+    { "label": "Go to the special school", "result": "From one-on-one you go to one-to-ten, and learn to watch ten children's mouths in a single lesson. At home time a child says \"goodbye, teacher\" to you, very clearly.", "end": "You became a speech rehabilitation teacher at a special education school, with a permanent post and school holidays, standing at the classroom door each morning as the children, one by one, say \"good morning, teacher.\"" },
+    { "label": "Stay at the center", "result": "You say the preschool years matter most, and you want to stay there." }
+   ]
+  },
+  "c_head": {
+   "title": "Take over as Director of the Rehabilitation Center",
+   "situation": "The founding director is retiring, and the investors ask if you'll take over as Director of the Rehabilitation Center: two branches, over eighty staff, the Federation's designated status and the annual accounts.",
+   "options": [
+    { "label": "Take it", "result": "The first thing you do is cap every therapist at seven sessions a day, however tight enrollment gets. The investors aren't pleased; you walk them through the numbers on staff turnover." },
+    { "label": "Decline", "result": "You recommend a deputy director who knows the business side better and keep running the clinical work. When she takes over, she says: on clinical matters, your word goes." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "In your last session you wipe the mirror clean, put the tongue depressors and picture cards away in the drawer one by one, and hand them to the young therapist taking over. The corridor is still full of parents, some dozing, some on their phones. You walk through them and hear, from one training room, a child's hard-won \"ahhh,\" and you pause a moment before going down the stairs.",
+  "burnout": "For a while your voice never healed; every sentence hurt. One afternoon you stopped all your sessions and handed the children to colleagues one by one, writing handover notes until dark. Outside the office building the wind had picked up over Dianchi, and without a word you walked all the way to the bus stop."
+ },
+ "stages": [
+  "You take seven one-on-one sessions a day, forty minutes each: assessment, oral motor work, articulation, comprehension and expression, picture exchange communication. The people you deal with most are the children, the parents watching through the little window in the door, and the supervisor training you; at hand are the mirror, tongue depressors, chew sticks, laminated picture cards and the center's rehabilitation management system. Before you leave, you send every parent the day's homework.",
+  "You take the severe and difficult cases: children who won't look at anyone, children with swallowing problems, children who've been through three centers. You run group sessions where three or four children take turns passing things, waiting and saying thank you. You mentor a new therapist and teach a parent class once a week. When parents aren't sure about something, they come to you first.",
+  "You manage the speech team of a dozen-plus therapists: scheduling, reviewing every child's individual plan, setting assessment and training standards, and showing the Federation inspectors round. You still teach three or four sessions a day; the rest of the time you sit in on newcomers' sessions, watch recordings and revise plans. At hand now are the team's teaching log and a progress chart for every child on the team.",
+  "You oversee the center's clinical lines: speech, occupational, physical therapy and special education, writing manuals, setting training, running case conferences, and negotiating partnerships with hospital rehab departments and schools. You rarely have regular children of your own any more; what you do most is sit outside the little window watching someone else's session, then talk with the therapist for twenty minutes afterward.",
+  "You answer for the whole institution: designated status, enrollment, the cap on sessions, staff pay and the annual accounts, in meetings with the Disabled Persons' Federation, the health authorities, investors and the parents' committee. What you look at most are attendance sheets and staff turnover. Every Friday afternoon, you still schedule one session for yourself."
+ ],
+ "work": [
+  "A four-year-old girl says \"tuzi,\" rabbit, as \"duzi,\" belly. You have her put the back of her hand on your throat to feel the difference between \"t\" and \"d,\" and in the third session she gets it right herself and laughs.",
+  "One child is interested only in electric fans. You bring out the little fan in the training room, and every time he says \"want,\" you let the breeze blow on his face.",
+  "Assessing a new child for language delay, you find he can't sit still, so you crawl after him on the floor mat; the assessment form takes an hour and a half.",
+  "You run your first four-child group session, with just one rule: wait until someone has finished speaking before you take a block. In forty minutes, one child waits three seconds, and you draw a star in your notes.",
+  "A child who has been through three centers arrives with a thick stack of assessment reports. You read every one and find each center set the same first goal, and none of them reached it.",
+  "A new therapist talks the whole session and the child can't get a word in. You watch through the little window and afterward tell her only: next time, say half as much.",
+  "You review an individual plan whose goal reads \"improve language ability.\" You send it back and have the therapist change it to \"within three months, can use two words to ask for water.\"",
+  "Before the Federation's annual inspection you have the team recheck six months of assessments and find three children overdue for reassessment; they're done the same day.",
+  "You play the team a recording of a session from your own first year and have them pick out the faults. They find eleven, and you write each one up on the whiteboard.",
+  "You organize a joint case conference with occupational therapy on a child whose speech is slurred; the occupational therapist finds the real problem is that he can't hold himself up sitting.",
+  "A hospital rehab department wants to partner with the center on screening preschool children. You spend an afternoon with their director settling who sees the children first and how referrals work.",
+  "In the assessment manual you write for the whole center, you add a chapter on dialect and accent, listing the pronunciation habits common among children from Kunming, Zhaotong and Dali.",
+  "The investors want a third branch. You bring the figures on how hard it is to hire qualified therapists and say: first keep the people at the two we have.",
+  "At the parents' committee someone proposes more sessions a day. You explain why a child who does seven a day actually remembers less, using years of progress charts.",
+  "Your own Friday session is with a newly arrived child. In forty minutes he looks at you twice, and you note both times."
+ ],
+ "past": [
+  "You're in your last year of middle school in Qujing. Your little cousin is three and still doesn't talk; your aunt takes him to one hospital after another, and one doctor says \"great men speak late,\" and she believes it.",
+  "Your cousin is later diagnosed with autism, and your aunt moves with him to Kunming, renting a room next to a rehab center. On weekends you visit and watch the therapists' sessions through the little window.",
+  "Filling in your gaokao (college entrance exam) applications, you find \"rehabilitation therapy\" in a medical college's prospectus, with a line of small print below: speech and hearing track.",
+  "In third-year clinical observation you use a tongue depressor for the first time to help a child find where his tongue should go. He cries, and your hand shakes too. Slower, the teacher says; let him get to know you first.",
+  "For your graduation internship you come to this center, following a therapist with ten years' experience, sitting in on her seven sessions a day and copying out her notes at night.",
+  "After graduation you stay on. That year your cousin starts first grade at a mainstream primary school, and after his first day he tells you on the phone: big sister, I have a deskmate."
+ ],
+ "late": {
+  "pension_note": "Estimate: the private center paid in at the minimum of Kunming's social insurance base for over thirty years, without a gap when you changed employers, so your pension is about forty percent of your final monthly salary.",
+  "scenes": [
+   "On your first morning of retirement you hear a child in the housing estate say \"duo-duo\" for \"ge-ge.\" You smile and don't correct him.",
+   "The neighborhood asks you to teach young parents how to talk with their children. Your first rule: after you ask a question, count to five before you speak again.",
+   "Your cousin brings his own child to see you, and the child chatters nonstop. See, big sister, your cousin says, now our family complains about too much talking.",
+   "After you quit you rest at home for half a year and hardly speak. Your voice slowly heals, and the first time you sing a song is while you're washing the dishes.",
+   "You find a job at a picture-book library, telling stories to children on weekends. One child never speaks, so you pass him the book and let him turn the pages.",
+   "On the street you meet the boy who was three and a half back then, now a tall teenager in headphones. His mother recognizes you and nudges him: say hello to your teacher. He does.",
+   "After leaving the little training room, you still find your hand going to your pocket for a tongue depressor that isn't there.",
+   "A parent you once worked with messages you: her child won a prize in a school speech contest, with a video attached. You turn up the volume and listen three times.",
+   "The cabinet of drawings in your study is full, so you buy another. The drawing on top shows a person and a mirror, and beside it in wobbly characters: teacher.",
+   "You hear AI can now practice pronunciation with children for hours without getting bored. Good, you think, only it won't wait for a child to look up at it.",
+   "Sorting old things, you find a stack of laminated picture cards worn round at the corners: biscuit, water, hug. You keep the one that says hug.",
+   "You go back once to the old office building in north Kunming. There's still a rehab center on the third floor, parents still sitting in the corridor, still a little window in each door."
+  ],
+  "closing": {
+   "retire": "One winter many years later, watching the gulls at Green Lake, you hear a small child point at the sky and shout \"bird! bird!\" In your head you count his sounds, one, two, then look up and watch the sky with him.",
+   "burnout": "Many years later, sunning yourself on your balcony, you hear a child downstairs reciting a lesson, getting one word wrong and starting over from the top. You listen without a word, and when he's finished you say to yourself: good.",
+   "end": "Many years later, your hand finds a tongue depressor in a drawer, the wood gone yellow. You hold it up to the mirror, smile, and put it back at the very back of the drawer."
+  }
+ }
+}

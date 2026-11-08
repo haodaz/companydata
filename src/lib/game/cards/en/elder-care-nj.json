@@ -1,0 +1,202 @@
+{
+ "id": "elder-care-nj",
+ "occupation": "Elderly Care Service Specialist",
+ "role": "Care Worker at a Publicly Built, Privately Run Care Home",
+ "headline": "A care worker who spent three years at a vocational college studying smart health and elderly care, holds a Level 4 elderly care certificate, and has been placed in the dementia unit of a publicly built, privately run care home in old Nanjing, starting from turning residents and feeding them",
+ "unit": "A publicly built, privately run care home in Nanjing's Qinhuai District (two hundred beds, with a dedicated dementia unit on the third floor)",
+ "unit_type": "Publicly built, privately run care home",
+ "city": "Nanjing",
+ "city_tier": "Emerging first-tier city",
+ "education": "Vocational college diploma (Smart Health and Elderly Care Services and Management)",
+ "level": "You've learned turning, feeding, assisted bathing and changing pads, and you have your Level 4 certificate; when a resident with dementia wants to go home in the middle of the night or refuses medication, you still watch how the veteran carers coax them.",
+ "intro": "You interned here for three months, and on graduation day the director called to ask if you were coming. The home sits on an old lane in Qinhuai District; it used to be the neighborhood home for the elderly. The third floor is painted pale yellow, the door needs a swipe card to get out, and twenty-four residents with dementia live there. The care team leader hands you a dog-eared handover book and says: learn the people first, then their tempers. From today, your name badge says Care Worker.",
+ "salary_note": "Estimate: a care worker at a publicly built, privately run home in Nanjing earns base pay plus night-shift pay and a full-attendance bonus, around five thousand yuan a month, close to the national average; graduates in elderly care also receive a city hiring subsidy paid out over several years, not counted in monthly pay.",
+ "facts": [
+  { "label": "Care Worker (Level 4) (current level)", "value": "0-2 years, ¥4,420–6,500 a month (national average, derived from pay by experience)", "source": "Industry norm" },
+  { "label": "Next level up", "value": "Care Worker (Level 2) and Care Team Leader (2-5 years)", "source": "Industry norm" },
+  { "label": "Pay after 10+ years", "value": "¥12,600 a month (national average)", "source": "Pay by experience" },
+  { "label": "Where AI is moving in", "value": "Assessing older people's abilities (cognition, mobility, self-care, social participation)", "source": "AI exposure" },
+  { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Handover. The night aunty reads and points as she goes: Bed 12 got up three times in the night; Bed 15 said at dawn she had to go to work and had to be talked back to bed. You draw two circles in the handover book.",
+  "Morning care. You knock on each door in turn, help residents wash their faces, brush their dentures, get dressed, and settle into wheelchairs. One old lady needs you to pin on her brooch first, every day.",
+  "Breakfast. Three residents need feeding. Bowl in your left hand, spoon in your right, you wait for each mouthful to go down before the next; the congee has the thickener the nurse asked for.",
+  "Assisted bath. You and a colleague move an eighty-nine-year-old man onto the shower chair. You test the water on your wrist first, then ask him if it's too hot. Just right, he says, and adds that your hands are gentle.",
+  "The residents nap and you catch up on records at the nurses' station: how much each one ate, how many times to the toilet, how many turns, any redness on the skin, ticked off item by item on the tablet.",
+  "Afternoon activity in the dementia unit: folding towels. An old woman who used to run looms at a textile mill folds fast and neat, then unfolds every one and starts over.",
+  "Peak visiting hours. A son asks why his father has lost weight. You pull up the week's food records to show him and say you'll have the dietitian look at him tomorrow.",
+  "You leave work down the lane, and the duck blood vermicelli soup shop on the corner is still open. You sit down for a bowl; your wrists ache a little."
+ ],
+ "ladder": [
+  { "title": "Care Worker (Level 4)", "stage": "Entry", "focus": "Looks after the daily care of eight to ten residents on one floor: turning, feeding, bathing, toileting, night rounds; passes Level 3 and trains newcomers to move up" },
+  { "title": "Care Worker (Level 2) and Care Team Leader", "stage": "Leading a shift", "focus": "With the senior certificate, leads a team: scheduling, training new staff, handling falls and choking, keeping families informed about care" },
+  { "title": "Elderly Care Service Specialist (Care Supervisor)", "stage": "Supervisor", "focus": "Does admission assessments, writes individual care plans, runs training and quality checks for every care worker, liaises with doctors, rehab and social work" },
+  { "title": "Deputy Director of the Care Home", "stage": "Operations", "focus": "Runs operations: beds, fees, civil affairs inspections and star ratings, safety; negotiates long-term care insurance and medical partnerships with the subdistrict and insurers" },
+  { "title": "Director of the Care Home", "stage": "In charge", "focus": "Answers for the safety and reputation of a whole home, deals with the operating company, civil affairs and the family committee, and controls people and money" }
+ ],
+ "ai_tasks": [
+  { "name": "Assessing older people's abilities (cognition, mobility, self-care, social participation)", "how": "AI can compile scale results, pull key points from interview notes and draft the assessment report; but cognition and mobility have to be judged by a person on site, watching and talking, taking in the resident's mood and family situation, and a person signs and is accountable." },
+  { "name": "Writing individual care plans and long-term care support plans", "how": "AI can draft care plan templates from assessments and records and flag what to watch for; a person weighs the resident's wishes, the family's finances and what's really possible, and adjusts the plan as things change." },
+  { "name": "Coordinating medical, rehab, nursing, social work, legal and financial resources", "how": "AI can find available resources, prepare referral documents, schedule and send follow-up reminders; getting doctors, therapists and social workers to actually cooperate comes from people talking to people and building trust." },
+  { "name": "Teaching family caregivers basic care skills and home adaptations", "how": "AI can produce plain-language care guides, adaptation checklists and video talking points; showing a family hands-on how to turn, transfer and prevent falls, and checking they've got it right, needs a person there to demonstrate and correct." },
+  { "name": "Running health promotion, cognitive training and emotional care activities", "how": "AI can write activity plans, cognitive exercises, publicity copy and tally sign-ups; leading the room, lifting the mood, handling the unexpected and noticing the quiet or low residents takes a person." },
+  { "name": "Helping with policy questions, subsidy claims and care home referrals", "how": "Explaining eligibility, listing documents for subsidies, filling in forms and guiding people through procedures, AI can mostly handle; a person only needs to spot-check special cases, disputed policies or documents that look wrong." }
+ ],
+ "events": {
+  "e_name": "A month in, the old lady on the third floor who has never recognized you calls you by your name for the first time. The next day she has forgotten again, and you are happy all day anyway.",
+  "e_scratch": "A resident suddenly resists in the bath and claws your arm. The team leader disinfects it and puts on a plaster and says: it's not you he's afraid of, it's the water.",
+  "e_fall": "On a night shift a resident gets out of bed alone and sits down hard by the bathroom door. The smart mattress's bed-exit alarm goes off in time and you are there in three minutes; you check, report and call the family by the book, and don't close your eyes all night.",
+  "e_family_angry": "A daughter finds a bruise on her mother's leg and pounds the desk at the nurses' station demanding an explanation. You pull out the turning log and the nurse's skin check sheet and go through them with her for half an hour.",
+  "e_level3": "You pass Care Worker Level 3. The practical is pressure sore prevention and assisted feeding on a mannequin, and the examiner says your feeding was the most like the real thing.",
+  "e_subsidy": "The first installment of the hiring subsidy for elderly care graduates arrives. You use some of it to buy your grandmother a walker and send it home to Yancheng.",
+  "e_quit_wave": "Of the five classmates who started with you, three are gone a year later: some to hospitals as care aides, one back home to sit the civil service exam. You cover two people's shifts on your own.",
+  "e_music": "In the dementia unit you put on an old song, and an old man who barely speaks sings the whole verse along with it. When it's over he asks you: what's the date today?",
+  "e_star": "The home prepares for its civil affairs star rating. The inspectors go through three months of your care records page by page, very closely. In the end the home is rated four stars.",
+  "e_ai_plan": "The home brings in an AI care system that rolls the daily records into weekly reports and flags whose eating is declining. You notice it missed that one resident was eating less because her dentures had come loose.",
+  "e_ai_subsidy": "Policy questions and subsidy claims now have an AI assistant; families can check on their phones which ones they qualify for. You save the time of dozens of phone calls a month.",
+  "e_long_care": "Long-term care insurance takes in a group of the home's residents with severe disabilities. You learn the new assessment forms and service record formats, and one family works out they'll pay over a thousand yuan less a month.",
+  "e_waist": "Years of bending and lifting, and a disc in your lower back has bulged. The home buys two patient lifts, and you are the first to insist on using them.",
+  "e_love": "You start seeing the home's rehab therapist. Your shifts never line up, so most dates are a meal together in the staff canteen.",
+  "e_house": "The two of you put a down payment on a small two-bedroom flat in Jiangning; the mortgage is over four thousand a month. You take two extra night shifts.",
+  "e_farewell": "A resident you cared for for four years passes away. When the family comes to collect her things, they leave you her brooch. After work that day you stand at the end of the lane for a while.",
+  "e_competition": "You represent the home in the city's care worker skills competition and win third prize. The trophy sits on the third-floor nurses' station, and the residents touch it as they pass.",
+  "e_dementia_train": "You go to Shanghai for a week of dementia care training, and when you come back you turn the end of the third-floor corridor into a pretend bus stop, where residents who want to go home can \"wait for the bus.\"",
+  "e_epidemic": "Flu season, and the home goes into lockdown for a month. You and your colleagues take turns living on site and send families video every day; one old man calls three wrong names at the camera.",
+  "e_robot": "The home trials a companion robot that tells stories and reminds people to take their medicine. An old lady chats with it all afternoon, and in the evening asks you: is that child coming back tomorrow?",
+  "e_operator_change": "The publicly built, privately run contract expires and a new operating company takes over. The new boss wants every care worker to take two more beds; at the handover meeting you lay the years of fall records on the table.",
+  "e_apprentice": "The first apprentice you trained passes Level 2. She comes to thank you; you say don't thank me yet, Bed 15 hasn't been turned today."
+ },
+ "choices": {
+  "c_hospital": {
+   "title": "Work as a care aide at a hospital",
+   "situation": "A classmate who graduated with you works as a medical care aide at a top-tier hospital. She says you're paid by the day there, over a thousand more a month, and no night shifts in a dementia unit. She asks if you want to come over.",
+   "options": [
+    { "label": "Go to the hospital", "result": "You spend a year at hospital bedsides. The money is better; the patients come and go, and you can't remember anyone's name.", "end": "You became a medical care aide at a hospital, coming and going between beds, and now and then, passing the lane with the care home, you look up at the row of pale yellow windows on the third floor." },
+    { "label": "Stay at the care home", "result": "You say you haven't learned all the tempers on the third floor yet. The team leader hears and gives you the hardest old lady to coax." }
+   ]
+  },
+  "c_level2": {
+   "title": "Sit Care Worker (Level 2) to become team leader",
+   "situation": "The home is promoting a care team leader and needs a Level 2 certificate. Level 2 means a paper, a defense, and having trained newcomers. You're on lots of night shifts, so study has to be squeezed into the hours you'd sleep in the day.",
+   "options": [
+    { "label": "Sit it and go for team leader", "result": "You write your paper on caring for residents with sundowning and pitch the pretend bus stop at the defense. The month the certificate comes through, you become team leader." },
+    { "label": "Not yet, build experience first", "result": "You keep working bed by bed. The team leader post goes to a colleague, and you help her draw up her first roster." }
+   ]
+  },
+  "c_dementia": {
+   "title": "Stay on in the dementia unit",
+   "situation": "The home is expanding the third-floor dementia unit to two floors and asks if you'll be based there. It's the most tiring place, the most restless at night, and also the place most short of staff and with the most to learn.",
+   "options": [
+    { "label": "Stay in the unit", "result": "You learn not to correct a resident who has the year wrong, but to follow what he says. Six months later, night calls in the unit are down by a third." },
+    { "label": "Move to general care", "result": "On the second floor you look after residents who can still walk: chess, blood pressure, sitting out in the yard in the sun. Calm days, less to learn." }
+   ]
+  },
+  "c_home_care": {
+   "title": "Go out on home visits",
+   "situation": "The operating company has opened a home care station in the subdistrict and wants people to ride e-bikes to homes for bathing, dressing changes and hospital escorts. Paid by the job: the more you do, the more you earn, out in wind and rain.",
+   "options": [
+    { "label": "Do the home visits", "result": "You cover six homes a day and get to know the old blocks of half of Qinhuai. One old man who lives alone always waits for you at his door, a peeled apple on the table." },
+    { "label": "Stay at the home", "result": "You stay at the home and get off work on time. Colleagues at the station sometimes call to ask how you handle a bath." }
+   ]
+  },
+  "c_ai_system": {
+   "title": "Learn the AI care system or not",
+   "situation": "The home is switching entirely to an AI care system: assessments, care plans, records and alerts all on the tablet. The director wants a young care worker to be the system administrator and trainer, teaching the veteran carers in their fifties to use it.",
+   "options": [
+    { "label": "Take it on, learning while teaching", "result": "You teach one team at a time. One aunty goes through it three times and finally asks you to write each step on a card taped to the back of her tablet. Six months later you start helping the home revise its care plan templates." },
+    { "label": "Being able to use it is enough", "result": "You keep logging on the tablet and leave the system to the home's IT clerk. Your time stays at the bedside." }
+   ]
+  },
+  "c_service_master": {
+   "title": "Qualify as Elderly Care Service Specialist and become care supervisor",
+   "situation": "The care supervisor is moving to a new branch. The vacancy requires the Elderly Care Service Specialist certificate: admission assessments, care plans, training for the whole home. You'd have weekend classes, and you'd have to teach yourself geriatrics and rehab on top.",
+   "options": [
+    { "label": "Qualify and take the post", "result": "Weekends in the classroom, weekdays at the bedside; you lose five pounds in six months. The day you get the certificate, you rewrite the care plan for every resident on the third floor." },
+    { "label": "Stay on the floor leading your team", "result": "You'd still rather walk the corridors. The supervisor job goes to a nurse who comes over from a hospital." }
+   ]
+  },
+  "c_branch": {
+   "title": "Become Deputy Director at a new home in the outskirts",
+   "situation": "The operating company has taken over a township home for the elderly in Lishui and wants to turn it into a care home with medical services. They ask if you'll go as Deputy Director of the Care Home. Pay is a bit lower, half the beds are empty, and everything starts from scratch.",
+   "options": [
+    { "label": "Go to Lishui", "result": "Every Monday you take the early bus out and come back to the city on Friday. In the first year you sign a visiting-doctor agreement with the township clinic, and occupancy goes from forty to eighty." },
+    { "label": "Stay in the city", "result": "You recommend a team leader who has worked with you for five years. She sends you photos once a month: freshly painted walls, greens planted in the yard." }
+   ]
+  },
+  "c_train_school": {
+   "title": "Teach elderly care at a vocational college",
+   "situation": "Your old vocational college wants you back as a practical skills instructor for elderly care. About the same pay, no more night shifts, and no more residents of your own.",
+   "options": [
+    { "label": "Go back to teach", "result": "Your first practical class is on feeding: where the bowl goes, which side the spoon comes from, how long to wait. The students laugh that you're too slow. That's the point, you say.", "end": "You became a practical skills instructor in elderly care at a vocational college, sending a cohort of twenty-year-olds into care homes every year, and the first thing you tell them is: learn the people first, then their tempers." },
+    { "label": "Stay at the home", "result": "You agree to teach a few classes each term and bring students to the home for placements." }
+   ]
+  },
+  "c_director": {
+   "title": "Take over as Director of the Care Home",
+   "situation": "The old director is retiring and the operating company wants you as Director of the Care Home. From then on, a two-hundred-bed home, more than eighty staff, the yearly civil affairs inspections and the family committee all rest on you.",
+   "options": [
+    { "label": "Take it", "result": "In your first week you hold no meetings; each day you work a shift on each of the three floors. In the second week you raise the care workers' night-shift allowance by a grade." },
+    { "label": "Decline and keep the care side", "result": "You say you can't leave the third floor. The new director asks you to keep running care and training, and you agree." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last shift you hand the handover book to the next carer and turn to the first page, where the two circles you drew at twenty-one are still there. You walk the third floor and say goodbye to every resident; some tell you to come in early tomorrow. You walk out down the lane. The duck blood soup shop has a new sign, and you go in and sit down anyway.",
+  "burnout": "That year your back never got better; at night, turning residents, you would break into a sweat from your own pain. The doctor told you to stop lifting people. You sign your resignation and leave your name badge on the desk at the nurses' station. As you walk out of the gate, someone at a third-floor window waves to you, and you wave back."
+ },
+ "stages": [
+  "You look after eight residents on one floor, from washing and dressing in the morning to rounds every two hours at night: turning, feeding, bathing, changing pads, helping them to the toilet. The people you deal with most are the residents themselves, the veteran carer training you, and visiting families; at hand are the handover book, turning log cards, the shower chair and a care tablet you log into with your staff card. You speak slowly and keep your hands steady.",
+  "You lead a team of six: rosters, training newcomers, watching everyone's care records. Falls, choking, a resident wandering off: you are the first one called. When a family has a complaint they come to you first, and you check the records, explain, apologize, fix it. You no longer look after just your own beds; you set the rhythm for a whole floor.",
+  "You do admission assessments and write care plans, and once a month you hold a care quality meeting, going through high-risk residents with the home's doctor, nurses, rehab therapist and social worker. You run training and evaluations for every care worker; at hand are ability assessment scales, care plan templates and monthly fall and pressure sore statistics. You go upstairs less, and look at spreadsheets more.",
+  "You run operations: bed turnover, fees, purchasing, fire and food safety, the annual civil affairs inspection and star rating, and partnerships with the subdistrict, the township clinic and the long-term care insurance office. At hand are monthly operating reports, inspection correction notices and a stack of contracts. Every week you still walk through the dementia unit and watch the care workers' hands.",
+  "You answer for the whole home: negotiating budgets and staffing with the operating company, reporting to civil affairs, holding quarterly meetings with the family committee, and signing first when anything goes wrong. What you check most are the safety logs and the staff turnover rate. One night shift a month, you still work yourself."
+ ],
+ "work": [
+  "The old man in Bed 15 is swallowing worse and worse. You measure the nurse's thickener into warm water by the markings and wait for him to nod after every spoonful; one bowl takes forty minutes.",
+  "At three in the morning an old lady stands by the door with her coat on, saying she has to pick up her child from school. You don't stop her; you walk two laps of the corridor with her until she says she's tired, and help her back to bed.",
+  "The first time you bathe a resident with one-sided paralysis on your own, you lay the transfer belt and test the water first, then tell him each step before you do it. He grips the handrail the whole time and never lets go.",
+  "The new care worker is a woman in her forties who used to wash dishes in a restaurant. You show her her first turn: hands on the shoulder and the hip, never pull on the arm.",
+  "A resident chokes at a meal and you rush over and do the Heimlich; on the third thrust it comes out. Writing the incident report afterward, you also note how soft or hard the food was that day.",
+  "You change the team's roster from weekly to monthly and split the night shifts evenly, so for the first time everyone can plan their trips home in advance.",
+  "A new resident's family hands you a stack of medical records. You go through the assessment scale question by question and watch him item by item, set him at Care Level 2, and write in the plan: a game of Chinese chess with him every afternoon.",
+  "At the care quality meeting, the fall statistics show three more on the second floor this month. You pull up the cameras, the rosters and the floor non-slip logs together, and find they all happened in the half hour of the afternoon shift change.",
+  "You teach the whole staff pressure sore prevention without slides: everyone takes a turn lying on a bed without moving for twenty minutes, then says where it hurt first.",
+  "The night before the civil affairs inspection, you and the facilities manager walk the fire exits once more and find a fire door half blocked by cardboard boxes.",
+  "Settling accounts with the long-term care insurance office, they want a location check-in and photo for every service visit. You calculate how much extra time it costs the carers and take that number to the negotiation.",
+  "The canteen changes suppliers. You eat lunch there every day for a week and write a page of comments each on the soft-diet and regular menus; the first one reads: take the bones out of the fish.",
+  "At the family committee's quarterly meeting someone proposes more cameras. You agree to cameras in corridors and common areas but not in rooms, and spend twenty minutes explaining why.",
+  "The operating company wants to cut labor costs. You bring out three years of staff turnover and hiring costs and say keeping one veteran carer is cheaper than hiring three new ones.",
+  "You work this month's night shift. At two in the morning, on the third floor, an old man sits in front of the pretend bus stop. You sit down next to him and wait for the bus with him."
+ ],
+ "past": [
+  "You're in your last year of middle school in the countryside outside Yancheng. After your grandmother's stroke leaves half her body paralyzed, with your parents working in Suzhou, it's you who washes and feeds her after school.",
+  "A few points short in the high school entrance exam, you miss the county high school. You enter a five-year vocational college track, and choosing a major you see \"smart health and elderly care\" and think of your grandmother.",
+  "In the college's training room you turn a mannequin for the first time. The teacher says your technique is right, you're just too forceful, like you're moving furniture.",
+  "You sit the Level 4 elderly care exam, and in the practical you're so nervous you forget to set the shower chair's brake. The examiner reminds you once, and you remember it for life.",
+  "You intern for three months at this Nanjing care home. On your first night shift an old lady on the third floor holds your hand all night, calling you by her daughter's name.",
+  "Before graduation some classmates go to hospitals, some to postpartum care centers. The director calls, and you say: I'll come."
+ ],
+ "late": {
+  "pension_note": "Estimate: the care home paid in on Nanjing's social insurance base for over thirty years, without a gap when the operator changed, so your pension is about forty-five percent of your final monthly salary.",
+  "scenes": [
+   "At half past six on your first morning of retirement you wake as usual and lie there thinking: it's time for handover.",
+   "Once a week you help out for a morning at the community seniors' canteen, and when you serve, you pass the softer portion to those with bad teeth.",
+   "You've started using a cane yourself. You visit old colleagues at the home, and the way the young carer helps you up the stairs is the method you once taught.",
+   "You go back to Yancheng and find a job as a pharmacy assistant in the county town. Standing all day without bending, your back slowly gets a little better.",
+   "The old man next door has a stroke and his family doesn't know how to care for him, so they come to you. You spend three days teaching them turning and feeding and take no money.",
+   "Scrolling on your phone you come across a video of the Nanjing home: the third floor walls still pale yellow, the bus stop at the end of the corridor still there.",
+   "After leaving the care home, for a long time you can't get used to mornings without a handover book.",
+   "The daughter of a third-floor resident recognizes you on the street and holds on to you, talking for ages about her mother's last years.",
+   "You keep the brooch in a drawer, and sometimes pin it on your coat to go to the market.",
+   "You hear care homes now have smart beds that turn residents on their own. A bed can turn you, you think, but who will ask whether it hurts?",
+   "Your grandmother's photo has always stood on the cabinet at home. Sometimes you talk to her, telling her who you taught to feed someone today.",
+   "Half the old lane in Qinhuai has been demolished, but the care home is still there, with a new sign by the gate. You stand across the street looking at it for a while and don't go in."
+  ],
+  "closing": {
+   "retire": "Many years later, in the care home where you now live, a carer comes to turn you. Her hands go to your shoulder and hip, not your arm. You close your eyes and say: that's the way.",
+   "burnout": "Many years later, you hang quilts to air in the yard back home, the sun warming the covers until they're hot to touch. You pat a quilt and think of your grandmother, and of the row of pale yellow windows on the third floor.",
+   "end": "Many years later, walking past a care home, you hear someone inside playing that old song. You stop at the gate and hum the verse to the end before you walk on."
+  }
+ }
+}

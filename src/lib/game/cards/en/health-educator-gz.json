@@ -1,0 +1,200 @@
+{
+ "id": "health-educator-gz",
+ "occupation": "Health Educator (County CDC)",
+ "role": "Public Health Physician in a County CDC's Health Education Section",
+ "headline": "A county CDC health educator who studied preventive medicine, tested back into a permanent state post in a mountain county of Qiandongnan, and is one of four people handling health education for over three hundred thousand residents, setting up a table at the market on market days to take blood pressure and hand out salt-measuring spoons",
+ "unit": "The health education section of the Center for Disease Control and Prevention in a Miao and Dong mountain county of Qiandongnan, Guizhou",
+ "unit_type": "County-level CDC",
+ "city": "A county in Qiandongnan Prefecture",
+ "city_tier": "County town",
+ "education": "Bachelor's degree (Preventive Medicine)",
+ "level": "You can run the door-to-door health literacy survey, write health leaflets and give talks on your own, and you've just passed the public health physician licensing exam; you only know a few words of the Miao language, so in the villages you still rely on the village doctor to translate.",
+ "intro": "You studied preventive medicine for five years in the provincial capital, and the year you graduated you tested into the CDC in your home county town. The health education section is the last room on the third floor: four desks, the corners stacked with leaflets, roll-up banners, salt-measuring spoons and oil-measuring bottles, and on the cabinet an old DSLR the unit issued. The section chief pins a map of the county's townships on the wall across from your desk, bristling with little red flags. From today, market day is a workday for you.",
+ "salary_note": "Estimate: a permanent post at a county CDC in Qiandongnan pays base salary plus performance pay and a field allowance, around five thousand yuan a month, about 0.8 times the national average; you have a permanent state post, full social insurance and an occupational annuity, and raises follow your professional title.",
+ "facts": [
+  { "label": "Public Health Physician (current level)", "value": "0-5 years, ¥4,500–7,000 a month (national average, estimated)", "source": "Industry norm" },
+  { "label": "Next level up", "value": "Attending Physician (Public Health) (5-10 years)", "source": "Industry norm" },
+  { "label": "What AI can't take", "value": "Going into the villages and talking face to face on market day", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Writing health articles, posters and short video scripts", "source": "AI exposure" },
+  { "label": "Open positions", "value": "25 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "In the CDC courtyard, you and the section chief load two boxes of leaflets, an electronic blood pressure monitor and a rolled-up banner into the minivan. It's market day in a Miao township today, an hour and a half on mountain roads.",
+  "At the township market you set up a table and hang the banner on the open ground outside the township clinic. Stalls selling chilies, chickens and silver jewelry crowd in on both sides, and the crowd keeps growing.",
+  "You take blood pressure for the old people in line. One old woman is over 170. You ask how much salt she uses a day and she gestures a big handful. You give her a salt-measuring spoon and show her: one spoon a day, that's all.",
+  "The village doctor repeats what you said in Miao, \"less salt, less oil, take your medicine on time,\" and the crowd laughs. You couldn't tell which line he added.",
+  "A bowl of sour soup rice noodles at a little shop by the market while you go through the health literacy questionnaire on your tablet; this afternoon there are eight households to survey.",
+  "Door-to-door survey. One family lives in a stilt house halfway up the mountain, just a grandfather, a grandmother and a grandson in primary school. The boy reads the questions aloud for his grandfather, and when he gets to \"do you know how HIV is transmitted,\" he blushes.",
+  "Back in the county town you sort the day's photos and data, write a post for the official social media account, and a one-page brief for the health bureau: blood pressure taken for 120 people, 400 leaflets distributed.",
+  "On your way home past the river, the night market's grilled potato stalls are already set up. You sit down for a plate and tell the stall owner: go easy on the salt."
+ ],
+ "ladder": [
+  { "title": "Public Health Physician", "stage": "Entry", "focus": "Goes to the countryside for health literacy surveys, writes health articles, gives talks, sets up at markets, writes briefs for the health bureau; needs the intermediate exam and the years to move up" },
+  { "title": "Attending Physician (Public Health)", "stage": "Core staff", "focus": "Owns one line of work (chronic disease, infectious disease or school health), trains newcomers, organizes the county's health awareness weeks and health promotion projects" },
+  { "title": "Head of the Health Education Section", "stage": "Running the section", "focus": "Manages the section's people and budget, sets the county's annual health education plan, handles evaluations from above, coordinates with the health bureau, education bureau and townships" },
+  { "title": "Associate Chief Physician (Public Health)", "stage": "Technical sign-off", "focus": "Signs off on the technical side of the county's health education and promotion, does field research and writes papers, trains township clinics and village doctors" },
+  { "title": "Deputy Director of the County CDC", "stage": "Overseeing divisions", "focus": "Oversees health education, chronic disease and school health, coordinates up and down the system, and leads the response when a public health incident breaks out" }
+ ],
+ "ai_tasks": [
+  { "name": "Writing health articles, posters and short video scripts", "how": "AI can write an article on high blood pressure in minutes, with poster copy and a short video script; rewriting it in words the village elders understand and checking the numbers takes a person." },
+  { "name": "Entering and analyzing health literacy survey data", "how": "Questionnaires go into the tablet at each home, and AI can catch errors and calculate the county's health literacy level and gaps between townships; how to sample and which households must be revisited, a person decides." },
+  { "name": "Planning campaigns by season", "how": "AI can use past case data to flag when to talk about drowning prevention and when about wild mushroom poisoning; which township goes first and whom to work with, a person arranges." },
+  { "name": "Going into the villages and talking face to face on market day", "how": "Standing in the market or sitting by a fire pit, explaining in words people understand and answering their doubts depends on trust between people." },
+  { "name": "Training village doctors and teachers", "how": "Teaching village doctors to take blood pressure and to tell old people to use less salt takes someone showing them by hand and watching them do it once." }
+ ],
+ "events": {
+  "e_spoon": "Six months later you're back at that township's market, and the old woman comes to have her blood pressure taken, salt spoon in hand: 150. The spoon's a bit small, she says, but her family uses it every day now.",
+  "e_rain": "It rains all market day; the wind tears the banner, half the leaflets get soaked, and fewer than ten people come for blood pressure checks. On the way back a stretch of mountain road collapses and you wait three hours in the van.",
+  "e_cold_shoulder": "You give a talk on high blood pressure in a village and half the audience dozes; one old man says: medicine hurts the liver, I won't take it. You don't argue; after the meeting you sit by his family's fire pit and listen to him for an hour talk about his brother.",
+  "e_drowning": "Before summer vacation you go round more than thirty schools in the county talking about drowning prevention, leaving every class a poster that says \"no swimming in wild ponds, never go alone.\" That summer, no child in the county comes to harm.",
+  "e_mushroom": "Wild mushrooms come into season in the rains, and in one week the county hospital takes in several cases of mushroom poisoning. You write a radio script overnight in both Miao and Chinese, and the next day every village loudspeaker in the county is playing it.",
+  "e_mid_title": "You pass the attending physician exam in public health. Your pay slip goes up a few hundred yuan, and the section chief says: next month's county health awareness week, you're in charge.",
+  "e_paperwork": "Inspectors from above come for the annual evaluation and want photos, sign-in sheets, briefs and logs for every event. You work late for a week straight and organize six months of material into twelve archive boxes.",
+  "e_miao": "You learn Miao from the village doctor, starting with three words: blood pressure, salt, take your medicine on time. Once, when you say it all yourself in Miao, an old woman pats your hand and says a long string of something; the village doctor says she's calling you one of the village's own.",
+  "e_ai_copy": "You start using AI to write health articles; what took an evening now takes half an hour to revise. You notice it writes \"no more than five grams of salt a day,\" and not one person in the village knows how much five grams is, so you change it to \"one salt spoon.\"",
+  "e_ai_rumor": "A video spreads through the village group chats claiming some herbal remedy can \"cure\" diabetes, and several village doctors are among those forwarding it. You make a short video explaining line by line why it's wrong, then call every village doctor one by one.",
+  "e_video_hit": "You film a short video at a market teaching an old woman to use a salt spoon, set to a Dong grand song, and it passes five hundred thousand views. The prefecture's health commission shares it, and the section chief holds up his phone for the whole center to see.",
+  "e_outbreak": "A boarding school in the county town has a norovirus cluster, and you work five days straight with the infectious disease section: case investigation, disinfection, a handwashing talk for every class, sleeping at night in the school's meeting room.",
+  "e_village_post": "Your unit posts you to a Dong village for a year. You live above the village committee office and help set up the village's first health hut, with blood pressure records for every resident over sixty on the wall.",
+  "e_marry": "You marry a teacher at the county's No. 1 Middle School, and the wedding banquet is held in your home village for three days and nights. Your colleagues come and spend an afternoon at the gate taking the guests' blood pressure.",
+  "e_house": "The two of you buy a hundred-square-meter flat in the county's new district, a little over four thousand yuan a square meter, on a housing fund loan. The balcony faces a mountain, and at night you can see the scattered lights of the villages.",
+  "e_father": "Your father is diagnosed with high blood pressure. He says he feels nothing and doesn't want to take the pills. You've lectured the whole county on blood pressure for years; it takes three months of talking at your own dinner table before he takes his pill every morning.",
+  "e_literacy": "The county's health literacy survey results come out: double what they were five years ago, still well below the provincial average. In the report you write: the biggest gaps are in the few villages with no road.",
+  "e_knees": "Years of climbing mountain paths into the villages, and your knees have started to hurt, worst on the way down. You buy a trekking pole and keep it on the back seat of the van.",
+  "e_new_staff": "A new graduate who tested into the section gets carsick and throws up all the way on his first trip to the countryside. You hand him the box of motion sickness pills from your own first year and say: go a few more times and you'll be fine.",
+  "e_road": "The farthest township gets an expressway, and the drive on market day goes from two hours to forty minutes. For the first time you can cover two township markets in a day.",
+  "e_research": "With the prefecture CDC you run a survey on diet and blood pressure in Miao and Dong villages, covering twenty villages and over a thousand households. The paper is published in a public health journal, with your name as first author."
+ },
+ "choices": {
+  "c_mid": {
+   "title": "Sit for Attending Physician (Public Health)",
+   "situation": "The public health attending exam is held once a year, and you're in the countryside a lot and writing briefs in the evenings. The veteran woman in the section took three tries to pass; sit it while you're young, she says.",
+   "options": [
+    { "label": "Study at night and sit it this year", "result": "You memorize epidemiology formulas in the van and do practice questions between market stalls. The day the results come out, you're by a fire pit in a village with one bar of signal." },
+    { "label": "Do the work well first", "result": "You keep your evenings for briefs and posts. The certificate comes two years later, and for those two years it's you who runs every health awareness week in the county." }
+   ]
+  },
+  "c_miao_language": {
+   "title": "Learn Miao properly or not",
+   "situation": "In the villages you always need the village doctor to translate, and a lot gets lost in the passing. A teacher at the county's ethnic middle school runs a free Miao evening class once a week, but that means no more working late on Wednesday nights to catch up on paperwork.",
+   "options": [
+    { "label": "Go to the evening class", "result": "After two years you can give a twenty-minute talk on high blood pressure in Miao. The old people stop dozing, and they put up their hands to ask questions." },
+    { "label": "Rely on the village doctor", "result": "You keep Wednesday evenings for paperwork and posts. The village doctor translates well; it's just that sometimes you don't know what he turned \"take your medicine on time\" into." }
+   ]
+  },
+  "c_civil": {
+   "title": "Sit the civil service exam for the health bureau",
+   "situation": "The county health bureau is hiring a civil servant to run health promotion and the patriotic hygiene campaign across the county: office work, writing documents, meetings, much less time in the countryside. Your degree fits, and your chances are good.",
+   "options": [
+    { "label": "Sit it", "result": "You pass and move into an office in the county government compound. The documents you write go out to the CDC signed by the health bureau, with your name in the drafter's box.", "end": "You became a civil servant at the county health bureau, writing documents and chairing coordination meetings, and every health awareness week you still ride the minivan out to a township market and stand behind the table helping hand out salt spoons." },
+    { "label": "Stay at the CDC", "result": "You say you'd still rather stand in the market. When the section chief hears, he gives you the farthest township." }
+   ]
+  },
+  "c_ai_platform": {
+   "title": "Lead the county's AI health video account",
+   "situation": "The prefecture wants every county to run a short video account for health education, using AI to generate content, voice-overs and translation. The center wants you to lead it: you review the content and film the videos, on top of everything you already do.",
+   "options": [
+    { "label": "Take it on, learning as you go", "result": "AI writes the first drafts; you revise them, film at the markets yourself, and have the village doctor record Miao voice-overs. A year later the account has over thirty thousand local followers, and the most common comment is: which township's market is tomorrow?" },
+    { "label": "Hand it to a young colleague and keep going to the villages", "result": "You hand the account to the new colleague and only review the content. Every time, you change the \"five grams\" and \"two hundred milliliters\" into the way people in the villages say it." }
+   ]
+  },
+  "c_prefecture": {
+   "title": "Apply for a transfer to the prefecture CDC",
+   "situation": "The prefecture CDC is selecting a health education specialist to work in Kaili, the prefecture seat: a bigger platform, less travel, more training. But once you leave the county, you'll rarely stand in a township market again.",
+   "options": [
+    { "label": "Apply for the transfer", "result": "You go to the prefecture and run health literacy monitoring for all sixteen of its counties. You often sit alone with the data late into the night, and when you go down to a county, you make a point of going to a market." },
+    { "label": "Stay in the county", "result": "You say the county needs people more. The place goes to a colleague from the next county, who looks you up to go to the market together whenever she comes on a field visit." }
+   ]
+  },
+  "c_chief": {
+   "title": "Apply for Head of the Health Education Section",
+   "situation": "The old section chief is moving to run a township clinic, and the post of Head of the Health Education Section is open. As head you'd manage four people, a year's budget and the county's evaluation targets, and have to coordinate with the education bureau and the townships one by one.",
+   "options": [
+    { "label": "Apply", "result": "At the selection meeting you set out one principle: every staff member spends at least a hundred days a year in the countryside. The leadership asks where the money will come from, and you produce a table of events co-hosted with three departments." },
+    { "label": "Don't compete, keep going to the villages", "result": "You put forward the veteran woman in the section. As head, she still assigns you the farthest townships." }
+   ]
+  },
+  "c_city": {
+   "title": "Move to a community health center in Guangzhou",
+   "situation": "A university classmate working in Guangzhou says the community health centers there are hiring public health doctors, at more than twice your current pay. But you'd lose your permanent post, your parents are in the county town, and your spouse's job is here too.",
+   "options": [
+    { "label": "Go to Guangzhou", "result": "At a community health center in a Guangzhou urban village you do health education for migrant workers. You still talk about less salt and less oil, but now your audience is the young people you used to see back home.", "end": "You went to a community health center in a Guangzhou urban village as a public health doctor, telling young people who left home to work about less salt and less oil, and when you now and then hear a phrase of Miao in the crowd, you turn and look for a long time." },
+    { "label": "Stay in the county", "result": "You save your classmate's message and don't reply. That night you stand on the balcony a long time looking at the lights on the mountain opposite." }
+   ]
+  },
+  "c_associate": {
+   "title": "Apply for Associate Chief Physician (Public Health)",
+   "situation": "The Associate Chief Physician (Public Health) review requires papers, research projects and technical reports, and few people at the county level make it. You have ten years of survey data, only waiting to be written up.",
+   "options": [
+    { "label": "Apply, and write up ten years of data", "result": "You turn all the villages you've visited and blood pressures you've taken into tables and write two papers. A reviewer asks: why salt spoons instead of grams? Because there are no scales in the villages, you say." },
+    { "label": "Skip it and lead the section well", "result": "You put the folder of materials away in the cupboard, and that year you take the section to every township market in the county." }
+   ]
+  },
+  "c_deputy": {
+   "title": "Become Deputy Director of the County CDC",
+   "situation": "The center is promoting a Deputy Director of the County CDC to oversee health education, chronic disease and school health. You'd have more meetings and more documents, and when a public health incident breaks out, you'd lead.",
+   "options": [
+    { "label": "Take it", "result": "At your first center meeting in the new post, you move the township map with its little red flags from the health education section to the meeting room wall." },
+    { "label": "Recommend someone younger", "result": "You recommend a section head you trained and keep doing technical work, training newcomers and going to the countryside. Your trekking pole, you say, isn't worn out yet." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "Your last trip to the countryside is on a market day. You stand behind the table taking old people's blood pressure until noon, and hand out the last salt spoon. On the way back to the county town you ask the driver to stop at the top of the mountain, and you watch the people heading home from the market, baskets on their backs holding chilies, chickens and small children. You get back in the van and say nothing more.",
+  "burnout": "In those years the paperwork kept growing and the trips kept shrinking; every day you filled in forms at a computer and felt the villages drifting further away. You applied to move to the center's administration, took the map with its little red flags down from the wall, rolled it up and handed it to the new section head. On your way home past the river the grilled potato stalls were still there; you sat a long time and ordered nothing."
+ },
+ "stages": [
+  "Half of every month you're in the countryside: setting up at markets to take blood pressure and hand out salt spoons and leaflets, going door to door in the villages for the health literacy survey, talking at schools about drowning and infectious disease. You deal most with village doctors, township clinic public health staff, old people and children; at hand are an electronic blood pressure monitor, the survey tablet, leaflets, roll-up banners and the unit's minivan. Back in the county town you write briefs and posts and keep the logs.",
+  "You run one line of work for the whole county: chronic disease campaigns or school health. You organize the health awareness weeks, teach training classes for township clinics and village doctors, and take a new staff member into the countryside with you. Now you also deal with school principals, township officials and mentors from the prefecture CDC; at hand are a full year's work plan and a stack of training slides.",
+  "You manage the section's four people and its annual budget: setting the county's health education plan, scheduling everyone's field trips, handling evaluations from the prefecture and the province. What you attend most are coordination meetings, negotiating one by one with the education bureau, the women's federation and the townships. You still go to the countryside, but more often to see how the newcomers are doing.",
+  "You're the technical sign-off for the county's health education: designing monitoring plans, reviewing health content, doing field research, writing papers and technical reports, invited by the prefecture to teach other counties. What's at hand has changed from a blood pressure monitor to statistics software, survey designs and a pile of drafts to review. When you say \"this number's wrong,\" the whole section recalculates.",
+  "You oversee several of the center's divisions: health education, chronic disease and school health. Every week you hold meetings, sign off on documents and report to the health bureau, and when an outbreak cluster appears you lead the response. What you look at most are the county's monitoring data and evaluation sheets. Every health awareness week, you still ride the minivan to the farthest township's market."
+ ],
+ "work": [
+  "At a village primary school you teach twenty-odd children handwashing with a basin of clean water and a little flour. When they've washed, you have them press their hands on black paper to see whose handprint is cleanest.",
+  "At the sixth household of the survey, the head of the house is a young man home from work in Zhejiang for New Year. When he's done the questions he asks: can my dad stop his blood pressure pills? You explain for twenty minutes.",
+  "You rewrite a tuberculosis leaflet three times, changing \"a cough lasting more than two weeks\" to \"a cough from this market day to the one after next.\"",
+  "You train twenty village doctors in a township to slip in a word about less salt during home visits. After class you have each of them give the talk on the spot; the best is a village doctor of sixty.",
+  "For the health awareness week plan you meet three times with the education bureau and the women's federation, and settle on holding it beneath a Dong drum tower, with the host alternating between Dong and Chinese.",
+  "A new staff member gives his first talk too fast and the old people can't follow. On the way back you don't criticize him; you just have him sit by a fire pit with you tomorrow and listen.",
+  "The evaluation sheet from above demands \"100 percent coverage of health talks.\" You work out the county's villages against your headcount, and in the annual plan you schedule the six most remote villages for live-in health campaigns.",
+  "You spend an afternoon with the county education bureau and get health education into every primary and middle school's timetable: four lessons a term, taught in rotation by the section's staff.",
+  "At the year-end review you don't read out numbers; you play a video of the old woman with the salt spoon, teaching others at the market how to use it.",
+  "Reviewing an AI-generated diabetes article, you find it gets the dosing of a drug wrong. You correct it, then post in the section's group chat: every health article must be reviewed by two people before it goes out.",
+  "You teach health education leads from all sixteen counties in the prefecture how to run a health literacy survey in villages without roads, using ten years of your own door-to-door photos.",
+  "The prefecture CDC asks you to design the evaluation for a high blood pressure intervention. You change the indicator from \"number of salt spoons distributed\" to \"how much blood pressure fell after a year.\"",
+  "A boarding school reports several students with fever. You get the call in the middle of the night, and in the car on the way to the school you've already laid out the plan for case investigation, disinfection and suspending classes.",
+  "The health bureau wants to cut the budget for field trips. You bring years of health literacy data by township to the briefing and show that the townships visited most improved most.",
+  "You take a newly hired graduate to the farthest township's market and teach him to set up the table, hang the banner and take the first old woman's blood pressure. His hands shake. Take your time, you say; she's in no hurry."
+ ],
+ "past": [
+  "You grow up in a Miao village in Qiandongnan. In your last year of middle school your grandmother has a stroke; the family thinks she's just worn out and lets her lie down to rest, and it's three days before she gets to the county hospital.",
+  "Your gaokao (college entrance exam) gets you into a medical university in the provincial capital; your score isn't enough for clinical medicine and you're placed in preventive medicine. Your mother asks what it's for. Keeping people from getting sick, more or less, you say.",
+  "For a third-year field placement you go back to your home township clinic and help with a month of chronic disease follow-up, and find that half the old people in the village don't know they have high blood pressure.",
+  "Your graduation internship is at the provincial CDC's health education institute. You make your first health poster, and the teacher says you've used too many words; old people only look at the pictures.",
+  "After graduating you sit the exam for a permanent state post three times, and on the third you test back into the CDC in your home county town. The day you report for work, your mother sets off a string of firecrackers in the village.",
+  "In your first year on the job you pass the public health physician licensing exam and follow the section chief to all fifteen townships in the county, carsick in the minivan for six months."
+ ],
+ "late": {
+  "pension_note": "Estimate: as a permanent employee of a county CDC who paid in on Guizhou's social insurance base for over thirty years, with an occupational annuity, your pension is about sixty-five percent of your final monthly salary.",
+  "scenes": [
+   "On the first market day of your retirement you take the bus alone to that Miao township, walk once round the market, buy a bunch of chilies, and nobody recognizes you.",
+   "The village elders ask you to give a talk beneath the drum tower on preventing falls. You give it in Miao, and afterward they keep you for a meal of sour soup fish.",
+   "Your own blood pressure is high now. You take it every morning, write it in a notebook, and put only one salt spoon of salt in your food.",
+   "After you move to administration you leave on time every day, and in the evenings you walk by the river and watch people square dancing.",
+   "The new section head comes to ask if you'll go to the countryside once more and show the young newcomers the ropes. You hesitate all night, and the next day you climb into the minivan.",
+   "On the county's social media account you see that health literacy has risen again this year. The photo is of a market day, and behind the table is a young person you don't know.",
+   "After leaving the CDC, whenever you pass a market you find yourself looking for the banner with the red cross on it.",
+   "A former colleague sends you a video: the health hut in the most remote village is still there, the blood pressure records on the wall now an electronic screen.",
+   "In a drawer you find an old salt spoon, the plastic gone yellow. You put it in the salt jar in the kitchen and go on using it.",
+   "You hear AI can now translate a health article into Miao at the touch of a button. You find one and listen; a few words are wrong. You smile, thinking of the old village doctor who used to translate for you.",
+   "Your grandmother's photo still hangs on the wall of the main room back home. When you go back to the village you talk to her, telling her that now when people in the village fall ill, they go to the clinic first.",
+   "You go back once to the county CDC. The health education section has moved into a new building; on the wall there's still a township map, but the little red flags are now points of light on a screen."
+  ],
+  "closing": {
+   "retire": "On a market day many years later you sit in the sun on a stone bench at the village entrance. An old woman with a basket on her back comes over and takes a salt spoon out to show you. You take it, hold it up and say: one spoon a day, that's all. She laughs.",
+   "burnout": "Many years later, from your balcony, you watch the lights come on one by one on the mountain opposite. You count off the names of those villages; some you visited a dozen times, some you never reached. You turn off your own light and let theirs shine.",
+   "end": "Many years later, cooking in the kitchen, you go to add salt to the pot and your hand stops in midair. You think a moment, and put a little back. Outside it's drizzling, just like the market day the banner tore in the wind."
+  }
+ }
+}

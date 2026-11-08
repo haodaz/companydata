@@ -1,0 +1,203 @@
+{
+ "id": "psychiatrist-sh",
+ "occupation": "Psychiatrist",
+ "role": "Psychiatry Resident at a Mental Health Center",
+ "headline": "A psychiatry resident who has just finished five years of psychiatric medicine plus three of residency training, with a ring of ward keys at the waist, managing twelve beds on a locked ward of a municipal mental health center in Shanghai",
+ "unit": "The adult locked ward of a municipal mental health center in Shanghai",
+ "unit_type": "Municipal psychiatric specialty hospital",
+ "city": "Shanghai",
+ "city_tier": "First-tier city",
+ "education": "Professional master's degree in Psychiatry (combined with residency training)",
+ "level": "You are fluent in the mental status exam, the rating scales and the doses and side effects of the common drugs; you can manage twelve beds and take emergency night calls on your own, but for treatment-resistant cases and decisions to change a regimen, a senior doctor still has the final word.",
+ "intro": "You rotated through this mental health center for three years, and on the day you completed residency the ward director put a ring of keys in your hand: the ward's main door, the doctors' office, the interview room, the medicine cabinet, seven keys in all. The ward is on the fourth floor of the inpatient building, the corridor long and bright, the windows opening only a hand's width. Of the twelve beds in your care, some patients arrived two days ago and some are nearly ready to go home. From today the keys hang at your waist at all times: open a door, turn, and lock it behind you.",
+ "salary_note": "Estimate: a resident at a Shanghai municipal psychiatric hospital earns base salary plus performance pay, around twelve thousand yuan a month, about 1.3 times the national average; psychiatry has no surgical bonuses and pays noticeably less than surgery at the same grade, rising only with more night shifts and clinic volume.",
+ "facts": [
+  { "label": "Resident Physician (current level)", "value": "0-5 years, ¥6,500–11,000 a month (national average, estimated)", "source": "Industry norm" },
+  { "label": "Next level up", "value": "Attending Physician (5-10 years)", "source": "Industry norm" },
+  { "label": "What AI can't take", "value": "The clinical interview and mental status exam", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Writing progress notes and discharge summaries", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You unlock the ward's first door, turn and lock it behind you, then open the second. The nurses' station is already at handover: which bed didn't sleep, which bed skipped breakfast, which bed's family says they're coming today.",
+  "Rounds behind the attending. You stop a few minutes at each bed, asking how they slept and whether the medicine is causing any discomfort, noting each person's pace of speech, their gaze, and how they've changed over the past few days.",
+  "In the interview room you do a mental status exam on a newly admitted patient: an hour and a half. You interrupt very little of what he says; you just mark a few points in time in your notebook to come back to.",
+  "You give a patient the Hamilton Depression Rating Scale, twenty-four items, six points lower than last week. You enter the score in the medical records system and note beside it that today, for the first time, he brought up his cat at home on his own.",
+  "Lunch in the canteen next to a colleague from psychotherapy, talking about next month's cognitive behavioral therapy training. You eat fast; you have two family meetings this afternoon.",
+  "Family meeting. A mother asks when her child can go home and how long the medicine must be taken afterward. You speak slowly, keeping what is certain separate from what isn't.",
+  "You write progress notes, adjust orders and request a blood level recheck. The attending reads your notes and draws a question mark beside one \"flat affect,\" telling you to go and look again tomorrow.",
+  "You're on emergency night call tonight. The emergency room is on the ground floor of the outpatient building. The triage nurse rings, and you lock the ward door and go down."
+ ],
+ "ladder": [
+  { "title": "Resident Physician", "stage": "Entry", "focus": "Manages beds on a ward, writes notes, does mental status exams and rating scales, takes emergency night calls; needs the intermediate exam and the years to be appointed attending" },
+  { "title": "Attending Physician", "stage": "Core staff", "focus": "Runs general outpatient clinics alone, is second on call at night, supervises residents, chooses a subspecialty (child and adolescent, geriatric, mood disorders, addiction) and starts research" },
+  { "title": "Associate Chief Physician", "stage": "Subspecialty lead", "focus": "Runs expert clinics, takes treatment-resistant cases and multidisciplinary consults; needs papers, grants and a stint at a grassroots hospital" },
+  { "title": "Chief Physician", "stage": "Final say", "focus": "The hospital's last word on difficult cases; supervises graduate students, examines residents, helps write clinical guidelines" },
+  { "title": "Ward Director", "stage": "Running the ward", "focus": "Manages a ward's doctors, nurses and bed turnover, answers for its safety and quality, works with the hospital, community mental health services and families" }
+ ],
+ "ai_tasks": [
+  { "name": "Writing progress notes and discharge summaries", "how": "AI can turn ward-round recordings, rating scales and orders into draft progress notes and discharge summaries; the doctor has to check every sentence, especially the description of mental status, and sign." },
+  { "name": "Compiling history, scales and tests into a diagnostic reference", "how": "AI can gather past records, scale scores and lab results and suggest possible diagnoses; the diagnosis is made by the doctor after the interview, together with what they observe." },
+  { "name": "Medication regimens and interaction alerts", "how": "AI can suggest standard regimens, dose ranges and drug interactions from the guidelines; whether to switch and how much to add, the doctor decides by watching the patient's response." },
+  { "name": "Follow-up and appointment reminders", "how": "Return visits, blood level rechecks and community follow-up for discharged patients, AI can schedule, remind and compile; who needs to be called back early, the doctor judges." },
+  { "name": "The clinical interview and mental status exam", "how": "What is in a patient's words and what is left unsaid takes a doctor sitting across from them, asking and watching little by little, building trust." },
+  { "name": "Risk assessment and talking treatment through with families", "how": "Whether a patient is safe right now, whether they need admission, whether the family can cope, the doctor has to judge in person, explain in person, and answer for." }
+ ],
+ "events": {
+  "e_first_discharge": "The first patient you've managed from admission to discharge leaves, saying thank you at the nurses' station door, quite ordinarily. You sit in the doctors' office for a while before you write the discharge summary.",
+  "e_keys": "Heading home after a night shift, you put your hand in your pocket on the metro and the key ring is still there. You ride back to the hospital and hand it to the day nurse; you get home at ten.",
+  "e_agitation": "On a night shift a patient on the ward becomes very agitated. You and the nurses handle it by protocol, talking first, then assessing, then medicating; an hour later he has calmed down, and only then do your hands stop shaking.",
+  "e_family_doubt": "A family member won't let the patient take medication, saying the drugs are making him dull. You meet with him three times; the third time he brings a notebook recording what time his son goes to sleep and wakes each day.",
+  "e_attending": "You pass the attending physician qualification exam in psychiatry. The night the results come out you're on emergency call; four patients come in, and you never get a chance to look at your phone.",
+  "e_youth_wave": "At the start of the school year, the adolescent clinic's appointments are gone the moment they're released. The hospital adds weekend clinics, you're put on them, and for two months you work seven days a week.",
+  "e_cbt": "You do a year-long continuing course in cognitive behavioral therapy: classes on weekends, recordings during the week, supervision each month. For the first time you feel that besides prescribing, there's something else you can do alongside a patient.",
+  "e_ai_notes": "The hospital introduces an AI notes assistant that turns what's said on rounds into progress notes. You find it has written a patient's \"nothing feels worth it\" as \"mood fair,\" and you raise it in the department: descriptions of mental status must be checked by a person, sentence by sentence.",
+  "e_ai_chat": "More and more outpatients say they chat with an AI every night. You start adding a question to your consultations: what have you been talking to it about lately?",
+  "e_community": "Once a month you spend half a day seeing patients registered for follow-up at a community health center. One long-time patient always arrives half an hour early and waits outside the door for you.",
+  "e_tired": "For months on end you've listened to too many heavy things; at home you don't want to talk, and on weekends you can't wake up. You go to talk with an old director in the department, and she has you drop one night shift first.",
+  "e_own_therapy": "You start your own personal therapy, once a week, sitting across from another therapist. This is the first time in years, you say, that you've been only the one who talks.",
+  "e_marry": "You marry an architect. Your partner asks whether you'll bring home what you hear at work. No, you say, those are other people's stories.",
+  "e_house": "The two of you buy a small three-bedroom flat near Pudong's outer ring road, the down payment draining both families' savings. You do the sums: at today's performance pay, the mortgage runs until you're fifty-eight.",
+  "e_paper": "A small study you led on sleep and mood in adolescents is completed and published in a core journal. You dedicate the acknowledgments to the young people who agreed to fill in the questionnaires.",
+  "e_stigma": "At a class reunion someone jokes that you spend all day with \"those people.\" You don't laugh. They're patients, you say, like heart patients or diabetics.",
+  "e_recovered": "A patient you looked after for years comes for a follow-up and says he's found a job, sorting old books at a library. As he leaves he closes the door gently behind him.",
+  "e_mdt": "A general hospital asks you to consult: an old man has suddenly stopped recognizing his family after major surgery. You spend an hour at his bedside and tell the surgeons: check these few things first, and don't add any drugs yet.",
+  "e_internet": "The hospital opens online follow-up, letting stable patients renew prescriptions remotely. Every evening you see twenty more patients online, and one from out of town says now he doesn't have to take leave every month to come to Shanghai.",
+  "e_neck": "Years of bending over notes and staring at a screen in clinic, and your neck has started to ache, your fingers sometimes numb. You raise the monitor on your office desk.",
+  "e_guideline": "You're invited to help revise the clinical guideline for depressive disorders and take the chapter on adolescents. After eight meetings, the final draft keeps one line you wrote: hear the young person out first.",
+  "e_resident_teach": "A resident asks how long a mental status exam really should take. Until you can tell the story of his last few months in his own words, you say."
+ },
+ "choices": {
+  "c_subspecialty": {
+   "title": "Which subspecialty",
+   "situation": "The director wants you to choose a direction: the child and adolescent clinic is packed, the parents hard to talk to, and doctors scarcest of all; geriatrics is slow-moving and needs internal medicine; adult mood disorders is the hospital's established strength, with many colleagues already in line.",
+   "options": [
+    { "label": "Child and adolescent", "result": "Your clinic fills with children in school uniforms and anxious parents. You learn to talk to the child first, then the parents, and finally all three together." },
+    { "label": "Geriatric psychiatry", "result": "You start teaching yourself geriatric medicine and often consult at general hospitals. Your patients walk slowly and speak slowly, and you slow down too." },
+    { "label": "Adult mood disorders", "result": "You spend five years on mood disorders under an old director, helping organize twenty years of her cases, and learn to see a single thread through a very long illness." }
+   ]
+  },
+  "c_attending": {
+   "title": "Go for Attending Physician, or a doctorate first",
+   "situation": "You have the years to be appointed Attending Physician. The department also has a doctoral place; with a PhD, the associate chief review is much easier, but for three years you'd run beds and do research at once, with no raise.",
+   "options": [
+    { "label": "Take attending first and see patients", "result": "You start running your own clinic. On the first day you see thirty patients, and when the last one leaves it's already dark." },
+    { "label": "Do a PhD while working", "result": "Rounds by day, data by night; over three years you lose a fair amount of hair. On the day of your thesis defense, what you think of is the patients who agreed to fill in the questionnaires." }
+   ]
+  },
+  "c_private": {
+   "title": "An offer from a private clinic",
+   "situation": "An upscale private psychological clinic wants you: over a thousand yuan a session, twice your current pay, no night calls. The patients are all people who can afford it; no locked ward, no emergency room.",
+   "options": [
+    { "label": "Go to the private clinic", "result": "Every appointment is fifty minutes, and the consulting room has a pothos plant and a window that opens all the way. Sometimes you think of the key ring on the ward.", "end": "You became a psychiatrist at a private clinic, seeing just eight patients a day, each for a full fifty minutes; the ring of ward keys you handed back to the young doctor who took your place." },
+    { "label": "Stay at the public hospital", "result": "You say the people who can't pay a thousand yuan need doctors more. The clinic says weekends would be fine then; you say weekends are for sleeping." }
+   ]
+  },
+  "c_ai_assist": {
+   "title": "Lead the AI diagnostic trial or not",
+   "situation": "The hospital is partnering with a company to test an AI system that gives diagnostic and risk references from records, scales and speech. It needs a young doctor to lead the clinical validation: writing the ethics application, comparing results. Extra work.",
+   "options": [
+    { "label": "Lead the validation", "result": "You compare eight hundred records and find it's accurate on typical cases but often wrong about patients who say very little. You put that on the first page of the validation report." },
+    { "label": "Stay out of it", "result": "You keep your time for the clinic and the ward. When the system goes live you read its references, and then you still go and ask for yourself." }
+   ]
+  },
+  "c_aid": {
+   "title": "A year at the grassroots",
+   "situation": "Before the associate chief review you need a year at a grassroots hospital. Your hospital partners with a prefecture psychiatric hospital in Yunnan: few doctors, many patients, many of whom ride for hours from the mountains to get there.",
+   "options": [
+    { "label": "A year in Yunnan", "result": "There you mentor three young doctors and open the hospital's first sleep clinic. The day you leave, the head nurse presses a bag of local small-bean coffee into your hands." },
+    { "label": "A district hospital in the suburbs", "result": "Three days a week you go to a suburban district mental health center and still get home at night. The year counts; the experience isn't so different." }
+   ]
+  },
+  "c_associate": {
+   "title": "Apply for Associate Chief Physician",
+   "situation": "The Associate Chief Physician review needs papers, grants, case numbers, the grassroots stint, and a defense. Your file is one paper short, which means writing every evening and weekend this year.",
+   "options": [
+    { "label": "Go for it this year", "result": "You turn a series of cases from these years into an article, four months of late nights. At the defense an expert asks: if a patient says nothing at all, what do you do? I wait, you say." },
+    { "label": "Next year", "result": "You keep this year for the clinic and your family. You see a few hundred more patients, and your file is still one paper short." }
+   ]
+  },
+  "c_psychotherapy": {
+   "title": "Move into psychotherapy",
+   "situation": "The hospital's psychotherapy department is short of people with medical training and asks if you'll transfer. You'd mainly do long-term psychotherapy, rarely prescribe, and no longer run a ward. Less money.",
+   "options": [
+    { "label": "Transfer to psychotherapy", "result": "You start seeing twenty clients a week, fifty minutes each, year after year. You discover that what you're best at, it turns out, is sitting quietly.", "end": "You became a psychotherapist trained as a psychiatrist, no longer running a ward, spending each day in a room with two chairs, listening as one person after another finishes what they have to say." },
+    { "label": "Stay in clinical psychiatry", "result": "You say you still want to run a ward and see people from the day they come in to the day they leave. You set aside half a day a week for two therapy cases, a window you keep for yourself." }
+   ]
+  },
+  "c_chief": {
+   "title": "Apply for Chief Physician",
+   "situation": "The Chief Physician review means supervising graduate students, leading grants and having standing in the field. Every year you'd be out lecturing, attending conferences and reviewing papers, with even less time on the ward.",
+   "options": [
+    { "label": "Apply", "result": "You take on graduate students, hold weekly lab meetings, and fly to more than a dozen cities to lecture. Your name appears in more and more conference programs, and ward rounds become the quietest time of your week." },
+    { "label": "Stay associate chief and see patients", "result": "You turn down most conferences and keep four half-day clinics a week. Seeing patients, you say, is something you haven't had enough of yet." }
+   ]
+  },
+  "c_ward_head": {
+   "title": "Take over as Ward Director",
+   "situation": "The old director has retired and the hospital wants you as Ward Director: a dozen doctors, over thirty nurses, the turnover and safety of sixty beds. Anything that happens on the ward, you sign for first.",
+   "options": [
+    { "label": "Take it", "result": "The first thing you change is having every new resident spend their first week shadowing the nurses, learning first how to open a door, lock it, and greet the patients." },
+    { "label": "Recommend someone else", "result": "You recommend a colleague better at management and keep running your clinic and teaching. On her first day, you hand her the ring of keys." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last clinic day you see the last patient and walk him to the consulting room door. Back on the ward you take the keys off the ring one by one and hand them to the doctor taking over: seven, not one missing. Outside the inpatient building you stand on the steps and hear someone humming at a ward window upstairs, the window open just a hand's width.",
+  "burnout": "For a time, sitting in your consulting room, you found you could no longer take in what patients said; you could only see their lips moving. You went to the old director, then to your own therapist. You stopped your clinics and handed in your keys, and that afternoon you walked alone along the river for a long time, thinking of nothing."
+ },
+ "stages": [
+  "You manage twelve beds on a locked ward: daily rounds, mental status exams and rating scales, progress notes, adjusted orders, and with the nurses you watch each patient's sleep, eating and mood. The people you deal with most are patients, families, the ward nurses and the attending who supervises you; at hand are the medical records system, the scales, blood level slips and the ring of keys at your waist. Two emergency night calls a week.",
+  "You run general outpatient clinics alone, thirty or forty patients a morning, serve as second on call at night and lead residents on rounds. You've chosen a subspecialty and begun writing grant applications and working with data. Now you also deal with outpatients, community mental health doctors and colleagues from general hospitals asking for consults. You no longer just carry out plans; you start making them.",
+  "You run an expert clinic, take patients others have treated for years without improvement, consult at general hospitals and lead the ward's case conferences on difficult cases. You write papers, run a research group, and teach community and grassroots hospitals. At hand now are the research system, ethics review forms and a pile of cases to review. When you say \"let's watch for another week,\" the whole ward does.",
+  "You're the hospital's last line on difficult cases: supervising graduate students, examining residents, helping write clinical guidelines, often invited elsewhere to lecture and consult. Your weekly clinic is still there, but most of the patients are referred from other hospitals. More of your time goes to reviewing others' treatment plans, correcting students' papers and sitting in meetings.",
+  "You run a ward: doctors' rosters, nurse staffing, the turnover of sixty beds, the review of every safety incident. You meet with hospital leadership, coordinate with community mental health services and talk with the family committee. What you read most are bed turnover tables and adverse event reports. Every Monday morning, you are still the first to unlock the ward door."
+ ],
+ "work": [
+  "A new patient says nothing at all. Every day on rounds you sit by his bed for five minutes, and on the fourth day he asks you: is it raining outside?",
+  "You order a blood level recheck for a patient on lithium, and it comes back slightly high. After discussing it with your senior you cut half a tablet, and the next day you go to see whether his hands still tremble.",
+  "On emergency night call, a mother comes in with her daughter, both crying. You pour them two cups of warm water first, and only when they're both seated do you take out the record book.",
+  "In clinic, a high school senior says he just can't sleep. You ask ten more minutes of questions, about what he does each night and who he talks to, and end up prescribing two weeks of medication and a referral for psychotherapy.",
+  "A resident's note sums up a patient's words as \"persecutory delusions.\" You have him write in the patient's own words first, then his own judgment.",
+  "A community mental health doctor calls: a patient discharged six months ago didn't come for his medication this week. You pull up his discharge summary and arrange a home visit with the community for the next day.",
+  "A patient who has been treated for five years and tried seven drugs is referred to your expert clinic. You don't rush to an eighth; first you read five years of records from beginning to end.",
+  "At the ward's case conference, three young doctors disagree. You have each of them say first which day in the patient's last three months was most different, and only then the diagnosis.",
+  "You teach community doctors from several districts how to tell, in a ten-minute follow-up, that a stable patient is starting to slip.",
+  "You examine residents at the end of training. One student's mental status exam is thorough, but halfway through the patient's answer she glances at the clock, and you note it on the score sheet.",
+  "A hospital in another province asks for a remote consult on a patient whose diagnosis has changed four times in three years. You spend two hours on the records and recordings and write a one-page opinion; the last line reads: suggest stopping one drug first.",
+  "Your graduate student wants to use AI to analyze outpatients' speech and predict relapse. You have her shadow you in clinic for three months before you'll talk about models.",
+  "At the ward's annual review of adverse events you name no one; you just lay out a timeline of the two hours before each incident.",
+  "The hospital wants to shorten average length of stay. You take the ward's data to the meeting and say it can be done, but community follow-up after discharge has to be in place first.",
+  "On the new head nurse's first day, you walk her through the whole ward, from the main door to the interview room at the far end: how each door opens, how each door locks."
+ ],
+ "past": [
+  "You're in your last year of middle school in Shaoxing. A close friend in your class stops coming to school for a while, and the adults lower their voices when they talk about it; you don't understand why you can't just ask.",
+  "Your gaokao (college entrance exam) score gets you into a good medical university. On the application form you see \"psychiatric medicine.\" Your family urges you to study clinical medicine, but you put it down anyway.",
+  "In your third-year clinical observation you enter a psychiatric ward for the first time. The supervising teacher opens a door for you, locks it, and says: remember, turn and lock it behind you. You write those words in your notebook.",
+  "After your bachelor's you're admitted to this Shanghai mental health center's professional master's program: five years plus three, graduate study and residency training together.",
+  "Residency rotations take you to internal medicine and neurology at a general hospital, where you learn to rule out illness of the body first before talking about illness of the mind.",
+  "You pass the medical licensing exam and receive your residency completion certificate. The director asks if you'll stay. You say yes, and she sets a ring of keys on the desk."
+ ],
+ "late": {
+  "pension_note": "Estimate: as a public hospital employee contributing on Shanghai's social insurance base for thirty-five years, plus an occupational annuity, your pension is about fifty-five percent of your final monthly salary; any clinic work after rehiring in retirement is extra.",
+  "scenes": [
+   "On the first Monday morning of retirement you touch your waist out of habit, and nothing hangs there.",
+   "The hospital rehires you for one half-day clinic a week. Most who come are patients you've seen for over a decade. As long as you're still here, they say, we can rest easy.",
+   "You start giving talks in your neighborhood to older people about how to sleep well. You keep it simple, and afterward you stay to hear them talk about themselves.",
+   "In the first months after stopping, every morning you sit in the park watching old people do tai chi and listening to the birds in the trees.",
+   "You take a part-time job at a university counseling center, two afternoons a week. Nothing the students tell you is new to you; you still listen very carefully.",
+   "A resident you once trained becomes a director and sends you a photo: the ward's new main door, the keys replaced by swipe cards.",
+   "Long after leaving the ward, you can't break one habit: walk through a door, turn, and lock it.",
+   "In your new place you meet someone who was once a patient on the ward. He recognizes you, you recognize him, and the two of you nod; neither mentions those days.",
+   "Now and then you go back to the mental health center for meetings. The corridor is as long and bright as ever, and the windows still open only a hand's width.",
+   "You read in the paper that many people now tell their inner thoughts to an AI every night. You think of the two chairs in the interview room, and the little table between them that always held a box of tissues.",
+   "Tidying your study, you find your notebook from third-year observation. The first page reads: turn and lock it behind you. Below it is a small line you added later: but open the door first.",
+   "On the street you see a young person crying at the roadside. You stop and ask if he'd like some water. He shakes his head, so you stand beside him for a while, until he walks away on his own."
+  ],
+  "closing": {
+   "retire": "One evening many years later you sit on your balcony. Downstairs a child is calling for his mother, someone is taking in laundry. You take in each sound one by one, the way you used to listen to patients on rounds, without interrupting.",
+   "burnout": "Many years later you sit on a bench by the river, watching a cargo ship slowly pass. You think of many people's words and say none of them aloud. When the ship is far off, you get up and walk home.",
+   "end": "Many years later, your hand finds a very old key in a drawer, and you can't remember which door it was for. You hold it a while, then put it back where it was."
+  }
+ }
+}

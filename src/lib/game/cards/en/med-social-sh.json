@@ -1,0 +1,202 @@
+{
+ "id": "med-social-sh",
+ "occupation": "Medical and Public Health Social Worker",
+ "role": "Medical Social Worker at a Children's Hospital",
+ "headline": "A medical social worker at a Shanghai children's hospital who stayed on after a year's internship in the social work department, finished a master's in social work, and now spends every day running between the hematology ward and the outpatient hall with a stack of financial aid forms in hand",
+ "unit": "The social work department of a top-tier (Grade 3A) children's hospital in Shanghai",
+ "unit_type": "Top-tier (Grade 3A) children's hospital",
+ "city": "Shanghai",
+ "city_tier": "First-tier city",
+ "education": "Master of Social Work",
+ "level": "You hold the Assistant Social Worker certificate and can do family assessments, write aid applications and run volunteers on your own; in family meetings you don't yet have a voice, and for crisis cases you still go into the ward behind the department head.",
+ "intro": "You interned in this children's hospital's social work department for a year, and two weeks after your thesis defense you reported for work. The department is at the far end of the corridor on the fifth floor of the outpatient building, with a volunteer service desk sign by the door; in the cupboard are picture books, modeling clay and a real stethoscope for children to play with. The department head slides a stack of referral forms from hematology across the desk and says: start with these families. From today, someone on the ward will call you the social worker.",
+ "salary_note": "Estimate: social work staff at a Shanghai Grade 3A hospital are paid on the hospital's support-staff scale, eight or nine thousand yuan a month, about 1.4 times the national average; passing the Social Worker exam brings an allowance, and there is no night-shift pay or surgical bonus.",
+ "facts": [
+  { "label": "Assistant Social Worker (current level)", "value": "0-3 years, ¥4,800–7,000 a month (national average, estimated)", "source": "Industry norm" },
+  { "label": "Next level up", "value": "Social Worker (3-7 years)", "source": "Industry norm" },
+  { "label": "What AI can't take", "value": "Being at the bedside and offering emotional support", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Writing case notes and financial aid applications", "source": "AI exposure" },
+  { "label": "Open positions", "value": "1 related listing nationwide, 1 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You come up out of the metro and there is already a long line of strollers at the outpatient entrance, half the accents from out of town. At the volunteer desk you pin up today's roster: twenty college students, split between wayfinding, the picture-book corner and ward companionship.",
+  "You go to hematology to listen to the nurses' handover. You don't speak; you just note three newly admitted families from out of province: Anhui, Jiangxi, Yunnan.",
+  "Bedside assessment. The father from Anhui has just come out of the stairwell from a call asking to borrow money. You sit with him on plastic stools in the corridor and go item by item: where his medical insurance is registered, whether he has filed for out-of-province coverage, who back home could come and take a turn.",
+  "In the playroom you use a stuffed bear and an IV cannula with the needle removed to explain tomorrow's procedure to a five-year-old boy. He gives the bear three shots, then rolls up his own sleeve.",
+  "In the canteen you eat pork chop noodles while revising an application to a foundation. They want the last three months of itemized bills; you message the admissions office for the second time.",
+  "Family meeting. The attending physician lays out the next phase of treatment. You sit beside the parents, and when the doctor is done you say \"consolidation therapy\" and \"expected cost range\" again in words they can hold on to.",
+  "Back in the office you write up case notes in the social work case management system. Assessment, plan, service, referral: only when all four boxes are full does a visit count.",
+  "On the metro home there are three voice messages from a parent asking where they can stay after discharge. You write it down; tomorrow you'll ask whether the charity family house near the hospital has a room."
+ ],
+ "ladder": [
+  { "title": "Assistant Social Worker", "stage": "Entry", "focus": "Goes round the wards doing assessments, writes aid applications and schedules volunteers; has to pass the intermediate social worker exam to move up" },
+  { "title": "Social Worker", "stage": "Core staff", "focus": "Owns the cases and family meetings for one or two wards, starts running groups and in-hospital projects, supervises interns" },
+  { "title": "Medical Social Work Program Lead", "stage": "Running a program", "focus": "Runs one service line (such as hematology-oncology, palliative care, or families from out of town), works with foundations and charities, writes proposals and evaluations" },
+  { "title": "Senior Social Worker", "stage": "Supervision", "focus": "Has passed the senior title review, supervises younger social workers, teaches communication to doctors and nurses, helps draft the hospital's social work standards" },
+  { "title": "Director of Social Work", "stage": "Running the department", "focus": "Runs the hospital's whole social work and volunteer system, negotiates partnerships and funding with hospital leadership, department heads, civil affairs and charities" }
+ ],
+ "ai_tasks": [
+  { "name": "Writing case notes and financial aid applications", "how": "AI can turn interview recordings and assessment forms into case notes and draft aid applications in each foundation's format; the social worker has to check every number and every family detail and sign before anything goes out." },
+  { "name": "Matching families to aid policies and charity funds", "how": "AI can filter eligible policies and programs by diagnosis, household registration and insurance type and flag deadlines; which to apply for first, and how to present the family to a foundation, is the social worker's judgment." },
+  { "name": "Recruiting, scheduling and training volunteers", "how": "Sign-ups, rosters, check-ins and hour tallies AI can handle; whether a new volunteer is ready for the ward, and which child needs whom, the social worker has to see for herself." },
+  { "name": "Assessing a family's finances and support", "how": "AI can score the scales and questionnaires and flag high-risk families; how much money is really left, who can come to help, whether the parents can hold up, takes sitting down and talking it through slowly." },
+  { "name": "Being at the bedside and offering emotional support", "how": "In the hardest days a child and parents need someone present: what to say, and when to say nothing, AI cannot do." },
+  { "name": "Mediating between families and staff, and crisis work", "how": "When a family and the medical team clash, or a family faces a hard decision, the social worker has to take both sides' words in person, translate them, and slow things down." }
+ ],
+ "events": {
+  "e_first_fund": "Your first aid application is approved, and thirty thousand yuan goes straight into the child's hospital account. The father bows to you in the corridor, and flustered, you bow back.",
+  "e_who_are_you": "A parent asks: are you a nurse or a doctor? Neither, you say. Then what are you here for? You think about the answer all the way home, and the next day you bring a small card with it written out.",
+  "e_conflict": "A father on the ward starts shouting at a nurse over a bed. You ask him out to the stairwell and listen to him for forty minutes; in the end he goes back and apologizes to the nurse himself.",
+  "e_volunteer_drop": "The new term starts and half the scheduled volunteers vanish at once. You cover the wayfinding desk yourself for a whole Saturday and lose your voice for three days.",
+  "e_exam_pass": "You pass the Social Work Practice paper of the intermediate social worker exam; the other two you make up the following year. The department head prints the results and pins them on the department whiteboard.",
+  "e_birthday": "You and the volunteers throw a birthday party on the ward for a girl who has been in hospital for a hundred days. She can't eat cake, so everyone folds one out of colored paper, and she blows out the \"candles\" three times.",
+  "e_hard_weeks": "A family you have followed for half a year moves to palliative care. For the next few weeks you go to work as usual and write your notes as usual; you just keep waking very early.",
+  "e_supervision": "You start seeing a university lecturer once a month for case supervision. The first time, she hears you out and asks only one question: in this family, whose decision do you most want to make for them?",
+  "e_ai_records": "The hospital gives the social work department an AI note-taking assistant: ten minutes of dictation after an interview and the case note has a first draft. Your writing time is halved, and you take the extra time back to the ward.",
+  "e_ai_wrong": "An AI-drafted aid application gives the child's household registration as the city where the father works, which nearly disqualifies them from the foundation's program. You recheck it line by line and set a department rule: every document is read start to finish by a person.",
+  "e_hospital_school": "You reach an agreement with a nearby primary school to send teachers to the ward twice a week. Children on long stays get exercise books with their own names on them for the first time.",
+  "e_media": "A news outlet wants to film a family's fundraising story. The parents agree, but you stop several shots of the child's face. When it airs, some people say you were in the way.",
+  "e_house": "The charity family house near the hospital adds two floors. You help draw up the admissions list, and families from out of town get a bed and a stove where they can cook congee.",
+  "e_marry": "You get married; your partner works in finance at a foreign company. On the wedding day two volunteers you once trained come to help greet the guests.",
+  "e_rent": "Your landlord raises the rent and you move from Xuhui out to Minhang, forty minutes more each way. You write the week's case plans on the metro.",
+  "e_doctors_ask": "Before rounds, the head of hematology has started asking: what does social work think about this family? You know that sentence was earned, a little at a time, over years.",
+  "e_budget_cut": "A foundation you have worked with for years changes direction and stops funding your line. You reorganize the files of more than thirty registered families and go looking for a new way forward for each of them.",
+  "e_letter": "A child discharged ten years ago gets into university. The mother asks a nurse to pass you a packet of tea from home; written on the bag: for the social worker.",
+  "e_train_nurses": "The nursing department asks you to give new nurses a class on how to talk to families. You use no slides; you have them pair up and practice saying \"I don't know, but I'll go and find out.\"",
+  "e_ai_family": "More and more parents ask an AI before they come to you, their phones full of answers about how much this illness will be reimbursed. More of your time now goes on explaining which answers don't apply in Shanghai.",
+  "e_back": "Years of standing on the wards and crouching to talk in stairwells, and your back has started to hurt. You buy a folding stool and take it everywhere you go.",
+  "e_city_standard": "The city revises its service standards for medical social work and invites you to discuss a draft. Your line, \"follow up with out-of-town families within seven days of discharge,\" goes into the text."
+ },
+ "choices": {
+  "c_exam": {
+   "title": "Sit the Social Worker exam early",
+   "situation": "With a master's you can sit the intermediate social worker exam after a year of work. Three papers, once a year; some in the department took three years to pass. This year you are following more than a dozen families.",
+   "options": [
+    { "label": "Study after work and sit it this year", "result": "Every night you do past papers in your rented room, and on weekends you go to the library. The day you walk out of the exam hall you sleep two stops past yours on the metro." },
+    { "label": "Follow the cases first, next year", "result": "You keep your evenings for the parents' unanswered messages. The certificate comes a year later, and a few more parents on the ward know you by name." }
+   ]
+  },
+  "c_palliative": {
+   "title": "Join the palliative care team or not",
+   "situation": "The hospital is setting up a pediatric palliative care team and needs a social worker on it full time. The work is staying with families through the hardest decisions and arranging what they want to do in the last weeks. The department head says you'd be good at it, and that you can say no.",
+   "options": [
+    { "label": "Join", "result": "You learn to split one conversation into three, and to wait in the corridor until a parent is ready to speak. Your supervision hours double." },
+    { "label": "Stay in hematology and outpatients", "result": "You keep chasing aid, running volunteers and finding places for discharged families to stay. The team hires someone with ten years in hospice care." }
+   ]
+  },
+  "c_ngo": {
+   "title": "A foundation comes calling",
+   "situation": "A children's medical aid foundation you often work with wants you as a program officer: thirty percent more pay, no more wards, your days spent on applications, donors and reports.",
+   "options": [
+    { "label": "Go to the foundation", "result": "You go from the one who submits applications to the one who reviews them. In your first week you send one back, with a full page of reasons.", "end": "You became a program officer at a children's medical aid foundation, approving aid payments one by one in the system, and now and then you go back to the hospital to visit, standing in the stretch of corridor where you used to stand." },
+    { "label": "Stay at the hospital", "result": "You say you still want to be at the bedside. The foundation people laugh and say that from now on they'll read your applications first." }
+   ]
+  },
+  "c_ai_tool": {
+   "title": "Lead the AI aid-matching pilot",
+   "situation": "The hospital IT department wants to pilot an AI tool: enter a family's situation and it matches every policy and foundation program they can apply for. They need someone who knows the work to help set rules and test data. Extra work, no extra pay.",
+   "options": [
+    { "label": "Take it on and set the rules", "result": "You enter the forty-odd aid programs you've kept in your notebook all these years, one by one, and decide which information never goes into the model. Six months later, new colleagues can find who to ask from day one." },
+    { "label": "Stay out of it and use what ships", "result": "When the tool goes live you use it like everyone else, but a few small programs it never matches are still written only in your notebook." }
+   ]
+  },
+  "c_supervisor": {
+   "title": "Apply for Medical Social Work Program Lead",
+   "situation": "The department is spinning off a service line for families who come from out of town and needs a Medical Social Work Program Lead: writing proposals, raising funds, managing two social workers and over a hundred volunteers. You qualify; the selection means a twenty-minute presentation and questions from hospital leadership.",
+   "options": [
+    { "label": "Apply", "result": "You map three families' journeys from admission to discharge, and the last slide shows what the line will cost a year and how many families it can help. The hospital president asks one question: where does the money come from? You have the answer." },
+    { "label": "Let a colleague have it and keep your cases", "result": "You put forward the colleague who started with you. Her first act as lead is to hand the hardest cases back to you anyway." }
+   ]
+  },
+  "c_city": {
+   "title": "Go home and build a department",
+   "situation": "A new children's hospital in your home province's capital is setting up a social work department and wants you to run it. Pay is seventy percent of Shanghai's, housing a quarter of the price, and your parents are there.",
+   "options": [
+    { "label": "Go back and build it from nothing", "result": "Your first month back, you have to explain the words \"social work\" to every department. By year's end, three department heads have come asking for staff." },
+    { "label": "Stay in Shanghai", "result": "You recommend an intern you trained. She calls you once a month, and her questions are the ones you once asked your department head." }
+   ]
+  },
+  "c_senior": {
+   "title": "Go for Senior Social Worker",
+   "situation": "Becoming a Senior Social Worker takes an exam plus a review: papers, project results, supervision hours, documents for everything. These two years your projects are at their busiest; evenings and weekends would all go into it.",
+   "options": [
+    { "label": "Go for it and write up the years", "result": "You turn ten years of cases into two articles. At the review defense a professor asks: after all this time, does it still make you sad? Yes, you say, which is why there is supervision." },
+    { "label": "Skip it and run the projects well", "result": "You put the folder of materials back in the cupboard. That year your projects help more than sixty extra families, and your name is still in the lead's box on every form." }
+   ]
+  },
+  "c_teach": {
+   "title": "Teach at a university",
+   "situation": "The university where you did your master's wants you back as a full-time lecturer teaching medical social work and supervising student placements. Summer and winter breaks, yes; the wards, no.",
+   "options": [
+    { "label": "Go back to teach", "result": "Your first lecture has no theory in it, just the stuffed bear and the cannula with no needle. After class three students ask whether they can do their placement at a children's hospital.", "end": "You became a social work lecturer at a university, sending a cohort of students into hospitals every year, and once a week you still go to a ward and sit at a bedside, as you used to." },
+    { "label": "Lecture, but stay at the hospital", "result": "You give eight lectures a term, and when students come to the hospital on placement, they ask for you by name." }
+   ]
+  },
+  "c_director": {
+   "title": "Take over as Director of Social Work",
+   "situation": "The old director is retiring and the hospital asks if you will take over as Director of Social Work. Ahead: over a dozen social workers, thousands of volunteers, a budget and annual reviews. You will rarely have cases of your own again.",
+   "options": [
+    { "label": "Take it", "result": "You move into the old director's north-facing office. The first thing you do is take the real stethoscope out of the cupboard and put it back in the playroom." },
+    { "label": "Recommend someone younger and stay on as supervisor", "result": "You say you still want to be at the bedside. On the new director's first day, she asks you to give the department its first supervision session." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you count the picture books and clay in the cupboard and hand them over to the young social worker taking your place. The wall of the volunteer desk is covered with years of names; you don't look for your own. Downstairs the outpatient hall is still lined with people, and you thread slowly through the parents with their strollers. Hearing someone ask the way, you stop and point.",
+  "burnout": "For a while you would stop at the door of the hematology ward with cold palms. Your supervisor says you should rest, and you hand your families over one by one; by the time the last handover sheet is signed, it is dark. You sit at the bus stop outside the hospital for a long time, watching people come and go, none of whom know you."
+ },
+ "stages": [
+  "Every day you run between hematology, outpatients and the volunteer desk: family assessments, aid applications, volunteer rosters. The people you deal with most are parents from out of province, the ward head nurses and foundation program officers; at hand are assessment scales, itemized bills and the social work case management system. In family meetings you mostly take notes, and now and then ask a question on the parents' behalf.",
+  "You run the cases for two wards on your own, and now you open and close the family meetings. You run groups, explain insurance and out-of-province reimbursement to newly diagnosed parents, and organize ward school for children on long stays; you have interns' weekly reports to read and a referral list you've built yourself. You are no longer just finding money; you help a family get ready before they decide.",
+  "You run a service line with two social workers and over a hundred volunteers. What you look at most are proposals, budgets and foundation close-out reports; the meetings you sit in most are with department heads and donors. You still go to the wards every week, but more often to take on the hardest families, paired with a younger social worker.",
+  "Half your time is spent across from young social workers in supervision, listening to the cases where they are stuck and to what those cases stir in them. You teach communication to doctors and nurses, help write the hospital's service standards, and are invited by the city's professional association to review projects. What's at hand has changed from aid forms to supervision notes, ethics codes and a pile of other people's proposals.",
+  "You run the hospital's whole social work and volunteer system: setting headcount, allocating budget, reporting to leadership, negotiating with civil affairs and charities. What you read most are annual performance reviews and volunteer hour reports. Wednesday afternoons are still kept free, for one family you follow yourself."
+ ],
+ "work": [
+  "The mother from Jiangxi can't read, so you draw the steps for filing out-of-province medical coverage as a little six-panel picture. She folds it up and tucks it inside her phone case.",
+  "A new college volunteer, on the ward for the first time, freezes in the doorway. You have her crouch down first and compare stickers with the child in the bed.",
+  "An aid application comes back for want of a household registration certificate. You make eleven phone calls, and in the end the head of the child's village committee rides to the township to get it issued.",
+  "Halfway through a family meeting the father says he'll take the child home and stop treatment. You don't argue; you ask the doctor to step out for ten minutes and let him lay out, item by item, the sums he has been doing in his head.",
+  "You run a first group for six parents whose children have just been diagnosed, with only tea and tissues on the table. Eight come to the second, and someone brings pickled radish from home.",
+  "An intern's case note says \"parent emotionally unstable.\" You circle it and have her rewrite it as what the parent said and did that day.",
+  "You write a close-out report for a foundation: twenty pages of data on thirty-six families. On the last page you attach a child's drawing of the ward; the donors say that was the page they looked at longest.",
+  "The service line for out-of-town families opens. You negotiate twenty beds at the charity family house and rewrite the admission rules five times; the last rule reads: on the first day, let the parents sleep.",
+  "A head nurse comes to you: a family is two months behind on bills. You pull up their file and that same afternoon get medical insurance, finance and a foundation in one room.",
+  "In supervision a young social worker says lately she's afraid to take on newly diagnosed families. You don't rush to give her methods; you ask her first to tell you what she saw on her first day on the ward.",
+  "You teach new residents how to tell parents bad news, using a dialogue script you've refined over many years, with a pause marked after every line.",
+  "At the city project review you come across a beautifully written proposal whose service numbers don't add up. On the review form you write: suggest they go and spend time on a ward first.",
+  "At the hospital leadership meeting you ask for two more posts for social work. You bring only one table: the number of families the hospital's social workers followed last year, and how those families' rates of unpaid bills changed.",
+  "The volunteer desk turns ten. You dig out every roster from those years, more than four thousand names, and have them printed on the wall of the desk.",
+  "The civil affairs bureau comes to discuss a citywide training partnership for medical social workers. Your first condition: every trainee spends two solid weeks standing on a ward."
+ ],
+ "past": [
+  "You're in your last year of middle school in a county town in northern Jiangsu. The year your younger cousin falls ill, your aunt's family lives in a hospital in the provincial capital for most of a year. On weekends you go with them to bring food and see rows of parents sleeping on mats in the corridors.",
+  "Your gaokao (college entrance exam) score is enough for a decent second-tier university, and on the application form you write social work. Your homeroom teacher asks what that is. Helping people, more or less, you say.",
+  "The summer after second year you intern at a community elder care center and write your first case note. Your supervisor circles every \"should\" in red.",
+  "After graduating you pass the Assistant Social Worker exam and get into a master's in social work at a Shanghai university. Your mother asks: all that study and you'll still be a social worker? A better one, you say.",
+  "In a practice class in your first year, a teacher describes a case from a children's hospital and mentions parents borrowing money in the stairwell. After class you go to her and ask whether you could intern there.",
+  "You intern for a year in this children's hospital's social work department, following the head around hematology and writing more than forty case notes. Before graduation she asks: will you stay?"
+ ],
+ "late": {
+  "pension_note": "Estimate: as a hospital employee contributing on Shanghai's social insurance base for over thirty years, with an occupational annuity, your pension is about half your final monthly salary.",
+  "scenes": [
+   "The first Wednesday afternoon after retirement, out of habit you glance at your phone. No messages from parents. You go to the market, buy a bunch of greens, and trim them slowly at home.",
+   "The hospital asks you back to give a class to new social workers. When you get to the six-panel picture, someone in the room takes a photo of it on their phone.",
+   "You start a mutual-support group for caregivers in your housing estate; everyone who comes is caring for an elderly spouse. You do what you always did: pour the tea first, then listen.",
+   "You quit the hospital and go back to the county town to live with your parents for a year. Every morning you walk along the river and don't look at your phone.",
+   "You find a half-time job at a social work station in the county, covering elder care and subsistence allowances. Nobody borrows money in stairwells here, but you still ask the extra question: who else is at home?",
+   "A message arrives from a parent from long ago: the child has started work. You look at it for a long time and reply with two words: how wonderful.",
+   "For the first few months after leaving the wards, you slow down whenever you pass a hospital and look at the line by the door.",
+   "In your new position you approve a grant, and the social worker who signed the application is an intern you once trained. You look at the name in the system a moment longer.",
+   "At a reunion of old colleagues, everyone talks about the north-facing office. You say what you remember most is the stethoscope in the cupboard, and you wonder if it's still there.",
+   "You hear AI can write an aid application in a minute now. You think of the one that took eleven phone calls to complete, and the village committee head who rode to the township.",
+   "Sorting through old things, you find a stack of small cards covered in writing. The top one says: I'm not a doctor or a nurse; I'm here to be with you.",
+   "You go back to the children's hospital once more. The outpatient hall has been renovated, but the volunteer desk is where it always was, and a young person in a red vest is giving a father directions."
+  ],
+  "closing": {
+   "retire": "One spring many years later, on a park bench, you see a child fall, and as his mother crouches you find yourself leaning forward too. The child gets up on his own. You sit back and let the sun fall on you.",
+   "burnout": "Many years later, by the river, you meet an old man from out of town who has lost his way. You walk him to the bus station, asking all the way where he's from and who else is at home. The bus comes; he waves, and you wave back.",
+   "end": "Many years later, on your bookshelf, you come across the case notebook from your internship, the red circles around every \"should\" still there. You put it back, make a cup of tea from home, and sit by the window."
+  }
+ }
+}

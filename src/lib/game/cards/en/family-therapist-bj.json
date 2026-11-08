@@ -1,0 +1,197 @@
+{
+ "id": "family-therapist-bj",
+ "occupation": "Marriage and Family Counselor",
+ "role": "Counselor at a Marriage and Family Counseling Studio",
+ "headline": "A marriage and family counselor who spent six years in HR at an internet company, went back at thirty for a part-time master's in applied psychology, and now sees twenty couples and families a week in a Chaoyang apartment turned studio, leaving work at nine at night",
+ "unit": "A marriage and family counseling studio in Beijing's Chaoyang District (two counseling rooms in a converted apartment, four counselors)",
+ "unit_type": "Private counseling studio",
+ "city": "Beijing",
+ "city_tier": "First-tier city",
+ "education": "Master's in Applied Psychology (part-time)",
+ "level": "You can run couples and family sessions on your own and have finished the first stage of training in systemic family therapy; with cases where one partner wants out, the other wants to stay, and both want you on their side, you still often get stuck in supervision.",
+ "intro": "You spent six years in HR at an internet company and handled a hundred-odd exit interviews; at thirty you went back for a part-time master's in applied psychology, and later joined this studio. It's on the twelfth floor of an old apartment block in Chaoyang: two counseling rooms, each with a loveseat, an armchair and a box of tissues, the clock on the wall hung where clients can't see it and you can with a glance. You've been seeing clients on your own for over a year, and from today, for the first time, your schedule is booked with twenty.",
+ "salary_note": "Estimate: counselors at a Beijing studio are paid a share of each session. A ninety-minute couples session costs about a thousand yuan, of which the counselor keeps sixty percent, a little over ten thousand a month, about 1.4 times the national average. Supervision, training and personal therapy you pay for yourself, and caseloads aren't steady.",
+ "facts": [
+  { "label": "Marriage and Family Counselor (current level)", "value": "2-6 years, ¥7,000–12,000 a month (national average, estimated)", "source": "Industry norm" },
+  { "label": "Next level up", "value": "Senior Marriage and Family Counselor (6-12 years)", "source": "Industry norm" },
+  { "label": "What AI can't take", "value": "Holding two people at once without taking sides", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Scheduling and organizing session notes", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "At the studio you open the windows to air the rooms, refill the tissues and warm water in both counseling rooms, and put the cushions back on the loveseat. When last night's final couple left, a cushion was sitting between them.",
+  "The first session is online: she's on a business trip in Shenzhen, he's at home in Beijing, two windows. You remind them: today, whoever is speaking, the other one holds off on interrupting.",
+  "A bowl of zhajiang noodles downstairs while you answer messages on the booking platform. A new client asks: can you help me win my husband back? You reply: let's meet first and hear what both of you have to say.",
+  "Family session. A thirteen-year-old boy has refused to go to school for three months. His parents sit on the loveseat, he sits in the armchair, and the chair has moved twenty centimeters toward the door.",
+  "Notes. The genogram goes on paper: three generations, who's close to whom, who's cut off from whom, in different kinds of line. The electronic notes record only facts and live on an encrypted drive.",
+  "Group supervision, four counselors around a table. You present last week's couple who start fighting the moment they sit down, and the supervisor asks: while they were fighting, whose side were you on inside?",
+  "Evenings are the busiest, couples coming in one after another after work. This pair have been married twelve years, and today, for the first time, they both say \"I'm tired\" together.",
+  "The last couple leaves at ten past nine. You put the cushions back, turn off the lights and lock up. On the metro you don't look at your phone; you look out of the window and set down today's twenty-odd people one by one."
+ ],
+ "ladder": [
+  { "title": "Assistant Counselor", "stage": "Entry", "focus": "Does intake interviews at the studio, sees individual clients, sits in on couples and family sessions, builds up counseling and supervision hours" },
+  { "title": "Marriage and Family Counselor", "stage": "Independent practice", "focus": "Sees couples and families independently, takes continuing training in family therapy; must register with the psychological society's registry to move up" },
+  { "title": "Senior Marriage and Family Counselor", "stage": "Core staff", "focus": "Takes complex cases such as high-conflict couples, divorce and blended families, runs groups, is invited to partner with hospitals, schools and marriage registries" },
+  { "title": "Family Therapy Supervisor", "stage": "Supervision", "focus": "A registered supervisor who supervises younger counselors' cases, teaches training courses and takes part in discussions on the profession's ethics and standards" },
+  { "title": "Studio Partner", "stage": "Running the studio", "focus": "Runs a studio: choosing counselors, setting fees, safeguarding ethics, outside partnerships, while keeping a few clients of one's own" }
+ ],
+ "ai_tasks": [
+  { "name": "Scheduling and organizing session notes", "how": "Bookings, rescheduling, reminders and first drafts of post-session notes, AI can handle; the counselor checks them, deletes what shouldn't be written down, and keeps the notes stored locally." },
+  { "name": "Intake questionnaires and risk screening", "how": "AI can score relationship satisfaction, conflict, depression and anxiety questionnaires and flag high risk; whether there's a safety risk, the counselor has to ask and judge in person." },
+  { "name": "Psychoeducation materials and homework", "how": "AI can generate communication exercises, readings and weekly tasks for each case; which couple gets what, and when, the counselor decides." },
+  { "name": "Holding two people at once without taking sides", "how": "When two people in the same room argue, go silent or cry, the counselor has to make each feel heard without leaning toward either." },
+  { "name": "Safety assessment and referral", "how": "When there's violence in a relationship or someone might harm themselves, the counselor has to assess on the spot, refer by protocol, and take responsibility." }
+ ],
+ "events": {
+  "e_side": "In the third session a wife says: you think it's his fault too, I can tell. You pause and say you can understand why she'd think so, then ask her husband how it felt to hear that. That session, for the first time, neither of them walks out.",
+  "e_drop": "A couple stops coming after two sessions and leaves a review on the platform: \"Counselor won't take a position, waste of money.\" You read it three times and don't reply.",
+  "e_safety": "In an individual session, a client tells you there has been violence at home. You set aside the plan, do a safety assessment, give her the numbers for help, and by protocol switch from couples work to individual sessions. That night it takes you a long time to fall asleep.",
+  "e_training": "Your continuing training in systemic family therapy enters its second stage: five days a module, six modules over three years, over fifty thousand yuan in fees and supervision. You spend all your annual leave in class.",
+  "e_back_school": "The thirteen-year-old who hadn't been to school for three months goes back. In the last session he shifts the armchair toward the loveseat, a little closer to his parents.",
+  "e_register": "Your counseling and supervision hours are enough, and you pass the review to become a registered psychologist with the psychological society's registry. The certificate arrives at the studio and your colleagues order a cake.",
+  "e_own_marriage": "Your own marriage has a very hard stretch too. The two of you don't go to a colleague; you go to an old counselor in another city, by high-speed train there and back.",
+  "e_video": "The studio has you film short videos on \"four ways couples fight,\" and one passes a million views. Hundreds of people pour into your messages, most wanting just one line: should I get divorced?",
+  "e_ai_notes": "The studio adopts an AI notes tool: five minutes of dictation after a session and there's a draft. You set a rule: anything either partner says alone, not one word goes into the system.",
+  "e_ai_partner": "A husband says he chats with an AI every night, more than he talks to his wife. His wife says she doesn't know what to count that as. That session, you talk about all the words that have gone missing between them these past two years.",
+  "e_ai_compete": "An emotional companion app advertises itself as a \"24-hour marriage advisor,\" and first consultations on the platform drop by a fifth. Among those who do come, more have already been talking to an AI for six months.",
+  "e_late": "Months of finishing at nine every night, and your stomach starts to hurt; on weekends you have no energy to see friends. You keep Wednesday evenings free and take no bookings at all.",
+  "e_registry": "The district marriage registry has a marriage and family counseling room run as a government-funded service, and they ask you to sit there half a day a week. Most who come are queuing to file papers; if they're willing to sit down and talk for twenty minutes, you talk with them for twenty minutes.",
+  "e_child": "Your child is born. You stop seeing clients for three months, and when you come back, two couples have waited for you and one has moved to a colleague.",
+  "e_rent": "The landlord raises the rent by thirty percent and the studio moves to an office tower in Wangjing. The windows in the new counseling rooms don't open, so you buy a small humidifier and a pothos plant.",
+  "e_hospital": "A hospital's fertility center asks you to run groups for couples going through IVF, eight weeks a cycle. In the first session, of eight couples only one husband speaks; by the eighth, everyone does.",
+  "e_remarried": "You take on a blended family, each parent with a child of their own. The first time, the four of them sit in four corners; by the sixth, the two children sit together and draw a cat on your whiteboard.",
+  "e_letter": "A couple who came ten years ago send a family photo; on the back they've written: that year we nearly fell apart. You tuck the photo into that year's notebook.",
+  "e_ethics": "A colleague discusses a pair of clients publicly online and is reported to the psychological society. You're invited to sit in on the ethics committee, and when you come back you revise the studio's confidentiality agreement once more.",
+  "e_eyes": "Years of evening sessions and online screens, and your eyes have become dry and blur if you look too long. You cut online sessions to three a week.",
+  "e_supervisee": "A young counselor you supervise says she always wants to make decisions for her clients. You ask her: in your own family, who makes decisions for whom? She is silent a long time."
+ },
+ "choices": {
+  "c_platform": {
+   "title": "Join a counseling platform or not",
+   "situation": "A big online counseling platform wants to sign you, with homepage placement that would double your caseload; but it takes thirty percent, and you'd have to list your \"specialties\" its way and accept ratings. The studio owner says it's up to you.",
+   "options": [
+    { "label": "Sign with the platform", "result": "Your schedule fills at once with all kinds of people, some wanting a single session to get an answer. You learn to explain in the first meeting what counseling is and what it isn't." },
+    { "label": "Rely on the studio and referrals", "result": "Clients come slowly, most recommended by former clients. The income isn't high, but you can stay with each couple longer." }
+   ]
+  },
+  "c_register": {
+   "title": "Build up the hours and become a registered psychologist",
+   "situation": "To become a Senior Marriage and Family Counselor you first have to register as a psychologist with the registry: you're still two hundred counseling hours and fifty supervision hours short, at eight hundred yuan a supervision session. You'd need more clients, and to spend more money.",
+   "options": [
+    { "label": "Fill the schedule and build the hours", "result": "You take twenty-five clients a week and book supervision on weekends too. A year later the hours are done, and you've lost weight." },
+    { "label": "Take it slowly", "result": "You stay at fifteen a week with supervision once a month. You register two years later, and your weekends are your own." }
+   ]
+  },
+  "c_eap": {
+   "title": "Go back to big tech for employee wellbeing",
+   "situation": "Your old company wants you back to do counseling and talks in its employee wellbeing team: one and a half times your current pay, with full social insurance and housing fund. The people who come wouldn't be clients, but colleagues.",
+   "options": [
+    { "label": "Go back", "result": "You wear a staff badge again. What people talk about most is performance reviews and layoffs; by the time they get to their families, it's usually nearly time to go home.", "end": "You went back to an internet company to work in employee wellbeing, listening in a small glass-walled meeting room as colleagues, in the last half hour before going home, start to talk about their families." },
+    { "label": "Stay at the studio", "result": "You say you want to see whole families, not employee numbers. Your old colleague laughs and says they'll refer people to you." }
+   ]
+  },
+  "c_ai_intake": {
+   "title": "Let AI do the intake",
+   "situation": "The studio wants AI to handle intake: clients chat with it for twenty minutes first and it produces a problem summary and risk score, so the counselor can get straight to the point at the first meeting. The owner asks if you'll lead on setting the rules.",
+   "options": [
+    { "label": "Lead the rules, and use it", "result": "You write an explanation for clients: what the AI will ask, what it records, who can see it. One rule you write most firmly: anything either partner says alone does not go into a summary the other can see." },
+    { "label": "Keep doing intake yourself", "result": "You insist on asking the first-meeting questions yourself. When a couple first sits down, you say, who speaks first and who sits where matters more than any summary." }
+   ]
+  },
+  "c_senior": {
+   "title": "Take on complex cases toward Senior Marriage and Family Counselor",
+   "situation": "The studio has a partnership with a court's family division: counselors hold family meetings before mediation for divorcing couples with children. These are the highest-conflict families; do it well, and you'll be the studio's senior counselor.",
+   "options": [
+    { "label": "Take on this line", "result": "In the court's mediation rooms you meet more than thirty families and learn, when the two adults are fighting hardest, to bring the talk back to who picks the child up tomorrow." },
+    { "label": "Not yet", "result": "You say you're not ready. The line goes to a colleague who used to be a lawyer, and she often comes to ask you about family therapy techniques." }
+   ]
+  },
+  "c_own_studio": {
+   "title": "Strike out with your own studio",
+   "situation": "Plenty of clients have stayed with you for years, and a colleague wants to go into partnership on a new studio in a small courtyard in a Dongcheng hutong. Renovation, rent, publicity: the first two years would likely run at a loss.",
+   "options": [
+    { "label": "Open a studio together", "result": "You pick the sofas and paint the walls yourselves, and plant a pomegranate tree in the courtyard. The first year you barely take home any money; by the second, bookings run a month out." },
+    { "label": "Stay at the old studio", "result": "You negotiate a bigger share with the owner and keep using the two counseling rooms. No worrying about rent, you say; that suits you." }
+   ]
+  },
+  "c_supervisor": {
+   "title": "Train as a Family Therapy Supervisor",
+   "situation": "To become a Family Therapy Supervisor you'd take continuing training for supervisors and then two years of \"supervision of supervision.\" For those two years your client hours would be cut by thirty percent, and your income with them.",
+   "options": [
+    { "label": "Do the training", "result": "Every week you sit across from young counselors and hear about the cases where they're stuck. You notice the question you ask most is: at this moment, who in your own family comes to mind?" },
+    { "label": "Stay on the front line", "result": "You say you want to see more couples. Twenty clients a week, not one fewer." }
+   ]
+  },
+  "c_teach": {
+   "title": "Teach at a university",
+   "situation": "A university psychology department wants you as a lecturer, teaching marriage and family therapy and supervising master's students' placements. School holidays, research pressure, and a bit less money than now.",
+   "options": [
+    { "label": "Go to the university", "result": "Your first lecture has no theory; you just draw a three-generation genogram on the blackboard and have the students guess: in this family, who is most tired?", "end": "You became a lecturer in a university psychology department, leading a cohort of students into the counseling room every year, and the first class is always a three-generation genogram drawn on the blackboard." },
+    { "label": "Teach part-time only", "result": "You give ten lectures a term, and when students come to the studio on placement, they compete to work with you." }
+   ]
+  },
+  "c_partner": {
+   "title": "Become Studio Partner",
+   "situation": "The owner is retiring and wants to hand the studio to you as Studio Partner: choosing counselors, setting fees, safeguarding ethics, outside partnerships, and half the profit or loss on the books.",
+   "options": [
+    { "label": "Take it", "result": "The first rule you set: no counselor sees more than twenty clients a week, everyone has supervision once a month, and the studio pays half." },
+    { "label": "Recommend someone younger", "result": "You recommend a counselor you've supervised for five years and keep supervising and seeing a few clients. At her first meeting, she still sits in her old seat." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "When your last clients leave, they put the cushions back on the loveseat, in the middle where they'd both been sitting. You sit in the counseling room a while, listening to the clock on the wall, then take it down and hand it to the young counselor taking over. On the way downstairs a young couple is quarreling quietly in the stairwell; you turn sideways to pass them and don't look back.",
+  "burnout": "For a while, listening to clients argue, what you heard in your head were the voices from your own home. Your supervisor told you to stop for a bit, and you stopped. You referred out the names on your schedule one by one, and in the last empty slot you wrote nothing. That evening, for the first time, you were home by seven, sitting at the dinner table, listening to your family tell you about their day."
+ },
+ "stages": [
+  "Every week you see twenty-odd couples and families: ninety minutes for a couple, two hours for a family, with seven to nine in the evening the fullest. You deal with clients, the studio's receptionist and your weekly supervision group; at hand are genograms, relationship questionnaires, a box of tissues and an encrypted drive only you can open. The hardest thing to learn is to stand on nobody's side.",
+  "You take the hardest cases: families in divorce litigation, blended families, relationships where someone has been violent. You work with a court's family division, a marriage registry and hospitals, and run couples groups. Now you also deal with judges, mediators and doctors, and at hand are referral forms, safety plans and a stack of partnership agreements. Cases other counselors can't hold come to you.",
+  "Half your time is spent across from young counselors in supervision, hearing about their stuck cases and their own families. You teach training courses, sit in on ethics committee discussions and help write standards for the profession. What's at hand has changed from relationship questionnaires to supervision notes, ethics codes and session recordings. Each week you still keep a few clients of your own.",
+  "You run a studio: choosing counselors, setting fees, arranging supervision, handling complaints and ethical questions, and negotiating partnerships with hospitals, schools, courts and companies. What you look at most is the booking schedule and each counselor's caseload. Every Thursday evening, you still see one couple yourself."
+ ],
+ "work": [
+  "A couple starts fighting the moment they sit down. You don't stop them; after five minutes you ask: at home, how long does a fight like this usually go on? Both of them freeze at once.",
+  "Drawing a genogram for a family with three generations under one roof, you reach the grandmother's box, and the daughter-in-law, silent until then, suddenly speaks for twenty minutes.",
+  "A couple wants your verdict: divorce or not. You say the verdict can only be theirs; what you can do is help them finish saying what they need to say before they decide.",
+  "In a court mediation room, divorcing parents argue for an hour over who gets the child. You push a blank sheet of paper across and ask them to write down together what time the child finishes school each day next week.",
+  "At the blended family's first meeting you give each of the four a sheet of paper: \"the one thing I most want in this family.\" Three of the four sheets say \"quiet.\"",
+  "In the marriage registry's counseling room, a young couple comes in each looking at their own phone. You ask only: how did you two first meet? Twenty minutes later, they say they'll hold off on filing.",
+  "In supervision a young counselor plays a recording: after the client finishes a sentence, she stays silent for ten seconds. You say those ten seconds were the best part of the session.",
+  "You teach a training cohort on high-conflict couples using a recording of yourself from ten years ago, when you were still interrupting people all the time.",
+  "The ethics committee discusses a case: should a counselor greet a client they run into at a shopping mall? Wait for the client to greet you first, you say; that was the first rule you learned.",
+  "Interviewing a new counselor, you don't ask about theory; you ask: when your family argues, where are you usually?",
+  "A company wants to buy your \"marriage relationship assessment\" as an employee benefit. You say you don't sell assessments, but you can send a counselor for two afternoons a month.",
+  "A client files a complaint about one of your counselors. You pull the notes and recordings, talk with each side separately, and in the end call the client yourself to apologize."
+ ],
+ "past": [
+  "You're in your last year of middle school in Shijiazhuang. Those years your parents are always fighting, and you do your homework in your room with headphones on, turning the volume up notch by notch.",
+  "Your gaokao (college entrance exam) gets you into a university in Beijing, where you study human resource management. You choose it because it sounds safe.",
+  "After graduating you join an internet company in HR, handling onboarding, exits and performance reviews. You notice many people cry in exit interviews, and never about work.",
+  "The year before you marry, your parents divorce, and both phone you to tell you what's wrong with the other. Caught between the two calls, for the first time you feel there's nothing you can do.",
+  "You quit and start a part-time master's in applied psychology, with classes on weekends and volunteering at a community psychological service station during the week.",
+  "You begin continuing training in systemic family therapy, and the first module's assignment is to draw your own family's genogram. When you reach your parents' boxes, you stop for a long time.",
+  "With your master's done, you join this studio as an assistant counselor, sitting in on the owner's couples sessions for a year and learning the hardest thing of all: not talking."
+ ],
+ "late": {
+  "pension_note": "Estimate: your first ten years were paid in at a company on Beijing's social insurance base, and after changing careers you paid in as a flexible worker through the studio, so your pension is about thirty-five percent of your final monthly salary; income from supervision and teaching is extra.",
+  "scenes": [
+   "On the first Thursday evening of retirement, at seven you glance at the clock, and nobody rings the bell. You cook dinner for your family and eat slowly.",
+   "The neighborhood asks you to give a class for newlyweds. You teach just one thing: when you argue, start with \"I,\" not \"you.\"",
+   "You still supervise a few former students once a month, in a teahouse in a hutong. They've started taking on students of their own now.",
+   "After you stop, every evening you go for a walk downstairs with your family, analyzing nothing, just listening to them talk.",
+   "You take a half-time job at a bookshop, looking after the two shelves of psychology. When someone hesitates in front of them for a long time, you go over and hand them a thin one.",
+   "Your parents are old now, and one Spring Festival the two of them sit at the same table for the first time. You stay in the kitchen, listening to them talk, and don't go out.",
+   "Out of the counseling room, you still can't break one habit: when people argue, you first notice where they're sitting.",
+   "A former client recognizes you on the street, a child by the hand. She doesn't say hello, only nods to you, and you nod back.",
+   "On an old computer you find the encrypted drive from those years, and you still remember the password. You don't open it; you wipe it.",
+   "You hear many people now have AI write what they want to say to their partner before they say it. However well it's written, you think, the two of them still have to sit together and say it out loud.",
+   "You dig out the genogram you drew at thirty-one. The line between your parents, you later traced over in pencil, turning a broken dashed line into a thin solid one.",
+   "The old apartment block in Chaoyang is still there, the twelfth-floor windows replaced. You stand downstairs a while, thinking of the clock on the wall that only you could see."
+  ],
+  "closing": {
+   "retire": "One evening many years later you sit on the sofa while your family bickers in the kitchen over some small thing. You don't get up; you listen line by line as the quarrel turns into laughter. You pull a cushion closer and go back to your book.",
+   "burnout": "Many years later, on a park bench, you watch an old couple: one talks, one listens, and when the talker tires, the listener takes a turn. You watch a long time, then get up to go home, and on the way you call to say: I'm almost there.",
+   "end": "Many years later you find an unopened box of tissues at the back of a cupboard, left over from the counseling room. You put it on the coffee table in the living room, and one day, someone really does use it."
+  }
+ }
+}

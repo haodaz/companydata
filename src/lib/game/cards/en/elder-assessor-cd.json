@@ -1,0 +1,202 @@
+{
+ "id": "elder-assessor-cd",
+ "occupation": "Elderly Ability Assessor",
+ "role": "Elderly Ability Assessor at a Third-party Assessment Agency",
+ "headline": "An assessor who did two years of rehab at a care home, earned the Level 3 Elderly Ability Assessor certificate, and now spends every day with a partner, assessment kits on their backs, climbing the stairs of old Chengdu apartment blocks with no elevators to assess older people for long-term care insurance",
+ "unit": "A third-party assessment agency in Chengdu contracted for long-term care insurance and civil affairs assessments",
+ "unit_type": "Third-party assessment agency",
+ "city": "Chengdu",
+ "city_tier": "Emerging first-tier city",
+ "education": "Vocational college diploma (Rehabilitation Therapy)",
+ "level": "You know the scales by heart and read standing, walking and dressing accurately; when a family member beside the old person helps them \"perform,\" or an old person is too proud to admit what they can't do, you're still not quite sure of yourself.",
+ "intro": "You did two years of rehab at a care home, getting old people up for standing exercises every day; then you earned the assessor's certificate and moved to this third-party assessment agency. The office is on the sixth floor of an office building in Jinniu District, and along the wall a row of cabinets holds the assessment kits: a tablet, a blood pressure monitor, a stopwatch, a tape measure and a body camera like the ones police wear. The team leader pairs you with a partner who has been doing this for three years. From today, every day you'll be knocking on five or six strangers' doors.",
+ "salary_note": "Estimate: a Chengdu third-party assessment agency pays base salary plus a fee per assessment, a little over five thousand a month, slightly below the national average; the work follows the application seasons for long-term care insurance and subsidies, busy and slack by turns.",
+ "facts": [
+  { "label": "Elderly Ability Assessor (Level 3) (current level)", "value": "0-2 years, ¥4,420–6,500 a month (national average, derived from pay by experience)", "source": "Industry norm" },
+  { "label": "Next level up", "value": "Elderly Ability Assessor (Level 2) (2-5 years)", "source": "Industry norm" },
+  { "label": "Pay after 10+ years", "value": "¥12,500 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Watching an old person stand up, walk and dress in their own home", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Filing assessment records and reminding when reassessments are due", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You pick up your assignments at the agency. The system has given you six households today, five in Jinniu and one in Pidu; you and your partner plot a route on the map.",
+  "The first household is on the seventh floor, no elevator. You stop on the fourth to catch your breath, and your partner says: this is nothing.",
+  "The old man sits in a rattan chair while his daughter brews lidded bowls of tea. You switch on the camera, explain what you've come to do and that everything will be recorded, then ask him to stand up from his chair.",
+  "The cognitive questions. In Sichuan dialect you ask him what day of the week it is and which district this is. He gets half right and says: I know, it's just that it won't come to me.",
+  "At the third household, before you've even opened the scale, the son says: my mother can't walk at all. Yet she holds the door frame and walks herself to the kitchen to pour you water.",
+  "At a hole-in-the-wall noodle shop by the road, a bowl of sweet potato noodles with pork intestine; as you eat, you match the morning's photos and recordings to the three households on your tablet.",
+  "The Pidu household is in a township, an hour away by bus. The old woman's toilet is outside the courtyard; in the recommendations box you write: install grab rails, put a commode chair in at night.",
+  "Back at the agency you hand in your files. The team leader spot-checks one of your recordings, and at the part where you let the old man do up his own buttons, he nods."
+ ],
+ "ladder": [
+  { "title": "Elderly Ability Assessor (Level 3)", "stage": "Entry", "focus": "Visits homes in pairs, scores self-care, mobility, cognition, perception and communication on the national standard scales, records, photographs and produces a first assessment; passing Level 2 and making few errors moves you up" },
+  { "title": "Elderly Ability Assessor (Level 2)", "stage": "Core staff", "focus": "Takes difficult and disputed cases, does reassessments, trains newcomers, can explain results clearly to families" },
+  { "title": "Assessment Team Leader (Reassessment and Quality Control)", "stage": "Leading a team", "focus": "Manages a team's assignments and quality, spot-checks recordings and reports, handles complaints and review requests" },
+  { "title": "Elderly Ability Assessor (Level 1) and Technical Director", "stage": "Technical sign-off", "focus": "Oversees assessment quality and training for the whole agency, takes part in final reviews, aligns standards and data with medical insurance and civil affairs" },
+  { "title": "Head of the Assessment Center", "stage": "Running the agency", "focus": "Answers for an agency's accreditation, contracts and credibility; deals with government departments, care homes and insurers" }
+ ],
+ "ai_tasks": [
+  { "name": "Filing assessment records and reminding when reassessments are due", "how": "Recordings, photos and scale results are filed automatically, reassessments are flagged when the twelve-month validity runs out, and big gaps between two assessments are marked; people only spot-check." },
+  { "name": "Gathering and verifying personal details, medical history and medication", "how": "AI can organize information from medical records and systems in advance and flag contradictions; whether what the old person and family say is true, and whether the medicine is really being taken, takes a home visit and seeing for yourself." },
+  { "name": "Scoring to the national standard, setting a provisional level and drafting the report", "how": "AI can compute a provisional level from the scale scores and the standard's rules and draft the report; cases stuck between two levels need the assessor to review them against what was seen on site, and sign." },
+  { "name": "Recommending care levels and home adaptations", "how": "AI can list care recommendations and adaptations from the results; whether a grab rail will fit in the house, and whether the children can afford it, takes a person talking it over with the family." },
+  { "name": "Watching an old person stand up, walk and dress in their own home", "how": "Whether an old person really can't stand or is just nervous, can't hear or really can't remember, a person has to see and judge on the spot." },
+  { "name": "Explaining results to the old person and their family", "how": "The level decides how much can be reimbursed each month; when a family objects, someone has to explain the grounds face to face and hold to the standard." }
+ ],
+ "events": {
+  "e_tea": "An old woman insists you stay for lunch. The rules say you can't, so she tucks two of her own mandarins into your bag. Outside, you and your partner take one each and peel them in the stairwell.",
+  "e_act": "A family member keeps answering for the old person and helps them \"perform\" as worse off than they are. You ask the family to sit in the kitchen for a while, and alone with you the old man pulls on his own trousers.",
+  "e_proud": "A retired factory director flatly refuses to admit he can't stand up, bracing himself on the table, red in the face. You stop the scale and spend twenty minutes talking with him about his old workshop, until he says: actually, this past half year, my wife has had to pull me out of bed.",
+  "e_complaint": "A family thinks you assessed too low, phones a complaint to the medical insurance office and applies for reassessment. The reassessment matches yours, and the team leader uses your recording to train newcomers.",
+  "e_dog": "A family's dog rushes out and grabs your trouser leg. Nobody is hurt, but your tablet hits the floor and cracks at one corner. The agency pays for the screen, not the trousers.",
+  "e_stairs": "In the long-term care application season you climb the stairs of over a hundred households in a month, and your knees start to click. You buy a pair of knee supports and hide them under your work trousers.",
+  "e_level2": "You pass Elderly Ability Assessor Level 2. The practical is scoring a recording, and you notice the \"old man\" has a tremor in his right hand doing up his buttons; the examiner says it was put in on purpose.",
+  "e_alone": "An old woman living alone has an empty fridge and has been out of her medicine for a week. After the assessment you report it to the neighborhood committee by the book, and the next day someone from the community is at her door.",
+  "e_ai_video": "The agency brings in AI video analysis: upload a recording and it gives provisional scores for standing and walking. You find it has marked an old man in a thick padded jacket as \"unable to raise his arms.\"",
+  "e_ai_report": "Reports are now drafted by AI; back at the agency you only check and sign, and you can visit two more households a day. With the time saved you sit ten minutes longer in each old person's home.",
+  "e_rural": "You go up into the hills of Dayi County to assess, and one household is a twenty-minute walk along the ridges between paddy fields. The old man is sitting in the yard in the sun; when he sees you coming he sends his grandson to fetch two benches.",
+  "e_marry": "You marry someone who works as a bank teller. At the wedding your grandmother sits at the first table, and without thinking you glance at where she puts her hands to get up.",
+  "e_house": "The two of you buy a second-hand two-bedroom flat in Wenjiang with a mortgage of over three thousand a month. You put a grab rail on the balcony and say it's for yourself, later on.",
+  "e_peer": "In a spot check you find the recording lengths of several reports from another team don't match. You report it as the rules require; that team's assignments are suspended, and some people don't speak to you for months.",
+  "e_standard": "The assessment standard is replaced by a new national version, with revised scales and redrawn levels. The agency stops assignments for a week of training, and you copy the old and new versions side by side into a notebook.",
+  "e_thanks": "At a reassessment a son tells you that since his mother qualified, a care worker comes three times a week and he can finally go to work normally. When he's said it, he walks you down to the street.",
+  "e_cold": "Chengdu winters are damp and cold, and the old flats have no heating. In and out of six homes a day, you come home with a fever and are in bed for three days.",
+  "e_train": "You teach new assessors their first class using a recording of yourself from your first year: a family member answering every question for the old person while you couldn't get a word in.",
+  "e_big_data": "The medical insurance department wants to use years of assessment data to estimate the long-term care fund's shortfall and asks your agency for someone to help check the data. You spend two weeks in a meeting room reconciling tables.",
+  "e_grandma": "It's time for your own grandmother to be assessed. The rules say you must recuse yourself, so you wait in the teahouse downstairs while a colleague spends an hour upstairs.",
+  "e_knees": "Over a decade of stairs, and in the end your knees give out; the doctor tells you to go up and down less. You start doing more recording reviews and fewer home visits."
+ },
+ "choices": {
+  "c_level2": {
+   "title": "Sit for Elderly Ability Assessor (Level 2)",
+   "situation": "The Level 2 certificate lets you take difficult cases and reassessments, at a higher fee. The exam means submitting an analysis of an assessment report and scoring recordings, and study has to be squeezed into evenings and weekends without assignments.",
+   "options": [
+    { "label": "Sit it", "result": "You pull out the hundred-odd reports you've written, pick the ten you were least sure about and go through them again, and find three where your judgment could have been sharper." },
+    { "label": "Do more assignments first", "result": "You book your weekends too. A bit more money, surer hands, and the certificate a year later." }
+   ]
+  },
+  "c_favor": {
+   "title": "Someone puts in a word",
+   "situation": "Before you set out, the team leader gets a call: the next household is a relative of someone they know, \"go easy if you can.\" On site, the old person's condition really is stuck between two levels.",
+   "options": [
+    { "label": "Assess to the standard and let the recording speak", "result": "You do every item strictly to the standard, with a recording more complete than usual, and the result comes out at the lighter level. The team leader watches the recording and says nothing more." },
+    { "label": "Lean toward the higher level", "result": "On the borderline you lean toward the heavier level and write a watertight report. On the way back neither you nor your partner says a word." }
+   ]
+  },
+  "c_rehab": {
+   "title": "Go back to rehab",
+   "situation": "The director of your old care home calls: they've opened a new rehab room and want you back as rehab supervisor, a thousand more a month and no more stairs. Only you'd have to leave assessment behind.",
+   "options": [
+    { "label": "Go back to rehab at the care home", "result": "Once more you spend every day getting old people up for standing exercises. Sometimes you wonder what level you'd give this one if you were assessing.", "end": "You went back to the care home as rehab supervisor, helping old people practice standing up and sitting down again and again, and those scores on the scales, you now win back with your own hands, one point at a time." },
+    { "label": "Stay in assessment", "result": "You say you want to see more old people in more homes. The director says then from now on the home's admission assessments will come to you." }
+   ]
+  },
+  "c_ai_video": {
+   "title": "Join the AI assessment trial",
+   "situation": "A tech company working with the agency wants to train a movement-recognition model on your recordings and needs assessors to label and correct them clip by clip. The agency asks who wants to take part: after hours, paid per clip.",
+   "options": [
+    { "label": "Take part, clip by clip", "result": "You label over two thousand clips and write a list of when the machine gets it wrong: thick clothes, backlight, an old person nervous and moving deliberately slowly. Later the list is printed in the operating manual." },
+    { "label": "Don't take part", "result": "You keep your evenings for yourself and spend a weekend hiking on Mount Qingcheng. When the system goes live you use it like everyone else and correct it by hand when it's wrong." }
+   ]
+  },
+  "c_county": {
+   "title": "Open a new site in an outlying county",
+   "situation": "The agency has won an assessment contract in an outlying county and needs someone to go and set up there, training the newly hired local assessors. Lower fees, long distances, but you'd be in charge from day one.",
+   "options": [
+    { "label": "Go to the county", "result": "You rent a single room in the county town and go round the villages every day with township community officials. In the first year you assess more than three thousand older applicants across the whole county." },
+    { "label": "Stay in the city", "result": "You stay in Jinniu, still climbing to seventh floors in old blocks. The colleague who went to the county comes back once a month and tells you how hard the mountain roads are." }
+   ]
+  },
+  "c_leader": {
+   "title": "Become Assessment Team Leader (Reassessment and Quality Control)",
+   "situation": "The agency is setting up a reassessment and quality control team. The leader spot-checks recordings, reviews reports and handles complaints and reviews, the kind of work that makes enemies. The director asks if you'll take it.",
+   "options": [
+    { "label": "Take it", "result": "You watch twenty recordings a day and learn every assessor's habits inside out. In the first quarter, reports overturned on complaint drop by half." },
+    { "label": "Stay on the front line", "result": "You say you'd rather sit in old people's homes. The job goes to a nurse from a hospital, who often shows your reports to the others." }
+   ]
+  },
+  "c_aging_home": {
+   "title": "Move to home adaptations",
+   "situation": "A company that adapts homes for older people wants you as an assessment consultant: visit homes, see where grab rails go and which thresholds need removing, draw up plans, paid on commission. Your income could double.",
+   "options": [
+    { "label": "Join the adaptation company", "result": "For the first time you don't have to give an old person a level, only think how to keep them walking at home a few more years. On the first plan you draw, the grab rail is marked to the centimeter.", "end": "You became an assessment consultant for a home adaptation company, walking into old people's homes and still watching how they stand up and walk, only this time you've come to put in their grab rails." },
+    { "label": "Stay at the assessment agency", "result": "You recommend a partner with five years' experience. The first grab rail she installs is in a home the two of you once assessed." }
+   ]
+  },
+  "c_level1": {
+   "title": "Sit for Elderly Ability Assessor (Level 1) and become Technical Director",
+   "situation": "Level 1 is the highest grade in the trade: it takes a paper, experience training others, and having taken part in final reviews. The agency's technical director is retiring, and passing would mean the job is yours.",
+   "options": [
+    { "label": "Sit it and take the post", "result": "Your paper is on how dialect and hearing distort cognitive assessment. At the defense an old expert asks: so how do you assess an old person who only speaks Hakka? You have the answer." },
+    { "label": "Don't sit it, lead your own team well", "result": "You say a technical director spends every day in meetings and you'd still rather watch recordings. When the new director takes over, the first training materials come to you for review." }
+   ]
+  },
+  "c_head": {
+   "title": "Take over as Head of the Assessment Center",
+   "situation": "The agency is spinning off an independent assessment center and asks if you'll be Head of the Assessment Center: accreditation, contracts, dozens of assessors, annual renewals with medical insurance and civil affairs. If one bad report goes out, you answer for it first.",
+   "options": [
+    { "label": "Take it", "result": "The first thing you do in the job is make \"teams of two, everything recorded\" the first clause of every contract." },
+    { "label": "Decline and stay technical", "result": "You say keeping the standard is enough for you. Before every renewal the new head comes to ask you first: will this number hold up?" }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you return your assessment kit to the agency, counting off the tablet, the stopwatch and the tape measure one by one. A new assessor asks what was hardest after all these years. You think and say: waiting, waiting for an old person to stand up on their own. Out of the building, you spend the afternoon in the teahouse downstairs watching old people play mahjong at the next table.",
+  "burnout": "For a while, every time you stood at the foot of a stairwell in an old block you had to rest a long time, your knees heavy and your heart heavier. You told the director you wanted a break and passed your assignments on. The last household was an old woman who saw you to the door and said: take the stairs slowly."
+ },
+ "stages": [
+  "Every day you and your partner visit five or six homes: first verifying identity and medical history, then taking the old person through the scale item by item, standing up, walking a few steps, eating, doing up buttons, a few cognitive questions, all recorded and photographed. You deal with old people, their families and the neighborhood grid workers; at hand are the assessment tablet, stopwatch, tape measure, body camera and the national standard scales. Back at the agency you file the first assessment for the team leader to spot-check.",
+  "You start taking the difficult and disputed cases: reassessments after family complaints, people stuck between two levels, people with dementia who won't cooperate. You train a new partner and teach her when to ask the family to step out. Your reports are often used as examples, and when families call to ask why they got the level they did, the call comes to you.",
+  "You manage an assessment team: assigning visits, spot-checking recordings, reviewing reports, handling complaints and review requests. You watch more recordings a day than you visit homes, and the people you deal with most are your team's assessors, clerks from the medical insurance office and families who come to the agency to argue. You no longer answer only for your own reports; every report from your team passes before your eyes.",
+  "You oversee assessment quality and training across the agency, take part in final reviews, and align standards and data with the medical insurance and civil affairs departments. You write training materials, set exam questions, interpret the new national standard, and are now and then invited to lecture in other cities. What's at hand has changed from an assessment kit to quality control reports, final review records and a stack of training slides.",
+  "You answer for an assessment center's accreditation and credibility: renewing contracts, managing dozens of assessors, handling audits and spot checks, meeting with government departments, care homes and insurers. What you read most are contract clauses and monthly quality reports. Once a month you still pick a day to climb the stairs with a new assessor."
+ ],
+ "work": [
+  "An old woman is hard of hearing, and you ask the cognitive questions three times while she shakes her head. You switch to writing big characters on paper and she answers every one correctly; in the notes you write: hearing impairment, not cognitive.",
+  "The scale needs the old man to sit up in bed on his own, and he fails three times. You don't help; you wait a minute, and on the fourth try he grabs the bed rail and sits up. You score what actually happened.",
+  "Photographing an old couple's living space, you find a ten-centimeter step at the bathroom door that the old man crosses twice every night. You take three photos from different angles.",
+  "A reassessment request: the family says the last assessment was too low. You compare the last recording with today's visit item by item, find he really has declined over the past six months, and change it to moderate disability.",
+  "On her first home visit, your new partner doesn't know what to do as a family member keeps answering for the old woman. You step in: auntie, could you put the kettle on for us?",
+  "An old man with dementia flies into a rage at the sight of the camera. You put it on top of a cabinet and spend ten minutes looking at his birds with him before he lets you begin.",
+  "Spot-checking recordings, you find one assessor always nudges the old person's chair forward a little before asking them to stand. You don't criticize him; you play it for him and ask why.",
+  "A family member comes to the agency and bangs the table, saying the assessor was unreasonable. You pull up the recording and watch it with him; halfway through he says himself: my mother did stand up.",
+  "In application season your team has sixty households a day. You re-sort the assignments by floor and elevator, and everyone climbs dozens of flights fewer each day.",
+  "At a final review, one report's first assessment and reassessment are two levels apart. You pull up both recordings and find the two assessors understood \"needs partial assistance\" differently.",
+  "You write the training guide to the new national standard, pairing every disputed item with a still from a real recording, faces blurred, movements perfectly clear.",
+  "The medical insurance office asks whether the assessment cycle could be cut from a year to six months. You work out assessor headcount and fees and write a two-page opinion.",
+  "At contract renewal, the other side wants to cut the fee by a fifth. You bring out three years of complaint rates and reassessment reversal rates and say the part you cut will all turn into wrong assessments.",
+  "A care home wants your agency to make its admission assessments \"a formality.\" On the phone you say: we don't offer that service.",
+  "You climb this year's first seventh floor with a new assessor. At the door, you let her knock while you stand behind her catching your breath."
+ ],
+ "past": [
+  "You're in your last year of middle school in Deyang. After his stroke your grandfather lies at home, too heavy for your grandmother to move alone, so when you get home from school you help turn him.",
+  "Your gaokao (college entrance exam) score isn't high, and you apply for rehabilitation therapy at a vocational college in Chengdu because the brochure says \"high employment rate.\"",
+  "Interning at a rehab hospital, you help a stroke patient practice walking for the first time. He falls, you burst into tears from fright, and he ends up comforting you.",
+  "After graduating you join a care home doing rehab, getting old people to stand up and sit down dozens of times a day.",
+  "Chengdu expands long-term care insurance, and assessors come to the home to set the residents' levels. Watching them score with their scales, you think a few of them get it wrong.",
+  "You sign up for elderly ability assessor training yourself, take classes on weekends, and pass the Level 3 certificate. The director says it's a shame; you say you want to see old people in more homes."
+ ],
+ "late": {
+  "pension_note": "Estimate: the agency paid in on Chengdu's social insurance base for thirty years, without a gap when you changed employers once, so your pension is about forty-five percent of your final monthly salary.",
+  "scenes": [
+   "In your first month of retirement, walking past an old apartment block, you look up without thinking and count the floors.",
+   "The neighborhood asks you to talk to the old people about preventing falls. You have them stand up from their chairs one by one and tell them they're all in better shape than the people you used to assess.",
+   "You've reached the age to be assessed yourself. The two assessors who come are very young. You stand up, walk a few steps and answer the questions obligingly, then ask them: did I do that to standard?",
+   "After quitting you rest at home for half a year and your knees mend a little. Every day you go down to the park for a walk and don't count the steps.",
+   "You find a job at the front desk of a community health center, where old people often come to ask how to apply for long-term care insurance, and you explain it better than anyone.",
+   "You hear that assessments now have AI watch the recording first and a person review it, with half as many people doing home visits. You don't know whether to be glad or not.",
+   "Out of assessment, you still can't break one habit: walking into someone's home, you check first how high the threshold is and whether the toilet has a grab rail.",
+   "An old woman you once assessed recognizes you at the market and says she goes downstairs to buy her own vegetables every day now. That's wonderful, you say; that's the grab rail you got us, she says.",
+   "On your balcony, the grab rail you said was for yourself, later on, has become your grandson's chin-up bar.",
+   "You see on the news that long-term care insurance covers more people again. You think of all those stairs to the seventh floor, and the lidded bowls of tea waiting at the top.",
+   "Sorting old things, you find the notebook where you copied the old and new national standards side by side, the writing dense, and on the last page: wait.",
+   "In the teahouse you watch an old man get up to refill his tea, first hand on the table, then hand on his knee. In your head you give him a score, then smile and drink your tea."
+  ],
+  "closing": {
+   "retire": "One afternoon many years later, in a tea garden in People's Park, the old man at the next table is getting up. You don't help; you just watch him rise, little by little. He finds his feet and nods to you, and you nod back.",
+   "burnout": "Many years later, you've moved to a ground-floor flat. One day, sitting in the sun at your door, you hear a neighbor carrying groceries climb flight after flight, and you count the footsteps, one floor, two floors, all the way to seven.",
+   "end": "Many years later, your grandson is learning to walk, inching along the grab rail on the balcony. You crouch beside him and don't reach out, waiting for him to walk to you on his own."
+  }
+ }
+}
