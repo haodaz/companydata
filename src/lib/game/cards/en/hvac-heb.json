@@ -1,0 +1,153 @@
+{
+ "id": "hvac-heb",
+ "occupation": "HVAC Engineer",
+ "role": "Assistant Engineer, District Heating Network",
+ "headline": "A Harbin heating engineer whose new year begins the day the valves open on October 20, keeping watch over forty-odd substations and a whole city's complaint calls",
+ "unit": "The heating branch of a Harbin thermal power group",
+ "unit_type": "Local state-owned heat and power company",
+ "city": "Harbin",
+ "city_tier": "Second-tier city",
+ "education": "Bachelor's in Building Environment and Energy Engineering",
+ "level": "You have done load and hydraulic calculations at school and you can draw in CAD. You have never opened a substation door by yourself, and you still have to think about which way a balancing valve turns.",
+ "intro": "You have come home to Harbin and joined the heating branch of a thermal power group. Your mentor hands you an infrared thermometer and a hook for lifting manhole covers. Forty-some substations in this district, he says, and come winter the whole city will be looking for you. From today on, your year begins not on January 1 but on October 20, the day the heat goes on.",
+ "salary_note": "Estimate: the national figure leans toward design institutes and HVAC jobs in the biggest cities. A local state firm in Harbin pays a good deal less, though social insurance is paid in full and winter brings heating allowances and on-call pay.",
+ "facts": [
+  { "label": "Assistant Engineer (current level)", "value": "0–3 years, ¥8,415–12,375 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Engineer (3–8 years)", "source": "Common in the trade" },
+  { "label": "Pay after 3–5 years", "value": "¥15,500 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "On-site supervision of installation, commissioning, acceptance and performance checks", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "System design, load calculation, equipment selection and cost comparison for HVAC", "source": "AI exposure" },
+  { "label": "Open positions", "value": "50 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "It is twenty-seven below. You pull on a padded cap and walk to the bus stop, and by the time you get there your eyelashes have frosted over. The ice on the bus window is too thick to see the streets of Daowai.",
+  "First stop is the dispatch room, to read the night's curves. Three substations on the district map have low return-water temperatures. Your mentor taps the screen: this one first.",
+  "Down into a substation beneath an old housing block, where the pumps hum and the steam fogs your glasses. You clamp the flow meter to the pipe. Your mentor turns the balancing valve half a turn and tells you to read it again in ten minutes.",
+  "House calls. Your infrared thermometer reads 16.8 degrees in an old woman's fifth-floor flat, the top of the radiator scalding and the bottom cold. You bleed off a cup of rusty water and she presses a frozen pear into your hand.",
+  "A bowl of sour cabbage and blood sausage in the little restaurant by the substation door. Your hands have barely thawed when two more complaints forwarded from the 12345 hotline pop up on your phone.",
+  "You go to see a top floor that has never once been warm. The drawing shows one pipe. The shaft, when you open it, has two. Nobody remembers who changed it back in the nineties.",
+  "Back at the office you write how many turns you gave each valve into the ledger. This book is more accurate than the drawings, your mentor says. If you ever leave, leave it behind.",
+  "You shower, lie down and put your phone by the pillow with the ringer on. It will be thirty below tonight, and the old network likes this kind of night for its troubles."
+ ],
+ "ladder": [
+  { "title": "Assistant Engineer", "stage": "Walking the stations", "focus": "Following your mentor around the substations and pipes, logging data, turning valves, taking indoor temperatures, learning the district one heating season at a time" },
+  { "title": "Engineer", "stage": "Your own district", "focus": "Running the hydraulic balance and summer upgrades for one district on your own; you move up by bringing complaints down and getting plans built" },
+  { "title": "Senior Engineer", "stage": "The whole network", "focus": "Dispatch and upgrades across the branch's primary network; the title takes results, papers and a professional license" },
+  { "title": "Branch Chief Engineer", "stage": "Signing off", "focus": "Signing for heating quality, major upgrades and winter emergency repair plans across the whole branch" }
+ ],
+ "ai_tasks": [
+  { "name": "HVAC system design, load calculation, equipment selection and cost comparison", "how": "AI can run load calculations in bulk, compare equipment options and rough economics, and produce alternatives fast. People confirm the design parameters and boundary conditions, fit the plan to the client and the site, and answer for the result." },
+  { "name": "Construction drawings, specifications and BIM coordination", "how": "AI can draft specifications, catch routine drawing errors and handle repetitive drafting. People have to see through pipe coordination, clashes between trades and whether it can actually be built, and work it out in coordination meetings." },
+  { "name": "Technical bid review, quantity takeoff, equipment quotes and technical bids", "how": "AI can pull equipment and quantities from drawings, build quote sheets and draft technical bids and responses. People only spot-check the quantities, the brand tier and whether a key clause is missing." },
+  { "name": "On-site supervision of installation, commissioning, acceptance and performance checks", "how": "AI can help organize commissioning records and check acceptance lists. But going to the site to see the workmanship, judging whether the air and water are truly balanced, dealing with a strange noise or a leak, talking to the crews and signing the acceptance papers still falls mainly to people." },
+  { "name": "Energy audits, retrofits and smart upgrades of existing systems", "how": "AI can analyze operating data, find energy anomalies, simulate a retrofit and draft the audit report. People verify the real state of the equipment on site, judge whether it can be done within the owner's budget and shutdown window, and make the trade-offs." },
+  { "name": "HVAC input to green building certification such as LEED and China's Three Star", "how": "AI can organize certification requirements, generate a first energy model and gather evidence. People decide the scoring strategy, check that the data is true, talk to the certifiers and the other trades, and answer for what is submitted." }
+ ],
+ "events": {
+  "e_first_open": "Your first opening day. Water eases into the network and every radiator pipe in the city begins to tick and knock. Your mentor listens to the phones start ringing and says: dinner is served.",
+  "e_burst": "In the depths of the last lunar month an old stretch of main bursts at midnight, and you work a thirty-below intersection until dawn. When it is fixed, your padded trousers are frozen stiff enough to stand up by themselves.",
+  "e_thanks": "You finally find what has kept one building cold for three years: a valve buried under cement. The head of the building brings a bag of sticky rice buns to the branch office and asks for you by name.",
+  "e_scold": "A customer shouts at you on the phone for twenty minutes. When he finishes you ask which way his bedroom faces. The next day you go, and it really is cold, and it really is your fault.",
+  "e_ledger": "The day your mentor retires, he sets twenty years of valve ledgers on your desk, says nothing, and goes downstairs for a smoke.",
+  "e_spring": "April 20, the heat goes off. Your whole section goes to the bank of the Songhua River for barbecue, and half a year of unsaid nonsense gets said in one evening.",
+  "e_new_year": "It is your turn on Lunar New Year's Eve. At midnight the fireworks go off outside and every curve on the dispatch screen lies perfectly flat. You eat a plate of dumplings made by a colleague's wife.",
+  "e_cold_snap": "A hard cold wave arrives early and the power plant hasn't laid in enough coal. For a week you hold down the supply temperature, calculating every day how much less each district can be given.",
+  "e_ai_forecast": "The company installs a load forecasting system that sets tomorrow's supply temperature from the weather report. In its first week it is wildly wrong about one old district. By its second year it is wrong less often than the veteran dispatchers.",
+  "e_ai_sensor": "Room temperature sensors go into tens of thousands of homes, and now the system reports a cold building before anyone complains. For the first time you knock on a door before the phone rings. The man stares at you for a long while.",
+  "e_ai_ticket": "A system now sorts, dispatches and follows up on complaints, and half the women on the phones are gone. The ones who stay take the calls the system can't parse, like the old man who only wanted someone to hear that his room was cold.",
+  "e_old_hood": "The heating-area records for a stretch of old buildings in Daowai are off by thirty percent. You lead a crew door to door with tape measures. One summer and two layers of sunburned skin later, the books finally balance.",
+  "e_knee": "All those years of climbing down shafts and up stairs and standing in the wind, and your knees are the first to file a complaint. The doctor looks at the X-ray and asks if you have spent your life working in cold water.",
+  "e_kid_leave": "Your child gets into a university in the south. On a video call that first winter, the kid says the dorm has no heating and it is too cold to sleep. You laugh for a good while at your end of the line, and then you feel a little sad.",
+  "e_coal_change": "With the power plant being refitted, several small boiler houses are joined to the grid and torn down. You go to see one through its last winter. The old stoker wipes his shovel clean and leans it against the wall.",
+  "e_people_shrink": "The old buildings in your district empty out floor by floor as the young go south. Occupancy falls and the pipes stay just as long, and every year the sums get harder.",
+  "e_apprentice": "A new graduate gets his first frozen pear from an old woman and doesn't know what to do with it. Eat it, you tell him, or next time she won't open the door.",
+  "e_no_heat_year": "This heating season your branch logs its fewest complaints on record. At the year-end meeting everyone claps a little, and then you go back to discussing unpaid bills.",
+  "e_tired_winter": "As you get older each winter is longer than the last. A week before the opening day you start to sleep badly, and there is always the sound of a water pump in your ears."
+ },
+ "choices": {
+  "c_cert": { "title": "Sit the exam for the Registered Utilities Engineer (HVAC) license?", "situation": "It is a hard exam, a foundation round and then a professional round, and for half the year you come home too tired to read. But when it comes to upgrades and professional titles, the people holding this license are heard differently.", "options": [
+   { "label": "Spend the summers on it", "result": "You give up two summers. While the others go fishing after the heat is off, you sit in the dorm grinding through practice tests. On the second try, you pass." },
+   { "label": "Learn the district first", "result": "You put the books in the cupboard. Within a few years you can say with your eyes shut where each building's risers are." }
+  ] },
+  "c_engineer": { "title": "Before you go up for Engineer, will you take on the hardest old district?", "situation": "The branch needs someone for the old district that has topped the complaints table for years. Done well, it is the strongest thing you could put in your file for Engineer. Done badly, the whole city curses you for a winter.", "options": [
+   { "label": "Take it", "result": "You spend a winter among those old buildings, add more than sixty building heads on WeChat, and bring complaints down forty percent." },
+   { "label": "Keep steady where you are", "result": "Your own district stays peaceful, so peaceful that your bosses can't quite remember you had anything to do with it." }
+  ] },
+  "c_private": { "title": "A private heating company comes hiring", "situation": "A private company expanding across the nearby counties offers forty percent more and wants you as technical lead. Its practices are looser than the group's, and a word from the boss might mean a pipe does not get replaced.", "options": [
+   { "label": "Go", "result": "You start driving from county town to county town. The pay really is better, and you really do learn to calculate with the boss how many more years a pipe can be made to last." },
+   { "label": "Stay with the group", "result": "You stay. Your pay doesn't change, and every October the work is the same." }
+  ] },
+  "c_south": { "title": "Going south to cool data centers", "situation": "A classmate doing HVAC at a data center company in the south says they are short of people who understand hydraulics. The pay is more than double yours and it is cooling all year round. Your parents are in Harbin, and you haven't got those old buildings right yet.", "options": [
+   { "label": "Leave", "result": "You hand your ledger to your apprentice and buy a one-way plane ticket south.", "end": "You go south, and from then on you spend the whole year keeping machines cool. Your first winter there you stand in short sleeves beside a chiller and phone your mother to ask if the radiators at home are warm." },
+   { "label": "Stay", "result": "You tell your classmate you'll come once you have those old buildings balanced. Then don't plan on coming at all, he says." }
+  ] },
+  "c_ai_learn": { "title": "Join the smart heating project?", "situation": "The group wants load forecasting, weather compensation and room sensors on one platform, and it needs someone who knows the network and doesn't mind arguing with programmers. If you go, you hand over your district.", "options": [
+   { "label": "Go", "result": "You spend a month telling programmers what hydraulic imbalance is, and they spend a month telling you what data cleaning is. Later, the correction factors for those old districts in the model are the ones you wrote in, valve by valve." },
+   { "label": "Stay in the field", "result": "You still trust your hands. You read what the system calculates, and then you go and feel the pipe." }
+  ] },
+  "c_senior": { "title": "The paper for Senior Engineer", "situation": "Going up for Senior Engineer takes results and also a paper. You have real data from retrofitting 200,000 square meters of old network, but writing it up will eat a whole summer, the same summer you promised your parents a trip home and your kid some time.", "options": [
+   { "label": "Write the paper", "result": "You put the retrofit data in order table by table. The paper is published. Your family gets one weekend of your summer." },
+   { "label": "Be with your family", "result": "You take your parents back to their old home in Wuchang and eat iron-pot stew beside the rice paddies. Next year for the paper, you say, and go on saying it for years." }
+  ] },
+  "c_esco": { "title": "Starting an energy services company", "situation": "Over the years you have got to know the facilities people at housing estates, hospitals and schools. An old colleague wants you to go out with him and do energy retrofits for a share of the savings. Everyone knows that money in the northeast is slow to collect.", "options": [
+   { "label": "Quit and do it", "result": "You hand in your resignation. The branch head tries three times to talk you out of it.", "end": "You and your old colleague open a small energy company whose first client is a middle school. For three years you get by on a mortgage against the flat. Later there are a few hospitals, and the money always arrives half a year late. But every October you still reach out, out of habit, and touch the client's heating pipe." },
+   { "label": "Stay at the company", "result": "You pass your old colleague a couple of clients, buy him dinner, and go back to your curves." }
+  ] },
+  "c_chief": { "title": "Stand for Branch Chief Engineer", "situation": "The old chief engineer is retiring. Standing for Branch Chief Engineer means signing every emergency repair plan every winter, and most likely leaving the field where you have spent half your life.", "options": [
+   { "label": "Stand", "result": "You speak for twenty minutes with no slides, only a hand-drawn map of the whole network." },
+   { "label": "Bringing up apprentices is enough", "result": "You tell your bosses: as long as these legs can get down a manhole, don't make me climb up to meetings." }
+  ] }
+ },
+ "endings": {
+  "retire": "The October 20 of the year you retire, for the first time, you don't go to the dispatch room. You sit at home all morning while the pipes begin to tick and knock. You put your hand on one and wait a little, and it is warm.",
+  "burnout": "That year, before the opening day, the doctor tells you no more manholes and no more nights. You give the hook and the thermometer back to the crew and move to a back-office job. Your first winter without calls you keep waking in the middle of the night to look at your phone, and there is no ringing."
+ },
+ "stages": [
+  "Your job is to walk. You log each substation's primary supply and return temperatures and pressures in the ledger, clamp an ultrasonic flow meter on the pipe, and check a manhole with a gas detector before you go down. Old hands tell you which way to turn things and you turn them. The women on the phones pass you the complaints and you go knock on each door, hearing people out before you take out the thermometer.",
+  "Now you have your own district. In summer you rerun the secondary network in the hydraulic software and decide which buildings get balancing valves and which pipe gets replaced, negotiating with property managers, contractors and neighborhood committees. In winter people's anger reaches you and has to be turned into numbers. You used to be told how many turns. Now you tell others.",
+  "It is no longer one building you look after but an entire network. Mornings you read the whole branch's hydraulics on SCADA and set dispatch for each district. You sit on upgrade reviews, fight with finance for pipe renewal money, and settle heat accounts with the power plant. When apprentices bring you plans, you usually ask one thing: have you been out and touched it?",
+  "Your signature goes on the winter operating plan and every major emergency plan. You attend general manager's meetings, report on heating quality to the authorities, and sit through one inspection after another. You rarely touch anything on the front line yourself. But on the night of a cold wave, everyone still waits for you to say whether this section can be shut off."
+ ],
+ "work": [
+  "You bleed a six-story building by yourself for the first time, from the top-floor vent down, until your hands are black with the water. Through a door downstairs an old man shouts: it's warm!",
+  "Old Sun from the next substation teaches you to listen to a pump: rest the tip of a screwdriver on the casing and press your ear to the handle. After a long while he says the bearing is going. If you can't hear it, just remember this sound.",
+  "Typing a handwritten ledger into Excel, you find one valve that has been adjusted more than thirty times in ten years, every entry reading: customer reports cold.",
+  "You rerun the hydraulics for a stretch of old housing and draw up a table of valve settings for twelve buildings. The crew foreman takes it and says: college boy, if this one's off I will eat this table.",
+  "After the heat goes off you and Lao Wei from property management walk the estate's pipe trenches. Your flashlight finds a stretch with all the insulation gone. You circle it in red on the map and add it to this year's retrofit list.",
+  "You hold a little meeting for the building heads and use a cup of hot water and a cup of cold to explain hydraulic imbalance. A retired math teacher goes home and logs the temperatures for the whole building for a month.",
+  "You and the power plant's dispatcher go over the heat settlement sheets all night. The difference turns out to be one meter with an unsynchronized clock. Lao Li at the plant says: you are the fussiest client I have ever met.",
+  "At an upgrade review a young engineer uses his model to prove a pipe need not be replaced. You ask whether there is a culvert under that pipe. He stops, and that afternoon he goes and digs it up.",
+  "Finance sends back the pipe renewal budget cut by a third. You take a map of pipe failures upstairs and sit in the deputy manager's office until closing time, and get half of it back.",
+  "The night of the cold wave, the repair crew leader phones to ask if the main can be shut for three hours. You look at the pressure curves for the whole network, think for a minute, and say: shut it, I'll take care of the stations downstream.",
+  "An inspection team has come to be briefed, and the young people have made beautiful slides. You turn to the end and read out, one by one yourself, the three estates with the most complaints.",
+  "You change two lines in the winter operating plan your apprentice has submitted, then set that stack of yellowed valve ledgers back on his desk and tell him to keep writing in it."
+ ],
+ "past": [
+  "Your family lives on the top floor of an old building in Daowai. Every winter of junior high your mother warms the bed with hot water bottles. One day a young man comes round with an infrared thermometer, and that is when you learn this is somebody's job.",
+  "Your gaokao (college entrance exam) score falls short of the popular majors at the big local university, and you get reassigned to Building Environment and Energy Engineering. Your father asks what that is. Fixing radiators, more or less, you tell him.",
+  "In your second year, heat transfer and fluid mechanics bring so many formulas you want to switch majors. Then on a visit to a substation the pumps shake your chest, and somehow you find the thing solid and real.",
+  "Most of your classmates apply to design institutes and real estate HVAC jobs in the south. You send a few of those too, and also come home for the group's recruitment exam, because your parents are getting older.",
+  "The winter before graduation you intern at the thermal power group and stand out all night at an intersection with the repair crew. The next day your phone shows an offer from a design institute in the south. You send your thanks and don't go."
+ ],
+ "late": {
+  "pension_note": "Estimate: Harbin's urban employee pension. A state firm paid contributions on your actual wages all your life, so in retirement you get close to sixty percent of your final monthly salary.",
+  "scenes": [
+   "Your first October in retirement, you start feeling the radiators a week early. Your spouse says they haven't even turned the heat on yet.",
+   "A young man from property management can't sort out a cold flat, so the head of the building drags you along. You give it half a turn and tell him to feel it again in ten minutes.",
+   "You take up winter swimming and go every day to the pool cut into the ice of the Songhua. Climbing out, you think this water is warmer than that manhole used to be.",
+   "You are moved to the storeroom in logistics, a room full of valves and flanges, each properly labeled.",
+   "You spend a winter in Hainan. By the sea in thirty-degree heat, you keep feeling something is missing. Eventually you work out what: the sound of the pipes knocking.",
+   "Your old apprentice still phones on holidays, and midway through the call he always asks: that old pipe, how exactly was it joined back then?",
+   "The first October 20 after you leave, you wake early as usual. The forecast says three below in Harbin. You look at it and say nothing to anyone.",
+   "An old colleague sends a photo: the network map you once drew is still taped to the wall of the dispatch room, its corners curling.",
+   "You go back to Harbin for the New Year, and the moment you step into the stairwell you put your hand on the riser. Your son asks what you're doing. Nothing, you say. Just checking.",
+   "Later the system can calculate a day ahead how much heat each building needs. But it still doesn't know which old person is cold and too embarrassed to call.",
+   "Waking on a winter night, you hear water moving through the radiator pipes. You turn over and go back to sleep."
+  ],
+  "closing": {
+   "retire": "One winter night many years later, it is thirty below outside and the windows are thick with ice flowers. Inside it is twenty-two degrees. You sit by the radiator in a thin undershirt with your hand on the pipe, and you just sit there.",
+   "burnout": "One spring many years later, on April 20, you stand on the balcony and listen to the pipes in the building slowly going quiet. The ice on the river has opened and the wind has gone soft.",
+   "end": "One evening many years later, you pass an old substation with its door half open, the pump humming inside. You stand there for a while, and you don't go in."
+  }
+ }
+}

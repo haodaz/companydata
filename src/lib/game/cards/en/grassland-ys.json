@@ -1,0 +1,194 @@
+{
+  "id": "grassland-ys",
+  "occupation": "Animal Husbandry and Grassland Technician",
+  "role": "Assistant animal husbandry specialist on assignment at a grassland station",
+  "headline": "Sent from far away to a grassland station 3,700 meters up in Yushu, Qinghai, an assistant animal husbandry specialist driving a pickup to survey plots and reseed pasture with the herders",
+  "unit": "A grassroots grassland station in Yushu, Qinghai",
+  "unit_type": "Grassroots grassland station (public institution)",
+  "city": "Yushu",
+  "city_tier": "Small highland town",
+  "education": "Bachelor's degree (Grassland Science)",
+  "level": "At university you sampled plots and learned dozens of forage species from specimens, but you have never walked above 4,000 meters. In your first week at the station, your headache keeps you up all night",
+  "intro": "When the bus crossed the last pass your ears closed up, and the veins on the back of your hand looked thicker than usual. The old station chief took your bags at the gate and handed you a pulse oximeter. For the first three months, he said, don't run, don't wash your hair, and breathe slowly. As of today, you are learning to count this grassland, higher than the sky back home, one square meter at a time.",
+  "salary_note": "Estimate: public institution pay plus high-altitude and hardship allowances, slightly above the national average for your years of service, though expenses aren't low either.",
+  "facts": [
+    { "label": "Livestock Technician / Technical Staff / Assistant Animal Husbandry Specialist (current level)", "value": "0-2 years, ¥4,420–6,500 a month (national average, derived from pay by experience)", "source": "Pay by experience" },
+    { "label": "Next level up", "value": "Technician / Technical Supervisor / Licensed Veterinarian (2-5 years)", "source": "Career map" },
+    { "label": "Pay after 10+ years", "value": "¥11,500 (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Running a round of livestock vaccination and deworming on the winter and spring pastures", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Surveying plots and recording grass cover and yield", "source": "AI exposure" },
+    { "label": "Open positions", "value": "23 linked listings nationwide (the job database is mostly campus and internship postings)", "source": "Job listings" }
+  ],
+  "day": [
+    "It's barely light and frost has formed in the yard. You boil water on the electric ring in the dark and clip the oximeter to a finger: eighty-six, a little better than yesterday.",
+    "The old station chief drives the pickup with you holding the plot frame and the spade. Half the road is ice and half is washboard, and the water cups jump in their holders the whole way.",
+    "4,200 meters. Get out and rest for five minutes first. You set the one-meter frame on the marked point, crouch down and count plant by plant, with fingers that don't quite obey.",
+    "Lunch is steamed bread from the truck and a flask of hot tea. The wind makes you want to turn your back to eat. The old chief says you're chewing too fast, that up here even eating has to go slowly.",
+    "At a herding family's place, the husband leads you to the black-soil patch behind their winter pasture. You measure pika burrows with a small trowel while he stands by, showing with his hand how tall the grass was last year.",
+    "Snow comes without a word of warning. That's it for today, the old chief says, and turns the truck around. In the mirror, the grassland goes white all at once.",
+    "Back at the station you bag the clippings in envelopes, write the point numbers, and put them in the oven. You enter data on the computer, with one bar of signal that comes and goes.",
+    "Lying down, your heart is louder than it was all day. You send a voice message home saying the weather was great."
+  ],
+  "ladder": [
+    { "title": "Livestock Technician / Technical Staff / Assistant Animal Husbandry Specialist", "stage": "Entry", "focus": "Feeding management, health checks, vaccination and treatment, equipment upkeep; living on site" },
+    { "title": "Technician / Technical Supervisor / Licensed Veterinarian", "stage": "Junior", "focus": "Independently responsible for technology in a unit or site: breeding, nutrition, disease response, and records" },
+    { "title": "Animal Husbandry Specialist / Production Manager / Technical Manager", "stage": "Intermediate", "focus": "Site production technology and team management. Eligible for the intermediate title after five years with a bachelor's degree or two with a master's" },
+    { "title": "Senior Animal Husbandry Specialist / Technical Director / Regional Technical Lead", "stage": "Senior", "focus": "Technical systems, breed improvement, and research results. Eligible for the senior title five years after the intermediate" },
+    { "title": "Principal Animal Husbandry Specialist / Chief Technology Officer", "stage": "Principal", "focus": "Technical strategy and industry standards" }
+  ],
+  "ai_tasks": [
+    { "name": "Running a round of livestock vaccination and deworming on the winter and spring pastures", "how": "AI can make the schedule and send reminders. But someone has to drive the road, restrain the animals and explain things in person at each household. The vaccinator has to be there." },
+    { "name": "Verifying grassland degradation and pest damage on site", "how": "Satellites and drones can point out which patch looks wrong. Reading the soil and the roots and counting burrows, to judge between pests and overgrazing, needs someone standing on the grass." },
+    { "name": "Surveying plots and recording grass cover and yield", "how": "A phone can help identify species and estimate cover automatically. A person has to walk to the point, set the frame, clip and weigh, and correct the grasses the system got wrong." },
+    { "name": "Interpreting remote sensing to estimate county-wide grass yield", "how": "Models can produce growth and yield maps directly from remote sensing data. A person only calibrates against plot data and writes it up." },
+    { "name": "Calculating forage-livestock balance and checking herd numbers", "how": "AI can suggest carrying capacity from yield and stock figures. Confirming real numbers at each household and talking through adjustments takes a person." },
+    { "name": "Teaching herders about reseeding and warm-shed feeding", "how": "AI can make diagrams and short videos. When it comes to which piece of land can be sown and how this family's shed should change, someone has to stand on that land to answer." },
+    { "name": "Keeping project ledgers and filing reports", "how": "AI can file spreadsheets and photos automatically and draft reports. A person checks the key numbers and signs." },
+    { "name": "Advising on yak breeding and feed ration", "how": "AI can calculate rations and keep breeding files. Body condition, heat and calving have to be seen in the shed." }
+  ],
+  "events": {
+    "e_altitude": "Your first winter you often woke up in the night short of breath and had to sit up and pant. The doctor said this is altitude sickness, not exactly an illness, and not to take it lightly.",
+    "e_grass_name": "At last you could tell drooping wild rye from alkali grass by feel with your eyes closed. The old chief didn't praise you. He only put the identification manual on your desk.",
+    "e_stuck_road": "The pickup sank on a thawing riverbank and the wheels only dug deeper. A passing herding family brought yaks and rope, and it took nearly two hours. None of you said one word you didn't have to.",
+    "e_family_far": "While your grandfather was in hospital you were on the road to the county seat. Snow closed the mountain, and by the time you reached a place that could sell you a ticket, it was all over.",
+    "e_sod": "The black-soil patch you reseeded last year turned a thin green this year. You crouched and took a dozen photos and posted them to the work group. Only the old chief replied, with a thumbs-up.",
+    "e_vaccine": "During spring vaccinations you covered seventeen households. The cattle wouldn't enter the chute and chasing them left you gasping. By evening you sat in the truck's open door, not wanting to say anything.",
+    "e_snow_winter": "A snowstorm came a month earlier than usual. The station moved its stored forage overnight to the farthest households, and you spent the night on the phone between dispatch sheets and road reports.",
+    "e_remote_sense": "The province sent down a remote-sensing yield map, covering the whole county in minutes. The station asked you to check it against your plots, and you found it had counted a stand of poisonous weeds as good grass.",
+    "e_drone": "The station got a drone, and one flight covers more ground than you walk in a day. But in a strong wind it can't come back, and you still have to drive to the point.",
+    "e_app": "The new ledger system generates half your reports for you, but won't take entries where there's no signal. You came up with a homemade method: notebook first, upload back at the station.",
+    "e_herder_trust": "A family's yak cow had trouble calving and they called the station in the middle of the night. You went and helped. The next spring, they were the first to let you try your grass on their land.",
+    "e_compare": "In the college alumni group, one person has bought a flat, someone else has made manager. You read this on a riverbank at 4,000 meters, thought for a bit, and moved the frame to the next point.",
+    "e_paper": "You worked eight years of plot data into a paper and put the old chief and two colleagues on it. Not long after it went out, a university called to ask if they could run trials on your sites.",
+    "e_apprentice": "The young person newly assigned here cried from the headache the first week. You left an oximeter and a pack of glucose outside their door, and the next day you said: for the first three months, don't run, don't wash your hair.",
+    "e_doctor": "Your hemoglobin was well up on the checkup, and the doctor told you to spend time at low altitude every year. You folded the page and put it in your plot notebook.",
+    "e_son": "Your child goes to school in Xining and you see each other four or five times a year. On video, your child asks what's so great about counting grass. You turn the phone around and show the grass outside.",
+    "e_visit": "Officials came to look around and the station swept the yard three days ahead. You took them to the nearest plot and told ten years in ten minutes.",
+    "e_recover": "The fenced trial plot you marked out when you were young now stands a clear step taller than the grass outside it. Passing by, you got out and touched it, and grass seeds clung to you all the way home.",
+    "e_knee": "Your legs aren't what they were, and you take the 4,500-meter pass in stages. You've handed the highest plots to the young ones, and you add up the fuel for the long routes again and again."
+  },
+  "choices": {
+    "c_stay_first": {
+      "title": "Third year: stay, or go back to your home unit",
+      "situation": "Your assignment is nearly up. Your unit in the province says you could go back to a desk. The old station chief says nothing, and simply sets next year's plot schedule on your desk. Stay, and you have a shot at being rated Technician and running your own plots.",
+      "options": [
+        { "label": "Stay a few more years", "result": "You took the schedule and did one more round of plots. This year's oxygen cylinders, the chief said, we'll draw one for you too." },
+        { "label": "Go back", "result": "You handed the schedule back to the old chief. Drive slowly, he said, and that was all.", "end": "You went back to an office two thousand meters lower, and slept the night through for the first time in years. Long after, you still kept the plot frame, hanging on your study wall." }
+      ]
+    },
+    "c_cert": {
+      "title": "Take the vet license, or stay with the grass",
+      "situation": "Herders come to you, half about grass and half about their animals. The station is short of a vet, and if you got licensed you'd fill a big gap. But that's half a year of reading, and your trials on the grassland would have to wait.",
+      "options": [
+        { "label": "Take the vet license", "result": "You finished three big textbooks beside the stove. The spring you passed, the hardest households on the vaccination list were all assigned to you." },
+        { "label": "Stay with the grass", "result": "You gave the whole year to your reseeding trials and tried eleven seed mixes. One patch, you think, is getting close." }
+      ]
+    },
+    "c_ai": {
+      "title": "Learn the remote sensing?",
+      "situation": "The province wants one person at the station to work with the remote sensing and AI identification systems, correcting the data and running the models. That means three months training in Xining, and then, likely, sitting at a computer. But the plots can't stop either.",
+      "options": [
+        { "label": "Go and learn", "result": "You came back and relabeled the species it had got wrong on the alpine meadow one by one. The error rate fell a good deal, and the provincial station started remembering your name." },
+        { "label": "Keep doing plots", "result": "Somebody has to bring the data down to the ground, you said. That green on the screen, you go and touch twice a year." }
+      ]
+    },
+    "c_pasture": {
+      "title": "What do you write for this family's herd",
+      "situation": "Checking stock house by house, you find one family has more animals than the ledger shows. The husband says there are a lot of them at home and the children are in school, and he's done those sums himself. The station needs true numbers. You've known him six years.",
+      "options": [
+        { "label": "Write it, then help", "result": "You wrote the true number and then helped him work out how to adjust and plant a little forage. He didn't speak all afternoon, and then poured you a cup of tea." },
+        { "label": "Check it next time", "result": "You said you'd stop here for today and didn't say a word the whole way back. The next year's ledger was harder." }
+      ]
+    },
+    "c_title": {
+      "title": "Applying for Animal Husbandry Specialist",
+      "situation": "This round of evaluation for Animal Husbandry Specialist has one slot, and you and an old colleague at the next station both have the years. You have eight years of plot data and a trial plot. It would take half a year of paperwork, and it means asking favors at the prefecture.",
+      "options": [
+        { "label": "Go for it", "result": "You turned eight years of data into a single dossier and made four trips to the prefecture. On the road back, for the first time, those numbers felt like they had weight." },
+        { "label": "Leave it to him", "result": "You've waited longer than I have, you told your colleague. Later he gave you all his trial records." }
+      ]
+    },
+    "c_transfer": {
+      "title": "A chance to transfer lower down",
+      "situation": "The provincial grassland station has an opening, more than a thousand meters lower, and your child could be near you. But go, and your trial plot passes to someone else, and more than ten years of points could break off with you.",
+      "options": [
+        { "label": "Stay at the station", "result": "You put the transfer out of mind. When spring came, you drove back out to the edge of that plot again." },
+        { "label": "Transfer down", "result": "You handed over the points and records of the trial plot page by page, and walked the new person through it once.", "end": "In an office in the provincial capital, you compiled grassland data for all of Qinghai. Every summer you applied to go back to the trial plot once, and stood at its edge for a while." }
+      ]
+    },
+    "c_senior": {
+      "title": "A push for Senior Animal Husbandry Specialist",
+      "situation": "Senior Animal Husbandry Specialist takes results and papers, and no one at the station has ever made it. Your seed mixes have spread across a few counties, but the writing would cost you one whole summer, and summer is the only season here when you can really work.",
+      "options": [
+        { "label": "Spend the summer writing", "result": "You wrote for three months in the station while the grass went green and yellow outside the window. When the panel asked, you told them that every number here had been measured on foot." },
+        { "label": "Spend it on the land", "result": "You didn't write it. You covered seven more points and looked over the land of several more families. They all know your truck." }
+      ]
+    },
+    "c_leave_late": {
+      "title": "A company wants you",
+      "situation": "A forage seed company in Xining has asked you to be its technical lead: double the salary, based at low altitude, and from here on your name on its seed bags. Your body has started giving you reminders too.",
+      "options": [
+        { "label": "Stay at the station", "result": "You thanked them. Later you bought that company's seed all the same and tried it out. Half of it came up." },
+        { "label": "Go to the company", "result": "You left the plot frame at the station, and took only the steel tape.", "end": "You moved down to low altitude and began writing instructions for bags of seed. At the end of each one you couldn't help adding a line: above 4,000 meters, please trial a small patch first." },
+        { "label": "Be a station adviser", "result": "You handed the routine work to the young ones and kept only the hardest plots. You've been here longer than I have, the station chief said." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On the day you retired, the young people drove you up to the pass. You got out and stood for a while, and the wind was as it had always been. You had handed your last plot notebook to the station, its corners gone soft. Looking back as you left, you could no longer tell the color of that trial plot from any other ground.",
+    "burnout": "Your oxygen numbers and your heart kept you at low altitude. You gave your keys and records to a colleague, and as the truck came down the mountain your ears opened little by little. You didn't tell them that you slept well that night, and woke up very early."
+  },
+  "stages": [
+    "You follow the old chief around the plots: setting the frame, counting stems, measuring grass height with a steel tape, clipping into envelopes, then back at the station into the oven for dry weight. You don't say much, and mostly you listen to the herders talking to him. In spring vaccinations you hold the hooves, in autumn you enter the ledger line by line. Your biggest job in the first year is getting used to being alive here.",
+    "You begin running a few areas of plots yourself. Satellite positioning and the frame are your two hands, and the reseeding trials, deworming and livestock census all pass to you. Herders start calling you, and not only about grass. You learn to speak in terms of this road and this weather, and you stop saying tomorrow. You say: when the road's open.",
+    "You have technical guidance for several villages and two or three young people under you. Trial plot plans, yield data and seed quantities all go out on your signature. Half your time is at the station squaring things with the grassland and livestock offices above you, and half is still spent driving out. When you talk now, the young people take notes.",
+    "The county's grassland monitoring and technical plans all cross your desk. You correct the errors in remote-sensing reports, negotiate plots with university research teams, and tell meetings at the prefecture how many years this alpine meadow will take to recover. You go out less, and when you do, it is usually young people standing beside you.",
+    "Other counties call you too. You review technical regulations, turn thirty years of your plots into a method that can be handed on, and sit on panels listening to young people talk about their grass. You can no longer walk to the 4,500-meter points, but when they come back you still ask first: was the soil damp?"
+  ],
+  "work": [
+    "The old chief has you sort a plot's grasses by species and weigh them, and you put two stems of bluegrass in the wrong pile. He splits the leaf sheath with his fingernail and shows you, then hands the scale back.",
+    "You line the envelopes up in front of the oven, and the temperature log goes to a third page. That night the power goes out, and the next morning you dry the samples over again and note the reason in the remarks.",
+    "On spring vaccination day you're paired with Ma, the vaccinator, on the yaks. You hold the horns and he pushes the syringe. By noon, one of your sleeves has been licked half wet.",
+    "You go looking with the GPS for a point set two years ago, and after a long search you find the iron stake you buried under a rock. You record the coordinates again and write it into the handover sheet.",
+    "Behind one family's winter pasture the burrows are so thick you can barely step. You and Xu measure twenty plots with small trowels, drawing the edge of the black soil on the map until dark.",
+    "You help the family next door work out how much more forage a warm shed could store, tapping away at your phone. The husband holds out his hand to show the amount and says that's about what his grandfather used to say.",
+    "New technician Tian sets his plot beside the road, saying it's easier to reach. You make him drive back and reset it up the slope, and neither of you gets lunch that day.",
+    "Before signing the yield report you double-check the fresh-to-dry ratios for two counties and find one group wasn't dried long enough. You send it back to Tian to redo.",
+    "The vaccine supplies reach the county seat but a batch of cold boxes is short. You grind away on the phone with Zhou in the supply section for half an hour, and in the end you move it all up in the station pickup, in three trips.",
+    "On the yield map from the remote-sensing firm you circle three patches in red and write: poisonous weeds, not grass. The firm's engineer opens your plot photos and looks for a long time.",
+    "A university team comes to borrow your plots. You give the lead teacher copies of ten years of records and make only one request: close the fence gate when you leave.",
+    "At the county's technical training, you say that newly reseeded land can't be grazed the first year. Someone below asks where that year's forage comes from, and you pass down the sheet you've already worked out.",
+    "The draft regulation says: fence off for two years after reseeding. In the margin you write: 3,000 meters and 4,000 meters are not the same thing. Write them separately.",
+    "On the review panel you listen to a young person present a model, and the charts are beautiful. You ask only one question: how many times have you been to this point?",
+    "A station chief from another county brings you a bag of black soil. You rub some between your fingers, smell it, and tell him to push the reseeding back half a month."
+  ],
+  "past": [
+    "You grew up on the loess plateau of eastern Gansu. Your family grew corn and the chore you hated most was weeding.",
+    "Your gaokao (college entrance exam) score wasn't high, and you were reassigned to Grassland Science at an agricultural university. What do you study in that, your father asked. Grass, you said. He was quiet a long time.",
+    "On an internship in your second year you went to a trial plot in the Qilian Mountains, saw green with no end for the first time, and had your first high-altitude nosebleed.",
+    "Your thesis was on alpine meadow degradation. Your advisor circled several points in your data and asked if you had really been to them. You said yes, and only then did he nod.",
+    "A provincial institution was recruiting grassland specialists with a grassroots posting required. You thought it over for several days and filled out the form. Your mother said there isn't even enough air up there.",
+    "Packing, you put a roll of steel tape and your two thickest pairs of socks in the case, and bought a train ticket to Xining."
+  ],
+  "late": {
+    "pension_note": "Estimate: public institution pension, with high-altitude allowances partly counted and long contribution years. You'll receive close to 70% of your final monthly pay.",
+    "scenes": [
+      "You move to Xining. For the first month, your oximeter reads so well that it almost makes you uneasy.",
+      "The young people send new plot data to your phone and ask if this patch is recovering. You read it all evening and reply with three lines.",
+      "In the flower bed at your apartment block you pick out the weeds that have crept in, naming each. A neighbor asks why you pull that one. It's growing too well, you say.",
+      "Once down, you slept first, and when you had slept enough you sat by the window. The traffic below is much louder than you had imagined.",
+      "The doctor says your numbers are back where they ought to be. You send them to the old chief, who replies two days later: then stay put and rest.",
+      "You begin teaching the neighborhood kids to identify the grasses around their school, and they call you Teacher Grass. You don't correct them.",
+      "In your new place you still glance at the sky each morning, guessing if the road will be open today.",
+      "People at the station now and then send photos, and your trial plot is still there. You zoom in and look at that stretch of wire on the fence.",
+      "At a get-together with colleagues someone brings up the snow that year. Everyone believes the truck they drove was the one in the most danger, and by the end you're all laughing.",
+      "The supermarket sells highland yak beef. You buy a piece, cut it at home and look at it. You say nothing about the meat, only: good grass.",
+      "Your child takes your grandchild to the grasslands and sends a video. You watch the wind go across, the way the grass rises and falls, and ask them to hold the phone lower."
+    ],
+    "closing": {
+      "retire": "In the evening you open the window a crack, and the wind in Xining isn't very cold. The steel tape you used for thirty years lies in the drawer. A stretch of its markings has worn too faint to read.",
+      "burnout": "Sometimes you still wake in the night and sit up to take a deep breath. There's enough air. You lie down again, close your eyes, and think for a while about how the grass looks.",
+      "end": "On your study wall hangs an iron frame, one meter square, with nothing inside it. When guests ask what it is, you say: that's a piece of land from when I was young."
+    }
+  }
+}

@@ -1,0 +1,157 @@
+{
+ "id": "drone-show-ly",
+ "occupation": "Drone Swarm Flight Planner",
+ "role": "Assistant Flight Planner",
+ "headline": "A drone show flight planner in Liuyang, China's fireworks capital, writing thousands of aircraft into the night sky, one gust away from calling off the whole show",
+ "unit": "A drone light show company in Liuyang, Hunan",
+ "unit_type": "Drone show company",
+ "city": "Liuyang, Hunan",
+ "city_tier": "County-level city",
+ "education": "Associate degree in Drone Application Technology",
+ "level": "You hold a civil drone pilot license, you fly a single aircraft steadily, and you've touched Blender. The numbers on a ground station when a thousand take off at once, you've only seen in videos.",
+ "intro": "You've come back to Liuyang and joined a company that does drone light shows. Every family here knows someone who sets off fireworks, and now you'll be launching a different sort of thing. Your team leader has you memorize the serial numbers of three hundred batteries first. Aircraft don't lie, he says. What lies is you, not looking closely enough. From today on, your work is what happens after dark.",
+ "salary_note": "Estimate: the national figure leans toward drone firms in Shenzhen and Shanghai. Base pay in Liuyang is low and depends on commissions per show, and income in the busy and slow seasons can differ by a factor of two.",
+ "facts": [
+  { "label": "Assistant Flight Planner (current level)", "value": "0–2 years, ¥10,200–15,000 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Flight Planner (2–5 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥25,800 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Risk assessment and emergency response to high wind, lost communications and position drift", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Writing flight scripts for shows, inspection or logistics and drawing up flight plans", "source": "AI exposure" },
+  { "label": "Open positions", "value": "10 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The company's warehouse is in an industrial park by the Liuyang River. You arrive early, open up last night's aircraft case by case and check the propellers for cracks.",
+  "The team leader opens the animation the client sent, thirty seconds of a phoenix in flight. This phoenix's tail is too thin, he says. In the air it will break. Go and adjust the spacing.",
+  "A plate of Liuyang steamed dishes, dried tofu steamed with chili. In the afternoon you load up and head for the venue, taking turns at the wheel with Lao Yang the driver for four hours.",
+  "At the plaza, with a tape measure and an RTK base station you lay out the grid, aircraft by aircraft, in a formation neater than military training. A woman from the square dancers asks what this is.",
+  "Power up for self-check. In a sea of green dots on the ground station are seven yellow ones. You run to each to change the battery, until you're soaked with sweat.",
+  "The anemometer jumps to six meters per second. The team leader is watching the weather map on his phone, the client's senior man stands alongside asking if it can fly, and nobody wants to speak first.",
+  "Takeoff. A thousand aircraft rise over your head and the crowd goes wow. You don't look up. Your eyes stay on the screen.",
+  "All the aircraft are back. You crouch on the ground counting cases. If one is missing, you go into the grass with a flashlight. Only when it's found can you leave."
+ ],
+ "ladder": [
+  { "title": "Assistant Flight Planner", "stage": "Setting out aircraft", "focus": "Going out with the team, setting out the grid, charging, inspecting, helping the planners revise scripts; you move up by missing nothing" },
+  { "title": "Flight Planner", "stage": "Writing scripts", "focus": "Turning animations into flight scripts on your own, doing collision avoidance and risk assessment, running the ground station at shows" },
+  { "title": "Senior Flight Planner", "stage": "Leading shows", "focus": "Leading a field team, answering for shows of over a thousand aircraft and for emergencies, dealing with clients and airspace approvals" },
+  { "title": "Flight Director", "stage": "Setting the standard", "focus": "Setting the company's flight standards, safety rules and technical direction; large shows fly only with this person's nod" }
+ ],
+ "ai_tasks": [
+  { "name": "Writing flight scripts for shows, inspection or logistics and drawing up flight plans", "how": "AI can generate draft flight scripts and procedure documents from a task description. People have to check the parameters, formation logic and safety limits in the script and answer for the final version." },
+  { "name": "Planning safe and efficient 3D flight paths given weather, airspace, electromagnetic conditions and aircraft performance", "how": "AI can combine weather, airspace and aircraft data to calculate and compare several 3D routes quickly. People must judge whether the data can be trusted and what the airspace and electromagnetic conditions are on the ground, and set the backup routes and emergency landing plan." },
+  { "name": "Operating the ground station and monitoring position, altitude, charge and attitude across a fleet of thousands", "how": "AI can automatically watch position, charge and attitude across thousands of aircraft and flag anomalies. People give the commands for takeoff, transformation and return at key moments, and take over when the system is unsure." },
+  { "name": "Risk assessment and emergency response to high wind, lost communications and position drift", "how": "AI can make risk lists and warnings. But sudden events like high wind, lost communications and position drift need a person on the ground to judge and decide, and a person to answer for any accident." },
+  { "name": "Collecting and analyzing flight data, and optimizing swarm control algorithms and positioning accuracy", "how": "AI is good at organizing flight logs, finding patterns and proposing algorithm changes and tuning. People set the goals, verify on real aircraft and judge whether a change brings new safety risks." },
+  { "name": "Working with art, music and engineering teams to deliver cross-disciplinary projects", "how": "AI can help organize requirements and draft creative sketches. But talking with art, music and engineering teams, making the trade-offs, and turning an artistic idea into something that can fly depends mainly on people working it out on the ground." }
+ ],
+ "events": {
+  "e_first_show": "Your first big show ends, and the client sets off a string of fireworks to celebrate. Standing on an aircraft case, you look up at the sky for the first time.",
+  "e_wind_cancel": "Gusts exceed the limit and the team leader calls it off. The client turns on you there and then, a plaza of tens of thousands leaves cursing, and you pack the aircraft back up one by one in silence.",
+  "e_lake": "At a lakeside show, a dozen or so aircraft lose contact and go down in the water. The next day you sit in a small boat, holding up a locator on the lake from morning to night.",
+  "e_ny": "The New Year is high season, and you see it in at a plaza in some other city. The show done at midnight, you eat instant noodles in the van and send your family a video.",
+  "e_change_word": "Three hours before the show, the client's senior man wants Welcome changed to A Warm Welcome. You rewrite the script and recalculate the paths in the van with sweating palms, and finish the upload on the ground station with two minutes to spare.",
+  "e_firework": "The company partners with a fireworks factory back home, and drones carrying cold sparks write characters in the night. Your father, who has spent his life in that factory, watches the show and says: that's not bad.",
+  "e_airspace": "The airspace application for a show gets stuck on the very last step, and you carry the papers back and forth. The approval comes through with only three days to go.",
+  "e_interference": "With the city's complicated electromagnetic conditions, a patch of aircraft loses its position at rehearsal. You move the takeoff point thirty meters south and the next day everything is normal. To this day nobody can say why.",
+  "e_ai_path": "The new software turns an animation into collision-free paths in one click. What used to take you a night now takes ten minutes. For the first time, you sleep eight hours the night before a show.",
+  "e_ai_design": "A client generates a pattern with AI and sends it over, saying fly this. The formation is lovely, with three places where aircraft would have to pass through each other.",
+  "e_ai_monitor": "The system watches the charge and attitude of thousands of aircraft and flags which should return early. The finger that presses the takeover key is still a human finger.",
+  "e_price": "More and more competitors arrive, and in two years the price per aircraft falls by half. The company takes on more shows and cuts its travel allowance.",
+  "e_viral": "A whale you designed swimming through the night sky spreads on short video, tens of millions of views, and nobody knows who made it. You read through the comments and send a screenshot to your mother.",
+  "e_road": "Two hundred days a year on the road. You wake in budget hotels in different cities, and have to look out the window to remember where you are today.",
+  "e_late_pay": "A county's cultural tourism payment is ten months late, and the company pays wages at eighty percent. The boss says he'll make it up at year's end. You all know how that goes.",
+  "e_dating": "On a blind date you're asked what you do for work. You open your phone and play a clip of a starry sky you flew. After watching it, the other person asks: so you are never home in the evenings?",
+  "e_kid": "At a kindergarten event the teacher asks whose parents can do magic. Your child says: someone in my family can arrange the stars into words.",
+  "e_teach": "A new apprentice sits at the ground station for the first time, hands shaking too much to press straight. Don't look at the sky, you say, look at the screen. And as soon as you've said it, he looks up.",
+  "e_knees": "After more than ten years of crouching to set out aircraft, your knees creak going downstairs. You begin letting the young ones do the crouching while you stand at the edge of the grid with a tablet."
+ },
+ "choices": {
+  "c_cert": { "title": "Sit the Drone Swarm Flight Planner skill exam?", "situation": "Tenders are starting to require the certificate. The company says sit it yourself and pay your own tuition, and it'll eat part of the off season. While you're not out on shows, you lose that commission.", "options": [
+   { "label": "Sit it", "result": "You take three weeks of classes in Changsha, flight control principles and aviation meteorology, and for the first time you understand why wind shear is worse than high wind." },
+   { "label": "Earn with the team first", "result": "You keep going out with the team, and you become the fastest in the company at setting out aircraft." }
+  ] },
+  "c_planner": { "title": "Go up to Flight Planner: take that show of three thousand", "situation": "The team leader is away and no one has written the script for a three-thousand-aircraft show. Take it, and going up to Flight Planner you'll have real results. Get one point wrong and thousands of aircraft could crash together in the sky, on a job worth a year's profits.", "options": [
+   { "label": "Take it", "result": "You calculate for three straight nights in the hotel and run the collision check again before upload. When the three thousand rise, your hands are shaking." },
+   { "label": "Wait for the team leader", "result": "You phone the team leader, and part of the job is outsourced. The company spends a bit more, and nothing happens to you." }
+  ] },
+  "c_fly_or_not": { "title": "The wind is at the limit. Fly or not?", "situation": "Wind speed is hovering around the limit. The county leaders have arrived, and the client says if it flies, the final payment is yours at once. If it doesn't, the company pays a penalty and this year's bonus is gone. Your team is looking at you.", "options": [
+   { "label": "Don't fly", "result": "You let go of the sticks and call it off. The client slams your contract on the roof of the van. There is a company meeting the next day. The boss says nothing, and doesn't make you pay." },
+   { "label": "Wait ten minutes, then fly", "result": "Ten minutes later the wind dies down a little and you press takeoff. You don't blink for the whole show. When the aircraft land, your back is soaked." }
+  ] },
+  "c_shenzhen": { "title": "A drone company in Shenzhen comes hiring", "situation": "A leading company in Shenzhen offers half again your pay to work on applied flight control algorithms, no field work. You'd become someone who writes tools and no longer stand on the plazas, and your parents would be even farther away.", "options": [
+   { "label": "Go to Shenzhen", "result": "You go to an office tower in Shenzhen. By day you adjust parameters, and at night you take a look at show videos others have sent. After a few years, you want to go back to the field." },
+   { "label": "Stay in Liuyang", "result": "You say work after dark suits you better." }
+  ] },
+  "c_ai_tool": { "title": "Lead the company's AI choreography tool?", "situation": "The company wants to build its own AI choreography tool and wants you to lead it, deciding which parameters AI may touch and which need a person's review. If it works, maybe the company won't need so many planners.", "options": [
+   { "label": "Lead it", "result": "You write down the first rule: before upload, someone must watch the full preview through. Three years later, the company has two fewer planners and flies twice as many shows." },
+   { "label": "Just fly good shows", "result": "You say you can't write software and don't want to. You still do your own sums before a show." }
+  ] },
+  "c_senior": { "title": "Go up to Senior Flight Planner and lead a field team", "situation": "The company is forming another field team and needs someone to go up to Senior Flight Planner and lead it. Leading means eating and sleeping on the road with your people, days at home countable on your fingers, just as your child starts primary school.", "options": [
+   { "label": "Lead the team", "result": "You take ten young men across half of China, and the van's odometer turns over one more time." },
+   { "label": "Stay and write scripts", "result": "You stay at the company writing scripts and take your child to jump-rope practice on weekends. The shows, you watch on your phone." }
+  ] },
+  "c_logistics": { "title": "Move to logistics drone dispatch", "situation": "Low-altitude logistics has taken off these past few years, and a company in Changsha is hiring dispatch supervisors, nine to five, no chasing the dark. Your skills still apply. But from then on no one will ever look up at what you fly.", "options": [
+   { "label": "Move", "result": "You quit, and the last show you fly is a sky full of stars, with no words.", "end": "You go into logistics drone dispatch, hundreds of sorties a day, carrying medicine and takeout into the mountains. The dots on the screen behave themselves, and nobody claps for them. Back in Liuyang for the New Year, you still go to the river and wait for someone else's aircraft to rise." },
+   { "label": "Stay in shows", "result": "You say you still want to hear the crowd go wow." }
+  ] },
+  "c_own": { "title": "Start your own crew", "situation": "An old client is willing to give you all his county's business, if you'll open your own company. Buying aircraft means borrowing, and there'll be times when you lose money on every one that flies. In Liuyang, a few small firms like this have opened and folded in the last couple of years.", "options": [
+   { "label": "Go it alone", "result": "You mortgage your flat and buy your first five hundred aircraft, and open up next door to a fireworks factory.", "end": "You open a small company that flies seventy or eighty shows a year. In the hardest times, after paying your staff, your own account holds four thousand yuan. Every New Year's Eve you go out yourself, and when it's done you bring your old man along to watch the last aircraft land." },
+   { "label": "Keep working for others", "result": "You thank the client and pass the job on to your company. At the annual party the boss drinks a toast to you." }
+  ] },
+  "c_director": { "title": "Stand for Flight Director", "situation": "The company has grown and needs a Flight Director to set the safety rules for the whole firm, with large shows flying only on that person's nod. Standing for it means stepping back from the field and sitting year round in front of screens and paperwork.", "options": [
+   { "label": "Stand", "result": "You list every show you've ever called off and put the list on the boss's desk. It later becomes the company's rule book." },
+   { "label": "Stay in the field", "result": "You say that as long as your legs can crouch, you want to stand at the edge of the grid." }
+  ] }
+ },
+ "endings": {
+  "retire": "Your last show is by the Liuyang River. The young ones give up the ground station to you. You wave them off, and don't sit down. The aircraft rise and the crowd goes wow. And this time, you keep your head up and watch the whole show.",
+  "burnout": "Years of travel and late nights have finally hollowed you out. You put your license and walkie-talkie in a drawer and no longer go out with the team. Your first New Year's Eve at home, fireworks are going off everywhere outside, and you stand on the balcony watching for half an hour."
+ },
+ "stages": [
+  "You carry cases, set out the grid, put up the tripod for the RTK base station and check propellers and batteries one by one. Before a show you run self-checks with the planners and go to wherever there's a yellow dot. Back at the company you help adjust the animation in Blender, pulling the points apart so it can fly. The team leader may not listen to what you say, but counting the cases is all yours.",
+  "You sit down at the ground station. You export the artists' animations and convert them to flight scripts, run collision checks, look at wind and electromagnetic conditions, and write the risk assessments and backup landing plans. During a show you send takeoff, transformation and return from the screen. You fight with the artists over spacing and sync with the music. You used to run errands. Now the account for these thousands of points is in your name.",
+  "You lead a field team all over the country: scouting venues ahead of time, holding coordination meetings with local police, air traffic control and the client, submitting airspace applications, arranging people and vans. You're the one who gives the last word before takeoff, fly or no fly. You review your apprentices' scripts and keep an eye on a plaza of thousands, and at the count that night, if one is missing, you are still the first to go looking.",
+  "You set the flight standards for the whole company: how much wind means no flying, how many people must review a show over a few thousand aircraft, which models should be retired. You meet with the boss, investors, insurers and major clients, and when something goes wrong your report is read first. You only go out to the biggest few shows now, standing at the back and saying nothing, and everyone knows you're there."
+ ],
+ "work": [
+  "The team leader has you measure the spacing between neighboring aircraft with a tape, and you do more than eighty. Xiao Zheng makes fun of you, and later his row goes crooked and has to be set out again.",
+  "You put serial numbers on three hundred batteries and find one swollen. You put it by itself in the explosion-proof case and write a line in the log, and Lao Yang pats you on the shoulder.",
+  "In Blender you pull the edge points of a heart ten centimeters apart, and the script finally stops throwing errors. Xiao Wu the planner doesn't look up, and says: that'll do.",
+  "You turn a thirty-second animation into a script and the collision check reports 140 conflicts. You fix them one by one. By daybreak two are left, and A-Wen the artist says: leave those two to me.",
+  "Mid-show four aircraft are losing charge fast. A tap of your finger sends them back early. The audience doesn't notice. On the walkie-talkie Lao Yang says: those four really know how to run.",
+  "The music teacher says this beat has to land at 17.4 seconds. You start the whole formation 0.3 seconds later, stand outside the venue listening, and at last it lands.",
+  "You arrive at a county town three days early and walk the plaza with an old police officer, looking at the high-voltage lines around it. He asks how many people you need for crowd control, and you hand him the plan.",
+  "Mr. Wang at the client insists on adding a slogan. You push the script and the risk assessment across to him and tell him that one more line means half as many fireworks. He thinks for a moment and picks the fireworks.",
+  "At the post-show count one aircraft is missing. You and Xiao Deng search a reed bed by flashlight until midnight, and find it at last on the roof of someone's chicken coop.",
+  "You invite the insurance company's claims specialist to the warehouse and have him press emergency return himself. After that, the premium goes down a little.",
+  "The new rule book says when the wind is over the limit, no one may say fly. The sales director says this will lose business, and you make that line bolder.",
+  "A young senior planner phones to ask if tonight's wind is flyable. You don't answer. You ask him: you're the one standing there, what do you think?"
+ ],
+ "past": [
+  "You grow up in a town in Liuyang, where your father works in a fireworks factory. You're used to the smell of gunpowder from childhood. The New Year at your house is quieter than others', because the grown-ups are tired.",
+  "Your gaokao (college entrance exam) results are average. On the application form you see Drone Application Technology and think at least this won't explode. Your father says: dream on.",
+  "At school you get your drone pilot license, and the first time you hold an aircraft steady in midair, you think it obeys you better than you do yourself.",
+  "You do an internship with a crop-spraying team, spending a summer spraying pesticide over the rice paddies of northern Hunan and burning black as charcoal. This job is too sunny, you think that summer.",
+  "You watch a drone show in Changsha, more than a thousand aircraft forming words above Orange Isle. In the crowd leaving, you decide, and the next day you start sending out résumés."
+ ],
+ "late": {
+  "pension_note": "Estimate: small companies usually pay pension contributions on the minimum base, so in retirement you get about forty percent of your final monthly salary.",
+  "scenes": [
+   "After you retire you still look at the wind speed each evening. Your spouse asks what you're looking at that for. Nothing, you say. Habit.",
+   "At a fireworks show by the Liuyang River you squeeze into the crowd with a grandchild. When the aircraft rise the child points at the sky, and your eyes go looking for where the ground station is.",
+   "Your old teammates have set up a group chat, where they post night skies from all over. Someone says this whale was yours once. You don't deny it.",
+   "For the first time you lie on the sofa at eight in the evening with someone else's show on television. Your spouse hands you the remote, and you don't change the channel.",
+   "You teach single-drone aerial photography at a senior college to students even older than you. They fly all over the place and laugh a lot.",
+   "Walking in the morning you pass an empty lot, and your head automatically sets it out into a grid. You stand a while, and walk on.",
+   "Your first New Year's Eve after leaving, you are at home watching television, and you see someone else's aircraft writing words. You count about how many.",
+   "An old colleague sends a video: the show you once called off was later flown in the same plaza on another day, in very fine weather.",
+   "In the warehouse you find an old propeller blade with your number on it. You take it home and set it on the windowsill.",
+   "Later AI can generate a sky full of stars from a single sentence. Whether to fly tonight in this wind still needs someone on the plaza to say so.",
+   "A grandchild asks what your job used to be. You point at the sky. The child looks up. There's nothing there but the stars."
+  ],
+  "closing": {
+   "retire": "One clear night many years later you sit on a rock by the Liuyang River. There are no aircraft in the sky, and no fireworks, only the old stars. They don't move at all. You look for a long time, and you don't have to count them.",
+   "burnout": "One New Year's Eve many years later the fireworks outside are finished, and the smell of powder slowly spreads. You open the window and breathe it in, and it's still the smell of your childhood. And then you shut the window.",
+   "end": "One evening many years later you look up, and far off there's a small point of light moving slowly. You watch until it's gone, then turn around and go home to dinner."
+  }
+ }
+}

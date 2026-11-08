@@ -1,0 +1,193 @@
+{
+  "id": "factory-boss-zs",
+  "occupation": "General and Operations Manager",
+  "role": "Acting General Manager of a Lighting Factory (Second-Generation Heir)",
+  "headline": "Two years as a consultant in Shanghai, one phone call home to Guzhen: the second-generation heir of a Zhongshan lighting factory, with Acting General Manager on his business card and the company seal still locked in his father's drawer",
+  "unit": "A two-hundred-person lighting factory in Guzhen, Zhongshan",
+  "unit_type": "Family-owned private manufacturer",
+  "city": "Zhongshan",
+  "city_tier": "Tier-2 city (Pearl River Delta)",
+  "education": "Bachelor's degree (Business Administration), one-year master's in the UK",
+  "level": "Your slide decks are beautiful; you can't tell a die-cast part from a stamped one",
+  "intro": "The day your father had a stent put in, you were in Shanghai presenting a digital transformation plan to a client. A month later you stand at the gate of the factory in Guzhen, Zhongshan, holding a box of freshly printed business cards: Acting General Manager. There are two hundred-odd people here, and the uncles who built the place with your father call you the Young Master. From today, any problem with any lamp comes to you.",
+  "salary_note": "Estimate: a family factory doesn't pay its heir much on paper, about 90% of the national average. Real income depends on dividends, and on whether you have to put money in to cover a loss.",
+  "facts": [
+    { "label": "Acting General Manager (current level)", "value": "0-3 years, ¥10,200–15,000 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "General Manager (3-8 years)", "source": "Common in the trade" },
+    { "label": "Pay after 10+ years", "value": "¥38,000 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Appointing and removing managers", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Answering to the board and carrying out its resolutions", "source": "AI exposure" },
+    { "label": "Open positions", "value": "61 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "You arrive ten minutes after the workers. The old gate guard looks at his watch and says nothing. Your father's car is already in its usual place.",
+    "You walk the floor with the plant manager, Uncle Ming: die casting, spray coating, assembly, burn-in racks. He speaks Cantonese, and when he goes fast you don't catch it all. He doesn't translate.",
+    "Export sales says a Middle East client wants a different shade color without moving the ship date. You go through the production schedule in the ERP and after a while find the ERP doesn't match the warehouse.",
+    "Lunch with your father in the factory canteen. He picks the chicken skin out of your bowl and says, that supplier this afternoon, don't mention payment terms.",
+    "Finance brings you a commercial acceptance bill, a property developer's payment for goods, ¥4,000,000, due in six months. She asks: this one, do we discount it?",
+    "You want a new piece-rate payroll system. The women on the assembly line hear you out and turn as one to look at Uncle Ming.",
+    "You go to the showroom on Lighting Street and see that the new store opposite has taken your family's model from last year, altered one edge, and priced it fifteen percent lower.",
+    "Coming home you pass your father's study, and the light is on. He is going through a handwritten customer ledger. He sees you and closes it."
+  ],
+  "ladder": [
+    { "title": "Acting General Manager", "stage": "Learning the ropes", "focus": "The card says general manager, but signatures still go through your father; you work your way through the floor, sales and the books" },
+    { "title": "General Manager", "stage": "Holding the seal", "focus": "The seal and finance are in your hands; you decide on orders and people, and start carrying losses yourself" },
+    { "title": "Managing Director", "stage": "Taking the liability", "focus": "Shares transferred, a seat on the board, your signature on guarantees; managing family shareholders and old retainers" },
+    { "title": "Chairman and General Manager", "stage": "Final say", "focus": "Your father steps down. Transformation, financing and outside relations are all yours to decide and to bear" },
+    { "title": "Group Chairman", "stage": "The whole spread", "focus": "Several factories and brands; developing professional managers; beginning to think about the next heir" }
+  ],
+  "ai_tasks": [
+    { "name": "Answering to the board and carrying out its resolutions", "how": "AI can break board resolutions into to-do lists, schedule them, track progress and send reminders. People grasp the real intent behind a resolution, make trade-offs when resources collide, and answer for the outcome." },
+    { "name": "Running the company's day-to-day business", "how": "AI can pull together department data, write daily and weekly reports, flag anomalies and draft routine notices. People handle emergencies, settle conflicts between departments, make key calls and lead the team." },
+    { "name": "Signing contracts and doing business externally under board authority", "how": "AI can draft and compare contract terms, mark risks and search past contracts. People negotiate, build trust, judge the limits of authority, and finally sign and carry the responsibility." },
+    { "name": "Appointing and removing managers", "how": "AI can only supply performance data and resumes for reference. People decide who goes up and who goes down by interviewing, judging character and team fit, and bearing the consequences." },
+    { "name": "Reporting regularly to the board and submitting the annual report", "how": "AI can pull numbers from finance and business systems and produce draft operating and annual reports, including charts and year-on-year analysis. People just spot-check definitions and add judgment and explanation on the main issues." }
+  ],
+  "events": {
+    "e1": "You had the materials racks on the floor renumbered, and the next day nobody could find anything. Uncle Ming stuck the old labels back on and said nothing.",
+    "e2": "You followed the coating line for a week and went home with the smell in your hair. An old hand gave you the spray gun. The first piece ran. At the fifth, he nodded.",
+    "e3": "A fitted-housing client's commercial bill couldn't be honored at maturity, and over ¥3,000,000 hung on the books. You drove to its headquarters, where a lot of people were already standing outside, holding the same paper.",
+    "e4": "The lighting fair opened and you stood at your booth for five days, collecting six hundred business cards. The customer who actually ordered was a quiet Middle Eastern buyer who came on the last afternoon.",
+    "e5": "Work resumed after Spring Festival, and the assembly line was thirty people short. You stood at the gate posting a hiring sign with wages ¥200 higher, and the sign next door soon went up ¥300.",
+    "e6": "Crystal chandelier orders shrink each year; young people all install recessed and magnetic track lighting. Your father strokes a crystal lamp in the sample room and says this one sold over ten thousand units in its day.",
+    "e7": "The monthly report now writes itself: AI pulls numbers from the ERP and finance system, fast and complete. What used to take you a week has become one morning of checking whether it's talking nonsense.",
+    "e8": "AI recommended cutting the lowest-output line, and there wasn't a single error in the numbers. You didn't cut it. That line's customer has been with your family twenty years, and is also the one who'll lend money next time cash runs short.",
+    "e9": "A batch of lamps for Europe failed in certification spot checks and a whole container came back. You and engineering spent two days taking them apart in a dockside warehouse and traced it to one batch of LED drivers.",
+    "e10": "A small workshop across the way listed your patented model online. The lawyer says you can win, and also that it will never end. You think it over and change the design cycle from a year to a quarter.",
+    "e11": "A small table lamp in your cross-border store suddenly took off, and the warehouse restocked through the night. You handed out red envelopes to the young women in customer service and spent half the night packing boxes yourself.",
+    "e12": "Your child was born. In the hospital corridor you answered three customers. Your wife looked at you once and you put the phone in your pocket. Ten minutes later you reached for it again.",
+    "e13": "Several years of cash crises and banquets, and arrows have begun appearing on your checkup report. The doctor asks about family history. You say: my father has a stent.",
+    "e14": "Uncle Ming reached retirement, and you threw him a retirement dinner and gave him a good-sized red envelope. Drunk, he said something in Cantonese, and you understood it now: Young Master, you'll do.",
+    "e15": "Your second uncle wants to sell his shares to an outsider, saying he has to retire too. At the family dinner that day the whole table of food went nearly untouched. Your father said just one thing: settle it among yourselves.",
+    "e16": "Vision inspection has gone in on the floor, and nobody needs to watch burn-in testing anymore. The former QC lead now teaches the machine to spot flaws. It listens better than an apprentice, she says, it just has no eye.",
+    "e17": "Back from a look around Southeast Asia, you do the math: labor at half the cost, parts still shipped from Zhongshan. You revise that feasibility report three times and put it in the cabinet.",
+    "e18": "Your father walks more slowly now, and still comes to the factory once a week to sit. He no longer asks about orders. He asks if the old gate guard's leg is any better.",
+    "e19": "A subsidized technology-upgrade loan came through and solar panels went on the roof, cutting the power bill considerably. You stood up there a while. All of Guzhen was already lit.",
+    "e20": "Your child comes to the factory for a holiday internship and runs through the workshop with the gate guard's grandson. You remember running the same way. You don't say he should take over, and you don't say he shouldn't."
+  },
+  "choices": {
+    "c1": {
+      "title": "Uncle Ming's payroll",
+      "situation": "Going through the books you find that Uncle Ming's nephew has been skimming on purchasing for a long time. Your father might know, or might be pretending not to. Dig into it and you will shake the oldest pillar of the factory.",
+      "options": [
+        { "label": "Take the evidence to tea with Uncle Ming", "result": "You don't name the nephew, only say you'd like to change the purchasing process. Uncle Ming looks at you for a while and says, fine." },
+        { "label": "Replace him outright, set a rule", "result": "The rule is established. Uncle Ming doesn't come to lunch that day. After that, anything you say on the floor has to be said twice before anyone moves." }
+      ]
+    },
+    "c2": {
+      "title": "Become General Manager?",
+      "situation": "Your father puts the company seal and the keys to finance on the table and says if you want to try, take them, but starting this year any loss is yours. Your partner in Shanghai messages to say your seat is still being held.",
+      "options": [
+        { "label": "Take it, be the General Manager", "result": "The keys are heavier than keys should be. That day you sit in your father's chair for the first time. There's a shape of him in it." },
+        { "label": "One more year, learn it properly", "result": "Your father puts the keys back in the drawer, not displeased. In the second year you learn to read cash flow, and only in the third to read people." }
+      ]
+    },
+    "c3": {
+      "title": "Go back to Shanghai?",
+      "situation": "The Shanghai firm gives you a last chance: partner level, start in a month. The factory has just survived a bad debt, and you know perfectly well that if you leave now, your father will not stop you, and will not forgive you.",
+      "options": [
+        { "label": "Go, this isn't my life", "result": "You leave your business card on your father's desk and hand the factory to Uncle Ming and a hired manager.", "end": "You went back to Shanghai and did what you were good at. Later the factory was sold and the sign over the door took on another family's characters. Passing down that street on a visit to Zhongshan, you saw all the lamps lit and could no longer tell which were yours." },
+        { "label": "Stay, this is mine now", "result": "You delete the chat and go downstairs to look at today's schedule. People on the floor still call you Young Master, but it has started to sound a little different." }
+      ]
+    },
+    "c4": {
+      "title": "The developer's big order",
+      "situation": "A property developer offers a ¥20,000,000 fitted-housing order, nearly half your annual capacity, paid entirely in commercial bills. Export sales says the market is bad, take it and everyone eats. The head of finance says nothing, and sets an old dishonored bill on your desk.",
+      "options": [
+        { "label": "Take it, demand a cash portion", "result": "You negotiate thirty percent cash, and the order is cut in half. The salesman is too angry to speak to you for days." },
+        { "label": "Refuse, go all out on export and e-commerce", "result": "This year nearly a third of capacity sits idle, and you rotate workers off. Next year, one factory after another in the trade shuts down." },
+        { "label": "Take all of it, fill the factory first", "result": "The books look very good this year, and everyone drinks happily at the New Year's Eve dinner. The bills fall due in six months." }
+      ]
+    },
+    "c5": {
+      "title": "Digitize, or the old way?",
+      "situation": "You want AI scheduling and a smart-lighting line, ¥4,000,000 in all, nearly every bit of the cash. Your father says he has trusted two things in his life: cash in hand and old masters on the floor.",
+      "options": [
+        { "label": "Invest, start with one line", "result": "The first year brings nothing but alarms and complaints. In the second, delivery dates hold much better and the old masters begin helping you tune parameters." },
+        { "label": "Steady on, keep the cash", "result": "The factory gets through the year smoothly. On the day the neighbor's new plant opens, you take a gift, and come home and look a little longer at your old equipment." }
+      ]
+    },
+    "c6": {
+      "title": "Sign the equity agreement to become Managing Director?",
+      "situation": "Your father is transferring 51 percent to you. From then on you are Managing Director, and bank loans require you and your wife to sign for unlimited joint liability. Your wife reads the agreement three times and asks: if the factory fails, what about our home?",
+      "options": [
+        { "label": "Sign, carry it together", "result": "Your wife signs and says nothing more. You stand on the balcony a long time that night. The next day you are at the factory at 7:50." },
+        { "label": "No equity yet, just run the business", "result": "You say let's wait. Your father nods. When the bank's account manager comes, he still asks for your father." }
+      ]
+    },
+    "c7": {
+      "title": "Someone wants to buy the factory",
+      "situation": "A listed lighting company wants to acquire you, at a price that would mean generations of the family need not worry. The terms: the brand folds into theirs and the Zhongshan plant is cut by half. The man who comes to negotiate is very polite and praises the old factory buildings at length.",
+      "options": [
+        { "label": "Sell", "result": "When the contract is signed you go to the floor and shake hands with every line's team leader.", "end": "You sold the factory. The next year the old buildings became an industrial park, and you took your child to see it; the banyan was still there. The guard, now a young man who didn't know you, asked you to scan the QR code and register." },
+        { "label": "Don't sell, keep going", "result": "You see them to their car. The next morning you say nothing about it at the meeting, but several people know already." }
+      ]
+    },
+    "c8": {
+      "title": "Build a plant in Vietnam?",
+      "situation": "An American client insists part of its goods ship from Southeast Asia. Go to Vietnam and half your time is away from home and Zhongshan loses a line. Don't, and this customer, twenty percent of sales, is gone next year.",
+      "options": [
+        { "label": "Go, spread out", "result": "You lease a plant in Haiphong and hire the first workers, and you spend more time on airplanes than at home." },
+        { "label": "No, make good products in Guzhen", "result": "The customer leaves, taking twenty percent. You double the design team and start your own brand. Payback will take many years." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "You hand the seal to the next one, setting it on the desk as your father did. Lamps come on one by one in the factory, and the new model on the burn-in racks is in its last round of testing. You walk out of the gate at 7:50, and the old guard's grandson nods at you. Guzhen's night is about to be lit again, and this time it isn't your worry.",
+    "burnout": "The doctor is very clear, and you have spent many years preparing yourself for it. You hand the daily work to a hired manager and keep only the seat on the board. On the first Monday you don't have to go to the factory, you still wake at seven. You lie there listening to someone downstairs rolling up a shop's metal shutter."
+  },
+  "stages": [
+    "Your days are spent moving among departments: mornings walking the line, afternoons at finance's elbow reading receivables, evenings seeing customers with the sales staff. You have an ERP login and a notebook that keeps getting thicker. The old staff call you Young Master and run everything past your father first. The card says general manager. The signature line is still his.",
+    "The seal and finance are in your hands. Each week you hold the production and sales meeting, decide which order goes first, read the cash flow statement, dine with the bank's account manager, and put the final signature on payroll. Department heads begin coming straight to you, and for the first time you dismiss someone. Your father used to catch your mistakes. Now a mistake is the workers' year-end bonus.",
+    "Your name has gone into the shareholder register and the bank's guarantee documents, and half your time goes to people: negotiating dividends with your second uncle, retirements with Uncle Ming's generation, bringing in professional managers and keeping them from fighting the old guard. The board is the family dinner table. Resolutions must be written up on proper paper, and you stay alert while eating, too.",
+    "Your father steps down, and everything is finally yours to say. You move the product line from crystal lamps to smart lighting, meet investors and regional investment officials, and fly to overseas trade fairs. The factory you leave to a general manager, and you look at the accounts three years out. There's nobody left to ask now, and that is harder than being busy.",
+    "You have several factories and two brands. Each month you read the consolidated statements, select general managers who can stand alone, and say a word or two for Guzhen at the chamber of commerce. What you think about most is succession: who comes next, how to hand it over, how to avoid doing it the way your father did to you, or how to do it somewhat as he did."
+  ],
+  "work": [
+    "You go with old purchasing clerk Ah Fen to reconcile accounts with the die-caster. The bill and the weighbridge ticket are two hundred kilos apart. Ah Fen says nothing and turns the ticket over to show you the handwritten figure on the back.",
+    "A young man on assembly fitted a batch of lamp heads backward. You take them apart with him one by one at the burn-in rack. At the thirtieth, he starts calling you boss.",
+    "The older woman in finance spreads a bank statement before you for the first time. You mark it with a highlighter for ages. She says your father does it in his head.",
+    "Old Li in sales hands up an order a year overdue. You go through the aging report in the ERP and write on it: no more shipments this year, send someone to collect first.",
+    "You fire the storekeeper who was selling scrap aluminum, and afterward take his last month's pay to his home. His wife opens the door. You leave the envelope on the shoe cabinet and go.",
+    "A European client's factory auditor walks into the coating shop with his checklist, asking about ventilation and protection. You take notes behind him, and that night you and engineering write the corrective actions as far as item twenty-seven.",
+    "Your operations director, Little Gao, poached from a foreign lighting company, quarrels with Uncle Ming in his first month. You bring the two of them to a dim sum place. A steamer of shrimp dumplings arrives and neither lifts his chopsticks first.",
+    "The bank's credit approval requires both you and your wife to give thumbprints. The account manager holds the ink pad. Afterward you look at your thumb and wipe it for a long time.",
+    "At the shareholders' meeting your second uncle demands a higher dividend. You bring out three years of cash flow and go through it page by page, while your aunt peels a tangerine.",
+    "The investment officer shows you a plot in an industrial park, with a thirty-page contract. You have legal circle the performance clauses, strike the buyback, and add a clause of your own.",
+    "At a trade fair in Singapore a designer asks ten questions about your smart ceiling lamp. You answer them all alone and realize you can now explain color temperature and dimming curves.",
+    "General manager Little Gao brings next year's budget, cutting R&D. You put it down and ask what this factory will live on in ten years. He says, maybe I should run the numbers again.",
+    "The consolidated statements show the Vietnam plant losing money three quarters running. You have finance break down the transfer pricing, fly over for two weeks, and replace a plant manager.",
+    "The chamber of commerce wants a proposed industry standard for Guzhen lighting. You argue with a few peers in a teahouse all afternoon and finally write it yourself.",
+    "You draw up a list for your child: three months on the floor, three months in finance, half a year on the road with customers. Finishing, you think a moment and add a last line: you can say no."
+  ],
+  "past": [
+    "Your father had you on the assembly line one summer, screwing in bulbs at five yuan an hour, your fingers burned red. All you thought then was that you never wanted to come back.",
+    "You got into a university in Guangzhou for business administration. When you filled in the form your father said, learn something about managing people. What you were thinking was: anywhere away from Zhongshan.",
+    "You went to the UK for a one-year master's. Home for New Year, your father showed you an export declaration for crystal chandeliers and asked if you knew all the English on it.",
+    "You joined a consulting firm in Shanghai and told other companies about management. On the phone your father asked: the things you talk about, have you ever run a factory?",
+    "You made senior consultant and wrote a transformation plan for a factory. The owner did not use a single page. For the first time, you thought that maybe what's on paper isn't enough.",
+    "The night after your father's surgery, your mother called to say that the factory's wages still had to go out next month. You sat a long time at the foot of the hospital building and handed in your resignation the next day."
+  ],
+  "late": {
+    "pension_note": "Estimate: business owners pay social insurance on a low base, and real retirement rests on dividends and savings, so the pension is only about a third of final monthly pay.",
+    "scenes": [
+      "You begin learning not to go to the factory. In the first month you drive to the gate and turn around, and the guard waves at you through the glass.",
+      "Like your father, you go once a week to sit at the factory, and you don't ask about orders, only whose child has gotten into college.",
+      "A few of the old shops on Lighting Street remain. You walk into one and touch an old-fashioned crystal lamp. The owner asks if you want it, and you say you have one at home.",
+      "A grandchild asks you: did your family make all these lights? You look out over Guzhen at night and say, some.",
+      "You are resting at home, the phone's chats changed to family, the company groups muted. Only now and then do you still open one to look.",
+      "You have learned to walk every day, a loop along the Qi River. Sometimes you run into old customers, and all anybody talks about is blood pressure.",
+      "The hired manager comes to report, and you listen and nod and no longer find fault. Seeing him to the door you notice you're walking as slowly as your father did.",
+      "After leaving you often have one dream: the payroll isn't signed and the workers are standing at the gate. Then you wake and remember that it isn't yours to sign.",
+      "You've changed your life, and you still look up whenever you see a lamp. At restaurants you always check the wiring on the chandelier.",
+      "You take your child back to Guzhen to eat pigeon and pass where the old factory stood. You tell a little of how it was. The child's attention drifts, so you stop.",
+      "Over New Year dinners someone still mentions Uncle Ming. It's always the insults they remember, and everyone laughs and does them one by one.",
+      "Your father's handwritten customer ledger stays in the second drawer of your desk. Most of the numbers in it no longer connect."
+    ],
+    "closing": {
+      "retire": "It gets dark, and Guzhen's lamps come on street by street. You don't turn yours on. You watch from the balcony for a while.",
+      "burnout": "Dusk has dimmed the room, and you reach out and turn on an old table lamp. The light is the same as ever, the color temperature on the warm side.",
+      "end": "You walk through the night of some other city, the streetlights all on overhead. You glance up and keep going."
+    }
+  }
+}

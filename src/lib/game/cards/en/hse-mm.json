@@ -1,0 +1,155 @@
+{
+ "id": "hse-mm",
+ "occupation": "Safety Engineer",
+ "role": "Safety Officer, HSE Department",
+ "headline": "A safety engineer at a petrochemical company in Maoming, signing work permits in a stifling flame-resistant uniform, for whom making enemies is part of the job",
+ "unit": "The HSE department of a petrochemical company in Maoming, Guangdong",
+ "unit_type": "Large petrochemical company",
+ "city": "Maoming, Guangdong",
+ "city_tier": "Third-tier city",
+ "education": "Bachelor's in Safety Engineering",
+ "level": "You have studied safety systems engineering, you can draw a risk matrix, and you've used a gas detector in the training lab. You don't yet know how to find your way around the units, or why the old hands don't like listening to you.",
+ "intro": "You've joined the HSE department of a petrochemical company in Maoming and been issued a flame-resistant uniform, a white hard hat and a palm-sized gas detector. Your mentor walks you into the unit area, pipework and hot wind on every side. In here, he says, nobody likes to hear you talk. But if the day ever comes when nobody is listening, talk faster. From today on, you begin thinking one step ahead for other people.",
+ "salary_note": "Estimate: petrochemical pay is among the higher in Maoming, with shift and heat allowances and bonuses that follow company results. The national figure includes many private-sector safety officers, and this job comes in slightly below it.",
+ "facts": [
+  { "label": "Safety Officer (current level)", "value": "0–2 years, ¥6,120–9,000 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Safety Engineer (2–7 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥17,500 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "On-site verification and stopping the work", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Writing hazard rectification notices and weekly and monthly reports", "source": "AI exposure" },
+  { "label": "Open positions", "value": "177 related listings nationwide, 2 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "It is thirty degrees by seven on a Maoming summer morning. In the locker room you put on the flame-resistant uniform and button it to the neck. Before you've even started to sweat, it is sticking to you.",
+  "At the morning meeting your mentor goes through the day's hot work, confined space and working-at-height permits for the whole plant one by one, and circles two for you to go along on.",
+  "At the hot work site you hold the detector down at the trench edge for a reading, check the extinguishers, the spark catcher and the fire watch, and go down the items on the permit. A welder impatiently taps his watch.",
+  "Thirty-odd new contractors have arrived, and you give them their induction in the training room. Halfway through, someone falls asleep. You lower your voice a little, and he wakes up on his own.",
+  "White-cut chicken and a big bowl of slow-boiled soup in the plant canteen. A workshop director at the next table notices you and swallows what he was saying, then changes the subject.",
+  "Patrol under the sun, six items on your safety observation card. An old hand has his harness clipped in the wrong place. You tell him. He glares at you and clips it right.",
+  "Back at the office you enter the hazards in the system and issue rectification notices. A workshop calls to ask for two more days. You look at your mentor, and your mentor looks out the window.",
+  "Off work and back in town, you eat a bowl of beef offal by Haoxin Lake. The smell of sweat and oil takes two washes to get off."
+ ],
+ "ladder": [
+  { "title": "Safety Officer", "stage": "Walking the units", "focus": "Following your mentor around the units, checking work permits, finding hazards, giving contractors their induction" },
+  { "title": "Safety Engineer", "stage": "One area", "focus": "Safety for one workshop or one class of work; the Registered Safety Engineer license is the way in" },
+  { "title": "Senior Safety Engineer", "stage": "Setting the rules", "focus": "Plant-wide risk assessment, turnaround safety plans and emergency plans; you move up by winning the respect of production" },
+  { "title": "HSE Department Manager", "stage": "Answering for it", "focus": "Leading the whole department, answering to plant leaders and the authorities, having the last word between schedule and safety" }
+ ],
+ "ai_tasks": [
+  { "name": "Writing hazard rectification notices and weekly and monthly reports", "how": "AI can produce notices and reports automatically from inspection records. People only check the numbers and which unit is responsible." },
+  { "name": "Video detection of missing hard hats and intrusions into restricted areas", "how": "Cameras and models can watch around the clock and raise alarms automatically. People spot-check false alarms and set the rules." },
+  { "name": "Reviewing work permits and looking up code clauses", "how": "AI can quickly check permits for omissions and find clauses. Whether this job can be done today is decided by someone who has been out to look." },
+  { "name": "Drafting emergency plans and training materials", "how": "AI can draft plans and course materials. Whether a plan is right for this unit takes a person who knows the plant and the people to fix." },
+  { "name": "On-site verification and stopping the work", "how": "Standing on site, seeing whether the safety measures are really in place, deciding whether to stop the work and taking responsibility for it can only be done by a person." }
+ ],
+ "events": {
+  "e_first_stop": "You stop a hot work job for the first time because the spark catcher is in the wrong place. The contractor foreman curses you a bit. The next day he puts it right without being told.",
+  "e_turnaround": "Plant-wide turnaround. Thousands of people come in, and for forty-five days you walk thirty thousand steps a day. On the last day you lie in the dorm with feet too swollen for slippers.",
+  "e_typhoon": "Before the typhoon you rush around the whole plant checking scaffolds and temporary structures. The wind blows all night. In the morning you go and count again, and not one is missing.",
+  "e_contractor_thanks": "A contractor worker whose pass you once confiscated stops you on the road years later and says that at every plant since then, he has clipped his harness the way you taught him.",
+  "e_blame": "The workshop's schedule has slipped, and at the production meeting someone puts it down to slow safety approvals. You sit in the corner and turn your pen around in your fingers many times.",
+  "e_paper": "Higher-ups want a full set of inspection files. For two weeks the whole department builds ledgers, collects signatures and fills archive boxes. Your time on site shrinks by more than half.",
+  "e_drill": "A plant-wide emergency drill, and you stand by the command vehicle with a stopwatch and a script. The fire brigade is in position two minutes ahead of the plan, and the plant manager, unusually, smiles.",
+  "e_lychee": "In June the lychees ripen, and a colleague from Gaozhou brings two baskets to the office. The whole department eats until their lips blister, and for once nobody mentions the word hazard.",
+  "e_ai_camera": "The plant adds video detection, automatically capturing hard hats and intrusions. In its first week it mistakes a passing insulation drum for a person. In its second year it catches a thousand items a month for you.",
+  "e_ai_report": "Weekly and monthly reports now come from the system, one a minute. You save half a day each week, and use it to make one more trip to the site.",
+  "e_ai_permit": "Electronic work permits check themselves for omissions, and the young people say there's no need to go to the site anymore. You take one to see a job with a perfect permit, and have him find the problem himself.",
+  "e_alarm_night": "The phone rings in the middle of the night. A combustible gas detector has gone off, and you're on site within twenty minutes. It turns out to be the detector. By the time you get home it is light.",
+  "e_lonely": "You notice the people your age at the plant rarely invite you out. An old classmate, drunk, says: when you're there, we are embarrassed to talk about where we cut corners.",
+  "e_family": "Your spouse complains you never stop at home either: don't plug that in like that, turn off the gas at the valve. Your child's school asks you in to give a safety talk.",
+  "e_hearing": "At the occupational health exam your hearing curve has dropped a little. The doctor asks if you wore earplugs on all those patrols. You think about it. For some of those years, not properly.",
+  "e_heat": "It is an especially hot summer. After a morning in uniform in the tank farm you feel dizzy, and you sit in the shade with two vials of herbal heatstroke remedy.",
+  "e_quiet_year": "Zero accidents in the plant this year. Nobody comes to thank you for it. The thing about this achievement is that nothing happened.",
+  "e_teach": "A new graduate stops a job for the first time, voice shaking. You stand behind him and don't say a word on his behalf. Afterward you buy him a cold Coke."
+ },
+ "choices": {
+  "c_cert": { "title": "Sit the Registered Safety Engineer exam", "situation": "The intermediate exam is hard: four papers on law, management, technology and practice. You walk the site all day and are too tired at night for anything but lying down. But without this certificate, you can't even apply for many posts.", "options": [
+   { "label": "Bite the bullet", "result": "It takes you two years in the dorm, one paper at a time. The day you pass the last one, you take your mentor out for pork-stomach chicken hot pot." },
+   { "label": "See more of the site first", "result": "You put the books aside. Over those years you and the old hands walk every valve and trench in the plant." }
+  ] },
+  "c_stop": { "title": "Stop the job that's racing the schedule?", "situation": "The turnaround is ending, two days to startup. A working-at-height permit is short on one safety measure. Stopping it will cost half a day, and the deputy plant manager has just been pressing for progress in the group chat. The workshop director standing next to you says: brother, let this one go.", "options": [
+   { "label": "Stop it", "result": "You write suspended on the permit and take that half day on your own account. Startup is delayed by half a day, and you are named at the meeting." },
+   { "label": "Watch it to the end", "result": "You don't suspend it. You stand underneath to the end. Nothing happens. You don't sleep well that night." }
+  ] },
+  "c_engineer": { "title": "Go up for Safety Engineer by taking the toughest workshop", "situation": "The department wants you embedded in the unit with the most hazards and the most bad-tempered director. Do it well, and going up for Safety Engineer you'll have real results. Do it badly, and your name will be mud there.", "options": [
+   { "label": "Embed", "result": "You leave a water cup in that workshop's duty room. Gradually, the shift leaders start telling you themselves when something is off." },
+   { "label": "Stay in the department", "result": "You stay and write system documents. They are very orderly documents, and nobody at the workshop knows who you are." }
+  ] },
+  "c_vision": { "title": "Lead the video detection rollout?", "situation": "The plant is bringing in video detection and electronic permits on a large scale and needs someone who knows the site and will tell the vendor what's wrong. Take it, and you'll be tuning rules with engineers without any less patrol work.", "options": [
+   { "label": "Take it", "result": "You go through three thousand false alarms one by one, telling the vendor: this is an insulation drum, this is a shadow, this is a person. By the second year it is more reliable than a new hire." },
+   { "label": "Stay on patrol", "result": "You say: whatever the cameras can't see, that's where I should be." }
+  ] },
+  "c_consult": { "title": "A third-party safety assessment firm makes an offer", "situation": "A safety assessment and consulting firm in Guangzhou comes hiring. Thirty percent more pay, no uniform, reports and client visits. But the reports sometimes have to be written to please the client.", "options": [
+   { "label": "Go to Guangzhou", "result": "You take off that uniform. The first time you walk into a client's factory in a shirt, the collar keeps feeling wrong.", "end": "You go to Guangzhou to do safety consulting, dozens of factories a year, your reports fast and accurate. Once a client tells you not to put a certain problem in. You look at him and put it in, and that contract is not renewed." },
+   { "label": "Stay at the plant", "result": "You say you'd still like to watch it start up." }
+  ] },
+  "c_overseas": { "title": "Go to the overseas project?", "situation": "The group has a new project in the Middle East. The HSE post pays double, on two-year cycles. Your child is small, and your parents have begun to need looking after.", "options": [
+   { "label": "Go for two years", "result": "On the edge of the desert you run the process to English-language standards. You come back with one more certificate, and your child is a little shy of you." },
+   { "label": "Stay in Maoming", "result": "You decline. On the way home you buy your child an ice pop." }
+  ] },
+  "c_senior": { "title": "Go up for Senior Safety Engineer by leading the plant-wide risk review", "situation": "Before you go up for Senior Safety Engineer, the department wants you to lead the plant-wide HAZOP review and the turnaround plan. Months of no dinners at home. Results will be collective, and mistakes will be yours.", "options": [
+   { "label": "Lead it", "result": "For three months you sit in a meeting room arguing with process, equipment and instrumentation, filling the deviation tables one by one." },
+   { "label": "Do your own job well", "result": "You say this is one for someone younger. That evening you go home for dinner and sit with your child over homework." }
+  ] },
+  "c_gov": { "title": "Sit the exam for the emergency management bureau?", "situation": "The local emergency management bureau is recruiting specialists with industry experience. A permanent state post, thirty percent less than the plant, and from then on you'd be inspecting your old colleagues.", "options": [
+   { "label": "Sit it", "result": "You pass, fold your uniform and put it back in the wardrobe.", "end": "You join the emergency management bureau and look at companies from another position. The first time you go back to inspect your old plant, the old hands are standing in a row, and your mentor hands you a white hard hat with a grin: here, you still wear it." },
+   { "label": "Stay in the company", "result": "You say you would rather be inside watching than outside looking in." }
+  ] },
+  "c_mgr": { "title": "Stand for HSE Department Manager", "situation": "The old manager is retiring and the plant leadership wants to hear your thoughts. As HSE Department Manager you'd have the last word in every dispute between schedule and safety, and you'd be the first to stand up when something goes wrong.", "options": [
+   { "label": "Stand", "result": "You talk about only one thing: after all these years here, I can still walk into any workshop's duty room for a cup of water." },
+   { "label": "Stay the old hand", "result": "You say you are too blunt for that seat. You go on taking the young people out to the site." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last day you hand your hard hat and detector back to the department. You make one more round of the units, checking nothing, only walking. The guard at the gate says: off work? You say: off work. For the first time in all these years, you do not look back.",
+  "burnout": "That year your body tells you it's time to stop. Your ears, your back and your blood pressure have all sent word. You ask to move to the archives, and each day you put those hazard records in order by year. Many of the things in them never happened, because someone took a second look."
+ },
+ "stages": [
+  "You walk the units with permits and a four-gas detector, checking each permit against the site: grounding, fire watch, ventilation, harness. You give new contractors their first lesson, issue rectification notices and smile at shift leaders. People don't necessarily listen to you, so every word you say has to be backed by a clause and a photo.",
+  "A workshop's safety is yours now. You hold monthly reviews with the workshop director, write the JSAs for maintenance plans, do safety observations with the crews, log hazards, follow up and close them out. Unlike before, people phone to ask you whether a thing can be done, and you have to give them one sentence.",
+  "You have a seat in the plant-wide risk assessment room, chairing HAZOP reviews, writing turnaround safety plans and emergency plans, arguing with process, equipment and instrumentation over whether a layer of protection is enough. You host inspections from above and talk down those in the workshops who won't accept things. You begin teaching others how to stop a job instead of stopping it yourself.",
+  "You lead a whole department. At the weekly production meeting you speak for your people, or take the scolding. You write risk reports for plant leaders, decide how the safety budget is spent, and deal with the authorities, group headquarters and contractor bosses. You rarely issue a permit yourself now. But the last page of every major work plan has your name on it."
+ ],
+ "work": [
+  "You climb a tower for the first time to check work at height, palms wet. From below Lao Sun shouts: watch the hook, don't look down. You watch the hook, and all that day you don't dare look down.",
+  "A contractor's laborer has lost his plant pass. You spend a long while in the system and reissue it. The next day at the gate he nods to you, his hard hat on perfectly straight.",
+  "You hold the detector at the edge of the trench waiting for the reading to settle, and the shift leader says you're slow. Thirty more seconds, you say. The number on the screen jumps, and he has nothing further to say.",
+  "You and Xiao Huang the process technician rewrite a maintenance JSA five times, and he says it's harder than his thesis. On the sixth pass the shift leader reads it and says: now I can understand this.",
+  "Your rectification notice comes back three times. You take it to the equipment director's office and sit for ten minutes. By the time you leave he has sent the maintenance men out.",
+  "At the morning meeting you put up a two-year-old photo and ask what is wrong with it. Lao Wang stares for a long while and says: isn't that me? The whole shift laughs.",
+  "Three weeks into the HAZOP, Lao Zhong from instrumentation and Xiao Peng from process start fighting over a protection loop. You turn the deviation table back to page one and say: let's read it from the top again.",
+  "In the turnaround safety plan you write, one page is just for the night shift, because people are prone to mistakes in the small hours. The group's reviewing expert puts a checkmark on that page.",
+  "Your apprentice Xiao Su wants to stop a job and isn't sure. He phones you. You're on site, you tell him, and I'm not. He hangs up and stops it.",
+  "At the safety budget meeting the finance director asks if this money can be spent next year. You show him the hazard it corresponds to. He flips through it and signs.",
+  "The group's audit team is coming, and everyone in the department wants to tuck problems out of sight. Put the three ugliest ones right at the front, you say, and let them see those first.",
+  "A contractor boss spends an afternoon in your office sweet-talking you to let his barred crew come back. You pour him three cups of tea, and at the end you hand him the penalty notice."
+ ],
+ "past": [
+  "You grow up on the edge of Maoming, your parents doing odd jobs up and down the petrochemical chain. The plant's flare burns at night, visible from your window, and you think of it as this city's streetlight.",
+  "When you fill in your gaokao (college entrance exam) preferences, an old workmate of your father's says: study safety, it's steady, every plant needs it. You have no idea what it is. You put it down anyway.",
+  "In your second year you learn fault trees, and the teacher says behind every accident is a string of small things. You begin to feel this class isn't only about rules.",
+  "Your graduation placement is at a chemical park, following a safety officer around for a month. It's the first you learn how unpopular safety officers are in a plant. You find this somewhat interesting.",
+  "You come back to Maoming through campus recruiting. Your classmates go to electronics factories in the Pearl River Delta. Your parents say coming home is good, there will be someone around."
+ ],
+ "late": {
+  "pension_note": "Estimate: a large company paid full pension contributions and there is an enterprise annuity, so in retirement you get about sixty percent of your final monthly salary.",
+  "scenes": [
+   "The first thing you do in retirement is replace the gas line at home. That's the third time, your spouse says.",
+   "The neighborhood committee asks you to talk about home safety, and a room full of old people listen hard. When you finish, an old man asks: so can the electric blanket stay on all night or not?",
+   "By Haoxin Lake you run into the old contractor foreman, also grown old. That time you chewed me out, he says, I've remembered it all my life. He holds out a cigarette and you don't take it, and you both laugh.",
+   "Long after you stop doing patrols, walking down the street you still take a second look at everything: manhole covers, scaffolds, a delivery rider's helmet.",
+   "You begin growing flowers and water them at fixed times. A neighbor says even the pots on your balcony are lined up square.",
+   "At a retirement dinner your old colleagues talk over this year and that one, each of them glad that someone took a second look back then. Nobody says who.",
+   "After changing jobs, you keep the old gas detector on a bookshelf, its battery dead, just for show.",
+   "Your old mentor at the plant sends a message: the page of night-shift reminders you wrote is still up on the duty room wall.",
+   "You go back to Maoming for the New Year, and at night from the expressway you see the plant's lights and flare. After you've passed, you look back once more.",
+   "Later the cameras can recognize everything. But why someone chose today of all days to cut a corner, that they still don't know.",
+   "A grandchild goes to climb a tree, and you call out without thinking: first see if that branch is sound. The child looks back at you, and you are the first to laugh."
+  ],
+  "closing": {
+   "retire": "One summer evening many years later you sit on the balcony with a plate of lychees as the lights of the plant come on one by one in the distance. Nothing happens. You spit a pit onto the plate and eat another.",
+   "burnout": "One afternoon many years later it is raining hard. Listening from inside, you suddenly want to go and check the drainage ditch, and then you remember there is no need. You sit back down.",
+   "end": "One early morning many years later you wake in a strange city, and someone is working on a scaffold by the road, harness properly clipped. You look once, and walk on."
+  }
+ }
+}

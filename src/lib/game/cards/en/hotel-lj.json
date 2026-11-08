@@ -1,0 +1,189 @@
+{
+  "id": "hotel-lj",
+  "occupation": "Hotel Manager",
+  "role": "Resort Front Desk Agent",
+  "headline": "A tourism graduate from Kunming who came up to 2,400 meters to say welcome home across a front desk in Lijiang, meaning to be a manager one day",
+  "unit": "An eighty-room resort hotel on the edge of Lijiang",
+  "unit_type": "Resort hotel",
+  "city": "Lijiang",
+  "city_tier": "Tier-3 tourist city",
+  "education": "Associate degree (Tourism Management)",
+  "level": "Your English gets guests checked in; you still work the PMS from sticky notes",
+  "intro": "You finished the tourism management program at a vocational college in Kunming, took the high-speed train to Lijiang, and caught your breath for a while after you got off. The hotel is on the edge of town; its guest rooms face the snow mountain, and the staff dormitory windows face the boiler room. From today you stand behind a two-meter wooden front desk, and every person who pushes open the door sees your face first.",
+  "salary_note": "Estimate: Lijiang hotels pay below the national average, a bit over 70%, with room and board included, commission in high season, and unpaid leave common in low season.",
+  "facts": [
+    { "label": "Front Desk Agent (current level)", "value": "0-3 years, ¥3,800–5,800 a month (national average, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Front Desk Supervisor (3-6 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Motivating and managing staff: people are what the work rests on, and their spirit decides the results", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Following hotel regulations and industry trends, and drawing up annual and half-year plans", "source": "AI exposure" },
+    { "label": "Open positions", "value": "12 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "Morning handover. The night shift pushes a sticky note across to you: 305 has altitude sickness and needed oxygen in the night; 212 wants a seven o'clock call for the first cable car up the snow mountain.",
+    "The snow mountain groups have left and the lobby is suddenly quiet. You pack two boiled eggs for the guest in 212, because yesterday he said he couldn't make breakfast.",
+    "Checkout rush. You check the minibar with one hand while reading back the invoice header for the second time, and the man behind in line has started sighing.",
+    "A guest complains that next door is too loud. You check the room status: full house, no moving anyone. You take a packet of tea and knock, and hear the whole thing out first.",
+    "Afternoon arrivals. An old man is white in the face getting out of the car. You sit him down, pour warm water, tell him to walk slowly and skip the shower today, and put an oxygen canister in his room.",
+    "A three-star review comes in on the booking site, saying the water wasn't hot enough. You call Old Yang from engineering, who says at altitude water just doesn't get that hot. You wonder how to phrase that.",
+    "Rainy-season evening, and it's coming down again. A charter driver out toward Lashi Lake calls to say he's stuck in traffic, and you push back dinner for six guests by an hour.",
+    "Off shift and back in the dorm, your legs a little swollen. You pick up tomorrow's schedule in the group chat and look up. Over the snow mountain the clouds haven't cleared."
+  ],
+  "ladder": [
+    { "title": "Front Desk Agent", "stage": "At the desk", "focus": "Check-in and checkout, phones, guests' small problems; you move up on zero errors and good reviews" },
+    { "title": "Front Desk Supervisor", "stage": "Running a shift", "focus": "Schedules, complaints, room status; you move up by leading people and holding the floor" },
+    { "title": "Front Office Manager", "stage": "Running a department", "focus": "Front desk, concierge and switchboard; answer for occupancy and ratings, coordinate with sales and housekeeping" },
+    { "title": "Resident Manager", "stage": "Running the house", "focus": "Daily operations, budget and all departments; the one who decides when the general manager is away" },
+    { "title": "Hotel General Manager", "stage": "Answering to owners", "focus": "Answer to the owners for profit, set pricing strategy and staffing, and answer for the hotel's name" }
+  ],
+  "ai_tasks": [
+    { "name": "Following hotel regulations and industry trends, and drawing up annual and half-year plans", "how": "AI can gather policy and market news and draft annual, quarterly, monthly and weekly plans. People set the goals around this hotel's position, resources and local conditions, and answer for the plan." },
+    { "name": "Controlling costs, keeping operating expense as low as sensible", "how": "AI can analyze cost data, find anomalies and places to trim, and forecast usage. People judge which money must not be saved, whether a saving hurts the guest experience, and push it through." },
+    { "name": "Running operations: coordinating large numbers of people, supplies and tasks", "how": "AI can do schedules, stock alerts, work orders and daily reports. People handle the floor, emergencies and coordination across departments." },
+    { "name": "Motivating and managing staff: people are what the work rests on, and their spirit decides the results", "how": "AI can provide performance data and training materials for reference. Real motivation comes from talking face to face, understanding how someone is doing, giving recognition and setting the example." }
+  ],
+  "events": {
+    "e1": "Your first overnight shift, you encoded a guest's key card for another room and very nearly opened the wrong door. The duty manager didn't scold you. He had you write the procedure out on your hand.",
+    "e2": "An elderly couple stayed five days and put your name in their review when they left. The supervisor pinned the screenshot up in the back office. You pretended not to see it and looked at it several times.",
+    "e3": "National Day week, all eighty rooms full every night. You stood twelve hours a day. On the fifth day, you smiled into the mirror and found your face no longer quite took orders.",
+    "e4": "November through March is low season, and the hotel rotates people off, half of every month unpaid for you. You cycled out to Tiger Leaping Gorge, and when you got back the number on your pay card was thinner than the mountain air.",
+    "e5": "A guest left a camera in the charter car up to the snow mountain. You made nine phone calls, and the next morning the driver brought it back from eighty kilometers away. The guest cried. So did you, a little.",
+    "e6": "In the rainy season, rockfall closed the road to Lugu Lake for two days and a whole tour group was stranded at the hotel. You turned the lobby into a rest area and worked through the bills and refunds one at a time.",
+    "e7": "Self-check-in kiosks arrived in the lobby. A scan of the face and a key card slides out. The front desk went from three people to two. You stand beside the machine, teaching guests to line up their faces.",
+    "e8": "The system began pricing rooms by itself, and a high-season weekend hit ¥2,800 a night. An old regular called and asked: is this still our hotel? You changed the rate and wrote your reason in the report.",
+    "e9": "Under the ultraviolet of 2,400 meters you have grown two red patches on your cheeks, like everyone you work with. People say you look two years older. You call it localization.",
+    "e10": "Two colleagues from your shift quit to open a guesthouse, and treated everyone to cured-rib hotpot before they went. You saw them to the street. The next morning shift, the front desk was two people short.",
+    "e11": "Your parents came to Lijiang for the first time and stayed at your hotel. You upgraded their room and paid the difference yourself. Your mother stroked the sheets and asked how much a night it was. You told her half.",
+    "e12": "You took out a mortgage on a small place in the north of town, a market downstairs, a bit of mountain in the window. From now on high season and low season have another meaning.",
+    "e13": "A summer wedding-photo crew spread itself across the lobby for two hours and other guests complained. You had coffee with the head photographer and set a rule: before eight in the morning, that bit of carpet is yours.",
+    "e14": "A new set of owners came in, and at the first meeting they asked why you carry so many people. You brought out the high- and low-season labor tables and talked for forty minutes. They were looking at their phones.",
+    "e15": "Three more resorts opened nearby, all advertising snow mountain views. Your occupancy fell ten points and the hotel started counting towels.",
+    "e16": "A young woman you once trained is a front office manager at a hotel in Dali now. She messages to ask how to answer a complaint, and she still opens by calling you master.",
+    "e17": "A guest who has come for one week every year for ten years comes alone this year. You ask nothing, save the same room for him, and put two cups on the table.",
+    "e18": "After years of high-season night shifts, you've stopped sleeping deeply and your heart rate doesn't look good. The doctor says altitude and late nights both play a part, prescribes medicine and tells you to rest on time. You ask what on time means.",
+    "e19": "Robots bring luggage upstairs and leave towels at doors. People have gotten used to it. You've noticed that what guests praise most now is the waiter who remembers they don't eat cilantro.",
+    "e20": "Winter is very dry, your nose bleeds a little and your hands crack. You keep hand cream in the desk drawer and offer it to everyone coming down from the snow mountain."
+  },
+  "choices": {
+    "c1": {
+      "title": "Can a bad review be removed?",
+      "situation": "The director hints that the rating needs a push this month. Someone at the hotel next door tells you there's a way: pay the guest back privately so they change it to a good one. This guest's bad review is actually fair. The air conditioner really is loud.",
+      "options": [
+        { "label": "No refund, fix the air conditioner", "result": "You pass the review to engineering, and the score doesn't go up this month. After he's fixed the unit, Old Yang brings you a roasted potato." },
+        { "label": "Make the call, refund ¥50", "result": "The score goes up a little. On the phone you hear the other person laugh and say, it's hard on you people too." }
+      ]
+    },
+    "c2": {
+      "title": "Go for Front Desk Supervisor",
+      "situation": "The supervisor transfers to Kunming next month. The duty manager says three things decide this post: the oral English test, scheduling, and whether you can take the overnights. Lately you've been a bit dizzy every afternoon.",
+      "options": [
+        { "label": "Apply, English at night", "result": "You practice saying I completely understand how you feel to the mirror, until you actually start to understand." },
+        { "label": "One more year at the desk, health first", "result": "You take a few days off and come back looking much better. The supervisor job goes to a colleague from Dali." }
+      ]
+    },
+    "c3": {
+      "title": "Learn the revenue system or not",
+      "situation": "Head office is pushing a smart revenue system: pricing, room assignment and forecasts all get an algorithm's advice, and someone has to learn to read it, change it and dare to overrule it. Most front office people steer clear, thinking it's for sales.",
+      "options": [
+        { "label": "Learn it, dig through data at night", "result": "Gradually you learn to read a curve: which day the rains begin, and which day everyone stops coming." },
+        { "label": "No, relationships beat curves", "result": "You still remember which room each regular likes. Only, at meetings, you can't get a word in about that curve." }
+      ]
+    },
+    "c4": {
+      "title": "Take over a guesthouse",
+      "situation": "An old guesthouse in Shuhe is changing hands on reasonable terms. A classmate wants you as a partner, saying you understand operations and he can handle money. Put in ¥200,000 and the front desk is yours from now on, and so is every good or bad season.",
+      "options": [
+        { "label": "Take it, go it alone", "result": "You give your badge back to HR and go to the market for two pots of bougainvillea.", "end": "You opened an eight-room guesthouse. In the morning you strip the beds yourself, at night you answer the reviews yourself, and on low-season afternoons you sit in the courtyard in the sun, the ledger on your knee, there being no point in opening it." },
+        { "label": "No, keep climbing", "result": "You treat your classmate to cured ribs. Later, passing down that lane, you see a new sign over the door, and that's fine too." }
+      ]
+    },
+    "c5": {
+      "title": "Compete for Front Office Manager",
+      "situation": "The Front Office Manager is leaving to open a new hotel, and the general manager asks you to write an improvement plan for next year. Up there, the desk, the concierge and the switchboard would all be yours, and so would most of the complaints.",
+      "options": [
+        { "label": "Write the plan, go for it", "result": "You sort three years of bad reviews into categories and make twenty pages. The general manager reads it, circles one typo, and tells you to give it a try starting next week." },
+        { "label": "A few more years with the shift", "result": "Nobody quits your shift all year. The general manager passes the desk and nods, and says nothing." }
+      ]
+    },
+    "c6": {
+      "title": "An offer from Shanghai head office",
+      "situation": "The management company wants you in Shanghai doing regional training, at forty percent more pay, with no overnight shifts. But here you know with your eyes shut which room's window sees the snow mountain. And your child has just started elementary school.",
+      "options": [
+        { "label": "Go to Shanghai", "result": "Getting off the plane you wait out of habit to catch your breath, and find there is more air than you can use.", "end": "You went to Shanghai and teach new general managers, in an office tower, how to handle complaints. One of the slides is of a snow mountain. You always pause on it two seconds longer." },
+        { "label": "No, stay at the foot of the mountain", "result": "You decline the transfer. Head office says it's a pity. That year your child starts learning to ride a bike in the courtyard, with the snow mountain behind." }
+      ]
+    },
+    "c7": {
+      "title": "Accept Resident Manager?",
+      "situation": "The owners want you as Resident Manager. The price is that you lay off a batch of low-season staff first, and you write the list yourself. On it are a few people who have been with you ten years, whose kids know you.",
+      "options": [
+        { "label": "Accept, I'll write the list", "result": "You talk to them one at a time, and afterward stand for a while in the fire stairs. The list is three names shorter than the owners wanted." },
+        { "label": "Decline, I won't write that list", "result": "The job goes to someone parachuted in, and he writes the list. Two of those leaving come to say goodbye to you." }
+      ]
+    },
+    "c8": {
+      "title": "A new business for the rainy season?",
+      "situation": "Rainy-season occupancy has never picked up. Sales proposes a highland wellness summer camp, which would sell rooms but require converting a floor and asking the owners for money. You've seen a good many plans that sounded this good.",
+      "options": [
+        { "label": "Try one floor", "result": "You lose a little the first year, and the second year there are repeat guests. At a meeting, the owners finally look up once." },
+        { "label": "No fuss, hold down costs", "result": "The reports are steady and everyone is at ease. Now and then you think of the idea, and put it back." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you stand behind the front desk for an hour, though it wasn't your shift. A guest asks if the snow mountain will show today. You look up at the sky and say, around four this afternoon. You put your badge in the drawer and walk out through the revolving door. At four o'clock the clouds really do clear.",
+    "burnout": "Several years of night shifts and high seasons, and your body has given a very clear answer. You resign and write thirty pages of handover notes, recording the temperament of every room. You pull your suitcase out through the staff entrance. The guard holds the door and says, take it slow."
+  },
+  "stages": [
+    "Your work is at one desk: check-ins, deposits, key cards, reading room status in the PMS, answering the switchboard, writing wake-up calls and airport pickups into the handover book. Guests with altitude sickness need you to bring oxygen; guests chasing the cable car need you to work out the timing. They all came to relax, and their tempers tend to show up in the first minute after arrival.",
+    "You don't do many check-ins now. You catch what others drop: making the day's schedule, watching room status and overbooking, standing at the hardest spot on the desk at peak hours. Escalated complaints come to you, and what you can give is one upgrade or one meal voucher, so you think about who gets it. You've started squabbling with the housekeeping lead about inspection times.",
+    "The front desk, concierge and switchboard are yours. Every week you read booking-site ratings and occupancy, match group blocks with sales, fight housekeeping for clean rooms, reconcile with finance. You hire people and keep them, and how to rotate days off in low season is the hardest thing you have to say. You used to answer for one shift. Now you answer for the name of this department.",
+    "Every morning you walk the whole property: lobby, kitchen, linen room, plant room. Then you lead the morning meeting, seven departments in turn. Budgets, purchasing, fire inspections and the staff dormitory are all your worry. While the general manager is off contending with the owners, power cuts, full houses and difficult guests all stop at you.",
+    "You turn in one set of books to the owners: monthly GOP, average rate, room revenue, and you look for a passable road between the owners wanting to save money and the guests wanting to be comfortable. You set pricing strategy, choose department heads, and receive the inspectors. You still walk the floor, only now the staff stand straighter when they see you."
+  ],
+  "work": [
+    "A guest from Guangzhou says he booked a mountain-view room, but the system has him in a courtyard room. You go through the booking screenshot, call reservations, and finally keep the last mountain-view room in your hands for him.",
+    "A woman calls the switchboard: her son has altitude sickness. You go up with a pulse oximeter and an oxygen canister. The reading isn't bad. You tell her not to worry, and to keep him out of the shower tonight.",
+    "During the night audit the books are ¥38 off. You and Little Yang on the night shift go through the PMS entry by entry and find one bottle of mineral water charged twice. It's already four in the morning.",
+    "The night before May Day you are three rooms overbooked. With a printed room status sheet you call three regulars ahead of time and move them to a partner hotel, the fare on you.",
+    "New hire Little Li has been reduced to tears by a guest. You send her to the back for some water, take her place at the desk, read the guest's reservation through, and the first thing you say is: it must have been a long trip.",
+    "The housekeeping lead says twenty clean rooms before noon can't be done. You move the group check-in to two in the afternoon, call the bus driver, and buy milk tea for the linen room.",
+    "Your booking-site rating drops by 0.1. You pull a hundred bad reviews into a sheet and find a third are about the breakfast line. You take the restaurant manager to stand at the door for a morning.",
+    "You interview a concierge from Shangri-La who has no certificates but can describe the road conditions into Yubeng precisely. On the hiring form you write: yes.",
+    "The low-season rotation goes through three versions. Little Zhou has old parents who need the money, and you give her a few more shifts, then worry someone will notice and shift everyone's a little.",
+    "The day before the fire inspection you and engineering go past each extinguisher's pressure gauge, and at the end of the corridor in Building 4 you find a fire door that won't close tight.",
+    "Purchasing reports linen up twenty percent. You have finance get three quotes, drive to Kunming yourself to look at samples, and spend half the day fingering them in the laundry.",
+    "At the morning meeting, food and beverage and housekeeping begin arguing over breakfast voucher settlements. You wait till they're done, reconcile last month's vouchers against the room folios, and say that starting tomorrow it goes by actual redemption.",
+    "The owners' representative sets the GOP sheet on the table and asks why it's two points below last year. You point to the labor and energy rows and to the guest review scores, and say: this is what you are buying.",
+    "Interviewing a candidate for front office manager, you don't ask about management philosophy. You have him stand at the desk for half an hour and watch how he talks to a lost old man.",
+    "The management contract is up. You take five years of operating data to Kunming to negotiate renewal, going from room rates to staff turnover, and stay in the hotel conference room until dark."
+  ],
+  "past": [
+    "You went to junior high in Qujing, where your family ran a small restaurant. After school you helped carry dishes and found you could remember customers' tastes, and what they owed.",
+    "Your gaokao (college entrance exam) score was only good enough for a vocational college. You wanted to go somewhere farther off and chose tourism management over e-commerce, because it looked like the one that traveled.",
+    "You interned at a business hotel in Kunming. The first time you stood eight hours in uniform shoes you got blisters, and also, for the first time, a letter of praise from a guest.",
+    "Classmates went to five-star hotels in Shanghai. You applied too, then thought of your parents, and in the end accepted an offer from this Yunnan resort.",
+    "The summer you graduated, you came alone to Lijiang for two weeks' trial work. The first day your head hurt too much to eat. The second day the snow mountain came out, and you thought you might stay a few more days and see."
+  ],
+  "late": {
+    "pension_note": "Estimate: hotel social insurance is on a low base; retiring from a company in Lijiang, the pension is a little over 40% of final monthly pay.",
+    "scenes": [
+      "The first high season after you retire, you are not standing up on National Day for the first time. You go to the market for vegetables, pass a newly opened hotel on the way, and look at the lobby lights.",
+      "Friends are coming, and you book their lodging, listing room type, orientation and rainy-season routes on half a page. They say it's an occupational disease. You say yes.",
+      "Old colleagues roast potatoes in the courtyard, and someone brings up that time the road was out. Talking it through, everyone manages to put the room number to every guest.",
+      "You go back to sit in the old hotel for a while. The front desk is a screen, on which a figure seems to be smiling at you. The wooden counter in the lobby is still there, its corners polished by hands.",
+      "After leaving, you go back to Qujing for a while and sleep very long. The altitude has dropped by half. Waking in the morning, you aren't used to all this oxygen.",
+      "You help people with paperwork at a community center near home, a few days a week. It's mostly old people who come, you speak slowly, and they all like to line up at your window.",
+      "One year you go back to Lijiang and stay at someone else's hotel. Checking out, you set the key card straight, fold the towels, and leave no review.",
+      "In your new life you still remember who drinks tea and who drinks coffee. The skill, in another place, is still useful.",
+      "An old regular tracks you down elsewhere and sends a message asking whether that room at that hotel is still there. You reply: it is. Only I'm not.",
+      "Your child asks why you always walk so straight and keep nodding at strangers. You think about it and say it's left over from an old job.",
+      "At other hotels you always glance first at the schedule behind the front desk, to see how many are on today.",
+      "On your phone there is still a picture of the snow mountain, taken one morning coming off a night shift, the sun just touching the summit. You never sent it to anyone."
+    ],
+    "closing": {
+      "retire": "In the afternoon you sit in the courtyard while clouds move slowly over from the mountain. Someone knocks to ask the way. You stand and, from habit, smile first.",
+      "burnout": "The wind comes up at dusk and you close the window halfway. The room is quiet. Tonight nobody needs a wake-up call.",
+      "end": "Going through your things at night, you find an old key card that won't open any door now. You put it back in the drawer."
+    }
+  }
+}

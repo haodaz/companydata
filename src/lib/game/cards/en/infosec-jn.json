@@ -1,0 +1,150 @@
+{
+ "id": "infosec-jn",
+ "occupation": "Information Security Analyst",
+ "role": "Junior Security Analyst, Compliance Assessment Firm",
+ "headline": "A Jinan security analyst carrying a checklist through the server rooms of Shandong's hospitals and city banks, with reports piling up like a mountain at the end of every year",
+ "unit": "A compliance assessment firm in Jinan",
+ "unit_type": "Security assessment and services firm",
+ "city": "Jinan",
+ "city_tier": "Second-tier city",
+ "education": "Bachelor's in Cyberspace Security",
+ "level": "You've done a few cyber ranges and you're fluent in Wireshark. You've memorized half the clauses of China's Multi-Level Protection Scheme 2.0. The first time you step into a client's server room you don't know where to put your laptop.",
+ "intro": "You've joined a firm in Jinan that assesses organizations against China's Multi-Level Protection Scheme, the national security compliance standard, and also watches security operations for a few clients. Your mentor gives you a laptop full of tools and a checklist of more than two hundred items, and says tomorrow you are going to a hospital in Linyi. From today on, your job is to ask people item by item: this one, did you really do it?",
+ "salary_note": "Estimate: the national figure leans toward security vendors and in-house teams in Beijing, Shanghai and Shenzhen, and an assessment firm in Jinan pays a good deal less. Travel brings allowances, and there are bonuses when the year-end projects pile up.",
+ "facts": [
+  { "label": "Junior Security Analyst (current level)", "value": "0–2 years, ¥7,000–11,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Security Operations Engineer (2–4 years)", "source": "Career map" },
+  { "label": "Pay after 3–5 years", "value": "¥16,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Re-verification on site of remediation for a bank's core trading system at protection Level 3", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Aggregating, deduplicating and prioritizing the day's SIEM alerts before the midday peak", "source": "AI exposure" },
+  { "label": "Open positions", "value": "157 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Jinan West Station with a jianbing crepe in your hand. You and your mentor are catching the earliest high-speed train to the client, with the printed on-site assessment authorization in your laptop bag.",
+  "At the hospital's IT department you hold the opening meeting. An old IT hand brings you tea and says: you came last year too. Last year's problems, we fixed half.",
+  "In the server room a cold wind makes you shiver. You log into the firewall from your checklist, look at access control policies, take screenshots and write it all down. Your mentor asks the person on duty: how often do you change account passwords?",
+  "A quick meal in the hospital canteen, and in the afternoon you run the vulnerability scanner on the internal network. Your mentor reminds you to turn the traffic down. The hospital system is running. Slow down their registration and we won't be leaving.",
+  "At the closing meeting you take the client through the high-risk items one by one. The IT director rubs his temples and asks: can this one be counted as medium risk?",
+  "On the train back you file the day's evidence screenshots by control point, more than three hundred of them. Your mentor is asleep against the window.",
+  "Home again, and the firm's managed operations group chat is still pinging with alerts. Somebody else is on duty tonight. You take one look, lay your phone face down on the table and eat a bowl of Jinan's savory millet porridge."
+ ],
+ "ladder": [
+  { "title": "Junior Security Analyst", "stage": "Entry (Junior/L1)", "focus": "Triaging alerts on 24/7 situational awareness and SIEM systems, filtering false positives; you move up with highly accurate analysis and disciplined incident response" },
+  { "title": "Security Operations Engineer", "stage": "Mid-level (L2)", "focus": "Taking on incident response and forensic tracing independently and tuning SIEM detection rules; you move up through red-team-exercise defense results and reduced false-positive rates" },
+  { "title": "Senior Security Analysis Expert", "stage": "Senior (L3)", "focus": "Leading deep tracing of complex attacks, proactive threat hunting inside networks and SOAR playbook development; you move up by lowering detection and response times and building a defensive moat" },
+  { "title": "Security Architect", "stage": "Principal / management", "focus": "Planning security architecture across the full life cycle, implementing compliance, reporting the risk matrix to executives; you hold your ground with technical depth and by making security cheaper for the business" }
+ ],
+ "ai_tasks": [
+  { "name": "Aggregating, deduplicating and prioritizing the day's SIEM alerts before the midday peak", "how": "Deduplication, noise reduction and scoring by CVSS, asset value and attacker technique can be done almost entirely by AI with rules and models. People only spot-check the top twenty for missed high-severity alerts and adjust the weighting." },
+  { "name": "Re-verification on site of remediation for a bank's core trading system at protection Level 3", "how": "AI can help turn 27 issues into a checklist and compare remediation materials. But confirming on site that 8 high-risk items are truly closed, and issuing a certificate bearing the accreditation stamp, needs a person present who verifies it and carries the legal responsibility." },
+  { "name": "Dynamically updating blue-team defenses from TAXII threat intelligence", "how": "AI can parse intelligence, draft endpoint policies and firewall rules, and automatically find gaps in cloud configuration. People must judge whether a confidence of 0.92 justifies a network-wide action, weigh the risk of blocking the business, and decide within a two-hour window." },
+  { "name": "Compliance verification of a migration to national cryptographic algorithms for a civil aviation air-ground data link", "how": "AI can generate test cases from the regulations, run performance scripts for the SM2 signature and SM4 encryption and compile results. People must build the environment on site at the airport's ground station, deal with device compatibility, and sign the compliance conclusion." },
+  { "name": "Producing a quarterly cybersecurity situation brief for government decision makers", "how": "AI can pull together alert trends, common compliance problems, attack technique shifts and vulnerability distribution, and draft the brief and charts. People must check the data definitions, judge what deserves special attention, and turn eight pages into something useful for decisions, with a sense of proportion in the wording." }
+ ],
+ "events": {
+  "e_first_report": "The first assessment report you write comes back from your mentor four times. On the fifth draft he sticks a note on the cover: this can be stamped.",
+  "e_year_end": "December, and the whole province's reports have to be out by year's end. You cover seven cities in a month, writing reports on high-speed trains, and the printer is more tired than you are.",
+  "e_drill": "For the annual attack-and-defense exercise you are sent to a client's duty room for two weeks of late nights watching alerts. On the last day the client treats everyone to braised pork belly, and you eat two bowls of rice.",
+  "e_weak_pwd": "One organization's core device has never had its default password changed. You put it in the report. They say no one has touched that device since it was bought, and no one dares.",
+  "e_old_it": "A county hospital has one old-timer in its IT department who looks after both network cables and printers. You stay another half day to help him tidy up the firewall policy, and he sees you off at the station with a bag of crepes.",
+  "e_ai_alert": "AI triage comes to managed operations, deduplicating and scoring alerts without people. The young man on duty says now he only has to look at twenty a night. In the second month he finds one that should have been looked at, ranked twenty-first.",
+  "e_ai_evidence": "Configuration checking scripts and models now compare hundreds of clauses automatically, and a first report comes out in half an hour. For the first time you sit in a client's server room with no screenshots to take and, oddly, time to talk.",
+  "e_ai_price": "Tender prices fall every year. Clients say: don't you use AI for this now? The same project goes for thirty percent less, with not one kilometer less to travel.",
+  "e_spring": "A rare weekend without travel. You take the family to Baotu Spring to fill a kettle and sit by Daming Lake for an afternoon. It's the first time in half a year you haven't brought your laptop.",
+  "e_night_call": "A client phones at two in the morning: a machine is behaving strangely. You turn on your computer in the dark and go through the logs with their duty officer until daylight.",
+  "e_thanks": "A rectification item you wrote into a report two years ago, one the client didn't want to fix at the time, finally got fixed. The director phones you and says only this: glad we listened to you.",
+  "e_mate_big": "A classmate who went to Beijing to work on a big firm's red team posts about his bug bounty money. You take one look and go back to finishing your sixty-seventh gap analysis.",
+  "e_baby": "The month your child is born you take on two fewer projects, and your mentor divides your work among others. In the hospital corridor, for the first time, you put your work phone on silent.",
+  "e_eye": "Your neck and eyes begin to protest. You have to hold the checklist farther away to read it. The doctor recommends less screen time, and you smile.",
+  "e_young": "A new young hire is using a tool you've never seen, explaining it as he goes. You nod, and quietly note down a few words on your phone.",
+  "e_teach": "Your apprentice comes back from running his first closing meeting alone and says the client didn't give him a hard time. You read his notes. They are all the questions you once got grilled with.",
+  "e_qualif": "The firm has to pass its accreditation review, and everyone turns over three years of project files. In the archive room you find your first report. How long-winded you were.",
+  "e_clear_year": "All your clients are safe and sound this year. For the year-end you have braised intestines in Jinan's old commercial district and think that in this trade, nothing happening is the top score."
+ },
+ "choices": {
+  "c_cert": { "title": "Sit the intermediate assessor exam and CISP", "situation": "To work on your own you need the intermediate assessor's certificate, and tender documents always ask for CISP as well. But you spend most of the year traveling, and at the hotel at night you only want sleep.", "options": [
+   { "label": "Study on the train", "result": "You record the law and technical modules as audio and listen for a year on the high-speed train. By the time you have both certificates you've worn out two pairs of earphones." },
+   { "label": "Do solid project work first", "result": "You set the certificates aside and follow a few difficult clients for two more years, learning a great deal about how the work is really done." }
+  ] },
+  "c_score": { "title": "Raise those few points?", "situation": "An organization's assessment fell just short of the rating for basic compliance. Their leader phoned your boss, and your boss asked you to see whether anything can be adjusted. All the evidence is right there on your computer.", "options": [
+   { "label": "Write what the evidence says", "result": "You lay out the evidence item by item for your boss, and the report goes out as it is. The client changes firms the following year, and your boss barely speaks to you for a month." },
+   { "label": "Find what can be adjusted", "result": "You go over several judgments and find two items that can count as partly compliant. The score is enough. For a few nights you don't sleep very well." }
+  ] },
+  "c_ops": { "title": "Move up to Security Operations Engineer", "situation": "The firm's managed operations are short of people. Going up to Security Operations Engineer means independent incident response and tracing, and night shifts. Stay on the assessment line, and the work is steady but it'll be years of writing reports.", "options": [
+   { "label": "Go to operations", "result": "You begin working night shifts and learn to write SIEM rules. The day you finally silence one false positive makes you happier than New Year." },
+   { "label": "Stay on assessments", "result": "You get better and better with the checklist. Walking into a client's server room, you can almost smell how hard this year's report will be to write." }
+  ] },
+  "c_ai_rule": { "title": "Lead the AI-assisted assessment process?", "situation": "The company wants AI in its assessment process, deciding what evidence a model can judge and what a person has to look at. Whoever leads it takes on a lot of coordinating, and also the blame if anything goes wrong.", "options": [
+   { "label": "Lead it", "result": "You write down the first rule: the model can draft, and the conclusion must be from someone who has been there and looked. It later goes into the company's quality manual." },
+   { "label": "Stick to your projects", "result": "You pass, and carry on with projects. The tools keep improving and you use them too, without having to take the blame for them." }
+  ] },
+  "c_bank": { "title": "Go in-house at a city bank", "situation": "A city commercial bank you often visit wants to hire you. No travel, about the same pay, regular hours. The price is that from now on you'd look at just one company's systems, and your skills might slowly narrow.", "options": [
+   { "label": "Go to the bank", "result": "You hand in your resignation. Go on, your mentor says, and when we come to assess you, don't pretend you don't know me.", "end": "You join the bank's information security department and spend each day looking at the same network. That year, when the assessors arrive on site, you've already made tea, and the account policies are printed out and waiting on the table." },
+   { "label": "Stay at the firm", "result": "You say you'd like to see a few more places. The suitcase gets a few more years of use." }
+  ] },
+  "c_expert": { "title": "Go for Senior Security Analysis Expert", "situation": "Going for Senior Security Analysis Expert takes deep forensic results on complex incidents and automated playbooks. Your child needs you most these years, and your projects haven't gotten any fewer.", "options": [
+   { "label": "Go for it", "result": "You give your weekends to hunting inside networks and write a forty-page tracing report, with the attack path drawn out clearly." },
+   { "label": "When the kid's older", "result": "You turn down a few out-of-town projects and take your child up Thousand Buddha Mountain on the weekend. The expert title can wait." }
+  ] },
+  "c_redteam": { "title": "Move to Beijing and join a red team", "situation": "A classmate wants you in Beijing for penetration testing, at sixty percent more pay, moving from defense to offense, the very thing you most wanted to do in college. But your flat, your spouse and your parents are all in Jinan.", "options": [
+   { "label": "Go to Beijing", "result": "You pack your bags for Beijing and move into a partitioned room in Wangjing.", "end": "You move to Beijing and join a red team. The first year, the vulnerabilities you find go into a weekly report shorter than anything you have ever written. Once a month you go back to Jinan, and straight off the train you go for a bowl of millet porridge." },
+   { "label": "Stay in Jinan", "result": "You say you'll think about it. After hanging up you smoke a cigarette downstairs, then go up and keep writing." }
+  ] },
+  "c_arch": { "title": "Become Security Architect, or stay on the front line?", "situation": "Your boss wants to make you Security Architect, planning whole security systems for large clients and explaining risk to their executives. From then on you'd be writing briefing decks, and the forensics would go to the young people.", "options": [
+   { "label": "Take it", "result": "You buy two shirts. For the first time, at a client's board meeting, you use three slides to turn risk into money they understand." },
+   { "label": "Stay on the front line", "result": "You say you still want to read logs. It is one of the few ways in this trade to work quietly into old age." }
+  ] }
+ },
+ "endings": {
+  "retire": "One last time you sign the conclusion page of a report and close your laptop. Your apprentices barely need printed reports anymore, but they print one anyway for you to take home. Riding the high-speed train, for the first time you pass all these cities without getting off.",
+  "burnout": "Years of night shifts and travel have set off warning lights in your neck, your sleep and your heart rate. You leave the project team and hand over your accounts one by one. When the last logout message appears, you take your hands off the keyboard and rest them on your knees."
+ },
+ "stages": [
+  "You follow your mentor on site, logging into devices with a checklist, reading configurations and capturing evidence, interviewing the IT staff, running vulnerability scans, and filing the evidence by control point. On managed operations rotation you triage alerts on the SIEM, judging each one true or false. Every conclusion you reach goes past your mentor first.",
+  "You can lead projects on site yourself now, and take over incidents on duty: capturing traffic, reading Sysmon logs, tracing, writing up the response. You are the one at the closing meeting, and the one who says the words high risk to people's faces. Your mentor used to cover for you. Now he looks only at the last page.",
+  "What you have are the hardest few things: where a lateral movement began, how to test a hunting hypothesis, writing SOAR playbooks to automate the repetitive responses. An apprentice passes you a log he can't crack and you have him walk you through his thinking first. At this level the work is mostly teaching others how to think.",
+  "You plan network segmentation and defense in depth for large clients, setting compliance, data security and business continuity on one map, and explaining the risk matrix to executives. Your tools have become architecture diagrams and briefing materials, and the question you answer has become: where should this money be spent?"
+ ],
+ "work": [
+  "In a county hospital's server room you hold up your phone for light and copy down the model of an old switch. Lao Sun from IT says it is older than you are and has never broken.",
+  "You spend a night on alert triage and mark an unusual login as a false positive. In the morning your mentor takes a second look and has you ask the account's owner whether they really were working late.",
+  "You import the scan results into Excel, more than four thousand lines, and deduplicate them one by one. Your mentor walks past and says: never mind the count. See which one's the billing system.",
+  "One organization's web server keeps setting off alerts. You rewind the traffic captures in Wireshark and find a test interface left behind by an outsourcing company. You phone their ops man Xiao Xu.",
+  "At a closing meeting the IT director argues with you about a risk level for an hour. You put the site screenshot on the big screen and read out the clause again. He sighs and picks up his tea.",
+  "You add three conditions to a SIEM rule that keeps misfiring, and that night's alerts drop by half. Xiao Meng on nights sends you a thumbs-up.",
+  "You write a detection rule in Sigma and run it on an internal network for a week, and catch a printer that goes online by itself in the middle of the night. A printer? says Director Wang at the client.",
+  "Your apprentice Xiao Tian writes a tracing report with a beautiful conclusion. You have him draw the timeline, and by the third box he finds for himself that one of the times doesn't fit.",
+  "You turn the handling of phishing emails into a SOAR playbook, four minutes from alert to block. For the first time, the people on nights can have a hot meal at night.",
+  "In a meeting room at a city bank you draw network segmentation on the whiteboard. The vice president in charge asks how much this will cost. You turn over another sheet, showing what it costs not to.",
+  "A tender document lists a long string of product requirements, and you cross out half with a red pen. Xiao Song in sales gets anxious. The client won't use those, you tell him, and I'm not writing them.",
+  "You revise a young architect's plan and leave only one comment: could the person on duty read this diagram at three in the morning?"
+ ],
+ "past": [
+  "You grow up on a housing estate in Zibo. In computer class in junior high you figure out how the lab's restore cards work, and get called to the office, and get remembered.",
+  "On your gaokao (college entrance exam) preferences you choose cyberspace security. Your parents think it means fixing computers, and so do your relatives, and you can't be bothered to explain.",
+  "In your second year you join the campus capture-the-flag team, and range practice runs all night. The captain tells you that in this trade you can be bad at it, but you can't not read the logs.",
+  "The summer after your third year you are a blue-team intern at a provincial attack-and-defense exercise, and you see a real alert screen for the first time. It is nothing like the competitions.",
+  "At campus recruiting you just miss out at the big firms, and the assessment firm in Jinan gives you an offer. It's close to home, your family says, that's good. Two years, you think, to start with."
+ ],
+ "late": {
+  "pension_note": "Estimate: Jinan's urban employee pension. The firm paid contributions on a fairly low base in the early years, so in retirement you get a little under half your final monthly salary.",
+  "scenes": [
+   "After retiring you get a new phone, and the first thing you do is change all your passwords. A grandchild says your phone is harder to get into than a bank.",
+   "The neighborhood committee asks you to talk about avoiding scams. You make a big-print poster, turning your checklist into five rules, and all the old people copy them into their little notebooks.",
+   "You take the high-speed train to Zibo to see the old folks. Of the cities out the window, you can still say what floor each hospital's server room is on.",
+   "After leaving the project you turn off your work phone and leave it in a drawer. For the first month you pull open the drawer now and then to look.",
+   "You start walking around Daming Lake each day. By the third year your neck is a little better and you no longer keep looking at your watch.",
+   "An old apprentice who is now the firm's technical lead comes to see you on holidays. AI reads logs better than anyone now, he says. Still, clients want a person to ask.",
+   "After leaving, you sometimes still look over the router in a strange restaurant and think: they definitely never changed that default password.",
+   "Your old mentor sends a photo of the sticky note from the cover of your first report. He has kept it.",
+   "Back in Jinan, by Baotu Spring you meet a young person with a laptop bag asking the way to the station. You point it out, and give the bag a second look.",
+   "Later AI can check hundreds of clauses in minutes. The hardest item is still the same one: getting the person across the table to admit that, no, we didn't do that.",
+   "When a text arrives from a strange number you still check the sender first, then the link, and then you put down the phone and go on with your tea."
+  ],
+  "closing": {
+   "retire": "One spring morning many years later you fill a kettle at the spring, and the water is cold. You watch the spring keep welling up, with nothing unusual about it, and you watch for a long time.",
+   "burnout": "One evening many years later you unplug the router at home, and all the little lights in the room go out. There's a wind outside. You open the window and sit a while.",
+   "end": "One afternoon many years later you open an old document on your computer, the cursor blinking on the first line. You write nothing, only close it, get up and pour yourself a glass of water."
+  }
+ }
+}

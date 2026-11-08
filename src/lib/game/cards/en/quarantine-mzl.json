@@ -1,0 +1,188 @@
+{
+  "id": "quarantine-mzl",
+  "occupation": "Agricultural Inspector",
+  "role": "Grade-one staff officer in port plant and animal quarantine",
+  "headline": "A newcomer to plant and animal quarantine at the Manzhouli port in Inner Mongolia, working at thirty below with a magnifying glass and sample bags, looking for insects in timber cracks and grain screenings",
+  "unit": "The frontline plant and animal quarantine team at the Manzhouli port, Inner Mongolia",
+  "unit_type": "Port inspection unit (civil service)",
+  "city": "Manzhouli",
+  "city_tier": "Border port city",
+  "education": "Bachelor's degree (Plant Protection)",
+  "level": "Fresh from the civil service exam and pre-job training. You did well in insect taxonomy and know your specimens, but you've rarely identified a live one, coated in sawdust and ice",
+  "intro": "On your first day in Manzhouli, the moisture in your nostrils froze. The veteran inspector assigned to you handed over a magnifying glass and a stack of sample bags and said insects here stand the cold better than people, so don't expect them to stay away. As of today, at the end of this railway line, you're learning to see what others don't.",
+  "salary_note": "Estimate: civil service pay plus a border allowance, slightly above the national average for your years of service. Most of what you spend goes on staying warm and getting home.",
+  "facts": [
+    { "label": "Grade-One Staff Officer (current level)", "value": "0-3 years, ¥3,910–5,750 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Grade-Four Principal Staff Officer (3-8 years)", "source": "Common in the trade" },
+    { "label": "Pay after 3–5 years", "value": "¥7,200 (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "On-site inspection of imported timber and grain in the freight yard", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Reviewing declaration documents and certificates of origin", "source": "AI exposure" },
+    { "label": "Open positions", "value": "5 linked listings nationwide (the job database is mostly campus and internship postings)", "source": "Job listings" }
+  ],
+  "day": [
+    "Thirty-two below. You've got on two pairs of padded trousers and your eyelashes go white as you step out. Breakfast is a bowl of mutton soup, and only after that does your body feel switched on.",
+    "The shift briefing: today's arrivals and the targeting instructions. The veteran inspector circles one rail car on the sheet. You're with me on this one.",
+    "In the freight yard the logs on each car are cased in ice. You lever off a slab of bark, and beneath it the galleries wind this way and that. Under the flashlight, nothing moves.",
+    "You write batch and time on the sample bags, with fingers that won't obey, and the letters come out crooked. The veteran glances over and says: rewrite them. If it can't be read, it wasn't taken.",
+    "Your turn on the passenger line. An old woman has a bag of home-cured meat, and by the rules you say it can't come through. She doesn't say anything, she only looks at you.",
+    "In the lab you spread the screenings on a white enamel tray and tease them apart grain by grain with tweezers. One seed under the dissecting scope takes you twenty minutes against the atlas.",
+    "The freight agent is waiting at the door, saying how much a car costs per day of delay. You explain the rule again. He offers a cigarette and you wave it away.",
+    "The dorm radiators run hot. You scrape a patch in the ice flowers on the window and look at the distant lights of the railway, where all night long cars are coupling."
+  ],
+  "ladder": [
+    { "title": "Grade-One Staff Officer", "stage": "Frontline inspection", "focus": "Shadow on-site inspections, sampling, passenger checks and document entry; learn the procedures, and how to talk to cargo owners and travelers" },
+    { "title": "Grade-Four Principal Staff Officer", "stage": "Leading a shift", "focus": "Lead a shift on your own and take charge of one section of the yard. Handle most on-site problems, and move up by being steady and exact" },
+    { "title": "Grade-Two Principal Staff Officer", "stage": "Senior specialist", "focus": "Manage an inspection team, sign off on identification results and pest treatment, train newcomers, and coordinate rail, freight agents and the lab" },
+    { "title": "Quarantine Section Chief", "stage": "Leading", "focus": "Responsible for the section's shifts, risk targeting and outside coordination. Sign, take responsibility, and do the explaining" }
+  ],
+  "ai_tasks": [
+    { "name": "On-site inspection of imported timber and grain in the freight yard", "how": "Cameras and image recognition can do a first pass. But peeling bark, turning over screenings, feeling for moisture and judging whether there's live infestation has to be done by someone standing beside the rail car." },
+    { "name": "Questioning travelers and handling the plant and animal products they carry", "how": "AI can identify what's in a bag. How to begin, how to explain it clearly, and how to take the other person's reaction can only be done face to face." },
+    { "name": "Reviewing declaration documents and certificates of origin", "how": "The system can cross-check documents, validate certificates and flag contradictions. A person only deals with the few it marks." },
+    { "name": "Deciding which shipments need closer inspection", "how": "A model scores risk from origin and history. The season, the weather and what has changed at this company need a human reading, and a person answers for the final targeting decision." },
+    { "name": "Identifying screened insects and weed seeds", "how": "Image recognition can offer candidate species. Broken specimens and larval stages have to be read under the dissecting scope by a person, then sent to the lab to confirm." },
+    { "name": "Supervising fumigation and other pest treatment", "how": "Sensors can log concentration and temperature continuously. Checking the seal, confirming the venting and judging whether a treatment counts needs someone on site." },
+    { "name": "Filling in inspection records and reporting ledgers", "how": "Voice and forms can generate records and reports automatically. A person checks them and signs." },
+    { "name": "Explaining quarantine requirements to companies and freight agents", "how": "AI can answer common questions. When a case is unusual, the judgment and the responsibility belong to a person." }
+  ],
+  "events": {
+    "e_cold": "Your first winter you got chilblains on your ears, and at sampling your hand lifted a layer of skin when it touched the sheet metal. The veteran inspector tossed you his old pair of sheepskin gloves.",
+    "e_first_id": "For the first time you identified a longhorn beetle larva on your own and sent it to the lab, and the result matched what you'd written word for word. Your mentor said nothing, and put a new box of sample bags on your desk.",
+    "e_luggage": "You took a bag of fruit from a traveler and explained why. He grumbled for a long while, then handed it over and said: it's not easy for you people either.",
+    "e_summer": "Summer in Manzhouli is as short as a vacation. On a day off in lieu you took a turn around the grassland. The evening wind blew, and your phone kept pinging with tonight's trains.",
+    "e_family": "Home is in Jiangsu, three train changes for New Year, and you couldn't get a ticket in the rush. You worked the window through New Year's Eve and sent your family a picture of snow on the railway.",
+    "e_system": "Document review has gone onto the system, and most of the forms clear in a second. There's far less paper at your elbow, though the veterans keep saying that less paper means less feel.",
+    "e_ai_bug": "The image recognition system flagged a common local beetle as a priority species. Under the dissecting scope you checked it, returned the alert, and added the example to the labeling rules while you were at it.",
+    "e_risk_score": "The targeting system scores each shipment, and low scores mostly go unopened. You know the man shipping this one, and lately he has switched to a different supply region, which the score can't see. You ticked it for inspection.",
+    "e_gift": "Before the holiday someone left two boxes at your door. Without looking inside you took a photo and phoned to ask him to come and collect them. You never mentioned it to anyone.",
+    "e_wind": "When the white wind blows through, no one can stand in the yard. You and your colleagues take turns warming your hands in the duty room, and by the end of a shift you can't quite talk straight.",
+    "e_russian": "You and a driver from across the border spent ages gesturing over a quarantine form, and between a translation app and your hands you got it done. Leaving, he held out a piece of candy. You declined and he laughed.",
+    "e_fumigate": "Supervising a fumigation, you stood in the draft for three hours, checking the seal and the concentration log. Going back, everything smelled of plastic until the next day.",
+    "e_good_record": "Your inspection records went through the year-end check without one error found. Before retiring, your mentor patted the stack of notebooks and said this proves better than anything that you were here.",
+    "e_young": "On his first night shift, the new youngster wrote on the sample bags as crookedly as you once did. You called him back. Rewrite them, you said. If it can't be read, it wasn't taken.",
+    "e_late_shift": "In the freight peak, train after train arrived, and you worked night shift after night shift. Lying down in the dorm, you could still hear the couplings clanging in your ears.",
+    "e_friend": "A high school classmate came to the port as a tourist. Over mutton that night he asked if your job was catching bugs all day. You thought it over and said: more or less. He thought you were joking.",
+    "e_kid": "At school your child wrote an essay called My Parents, saying your job was giving medical care to wood. The teacher pinned it to the wall.",
+    "e_joint": "The cold has got into your joints. Around the start of winter each year your knees know first, and getting to the freight yard takes a couple more rests than it used to.",
+    "e_handbook": "You sorted your years of photos of pests and galleries into an in-house atlas. Every young officer has one, and the covers have gone fuzzy from use."
+  },
+  "choices": {
+    "c_slow": {
+      "title": "Your first time being pressed to release",
+      "situation": "A shipment is waiting to go, the freight agent says the contract will be breached, and the boss is wringing his hands outside. It looks fine to you, but one step in the procedure isn't done. The shift leader's out today, and it's your decision.",
+      "options": [
+        { "label": "Finish the procedure", "result": "It held the shipment for another half day and the freight agent's face stayed long. The next day the shift leader read the record, said nothing, and handed you the next shipment." },
+        { "label": "Check with someone first", "result": "You made two calls and worked out whether the step could run in parallel. From then on your phone held a few more numbers." }
+      ]
+    },
+    "c_exam": {
+      "title": "Do the training before Grade-Four Principal Staff Officer?",
+      "situation": "To lead a shift and rise to Grade-Four Principal Staff Officer, what counts is the performance review. The system also has a specialist course in pest identification, away for two months. The yard is short of people right now.",
+      "options": [
+        { "label": "Go to the course", "result": "You stared down a dissecting scope in a lab far away for two months until your eyes blurred. Back home, you look first at the wing veins of everything." },
+        { "label": "Stay and cover", "result": "You covered the yard all winter. When your mentor was ill, the whole section landed on you, and it turned out you could do all of it." }
+      ]
+    },
+    "c_classmate": {
+      "title": "An old classmate wants your help",
+      "situation": "A college classmate is in the timber import business. On the phone he's polite: he only hopes you'll look after him. You copied each other's homework, and his father once bought you dinner. Nothing has been said outright, but you understand.",
+      "options": [
+        { "label": "Say plainly no", "result": "Inspections go as they go, you said, and anything else we can talk about. He was silent a moment and said: understood. After that he didn't call much." },
+        { "label": "Walk him through the rules", "result": "You went carefully through the regulations and paperwork so he wouldn't take any wrong turns. He heard what you said, and what you hadn't said." }
+      ]
+    },
+    "c_ai": {
+      "title": "Learn to maintain the recognition system?",
+      "situation": "The higher-ups are pushing image recognition and risk scoring, and they want frontline people to label samples and tune rules. That means more time at a computer and less in the yard. The old hands say: the bugs aren't in the screen.",
+      "options": [
+        { "label": "Go and learn", "result": "You relabeled years of pest photos one by one. The system got a good deal more accurate, and your name went on the project team." },
+        { "label": "Stay in the yard", "result": "Somebody has to keep touching the bark, you said. What the system couldn't flag, people like you went on catching." }
+      ]
+    },
+    "c_lab": {
+      "title": "A private testing company",
+      "situation": "A firm doing import and export testing has offered you more than double your pay to be its technical lead. It means giving up an iron rice bowl and moving to Dalian. Your family's jobs would have to move too.",
+      "options": [
+        { "label": "Decline", "result": "You thanked them. The next morning you pulled on your padded trousers as usual and rode to the yard." },
+        { "label": "Join the company", "result": "You submitted your resignation. Your mentor didn't try to talk you out of it. He only pressed those old gloves on you again.", "end": "In a lab by the sea, you put on a white coat. You never had to wear two pairs of padded trousers again, and sometimes it felt as though something wasn't cold enough." }
+      ]
+    },
+    "c_group": {
+      "title": "Compete for Grade-Two Principal Staff Officer and lead a team",
+      "situation": "An inspection team needs a new head, and half its people are older than you. From here the road goes to Grade-Two Principal Staff Officer: rosters, identification results, first to step up when something goes wrong. You've never truly led someone ten years your senior.",
+      "options": [
+        { "label": "Go for it", "result": "At your first team meeting, you asked the veterans about the roster one by one before deciding. Nobody said it was good to your face. Nobody said it wasn't." },
+        { "label": "Keep to the work", "result": "You stayed at your dissecting scope. When the young officers aren't sure about an insect, they still knock on your door first." }
+      ]
+    },
+    "c_home": {
+      "title": "A transfer home",
+      "situation": "An inland port near your hometown has an opening. It isn't this cold there, and your parents are seventy. But if you go, the people here and the insects here will all have to be learned again from nothing.",
+      "options": [
+        { "label": "Go back", "result": "You packed up your years of notes. When you boarded, the whole train was furred with frost.", "end": "You went home and inspected for many years at that inland port. When you told people about the cold in Manzhouli, they never quite believed you." },
+        { "label": "A few more years", "result": "You bought your parents a new heater, saved up your leave, and had them come stay for a month in summer." },
+        { "label": "Bring your parents here", "result": "They stayed one winter, praised everything, and wouldn't go downstairs. In spring you saw them off, and the wind on the platform still had an edge." }
+      ]
+    },
+    "c_chief": {
+      "title": "Compete for Quarantine Section Chief",
+      "situation": "The chief is about to retire and the higher-ups have told you to apply as well. A Quarantine Section Chief handles rosters, risk targeting and endless coordination. What you like is the dissecting scope. But someone has to sit at this desk.",
+      "options": [
+        { "label": "Apply", "result": "Writing your materials, you realized that what you had mostly worked with all these years was people. At the panel you told a story about the writing on a sample bag." },
+        { "label": "Don't apply", "result": "You returned the forms and kept on with your work. The new chief is six years younger than you, and when a problem is hard to handle, comes knocking on your door too." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last shift you took a walk around the yard and laid your hand on the bark of a log. When you went off duty the young officers brought you the handover book to sign. You wrote very slowly, every character legible. Rail cars were coupling on the line, and it sounded the same as on your first day.",
+    "burnout": "Your knees and your lungs could no longer take the winters here. You left the magnifying glass and the old gloves with the young officers. When the train pulled out, the window was furred with frost. You drew a line in it with your finger, and outside was still white."
+  },
+  "stages": [
+    "You follow the shift leader into the yard: prying off bark, scraping galleries, sieving grain, bagging samples with batch numbers, checking them under the dissecting scope, and entering declarations in the system. On the passenger line you learn to speak up. Freight agents and travelers all talk to the veterans beside you. You take the notes and carry the toolbox.",
+    "You begin leading a shift on your own, and one section of rail cars is yours. On arrival you check the documents first, set the inspection ratio, sample on site, send anything doubtful to the lab, and click release on what can go. Freight agents start to recognize your name and talk more politely. For what's hard to handle, you have to come up with the words yourself.",
+    "You have an inspection team and several rosters in hand. You review your team's identifications, supervise fumigation and pest treatment, and go through timings one by one with rail, agents and the lab. Every record the young officers write crosses your desk, and what you change most is the wording. Once you sign, that shipment's business is yours.",
+    "Most of your day is in the office, watching the section's targeting instructions, staffing, peak-season plans, and whether the system's scores have gone off course. When companies have complaints, you're the first they see, and judging what to say falls to you. You rarely pry at bark yourself anymore, going down to the yard only when a young officer isn't sure, to feel it with your hand."
+  ],
+  "work": [
+    "Shift leader Zheng has you shine a flashlight on the borehole in a larch log and tell him whether the frass at the mouth is fresh or old. You look a long time and say old. He rubs a pinch between his fingers and has you smell it.",
+    "From the grain screenings you tweeze out a weed seed with an awn and tape it to the record card. Wu in the lab reports back the next day: genus right, species wrong.",
+    "At the passenger window a family of three arrives with a child clutching a bag of pine cones. You crouch to tell the child these can't come through, and the father lets go before the child does. You tear off the copy of the disposal slip for him.",
+    "A shipment of sawn timber arrives. After checking the documents you set a ten percent sampling rate. On the seventh bundle one board's color is off, so you tell the agent to unload. He grumbles but brings the forklift.",
+    "In the handover log you write: Track 3, fifth car, abrasion on seal, photographed. Yang, coming on shift, reads it and drives straight to that car.",
+    "Freight agent Meng brings a certificate missing a stamp and asks if it can go through first. You turn your screen toward him to show the system's prompt. He sighs and turns away to make a call.",
+    "Reviewing the identification form Yang sent up, you find the description of the wing veins thin and put the specimen back under the scope. An hour later you change one word on the form and sign your name.",
+    "In the third hour of supervising a fumigation, you check the logger's curve and have someone shift a weight at the edge of the tarp. The owner of the fumigation company stands in the wind and says no more.",
+    "New officer Bai handles a traveler's goods on her own for the first time and gets shouted at until she cries. You don't comfort her. You spread out a disposal slip and rewrite the wording with her.",
+    "A week before peak season, you go over the section's roster and move half the night shifts away from two people with small children, and add two lines to the targeting list. In the meeting you don't explain.",
+    "A company's head comes to complain that inspections are slow. You have Yang pull up the progress on their rail cars and point out that the two longest delays were when their own documents hadn't arrived.",
+    "This month's system scores run low for one kind of cargo. You pull three years of data and spend an afternoon going through it with a technician, then write the higher-ups one page explaining that the model leaves out the seasons."
+  ],
+  "past": [
+    "You grew up in a small town in northern Jiangsu, catching insects in summer and pinning them to foam board. Your grandmother did not consider this a lucky hobby.",
+    "The gaokao (college entrance exam) took you to an agricultural university, to study plant protection. You chose it only because the admissions brochure had a very handsome beetle on it.",
+    "You interned at a city plant protection station, counting rice planthoppers in the fields every day. The station head said no one remembers you in this job until the insects arrive.",
+    "You took the civil service exam and applied for a border port, because the post matched your major and the cutoff wasn't too frightening. Your father spent a long time finding Manzhouli on the map.",
+    "You passed the interview and the physical. You rode a train north for nearly thirty hours, and outside the window, the trees got gradually shorter."
+  ],
+  "late": {
+    "pension_note": "Estimate: civil service pension plus occupational annuity, with long contribution years. You'll receive a little over 70% of your final monthly pay.",
+    "scenes": [
+      "Your first winter of retirement you still wake at half past six. You look at the thermometer outside, thirty below, and then remember you don't have to go out today.",
+      "Young officers bring you a photo they're unsure of. You put on your reading glasses, study it a long while, and say: take another one of the wing veins.",
+      "You've potted a few flowers on the balcony and they've got aphids. You look at them with your magnifying glass all morning and can't bring yourself to spray.",
+      "You moved somewhere warm. The first winter, oddly, you couldn't sleep. It always seemed the heating wasn't making enough noise.",
+      "Your knees get a bit better and you walk in the park. A tree on the path has boreholes. You stand and look for a while, then phone the parks department.",
+      "An old colleague sends a photo of the yard, saying the new equipment is fast and accurate. You zoom in on the picture and look at the bark.",
+      "In your new place you still stamp your feet twice before coming in. People ask what's wrong, and you say nothing is.",
+      "A former colleague comes through on business, and you eat mutton at a roadside place. He tells you this year's wind has been the worst yet. You pour him a drink and say nothing.",
+      "Your child asks if that insect collection from your childhood still exists. You dig it out of the cupboard, the foam board gone yellow.",
+      "On trips, while others look at the view, you're looking at the bark on the street trees. Your family is used to it, and walks a little ahead to wait.",
+      "On television you see snow in Manzhouli. The railway is still there, and the cars are still moving forward one by one. You turn up the volume a little."
+    ],
+    "closing": {
+      "retire": "In the evening you put the magnifying glass back in the drawer. Outside the window nothing has happened, and this may be the thing you did all your life: made sure nothing happened.",
+      "burnout": "Outside the window the trees are ordinarily green, without boreholes, and no one needs you to look at them. You sit a while and finish your tea.",
+      "end": "Now and then you leaf through your old record books, every character legible. At the end of that railway line, the cars are probably still coupling."
+    }
+  }
+}

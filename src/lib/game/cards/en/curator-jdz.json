@@ -1,0 +1,155 @@
+{
+ "id": "curator-jdz",
+ "occupation": "Curator",
+ "role": "Curatorial assistant (Assistant Curator) at a ceramics art museum",
+ "headline": "An art history master's graduate who has come to a ceramics museum in a converted Jingdezhen porcelain factory, starting out on wall labels and condition reports",
+ "unit": "A ceramics art museum in Jingdezhen, Jiangxi (a converted porcelain factory; a public institution with about ten staff and seven or eight exhibitions a year)",
+ "unit_type": "Ceramics art museum",
+ "city": "Jingdezhen",
+ "city_tier": "Fourth-tier city",
+ "education": "Master's in art history",
+ "level": "Your thesis was on Ming and Qing export porcelain, and you can read glazes and reign marks. As an intern at a big museum you only put up wall labels. You have never checked a condition report alone, or spoken with a living craftsman.",
+ "intro": "The museum is in the workshops of an old porcelain factory, under a sawtooth roof, with the chimney still standing. The director walks you around, then at the storeroom door hands you a stack of condition reports and says eighty objects are coming in this month. Every chip, hairline crack and bubble in the glaze must go down on paper. You spent seven years reading art history, and all the porcelain in those books was behind glass. Starting today, you put on gloves and lift it up.",
+ "salary_note": "Estimate: public institution pay in Jingdezhen is below the national figure, and a small museum's exhibition budget leaves little for bonuses, so 0.75.",
+ "facts": [
+  { "label": "Assistant Curator (current level)", "value": "0–4 years, ¥4,200–6,800 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Curator (4–10 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Choosing the work, and talking exhibitions through with artists and craftsmen", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Searching the literature and collating material on artists and kilns", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the database leans toward campus hires and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You ride your electric bike through the old town. Three-wheeled carts go by loaded with boards of white unfired ware, and you give them room. In Jingdezhen, if you knock over someone's board of pots, you pay.",
+  "Unpacking in the storeroom. A large blue-and-white platter comes out of its foam. You search for a two-centimeter hairline on the condition report with a flashlight held at an angle, while an old hand steadies the crate.",
+  "Revising labels. A hundred and twenty characters must explain where a monochrome glaze came from. The director strikes out “ultimate” and “craftsmanship” and asks you to say where in the kiln this vase stood.",
+  "A bowl of cold rice noodles with a fried egg outside the museum. At the next table two young people argue over how much kaolin has gone up this year.",
+  "Out to borrow work. The ceramicist Xiao Qin is one of the “Jingdezhen drifters,” young artists who come from all over to work here, and lives in a village at Sanbao. Two rounds of tea go by before you get to the point. She says her best piece cracked in the firing. You look at another and say nothing.",
+  "Adjusting the gallery lights. Under 4000K the white porcelain looks cold, at 3000K it yellows. You and Lao Song the electrician move one track spot three times.",
+  "The accounts. The money left in the exhibition budget covers shipping or the catalog. You shift numbers around in Excel, and in the end delete the opening-night drinks."
+ ],
+ "ladder": [
+  { "title": "Assistant Curator", "stage": "Curatorial assistant", "focus": "Write labels, check condition reports and help install, turning other people's plans into cases. You move up by mounting show after show without a mistake." },
+  { "title": "Curator", "stage": "Independent curating", "focus": "Propose your own subjects; choose artists, borrow objects, write outlines, hold a budget. You need one or two shows and papers that stand up." },
+  { "title": "Associate Research Curator", "stage": "Head of exhibitions", "focus": "Manage the museum's schedule and its young curators and negotiate with other museums. Scholarly output decides whether you are appointed." },
+  { "title": "Research Curator", "stage": "Academic lead", "focus": "Set the museum's scholarly direction and carry weight in the field. Only a handful exist in the city, and most never get there." }
+ ],
+ "ai_tasks": [
+  { "name": "Searching the literature and collating material on artists and kilns", "how": "AI can go through the literature fast and list chronologies and related works. Which sources are reliable and which claims about a kiln don't hold up has to be checked by someone who knows porcelain." },
+  { "name": "Drafting outlines, wall labels and audio guides", "how": "AI can produce outlines and multiple versions of labels in Chinese and English. What the show is really saying, and which sentence stays on a label, is the curator's decision." },
+  { "name": "Scheduling, budgets and loan lists", "how": "AI can build Gantt charts, run budgets and tidy lists. How to deal with collectors and artists, and what to cut when money runs short, is for a person to answer for." },
+  { "name": "Posters, social posts and short promotional videos", "how": "AI can quickly turn out copy, posters and video scripts in versions for each platform. A person checks tone and facts, spot-checks and publishes." },
+  { "name": "Choosing the work, and talking exhibitions through with artists and craftsmen", "how": "Going into a studio to look at unfired ware, touch glaze, drink tea and persuade someone to bring out their best depends on an eye and on trust, which AI cannot replace." },
+  { "name": "Installing, checking in and dealing with damage", "how": "Opening crates against condition reports, adjusting lights, setting an object's height and taking responsibility on the spot when something is broken all require a person in the gallery." }
+ ],
+ "events": {
+  "e_crack": "You missed an old repair on a condition report, and at deinstallation the lender points to it. Only the original photos clear things up. From then on, when you open a crate you photograph every side.",
+  "e_master": "A retired master the museum rehired spent thirty years at the factory. He has you handle unfired ware for an afternoon and shows you which way the marks of the trimming knife run. Your thesis had nothing like this.",
+  "e_kiln": "You go at midnight to watch the last stoking of a wood firing before the kiln is sealed. The firelight turns everyone's faces one color. The next day you change one word on a label.",
+  "e_visitor": "A tour group comes on the weekend, and the guide spends four minutes in the gallery you are proudest of. An old woman falls behind and stands in front of a bowl for a long time.",
+  "e_budget": "The annual budget is cut, and the catalog for your show becomes a folded leaflet. The artist calls to ask about it. You speak as slowly as you can.",
+  "e_rain": "Plum rain season, and the old workshop roof leaks. You and the security guard shift the display cases at midnight and catch the water in buckets until morning.",
+  "e_young": "At a craft market you notice a recent graduate whose cup handles are very strange. You leave your number. Two years later his work is in your gallery.",
+  "e_broken": "The shipper's crate arrives unmarked, but a bowl of eggshell porcelain inside is cracked. Insurer, artist, director: three calls take the afternoon, and your voice is lowest on the last.",
+  "e_critic": "A critic writes online that your show is “too much like a textbook.” You forward it to the director, who replies with a smiley. You print the article and pin it above your desk.",
+  "e_foreign": "A small European museum wants to borrow a group of contemporary blue-and-white pieces. The agreement goes back and forth for six months, and the inventory lists every screw. You learn one useful sentence: please provide your humidity records.",
+  "e_ai_label": "The museum starts drafting labels with AI, ten a minute, all smooth. You check each one. It states the origin and firing temperature of one monochrome glaze with great confidence, and both are wrong.",
+  "e_ai_poster": "The young woman in publicity finishes in half a day what used to be a month of outside contracting. With the money saved, you borrow three more works.",
+  "e_ai_image": "Someone submits a set of AI-generated “antique porcelain” images for exhibition publicity. You zoom in and see the crackle in the glaze is identical from piece to piece. You write back: please use real things.",
+  "e_fake": "A collector brings several pieces he wants in your show and says they are old. You look at the foot and the body, say nothing, pour him some tea, and ask him to come back with more documentation.",
+  "e_rent": "You buy a small apartment near Hutian, with a modest mortgage. A drifter couple moves in across the hall, and they dry unfired pots on their balcony every day.",
+  "e_artist_gone": "An old ceramicist you have worked with for ten years has stopped making work, and shows you a roomful of glaze recipes. You say you can't accept these. He says then help me think who should have them.",
+  "e_show": "You mount a show about the old porcelain factory's workers and their skills. On opening day many old people come in worn work clothes, stand in front of what they made decades ago, and describe it with their hands.",
+  "e_neck": "All those ladders during installation and all that looking at the undersides of things, and your neck begins to object. The doctor says look down less. You say all right, and the next day you look down.",
+  "e_student": "The new curatorial assistant is checking a condition report for the first time and holding the flashlight too straight on. You take it and tilt it a little, and the line appears.",
+  "e_last": "The old workshops need structural reinforcement, and the chimney takes three meetings. You say just one thing: this chimney is bigger than anything in the collection."
+ },
+ "choices": {
+  "c_first": { "title": "Your first small show of your own", "situation": "The director gives you the smallest gallery for a month. You could do the export porcelain you know well, or the young drifters you've been visiting lately, which comes with no scholarly insurance.", "options": [
+   { "label": "Export porcelain", "result": "A solid show. Two academics come and praise the material. You know, too, that nobody much will remember it." },
+   { "label": "The young artists", "result": "The opening is packed, with unsold cups on the floor. An elder says you are too young, and you don't argue." }
+  ] },
+  "c_title1": { "title": "Applying for Curator", "situation": "Promotion to Curator needs a paper. You have a study of monochrome glazes, but a core journal would take over a year. A member of the review panel hints you could put it under his research grant, and it would go faster.", "options": [
+   { "label": "Submit it yourself", "result": "You wait fourteen months and go through three revisions. When the journal arrives you don't post about it." },
+   { "label": "Use his grant", "result": "The paper comes out quickly, with your name third. At a later conference you run into that teacher, and he remembers who you are." }
+  ] },
+  "c_commercial": { "title": "A commercial gallery comes calling", "situation": "A Shanghai gallery wants you to run its ceramics line, at more than twice your pay. You would be selling, and keeping collectors company. The director says I won't stop you, it's only that nobody here will write those labels of yours.", "options": [
+   { "label": "Stay", "result": "You put the offer letter in the drawer. That month's pay comes in, a little over four thousand. You glance at it and go back to your outline." },
+   { "label": "Go to Shanghai", "result": "You take a box of books and a cup thrown by hand.", "end": "You went to the Shanghai gallery, learned to memorize names at opening parties, and the numbers in your account looked much better. The cup stayed on your desk, holding paper clips." },
+   { "label": "Take outside jobs", "result": "You write proposals for a cultural tourism company on weekends and earn a little extra. Nothing slips at the museum, though you are a good deal more tired." }
+  ] },
+  "c_ai": { "title": "Leading the museum's AI work", "situation": "The province has funding for digital exhibitions and someone must lead the collection database and an AI guide. It would take time to learn, and could mean two years with no exhibitions at all.", "options": [
+   { "label": "Lead it", "result": "You go through the records of two thousand objects and find a dozen old entries wrong. The day the AI guide goes live, a child asks it why one bowl is crooked." },
+   { "label": "Keep making shows", "result": "You pass it to the next department. For a year you spend more time in the galleries than anyone." }
+  ] },
+  "c_indie": { "title": "Going independent", "situation": "Several biennials have begun looking for you. Independent curating means freedom and a name, with no employer to pay your social insurance and no steady income. The director, close to retirement, hints that you should wait.", "options": [
+   { "label": "Go out alone", "result": "You rent a room at Sanbao with a view of the hills and hang a wooden sign on the door.", "end": "You became an independent curator, flying all over for three or four shows a year, with an income that swung up and down. Every time you came back to Jingdezhen, the carts of unfired ware on the road still made you edge aside." },
+   { "label": "Wait a while", "result": "You politely decline two and accept one you can do on leave. Your name climbs the museum's schedule." }
+  ] },
+  "c_title2": { "title": "Applying for Associate Research Curator", "situation": "The head of exhibitions post has opened up. Take it and you will run the schedule and personnel and have a better shot at Associate Research Curator. But a book you've worked on for five years would never get finished.", "options": [
+   { "label": "Take the post", "result": "You begin attending a great many meetings. In your first year you shorten the department's reimbursement process, for which people thank you more than for any show." },
+   { "label": "Write the book", "result": "It comes out in a run of a thousand. Someone finds a copy on a secondhand stall and sends you a photo." }
+  ] },
+  "c_city": { "title": "A museum in the provincial capital", "situation": "A big museum in Nanchang needs a ceramics researcher and can arrange a transfer. A bigger platform, better schools for your child. Your spouse is willing. You can't quite let go of these workshops.", "options": [
+   { "label": "Stay in Jingdezhen", "result": "Your child stays at the same school, and on weekends comes to the kilns with you to play with clay." },
+   { "label": "Move to Nanchang", "result": "You move. Your office is on the twentieth floor, and the climate control in the storeroom far outdoes the old workshop's.", "end": "You moved to the big museum in the capital and your research went deeper, only you never again had to ride around a cart of white ware. Every spring you still came back to Jingdezhen and stood for a while at a kiln." }
+  ] },
+  "c_parent": { "title": "Your mother needs company", "situation": "Your mother lives alone in Shangrao and has begun forgetting things. A big show is scheduled for the end of the year, and you are in charge of it.", "options": [
+   { "label": "Hand over the show", "result": "You give your deputy the plan and contact book and go home for two months. You learn to make the dish your mother likes." },
+   { "label": "Go back and forth", "result": "You finish the last wall panel on the high-speed train. On opening day you leave before the end to catch the last train." }
+  ] }
+ },
+ "endings": {
+  "retire": "When your last show comes down you check the condition reports one by one and sign the final page. The workers dismantle the temporary walls. The sawtooth roof shows again, and the light falls on the concrete floor. You leave your flashlight on a shelf in the storeroom. Outside, the carts of white ware are still moving along.",
+  "burnout": "Years of big shows have worn down your neck and your sleep. The museum moves you to collection research, away from installations. You spend your days with the things in the storeroom, and they never hurry you. You stop going to openings, and sometimes walk through the galleries after closing."
+ },
+ "stages": [
+  "Most of your day goes to the storeroom and the galleries: opening crates, checking condition reports line by line, photographing, mounting labels, lifting objects onto plinths. When a curator's outline comes down, you enter every object's dimensions, date and provenance in Excel and confirm times with the shippers and the insurance broker. You don't make the decisions yet. You just can't make mistakes.",
+  "Now you propose your own subjects. You go around studios, look at unfired ware, choose work, write the outline and budget, defend them to the director and negotiate loan agreements with artists. The week before an opening you nearly live in the gallery, with a CAD layout and a roll of masking tape. Unlike before, when something goes wrong the name on it is yours.",
+  "What you hold now is the full year's exhibition schedule, the budget sheets and proposals from two young curators. Mornings you are in meetings, afternoons you edit other people's outlines, evenings you have dinner with visiting colleagues. You negotiate exchange shows with other museums and explain to the academic committee why a subject is worth doing. You make only one show a year yourself, and sign off on everyone else's.",
+  "What this museum looks like five years from now is mostly yours to say. You review its scholarly direction, write foundation applications, sit on review boards, and put your name behind young people's projects. You still go to kilns and studios several times a year, with no notes, only a flashlight, and sit and listen to the craftsmen."
+ ],
+ "work": [
+  "Lao Song from the next department shows you how to support eggshell porcelain from inside, with tissue paper balled up and fed in bit by bit, neither loose nor hard. That bowl comes out of its crate feeling lighter than it went in.",
+  "You enter eighty objects' dimensions in Excel and when checking find one vase's height and width reversed. The plinth was almost built to the wrong size. Lao Zhou the carpenter changes his drawing back.",
+  "The artist Xiao Qin comes to install and insists on placing her work at the very front edge of the case. You bring a tape and measure the fall clearance. She mutters a bit and moves it back two centimeters.",
+  "On an old painter's workbench you turn up a stack of old sketches for designs. Throw those out, he says. It takes you three months to persuade him to let that paper lie in the middle of the case.",
+  "The insurance broker returns the valuation, and one group of works is insured at half what the collector stated. You spend a week on the phone with both sides and settle in the middle, writing the new number into the loan agreement.",
+  "Lao Song the lighting man says this wall can't be lit. You ask him to bring the piece forward ten centimeters. The night before the opening, the wall finally shows the shadow you wanted.",
+  "Your deputy hands in an outline that uses “dialogue” five times. You don't edit it. You call and ask her: if this show could keep just one sentence, which would it be? She thinks a long time and sends one line.",
+  "A museum in another province wants an exchange, and the shipping costs in the contract are vague. You sit with Xiao Lin from finance and go through them for an afternoon, down to depreciation on the crates.",
+  "A young assistant speaks at an opening for the first time, sweating through her notes. You stand in the front row, nod to her, and put your phone back in your pocket.",
+  "A foundation officer asks about the show's social value. You don't open any slides. You take him to see the row of lockers behind the workshop that the workers once used.",
+  "The academic committee is reviewing a newcomer's proposal, and the old gentlemen are shaking their heads. You say let her try, if it fails it's on me, and sign the review form.",
+  "The family of an old ceramicist wants to donate a body of handwritten glaze recipes, and the terms keep changing. You sit four afternoons in their living room. On the final page, his son signs."
+ ],
+ "past": [
+  "You went to school in Jiujiang. The bowls at home had a small red mark on the bottom. One day you asked what it was. From the factory, your grandfather said.",
+  "When you filled in your college choices your parents wanted accounting. You quietly put art history first and told them it was a humanities major.",
+  "In your third year you interned at a museum and in the storeroom saw an export porcelain plate with an old rivet repair on the bottom. You stood there for a long time and decided on graduate school.",
+  "In graduate school you wrote on Ming and Qing export wares and went to Jingdezhen three times, staying at a guesthouse in the old town. It was the first time you saw someone throw a pot. In their hands the clay stood up all at once.",
+  "The year you finished, the big museums in Beijing were only taking interns, and classmates went to auction houses. You saw this Jingdezhen museum advertising, with few permanent posts and modest pay.",
+  "In the interview the director handed you a bowl and asked what period it was. You looked at the foot and said you weren't sure. He nodded: that sentence is enough."
+ ],
+ "late": {
+  "pension_note": "Estimate: public institution pension plus occupational annuity, about two-thirds of final monthly pay.",
+  "scenes": [
+   "You rearrange the bookshelves at home, then turn over those few bowls and look at the bottoms.",
+   "For the museum's anniversary show the young staff ask you to read the outline. You circle one word in pencil and hand it back.",
+   "Going to the market early, you see an old craftsman pull a board of pots past. You step aside out of habit, and he nods to you.",
+   "Your book is out of print. A student buys a used copy online and mails it to you to sign. An old wall label is tucked inside.",
+   "The storeroom holds at twenty degrees. You go through the old catalog entries one by one and correct a few characters your predecessors got wrong.",
+   "The doctor says you can take less medicine now. You start walking through the old town once a week and sitting for a while outside a small porcelain repair shop.",
+   "You teach yourself kintsugi to mend a cup you broke. The repair is not pretty. You keep drinking tea from it.",
+   "After you've moved on, the museum sends you a catalog. Your name is gone from the staff list on the back cover, but the paper is still the kind you once chose.",
+   "Passing through Jingdezhen on business, you go in to see a new show, and silently count the words on a label.",
+   "You take your child back to the workshops, and they ask what the chimney was for. You think for a moment and begin at the beginning.",
+   "Friends visit from out of town and you take them to see the kilns. On the way back you each buy a few cups, and you pick out the slightly crooked one.",
+   "After a rain the sawtooth roof slices the light into strips. You stop for a moment as you pass."
+  ],
+  "closing": {
+   "retire": "Afternoon light lies in the bowl on the table. You turn it half around so the hairline faces in.",
+   "burnout": "The storeroom lights go off. Those things stay there quietly in the dark, and you go home too.",
+   "end": "You covered a lot of ground later on. The bowls at home, you still turn over for a look."
+  }
+ }
+}

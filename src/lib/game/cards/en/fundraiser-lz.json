@@ -1,0 +1,196 @@
+{
+  "id": "fundraiser-lz",
+  "occupation": "Nonprofit Fundraiser",
+  "role": "Fundraising Associate",
+  "headline": "A social work graduate who stayed in Lanzhou, finding money one donation at a time for village schools in the hills of Dingxi, from a rented office in an old tower block",
+  "unit": "A Lanzhou nonprofit working on rural education in China's northwest",
+  "unit_type": "Private nonprofit organization",
+  "city": "Lanzhou",
+  "city_tier": "Tier-2 city",
+  "education": "Bachelor's degree (Social Work)",
+  "level": "You can write a thank-you letter but don't yet dare to ask anyone for money",
+  "intro": "The office is on the ninth floor of an old building in Qilihe District. Eleven people, and enough in the account for five months of salaries. Your job is to find money for libraries and teacher training at forty-odd village schools in the hills of Dingxi and Longnan. From today you must learn something nobody taught you at college: how to ask people to open their wallets, and how to leave them feeling it was worth it.",
+  "salary_note": "Estimate: small nonprofits in the northwest generally pay low, about 70% of the national average, and annual fundraising decides whether there is any room for a raise.",
+  "facts": [
+    { "label": "Fundraising Associate / Assistant (current level)", "value": "0-2 years, ¥4,420–6,500 a month (national average, derived from pay by experience)", "source": "Pay by experience" },
+    { "label": "Next level up", "value": "Fundraising Supervisor / Senior Fundraising Officer (2-4 years)", "source": "Career map" },
+    { "label": "Pay after 10+ years", "value": "¥15,000 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Planning and running a charity dinner", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Keeping donors and raising renewals", "source": "AI exposure" },
+    { "label": "Open positions", "value": "2 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "You carry a bowl of beef noodles upstairs and open the donor spreadsheet. Thirteen new monthly gifts came in yesterday. One is for ¥9.90, with a note: don't tell my mom.",
+    "You send each new donor a thank-you text. There is a template, but you change the first line anyway, until you can read it without wincing.",
+    "A colleague from the program team is back from Tongwei with a stack of photos and a handwritten book list. You ask if you can use this one. She says she'll have to check with the teacher and the parents first.",
+    "You are revising a proposal for a company. In the budget, there's the line for administrative costs: finance wants it spelled out, and the company wants it smaller.",
+    "Six calls to monthly donors who have lapsed. Four don't pick up. One says he has just lost his job. One says: how are those kids doing now? You talk for ten minutes.",
+    "The platform wants an update on your public fundraising. You compile last month's income and spending, entry by entry against the bank statement. It's three yuan off. You go through it again.",
+    "After work you walk a stretch along the Yellow River. There is a smell of earth on the wind, and on your phone you answer the last donor's message.",
+    "By now you've been thinking about matching-day copy for hours. You write one very moving sentence and delete it, because it is very slightly untrue."
+  ],
+  "ladder": [
+    { "title": "Fundraising Associate / Assistant", "stage": "Entry", "focus": "Donor care, online campaign execution, event support" },
+    { "title": "Fundraising Supervisor / Senior Fundraising Officer", "stage": "Junior", "focus": "Own one fundraising line, plan events and platform campaigns" },
+    { "title": "Fundraising Manager", "stage": "Mid-level", "focus": "Corporate partnerships, major gifts and breaking down annual targets" },
+    { "title": "Fundraising Director / Director of Development", "stage": "Senior", "focus": "Fundraising strategy, budget, compliance and team" },
+    { "title": "Deputy Secretary-General / Secretary-General", "stage": "Executive", "focus": "The organization's overall resources and strategy" }
+  ],
+  "ai_tasks": [
+    { "name": "Planning and running a charity dinner", "how": "AI can help with a first guest list, run-of-show, draft speeches and a budget. Whether major donors come, how the room feels, what to do when something goes wrong, and saying thank you in person all depend on people." },
+    { "name": "Keeping donors and raising renewals", "how": "AI segments donor data, warns of lapses, and drafts personal thank-you notes and call scripts. People decide which donors deserve a call or a visit, and handle conversations with feeling or demands in them." },
+    { "name": "Launching a public campaign on a designated platform", "how": "AI drafts the project description, budget notes, filing materials and publicity, and checks the format. People answer for truthfulness and compliance, confirm the materials, and deal with the platform and the authorities." },
+    { "name": "Closing a corporate social responsibility partnership", "how": "AI can look up public company information, collate its giving preferences and draft a proposal. Finding out what they really want, building trust, negotiating and moving their internal decision depend on human relationships and judgment." },
+    { "name": "Emergency fundraising after a sudden event", "how": "AI quickly produces campaign copy, multi-channel releases, ledger templates and FAQs. People judge whether the organization is qualified to raise funds, how the money is used and whether the information is accurate, and answer for it publicly." },
+    { "name": "Running a matching day or monthly giving campaign", "how": "AI makes the copy, posters, community messages, daily data reports and volunteer rosters. People mobilize core donors and volunteers, talk to them directly, adjust the pace on the fly and look after partnerships." },
+    { "name": "Publishing fundraising disclosures on schedule", "how": "AI can compile income, spending and progress from ledgers and project records, generate a legally formatted disclosure and flag deadlines. People just verify the numbers, spot-check for omissions and sign off." },
+    { "name": "Setting the annual fundraising plan and leading the team", "how": "AI analyzes past results and channel performance, runs budgets and scenarios and drafts the plan. People set targets, choose channels, assign staff, lead the work and answer for the result." }
+  ],
+  "events": {
+    "e1": "The first time you went with the executive director to see a company boss, your only job was handing over the proposal. Outside she said: you were embarrassed on their behalf the whole time, and they could see it.",
+    "e2": "Your first trip to a project site in Min County, four hours on mountain roads. The village teacher showed you the book corner, its covers wrapped in old calendar pages. The copy you wrote when you got back was the first your colleagues ever shared.",
+    "e3": "September's matching day, and the whole organization barely closed its eyes for three days. You sat watching the back end. At two in the morning the curve was still climbing, and everyone ate a box of mooncakes in front of the screen.",
+    "e4": "A donor who had given monthly for four years suddenly canceled, with a note saying that after seeing your salary costs, nonprofit people shouldn't be paid so much. You looked at that number and thought about your rent.",
+    "e5": "The account will cover only two more months of pay. The executive director suggests holding back half for now. Everyone nods. After the meeting, nobody walks toward the break room.",
+    "e6": "The company you've been pursuing for a year and a half finally signed: three years, enough for teacher training at twenty schools. Their manager said it was mostly because each time you came, you had done what you promised the last time.",
+    "e7": "Copy, posters and community messages all start with an AI draft now, and by afternoon you can see ten directions. The question has become which of the ten isn't lying, and that is still yours to answer.",
+    "e8": "The system flagged lapsing donors, and the list was accurate. But it suggested sending an exclusive benefits offer to an old donor recently widowed. You deleted that one by hand and made a phone call.",
+    "e9": "Years of travel, late nights and pressure, and your stomach isn't right. You've cut back on the noodles. The executive director tells you to get a checkup, and you say after matching day.",
+    "e10": "Your family asks again when you'll find a proper job. After you've explained for a good while your father says, so you ask people for money for other people. You think it over and don't argue.",
+    "e11": "A child from one of the book corners got into a teachers college and wrote to the organization, the characters pressed hard into the paper. You sent a photo of it to the retired teacher who paid for that book corner. She replied with a long string of voice messages.",
+    "e12": "You bought a small two-bedroom in an old complex in Anning District, half the down payment from your parents' savings. From the balcony you can see a little of the shadow of White Pagoda Hill, if you lean out.",
+    "e13": "Another organization's accounting scandal hit the sector and your donations fell by a fifth that month. You put all of the past three years' audit reports back up and answered donors' questions one at a time.",
+    "e14": "After a flash flood in the province, in the emergency appeal, you did not touch the part you weren't qualified to raise; it all went to a partner foundation. Someone called you timid. You posted the compliance clause in the group.",
+    "e15": "A major donor's wife wanted to build the school a new building. But what the school lacked was teachers, not buildings. It took you three dinners to turn that gradually into her own idea.",
+    "e16": "The college volunteers you trained spent a month in Longnan. When they got back, one young woman said she wanted to switch her major to education. You recommended two books and didn't dare tell her what this line pays.",
+    "e17": "There are fewer and fewer children in the villages, and a few of the schools you supported have merged. The books from the book corners filled forty-odd boxes, trucked to the central school in town. In the report, this takes up one line.",
+    "e18": "Among your first donors from twenty years ago, someone's child has begun giving monthly too. The note in the spreadsheet reads: my dad told me to.",
+    "e19": "The provincial annual inspection rules for social organizations changed, and you and finance worked overtime for a week. You delivered a thick binder, and on the way back got a call saying it was missing a stamp.",
+    "e20": "A student once supported by the program now teaches at a middle school in Lanzhou and brings her own students to volunteer. She doesn't remember you, and you don't mention it."
+  },
+  "choices": {
+    "c1": {
+      "title": "Use that photo or not",
+      "situation": "The monthly giving page isn't converting. The communications colleague says that if you swap in a photo of a child in a ragged padded jacket, clicks would double at least. The photo is real and the child's teacher says it's fine, but the child doesn't know.",
+      "options": [
+        { "label": "No, use the teacher in class", "result": "As expected, conversion barely moves. The executive director looks at the data, says nothing, and keeps your version." },
+        { "label": "Yes, get the money first", "result": "You raise a good deal more this month, enough for six hundred books. You never dare send that photo to that teacher." }
+      ]
+    },
+    "c2": {
+      "title": "Take over as Fundraising Supervisor?",
+      "situation": "Your predecessor resigned and went to Shanghai, and nobody runs public fundraising. The executive director asks if you'll take it: launching campaigns yourself, handling the filings, and carrying the annual number. For ¥600 more a month.",
+      "options": [
+        { "label": "Yes, be the Supervisor", "result": "You read the Charity Law and the rules on public fundraising until the margins curl. Your first campaign nearly fails review." },
+        { "label": "Not yet, master monthly giving first", "result": "You segment the two thousand-odd monthly donors, and attrition really does drop. The supervisor's seat goes to someone hired from outside." }
+      ]
+    },
+    "c3": {
+      "title": "How much should AI say for you?",
+      "situation": "The new system can generate a personal thank-you letter for every donor, even with the children's names in it. A board member says it could save two salaries. A young woman on your team asks quietly who will remember them after that.",
+      "options": [
+        { "label": "Learn it, and set the rules yourself", "result": "You write a one-page guide: which letters machines write, which calls a person has to make. Other organizations later ask for that page." },
+        { "label": "People should write thank-yous", "result": "You write slowly and write few. One donor posts a photo of a handwritten letter on social media. Just that one." }
+      ]
+    },
+    "c4": {
+      "title": "The CSR job at the company",
+      "situation": "A large company you've worked with is hiring a social responsibility manager in Xi'an at two and a half times your pay. They say: you understand nonprofits, and you understand us. Your mother's recent medicine isn't cheap.",
+      "options": [
+        { "label": "Go do CSR at the company", "result": "You finish handing over the donor spreadsheet and buy everyone a bowl of beef noodles.", "end": "You joined the company and became someone who approves nonprofit budgets. The first time a young fundraising associate sat across from you and passed over a proposal, her hand trembled a little. You pushed the tea toward her and said, take your time." },
+        { "label": "Stay and hold on a while", "result": "You decline and go back to the budget sheet. That month, for the first time, you ask the executive director for a raise. She gives you half of it." }
+      ]
+    },
+    "c5": {
+      "title": "Compete for Fundraising Manager",
+      "situation": "The organization is expanding and wants a Fundraising Manager over corporate partnerships and major gifts, with annual targets broken down per person. You and another colleague are both suited. She has a child, and the money matters more to her.",
+      "options": [
+        { "label": "Go for Fundraising Manager", "result": "You win it, and from then on spend every month calculating the gap. That colleague still works with you, but you don't have lunch together anymore." },
+        { "label": "Let her have it, take the program line", "result": "The next year you move up a little too. The day her child started school, she brought you a piece of cake." }
+      ]
+    },
+    "c6": {
+      "title": "An invitation from a Shanghai foundation",
+      "situation": "A national foundation wants you in Shanghai to do development work, on a bigger platform with higher pay. But their programs aren't in the northwest. You'd go from finding money for Dingxi to finding money for rural China.",
+      "options": [
+        { "label": "Go to Shanghai", "result": "You pack your bags and take along the writing brush a teacher in Min County gave you.", "end": "You went to Shanghai, and the sums grew several zeroes. Every July you take annual leave and go back to Dingxi at your own expense, to see the schools that are no longer yours to look after." },
+        { "label": "Stay, someone has to find this money", "result": "You turn them down, and they say they understand. That winter, you are the one who negotiates the heating bills for four schools." }
+      ]
+    },
+    "c7": {
+      "title": "The line with corporate partners",
+      "situation": "A company with mines in Gansu will give ¥3,000,000 at once, on condition that its plaque hangs in every book corner. The money would solve two years of the organization's survival. A board member has quietly mentioned its environmental disputes.",
+      "options": [
+        { "label": "Take it, but no plaques", "result": "After three rounds they agree to a name in the annual report only, and the amount is cut to ¥1,800,000." },
+        { "label": "Decline, find another way", "result": "Everyone is relieved, and more nervous. This year you travel to eleven more cities." },
+        { "label": "Take it, plaques and all", "result": "The organization survives, and you never go back to look at those plaques." }
+      ]
+    },
+    "c8": {
+      "title": "Go for Fundraising Director",
+      "situation": "The founder is stepping back, and the board wants to name a Fundraising Director for strategy, budget and team, and asks you for a three-year development plan. Writing it means nailing yourself to this desk.",
+      "options": [
+        { "label": "Write it, go for Director", "result": "The plan reaches its ninth draft. On the last page the board chair writes one word: Good." },
+        { "label": "Don't write it, I want to keep going out", "result": "You keep going to the villages every year and know more and more teachers. Let others go to the meetings." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "You hand over access to the donor spreadsheet, which by now has well over a hundred thousand rows. All these years the money you have spent for other people far exceeds what you earned in a lifetime. Walking out of the building, the owner of the noodle shop downstairs asks why you're so early today. From now on, you tell him, this is how early.",
+    "burnout": "You got through a great many matching days. This time you really can't. The executive director comes to see you, says nothing about work, and sets down a bag of apples. You write the account passwords on a piece of paper and hand it over. You still remember the names, but you no longer have to greet them one by one."
+  },
+  "stages": [
+    "Your days are the donor spreadsheet and thank-you letters: entering new monthly gifts into the CRM, sending each donor feedback, calling those who lapsed, carrying banner stands and manning the sign-in table at events. Most of the people you deal with are kind and cautious, and what they ask most is: where did the money actually go?",
+    "You begin running a fundraising line yourself: writing proposals, launching campaigns on the public platform, tracking filing numbers and updates, and rostering groups, posters and volunteers for matching day. You and the program team argue half a day over a sentence. Before, you only executed. Now the number on this line has your name on it.",
+    "Half your time is spent out meeting people: corporate social responsibility teams, foundation program officers, a few bosses who care. You carry a much-revised partnership proposal and a target breakdown, and you split the annual number among three reports. More important now than writing is hearing the conditions the other side has not said aloud.",
+    "You oversee where all the organization's money comes from: the annual fundraising strategy, channel budgets, compliance audits and the team. You explain the shortfall to the board, check fundraising cost ratios with finance, and buy noodles for young colleagues thinking of quitting. You rarely write copy yourself now, but no public figure goes out without your eyes on it.",
+    "You are the organization's outward face: answering to the board, dealing with the civil affairs bureau, meeting the biggest donors, deciding which counties to enter and leave next year. And when the account runs dry you are the first to know and the first to find a way, and then you walk into the office so that nobody can tell."
+  ],
+  "work": [
+    "A donor named Ma asks where the books he paid for have ended up. You find the Tongwei school in the project ledger and ask the teacher for a photo of the shelf. He replies with a very small smiley face.",
+    "Your first solo project report comes to thirty-two pages. Old Yang in finance draws a red line through the budget comparison: this row is ten yuan off the bank receipt.",
+    "At a weekend charity market you stand at the booth for six hours and collect twenty-one monthly-giving forms. Back at the office you enter them into the CRM one by one; three of the phone numbers look like hieroglyphs.",
+    "The platform's reviewers send back your project page, saying the execution cost ratio has no stated basis. You revise the budget notes, attach last year's audit report, and it passes the second time.",
+    "The night before matching day you sort two hundred volunteers into twelve chat groups and send each group leader a roster. The last leader is a retired principal, sixty-two years old.",
+    "A headline from Little Tang in communications is too moving, and you have her change it three times. She is too angry to speak to you. The next day the fourth version is on your desk.",
+    "You visit a maize seed company. The vice president's first question is whether you can issue a receipt. You set a sample donation receipt on the table and talk for ten minutes about the schools.",
+    "You and your report, Little An, cut the list of prospective donors from fifty to twelve, one page each, recording what they really care about and what you last talked about.",
+    "By midyear you've hit forty percent of target. You spread the breakdown out again and move a Xi'an company prospect from Little An's hands to your own. You spend the evening explaining to her.",
+    "At the annual budget meeting finance shows the fundraising cost ratio is over the line. You cut one online channel, move the money to keeping old donors, and the table on the projector is recalculated.",
+    "A report of five years hands in a resignation letter, saying she is getting married and needs to buy an apartment. You look at the pay sheet and write her a recommendation to the next employer.",
+    "The auditors come for three days. You put every campaign's filing number, receipts and disbursement vouchers into one binder, and when they finish they say it could serve as a model.",
+    "The board discusses withdrawing from two counties. You set out school numbers, student attrition and donor wishes in one table, and when you finish, you are the first to fall silent.",
+    "The civil affairs bureau comes for its annual inspection talk. You bring the charter and three years of financial reports. They ask in detail, you answer slowly, and on leaving they say, you've been steady these years.",
+    "With a month and a half of money left, you go alone to see an old donor. No slides, just a stack of the schools' new book lists. You talk until dark."
+  ],
+  "past": [
+    "You went to junior high in a county town under Dingxi, where the school library door stayed locked year-round. A college student on a teaching stint got hold of the key and let you borrow a book.",
+    "Your gaokao (college entrance exam) score was neither high nor low, and you put down social work at a university in Gansu. Relatives asked what a social worker did. You couldn't answer either.",
+    "In the winter break of your second year you interned at a nonprofit, helping paste up receipts, and learned for the first time how many hands a book passes through between a gift and a shelf.",
+    "Senior year. Classmates were taking the civil service exam or going home. You took it once too and missed by two points. You were relieved, and didn't quite dare tell your family.",
+    "You went first to a tutoring company as an enrollment rep. In one month you made thousands of calls, and found you could stand being turned down, but didn't want to keep deceiving people.",
+    "The nonprofit where you had interned was hiring a fundraising associate, at ¥1,000 less than enrollment paid. At the interview the executive director asked: do you dare ask people for money? You said you could learn."
+  ],
+  "late": {
+    "pension_note": "Estimate: nonprofits pay social insurance on a low base, so the pension is a little over 40% of final monthly pay.",
+    "scenes": [
+      "You turn off every monthly-giving alert on your phone except your own. On the day it deducts each month, you still take a look.",
+      "You go back to Min County. That village school has closed, and the book corner's shelves have moved to the village committee office, still bearing the labels you made.",
+      "The organization's twentieth anniversary, and the young people ask you to say a few words. You talk about a ¥9.90 monthly donation. They laugh, and then go quiet.",
+      "An unfamiliar number calls. It's one of the children from that school, now bringing a child of their own to Lanzhou to see a doctor, wanting to treat you to a meal. You say, the noodles are on me.",
+      "You finally have the checkup you put off so long, and take a very long leave. Waking up without looking at fundraising progress feels strange at first.",
+      "You volunteer at a community reading room, two afternoons a week, putting labels on books. Someone asks what you used to do. You say, I looked after books then too.",
+      "Old colleagues send news of the programs from time to time. You always reply slowly, and you read every one.",
+      "You've changed jobs, and you still can't bring yourself to stop your monthly gift to the old organization. New colleagues say why bother with so little. You smile.",
+      "Where you are now, you're often asked to talk about the northwest. You speak very concretely, down to the poplar at a certain school's gate.",
+      "You take your child back to Dingxi. The road is paved now, and the four-hour trip takes an hour and a half. The child complains about the wind. You stay a while longer.",
+      "When people share a fundraising link, you can't help reading the budget before deciding how much to give.",
+      "You still have that rejected line of copy. The sentence really was moving, and really was very slightly untrue."
+    ],
+    "closing": {
+      "retire": "Not many people along the Yellow River at dusk. You finish a bowl of noodles and walk slowly by the water. The numbers in the account are someone else's now.",
+      "burnout": "On the windowsill is a book wrapped in calendar paper. The afternoon sun is on it. You look at it for a while and don't open it.",
+      "end": "Every September your phone still chimes a few times. You tap in and give a little, not much, and go on with your day."
+    }
+  }
+}

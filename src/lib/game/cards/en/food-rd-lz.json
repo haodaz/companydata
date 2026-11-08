@@ -1,0 +1,186 @@
+{
+  "id": "food-rd-lz",
+  "occupation": "Food Engineering Technician",
+  "role": "Assistant R&D engineer at a river snail noodle factory",
+  "headline": "An assistant R&D engineer at a river snail noodle factory in Liuzhou, Guangxi, your hair always smelling of pickled bamboo shoots, in a daily fight with swollen packets and shelf life",
+  "unit": "The R&D department of a packaged river snail noodle factory in Liuzhou",
+  "unit_type": "Food processing plant",
+  "city": "Liuzhou",
+  "city_tier": "Third-tier city",
+  "education": "Bachelor's degree (Food Science and Engineering)",
+  "level": "You did fermentation labs at university and know the words water activity and HACCP. The first time you walked into the pickled bamboo shoot workshop, you held your breath and counted to ten",
+  "intro": "At your interview the boss didn't ask what you'd studied. He brought out a bowl of noodles and asked how many things you could taste. You said five, and he said eleven. As of today, you are trying to fit a flavor this sour, this rank and this addictive into a bag that can sit for half a year.",
+  "salary_note": "Estimate: food factory pay in Liuzhou is well below the national R&D average, but housing and noodles are both cheap.",
+  "facts": [
+    { "label": "Assistant R&D Engineer (current level)", "value": "0-2 years, ¥5,000–8,000 a month (national average, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "R&D Engineer (2-6 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Working with other departments, including sales, production and purchasing", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Monitoring quality at key points in production and keeping workshop practice to standard", "source": "AI exposure" },
+    { "label": "Open positions", "value": "5 linked listings nationwide, 0 in this city (the job database is mostly campus and internship postings)", "source": "Job listings" }
+  ],
+  "day": [
+    "A bowl of breakfast noodles at the stall by the factory gate. The stall's broth is different every day, and you've started to notice there's a little more chili oil than yesterday.",
+    "Change into work clothes, hair net, air shower. In the lab you go first to the incubator and its sample bags. Day fourteen, and number three has puffed up slightly.",
+    "You take the swollen bag to the clean bench and open it, and the smell gets to you first. Sample, inoculate, write the date on the petri dish, and wait two days for the result.",
+    "The boss comes to taste a new broth formula. He takes a sip, sets it down and says nothing, takes another and says: this soup has no strength. In your notebook you write no strength and add a question mark.",
+    "To the pickled bamboo shoot workshop for samples. A row of big vats stands open, the sourness goes straight up your nose, and the aunties there laugh at you: a few more days of it and it'll smell good.",
+    "Water activity meter and pH meter, once more, numbers into the sheet. Your senior points out you've got the wrong number of decimal places, and that numbers like this will get you laughed at.",
+    "Before leaving you check the temperature curve on the pilot line's retort. The curve is very flat, and your heart settles a little along with it.",
+    "Your flatmate says they always know when you're home. You drop your clothes straight in the washing machine and open the window, and the wind off the Liu River comes in."
+  ],
+  "ladder": [
+    { "title": "Assistant R&D Engineer", "stage": "Assisting", "focus": "Run bench trials, weigh ingredients, do physical, chemical and shelf-life tests, and learn formulas and data" },
+    { "title": "R&D Engineer", "stage": "Running projects", "focus": "Own new products and process improvements from bench to pilot to line, and be able to make the case to the workshop and quality control" },
+    { "title": "Senior R&D Engineer", "stage": "Technical lead", "focus": "Tackle hard problems such as swollen packets, flavor stability and compliance with standards; lead others and produce technical plans" },
+    { "title": "R&D Manager", "stage": "Leading", "focus": "Set the plant's product and technical direction, answer for new products and food safety, and make decisions with the boss and sales" }
+  ],
+  "ai_tasks": [
+    { "name": "Monitoring quality at key points in production and keeping workshop practice to standard", "how": "AI can watch critical control points through sensors and cameras, spot anomalies and send alerts. A person has to go to the floor, make corrections, explain the standard to workers and see it carried out." },
+    { "name": "Testing finished products for physical, chemical, microbial and preservative safety", "how": "AI can organize test data, read results, write reports and flag anomalies. Sampling, running the instruments, retesting and making the final call stay with a person." },
+    { "name": "Testing product attributes, such as reducing sugars in candy", "how": "AI can help calculate, compare against standards, file data and find trends. Specific measures like reducing sugars need a person to run the experiment, calibrate the instrument and verify the result." },
+    { "name": "Developing and evaluating new products", "how": "AI can search the literature, suggest formula ideas and predict trends in taste and shelf life. A person has to set the product direction, run bench and pilot trials, taste and pass judgment." },
+    { "name": "Process improvement and research projects", "how": "AI can help find information, analyze process data and draft proposals and applications. A person has to ask the real question, design the validating experiment and make the improvement work on the line." },
+    { "name": "Working with other departments, including sales, production and purchasing", "how": "AI can help organize materials and minutes. But weighing trade-offs among sales, production and purchasing and explaining technical limits depends on human relationships and judgment." },
+    { "name": "Ensuring every product leaving the plant is compliant, with no food safety problems", "how": "AI can help check data before release and flag risks. Whether a product ships, and who answers if something goes wrong, must be decided and carried by a person." }
+  ],
+  "events": {
+    "e_smell": "On the bus someone quietly moved one seat over. You sniffed your sleeve and could smell nothing at all. Your nose has been absorbed into the trade.",
+    "e_first_pass": "The boss tasted a chili oil packet you had made and for the first time said two words: fine, then. You ran back to the lab and copied out the formula number three times.",
+    "e_swell": "A batch shipped out of province came back with some packets swollen. You and quality control spent three days going through sterilization records and ingredient lots, and finally pinned it on one batch of bamboo shoots.",
+    "e_taste_panel": "The sensory panel sat in a row, seven people eating seven identical bowls and scoring sourness. You looked at the spread of numbers on the sheet and felt a strange kind of happiness.",
+    "e_ai_formula": "Formulation software can produce a dozen options with predicted shelf life in one go. You chose three for bench trials, and after one of them the boss said: now this has some strength.",
+    "e_ai_lab": "The lab has automated reading now, and big batches of data have reports by morning. You stay up late much less, and you've started to wonder how long it's been since you shook a test tube by hand.",
+    "e_rush": "Two months before Singles' Day the whole plant was fighting for capacity, and R&D trial runs couldn't get on the line. You worked three weeks of nights on the pilot line, and you and the workshop were both on fire.",
+    "e_rice": "This season's early indica rice has aged differently, and the noodles break as soon as they're boiled. You spent ten days in the workshop trying soaking times and extrusion temperatures bit by bit until they came back.",
+    "e_viral": "The factory's new flavor suddenly took off on short video, with one day's orders exceeding a month's. The boss handed out red envelopes while you worked out if the bamboo shoot stock would last.",
+    "e_bamboo": "You went with purchasing to Luzhai to buy bamboo shoots, and squatted beside a farmer's vat for a long time, smelling. For the first time, you understood that the flavor has to do with this river and this rain.",
+    "e_inspect": "Market regulators came to spot-check, and the plant was tense from morning on. You set out the batch records book by book. Everything passed, and that night the boss treated everyone to a meal that wasn't noodles.",
+    "e_mom": "Home for New Year, your mother said everything was fine except don't bring your work home. You stood at the door, awkward, with ten boxes of the factory's noodles.",
+    "e_conflict": "Sales wanted a new flavor within a month, and you said shelf-life tests would take at least three. The meeting went on till the boss banged the table, and your schedule got squeezed down to forty days.",
+    "e_standard": "A local food standard was being revised and opened for comment. One of your suggestions on nitrite in bamboo shoots and sterilization was adopted. You took a screenshot, and the boss forwarded it to every group he was in.",
+    "e_mentor": "A new graduate on his first trip into the bamboo shoot workshop held his breath and counted to ten as well. You didn't laugh. You handed him the long-handled sampling spoon.",
+    "e_overseas": "The product was going abroad, with a thick stack of labeling and additive requirements from the other country. You ran the formula again in the lab, and changed this bowl of noodles almost past recognizing.",
+    "e_copy": "A new product from the factory next door looked strangely like your formula. Only a few people knew the details. At the meeting no one spoke, and they looked at one another.",
+    "e_tongue": "With age, sour and hot have both gone fainter on your tongue. You've begun trusting the instruments more, and more too the twenty-six-year-old beside you.",
+    "e_old_food": "The owner of a roadside noodle stall recognized you and said he now cooks with your factory's broth packets too, since it's easier. You finished a bowl and left him an extra ¥5."
+  },
+  "choices": {
+    "c_nose": {
+      "title": "Down to the workshop, or stay in the lab",
+      "situation": "Your mentor wants you to pick a focus. Bamboo shoot fermentation is in the workshop, dirty, rank and done by feel. The data in the lab is clean and easy to write up. To move up you'll need both, but you can only choose one for now.",
+      "options": [
+        { "label": "Down to the workshop", "result": "You learned to turn the vats from the aunties, and three washes couldn't get the smell off your hands. What they taught you isn't in any textbook." },
+        { "label": "Stay in the lab", "result": "You made the incubator and microbial test data perfectly neat. Your senior said your reports can go out without changes." }
+      ]
+    },
+    "c_exam": {
+      "title": "Do a part-time master's?",
+      "situation": "A university in Guangxi offers a part-time food science master's, weekend classes, tuition over ¥30,000. The factory would reimburse half, but you'd have to stay five more years after graduating.",
+      "options": [
+        { "label": "Do it", "result": "For two years you traveled back and forth every week, and your thesis was on those few microbes in the bamboo shoots. The panel praised your clean data. You didn't tell them how long you had been smelling it." },
+        { "label": "Don't", "result": "You kept your weekends for living and for walks along the Liu River, and learned the craft from the workshop and the samples." }
+      ]
+    },
+    "c_swell": {
+      "title": "What shelf life do you print",
+      "situation": "The boss wants to go from six months to nine, which would save a good deal in distribution. Your tests have only reached seven and a half months and the data is still a little short. Sales has already sent over the new packaging proofs.",
+      "options": [
+        { "label": "Go by the data", "result": "You put the seven-and-a-half-month curve up at the meeting. The boss looked grim for days, then never raised it again, and put you in charge of product stability." },
+        { "label": "Try another process step", "result": "You ran two more months of accelerated trials and added a step, raising the cost by twenty fen a bag. The boss agreed. The production line didn't." }
+      ]
+    },
+    "c_ai": {
+      "title": "Lead the AI formulation effort?",
+      "situation": "The boss is back from a trade show saying everyone's using AI for formulation and flavor prediction. He wants you to lead it, feeding in all your years of formula and sensory data. You know that this data is what the factory lives on.",
+      "options": [
+        { "label": "Lead it", "result": "You spent half a year cleaning up the chaotic spreadsheets. The system can guess seven or eight parts of it. The rest still depends on your tongue." },
+        { "label": "Let others do it", "result": "You went on trying things spoon by spoon. The young people come to you with printed plans, and often you tell them: cook this one again." }
+      ]
+    },
+    "c_big": {
+      "title": "A big company tries to hire you",
+      "situation": "A national instant food giant in Guangdong is hiring R&D engineers to work on instant noodles, offering one and a half times your pay. But over there, the soup doesn't need smelling this many times.",
+      "options": [
+        { "label": "Stay in Liuzhou", "result": "You turned them down. Back in the workshop the next day, an auntie asked why you'd come in so early." },
+        { "label": "Go to Guangdong", "result": "On moving day you left your work clothes in the locker. An auntie from the workshop pressed a jar of her own pickled bamboo shoots on you.", "end": "You went to Guangdong and worked from then on on standardized instant noodles in a big clean lab. Every summer you still had someone send you things from Liuzhou, which you kept at the very back of the fridge." }
+      ]
+    },
+    "c_senior": {
+      "title": "Going for Senior R&D Engineer",
+      "situation": "The swollen packet problem has been dogging the plant for years, and whoever solves it can be rated Senior R&D Engineer. You think it lies in the bamboo shoots' secondary fermentation, but proving that means stopping a line, and the boss is sure to do the math.",
+      "options": [
+        { "label": "Convince him to stop", "result": "You argued with the boss half a day with two years of data, and the line stopped for three days. You turned out to be eighty percent right. The other twenty percent took another year." },
+        { "label": "Test during production", "result": "You adjusted bit by bit without stopping the line. It went a lot slower, but the workshop people felt you were reasonable." }
+      ]
+    },
+    "c_manager": {
+      "title": "Take the R&D Manager's seat",
+      "situation": "The old manager is retiring and the boss asks if you'd be R&D Manager. A lot of meetings, a lot of fights with sales, standing up for every batch that goes wrong. And you'd like to keep at that new microbial strain a while longer.",
+      "options": [
+        { "label": "Take it", "result": "Your office moved upstairs where you can't smell the workshop. Every few days you go down for a walk around, to take a look, you say. Really, you go for a sniff." },
+        { "label": "Keep doing science", "result": "You told the boss the strain wasn't finished. You people, he said. Then he called someone else into the office." }
+      ]
+    },
+    "c_own": {
+      "title": "Go out on your own?",
+      "situation": "The owner of a noodle shop chain wants you as a partner in a supply chain for bamboo shoots and broth, his money and your skills. You've got ideas of your own, but this factory has fed you for all these years.",
+      "options": [
+        { "label": "Go in as partner", "result": "You left your resignation on the boss's desk. He looked at it a long time and said: take one formula with you and I'll sue. I know, you said.", "end": "You rented a small workshop in the Yanghe industrial area, and lost money for three years before your broth came into a flavor of its own. Your old boss would sometimes come by and taste it, saying nothing, and leave only after finishing." },
+        { "label": "Join a testing agency", "result": "You wanted a life that didn't require smelling. A third-party testing firm a friend knew needed someone who understood fermentation.", "end": "From then on you stood on the other side, writing reports for other factories. When swollen bags were sent to you, you could tell at a glance roughly where the problem lay." },
+        { "label": "Stay", "result": "You politely declined him. The boss heard about it, said nothing, and at year's end the bonus was a little bigger." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On the day you retired you went one last time to the pickled bamboo shoot workshop, where the aunties have changed several times over. You scooped up a little with the long-handled spoon, smelled it, and said: it'll do. Crossing the Liu River bridge on your way home, the wind didn't smell of anything, and you weren't quite used to that.",
+    "burnout": "When your body and your nose were about done, you handed over the sample room key and the formula records. Leaving, your hair still carried that smell. At home you washed for a long time, and then discovered you'd begun to miss it."
+  },
+  "stages": [
+    "Your day is weighing and recording: making up broth samples on the analytical balance, stacking bags in the incubator for accelerated testing, opening them on schedule for total plate count, water activity and acid value. Your senior sets the plan, and you do it, watch the curves and fill out forms. The aunties in the workshop call you the college kid, quality control finds your mistakes, and you write it all in your lab book.",
+    "One new product is yours from start to finish: bench formula, pilot run, the sterilization formula, the first batch on the line. In one hand you've got the HACCP critical control point sheet, in the other the boss's verdict of no strength. The workshop director and purchasing start negotiating with you seriously. You no longer just record numbers. You must say why you're changing them.",
+    "You now take on the problems no one can explain: recurring swollen packets, flavor that fades quickly, a batch of noodles that breaks when boiled. You design validation trials, read ingredient lot data, go over curves with the retort maker's engineer, and write the results up as technical plans. Samples nobody's sure about land on your desk, and quality control and the workshop act on your conclusions.",
+    "On your desk are the product road map and the year's budget. You decide with the boss what flavors to make this year, argue with sales about launch dates, and sign when a release is disputed. When outside standards change, you are first into the meeting. You rarely weigh anything yourself anymore. Only before each new product is finalized do you cook a bowl for yourself."
+  ],
+  "work": [
+    "Your senior has you measure the broth's soluble solids with a refractometer. You do it three times and get three numbers. He wipes down the instrument, has you try again, and this time they're close.",
+    "Auntie Wei in the workshop hands you a bamboo shoot and has you snap it to see if the fiber's old. Your hands run wet. You write the sample number on your glove and she laughs until she can't stand up straight.",
+    "On day three the petri dish grows a patch of white dots. You take it to Qin in the microbiology room. She takes one look and says it came from your hands, you still haven't washed enough.",
+    "The first trial batch of broth packets: you watch the temperature probe at the retort and work out the F-value twice. Workshop director Huang smokes while waiting for your nod. You nod, and only then does he open up.",
+    "Lu from purchasing says this batch of peanuts is twenty fen cheaper. You run them through the acid value tester, put the report in front of him, and he sighs and redials.",
+    "You cut the frying time on the bean curd stick packet by eight seconds. The crunch stays, and oil absorption drops noticeably. You send the curve to your senior, who replies: mm.",
+    "From the swollen batch you isolate three gas-producing bacteria, number them, and match them against ingredient lots. Qin says your sheet is finer than hers. You say you'd like to leave early too.",
+    "An engineer called Su from the retort manufacturer comes to tune it. You lay out three weeks of temperature curves and point to a place where they aren't flat. He follows the piping around and stops at a valve.",
+    "Meng, a new master's graduate, has built a beautiful model predicting six more months of shelf life. You take him to the incubator, point to the few packets that have puffed up, and say: first explain these.",
+    "At the annual new products meeting you pull a flavor sales has been pushing from the plan, your reasons written in three lines. That afternoon the sales director passes you in the hall and doesn't say hello.",
+    "One batch's test results sit right on the standard line. The quality control manager brings the release form, and you have two more groups sampled and wait until the next afternoon before you pick up a pen.",
+    "You give a training session for new quality control and R&D staff. The first thing you teach is how to keep a lab notebook, using the page sent back to you more than twenty years ago."
+  ],
+  "past": [
+    "You grew up in a county town in southeastern Guangxi, where your family ran a small braised meat shop. You often minded the fire, and took flavor more seriously than exams.",
+    "The gaokao (college entrance exam) took you to a university in Nanning for food science and engineering. At least you won't go hungry, your father said.",
+    "In fermentation lab your pickles were the best tasting in the class and also the least compliant. These two things, your teacher said, often don't conflict.",
+    "You interned in the quality inspection department of a beverage plant, looking at the same numbers every day. You wanted a job where you could put your hands into something.",
+    "At the campus job fair, few people stood at the booth of a noodle factory from Liuzhou. You asked what they needed. Someone who isn't afraid of the smell, the person in charge said."
+  ],
+  "late": {
+    "pension_note": "Estimate: enterprise employee pension in Liuzhou, with a middling pay base and long contribution years. You'll receive about 45% of your final monthly pay.",
+    "scenes": [
+      "Your first week of retirement you cook a bowl of noodles at home and let it sit a long while. Someone in the family asks what you're waiting for. You say you're waiting for it to cool enough to smell right.",
+      "Young people from the factory bring a new product for you to try. You smell it and say it's not bad, just a touch less. They take it back and change it.",
+      "On your balcony you make pickled bamboo shoots in a crock, and the neighbors complain to the property management twice. You move the crock to the farthest corner.",
+      "After you stopped working, there was a stretch when you didn't want any noodles at all, only plain congee.",
+      "You begin teaching pickling at a community senior college, and in the middle of it you get onto lactic acid bacteria, and no one's really listening.",
+      "Your stomach's much better. One day you pass a noodle stall, sit down again, and order a bowl without chili.",
+      "In the new place, the first time you taste another maker's broth, you can more or less tell in one sip what they use. You don't say so.",
+      "A former colleague sends a message saying the old formula has been changed again. You ask what changed, and he types a few words. You think it over and reply: pity.",
+      "On a supermarket shelf in another city you see a noodle you finalized years ago. The packaging has changed and the ingredients list hasn't. You buy a bag.",
+      "Your child brings friends home. A friend walks in and says it smells great. Don't ask, your child says, that's just how our family is.",
+      "You take a walk by the Liu River and see young people in a long line for a bowl of noodles. You stand at the back and watch for a while, and don't join the line."
+    ],
+    "closing": {
+      "retire": "In the evening you push open the window and the wind off the Liu River comes in, carrying someone's cooking broth. You close your eyes and count, and this time you get to eleven.",
+      "burnout": "Your clothes no longer have that smell. Now and then you open the cupboard instead, take out a broth packet that's been there a long while, smell it, and put it back.",
+      "end": "The nose you used your whole life is still working. On streets in other cities, from half a block away, you know someone is cooking that thing."
+    }
+  }
+}

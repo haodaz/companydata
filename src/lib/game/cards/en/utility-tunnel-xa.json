@@ -1,0 +1,190 @@
+{
+  "id": "utility-tunnel-xa",
+  "occupation": "Utility Tunnel Maintenance Technician",
+  "role": "Trainee inspector in an underground utility tunnel",
+  "headline": "A trainee inspector beneath the new city of Xiong'an, walking ten-odd kilometers of utility tunnel a shift, smelling for what's off, listening for what's wrong, and copying down readings",
+  "unit": "A municipal utility tunnel operations company in Xiong'an New Area",
+  "unit_type": "Municipal operations company",
+  "city": "Xiong'an",
+  "city_tier": "New planned city",
+  "education": "Vocational college (Mechatronics)",
+  "level": "You just got your low-voltage electrician's certificate and have done two weeks of confined-space training. On your first trip below, you lost count of the turns",
+  "intro": "When you walked down into your first section of tunnel, the door shut behind you and the sound of the city was gone. Your master hung a four-gas detector on your chest and said your nose should know before this thing goes off. As of today, this new city's power, water and network cables all run above your head, and you walk beneath them.",
+  "salary_note": "Estimate: municipal operations firm in Xiong'an, slightly above the national average, with night shift allowances and rent far cheaper than Beijing.",
+  "facts": [
+    { "label": "Tunnel Inspector (current level)", "value": "0-2 years, ¥4,500–6,500 a month (national average, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Tunnel Maintenance Technician (2-6 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Maintaining ventilation, drainage, lighting and other electromechanical equipment", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Scheduled inspection of power, telecom, water and drainage lines in the tunnel", "source": "AI exposure" },
+    { "label": "Open positions", "value": "0 linked listings nationwide (the job database is mostly campus and internship postings)", "source": "Job listings" }
+  ],
+  "day": [
+    "Two buns from a stand at the foot of a resettlement block in Rongdong. At the dispatch room, you first look through last night's alarm log: three entries, two of them false.",
+    "Change, hard hat, zero the detector. Your master signs the tunnel entry log, and you follow him and write your number on the line below his name.",
+    "Fire doors pushing open one after another onto a corridor running out of sight. Overhead are cable trays, beside you thick water pipes, and the lights come on section by section as you go.",
+    "At the eighth fire compartment, a small patch of water on the floor. Your master crouches with a flashlight on the expansion joint and has you feel if it's still seeping. You feel it. Your fingertip comes away cold.",
+    "Up for lunch, and the sun makes you squint. Spend long enough below, your master says, and you have to remember to look up.",
+    "Servicing an exhaust fan: remove the cover, tighten the bolts, test the insulation. The corridor is narrow, your elbow is jammed against a bracket on the other side, and you can't get any force behind it.",
+    "The inspection robot on its rail glides past you and its camera turns a little. Your master raps on its casing and says it can't smell.",
+    "You upload the inspection record and hand over the shift. Back at the dorm you find your phone logged over twenty thousand steps today, and you've seen exactly three people."
+  ],
+  "ladder": [
+    { "title": "Tunnel Inspector", "stage": "Shadowing", "focus": "Walk the route with your master, take readings and record brackets and joints. First you have to learn to see the problem" },
+    { "title": "Tunnel Maintenance Technician", "stage": "On shift alone", "focus": "Stand shifts alone, service fans, pumps and lighting, deal with common alarms and leaks. Hands and judgment take you up" },
+    { "title": "Maintenance Team Leader", "stage": "Leading a shift", "focus": "Lead a team, manage tunnel entry permits and hot work, and coordinate the power, telecom and water companies" },
+    { "title": "Maintenance Supervisor", "stage": "Running a district", "focus": "Manage a district's maintenance plan, budget and emergency plans; carry overall responsibility for safety; meet with the owner and the utility companies" }
+  ],
+  "ai_tasks": [
+    { "name": "Scheduled inspection of power, telecom, water and drainage lines in the tunnel", "how": "Inspection robots and cameras can follow fixed routes while AI spots unusual images and readings. Strange smells, odd sounds and small changes still take someone on site, and so do the corners machines can't reach." },
+    { "name": "Checking and recording the condition of line brackets, joints and tunnel structure", "how": "Image recognition can help find loose brackets, cracks and corroded joints. A person confirms up close, taps to check, and judges whether it needs dealing with." },
+    { "name": "Maintaining ventilation, drainage, lighting and other electromechanical equipment", "how": "Taking fans, pumps and light fittings apart, replacing and adjusting them is handwork in cramped, damp places. AI can at most offer fault prompts and reminders. Actual repair depends on people." },
+    { "name": "Inspecting and maintaining monitoring, alarm and fire systems", "how": "Systems can self-test and flag faulty alarm points and aging equipment. A person tests on site, services the fire equipment, and confirms false and missed alarms." },
+    { "name": "Monitoring temperature, humidity, harmful gases and water level", "how": "Sensors collect these continuously, and AI can analyze trends and warn of limits. A person only calibrates the sensors now and then and spot-checks whether the data can be trusted." },
+    { "name": "Tracing hazards such as leaks, standing water and overheating cables", "how": "AI can pick up early signs from thermal imaging, video and shifting data. A person goes to find the cause, assess the risk and decide what to do." },
+    { "name": "Handling equipment faults and sudden emergencies, and organizing repairs", "how": "AI can suggest fault locations and pull up drawings and emergency plans. Real emergency response, directing the scene, coordinating the utilities and doing the repairs rest on human responsibility and hands." },
+    { "name": "Filling in inspection and repair records and reporting operations", "how": "AI can generate inspection records, repair ledgers and operating reports from data, voice and photos. A person checks the key content and signs." }
+  ],
+  "events": {
+    "e_lost": "On your own you went into the wrong compartment and wandered for twenty minutes until you saw a material hatch number. Your master didn't scold you. He had you walk that stretch twice more, until you could feel the turns with your eyes shut.",
+    "e_first_catch": "Beside a cable joint you caught the faintest smell of scorching. The infrared thermometer read more than ten degrees higher than its neighbors. The people from the power company came and said good thing you caught it early.",
+    "e_flood": "July rainstorms, and the drainage pumps went off one after another. You held two days and nights in shifts on instant noodles and turns at dozing, and the water line climbed no higher.",
+    "e_alarm": "An alarm in the middle of the night. You climbed out of bed and went down, walked a kilometer and a half, and found a sensor with moisture in it. You wrote false alarm in the record and then three more lines on why.",
+    "e_robot": "Rail-mounted robots have taken over half the scheduled inspections. They don't get tired and don't go off shift. Your route has shortened, and there's a tablet in your hand for watching what they send back.",
+    "e_report": "Now you take a photo, say a sentence, and the system writes the inspection record. For the first time you finished all your work before the end of the shift, and weren't sure what to do next.",
+    "e_mom_home": "Weekend dinner at the new flat in Rongdong. Your mother asks: you just wander around down there all day? She stamps on the floor, and you laugh.",
+    "e_damp": "The tunnel is cold and damp all year, and your lower back has begun to ache. In summer it's hot above and cold below, and you change seasons several times a day.",
+    "e_contractor": "A telecom crew wanted in without a permit, saying it would take ten minutes. You held the door. Their foreman cursed, made three phone calls, and in the end filled out the permit.",
+    "e_seep": "An expansion joint kept seeping after three repairs. On the fourth you squatted there a whole afternoon and found the water was coming along a wall sleeve. The plan changed and the seep stopped.",
+    "e_night": "Half a month of night shifts in a row. You've lost track of day and night and of what day of the week it is, and your girlfriend says your voice has started to echo.",
+    "e_visitors": "Many people come to tour the tunnel and sometimes you're called in to guide. A primary school student asks: are there rats down here? There are robots, you say. Are robots scared of rats? the kid says.",
+    "e_drill": "Twice a year there are confined-space and fire drills, running through a dark tunnel in breathing apparatus. Your time was a minute faster than last time, though your legs aren't what they were when you were young.",
+    "e_city_grow": "New towers keep rising overhead, and the load curve below goes higher every year. You layer several years of cable temperature data on one another and feel you're taking this city's temperature.",
+    "e_mentor": "On his first trip below the new kid can't count the turns either. On the first page of his notebook you write: you've only walked it when you can walk it with your eyes closed.",
+    "e_coord": "Power, telecom and water all want tunnel access the same week, each saying theirs is the most urgent. You sit in the dispatch room and go through eleven versions of one schedule.",
+    "e_lung": "The doctor at your checkup says your spine and joints have got their years on them. You bring a back brace below now, and you no longer take the service ladder two rungs at a time.",
+    "e_map": "From memory, you mark up a map of all the routes you've walked: where it tends to seep, where the signal drops. The young ones say this map is more useful than the one in the system.",
+    "e_son": "Coming home from school, your son points at the ground and says my dad works under here. His classmates don't believe him. He stamps on a manhole cover and says: listen.",
+    "e_ai_alert": "The new smart alerts push dozens a day. You and your team check each one. Some are real. One is a moth that landed on a camera. You begin writing rules for the system, telling it what doesn't count."
+  },
+  "choices": {
+    "c_nose": {
+      "title": "Before making Tunnel Maintenance Technician, take night shifts?",
+      "situation": "If you want to make Tunnel Maintenance Technician, your master says, you've got to learn to fix things. Day shift has too many people and you don't get near the equipment. Nobody bothers you on nights and you learn faster taking things apart, but it wears you down.",
+      "options": [
+        { "label": "Learn on nights", "result": "With the old hand on nights you stripped down your first sewage pump, soaked to the skin, and your hands got much faster." },
+        { "label": "Days, slowly", "result": "You followed your master step by step. Half a year on you'd learned plenty, except that no piece of equipment had yet been fixed by you alone." }
+      ]
+    },
+    "c_cert": {
+      "title": "Take the special work and high-voltage certificates",
+      "situation": "The company says these are required for the job, and more so for leading a team. High-voltage electrician and confined-space supervisor, training in Baoding, and part of the cost is on you. With them you could sign for hot work and tunnel entry.",
+      "options": [
+        { "label": "Take them", "result": "You spent three weeks at the training base in Baoding and got the wiring diagrams by heart. Back home your master handed you the supervision form." },
+        { "label": "Save the money", "result": "You kept the money and bought a secondhand electric bike. As for the certificate, you told yourself, next year." }
+      ]
+    },
+    "c_rail": {
+      "title": "The subway is hiring",
+      "situation": "Beijing's subway maintenance is hiring, with higher pay than here and legends of a hukou. Your girlfriend works in Beijing, and you've been squeezing onto the intercity train every week for two years.",
+      "options": [
+        { "label": "Stay in Xiong'an", "result": "You thought it over for days. Your parents are here, and you know this tunnel by now. You agreed she'd come and see what work there was out this way." },
+        { "label": "Wait one more year", "result": "You put the application in a drawer. That year you rode the intercity many more times, and the tickets piled up thick." },
+        { "label": "Go to Beijing", "result": "You turned in your badge. The roads down below you all remember, your master said. The ones up top, watch out for yourself.", "end": "You went to Beijing and kept walking in another, deeper underground. Sometimes in a tunnel you caught a faint odd smell, and you were still the first to stop." }
+      ]
+    },
+    "c_ai": {
+      "title": "Go and manage the robots?",
+      "situation": "The company is forming a smart inspection team to manage robots and the alert platform, tuning rules and calibrating sensors. Less time below, more in front of screens. Your master says you're young and should go. You can't quite let go of the solid feeling of measuring with your feet.",
+      "options": [
+        { "label": "Go and learn", "result": "You relabeled a year of false alarms entry by entry and cut alerts by half. There's a new position on your badge." },
+        { "label": "Keep going below", "result": "Somebody has to know what it smells like down there, you said. When young people later came across alarms they couldn't explain, they came to you first." }
+      ]
+    },
+    "c_ticket": {
+      "title": "Do you sign this hot work permit",
+      "situation": "The contractor is behind schedule and wants to weld in the compartment, and the gas readings are right on the line. The project people are pressing you: it's a small thing, sign it and everybody goes home. You are the one on duty.",
+      "options": [
+        { "label": "Don't sign, retest", "result": "You had them ventilate for another hour and signed only after a passing retest. They cursed you all afternoon and you didn't say a word back." },
+        { "label": "Let the leader decide", "result": "You phoned in the situation to the team leader exactly as it was. He came and had them test again. You learned that this too is a way of signing." }
+      ]
+    },
+    "c_leader": {
+      "title": "Compete for Maintenance Team Leader",
+      "situation": "The team leader has moved to another district, and a new Maintenance Team Leader is to be chosen from among the veteran technicians. It means making rosters, fighting with the utility companies, and signing every work permit. It's been a long time since you've talked to people this much.",
+      "options": [
+        { "label": "Compete for it", "result": "In your pitch you described the expansion joint that kept seeping and how you traced where the water came from. People in the audience could tell you'd truly been down there." },
+        { "label": "Stay on the front line", "result": "I'd rather go below, you said. The new leader is three years younger than you, and always asks you first when he makes the roster." }
+      ]
+    },
+    "c_out": {
+      "title": "Go to a company outside?",
+      "situation": "A company making smart tunnel equipment wants you for technical service, double the pay, traveling the country. A relative says there's a machinery repair business back home you could take over. After all these years underground, you'd kind of like to see the sun.",
+      "options": [
+        { "label": "Join the equipment firm", "result": "You got on the high-speed train with a sample unit and began explaining to other cities the road you had walked.", "end": "You traveled the country on business through its utility tunnels, from the damp of the south to the dry cold of the north. Every tunnel smelled different, and you could say how." },
+        { "label": "Go back and do repairs", "result": "You rented a storefront in Anxin and wrote the sign yourself.", "end": "Your little shop repairs pumps and motors, and people from around Baiyangdian Lake all come to you. You rarely go underground anymore, but you still listen for the sound of the machines when you walk in." },
+        { "label": "Stay down below", "result": "A few more years, you said. The next morning you zeroed your detector as usual and pushed open that fire door." }
+      ]
+    },
+    "c_chief": {
+      "title": "Taking on Maintenance Supervisor",
+      "situation": "The company wants you as Maintenance Supervisor, in charge of the district's budget, emergency plans and outside coordination. You know what it means: whatever goes wrong from now on, the first call is yours, and in the middle of the night too.",
+      "options": [
+        { "label": "Take it", "result": "You turned your ringtone all the way up. In your first week in the job, you walked everyone through the emergency plans from the top." },
+        { "label": "Decline", "result": "You told the leadership you're better suited to leading a shift. You can still go below now and then, walk a stretch, and listen." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you returned the four-gas detector to the instrument room and signed your name on the log. You walked once more the stretch you had first walked, the lights coming on ahead of you one section at a time and going out behind you one at a time. When you came up to the surface the sun was just right, and you looked up.",
+    "burnout": "Your back and knees would no longer let you go down, and you gave your route maps and notes to your apprentice. On the day of your last walk you patted the fire door twice, the way you'd pat an old friend on the shoulder, then shut it properly."
+  },
+  "stages": [
+    "You walk the route with your master and look over each fire compartment: cable trays, bracket bolts, pipe joints, sump levels, an inspection terminal and flashlight in your hand. He takes the infrared thermometer and you read back the numbers. Entry permits, logs and the gas check before going down: each has to happen without you being told. You don't have to fix anything yet. You only have to see.",
+    "You're on shift alone now. Every week you service fans, pumps and lighting, test insulation with a megohmmeter, deal with alarms popping up on the monitoring platform, and judge which ones need a trip below. When power and telecom crews enter the tunnel, they sign in with you and you escort them. What the system reports you must verify, and what the machine can't explain, you have to.",
+    "You've got five or six people under you, and rosters, work permits and hot work approvals all go through you. You coordinate with the heads of power, water and telecom on who enters a compartment first, and you watch over confined-space work. More of your time goes to meetings. You still go below, but now you walk at the back and watch how people work.",
+    "You run a district's maintenance plan and budget: how many fans to replace this year, who to contract sensor calibration to, how to rehearse for storms and outages. You sit in coordination meetings with the owner and the utility companies and write operations reports for those above you. When a real emergency happens, the first call comes to you, and the decisions on site are yours."
+  ],
+  "work": [
+    "Your master has you shine a flashlight on the bolts at the root of a bracket and tap them lightly with a small hammer, listening. You tap seven or eight before you can hear which is loose. He has you photograph and mark it on the terminal.",
+    "Reading the sump level, you get it wrong by one gradation. At handover Old Wang checks it against the curve, calls you back, and has you measure again with a ruler.",
+    "The first time you sign the tunnel entry log, your name comes out very small. Meng on duty hands you the gas detector, watches you zero it, and has you read the numbers aloud.",
+    "An exhaust fan is vibrating badly. You shut it down, open it up, and find the bearing is worn. You find a matching part in the spares room, replace it alone, and check it twice with the vibration meter.",
+    "The monitoring platform shows a combustible gas alarm. You take a portable meter and walk from one end of the compartment to the other, with normal readings throughout. You replace the probe, tag the old one and send it off for calibration.",
+    "Guo from the water company comes to check valves and you escort him for more than an hour. He says this stretch of pipe is vibrating a little more than last year, and you note the location in your book.",
+    "The work permit says two people for hot work, and four have shown up. You take the permit back and have the contractor's lead fill in a new one. He smokes half a cigarette at the hatch before coming back.",
+    "Meng's inspection records have said normal for a whole month. You spot-check by walking a stretch with him. At the third compartment you point to a water stain and ask: and what's this?",
+    "The power company needs an emergency repair at midnight. You arrange entry, ventilation and supervision point by point, and in the dispatch room you switch the radio to their channel.",
+    "At the budget meeting, you cut outsourced sensor calibration by twenty percent and put the difference into flood pumps. Li in finance asks how to explain that, and you pass him last year's water level curve.",
+    "At the pre-flood drill you cut one power feed on the diagram and time the team's response. Seventeen minutes on the first run. You say nothing and have everyone go again.",
+    "The new head of a utility company attends the coordination meeting for the first time. You push the entry rules and three years of hazard records across the table and say: let's begin with this sheet."
+  ],
+  "past": [
+    "You grew up in a village by Baiyangdian Lake in Anxin County. Your grandfather fished and your father drove trucks. You liked taking apart broken radios at home, and by the third one, you could put it back together.",
+    "The old houses in the village were being measured one after another, and all anyone talked about was later. New buildings are going up here, your father said, so learn a trade.",
+    "You didn't make it into a four-year university and went to a vocational college for mechatronics. In practical classes, your wiring was neater than anyone's.",
+    "You interned at a factory repairing pumps and motors. The old hands said your hands were steady, and only that you didn't talk much.",
+    "Your family moved into a new flat in Rongdong, with tower cranes still outside the window. On a job listing you saw utility tunnel maintenance, and the word underground made you look twice.",
+    "You got your low-voltage electrician's certificate, did two weeks of training, and filled out a form. The company put you in a district not too far from home."
+  ],
+  "late": {
+    "pension_note": "Estimate: employee pension at a municipal operations company, with a middling base and long contribution years. You'll receive about half of your final monthly pay.",
+    "scenes": [
+      "The first rainy day after you retire, you wake in the night and open your phone, and only then remember you no longer need to look at the water level.",
+      "An apprentice calls about the old problems in a section of tunnel. With your eyes closed you give the number of that fire compartment, not one digit off.",
+      "Walking around the estate, you stop beside the service hatches and listen. What are you listening to now? the security guard says.",
+      "After you stopped going below, for a while you couldn't sleep well. The room seemed too bright and too loud.",
+      "Your back gets a little better and you start fishing by Baiyangdian Lake, a whole afternoon at a time, not caring if there's any fish.",
+      "You walk your grandchild over a manhole cover and say there's a very, very long road down there. The child doesn't believe you, and you don't explain.",
+      "In your first month at the new job, you find yourself taking a sniff whenever you come in the door.",
+      "An old colleague sends a photo showing your markings from back then are still there. You zoom in and see your own handwriting.",
+      "You return to Xiong'an on an errand and walk along a newly built road. The road beneath your feet lies in layers that others can't see. You can see them.",
+      "A friend asks what you've done with your life. You think it over and say: I walked a long way underground.",
+      "The new city has long stopped being new, and the trees downstairs have grown tall. When a summer storm comes, not a puddle stands on the ground. You watch from the window without saying anything."
+    ],
+    "closing": {
+      "retire": "In the evening the streetlights come on one section at a time. You stand on the balcony watching and feel that you've walked this road long before.",
+      "burnout": "You leave the window open. Someone walks past downstairs, and the road makes no sound at all. You know it's down there, power moving, water moving, all well.",
+      "end": "People walk along this city's roads not knowing there's another layer beneath their feet. You know. Now and then you remember the sound of the world going quiet when that door shut."
+    }
+  }
+}

@@ -1,0 +1,151 @@
+{
+ "id": "nuclear-fq",
+ "occupation": "Nuclear Engineer",
+ "role": "Trainee Shift Operator",
+ "headline": "A shift operator at a nuclear plant in Fuqing, just out of years of training, following a mentor around the rotating roster, with home hundreds of miles away",
+ "unit": "The operations department of a nuclear power plant in Fuqing, Fujian",
+ "unit_type": "Large central state-owned energy company",
+ "city": "Fuqing, Fujian",
+ "city_tier": "County-level city",
+ "education": "Bachelor's in Nuclear Engineering and Technology",
+ "level": "You are most of the way through induction training and job qualification exams, and you know the procedures well. Every action you take on duty still needs your mentor standing beside you.",
+ "intro": "You studied nuclear engineering, spent two more years in training, and came to the coast at Fuqing to join an operations shift. Your mentor is a man of few words. On your first day he says only this: here, people say everything twice. From today on, your days are counted by the shift roster, not by the week.",
+ "salary_note": "Estimate: the national figure is based on commonly published pay for operations staff at central state energy firms. Pay is modest during the trainee years, licensed staff earn good shift and position allowances, and living in Fuqing is not expensive.",
+ "facts": [
+  { "label": "Trainee Shift Operator (current level)", "value": "0–3 years, ¥9,000–14,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Shift Operator (3–8 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Judgment and sign-off on shift", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Organizing duty logs and shift handover records", "source": "AI exposure" },
+  { "label": "Open positions", "value": "4 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The early-shift alarm. Outside is the sea wind off Fuqing, and colleagues are already moving down the dormitory corridor with their water bottles toward the shuttle bus. Nobody talks much.",
+  "The pre-shift meeting. The shift supervisor reads out the day's work and each person repeats what they are to do. The first time you heard it, it seemed tedious. Now you wouldn't dare drop a word.",
+  "Handover. The outgoing shift goes through the records with you line by line. He says a thing, you repeat it, he confirms it, and then you both sign.",
+  "Your mentor has you take the procedures and explain yesterday's chapter to him. Halfway through he stops you: why is this sentence written that way? You can't say.",
+  "The canteen has Fuqing's sesame guangbing buns with meat and oyster omelets. An older colleague on your shift tells you not to eat too much before a night shift, or the small hours are the hardest.",
+  "You write the duty log. The handwriting must be neat, the times exact to the minute, and any change means a line through it and a signature. Your mentor reads it, hands it back and says: again.",
+  "The post-shift meeting before you go. Nothing happened today. Even so, the supervisor has everyone name one small thing they nearly got wrong.",
+  "On a video call with your parents, they ask if today was busy. You say no, it was a very ordinary day. Here, ordinary is the best a day can be."
+ ],
+ "ladder": [
+  { "title": "Trainee Shift Operator", "stage": "Shadowing", "focus": "Following your mentor around the shifts, memorizing procedures, learning handover, passing the job assessments one at a time" },
+  { "title": "Shift Operator", "stage": "Licensed", "focus": "Holding your own post with a qualification; you move up by years without error and by bringing on new people" },
+  { "title": "Senior Shift Operator", "stage": "Checking others", "focus": "Checking other people's work on the shift and sitting a higher qualification" },
+  { "title": "Shift Supervisor", "stage": "Leading a shift", "focus": "Leading one shift, deciding, signing and answering for what happens on it" }
+ ],
+ "ai_tasks": [
+  { "name": "Organizing duty logs and shift handover records", "how": "AI can sort and summarize a shift's records and produce a handover outline. People only check that nothing is missing." },
+  { "name": "Searching procedures and past records", "how": "AI can quickly turn up the relevant clauses and past lessons. Whether and how to use them is for the people on duty to judge by the procedures." },
+  { "name": "Writing training questions and running job assessments", "how": "AI can set questions, mark them and analyze mistakes. A mentor still has to see whether a new person understands or has only memorized." },
+  { "name": "Judgment and sign-off on shift", "how": "Who is watching this shift, who confirms, who signs, is the responsibility of licensed people. AI cannot stand in that place for a person." }
+ ],
+ "events": {
+  "e_exam_pass": "You come second in your class on a job assessment. Your mentor looks at the results and says: those two you got wrong, explain them to me next week.",
+  "e_night_shift": "After a run of night shifts you can't sleep in the daytime even with the curtains drawn. Close your eyes and there are the page numbers of the procedures.",
+  "e_spring_fest": "The roster gives you the Spring Festival. The canteen sets out a few tables on New Year's Eve, and the supervisor goes from table to table with a glass of orange juice: this year we're keeping the night watch for all of Fujian.",
+  "e_master_note": "Before moving to another department your mentor gives you a hand-copied notebook. The cover is blank. On the first page are the three mistakes he made when he first arrived.",
+  "e_small_miss": "You leave one confirmation out of a record. Nothing comes of it, and you report it yourself. The next day the whole shift spends half an hour going back over it together.",
+  "e_typhoon": "A typhoon comes ashore and the whole shift stays on for more than ten extra hours. Rain beats on the windows, people take turns putting their heads down, and the smell of instant noodles fills the corridor.",
+  "e_family_miss": "Parent-teacher meetings, your spouse's birthday, an old friend's wedding: the shift roster always misses them. Your spouse says, I don't live with you on weekends. I live with you on your days off.",
+  "e_ten_rest": "The roster gives you a rare run of days off. You take the family to Pingtan to look for the glowing tide called blue tears. You stand out until midnight and see nothing, and everyone is happy.",
+  "e_ai_log": "The company brings in a system that turns duty records into handover outlines automatically. After a month's trial the rule hasn't changed: every line it sorts still has to be checked by a person.",
+  "e_ai_trainer": "The training system now sets new hires their questions and finds their weak points, more tireless than any person. A new hire gets every answer right, and you still call him over and ask why this rule says what it says.",
+  "e_ai_search": "Looking up past lessons now takes one question, and the young ones find the old-timers slow with their paper binders. The old-timers don't mind. While I was turning pages, one says, I happened to read the three before and after.",
+  "e_medical": "The annual fitness-for-duty exam. The doctor says your blood pressure and your sleep both need watching. People with this many years of nights have much the same arrows on their charts.",
+  "e_inspect": "An inspection team stays for a week, looking at everything and asking about everything. At the end they say your records are very clean. You go back to the dorm and sleep for twelve hours.",
+  "e_mate_leave": "A classmate from your intake stops working shifts and goes to management at headquarters. Drunk at his farewell dinner, he says he never wants to hear an alarm clock again. Everyone laughs, and no one answers.",
+  "e_local": "The old woman next door has a son and his family working abroad, like so many from Fuqing. On holidays she brings you a bowl of peace noodles. After a few years of them, you learn to say thank you in the local dialect.",
+  "e_house": "You buy a flat in downtown Fuqing, most of an hour's drive from work. Your parents come to stay for a month and say the sea wind here has got into their bones and salted them.",
+  "e_apprentice": "A new hire you are training takes his post for the first time and says one sentence three times out of nerves. You don't laugh. You were the same.",
+  "e_body_clock": "Past forty, each rotation is harder than the last. On the morning after a night shift you sit in the car for ten minutes before you remember where you were driving.",
+  "e_clean_years": "Another smooth, uneventful year for your shift, nothing to put in the news. At the year-end dinner the supervisor lifts a glass: to nobody knowing about us."
+ },
+ "choices": {
+  "c_duty": { "title": "The Shift Operator qualification: wait for the next round, or go now?", "situation": "In this round of exams for Shift Operator you are just short of ready. Pass now and you can hold a post alone two years sooner. Fail, and it stays on your file. Your mentor says it is up to you.", "options": [
+   { "label": "Go now", "result": "You spend every day off for two months on the procedures. In the exam room your palms are wet." },
+   { "label": "Wait a round", "result": "You follow the shifts for another year. Your mentor passes no judgment. He only puts a few more things in your hands." }
+  ] },
+  "c_day_job": { "title": "Move to a day job in technical support?", "situation": "Technical support wants someone who has worked shifts. No more rotating, and you could walk your child to school, but you'd lose a good deal of shift pay and your path in operations would end. Your spouse says it is up to you.", "options": [
+   { "label": "Stay on shifts", "result": "You put the transfer form back on the desk. By the time you get home that day, your child is asleep." },
+   { "label": "Move to days", "result": "For the first time, at seven-thirty in the morning, you walk to the school gate holding your child's hand. Your payslip has grown thinner." }
+  ] },
+  "c_exam_ai": { "title": "Lead the training system?", "situation": "The training department wants AI question banks and review tools in everyday training, and is looking for someone from the shifts to lead: to decide what a machine can teach and what a person must. This work won't count in your appraisal.", "options": [
+   { "label": "Lead it", "result": "You write down the first rule: AI can set the questions, but not one talk between mentor and apprentice may be skipped. Many people copy that rule later." },
+   { "label": "Just work your shift well", "result": "You say you'd rather train people well first. Systems have their own specialists." }
+  ] },
+  "c_inland": { "title": "A new site elsewhere wants people", "situation": "The group has a new site in another province and needs experienced operators. The post and pay are both a bit higher, for five years at least. Your parents, your spouse's job and your child's school are all here.", "options": [
+   { "label": "Go to the new site", "result": "You drag your luggage to a place you had never heard of and become the old hand on a shift. For a few years your family lives by video call." },
+   { "label": "Stay in Fuqing", "result": "You stay. The supervisor claps you on the shoulder, and at the pre-shift meeting that evening it's the same few faces." }
+  ] },
+  "c_senior": { "title": "Sit for Senior Shift Operator", "situation": "Sitting for Senior Shift Operator means months of full-time training, and few pass on the first try. Your child is coming up to the big exams. If you go, your spouse is alone at home.", "options": [
+   { "label": "Sit it", "result": "You leave your child's homework to your spouse and your parents. On a video call one evening your child asks: you're this old, why do you still have exams?" },
+   { "label": "Not these few years", "result": "You give your place to Xiao Zheng on your shift. The day of your child's high school entrance exam you wait all morning at the school gate." }
+  ] },
+  "c_leave": { "title": "A private energy company makes an offer", "situation": "A storage and renewables company comes hiring. It is precisely your habit of not making mistakes they want, they say. Half again your pay, and no shifts. You don't know whether all this discipline counts as a skill anywhere else.", "options": [
+   { "label": "Leave", "result": "You finish the paperwork and take your mentor's notebook with you.", "end": "You go to run operations at an energy storage company. At your first meeting you repeat your boss's words back to him out of habit, and the whole room looks at you. Later, they start talking that way too." },
+   { "label": "Stay", "result": "You thank them and decline. The good of this job is hard to describe. Maybe it is just knowing what each day is for." }
+  ] },
+  "c_teach": { "title": "Move to the training center as an instructor?", "situation": "The training center needs veteran operators who can bring the procedures alive. Regular hours and no more nights. You have been in this seat a long time, and your body has begun to voice its opinions.", "options": [
+   { "label": "Become an instructor", "result": "You finish the paperwork and hand in your duty key. When you walk out of the gate the sun has not yet set.", "end": "You become an instructor at the training center and give each batch of new hires their first lesson. You always start: here, people say everything twice. Someone in the room always laughs. A few years later, they are saying it to new people themselves." },
+   { "label": "A few more years on shift", "result": "You tell them you'll think about it when you have finished bringing up these last few." }
+  ] },
+  "c_chief": { "title": "Stand for Shift Supervisor", "situation": "The old supervisor is nearing retirement and the department will choose a Shift Supervisor from among the senior operators. Everything on that shift would count under your name, and you wouldn't dare turn off your phone all year.", "options": [
+   { "label": "Stand", "result": "Asked in the interview why you want to be Shift Supervisor, you say: I want the pre-shift meeting to keep being run this way." },
+   { "label": "Be a good old hand", "result": "You say the young ones have more energy. You stay on the shift and take one more look at every handover." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last handover, you and the young person taking over go through the records line by line. He says a thing, you repeat it. You both sign, you put the cap on your pen, and you set it on the desk. Nobody applauds. This day is as ordinary as all the others.",
+  "burnout": "After the checkup that year the doctor advises you to stop working shifts. You arrange a transfer and put your qualification certificate in a drawer. On the first Monday with no alarm set, you wake very early and lie there listening to the wind."
+ },
+ "stages": [
+  "Your days are spent in your mentor's shadow. You go over handover records with him, learn the procedures page by page, and say why for each step he takes. You write logs, sit assessments, attend the meetings before and after each shift, and someone checks everything you do. You don't make decisions. What you have to learn is to stop first, confirm, and only then speak.",
+  "Your name goes on the roster by itself. You do your part according to the procedures, fill in the records, and go over them with the incoming person sentence by sentence. If there is any doubt you stop and ask, which matters more than anything. What is different is that nobody stands behind you, and the name in the signature box is your own.",
+  "You begin checking other people's work: you read the forms the young ones hand you, and ask them first about what they are about to do. At the post-shift meeting you talk about the small thing you nearly got wrong today. You sit as an examiner and bring on apprentices. There is less in your hands now, and more for your eyes.",
+  "You lead a shift. You read out the pre-shift meeting, you set the roster and the assessments and who should rest, you hand over to the other shifts and report to the department, and the signature at the end of each day is yours. When something is unclear the whole room looks at you, and the thing you say most often is: no rush, let's stop, bring the procedures."
+ ],
+ "work": [
+  "You copy out the handover record three times. Your mentor circles a time on the second copy in pencil and writes one word: exact? You go back and check, and it is one minute off.",
+  "An older colleague draws you up a list of your wrong answers and has you learn three a day. After two weeks she picks one at random, you answer straight off, and she nods and walks away.",
+  "In the sleepiest part of the night, Lao Zhou teaches you to stand up, take two steps, go back to your place and read the last record from the top. By the third line you are awake.",
+  "Taking over, you find an entry written vaguely. You don't guess. You call Xiao Lin back from the locker room. He has a temper, but when he has come back and looked, he says thank you.",
+  "The first time you sign a handover form alone, the pen stops a moment on the paper. The supervisor passes, glances at it, and says nothing, which means it is fine.",
+  "You explain to the new intern why everything is said twice. He asks whether it isn't a bit rigid. You have him pass a sentence to the next room and back, and when it comes back it has changed.",
+  "Your apprentice Xiao Chen hands you a very well written form. You look at it for three minutes and still ask him why it is in this order. He can answer, and only then do you sign.",
+  "As an examiner, you hear a young man recite it word for word. You ask the same question another way and he freezes. On the score sheet you write: six more months of shadowing.",
+  "At the post-shift meeting you tell them about a line you nearly missed today. Colleagues more than ten years younger look at you, and later they dare to talk about their own.",
+  "Lao Zheng has trouble at home. You rewrite the roster three times and fill the gap with your own day off. He doesn't know, and you don't mention it.",
+  "At the department's monthly meeting, someone wants to shorten the pre-shift meeting. You bring out years of record books and say: not one minute of these fifteen can go.",
+  "A new operator is white with nerves. You set a cup of water by his hand and say: I'm on this shift with you. He drinks it, and says the sentence again."
+ ],
+ "past": [
+  "You go to junior high in an inland county town. Your physics teacher's eyes light up when he gets to the atom, and that day after school you read the book from the first page.",
+  "On your gaokao (college entrance exam) preferences you put nuclear engineering. A relative asks whether it isn't dangerous. Your father says: the kid has the score, let the kid study it.",
+  "On a second-year placement you first hear an older student describe life on shifts. Everyone laughs at the circles under his eyes, and everyone envies his pay.",
+  "A central state energy firm comes to campus for operations staff, requiring a clean medical and a willingness to work shifts. You sign, and from then on you are more than a thousand kilometers from home.",
+  "The first two years on the job are nothing but study and exams. You live in a group dormitory at the training base, and your days of procedures, tests and wrong answers are more regular than the last year of high school.",
+  "Training ends and you are assigned to Fuqing. When the bus comes to the coast the wind is strong. Dragging two suitcases, you see for the first time the sea you will live beside for many years."
+ ],
+ "late": {
+  "pension_note": "Estimate: a central state firm paid basic pension contributions in full and there is an enterprise annuity, so in retirement you get about sixty percent of your final monthly salary.",
+  "scenes": [
+   "In your first month of retirement you still wake by the shift roster, sitting on the sofa at three in the morning with no idea what to do.",
+   "You learn to go out on weekends. Standing at the door of a shopping mall on your first crowded Saturday, you find it all quite novel.",
+   "Walking on the little path by the sea you pass a young person in work clothes, walking tiredly. You nod, and the young person nods back.",
+   "After moving to days, it takes you most of a year to learn to sleep at night.",
+   "You can wait at the school gate now. Your child says with disgust, don't come, my friends will see. You go again the next day.",
+   "At a reunion of old colleagues, everyone is older now. Talking about the pre-shift meetings of those years, someone still repeats other people's sentences out of habit.",
+   "The first Spring Festival after you leave, you eat the reunion dinner at home. At midnight you glance at your watch and think: they'll be handing over about now.",
+   "Your colleagues often ask how you manage to be so careful. You think it over and say: someone told me that things should be said twice.",
+   "You dig out your mentor's notebook, its cover gone soft. You write a few words on the last page and close it.",
+   "A cashier tells you the total and you repeat it without thinking. She looks up at you.",
+   "A grandchild asks what you used to do. Watched, you say, and watched, and kept on watching, and nothing happened. What's fun about that, the child says. You say: exactly."
+  ],
+  "closing": {
+   "retire": "One evening many years later you sit by the sea at Fuqing as the tide slowly comes in. It gets dark slowly, and far off there are lights on. You put your hands on your knees. There is nothing to confirm.",
+   "burnout": "One morning many years later you have set no alarm, and when you wake the sun has reached the foot of the bed. You lie listening to the guangbing seller calling downstairs, and close your eyes again.",
+   "end": "One night many years later you suddenly wake and look at the clock, and it is exactly the hour of handover. You lie there a while, thinking of the people who said everything twice, and go back to sleep."
+  }
+ }
+}

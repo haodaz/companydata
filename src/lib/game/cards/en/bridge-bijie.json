@@ -1,0 +1,161 @@
+{
+ "id": "bridge-bijie",
+ "occupation": "Civil Engineer",
+ "role": "Site Technician, Bridge Project Department",
+ "headline": "A civil engineer on an expressway bridge in the mountains of Bijie, Guizhou, living in a prefab hut halfway up a slope, who can only see the far bank when the fog lifts",
+ "unit": "The bridge project department of an expressway under construction in Bijie, Guizhou",
+ "unit_type": "Project department of a central state road and bridge builder",
+ "city": "Bijie, Guizhou",
+ "city_tier": "Mountain prefecture-level city",
+ "education": "Bachelor's in Civil Engineering (Road and Bridge)",
+ "level": "You did well in mechanics and bridge engineering, you can draw in CAD, and you have touched a total station twice at school. You have never really seen what concrete looks like coming off a mixer truck.",
+ "intro": "You follow a pickup around mountain roads for three hours and arrive at the project department in the hills of Bijie. The prefab huts sit halfway up a slope. The mountain opposite looks close, and takes a day to walk to. The chief engineer points into the fog: that is where the bridge goes. From today on, you live in this hut and wait for the fog to lift.",
+ "salary_note": "Estimate: on top of base pay, a central state road builder pays project and field allowances on mountain jobs, and food and lodging are on site. It is more than your peers in town make, and it is bought with only a few trips home a year.",
+ "facts": [
+  { "label": "Site Technician (current level)", "value": "0–3 years, ¥6,500–11,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Section Engineer (3–7 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Testing soil and materials to determine the adequacy of foundations, concrete, asphalt and steel", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Inspecting sites to monitor progress and compliance with design and safety standards", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Your reveille is the chickens down the hill and the project generator. When you open the hut door the fog rolls in. Your hard hat has sat out all night, and its brim is wet.",
+  "A bowl of potato rice with chili powder in the canteen. Over breakfast the foreman tells you yesterday's rebar has to be inspected today, and the supervising engineer arrives at eight-thirty.",
+  "You climb the slope with the prism on your back and set the total station on a rock to lay out the piles for this afternoon. A cloud comes through and there is nothing to see, so everyone sits down to wait.",
+  "Down at the pile site to look at the drill cuttings. An old hand scoops up a fistful and rubs it between his fingers: we're about to go into a cave. Go and tell the chief.",
+  "The concrete trucks are stuck on a bend, this one the seventh. You run to ask a villager if you can borrow the flat ground outside his door to turn around, and promise to fix up his yard afterward.",
+  "In the hut you write the site diary and the hidden-work inspection records, with the forms, photos, times and signatures all matching. Rain on the roof is so loud you can hardly hear yourself type.",
+  "The evening production meeting runs till nine, laying out tomorrow's concrete, lifts and weather. At the end the chief asks: anyone else have anything to say? No one dares.",
+  "Two bars of signal. You stand outside the hut holding up your phone for a video call home, and the picture freezes on a face halfway through a smile."
+ ],
+ "ladder": [
+  { "title": "Site Technician", "stage": "On site", "focus": "Going out with the crews, setting out, supervising pours and writing records, turning lines on a drawing into piles on a mountain" },
+  { "title": "Section Engineer", "stage": "One section", "focus": "Running the piles or piers of one work section; you move up on quality, progress and being able to hold your own with the crews" },
+  { "title": "Head of Engineering", "stage": "The whole bridge's technical work", "focus": "Plans, briefings and measurement for the whole project; a Grade 1 Constructor license is the threshold" },
+  { "title": "Project Chief Engineer", "stage": "Technical decisions", "focus": "Deciding and answering for the whole project's technical plans, dealing with designers, supervisors and the owner" },
+  { "title": "Project Manager", "stage": "Everything", "focus": "Answering for one project's schedule, costs, safety and several hundred people" }
+ ],
+ "ai_tasks": [
+  { "name": "Inspecting sites to monitor progress and compliance with design and safety standards", "how": "AI can compare drawings with code clauses, analyze site photos and monitoring data and flag anomalies. People must verify on site and make, and answer for, the final call on compliance and safety." },
+  { "name": "Technical advice on design, construction, procedure changes and structural repair", "how": "AI can quickly search codes and cases and draft technical replies. People judge whether a suggestion fits this project, explain it to the other side, and take responsibility." },
+  { "name": "Testing soil and materials to determine the adequacy of foundations, concrete, asphalt and steel", "how": "Sampling, field tests and running equipment must be done by people. AI can only help organize data and compare it to standards. A person signs for the conclusion." },
+  { "name": "Managing and directing construction, operations or maintenance on site", "how": "Dispatching on site, coordinating crews and handling emergencies falls to people. At most AI helps with schedules and risk reminders, and it cannot make the call on the ground." },
+  { "name": "Directing and joining surveys to set reference points, grades and elevations", "how": "Laying out lines, setting reference points and leading survey parties all happen on site and need people's hands and judgment. AI can help process survey data and generate coordinates." },
+  { "name": "Estimating quantities, materials, equipment and labor costs to determine feasibility", "how": "AI can take off quantities from drawings, apply price data and produce a first cost estimate. People only spot-check key items and price assumptions." },
+  { "name": "Planning and designing transport systems or hydraulic structures with computer drafting tools", "how": "AI can help generate sketch options, parametric designs and first calculations. People set the design thinking, choose the option, check the key calculations and answer for the drawings." },
+  { "name": "Preparing or presenting bids, contracts, environmental impact statements and right-of-way reports", "how": "AI can draft bids, contract text and first reports and gather materials. People review the accuracy, legal liability and key clauses and handle the outside conversations." },
+  { "name": "Designing energy-saving or environmentally sound civil structures", "how": "AI can simulate energy use and compare the environmental performance of materials and options. People weigh cost, schedule, the owner's needs and real conditions, and decide." },
+  { "name": "Identifying environmental risks and setting risk management strategy for civil projects", "how": "AI can gather past cases, list common risks and make a first assessment. People judge how serious the risks are given the site, the environment and the rules, and decide how to respond." }
+ ],
+ "events": {
+  "e_first_pile": "The first pile you set out goes in, and the recheck is off by less than a centimeter. The old surveyor puts a checkmark next to it in his notebook and says nothing.",
+  "e_karst": "In the karst mountains a pile drills halfway down into a cave that isn't on the drawing. The whole project holds three meetings about this one pile, and the schedule slips by forty days.",
+  "e_ny": "Someone has to stay and mind the site over the New Year, and you stay. On New Year's Eve you eat hot pot with the guards and the cook, and the fireworks come in waves across the valley.",
+  "e_fog_day": "Half a month of freezing fog. The cranes stop and the roads ice over. Everyone holes up in the huts playing cards, each person staring at the schedule and worrying.",
+  "e_village": "You help a villager down the hill repair a water pipe the access road cut through. At New Year his child brings up a bowl of cured pork, sets it down and runs.",
+  "e_child_shy": "You go home for five days. At first your child hides behind your spouse and calls you uncle. On the fifth day, just as the two of you are getting used to each other, you have to go.",
+  "e_closure": "The bridge closes. Everyone on the project crowds onto the deck to set off a string of firecrackers. You stand between two mountains looking down, the fog drifting slowly under the bridge.",
+  "e_move": "This project is winding up. You pack a single case and move to the next project department on the next mountain road. In all these years the case has not grown fuller.",
+  "e_ai_quant": "The company's software now takes quantities straight from the drawings and produces first measurement drafts. Lao Cai, who has spent his life with his abacus-style spreadsheets, looks at the result, opens his own, and compares them for an afternoon.",
+  "e_ai_drone": "A drone circles a tall pier and the system marks cracks and honeycombing in the concrete by itself, sparing a few trips in the hanging basket. Where it marks red, you still go up to feel it yourself.",
+  "e_ai_report": "AI now writes first drafts of construction plans and technical briefings in minutes, thick and impressive. But the mountain in them isn't this mountain.",
+  "e_pay_owed": "The owner's payment is three months late and subcontractors' men block the gate asking for their wages. You stand with them in the yard all afternoon handing out cigarettes.",
+  "e_rain_road": "A rainy-season downpour washes out the access road and supplies can't get up. For five days you all eat potatoes and cured pork.",
+  "e_mentor": "The chief engineer puts a heavily annotated copy of the code on your desk: this one's harder to read than the new edition. Read this first.",
+  "e_waist": "Years of climbing hills, eating chili and staying up have sent your back and stomach to find you. The doctor prescribes something and tells you to climb less. You nod, and that afternoon you are back up a pier.",
+  "e_open_road": "A road you built opens to traffic. You drive the family over it from home and point out the window: we built that bridge. Your child glances up at the navigation on the phone.",
+  "e_grey_old": "A young man at the new project department calls you old master. You leaf through two pages of the geological report for this mountain, and find you have put on reading glasses.",
+  "e_marriage": "Your spouse says on the phone that the water pipe at home burst, and that it's been fixed. The voice is very calm. You are quiet for a long time.",
+  "e_fewer_roads": "Guizhou's expressways are mostly built now, and new projects get fewer each year. The company starts bidding on maintenance and overseas roads, and your old colleagues scatter."
+ },
+ "choices": {
+  "c_cert": { "title": "Sit the Grade 1 Constructor exam (highways)", "situation": "People on the project with the license get better treatment and carry more weight. But the production meeting ends after nine each night, and the signal up here can't even finish an online class.", "options": [
+   { "label": "Study at night", "result": "You set a small lamp in the hut and print out past papers. One subject at a time, and two years later you have the certificate." },
+   { "label": "The site is the real school", "result": "You put the book under your monitor. Over these years you follow the old foremen until you know pile and pier work through and through." }
+  ] },
+  "c_gongqu": { "title": "Stand for Section Engineer on the hardest main pier", "situation": "The main pier section is at the very bottom of the valley, with the access road still unfinished, a month at a time without coming down. Few people stand for Section Engineer here, because everyone knows what it is like.", "options": [
+   { "label": "Take the main pier", "result": "You move into a work shed at the valley bottom. Half a year later your face is the same color as the workers'." },
+   { "label": "Stay in Engineering for now", "result": "You stay in the project office and keep the records watertight. That is a skill too, says the chief, only it doesn't count for much at promotion time." }
+  ] },
+  "c_home": { "title": "Your spouse asks if you are ever coming back", "situation": "Your child is starting primary school. Your spouse says you can apply to go back to the company's head office, or things can go on like this, but think it through. Head office pays less, and nobody will ever send you up a bridge again.", "options": [
+   { "label": "Apply for head office", "result": "You return to the provincial capital, pick up your child on time, go to meetings and write documents. The calluses on your hands soften year by year." },
+   { "label": "One more project", "result": "You tell your spouse: when this bridge closes. Your spouse says: that's what you said about the last one." }
+  ] },
+  "c_design": { "title": "A design institute comes asking", "situation": "A design institute you've worked with wants someone who knows site work. An office, a home in town, no more huts, about the same pay. From then on your bridges would all be inside a computer.", "options": [
+   { "label": "Go to the institute", "result": "You come down the mountain and move into a flat in Guiyang. Your first night there the quiet of the neighborhood keeps you awake.", "end": "You settle into a design institute. When you draw, you keep thinking about how the rebar crew will get their hands in. Contractors like your drawings, and say whoever drew this has been on a site." },
+   { "label": "Stay on site", "result": "You say: I still want to watch it grow." }
+  ] },
+  "c_bim": { "title": "Learn BIM and smart construction?", "situation": "The company wants to try BIM and smart monitoring on this bridge and needs someone to lead it, to decide what data gets collected and which alarms need a person. No extra pay, and two more hours crammed into an already long day.", "options": [
+   { "label": "Lead it", "result": "You put the bridge in the computer and stuck the sensors on the piers. The old foremen mock you at first, and later they come by every day to ask you if the alignment on your phone is right." },
+   { "label": "Eyes and hands are more reliable", "result": "You say: when it can climb a pier, we'll talk. You still go up to look every day yourself." }
+  ] },
+  "c_overseas": { "title": "A project in Africa", "situation": "The company has a road in Africa and needs a head of engineering with mountain experience. Double the pay, two years to a contract. They say two years. It's often more.", "options": [
+   { "label": "Go", "result": "You live in prefab huts for a few more years, on red earth. The rainy-season roads are as bad as Bijie's, only the mountains aren't as steep. The money you send home pays off the mortgage early." },
+   { "label": "Don't go", "result": "You say you haven't seen enough of these mountains. In fact your child is about to take the high school entrance exam." }
+  ] },
+  "c_chief": { "title": "Take the Project Chief Engineer post", "situation": "The company wants you on a new project as Project Chief Engineer. It means your signature on every plan, and also a mountain you've never seen, and three years of huts at the very least.", "options": [
+   { "label": "Take it", "result": "You sign the handover form and pack that case with nothing much in it." },
+   { "label": "Stay where you are", "result": "You say you'd like to bring on the younger people a while longer. Your boss looks at you and says all right." }
+  ] },
+  "c_maintain": { "title": "Move to bridge maintenance?", "situation": "With fewer roads to build, a maintenance company wants people to inspect at regular intervals the very bridges you built. No more living on site, and you could go home. The pay is somewhat lower, and people in the trade call it early retirement.", "options": [
+   { "label": "Go to maintenance", "result": "You finish the transfer and take your hard hat with you.", "end": "You go to the maintenance company and each year walk the bridges of Guizhou with an inspection truck. Inside the box girder of an old bridge, you find names that workers once wrote in chalk." },
+   { "label": "One more bridge", "result": "You tell your spouse this really is the last one. This time your spouse says nothing." }
+  ] }
+ },
+ "endings": {
+  "retire": "Before you retire the company asks you to go and see one last project. You stand on a bridge just opened to traffic as the fog rises from the valley and hides the mountains at both ends, leaving only this bridge hanging in the middle of the white. You walk it there and back, and take off your hard hat.",
+  "burnout": "After the checkup that year, your back can't go up a pier again, and your stomach can't take site food. You file a report and come off the project. Back in the home in town your child is taller than you, and sitting at the same table for meals, neither of you is quite used to it."
+ },
+ "stages": [
+  "You haul the total station and prism up slopes to lay out lines, stand watch over rebar tying and concrete pours, note the slump truck by truck, and make test cubes. Evenings in the hut you catch up on the site diary, the hidden-work records and measurement files, checking forms with the supervising engineer and learning to read drawings from the foreman. The workers don't much listen to you, but every page you write will be checked.",
+  "A section is yours now: a few piers, a few crews. You make the schedules, keep an eye on the form travelers and climbing formwork, give technical briefings, ask the rebar foreman and the batching plant for what you need, and haggle with the supervising engineer over an inspection form. You used to run after other people. Now they wait for your word on whether this steel can be poured.",
+  "You sit in the engineering office, and the whole bridge's plans, drawing reviews, briefings, change orders and measurements pass through your hands. You argue with the design institute over a joint by phone, work out schedules for the owner, and watch over several technicians. You still go up on the bridge, but more often you take a drawing to ask someone a question.",
+  "Your signature goes on every special construction plan. You defend them before panels of experts, decide what to do about reports from the alignment monitoring team, and when the geology suddenly changes, it is you who says whether the drawings change. When the young engineers bring you plans, you often look first at the emergency measures on the last page.",
+  "It isn't a bridge you run any more but several hundred people, a few hundred million yuan and a deadline set in stone. You hold owner coordination meetings, visit local government departments, negotiate settlements with subcontractors, and work out with finance where next month's wages will come from. You still sleep badly at night, and when it rains you get up to take a look."
+ ],
+ "work": [
+  "Lao Luo the old surveyor has you carry the prism to the opposite hilltop while he shouts over the walkie-talkie from behind the total station: a bit left, a bit more left. There is a gully under your feet, and setting this one point takes till noon.",
+  "Taking test cubes at the batching plant, you are offered a cigarette by Lao Yang the truck driver. You don't smoke. Take it anyway, he says. Hand it to the foreman when he comes.",
+  "The supervising engineer finds a date on your hidden-work form that doesn't match the photo. You go through more than thirty forms that night and put them on his desk the next day.",
+  "On the form traveler's first move, you and Lao Yu the rebar foreman tap each anchor bolt in turn. Somewhere past the fortieth the sound is wrong, and you change it.",
+  "You explain formwork bracing to the carpentry crew with a hand-drawn sketch. The crew chief studies it a long while and says: why didn't you draw this before? Those lines on the drawings, we can't read them.",
+  "Xiao He the dispatcher at the batching plant says he can only give you six trucks tonight. You stand at his desk with the pour plan and work it out for him, and leave with nine.",
+  "At a drawing review you point to a clash between pile cap rebar and an embedded part. A young designer says he'll go back and look. You send him a photo from the site and he phones the next day.",
+  "Checking the monthly measurement sheets one by one, you find a subcontractor has billed the same stretch of access road twice. You make no fuss. You call the subcontractor's boss in and put the sheet in front of him.",
+  "A new master's graduate writes a very handsome plan. You put one question mark next to the form traveler section and tell him to take that page up on the bridge, stand on it for an hour and come back.",
+  "At an expert review an old specialist asks how you judged that stretch of geology. You don't open the report. You lay out in front of him the photos and records of the drill cuttings.",
+  "The alignment monitoring data comes in a little off the planned camber. You and the head of engineering stand on the deck till dark, and decide to adjust the formwork elevation on the next segment.",
+  "On the special plan for the rainy season you change three things in the safety department's emergency measures and raise the number of drainage pumps from four to six. Finance phones. Buy them first, you say.",
+  "The owner coordination meeting runs four hours and you argue about one thing: this month's progress payment. In the corridor afterward you make your fifth call to a supplier, asking for two more weeks.",
+  "A township official goes with you to see a villager who still hasn't agreed. You bring no contract, only a case of milk, and sit by his fire one whole afternoon explaining where this road has to go.",
+  "In the middle of the night you check the rain report and phone Xiao Wu on duty, telling him to bring the excavator up beside the access road. You hang up, open the curtains, and wait for dawn."
+ ],
+ "past": [
+  "You grow up in a county town in Anhui. Your father works road gangs and comes home twice a year, and each time you think he is darker than the last.",
+  "After the gaokao (college entrance exam) your father tells you not to study civil engineering, it's too hard. You put it down anyway, because this is the only kind of adult you've ever seen.",
+  "On a surveying practicum in your second year you set up a total station on campus, and find it remarkable for the first time that a line nobody can see can be fixed to the ground.",
+  "A professor plays a video of a bridge in Guizhou, and the whole class laughs that it stands higher than the mountains. You remember its name.",
+  "At campus recruiting, a central state road builder offers more than the design institutes, and the older graduate doing the hiring has a raspy voice. If you can take it, come, he says. You sign."
+ ],
+ "late": {
+  "pension_note": "Estimate: a central state firm paid basic pension contributions in full, so in retirement you get about fifty-five percent of your final monthly salary, not counting project allowances.",
+  "scenes": [
+   "After you retire you spend a whole year at home for the first time. You always get up early, standing on the balcony looking at the sky to see if concrete can be poured today.",
+   "You drive your spouse down the expressways of Guizhou, calling out bridge after bridge: this one's ours, that one's the other bureau's. Your spouse falls asleep against the window.",
+   "You have a reunion with your old workmates. Nobody at the table has good teeth any more, and you still order a plate of chili chicken.",
+   "After you come down off the site you eat at regular hours and drink hot water, and life feels a little too light.",
+   "Your grown child takes you to register at the hospital, and knows the way better than you do. Walking behind, you remember a small child hiding behind a parent and calling you uncle.",
+   "The news says another expressway has opened in the mountains. You turn up the television a little and wait for a shot of the bridge.",
+   "On the first rainy day after you leave the site, you glance out the window at the sky without thinking, and then remember that this rain has nothing to do with you now.",
+   "An old colleague sends a photo of a project sign still standing beside the road with your name on it from those days, bleached by the sun almost to nothing.",
+   "You ride with a grandchild over the great bridge at Bijie as the fog comes up. Why is the bridge in the clouds, the child asks. When we built it, you say, it was in the clouds.",
+   "Later AI can tally the rebar on a drawing at a glance. But how many caves lie under this mountain, someone still has to put a drill down to find out.",
+   "You always take a second look at any road. Seeing a retaining wall, you want to go and tap on it. Your family says you have never in your life come down off the site."
+  ],
+  "closing": {
+   "retire": "One morning many years later the mountain fog slowly lifts, and that bridge emerges little by little from the white. A car goes across, and then another. None of them knows what lies beneath them, and none of them needs to.",
+   "burnout": "One afternoon many years later you sit on a stone bench in your neighborhood with the sun warming the small of your back. Far off a tower crane is turning. You narrow your eyes and watch it for a long while.",
+   "end": "One rainy night many years later you fall asleep to the sound of it. In your dream you are still living in a hut halfway up a slope. The rain is on the roof, day has come, and the fog is seeping in under the door."
+  }
+ }
+}

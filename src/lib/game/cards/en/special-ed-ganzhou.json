@@ -1,0 +1,155 @@
+{
+ "id": "special-ed-ganzhou",
+ "occupation": "Special Education Teacher",
+ "role": "Vocational-track teacher at a school for students with intellectual disabilities",
+ "headline": "A special education teacher in Ganzhou who spent three years with the youngest children, then was picked by the principal to start a baking program and teach sixteen-year-olds a trade that can feed them",
+ "unit": "A public special education school in Ganzhou, Jiangxi (mainly for students with intellectual disabilities, with a vocational high school section; just over a hundred students, nearly half of them boarding)",
+ "unit_type": "Public special education school",
+ "city": "Ganzhou",
+ "city_tier": "Third-tier city",
+ "education": "Bachelor's in special education",
+ "level": "You have broken lessons down step by step and handled behavior support for three years with the youngest classes. Baking you learned only last summer; the pastry cook certificate is brand new, and your egg tarts still collapse.",
+ "intro": "The vocational classroom is behind the main building. It used to be a storeroom. Now it has a built-in worktable, two ovens, and a row of pomelo trees outside the window. The principal hands you the key and says these students graduate in three years, and their parents have been asking for years where they will go after that. For three years you have taught children to tie shoes and recognize money. This time you are teaching a trade. Starting today, every gram of flour in this room needs someone who can weigh it alone.",
+ "salary_note": "Estimate: public special schools pay on the teachers' scale plus a special education allowance. Ganzhou's bonuses and subsidies run below the national figure, so 0.85.",
+ "facts": [
+  { "label": "Teacher, Grade 2 (current level)", "value": "0–5 years, ¥4,420–6,500 a month (national average, estimated from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Teacher, Grade 1 (5–10 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥9,600 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Helping students build emotional and social skills, and teaching the life skills that let them be as independent as they can", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Choosing and setting up the devices and techniques students need in order to learn in the classroom", "source": "AI exposure" },
+  { "label": "Open positions", "value": "164 related listings nationwide, 0 in this city (the database leans toward campus hires and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The bus stop across from the school gate. Xiao Zhong, who lives at home, gets off the No. 8. He practiced this route for a whole semester. You watch from your side of the road and do not cross.",
+  "Morning meeting has no lessons about life, only what happens today. A row of picture cards on the board: wash hands, put on cap, weigh flour, knead, wait, bake. Anyone who forgets the next step goes up and takes a look.",
+  "Weighing flour. A strip of red tape next to the scale's display reads 250. Xiao Zhou pours too much. You don't scoop it out for him. You wait for him to stare at the number and notice.",
+  "The oven timer goes off. Oven mitts, door, tray: six separate steps. You stand one hand's length behind the student and say a single word at step four: steady.",
+  "Lunch with the boarders. The canteen has stir-fried fish and pickled greens today. While you eat, you note who hasn't touched their chopsticks and who has moved their meat into a neighbor's bowl again.",
+  "Workplace skills class. You play the boss and snap, “Hurry up!” What they are practicing is not throwing anything when someone rushes them, and saying “All right.” Someone laughs. You start over.",
+  "You phone the owner of the cake shop at the intersection and ask whether he could take an intern next term. He says he'll see. You say fine, and that you'll call next week.",
+  "The monthly notes on each individualized education plan: whose which step has gone from “needs a prompt” to “does it alone.” You write no other line so slowly."
+ ],
+ "ladder": [
+  { "title": "Teacher, Grade 2", "stage": "Finding your feet", "focus": "Teach the hands-on classes for one trade, write individualized education plans, and learn to break a skill into steps a student can complete." },
+  { "title": "Teacher, Grade 1", "stage": "Program mainstay", "focus": "Write your school's own textbooks, find internship employers, and walk students into placements. You move up on students who actually keep jobs, and on open lessons." },
+  { "title": "Senior Teacher", "stage": "Program lead", "focus": "Run the vocational section's offerings and job placement, mentor young teachers, and negotiate long-term arrangements with the disabled persons' federation and employers." },
+  { "title": "Professor-Level Senior Teacher", "stage": "Regional authority", "focus": "People listen when you speak about vocational special education across the city. The places are few and most never get one." }
+ ],
+ "ai_tasks": [
+  { "name": "Choosing and setting up devices and techniques students need in order to learn", "how": "AI offers screen readers, speech-to-text, image description and communication aids, and can help pick and tune equipment. The teacher matches tools to each student's particular disability, adjusts on the spot, and watches whether the student can use them and is willing to." },
+  { "name": "Teaching language (including sign language), art, science and health", "how": "AI can draft lesson plans, adapt materials to different levels, produce images and exercises, and make captions and sign-language study aids. The teacher sets the pace to what students can take in, demonstrates signing, and handles what happens live in class." },
+  { "name": "Testing students to assess their progress", "how": "AI can write questions, mark objective ones, chart progress and draft assessment reports. The teacher picks the right kind of assessment, often an adapted one, watches how the student does during it, interprets the results and answers for the conclusions." },
+  { "name": "Helping students build emotional and social skills, and the life skills for independence", "how": "Emotional support, social practice and daily-living skills depend on long companionship, trust and live demonstration. AI can at most supply social stories and scripts. The real guiding, correcting and encouraging happen face to face." }
+ ],
+ "events": {
+  "e_scale": "For the first time Xiao Zhou weighs out a whole recipe alone, without a prompt. He picks up the scale to show you. “Put it down,” you say. “Put it down, the flour's going to spill.”",
+  "e_collapse": "School leaders bring visitors through, and that batch of egg tarts collapses. The students look at you. You pick one up, eat it, and say, “The flavor's right. Lower heat next time.”",
+  "e_summer": "July in Ganzhou. The air conditioning in the baking room can hold off exactly one oven. You run a summer course all vacation, come home and fall asleep at once, two new burn marks on your arm.",
+  "e_orange": "November, and the navel oranges come off the trees. You arrange for four students to learn labeling and boxing at a packing plant. They are slow, but no box ever has one too many or one too few. “Better than those two relatives of mine,” the owner's wife says.",
+  "e_quit": "The student you placed at a car wash comes back after three months. The owner says he refuses to change into the uniform. You go over and work out that the collar scratches his neck. You cut out the label. He goes back the next day.",
+  "e_parent": "A mother sits in your office all afternoon and asks the same thing she always asks: what happens to him when we are old? You have no answer, so you read her last month's notes on him, one line at a time.",
+  "e_visit": "Your turn for home teaching. The van follows the mountain road through Yudu to a student too severely disabled to come to school. You have brought a small bag of dough. You put his hands in it and knead together for twenty minutes. It is dark when you get back to the city.",
+  "e_wage": "Your graduate Xiao Zhong gets his first month's pay and brings a bag of candy to school, one piece per teacher. When he reaches you he counts carefully and gives you two.",
+  "e_factory": "The packing shop at a furniture factory in Nankang agrees to try two graduates. You go along for the first week and draw the order of labeling, sealing and stacking, then post it in front of their stations.",
+  "e_closed": "The cake shop you worked with for years shuts down, and both your students there have nowhere to go. You tell the parents' group, then open your contacts and start from the top.",
+  "e_ai_pic": "The school tries an AI tool: a few typed lines and out comes a set of step-by-step picture cards. The ones you stayed up drawing are no longer needed. But the hands it draws often have six fingers, and the students stare at them and will not go on.",
+  "e_ai_report": "AI now drafts assessment reports faster than you. Reading through one, you find it thorough. It just doesn't know that this boy will only walk into the classroom wearing the blue shoes.",
+  "e_ai_app": "You install a speech-aid app for a student who barely talks and practice with her on the button: “Hello, how many would you like?” At her internship she says it to a customer for the first time. The voice is a machine's. The hand that reached up is hers.",
+  "e_mine_kid": "Your own child's parent-teacher meeting falls on the same day as a student's placement, and you go to the placement. That night your child puts a report card on the table and goes to their room without a word.",
+  "e_friend": "At a class reunion someone asks what you teach. Baking, you say. Everyone laughs with something like relief, and the talk moves on to apartments. On the way home you stand for a while below Yugu Terrace.",
+  "e_contest": "The province holds a vocational skills contest for people with disabilities, and your student competes in cake piping. She never once looks up. When time is called she lays the piping bag flat and goes off to wash her hands. Her placing isn't high. It is enough for you.",
+  "e_back": "A dozen years at the worktable, and your back starts to negotiate. You put a block of wood under your feet and change your demonstrations to half sitting, half standing.",
+  "e_old_student": "At the supermarket you run into a student from ten years ago, in a stock clerk's vest. He recognizes you and turns a row of yogurts around to show you the dates, bottle by bottle. All of them are right.",
+  "e_young": "A new teacher is close to tears in her first week. A student tore up her lesson plan. You don't try to comfort her. You take her out back to bake a tray of cookies and have her weigh the flour herself.",
+  "e_eyes": "You need reading glasses now to see the numbers on the scale. A student carries it over and reads it out loud for you, exactly as you taught."
+ },
+ "choices": {
+  "c_major": { "title": "What the next students will learn", "situation": "The baking room holds only eight, and the principal wants a second program from you. Housekeeping has real jobs at hotels and a low bar to entry. Chinese dough work is respected locally, but its handwork is hard to teach.", "options": [
+   { "label": "Start housekeeping", "result": "You teach students to make beds with forty-five-degree corners. Two hotels agree to take people every year. The work is not light, but the jobs are real." },
+   { "label": "Start Chinese dough work", "result": "You apprentice yourself for two months at a steamed bun shop on the old street. The first year's products are lopsided, but the students' hands slowly steady." }
+  ] },
+  "c_rank1": { "title": "Applying for Teacher, Grade 1", "situation": "Promotion to Teacher, Grade 1 calls for papers and an open lesson, and this year's is at the city level. The teaching office suggests something good-looking. You would rather teach how to read a bus stop sign, which won't dazzle anyone.", "options": [
+   { "label": "The good-looking lesson", "result": "You choose cake piping. The students do it beautifully and the observing teachers take a lot of photos. The score is good." },
+   { "label": "The bus stop sign", "result": "A few observers drift to their phones. Afterward a teacher from a county school catches up with you in the corridor and asks for your set of cards." }
+  ] },
+  "c_ordinary": { "title": "Teaching at a regular vocational school", "situation": "A vocational school in Ganzhou is hiring a cooking instructor. Your permanent state post can transfer. The students can keep up with a syllabus, classes are large, and you would be off work at 5:30. A colleague says your skills would be welcome anywhere.", "options": [
+   { "label": "Stay at the special school", "result": "You put the transfer form back in the drawer. The next day Xiao Zhou asks if you are still weighing flour today." },
+   { "label": "Transfer", "result": "In your first class at the new school you cover what used to take two weeks. After class the room is so quiet you can't quite get used to it.", "end": "You moved to the vocational school and taught cooking, with more students every year. In your desk drawer you kept one card, a six-step drawing of how to wash your hands." }
+  ] },
+  "c_workshop": { "title": "Starting a sheltered workshop", "situation": "Several graduates' parents have pooled money and want you to run a baking workshop for young people with nowhere to go after school. The disabled persons' federation subsidizes the space, but someone has to be there full time. You would have to give up your permanent post.", "options": [
+   { "label": "Quit and run it", "result": "You rent a storefront on a small street in Zhanggong District. A student painted the sign.", "end": "You gave up the state post and started the workshop. The income came and went and the accounts were always tight. Every morning eight graduates arrived on time, put on their caps and stood at their own places." },
+   { "label": "A training shop at school", "result": "You persuade the school to open a window at the gate. Students take turns selling bread, and parents queue in the afternoons." },
+   { "label": "Find someone else to run it", "result": "You write a detailed operating manual and give it to the parents, and stay out of it yourself. A year later the workshop is open, and the manual's first page is worn through." }
+  ] },
+  "c_ai": { "title": "Learning to make teaching aids with AI", "situation": "The education bureau is running a course on AI in special education, ten weekends long. You'd be able to make different picture cards and speech practice for every student. But your weekends already go to visiting employers.", "options": [
+   { "label": "Take it", "result": "You learn to make each student a personal set of cards, with their own name and photo. You begin reviewing AI's pictures, and can spot a wrong hand at a glance." },
+   { "label": "Keep visiting employers", "result": "Your weekends stay on the bus. You are slower with the new tools, and this year you sign up one more supermarket." }
+  ] },
+  "c_union": { "title": "The federation wants to borrow you", "situation": "The city's disabled persons' federation runs employment services and wants you on loan to train job coaches citywide. You could do something larger, but your hands would leave the worktable. Do well, and you could transfer for good.", "options": [
+   { "label": "Stay at school", "result": "You copy out your list of employers for them and go back to class." },
+   { "label": "Go to the federation", "result": "You start speaking to the whole city through spreadsheets. On your first visit to an employer you automatically check whether the workstations are high enough.", "end": "You transferred to the federation and worked in employment services for the rest of your career. You knew every spreadsheet in the city, and on every visit you still looked first at how high the workstations were." }
+  ] },
+  "c_rank2": { "title": "Applying for Senior Teacher", "situation": "The head of the vocational section is retiring and the school wants you to take over, which would help you become a Senior Teacher. It means timetables, budgets and a dozen teachers, and half your own classes would go.", "options": [
+   { "label": "Take the section", "result": "You start reading budget tables, and write three applications for one new oven. Students still call you the bread teacher." },
+   { "label": "Keep teaching", "result": "You recommend the teacher from the next group, and go on standing at the worktable at nine every morning. The title can wait." }
+  ] },
+  "c_home": { "title": "Your parents need looking after", "situation": "Your father in Xingguo has had a fall and your mother can't manage alone. Three students go out on placements this year, all with employers you brought in yourself.", "options": [
+   { "label": "Take long leave", "result": "You go home for three months. Your father learns to use a walker. You break the movement into four steps and pin them over his bed." },
+   { "label": "Bring them to the city", "result": "Your parents move into the small room at your place and never quite settle. You rush home from school every day to make dinner." }
+  ] }
+ },
+ "endings": {
+  "retire": "At your last class you have the students put the six picture cards on the board themselves, and not one is out of order. You hand the baking room key to the teacher taking over, and tell her the second oven runs ten degrees hot. The pomelo trees outside the window have fruit on them. On the way home the supermarket lights are on. You don't go in.",
+  "burnout": "The school nurse tells you to rest, and you say after this group finishes their placements. Then your back and your sleep refuse together, and the school moves you to the records office, away from the worktable. Sometimes you walk to the door of the room out back, breathe in the smell of bread, and walk away again."
+ },
+ "stages": [
+  "Your days go to breaking a trade into steps a student can complete: weighing in three, kneading in five, each step drawn on a card, laminated and fixed to the worktable. Your mentor, Lao Zhou of the teaching group, watches your classes and asks one question: who can do this step alone now? Parents ask other things on WeChat, and you fill in the individualized education plan box by box.",
+  "Your apprentice draws the cards now, and you are out on the road. Cake shops, hotel housekeeping departments, packing plants: you sit down with each boss and say honestly what a student can and cannot do. You edit the school's own textbooks, and for a student's first week on placement you stand beside them as a job coach. Unlike before, you now answer for someone else's workstation.",
+  "What you hold now is the vocational section's timetable, the training budget and a book of employers. Mornings you work with the disabled persons' federation on employers meeting their disability hiring quotas; afternoons you sit in on young teachers' classes, note three things and mention one. What programs open and close is your call. When a student has nowhere to go after graduation, it is your phone that rings.",
+  "Special school teachers around the city have begun bringing you their problems. You sit in on classes in the counties, look over their training rooms and tell principals which equipment not to buy. You lead the writing of a citywide vocational curriculum guide and edit it late into the night. You still stand at the worktable once a week. If you stopped, you are afraid your words would go hollow."
+ ],
+ "work": [
+  "You break whipping egg whites into seven pictures. Xiao Lin stops at the fourth because the bowl in the picture is a different color from the one in her hand. You find the same bowl and shoot it again.",
+  "Lao Zhou has you change the monthly exam to a practical: one score sheet, twelve items, each marked only independent, prompted or assisted. After your first round you find you have marked higher than the students really did.",
+  "You take students to the market to buy eggs, five yuan each. The egg seller gives Xiao Zhou one yuan too much in change. He stops and holds it out. She blinks, laughs and presses an extra egg on him.",
+  "The hotel housekeeping supervisor says the bed corners aren't crisp. The two of you film the standard motion on a phone, you cut it into forty-second clips, and students practice from them in the dorm.",
+  "You turn in the first edition of the school's textbook. The principal stops at the chapter on expiry dates and says there are too many words on this page. You replace a hundred-odd characters with four photos of a refrigerator.",
+  "A new floor manager at the packing plant doesn't know about the students and shouts at one in front of everyone. You don't argue with him. Next day you bring a single page explaining how to call this young man's name.",
+  "The budget covers one dough mixer or two ovens. You spend an afternoon with two of the instructors working out class hours, put it into one table for the principal, and choose the mixer.",
+  "Market regulators come to check health certificates at the training shop. You took each student for their medical exam yourself. You hand over the folder, a photo clipped into every booklet.",
+  "Young Xiao Chen wants to divide students into competing teams. You hear out her plan and change only one thing: “who is fastest” becomes “who finishes alone.”",
+  "A principal from a special school in Ningdu phones to ask how to set up a baking room. You ask for a plumbing and wiring plan first, then tell him: put the sink where a student can reach it by turning around.",
+  "At the review meeting for the curriculum guide, a provincial expert wants one more chapter of theory. You put a photocopy of a graduate's pay slip on the table and ask whether this could be the chapter.",
+  "Your apprentice has a defense coming up for the master teacher workshop and is too nervous to remember her talk. You have her put it down and tell you about the student in her class who will only use his left hand."
+ ],
+ "past": [
+  "You grew up in Ganxian. In middle school there was a boy in the next class everyone laughed at, and once you picked up his schoolbag. You remembered it for years and never told anyone.",
+  "Your gaokao (college entrance exam) score was good enough for a teachers' college. On the form you saw “special education”: reduced tuition, easy to find a job. Your family asked what exactly it taught, and you couldn't quite say.",
+  "In your second year you observed at a school for children with intellectual disabilities. A child took hold of your hand and wouldn't let go, and as you left a teacher showed you how to slip free. It was the first professional technique you learned.",
+  "After graduation you sat the exam for a state post at a special school in Ganzhou. The written test was on pedagogy. In the interview you had to teach a student, then and there, to tell red from green.",
+  "Your first year with the youngest class, one student spent eight months learning to tie his shoes. The day he managed it you told the office three times, and everyone laughed.",
+  "The principal said the school wanted to start baking in the vocational section and asked who would learn it. You spent forty days of summer at a training course in the provincial capital, passed the pastry cook exam and got your first burn scar."
+ ],
+ "late": {
+  "pension_note": "Estimate: public school teachers are covered by the public institution pension and an occupational annuity, about seventy percent of final monthly pay.",
+  "scenes": [
+   "Your first month of retirement you bake a batch of bread at home, and out of habit write the recipe out in six steps and stick it on the refrigerator. Your spouse looks at it for a long while and says, “Now even I can do it.”",
+   "The school asks you back to speak to new teachers. You bring no slides, only a bag of flour and a scale.",
+   "Xiao Zhong is past forty now and still at that same job. He phones at New Year and says the same few sentences, word for word.",
+   "You ride the No. 8 down to the river. When the stop is announced you remember a student who once recited every stop on this route to you, not one missing.",
+   "The records office window looks onto the playground. You sort all those years of picture cards into numbered volumes, more than a dozen thick ones, and shelve them on the lowest row.",
+   "Your back is a little better and you start walking along the Gong River every day. Halfway along, a middle-aged man gets off his electric bike and calls you teacher.",
+   "Young teachers still ask what to do about some student. You don't go to school anymore. You listen on the phone and when they finish you ask, “Did he eat today?”",
+   "In the new place you still wake a little after seven, then remember you don't have to go stand across from the bus stop.",
+   "On the street you see a new bakery, go in and buy one thing, turn it over to look at the color of the bottom, and nod.",
+   "At a retirement dinner for old colleagues someone mentions the room out back, which has a third oven now. You ask whether the pomelo trees are still there.",
+   "When the navel oranges come in you always buy a box. You open it and count them first, then check whether the labels are on straight.",
+   "A handwritten card arrives, with large, leaning letters and just three words. You tuck it into that notebook of records."
+  ],
+  "closing": {
+   "retire": "Your hands still know how much two hundred and fifty grams of flour weighs. On an autumn afternoon you wipe the scale clean and put it in the cupboard.",
+   "burnout": "You have returned the records office key. In the evening someone is flying a kite by the river, letting the line out little by little. You stand and watch, in no hurry.",
+   "end": "What you did later went by other names. When you pass a bakery you still slow down a little."
+  }
+ }
+}

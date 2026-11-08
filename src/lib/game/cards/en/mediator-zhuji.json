@@ -1,0 +1,155 @@
+{
+ "id": "mediator-zhuji",
+ "occupation": "Mediator",
+ "role": "Full-time mediator on a township people's mediation committee",
+ "headline": "Formerly a sock factory order-chaser and a village clerk, hired at thirty-eight by the township justice office to pour tea all day and listen to people fight",
+ "unit": "The people's mediation committee of a township in Zhuji, Zhejiang (next door to the justice office; three full-time mediators, one mediation room)",
+ "unit_type": "Township people's mediation committee",
+ "city": "Zhuji",
+ "city_tier": "County-level city",
+ "education": "Associate degree in legal affairs (adult education)",
+ "level": "For two years you helped settle neighbor disputes in your village, and you've just received your people's mediator certificate. You have to look up the statutes as you go. You understand Zhuji dialect and that of several migrant workers. Your written agreements still ramble.",
+ "intro": "The mediation room is next to the justice office: one long table, an electric kettle, and chairs on either side that don't quite face each other. The old director set them that way. People won't open up face to face, he said. You have chased orders at a sock factory and kept the books in a village, and this year the justice office came to ask for you. The old director hands you an enamel mug and says what you need here is not talking but listening. Starting today, the fights this township can't finish will all come to this table.",
+ "salary_note": "Estimate: township full-time mediators are mostly government-contracted positions paid under hiring contracts with a small per-case subsidy, below the national figure, so 0.68.",
+ "facts": [
+  { "label": "Full-Time People's Mediator (current level)", "value": "0–5 years, ¥6,000–8,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Deputy Director of the Mediation Committee (5–12 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥14,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Mediating under the Ministry of Justice's rules on people's mediation: lawfully, voluntarily, with both sides on equal terms", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Signing agreements, stamping a personal seal on the key figures, and delivering copies to both parties", "source": "AI exposure" },
+  { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (the database leans toward campus hires and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Boil water, wipe the table, set the two chairs. The kettle's switch has come loose, and you wind another turn of tape around it.",
+  "You go through the visitors' register. Two parties are booked today, one from a village, one from the industrial park. You stagger the times so they won't meet at the door.",
+  "The first pair sit down. You pour tea first and ask whether they've eaten. Each describes the same matter, and it sounds like two different ones. You aren't noting who is right, only which sentence each of them cares most about.",
+  "Separate talks. You take one side next door. What the other side said you tell only once outside: this line you carry across, that one you keep to yourself.",
+  "A bowl of Cizao beaten noodles in town. The owner asks how things went with that family. You say the noodles are good.",
+  "You ride your electric bike down to the village. The paths between fields are narrow, and the shadows of Chinese nutmeg yews lie across them. The village mediation chief waits for you on the drying ground, and the two of you go over what needs saying as you walk.",
+  "Writing up the agreement. Key figures go in formal numerals, your personal seal goes on them, and each side gets a copy, handed over in person, at no charge.",
+  "Filing, and logging it all to the online mediation platform. On your way home someone stops you and holds out a cigarette. You wave it off and say your family won't let you."
+ ],
+ "ladder": [
+  { "title": "Full-Time People's Mediator", "stage": "Learning the ropes", "focus": "Receive visitors, mediate neighbor, family and small debt disputes in villages and factories, write agreements. You move up by being fair and having both sides accept it." },
+  { "title": "Deputy Director of the Mediation Committee", "stage": "Carrying the load", "focus": "Take the hard ones, guide the village committees, and manage the files and ledgers." },
+  { "title": "Director of the Mediation Committee", "stage": "In charge of the township", "focus": "Run mediation for the whole township, connect with the police station, the court and the justice office, and judge what's proper in big matters." },
+  { "title": "Chief Mediator", "stage": "The city's old hand", "focus": "One of a handful in the city. You are brought in on the hardest disputes, and you train apprentices and give talks." }
+ ],
+ "ai_tasks": [
+  { "name": "Mediating under the Ministry of Justice's rules: lawfully, voluntarily, with both sides on equal terms", "how": "Persuading people, easing them, and getting both sides willing to negotiate depend on judgment in the room and on relationships of trust. AI can at most look up rules and statutes and lay out the points of dispute. A person decides." },
+  { "name": "Signing agreements, stamping a personal seal on key figures, and delivering copies", "how": "AI can draft an agreement from the mediation record, check clauses for consistency, verify key numbers and format, and print copies in bulk. Signing, sealing the key figures and handing copies to both parties must be done and answered for by a person." },
+  { "name": "Keeping parties' privacy and never charging them", "how": "Confidentiality and not charging fees are bedrock rules of the profession that a person has to keep. AI can't take on this responsibility. When AI handles materials, a person still has to keep private matters from leaking." },
+  { "name": "Not acting as anyone's litigation representative when mediation fails, and not referring a lawyer", "how": "When mediation fails you can't represent either side or introduce them to a lawyer. This neutrality is something a person has to judge and hold to. AI can at most give a reminder in the workflow." }
+ ],
+ "events": {
+  "e_old_boss": "In one session the old director hardly says a word. He just refills the tea six times. Afterward he says: stand up when the cup is half poured, so that they have time to think.",
+  "e_scold": "An old woman points at you and says you are taking sides. You flush and your voice rises a little. The old director doesn't criticize you afterward. He just swaps your mug for a smaller one.",
+  "e_redo": "An agreement you wrote has one word that can be read two ways, and three days after signing both parties are back. You rewrite it, and from then on have someone uninvolved read every one.",
+  "e_law": "The justice office holds quarterly training, and a judge from the local court explains how to make an agreement hold up. You sit in the front row and put tabs all through the contract section of the Civil Code.",
+  "e_thanks": "Two families who came in fighting last year are buying fish together at the market. They don't see you, and you don't go over.",
+  "e_gift": "Someone leaves a case of Chinese nutmegs at your door. It takes asking at three houses to find out who. You ride them back, and find a way of saying it that doesn't embarrass anyone.",
+  "e_noshow": "One side doesn't show up and doesn't answer the phone. You sit in the mediation room until dark. The kettle boils three times.",
+  "e_factory": "A pay dispute breaks out in the industrial park between some migrant workers and their boss. You hear both sides at the shop by the factory gate, then spend ten minutes talking with one worker about his family back home, in his own dialect.",
+  "e_tired": "After seven hours of listening to other people's grievances, you get home and your spouse asks you something. You don't want to say a word. You sit on the balcony for half an hour watching the cars below.",
+  "e_tour": "A delegation from another province tours the township to learn about its methods, and the mediation room gets photographed a great deal. You put the chairs back at their angle. The kettle still has its tape.",
+  "e_ai_draft": "The platform adds AI-drafted agreements: a recording goes in and a first draft comes out. It's quick and complete, except that one side's angry words got written in too. You strike them out clause by clause.",
+  "e_ai_privacy": "A young colleague pastes a mediation record into an outside AI tool to rewrite it. You see it, ask him to close it, and read out the confidentiality rule, without any edge.",
+  "e_ai_person": "Someone arrives having already asked AI, holds a phone up to your face and says by this statute the other side owes this much. You read it, pour him a cup of tea, and ask how many years his family and theirs have known each other.",
+  "e_wedding": "The children of two families you once mediated between are getting married and invite you to the banquet. You think it over and send a gift, but don't take a seat.",
+  "e_pearl": "In recent years more and more people in town sell on livestreams, and disputes over payments, returns and partners' accounts have reached your table. You get your nephew to teach you to read the sales back-end.",
+  "e_fail": "Several rounds, and still the two families won't sit down together. As the rules require you tell them they may go to court, you won't find anyone a lawyer, and you won't say who would win. On the way out you stand on the steps for a while.",
+  "e_neighbor": "You have a few words with the people upstairs about a leak. Your spouse, beside you, asks: shall I find you a mediator?",
+  "e_tea": "The new young man asks how to tell whether someone is telling the truth. You say there's no need to tell. Watch whether their hand is steady when they put the cup down.",
+  "e_knee": "A dozen years on those field paths, and your knees aren't obeying. You have someone carry you part of the way by three-wheeler now. The talking you still go do yourself.",
+  "e_child": "Your child, choosing college majors, asks whether to study law. What are you asking me for, you say, my line of work hardly needs a degree. After a moment you say, go ahead."
+ },
+ "choices": {
+  "c_cert": { "title": "Which certificate to go for", "situation": "The justice office says if you mean to stay long, you should get another certificate. The social worker qualification is easier and useful in dealing with people. The national legal qualification exam is hard, but it would give your agreements a backbone.", "options": [
+   { "label": "Social worker certificate", "result": "You study for three months at night and pass. You pick up the word “empathy” and find the old director has been doing it all along." },
+   { "label": "Legal qualification exam", "result": "At forty you sit in an exam hall among people in their early twenties. It takes two years, and you pass." }
+  ] },
+  "c_call": { "title": "Someone puts in a word", "situation": "A person of some standing in town calls. One party is his relative, and he asks you to “look after them a bit.” The other family has no one like that, and doesn't know about this call.", "options": [
+   { "label": "Handle it as usual", "result": "You say all right, I understand, and do it the way you would have. For a while after that, certain matters in town stop coming your way." },
+   { "label": "Give a little", "result": "You lean half a step that way in how you put things, and the agreement is still fair. At the signing the other side looks at you a moment longer." }
+  ] },
+  "c_vice": { "title": "Becoming Deputy Director of the Mediation Committee", "situation": "The old director is stepping back, and the justice office proposes you as Deputy Director of the Mediation Committee. From now on the villages' hard cases would be yours, and so would the mediation ledgers of twenty-odd villages.", "options": [
+   { "label": "Take it", "result": "You read through the ledgers of all twenty-odd villages and find that in several the mediation chief changed three years ago, and the book still carries the old name." },
+   { "label": "A few more years of casework", "result": "You say you need more practice. The old director nods and swaps your mug back for the large one." }
+  ] },
+  "c_hr": { "title": "A factory in the industrial park wants you", "situation": "A sizable sock company wants you for labor relations, at half again the pay, with full benefits and a car allowance. Your face works with the workers, the boss says.", "options": [
+   { "label": "Stay", "result": "You thank the boss. Back at the mediation room, someone has replaced the kettle for you." },
+   { "label": "Go to the factory", "result": "You put on a new badge. The first time you sit on the boss's side, the angle of the chair feels wrong.", "end": "You went to the factory to handle labor relations. The pay was better, and the people on the floor still called you old master. Sometimes after work you pass the township justice office and glance at that lit room." }
+  ] },
+  "c_ai": { "title": "Learning online mediation", "situation": "The city is promoting online mediation with AI assistance and each township must send someone for training. Parties working far away could be mediated by video. You'd have to learn to read people through a screen.", "options": [
+   { "label": "Go learn", "result": "You master split screens, transcription and reviewing AI drafts, and you learn to ask someone to turn the camera a bit, to see who else is beside them." },
+   { "label": "Let the young go", "result": "You keep walking from village to village, seeing people when you can. The young man starts the online sessions for you." }
+  ] },
+  "c_lawyer": { "title": "A law firm wants your name", "situation": "You've made a name, and a law firm in Zhuji wants you for pre-trial settlements, at two or three times your income. But as a lawyer you'd stand on one side.", "options": [
+   { "label": "Don't go", "result": "You tell them the chair you sit in doesn't lean to either side, and that suits you." },
+   { "label": "Resign and go", "result": "You resign from the post and hand over your files in perfect order, taking not one sheet of paper with you.", "end": "You left the committee for settlement work at the firm, and by the rules never touched anything concerning a family you had mediated for. When a client sits down, you still pour tea first." },
+   { "label": "Give a talk or two", "result": "You agree only to one talk a month on mediation technique, and donate the travel money to the village." }
+  ] },
+  "c_chief": { "title": "Taking over as Director of the Mediation Committee", "situation": "The old director has fully retired and someone needs to be Director of the Mediation Committee. It means regular meetings and coordinating with the police station and the court, with much less time at your own table.", "options": [
+   { "label": "Take the job", "result": "You sit in a lot of meetings, then translate what you hear into words the villages can follow and say it all again." },
+   { "label": "Stay at the table", "result": "You recommend Xiao Meng, who has transferred in from the next township, and go on boiling water every day." }
+  ] },
+  "c_retire": { "title": "Staying on past sixty", "situation": "You've reached the age to rest, and the justice office asks if you'd stay on, year by year. The grandchild needs looking after and your spouse has been saying so for years, but people in the villages still ask for you by name.", "options": [
+   { "label": "Stay on", "result": "You say a few more years, half days only. In the afternoon someone comes in with a child, and you keep an eye on the child while listening." },
+   { "label": "Look after the grandchild", "result": "Every Monday, Wednesday and Friday you go to the kindergarten gate. A few grandmothers start quarreling there. You hold back and don't go over." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last day you wash the enamel mug and put it back in the cabinet, and wrap a fresh turn of tape around the kettle. You set the two chairs at their old angle and leave a note for your successor with only one line: stand up when the cup is half poured. Passing the village entrance on the way home, someone calls you in to eat. You wave and walk on, smiling.",
+  "burnout": "After years of listening to others, you started sleeping badly and speaking less and less. Your family urged you to rest, and the justice office brought in someone young. You sorted the files and handed them over, and now you grow greens at home. When the neighbors argue, you shut the window."
+ },
+ "stages": [
+  "Your days are listening: names into the visitors' register, tea on the table, the two sides talked with apart and then brought together, the agreement written, your personal seal on the key figures. The old director sits to one side, says nothing, and afterward asks a single question: who wasn't telling the truth today? Whatever the police station passes along or the villages can't settle comes to you first.",
+  "The hard ones come to you first now. You go down to the villages with the ledgers of the township's twenty-odd mediation chiefs, looking for whose book has gone empty. You review files on the online platform and turn in the justice office's monthly reports. Unlike before, it isn't enough to get the words right yourself. You also have to back up the novices in the villages.",
+  "The whole township's mediation is yours to run. Mornings you meet with the police station and the court's judges about what can be mediated first; afternoons you handle the hardest one or two; evenings you read agreements written by young staff. You sit through township meetings and translate them for the villages. When you decide something, you think about how many more years this table will be in use.",
+  "When something in the city can't be moved by anyone, you get a phone call. You ride out to another township with no files and listen for a whole morning. The justice bureau asks you to lecture. You can't lecture on theory, so you talk about where to put the mug. When your apprentices are unsure of something they call at night. You hear them out and ask first: have you eaten?"
+ ],
+ "work": [
+  "Lao Lou, the village mediation chief, hands over a crumpled account book. Each family has its own. You go through them in the mediation room line by line with a ruler, and by the third page both sides have stopped talking.",
+  "The agreement comes off the printer. You seal the formal numerals, then read it aloud once to the party who can't read. Before she presses her thumbprint, she asks you to read the last line again.",
+  "Xiao Chen from the police station drops off a referral slip and says try this one. You read it, don't reach for the phone yet, and first go for a walk down that lane.",
+  "At your monthly meeting with the village mediation chiefs, you turn up a ledger in which the same three months have been copied out word for word. You don't say so in front of everyone. After the meeting you ask Lao Lou to stay.",
+  "A judge needs to confirm an agreement in court and one clause is vague. You and young Xiao Jin rewrite it, and bring both parties back to sign again.",
+  "The boss and several workers from the industrial park agree to talk outside the corner shop. You bring two little stools and ask the boss to sit. A little stool is lower than an office chair, and his talk softens some.",
+  "You and the police chief go through this quarter's referral slips, and you sort several dozen into three piles: can be mediated, needs time, should go to court, with reasons for each.",
+  "Young Xiao Meng has written “both parties unanimously agree” in an agreement when one party was shaking their head all along. You hand back the draft and have him go again, bringing nothing.",
+  "The township's annual budget wants to cut mediation funding. You bring three agreements and one table, work out exactly how much each case saved by not going to court, and the funding stays.",
+  "The justice bureau asks you to teach all the city's new mediators. You turn off the projector, bring in two chairs, have one trainee sit down and another pour him tea, and let everyone watch.",
+  "An apprentice phones in the middle of the night, unsure about that family tomorrow. You ask which floor the old people live on. He can't say. Then go there first, you tell him.",
+  "A matter in another township has been stuck for two years. When you arrive you say nothing, go through the ledger from the start, and at the first page point to the earliest entry: start asking from here."
+ ],
+ "past": [
+  "After middle school your family couldn't keep paying, and you went to work the knitting machines at a sock factory over in Datang. Twelve-hour shifts. That was when you learned to hear what people said over the roar of machines.",
+  "You worked up to order-chaser, carrying messages between the boss and the home workshops. Both sides cursed you, and you learned which sentences to pass on only half of.",
+  "When your child was small you quit the factory and came back to the village to keep the books and paperwork for the village committee. When villagers quarreled they often ran to you, and you made them a cup of tea.",
+  "You enrolled in an adult education program in legal affairs and took the bus to Shaoxing for class every weekend, with your child's homework in your bag.",
+  "The village chose you as mediation chief. In your first session an old man slammed the table and water spilled on your notebook. You turned to a clean page and went on writing.",
+  "The head of the township justice office heard about you, came once to the village and asked if you'd go full time. The pay wasn't high. You and your spouse talked it over for three nights."
+ ],
+ "late": {
+  "pension_note": "Estimate: contract positions pay into the enterprise employee pension, and the pension is a little over half of final pay.",
+  "scenes": [
+   "On your first day with no work you still boil water at eight, pour two cups, and bring one to your spouse.",
+   "A quarrel breaks out at the chess stall by the village gate, and everyone looks your way. You set down your cup, stand slowly, and sit down again.",
+   "Buying vegetables in town, a middle-aged couple smiles at you. You can't remember whose family they are, so you smile too.",
+   "The mediation room is being refurbished, and they bring you the kettle with the tape on it, as a keepsake.",
+   "You grow greens in the yard, row on row, straight as ruled lines. The greens don't argue.",
+   "Your sleep slowly improves. On rainy nights you listen to the rain, and no one needs you to judge which drop is telling the truth.",
+   "An old colleague comes to see you and says something has come up in the village. He stops halfway, and asks how you grew these greens so well.",
+   "At the new place you still look first at how the chairs are arranged, and quietly turn one a bit.",
+   "Back in the village for Qingming, the spring day for tending family graves, someone still calls on you to judge a dispute. You smile and say that's not mine to deal with now, and your hand still goes out for the tea.",
+   "An old ledger is sent to the archive. Someone turns up your handwriting and posts a photo in a group chat. You zoom in and look at the personal seal.",
+   "At the Chinese nutmeg harvest you take a walk on the mountain. Trees a thousand years old are hung with fruit. They've seen three generations' worth of everything.",
+   "Your grandchild comes home from a fight with a classmate. You don't ask who was right. You pour half a glass of water and wait for him to speak."
+  ],
+  "closing": {
+   "retire": "The evening water has boiled. You pour half a cup, set down the kettle, and sit waiting for it to cool a little.",
+   "burnout": "A thin frost has fallen on the vegetable beds. You pull the door shut. No one is coming today.",
+   "end": "You have sat in many chairs since. On entering a room, you still look at how they're angled."
+  }
+ }
+}

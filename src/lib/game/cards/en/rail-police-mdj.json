@@ -1,0 +1,161 @@
+{
+ "id": "rail-police-mdj",
+ "occupation": "Railway Police Officer",
+ "role": "Railway police train officer (Police Officer, Grade 1)",
+ "headline": "A police academy graduate posted back to Heilongjiang, riding the old green trains between Mudanjiang and Suifenhe and reporting for duty on platforms at thirty below",
+ "unit": "A railway police train squad based in Mudanjiang (covering passenger trains toward Suifenhe, Harbin and Dongning)",
+ "unit_type": "Railway police",
+ "city": "Mudanjiang",
+ "city_tier": "Prefecture-level city",
+ "education": "Bachelor's in police studies",
+ "level": "You've passed the basic law enforcement qualification and ridden the trains for a year. You can check documents and write up duty records. You can talk down about half the drunk passengers, and you still can't keep a dozen carriages of faces in your head.",
+ "intro": "The platform at five in the morning, twenty-eight below zero, your breath freezing to your collar as it leaves you. Your mentor hands you a thermos and says don't drink much before a run, the toilets on this train often freeze. The conductor stands at the carriage door calling names. A car inspector works his way down the train with a small hammer, tapping each carriage. At the academy you studied statutes and restraint holds. Starting today, whatever happens on the way to the thousand-odd people aboard this green train comes to you first.",
+ "salary_note": "Estimate: railway police are paid on the civil service scale plus rank and on-train allowances, with regional allowances low in the Northeast, so 0.9.",
+ "facts": [
+  { "label": "Police Officer, Grade 1 (current level)", "value": "0–3 years, ¥5,500–7,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Police Sergeant, Grade 4 (3–8 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Handling passenger disputes and sudden incidents on trains and at stations", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Patrolling stations and trains and keeping order", "source": "AI exposure" },
+  { "label": "Open positions", "value": "4 related listings nationwide, 0 in this city (the database leans toward campus hires and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Roll call before the run. The duty officer reads the assignment and you note train number, stops and what to watch for the next few days. Handheld terminal charged, body camera clipped on.",
+  "The train pulls out. You, the conductor and the car inspector put your heads together to go over this trip: whose carriage has a student group, whose heating isn't so good.",
+  "Walking the carriages. You go through one by one, help an old man stow a sack under his seat, and look up to see if anything on the luggage rack sits crooked.",
+  "A man who has been drinking starts a row with the passenger next to him. You don't raise your voice. You crouch beside him and ask where he's getting off and who he has at home, and little by little his voice comes down.",
+  "Lunch in the dining car: stewed potatoes and green beans, and the cook gives you an extra ladle of broth. You eat with your eye on the door to the carriages.",
+  "Coming into Suifenhe, cross-border traders haul their bags off in loads. You stand by the door and call out: slowly now, no shoving. Cold air pours in through the gap.",
+  "A quick nap at crew quarters before the return trip. It's snowing outside and the radiator ticks. You finish today's duty record on the handheld.",
+  "At night the carriage lights go low. An old woman is standing by the door, unable to find her seat number. You shine a flashlight on her ticket and walk her three carriages down."
+ ],
+ "ladder": [
+  { "title": "Police Officer, Grade 1", "stage": "Riding along", "focus": "Ride with your mentor, patrol carriages, check documents, calm disputes and write duty records. You move up by making no mistakes and taking the hardship." },
+  { "title": "Police Sergeant, Grade 4", "stage": "Solo runs", "focus": "Handle a whole train by yourself, in partnership with the conductor and car inspector, dealing with everything large and small on board." },
+  { "title": "Police Sergeant, Grade 3", "stage": "Lead train officer", "focus": "Lead a duty team of a few people, roster shifts, review records, mentor new officers, and pass the intermediate law enforcement qualification." },
+  { "title": "Police Sergeant, Grade 2", "stage": "Squad mainstay", "focus": "Run the duty assignments for a whole line, coordinate police stations along the way, and make the call when something sudden happens." },
+  { "title": "Police Sergeant, Grade 1", "stage": "Unit leader", "focus": "The daily work of dozens of train officers comes to you. Not many reach this level." }
+ ],
+ "ai_tasks": [
+  { "name": "Patrolling stations and trains and keeping order", "how": "AI watches video for crowding, unusual lingering and fights and flags the location. Officers still have to arrive, patrol, deter and handle things in person." },
+  { "name": "Dealing with pickpocketing, fraud and other offenses on trains and at stations", "how": "AI finds peak times, places and suspicious movement patterns in video and report data. Officers make the arrest, question people, establish the facts and determine the violation." },
+  { "name": "Questioning passengers of concern and suspicious persons", "how": "AI can help compare identity information and flag alerts. Whether to question someone, how to ask and how to judge truth from lies is for an officer to observe and decide lawfully in person." },
+  { "name": "Checking passengers and luggage to keep dangerous goods off trains", "how": "Screening equipment with AI image recognition automatically marks suspected knives and flammables, easing eye strain. Opening bags, explaining and dealing with prohibited items is still done by people." },
+  { "name": "Handling passenger disputes and sudden incidents on trains and at stations", "how": "Arguments, crushing crowds and sudden illness need people on the spot to calm things, direct evacuation and take responsibility. AI can at most look up rules, pull video and call for backup." },
+  { "name": "Lawful detention, search and seizure of evidence", "how": "These involve personal liberty and property and must be decided and carried out by an officer under legal procedure. AI can only help draft documents and tidy lists." },
+  { "name": "Patrolling along the line to guard against damage and threats to safe running", "how": "Drones and cameras with AI can spot debris on the track, broken fences and trespassers. Officers still go to the site to verify, handle it and find who's responsible." },
+  { "name": "Taking reports and investigating and gathering evidence", "how": "AI can help log reports, tidy statements, search similar cases and link video clues. Officers question those involved, examine the scene, weigh evidence and handle the case." }
+ ],
+ "events": {
+  "e_master": "Your mentor has been riding trains for thirty years and can tell at a glance where trouble is going to be. Look at people's feet, he says, whether the shoes are wrong, whether the walk is wrong.",
+  "e_cold": "More than thirty below, and the carriage door has frozen shut. You and the attendant work at it on the platform with hot water and a small hammer for a quarter of an hour. Back inside, your fingers won't bend for a long while.",
+  "e_new_year": "New Year's Eve on the train. At midnight you are passing through a stretch of black forest. The dining car sends out a plate of dumplings and you and the conductor eat them standing up. The video call home keeps cutting out.",
+  "e_lost": "An old man has boarded the wrong train with nothing on him but a slip of paper with his son's number. You stay with him all the way and hand him to colleagues at the next station. Later the son cries on the phone.",
+  "e_complain": "A passenger unhappy with how you handled something posts your body-camera moment online, only the second half. You write an explanation and hand in the full record, and don't sleep well for three days.",
+  "e_russian": "You pick up a few phrases of Russian from the Suifenhe traders, enough to ask the way, ask for a ticket and say don't worry. An old Russian woman who can't find her carriage hears you speak and every wrinkle on her face eases into a smile.",
+  "e_stomach": "Irregular meals and all-night shifts, and your stomach starts acting up. The unit doctor gives you medicine and says eat on schedule. You nod and glance at next week's roster.",
+  "e_snow": "Heavy snow blocks the line and the train sits for thirteen hours at a small forest station. You go through every carriage explaining what is happening, moving old people and children to the warmest cars, and stay on your feet all night.",
+  "e_ski": "Snow season, and tourists from elsewhere ride this train to see Snow Town. A whole carriage holds up phones to film the window. Someone asks how much farther it is to Snow Town. Not far, you say, and you don't know why they are so happy.",
+  "e_hsr": "After high-speed rail opens, the green train you ride goes to every other day. A woman with a basket who rides it often says she doesn't know how she will get to the city to sell her vegetables now.",
+  "e_ai_face": "AI alerts are added to your handheld, and one carriage can pop up several in a row. You check them one by one, and most are false alarms. Once it's just an old man with a similar face. You politely return his ID and help him settle his bag.",
+  "e_ai_record": "Voice recordings now turn automatically into draft duty records, which saves you over an hour on the return trip. You spend the extra time asleep in the dorm.",
+  "e_ai_drone": "The line now has drones and AI inspection, and anything unusual is pushed first to your phone. At the site you still have to tramp through the snow, because it doesn't count until you've looked.",
+  "e_family": "You miss your child's parent-teacher meeting again. Your spouse doesn't lose their temper on the phone, and that's harder. You stand in the space between carriages for one whole stop.",
+  "e_birth": "A pregnant passenger is going into labor. You contact the next station while the attendant finds clean towels and you ask the men nearby into the next carriage. When you reach the station, your hands are still shaking.",
+  "e_thanks": "A handwritten thank-you letter comes to the squad, saying you helped her elderly father some years back. You think for a long while and can't remember which run it was.",
+  "e_knee": "Twenty thousand steps a day, in a carriage that sways, and your knees and back start reminding you of your age. You've become a regular at the unit's physiotherapy room.",
+  "e_young": "A new young man on his first run nervously keeps touching his belt. You hand him a thermos and tell him not to drink much before a run.",
+  "e_shift": "One green-train line is about to stop running and you apply to work its last trip. There are few passengers. The attendants have washed all the curtains.",
+  "e_friend": "The conductor you've partnered with for a dozen years retires, and as he gets off he pats your shoulder and says nothing. The next day there is a young face at the carriage door."
+ },
+ "choices": {
+  "c_line": { "title": "Green trains or high-speed", "situation": "The squad is staffing a new line, and the high-speed service to Harbin needs people. High-speed trains are clean and short, but you'd be watching closely the whole way. Green trains are slow and full of all sorts, and there's much to learn. Up to you, says your mentor.", "options": [
+   { "label": "Stay on the green trains", "result": "You go on squeezing through the carriages, and memorize the name of every small station along the line." },
+   { "label": "Move to high-speed", "result": "You put on an ironed uniform. A run lasts no more than three hours, and far less happens." }
+  ] },
+  "c_rank1": { "title": "The qualification before Police Sergeant, Grade 4", "situation": "Before making Police Sergeant, Grade 4, it would be best to pass the next level of law enforcement qualification, and studying would eat your few days off. Meanwhile friends at home want you to come earn some money on your rest days toward a down payment.", "options": [
+   { "label": "Study", "result": "You finish a stack of books at crew quarters with your phone on silent. You pass." },
+   { "label": "Help at home", "result": "On your days off you go home to help with the business, and put your savings toward the down payment. The exam can wait till next year." }
+  ] },
+  "c_office": { "title": "Moving to a desk job", "situation": "The political work office needs someone who can write, and you've been recommended. Nine to five, dinner at home, and your child is little. A colleague on the trains says once you're off, you don't get back on.", "options": [
+   { "label": "Keep riding", "result": "You turn it down. At the next roll call you stand in your usual place." },
+   { "label": "Take the desk", "result": "Your first month in the office you get sleepy every afternoon at three, and feel the chair doesn't sway enough." }
+  ] },
+  "c_home": { "title": "The provincial exam back home", "situation": "Home is Jiamusi. Your spouse works there, and you see each other only a little each year. This year the provincial police are recruiting. Pass, and you could go back in the same uniform and never board again.", "options": [
+   { "label": "Don't take it", "result": "You meet once a month at a station halfway, and live your life the way you work a run." },
+   { "label": "Take it", "result": "You pass, and from then on leave the railway line behind.", "end": "You tested back into Jiamusi and settled at a police station, home for dinner every evening. When the sound of a train comes from far off, you still lift your head to listen." }
+  ] },
+  "c_ai": { "title": "Learning to review AI alerts", "situation": "The division is training a group to specialize in reviewing AI alerts and organizing data, two months off the line. Afterward you might ride less, or never need to ride again.", "options": [
+   { "label": "Go learn", "result": "You learn to pick out false alarms and label thousands of data points for the model. Back on the train, you know when not to trust it." },
+   { "label": "Stay on the train", "result": "An alert is an alert, you say, and people still have to look for themselves. You go on looking at feet." }
+  ] },
+  "c_rank2": { "title": "Lead train officer, and Police Sergeant, Grade 3", "situation": "Your team needs a lead officer, which would help you make Police Sergeant, Grade 3. You'd manage three people's rosters and mistakes, and when something goes wrong you'd write the report first.", "options": [
+   { "label": "Take it", "result": "Before each run you begin looking a little longer at everyone's color, and you begin writing a lot of reports." },
+   { "label": "A few more years", "result": "You recommend your partner Xiao Tian, and go on walking the carriages one by one." }
+  ] },
+  "c_private": { "title": "A security company's offer", "situation": "An old comrade runs safety at a large company in the south and needs someone who knows the ground, at more than double your pay and no night shifts. You've spent all these years in the Northeast, and your stomach isn't what it was.", "options": [
+   { "label": "Resign and go south", "result": "You take off the uniform, fold it, and put it in the wardrobe.", "end": "You went south as a corporate safety manager and winters no longer called for padded boots. At New Year you buy a hard-seat ticket and ride a green train back to Mudanjiang, watching the carriage the whole way." },
+   { "label": "Stay", "result": "You reply with thanks. Back from this run, you buy your stomach pills in the larger bottle." }
+  ] },
+  "c_parent": { "title": "A parent falls ill", "situation": "Your mother is in the hospital and your spouse can't handle it alone. Spring Festival travel season is about to start and everyone on the squad is fully rostered. If you take leave, someone else has to work an extra run.", "options": [
+   { "label": "Take leave", "result": "You stay twenty days at the hospital. When you return, you bring two cartons of cigarettes for the colleague who covered for you. He won't take them." },
+   { "label": "Finish the rush", "result": "You phone at every stop. When the rush ends you've lost weight, and you fall asleep at your mother's bedside." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last run the conductor tells you to sit a while, and you still walk through every carriage. At the end you hand in your handheld and body camera, and the young ones snap a salute. You walk out across the platform at twenty-some below, snow falling on your shoulders, with no train to board this time. Behind you the train slowly starts to move.",
+  "burnout": "Your stomach and your back couldn't keep up with the roster, and after one physical the squad took you off the trains and moved you to a station desk. You no longer ride, only glance at the clock out of habit as each train pulls out. You still often wake a little after four."
+ },
+ "stages": [
+  "You follow your mentor through the carriages one by one, checking documents, writing duty records, straightening boxes crooked on the rack. The conductor and car inspector are senior to you, and you call them master before you speak. Your mentor has you learn the people on this train first: who rides often, who is here for the first time, who starts looking for something the moment they board.",
+  "One train is now yours alone. You work with the conductor and car inspector as a three-person crew, from roll call to the end-of-run handover. Drunks, arguments, lost things and lost people on the train are all yours. Your handheld and body camera never leave you, and at each end you hand over to the station police. Unlike before, once the train moves, no one is standing behind you.",
+  "You lead a duty team of a few people. Rosters, the review of duty records and the pairing of new officers with mentors have all come to you, and before each run you look at everyone's color. When something comes up you judge first whether to deal with it aboard or alert the station ahead. You begin writing many reports, and taking the blame for the young.",
+  "The duty assignments for a whole line are yours. In the command room you are on the phone with police stations along the way, and plans for the Spring Festival rush, snow disasters and student travel come from you. Every so often you ride a train, not to catch anything, just to sit down with the young ones for a dining car meal and hear how the line really is.",
+  "The duty, training and family troubles of dozens of train officers all pass through you. You sit in many meetings, negotiate trainsets and staffing with the railway's passenger department, and sign more and more papers. Your office window faces the platform. When the young ones line up to go out on a run, you sometimes stand up and watch for a while."
+ ],
+ "work": [
+  "Your mentor has you read a duty record of his, half a page for a small thing. He points at one line: write times to the minute. Someday this sentence will save you.",
+  "The attendant Xiao Sun says the heating has failed in carriage seven and a passenger holding a child is stamping her feet from cold. Together you move them to carriage nine and add a note.",
+  "The first time you alone talk two people out of a fight, you go back to the police compartment and find you've cracked the cap of your pen in your palm.",
+  "The conductor Lao Gu says someone is peddling goods by the dining car. You go look, have the person pack it up, and before the station write it into the handover slip. Xiao Lu at the police post takes it from there.",
+  "A student has lost a backpack. You pull up the ticket-check time and ask your way through one carriage after another, and find it on the rack in carriage twelve, with the exam admission ticket still inside.",
+  "The car inspector Lao Hu hears something wrong with his hammer and the train must sit fifteen extra minutes at a small station. You go through with a loudhailer, explaining, and not one person gets off to wander.",
+  "Young Xiao Tian left a time out of his record. You don't say so in the group chat. You call him to the crew quarters, make him a cup of instant noodles and the two of you fill in the record together.",
+  "Doing the Spring Festival roster: one person's child was just born, another's mother just went into hospital. You erase and rewrite the sheet, and finally put yourself on the New Year's Eve train.",
+  "The new body cameras lose power quickly at thirty below. You have your team keep spare batteries inside their clothes, and this later goes into the squad's winter advisory.",
+  "A blizzard warning comes through. In the command room you run through the plan with duty staff at stations along the line. Which station can hold a train, which has heating: you know without looking at the map.",
+  "At a coordination meeting before the student rush, the station head wants two more extra trains. You count who you have, and temporarily bring Lao Wang back to the line from the office for two weeks.",
+  "New officer Xiao Su faces her first complaint and comes to you, explaining nonstop. You play the body-camera video, pause it at two minutes and have her say where it could have gone better.",
+  "The railway's passenger department wants to cut trainset staffing. You make three years of duty records into one table, and point to those few small forest stations: no fewer people on this stretch.",
+  "An old officer, Lao Xie, applies for one last year on the line. You read his physical, write “approved, day shifts only” on the application, and call him yourself.",
+  "The political instructor brings this year's training plan. You strike two parade drills and add one thing: every new officer must write a duty record in gloves on a platform at thirty below."
+ ],
+ "past": [
+  "Home was Jiamusi, and your father drove a truck for the forestry farm and came back a few times a year. Your earliest memory of the outside world is riding a green train to your grandmother's, with thick frost on the windows.",
+  "When you filled in your college choices you applied to a police academy. The physical and the background check made you more nervous than the gaokao (college entrance exam), and your family went through all your relatives one by one.",
+  "At the academy you learned law and restraint holds and how to keep a dorm. Morning drill at six every day, and your quilt folded with square edges.",
+  "After graduation you sat the joint police exam and were assigned to the railway police. Classmates asked if you would be selling tickets at the station. You smiled and didn't explain.",
+  "On your first run you were tense in the carriage the whole way, and at the station found your back was soaked. Your mentor handed you his thermos and said nothing."
+ ],
+ "late": {
+  "pension_note": "Estimate: railway police are civil servants, with a pension plus occupational annuity of a little over seventy percent of final monthly pay.",
+  "scenes": [
+   "For the first month you still wake after four. Hearing a train in the distance, you remember there is no roll call today.",
+   "You buy a ticket and ride to Suifenhe as a passenger. Halfway there you stand up and straighten somebody's crooked box.",
+   "A dinner with old colleagues, everyone with their pills. The liquor gets poured only a little, and the talk runs till midnight, all about which year and which train.",
+   "Winter in Mudanjiang is still cold. You watch people cut ice on the river, and when you've stood too long you stamp your feet by habit.",
+   "The station desk office has heating and a window. When a train comes in, the cup on your desk gives a small ring.",
+   "Your stomach has slowly gotten better. You eat three meals on schedule. Your spouse says it's the first time since you were married.",
+   "The young officer you trained has become a lead officer and sends a picture from a run. You zoom in to see whether his shoes are polished.",
+   "At the new place you still look for the exits when you walk in. A friend asks what you're looking at. Nothing, you say.",
+   "You take your child on a train. Your child asks why that man keeps walking back and forth. You say he is checking whether everyone's all right.",
+   "You go back to see your old mentor. He is past eighty and hard of hearing. From the cabinet he brings out an old thermos and asks if you want it.",
+   "In winter you still tuck your water bottle inside your coat. People laugh at you. It tastes better warm, you say.",
+   "You hear the last green train has been turned into a sightseeing train with much larger windows. Frost would look good on those too, you think."
+  ],
+  "closing": {
+   "retire": "It snowed all night. At daybreak a train goes by in the distance. You listen until it's gone, then go boil water.",
+   "burnout": "The platform lights go out one by one. You put your mug away and walk slowly home.",
+   "end": "You traveled many roads after that. When you hear a train, you still stop for a moment."
+  }
+ }
+}

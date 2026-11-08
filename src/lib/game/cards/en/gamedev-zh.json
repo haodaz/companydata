@@ -1,0 +1,155 @@
+{
+ "id": "gamedev-zh",
+ "occupation": "Game Developer",
+ "role": "Junior Client Developer",
+ "headline": "A Zhuhai mobile game client developer writing Unity in a software park by the sea, whose projects can be killed with one sentence and who can see the Lingding Sea from the office window after work",
+ "unit": "A mid-sized mobile game company in Zhuhai",
+ "unit_type": "Mid-sized mobile game studio",
+ "city": "Zhuhai",
+ "city_tier": "Second-tier city",
+ "education": "Bachelor's in Software Engineering",
+ "level": "You've made two graduation-project-sized games in Unity and C#, and you can put together a UI in UGUI. Draw calls, Lua hot updates and compatibility across hundreds of Android phones have yet to educate you.",
+ "intro": "You have joined a mobile game company in Tangjia Bay, Zhuhai, with a desk by the window and the sea outside it. The lead hands you a task sheet. Do this seven-day sign-in first, he says, and by the time you're done you'll know how much of this project is a heap of crap. From today on, what you write will end up on millions of phones, or else be killed along with the project one day.",
+ "salary_note": "Estimate: the national figure leans toward the big studios in Guangzhou, Shenzhen and Shanghai, and a mid-sized company in Zhuhai pays ten or twenty percent less, though housing costs far less than in Shenzhen. There are profit shares when a game earns, and nothing when a project is cut.",
+ "facts": [
+  { "label": "Junior Client Developer (current level)", "value": "0–2 years, ¥8,000–13,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Client Developer (2–5 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Understanding and shaping the overall design of the game", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Working with the lead programmer on architecture and on designing, building and debugging major features", "source": "AI exposure" },
+  { "label": "Open positions", "value": "59 related listings nationwide, 1 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You ride your e-bike along the seafront to the park, the salt wind blowing your hair into a knot. Last night's build is still open on your desk, with one line in red.",
+  "Stand-up. The designer says this week's seven-day sign-in needs a streak bonus. Wasn't that settled last week, you ask. That was last week, says the designer.",
+  "You assemble UGUI in Unity, hanging the artist's sliced images one by one. The nine-slice is wrong, and when the button stretches its rounded corners turn into a flower.",
+  "A QA colleague brings a four-year-old Android phone and shows you the sign-in page going black. You plug in ADB and read the log. One image isn't in the asset bundle.",
+  "You watch the Profiler with the lead. His finger lands on a spike: that frame's garbage collection, you wrote that, didn't you. You take a look. You did.",
+  "The company canteen has char siu rice and soup of the day. After dinner nobody leaves. The whiteboard in the hall shows the countdown to this week's content lock.",
+  "You commit your Lua fixes and during the twenty-minute build you stand at the window, looking at the lights at the far end of the Hong Kong-Zhuhai-Macao Bridge.",
+  "Back in your small rented room, you open your own game and glance at the forum. Someone is saying the sign-in page lags. You quietly make a note."
+ ],
+ "ladder": [
+  { "title": "Junior Client Developer", "stage": "Writing features", "focus": "Taking system and UI tasks and turning design docs into features that run; you move up by not having to redo things and by being able to track down bugs" },
+  { "title": "Client Developer", "stage": "Owning a module", "focus": "Carrying a game system or module alone, starting to care about performance and package size" },
+  { "title": "Senior Client Developer", "stage": "Performance", "focus": "Rendering optimization, frameworks and the hardest crashes; you move up by being able to rescue a release" },
+  { "title": "Lead Client Programmer", "stage": "Leading", "focus": "Setting client architecture and assignments, answering for launch quality, pulled between designers, artists and the boss" }
+ ],
+ "ai_tasks": [
+  { "name": "Understanding and shaping the overall design of the game", "how": "AI can help gather material on similar games and lay out gameplay options. How the whole game is designed and what flavor it has still takes a person to decide and answer for." },
+  { "name": "Working with the lead programmer on architecture and on designing, building and debugging major features", "how": "AI can generate feature code, help find bugs and write debugging scripts. How the architecture is built, which features to keep and how to pin down a problem are for people to judge." },
+  { "name": "Producing art assets: characters, scenes, animation and effects", "how": "AI can quickly produce concept images of characters and scenes and first drafts of effects and animation. Whether the style holds together, whether it runs in the engine and how the details get polished are for people to settle." },
+  { "name": "Designing and building game development tools and operations tools", "how": "AI can write most of the code for tools and ops scripts and build the interface. People have to work out what the team and live ops really need and judge whether it is any good." },
+  { "name": "Writing server module code and documentation, optimizing it and unit testing it", "how": "AI can write routine server module code, fill in documents, generate and run unit tests and do first-pass optimization. People only spot-check key logic and performance bottlenecks." },
+  { "name": "Managing and maintaining the game's platform and its operation", "how": "AI can help write deployment scripts, monitor alerts and analyze logs. Emergency decisions when the platform fails and its long-term stability remain a person's responsibility." },
+  { "name": "Working with the team to improve and innovate, including client architecture, module division and staffing", "how": "AI can offer architecture references and organize review notes. How modules are divided, how the editor is planned, who does what and how a team innovates together comes down to people talking and deciding." },
+  { "name": "Integrating the game client with the company's technical platform", "how": "AI can read interface docs and generate integration code and examples. The actual joint debugging, compatibility problems and conversations about permissions and rules are handled by people." },
+  { "name": "Coordinating with server, design, art and other technical teams", "how": "AI can help draft messages and meeting notes. The tug-of-war between departments, the arguments over priorities and the building of trust have to be done in person." },
+  { "name": "Full responsibility for client quality; monitoring progress and quality through to a successful launch", "how": "AI can run automated tests, sort crash logs, summarize progress data and flag risks. Whether quality is good enough, whether it can ship, and who answers if things go wrong are ultimately decided by people." }
+ ],
+ "events": {
+  "e_first_online": "The first feature you wrote goes live, a seven-day sign-in, and hundreds of thousands of people tap it that day. You open the numbers in the backend and look at them for a long time.",
+  "e_crunch": "The last week before content lock, the whole team lives at the office for five days. Folding beds on the floor are harder to come by than desks.",
+  "e_cut": "The second test numbers are poor, and one word from the boss kills the project. The combat system you spent two years on will now only run on a hard drive.",
+  "e_license": "After fourteen months the publishing license finally comes through, and everyone in the company gets a bubble tea. Lao Zhou from the server team says it's the most expensive tea he's ever had.",
+  "e_crash": "On launch night the crash rate shoots up. You and your colleagues read stack traces on the crash-reporting dashboard until four in the morning, and it turns out to be a GPU driver on an obscure phone model.",
+  "e_player": "A player writes a long letter on the forum saying this game kept him company through chemotherapy. You read it, take a screenshot of the page, and say nothing.",
+  "e_macau": "On the weekend you cross the border to Macau for a bowl of shrimp-roe noodles and stand a while in Senado Square. Going back you think: living here isn't bad.",
+  "e_ai_code": "The company opens up AI coding tools, and UI logic and boilerplate come out in minutes. After a week of using them, you begin not to recognize code you have committed yourself.",
+  "e_ai_art": "With AI generating images, the art team shrinks by half. The concept artist at the next desk carries off her drawing tablet and leaves you a packet of tea.",
+  "e_ai_qa": "AI now runs automated testing and crash sorting, and a bug goes from discovery to location in about ten minutes. For the first time, during lock week, you get home by eight in the evening.",
+  "e_old_engine": "An old project is still making money on a five-year-old framework that only you understand. While others are being promoted, you are still inside it patching holes.",
+  "e_house": "You buy a flat in Jinwan, far cheaper than what your classmates pay in Shenzhen. The trip to work takes an hour, and from the balcony you can see planes taking off and landing.",
+  "e_35": "On your thirty-fifth birthday HR has a talk with a few older employees. You aren't on the list, but you begin to look at what else your résumé can say.",
+  "e_hit": "One of your small games unexpectedly takes off, and the year-end bonus is ten months' pay. The victory dinner is by the sea, and for the first time you see the boss drunk.",
+  "e_neck": "Your neck trouble is making your hands a little numb. The physiotherapist tells you to stand up once an hour. You set an alarm, and also set it to be ignored.",
+  "e_mentor": "An intern you are mentoring solves a memory leak for the first time and excitedly drags you over to see. You look at his Profiler and remember that spike from ten years back.",
+  "e_kid_game": "Your child comes home saying everyone in class is playing a game made by another company. Quietly, you download it and take its loading flow apart.",
+  "e_shutdown": "A game that ran for twelve years is shut down. On the last night hundreds of players stand in the main city and do not log off. You watch the online count in the backend and wait for midnight."
+ },
+ "choices": {
+  "c_lua": { "title": "Rendering, or gameplay?", "situation": "The lead asks which way you want to go. Gameplay work needs many hands, the schedule is tight and promotion comes faster. Rendering means learning shaders from scratch, with nobody counting it toward your appraisal in the short term.", "options": [
+   { "label": "Dig into rendering", "result": "You write shaders after work, and for the first two months you produce only a flickering ball. In your second year the project's lighting is yours." },
+   { "label": "Get fast at gameplay first", "result": "You become the most frequent committer on the team, and the designers all love coming to you." }
+  ] },
+  "c_mid": { "title": "To go up to Client Developer, take over this mess", "situation": "The last person on the guild war module has left, and no one dares touch the code. The lead says if you take it on, you'll have a case for going up to Client Developer. It means carrying that pile of spaghetti alone for months.", "options": [
+   { "label": "Take it", "result": "You read the code for three weeks, curse your predecessor a hundred times in the comments, and in the end find that he had his own troubles." },
+   { "label": "Keep writing new features", "result": "You say you can't chew through that. The lead says nothing and gives it to someone else." }
+  ] },
+  "c_shenzhen": { "title": "A call from a big Shenzhen company", "situation": "A headhunter phones: a big firm in Shenzhen offers fifty percent more, with hours till ten and alternating six-day weeks, and you'd have to rent over there. By now you have got used to Zhuhai's sea.", "options": [
+   { "label": "Go to Shenzhen", "result": "You drag your case to Nanshan. Your income goes up, the treadmill belongs to the company, and the sea is only on your phone's wallpaper. After a few years you come back, not at much lower pay." },
+   { "label": "Stay in Zhuhai", "result": "You hang up and walk home along Lovers' Road after work." }
+  ] },
+  "c_ai_way": { "title": "Lead the AI workflow?", "situation": "The boss says next year client headcount will shrink by thirty percent, and wants you to write an AI collaboration standard: what AI may write, who reviews it, who answers for problems. Write it well, and maybe the first to be cut will be the new hires on your own team.", "options": [
+   { "label": "Write it", "result": "You write the first rule: for any code AI writes, one person must be able to explain why it is written that way. Half the new hires stay on, all of them reviewing." },
+   { "label": "Stay out of it", "result": "You say you can't write this. Later the standard is bought from outside, and is worse to use than you imagined." }
+  ] },
+  "c_senior": { "title": "Go up for Senior Client Developer by taking on the frame rate problem", "situation": "The new project's frame rate is badly down on low and mid-range phones. If you lead the effort to bring it up, you'll have the strongest results for going up to Senior Client Developer. But you'd have to renegotiate an entire set of asset specs with art and offend everybody.", "options": [
+   { "label": "Lead the optimization", "result": "You send the artists a texture spec, and the art director almost blocks you. Three months later budget phones hold a steady frame rate, and he buys you a bubble tea." },
+   { "label": "Let someone else lead", "result": "You keep your own modules solid and leave optimization to the new hire. On appraisal day, his name comes before yours." }
+  ] },
+  "c_indie": { "title": "Make an indie game with two old colleagues", "situation": "An old designer colleague and the art director want you to quit with them and make a small, lovely pixel-art game in a rented village house in Tangjia, everyone living on three years of savings for this one shot. For the first time, your code could be exactly the way you want it.", "options": [
+   { "label": "Quit and make it", "result": "You hand in your resignation and carry off the pothos from your desk.", "end": "You work three years in the village house in Tangjia. On its first day on sale the game sells a little over two thousand copies, enough for another six months. You put out one more after that. Money is always tight, but every line of code is one you wanted to write." },
+   { "label": "Stay at the company", "result": "You treat them to a meal and give them a mechanical keyboard. On release day, you buy three copies." }
+  ] },
+  "c_transfer": { "title": "Move to industrial software", "situation": "A company doing digital twins and industrial simulation wants people who know Unity. Stable work, no content locks, no staring at revenue numbers. But from now on what you render is a production line, and no longer a rainstorm.", "options": [
+   { "label": "Move", "result": "You quit, and in the afternoon you smoke one last cigarette downstairs.", "end": "You go into industrial software. The first time a client looks at a conveyor turning on the screen and says it's lovely, you remember someone once writing a long letter about the light in a rainstorm. You leave on time, and write small things of your own at home on weekends." },
+   { "label": "Keep making games", "result": "One more, you say, and this time we'll really make something. You say it the same way as the other times." }
+  ] },
+  "c_lead": { "title": "Take the Lead Client Programmer job", "situation": "The lead has left and the boss wants you to take over as Lead Client Programmer. You'd close most of your editor windows, and your days would turn to schedules, fights and taking the blame. If you don't, you can go on writing the hardest code, though both your age and your position are getting a bit awkward.", "options": [
+   { "label": "Take it", "result": "You begin spending your days in meeting rooms and open the IDE only after work, to see what the others wrote." },
+   { "label": "Keep writing code", "result": "You tell the boss your shaders aren't finished. The young people come to call you the sweeping monk, the quiet master in the kung fu stories." }
+  ] }
+ },
+ "endings": {
+  "retire": "You stayed in this trade until retirement, which is almost rarer than a hit. On your last day you finish the comments on an old module and commit them. The log says: no logic changed. You stand up, and the sea outside the window is still there.",
+  "burnout": "That year, the numbness in your hands and the racing heart at night are no longer warnings you can dismiss. You hand over your accounts, and when you open your computer it's only to check the weather. For many days you walk along Lovers' Road, and the sea wind blows every thought out of you."
+ },
+ "stages": [
+  "You take the little tasks split off from the design doc: sign-ins, mail, inventory. You hang up UGUI in Unity and write the logic in Lua. QA tosses you bug tickets and you switch back and forth between ADB logs and the tracker. The lead reviews your code once a week, and the word you dread most is rewrite.",
+  "A complete game system is yours: guild wars, gacha or the new player tutorial, from going over the design with the designer to joint debugging with the server. You begin looking at the Profiler, caring about asset bundle size, teaching interns to resolve conflicts in Git. People used to tell you what to do. Now designers come to ask you whether a thing can be done.",
+  "Your work is now the part others can't handle: going through draw calls frame by frame in RenderDoc, building quality tiers for low-end phones, taking frameworks apart, chasing a crash that only happens on one old phone model. You negotiate texture specs with the art director and explain the arithmetic of frame rates to designers. You don't commit much, but people copy every line.",
+  "You set the client architecture and assignments, plan the release cadence, and before lock you're the last to press build. Every week you argue with the producer, the art director and the lead server programmer, and you can only review the code that matters. If something breaks in production, the boss's first call is to you. You write less code, and you answer for more of it."
+ ],
+ "work": [
+  "You redo the nine-slice on an image, and at last the button stops blooming. Xiao Lin the artist passes by, glances at the screen and flashes you a thumbs-up.",
+  "You overwrite someone's code in Git for the first time. Lao Han at the next desk silently resets it for you and silently points at rule one on the wiki.",
+  "Xiao Cai from QA sets an old phone on your desk and says only this one reproduces it. You pull the log and read it all afternoon. A font file has blown past the memory limit.",
+  "With the Profiler you find the tutorial allocating a new string every frame, and after the fix the frame rate steadies by five. A-Dong on the server team says: you client people are easily pleased.",
+  "A-Wei the designer wants a cross-server leaderboard. On the whiteboard you draw him the protocol and load sequence, and he looks at it and says: how about just this server, for now?",
+  "You squeeze the gacha animation's asset bundle from forty megabytes to twelve. Xiao He in operations sends the numbers: first-download drop-off is down three points.",
+  "Going frame by frame through RenderDoc, you find one translucent effect drawn eleven times. Lao Wang, the art director, reads your screenshot and has the effects artist change it.",
+  "For a crash that only one old phone model produces, you ask a friend to buy the same model at a used market, plug it in, and chase it from evening through to the next morning.",
+  "A new campus hire writes a lovely object pool. In the merge request you leave one comment: what happens to this during a hot update?",
+  "The night before lock, the producer still wants to squeeze in an event. You put the build schedule and the regression testing headcount in front of him and let him choose something not to do.",
+  "You add a rule to the AI code review: anything touching payments must be seen by two people. Sister Chen in finance later brings you a box of mooncakes in person.",
+  "A performance review. Lao Han sits across from you, four years your senior. You both look at the form, and neither of you speaks first."
+ ],
+ "past": [
+  "You go to junior high in a county town near Zhanjiang, and in summer you help your cousin mind an internet café. You read an online game's patch notes more carefully than your textbooks.",
+  "Your father wants you to study medicine for the gaokao (college entrance exam), and you secretly put software engineering first. The admissions letter comes, and a whole dinner passes in silence.",
+  "In your second year you and a roommate make a brick-breaker in Unity. A classmate clears it in ten minutes and says the feel is a bit off. You're excited for a week.",
+  "You intern at a small company in Guangzhou, where the boss pays two months late. It's the first you learn that this trade is not only about making games.",
+  "At campus recruiting you miss out at the final interview for a big firm in Shenzhen, and this company in Zhuhai gives you an offer and a desk by the sea. Just build some project experience first, you tell yourself."
+ ],
+ "late": {
+  "pension_note": "Estimate: Zhuhai's urban employee pension. Game companies often pay on a low base and there are frequent gaps, so in retirement you get about forty percent of your final monthly salary.",
+  "scenes": [
+   "After retiring you write a small game on your computer at home, with one level. Your spouse plays for ten minutes and says the feel is a bit off.",
+   "At a reunion with old colleagues, a table of white-haired people are still talking about why the old framework was written that way.",
+   "Walking on Lovers' Road you see a young person playing a game you've never seen. You look at the dropped frames on the phone, and say nothing.",
+   "After leaving, for a long time you open no games at all. Then one day you play a round of Tetris, and it's just fine.",
+   "You teach children to make brick-breakers at a neighborhood coding class. One child asks you: have I played a game you made?",
+   "From a storage box you dig out your old badge and an old phone. The phone still turns on, and the game's icon is still there. Tap it and one line appears: server closed.",
+   "In the first month after leaving you still open the forum at nine at night, to see what people are cursing about.",
+   "A young person you don't know sends a message saying they played something you made as a kid, and now they make games too.",
+   "On an old hard drive you find the combat system that was killed, and it still runs. You fight for a while in the empty scene, and close it again.",
+   "Later AI writes code faster than anyone. But it still has to ask a person whether the game is any fun.",
+   "A grandchild is playing a game on a phone and it stutters for a moment. Whose garbage collection is that? you say. The child looks at you and doesn't understand."
+  ],
+  "closing": {
+   "retire": "One evening many years later you sit by the sea as the sun goes down behind the bridge. There's an update notification on your phone, and you don't tap it. The light on the water flickers, and not one frame is dropped.",
+   "burnout": "One afternoon many years later the rain has stopped and you push open the window. The wet road reflects the light. You look for a while and think: such lovely light. Who knows how much compute that would take.",
+   "end": "One night many years later you open an empty project, create a cube and set it spinning. You watch it turn for a while, and switch off the lamp."
+  }
+ }
+}

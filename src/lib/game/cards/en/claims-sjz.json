@@ -1,0 +1,191 @@
+{
+  "id": "claims-sjz",
+  "occupation": "Claims Adjuster, Examiner and Investigator",
+  "role": "Auto Claims Field Adjuster",
+  "headline": "Two years in a dealership service bay, then out onto the road: a field adjuster for a property insurer in Shijiazhuang, a dozen-plus claims a day, a phone full of photos of other people's rear bumpers",
+  "unit": "Auto claims department, Shijiazhuang branch of a property insurer",
+  "unit_type": "City branch of a property insurer",
+  "city": "Shijiazhuang",
+  "city_tier": "Tier-2 city",
+  "education": "Associate degree (Automotive Testing and Repair)",
+  "level": "You know cars but not yet the policy wording; now and then your photos miss the VIN",
+  "intro": "You spent two years in a dealership service department and have taken off more bumpers than you have met customers. Now you put on a reflective vest printed with the company logo and are handed a phone loaded with the inspection app and a half-worn company car. From today, any collision on the south side of Shijiazhuang, once the call comes in, may land on you.",
+  "salary_note": "Estimate: base pay at a Shijiazhuang branch is modest, and income follows claim volume and appraisals, at about 80% of the national average.",
+  "facts": [
+    { "label": "Field Claims Adjuster (current level)", "value": "0-3 years, ¥5,270–7,750 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Senior Damage Appraiser (3-6 years)", "source": "Common in the trade" },
+    { "label": "Pay after 10+ years", "value": "¥13,500 a month (national average)", "source": "Pay by experience" },
+    { "label": "Where AI is moving in", "value": "Investigating, then collecting, sorting and checking inspection and appraisal files", "source": "AI exposure" },
+    { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "Rush hour isn't over and the app has already sent three jobs, all around Huai'an Road and Tiyu Street. You drop the tape measure and paint gauge in the basket on the passenger seat and start the car.",
+    "On the South Second Ring a ride-hailing car has rear-ended a white sedan. You talk both drivers into moving to the curb, then walk around shooting the overview, the point of impact, the VIN. Twenty-odd pictures in all.",
+    "The owner asks whether he can get a new bumper. You check the policy, check the parts price, and tell him this one can be repaired. His face drops, and he follows you half a block.",
+    "At a body shop in Yuhua District the mechanic has already taken the front end apart, and the radiator support is slightly bent. You run a hand over it before you add the line in the system.",
+    "You buy a kiln-baked flatbread at the roadside and eat it in the car. Halfway through, yesterday's owner calls to ask exactly which day the money will arrive.",
+    "Rain comes in the afternoon, and two cars have stalled under an overpass. You wade in wearing rubber boots, and your first question is: after it stalled, did you try the ignition again?",
+    "Back at the office you complete the files: vehicle license, driver's license, accident report, repair list. Miss one and the reviewers send the whole thing back.",
+    "Dinner is barely over when the phone lights up. The colleague on night duty has a job beyond the Third Ring he can't get to, and wants to know if you can take it."
+  ],
+  "ladder": [
+    { "title": "Field Claims Adjuster", "stage": "On the road", "focus": "Take dispatched jobs, photograph the scene, appraise damage at the body shop; you move up on volume and a low return rate" },
+    { "title": "Senior Damage Appraiser", "stage": "The hard ones", "focus": "Big losses, flooded cars, EVs, and training new hires; you move up on your command of parts and labor hours" },
+    { "title": "Claims Examiner", "stage": "At the desk", "focus": "Review other people's appraisals and claims in the system, chase anomalies, sign off on the amounts" },
+    { "title": "Claims Supervisor", "stage": "Running a team", "focus": "Manage a district team's schedules, turnaround and leakage, and handle escalated complaints" },
+    { "title": "Auto Claims Department Manager", "stage": "The whole picture", "focus": "Answer for the branch's loss ratio and customer satisfaction; deal with the repair network and the provincial office" }
+  ],
+  "ai_tasks": [
+    { "name": "Investigating, then collecting, sorting and checking inspection and appraisal files", "how": "AI can read, sort and cross-check documents and photos, and flag what is missing or contradictory. Inspecting the scene, taking statements face to face and judging whether a story holds up still need a person." },
+    { "name": "Checking claim forms and records to confirm coverage, and calculating payouts", "how": "AI can largely match claims to policy terms and calculate by the rules; people only spot-check and handle ambiguous or disputed cases." },
+    { "name": "Explaining claim decisions to customers and agents, and handling their objections", "how": "AI can draft the explanation, assemble the policy basis and suggest replies. When a customer is upset, rejects the decision or disagrees, a person has to sit down, calm things and take responsibility." },
+    { "name": "Filing claims, maintaining the claims database and customer risk records, analyzing risk distribution", "how": "AI can file automatically, update the database, summarize risk distribution and produce reports; people confirm the data is accurate and decide which countermeasures to adopt." },
+    { "name": "Studying claims policy, rules and workflow, and proposing changes to improve quality and efficiency", "how": "AI can find bottlenecks, compare policy texts, measure efficiency and draft revisions. How the rules are set, what is traded off and how they land are for people to decide." }
+  ],
+  "events": {
+    "e1": "You missed a car's VIN and the file came back. By then the car was up on the lift at the body shop, so you climbed under it for one more picture and came home black. After that, your photos had a fixed order.",
+    "e2": "Old Zhou, who was training you, showed you how to slide a palm slowly along a body panel: where it has been dented and repaired, the hand knows before the eye. You spent an afternoon in the parking lot feeling other people's cars.",
+    "e3": "In July it rained all night, and the next day the claims line across the city jammed. For eleven days you looked at flooded cars, measured waterlines, smelled carpets, and fell into bed the moment you got home.",
+    "e4": "An owner who thought he'd been paid too little called the regulator's complaint line and gave your staff number. You wrote two pages of explanation, every labor hour itemized. The file was correct. Your bonus was docked that month anyway.",
+    "e5": "A bank of sudden fog on the Beijing-Hong Kong-Macao Expressway, and a dozen-odd cars ran into each other. You stood by the emergency lane for seven hours, numbering and photographing them one by one, and were hoarse for three days.",
+    "e6": "A body shop billed a new headlamp. You saw old wear on the clips and asked the mechanic to take it off and check the label. The owner said nothing and changed the estimate.",
+    "e7": "Small claims have started going to owners, who upload their own photos and get a figure from the system in minutes. Your daily jobs fell by almost half. The running got easier, and the payslip got lighter.",
+    "e8": "The system marked a rear quarter panel as repairable; one look and you could see it had torn under the paint. Jobs like this now flow to you on purpose. People call them the ones the machine isn't sure about.",
+    "e9": "After years of crouching under cars, your back has filed a complaint. Two weeks on the physical therapy table; the doctor tells you to drive long distance less. You ask him how much less.",
+    "e10": "Chinese New Year's Day, and you are on duty. Two cars have scraped each other at a village entrance out in Luquan, and two families are arguing in the road. When you get there, each of them presses a handful of peanuts on you.",
+    "e11": "You bought a secondhand apartment in Chang'an District, in an old complex with no elevator. You now remember mortgage day better than claims season.",
+    "e12": "Your kid wrote a school essay about your job, saying that the adults at home, whenever they see someone else's car, first check whether it has been repaired. The teacher put a small red tick beside it.",
+    "e13": "Going through claims, you notice three cars with dents at exactly the same height, all from one body shop, all with the same contact number. You write up the anomalies for the anti-fraud line. What happens next is not your department.",
+    "e14": "The company wants a lower loss ratio and has cut partner dealerships' labor rates by ten percent. The service manager at one dealership tells you over the phone not to expect any accident cars steered your way from now on.",
+    "e15": "EVs keep multiplying, and a single scratch on the underbody can cost a whole battery pack. You spend two weeks with the carmaker's after-sales team and learn to read the insulation test report before opening your mouth.",
+    "e16": "A young man you trained years ago sends a photo: he has apprentices of his own in Xinle now, and the first thing he teaches them is the order of the photos.",
+    "e17": "The provincial office has pulled claims review into one place, and the branch has three fewer examiner posts. There are a few empty desks in the corridor now. Someone left their pothos behind.",
+    "e18": "You've got reading glasses now. You blow photos up to full screen, and when a young colleague comes over to ask how to tell a new dent from an old one, you tell him to give you his hand.",
+    "e19": "An old lady's aging sedan was hit, and the repair nearly matched the car's value. You worked through the salvage value and the constructive total loss for her, three times. In the end she patted the door and said, all right, it's been with me twenty years.",
+    "e20": "At year's end the company paid out an auto-line profit bonus, a little more than you expected. You bought your parents a new air conditioner; winters back home by the Taihang Mountains need one just the same."
+  },
+  "choices": {
+    "c1": {
+      "title": "The carton of cigarettes",
+      "situation": "The owner of a body shop you often visit keeps setting a carton of cigarettes on your passenger seat, saying he only wants to be friends. This afternoon he hands you an estimate with a fog lamp on it that isn't broken.",
+      "options": [
+        { "label": "Put the carton back, strike the lamp", "result": "He laughs and starts calling you Iron Face. His jobs still come to you. Nobody leaves cigarettes for you anymore." },
+        { "label": "Keep the carton, let the lamp go", "result": "Nothing happens, and that is the part that keeps you awake. Next time, what's extra on the estimate is more than a fog lamp." }
+      ]
+    },
+    "c2": {
+      "title": "Go for Senior Damage Appraiser",
+      "situation": "Once a year the branch holds an internal assessment: parts prices, bodywork labor hours, policy practice, and a blind appraisal of two wrecks. Preparing will cost months of evenings, and your claim volume won't drop by one.",
+      "options": [
+        { "label": "Study every night after work", "result": "You go through the part numbers for the common models. Your spouse says you recite labor hours in your sleep." },
+        { "label": "Run the claims well, next year maybe", "result": "You rank high in volume this year and the bonus is a bit bigger. Your name isn't on the assessment list." }
+      ]
+    },
+    "c3": {
+      "title": "Learn to review AI appraisals?",
+      "situation": "The company is launching image-based appraisal and wants people to check the system's results and label its mistakes. No bonus for it, but who stays on the review line later will probably come down to this group.",
+      "options": [
+        { "label": "Sign up and learn it first", "result": "You start going through the photos the machine got wrong, and slowly you learn which kinds of light make it stupid." },
+        { "label": "Skip it, I'll stay in the field", "result": "There will always be places the machine can't go, you tell yourself, and you keep driving, though the jobs keep getting farther away." }
+      ]
+    },
+    "c4": {
+      "title": "Old Zhou wants a partner for a body shop",
+      "situation": "Old Zhou is leaving early and plans to take over a Class 2 body shop in Zhengding. He says you both know accident cars inside out, and what he lacks is someone who can talk to insurers. He wants ¥150,000 from you, and there's no staff badge after that.",
+      "options": [
+        { "label": "Quit and go with Old Zhou", "result": "You take off the reflective vest and put on shop overalls.", "end": "You and Old Zhou got the shop running. You used to stare at other people's estimates; now others stare at yours. One day the young adjuster who came to appraise a car shot his pictures in exactly your old order." },
+        { "label": "Stay, keep the badge and benefits", "result": "You buy Old Zhou a dinner and he doesn't bring it up again. Passing through Zhengding later on, you still go out of your way to look." }
+      ]
+    },
+    "c5": {
+      "title": "Move to Claims Examiner?",
+      "situation": "A review post has opened. An office, no wind or rain, but every day in front of a screen checking other people's files, and every figure you sign is yours. The body shops you got to know on the road will all become people you have to watch.",
+      "options": [
+        { "label": "Become a Claims Examiner", "result": "You move up to the third floor with two monitors on your desk, and you keep the worn old paint gauge." },
+        { "label": "A few more years in the field", "result": "Summers are still hot and the jobs are still many, but in any body shop you can count on a cup of hot water." }
+      ]
+    },
+    "c6": {
+      "title": "A carmaker wants you for its insurance arm",
+      "situation": "An EV company is setting up a claims center in North China and needs people who understand appraisal to write rules and tune models. The pay is one and a half times what you make now, in Daxing, Beijing. Your kid is just starting junior high.",
+      "options": [
+        { "label": "Go, take the other road", "result": "You board the high-speed train to Beijing with an old reflective vest in your bag.", "end": "You joined the carmaker and wrote rules for models. On weekends you took the train home to Shijiazhuang. Your kid asked if you still looked at rear bumpers; you said now it was data, but when you see two cars pressed together at the roadside, you still slow down." },
+        { "label": "Stay, the high school exam matters", "result": "You keep that job ad for a long time. At the parents' meeting, sitting on your kid's small chair, you decide this is fine too." }
+      ]
+    },
+    "c7": {
+      "title": "Compete for Claims Supervisor",
+      "situation": "The supervisor is moving to the provincial office, and three people want the job. You'd have to present a plan to cut leakage. Up there you stop being someone who appraises and become someone who manages appraisers, and every complaint ends on your desk.",
+      "options": [
+        { "label": "Apply and write the plan", "result": "You sort years of returned files into categories, make twelve pages out of them, and your hand shakes a little at the panel." },
+        { "label": "Don't compete, stay a craftsman", "result": "You let someone who wants it more take the post and go on doing your jobs. Some say you lack ambition. Others come to you to look at a car." }
+      ]
+    },
+    "c8": {
+      "title": "Where to set the line",
+      "situation": "The loss ratio is over this quarter and the provincial office wants it tightly controlled. Your people have sent up a batch of borderline claims. Being strict would save a good deal, but a few of these owners really don't understand their policies, and on paper they need not be paid.",
+      "options": [
+        { "label": "Hold the line, the numbers come first", "result": "The report looks better and the complaints multiply. You are praised at the monthly meeting and take three furious calls on the way out." },
+        { "label": "Pay what can be explained, carry the numbers myself", "result": "You get criticized at the quarterly meeting. Two months later an owner sends a box of Zanhuang dates through a friend. You send it back and keep one to try." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you hand your badge to HR and scroll through the tens of thousands of accident photos on your phone, unable to delete them all at once. For more than thirty years you have seen every road in Shijiazhuang at its worst moment. Going downstairs you glance over the parking lot. One car's front bumper has been repaired; the paint is off by just a shade. You tell no one.",
+    "burnout": "Your back and your sleep have come to collect, and the doctor is very clear. You hand the last few open files to a colleague and go through them line by line. You won't have to answer that call again. Only, when the phone rings in the middle of the night, you still sit up first."
+  },
+  "stages": [
+    "Your day is running: take the job from the app, get to the scene, shoot the overview, the impact point and the VIN, record what both sides say, then go to the body shop, feel over the dismantled car, and tick parts and fill in labor hours in the appraisal system. You deal with anxious owners and shrewd mechanics, and the hardest things in your hands are a tape measure and a paint gauge.",
+    "The small dings aren't yours anymore. You get the hydrolocked engines, the bent frame rails, the jobs where one replaced part drags a dozen more along. You look at underbodies from beneath the lift, argue labor hours with dealership technical managers over the repair manual, and train a new hire, correcting the part numbers he enters wrong. The difference now is that people call to ask you.",
+    "You don't go out anymore. Every day on the review platform you check a hundred-odd appraisals: do the photos match the parts, are the hours padded, is the file complete. The body shops call you now, and the balance is harder to hold than before. Whichever file carries your staff number, its amount is yours.",
+    "You have twenty-odd field adjusters. Mornings you read the turnaround reports and work out which district is short today; afternoons you sit down with complaining owners and push the tea across the table. You go to the repair-network negotiations and teach new-hire training. You used to answer for one file. Now you answer for a whole district's leakage.",
+    "You sit in the branch's business review, and three numbers follow you every month: loss ratio, closure time, satisfaction. You ask the provincial office for policy, have dinner with the head of the dealership group, and go to the regulator to explain complaints one by one. You rarely go to a scene now. Only in a major catastrophe do you put on that reflective vest."
+  ],
+  "work": [
+    "At the Xinhua Road intersection a delivery scooter scraped a luxury car. You mark the rear bumper down for one panel of paint; the owner insists on a whole new bumper, and you show him the paint gauge reading.",
+    "A young apprentice at the body shop asks how you can tell whether an airbag has gone off. You plug in the scanner, read the fault code, and show him the seam on the airbag cover.",
+    "A third-party car in Zhao County, forty minutes' drive. The owner waits for you in his pear orchard. You take twenty pictures, and when you leave there's a bag of pears in your trunk. You put it back.",
+    "A sedan that has been underwater. You pull the dipstick, lift the carpet and measure the watermark, tick your way down the flood-damage form, and in the engine row you write: teardown required.",
+    "New hire Little Meng picked the part number for the high-spec mirror, adding ¥800. You kick it back in the system with a note of three words: check trim first.",
+    "The dealership's technical manager says the rail has to be replaced. With the body dimension chart you measure with him point by point. At the seventh point he says straightening would do.",
+    "The review platform shows a file for a new radiator, with a photo of some other car's wheel. You send it back and call the adjuster. The young man says he picked the wrong album, his voice getting smaller as he goes.",
+    "You pull half a year of one body shop's replaced parts into a table and find one model's headlamp replacement rate is oddly high. You send the table to your supervisor and write no conclusion on it.",
+    "A claimant's agent sends a repair invoice ¥2,000 off from the appraisal. You put a hold on it in the claims system and note that the original settlement statement is required.",
+    "The schedule shows only one person in the Gaocheng district three weeks running. You move Little Zhao there and hand off the long-distance jobs from his own area. He goes quiet on the phone a moment and says, all right.",
+    "An owner sits across from you with a letter of complaint. Instead of explaining the policy you read his appraisal from the top. By the third line you can see that your side did leave something out.",
+    "You give the first class of new-hire training with no slides. You take everyone to the parking lot and have each person close their eyes and feel a repaired door.",
+    "The provincial loss-ratio bulletin arrives. You circle the Xingtai and Shijiazhuang rows and have finance break them down by model; the night before the meeting, you get it down to body shop.",
+    "The head of a dealership group invites you to tea, and all his talk is labor rates. You push across one page showing three years of claim volume, and the two of you look at it through a whole pot.",
+    "The night of the red rainstorm alert, you open a disaster command group at the office and slot people and tow trucks by district into a spreadsheet. At three in the morning you send each district leader one line: nobody goes in the water."
+  ],
+  "past": [
+    "You missed the high school cutoff by a few points. Your father said a person with a trade doesn't starve. Your family lived in Luancheng, and cycling past the repair shop in town, you found you didn't mind the smell of engine oil.",
+    "At vocational school you studied auto repair. The first time you took a gearbox apart and put it back together, one screw was left over. The teacher didn't scold you; he told you to take it apart again.",
+    "In the vocational college entrance round, you passed over e-commerce, the popular choice then, and applied for automotive testing and repair, on the grounds that at least you'd know what you would do after graduating.",
+    "For your graduation internship you went to the service department of a dealership and started by washing parts. You noticed that the insurance specialist who received customers earned no less than the mechanics, and never had to lie on the floor.",
+    "You stayed on as a mechanic, and when accident cars came in you were always called to help with the appraisal. You watched the adjuster walk once around a car and get most of the estimate right.",
+    "That adjuster said his company was hiring, repair experience preferred. You thought about it for a week and decided that at least you wouldn't have to lie under cars. Later you found out you still would."
+  ],
+  "late": {
+    "pension_note": "Estimate: enterprise pension plus a small annuity, retiring from a company in Shijiazhuang, about half of final monthly pay.",
+    "scenes": [
+      "The first morning you don't have to check claim volume, you take a walk around the botanical garden. On the way back two cars have scraped, and you stand by and watch for a long while, saying nothing.",
+      "A relative's car has had a mishap and the whole family calls you over to ask how much it will pay. You walk around it once and name a figure. When the insurer pays out, you are off by less than ¥200.",
+      "A fast-repair shop with no human appraiser has opened by your complex; take a picture and it gives you a price. You bring your own car to try it. You think it has missed a body panel. You don't tell it.",
+      "A reunion of old colleagues, seven people. Talking about that great flood, everyone remembers the dates differently and the numbers exactly.",
+      "You've handed back your badge and spend a month lying at home. You still keep the phone by your pillow out of habit. There won't be another dispatch.",
+      "When your back improves you go help a used-car dealer inspect vehicles, three days a week, no hurry. The owner says your hands are faster than the instruments. You say that was before.",
+      "You have learned to drive very slowly. When the car behind honks you don't hurry. You know better than the navigation where this road goes wrong.",
+      "You still talk about cars with people, you just don't have to enter them in a system. When someone asks what you used to do, you say: I saw a lot of people on their unluckiest day.",
+      "An old colleague passing by comes in to sit a while and says small claims are all done by machine now. You talk for some time. Neither of you says it's a pity.",
+      "Your kid has a driver's license. Before the first time on the road you make them walk around the car once and look at all four corners.",
+      "When the rain comes down hard you still look out the window and work out which underpasses must have water by now.",
+      "In other people's cars you always feel along the edge of the door. Your friends laugh, and you laugh too, and your hand stays where it is."
+    ],
+    "closing": {
+      "retire": "In the evening you stroll downstairs, past a row of quiet parked cars, every one intact. You look a little while, then go up to dinner.",
+      "burnout": "The traffic outside doesn't stop. You make a cup of tea. The phone on the table hasn't rung in a long time.",
+      "end": "You dig the old reflective vest out of the closet, fold it, and put it back. It's very bright outside. On the road, everything is normal."
+    }
+  }
+}

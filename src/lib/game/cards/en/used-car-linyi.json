@@ -1,0 +1,188 @@
+{
+  "id": "used-car-linyi",
+  "occupation": "Used Car Broker",
+  "role": "Apprentice broker at a used car market",
+  "headline": "An apprentice at a used car market in Linyi, Shandong, polishing cars for an old dealer, running paperwork, and finding cargo vans for the bosses of the wholesale city",
+  "unit": "A dealership in a used car market in Linyi",
+  "unit_type": "Used car dealership",
+  "city": "Linyi",
+  "city_tier": "Third-tier city",
+  "education": "Vocational college (Automotive Marketing)",
+  "level": "You can drive stick and you know a registration certificate from a vehicle license. When you inspect a car you only look at the paint. Your master says that when you touch a car now, it's about like touching a watermelon",
+  "intro": "You stood at the market gate all morning before you found the dealership with the HIGH PRICES PAID FOR CARS sign. Your master tossed you a chamois and pointed at a dozen cars lined up in the sun. Get them properly clean first, he said. As of today, you are learning how to hear a car tell the truth.",
+  "salary_note": "Estimate: Linyi's used car market pays a low base and lives on commission. Logistics and the wholesale city keep demand for cargo vehicles steady, so income runs somewhat below the national average, and in good years not by much.",
+  "facts": [
+    { "label": "Apprentice Broker (current level)", "value": "0-2 years, ¥3,500–6,000 a month (national average, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Used Car Broker (2-5 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Bringing buyer and seller together and negotiating the price", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Researching market prices and trends", "source": "AI exposure" },
+    { "label": "Open positions", "value": "0 linked listings nationwide, 0 in this city (the job database is mostly campus and internship postings)", "source": "Job listings" }
+  ],
+  "day": [
+    "A bowl of hot sa, Linyi's peppery breakfast soup, by the road, with the pepper going straight to the top of your head. At the market the gates have only just opened, and you take the chamois down the line of cars that gathered dust overnight.",
+    "Your master lifts the hood of a van and has you look at the bolts on the fender. Those have been turned, he says, the paint's gone. You stare a long while and nod, though you can't quite see it.",
+    "A hardware dealer from the wholesale city wants something that hauls a ton and a half on not much fuel. He pats the door and says it's too expensive. Your master hands him a cigarette and says: have another look at the wear on the rear tires.",
+    "You carry a stack of forms to the vehicle administration office and queue for more than an hour. The window says the owner's ID copy is missing a page, and you ride back.",
+    "A pancake rolled around scallion, eaten at the little table behind the dealership. Your master's phone doesn't stop, and every call asks the same thing: is that car still there?",
+    "Out to Fei County with your master to buy a car from a peach farmer, who sits in his front room and only says: this car's never been in an accident. Your master doesn't answer. He squats and runs his hand along the rocker panel.",
+    "Back at the market you photograph today's purchase, blur the plate, and show your master the listing. He strikes out LIKE NEW, ONE OWNER and tells you not to go making trouble for yourself.",
+    "The market is about to close and you hose down the cars. The dealer next door calls your master over for cards, and you go down the dozen cars by yourself, one more time."
+  ],
+  "ladder": [
+    { "title": "Apprentice Broker", "stage": "Apprentice", "focus": "Clean and prep cars, run to the vehicle office, buy with your master, and learn to spot accident repairs and bad paperwork. You move up by closing a car on your own." },
+    { "title": "Used Car Broker", "stage": "Selling solo", "focus": "Your own clients and sources: buy, price, negotiate and transfer ownership yourself. Volume and repeat customers move you up." },
+    { "title": "Senior Broker", "stage": "Core staff", "focus": "Hold the appraisal certificate, set the buying price, train newcomers, and help the dealership control stock and cash flow." },
+    { "title": "Dealership Manager", "stage": "Leading", "focus": "Manage inventory, cash, loan channels and after-sale disputes, and answer for the dealership's books and name." }
+  ],
+  "ai_tasks": [
+    { "name": "Researching market prices and trends", "how": "AI can pull asking prices, sale prices and trends across platforms and write a daily market brief. A person only spot-checks whether it has drifted from local reality." },
+    { "name": "Buying cars and verifying where they came from and their paperwork", "how": "AI can check documents, registrations and violation records and flag anomalies. A person has to meet the seller, judge whether the car's history smells wrong, and own the decision to buy." },
+    { "name": "Inspecting condition and valuing the car", "how": "AI can flag scratches in photos and analyze inspection and maintenance records. A person has to find the accident repairs on site, listen on a test drive, and stand behind the verdict." },
+    { "name": "Setting a price from condition and the market", "how": "AI suggests a range from model, mileage, condition and market. A person sets the final number, weighing local demand, stock pressure and the individual car." },
+    { "name": "Publishing listings and answering buyers", "how": "AI can write the copy, sort the photos, post across platforms and field the routine questions with a chatbot. A person handles the difficult ones and spot-checks the replies." },
+    { "name": "Bringing buyer and seller together and negotiating the price", "how": "AI can suggest a floor price and a script. A person has to read both sides face to face, pull the gap closed, build trust, and get it done." },
+    { "name": "Helping with ownership transfers and out-of-area registration", "how": "AI can generate document checklists, prefill forms and track deadlines. A person has to go in person and deal with out-of-area moves and missing papers." },
+    { "name": "Advising buyers and following up after the sale", "how": "AI can answer routine questions and send follow-ups and maintenance reminders. A person handles the dispute when a car goes wrong, calms the customer, and keeps the relationship." }
+  ],
+  "events": {
+    "e_first_flood": "You nearly bought a flood car as a good one. Your master lifted the carpet, had you smell it, and showed you the line of silt in the seat rails. You remembered that smell for years.",
+    "e_first_sale": "You sold your first car on your own, a little van with a hundred thousand kilometers on it. The buyer drove off to haul freight. You looked for a long time at the ¥300 on your commission slip.",
+    "e_buyer_back": "A buyer came back three months later saying the gearbox was making a noise. You took him to the repair shop and put in ¥800 yourself. Leaving, he said: next time, I'm coming to you.",
+    "e_cold_winter": "For the two weeks before New Year the market was packed with migrant workers who wanted to drive home. For a month after, you sat in the sun at the gate, and not one car moved.",
+    "e_ai_price": "A valuation app gives a price in seconds, with trends from nearby listings. Young buyers bargain with their phones held up, and you have to explain the number on the screen before you can talk about the car.",
+    "e_ai_post": "Copy and photos for listings now go out to every platform in minutes, and a chatbot answers messages through the night. The time you got back all went to standing beside cars with customers.",
+    "e_ev_hit": "The question of what electric cars hold in value landed on the market all at once. Two EVs you'd bought fell by several thousand yuan in a month. It's all in the battery, your master said, not the body.",
+    "e_stuck": "One car sat unsold for four months while the loan interest and the lot fee ran on. You gritted your teeth and took a ¥3,000 loss, and that night you couldn't eat.",
+    "e_friend_buyer": "An uncle from home came to buy a car and started right off: we're family, don't cheat me. You listed every fault of the cheapest one, and he took it to mean you weren't serious.",
+    "e_logistics": "The boss of a logistics park wanted six small trucks at once. You drove through three counties to pull them together and pushed the papers through one by one. That month's commission matched half a year's.",
+    "e_drive": "In one day you drove out to Mengyin and Tancheng and back to buy two cars. On the highway at night you stayed awake on coffee and wind from the window, and when you got out, your legs had gone numb.",
+    "e_odometer": "Someone at the market got caught rolling back odometers, and several dealers were shut for days. You pulled the service records on every car you had and went over them one at a time.",
+    "e_dispute": "A buyer said you'd hidden the car's condition and put up a video calling you out. You assembled the inspection report and the recordings, and it blew over. For a few days you didn't dare look at your phone.",
+    "e_repeat": "You sold your first van to a woman who sells pancakes. Nine years later she's on her third. She comes in and doesn't look at the cars, she just asks: which one do you say?",
+    "e_apprentice": "A new kid misjudged his first buy and got a car with a repaired frame rail. You didn't scold him. You took him under it and had him put his hand in and feel the weld scar.",
+    "e_family": "Weekends are your two busiest days, and you missed your daughter's parent meeting for the third time. Your wife sent you a photo of her report card, without a word.",
+    "e_market_move": "The whole market moved to a new park on the south side, brighter and farther away. Old customers called to ask where you were, and you sent your location three times.",
+    "e_back": "After half a life under cars your back has stopped taking orders. Now the young ones go down while you squat alongside and hold the flashlight.",
+    "e_old_car": "In a corner of the market you saw a van you'd sold more than ten years ago, its rear bumper still the patch you'd had done. You walked around it once and told no one.",
+    "e_ai_inspect": "A few dozen photos and the system flags suspect bodywork. It's usually right. One car, it missed a cut in the door pillar. You wrote one line on the review form and turned the light up a little."
+  },
+  "choices": {
+    "c_money": {
+      "title": "Your master wants you to haggle face to face",
+      "situation": "If you want to be a Used Car Broker, your master says, you'd better be able to buy on your own. Next week you go to Lanling to buy a car, and he'll stand there and smoke while you do the talking. If you pay too much, half the loss comes out of your commission.",
+      "options": [
+        { "label": "You do the talking", "result": "You got so nervous you described a fault backward, and the owner laughed. You paid ¥500 above your master's estimate, and he said that ¥500 was tuition." },
+        { "label": "Watch a few more", "result": "You followed him for another half year with every sentence written in your phone. You can recite the lines now. You've just never used them." }
+      ]
+    },
+    "c_cert": {
+      "title": "Get the used car appraisal certificate",
+      "situation": "If you want to be a Senior Broker, the market looks for this certificate. The course is in Jinan, two weeks off work and nearly ¥10,000 with lodging. You can sell without it, your master has no such thing. It's only that the big clients have started to ask.",
+      "options": [
+        { "label": "Go to Jinan", "result": "You learned paint gauges and diagnostic computers, and the names for a lot of things your master knew by touch. So that's called a structural member." },
+        { "label": "Trust hands and eyes", "result": "You didn't go. In the backyard you took a wrecked car apart and put it together again, and your hands kept getting more exact." }
+      ]
+    },
+    "c_hide": {
+      "title": "Do you tell him everything about this car",
+      "situation": "This car had a small accident and was well repaired. You could leave it out and he'd hardly find it. The buyer is a just-married young guy who's short of money and has fallen for it. Say it and the deal probably dies, and your boss is waiting on cash this month.",
+      "options": [
+        { "label": "Tell him all of it", "result": "You showed him the repair. The deal died. A month later he came back with his brother: my brother wants a car, he said, and I told him to find you." },
+        { "label": "Don't bring it up", "result": "The car sold and the cash came in. After that, whenever you saw his number on your phone, you waited for the third ring." }
+      ]
+    },
+    "c_ai_ops": {
+      "title": "Learn the online and AI side of things?",
+      "situation": "On short-video platforms, there are people selling three cars a day by livestream. Your boss wants to try it: AI to cut videos, value cars, answer messages, and a phone rig for the dealership. The old dealers are squatting at the gate waiting to see it fail.",
+      "options": [
+        { "label": "Give it a try", "result": "You talked to your phone about how to read a rocker panel, in rough words, and people watched. Somebody drove three hundred kilometers from Henan and asked for you by name." },
+        { "label": "A car needs seeing", "result": "You went on standing beside cars. Your customers got older, and all of you agreed that you can't tell a car's worth through a phone." }
+      ]
+    },
+    "c_own": {
+      "title": "Buy for yourself, or stay under the boss",
+      "situation": "You've saved ¥150,000 and you've got clients. Some tell you to hold a few cars yourself and make the margin, but when a car sits, the interest and the depreciation are yours. Your boss says stay, and I'll hand you the inventory. That would be the road toward Dealership Manager.",
+      "options": [
+        { "label": "Listen to the boss", "result": "You started to watch the whole lot's turnover. When cars sell fast everyone's pleased, and when they don't, everyone looks at you." },
+        { "label": "Hold two yourself", "result": "The first batch made ¥20,000. The second ran into a price drop and you gave back ¥18,000. You began to see why your boss reads the market like a weather report." }
+      ]
+    },
+    "c_jinan": {
+      "title": "The big platform in the provincial capital",
+      "situation": "A national used car platform in Jinan is hiring buying consultants: better base, full benefits, a system, and everything standardized. Your wife wants your child to go to school in the capital. Your father says, a market as big as Linyi's isn't enough to feed you?",
+      "options": [
+        { "label": "Stay in Linyi", "result": "You turned it down. Your phone book is still the most valuable thing you own, and it lives in Linyi." },
+        { "label": "Go to the platform", "result": "You copied out your phone book for your master. On the day you packed, he wiped down the cars at the gate for you.", "end": "You moved to the capital and put on a shirt with a badge, and every car went through more than a hundred standard checks. Years later, in front of someone else's car, you still squat down and feel the rocker panel first." }
+      ]
+    },
+    "c_rush": {
+      "title": "A shot at Dealership Manager",
+      "situation": "The boss wants to step back and hand the place to one person as Dealership Manager: cash, loan channels, disputes, and six or seven people's livelihoods. Your senior colleague has his eye on it too. Take this on, and you won't get to squat beside many cars anymore.",
+      "options": [
+        { "label": "Go after it", "result": "You put two years of turnover and loss sheets on the table. The boss looked at them for a long while and said no one had ever shown him these." },
+        { "label": "Let him have it", "result": "He became manager and you went on with your own cars. At New Year he bought you a drink and said that chair made his heart race." }
+      ]
+    },
+    "c_exit": {
+      "title": "Thinking about another road",
+      "situation": "Prices are getting more transparent and the margins thinner. A logistics boss you've known for years says, you know cars, come run my fleet, steady pay. Your uncle back home says come back and open a repair shop, he'll provide the yard.",
+      "options": [
+        { "label": "Run the fleet", "result": "You sold off your three cars at a discount and reported to the logistics park the next day.", "end": "You went to the logistics park, in charge of dozens of vehicles you had once sold. Fuel logs and service sheets replaced haggling, and sometimes you missed that patch of sun at the gate." },
+        { "label": "Open a repair shop", "result": "Your uncle cleared the yard and you bought a secondhand lift.", "end": "You went home, and whenever the lift hummed in the yard the neighbors came to look. In the years that followed, anyone in the village who bought a car drove it to you first, for you to have a look." },
+        { "label": "Stay at the market", "result": "A few more years, you said. Early the next morning you picked up that chamois again." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "The last car you sold went to a kid fresh out of school, and you didn't make much on it. You hung the chamois you had used for so many years over the door handle. At the market gate they were changing the sign again, and the sun was still moving down the row of windshields, one car at a time.",
+    "burnout": "When your back and neck wouldn't let you squat anymore, you divided your clients among your apprentices and copied out your phone book for them. On your way out you ran a hand along the fender of the van by the gate. The bolts were factory. You smiled a little and didn't say anything."
+  },
+  "stages": [
+    "Every day starts with washing, waxing and vacuuming mats. Then you inspect with your master: a flashlight on the rocker panel, the bolts on the radiator support, a paint gauge panel by panel. The transfers are all yours, registration certificate, vehicle license, copies of the owner's ID, and you get to know the windows and the paperwork runners at the vehicle office. When you speak, the buyers still look at your master.",
+    "You begin buying and pricing for yourself. Mornings go to cross-checking service records against insurance claims, afternoons to test drives with buyers, and evenings to adjusting prices on the listing platforms. Bosses from the wholesale city and freight drivers become your regulars, and your phone remembers who cares about payload and who about fuel. When a deal falls apart, no one smooths it over for you now.",
+    "The last look before buying has become yours. You read fault codes on a diagnostic computer, score each car on the appraisal form, and set the ceiling price. New people call for you from under cars, and bank and insurance reps come straight to you now. You've gone from selling a car to deciding what this dealership dares to hold.",
+    "Your morning starts with the inventory sheet and the cash account: which car has sat for sixty days and needs marking down, which finance loan needs renewing. You negotiate credit with the bank and lot space with the market, and you're first on the scene when a buyer makes trouble. It's you who signs the commission slips now. You look at cars less and less, and at people more and more."
+  ],
+  "work": [
+    "Your master has you take thirty paint gauge readings on a white sedan. On the right rear door the number jumps to one-eighty. He asks what that means. Repainted, you say. Only then does he take the gauge.",
+    "The woman at the vehicle office window hands your forms back. The power of attorney is missing a stamp. You ride back, and when you get to the market your master has already put the stamp on the table waiting for you.",
+    "You pull all the seats out of a van to wash them, and from the seams fall three coins and an old fuel receipt. You clip the receipt into the car's file. Your master glances at the mileage and nods.",
+    "Old Zhao from Yinan wants a small truck for hauling fruit crates. On the test drive you deliberately take a slope so he can hear whether the engine struggles. He listens from the driver's seat for half a kilometer without saying a word.",
+    "The service records have a two-year hole. You phone the previous owner, who spent those years hauling freight out of province. You write commercial use, to be confirmed in the file and bring your buying price down by ¥4,000.",
+    "Helping an out-of-area buyer with registration, you find the car's emissions rating falls just short of the local threshold. You read the standards all night, and the next day you tell him not to buy this one.",
+    "The diagnostic computer shows an old airbag fault and your apprentice Zheng shrugs. You have him pull up the wiring under the seat, and the new and old loom are visibly different colors.",
+    "You score a car seventy-two on the appraisal form, far below what the seller had in mind. You send him photos of the deductions. He calls back the next day and says: have it your way.",
+    "Han from the bank comes in to reconcile this quarter's financed cars. You take a mortgaged car that hasn't been paid off out of the showroom and slip the paperwork back into his folder.",
+    "At the Monday stock meeting you circle in red the four cars older than sixty days and tell Zheng to clear two at cost within the week. His face looks worse than the cars.",
+    "A buyer arrives with a lawyer's letter. You lay out the inspection sheet, the contract and the test-drive recording on the table one by one, and pour him a cup of water. He takes the letter with him when he leaves.",
+    "You negotiate renewal with Sun from the market management, who's raised lot fees by thirty percent. With this year's sales and the share of local buyers in hand, you bring it down to ten."
+  ],
+  "past": [
+    "You grew up in a village in Lanling, where your father drove an old farm truck hauling garlic. When it broke down you squatted beside it handing him wrenches, more alert than you ever were at homework.",
+    "You did so-so on the gaokao (college entrance exam). Relatives said you'd always eat if you worked in cars, so you enrolled in Automotive Marketing at a vocational college in the province.",
+    "You did your internship at a new-car dealership and stood in the showroom for half a year, driving more test cars than you sold. What customers asked most, you noticed, was how much their old car would fetch.",
+    "Your older cousin did business in Linyi's wholesale city and wanted a new cargo van, so he brought you along to the used car market. An old dealer touched the car door and told the car's history more or less correctly.",
+    "Before graduation you went back and asked that old dealer if he needed anyone. He looked you up and down. ¥2,500 base and commission, he said, and you start by wiping cars."
+  ],
+  "late": {
+    "pension_note": "Estimate: dealerships usually pay social insurance at the minimum base, and you covered some years yourself as a self-employed worker, so you'll receive a little under 40% of your final monthly pay.",
+    "scenes": [
+      "For the first few days of retirement you still walk toward the market, and only at the gate remember you've got nothing to do. The guard hands you a cigarette. You came? he says.",
+      "A neighbor's son wants his first car and asks you along. You squat in front of it for ten minutes, then lean on the door for a while getting up. This one's fine, you say.",
+      "The pension is nothing much, but enough for groceries and meals. You flip over your grandson's toy car and say the chassis on this isn't any good.",
+      "After you stopped going out to buy cars, you lived a weekend as a weekend for the first time, and weren't sure where to put your hands.",
+      "You gave your apprentice all your years of notes on cars, seven or eight notebooks in a plastic bag. He leafed through two pages and said: Master, this is more accurate than the software.",
+      "Your back gets a little better. You go walking by the Yi River, and when you pass a parked car, you still glance at its tires.",
+      "In a new place, for the first month you can't help asking people what they paid for the car. Your colleagues think you're joking.",
+      "Old customers keep calling to ask which car is good now. I'm out of it, you say, and then you talk for forty minutes.",
+      "You pass the old market, whose sign has been changed several times. You don't recognize any of the people sitting in the sun at the gate. The sun you recognize.",
+      "When your own family needs a new car, you just can't bring yourself to swap. This one, you know its past, you say. Your wife laughs and says you've spent your life with it.",
+      "The roads are all full of cars that don't need starting now. Now and then, in the estate, you see an old van, and stop to listen to it idle."
+    ],
+    "closing": {
+      "retire": "In the evening you wipe down your old car in the yard, following the line of its body, with the same strength in your hand as forty years ago. When you're done you pat it on the roof, the way you'd pat an old friend.",
+      "burnout": "You sit on a bench by the Yi River with the traffic going by behind you. Even with your eyes shut you can tell which engine is short of breath. You don't tell anyone.",
+      "end": "After many years, you still slow down when you walk past a car. Cars don't speak. They only stay where they are, waiting for someone to understand them."
+    }
+  }
+}

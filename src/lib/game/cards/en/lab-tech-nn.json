@@ -1,0 +1,194 @@
+{
+  "id": "lab-tech-nn",
+  "occupation": "Clinical Laboratory Technologist",
+  "role": "Clinical Laboratory Technician",
+  "headline": "A new medical laboratory graduate in the basement of a top-tier (Grade 3A) hospital in Nanning, clocking in alongside the automation line, the specimen racks and the damp of the returning south wind",
+  "unit": "Clinical laboratory of a top-tier (Grade 3A) hospital in Nanning",
+  "unit_type": "Top-tier (Grade 3A) hospital",
+  "city": "Nanning",
+  "city_tier": "Tier-2 city",
+  "education": "Bachelor's degree (Medical Laboratory Technology)",
+  "level": "You can run quality control but aren't confident making a critical-value call to the wards",
+  "intro": "The lab is on the first basement floor of the outpatient building, and there are no windows. On your first day in a white coat, the first thing your senior colleague teaches you isn't how to start the analyzers; it's how to take off gloves without touching the outside. From today you will handle several hundred tubes of other people's blood a day. You'll never see their faces, only barcodes, numbers, and now and then a result that comes up red.",
+  "salary_note": "Estimate: technical posts at a top Nanning hospital pay a little below the national average, about 95%. Bonuses follow total department volume, and a permanent state post pays differently from an agency contract.",
+  "facts": [
+    { "label": "Laboratory Technician (current level)", "value": "0-3 years, ¥4,420–6,500 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Laboratory Technologist (3-8 years)", "source": "Common in the trade" },
+    { "label": "Pay after 10+ years", "value": "¥11,500 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Explaining abnormal results to the wards, retesting and dealing with rejected specimens", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Checking in and receiving blood and fluid specimens sent from the wards", "source": "AI exposure" },
+    { "label": "Open positions", "value": "178 related listings nationwide, 1 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "You come in half an hour early to run internal quality control. Three levels of control material go through, and in the LIS you look at the line on the chart. Today it's all inside two standard deviations.",
+    "Specimens from the outpatient blood-draw windows arrive by the cartload. You load tubes onto the automation line, scan, spin, decap, and the little carriers begin shuttling along the track.",
+    "A CBC specimen has hemolyzed. You call the draw room, and they say the patient has left. You say: please ask them to come back and be drawn again.",
+    "The blood smear is ready. Your teacher has you count a hundred white cells under the microscope. When the tally counter clicks past sixty-something, your mind wanders for a moment.",
+    "There are lots of pre-pregnancy thalassemia screens in Guangxi. You look at the peaks on the electrophoresis trace, and your senior colleague points to one of them and says this one goes for genetic testing.",
+    "A critical value pops up, the potassium startlingly high. You check the specimen first, then the instrument, then dial internal medicine and read out the name and bed number twice.",
+    "The wet of the returning south wind comes in under the door, and the dehumidifier in the reagent room is full. You empty a bucket and write numbers on the temperature and humidity log.",
+    "When you get above ground after work it's already dark. You go to Zhongshan Road for a bowl of laoyou noodles. The sour bamboo hits your nose and only then do you feel you're back among the living."
+  ],
+  "ladder": [
+    { "title": "Laboratory Technician", "stage": "Rotating", "focus": "Rotate through the sections, receive specimens, run instruments and quality control; move up by passing the junior qualification exam" },
+    { "title": "Laboratory Technologist", "stage": "In a section", "focus": "Assigned to a section, sign reports independently, work nights; the mid-level exam requires seniority and papers" },
+    { "title": "Supervising Technologist", "stage": "Gatekeeping", "focus": "Teach residents and visiting staff, handle difficult results, talk with clinicians; advance through practice and research" },
+    { "title": "Associate Chief Technologist", "stage": "Leading a section", "focus": "Run one section's quality system, open new tests, write tenders; the title review requires funded projects" },
+    { "title": "Chief Technologist", "stage": "Leading the discipline", "focus": "Steer the discipline's direction, accreditation and staffing, often also serving as department head or deputy" }
+  ],
+  "ai_tasks": [
+    { "name": "Checking in and receiving blood and fluid specimens sent from the wards", "how": "AI and barcode systems can check specimen information, spot labeling errors and track transit time. People inspect a specimen's appearance and deal with ones whose details don't match or that look suspect." },
+    { "name": "Pre-processing specimens by protocol: centrifuging, aliquoting, labeling", "how": "Automated lines and robots can already spin, aliquot and label, with AI handling dispatch. People deal with abnormal specimens before loading and work by hand when equipment fails." },
+    { "name": "Operating analyzers for blood counts, chemistry, immunoassay and more", "how": "Testing itself is mostly automatic, and AI can monitor instrument status and flag anomalies. People just spot-check and handle alarms and breakdowns." },
+    { "name": "Microscopic examination of urine, stool and other excreta", "how": "AI image recognition can pre-classify cells and casts in urine sediment and stool. People review the elements under the microscope and judge difficult or rare morphology." },
+    { "name": "Microbial culture, smear staining and antibiotic sensitivity testing", "how": "AI can help read plates, identify colonies and smear images, and suggest how to interpret sensitivity. People take samples, stain, identify hard strains and own the final judgment." },
+    { "name": "Daily internal quality control, instrument maintenance and calibration", "how": "Software can log QC data, plot control charts and flag violations by rule. People analyze why control was lost, do the maintenance and calibration by hand, and change reagents and consumables." },
+    { "name": "Reviewing results and issuing laboratory reports", "how": "AI and autoverification rules can release most normal, logically consistent results. People review the abnormal, contradictory or critical ones, and sign and take responsibility for the report." },
+    { "name": "Explaining abnormal results to the wards, retesting and dealing with rejected specimens", "how": "AI can suggest which results need a call or retest, but explaining to doctors and nurses, negotiating a retest and deciding if a specimen is acceptable depend on a person who communicates and answers for it." }
+  ],
+  "events": {
+    "e1": "Your first solo night shift, a batch of emergency specimens arrived and the automation line picked that moment to alarm. You read the operating manual until the small hours. When your teacher looked over the log the next day she changed only one unit.",
+    "e2": "You followed your teacher into the bone marrow morphology room. She studied one slide for half an hour and said you had only just met it. Your eyes ached and you didn't want to leave.",
+    "e3": "The department works three rotating shifts, and your body clock has given up. You sleep in the daytime behind blackout curtains, and the neighbor's renovation drill goes through everything.",
+    "e4": "A doctor called demanding to know why the result was so far off last week's. You checked the raw data and reran the specimen, and it was correct. You explained twice, and he said: all right.",
+    "e5": "That day you looked once more at a smear and found a few cells of the wrong shape, and asked the ward to order an additional test. Later the director mentioned it at the morning meeting, without your name.",
+    "e6": "A small occupational exposure handling a specimen. Reporting, testing, waiting for the follow-up: alone with those days, nothing has ever been so long. In the end it was fine, and you bought a box of better gloves.",
+    "e7": "The department has gone live with autoverification, and most normal results go out without anyone looking. Your worklist has shrunk by a section. The signature line still has your staff number.",
+    "e8": "AI morphology called a slide normal, and something about it bothered you. You made a new smear and looked, and sure enough there were several cells that shouldn't have been there. That case later went into the department's training materials.",
+    "e9": "Dengue samples surged that summer, specimens from the fever clinic arriving cart after cart. Your section worked two weeks of overtime, and everyone ate lunch standing up.",
+    "e10": "The hospital's ISO 15189 accreditation assessment arrived, with over a thousand pages of work instructions to check line by line. You explained to the assessor how a loss of QC control was handled. Only outside did your legs begin to shake.",
+    "e11": "You bought an apartment in Wuxiang New Area, forty minutes by subway from the hospital. The down payment was three years' wages plus your parents' savings. You see more of the Yong River now on the commute.",
+    "e12": "Friends ask you whether the arrows on their checkup reports matter, and you often take a look for them. Each time you tell them, go see a doctor, having read every line.",
+    "e13": "The department is reforming bonuses, and technologists' coefficients are well below doctors'. For several days people talk it over in the break room. Then the director holds a meeting, the content of which is: understanding.",
+    "e14": "A new method for thalassemia genotyping is running smoothly in your section, and accuracy has gone up a notch. The head of obstetrics made a special trip down to the basement, which in your department is a rarity.",
+    "e15": "A resident you are training asks: teacher, the machines will do all this later, so why are we learning it? You take her to the microscope, put a slide on, and don't answer.",
+    "e16": "Years of bending over a microscope, and your neck has sent a signal. A colleague in physical medicine looks at you and says it's occupational, and tells you to lift your head once an hour.",
+    "e17": "The hospital sent you to a partner hospital in a neighboring Southeast Asian country for two weeks of lab quality training. You lectured on control charts, and at lunch you ate a sour soup you had never tasted before.",
+    "e18": "County hospitals now often send hard slides up for you to read, one chat group on your phone, dozens of hospitals. You replied to one in the middle of the night and the next morning received a thank-you-teacher sticker.",
+    "e19": "Your eyes have slowly gone farsighted and the eyepieces take more adjusting. Young people look at slides on screens. You still like putting your eye to it, as though only then have you really seen it.",
+    "e20": "Your kid has a fever and you are on shift. Your spouse asks on the phone whether to go to the hospital. You handle so much blood in a day, and right now you can't judge a thing."
+  },
+  "choices": {
+    "c1": {
+      "title": "Should this result be rerun?",
+      "situation": "On a night shift one result is plainly unreasonable, but thirty emergency specimens are piling up on the line. The rule says to retest; if you do, every report behind it goes over time, and overtime costs points.",
+      "options": [
+        { "label": "Stop and rerun this one", "result": "It really was the specimen, and you tell the ward to redraw. Over time costs you points. You write down why in the handover book." },
+        { "label": "Release it with a comment", "result": "Nothing goes wrong on this one. For several days after, that number comes back to you in the middle of the night." }
+      ]
+    },
+    "c2": {
+      "title": "Take the Laboratory Technologist exam",
+      "situation": "After a year of work you are eligible to sit the Laboratory Technologist qualification. The books are a stack, and the night shifts aren't few. A senior colleague says sit it early and be done. A classmate says blind dates on weekends matter more.",
+      "options": [
+        { "label": "Sign up, study after nights", "result": "You read the clinical laboratory basics text until the corners fray. The day scores come out you read your phone in the bathroom." },
+        { "label": "Next year, take a breath first", "result": "You go see the ocean and also meet the person you later marry. The exam, it seems, will still be there next year." }
+      ]
+    },
+    "c3": {
+      "title": "Learn rule and model maintenance?",
+      "situation": "The department needs someone to maintain autoverification rules and AI reading models, tuning thresholds with IT and validating them. No extra pay, but the director says whoever sets these rules in future, the specialty will listen to them.",
+      "options": [
+        { "label": "Sign up, validate as you learn", "result": "You begin adjusting rules against thousands of old reports, and at last understand how the machine goes wrong." },
+        { "label": "Leave it, I'll stay with morphology", "result": "You get better and better at the microscope, and the morphology room can't do without you. Only you're no longer called to the system upgrade meetings." }
+      ]
+    },
+    "c4": {
+      "title": "An offer from the reagent company",
+      "situation": "The engineer who comes to service the instruments says his company is hiring a South China application specialist. Half again your pay, no nights, but constant travel, and you would be selling to your present colleagues.",
+      "options": [
+        { "label": "Go to the company", "result": "You take off the white coat and put on a badge in an office tower.", "end": "You joined an in-vitro diagnostics company and hauled your demo case around every county hospital in Guangxi. Your old colleagues in the labs still call you teacher, only now with an added politeness." },
+        { "label": "Stay at the hospital", "result": "You decline politely. The next morning running QC, the line on the chart is as calm as ever, and you look at it for a while." }
+      ]
+    },
+    "c5": {
+      "title": "Take the Supervising Technologist exam",
+      "situation": "The mid-level exam and a required paper both come due in these two years. A paper needs project data, and everyone in the department is fighting over the same few specimens. Your child is about to be born, and the night shifts haven't eased.",
+      "options": [
+        { "label": "Go for Supervising Technologist, paper too", "result": "You submit the paper a month before the baby arrives. Your family says, well, you made both deadlines." },
+        { "label": "Family first, put it off", "result": "Drop-offs, bottle feeds and night shifts in rotation. The first time your child calls out to anyone, you happen to be home." }
+      ]
+    },
+    "c6": {
+      "title": "A job at the independent lab",
+      "situation": "A medical testing company expanding into Nanning wants you as laboratory head, at double the income, with shares. Everything there is counted by volume, specimens collected from grassroots hospitals everywhere. It's another kind of life entirely.",
+      "options": [
+        { "label": "Go to the independent lab", "result": "You hand in your badge, and take with you the pipette cap you've gotten used to.", "end": "You went to the independent lab and became its head. The automation line is twice as long as the hospital's, and it's lit all night. You never see a clinician now; everyone on the phone is a salesperson." },
+        { "label": "No, stay at the top-tier hospital", "result": "You don't go. Two years later that lab changes owners, and you read about it in the classmates' group chat." }
+      ]
+    },
+    "c7": {
+      "title": "Apply for Associate Chief Technologist",
+      "situation": "The review demands funded projects, papers and teaching hours. The hospital gives the department one slot, and you and an older colleague in your section both qualify. He's five years your senior, and this may be his last chance.",
+      "options": [
+        { "label": "Apply for Associate Chief Technologist", "result": "The materials stack up half a foot high. When the defense is over, your colleague pats you on the shoulder in the corridor and says, do well." },
+        { "label": "Let him go first", "result": "He gets it and treats the department to lemon duck. When you apply the next year, he is the one who edits your materials." }
+      ]
+    },
+    "c8": {
+      "title": "A year helping a county hospital?",
+      "situation": "The hospital is sending someone to a county hospital in Baise for a year to set up a proper lab, with credit toward promotion on return. It's four hours away, and your kid is about to sit the gaokao (college entrance exam).",
+      "options": [
+        { "label": "Go for the year", "result": "You pin a control chart to the county hospital's wall and teach a young woman how to read it. By the time you go back to Nanning she can handle a loss of control by herself." },
+        { "label": "No, this year is for my kid", "result": "Each day after work you go to the school gate with a cup of warm water in the car. In fact, you don't talk much." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last shift you run QC as usual, all three lines inside the limits. You log out of the LIS and your staff number is taken back. In more than thirty years, you have seen many more numbers than people you've known. Behind each of them was someone you almost never met. When you come up to ground level it is raining in Nanning, and you stand a moment at the door.",
+    "burnout": "Night shifts and your cervical spine together brought you to this point. You applied to stop working nights, and later to leave early. You tell no one the day you go. You just put the morphology room's slides back in numerical order. The lights in the basement stay on. They don't need to know you've left."
+  },
+  "stages": [
+    "You rotate through the sections: routine lab, chemistry, immunology, microbiology, a few months each. Daily you receive specimens, check barcodes, load the line, enter results in the LIS, change reagents and do maintenance. The people you know are the draw-room nurses and the man who carries the specimens, and when something is beyond you, you hurry to call your teacher.",
+    "You've been assigned to a section and begun to review reports and work nights on your own. When a critical value comes up, you make the call; when QC goes out of control, you find out why, fill in the record and decide if today's batch can go out. Doctors now call you directly, not always politely, and you have to be accurate without being hard.",
+    "In your section you take the hardest part: difficult morphology, illogical results, doctors calling to argue. You teach residents and visiting staff from county hospitals, correct their reports, write work instructions, and find your own projects too. The mistake now isn't necessarily yours, but stopping it is.",
+    "You manage a section of seven or eight: scheduling, tracking quality indicators, writing new-test proposals and technical specs for instrument tenders. You sit down with clinical department heads to discuss which tests to open, with equipment procurement about budgets, and you lead inter-lab comparison. What's in your hands has gone from reports to systems and people.",
+    "You steer the whole laboratory discipline: how to pass the next accreditation round, whether to bring in molecular testing and mass spectrometry, how far to let AI readings go, who comes next in the talent line. You fight for equipment budgets at hospital meetings and attend the provincial quality control center. You still sit at the microscope sometimes. Only nobody lets you work nights anymore."
+  ],
+  "work": [
+    "You load a tray of urine specimens onto the analyzer and one tube's barcode is crooked and won't read. An outpatient nurse is pressing you at the window. You enter it by hand and check the name again.",
+    "Your teacher Ms. Liang has you pipette samples. Your hand shakes and you draw too much. She ejects the tip and says start over, this step can spare ten seconds.",
+    "In the microbiology incubator you identify the colonies on a plate for the first time and ask your teacher to confirm. She takes a sniff and says, right, and next time don't get so close.",
+    "Two in the morning, sodium on the chemistry line goes out of control. You check the electrode, change reagent, rerun QC, write the action in the control record, and retest the twenty tubes before it.",
+    "An attending in cardiology calls to ask why troponin has gone up. You pull the previous two results in the LIS and read him times and values. He grunts.",
+    "New rotating colleague Little Qin racked a batch of blood culture bottles wrong. You and he go through them by barcode one by one during the night. He keeps saying sorry.",
+    "A visiting teacher from a county hospital shows you a smear she thinks has abnormal cells. You spend ten minutes under oil immersion and tell her it's a smearing artifact. She takes out a notebook.",
+    "A thalassemia genetic report doesn't match the blood count. You call the obstetrics clinic, check the gestational age on the form, ask the draw room to schedule the woman to come again, and explain why.",
+    "The director has you revise a work instruction. You make seventeen changes against the instrument manual and the industry standard, print it, and give it to newcomer Little Wei to try following.",
+    "You are on the thirtieth item of tender specs when a supplier's rep calls to get friendly. You say, go through the tender office, hang up, and make that item stricter.",
+    "The section's monthly indicators show a high specimen rejection rate. You look at it with nursing, and pin the problem to one kind of collection tube used on the wards.",
+    "Performance validation for a new test is finished. You set the precision and linearity data before the clinical head and suggest a three-month trial in obstetrics.",
+    "At the hospital meeting you present a request for a mass spectrometer. The vice president in charge asks how much it recoups in a year. You list test volumes and send-out fees in a table and say: let's count three years.",
+    "An assessor finds a correction on a record from last year. You and the section leader pull the original file and explain the time and signature of the change. The assessor leafs through it and continues.",
+    "You set a rule for the department: when AI readings show certain cells, a person must look at the slide. You pin it up in the morphology room. People call it the old rule. You wrote it a year ago."
+  ],
+  "past": [
+    "You went to junior high in Yulin, and your grandmother often went to the hospital for blood draws. You sat with her on the bench and watched people in white coats go by with trays of small tubes.",
+    "Your gaokao (college entrance exam) score fell short of clinical medicine. A teacher said laboratory medicine had good job prospects and not so many operations to stand through. You weren't sure what it actually was.",
+    "At your first parasitology practical, a whole room gagged over the microscopes, and you looked very carefully. Just then you wondered whether you might be a little strange.",
+    "In your senior year you interned in Nanning and rotated into the morphology room. A teacher handed you a slide and asked what you saw. You made a complete mess of it, and she looked at you a second time.",
+    "In hiring season, classmates went to diagnostics companies for more than the hospitals paid. You wavered between the hospital's agency-contract post and a company, and finally decided you wanted a few more years at the microscope."
+  ],
+  "late": {
+    "pension_note": "Estimate: hospital staff pension plus occupational annuity, about 60% of final monthly pay.",
+    "scenes": [
+      "The first morning you don't have to look at QC, you take a walk at the foot of Qingxiu Mountain. At half past eight your hand still feels for a badge in your pocket.",
+      "Your family brings checkup reports for you to read. When you finish you say slowly: no hurry, go ask a doctor about these few below. You've said that all your life.",
+      "A young colleague asks you back to look at a difficult slide. It's enlarged on a screen. You say you can do without the microscope, then ask them to bring the slide anyway.",
+      "You go to the hospital for a blood draw and wait in line. The young woman at the window sticks on the barcode, and you glance to see if the label is straight, and say nothing.",
+      "You finally bring your schedule back to daytime. The morning light is very bright. After all those years in the basement, you notice for the first time what color the curtains are.",
+      "You help at a community health center for a while, two mornings a week. There's just one little instrument, and you do its QC more carefully than anyone.",
+      "Your neck is a little better. You begin keeping flowers on the balcony, and when you look down, you remember to look up again.",
+      "In the new place you don't wear a white coat, but you still take off gloves the same way: pinch the edge, turn it inside out.",
+      "At a class reunion everyone talks about their first night shift. You don't say much, and go through the numbers of that night again in your head.",
+      "Your child's biology class needs a microscope. You set the focus and have her look. She says she can't see anything. You say, no hurry, look slowly.",
+      "When the wet south wind comes back you still glance at the humidity on the wall, and then remember there are no reagents to store here.",
+      "Laoyou noodles still smell that strong. When you finish the bowl you think of the moment, back then, when you got above ground after work."
+    ],
+    "closing": {
+      "retire": "The Yong River slowly darkens toward evening. You stand on the bridge a while. Water, like numbers, goes calmly past.",
+      "burnout": "There's light in the room and the window is half open. You close the book. This afternoon there's nothing to verify.",
+      "end": "You come across an old control chart, three lines well-behaved. You look at it for a while and slip it back in the book."
+    }
+  }
+}

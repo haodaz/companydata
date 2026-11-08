@@ -1,0 +1,152 @@
+{
+ "id": "composer-bj",
+ "occupation": "Composer and Music Director",
+ "role": "Assistant at a film and TV scoring studio",
+ "headline": "A composition master's graduate in a soundproofed rental in Tongzhou, writing underscore, syncing to timecode and doing eleventh revisions at a senior classmate's film scoring studio",
+ "unit": "A film and TV scoring studio in Beijing (five or six people, working on series, films, commercials and short dramas)",
+ "unit_type": "Film and TV scoring studio",
+ "city": "Beijing",
+ "city_tier": "First-tier city",
+ "education": "Master's in composition and music theory",
+ "level": "You've studied counterpoint and orchestration, and your graduation piece was a string quartet. You aren't fast yet in Cubase and with sample libraries, and you have never delivered twelve cues in forty-eight hours.",
+ "intro": "The studio is on the second floor of an old factory compound in Tongzhou, with a piece of paper on the door: Recording, do not knock. Your senior hands you a hard drive holding a thirty-six-episode series. The director says the hospital scene in episode seven still needs music: sad, not too sad, by tonight. You have studied composition for seven years and written a string quartet, but you have never scored anyone's tears. Starting today, every note you write has to land on a timecode.",
+ "salary_note": "Estimate: Beijing scoring studios pay by the project, starting low, with enormous differences once someone has a name, so 1.25.",
+ "facts": [
+  { "label": "Scoring Assistant (current level)", "value": "0–3 years, ¥5,000–10,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Episode Composer (3–7 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Helping conductors, directors and singers understand and perform the work once it reaches rehearsal", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Studying music history, observing life, and distilling experience into musical ideas written down in notation", "source": "AI exposure" },
+  { "label": "Open positions", "value": "9 related listings nationwide, 1 in this city (the database leans toward campus hires and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "This trade gets up late. You walk from your rental in Tongzhou to the studio with last night's demo in your earphones, and decide the second chord is wrong again.",
+  "You open Cubase. Your senior's session has over two hundred instrument tracks. You tidy the template first and make sure all the string libraries load.",
+  "Syncing. Episode seven, 18 minutes 42 seconds: the actor looks up and the music has to enter on that frame. You watch it twenty times and nudge the barline half a beat.",
+  "The editor messages you: the director has grown used to the temp track. Could you write something about the same, but not the same?",
+  "Your takeout has gone cold beside the keyboard. Your senior sits behind you, listens for thirty seconds, reaches over and mutes two tracks. Now you can hear the actor, he says.",
+  "The director's reply arrives as a forty-second voice message, which amounts to: make it more sophisticated, but not that sophisticated.",
+  "Bouncing stems: strings, piano, ambience, one file each. One wrong character in a file name and the re-recording mixer will call you.",
+  "You take a cab home. The driver is playing an end-title song your studio wrote last year. You don't tell him."
+ ],
+ "ladder": [
+  { "title": "Scoring Assistant", "stage": "Assisting", "focus": "Organize instrument templates, sync to timecode, write underscore and transitions, and turn the lead composer's demos into something deliverable." },
+  { "title": "Episode Composer", "stage": "Writing cues alone", "focus": "Own the music for a few episodes or one storyline, work directly with editors and directors, and advance on credits and reputation." },
+  { "title": "Lead Composer", "stage": "Credited lead", "focus": "Set a production's themes and music budget, organize recording sessions, and have your name in the credits." },
+  { "title": "Music Director", "stage": "Oversight and label", "focus": "Run the music on several productions at once, lead a team of composers, choose songs and negotiate rights, and write less and less yourself." }
+ ],
+ "ai_tasks": [
+  { "name": "Studying music history, observing life, and distilling experience into musical ideas", "how": "AI can organize material on music history, summarize styles, and transcribe humming or recordings into notation. Observing life and turning a singular experience into a musical idea remain the composer's own perception and judgment. AI is only there to record and look things up." },
+  { "name": "Composing with the technical means suited to a genre and to its instruments and voices", "how": "AI can quickly generate drafts of melody, harmony and orchestration by genre, and imitate different instruments. A person chooses and revises according to what real instruments, voices and halls can do, and decides the style and emotional course of the whole piece." },
+  { "name": "Helping conductors, directors and singers understand the work once it reaches rehearsal", "how": "This requires being face to face with conductors, directors and singers, explaining what the work intends and adjusting to what happens in rehearsal. AI can at most tidy parts and rehearsal notes. Real understanding and communication depend on people." }
+ ],
+ "events": {
+  "e_master": "Your senior cuts a string cue of yours down to a single cello and plays it for you. For the first time you understand that most of scoring is knowing when to shut up.",
+  "e_credit": "The series goes online and all three of your cues were used. The credits roll fast. You pause and search for the music assistant line. You aren't on it.",
+  "e_night": "Three weeks straight of hourly deliveries, living on coffee and takeout. You wake up on Sunday afternoon and for a moment can't tell whether it is morning or evening outside.",
+  "e_erhu": "Your first time in a studio recording erhu. The old musician plays it once, looks at your part and says the shift here is uncomfortable. He changes one note for you, and suddenly the phrase is alive.",
+  "e_money": "The producer's final payment has been held up for seven months. The contract says “payable upon acceptance,” and the show still hasn't aired.",
+  "e_short": "A vertical short-drama company comes to you with forty cues a week at a fraction of TV rates. You save your usual chord progressions as templates, and by the third day you are modulating in your dreams.",
+  "e_ai_temp": "Editors start generating temp music with AI. Describe a mood and you get a piece of it. Once more the director gets used to it. Only now you have to write better than something that cost nothing.",
+  "e_ai_sketch": "You have AI draft a few orchestrations. The string writing is correct every time, and every time about the same. You keep one line for the viola and delete the rest. It saves you four hours a day.",
+  "e_ai_budget": "A mid-budget film halves its score budget, on the grounds that “AI can do this now.” You reply with one sentence, offering to do only the themes and suggesting they try the rest themselves.",
+  "e_string": "There is no budget for a Beijing orchestra, so you record an Eastern European string section remotely. At three in the morning the conductor on the screen raises a hand, and you say “thank you” into the microphone.",
+  "e_ear": "A hearing test shows your high frequencies are dropping a bit. The doctor asks what you do. Music, you say. He tells you to turn down your monitors.",
+  "e_theme": "Viewers track down a theme you wrote, someone posts a piano arrangement, and the comments ask who composed it. You see it, don't reply, and play the video two more times.",
+  "e_house": "The landlord is selling, and you move for the fourth time with two monitors and your acoustic panels. In the new place a child next door practices piano. You find you don't mind.",
+  "e_friend": "A classmate has made principal of his section in a symphony orchestra. Over dinner at a small place he says he envies you your name in the credits. You say you envy him his health insurance.",
+  "e_director": "A director you've worked with gets a new project and you are the first call. He says only: it should be you again, that cello from last time.",
+  "e_copy": "A piece of your music turns up, unlicensed, in somebody's short-video ad. A lawyer says it would cost more than you could recover. You save the evidence and let it go.",
+  "e_child": "Your child plays with your MIDI keyboard like a toy and bangs out a mess of notes. You record it into that day's session, and the next day quietly delete it.",
+  "e_young": "A new assistant sends you a cue crammed with notes. You sit down behind him, listen for thirty seconds, reach over and mute two tracks.",
+  "e_style": "A young director calls your music a bit “old school.” You go home and spend an afternoon listening to what they like. Some of it is truly lovely, which leaves you a little sour.",
+  "e_quartet": "You dig out your graduation string quartet, and a few friends play it through in a small hall. Fewer than thirty people listen. There is no timecode. You sit in the last row."
+ },
+ "choices": {
+  "c_shortplay": { "title": "Taking on short-drama volume", "situation": "The studio is between long series, and rent is due. Short-drama companies have plenty of work: you'd write a lot, get paid fast, and could easily ruin your hand. Your senior leaves it up to you.", "options": [
+   { "label": "Take it", "result": "In one quarter you write over three hundred cues, and modulations and endings turn into muscle memory. There's finally some money in your account." },
+   { "label": "Tighten your belt and wait", "result": "You scrape by on teaching for a few months. When a film's trailer comes to the studio, you have nothing on your plate and can catch it." }
+  ] },
+  "c_cue": { "title": "Fighting for a shot as Episode Composer", "situation": "No one is writing the last ten episodes of a series, and your senior asks if you dare to step up as Episode Composer. There are only three weeks. If you botch it, the studio's name goes down too.", "options": [
+   { "label": "Take it", "result": "You sleep forty-odd hours in three weeks, and the sixth version is approved. The producer asks who wrote those episodes." },
+   { "label": "Follow one more series", "result": "You say you'd like to watch one more series first. Your senior says nothing and hands it to someone else." }
+  ] },
+  "c_teach": { "title": "Going back to teach", "situation": "An arts college is hiring a composition teacher, with a permanent state post, summers off and steady pay. Your old advisor says openings like this are rare, but once you are teaching you will probably have no time for the studio.", "options": [
+   { "label": "Keep writing", "result": "You close the job posting. The next day you are still syncing timecode until the small hours." },
+   { "label": "Go teach", "result": "You write out harmony in the classroom for the first time, chalk dust on your sleeve.", "end": "You went to the arts college and taught for many years, and the things you wrote no longer needed timecode. When students ask how to write for film, you tell them first learn to mute two tracks." }
+  ] },
+  "c_ai": { "title": "Putting AI into the workflow", "situation": "Others in the trade are using AI to draft and reorchestrate, doing a day's work in two hours. The studio wants you to figure out a workflow. You worry that if you write with it too much, your ears will recognize only its flavor.", "options": [
+   { "label": "Study it thoroughly", "result": "You figure out what it's good at and where it will always fall short. You deliver faster, and you begin fixing what others made with AI." },
+   { "label": "Treat it as a tool only", "result": "You use it only to tidy parts and transcribe phrases. The first note of a theme, you still find sitting at the piano." }
+  ] },
+  "c_game": { "title": "A game company's offer", "situation": "A game company is looking for an audio director at three times what you make, with full benefits, based in Shanghai. You would write battle music that loops without end.", "options": [
+   { "label": "Stay in film and TV", "result": "You decline. A series you take that year eventually airs, and not many people remember it." },
+   { "label": "Join the game company", "result": "You move to Shanghai and sit in a dozen meetings a week, and hear for the first time a few hundred thousand people playing to your music at once.", "end": "You moved to games, and the pay slip stopped your parents asking when you would get a job. Sometimes, working late, you still open the score of that string quartet." },
+   { "label": "Take outsourced work", "result": "You take on a contract for them. The money's good, and it is one more sleepless quarter." }
+  ] },
+  "c_lead": { "title": "Taking the Lead Composer seat", "situation": "A low-budget film wants you as Lead Composer. The pay is small, but there's only one music credit, and it's yours. At the same time a big series wants you for episodes at four times the money.", "options": [
+   { "label": "Do the film", "result": "You pay out of your own pocket to record an extra cello. The film hardly gets screens, but at a festival someone stays to listen through the end credits." },
+   { "label": "Write the series", "result": "The money comes through. Two years later, the series is on the third line of your résumé." }
+  ] },
+  "c_studio": { "title": "Music Director, or keep writing", "situation": "Your senior is stepping back and the studio could be yours, as Music Director. You'd lead eight young composers, hold meetings, take jobs, do accounts, and write very little yourself each year.", "options": [
+   { "label": "Take the studio", "result": "A new Excel sheet appears on your computer with everyone's progress in it. You begin scoring other people's cues one by one." },
+   { "label": "Keep writing", "result": "You say no, and recommend an old classmate at the studio next door. You stay in your old chair." }
+  ] },
+  "c_family": { "title": "Going home, or staying in Beijing", "situation": "Your child is reaching school age and has no Beijing household registration, so getting into a public school means gathering documents one by one. Your spouse says you could return to your home province's capital and deliver music online, except that directors will soon forget you.", "options": [
+   { "label": "Stay in Beijing", "result": "You pay into social insurance for several years and open a pile of certificates, and your child gets into a school four kilometers from home." },
+   { "label": "Go home, deliver online", "result": "You install acoustic panels back home. Work falls off by a third, and you all have dinner together." }
+  ] }
+ },
+ "endings": {
+  "retire": "When the final mix of your last production is done, you listen through the end titles and pull the fader all the way down. The session gets archived, the drive gets a label, and there is a whole cabinet of them. You walk out of the old factory compound in Tongzhou without earphones. The passing cars, the wind, someone shouting far off: none of it has timecode.",
+  "burnout": "Decades of late nights, and your heartbeat and your ears stopped consulting you. The doctor told you to stop delivering by the hour. You split your projects among your apprentices and took only small occasional jobs. In the afternoon light you play the piano for a while and stop wherever you stop."
+ },
+ "stages": [
+  "Your job is to turn other people's ideas into files that can be delivered: tidying Cubase templates, syncing to timecode, writing underscore and transitions, doing the eleventh revision, bouncing stems and packing them up by the naming rules for the re-recording mixer. Your senior sits behind you and reaches over to mute two tracks. The editors and producers don't know you, only your file names.",
+  "A few episodes are yours now. You spot cues directly with the editor and watch the cut with the director, noting what lies behind every word he says. You go back and write and get sent back. Your Kontakt library keeps growing, and you begin having your own assistant do stems. Unlike before, when a revision won't go through, the phone call comes to you.",
+  "A production's theme begins at your piano. You hold spotting sessions with the director, deciding scene by scene where music goes and where it doesn't. You work out the budget and which instruments to record for real, sit behind the console going over the score with the conductor, and find singers for end titles. The name in the credits is yours, and the client's anger comes your way too.",
+  "Several productions lie open on your desk at once. You assign work to young composers, listen to demos and send them back, negotiate contracts and rights ownership with producers, choose songs for projects, and attend premieres and award ceremonies. You yourself write only a handful of cues a year, and when you do your door is shut tight and everyone walks softly."
+ ],
+ "work": [
+  "The re-recording mixer sends your stems back: the sample rates of strings and ambience don't match. You check track after track in Cubase and, late at night, find the one session with the changed setting.",
+  "The editor Lao Xu has moved another three seconds. You shift all the music back twelve frames, re-sync episode seven from start to finish, and reply “OK” in the chat.",
+  "Your senior has you transcribe a temp cue on piano, then write something that sounds about the same with every interval different. It takes you all day and tires you more than a quartet.",
+  "The director says this scene is too full. You and the editor Xiao Zhou move the music entrance back eleven seconds. It comes in only after the lead has walked out the door.",
+  "You send your assistant a voice note saying the bass needs its own stem. He replies with a question mark. You share your screen and build him an export preset step by step.",
+  "An old suona player comes into the studio and gives one blast, and the engineer Lao Fang quickly pulls the level down. You mark this phrase down an octave on the part, and the old man says that's more like it.",
+  "A producer pushes the budget sheet over and says to replace the orchestra with samples. With a pencil you cut a thirty-two-piece orchestra to twelve players and save the real strings for the last scene.",
+  "In the studio a young conductor asks if you want a diminuendo in bar three. You glance at the actor's close-up, shake your head, and sign through the glass.",
+  "The singer's manager says the chorus is too high and wants it down two keys. You spend an afternoon trying it in Sibelius, keep that string line and rewrite the vocal.",
+  "Clause twelve of the rights contract says buyout in perpetuity. You circle “all rights” with a pen and send the lawyer Xiao Jiang to negotiate, keeping the author's credit and a share of secondary use.",
+  "An apprentice hands in a cue drafted with AI and then revised. You hear within eight bars which part he wrote himself, highlight those bars in yellow, and send it back: start from here.",
+  "The director of a new film is a first-timer and can't explain anything. You bring no reference clips, let him talk for an hour about his grandmother, then go home and write sixteen bars for piano."
+ ],
+ "past": [
+  "You had years of piano in Nanjing, and got into the music conservatory's attached middle school. Your hands weren't large enough for big repertoire, your teacher said, and suggested you try composition.",
+  "The composition department took only a few students. You memorized a roomful of scores and got in. From then on all your friends were people who carried scores to dinner.",
+  "In your third year a classmate talked you into scoring a student film. At the screening you heard music and image come together for the first time. Nobody in the room noticed the music, and you were happy for days.",
+  "In graduate school your advisor urged you to continue writing serious music. Your graduation piece was a string quartet, performed once, its audience mainly classmates.",
+  "Before finishing you went to help at your senior's studio. He said there are lots of roads in music and not many survivors, and you should get faster in Cubase first."
+ ],
+ "late": {
+  "pension_note": "Estimate: years of paying social insurance as a freelancer mean a modest pension; there are a few royalties, not steady ones.",
+  "scenes": [
+   "You number your session drives and the next day have nothing to do. You sit at the piano and play something with no purpose.",
+   "An old director takes you to dinner. Neither of you hears very well anymore, and you both talk loudly. The next table keeps looking over.",
+   "An old series reruns on TV. At episode seven you lift a finger, and the music comes in just as the actor looks up.",
+   "A royalty statement arrives: 127 yuan this year. You put it together with previous years' and tuck them all into a score.",
+   "You return the studio keys. When you get home you can hear your own footsteps in the stairwell, a bit loud.",
+   "The doctor says your heart rhythm is much better. You begin walking every afternoon to the canal, leaving your phone at home.",
+   "A film your apprentice worked on opens, with your name under special thanks. You buy a ticket and go alone.",
+   "On the first Sunday after you changed jobs, you wrote nothing. Toward evening you noticed you'd spent the whole afternoon counting beats in the renovation noise outside.",
+   "You take your child to a movie. When the credits start your child wants to go. Wait a bit, you say, and listen to the music through.",
+   "An old classmate sends a short film and says he'd like to use a cue you wrote when you were young. After a long search you find it on an old hard drive.",
+   "A friend has moved and asks you to listen to the new speakers. You sit in the middle of the sofa, close your eyes, and even out the balance by a hair.",
+   "On an afternoon in the complex, a child practicing piano keeps missing the same note. You wait on the balcony until the note comes out right."
+  ],
+  "closing": {
+   "retire": "You close the piano lid. There are many sounds outside the window, and it isn't up to you when they come in.",
+   "burnout": "The afternoon light moves slowly. You play four bars and stop, and let it stay stopped.",
+   "end": "What you wrote later served other purposes. When the credits come up you still tend to sit to the end."
+  }
+ }
+}

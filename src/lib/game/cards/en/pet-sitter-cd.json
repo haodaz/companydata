@@ -1,0 +1,191 @@
+{
+  "id": "pet-sitter-cd",
+  "occupation": "Pet Care Provider",
+  "role": "Trainee in-home pet sitter",
+  "headline": "A trainee pet sitter in Chengdu with an electric scooter and the door codes of a dozen strangers' homes in your phone, letting yourself in alone to feed their cats and walk their dogs",
+  "unit": "The west-side branch of an in-home pet care agency in Chengdu",
+  "unit_type": "In-home pet care agency",
+  "city": "Chengdu",
+  "city_tier": "New first-tier city",
+  "education": "Vocational college (Business English)",
+  "level": "Just past the online exam and the background check, with twenty jobs shadowed behind a senior sitter. You can scoop, change water and film the record. You have never been alone with a cat that needs its pill",
+  "intro": "When the e-commerce customer service job disappeared, you scooped your own cat's litter for three months and then signed up to be an in-home pet sitter. Your mentor handed you a pair of shoe covers and a chest camera and said the point of this trade isn't liking cats. The point is behaving, when someone isn't home, as if they were. As of today, your phone holds the codes to other people's front doors.",
+  "salary_note": "Estimate: Chengdu's service-sector pay sits near the national average and you are paid by the job. Ordinary months are tight; over Spring Festival and long holidays the rate per visit can double.",
+  "facts": [
+    { "label": "Trainee Pet Care Attendant (current level)", "value": "0-1 years, ¥3,000–5,000 a month (national average)", "source": "Career map" },
+    { "label": "Next level up", "value": "Pet Care Provider (1-2 years)", "source": "Career map" },
+    { "label": "Pay after 1–3 years", "value": "¥5,300 (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Spotting a cat's urinary trouble and preparing an emergency sample and vet trip", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Checking the home and logging every step of a visit", "source": "AI exposure" },
+    { "label": "Open positions", "value": "77 linked listings nationwide, 1 in this city (the job database is mostly campus and internship postings)", "source": "Job listings" }
+  ],
+  "day": [
+    "In your shared flat off Jianshe Road, you open today's dispatch: nine homes, a loop around the west side. You group the neighbors and put the cat that needs medicine first.",
+    "The scooter goes under an old block in Yulin. Sixth floor, no elevator. At the door you start the camera, say the date and the job number out loud, and pull on shoe covers.",
+    "This is your third visit to this cat and you have yet to see its face. You say something to the underside of the sofa, fill the bowl, change the water, scoop, and weigh the clumps.",
+    "An old golden retriever in Tongzilin is waiting for you to take him down. He walks slowly, so you walk slowly. After the bag, you sit by a bench and let him lie there ten minutes.",
+    "A bowl of maocai at a roadside stall while you write up the morning: how much it ate, what came out, a photo of a tail sticking out from under the sofa. The owner sends back a crying-laughing face.",
+    "One household's smart lock has run out of battery. You stand outside phoning the agency for the spare key, listening to the dog on the other side bark, and bark.",
+    "Before leaving the last home you walk the checklist: windows shut, tap off, cat not at the door. On the way out you tell the camera: door locked.",
+    "Home, and you scoop for your own cat. She sniffs your trouser legs for a long time. They smell of nine other households."
+  ],
+  "ladder": [
+    { "title": "Trainee Pet Care Attendant", "stage": "Trainee", "focus": "Assist senior sitters on routine visits, follow the standard steps for feeding, cleaning and short leash walks, and keep the audio and video record. Zero complaints gets you promoted to working solo." },
+    { "title": "Pet Care Provider", "stage": "Working solo", "focus": "Take regular home visits and day care alone, read a stressed animal and calm it, and catch the early signs of common illness." },
+    { "title": "Senior Pet Butler", "stage": "Senior specialist", "focus": "Handle the hard cases: large and reactive dogs, severe separation anxiety, post-surgery and chronically ill pets. Also emergency response and on-site complaint handling." },
+    { "title": "Pet Care Supervisor", "stage": "Management", "focus": "Run dispatch across the district, assess new hires, set service quality standards, and deal with partner vet clinics and accident claims." }
+  ],
+  "ai_tasks": [
+    { "name": "Spotting a cat's urinary trouble and preparing an emergency sample and vet trip", "how": "AI can check symptoms against a list and prompt the steps, but feeling the cat, watching it try to pee, collecting the sample and cleaning up need someone in the room. Whether to go to the vet, and getting the owner's go-ahead, is a person's responsibility." },
+    { "name": "Handling a suspected urinary emergency, keeping the evidence and preparing transport", "how": "AI offers a reference and a checklist at most. The first exam, the no-stress sample, clearing the hazard, readying the carrier, and getting the owner's authorization all take hands and on-the-spot judgment." },
+    { "name": "Checking the home and logging every step of a visit", "how": "AI can handle check-ins, timing, checklists, device self-tests and archives. Noticing a hazard, putting on protection and building trust with the household still falls to a person." },
+    { "name": "Giving prescribed medicine to chronically ill pets, with a two-person check on record", "how": "AI can remind you of time and dose, log the video and the medication, and cross-check the prescription. Splitting the pill, hiding it in food, getting it down and watching the reaction are done by hand." },
+    { "name": "Recognizing and interrupting a dog's separation-anxiety outbursts", "how": "Cameras and microphones with AI can pick up barking and chewing and raise an alert. Getting there, calming the dog and keeping it from hurting itself takes a person." },
+    { "name": "Daytime husbandry and habitat tuning for exotic pets (sugar gliders, leopard geckos)", "how": "AI can suggest feeding rhythms, light and humidity by species, read the sensors and raise alarms. A person does the feeding, adjusts the kit and notices when the animal seems wrong." },
+    { "name": "Dealing with a dog choking on a walk", "how": "This is first aid measured in seconds and AI is no help. You judge and do the canine Heimlich yourself; AI can only support the practice drills beforehand." },
+    { "name": "Writing each client's Monthly Care Quality Report", "how": "AI can pull the month's data together and draft the charts, trends and advice. A person only checks the numbers, adds what they saw, and answers questions on the call." }
+  ],
+  "events": {
+    "e_spring": "Over Spring Festival Chengdu's young people go home and leave their cats behind. You did seventeen homes on New Year's Eve at double the rate, and fell asleep against the chair at the reunion dinner.",
+    "e_scratch": "A stressed cat came off the top of a wardrobe and left three lines down your arm. You got your shots. The next day you had to go back, and this time you crouched at the door for five minutes first.",
+    "e_first_review": "A client back from a business trip left you a long review, saying the cat had lost a little weight but its coat was smooth. You sent a screenshot to your mother. She replied: so this counts as a job, then.",
+    "e_lock": "A client changed the door code and forgot to tell you. You waited outside until nine at night while he kept apologizing from an airport. The cat ate six hours late.",
+    "e_pee": "Weighing the clumps, you saw that a tomcat's had been too small for two days. You sent the owner a photo and told him to go now. Later he told you what the vet had said: good thing you came early.",
+    "e_camera": "More and more home cameras file their own reports: how long the barking lasted, when the cat used the box, all pushed to the owner's phone. The agency now asks you only to verify anomalies, and some visits have been trimmed.",
+    "e_report": "The monthly report now writes itself, curves and recommendations included. The one line you added, she's taken to lying on the north windowsill, was the only part the client said she read twice.",
+    "e_summer": "Chengdu in July is close and blinding. You moved dog walks to before seven in the morning and after eight at night. For a whole summer your working day was cut in two, and your afternoon nap felt like repaying a debt.",
+    "e_bike": "In the rain your scooter slid on the Second Ring Road and your knee swelled for a week. A colleague took your jobs. You lay there on the phone, going house by house through every cat's temper.",
+    "e_old_cat": "An old cat you had fed for five years died. The owner couldn't get back in time and you were the one who stayed with it. Every Spring Festival since, that client has sent you a box of oranges.",
+    "e_suspect": "A client said a pair of earrings had gone missing and the agency pulled your full visit video. Three days later she found them by the washing machine and sent a short sorry. You started charging the camera earlier.",
+    "e_exotic": "A programmer in the high-tech zone left you two leopard geckos. For the first time, you looked at a thermostat longer than at the animals, and you read humidity charts all night.",
+    "e_friends": "Holidays are always your busiest days, and at a friend's wedding you only caught the toasts. A bridesmaid asked what you did. I let myself into people's houses, you said. There was a small silence.",
+    "e_referral": "Seven households in one building, each one passing you to the next, all asking for you by name. Your weekends filled up two months ahead and the agency praised you in the staff group.",
+    "e_sedate": "You started taking post-surgery dogs: dressings twice a day, temperatures, watching the wound for seepage. The vet says it once over the phone, you do it once, and your hands keep getting steadier.",
+    "e_newcomer": "The new girl cried in her first week because a cat kept hiding from her. You told her that your first cat hadn't shown you its face in three visits.",
+    "e_knee": "You have climbed these old stairs for more than a decade, and on wet days your knees started raising objections. You quietly passed the sixth-floor walk-ups to the younger people.",
+    "e_second_gen": "The young woman who once rented a room and got her first cat now books you for her third, and brings her child to the door. The child asks: are you the cat's teacher?",
+    "e_rental": "Your lease ended and the landlord no longer allowed cats. You spent a day looking after other people's cats, then held your own and scrolled through rentals half the night.",
+    "e_saved": "Opening a door you smelled scorching: an electric heater left on, cooking the corner of a curtain. You unplugged it, opened the window, put the cat in a carrier, and only then remembered the camera."
+  },
+  "choices": {
+    "c_zero_bad": {
+      "title": "Shadow a few more jobs before going solo?",
+      "situation": "Your trial period is nearly over. The branch manager says zero complaints is enough to work solo as a Pet Care Provider, and your numbers are there. But you've never given a cat its medicine alone. Your mentor offers another month together, and that month pays less.",
+      "options": [
+        { "label": "One more month", "result": "He showed you how far back the pill really has to go. A month later, your first solo job was a cat with kidney disease." },
+        { "label": "Go solo now", "result": "Your numbers jumped at once. The first time you gave a pill, the cat brought it up three times, and you knelt on a stranger's floor for half an hour." }
+      ]
+    },
+    "c_cert": {
+      "title": "Take the pet health care and pet first aid certificates",
+      "situation": "The agency says harder jobs need a certificate. The course runs six weekends, costs over ¥4,000, and weekends are when the orders are thickest. How much pushing on a fake dog's chest resembles the real thing, no one can say.",
+      "options": [
+        { "label": "Give up the weekends", "result": "You pressed on a fake dog for six weeks and came away with two certificates. The manager moved your photo into the column marked chronic care." },
+        { "label": "Keep running jobs", "result": "You earned those six weeks' money. As for the certificates, you told yourself, next year." }
+      ]
+    },
+    "c_private": {
+      "title": "An old client asks to book you privately",
+      "situation": "A client with three cats says quietly: skip the agency, she'll pay you directly. You'd make thirty percent more, she'd pay twenty percent less. No insurance, no record, no one would know. The agency's rule on this is written in red.",
+      "options": [
+        { "label": "Decline, keep it official", "result": "You said it should go through the agency, for both your sakes. She didn't bring it up again, and the next year she referred a friend." },
+        { "label": "Take it", "result": "The money was better. Then the big orange one got sick in the night, she called six times, and you understood that you were carrying more than a paycheck now." }
+      ]
+    },
+    "c_hard_orders": {
+      "title": "Taking on Senior Pet Butler cases",
+      "situation": "The manager asks if you dare take severe separation anxiety and post-surgery jobs. The rate doubles, but when a dog takes apart a client's door frame, it's you who explains. Do these well and you can call yourself a Senior Pet Butler.",
+      "options": [
+        { "label": "Take them, and learn", "result": "You read behavior books at night and listened to the rhythm of barking through doors by day. Three months on, that dog could lie quietly past the twentieth minute." },
+        { "label": "Stick to regular visits", "result": "Your route stayed your route, the cats the same cats. You knew every windowsill like your own." }
+      ]
+    },
+    "c_ai_triage": {
+      "title": "Learn to review the AI's health alerts?",
+      "situation": "The agency has a system that flags health risks from litter box photos and camera footage. Half are false alarms. The manager wants someone to review alerts and tune the rules, which means work on a screen and half the road miles.",
+      "options": [
+        { "label": "Learn it", "result": "You relabeled the false alarms one by one, and three months later the phantom midnight alerts to clients had fallen by more than half." },
+        { "label": "Stay in the field", "result": "A screen can't tell if a cat just doesn't feel like seeing anyone today, you said. Some clients still trusted only the sound of you at the door." }
+      ]
+    },
+    "c_clinic": {
+      "title": "A vet clinic tries to hire you",
+      "situation": "The clinic you often bring animals to says its inpatient ward is short and they like how steady your hands are. They want you as an assistant. Nine to six, no stairs, and never again alone in a stranger's house.",
+      "options": [
+        { "label": "Go to the clinic", "result": "You handed the door codes back to the agency one by one, and on your last day you gave the old golden retriever one extra brushing.", "end": "You took off your shoe covers and put on scrubs. You stayed in the ward for many years. Now and then, an old client came in with a cat and called your name over the counter." },
+        { "label": "Stay on the road", "result": "You thanked the director and rode to the next house. You found you simply liked the few seconds before a door opens." },
+        { "label": "Help out half a day", "result": "You went to the ward on Wednesday afternoons and learned to read lab results. Back on the road, your notes on kidney cats grew shorter and more exact." }
+      ]
+    },
+    "c_supervisor": {
+      "title": "Compete for Pet Care Supervisor",
+      "situation": "The district needs a Pet Care Supervisor: drawing the grid, assessing new hires, handling accidents and claims, and hardly ever going through a door again. Better pay, a phone that rings around the clock. And what you like best is still that moment of pushing a door open.",
+      "options": [
+        { "label": "Go for it", "result": "You wrote a scheduling plan that kept walk-ups away from your older colleagues. The panel asked what you feared most. You said: that people will stop remembering the cats' names." },
+        { "label": "Stay a butler", "result": "You let a junior have the chance and kept opening other people's doors. He kept calling afterward to ask how you'd put it." }
+      ]
+    },
+    "c_transition": {
+      "title": "Which way from here",
+      "situation": "You're in your early forties. A longtime client asks if you'd help her open a small boarding house. Meanwhile a small pet farewell service has noticed how you talk to owners and wants you. If you don't turn now, it's more stairs.",
+      "options": [
+        { "label": "Open a boarding house", "result": "You rented a ground-floor space in the high-tech zone together, and you measured the height of every cat room yourself.", "end": "You moved into the shop, and room charts and disinfection logs replaced door codes. The clients of all those years became your first guests." },
+        { "label": "Join the farewell service", "result": "The first person to come to you was the client whose cat you had fed for five years.", "end": "You began walking people through the last stretch. You didn't say much. You just always remembered to ask where it had liked to lie." },
+        { "label": "Keep climbing stairs", "result": "You spent a little more on knee braces and left at seven the next morning." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you deleted the door codes from your phone, one at a time, slowly. The young staff gave you a pair of shoe covers to remember them by. On the way home you passed that old block in Yulin and looked up at the sixth-floor windowsill. There was a cat on it. You didn't know this one.",
+    "burnout": "When your knees and back would no longer carry you around, you handed over your jobs and returned the keys to the agency one by one. The dog at the last house thought you were only stepping out, and sat behind the door. Door locked, you told the camera."
+  },
+  "stages": [
+    "Your day is a checklist: portioning food, washing bowls, scooping, changing water, filming each feeding, checking doors, windows, taps before you go. You follow your mentor's jobs, he opens and you film, he examines the cat and you take notes. You never see the client, only a mini-app, a chest action camera and voice messages. Your one KPI is zero complaints.",
+    "You begin going in alone, with regular visits and day care now yours. You learn to tell from the angle of a cat's ear or a dog licking its lips whether it's anxious, and you learn pheromone sprays and the slow blink. The client watches you through a camera while you watch their cat. The difference is that when something goes wrong, you're the first one asked.",
+    "What reaches you now is what others won't touch: large dogs that lunge, severe separation anxiety, subcutaneous fluids for kidney cats, post-surgery dressings. You confirm doses by phone with a licensed vet, work with a pill syringe and a restraint towel, and write up each case like a chart. When a complaint can't be settled, the manager sends you, and you start taking apprentices on hard jobs.",
+    "Most of your day is the dispatch console: how the grid is drawn, whose route doubles back, how many people short you'll be at Spring Festival. You assess new hires, negotiate an emergency channel with partner clinics and handle claims for scratches and damaged doors. You rarely enter a client's home now, and on the phone you've gone from the cat lady to Supervisor So-and-so."
+  ],
+  "work": [
+    "Your mentor has you weigh a calico's clump: forty-two grams. You type urine output normal in the app. He has you delete it and write: forty-two grams, last time forty-five.",
+    "At a home in Qingyang you open the smart lock yourself for the first time. The chest camera records you getting the code wrong twice. Reviewing it, your mentor says nothing and simply recites the entry script again.",
+    "You fit a figure-eight harness on a Shiba and it backs straight out. Your mentor makes you practice in the stairwell for twenty minutes before you're allowed downstairs.",
+    "A newly adopted cat hasn't eaten in three days. You move the bowl from the corner to where it can see the door, and the next day the scale reads fifteen grams lighter.",
+    "On a video call the client asks why the dog keeps licking its paw. You bring the camera in and see a small red patch between the toes, tell her to book a vet, and note the date on the report.",
+    "He at the next station is on leave and you inherit his parrot. You change the liner according to the handover sheet, then stand in front of the cage and slowly eat a carrot, so it can get used to you.",
+    "An old kidney cat needs subcutaneous fluids while its owner watches by livestream from another city. You wrap it in a towel and the needle goes in gently. The person on the phone doesn't make a sound until you say: done.",
+    "A German shepherd lunges at every scooter. With treats and a no-pull harness you walk one stretch along the Jin River for eleven mornings. On the twelfth, it only looks.",
+    "Your apprentice Su handles her first complaint alone and calls for help halfway through. You take over from an elevator. The first thing you ask is: has the cat eaten?",
+    "A week before Spring Festival you cut the west side into seven blocks on the rota and raise the rate for anyone not going home. Li in accounting stops halfway and asks how the shortfall can be twelve people.",
+    "A new hire wants to quit after being scratched. You go to see him with the vaccine and injury claim forms and, while you're at it, change next week's route to one with only three cats.",
+    "You rework the emergency channel with the partner clinic's director, turning pay first or call the owner first into one page. It's taped into every new hire's first day of training."
+  ],
+  "past": [
+    "You grew up in Nanchong. Your family never kept animals, but there was a stray cat downstairs, and you once sneaked it some ham sausage and got told off.",
+    "Your gaokao (college entrance exam) score was enough for a vocational college. Your parents said English would come in useful, so Business English it was.",
+    "After graduating you came to Chengdu and took a customer service job at a home goods e-commerce company, answering eight hundred messages a day. After work you found your first cat.",
+    "You took care of your cat so seriously that friends started leaving you their keys when they traveled. Once you fed someone's cat for seven days and they sent you ¥200, and you stopped short.",
+    "The company switched customer service to auto-reply. Two people from your team stayed, and you weren't one of them. You scooped litter at home for three months and sent out a few résumés.",
+    "An in-home pet care agency was hiring: online exam, background check, health certificate, all of which you got done. This job didn't require having studied anything in particular."
+  ],
+  "late": {
+    "pension_note": "Estimate: Chengdu's urban employee pension. Agencies usually contribute at a low base, and you covered some years yourself as a gig worker, so you'll likely receive a little over 40% of your final monthly pay.",
+    "scenes": [
+      "Your first month of retirement you still wake up at seven. You go down, take a turn around the estate, and wash out the strays' bowls.",
+      "Short of hands at Spring Festival, the youngsters at the branch call to ask if you could help for three days. You take only buildings with elevators: three homes, all old cats.",
+      "The pension covers daily life, though covering the cat's vet bills is another matter. Your largest expense now is still your own cat, well into its teens.",
+      "After you stopped riding, for a long time you couldn't stand the sound of a scooter alarm. It made you reach for the dispatch app.",
+      "You help the neighborhood committee write a pet-keeping notice and post it in the elevator. The first line reads: before you leave, tell someone where it hides.",
+      "Your back slowly improves and you can sit a whole afternoon in a teahouse. A neighbor's dog knows you, and wags at you from half a street away.",
+      "In your first week at the new job, walking past a building after work, your hand went on its own to the shoe covers in your pocket, and you remembered that you didn't need them.",
+      "Old clients sometimes send a message asking if you remember that cat. You remember. You remember which brand of litter it hated.",
+      "At a get-together with old colleagues everyone competes over whose knees are worst. You bring up the cat that wouldn't show its face in three visits. Everyone at the table has had one of those.",
+      "You go traveling yourself and leave your cat with a young person. You write two full pages of instructions, and delete half.",
+      "Passing through Yulin, you see that the old block has had an elevator added. You stand downstairs and try to add up all those floors, and you can't."
+    ],
+    "closing": {
+      "retire": "In the evening you sit on the balcony with your old cat lying across your foot. She doesn't need weighing or photographing, and no one needs to be told that the door is locked.",
+      "burnout": "Your window is open a crack, just enough for a cat to put its head out. In spring, the osmanthus and the hotpot downstairs drift up together.",
+      "end": "You still look down at the floor as you come in. There's nothing there, only one pair of shoes, and next to them, the cat who's been waiting for you."
+    }
+  }
+}

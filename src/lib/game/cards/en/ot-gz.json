@@ -1,0 +1,191 @@
+{
+  "id": "ot-gz",
+  "occupation": "Occupational Therapist",
+  "role": "Occupational Therapist (Rehabilitation Therapy Technician)",
+  "headline": "A rehabilitation graduate in the occupational therapy room of a Guangzhou rehabilitation hospital, teaching people to use chopsticks again, do up their buttons, and go back to work",
+  "unit": "Occupational therapy department of a Guangzhou rehabilitation hospital",
+  "unit_type": "Specialist rehabilitation hospital",
+  "city": "Guangzhou",
+  "city_tier": "Tier-1 city",
+  "education": "Bachelor's degree (Rehabilitation Therapy, occupational therapy track)",
+  "level": "You can score a Barthel index; you can't yet follow the old ladies' Cantonese",
+  "intro": "You studied rehabilitation for four years. Most of your classmates chose physical therapy and you chose occupational therapy, because a teacher once said: we don't treat hands, we get a person back to living their life. The treatment room at this Guangzhou hospital has modeling clay, pegboards, a mock kitchen, and a wall covered in photographs of workers. From today your job is to keep people company while they learn the most ordinary things all over again.",
+  "salary_note": "Estimate: a public rehabilitation specialist hospital in Guangzhou pays a little over the national average, about 15% more, with bonuses counted by treatment sessions.",
+  "facts": [
+    { "label": "Rehabilitation Therapy Technician (current level)", "value": "0-3 years, ¥5,000–7,500 a month (national average, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Rehabilitation Therapist (3-8 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Guiding patients by hand through dressing, eating and toileting", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Scoring Barthel, FIM and other functional assessments and writing the reports", "source": "AI exposure" },
+    { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "The treatment room lights go on. You clip today's schedule to your board: fourteen sessions from eight to five, forty minutes held back at noon.",
+    "First is Uncle Chen, post-stroke, who wants to use chopsticks by himself. You fit a length of soft tubing on a pair and set out ten peanuts. When he lifts the first one, there is sweat on his forehead.",
+    "You practice putting on a cardigan with an old lady: which arm goes first, three times over. She says something in Cantonese, and the family member at the next bed laughs and translates: she says you're too young.",
+    "The worker with the hand injury comes in. You adjust his splint and have him squeeze the gauge. When he's done he asks: can I go back to the factory next month? You look at the numbers and say, keep practicing.",
+    "Afternoon in the mock kitchen. A man is practicing chopping while you stand by and do nothing. He cuts very slowly. The hardest thing in this half hour, actually, is keeping yourself from helping.",
+    "Team meeting with the rehabilitation physician and the physical therapist. You say what this patient wants most is to use the toilet alone. The doctor nods and writes it into the goals.",
+    "A family member pulls you aside to ask whether to buy that ¥30,000 nursing bed for home. You take out paper and have her draw the bathroom door and the steps at home.",
+    "Notes done, you bend to clear the pegboards and your back aches a little. On Metro Line 3 you watch an old man slowly buttoning his shirt, and you look twice."
+  ],
+  "ladder": [
+    { "title": "Rehabilitation Therapy Technician", "stage": "Getting started", "focus": "Assess and train under a senior, with a dozen-plus sessions a day; pass the junior rehabilitation therapy qualification to move up" },
+    { "title": "Rehabilitation Therapist", "stage": "Independent", "focus": "Manage a group of patients on your own: ADL training, hand function, splints; the mid-level title needs an exam and papers" },
+    { "title": "Supervising Therapist", "stage": "Teaching", "focus": "Train interns, lead case conferences, run return-to-work and home modification programs" },
+    { "title": "Associate Chief Therapist", "stage": "Leading a specialty", "focus": "Lead a subspecialty, introduce new techniques, write projects, set plans jointly with rehabilitation physicians" },
+    { "title": "Chief Therapist", "stage": "Leading the discipline", "focus": "Manage discipline building, quality control and outside training, and make the department's name in the field" }
+  ],
+  "ai_tasks": [
+    { "name": "Guiding patients by hand through dressing, eating and toileting", "how": "AI can't help with the work of the hands: where the patient's hand goes, when to steady them, when to let go, all depend on a therapist standing beside them, watching and touching. At most AI records the movements." },
+    { "name": "Measuring hands and making splints from low-temperature thermoplastic", "how": "The material must be molded on the hand, trimmed and tried on, watching how skin and joints respond. AI can suggest common splint types; making it still takes hands." },
+    { "name": "Scoring Barthel, FIM and other functional assessments and writing the reports", "how": "AI can record during assessment, tally scores and draft the report. How the patient actually performs, and whether what the family says matches what you see, are for the therapist to judge." },
+    { "name": "Drafting occupational therapy goals and training plans", "how": "AI can draft plans from the diagnosis and assessment and look up guidelines. What this patient most wants to do at home, and what home is like, must come out in conversation and be decided by the therapist." },
+    { "name": "Home environment assessment and age-friendly modification advice", "how": "AI can mark threshold and grab-bar problems from photos and floor plans and list changes. Going to see the real routes through the home and talking it over with the family takes a person." },
+    { "name": "Writing treatment notes and tallying sessions and billing items", "how": "AI can generate treatment notes from speech and the schedule and check billing items and session counts. The therapist only confirms and signs." }
+  ],
+  "events": {
+    "e1": "Your first thermoplastic splint: the sheet went soft in the water and your hands went stiff. You trimmed it three times and it still pressed on the web of the patient's thumb. Your teacher picked up the scissors and had you watch how her wrist turned.",
+    "e2": "After three months of Cantonese you can understand m goi and mou lik. The first time Uncle Chen says to you, thanks a lot, youngster, you are happy all day.",
+    "e3": "One worker's hand function hasn't improved, and he has sat silent in the treatment room for weeks. Today he threw the pegboard, then picked it up. You said nothing, sat across from him, and set the board back in place.",
+    "e4": "Before going home an old lady put on a zip-up jacket by herself, her daughter filming from the doorway. You pretended to be looking down at your notes. You always pretend not to watch these things.",
+    "e5": "The department pays by session, fifteen or sixteen a day, half an hour each. You want to stay and work a little longer with one patient. The next one on the schedule is already at the door.",
+    "e6": "A family member complained that after two months the hand wasn't better, so why keep paying. You brought out the assessment records and went through it with the doctor for half an hour: where it started, where it is now.",
+    "e7": "Treatment notes can be dictated now, and AI generates them and tallies scores fast. You write for one hour less each day. That hour is quickly taken up by two more sessions on the schedule.",
+    "e8": "AI drew up a beautiful training plan for an old woman, every item correct. She only said one thing to you: she wants to go home and make soup for her grandson. You turned the plan over and wrote another.",
+    "e9": "Years of bending and supporting people, and your own back now needs treatment. A colleague releases it for you and says as he works: an occupational therapist's back is on loan.",
+    "e10": "A Hong Kong occupational therapy supervisor comes once a month to read the goals you've written, and asks one thing: is this the therapist's goal or the patient's? You went back and rewrote ten of them.",
+    "e11": "You went back with an electrician to his factory to see how high his job climbs and how heavy his tools are. When his boss had heard your advice, he moved him to a line with no ladders.",
+    "e12": "You bought a small two-bedroom in Baiyun District, fifteen minutes' walk from the subway. All these years' savings went into it. You started bringing your own lunch.",
+    "e13": "You put two grab bars in your grandmother's bathroom and made a ramp over the threshold. She says it's a waste of money. At night, getting up, her hand stays on that bar.",
+    "e14": "Medical insurance has tightened, and several occupational therapy items have fewer covered days. Some patients have to go home early, and you write them detailed home practice sheets.",
+    "e15": "Your hand function subspecialty presented at the provincial society meeting, and the first slide was the wall covered in workers' photographs.",
+    "e16": "A patient from years ago comes by, here on some business for his son, and stops to see you. With that hand he carries a bag of oranges, and sets it on your desk. Steadily.",
+    "e17": "The hospital sent you to talk about fall prevention in the community, and thirty-odd old people came. The slides you prepared went unused. Everyone wanted to know how to choose slippers.",
+    "e18": "An intern you train says she plans to do pediatric sensory integration after graduation, for twice the pay. You say that's good and look over her resume. That afternoon you wash the treatment room's pegboards one extra time.",
+    "e19": "Home rehabilitation robots and hand exoskeletons have come into the treatment room. The young ones pick them up fast. You keep getting called over: the patient won't use it, and won't say why.",
+    "e20": "You've begun applying what you've taught to yourself: steady first before you rise, two hands to lift. After work you write it into the handouts for new staff."
+  },
+  "choices": {
+    "c1": {
+      "title": "Help or don't help",
+      "situation": "A man has been working for twenty minutes and can't do up his first button. His family, eyes red, says just help him this once. You know that helping makes today easier, and next time he will be less willing to try.",
+      "options": [
+        { "label": "Don't, switch to larger buttons and keep on", "result": "He loses his temper and the family complains. Three weeks later he does it up himself and says not a word." },
+        { "label": "Help him, let him catch his breath", "result": "Everybody relaxes. You write the level of assistance in your notes, one grade more than last week." }
+      ]
+    },
+    "c2": {
+      "title": "Take the Rehabilitation Therapist exam",
+      "situation": "The junior qualification exam has collided with the department's rotation assessment. You have to study, your dozen-plus sessions a day won't shrink, and the director says next year's rotations go first to those with the certificate.",
+      "options": [
+        { "label": "Take it, study room after work", "result": "You memorize anatomy on the subway, your hand tracing muscle origins and insertions, and the person beside you edges away a little." },
+        { "label": "No rush, get the hands right first", "result": "You make many more splints, and your feel for it keeps improving. The certificate slides to the following year." }
+      ]
+    },
+    "c3": {
+      "title": "Learn AI assessment and remote follow-up?",
+      "situation": "The hospital will pilot AI motion-capture assessment and remote home follow-up, with therapists helping set the standards. This work is extra, doesn't count as sessions, and will swallow a good many of your afternoons.",
+      "options": [
+        { "label": "Join the pilot", "result": "You watch thousands of clips of movement and learn which compensatory motions the machine always misjudges." },
+        { "label": "Stay out, keep the time for patients", "result": "Your patients all feel you aren't in a hurry. When the standard comes out, none of your ideas are in it." }
+      ]
+    },
+    "c4": {
+      "title": "An offer from a children's rehab center",
+      "situation": "A pediatric sensory-integration chain is opening a new center in Tianhe and wants you to lead the team, at twice your income. But it sells by course package, and what parents are sometimes buying is anxiety, not what their child truly needs.",
+      "options": [
+        { "label": "Go lead the team", "result": "You take Uncle Chen's photo down from the wall, put it back up, and leave.", "end": "You went to the children's center with a dozen-odd young therapists. The first thing you taught them: before you sell a package, tell the parents whether this child really needs it. The location was never the top performer because of that, and you never changed jobs again." },
+        { "label": "No, stay in adult rehab", "result": "You decline and go on training your feel for splints. That month's pay slip shows the same few numbers." }
+      ]
+    },
+    "c5": {
+      "title": "Take the Supervising Therapist exam",
+      "situation": "The mid-level exam needs preparing and a paper needs publishing. You happen to have a batch of return-to-work data to write up, but it will take dozens of evenings, your spouse is working nights, and your child is only two.",
+      "options": [
+        { "label": "Go for Supervising Therapist, paper too", "result": "You open the computer after your child falls asleep. At the defense a teacher asks if your sample is large enough. You say: I remember every one of them." },
+        { "label": "Set it aside while the kid is small", "result": "You leave on time every day and build blocks with your child at night. You catch yourself staring at his thumb and forefinger." }
+      ]
+    },
+    "c6": {
+      "title": "A master's degree in Hong Kong",
+      "situation": "A Hong Kong university offers a two-year occupational therapy master's. You would have to quit and pay your own way, with a chance of staying on as a therapist afterward. You've always felt their approach was closer to what you want. But the mortgage is still there.",
+      "options": [
+        { "label": "Quit and go", "result": "You hand in your badge and pack a box of thermoplastic and scissors.", "end": "After your degree you stayed on as an occupational therapist at a care home in Hong Kong. The pace is much slower; you can spend an hour with one old person. Every month you ride the train back to Guangzhou with medicine for your parents." },
+        { "label": "No, stay and carry on", "result": "You put the prospectus in a drawer, and the next morning there are still fourteen sessions. Uncle Chen's chopsticks don't need the tubing anymore." }
+      ]
+    },
+    "c7": {
+      "title": "Apply for Associate Chief Therapist",
+      "situation": "The review needs funded projects, teaching hours and subspecialty results. The department has plenty of therapists and one slot, and the director tells you all to work it out. Your project is half done and you still need one core journal paper.",
+      "options": [
+        { "label": "Apply for Associate Chief Therapist", "result": "You redo five years of return-to-work data. The manuscript is rejected twice and published on the third try." },
+        { "label": "Put the energy into clinical work", "result": "You take on the hardest few patients. They don't know you didn't apply, and you don't mention it." }
+      ]
+    },
+    "c8": {
+      "title": "Extend services into the community?",
+      "situation": "You propose taking occupational therapy into communities and factories, visiting people after discharge. The hospital doesn't object, but there is no billing item and no staff. If you want it done, you'll have to find the money and the people yourself.",
+      "options": [
+        { "label": "Do it, get two communities running", "result": "You spend more than half a year negotiating with neighborhood offices and unions. When the first home visits begin, you go yourself, tool case on your back." },
+        { "label": "No, hold quality within the hospital", "result": "The department's indicators are steady. An old person discharged six months ago falls again and comes back. You stand by the bed for a while." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you wash the pegboards and clay and put them back in the cupboard. For more than thirty years you have kept thousands of people company as they learned again to lift chopsticks, tie shoelaces, climb stairs. Once they went home they mostly never thought of you again, which is just the result you wanted. The photographs on that wall have changed several times. You touch the wall and go.",
+    "burnout": "Your back and wrist have finally given out ahead of your patients'. Your schedule keeps getting shorter, and at last the director tells you to rest. You write very detailed training sheets for your last few patients and hand them to a colleague. On your way out, you try doing up your jacket's button with one hand. It closes."
+  },
+  "stages": [
+    "You go patient by patient with your teacher: scoring Barthel and FIM, filling in the forms, training people to dress, eat and transfer. In your hands are a gait belt, pegboards, elastic tubing and a schedule written full. Relatives often call you as though you were a care aide, and you have to work out who can help and who should let go.",
+    "You manage ten or so patients yourself, from assessment to goals to discharge advice. You make splints from low-temperature thermoplastic, track progress with grip and pinch gauges, and speak for the patient at team meetings. Unlike before, you now decide what a person practices and what they don't, and you face it alone when progress stops.",
+    "Besides your own patients you train interns, lead case conferences and correct goals others have written. Return-to-work assessment for injured workers is yours: going to the factory to see the job, negotiating reassignment with HR, issuing functional capacity reports. When you speak to a rehabilitation physician now you can say a thing in such a way that he changes the order.",
+    "You lead several therapists in the hand function subspecialty, setting assessment processes, introducing new techniques, writing project applications and ethics documents. You discuss with the head of hand surgery when to begin movement, negotiate equipment trials with manufacturers, and handle the team's bonuses and moods. There is less treatment in your hands and more time with case files.",
+    "You oversee the whole occupational therapy discipline: how to develop people, how to do quality control, how to get into communities and factories. You lecture at the provincial society, train sister hospitals, and go explain to the medical insurance bureau why an item is worth its price. You still keep one morning of clinic. That one you won't give up."
+  ],
+  "work": [
+    "You practice bed-to-wheelchair transfers with Auntie Huang, the gait belt tight. When her foot isn't placed right, you call a stop. Your teacher watches from the side, nods, and doesn't step in.",
+    "You score a modified Barthel for an old man who says he can bathe himself. A relative behind him shakes her head. You put a question mark on the form and ask the nurse the next day.",
+    "Before going home you practice making splints in the treatment room and ruin three sheets. The head nurse passes and asks what it is. You say thumb abduction. She says it looks like a dumpling.",
+    "A carpenter has injured his hand. Your dynamometer reads eighteen kilos. You have him grip a hammer handle to try it. He squeezes and says the weight is wrong, so you swap in his own.",
+    "At the team meeting Little Zhao from physical therapy says walking first. You say what this auntie needs most urgently is the toilet. The physician looks at the FIM sheet and tells you to schedule it together.",
+    "You modify the palm support of a splint for a bun maker so he can pinch pleats. At his follow-up he brings a bag of buns, the pleats wobbly. You count. Eleven.",
+    "You visit a factory in Huangpu to see the job and time material handling with a stopwatch. HR says they have no light duty here. With the functional capacity report in hand, you walk the workshop again.",
+    "Intern Little Zhong writes the goal as improve upper limb function. You strike it in red and have her go ask the patient what they want to do once they're home, and write it again.",
+    "On a home visit to an old man in Panyu you measure the bathroom door with a tape and find a wheelchair won't fit. You and his son talk about moving the frame out ten centimeters.",
+    "The head of hand surgery says start moving soon. You say the tendon needs another week. Standing at the nurses' station you spread out the surgical record and assessment and work out an early motion timetable.",
+    "On page nine of the ethics application the research office sends it back: the consent form is too technical. You read it to the cleaning auntie, and what she understands, you keep.",
+    "The bonus sheet is out and Little Wu is well behind the others. You look at his treatment notes; he always runs over. You talk to him once, and change his schedule a bit too.",
+    "The medical insurance bureau asks why occupational therapy charges this price. You go with five years of return-to-work data, talk through one table for twenty minutes, and when you come back revise it again.",
+    "A county hospital wants to build an occupational therapy room. You look at the photos they send and tell them not to buy equipment yet: buy a table, a pair of chopsticks, and send someone to Guangzhou for three months.",
+    "You've started choosing the discipline's successor. You don't look at her papers but at where her hand goes when she passes water to a patient in a temper."
+  ],
+  "past": [
+    "You went to junior high in Zhanjiang. After your grandfather's stroke his right hand couldn't manage chopsticks, and your grandmother fed him at meals. After that he didn't much want to come to the table.",
+    "Filling in your gaokao (college entrance exam) choices, you paused at rehabilitation therapy. Your family asked if that was massage. Not quite, you said, you thought.",
+    "When the program split into tracks, everyone went to physical therapy. You went to the first occupational therapy class. The teacher held up an apple and asked: how many muscles does it take to peel this?",
+    "Interning in Guangzhou you first saw a patient learning to eat alone. Food fell all down his front, nobody laughed, and the therapist waited beside him.",
+    "In spring hiring a private children's center offered far more than the public hospitals. You went to hear a talk about its course packages, walked a long way when you came out, and applied to this hospital."
+  ],
+  "late": {
+    "pension_note": "Estimate: public hospital pension plus occupational annuity, retiring in Guangzhou, about 60% of final monthly pay.",
+    "scenes": [
+      "The first day of retirement you go to a teahouse for dim sum and watch the old man at the next table pick up a shrimp dumpling with chopsticks, very steady. You watch a while, and go on with your tea.",
+      "In your complex you help old neighbors work out where the bathroom grab bars should go, and they all say you're free of charge. You take your tape measure and miss no one.",
+      "You receive a picture of that bun maker's shop. It's in the second generation now, and his first steamer's photo still hangs at the door.",
+      "You have begun using a cane yourself. The therapist is a student of a student of yours, and she tells you to steady yourself first. You say: yes, yes.",
+      "You take a very long leave and get your back some way toward recovered. The first thing each morning is to sit on the edge of the bed and get up slowly, as you taught.",
+      "You volunteer at a community seniors' center once a week, teaching fall prevention. Everyone calls you teacher, and you do it sitting down.",
+      "Your wrist reacts whenever the weather changes. You make yourself a little splint. The skill is still there, only much slower.",
+      "You've left the old treatment room and your hands still can't keep idle. Seeing people's gestures on the subway, you can't help thinking: the thumb is working wrong.",
+      "An old patient tracks you down and asks what to do about a broken splint. You say you aren't there anymore, then ask him: can your hand open now?",
+      "You take your child to Guangzhou and pass the gate of that hospital. Your child asks what you did in there. You say: taught people how to eat. Your child laughs.",
+      "When you shop, you always check first how high the threshold is, how wide the turn, whether a wheelchair could get in.",
+      "One pair of chopsticks at home still has a piece of old soft tubing on it. Nobody uses them. You haven't thrown them out either."
+    ],
+    "closing": {
+      "retire": "Toward evening the shadow of the banyan falls long below the window. An old person goes slowly past holding the rail. You don't go over. You just watch.",
+      "burnout": "Afternoon sun falls on your hand. You spread your fingers one at a time and slowly close them. This counts as practice.",
+      "end": "You tie your shoes and stand up, without having to think. You think about that, smile a little, and go out."
+    }
+  }
+}

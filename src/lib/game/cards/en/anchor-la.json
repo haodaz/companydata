@@ -1,0 +1,159 @@
+{
+ "id": "anchor-la",
+ "occupation": "Broadcast Announcer",
+ "role": "Announcer and host at a county media center (Announcer, Grade 2)",
+ "headline": "A broadcasting graduate back home in the Dabie Mountains, reading the county news, hosting the noon radio hour, and hauling a tripod to the tea hills to sell tea on livestreams",
+ "unit": "The media center of a county in the Dabie Mountains near Lu'an, Anhui (TV, radio, county paper and social accounts on one floor, about forty staff)",
+ "unit_type": "County media center",
+ "city": "A county near Lu'an",
+ "city_tier": "County town",
+ "education": "Bachelor's in broadcasting and hosting",
+ "level": "Your Mandarin certificate is Grade 1B, the level broadcasters need, and you read news copy steadily. After one year in the studio you still flinch when the teleprompter stops. You've done fewer than ten live remotes, and understand about half the local dialect.",
+ "intro": "The studio is on the third floor: a green screen, two lights, one desk, and behind you a “blue sky over the county town” keyed in by computer. You studied announcing for four years in the provincial capital. On your first day back, the veteran anchor sets a script in front of you, points at the first line and asks: how do you say this place name? You say Liu. She shakes her head. The Liu in Lu'an is pronounced Lu, here and nowhere else. Starting today, when people in this county turn on the TV at night, you are what they see.",
+ "salary_note": "Estimate: county media pay on the public institution scale with very small bonuses, well below the national figure, so 0.6.",
+ "facts": [
+  { "label": "Announcer, Grade 2 (current level)", "value": "0–4 years, ¥5,270–7,750 a month (national average, estimated from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Announcer, Grade 1 (4–10 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥18,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Reporting and interviewing on location", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Reading news, weather forecasts and other scripted copy", "source": "AI exposure" },
+  { "label": "Open positions", "value": "2 related listings nationwide, 0 in this city (the database leans toward campus hires and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Voice practice by the stream behind the building. You run through tongue twisters. The old man doing his morning exercises across the water nods at you, long used to it.",
+  "The editorial meeting. The director reads the day's list: a county meeting, two items from townships, one from a tea garden. You get your scripts and check names and titles again first. One wrong character is a serious matter.",
+  "Out to the villages. You and the cameraman Xiao Wang drive an old van up the mountain and set up a tripod beside a tea garden. You talk to the lens while the tea growers behind you shyly turn their backs.",
+  "Noon radio, twenty minutes: weather, vegetable prices, notices. You read a village's water shutoff notice a little slower. Most people in that village are getting on in years.",
+  "Voice-over. You narrate a county promotional film. The director says: make it grand. When you finish he says: a little warmer.",
+  "The makeup room is really a closet. You touch up your powder in front of a mirror with lights, and a colleague comes by with a boxed dinner to ask how long tonight's script is.",
+  "Recording the evening county news, fifteen minutes. The teleprompter operator runs half a beat fast. Your eyes don't move. You hold your breath down and catch up.",
+  "You cut today's location shoot into a vertical clip and post it on Douyin, the Chinese TikTok. You rewrite the title four times. By bedtime it has 327 views."
+ ],
+ "ladder": [
+  { "title": "Announcer, Grade 2", "stage": "On air", "focus": "Read, voice over and work the villages. You have to report, edit and announce on your own, and you move up by not making mistakes and being able to take on anything." },
+  { "title": "Announcer, Grade 1", "stage": "Lead host", "focus": "You anchor the county news and host big events. You start training newcomers and need award-winning programs and a paper." },
+  { "title": "Senior Announcer", "stage": "Head of announcing", "focus": "Run the announcing department and approve hosts for major county events. Very few in the county reach this level." },
+  { "title": "Chief Announcer", "stage": "Elder of the field", "focus": "The top professional title. They can be counted across the whole province, and a county may go many years without one." }
+ ],
+ "ai_tasks": [
+  { "name": "Reading news, weather forecasts and other scripted copy", "how": "AI voices can already read routine copy and weather clearly. People handle tone and judgment for major or breaking news, take responsibility with their names, and spot-check pronunciation and intonation." },
+  { "name": "Studying scripts and understanding what the director wants", "how": "AI can summarize the main points and mark rare characters and difficult passages. A person has to talk to the director and truly understand what the program wants to say and where the feeling lands." },
+  { "name": "Writing links and hosting scripts", "how": "AI can quickly produce first drafts and multiple versions. A person changes them into their own voice, adds real feeling and on-the-spot judgment, and checks the facts." },
+  { "name": "Reporting and interviewing on location", "how": "Location work means observing on the spot, improvising, following up and winning people's trust. AI can at most look things up, draft question outlines and transcribe afterward." },
+  { "name": "Hosting live or recorded programs and controlling the pace", "how": "Handling surprises on air, working with guests and the director, and keeping the rhythm depend mainly on a person. AI can supply prompts and look-ups." },
+  { "name": "Hosting galas and major events", "how": "Galas depend on atmosphere, audience interaction and improvisation, and the person is the core. AI can help with run-of-show documents, first-draft links and research." },
+  { "name": "Daily training of the voice and delivery", "how": "AI can analyze articulation, pace and phrasing in a recording and give feedback. You still have to practice and feel it yourself to develop your voice and style." },
+  { "name": "Taking part in program reviews and improving from feedback", "how": "AI can gather audience feedback, data and problem clips. A person hears the reviewers' opinions, judges what to change and really changes how they speak." }
+ ],
+ "events": {
+  "e_wrong": "You say one character of a township's name wrong, and it isn't fixed until just before the rebroadcast. Next morning the director says nothing and puts that script on your desk.",
+  "e_teacher": "The veteran anchor listens to you and says every word was right, and not one of them was said to a person. She has you read the script to the old man at the front gate until he understands it.",
+  "e_tea": "Around Grain Rain, in the middle of April, you sell Lu'an Melon Seed tea on a livestream from the tea hills, standing from dawn to dark. An old grower presses a handful of just-roasted leaves into your hand. Your voice is gone for three days, and a good many orders come in.",
+  "e_flood": "Flood season. The reservoir opens its gates and you do a live remote below the dam in a raincoat, rain hitting the microphone, your voice required to stay steady. You run a fever for two days afterward.",
+  "e_viewer": "An old woman up in the mountains phones the center to say she only learned from your radio program that this year's medical insurance payment was due. She tells you not to tire yourself. You sound a little hoarse.",
+  "e_voice": "A small growth appears on your vocal cords, and the doctor orders two weeks of silence. You pass notes around the office. Your colleagues lower their voices too, as if it were catching.",
+  "e_wedding": "A classmate asks you to host his wedding, and the hotel owner, impressed, asks if you take weekend work. One event pays as much as several days at the station.",
+  "e_gala": "The Spring Festival village gala, with a stage on the threshing ground, several degrees below zero, and you in thin formal wear announcing the acts. A small child forgets the words. You walk over, crouch down and hold out the microphone.",
+  "e_ai_weather": "The weather forecast switches to an AI voice trained on samples of yours. You don't have to read a word. You listen once. The rhythm is very like yours, except that it doesn't breathe.",
+  "e_ai_check": "The center rules that AI-read news briefs must be reviewed by someone. You sit in the machine room with headphones on, correcting each place name it gets wrong, and saying it one more time: Lu.",
+  "e_ai_outline": "AI turns out three versions of an event script in a minute. You pick one and rewrite it in your own words, and when you get there most of it is no use.",
+  "e_merge": "The center changes its bonus scheme, and story counts and Douyin numbers now score points. You begin writing and cutting your own pieces, and every month you look for your name on a sheet.",
+  "e_ageing": "A supervisor gently brings up the question of appealing to younger viewers. The following week you have two fewer nights on the evening news roster.",
+  "e_cold": "Heavy snow closes the road up the mountain and the van can't get through. You and Xiao Wang walk two hours and bring back the story. Your shoes spend the night on the radiator.",
+  "e_mom": "Your mother turns on the county news punctually every night. When you finish she sends two words: I watched. In over ten years she has never added a third.",
+  "e_newbie": "The new young woman says Lu'an with a Liu. You think for a moment, point at the script and ask her: how do you say this place name?",
+  "e_viral": "Someone clips your weather warning in dialect and posts it, and fellow locals working far away flood the comments. For a few days the whole office is watching your account.",
+  "e_relief": "The noon radio show, stopped for some years, is brought back. Someone wrote in to say that in the mountains the signal is bad and a radio is still what you can count on.",
+  "e_eyes": "The teleprompter's letters have gone up two sizes, and nobody else knows. After all these decades, you can see how some scripts end from how they begin.",
+  "e_room": "The studio gets an LED wall and the green screen comes down. You keep a small piece, fold it and put it in a drawer, without really knowing why."
+ },
+ "choices": {
+  "c_staff": { "title": "Contract staff, or sit the state exam", "situation": "You're contract staff at the center. The exam for a permanent state post has a written test, and studying means giving up half your village work. The director says that with or without a post, promotion later is a world apart.", "options": [
+   { "label": "Study for the exam", "result": "You read general knowledge after work for six months and pass. A few more lines of small print appear on your pay slip." },
+   { "label": "Keep working on location", "result": "You go on carrying the tripod up the mountains. After a year you could describe every road in the county with your eyes closed." }
+  ] },
+  "c_rank1": { "title": "Applying for Announcer, Grade 1", "situation": "Promotion to Announcer, Grade 1 needs work samples and an award. There is a citywide news contest. You could enter a safe program the veteran anchor has already vetted, or the one you shot yourself on old people in the mountains, rough but true.", "options": [
+   { "label": "Enter the safe one", "result": "It takes second prize. The certificate goes into the folder and the points add up." },
+   { "label": "Enter the old people", "result": "The judges say the camera shakes, and there is no prize. The film goes on circulating in the county's WeChat feeds for a long time." }
+  ] },
+  "c_kids": { "title": "Opening a children's speech class", "situation": "Parents in the county will pay for their children to learn announcing. A few classmates run speech classes that earn several times a salary. A friend wants you as a partner, full time. You'd have to resign.", "options": [
+   { "label": "Resign and open it", "result": "You rent two classrooms on the second floor over the shopping street, and your photo from TV goes on the sign.", "end": "You opened your children's speech class, and one summer's income matched last year's whole salary. Children chant tongue twisters together in your classroom. When you correct a nasal ending, you always think of that Lu." },
+   { "label": "Teach on weekends", "result": "You only fill in on weekends, and the station looks the other way. You earn a bit more, and have no more weekends." },
+   { "label": "Say no", "result": "You thank them. That weekend you sleep until nine." }
+  ] },
+  "c_city": { "title": "A chance at a station in Hefei", "situation": "A lifestyle channel in the provincial capital wants a host: a contract with somewhat better pay and more of the world, but renewed yearly, with no permanent post. Your parents don't want you to go.", "options": [
+   { "label": "Stay in the county", "result": "You send your reply. That evening, reading the county news, you feel life is more or less taking shape." },
+   { "label": "Go to Hefei", "result": "You move to Hefei. Your show reruns in the small hours.", "end": "You went to Hefei and, after the channel changed direction several times, moved into voice-overs and event hosting. When you go home for New Year someone recognizes you and talks about those years of evening news." }
+  ] },
+  "c_ai": { "title": "Who runs the AI anchor project", "situation": "The center is putting an AI anchor on news briefs and wants you to lead it, teaching it local place names and reviewing its copy. Taking it means personally teaching it your job. If you don't, someone else will.", "options": [
+   { "label": "Take it on", "result": "You give it a pronunciation list of eight hundred place names, and it gets better and better. You go from being the one who reads to being the one who listens." },
+   { "label": "Focus on location work", "result": "You pass the project to the tech department. While you interview on the mountain, it reads what you used to read." }
+  ] },
+  "c_gov": { "title": "A county department wants you", "situation": "A county department needs someone to write reports and run events and wants to transfer you, with civil-servant-type status. Stable, and no more on-camera work.", "options": [
+   { "label": "Stay at the station", "result": "You decline. The next day's remote finds you standing on a muddy road." },
+   { "label": "Transfer", "result": "You begin writing scripts for other people to read.", "end": "You transferred to the county department and spent many years on reports and events. When someone says a place name wrong at a big meeting, a very slight frown crosses your face, down in the audience." }
+  ] },
+  "c_rank2": { "title": "Applying for Senior Announcer", "situation": "There are only one or two Senior Announcer slots in the whole city. You need papers and to lead a team. The head of announcing is retiring too, and taking that job would mean much less time on camera.", "options": [
+   { "label": "Take the department", "result": "You start doing rosters, audio reviews and meetings, and give up your on-camera slots to the young." },
+   { "label": "Stay on camera", "result": "You recommend a colleague. On the next remote, you are out in the rain again." }
+  ] },
+  "c_family": { "title": "Your child's middle school", "situation": "Your child is starting middle school, and schools in Lu'an city are better. Your spouse is willing to go along. You would stay in the county and see them once a week, or move to the city station and start over.", "options": [
+   { "label": "Commute", "result": "You ride Friday's last bus for six years. Your child learns to say tongue twisters over the phone." },
+   { "label": "Study in the county", "result": "Your child goes to the county school, and you still make it home for dinner. Nobody in the family says much about grades." }
+  ] }
+ },
+ "endings": {
+  "retire": "At the last evening news you read the sign-off and pause one second longer than usual. In your headphones the director says: okay. You coil the mic cable. There is half a cup of herbal tea on the desk. When you get downstairs it is dark, and a TV by the road is on, showing the next program.",
+  "burnout": "Year by year your voice grew less obedient, and the doctor and your boss said the same thing. You left the anchor desk and went to the archive to look after the old tapes and audio. Sometimes someone comes in looking for a decades-old news item, and you can say at once what year it was and who read it."
+ },
+ "stages": [
+  "What you do all day is read, dub and run. In the morning you mark stresses and pauses on your script, later you take the tripod to the villages with Xiao Wang, in the afternoon you're in the voice booth, and at night you record the county news. The veteran anchor listens to your playback and circles things in pencil. Cameramen and editors have seniority; you call them teacher before speaking, and your phone holds the correct pronunciation of every township.",
+  "The evening anchor desk is yours now, and your turn comes up to host the county's big events. You write your own links, go over the rundown with the director, and before opening you go backstage to confirm the order of speakers with the officials. You have a young apprentice whose playback you listen to and whose script you mark. Unlike before, you are responsible for words someone else says.",
+  "The announcers' roster and the review sheets are yours now. Mornings you sit on the editorial board, afternoons you review the AI briefs and young people's pieces, and for big events you choose the hosts and set the running order. When the county has guests, you are often the one sent out. You are on camera less, think more before you speak, and every sentence has to take care of many layers of people on stage and off.",
+  "The province asks you to judge at announcing reviews, and young people need your recommendation for their papers. You run a Mandarin training course in the county, teaching township officials and teachers. You appear on the evening news only a few times a year, when something big has happened. Viewers hear your voice and know there's news today."
+ ],
+ "work": [
+  "The editor Lao Fang rewrites a story for the third time and hands it over nine minutes before air. You mark three breaths in red. Your hands are still cold when you enter the studio.",
+  "A township official asks you to stand beside the newly paved road and say it again, smiling this time. Xiao Wang lowers the camera. You say it again to a duck walking by.",
+  "The first time you voice a promotional film, the recording engineer Lao Sun turns down your headphones and says: don't listen to yourself, listen to the script. That line takes you seven tries.",
+  "The hosting script for a big county meeting arrives with five changes to the order of names. You go through it line by line against a ruler, and give the final version to the director ten minutes before the start.",
+  "Your young apprentice reads the farm news as if it were an obituary. You send him to the market to buy vegetables, then have him read it again. He laughs, and the second go is half better.",
+  "During a TV gala the lighting man cues the wrong light. You keep talking in the dark for a dozen seconds while the next act quietly walks on behind you.",
+  "Xiao Wu from the tech department turns the AI brief review into a table. You add a column: “whose grandparents listen.” He pauses a moment and doesn't delete it.",
+  "Three young hosts compete for the evening news, all good. You spend an afternoon listening to the three playbacks, then hand in the score sheet with two lines of reasons.",
+  "The county's investment fair wants to bring in a host from the provincial capital, at a good price. You do the arithmetic for the director, tell him your own Xiao Li can do it, and put her reel on his desk.",
+  "At a provincial review, a young host's piece has a low technical score. In the comments column you write: people would listen to this voice. And you raise the mark two points.",
+  "In your course for township officials, an old village Party secretary can't get his retroflex sounds right. You say no need to fix them, and ask him to say what he actually wants to say into the loudspeaker. It sounds right on the radio.",
+  "The county gazetteer is adding a chapter on broadcasting, and Lao Wei from the office comes to check the years with you. You pull several broadcast logs from a cabinet, their corners curled."
+ ],
+ "past": [
+  "At the county high school the broadcast club was recruiting, and a teacher had you read a passage. Nice voice, she said, but your front and back nasals are mixed up. You went home and practiced with a mirror for a month.",
+  "Art exam training was in Hefei and expensive, and your parents sold a season's tea to pay for it. It was the first you heard that a sentence divides into breath, articulation and feeling.",
+  "Between the gaokao (college entrance exam) and the art exams, you got into a broadcasting and hosting major at a college in the provincial capital, the second person from your village to attend a four-year college.",
+  "In your third year you interned at the city station and mostly bought boxed lunches and carried mic cables. Your supervisor said that if you can say people's names right, you're ahead of a lot of people.",
+  "At graduation, hosting jobs in the capital all had long trial periods, and classmates went to livestream companies. You earned your Grade 1B certificate and applied at the media center back home.",
+  "Your first year, you read weather forecasts and radio notices, and practiced the names of all the townships in the county one by one. Up on the tea hill, your father worked with the radio on."
+ ],
+ "late": {
+  "pension_note": "Estimate: public institution pension plus occupational annuity, about seventy percent of final monthly pay.",
+  "scenes": [
+   "On your first evening without work, you turn on the county news at seven anyway. The young reader takes a breath in not quite the right place. You put the remote down and don't say a thing.",
+   "The community college for seniors asks you to teach recitation, and your class is all older than you. You teach them how to breathe, and they teach you how to handle a grandchild.",
+   "The stallholder at the market still calls you the host and adds an extra handful of greens. You tell him not to. He says he has been listening to you for years.",
+   "A new road has been cut into the mountains. Riding up, you pass the tea garden where you once stood. That tree is still there. You ask the driver to go a little slower.",
+   "The archive's tapes are being digitized and every day you listen to your old self. The young voice is very bright and a little in a hurry.",
+   "After a few years of rest for your voice, you speak much more slowly. It's better this way, your spouse says, you can be understood.",
+   "Sometimes you judge an elementary school reading contest and write one line for each child. What you write most often: very good, a little slower.",
+   "After you changed jobs, you kept looking up at the clock around six in the afternoon, then remembered there was no script tonight.",
+   "Back in the county on an errand, the young clerk at the counter hears you speak and looks up: weren't you on TV?",
+   "A clip of old footage goes around your former colleagues' chat group: you and Xiao Wang on the tea hill. You were both very thin then, and the wind was strong.",
+   "In tea season your brother mails a tin of new leaves from the mountain, with a crooked handwritten label. You steep some and breathe it in.",
+   "Someone on the radio says the name of this place wrong. You correct them softly, at the radio: Lu."
+  ],
+  "closing": {
+   "retire": "The evening mist comes down from the mountain. The radio is on, very low. You don't turn it up, and you don't turn it off.",
+   "burnout": "The last reel in the archive has been transferred. You press stop, and the room stays quiet for a while.",
+   "end": "You seldom spoke to a camera after that. When someone asks what this place is called, you still say the first syllable very clearly."
+  }
+ }
+}
