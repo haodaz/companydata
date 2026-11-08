@@ -3,7 +3,7 @@
  * 每年：状态自然变化 → AI 接手某些活（职业库 · AI 替代性）→ 够年限就判晋升（职业库 · 职业地图）→ 可能停下来让人做一个重大抉择 → 随机事件 → 算月薪。
  * 随机数带种子、状态存在 Life 里，存本机就能接着玩。同年入行的人用同一套规则（不带事件和抉择）开局就推演完。
  */
-import type { Effect, GameCard, GameChoice, PeerCard, Stat } from './types';
+import type { Effect, GameCard, GameChoice, GameOption, PeerCard, Stat } from './types';
 
 export interface LogItem { y: number; age: number; text: string; kind: 'start' | 'stage' | 'work' | 'event' | 'promo' | 'choice' | 'ai' | 'end'; mood?: 'good' | 'bad' | 'plain'; source?: string; effect?: Effect }
 export interface YearRow { y: number; age: number; stage: number; salary: number; skill: number; rep: number; health: number; joy: number }
@@ -13,12 +13,16 @@ export interface Life {
   stats: Record<Stat, number>;
   salary: number; salaryMul: number; growthMul: number; promoteBonus: number; savings: number; earned: number;
   usedEvents: string[]; usedChoices: string[]; aiDone: number; usedWork?: number[];
+  staying?: boolean;   // 选了卡上标 stay 的选项（如转教学岗）：不再受非升即走限制
   pending: string | null;
   log: LogItem[]; rows: YearRow[];
   picks: { y: number; age: number; title: string; label: string; result: string }[];
   promos: { y: number; age: number; title: string }[];
   done: null | 'retire' | 'burnout' | 'end'; endText: string;
 }
+
+/** 非升即走：只有卡上写了 up_or_out 的才有。在 stage 这一级待满 years 年还没升、也没选过标 stay 的选项，这段职业生涯就结束（算转身） */
+type UpOrOut = { stage: number; years: number; end: string; end_en: string };
 
 // ── 随机数（mulberry32，状态存在 life.rng 里） ──
 function rand(l: Life) { let t = (l.rng = (l.rng + 0x6d2b79f5) | 0); t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }
@@ -78,14 +82,48 @@ function apply(l: Life, e: Effect | undefined) {
 }
 const inWindow = (l: Life, x: { from: number; to: number; minStage?: number }) => l.y >= x.from && l.y <= x.to && (x.minStage == null || l.stage >= x.minStage);
 
+const norm = (s: string) => s.replace(/\s+/g, '').replace(/\(/g, '（').replace(/\)/g, '）');
+/** 阶梯的级别名 → 认它的词：去掉空格，「/」的每种写法都算，第一种写法带简称（「主治医师」→「主治」），括号里的字也算（「验光员（三级）」「验光员三级」）。
+ *  去掉括号后几级同名（「XX 工程师（初级）/（中级）」）时，光秃秃的名字分不清是哪级，不认；没有括号的同名算最高那级。长词排前面先认 */
+function levelKeys(card: Pick<GameCard, 'ladder'>) {
+  const raw = card.ladder.flatMap((s, i) => {
+    const t = norm(s.title), inner = t.match(/（([^）]*)）/)?.[1] || '';
+    return t.replace(/（[^）]*）/g, '').split('/').filter(Boolean).flatMap((n, j) => [
+      { k: n, i, bare: true }, ...(j === 0 ? [{ k: n.replace(/(医师|护师|工程师|律师|教师|老师|师)$/, ''), i, bare: true }] : []),
+      ...(inner ? [{ k: n + inner, i, bare: false }, { k: `${n}（${inner}）`, i, bare: false }] : []),
+    ]).map(x => ({ ...x, inner: !!inner }));
+  }).filter(x => x.k.length >= 2);
+  return raw.filter(x => !x.bare || !raw.some(y => y.bare && y.k === x.k && (y.i > x.i || (x.inner && y.i !== x.i)))).sort((a, b) => b.k.length - a.k.length);
+}
+const PROMO_WORD = /(评|考|升|晋|当|成为|转正|转为|提|接|竞聘|冲|定|往)/;
+/** 文字里提到的最高一级（-1 = 没提）；长的词先认并盖掉，「副创意总监」不会再被认成「创意总监」。
+ *  strict：词前面要跟着「评 / 考 / 升……」才算在说这一级（处境里常顺带提到别的职位）；职业名里本来就有的词（「工程师」「咖啡」）太泛，题目里也要这样 */
+function mentionedLevel(card: Pick<GameCard, 'ladder' | 'occupation' | 'role'>, raw: string, strict: boolean) {
+  const occ = norm(`${card.occupation?.name || ''}${card.role || ''}`);   // 同年入行的人用的精简卡没有 occupation
+  let text = norm(raw), top = -1;
+  for (const { k, i } of levelKeys(card)) {
+    if (!text.includes(k)) continue;
+    if (!(strict || occ.includes(k)) || text.split(k).slice(0, -1).some(p => PROMO_WORD.test(p.slice(-4)))) top = Math.max(top, i);
+    text = text.split(k).join('□');
+  }
+  return top;
+}
+/** 这道题说的那一级是不是已经升上去了：题目里点了名就看题目，没点名再看处境 */
+export function choiceReached(card: Pick<GameCard, 'ladder' | 'occupation' | 'role'>, x: Pick<GameChoice, 'title' | 'situation'>, stage: number) {
+  const t = mentionedLevel(card, x.title, false);
+  if (t >= 1) return t <= stage;
+  const s = mentionedLevel(card, x.situation, true);
+  return s >= 1 && s <= stage;
+}
+
 /** 往前走一年。停在抉择上（life.pending）或结束（life.done）时不动 */
 export function step(card: GameCard, l: Life): Life {
   if (l.done || l.pending) return l;
   l.y += 1; l.age += 1; l.inStage += 1;
   // 1. 自然变化：手艺随年限涨（前几年快）、身心按单位的强度消耗、四十五岁后多掉一点
   l.stats.skill = clamp(l.stats.skill + (0.6 + rand(l) * 1.6) * card.growth * l.growthMul * (l.stage <= 1 ? 1.1 : 0.65) * (l.stats.skill > 80 ? 0.5 : 1));
-  // 身心：按单位强度消耗；掉到 40 以下人会自己调（少接班、请假、看病），多回一点
-  l.stats.health = clamp(l.stats.health - card.load * (1.6 + rand(l) * 2.6) - (l.age > 50 ? 1 : 0) + 1.7 + (l.stats.health < 40 ? 0.9 : 0));
+  // 身心：按单位强度消耗；掉到 40 以下人会自己调（少接班、请假、看病），多回一点，但强度越高越调不动
+  l.stats.health = clamp(l.stats.health - card.load * (1.6 + rand(l) * 2.6) - (l.age > 50 ? 1 : 0) + 1.7 + (l.stats.health < 40 ? 0.9 * Math.max(0, 2 - 2 * card.load) : 0));
   l.stats.joy = clamp(l.stats.joy + (rand(l) - 0.55) * 4);
   if (l.stats.skill > 60) l.stats.rep = clamp(l.stats.rep + rand(l) * 1.6);
 
@@ -104,7 +142,8 @@ export function step(card: GameCard, l: Life): Life {
     if (next >= 2) p *= Math.pow(cap, (next - 1) / 2);
     if (next >= card.ladder.length - 2) p *= 0.45;
     if (next === card.ladder.length - 1) p *= 0.22;
-    p = Math.min(p, next === card.ladder.length - 1 ? 0.05 : next === card.ladder.length - 2 ? 0.12 : 1);   // 一年里升到顶的机会封顶：熬得再久，到顶也是少数
+    // 一年里升到顶的机会封顶：熬得再久，到顶也是少数。倒数第二级的窗口会关：该升的年限过了还没升，机会一年比一年小（不然熬够年头几乎人人都到这一级）
+    p = Math.min(p, next === card.ladder.length - 1 ? 0.05 : next === card.ladder.length - 2 ? 0.11 * Math.pow(0.86, Math.max(0, Math.min(l.inStage, l.y) - needYears(card, l.stage))) : 1);   // 只算入局后的年头，开局前的资历不算错过窗口
     if (rand(l) < p) {
       l.stage += 1; l.inStage = 0; l.promoteBonus = 0;
       const s = card.ladder[l.stage];
@@ -117,14 +156,9 @@ export function step(card: GameCard, l: Life): Life {
 
   // 4. 重大抉择：窗口里的第一个，到窗口最后一年必出，平时一半概率出
   // 卡里写的抉择和规则推出来的晋升会撞：抉择说的那一级（如「评副主任医师」「考主治」）已经升上去了，这道题就不出了
-  // 匹配时：职业名里本来就有的短词不算（「咖啡师」截成「咖啡」、「测试工程师」截成「测试」会把整张卡的抉择都跳掉）；先把还没升到的级别名从题面里去掉（「馆员」别误伤「副研究馆员」）
-  const occ = `${card.occupation?.name || ''}${card.role || ''}`;   // 同年入行的人用的精简卡没有 occupation
-  const reached = card.ladder.slice(1, l.stage + 1).flatMap(s => { const full = s.title.split(/[\s/（(]/)[0]; return [full, full.replace(/(医师|护师|工程师|律师|教师|老师|师)$/, '')]; }).filter(k => k.length >= 2 && !occ.includes(k));
-  const higher = card.ladder.slice(l.stage + 1).map(s => s.title.split(/[\s/（(]/)[0]).sort((a, b) => b.length - a.length);
   if (card.choices.length) for (const x of card.choices) {
     if (l.usedChoices.includes(x.id) || !inWindow(l, x) || !x.options.some(o => o.promote)) continue;
-    let text = `${x.title}${x.situation}`; for (const h of higher) text = text.split(h).join('');
-    if (reached.some(k => text.includes(k))) l.usedChoices.push(x.id);
+    if (choiceReached(card, x, l.stage)) l.usedChoices.push(x.id);
   }
   const c = card.choices.find(x => !l.usedChoices.includes(x.id) && inWindow(l, x));
   if (c && (l.y >= c.to || rand(l) < 0.45)) l.pending = c.id;
@@ -151,7 +185,10 @@ export function step(card: GameCard, l: Life): Life {
   l.savings = Math.round((l.savings + (l.salary * 12 * 0.22) / 10000) * 10) / 10;
 
   // 7. 结束：身心撑不住 / 到退休年龄
-  if (l.stats.health <= 6) finish(card, l, 'burnout');
+  // 身心低了不一定当场倒下，但每年都可能走：身心越低、这份工作强度越高，越撑不下去
+  const uo = (card as GameCard & { up_or_out?: UpOrOut }).up_or_out;
+  if (l.stats.health <= 6 || (l.stats.health < 60 && rand(l) < ((60 - l.stats.health) / 60) * Math.min(0.3, card.load * card.load) * 0.2)) finish(card, l, 'burnout');
+  else if (uo && l.stage === uo.stage && l.inStage >= uo.years && !l.staying) finish(card, l, 'end', l.lang === 'en' ? uo.end_en : uo.end);
   else if (l.age >= card.retire_age) finish(card, l, 'retire');
   l.rows.push(row(l));
   return l;
@@ -174,6 +211,7 @@ export function choose(card: GameCard, l: Life, i: number): Life {
   if (o.promote) l.promoteBonus += o.promote === (true as any) ? 0.45 : Number(o.promote) || 0;
   if (o.salary) l.salaryMul = clamp(l.salaryMul * (Number(o.salary) || 1), 0.5, 1.6);
   if (o.growth) l.growthMul = clamp(l.growthMul * (Number(o.growth) || 1), 0.6, 1.6);
+  if ((o as GameOption & { stay?: boolean }).stay) l.staying = true;
   l.picks.push({ y: l.y, age: l.age, title: c.title, label: o.label, result: o.result });
   l.log.push({ y: l.y, age: l.age, kind: 'choice', mood: 'plain', source: c.source, text: l.lang === 'en' ? `${c.title.replace(/[?.!]$/, '')}: you chose "${o.label}". ${o.result}` : `${c.title.replace(/[？?。！]$/, '')}：你选了「${o.label}」。${o.result}`, effect: o.effect });
   if (o.end) finish(card, l, 'end', o.end);
