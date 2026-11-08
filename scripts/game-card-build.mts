@@ -21,6 +21,7 @@ function parseSalary(s: string): [number, number] {
     const raw = parseFloat(m[1]), unit = m[2] || '', per = m[4] || '';
     const after = t.slice((m.index || 0) + m[0].length, (m.index || 0) + m[0].length + 1);
     if (!unit && !per && (after === '年' || (raw >= 1900 && raw <= 2100))) continue;   // 年份
+    if (!unit && !per && raw < 100 && /^\s*(?:[-–~至]\s*\d+\s*)?年/.test(t.slice((m.index || 0) + m[0].length - (m[0].length - m[1].length)))) continue;   // 「3-5 年」「3年」这类年限（bds 装调工 11-07 被读成 3,000）
     let n = /万|w/i.test(unit) ? raw * 10000 : /k|千/i.test(unit) ? raw * 1000 : raw;
     if (/年/.test(per) || /年薪/.test(t.slice(Math.max(0, (m.index || 0) - 3), m.index))) n /= 12;
     if (n > 0) nums.push(n < 300 ? n * 1000 : n);
@@ -36,9 +37,12 @@ async function build(id: string) {
   const { data: o } = await db.from('occupations').select('id, key, name, career_map').eq('key', d.occ).single();
   if (!o) throw new Error(`职业库里没有 ${d.occ}`);
   // 职业库没有阶梯的（511 个，11-07）：草稿里按行业惯例手写 ladder_override（title / stage / years / focus，salary 可不填，按年限薪资推），出处标「行业常见」
-  const own = !(o.career_map?.ladder?.length) && Array.isArray(d.ladder_override) && d.ladder_override.length >= 3;
-  const ladder: LadderStep[] = (own ? d.ladder_override : o.career_map?.ladder || []).map((l: any) => ({ title: String(l.title), stage: String(l.stage || ''), years: String(l.years || ''), min: +(String(l.years || '').match(/\d+/)?.[0] || 0), salary: parseSalary(l.salary), focus: String(l.focus || '') }));
   const { data: sal } = await db.from('occupation_salaries').select('year, salary').eq('occupation_id', o.id).eq('if_delete', false);
+  // 库里有阶梯但有的级没薪资、也没有年限薪资时，同样用草稿手写的阶梯（北斗装调工 11-07）
+  const dbLadder = o.career_map?.ladder || [];
+  const dbNoPay = dbLadder.some((l: any) => !parseSalary(l.salary)[1]) && !sal?.length;
+  const own = (!dbLadder.length || dbNoPay) && Array.isArray(d.ladder_override) && d.ladder_override.length >= 3;
+  const ladder: LadderStep[] = (own ? d.ladder_override : o.career_map?.ladder || []).map((l: any) => ({ title: String(l.title), stage: String(l.stage || ''), years: String(l.years || ''), min: +(String(l.years || '').match(/\d+/)?.[0] || 0), salary: parseSalary(l.salary), focus: String(l.focus || '') }));
   const { data: ex } = await db.from('occupation_ai_exposure').select('tasks, new_tasks').eq('occupation_id', o.id).order('version', { ascending: false }).limit(1);
   const jd = (await db.from('jobs').select('id', { count: 'exact', head: true }).contains('related_career_ids', [o.key])).count || 0;
   const jdc = d.cityCode ? (await db.from('jobs').select('id', { count: 'exact', head: true }).contains('related_career_ids', [o.key]).eq('city', d.cityCode)).count || 0 : null;

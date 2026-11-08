@@ -1,0 +1,316 @@
+{
+ "id": "bds-assembler-cs",
+ "occupation": "Satellite Navigation Equipment Assembler and Tester",
+ "role": "Assembler and tester at a BeiDou navigation equipment factory",
+ "headline": "Two years out of vocational college, on the assembly-and-test line of a BeiDou navigation equipment factory in Changsha's Lugu tech park, tuning BeiDou receivers one by one with a satellite signal simulator and a spectrum analyzer",
+ "unit": "A navigation equipment maker in Lugu, Changsha's high-tech zone, building BeiDou terminals, timing units and high-precision receiver boards",
+ "unit_type": "BeiDou navigation equipment manufacturer",
+ "city": "Changsha",
+ "city_tier": "New Tier 1",
+ "education": "Associate degree, vocational college (electronic information engineering technology)",
+ "level": "You can assemble a vehicle or shipboard BeiDou terminal on your own, run the simulator scenarios in the test plan and fill in the test record. When sensitivity fails you check the antenna and the cables; past that, you call your master",
+ "intro": "You came out of vocational college into a BeiDou terminal factory in Lugu and spent your first year on the assembly line, driving screws and soldering wires. Now at your elbow there is a satellite signal simulator, a spectrum analyzer and a shielded box, and you tune twenty or thirty receivers a day. As of today, you are going to learn to understand why a machine can't find the satellites.",
+ "salary_note": "Estimate: an assembly-and-test job at a Changsha navigation equipment plant, base pay plus performance bonus and overtime in rush periods, lands roughly at the national figure. Months of heavy overtime before a military batch acceptance run a little higher.",
+ "facts": [
+  {
+   "label": "Satellite Navigation Equipment Assembler and Tester (current level)",
+   "value": "1-3 years, ¥5,000–9,000 a month (national average, estimate)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Debug Technician / Test Technician (3-6 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Assembling a complete navigation terminal from the drawings",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Tuning a finished unit on the signal simulator and measuring its positioning specs",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "Before the shop floor you pass through the air shower, change into an anti-static smock, put on a wrist strap and press the tester. Only when the green light comes on are you let in.",
+  "Morning briefing. The team lead says fifty short-message terminals for fishing boats ship today, and three from yesterday failed acquisition sensitivity. They are waiting for you on the rework rack.",
+  "You slide a terminal into the shielded box, connect the simulator's RF cable, set up twelve BeiDou-3 satellites in the scenario and time how long it takes to get a fix. The number on the screen ticks for a while and stops at thirty-one seconds.",
+  "A rework unit loses lock as soon as the signal drops to -145 dBm. You open the case, follow the supply with a multimeter all the way to the low-noise amplifier, and find an inductor with a cold solder joint. You touch it up.",
+  "Stir-fried pork with chilies in the canteen: free food, never quite spicy enough. At the next table people from R&D are talking about the new high-precision board. You don't follow most of it, and write down a few words.",
+  "In the afternoon you tune timing terminals. You watch the pulse-per-second offset on the time interval counter, log each unit in the test record and sign with your employee number.",
+  "QC brings you a nonconformance report: the antenna connector on one unit was tightened too hard and the thread is slightly deformed. You write the cause on the form and go remind the assembly station.",
+  "You take the metro back to your rented room, half the carriage people heading home from Lugu. On your phone you play an online course on navigation theory, and by the section on pseudorange your eyelids are drooping."
+ ],
+ "ladder": [
+  {
+   "title": "Electronics Assembler / Assembly-and-Test Apprentice",
+   "stage": "Entry",
+   "focus": "Assemble parts to the drawings, practice soldering and anti-static handling, and get to know the products."
+  },
+  {
+   "title": "Satellite Navigation Equipment Assembler and Tester",
+   "stage": "Junior",
+   "focus": "Assemble and tune complete units on your own, run spec tests with a spectrum analyzer and signal simulator, and fill in the records."
+  },
+  {
+   "title": "Debug Technician / Test Technician",
+   "stage": "Intermediate",
+   "focus": "Handle hard faults and rework, support military and factory inspections, and maintain the automated test stations."
+  },
+  {
+   "title": "Team Leader / Process Technician",
+   "stage": "Senior",
+   "focus": "Scheduling and training, process improvement and yield."
+  },
+  {
+   "title": "Senior Technician / Assembly-and-Test Process Expert",
+   "stage": "Expert",
+   "focus": "Write the assembly-and-test process standards and the training system."
+  }
+ ],
+ "ai_tasks": [
+  {
+   "name": "Assembling a complete navigation terminal from the drawings",
+   "how": "AI can help look up drawings, check the process documents and generate assembly record templates. But driving screws, plugging in cables, mounting the antenna and judging whether a board is properly seated all come down to the hands, and that takes a person."
+  },
+  {
+   "name": "Tuning a finished unit on the signal simulator and measuring its positioning specs",
+   "how": "AI can set up simulator scenarios from the test plan, collect the data and generate the test report on its own. How to tune the RF chain, and where the problem is when a spec comes out wrong, still need a person watching the instruments, judging and adjusting by hand."
+  },
+  {
+   "name": "Supporting military or factory inspection to accept a production batch",
+   "how": "AI can help organize records and summarize past test data. At the acceptance itself you face the customer's representative or the quality department: retesting, explaining, dealing with surprises and answering for it. Only a person can do that."
+  },
+  {
+   "name": "Finding and repairing a terminal that fails its sensitivity spec",
+   "how": "AI can suggest a troubleshooting path and list likely causes from the symptoms and past repair records. Measuring stage by stage from the power supply and clock to the RF front end, soldering and fixing it, takes a person's hands, and a person makes the final call."
+  },
+  {
+   "name": "Fixing the yield problem at one assembly step",
+   "how": "AI can analyze yield and defect data, find the stations or batches where problems cluster and point to likely causes. Going down to the line to watch how it is really done, trying a fix and getting coworkers to follow it is led by the technician."
+  },
+  {
+   "name": "Maintaining the automated test station and writing test scripts",
+   "how": "AI can write test scripts for a new model's specs, change parameters and find script bugs; a person only has to trial-run them on the real station and spot-check the results. Repairing the test fixture hardware still takes a person."
+  }
+ ],
+ "events": {
+  "e_master_spectrum": "Your master tells you to stop staring at the fix result and hook the spectrum analyzer up to the IF port. For the first time you clearly see the signal buried under the interference, like a streetlight seen through fog.",
+  "e_esd": "You forget your wrist strap and pick up an RF board, and two boards from that batch later show inexplicably poor sensitivity. The trail leads back to your record from that day, and the team lead has you copy out the anti-static rules by hand.",
+  "e_rush": "At year end a batch of terminals has to leave the factory before the delivery deadline, and for three weeks straight the shop works until ten at night. The day the overtime pay comes in, you send money home.",
+  "e_summer": "July in Changsha, and the air conditioner in your rented room is broken for a week. Every day you hate to leave the climate-controlled shop floor.",
+  "e_trial_site": "You go out with R&D for a drive test by the lake, an antenna on the car roof, lap after lap along the lakeside road. That night at a roadside stall, over a bowl of rice noodles, someone from R&D says the unit you tuned was the steadiest.",
+  "e_love": "The girl at the milk tea shop downstairs recognizes your badge and says everyone from your factory orders the same drink. Later the two of you climb Yuelu Mountain together, and it is dark by the time you come down.",
+  "e_auto_test": "The factory brings in automated test stations: eight units plugged in at once, simulator scenarios and data logging all running on their own. You go from tuning machines one by one to reading results row by row.",
+  "e_chamber": "During the -40 degree stage in the thermal chamber, the clock in one unit stops oscillating. You wait by the chamber all night, and at dawn you find moisture got into the crystal oscillator.",
+  "e_fisherman": "A message comes through from after-sales: a fishing boat far to the south used one of your terminals to send a distress message by satellite, and everyone is safe. The shop director reads it out at the morning briefing. You remember tuning that batch.",
+  "e_wedding": "You go back to your hometown for the wedding. Relatives in Shaoyang ask what you do in Changsha. You say you tune BeiDou, and they say that's something up in the sky. You say it's something on the ground that listens to the sky.",
+  "e_eyes": "Years of touching up components a fraction of a millimeter wide under the microscope, and by afternoon your eyes are gritty. You get blue-light glasses, and a bottle of artificial tears appears on your bench.",
+  "e_inspection": "During a batch acceptance, the customer's representative pulls a unit you reworked and watches the retest for half an hour. Every number passes. He signs the acceptance form and gives you a look.",
+  "e_batch_fail": "An imported filter is replaced with a domestic substitute, and a whole batch falls short on out-of-band rejection. Your team spends two weeks on rework, and everyone signs the quality problem close-out report.",
+  "e_house": "You buy a small three-bedroom in Xingsha, the down payment pooled from both families. The mortgage is over ¥4,000 a month, and you stop turning down overtime.",
+  "e_baby": "The month your child is born is the month of a big delivery. You are on the shop floor by day and at the hospital by night, and twice you fall asleep on a bench in the corridor.",
+  "e_ai_diag": "The factory trials an AI troubleshooting tool: type in the symptoms and it lists five likely causes, with old rework records attached. New people follow it and can fix a unit in half a day. When it hits a fault it has never seen, they still come to you.",
+  "e_apprentice": "Your apprentice finds a fault on his own for the first time: the shielding on an RF cable is torn. When he runs over to tell you, his voice is louder than usual.",
+  "e_orders_drop": "Prices for civilian terminals are driven into the floor, and a vehicle terminal line shuts down. Some people from the shop go to the drone maker next door, saying flight controllers need tuning too.",
+  "e_neck": "Head bent over the soldering, head bent over the screen: your neck gives out first. One morning you can't turn your head, and you spend a month at a massage clinic.",
+  "e_parent": "A call from home: your mother is in hospital with high blood pressure. You take a week off and go back, watching the shop's test data remotely on your phone by her bed.",
+  "e_standard": "An assembly-and-test work instruction you led the revision of is adopted as a factory standard, and the new line is built to it. On the last page, in the author field, is your name.",
+  "e_young": "This year's interns used simulators at school and can write test scripts. Watching them pick it up in half a day, you think of the year you spent driving screws on the assembly line."
+ },
+ "choices": {
+  "c_cert": {
+   "title": "Take the senior-level radio equipment tester exam",
+   "situation": "The factory encourages its assemblers to get the senior radio equipment tester certificate: pass, and you get an extra ¥300 a month in skill allowance, and it counts later when Debug Technician comes up. The theory means grinding through RF circuits; the practical means tuning an unfamiliar receiver in half an hour in the exam room.",
+   "options": [
+    {
+     "label": "Sign up and study at night",
+     "result": "After work you draw mixer block diagrams in your rented room until you can write the local oscillator frequency with your eyes closed. The machine in the exam room takes you twenty minutes."
+    },
+    {
+     "label": "Not yet; keep working under your master",
+     "result": "You don't sign up. Your master says you'll have to take it sooner or later, and saving up what's in your hands first is fine too. You stand at the rework rack another year."
+    }
+   ]
+  },
+  "c_auto": {
+   "title": "Go maintain the automated test stations and learn to write test scripts",
+   "situation": "The test engineer needs a hand and asks if you'd like to maintain the automated stations: editing scripts, tuning fixtures, and later helping write the test programs for new models. You would have to learn Python from scratch and give up your piece-rate bonus on the line.",
+   "options": [
+    {
+     "label": "Go to the test stations and learn scripting",
+     "result": "The first script you write runs through eight units without a single red line in the log. You keep that screenshot for a long time."
+    },
+    {
+     "label": "Stay on the assembly-and-test line",
+     "result": "You say you want a few more years with your hands on machines. There's less and less hand tuning, but every unit the automated stations can't pass ends up in front of you."
+    }
+   ]
+  },
+  "c_shenzhen": {
+   "title": "Jump to a high-precision positioning company in Shenzhen",
+   "situation": "A classmate works at a Shenzhen company making positioning modules for surveying and drones. He says they're short of people who can tune RF, the pay is forty percent higher, and whether you get weekends off is anyone's guess. Going means leaving the Changsha you've just gotten used to, and paying double the rent.",
+   "options": [
+    {
+     "label": "Go to Shenzhen",
+     "result": "You tune an RTK board for the first time, centimeter-level numbers flickering on the screen. The pay really is higher, and you usually leave after nine at night."
+    },
+    {
+     "label": "Stay in Changsha",
+     "result": "You stay, and the factory moves you up a pay grade. On weekends you can still run along the Xiang River. Your classmate sends you Shenzhen at night, and you hit like."
+    }
+   ]
+  },
+  "c_debug_tech": {
+   "title": "Compete for Debug Technician, specializing in hard repairs",
+   "situation": "The shop is naming one Debug Technician to handle the units nobody else can fix, support retests during military and factory inspections, and maintain the test platforms. To compete you present a fault you tracked down yourself, then troubleshoot a faulty unit on the spot.",
+   "options": [
+    {
+     "label": "Put your name in",
+     "result": "You talk about the unit whose clock stopped, from the symptoms to that night by the thermal chamber. For the live test you measure from the power supply all the way to the RF front end and find it in forty minutes."
+    },
+    {
+     "label": "Leave it to an older colleague",
+     "result": "You think old Zhou is better suited, and don't apply. Once he gets it, he often calls you over when a hard one comes in."
+    }
+   ]
+  },
+  "c_rf_eng": {
+   "title": "Top up to a bachelor's degree and move into RF test engineering",
+   "situation": "The RF test engineer job in R&D requires a bachelor's degree. Your supervisor says your hands are good enough; what you lack is the diploma and the ability to write test plans. A part-time top-up degree takes two and a half years of weekends. It might get you the transfer, or it might not.",
+   "options": [
+    {
+     "label": "Do the degree",
+     "result": "For two and a half years you don't have a full weekend. The day you get the diploma, your supervisor moves you to the R&D building.",
+     "end": "You walked off the line and into the R&D building, writing test plans instead of tuning machines by them. At last you know why each spec on a new model is set where it is."
+    },
+    {
+     "label": "Skip it and stay on the line",
+     "result": "You do the sums on time and money and don't apply. There aren't many people on the line who can tune, and if you left, no one would fill the gap."
+    }
+   ]
+  },
+  "c_team_lead": {
+   "title": "Team Leader, or Process Technician",
+   "situation": "The shop reorganizes its teams and the director gives you two paths: lead an assembly-and-test team, in charge of scheduling, training and yield for a dozen people; or join the process group as a process technician, writing work instructions, validating fixtures and working with R&D on trial production of new models.",
+   "options": [
+    {
+     "label": "Lead the team",
+     "result": "You start doing rosters, morning briefings and daily reports, and lose your voice twice in the first month. The team's yield climbs from 92 percent to 96."
+    },
+    {
+     "label": "Join the process group",
+     "result": "You get a desk in the process group, piled with process cards and FMEA sheets. The first unit of a new model's trial run is built by the steps you wrote."
+    },
+    {
+     "label": "Neither; keep tuning machines",
+     "result": "You say you'd still rather have a machine in your hands. The director doesn't push, and the hard units keep landing on your bench."
+    }
+   ]
+  },
+  "c_service": {
+   "title": "Become a field service engineer",
+   "situation": "After-sales is short-handed and wants someone who knows the whole unit to travel the country: timing cabinets at ports, synchronization clocks for the power grid, terminal repairs at fishing harbors. The allowances are good, and you would be out of Changsha more than half the year.",
+   "options": [
+    {
+     "label": "Take to the road",
+     "result": "You pick up a case full of tools and spare parts and board a high-speed train to Zhanjiang.",
+     "end": "You became a field service engineer, shuttling between docks, substations and fishing harbors. Wherever you arrive, the first thing you do is look up to see where the antenna is mounted."
+    },
+    {
+     "label": "Stay in the shop",
+     "result": "You say your child is still small and you don't want to be away all year. When after-sales can't fix a returned unit and ships it back, you're the first one they call."
+    }
+   ]
+  },
+  "c_ai_tool": {
+   "title": "Feed thirty years of repair records to AI",
+   "situation": "The factory is building an AI troubleshooting assistant and needs a veteran to turn years of repair records, symptoms and fixes into something it can use. Some say that's handing over the thing you make your living from.",
+   "options": [
+    {
+     "label": "Lead the effort",
+     "result": "You spend three months going through old notebooks, typing scrawled fixes into a spreadsheet one by one. Once the assistant is live, the first thing new people often say is: the system says check the crystal first."
+    },
+    {
+     "label": "Stay out of it",
+     "result": "You say you just fix machines. The assistant goes live, and for the kinds of fault it can't answer, everyone knows who to find."
+    }
+   ]
+  },
+  "c_senior_tech": {
+   "title": "Apply for Senior Technician in assembly and test",
+   "situation": "The factory nominates you for Senior Technician. You have to submit a technical summary of the assembly problems you've solved over the years, the standards you've set and the people you've trained, and defend it in person. Preparing will take a whole winter.",
+   "options": [
+    {
+     "label": "Apply and write the summary",
+     "result": "You boil years of work instructions and fault cases down to forty pages. At the defense a panelist asks about tracking down interference, and halfway through your answer you see someone nodding."
+    },
+    {
+     "label": "Leave it to someone younger",
+     "result": "You say give the slot to someone younger. That winter you leave work on time and help your child finish the holiday homework."
+    }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you wipe down the shielded box and coil the probes of the spectrum analyzer you used for so many years back into their case. In the handover book you write: the simulator RF cable at station three needs replacing. When you walk out of the shop there isn't a cloud in the sky. You glance up out of habit. You can't see anything, but you know they're all there.",
+  "burnout": "That spring your neck and your eyes give out together, and you can't sit at the microscope for half an hour. The shop moves you to the warehouse to manage incoming materials and spares, checking items in and out against a list every day. You still pick up a returned board now and then, to see where it went wrong."
+ },
+ "stages": [
+  "You are responsible for a whole unit on your own. In the morning you fit boards, RF cables and antenna connectors into the case from the assembly drawing; in the afternoon it goes into the shielded box, the simulator runs a fix, the spectrum analyzer checks the power, and sensitivity and time to first fix go into the test record line by line. QC and the assembly stations both come to you: one to send units back, the other to ask why.",
+  "The units that reach your bench are the ones nobody else could fix. You sweep the antenna's VSWR with a vector network analyzer, chase a fault with an oscilloscope all the way to the clock, and write up symptom, cause and fix in the rework record. At acceptance you stand beside the customer's representative to retest and explain; when the test platform breaks, you fix that too. Going from tuning units to judging them, your signature weighs more.",
+  "Your day starts with the production schedule and the daily yield report: which line is stuck at which step, which new hire keeps fitting the cables backwards. You write work instructions, validate fixtures, run trial production of new models with R&D, and at quality meetings argue a defect rate out with purchasing and suppliers. You tune machines yourself less often; there are more and more people under you.",
+  "What you decide now is how the whole factory assembles and tests: the process standards, the training courses, the questions on the skill-level exams. Before a new line is built, they ask you first; quality close-out reports wait for your signature; new assemblers hear their first lesson from you. You gave a talk on assembly and test at an industry conference once, and when you got back you still walked the shop floor."
+ ],
+ "work": [
+  "Xiao Chen at the assembly station crimped the antenna cables on a batch the wrong way round. In the shielded box you measure the whole batch's signal-to-noise ratio running low, open one unit and see it at once, then carry it over to him.",
+  "A timing terminal's pulse-per-second runs tens of nanoseconds behind the reference. You re-enter the cable delay compensation in the simulator, and the number on the counter comes back into range.",
+  "The test plan is revised and the acquisition sensitivity spec goes up by two decibels. You step the simulator power down notch by notch, find where this batch really gives out, and write it in your own notebook.",
+  "A terminal sent back from a fishing harbor took in seawater, a white frost across the board. You clean it bit by bit with anhydrous alcohol, replace two capacitors, and when you power it up it finds eleven satellites again.",
+  "One position on the automated test station keeps reporting false failures. The spectrum analyzer shows the conductive gasket on the shielded box door has aged and is leaking signal. You replace the gasket and the false failures stop.",
+  "At a factory inspection the customer's representative asks to see a unit retested after vibration. You connect it, run the scenario and produce the data in front of him. He asks, you answer, and not one number needs looking up afterward.",
+  "Trial production of a new model, and the R&D engineer says the assembly order is fine. You have two assemblers each build five units by the process card while you time them, then point out that swapping step seven saves two minutes. He changes it.",
+  "At the monthly quality meeting purchasing brings low-noise amplifier samples from a new supplier. You have your team run a comparison test on a hundred units, and write on the review form: usable, but test samples from every incoming batch.",
+  "The new vocational graduate on your team fits a cable backwards for the third time. You don't shout. You stick a wiring diagram you drew yourself on his station, and the next week he doesn't get one wrong.",
+  "You write the practical for the skill-level exam and plant a clock fault in one of the exam units. Afterward you read the troubleshooting records one by one, to see who measured their way to it and who guessed.",
+  "The factory is building a new line in another province. You take the process standards and two apprentices, and in three weeks you turn twelve stations from an empty room into a line that ships.",
+  "R&D brings you a diagnostic report from the AI troubleshooting assistant and asks whether it's accurate. You test it on twenty past hard cases, mark the three it got wrong, and write down why."
+ ],
+ "past": [
+  "You go to middle school in Shaoyang, best at physics, worst at Chinese. Your father has worked ten years in an electronics factory in Guangdong, and says nobody who learns electronics goes hungry.",
+  "Your score on the gaokao (college entrance exam) isn't enough for a good university, so you put down a vocational college in Changsha, electronic information. The prospectus says: order-based class, partnered with BeiDou navigation companies.",
+  "The first time you solder surface-mount parts in the electronics workshop, you ruin a whole board. Your teacher says don't rush; steady hands come one joint at a time.",
+  "You pass the intermediate electronic assembly certificate and get into the school's BeiDou partner class. In the lab you see a satellite signal simulator for the first time, a ring of small dots turning on its screen.",
+  "You do your internship placement at this factory, driving screws, bundling cables and sticking on labels on the assembly line. Half your roommates go to phone factories in Shenzhen, where they say the pay is better.",
+  "When the internship ends you stay on and spend a year assembling whole units. At year end the team lead says the test station needs someone and asks if you want it. You say yes."
+ ],
+ "late": {
+  "pension_note": "Estimate: with thirty-odd years of contributions to Changsha's basic pension for company employees at your wage base, your pension comes to a little over forty percent of your final monthly pay. The factory has no company annuity.",
+  "scenes": [
+   "For the first few months of retirement you wake up reaching for a wrist strap. You hang the old one on a hook of the clothes rack on the balcony.",
+   "A vocational college asks you to teach in its BeiDou training lab two afternoons a week. The first problem you give the students is a unit with torn shielding on its antenna cable.",
+   "Your child gets into university to study surveying, and calls to say the lecture covered pseudorange and clock error, and do you know about that. You say you tuned it your whole life.",
+   "Driving back to your hometown, your phone's navigation says you've left the route. You think of those nights lapping the lakeside road on drive tests, and the taste of that bowl of rice noodles.",
+   "You manage spares in the warehouse and leave on time, home for dinner with your child. When your neck isn't hurting you take a walk along the Xiang River.",
+   "A young man from the shop brings a unit he can't fix to the warehouse. You tell him to measure the power first, then look at the clock. He comes back in the afternoon and says it was the crystal.",
+   "When the time comes you retire. The guard at the factory gate still knows you and asks what you're back for. You say just passing, having a look.",
+   "In the first year off the line, whenever you see a shielded box somewhere else you can't help checking how well its door seals.",
+   "You find your footing in the new job. On a visit to the factory, an old colleague points at an automated test station and says some of the script on it is still the lines you wrote.",
+   "An apprentice of yours is now an assembly-and-test team leader, and sends you a photo: him showing new hires how to wire the shielded box, with your wiring diagram on the wall behind.",
+   "Later BeiDou becomes just something built into every phone, and nobody asks what it is anymore. Sometimes when you see the little blue dot on a map you wonder how many satellites are behind it.",
+   "Your grandchild asks whether you can see the satellites in the sky. You wait with him on the roof all evening until a bright point drifts slowly across. You say not that kind, but close enough."
+  ],
+  "closing": {
+   "retire": "Many years later you are eating seafood in a fishing-harbor town and notice, on the wheelhouse roof of an old boat at the dock, a white antenna dome you recognize. You stand and look at it a while, and don't go ask whether it still works.",
+   "burnout": "Many years later you find your old test record book in a drawer, page after page of sensitivity, time to first fix and your employee number. You leaf through a few pages, put it back and close the drawer.",
+   "end": "Many years later you drive through Lugu at night, and a few floors of that factory are still lit. You don't stop. Only at a red light do you look up, once, at a sky with no stars in it."
+  }
+ }
+}
