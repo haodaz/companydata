@@ -195,7 +195,7 @@ function CardView({ s, onDay, onStart, onRedraw, busy }: { s: Save; onDay: () =>
       </section>
       <div className="g-actions sticky">
         <button className="g-btn" onClick={onDay}>先看看这一天</button>
-        <button className="g-btn primary" onClick={onStart}>从今天起</button>
+        <button className="g-btn primary" onClick={onStart}>开启职业人生</button>
       </div>
       <button className="g-link" disabled={busy} onClick={onRedraw}>不想过这一生？换一张</button>
     </main>
@@ -211,7 +211,7 @@ function DayView({ card, onStart, onBack, back }: { card: GameCard; onStart: () 
       <ol className="g-day">{card.day.map((d, i) => <li key={i}><time>{d.time}</time><p>{d.text}</p></li>)}</ol>
       <div className="g-actions sticky">
         <button className="g-btn" onClick={onBack}>{back}</button>
-        {back === '回到登记卡' && <button className="g-btn primary" onClick={onStart}>从今天起</button>}
+        {back === '回到登记卡' && <button className="g-btn primary" onClick={onStart}>开启职业人生</button>}
       </div>
     </main>
   );
