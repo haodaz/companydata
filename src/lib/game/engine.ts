@@ -8,7 +8,7 @@ import type { Effect, GameCard, GameChoice, PeerCard, Stat } from './types';
 export interface LogItem { y: number; age: number; text: string; kind: 'start' | 'event' | 'promo' | 'choice' | 'ai' | 'end'; mood?: 'good' | 'bad' | 'plain'; source?: string; effect?: Effect }
 export interface YearRow { y: number; age: number; stage: number; salary: number; skill: number; rep: number; health: number; joy: number }
 export interface Life {
-  cardId: string; name: string; seed: number; rng: number;
+  cardId: string; name: string; seed: number; rng: number; lang?: 'zh' | 'en';
   y: number; age: number; stage: number; inStage: number;
   stats: Record<Stat, number>;
   salary: number; salaryMul: number; growthMul: number; promoteBonus: number; savings: number; earned: number;
@@ -29,10 +29,14 @@ const SURNAMES = '王李张刘陈杨黄赵吴周徐孙马朱胡郭何林罗高�
 const MALE = ['一鸣', '思远', '浩然', '俊杰', '晓东', '宇航', '志强', '文博', '建国', '明轩', '泽宇', '国栋', '天佑', '家豪', '振华', '立新', '子轩', '海涛', '永刚', '鹏飞'];
 const FEMALE = ['子涵', '雨桐', '欣怡', '佳琪', '静怡', '梦瑶', '雪梅', '诗雨', '晓燕', '婉清', '若溪', '丽华', '春燕', '可欣', '晓雯', '慧敏', '秀英', '思琪', '玉兰', '嘉怡'];
 const ANY = ['小满', '晨曦', '一凡', '子墨', '安然', '清和', '知远', '睿'];
-/** 名字按卡上的性别抽（卡里写了「丈夫」「她」这类，名字得对得上）；没标性别的男女名都可能 */
-export const randomName = (seed: number, gender?: 'f' | 'm') => {
+// 英文版的名字用拼音（姓在前，如 Wang Yiming）
+const PY_SUR: Record<string, string> = Object.fromEntries('王Wang 李Li 张Zhang 刘Liu 陈Chen 杨Yang 黄Huang 赵Zhao 吴Wu 周Zhou 徐Xu 孙Sun 马Ma 朱Zhu 胡Hu 郭Guo 何He 林Lin 罗Luo 高Gao 郑Zheng 梁Liang 谢Xie 宋Song 唐Tang 许Xu 韩Han 冯Feng 邓Deng 曹Cao 彭Peng 曾Zeng 萧Xiao 田Tian 董Dong 袁Yuan 潘Pan 蒋Jiang 蔡Cai 余Yu 杜Du 叶Ye 程Cheng 苏Su 魏Wei 吕Lyu 丁Ding 任Ren 沈Shen 姚Yao 卢Lu 姜Jiang 崔Cui 钟Zhong 谭Tan 陆Lu 汪Wang 范Fan 金Jin 石Shi 廖Liao 贾Jia 夏Xia 韦Wei 付Fu 方Fang 白Bai 邹Zou 孟Meng 熊Xiong 秦Qin 邱Qiu 江Jiang 尹Yin 薛Xue 闫Yan 段Duan 雷Lei 侯Hou 龙Long 史Shi 陶Tao 黎Li 贺He 顾Gu 毛Mao 郝Hao 龚Gong 邵Shao 万Wan 钱Qian 严Yan 覃Qin 武Wu 戴Dai 莫Mo 孔Kong 向Xiang 汤Tang'.split(' ').map(x => [x[0], x.slice(1)]));
+const PY_GIVEN: Record<string, string> = Object.fromEntries('一鸣Yiming 思远Siyuan 浩然Haoran 俊杰Junjie 晓东Xiaodong 宇航Yuhang 志强Zhiqiang 文博Wenbo 建国Jianguo 明轩Mingxuan 泽宇Zeyu 国栋Guodong 天佑Tianyou 家豪Jiahao 振华Zhenhua 立新Lixin 子轩Zixuan 海涛Haitao 永刚Yonggang 鹏飞Pengfei 子涵Zihan 雨桐Yutong 欣怡Xinyi 佳琪Jiaqi 静怡Jingyi 梦瑶Mengyao 雪梅Xuemei 诗雨Shiyu 晓燕Xiaoyan 婉清Wanqing 若溪Ruoxi 丽华Lihua 春燕Chunyan 可欣Kexin 晓雯Xiaowen 慧敏Huimin 秀英Xiuying 思琪Siqi 玉兰Yulan 嘉怡Jiayi 小满Xiaoman 晨曦Chenxi 一凡Yifan 子墨Zimo 安然Anran 清和Qinghe 知远Zhiyuan 睿Rui'.split(' ').map(x => { const i = x.search(/[A-Z]/); return [x.slice(0, i), x.slice(i)]; }));
+/** 名字按卡上的性别抽（卡里写了「丈夫」「她」这类，名字得对得上）；没标性别的男女名都可能；英文版给拼音 */
+export const randomName = (seed: number, gender?: 'f' | 'm', lang: 'zh' | 'en' = 'zh') => {
   const pool = gender === 'f' ? FEMALE : gender === 'm' ? MALE : [...MALE, ...FEMALE, ...ANY];
-  return SURNAMES[seed % SURNAMES.length] + pool[Math.floor(seed / SURNAMES.length) % pool.length];
+  const sur = SURNAMES[seed % SURNAMES.length], given = pool[Math.floor(seed / SURNAMES.length) % pool.length];
+  return lang === 'en' ? `${PY_SUR[sur] || sur} ${PY_GIVEN[given] || given}` : sur + given;
 };
 
 /** 这一级、在这一级第几年的月薪（元） */
@@ -47,10 +51,10 @@ function monthly(card: Pick<GameCard, 'ladder' | 'salary_factor'>, stage: number
 /** 升到下一级要在这一级待几年（职业地图的年限差，至少 3 年） */
 const needYears = (card: Pick<GameCard, 'ladder'>, stage: number) => Math.max(3, (card.ladder[stage + 1]?.min ?? 99) - (card.ladder[stage]?.min ?? 0));
 
-export function newLife(card: GameCard, seed: number): Life {
+export function newLife(card: GameCard, seed: number, lang: 'zh' | 'en' = 'zh'): Life {
   const s = card.start;
   const l: Life = {
-    cardId: card.id, name: randomName(seed, card.gender), seed, rng: seed,
+    cardId: card.id, name: randomName(seed, card.gender, lang), seed, rng: seed, lang,
     y: 0, age: s.age, stage: s.stage, inStage: Math.max(0, s.years_in_field - (card.ladder[s.stage]?.min ?? 0)),
     stats: { skill: clamp(30 + s.stage * 14 + s.years_in_field), rep: clamp(35 + s.stage * 10), health: clamp(88 - Math.max(0, s.age - 24) * 0.6), joy: 72 },
     salary: 0, salaryMul: 1, growthMul: 1, promoteBonus: 0, savings: 0, earned: 0,
@@ -85,7 +89,7 @@ export function step(card: GameCard, l: Life): Life {
   const aiTasks = card.ai.tasks.filter(t => t.kind !== 'human');
   if (l.aiDone < aiTasks.length && l.y >= card.ai.from_year + l.aiDone * 5) {
     const t = aiTasks[l.aiDone++];
-    l.log.push({ y: l.y, age: l.age, kind: 'ai', mood: 'plain', source: 'AI 替代性', text: `「${t.name}」这件事，AI 开始插手了：${t.how}` });
+    l.log.push({ y: l.y, age: l.age, kind: 'ai', mood: 'plain', source: 'AI 替代性', text: l.lang === 'en' ? `AI has started moving in on "${t.name}": ${t.how}` : `「${t.name}」这件事，AI 开始插手了：${t.how}` });
   }
 
   // 3. 晋升（职业库 · 职业地图）：够年限才判，看手艺、口碑、之前抉择攒下的机会
@@ -102,17 +106,17 @@ export function step(card: GameCard, l: Life): Life {
       const s = card.ladder[l.stage];
       apply(l, { rep: 5, joy: 4 });
       l.promos.push({ y: l.y, age: l.age, title: s.title });
-      l.log.push({ y: l.y, age: l.age, kind: 'promo', mood: 'good', source: '职业地图', text: `你成了${s.title}。${s.focus}` });
+      l.log.push({ y: l.y, age: l.age, kind: 'promo', mood: 'good', source: '职业地图', text: l.lang === 'en' ? `You became ${s.title}. ${s.focus}` : `你成了${s.title}。${s.focus}` });
     }
   }
 
   // 4. 重大抉择：窗口里的第一个，到窗口最后一年必出，平时一半概率出
   // 卡里写的抉择和规则推出来的晋升会撞：抉择说的那一级（如「评副主任医师」「考主治」）已经升上去了，这道题就不出了
   // 匹配时：职业名里本来就有的短词不算（「咖啡师」截成「咖啡」、「测试工程师」截成「测试」会把整张卡的抉择都跳掉）；先把还没升到的级别名从题面里去掉（「馆员」别误伤「副研究馆员」）
-  const occ = `${card.occupation.name}${card.role}`;
+  const occ = `${card.occupation?.name || ''}${card.role || ''}`;   // 同年入行的人用的精简卡没有 occupation
   const reached = card.ladder.slice(1, l.stage + 1).flatMap(s => { const full = s.title.split(/[\s/（(]/)[0]; return [full, full.replace(/(医师|护师|工程师|律师|教师|老师|师)$/, '')]; }).filter(k => k.length >= 2 && !occ.includes(k));
   const higher = card.ladder.slice(l.stage + 1).map(s => s.title.split(/[\s/（(]/)[0]).sort((a, b) => b.length - a.length);
-  for (const x of card.choices) {
+  if (card.choices.length) for (const x of card.choices) {
     if (l.usedChoices.includes(x.id) || !inWindow(l, x) || !x.options.some(o => o.promote)) continue;
     let text = `${x.title}${x.situation}`; for (const h of higher) text = text.split(h).join('');
     if (reached.some(k => text.includes(k))) l.usedChoices.push(x.id);
@@ -159,7 +163,7 @@ export function choose(card: GameCard, l: Life, i: number): Life {
   if (o.salary) l.salaryMul = clamp(l.salaryMul * (Number(o.salary) || 1), 0.5, 1.6);
   if (o.growth) l.growthMul = clamp(l.growthMul * (Number(o.growth) || 1), 0.6, 1.6);
   l.picks.push({ y: l.y, age: l.age, title: c.title, label: o.label, result: o.result });
-  l.log.push({ y: l.y, age: l.age, kind: 'choice', mood: 'plain', source: c.source, text: `${c.title}：你选了「${o.label}」。${o.result}`, effect: o.effect });
+  l.log.push({ y: l.y, age: l.age, kind: 'choice', mood: 'plain', source: c.source, text: l.lang === 'en' ? `${c.title}: you chose "${o.label}". ${o.result}` : `${c.title}：你选了「${o.label}」。${o.result}`, effect: o.effect });
   if (o.end) finish(card, l, 'end', o.end);
   return l;
 }
@@ -173,9 +177,9 @@ export function autoChoose(card: GameCard, l: Life) {
 }
 
 /** 同年入行的人：同一套规则开局就推演完（没有专属事件和抉择），返回每年的职级、月薪 */
-export function simulatePeer(p: PeerCard, seed: number) {
+export function simulatePeer(p: PeerCard, seed: number, lang: 'zh' | 'en' = 'zh') {
   const card = { ...p, events: [], choices: [], ai: { from_year: 99, tasks: [], new_tasks: [] }, endings: { retire: '', burnout: '' }, intro: '' } as unknown as GameCard;
-  const l = newLife(card, seed);
+  const l = newLife(card, seed, lang);
   while (!l.done && l.y < 60) step(card, l);
   return { name: p.name, role: p.role, headline: p.headline, city: p.city, unit_type: p.unit_type, rows: l.rows, done: l.done, promos: l.promos, ladder: p.ladder.map(s => s.title) };
 }
