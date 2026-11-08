@@ -431,7 +431,7 @@ const CSS = `
 .g-codes { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin: 6px 0 14px; }
 .g-codes figure { margin: 0; } .g-codes img { width: 200px; max-height: 300px; height: auto; object-fit: contain; border-radius: 12px; border: 1px solid var(--line); background: #fff; }
 .g-art { display: block; width: 100%; aspect-ratio: 1440 / 800; object-fit: cover; border-radius: 16px; margin: 0 0 18px; box-shadow: 0 10px 30px rgba(31,61,107,.12); background: #e9eef5; }
-.g-art-hero { margin-bottom: 22px; }
+.g-art-hero { margin-bottom: 22px; aspect-ratio: 1213 / 800; }
 .g-codes figcaption { font-size: 12.5px; color: var(--ink3); margin-top: 4px; }
 .g-in { animation: g-in .6s ease-out both; }
 .g-path li.bad::before { border-color: var(--bad); } .g-path li.good::before { border-color: var(--good); }
