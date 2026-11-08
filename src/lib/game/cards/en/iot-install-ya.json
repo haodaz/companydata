@@ -1,0 +1,223 @@
+{
+ "id": "iot-install-ya",
+ "occupation": "IoT Installation and Commissioning Technician",
+ "role": "IoT Installation and Commissioning Technician (Level 5)",
+ "headline": "Back in Yan'an after vocational college, working for a small integrator, climbing poles and tuning gateways at oil well sites and apple orchards across the Loess Plateau",
+ "unit": "An IoT systems integrator in Yan'an",
+ "unit_type": "Small local integrator",
+ "city": "Yan'an",
+ "city_tier": "Fourth-tier city",
+ "education": "Associate degree (IoT application technology)",
+ "level": "You can wire things up and configure a LoRa gateway by following the manual. Your low-voltage electrician's license is brand new, and your legs still shake on a pole.",
+ "intro": "The work in Yan'an comes in two halves. Up north, the well sites need dynamometers and pressure transmitters. South on the tablelands, the apple orchards need soil moisture probes. The company has one pickup, one toolbox and one reel of cable, and the roads are longer than they look on the map. A senior colleague hands you your site safety card and tells you to forget about the signal for now and think about what shoes you wear on a well site.",
+ "salary_note": "Estimated: a local integrator in Yan'an pays below the national average, and travel allowances are part of it.",
+ "facts": [
+  {
+   "label": "IoT Installation and Commissioning Technician (Level 5) (current level)",
+   "value": "0–2 years, ¥3,300–4,900 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "IoT Installation and Commissioning Technician (Level 4) (2–5 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥10,000 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Climbing poles, drilling, running and terminating cable",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Writing commissioning reports and device records",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "The pickup leaves Baota District with RTUs, solar panels and two reels of sheathed cable in the bed. Out of town, your phone signal starts dropping one bar at a time.",
+  "At the well site you check in at the duty room, sign the entry form and put on anti-static coveralls. Old Ma, the pump operator, leads the way. You walk only where he points.",
+  "A dynamometer on the walking beam of the pumpjack needs replacing, which has to wait for shutdown and lockout. In the meantime you open the gateway box and find an old wasp nest plugging the cable entry.",
+  "You eat your packed flatbread in the duty room and hook your laptop up to the gateway. The serial port prints gibberish until you set the baud rate right and it starts talking sense.",
+  "The platform still shows the site offline. Someone from the client's information center keeps asking on the phone exactly whose side the problem is on. You walk the slope with a spectrum analyzer looking for the ridge that is blocking the LoRa signal.",
+  "You move the antenna two meters south and raise the pole a section. The well's chart lights up on the platform. You take photos, record serial numbers and stick on QR labels.",
+  "On the way back through the orchards at Luochuan, the co-op chairman flags down the pickup. One probe has been reporting 100 percent soil moisture every day. You pull it out and find the fertigation line has been dripping on it.",
+  "You write up commissioning notes in a county hotel. There's yellow dirt under your fingernails, and you don't notice the small cut from a zip tie until water hits it."
+ ],
+ "ladder": [
+  { "title": "IoT Installation and Commissioning Technician (Level 5)", "stage": "Riding along", "focus": "Riding along to install sensors, run cable and set parameters, learning site rules" },
+  { "title": "IoT Installation and Commissioning Technician (Level 4)", "stage": "Own sites", "focus": "Covering a set of wells or orchards alone, tracking down outages and packet loss" },
+  { "title": "IoT Installation and Commissioning Technician (Level 3)", "stage": "Integration", "focus": "End-edge-cloud integration, acceptance documents, working with the client's information center" },
+  { "title": "Field Technical Supervisor", "stage": "Leading a crew", "focus": "Leading the crew, setting the plan, watching warranties and final payments" },
+  { "title": "Engineering Department Manager", "stage": "Running the business", "focus": "Bids, projects and people, and deciding what work the company takes" }
+ ],
+ "ai_tasks": [
+  { "name": "Climbing poles, drilling, running and terminating cable", "how": "AI can check the site plan. Which way this pole should give on this loess slope takes someone standing there." },
+  { "name": "Writing commissioning reports and device records", "how": "Feed in photos, parameters and notes and a draft comes out. People verify the key figures." },
+  { "name": "Configuring communication modules and protocols", "how": "AI generates parameters and scripts from the manual. When the manual and the hardware disagree, a person tries it on the device." },
+  { "name": "Tracking down outages and packet loss", "how": "AI reads the logs and suggests an order to check things. Water ingress, rodent damage and oxidized joints only show when someone opens the box." },
+  { "name": "End-edge-cloud integration testing", "how": "AI compares reported fields. Whether a value makes sense needs someone who knows this well or this plot." },
+  { "name": "Firmware upgrades and rollbacks", "how": "AI draws up the upgrade checklist. With hundreds of devices up on the hills, a person decides who goes when one bricks." }
+ ],
+ "events": {
+  "e_pole": "The first time you climb a six-meter pole by yourself, you discover at the top that your wrench is in the truck. Your senior colleague laughs below, and a rope brings up a wrench and a bottle of water.",
+  "e_frost": "In April you race to finish the orchard weather stations before the late frost, nine days straight on the tableland. One night a temperature probe sets off the alarm, and that text gets the growers up in the small hours to light smudge fires. The next day they bring you a bag of last year's apples.",
+  "e_cold": "At minus twenty in January, a whole cluster of lithium iron phosphate batteries dies overnight. You make three trips swapping in cold-rated ones, your fingers too numb to turn the terminals.",
+  "e_ticket": "You forget to get a hot work permit in advance, and the safety officer shuts down the bracket welding on the spot. A whole truckload of people waits outside the well site until the next day. The boss's face falls faster than the sun.",
+  "e_mouse": "A whole section of orchard probes goes offline at once. You dig up the conduit and find rodents have chewed along the sheathing the entire way. You switch to armored conduit at twice the cost, and the client sighs as they sign.",
+  "e_tail": "Fourteen months after acceptance, the final payment still hasn't come. The boss sends you to camp out at the client's office. You bring the commissioning records, a bottle of water and plenty of patience.",
+  "e_knee": "All those trips up and down loess slopes, and your knees have started creaking on the stairs. You buy knee braces and leave them on the passenger seat of the pickup. You wear them a few times a year.",
+  "e_cert": "Your low-voltage electrician's license comes up for its three-year review just as the autumn harvest installs begin. You spend half a day in a classroom in the city on electrical safety, with orchard outage alerts filling your phone.",
+  "e_apple": "In October the apples come down and the orchards fill with people, and ladders knock over a stretch of probes. You stand them back up one by one. Old Gao says as he picks that your gadget did help him out this year.",
+  "e_2g": "The carrier announces old base stations will be retired, and that early batch of 2G modules on the tableland becomes scrap overnight. More than three hundred need replacing, and the client wants to know who pays.",
+  "e_ai_report": "Commissioning reports now come out of a photo upload. Your nights of writing in hotels are over. You spend the extra evenings catching up on sleep and correcting where it wrote RTU as UTR.",
+  "e_ai_wrong": "The model says this well's communications fault is probably the antenna. You drive three hours and find the pump operator unplugged the gateway to charge his phone.",
+  "e_platform": "The oil plant changes cloud platforms and the protocol no longer works. The original integrator dissolved long ago, and you reconnect point by point through a pile of uncommented config files.",
+  "e_car": "The pickup sinks half a wheel on a dirt road at the edge of the tableland, and you and the driver dig for two hours with a toolbox lid. Once it's dark there isn't a bar of signal. You will tell this story to new hires for years.",
+  "e_son": "You're away twenty days a month. The router at home breaks, and your child asks over the phone if you can fix it. You say when you get back. When you get back, it's next week.",
+  "e_warranty": "A month before the warranty runs out, the client reports three years of small faults all at once. You drive the whole route and add fresh waterproof sealant to every box.",
+  "e_drone": "Drones begin taking over line inspection, one flight doing half a day's walking. The company lets go two young pole climbers, and everyone left has to go get a drone license.",
+  "e_old": "You're fifty and still climbing poles. A young man at the client's says: Uncle, let me do that. You hand him the safety harness and check his buckle while you're at it.",
+  "e_sun": "The patch on the back of your neck, tanned by years in the sun, never fades. The dermatologist says it's long-term exposure and prescribes sunscreen. You keep it with the electrical tape and use it more slowly than the tape.",
+  "e_end_field": "The well site you once wired up has declined and is being shut in. You go to take down the equipment, unscrew the box, and the RTU inside is still blinking and reporting."
+ },
+ "choices": {
+  "c_where": {
+   "title": "The oil field crew or the orchard crew",
+   "situation": "The company is splitting into two crews. Oil work has plenty of rules and travel pay, and every entry to a well site comes with a stack of permits. Orchards are looser, pay less, and mean dealing with growers and figuring out what they want.",
+   "options": [
+    { "label": "The oil field crew", "result": "You learn to walk between entry forms, work permits and acceptance sheets. Once the rules are memorized, the work stops being frightening." },
+    { "label": "The orchard crew", "result": "You learn to squat at the edge of the field, ask first how the blossom went this year, and only then ask about the probes." }
+   ]
+  },
+  "c_mid": {
+   "title": "Take the exam for Level 4",
+   "situation": "The company says bids need certified staff and will pay for you to sit the exam for IoT Installation and Commissioning Technician (Level 4). The course is a week in Xi'an, right on top of spring installs.",
+   "options": [
+    { "label": "Go to Xi'an for the exam", "result": "The practical exam is far tidier than a job site. You get the certificate and come back to find the work has been waiting for you." },
+    { "label": "Finish the spring work first", "result": "You get two orchards done before blossom. The co-op chairman remembers you. The certificate can wait a year." }
+   ]
+  },
+  "c_oilman": {
+   "title": "The oil plant's information center is hiring contract staff",
+   "situation": "The client's information center is short of people and asks if you'd come over on contract. Similar pay, far less driving, and a lifetime of watching other people do the work you do now.",
+   "options": [
+    { "label": "Go to the client", "result": "You leave your toolbox in the company storeroom and sit down, for the first time, in an air-conditioned duty room.", "end": "You went to the oil plant's information center. From then on it was someone else walking the slope with a spectrum analyzer, while you sat at the screen asking whose side the problem was on. You ask a little more kindly than they used to." },
+    { "label": "Stay and keep driving", "result": "You thank them. The job goes to someone else, who now phones you often to hurry you up." }
+   ]
+  },
+  "c_high": {
+   "title": "Take the exam for Level 3",
+   "situation": "IoT Installation and Commissioning Technician (Level 3) tests end-edge-cloud integration and fault diagnosis. You usually go by feel. To pass you would have to relearn MQTT, protocol stacks and the network layers.",
+   "options": [
+    { "label": "Study nights in the hotels", "result": "Under county hotel lamps you pick apart protocol frames byte by byte, and find out you have been guessing all these years." },
+    { "label": "Don't, live by feel", "result": "When bids need a certificate they borrow someone else's name. When a site has trouble they call you." }
+   ]
+  },
+  "c_home": {
+   "title": "Big jobs far away, or stay in Yan'an",
+   "situation": "The prime contractor has big coal mine projects in Yulin and Ordos at a third more pay, six months away at a stretch. Your child is in primary school in Yan'an, and the grandparents aren't in great health.",
+   "options": [
+    { "label": "Go away for work", "result": "You spend two Spring Festivals in a mining camp dorm. The bank balance looks good, and your child's phone calls get shorter." },
+    { "label": "Stay in Yan'an", "result": "You keep running the wells and orchards, and you eat at home two days a week." }
+   ]
+  },
+  "c_ai": {
+   "title": "Build the company's fault knowledge base",
+   "situation": "The boss wants to feed the company's fault records into AI so new hires can ask it on site, and someone has to organize years of notes. If you write it, you are laying out for everyone the skill that feeds you.",
+   "options": [
+    { "label": "Write all of it down", "result": "You turn rodent bites, wasps and pulled plugs into entries, and the new hires' outage repair time falls by half." },
+    { "label": "Write only the outline", "result": "You write a dozen common cases and keep what really counts in your head. When something happens, everyone still calls you." }
+   ]
+  },
+  "c_apple": {
+   "title": "Go home and take over the orchard",
+   "situation": "Your parents can't work the orchard in Luochuan anymore and the land is about to be leased out. The co-op chairman urges you to come back, saying no one knows this sensor and fertigation setup better. It would be another kind of life, with each year's harvest up to the sky.",
+   "options": [
+    { "label": "Go back and grow apples", "result": "You move your toolbox home, and the first thing you do is put probes in your own ground.", "end": "You went back to the tableland and became one of the people waiting up for the late frost text. When someone else's probe breaks they come to you. You don't charge. Payment arrives by the bag, in apples." },
+    { "label": "Stay in engineering", "result": "The land goes on lease, and each year's rent covers a term of your child's tuition. You keep planting probes in other people's ground." }
+   ]
+  },
+  "c_lead": {
+   "title": "Take on Field Technical Supervisor",
+   "situation": "The company wants you as Field Technical Supervisor, leading a crew of eight. A small raise, and the client's calls, the workers' wages and the bad debts of the warranty period all become yours.",
+   "options": [
+    { "label": "Take it", "result": "You write your name on a construction plan for the first time, then find two of your men stop answering the phone once they're up a pole." },
+    { "label": "Keep doing the work yourself", "result": "You tell the boss you can't manage people, but you can still climb. The sticker on your toolbox gets replaced with a new one." }
+   ]
+  },
+  "c_mgr": {
+   "title": "Compete for Engineering Department Manager",
+   "situation": "The old manager has retired, and the boss asks if you want to be Engineering Department Manager. Bids, collections and annual qualification reviews would all be yours. You probably won't have to climb a pole again, and you probably won't sleep through the night again either.",
+   "options": [
+    { "label": "Take it", "result": "Your pickup goes to the crew leader. From now on, your business trips are bid meetings." },
+    { "label": "Turn it down", "result": "You decline. When the crew hears, they stand you a bowl of mutton soup." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "The autumn you turn sixty, your low-voltage electrician's license comes up for review and you don't go. On the day it expires, a reminder pops up on your phone. However bad the signal gets on the tableland after this, it's no longer your concern.",
+  "burnout": "Your knees and your back together put an end to the poles. The company offers you a desk, and after three months at it your whole body aches. You do the paperwork, inventory the company toolbox and push it into the storeroom. As the pickup leaves the yard, your phone still has two bars."
+ },
+ "stages": [
+  "You ride in a senior colleague's pickup and do the fetching: raising poles, pulling conduit, landing terminals, checking serial numbers against the site list. Setting parameters is his job. You watch with a laptop as he types serial commands. Your most important duty is not stepping in the wrong place on a well site.",
+  "A cluster of wells or a co-op's orchards belongs to you alone now. Gateways, LoRa nodes and dynamometers are yours from install to tuning, and the alerts come to your phone. You learn to talk to pump operators and growers who don't care about protocols. They want to know if the thing is accurate today.",
+  "You begin end-edge-cloud integration: trigger signals on site, match fields on the platform, write acceptance documents the client can't find fault with. You have serial tools, packet capture software and a set of test scripts. Unlike before, engineers from the client's information center now call you directly.",
+  "You rarely climb now. You read plans and track progress. How to deploy eight people and two trucks, whose warranty fault comes first, when to phone about the final payment: it all passes through you. When wages are late, the workers come to you before they go to the boss.",
+  "Your calendar fills with tender deadlines: reading bid documents, costing, annual qualification reviews, dinners with the client's section chief. You have to decide whether the company keeps earning its small money from well sites or goes after new energy stations. Trucks are something you only see in reports now."
+ ],
+ "work": [
+  "Your senior colleague has you add a termination resistor to the RS485 bus. You wire A and B backward and the data is garbage. He makes you find it yourself, and it takes all afternoon.",
+  "Old Ma walks you around the well site and points out where you must not take out your phone. You draw a little map of those spots on the back of the site list.",
+  "Soil probes have to go down thirty and sixty centimeters. The loess is too dry, so you pour water around the spot before they'll go in. The co-op chairman stands by, counting how much you use.",
+  "One well's load data keeps jumping. You open the dynamometer's connector and find a layer of oily sludge. You clean it and upload a photo. Old Ma says: told them already.",
+  "The tableland's LoRa gateway can't reach down into the gully. You walk the rim all day with a node on your shoulder and your phone logging signal, and end up mounting a repeater in an old wild pear tree.",
+  "The co-op's fertigation unit won't start on schedule. You climb into the pump house and find the controller clock reset after a power cut. You replace the battery and write the date on the box door.",
+  "During integration, the platform's pressure curve runs a step below the gauge on site. You check range, units and offset and find the client's conversion formula is the old version.",
+  "You write acceptance documents for the oil plant with a point list of 1,840 rows. The information center's engineer flags three. You go to the site and photograph each, and he accepts them all.",
+  "A batch of nodes needs a remote firmware upgrade. You try five of the nearest and wait two days. Only when nothing goes wrong do you dare push the full release.",
+  "Two of your crew fall out on the tableland over who climbed one more pole. You reschedule the second half of the year by pole count and stick it on the pickup's sun visor.",
+  "The orchard client wants to move the sensor points, which isn't in the contract. You take a change order to the co-op and read the extra cable and labor to the chairman item by item.",
+  "The night before bids close, the commercial team finds a performance certificate missing a stamp. You drive three hours to the client and wait at the gatehouse until work begins the next morning.",
+  "A wind farm job has thin margins and long payment terms. You spread three projects' collection curves over the table and tell the boss to take this one, but only half of it."
+ ],
+ "past": [
+  "Your father spent half his life on an oil workover crew, and the house is full of oily gloves. He tells you not to go into this line. Too much work.",
+  "In summer you work at your aunt's apple orchard thinning fruit until you can't lift your arms, at ¥80 a day.",
+  "You apply to a vocational college in the provincial capital for IoT application technology. The brochure says everything connected. You thought it meant fixing phones.",
+  "In practical class you first send readings from a temperature and humidity probe up to the cloud. The numbers jump on the screen, and it seems to you this might be something.",
+  "You take your low-voltage electrician's exam. An examiner with the look of an old hand has you wire a three-phase meter at the practical bench. You get it right, your palms soaked.",
+  "Before graduation a company in Xi'an offers you a desk job in customer service. The Yan'an firm says the pay is less but the work is real. Your father hears this and silently lights a cigarette."
+ ],
+ "late": {
+  "pension_note": "Estimated: an employee pension, with contributions at the lower base typical of small companies.",
+  "scenes": [
+   "The access gate in your neighborhood breaks, and the manufacturer needs a week. You test it with a multimeter and replace a relay. The property office sends over half a case of milk.",
+   "On a long-distance bus, you want to shout stop whenever a solar panel on a roadside pole is pointing the wrong way. The person beside you asks what you're looking at. You say that panel's off by fifteen degrees.",
+   "Your knee has been replaced and walking on level ground is fine. Well sites are patrolled by robot dogs now. You see it on the news and think their legs aren't as good as yours were.",
+   "You don't talk about the trade much. When your phone shows one bar, you no longer hold it up to look for more.",
+   "You rest at home for half a year. Your back improves and you get restless. When the neighborhood committee asks you to help watch the gate, you spend three days studying the gate's sensors.",
+   "You lend a hand at an electric scooter repair shop in the county town, where you're quick with wiring faults. The owner pays by the day, less than engineering did, but you can eat at home.",
+   "All your monthly medical insurance money goes to your knees and back. You've worked it out: nearly all those old travel allowances have gone back where they came from.",
+   "The pay in this trade has gone up. But since changing jobs, you never have to work out at five in the morning how long the drive to a well site will take. You treasure that small benefit.",
+   "In your new place, every spring you still check the lowest temperature in the forecast. When it goes below zero you message someone, whether they need it or not.",
+   "The platform you built back then has long gone unmaintained, its domain expired and page dead. You tried it once. You haven't since.",
+   "The Wi-Fi at a restaurant is slow, and you ask the owner where the router is. It's behind a sheet-metal cabinet. You shift it a little, and he brings you an extra plate of smashed cucumber.",
+   "On the tableland the apples are picked by robots now. You buy a case to try. About as sweet. You scan the QR code on the bag, and it works."
+  ],
+  "closing": {
+   "retire": "Evening wind comes up across the tableland. Somewhere a fertigation unit starts on schedule, and you can hear it across several gullies.",
+   "burnout": "The charger by the bed shows a small green dot, and the signal is full.",
+   "end": "You wind up the leftover cable, bind it with a zip tie and hang it from a nail in the yard wall."
+  }
+ }
+}

@@ -1,0 +1,178 @@
+{
+ "id": "media-ops-cs",
+ "occupation": "Omnimedia Operator",
+ "role": "Omnimedia Operations Associate",
+ "headline": "At a media company on the edge of Changsha's Malanshan creative park, an operations associate serving eleven accounts, three platforms and a roomful of clients at once",
+ "unit": "A media company in Changsha (running accounts for local restaurants, tourism bureaus and appliance brands)",
+ "unit_type": "Media company",
+ "city": "Changsha",
+ "city_tier": "New first-tier city",
+ "education": "Bachelor's degree (Journalism)",
+ "level": "You can write a headline and cut fifteen seconds. Why a video suddenly stops getting views, you can only blame on the algorithm.",
+ "intro": "The company rents half a floor on the edge of Malanshan. Next door is a livestreaming outfit, and someone in the corridor is forever testing a mic. On your first day your supervisor opens the back end of eleven accounts for you: a local crayfish brand, a county tourism account, one that sells air fryers. Every account needs a post before nine tonight, she says, and don't mix up the accounts. Last time someone posted the fryer copy to the county tourism page.",
+ "salary_note": "Estimate: a Changsha media company pays below the same job in first-tier cities, with project commissions in peak season.",
+ "facts": [
+  {
+   "label": "Omnimedia Operations Associate (current level)",
+   "value": "0–2 years, ¥5,270–7,750 a month (national average, derived from pay by experience)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Omnimedia Operations Supervisor (2–5 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥16,300 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Cross-team coordination and client relationships",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Daily and weekly data reports",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "194 related listings nationwide, 2 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "First thing at the office you check the dashboards. Last night's crayfish video has a completion rate of eleven percent. The top comment reads: you didn't devein it.",
+  "Topic meeting. Your supervisor asks if this week's trending stories can be used, and you sort them into three columns: usable, unusable, and usable but the client will yell.",
+  "You write a script. The first three seconds need a hook, and the first words can't be hello everyone. For one sixty-second piece you write eleven openings.",
+  "You carry a gimbal to Pozi Street for a restaurant shoot. The owner puts his best crayfish in front. You tell him to leave it alone and bring the light over.",
+  "In the group chat the client sends a voice message saying this doesn't feel right, it should be classier and also more down-to-earth. You screenshot the transcript and forward it to the designer.",
+  "Compliance review. Absolute claims under advertising law must be replaced one by one. You can't say best, you can't say number one, and you find-and-replace through the document.",
+  "The livestream starts and you run the control desk. When the host shouts for the link, you put the product up. Someone in the chat asks about returns, and you type faster than the host can talk.",
+  "Post-stream recap: GMV, watch time and conversion in three lines. On the way home you eat a skewer of fried sugar cakes. Your phone is still buzzing with the daily report reminder."
+ ],
+ "ladder": [
+  { "title": "Omnimedia Operations Associate", "stage": "Post content", "focus": "Write scripts, edit video, schedule posts, answer comments and get a grip on the daily report" },
+  { "title": "Omnimedia Operations Supervisor", "stage": "Run accounts", "focus": "Own the topics and ad spend for a group of accounts, lead two or three associates, and answer to data and the client" },
+  { "title": "Omnimedia Operations Manager", "stage": "Run projects", "focus": "Manage project teams and budgets, negotiate client renewals, and handle public-opinion trouble and platform rule changes" },
+  { "title": "Director of Operations", "stage": "Business line", "focus": "Manage a business line's revenue and team, and decide which clients to take and which platforms to bet on" },
+  { "title": "Deputy General Manager", "stage": "Running the firm", "focus": "Answer for the company's cash flow, government clients and direction of change" }
+ ],
+ "ai_tasks": [
+  { "name": "Cross-team coordination and client relationships", "how": "AI can tidy minutes and requirements. Persuading a client, securing resources and smoothing things over in a group chat still takes a person." },
+  { "name": "Daily and weekly data reports", "how": "Traffic sources and conversion data roll up automatically into reports that flag anomalies. People only spot-check definitions and decide whether to change strategy." },
+  { "name": "Topic ideas and first-draft scripts", "how": "AI batch-produces topics, scripts and rewrites for each platform. People judge which one fits the brand and revise the words until they sound like someone talking." },
+  { "name": "Making graphics and short video", "how": "AI can illustrate, rough-cut, caption and voice over. People take care of taste, fact-checking and advertising compliance." },
+  { "name": "Finding influencers and monitoring public opinion", "how": "AI screens influencers, watches for negative chatter and drafts responses. Negotiating deals and making the call in a crisis are left to people." }
+ ],
+ "events": {
+  "e_viral": "A video you cut on the side, of a restaurant owner showing how to split a crayfish, blows up, three million views overnight. A line forms outside the client's restaurant. The owner credits his skill, the company credits its methodology.",
+  "e_limit": "An account is suddenly throttled, its views falling from a hundred thousand to three hundred. The platform doesn't explain. You check the last thirty posts one by one and end up suspecting the background music, though no one dares to be sure.",
+  "e_618": "Around the 618 shopping festival and Singles' Day the whole company streams for three weeks straight. Your body clock now runs on the live room, and the colleagues who get up in the afternoon all look better than you do.",
+  "e_crawfish": "When crayfish season comes, from May to August you practically live at late-night food stalls. Now whenever you see something red, your mind checks whether the color temperature will post well.",
+  "e_ban": "A network account built up over three years gets permanently banned for one violation, and four hundred thousand followers are gone overnight. The client asks if those followers aren't their asset. You read through the platform agreement. The answer is not easy to say aloud.",
+  "e_neck": "The X-ray shows your neck has lost its natural curve. Bottles of dry-eye drops are lined up on your desk. The doctor asks how long you look at a screen each day, and you think it over and can't come up with anything shorter than fourteen hours.",
+  "e_contract": "The annual framework is up, and the client's new marketing director wants a full re-pitch. You bring three years of account data to the pitch. She flips one page and says she'd like something fresh.",
+  "e_county": "On the county tourism job, bureau staff review everything three times before it goes on the government account. You've filmed a field of rapeseed flowers beautifully. By the ninth version of the copy, only the rapeseed flowers are left.",
+  "e_crisis": "Someone films a hygiene problem at a client's restaurant and posts it online, and at two in the morning the group chat explodes. You draft the statement. The boss wants an apology with no admission, the lawyer wants an admission with no apology. It goes out at seven, and you haven't slept.",
+  "e_friend_food": "At a meal with friends you reach for your phone as soon as the food arrives. A friend holds down your hand. You put the phone away, and forty seconds later you're writing a headline for this table in your head.",
+  "e_algo": "The platform changes its recommendation rules again, and everything you know about launching an account stops working. The trainer the company paid for is still teaching last month's playbook, and you correct it in your seats as he talks.",
+  "e_ai_script": "AI turns out twenty scripts and platform rewrites in a minute. The associates' headcount shrinks from eight to five, and those who stay pick holes in what the machine writes.",
+  "e_ai_avatar": "Digital human hosts go to work, selling air fryers even at three in the morning. They convert worse than real people but cost nothing. The client does the math: real people by day, all replaced at night.",
+  "e_ai_edit": "One-click rough cuts finally work, and you find the best shot is still the one where the owner's hand trembled. AI deleted it as waste. You fish it back out of the footage and put it first.",
+  "e_commission": "Year-end commissions come through, and an appliance account has beaten its target. The money that arrives is more than your pay for half a year, and you bring your parents up from Zhuzhou for a trip.",
+  "e_turnover": "Three people leave the group this quarter. One goes to Hangzhou, one goes home to open a milk tea shop, one goes off to take the civil service exam. In the handover documents, the longest line is the one listing account passwords.",
+  "e_stomach": "Years of eating late after shows, and the endoscopy says chronic gastritis. The doctor says eat on schedule. You look at next week's streaming roster and take a screenshot of what he said.",
+  "e_rule": "The platform brings in a new labeling rule for AI content, and hundreds of old posts must be checked and tagged one by one. For the first time, you veterans feel the manual work has come back."
+ },
+ "choices": {
+  "c_title": { "title": "Whether to use clickbait this once", "situation": "Your supervisor says if this account doesn't get going the client will switch agencies. You have a headline that would triple clicks, though it doesn't really match the content, and the comments will likely be furious.", "options": [
+   { "label": "Post it, survive first", "result": "Clicks go up, and the client sends three clapping emojis to the group. You collapse the angry comments one by one." },
+   { "label": "Write it straight", "result": "The numbers are flat, and your supervisor pulls you in for a ten-minute talk. That account's followers do stay longer than those on the other accounts." }
+  ] },
+  "c_cert": { "title": "Get certified, move up to Omnimedia Operations Supervisor", "situation": "The company says those with an omnimedia operator certificate and ad platform certification get priority for the next Omnimedia Operations Supervisor slot. The exam takes weekends, and weekends are shoot days for restaurant clients.", "options": [
+   { "label": "Shoot by day, study by night", "result": "You learn every term in the ad back end and get the certificate. A screenshot of your certification goes into the company's sales brochure." },
+   { "label": "Build the accounts first", "result": "You put off the certificate. Two of your accounts take off that year, and what the boss remembers is the numbers." }
+  ] },
+  "c_hangzhou": { "title": "A Hangzhou livestream company makes an offer", "situation": "A livestream e-commerce company in Hangzhou offers one and a half times your pay, working nonstop in sales seasons, but you'd learn ad buying for real. In Changsha the rent is cheap and you get along with your colleagues.", "options": [
+   { "label": "Go to Hangzhou", "result": "You spend three years in Binjiang and can work the ad platform with your eyes closed. You've lost some hair, and when you come back to Changsha your market value is a notch higher." },
+   { "label": "Stay in Changsha", "result": "You stay. On Friday nights you can still have late snacks with colleagues at Wuyi Square, a thing that has no line on any job form." }
+  ] },
+  "c_client": { "title": "Whether to take this account", "situation": "A cosmetic-medicine clinic will pay thirty percent above the going rate, and its copy can easily cross the line. Company cash flow is tight this quarter, and the boss leaves it to you.", "options": [
+   { "label": "Take it, lock down compliance", "result": "Every piece goes through legal and the client feels hemmed in, but payment comes fast. Everyone is paid on time this quarter." },
+   { "label": "Pass", "result": "You and the boss go over the cash flow and decide against it. The department outing that month is canceled, and nobody says much about it." }
+  ] },
+  "c_manager": { "title": "Compete for Omnimedia Operations Manager", "situation": "The boss wants you as Omnimedia Operations Manager, running a dozen-plus people and client renewals. You have a real feel for content, but as manager you may not cut more than a few videos a year.", "options": [
+   { "label": "Compete", "result": "You start reading the profit and loss, and your footage library permissions go to someone else. The first time you have to let someone go, you don't sleep well the night before." },
+   { "label": "Keep making content", "result": "You don't want to leave the footage. While others manage people, an account you built wins a local award." }
+  ] },
+  "c_ai": { "title": "Move the whole content line to an AI workflow?", "situation": "The boss wants scripts, graphics and rough cuts all hooked up to AI, leaving only a third of the people. You're to write the plan. Many on the team you brought up yourself.", "options": [
+   { "label": "Write it, and decide who stays", "result": "You reorganize the work, moving some people to review and live-room control. When it's done, five have left and those remaining get raises." },
+   { "label": "Run a limited pilot", "result": "You say give it half a year. A competitor's quotes come in thirty percent lower, and the boss starts asking how long half a year still is." }
+  ] },
+  "c_county_job": { "title": "The media center back home is hiring", "situation": "Your home county's media center is hiring for new media, a permanent state post, at sixty percent of your pay and no more all-nighters for sales seasons. Your mother has already forwarded the notice to the family group chat.", "options": [
+   { "label": "Go back and sit the exam", "result": "You place second, and the person in first gives it up. You hand over the back ends of all eleven accounts cleanly and leave every client group.", "end": "You go back to the county media center and film spring plowing, the start of the school year and officials on inspection tours. When a piece goes out your mother's colleagues all see it. You don't check the numbers much anymore." },
+   { "label": "A few more years in Changsha", "result": "You tell your mother to wait a bit. The same day, she posts a screenshot in the group about someone else's child passing the civil service exam." }
+  ] },
+  "c_studio": { "title": "The company is shrinking its account business", "situation": "Margins on running accounts have been squeezed thin by AI and low-cost teams, and the company has decided to keep only government projects. You can stay and work on tenders, or take a small team out to serve local businesses.", "options": [
+   { "label": "Leave and start a studio", "result": "The three of you rent a room in an old apartment block in Kaifu district. Your first client is a chopped-chili factory.", "end": "Your studio films things for small county factories, twenty-odd clients a year. Platforms have come and gone, and your clients are still asking if it can be classier and also down-to-earth." },
+   { "label": "Stay for government projects", "result": "You start reading tender documents and learning the scoring rules. Your content never goes viral again, and the accounts are all paid on time." }
+  ] }
+ },
+ "endings": {
+  "retire": "In your final meeting at the company you listen to young people talk about a new platform, a name you're hearing for the first time. Most of the accounts you ran in more than thirty years can no longer be opened. You log out of the back ends on your phone one by one, and it asks you if you are sure.",
+  "burnout": "Three days after a big sale you fall asleep at the live-room desk, and it's the cleaning lady who wakes you. Your neck and stomach won't let you stay up any longer. You resign and leave your work groups one by one. At the forty-first, the phone finally goes quiet."
+ },
+ "stages": [
+  "Your daily job is to turn an idea into a record in the back end: write a script, rough-cut it in editing software, schedule the post, answer comments, fill in the daily report. Your direct contacts are your supervisor and the camera operator, and what clients say reaches you through her. You're not responsible for results yet, but posting to the wrong account would be on you.",
+  "A group of accounts is yours, with two or three associates under you. You set the weekly topic sheet, launch ad campaigns, watch completion, engagement and conversion, and check in the middle of the night to see if ROI has dropped. You start speaking directly in client groups, your manner moving from okay to we recommend. Unlike an associate, if an account lives or dies, it's on you.",
+  "You manage project teams and the budget sheet. Renewal talks, influencer contracts and crisis plans are all in your hands now, and in the back end you look only at weekly reports and anomalies. The most tiring thing each week is meetings: talking profit to those above, growth to clients, and why this month's commission is smaller to those below.",
+  "You manage a business line's revenue and decide which platform to bet on this year, which types of client to drop, and how many people to keep. At pitches you sit in the middle and say the last three minutes. Staff utilization and gross margin in Excel matter more to you than any viral hit.",
+  "The company's cash flow, collections from government clients and the direction of change all sit on your calendar. You go to meetings at the tourism bureau and to the bank to discuss credit. You say one word about content and everyone does it, so you have learned to say less."
+ ],
+ "work": [
+  "Qiang, the camera operator, brings back forty minutes of restaurant footage. In the editor you keep just fifteen seconds and put the owner's wife flipping the wok in the first frame. Your supervisor says that opening will hold people.",
+  "A viewer in the comments asks if the air fryer can roast sweet potatoes. Instead of pasting a script, you go home after work, roast one, take a picture and reply. That reply rises to the top.",
+  "On the compliance sheet you mark twenty banned words and replace them one at a time in the county tourism copy. The bureau's publicity officer writes back: if we can't say most beautiful, our leaders won't really accept that.",
+  "ROI in the ad back end drops to 0.8. You change targeting from everyone to moms within thirty kilometers, and the next day it's back to 1.6. Your associate Yang asks how you could tell. You say you just try things.",
+  "You negotiate a filing rate with a restaurant-visit influencer. He asks twenty thousand, and you bring out the completion data for his last ten posts and go through them. You settle at eight thousand. He says next time don't bring a spreadsheet.",
+  "A host blurts out lowest price online in the live room. You type a warning at the control desk straight away and add a correction to the next round of the script. In the compliance review, that segment is kept on file.",
+  "At a client's quarterly review you explain why follower growth has been slow, and one retention curve wins you next year's budget. Procurement says next time, write the discount in as well.",
+  "You write three tiers in the crisis plan: who speaks within half an hour, who signs off the statement, who to find if the boss's phone won't connect. The day you really need it is at two in the morning, tier two.",
+  "Two clients both want more staff, and looking at the schedule you can keep just one. You call the marketing director you couldn't keep and suggest another agency that would suit him better.",
+  "The night before a pitch you tell the team to delete all the methodology and leave just three real bad reviews of the client's restaurants and how to fix them. The next day the judges question you for twenty minutes more.",
+  "Collections from the tourism bureau have slid to the third quarter, and the bank credit needs renewing. You go back and forth with copies of contracts and invoices, then return to the office and push the bonus date back ten days.",
+  "At the company's weekly meeting you make a rule: for anything AI makes, state in the credits who reviewed it. A young colleague asks what use that is. You say it's so we know who to find when something goes wrong. They laugh. You don't."
+ ],
+ "past": [
+  "Your home is in Zhuzhou. You moderate a forum for your school, and one thread keeps you arguing till the early hours. You fall asleep in class the next day.",
+  "You pick journalism, and a teacher says you could be a reporter one day. You don't foresee that by the time you graduate, few places around you will be hiring reporters.",
+  "You write a review of the school canteen on the campus social account, and it gets over a hundred thousand reads. Someone from the logistics office has a talk with you. It's the first time you feel how strong a headline can be.",
+  "A summer internship at a newspaper. A veteran reporter takes you to two district meetings, and in all, four words of your copy get changed. That year you decide not to take this road.",
+  "You apply around in graduation season. In the interview at this Changsha media company you're asked to write three headlines on the spot for a serving of stinky tofu. You do, and start work the following week."
+ ],
+ "late": {
+  "pension_note": "Estimate: enterprise employee pension, contributed at a low base in the early years, with a low replacement rate.",
+  "scenes": [
+   "You shut down your social feed and keep one small account just for the weather. Once a month the system reminds you: your account has been inactive for many days.",
+   "The neighborhood wants to make an anti-fraud video, and the director hands you a phone. You say the first three seconds can't be an official talking. The director says that won't do. You film the official talking.",
+   "Dry eye and your neck have become regular clients. You've learned to hold screen time to two hours a day, which is harder than holding an ad budget ever was.",
+   "The crayfish brand you once ran is long gone, and the offices by Malanshan have had three sets of companies. Now machines write and post for themselves, and when one drifts past on your phone you can tell which template it used.",
+   "You set your phone to black and white. Every day you walk to the Xiang River and back, and take no pictures.",
+   "You help put up notices for the calligraphy class in the neighborhood. A sheet of A4 goes on the wall, nobody likes it, and you find that very good.",
+   "Your stomach is much the same, and you must finish eating before ten. The late-night stalls downstairs only open then. You walk past them with your phone in your pocket.",
+   "Your job now doesn't involve data, but you still remember those months of completion rates, like the phone number of an ex.",
+   "The platform rules have changed again, and a newcomer sends you a message about launching an account. You reply: I don't know either. It's never told anyone.",
+   "You've left the trade entirely, and work half a mu of vegetables with your parents in the county. The chilies grow well. You take a picture and don't post it.",
+   "At dinner you still shift the best-looking piece to the front of the plate, then set down your chopsticks and remember that nobody needs to film it.",
+   "Three seconds into a movie you know if you'll sit through it. Your family says that's a tiring way to live. You say you're much better now, and can last five seconds."
+  ],
+  "closing": {
+   "retire": "A wind has come up on the Xiang River and no one is holding up a phone. No one published this evening.",
+   "burnout": "The phone is in another room. The food is hot, and eaten on time.",
+   "end": "The last thing you posted is still up, with two likes under it."
+  }
+ }
+}

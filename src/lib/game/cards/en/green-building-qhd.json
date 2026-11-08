@@ -1,0 +1,218 @@
+{
+ "id": "green-building-qhd",
+ "occupation": "Building Energy Efficiency and Emissions Consultant",
+ "role": "Assistant Energy Engineer",
+ "headline": "Back in Qinhuangdao with a master's in HVAC, at a consultancy of a dozen people, carrying a thermal camera through hotels, hospitals and new buildings to find where the energy goes",
+ "unit": "A building energy consultancy in Qinhuangdao",
+ "unit_type": "Local energy consultancy",
+ "city": "Qinhuangdao",
+ "city_tier": "Third-tier city",
+ "education": "Master's degree (heating, gas supply, ventilation and air conditioning)",
+ "level": "You can calculate loads and run energy simulation software. You can't yet name all the meters in a switchgear room, and you can't quite follow what building owners are saying.",
+ "intro": "Qinhuangdao's buildings keep two sets of books. In summer the seaside hotels can't find you a room and the chillers run flat out. In winter the same building is half empty and the heating bill doesn't drop a cent. Your boss hands you an infrared camera and tells you to bring a down jacket. Today you're going up on the roof, and the rest can wait.",
+ "salary_note": "Estimated: a small Qinhuangdao consultancy pays below the national average, with project bonuses that come and go.",
+ "facts": [
+  {
+   "label": "Assistant Energy Engineer (current level)",
+   "value": "0–3 years, ¥3,500–5,200 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Energy Engineer (3–8 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Guiding contractors to carry out energy-saving measures",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Surveying existing energy use and collecting operating data",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "At a seaside hotel's engineering office, the supervisor pushes three years of electricity and gas bills across to you. A few months are missing and he says they can't be found. You highlight the gaps in yellow.",
+  "Down in the switchgear room to read the submeters. The nameplate doesn't match the drawings. You take a photo and ask the duty electrician if this pump was replaced long ago.",
+  "Up on the roof to check the cooling towers and insulation. Sea wind shakes your tape measure. Gulls have pecked open a patch of insulation, and you photograph it and give it a number.",
+  "A boxed lunch in the duty room. The electrician mentions that the bypass valve has been open for seven years. You won't find that on a drawing, so you write it down.",
+  "Back at the office you run the energy model, comparing hourly load against the bills. It's way off. Either the model is wrong or the building has another set of books.",
+  "The chief engineer edits your report, changing estimated energy savings of 30 percent to under the following boundary conditions. Someone, he says, will have to answer for that sentence one day.",
+  "You stick a few strips of weather seal on your rented room's window frame. Downstairs an AC outdoor unit has dripped all over the ground, and you look a few seconds longer than necessary."
+ ],
+ "ladder": [
+  { "title": "Assistant Energy Engineer", "stage": "Collecting data", "focus": "Reading meters, gathering bills, running simulations, writing the data chapters" },
+  { "title": "Energy Engineer", "stage": "Own projects", "focus": "Running energy audits and retrofit plans independently, facing owners and contractors" },
+  { "title": "Senior Energy Engineer", "stage": "Signing", "focus": "Signing and answering for reports, technical review of ultra-low-energy and carbon accounting" },
+  { "title": "Technical Director", "stage": "Gatekeeping", "focus": "Setting the firm's technical standards, leading the team, meeting major owners and experts" },
+  { "title": "Partner", "stage": "Running the firm", "focus": "Licenses, collections and the books on energy performance contracts" }
+ ],
+ "ai_tasks": [
+  { "name": "Surveying existing energy use and collecting operating data", "how": "AI can link to building systems and bills and clean the data automatically. People still have to see the equipment and ask the maintenance staff about what the data doesn't show." },
+  { "name": "Analyzing energy data to find savings potential", "how": "AI benchmarks, spots anomalies, breaks down consumption and screens for potential faster than people. People spot-check the conclusions and that the data definitions line up." },
+  { "name": "Designing energy-saving retrofits", "how": "AI can generate several draft plans and rough comparisons. People weigh actual building conditions, the owner's budget and buildability, and answer for the plan." },
+  { "name": "Recommending energy-saving technologies and materials", "how": "AI quickly finds and compares performance figures and applications. People judge whether a product will hold up on this job and see through the vendor's claims." },
+  { "name": "Calculating energy savings and emissions benefits", "how": "AI batch-calculates savings, reductions and payback with established methods. People confirm the boundary conditions, baseline and emission factors." },
+  { "name": "Compiling energy diagnostics and consulting reports", "how": "AI drafts reports from data and plans, using templates and generating charts. People review the conclusions, sign off and adjust the wording for each client." },
+  { "name": "Guiding contractors to carry out energy-saving measures", "how": "AI can help organize requirements and checklists. But watching quality at the site, coordinating contractors and settling changes on the spot are mostly up to people." },
+  { "name": "Monitoring post-retrofit energy use and evaluating results", "how": "AI compares before and after, screens out weather and occupancy effects and drafts the assessment. People find out why results fell short and explain to the owner what to adjust." }
+ ],
+ "events": {
+  "e_bill": "Your calculated savings are double what the bills show. The chief engineer sees at a glance you put vacant months into the baseline. You rework it until midnight and learn the first rule: ask which months the building was empty.",
+  "e_blower": "Your first airtightness test on an ultra-low-energy building. The blower door goes up, every window and door in the building is shut, and you hunt along each seam with a smoke pen. The workers say this is harder than plastering.",
+  "e_winter": "Infrared inspections have to be done on heating-season dawns, when the temperature difference is big enough. You go up the scaffolding at 5 a.m. You can only work the camera with your gloves off, and your fingers stop listening.",
+  "e_hotel": "The hotel owner refuses to shut off anything in July or August. In peak season, he says, one complaint is worth ten thousand kilowatt-hours. The whole plan gets squeezed into the off-season between October and April.",
+  "e_report": "The year-end energy assessment reports all land at once and you spend four nights at the office. The guy at the print shop knows without asking that your documents get double-sided perfect binding with color pages.",
+  "e_hospital": "A hospital's facilities chief calls you in and says the operating room ventilation is untouchable, and the rest is yours. You touch only the boiler flue's waste heat, saving a car's worth of money a year. He treats you to dumplings.",
+  "e_vendor": "An exterior coatings maker comes knocking, claiming startlingly low thermal conductivity and offering a kickback. You ask for a third-party test report and never hear from them again.",
+  "e_spec": "The national code changes, and limits for walls and windows all tighten. Plans you are halfway through have to be recalculated, and the owner wants to know who's going to bring up the extra cost.",
+  "e_knee": "With the seaside damp and all those roofs and mechanical floors, your knees now forecast rain ahead of time. You do the reports that involve stairs first and put off the stairs themselves.",
+  "e_ai_data": "Once the building systems are connected, a model does the submeter cleaning and benchmarking a hundred times faster than your old Excel. You no longer write the first chapter of the report. Your boss concludes one assistant is enough.",
+  "e_ai_base": "The model counts the months when a shopping mall reopened after renovation as energy savings, producing a figure too lovely to be true. You change the baseline back. The owner isn't pleased, but the review panel nods.",
+  "e_emc": "Three years into an energy performance contract, the owner won't accept the savings and the shared payment stalls. You turn three years of monthly bills and weather data into one chart and sit through four rounds of meetings.",
+  "e_passive": "An ultra-low-energy housing project is handed over. In the first winter a resident complains there are no radiators. You go to their home and spend an hour and a half explaining ventilation and heat recovery. Their expression shifts from doubt to courtesy.",
+  "e_carbon": "Carbon accounting suddenly takes off, and several companies ask how to calculate building emissions. You recheck the emission factor table and find two figures in the widely circulated version are copied wrong.",
+  "e_subsidy": "A retrofit subsidy expires and owners all lose interest at once. The firm's contracts fall from more than twenty a year to nine, and the boss starts thinking about giving up half the office.",
+  "e_eye": "These days you enter any room and touch the window frame first, then check the corner of the sill for condensation marks. Invited to dinner, you ask whether these are triple-glazed. The table goes quiet for a moment.",
+  "e_junior": "A newly hired master's graduate turns in a flawless report, all model-generated. You take him to a switchgear room and ask him which of these meters is lying. He freezes.",
+  "e_stairs": "This time you don't go up on the roof. A young colleague shows you with a livestream. You can see through the screen that a seam in the insulation is wrong. Your legs just don't much want to move anymore.",
+  "e_sign": "At a review, the experts challenge your baseline year. You bring up what the electrician said about the bypass valve, and only then does the room believe the curve. What the data doesn't say has always been your capital."
+ },
+ "choices": {
+  "c_track": {
+   "title": "Energy audits first, or ultra-low-energy projects first",
+   "situation": "Both lines need people. Audits are the firm's old trade: switchgear rooms and bills, steady work. Ultra-low-energy building is the city's calling card, which means staying on top of every strip of tape on site. Fine, labor-heavy work.",
+   "options": [
+    { "label": "Energy audits", "result": "In two years you read the bills of more than sixty buildings and start being able to guess what a building does from the shape of its electricity bill." },
+    { "label": "Ultra-low-energy projects", "result": "You stay on the site until the window frames' vapor membrane is all taped. The masons start calling you the tape engineer." }
+   ]
+  },
+  "c_engineer": {
+   "title": "Sit the intermediate title and become Energy Engineer",
+   "situation": "The firm's license needs staff with intermediate titles, and your boss is pressing you to qualify as Energy Engineer. You need papers and a track record, and the defense falls at the busiest end of the report season.",
+   "options": [
+    { "label": "Squeeze it in", "result": "You turn two projects into papers. At the defense you're asked how you chose your weather data, and you answer reasonably well." },
+    { "label": "Not this year", "result": "You work briskly through the year-end jobs. The boss gives you a fat red envelope and says next year." }
+   ]
+  },
+  "c_design": {
+   "title": "Join a design institute as an HVAC engineer",
+   "situation": "A classmate at a Beijing design institute says HVAC is short of people and pays 40 percent more. There's just the overtime at the drawing board, and leaving this city.",
+   "options": [
+    { "label": "Go to Beijing", "result": "You say goodbye to the seaside roofs, and your desk fills up with duct drawings.", "end": "You joined the design institute in Beijing. From then on you calculated for buildings yet to exist and never again looked at their bills once they stood. Now and then, next to a bypass valve on a drawing, you add one extra note." },
+    { "label": "Stay in Qinhuangdao", "result": "You reply to your classmate: let me think about it. At the weekend you go up on a seaside roof and measure insulation as usual." }
+   ]
+  },
+  "c_num": {
+   "title": "The owner wants a higher savings figure",
+   "situation": "A retrofit is being put forward for an award, and the owner hints that the report could show five points more savings. The firm is waiting on this payment this month. The number is yours, and so is the signature.",
+   "options": [
+    { "label": "Report what's true", "result": "You write all the calculation boundaries into the body of the report. The owner hires another firm for the next phase, and your boss sighs beside you for days." },
+    { "label": "Adjust the boundary conditions", "result": "You don't change the number. You just pick a different baseline year. The report passes and the money arrives, and you remember it very clearly." }
+   ]
+  },
+  "c_ai": {
+   "title": "Take over the AI calculation workflow?",
+   "situation": "The boss wants to hand calculations and reports to AI, with someone who knows the trade setting the rules: how to take the baseline, which factors must not be misused. Take this on and you'll hardly go on site again.",
+   "options": [
+    { "label": "Take it over", "result": "You write a thirty-page set of rules titled Do Not Calculate It Like This. Every mistake the model makes ends up in it." },
+    { "label": "Keep doing site work", "result": "You keep going up on roofs and take the model's numbers to the site to check them one by one." }
+   ]
+  },
+  "c_senior": {
+   "title": "Apply for Senior Energy Engineer",
+   "situation": "Becoming a Senior Energy Engineer takes a record of leading projects, papers, and the ability to defend a report before a review panel. One of the judges is someone you stood up to at a review some years ago.",
+   "options": [
+    { "label": "Apply", "result": "That day the judge asks the most detailed questions. You answer each in turn. At the end he says: you read this number off the meter yourself, didn't you?" },
+    { "label": "Wait a couple of years", "result": "You put your energy back into your projects, and the chief engineer goes on signing." }
+   ]
+  },
+  "c_gov": {
+   "title": "Move to the client side as an energy manager",
+   "situation": "A hotel chain is hiring an energy manager to run the books for a dozen or so northern properties. Steady pay, no bidding, no chasing payment. Only, from now on you would be beating down consultancies' prices for the owner.",
+   "options": [
+    { "label": "Join the hotel group", "result": "Your identity changes. For the first time you hear a young consultant call you Teacher on the client side.", "end": "You went to the hotel group as an energy manager and ran the numbers for a dozen properties year-round. When consultants send reports, you turn first to the baseline year. No one has ever gotten anything past you." },
+    { "label": "Stay at the consultancy", "result": "You decline. That month you pick up two more small owners, both on six-month payment terms." }
+   ]
+  },
+  "c_director": {
+   "title": "Take the Technical Director seat",
+   "situation": "The chief engineer is retiring and wants you as Technical Director. From now on, the bottom line on every report in the firm rests with you. Between the number the sales side wants and the number you're willing to sign, you have to find the line.",
+   "options": [
+    { "label": "Take it", "result": "You start writing comments on other people's reports, which is more tiring than writing your own." },
+    { "label": "Decline, keep doing projects", "result": "You tell the boss you would rather stay with specific buildings. Directors come and go, and your projects stay." }
+   ]
+  },
+  "c_partner": {
+   "title": "Buy in and become a Partner",
+   "situation": "The boss wants to retire and asks if you will buy in as a Partner. It would take years of savings, plus the outstanding receivables and a pile of licenses about to expire.",
+   "options": [
+    { "label": "Buy in", "result": "You sign the partnership agreement and trade your family's savings for a stack of accounts receivable." },
+    { "label": "Don't", "result": "The firm is sold to a big out-of-town group. Your desk stays where it is. The letterhead changes." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "At the end of the heating season the year you turn sixty, your assessment credentials expire and you don't renew them. The seaside buildings' books now refresh hourly on a screen. The day you clear out your office is very ordinary. There's a small condensation mark in the corner of the windowsill, and you wipe it away with a finger.",
+  "burnout": "Several years of year-end reports in a row, and your knees and blood pressure stop cooperating. You tell the boss you're done and hand your projects over one at a time, each with a page only you could write: which meter in this building can't be trusted."
+ },
+ "stages": [
+  "You collect the bottom layer of the data: reading meters in switchgear rooms, asking owners for bills, entering three years of electricity and gas into a clean table, and running it through energy simulation software. You write the report's longest and least-read second chapter. The electrician in the engineering office is the person you most need on your side.",
+  "You start managing a building alone, from walkthrough and energy audit to retrofit plan. To owners you explain payback in terms they understand. With contractors you stay on window frames and insulation details. At the last level you answered for the data. At this one you answer for whether the plan works.",
+  "Your name is on the report cover now. You review other people's baselines and emission factors, run the technical checks on ultra-low-energy projects, and defend conclusions before review panels. You need to understand both the site and the model, and above all when to say this number can't be written down.",
+  "You set the firm's calculation boundaries and report templates, lead four or five engineers and meet major owners and review experts. The technical bids are yours, and so are the projects in trouble. Meetings and comments fill most of your calendar, and you go up on a roof only a few times a year.",
+  "Every month you look at the collection table, the annual license review and the cash flow on energy performance contracts. Which owners' accounts can be collected, whether to bid jointly with a big outside firm, whether to take up carbon accounting as a new line: it's all decided here."
+ ],
+ "work": [
+  "An electrician points out that two meters in a panel are wired backward. Three months of your submetered data is void. You buy him a carton of cigarettes in thanks and read them all again.",
+  "In Excel you plot the hotel's daily occupancy against electricity use. The curves don't match. After asking around you learn the laundry is on the guest-room circuit.",
+  "The chief engineer has you delete every approximately from Chapter Two. Either write a number, or write why there isn't one. You spend an afternoon on it.",
+  "In a shopping mall's chiller plant you measure a temperature difference of only 2 degrees between supply and return, the pumps wasted for years. You write up a variable-speed plan, and the engineering manager takes it to the owner with only the title changed.",
+  "During window installation on an ultra-low-energy project, you sweep each corner with an infrared camera. A mason says this counts as work now, does it? You say this corner leaks, and he reapplies the sealant.",
+  "An old office building's owner has no budget and just wants to spend a little. You cut the plan down to two items, fixing the pump and closing the bypass valve. The ¥70,000 outlay pays back in one heating season.",
+  "A third-party review sends nineteen comments. You answer point by point on baseline choice and the source of the climate correction. On number twelve you just admit you were wrong and change the figure.",
+  "Before you sign an airtightness report for an ultra-low-energy project, you go back to the site and run the test again yourself. The air change rate falls slightly short, so you have the contractor go over the window corners once more.",
+  "A factory is doing a building carbon inventory for the first time. You spend two pages on where to draw the boundary and tell them whether the canteen's gas counts, and why.",
+  "A new engineer's model yields an overly rosy payback. You write one line on his report: how many more years will this chiller last, and have you asked the owner?",
+  "You spend an hour at a bid clarification meeting wrangling over boundary conditions with a major owner's chief engineer. They give no answer. Three days later the contract arrives.",
+  "A shared-savings payment is fourteen months overdue. You take the bills and invoices to the owner and talk with the finance director from the account all the way to his kid's grad school exam, and come back with sixty percent.",
+  "The firm's top-grade license is up for review. You check every person's social insurance, project records and professional titles one by one, and find a certificate three days out of date."
+ ],
+ "past": [
+  "Your family lives in an old block in Qinhuangdao. In winter the radiators scald and the windows leak, and the grown-ups open the windows while paying the heating bill.",
+  "You pick building environment and energy engineering, thinking it's an environmental major. Later you find out its other name is HVAC.",
+  "In your second year you first study the psychrometric chart, its lines like a sheet of waves. You draw it for a whole term before you understand that air has its own accounts too.",
+  "You go with your advisor to measure a passive building. In the dead of winter with no heating it's twenty degrees indoors, and you stand by the window not quite believing it.",
+  "In grad school you help your advisor run energy simulations. A model runs three days and one parameter ruins it. You learn to check your inputs first.",
+  "At graduation you can choose a design institute or a consultancy. You hear this firm in your hometown goes into seaside hotels to investigate their energy use, and it sounds interesting."
+ ],
+ "late": {
+  "pension_note": "Estimated: an employee pension with a small supplement from an enterprise annuity.",
+  "scenes": [
+   "The neighborhood is retrofitting exterior insulation on its old blocks, and the residents' committee hears you know about it and asks you to a meeting. You talk for twenty minutes. The residents care about one thing: will there be scaffolding, and where do they hang their laundry?",
+   "You install triple glazing at home and apply the sealant yourself. Your family says it's stuffy. You explain ventilation at length, and in the end someone opens a window.",
+   "Buildings today calculate and tune their own energy use. When you see a savings figure in the news, your first reaction is still: which baseline year?",
+   "You no longer attend reviews and don't want to read any more reports. In summer you go to the seaside and look only at the sea.",
+   "You get your blood pressure down first, walking six thousand steps a day along the shore. It takes three months before you can pass a building without looking up at its roof.",
+   "You do a few small upgrades at a friend's guesthouse, sealing window gaps and replacing the shower pump, and are paid with a meal and a room voucher.",
+   "You've run the numbers on the money from this trade: enough for the doctors, not much beyond that. Your knees hurt whenever it rains, and they're more accurate than the weather bureau.",
+   "After changing jobs, you find that the meter reading you used to hate was when you were most sure of having done something. Your work now is all settled in meetings.",
+   "You still can't stand air conditioning with the windows open. On business trips you set the hotel remote to 26 and draw the curtains, and housekeeping thinks you're an inspector.",
+   "The firm was later acquired and your old colleagues scattered. Now and then someone in the WeChat group posts a photo of condensation on a windowsill, with a smiley.",
+   "After a snowfall, you walk past a housing estate looking only at the roofs. Whichever patch of snow melts first is where the heat is leaking. You don't plan to give up this habit.",
+   "Chillers, fans and pumps are all tuned by models now, and the bills look fine. The bypass valve you never could get a handle on doesn't exist in new buildings at all."
+  ],
+  "closing": {
+   "retire": "The last day of the heating season, you shut the valve at home, and the pipes slowly go cold.",
+   "burnout": "The sea wind blows all afternoon, and you don't try to work out how much heat it's taking with it.",
+   "end": "Another length of weather seal has come loose at the window, and you press it back with your thumb."
+  }
+ }
+}

@@ -1,0 +1,183 @@
+{
+ "id": "plastics-yy",
+ "occupation": "Plastics Engineer",
+ "role": "Plastics Engineer at an injection-mold factory",
+ "headline": "Trial-running molds at a thirty-press factory in Yuyao, where getting a tool from T0 to customer sign-off comes down to whether the resin was dried long enough, two seconds of packing pressure, and how a snap-fit feels when you bend it till it breaks",
+ "unit": "The technical department of an injection-mold factory in Yuyao, Zhejiang",
+ "unit_type": "Private mold and injection-molding plant",
+ "city": "Yuyao, Zhejiang",
+ "city_tier": "County-level city",
+ "education": "Associate degree (Polymer Processing Technology)",
+ "level": "You can tell PP, ABS and PA grades apart and copy every number on a process sheet. You don't yet know which number to move first.",
+ "intro": "This plant on the west side of Yuyao runs about thirty injection presses, building and trialing molds for small appliances and car interiors. In your first week they walk you to the trial press. The customer's samples have to go out by courier this afternoon, and the PA66 in the hopper has been drying for only two and a half hours. The shop supervisor slaps a blank process sheet on the machine and tells you to start by copying down the barrel temperatures, zone by zone.",
+ "salary_note": "Estimate: technical jobs at private mold shops in Yuyao pay well below the national figure for plastics engineers. Trial rushes earn overtime, and pay climbs faster once you carry a big customer's projects.",
+ "facts": [
+  {
+   "label": "Assistant Process Engineer (current level)",
+   "value": "0–2 years, ¥4,000–5,200 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Plastics Engineer (2–6 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥16,600 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Leading and coordinating the development of plastic parts",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Research into testing methods for plastic parts and raw materials",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "95 related listings nationwide, 1 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "You change your shoes, walk onto the floor and go straight to the resin room to feel the outlet of the desiccant dryer and read the dew-point gauge. If the nylon isn't dry, everything you trial today will show silver streaks.",
+  "Morning meeting. The toolmaker carries up the insert he reworked yesterday and says the ejector holes are to the drawing this time, so don't blame him for any more flash.",
+  "Mold goes on the press. You stand beside the setter copying down injection speed, packing pressure, back pressure. Every changed number gets ten shots, and the samples are numbered and lined up on a tray.",
+  "Canteen. The buyer swears at the morning quote from the Yuyao plastics market on his phone. ABS is up another ¥150 a ton, and this job was quoted last month.",
+  "Measuring samples. Calipers, optical comparator, shrinkage math. It's three hundredths of a millimeter under the drawing. You put the number in the table without knowing whether to blame the mold or the resin.",
+  "The customer's supplier quality engineer calls: the snap-fit on the last version breaks when you bend it. You take the fracture over to look at the weld line. It sits right on the thinnest rib.",
+  "You open Moldflow, move the gate on the next tool five millimeters to the left and run a fill. The fan whines. You wait for it to finish before going to dinner.",
+  "A night shift to rush a tool. The trial press opens and closes, the shop smells sweet with hot plastic, and at home your clothes have to go in their own wash."
+ ],
+ "ladder": [
+  { "title": "Assistant Process Engineer", "stage": "Shadowing trials", "focus": "Follow trials, log parameters, measure samples, learn resins and mold construction" },
+  { "title": "Plastics Engineer", "stage": "Running trials alone", "focus": "Set up presses and processes independently, diagnose with mold-flow analysis, write trial reports and 8Ds" },
+  { "title": "Senior Plastics Engineer", "stage": "Choosing materials", "focus": "Select materials, fix difficult tools, review mold designs, deal directly with customer SQEs" },
+  { "title": "Technical Department Manager", "stage": "Leading the team", "focus": "Run the trial and process teams, schedule mold milestones, answer for quotes and yields" },
+  { "title": "Chief Technical Engineer", "stage": "Final say", "focus": "Decide which resins, processes and kinds of orders the plant will take" }
+ ],
+ "ai_tasks": [
+  { "name": "Research into testing methods for plastic parts and raw materials", "how": "AI can look up standards, sort the literature, analyze test data and flag anomalies. People decide what to test and how, and judge whether the result really says anything about the part or the material." },
+  { "name": "Continually improving test methods for plastic materials", "how": "AI can summarize the strengths of existing methods, suggest improvements and draft method documents. People verify in the lab that a new method is repeatable and reliable, and answer for the one adopted." },
+  { "name": "Designing and improving plastic product processes", "how": "AI can recommend parameters from historical data, run simulations and help trace defects. People tune at the press, judge the gap between simulation and reality, and make the call on production stability." },
+  { "name": "Leading and coordinating the development of plastic parts", "how": "AI can schedule, take minutes and track issue lists. Coordinating across departments, talking to customers and suppliers, and making and owning the trade-offs still falls mainly to people." }
+ ],
+ "events": {
+  "e_first_nylon": "To save time you cut the nylon's drying by forty minutes, and a whole tray of samples comes out covered in silver streaks. The setter makes you pick them out one by one. You never touch the dryer timer again.",
+  "e_burn_test": "A bag of resin in the warehouse has lost its label. An old setter pinches off a bit, burns it, sniffs the smoke and says POM. You lean in and smell it too. You learn the trick, and cough all afternoon.",
+  "e_burn_hand": "Cleaning the nozzle, you get a blob of melt on the back of your hand, and the skin stays red for two weeks. Hardly anyone on the floor doesn't have marks like that. It doesn't count as an injury; nobody bothers with a bandage.",
+  "e_good_t1": "A small-appliance face panel passes at T1. The customer's engineer turns the sample three times under the light and can't find a flow mark. The mold team buys the trial team milk tea, which around here counts as a ceremony.",
+  "e_year_end": "Tools have to ship before Lunar New Year, and three of them collide in the last month. The trial press runs eleven days straight. You change your train ticket home three times, and your first sleep back lasts fourteen hours.",
+  "e_singles": "Small-appliance makers stock up in the second half for Singles' Day. One phone call doubles the volume and a two-cavity tool isn't enough. You shave the cycle from thirty-eight seconds to thirty-three, the owner does some arithmetic, and he smiles.",
+  "e_price": "Resin at the plastics market jumps ¥2,000 a ton in a month and a fully quoted order now loses money on every piece. The owner tells the technical department to think of something. You keep adjusting the regrind ratio, and it still has to pass the customer's tensile test.",
+  "e_8d": "Two car-interior clips break on the automaker's line. You write an 8D and revise it five times. The root cause in the final version is the filter on a dryer.",
+  "e_eye": "In the supermarket you now pick up a food container and turn it over to find the gate mark and the ejector pins. When you shop with family, you are often asked to keep moving.",
+  "e_voc": "Environmental inspectors come about VOCs and the shop gets activated carbon and extraction hoods. Summer becomes stuffier. While you're at it you rebalance the mold temperatures on a few presses, and scrap actually falls a little.",
+  "e_ear": "From half a shop away you hear that press seven's clamping sounds wrong. You walk over and the clamp force has dropped. A worker asks how you could tell. You can't really explain.",
+  "e_ai_param": "The plant's process system starts recommending parameters on its own, and the first round is often better than a new hire's. It doesn't know today's regrind runs wet, though. Someone still has to go stand by the hopper.",
+  "e_customer_gone": "Your biggest coffee-machine customer ships a dozen tools to Southeast Asia. The day the container leaves, line four is half empty. What's left is a list of mold numbers and a stack of unsettled statements.",
+  "e_apprentice": "A new graduate asks why packing has to be split into three stages. Instead of answering, you tell him to combine them into one, shoot ten parts, and put calipers on the root of that rib.",
+  "e_back": "Years on a concrete floor, bending to move mold clamps, and your back starts sending the bill. You buy the most expensive safety shoes the plant sells. You can still forecast rain.",
+  "e_pcr": "A European tender specifies recycled content, and sales asks if you can do it. You sample from three recyclers. For the same nominal grade, melt flow can differ by a factor of two.",
+  "e_boss_son": "The owner's son comes home from abroad to take over, and his first idea is to drop appliance parts and switch to medical housings. You price out a cleanroom for him. The next day he says it a different way.",
+  "e_old_machine": "The two oldest hydraulic presses are replaced by all-electrics. Before they go to the scrapyard, the owner has someone wipe them down. The new machines are quiet, and a lot of the old hands feel they aren't really working.",
+  "e_final_mold": "You mostly sign things now, and seldom trial a tool yourself. This resin runs more viscous than you expected, and you back packing off by two seconds. A young engineer writes it down and doesn't ask why."
+ },
+ "choices": {
+  "c_moldflow": { "title": "Learn mold-flow, or stay at the press", "situation": "The technical department has a Moldflow license that sits idle at night. The setting team lead says software is no match for a few thousand more shots. You only have time after work for one of them.", "options": [
+   { "label": "Learn mold-flow at night", "result": "You follow the tutorials and back-calculate your first few tools. The one that warped, the software had called six months earlier." },
+   { "label": "Stay at the press", "result": "You work a quarter of night shifts. Now you can touch a sprue and tell whether the temperature is high or low." }
+  ] },
+  "c_t2": { "title": "Samples on the twenty-eighth of the last lunar month", "situation": "The customer wants T2 samples before Lunar New Year. Eleven of today's thirty have faint flow marks. The owner says send the good ones and fix the tool after the holiday. Sales has already promised.", "options": [
+   { "label": "Send the good ones, with a note", "result": "You put the flow-mark rate on the last line of the trial report. The customer doesn't reply to that line, but acknowledges it when the tool gets reworked after the holiday." },
+   { "label": "Stop, fix the tool first", "result": "The toolmaker is still polishing the day before New Year's Eve, and the samples land on the sixth day of the holiday. The customer's buyer complains. That tool runs three years without a problem." }
+  ] },
+  "c_senior": { "title": "Going for Senior Plastics Engineer", "situation": "The owner says the Senior Plastics Engineer slot goes to whoever can fix that warped long panel. The tool has lost money for two rounds, and whoever takes it takes the blame.", "options": [
+   { "label": "Take the tool", "result": "You change the cooling channels and the glass-fiber content, and on the fourth round flatness passes. There's a new number on your pay slip and a new mark on your hand." },
+   { "label": "Let someone else try", "result": "You keep running your few steady tools. Your bonus isn't any smaller; your name just comes later in the reports." }
+  ] },
+  "c_sqe": { "title": "Become a supplier quality engineer at the customer", "situation": "The appliance maker that keeps coming to pick your plant apart needs an SQE. Their quality manager asks if you want it: 30 percent more pay, and from now on you're the one picking other plants apart.", "options": [
+   { "label": "Go to the customer", "result": "You carry your calipers over to the other side of the table.", "end": "You go to the appliance maker as an SQE, and spend every month at suppliers' presses, asking how many hours this batch was dried." },
+   { "label": "Stay at the plant", "result": "You thank him. When he audits the plant a couple of weeks later he's stricter than before, and that seems right to you." }
+  ] },
+  "c_ai_learn": { "title": "Feeding the process system", "situation": "The plant has bought a parameter-recommendation system. Someone has to enter more than a decade of process sheets and review its suggestions. It doesn't count as output, and the setters give you looks: teach it everything, then what do they need us for?", "options": [
+   { "label": "You'll lead it", "result": "You enter the numbers that were corrected in pencil, line by line, and for the first time see exactly where this plant has made the same mistake for twenty years." },
+   { "label": "Stay at the press", "result": "The system goes live without you. When it isn't sure about a resin, they still come and shout for you." }
+  ] },
+  "c_manager": { "title": "Applying for Technical Department Manager", "situation": "The Technical Department Manager is retiring. The job means daily fights over quotes, deciding who stays and goes, and more or less saying goodbye to the press. The owner asks if you'll try.", "options": [
+   { "label": "Try for Technical Department Manager", "result": "You start reading the P&L. The first time you stand up for the mold team in a quoting meeting, sales doesn't speak to you for two weeks." },
+   { "label": "Stay on the hard tools", "result": "You say you can't do the accounts. Whenever a part can't be made, they still bring it to you." }
+  ] },
+  "c_vietnam": { "title": "Follow the tools to Vietnam", "situation": "A big customer's tools have moved to Vietnam, and they want to borrow someone from the plant for six months. The allowance is good. Home will have to manage, and your position here may not be held for you.", "options": [
+   { "label": "Go for six months", "result": "In a prefab room in an industrial park you teach local setters to read a dew-point gauge. Gestures work better than English. Six months becomes ten." },
+   { "label": "Don't go", "result": "The owner sends someone else. Two years later that tool belongs entirely to the other side, and at least you didn't go off with it." }
+  ] },
+  "c_own": { "title": "Going in on a few presses", "situation": "Yuyao has no shortage of presses; a used one goes for a little over ¥100,000. A friend who has worked in molds wants a partner: he finds orders, you run the process. It means putting up your savings.", "options": [
+   { "label": "Go in with him", "result": "You do the math and sign.", "end": "You and your friend rent half a floor and run six presses. In good months it works out; in bad months you feed the machines yourself." },
+   { "label": "Keep your job", "result": "Your friend opens without you and moves premises three times in two years. You still have dinner together and don't ask about each other's books." },
+   { "label": "Put in some money, not yourself", "result": "You invest a small sum and go by on weekends to look at the presses. You don't open his ledger. Your year-end share is enough for a new water heater." }
+  ] },
+  "c_compound": { "title": "The compounder at the plastics market", "situation": "A compounding plant at the plastics market wants you for technical support and sales, on the strength of your customers and name. The money's decent, but you'd go from someone who knows resin to someone who sells it.", "options": [
+   { "label": "Go sell resin", "result": "You hand in your notice and start visiting customers the next week.", "end": "You start calling on customers for the compounder. At every plant you feel the dryer first and put your sample bag on the table second. Customers say this salesman is more of a pain than their own engineers." },
+   { "label": "Stay at the mold plant", "result": "You say you'll do a few more years. They hand you a bag of samples anyway and say try it." }
+  ] }
+ },
+ "endings": {
+  "retire": "Your signature is on the last batch of trial sheets before you go. You put your safety shoes in the locker and don't take them. At home you shower, and the sweetness of hot plastic stays on the back of your hand for another week.",
+  "burnout": "The scans of your lower back come in and the plant moves you to quality paperwork, off the floor. The office is behind a pane of glass, and press seven's opening and closing has become very small. You revise 8Ds at your screen, and some days you can't tell whether it's running fast or slow."
+ },
+ "stages": [
+  "Your job is to follow the setter, copy down numbers, label samples, measure parts and turn trial reports into something a customer can read. The toolmaker thinks you ask too much, the setter thinks you stand in the way. Calipers and printed process sheets are what you hold most. Changing a number isn't your turn yet.",
+  "Now you run a press alone, T0 through T2, deciding injection speed, packing and mold temperature yourself. Problems mean a trial report, a rework request and bargaining with the toolmaker about what steel can be cut. The difference from before: when a sample has a defect, they come to you first.",
+  "Your day splits in two: mornings choosing materials and reviewing mold 3D for hidden trouble in cooling lines and gates; afternoons on the phone with customer SQEs, speaking for the plant and for the part. The hard tools all pile up with you. You no longer set presses much, except when someone else can't.",
+  "You carry a Gantt chart of a dozen mold milestones and a weekly yield report. At quoting meetings you say whether a part can be made and how long it takes. At month-end you set the trial team's bonuses and explain to the owner why you need another mold-temperature controller. You touch presses less; at meetings your hands still smell of resin.",
+  "You decide what the plant takes on: how much glass fiber it won't touch, how thin it will go, which customers squeeze so hard that sales shouldn't call. Each month you go through capital spending with the owner and finance. What your managers bring you now are mostly things they can't decide."
+ ],
+ "work": [
+  "The setter has you work out the shot weight. You weigh runner and part, fill in the table, and find runners make up a third. So that's where that line on the quote comes from.",
+  "The toolmaker gives you a scrap insert and has you spot the mating faces with red lead. Your hands are red all day. For the first time you know what a few hundredths feels like.",
+  "The warehouse clerk asks you to check an ABS batch. The masterbatch number is off by one digit. You run to a color match, and that trace of extra yellow under the light box very nearly gets through.",
+  "An air-conditioner panel has a weld line you can't hide. You file a rework request and the toolmaker adds an overflow groove on the back, moving the line under the trim strip.",
+  "Sales brings a customer to watch the trial and they insist on twenty shots on the spot. You preheat the mold an hour early and store the packing curve as a recipe. From the tenth shot on, every part is the same.",
+  "A batch of POM gears squeals and the customer rejects it. You section one and find a void in the middle, lengthen packing by a second and a half, and send it back to the test rig.",
+  "An automaker's SQE comes for the PPAP and flips to your control plan, asking why this key dimension is only measured on first and last pieces. You show him the Cpk on thirty sets of data. He puts his pen down.",
+  "In a mold design review you circle a sudden change in wall thickness. The mold team says fixing it costs three days. You put the last part with a similar sink mark on the table, and they give you the three days.",
+  "A new supplier's flame-retardant PC is 8 percent cheaper. You sample it, run the glow-wire test and leave parts in the oven for a week, then send purchasing a note of two lines.",
+  "You and finance go through the actual cost of a tool and find it needed three more rework rounds than the quote assumed. On the next quote, you add a line called trial rounds.",
+  "Two engineers argue all the way into your office over whose tool goes on the press first. You open the customer's milestone sheet and ask one question: which one costs money if it's a day late.",
+  "The owner wants a job in clear optical parts, with lovely margins. You take finance to the shop to look at the dust and filtration, then write two words on the project form: not yet.",
+  "A rival from out of town tries to poach your trial team lead. You spend an afternoon with the owner on equity and housing money, and the final deal gets written on the back of a quote."
+ ],
+ "past": [
+  "You grow up on the outskirts of Yuyao. Half the village packs parts for plastics plants, and after school you often help trim sprues.",
+  "A vocational teacher says molds have better prospects. You find the shop floor too loud and choose polymers, imagining that means a lab.",
+  "Your first college internship is in a blow-molding shop, and you spend a summer in the heat. Back at school, you finally start listening to the rheology lectures.",
+  "You sit the intermediate injection-molding certificate. The examiner has you shoot a cup lid. It takes seven tries before there's no flash.",
+  "At graduation a foreign-owned plant in Suzhou offers more, but your father's back is bad, and you choose the mold shop you can reach by e-bike."
+ ],
+ "late": {
+  "pension_note": "Estimate: private firms in Yuyao pay into social insurance on a low base, so the pension falls well short of the salary.",
+  "scenes": [
+   "The owner hires you back two days a week to look at resin and quotes, no clocking in. You ask for a chair by the trial press, and don't use it much.",
+   "Your back and hands are holding up. Your ears aren't; the hospital says high-frequency loss, a few decades of shop floor. You turn up the TV and the whole family shouts at you.",
+   "You've stopped reading the plastics market quotes. Last year a molding plant that had been around for twenty years moved away, and the building is a cross-border e-commerce warehouse now. The camphor tree by the gate is still there.",
+   "Twice a week you go for spinal traction. One plastic clip on the table has come loose. You pick at it with a fingernail and know it's PP, and that it's going to break sooner or later.",
+   "It wasn't ruled a work injury, and the commercial insurance doesn't do much. You do the sums three times. Later you start fixing small appliances at a neighborhood service stall, twenty yuan a housing.",
+   "You've stopped thinking about the shop entirely. When people ask what you used to do, you say plastics, they nod, and that's the end of it.",
+   "Your new job doesn't involve standing on concrete, but in meetings you still rub the back of your hand. A new colleague asks about the scar. You say it's from a barbecue.",
+   "The bosses at the plastics market have turned over, and many have gone into recycled resin. You're still in the quote group, hundreds of messages a day. You only read the close.",
+   "The year you turn sixty you add it up. This path paid more than staying at one plant would have, and it cost more too. You aren't sure if that counts as winning or as being tired.",
+   "Laundry baskets at the supermarket, your kid's water bottle: you pick them up and turn them over to read the number in the triangle. The habit doesn't bother anyone.",
+   "The news talks about plastic bans and microplastics in the ocean, and your family asks if it's true. You say the material is good, it's just that no one wants to collect it. Even as you say it, you know you haven't explained it."
+  ],
+  "closing": {
+   "retire": "The washed lunchbox sits upside down to drain. The parting line runs thin and very straight, all the way around. Not a bad tool.",
+   "burnout": "The traction belt loosens and you sit up slowly. No rain today, says your back.",
+   "end": "A container truck passes under the overpass and no one knows what's in it. You think for a moment about the wall thickness of whatever it's carrying, then keep walking."
+  }
+ }
+}

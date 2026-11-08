@@ -1,0 +1,171 @@
+{
+ "id": "grid-lhasa",
+ "occupation": "Power Engineer",
+ "role": "High-altitude Grid Power Engineer",
+ "headline": "Posted from Sichuan to a grid maintenance unit in Lhasa, looking after substations and lines above 3,600 meters, with spring outage windows counted in days, winter dry-season load watched by the hour, and every three years the question of whether to stay",
+ "unit": "A grid maintenance unit in Lhasa, on assignment",
+ "unit_type": "Power grid company",
+ "city": "Lhasa, Tibet",
+ "city_tier": "Provincial capital",
+ "education": "Bachelor's degree (Electrical Engineering and Automation)",
+ "level": "You've done three years of maintenance at substations on the Sichuan plain and can read protection settings. You don't yet know you'll have to count stairs.",
+ "intro": "The plane lands at Gonggar and the moment the door opens your head feels tight. The unit's driver picks you up and tells you not to wash your hair today, not to run, not to act tough. In the dormitory an oxygen concentrator hums. Your assignment agreement says three years, and the spring outage window is scheduled for next month.",
+ "salary_note": "Estimate: base pay follows the grid company's pay scale, with high-altitude and assignment allowances that put it well above equivalent jobs inland, though part of it goes on travel back and forth.",
+ "facts": [
+  {
+   "label": "Grid Engineer (current level)",
+   "value": "2–7 years, ¥10,300–13,600 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Engineer (7–14 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥17,500 a month (national average)",
+   "source": "Pay by experience"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Judging equipment condition in person at high-altitude sites",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Writing maintenance plans and outage schedules",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "168 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "It's still dark; dawn here comes over an hour later than in Chengdu. You get up, take your oxygen saturation and blood pressure, log the numbers on your phone, and put your socks on slowly.",
+  "Morning meeting. Dispatch sends today's load forecast, the crew chief reads the work permit aloud, and stresses that the morning wind is light, so get the work at height done early.",
+  "The truck climbs the mountain road toward the station, the driver silent. You're in the back reading test reports when he suddenly says there's ice on the bend ahead today.",
+  "Infrared temperature survey. The sun is so strong you have to find angles to avoid the glare, scanning one connector at a time and catching your breath every few steps.",
+  "Noodles boil in the station's pressure cooker; water boils early up here, so they need longer. The manufacturer's engineer says on the phone that their manual only goes up to 2,000 meters.",
+  "You check breaker gas pressure. The cold season is over, and this set of readings has to be compared with winter's. You call out the gauge, and your colleague checks it before writing it down.",
+  "Back at the unit, you write up the test report and apply altitude corrections to today's external insulation readings. Everyone from the plains has to learn those coefficients from scratch.",
+  "You video-call home and your kid says your face is darker again. The concentrator's noise gets into the microphone, and you move the phone toward the window."
+ ],
+ "ladder": [
+  { "title": "Assistant Engineer", "stage": "Shadowing", "focus": "Shadow maintenance and testing, record data, learn the regulations" },
+  { "title": "Grid Engineer", "stage": "Leading crews", "focus": "Lead spring and autumn inspections, analyze equipment condition, write maintenance plans and test reports" },
+  { "title": "Senior Engineer", "stage": "Reviewing plans", "focus": "Answer for one discipline's equipment condition, review plans, solve difficult high-altitude problems" },
+  { "title": "Deputy Chief Technical Engineer", "stage": "Final say", "focus": "Sign off on the whole unit's equipment condition, coordinate maintenance and supply with dispatch, contractors and manufacturers" }
+ ],
+ "ai_tasks": [
+  { "name": "Judging equipment condition in person at high-altitude sites", "how": "Monitoring can raise an alarm. Going up to the station to listen, look and measure, then deciding whether today's live work goes ahead, takes a person on site." },
+  { "name": "Writing maintenance plans and outage schedules", "how": "AI can sequence steps and look up regulations. Which road won't get through this month and whether a crew can work full hours is for people to decide." },
+  { "name": "Analyzing live test and operating data", "how": "Models can spot abnormal trends. Whether it's the equipment or a sensor misbehaving in the cold takes someone who knows high-altitude gear." },
+  { "name": "Compiling monthly operating reports and asset ledgers", "how": "Reports and ledgers are mostly automatic, with people spot-checking." }
+ ],
+ "events": {
+  "e_first_climb": "Your first time at a station above 4,000 meters, you carry the instrument case a hundred meters and stop three times. The old crew chief takes the case. Everyone's like this the first year, he says; by the second, you'll know how to go slow.",
+  "e_factory_call": "A newly delivered switchgear cabinet shows a signal and the manufacturer's engineer can't come. He directs you by phone as you remove the panel. You send him site photos one at a time. He says this case isn't in the manual.",
+  "e_spring_window": "The spring outage window is only five days, and half the contractor crew from inland have headaches on arrival. You reschedule, move all work at height to the mornings, and keep half a day in reserve.",
+  "e_winter_load": "Dry-season hydro output falls and evening load climbs. The dispatch duty roster stretches through New Year. You stay by the phone, checking the load curve every two hours.",
+  "e_clinic": "The head of a remote township clinic comes to the supply office worried about the vaccine refrigerator losing power. You shift the maintenance hours on that line. He doesn't say thank you. Next visit, he brings two bags of potatoes.",
+  "e_diesel": "The county's old diesel generator is retired and the line finally reaches there. The operator who kept it running for eight years carries off the fuel drums and asks you what he can do now. You have no answer.",
+  "e_road": "Rainy season washes out a section of road. The driver takes a six-hour detour to reach the station, and you eat crackers in the truck all day. Back at the unit, he writes down the place in his notebook.",
+  "e_hemoglobin": "Your checkup shows hemoglobin up a little more, and the doctor suggests fewer high-altitude station visits. You fold the report into your bag. Next week's work permit still has your name on it.",
+  "e_home": "You're at a station on your kid's first day of primary school and only see the photo sent to your phone. Home in Chengdu on leave, your kid hides behind the door, calls you uncle, then quickly corrects it.",
+  "e_drunk_oxygen": "Every leave back on the plain, you want to sleep for the first three days, and can doze off in meetings. Family says you're drunk on oxygen. Relatives say your job must be too easy.",
+  "e_data": "You organize several years of external insulation and gas data into a paper, putting field data on altitude correction next to the handbook for the first time. Engineers from inland write in, asking for the raw tables.",
+  "e_eye": "Everywhere you go now you count the insulator discs first. On your way to a wedding banquet inland you see a pole, and what comes to mind is that this creepage distance wouldn't be enough up where you work.",
+  "e_solar": "Large-scale solar and storage keep connecting. By day there's power that can't be sent out, and at dusk everyone's scrambling. Dispatch has changed, and what you have to learn now is inverters and frequency.",
+  "e_ai_monitor": "Substations are going unstaffed, with cameras and algorithms doing the rounds. Dozens of alarms a night, mostly sun glare and passing birds. You have to decide which one is worth sending the driver for.",
+  "e_colleague_home": "The colleague who came up with you finishes his assignment and gets his transfer back. You go for Sichuan food together. He says when he's back he's going to run five kilometers on flat ground, and you say you believe him.",
+  "e_young_eng": "On his first day the new graduate wants to rush up to the station. You have him put down the instrument case, walk a full circuit empty-handed, and then tell him what time you're leaving tomorrow.",
+  "e_merge_station": "Several maintenance stations merge into a central control center and the staff on duty is cut by half. When the pressure cooker and bedding are collected from the station, the little tree you watered for years in the yard is still alive.",
+  "e_sign_later": "You sign more forms now than you've made station visits. You've taken this spring inspection master plan through six drafts. Construction hours differ at every altitude point, and you know why.",
+  "e_heart": "Each year the doctor looks twice at your ECG. You start walking slowly to the gate of the compound every morning, and the unit won't let you drive anymore."
+ },
+ "choices": {
+  "c_renew": { "title": "The first three years are up", "situation": "Your assignment is about to expire and HR asks if you'll renew. Renewal means another three years. Your health numbers are fine, but the chance to go back won't always be there, and family matters won't get any smaller because you're in Lhasa.", "options": [
+   { "label": "Sign for three more", "result": "You write your name on the application, then go seal the gaps in the dormitory window again." },
+   { "label": "Apply to return to Sichuan", "result": "You apply for a transfer, and the paperwork takes six months.", "end": "You transfer back to the maintenance unit in Sichuan, and never have to count stairs again. In spring inspections you often think how luxuriously wide the outage windows are here." }
+  ] },
+  "c_learn_inverter": { "title": "Learning renewables integration", "situation": "With solar and storage arriving, dispatch and protection all have to change. The unit asks if you'll go for six months' training. Your strength has always been conventional substation gear, and this would make you a student again.", "options": [
+   { "label": "Go", "result": "In training you start from inverter waveforms, slower than your twenty-something colleagues, but you know what happens when this stuff is connected to a high-altitude station." },
+   { "label": "Stick with your old specialty", "result": "Old equipment still needs someone who knows it. You keep testing, but you read the new plans more and more slowly." }
+  ] },
+  "c_senior": { "title": "Applying for Senior Engineer", "situation": "The Senior Engineer title needs papers and a track record. Your high-altitude insulation data is enough to write up, but it would have to be done in the second half of the year, when you also lead the autumn inspection, and neither can be delayed.", "options": [
+   { "label": "Carry both", "result": "You're at stations by day and write at night with the concentrator as background. In your defense an expert asks about altitude correction, and you answer more smoothly than expected." },
+   { "label": "Lead autumn inspection first", "result": "Autumn inspection goes without a hitch. The paper waits till next year, and for the quarter you finally eat a few hot meals." }
+  ] },
+  "c_hemoglobin_doc": { "title": "A note on the checkup form", "situation": "The doctor suggests moving to a lower-altitude or desk post, which would be better for you, and would also take you away from the high stations where your experience counts most. The unit asks what you want.", "options": [
+   { "label": "Move to a desk for a while", "result": "You move to the planning group and go up only a few times a year. Your numbers improve. You work out hours in an office for other people." },
+   { "label": "Lead crews two more years", "result": "You lead two more years and bring along a few younger engineers. You don't show your family those two years of checkup results." }
+  ] },
+  "c_school": { "title": "Your kid's school", "situation": "Your kid, raised by the grandparents in Chengdu, is starting to act up. Your spouse asks whether to bring the kid to Lhasa for school, or give up a job and move up too, or whether you should go back. Someone gives way on every route.", "options": [
+   { "label": "Keep your kid in Chengdu", "result": "You apply for more leave and set calls for weekends. Later, your kid starts sending photos of homework, asking if this problem is right." },
+   { "label": "Bring your kid up for a year", "result": "Your kid spends a year here, waiting for you in the yard after school. The next year it's back to Chengdu; junior high has to be lined up well ahead." }
+  ] },
+  "c_solar_co": { "title": "A renewables company comes calling", "situation": "A company building solar projects on the plateau wants a grid engineer who understands interconnection. Half again the pay, and you move on when each project ends. No more iron rice bowl, but no more stations above 4,000 meters either.", "options": [
+   { "label": "Jump", "result": "You resign and leave the concentrator to your roommate.", "end": "You go to the renewables company to do interconnection, one project after another, from plateau to desert. When a contract ends, you're often not sure where the next site will be." },
+   { "label": "Stay with the grid", "result": "You decline. They say this pay is real. You say the shifts here are real too." },
+   { "label": "Review one plan for them", "result": "With the unit's approval you review an interconnection plan and give seven comments. Their engineers often come to ask you things after that." }
+  ] },
+  "c_deputy": { "title": "Applying for Deputy Chief Technical Engineer", "situation": "The Deputy Chief Technical Engineer position has come open. From now on you'd sign every maintenance plan, and every supply-season call would come to you first, with even fewer station visits.", "options": [
+   { "label": "Apply for Deputy Chief Technical Engineer", "result": "You move to an office with a window, a red phone appears on the desk, and in your first week it rings fourteen times at night." },
+   { "label": "Stay in your discipline", "result": "You say you don't want one more layer of responsibility. The younger people still bring you their difficult waveforms." }
+  ] },
+  "c_design": { "title": "An offer from a design institute", "situation": "A design institute in Chengdu wants an expert who knows high-altitude sites to do design review. Much easier work, decent pay. After all these years of assignment, that would be a fair way to close it.", "options": [
+   { "label": "Back to Chengdu to review designs", "result": "You pack two boxes of material in your office and take the dormitory key off your key ring.", "end": "You go back to Chengdu to review designs, and can always find a few places in other people's high-altitude plans that won't get up the mountain. Drawings are flat. Your knees remember the steps." },
+   { "label": "Stay until retirement", "result": "You say a few more years. The institute says they don't know if they'll still need someone by then." }
+  ] }
+ },
+ "endings": {
+  "retire": "You finish your retirement papers in Lhasa, ship two boxes of material and leave the concentrator to the unit. The plane lands in Chengdu, the air thick and soft. On the airport steps you try walking a little faster and don't get winded. At home you leave the windows open all night.",
+  "burnout": "Your health numbers keep you off the stations, and the unit transfers you to a support post inland, managing the filing of tools and contracts. The altitude here is only five hundred meters. You still go slowly on the stairs, and younger people pass you on both sides."
+ },
+ "stages": [
+  "You lead three to five people up to stations for spring and autumn tests and defect repairs. Before leaving you write the work permit and work out hours, with altitude and weather counted in. Afterward you write up test reports and check outage plans with dispatch. Unlike Sichuan, everything now has to include those hours on the road.",
+  "You answer for one discipline's equipment condition across the unit, reviewing each crew's plans and making your own call when the manufacturer's manual is silent. Half the month is on the road, the other half in meetings with dispatch and contractors, fitting the work that can be done into limited outage windows.",
+  "You sign off on the whole unit's equipment condition and maintenance plan, stay on the phone through supply season, and before spring inspection negotiate people and time with each contractor, manufacturer and dispatch. You no longer carry an instrument case. Reading the data younger people bring back, you think of those particular bends."
+ ],
+ "work": [
+  "The old crew chief has you check a set of main transformer oil chromatography results. The sampling date is half a year from the last. You go through the ledger together and reschedule the sampling cycle.",
+  "On a contractor crew's second day up, people have headaches. You take the schedule apart, keep work at height to mornings and put people in the truck on oxygen in the afternoons. The milestone is very tight.",
+  "The driver says the sand comes up on this road from three in the afternoon. You move the infrared survey to the morning, and it finds two more hot joints than last time.",
+  "The manufacturer's corrective plan assumes plains conditions. You add high-altitude cooling, recalculate, and send it back to their engineer to revise.",
+  "The head of a township supply office wants an old line upgraded next year. You work through the load data together and agree on the spring outage window the year after.",
+  "A dispatcher needs an answer in forty minutes on whether a protection operation is acceptable. You pull the fault recording and write the conclusion in three lines with a protection colleague.",
+  "You negotiate the second-half schedule with a contractor's project manager, who wants to bill more of an altitude factor. You produce three years of actual hours, and both of you change a number or two.",
+  "At the annual maintenance plan briefing you rank the risks at several stations. The first item is road conditions. After the meeting, finance asks how to budget that."
+ ],
+ "past": [
+  "You grow up in Mianyang, Sichuan, where your father works at the county supply office and always goes out in thunderstorms. Your family sees electricity as a sure living. What you remember is him not being home at night.",
+  "You choose electrical engineering and are placed in the high-voltage track once you get there. Few people in the dorm want it. At least you won't go hungry, you think.",
+  "A summer internship at a 220 kV substation. It's the first time you hear a main transformer's hum. An older student shows you how to listen for whether the three phases are balanced.",
+  "You join the Sichuan grid maintenance unit, spend three years following spring inspections, and learn to write work permits and test reports.",
+  "The unit recruits for a high-altitude assignment, three years per term, with a good allowance. You talk it over at home for two evenings and sign up."
+ ],
+ "late": {
+  "pension_note": "Estimate: grid companies contribute in full on a high wage base, so the pension is somewhat above equivalent jobs inland.",
+  "scenes": [
+   "You walk slowly even buying vegetables in Chengdu. The vendor thinks you're choosing. Really, it's just habit.",
+   "Every six months you get your heart rechecked. The doctor looks at the scans and asks how many years you spent on the plateau. You tell him, and he writes two more slips.",
+   "Those stations are all monitored remotely now, and drones patrol the lines. That road you detoured around eating crackers has been paved. You try driving it on a phone map.",
+   "In your first year back inland your hemoglobin slowly comes down and you start feeling sleepy, wanting to doze by day. The doctor says your body needs time to accept this altitude.",
+   "You stay in the inland support job until retirement, sending out reminders when safety gear is due for testing. Once a pair of gloves was three days expired, and you still called the man back to change them.",
+   "Your kid has graduated and doesn't say much to you, though you can both talk calmly about money. What you owe from those years isn't something an allowance can settle.",
+   "After your move, your oxygen bottle sits in the storage room and quietly expires. It doesn't occur to you to do anything about it.",
+   "An old colleague messages that one of those stations now has storage, and dispatch days are much easier. You send a thumbs-up, think a moment, and type a few words to ask about his knees.",
+   "Sometimes you do the sums: a little more money than if you had stayed on the plateau, and a somewhat better-looking heart scan. The part that doesn't add up, you leave alone.",
+   "The neighborhood's distribution box door isn't closed tight. You go around to look, push it gently shut, and look up to count the discs on the pole.",
+   "Your kid asks what was so good up on the plateau. You think for a long time and say the sky was very blue, and afterward you feel this wasn't much of an answer for an engineer."
+  ],
+  "closing": {
+   "retire": "An evening drizzle comes down, and Chengdu's air thickens by one more layer. You breathe it in deep. This breath doesn't need rationing.",
+   "burnout": "You've kept the pulse oximeter by the bed. It always says ninety-eight. You check again. Ninety-eight.",
+   "end": "Far off the transmission lines pass behind the buildings, a few wires, a string of insulators. Enough discs for this altitude."
+  }
+ }
+}

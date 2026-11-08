@@ -1,0 +1,213 @@
+{
+ "id": "planner-sg",
+ "occupation": "Urban and Regional Planner",
+ "role": "Assistant Planner",
+ "headline": "Fresh out of a planning degree at a Grade B planning institute in Shaoguan, surveying villages, drawing existing-conditions maps and sitting through meetings with township heads and villagers",
+ "unit": "A planning and design institute in Shaoguan",
+ "unit_type": "Prefecture-level planning institute (Grade B)",
+ "city": "Shaoguan",
+ "city_tier": "Fourth-tier city",
+ "education": "Bachelor's degree (urban and rural planning)",
+ "level": "You know ArcGIS and CAD and build lovely SketchUp models. You have never sat on the long bench at a village committee.",
+ "intro": "At a planning institute in Shaoguan, half the work is on the road: Nanxiong, Renhua, Shixing, Lechang, one township after another. The institute has one drone, your team has one old van, and the back seat is stacked with large-scale maps. The section head spreads out an existing-conditions map covered in notes and says the map is wrong and the village is right. Go down there.",
+ "salary_note": "Estimated: a planning institute in northern Guangdong pays well below the national average, with project bonuses tied to when clients pay.",
+ "facts": [
+  {
+   "label": "Assistant Planner (current level)",
+   "value": "0–3 years, ¥3,400–4,700 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Urban and Rural Planner (3–7 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥8,500 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Village surveys and talking with residents",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Gathering and organizing background material",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "18 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "The van leaves the banks of the Zhen River for two hours of mountain road. You edit drawings in the back seat, the van takes a bend, and a line lands on another layer.",
+  "At the township government, the head of the planning office makes tea and walks you to the village committee, where a few village representatives are already sitting on the long bench.",
+  "You go house to house, marking floors, structure and occupancy on the tablet map. A dog follows you down three alleys.",
+  "Lunch at the village secretary's. Old Kuang says this plot is forest land in the plan, but his forebears grew tea on it. You write that in the margin.",
+  "The drone goes up and you watch the screen, checking parcels. The fish pond behind the houses is still farmland in the base data.",
+  "Back at the institute you file today's photos by village and write attributes for each parcel. ArcGIS spins for a long time.",
+  "The database check runs: more than four hundred errors, mostly overlapping parcels. You fix them one by one and hear the next team still revising a report."
+ ],
+ "ladder": [
+  { "title": "Assistant Planner", "stage": "Drawing", "focus": "Field surveys, organizing existing conditions, drafting, preparing database files" },
+  { "title": "Urban and Rural Planner", "stage": "Project team", "focus": "Responsible for a township or village plan, going to meetings on site and revising" },
+  { "title": "Registered Urban and Rural Planner", "stage": "Signing", "focus": "Project lead, signing and stamping results, facing review panels" },
+  { "title": "Senior Planner", "stage": "Gatekeeping", "focus": "Leading a section, setting technical direction, reviewing the institute's major work" },
+  { "title": "Deputy Chief Planner", "stage": "The whole institute", "focus": "Institute-wide technical quality, plus bids and the institute's credentials" }
+ ],
+ "ai_tasks": [
+  { "name": "Village surveys and talking with residents", "how": "AI can see the satellite image. Why this alley can't be widened is something you have to go and ask the people who live in it." },
+  { "name": "Gathering and organizing background material", "how": "Statistics, higher-level plans and key documents can be summarized automatically. People check the definitions." },
+  { "name": "Database submission and data checks", "how": "Machines run topology, coding and layer checks in minutes. People handle why the errors happened." },
+  { "name": "Concept design and comparing options", "how": "AI can produce many versions. Which one the township can carry and the village will sign is up to people." },
+  { "name": "Drawings and report writing", "how": "AI drafts maps and text. Who answers for which farmer's field a line crosses is a person." },
+  { "name": "Tracking and adjusting implementation", "how": "Remote sensing compares the changes. Whether to adjust means going there and asking." }
+ ],
+ "events": {
+  "e_map": "You draw a village road straight through someone's ancestral hall, and this map reaches the village committee. The secretary doesn't scold you at all. He holds his cup and looks at you for half a minute. You go back and redraw it overnight.",
+  "e_rain": "The heavy May rains wash out a section of the road. You go forty kilometers around and reach the village near dark, where someone has boiled a pot of sweet potatoes. You spread out the maps and eat.",
+  "e_bid": "For the two nights before a bid closes, your team sleeps on the institute floor. The print shop is closed, so you run to another district and finish at a place that prints wedding invitations.",
+  "e_exam_fail": "Of the four registered planner exams, you pass two. The results come while you are revising a plan at a village committee. The rolling exam window starts counting down.",
+  "e_old": "A ninety-year-old grandmother takes you by the arm to see her grey-brick house and says if this wall comes down, she won't move. On the map you draw a small circle around her house and write Retain.",
+  "e_pay": "The final payment on a county plan has been outstanding for two years. Finance says it's waiting on the township, the township says it's waiting on the county, and your bonus is waiting on the institute.",
+  "e_review": "At a provincial expert review, an old expert points at the map and asks where this river's ten-year flood line comes from. You turn to that page of the water department's data. He nods and moves on.",
+  "e_mos": "After a summer of field surveys your legs are so covered in mountain mosquito bites that they take a month to fade. Your soles have worn flat. There is no line on the expense claim for that.",
+  "e_rule": "The land use classification standard gets a new version, and drawings you are halfway through need recoloring and recoding. Months of work start over. The client asks if the cost can be included in the original contract.",
+  "e_neck": "When you lower your head to draft, your neck seizes. You buy a standing board, and then your legs hurt after every trip to the villages. Neither way is comfortable.",
+  "e_ai_map": "Existing-conditions maps can now be generated straight from remote sensing, three days instead of a month. Young staff can see the roofs without leaving the office. You still make them go, because there are people under those roofs.",
+  "e_ai_slope": "The model suggests putting new industrial land in a gently sloping valley, with lovely indicators. You go have a look. In summer the water there rises to half a person's height. The locals all know that. The database doesn't.",
+  "e_ai_report": "Reports now draft themselves with one click, and the institute keeps only half its drafters. A draftsman of more than ten years comes to ask if you still want him. You put him on database checks. He learns slowly.",
+  "e_village": "The small square you planned at the village entrance a few years ago has actually been built. Old Kuang calls to say lots of people dance there at night. The only thing is the lights are too bright.",
+  "e_merge": "The institute is restructured and merges with a surveying unit in the city. The planning section becomes the Spatial Information Division. The sign at the door changes and the business cards have to be reprinted.",
+  "e_eye": "Now in any housing estate you first check whether the fire lanes are wide enough and how far away the school is. Asked at home what's for dinner, you say the wet market has a service radius problem.",
+  "e_quiet": "There are fewer and fewer young people in the villages. The road you planned has been built and not many walk on it. You don't put this in the report.",
+  "e_foot": "Your legs have slowed, and halfway along a mountain path you need a rest. A young planner hands you water. By the time you get there, they have finished flying the drone.",
+  "e_again": "A township you worked on in your thirties is due for its next round of planning. You open the old report and can pick out at a glance what was wrong, and also what was right."
+ },
+ "choices": {
+  "c_kind": {
+   "title": "Village planning team, or the urban regulatory plans team",
+   "situation": "The village planning team is in the countryside year-round and is always dealing with villagers. The regulatory plans team draws more in the office, calculates more indicators, and sits closer to the bureau people.",
+   "options": [
+    { "label": "Village planning team", "result": "You soon tan. You learn not to say land use designation at a village committee. You say what this land will be able to do." },
+    { "label": "Urban regulatory plans team", "result": "You learn to calculate floor area ratios and green space ratios, and to understand what the bureau means by we'll look into it." }
+   ]
+  },
+  "c_grad": {
+   "title": "Go to a big institute in Guangzhou",
+   "situation": "A big planning institute in Guangzhou wants people. The pay is about double, the projects are large, only it'll be a long time there before you get near a scheme, and you'll be leaving home.",
+   "options": [
+    { "label": "Go to Guangzhou", "result": "You rent a single room in an urban village in Guangzhou. Your drawings are ten times the size. Your name comes ninth on them.", "end": "You went to the big institute in Guangzhou and ended up working on the Greater Bay Area's large-scale plans. Now and then a drawing of northern Guangdong crosses your desk, and you can tell which road is one you once walked." },
+    { "label": "Stay in Shaoguan", "result": "You say you'll think about it. Next month the institute has a township plan coming up, and the section head makes you the lead drafter." }
+   ]
+  },
+  "c_exam": {
+   "title": "Prepare for the Registered Urban and Rural Planner exam",
+   "situation": "The Registered Urban and Rural Planner exam has four rolling parts. The institute says there's a reward for holding the certificate, but village trips and projects don't get any lighter. Study means trading every weekend and evening.",
+   "options": [
+    { "label": "Go all in", "result": "You take principles and regulations along in the van, and the village committee's long bench becomes your study hall." },
+    { "label": "Do the projects well first", "result": "The projects are solid. The certificate moves back a year at a time." }
+   ]
+  },
+  "c_line": {
+   "title": "The township head wants this plot included",
+   "situation": "Before a township plan goes to review, the township head wants a stretch of hillside inside the development boundary. The village representatives say otherwise. The quota is limited: put this in, and something else has to come out.",
+   "options": [
+    { "label": "Talk to both, make two versions", "result": "You make four extra trips and two versions and set out the gains and losses in one table for them to decide. The township head says you're too slow." },
+    { "label": "Do what the township wants", "result": "The plan goes through the meeting smoothly and the township head treats you to dinner. The section head is the one who goes to explain things to the village." }
+   ]
+  },
+  "c_gov": {
+   "title": "Take the exam for the natural resources bureau",
+   "situation": "The bureau is recruiting for a planning post, a perfect match for your years at the institute. Somewhat less pay, no bidding, no chasing payments. From now on you'd be the one reviewing plans.",
+   "options": [
+    { "label": "Sit the exam", "result": "You pass. On your first day at work you return a colleague's drawing from the institute, very politely.", "end": "You joined the bureau and went from the one drawing the maps to the one reviewing them. Old colleagues from the institute bring in submissions, and you talk through the service window, raising the problems on the drawings one by one as ever." },
+    { "label": "Don't, stick with projects", "result": "You still like the village work. Your classmate passes, and now he reviews your drawings." }
+   ]
+  },
+  "c_ai": {
+   "title": "Lead the institute's AI workflow?",
+   "situation": "The director wants you to lead the use of models for existing-conditions analysis and comparing options, and to set the procedure. That means writing rules and teaching younger staff, and far less time in the villages.",
+   "options": [
+    { "label": "Lead it", "result": "You write up the pitfalls of these years as a review checklist. Of the first plan the model turns out, you change three-quarters." },
+    { "label": "Don't, stay on site", "result": "You keep going to the villages. When younger staff bring you a scheme, you ask just one thing: have you been there?" }
+   ]
+  },
+  "c_senior": {
+   "title": "Apply to become a Senior Planner",
+   "situation": "Becoming a Senior Planner takes major projects and papers. But your projects are all up in the hills without much of a name, and the papers aren't what you would choose to write.",
+   "options": [
+    { "label": "Apply", "result": "You write about ten years of change in a few northern Guangdong villages. The judges say the topic is small and the data is real." },
+    { "label": "Don't apply", "result": "Colleagues your age get promoted. You have just as many projects as before." }
+   ]
+  },
+  "c_chief": {
+   "title": "Take on Deputy Chief Planner",
+   "situation": "The director asks you to be Deputy Chief Planner. All the institute's work would pass through your hands and you'd front the bids. You happen to have one village you'd like to see through this round.",
+   "options": [
+    { "label": "Take it", "result": "You hand that village to a young project lead and begin writing on other people's drawings." },
+    { "label": "Don't, finish the village", "result": "You go four more times and settle the course of that drainage ditch. The institute's affairs fall to someone else." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "The year you turn sixty, your registration expires and you don't renew it. Northern Guangdong's townships are now on their third round of plans, all stored on a cloud platform, new lines laid over your old ones. Some days the width of a certain alley still comes to you faster than someone's name.",
+  "burnout": "Your neck, your back and the endless revisions all pressed down at once. You tell the director you can't make the next trip to the countryside. The institute does your paperwork. You don't touch that report again, and leave it at version eleven."
+ },
+ "stages": [
+  "You go to the villages with a tablet and a camera, marking conditions and checking parcels. Back at the institute you file hundreds of photos by village and submit layers to the database. You write the background chapters and run errands for the team lead. While others are in meetings, you sit at the back putting what they say into notes on the map.",
+  "A township or several villages are yours now. You explain the plan at the township, going through each land use change, then revise it and explain it again. You deal directly with the planning office head and the village secretary, and learn to translate land use designation into human speech. At the last level you just made the map accurate. Now it has to be usable.",
+  "Your stamp goes on the cover of the work now. You are the project lead, agreeing schedules with the client, assigning your team, and answering experts' questions at provincial reviews. Exactly where each line on the map falls is now on you, and when one is wrong you are the one who goes to explain it.",
+  "You lead a section of over a dozen people. Mostly you set technical direction, look at other people's schemes and split review comments up among your staff. You also negotiate schedules and fees with the bureau's section chiefs. You don't go to the villages much now, and when you do it's to solve what others can't.",
+  "The institute's work quality is yours and you chair the technical committee. Bids, credential reviews, whether to enter new fields, all want your view. Every day you write on other people's drawings, trying to make thirty years of pitfalls short enough for the young to finish reading."
+ ],
+ "work": [
+  "You enter a village's population figures and come out three hundred above the committee's real number. Old Kuang says those three hundred people are in Dongguan.",
+  "Database rules require twelve-digit parcel codes. You write a small script to fill them in by batch, and when it finishes you find it has coded water as farmland.",
+  "The team lead has you pace out the width of an old street. You walk it four times and come within twenty centimeters of the drone's measurement.",
+  "The township middle school needs to expand. You calculate its service radius in CAD, then go ask the breakfast seller at the gate which road most of the students come along.",
+  "On the third round of a plan, the section head says the village road is still too wide. You change the standard cross-section to the width where a tricycle and a motorbike can pass each other.",
+  "At the villagers' meeting you tape the land use map to the wall. An old man leans in close and asks where his chicken coop is. You enlarge the map and point to it.",
+  "The review panel raises twenty-three comments. You split them into a table for your team and keep the hardest two for yourself: the flood line and the buffer distance.",
+  "You report to the township, and the township head takes three calls along the way. You squeeze twenty slides into five and finish before the fourth call.",
+  "During the public notice period two villagers file objections. You take the map and records to the village and sit under that family's eaves explaining this line.",
+  "A young planner's scheme looks lovely on paper. You call him in and ask what color that river turns in summer. He can't answer, and the next week he goes to the village.",
+  "The client cuts the project fee by thirty percent. You lay out the man-hours and field costs for the section chief and save twenty of it, and explain the remaining ten to your team.",
+  "The institute is bidding on a major cross-county project. You read the technical proposal and move one page about mountain flood gullies from the appendix to the first chapter.",
+  "Counting registered staff and projects for the credential review, you notice two young people's registrations are close to expiring, and you go remind them personally."
+ ],
+ "past": [
+  "You live in Shaoguan's old town, and the street on your way home from school keeps being torn up and rebuilt. You can never work out who decides these things.",
+  "Your geography teacher draws a central place model on the board while explaining how cities form. For the first time, it occurs to you that a city can be drawn.",
+  "You apply for urban and rural planning at a university in Guangzhou, a five-year program. A relative asks if that's the major for tearing down houses.",
+  "For a second-year studio you design a community center, and your hand-rendered drawing gets hung up. You linger in front of it for a while.",
+  "You intern at a design institute and spend six months drawing parking spaces. The person training you says get parking straight first, then we'll talk.",
+  "Most of your classmates stay in Guangzhou or Shenzhen. When Shaoguan's institute comes to recruit, you think of the old people at home and fill in the form."
+ ],
+ "late": {
+  "pension_note": "Estimated: a former public institution turned enterprise, with retirement pay between the two systems.",
+  "scenes": [
+   "A township's old party secretary sends word that the drainage ditch at the village entrance has silted up again. You go have a look and draw a sketch, charge nothing, and come back with a bag of dried sweet potato.",
+   "You sign up for a seniors' photography class. Others shoot flowers. You shoot rooftops and intersections. The teacher says your composition is good, only there are no people in it.",
+   "New plans are all done on cloud-based 3D platforms. A young person next door shows you one, where you can spin a village around and see the back of it. You nod and ask how many people are still in this village.",
+   "You still walk with an even stride, seventy-five centimeters a step, left over from pacing old streets. At the hospital, the physical therapist says your gait is very standard.",
+   "For three months you don't open a computer and just walk along the Zhen River. You don't count a single manhole on the way.",
+   "A small company asks you to look at guesthouse sites, at ¥2,000 a visit. You go and tell them this plot floods in summer. They rent it anyway.",
+   "The neck trouble has stayed with you, and you can't watch the rear-view mirror for long when driving. One of the institute's old bonuses is still unpaid.",
+   "Since changing jobs you never have to ride in that van again. Yet when the heavy May rains come around, you still check road conditions in northern Guangdong out of habit.",
+   "All your work is in an office now, and the calluses on your feet have slowly softened. One day you find you no longer remember the name of that alley in the township.",
+   "Old colleagues have started a group chat, and everyone posts about health. Now and then you send a photo of an intersection and ask if the channelization is right. No one replies.",
+   "Driving a new road, you notice several intersections with turning radii that are too small. You get home and say nothing to anyone.",
+   "A good many villages in northern Guangdong only light up at Spring Festival now. The lines on the plan are still there. You don't know if that means you drew them right, and you don't want to work it out anymore."
+  ],
+  "closing": {
+   "retire": "Someone is flying a kite on the embankment at dusk, the line drawn very straight, and you read the wind direction along it.",
+   "burnout": "The atlas sits on the bottom shelf, its cover beginning to curl.",
+   "end": "You open the map on your phone, zoom in as far as it goes, then slowly out, until you can no longer make out that village."
+  }
+ }
+}

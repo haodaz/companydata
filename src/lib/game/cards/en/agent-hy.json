@@ -1,0 +1,152 @@
+{
+ "id": "agent-hy",
+ "occupation": "Performing Arts Agent",
+ "role": "Talent agent at a small agency",
+ "headline": "A five-person talent agency in Hengyang, Hunan, with a roster of bar singers, a huagu opera performer and a dance troupe. You drive a seven-seat van around southern Hunan to housing launches, car shows and company parties, and the hardest part of the job is collecting the balance",
+ "unit": "A small talent agency in Hengyang, five people, one office and one storeroom",
+ "unit_type": "Small private performance agency",
+ "city": "Hengyang, Hunan",
+ "city_tier": "Third-tier",
+ "education": "Associate degree (audio engineering)",
+ "level": "You can wire a stage, run a mixing desk and drive. Contracts are still a blur, and you can't yet tell which of a client's sentences count",
+ "intro": "The company is on the third floor of a building in the Huaxin development zone: one office, one storeroom with two speakers and a rack of stage costumes, smelling of mothballs and hair spray. The boss took you along on three gigs, then tossed you the van keys and said you'd do next week's housing launch in Changning on your own. On the schedule you've been handed, May Day and National Day are full. June through August is blank.",
+ "salary_note": "Estimate: small Hengyang agencies pay a low base, and income depends on commissions and gigs. A good month at year-end equals three in the slow season; this figure is an average.",
+ "facts": [
+  {
+   "label": "Agent's Assistant (current level)",
+   "value": "0–2 years, ¥2,300–3,200 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Booking Agent (2–5 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Negotiating fees and balances with clients",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Posters and promotional materials",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "You open the schedule at the office. Eleven gigs this month, seven confirmed, deposits received on four. Only the paid ones are gigs, the boss says.",
+  "You meet a bar singer at a fish noodle shop by the Zheng River. He asks if he can do two fewer shows next month. You look at the chart and work out whether two fewer would still cover his rent.",
+  "You drive to a sales office in Qidong. First you check the breaker box, then the stage entrance, then the cable troughs on the floor. Is the thirty kilowatts the client promised real? You clamp on your ammeter and see.",
+  "The dance troupe changes in the sales office bathroom. The lock is broken, so you stand guard at the door.",
+  "Showtime. You stand in the wings with one ear on the sound and one on the client's phone call. The emcee mispronounces the name of the housing development, and you raise the cue card a little higher.",
+  "It's over. The client's project manager says the balance will go through next week. You say fine, say fine once more, then ask if that means Wednesday.",
+  "On the expressway back to Hengyang, everyone in the back is asleep. You crack the window to let the wind keep you awake, in a van that smells of setting spray."
+ ],
+ "ladder": [
+  { "title": "Agent's Assistant", "stage": "Riding along", "focus": "Work gigs on site, book vans and meals, run cables, hand over mics, learn permits and settlements" },
+  { "title": "Booking Agent", "stage": "Running gigs", "focus": "Handle each show end to end: contract, permit, rehearsal, settlement; take a team out on your own" },
+  { "title": "Talent Agent", "stage": "Own roster", "focus": "Have your own artists; find work, negotiate fees, manage image and moods, live on commission" },
+  { "title": "Head of Talent", "stage": "Running the team", "focus": "Manage the agency's artists and clients on both sides, set split rules, handle terminations and disputes" },
+  { "title": "Partner", "stage": "Carrying the risk", "focus": "Put in money and carry debts, decide what business to take and where the company turns" }
+ ],
+ "ai_tasks": [
+  { "name": "Negotiating fees and balances with clients", "how": "How low a show will go, and when the balance arrives, get ground out over banquets and on the phone." },
+  { "name": "Managing artists' moods and departures", "how": "When a singer of eight years wants to quit, you have to sit across from him." },
+  { "name": "Posters and promotional materials", "how": "AI turns out several versions in minutes and has mostly replaced design at small companies. A person checks that the faces are right." },
+  { "name": "Event plans and emcee scripts", "how": "AI can write these. For a county-town store opening, someone has to take out the words nobody understands." },
+  { "name": "Short-video editing and topics", "how": "AI can cut footage and add captions. Which moment makes people remember this person is a human pick." },
+  { "name": "Schedules and settlement ledgers", "how": "Booking conflicts and splits are calculated more accurately by the system than by people." }
+ ],
+ "events": {
+  "e_first_mic": "The first time you run a gig alone, you bring only one spare battery for the mic. Halfway through the second song the sound dies, and you crawl across the stage from the wings to replace it while the crowd laughs. The next day the boss leaves a whole box on your seat, and doesn't say a word about it.",
+  "e_year_end": "Year's end is company party season: from mid-December to the twenty-eighth of the twelfth lunar month, up to three gigs a night. You eat boxed meals in the van for a dozen days, and this one month earns what three summer months do.",
+  "e_tail": "A store owner in Leiyang owes you an eight-thousand-yuan balance. Three months of phone calls take you from “it's being processed” to “our accountant is on maternity leave.” You drive to his door. He buys you a meal, hands over three thousand, and says the rest can wait till next year.",
+  "e_find": "In a bar you find a young man called Ah Guo singing his own songs, with three tables listening. You stay till closing and leave your business card on his guitar case. He asks what you do. You say you're the one who gets people their money.",
+  "e_permit": "Every performance needs a permit, and for shows across county lines not one item may be missing. One time the permit is a day late and the client says that's your problem. You wait on a bench in a corridor of the cultural affairs bureau until ten past five, and then drive two hours back to the site.",
+  "e_realestate": "Housing developments in southern Hunan stop launching, and sales offices close one after another. This line of business once made up sixty percent of the company's income; now it brings in a few gigs a year. The dance troupe uses the “Grand Opening” backdrops from the storeroom as floor mats.",
+  "e_live": "Two singers on your roster start livestreaming at night, and one evening's tips match three shows. They begin to get choosy about live gigs, and glance at the numbers on their phones partway through a song. What you have to manage has gone from schedules to traffic.",
+  "e_rain": "A May Day outdoor show gets hit by a downpour, and the breaker trips first. The client won't cancel. You get the dancers back into the van in the rain and talk safety with the project manager for forty minutes, until he can't hold his umbrella steady. It counts as half a show, and you recover sixty percent.",
+  "e_opera": "You get a woman who has sung huagu opera for thirty years onto the county's opera-to-the-villages program. The subsidy is under two thousand yuan a show. She spends an hour and a half on her makeup. The audience is old people on low stools, and some sing along, more accurately than the stage.",
+  "e_ai_poster": "The company's designer leaves, and AI takes over posters. The client says they look great, except that the lead singer's right hand has six fingers. You fix it past midnight, and add a line to the pre-publication checklist: count the fingers.",
+  "e_ai_singer": "A new mall wants a “digital singer” for its opening: someone forever young on a screen, one payment, no van, no meals. A singer on your roster hears the quote, lights a cigarette and says, how much cheaper than me?",
+  "e_highway": "Your lower back is the bill for all that driving, over forty thousand kilometers a year, nearly all of it at night. At the rehab clinic someone asks what you do for work. Driver, you say. It's easier to explain.",
+  "e_stomach": "All the drinks you've taken for others over the years have shown up on your liver function report, several numbers with arrows beside them. You start to carry hangover pills, and then to carry the prescription instead, and when clients offer a toast, you show them that.",
+  "e_tv": "A singer you manage gets onto a provincial TV talent show and goes out in the second round. The next morning your phone rings until lunch, and this year her fee triples. You stay in the office and print a new price list.",
+  "e_new_year": "New Year's Day and Spring Festival both pass in the middle of gigs. Your spouse says you spend all your holidays on other people's celebrations. You hear part of your child's school New Year concert over the phone. Someone on the other end goes flat, and you very nearly shout for the sound guy.",
+  "e_summer": "June through August is the slow season. The dancers take weddings, the singers go to night-market food stalls, and you help a wedding company put up its scaffolding. You could do the company's bank balance for those two months with your eyes shut.",
+  "e_tax": "The tax bureau starts looking into cash payments in the performance business, and the company's books have to be redone entry by entry. The boss dumps years of receipts on a table. You and the accountant spend a month, and discover he has been earning far less than you'd imagined.",
+  "e_boss": "The boss empties the company account and says he's going home to recover from an illness, leaving two months of wages for seven people and a room full of costumes. A few of you sell the equipment, and pay the dance troupe first. You do the final accounts on the storeroom floor."
+ },
+ "choices": {
+  "c_toast": { "title": "Come down and sit with us", "situation": "After the show, the client's boss sends word: he wants the female singer to come down and have a drink at their table. The twenty-thousand-yuan balance is still outstanding. She's tired from singing tonight, and she turns to look at you.", "options": [ { "label": "Go down and drink for her", "result": "You carry a bottle down and say she has a show first thing tomorrow, so this one's on you. After the third round the boss slaps your shoulder and says you're all right. The balance comes a month late." }, { "label": "Let her decide", "result": "She thinks about it, goes down herself, offers a cup of tea and comes back. In the van she tells you: next time, don't wait for me to look at you. You speak first." } ] },
+  "c_cert": { "title": "The performance agent's license", "situation": "The company has always filed permits under the boss's license, and he says it's time you got your own. It means memorizing the performance regulations and taking the exam in Changsha. The fee isn't much, but there's a seven-thousand-yuan company party the same weekend.", "options": [ { "label": "Take the exam", "result": "In the Changsha exam hall you write “commercial performance” until your hand aches. From now on, permits can carry your name." }, { "label": "Do the gig", "result": "You earn the seven thousand. You never do find the right weekend for the exam." } ] },
+  "c_advance": { "title": "Whether to front the money", "situation": "The client's balance hasn't come, and the dancers' pay is due this month. By contract, the company splits only after receipt. You could wait, or cover it out of your own savings. One of the dancers has a mother in the hospital.", "options": [ { "label": "Cover it yourself", "result": "You transfer twenty thousand. After that the troupe will follow you anywhere. Only half of the client's money arrives by the following spring." }, { "label": "Wait, per the contract", "result": "You explain the contract. They all understand. Before the next show, two of them say something has come up at home." } ] },
+  "c_agent": { "title": "Moving up to Talent Agent", "situation": "The boss wants to shift you from booking to Talent Agent, with your own artists and commissions, and half the base pay. Do it well and one year equals three. Do it badly and you're living on savings within six months.", "options": [ { "label": "Become a Talent Agent", "result": "You write those names from the bars into contracts, a forty-sixty split, with the forty to you. At the end of your first year you've earned eight thousand less than before." }, { "label": "Stay in booking", "result": "The base keeps coming, the gigs keep coming. The boss finds someone else to be a Talent Agent, who often comes to ask you where the cables are kept in the van." } ] },
+  "c_poach": { "title": "Ah Guo wants to go", "situation": "Ah Guo's songs catch fire online for a while, and a talent-network company in Changsha comes for him. He wants out. There are three years left on the contract, the penalty is there in black and white. He sits across from you. The business card on his guitar case is the same one you left.", "options": [ { "label": "Let him go for a token sum", "result": "You take almost nothing, and people at the company say you're a fool. Later on a program he thanks a great many people. You count them one by one in front of the TV, and don't get to yourself." }, { "label": "Collect the penalty", "result": "The money covers half a year's rent, and the two of you never speak again. You hear his next song on somebody else's livestream." } ] },
+  "c_live_ai": { "title": "Learning livestreams and AI editing", "situation": "Live shows are getting fewer, and the company decides someone should learn livestreaming, short video and AI editing, for no extra pay and with late-night shifts keeping streamers company. You're past thirty, and the young hires learn these things faster.", "options": [ { "label": "Learn it", "result": "You learn to read a retention curve and to tell AI to keep the moment where he takes a breath. Your singers last a few more years online." }, { "label": "Leave it to the young", "result": "You keep working live shows by phone and over banquets. As for what happens online, you look at the numbers and listen to reports, and mostly don't follow." } ] },
+  "c_changsha": { "title": "The big company in Changsha", "situation": "A Changsha company in variety shows and talent needs someone to run production, with forty percent more pay and a chance to see the world. None of your Hengyang connections are any use there. The high-speed train takes around forty minutes, so you wouldn't have to move.", "options": [ { "label": "Go to Changsha", "result": "You see a backstage of dozens of people for the first time, and discover that your own part is ordering boxed lunches and checking the run sheet. Your income does go up." }, { "label": "Stay in Hengyang", "result": "You go on running around southern Hunan, where county bosses call you brother even when the balance is unpaid." } ] },
+  "c_director": { "title": "Applying for Head of Talent", "situation": "The company wants a Head of Talent to manage all the artists and the split rules. This person has to negotiate longtime performers down, and take artists to court for the company. The boss says nobody's going to like you for this.", "options": [ { "label": "Take it", "result": "You post the new split rules on the wall. In the first week, two people block you on WeChat. In the second week, they add you back to ask about their schedules." }, { "label": "Don't be the bad guy", "result": "You keep your few artists. Someone else becomes Head of Talent, and your own splits go down too." } ] },
+  "c_wedding": { "title": "Your own wedding business", "situation": "A friend in the wedding business wants to sell his storefront. Weddings are steadier than gigs and there's work in the slow season, and after all these years of driving you know where every hotel is. The downside is that you'll never again have to talk about art.", "options": [ { "label": "Take it over", "end": "You haul your speakers from the company storeroom to your own storefront, and change the sign. The emcee script for the first wedding is yours, and the bride's name is pronounced correctly.", "result": "You hand off your artists, one at a time." }, { "label": "Stay an agent", "result": "Your friend sells to someone else. Next party season, from mid-December on, you have no evenings." } ] },
+  "c_culture": { "title": "A contract job at the culture center", "situation": "The district culture center is hiring a contract worker who knows performance, to manage free public shows and amateur rehearsals. The pay's not much. Benefits are on time, there are no balances, and no one will ever send word for you to come down and sit at a table.", "options": [ { "label": "Go to the culture center", "end": "At the culture center you have a desk of your own. On Wednesday afternoons you lead a group of retired women in choir. They go flat in remarkably the same direction, and you begin to think this too is a skill.", "result": "You leave the van keys at the company." }, { "label": "Don't go", "result": "You say you can run for a few more years. The job later goes to a young woman who studied dance." } ] }
+ },
+ "endings": {
+  "retire": "You are the one who finally goes to cancel the company's business license. The clerk at the window asks the reason, and you write: term of operation expired. It takes three cartons to hold the contracts you've handled, and a few balances are still written on an IOU in the third carton. Two of those clients have long since ceased to exist, and you keep it anyway.",
+  "burnout": "Your lower back reaches the point where you can't drive long distances, and the liver numbers won't improve. There's no sick leave in this trade. You tell your few artists one by one and move their contracts to another agency. You sell the seven-seat van, and the new owner asks when he picks it up if you still want the roll of cable in the back."
+ },
+ "stages": [
+  "You drive, book meals, wire stages and hand over mics. You arrive three hours early, measure the power with an ammeter and pace off the stage. The boss talks in front; you take notes behind: how much deposit, when the balance, who among the clients actually decides. The schedule and receipts get updated twice a day, and if you get a number wrong, you pay for it.",
+  "Each show now lands on you: reading the contract, running the permit, going through the run sheet with the client and the cue list with the sound engineer, then working out the split and sending it to each dancer's phone. You go out without the boss, so nobody fends off the talk for you. You learn to lay out all the trouble before the show and, after it, all the money.",
+  "You have a few people of your own, and you talk with each of them every week: their health, the next song, whether to take a certain kind of gig. You bargain up and down for them, drink in their place, and decide what they won't perform. Commission is your living. So are their moods, and these are often the same thing.",
+  "You no longer ride along on every show. You set new artists' splits, deal with terminations, compete with other agencies for county performance contracts, and explain this year's accounts to the boss. The contract template keeps changing, because you keep changing it, adding a clause each time something goes wrong. The agents who come to you bring only the kind of thing they can't solve.",
+  "The company's accounts hold your money and also your debts. You decide next year's mix of livestreams and tourism work, whether to keep the storeroom, who stays. You see bankers more than singers. Now and then you go back to the front line to rescue a show, because a client insists on seeing the person he met years ago."
+ ],
+ "work": [
+  "The Changning stage has too few outlets, so you go to the hardware store next door to borrow a power strip. The owner wants a twenty-yuan deposit, and you leave your ID. When the show ends and you go back to swap, he has closed, and you wait on the step until morning.",
+  "The emcee wants to change his lines at the last minute. You write them out with a marker on A4 paper and crouch behind the speakers at the lip of the stage holding them up. He gets it right, and your legs go numb.",
+  "You check the costumes back into the storeroom one by one, and a skirt is missing. The troupe leader takes out her phone and searches for a long while, then finds out her sister wore it to a class reunion.",
+  "A car show needs a permit, and the form at the bureau has the wrong floor area. You measure the hall again with a tape, and find that the client's figure was two hundred square meters too big.",
+  "Version seven of the party's run sheet has the CEO's speech growing from five minutes to twenty. You cut two later acts and explain to each performer in person: you still get paid.",
+  "The settlement sheet lists eight dancers but divides by seven. You press through it three times on a calculator at a service area, and transfer the two hundred yuan from your own phone first.",
+  "The male singer's throat is swollen this week. You move two of his three gigs and have him keep to the lower range for the remaining one, having agreed with the band to drop the key by a step and a half.",
+  "A county boss wants your singer to sing a song he wrote himself, at double fee. You read the lyrics and suggest he get two lines rewritten. He agrees, and after the show the singer quietly thanks you.",
+  "The huagu opera performer's contract is up, and you bring the new one to her home. She's altering a costume on her sewing machine, and has you read it aloud to her. When you reach the split, her foot pauses on the treadle.",
+  "A new artist wants out, and his mother has come in from Leiyang and sits in the office. You open the contract to the penalty page, and also lay out his two years of shows and actual receipts, and let them do the sums.",
+  "Version nineteen of the contract template: you add a clause saying voice and likeness may not be used for generated content without written consent. The lawyer says the wording isn't very professional, but it gets the idea across.",
+  "The storeroom lease is up and the landlord wants twenty percent more. You stand in the storeroom and work it out: what those two speakers cost ten years ago is more than a year's rent here. You decide to let the place go.",
+  "The bank's account manager is looking at the company's statements, and asks why a “performance deposit” has been sitting on the books for so long. You hand him the notice revoking that client's business license three years ago."
+ ],
+ "past": [
+  "At junior high in Hengnan County, when a band plays at a village wedding or funeral, you're always the first to get to the sound equipment. The sound man teaches you to coil a cable so it doesn't tangle.",
+  "Your parents think you should learn a trade, and you go to the audio program at a Hengyang vocational school. Nineteen in the class: half want to be singers, half want to be bosses.",
+  "One summer you travel with a performance troupe around Chenzhou and Yongzhou at 120 yuan a night. For the first time you see a boss handing out a stack of cash, and you also see a boss being hung up on by a client.",
+  "After your associate degree you work sound for two years at a performance bar in Changsha, and every night you watch one group after another on the stage, while the mixing desk stays the same.",
+  "Your father's leg goes bad, and you come back to Hengyang. A man who comes to borrow speakers watches you wire them and asks if you'll work with him: no base salary, meals included. Later that changes to two thousand base."
+ ],
+ "late": {
+  "pension_note": "Estimate: a small company's on-and-off contributions, mostly at the minimum base, leave a pension that covers only basics in Hengyang, supplemented by odd jobs through old connections.",
+  "scenes": [
+   "Now you get up at seven, and at ten at night your body is still wide awake, not knowing what to do. You walk many laps of the compound, and by now you know the wiring of every streetlamp.",
+   "People at small county events still call you sometimes to look over the wiring, for three hundred yuan. You bring the ammeter you've had for thirty years. The thirty kilowatts the client promised is, as ever, twenty-two.",
+   "You go to a wedding banquet and the emcee's mic is whistling faintly. You take a look at the stage layout, lift your cup and go on eating, moving the speakers back half a meter in your head.",
+   "You still remember the amount of one balance from twenty years ago. That boss's son has opened a shop that does good business. You went in once to eat, and you paid.",
+   "Your back won't let you drive, and you have to stand for half of any high-speed train ride. For the first time in your life there's no gig to rush to, and Hengyang turns out much bigger than you'd thought, and much slower.",
+   "You've quit drinking. A friend takes you for tea, and you see some of the old clients in the teahouse too, all with the same goji berry tea. Nobody brings up money.",
+   "You help put on shows at the little community stage, responsible only for telling the old ladies where to stand. Your back won't bend, so you point with a bamboo pole.",
+   "You've still got over three hundred “Boss So-and-So” in your phone. The new job has no use for them, and you don't delete them either. When people send New Year's wishes in bulk, you answer each one.",
+   "You see a familiar face on TV, heavier now, with a different name. When you knew him, he got three hundred yuan a show and had to borrow bus fare from you.",
+   "Mall openings now have screens that sing, never off-key, and for nothing. Walking past, you notice that voice breathes at very regular points, more regular than any living person.",
+   "At a restaurant you always look first for the stage entrance, even if the place has no stage. When you see a person, your first thought is still: how much would that face go for per show?",
+   "On summer nights somebody is singing with a guitar by the Xiang River, good voice, not enough breath. You stop for two songs and leave twenty yuan in the case. No business card."
+  ],
+  "closing": {
+   "retire": "You clamp the old ammeter on a wire at home. The reading is normal. Nobody's balance is waiting on you tonight.",
+   "burnout": "The bamboo pole leans against the wall. The old ladies downstairs have gone home and the speaker is still on, with a faint electric hum. You can tell it's the ground wire.",
+   "end": "A new year, and the schedule is empty. You print it out, put it on the table and write nothing on it."
+  }
+ }
+}

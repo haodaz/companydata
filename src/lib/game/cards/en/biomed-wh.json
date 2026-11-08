@@ -1,0 +1,158 @@
+{
+ "id": "biomed-wh",
+ "occupation": "Biomedical Engineer",
+ "role": "Biomedical Engineer at a medical consumables factory",
+ "headline": "Developing infusion and blood-purification consumables at a factory in Weihai, where a single tube takes three to five years from prototype to registration, and one volume-based procurement result can shut a line within six months",
+ "unit": "The R&D center of a medical consumables factory in Weihai, Shandong",
+ "unit_type": "Medical consumables company",
+ "city": "Weihai, Shandong",
+ "city_tier": "Prefecture-level city",
+ "education": "Bachelor's degree (Biomedical Engineering)",
+ "level": "You've studied signals and materials and can run a tensile tester. You are only now hearing that a tube requires a design history file hundreds of pages long.",
+ "intro": "The sea wind off Weihai rattles the automatic doors at the plant. At the R&D center you're issued a badge and a blue one-piece cleanroom suit. Your first job is entering tensile data for 120 extension lines into a spreadsheet. The regulatory specialist next door tells you this product's registration certificate expires next year, and the renewal file has to start now.",
+ "salary_note": "Estimate: medical consumables firms in Weihai pay less than the Yangtze Delta for the same job, with bonuses at registrations and project milestones. The cost of living is low.",
+ "facts": [
+  { "label": "Assistant R&D Engineer (current level)", "value": "0–2 years, ¥5,500–8,500 a month (national average, estimate)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "R&D Engineer (2–6 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Going to clinical sites to hear how nurses use the product", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Planning design verification and biocompatibility tests", "source": "AI exposure" },
+  { "label": "Open positions", "value": "28 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Changing room: shoes, handwash, cleanroom suit, hair cover. Seven minutes end to end. Inside the Class 10,000 cleanroom, you hear only the air shower.",
+  "Sampling by the extrusion line. The tube diameter is off by a hundredth of a millimeter. The line lead says it's within tolerance. You still measure three times and log it.",
+  "You clamp connectors into the tensile tester and bond strength figures jump up one by one. Number seventeen is lower than the rest by quite a lot.",
+  "The canteen has seafood noodles today and the sea fog outside the window hasn't lifted. The regulatory specialist says the review center has sent another deficiency letter, and walks off with her tray.",
+  "Writing the design history file. Why this valve uses this silicone, and which clause of which standard to cite, all written so someone five years from now can follow it.",
+  "You coordinate ethylene oxide aeration time with the sterilization shop. This batch has to ship, and the warehouse and quality department are already arguing about it in the corridor.",
+  "You and sales take a call from a head nurse. The new IV catheter is good, she says, only the withdrawal feels a bit rough. You write down the word rough and draw a line under it.",
+  "You peel off the cleanroom suit and your back is wet. The wind beyond the gate tastes of salt, and the shuttle bus runs along the sea."
+ ],
+ "ladder": [
+  { "title": "Assistant R&D Engineer", "stage": "Running tests", "focus": "Prototype, run tensile and puncture tests, compile the design history file" },
+  { "title": "R&D Engineer", "stage": "Owning a product", "focus": "Own design and verification for one product, support registration and production transfer" },
+  { "title": "Senior R&D Engineer", "stage": "Setting the approach", "focus": "Set material and structure routes, lead sterilization and biocompatibility plans, answer review deficiencies" },
+  { "title": "R&D Project Director", "stage": "Running the portfolio", "focus": "Manage the R&D team and pipeline, decide what starts and stops, liaise with regulatory and sales" },
+  { "title": "VP of R&D", "stage": "Running R&D", "focus": "Answer for the compliance and direction of the company's product lines" }
+ ],
+ "ai_tasks": [
+  { "name": "Going to clinical sites to hear how nurses use the product", "how": "Which motion is easy and which is awkward has to be seen standing next to a nurse. AI can't go and ask for you." },
+  { "name": "Planning design verification and biocompatibility tests", "how": "AI can look up standards, list checks and compute sample sizes. People are responsible for what's tested and whether a result counts." },
+  { "name": "Writing registration files and technical requirements", "how": "AI can format the files and compare versions. Talking to reviewers, and final responsibility, belong to people." },
+  { "name": "Compiling inspection data and batch records", "how": "Data entry, trend charts and anomaly alerts are mostly automatic. People spot-check and verify." }
+ ],
+ "events": {
+  "e_first_dhf": "Your first verification report comes back from quality three times: no basis given for the sample size, a record not dated, a cited standard withdrawn. You start writing down publication years.",
+  "e_clean_room": "Weihai summers are damp, and half a day in a cleanroom suit leaves eczema across your hands and wrists. Colleagues on the floor tell you which hand cream doesn't shed and can go into the cleanroom.",
+  "e_nurse": "You go with sales to a hospital infusion room and stand next to the head nurse for two hours. Back at work you widen the catheter's wing by one millimeter. That's the millimeter you never learned at school.",
+  "e_eo": "Ethylene oxide residue sits right at the limit, so the product has to stay in the aeration room for several more days. Shipping tallies up customer demands, you tally residue curves, and the two sheets can't be made to meet.",
+  "e_inspection": "A surprise drug-administration inspection gives no warning. By nine in the morning they're on the floor. You're called in to explain a deviation record, and the inspector has you pull original records from three years ago. Your palms are wet.",
+  "e_cert_got": "The extension line you've followed from the first prototype finally receives its registration certificate, four years in. The certificate is a single sheet of paper. The shop supervisor takes a photo for the group chat, and the night shift runs as scheduled.",
+  "e_bufa": "The reviewers issue a deficiency notice asking for simulated-use data, with a one-year deadline. You reschedule tests, and all quarter sales keeps asking when the certificate will come.",
+  "e_eye": "A relative is in hospital. The first thing you do on visiting is turn over the infusion set packaging to read the batch and sterilization method, and only then ask how the food is.",
+  "e_vbp": "National volume-based procurement opens and your catheter wins, at 30 percent of the old price. Output doubles, profit thins out, and the R&D budget gets a new draft.",
+  "e_vbp_lost": "An infusion set line loses in a provincial procurement round and stops production six months later. You write the withdrawal assessment. Verification data from four years ago goes into the archive, page by page.",
+  "e_mdr": "Europe's new regulation has a transition deadline and technical files for export products must be rewritten from scratch. The notified body's queue is over a year long. You work backward on the calendar. Your Korean customer emails every week to ask.",
+  "e_ai_docs": "The company brings in a documentation system that checks design files against regulatory templates. A month of sorting becomes days. It then writes up a withdrawn standard so convincingly that you realize someone still has to read every line.",
+  "e_winter": "Heavy snow in Weihai closes the expressway and shipping stops for two days, along with the cold chain and sterilization schedules. You dig out your car and redo three planning sheets.",
+  "e_child_school": "The cleanroom means half a day without your phone, and you're always slow returning kindergarten's calls. Eventually the teacher saves your spouse's number. Yours is now marked backup.",
+  "e_complaint": "A customer complains of connectors working loose in one batch. You trace it to a single mold cavity, write the CAPA, add an in-line check, and audit the supplier while you're at it.",
+  "e_young": "A new master's graduate asks why a failed design should go into the file. You tell him the reviewer wants to know why you didn't choose it, which says more than what you chose.",
+  "e_eyes": "Over a decade of looking at needle tips under magnification and presbyopia arrives ahead of your age group. You start having the younger people read out numbers, and you listen and stop them when one sounds wrong.",
+  "e_renew": "Registration certificates renew every five years, and this time seven expire together. You go through them with the regulatory specialist and decide to renew four and let three go. Those three products simply disappear from the market.",
+  "e_new_line": "One of the last projects you approve in this post is a biodegradable coated catheter. It'll take ten years to come through, by which time whoever takes it on probably won't know who began it."
+ },
+ "choices": {
+  "c_reg_learn": { "title": "Learn regulations or process", "situation": "Regulatory is short of people and wants to borrow you for six months to sort files. You'd learn the rules. The R&D lead says if you write files before understanding the process, what you write will be empty talk.", "options": [
+   { "label": "Go to Regulatory", "result": "For the first time you see how a certificate comes about, and what kind of table frightens a reviewer." },
+   { "label": "Stay at the extrusion line", "result": "After a full year on the line you can feel the difference between silicone and PVC tube extruding, and you know the people on the floor." }
+  ] },
+  "c_batch": { "title": "Whether to escalate a deviation", "situation": "A batch has a two-hour gap in its cleanroom records; a hygrometer went offline. Quality asks you to assess the impact. Call it a major deviation and several hundred thousand yuan of goods go into quarantine. The line manager says nothing changed in those two hours.", "options": [
+   { "label": "Report as a major deviation", "result": "The batch sits in quarantine three weeks, more verification gets done, and it's released in the end. The line manager doesn't greet you for a long time." },
+   { "label": "Minor deviation, with an assessment", "result": "You pull data from the neighboring sensor and write a five-page assessment. Quality signs it. You keep a copy of those five pages." }
+  ] },
+  "c_senior": { "title": "Going for Senior R&D Engineer", "situation": "A Senior R&D Engineer has to have led a Class III product from project start. There's a blood-purification tubing project with a long timeline and high risk, and no one's fighting for it.", "options": [
+   { "label": "Lead the project", "result": "You spend two years shuttling between the lab and the clinical trial site. You lose some hair, and the product's plan finally holds." },
+   { "label": "Stay on Class II products", "result": "Your products get certified faster and the bonuses aren't bad. The lead says to see about promotion next year." }
+  ] },
+  "c_consult": { "title": "Going into regulatory consulting", "situation": "A device-registration consultancy in Suzhou wants you, at 40 percent more pay, to write files for a dozen companies a year. What you know is worth money. But you'd never again have a product of your own.", "options": [
+   { "label": "Go to Suzhou", "result": "You finish the paperwork and return your cleanroom suit to the shop.", "end": "You do registration consulting in Suzhou, a dozen certificates a year passing through your hands, none your product. By year-end, you often have to check the contract to recall who makes what." },
+   { "label": "Stay in Weihai", "result": "They say the door's open. You go back to the floor and keep waiting for that batch's sterilization result." }
+  ] },
+  "c_ai_quality": { "title": "Taking over the quality data system", "situation": "The company is connecting all its batch records and complaints to one system, with AI to flag anomalies. No name goes on this work and no one in R&D wants it, but under new regulations, if the data isn't clean nobody will be able to explain anything.", "options": [
+   { "label": "You'll take it", "result": "You spend a year sorting over a decade of paper records into the system and find the same defect called three things by three distributors." },
+   { "label": "Stick to new products", "result": "New products keep you busy, and IT and a contractor build the system. When you need data, you fill out a request form." }
+  ] },
+  "c_vbp_price": { "title": "Cutting costs before procurement", "situation": "The next procurement round is coming. Sales says winning takes another 20 percent off cost, which means swapping a medical-grade silicone for a cheaper equivalent. Verification would have to be redone, and may not finish in time.", "options": [
+   { "label": "Change the material, redo verification", "result": "You go through the full biocompatibility path and land two weeks after the bid date, in time only for the next round." },
+   { "label": "Keep the material, trim the process", "result": "You merge two steps into one and save less than half the target. The sales director says you're too conservative, and you don't deny it." }
+  ] },
+  "c_director": { "title": "Applying for R&D Project Director", "situation": "The R&D Project Director decides the life or death of a dozen products. What starts and what stops is often several years of one person's work. The owner asks if you'd dare.", "options": [
+   { "label": "Apply for R&D Project Director", "result": "The first project you cancel is one your own protege spent three years on. When he walks out of your office, you don't call him back." },
+   { "label": "Stay technical", "result": "You say you don't want to decide other people's fates. After the new director arrives, you're still the one who spends longest in the cleanroom." }
+  ] },
+  "c_hospital": { "title": "The hospital's equipment department", "situation": "A city hospital's equipment department wants an engineer with industry experience: a permanent state post, 20 percent less pay, and no more chasing certificates. Your spouse thinks this needs no thought.", "options": [
+   { "label": "Go to the hospital", "result": "You hand in your resignation and report to the new job in a white coat.", "end": "You go to the hospital's equipment department and manage procurement acceptance and adverse-event reports. Your former customers now sit across from you, and you know better than they do how each page of a file got put together." },
+   { "label": "Stay at the plant", "result": "You say you'll do one more product. Your spouse never brings it up again, and it stays there anyway." },
+   { "label": "Try a six-month rotation first", "result": "You arrange six months in the equipment department and walk around your own products from the acceptance side. You come back to the plant with a dozen more comments." }
+  ] },
+  "c_dealer": { "title": "The old salesman wants a partner", "situation": "The sales director you've worked with for over a decade is striking out on his own as a regional consumables distributor, and wants you for product and training. Since volume procurement distributors have it hard, but he says there'll always be categories it doesn't reach.", "options": [
+   { "label": "Go with him", "result": "You look at your housing fund and nod.", "end": "You and the old salesman run a consumables distributorship, and you're often on the road to county hospitals. The head nurses are younger than you now. They still hand you the catheter and ask you to feel the withdrawal." },
+   { "label": "Stay in R&D", "result": "The old salesman says you're no fun. At New Year he still sends a box of sea cucumbers." }
+  ] }
+ },
+ "endings": {
+  "retire": "In the month you reach retirement age, you upload renewal files for three certificates and press submit. Their validity outlasts your working life. The wind is still salty as you walk out the gate, and for the first time in all these years you don't look back at the sterilization plant's stack.",
+  "burnout": "The eczema keeps coming back, and inspection after inspection has kept you on edge. The company moves you to standards: no more cleanroom, no product of your own to answer for. At your desk you read notices of standards updates, line by line, new versions replacing old ones."
+ },
+ "stages": [
+  "Your job is sampling, prototyping, tensile and puncture tests, then putting the data into the tables of the design history file. The floor teaches you to wear a cleanroom suit without shedding fibers, and quality teaches you never to alter a record. What you hold most are calipers, the tester's clamps and batch-numbered sample bags.",
+  "Now you run a product from the start: writing design inputs, checking drawings with the mold maker, sending samples for biocompatibility, preparing the file with the regulatory specialist. What sales wants and what regulations demand often clash, and that's when people ask you. The difference: the prepared by line on the document is now you.",
+  "You set materials and sterilization and answer review deficiencies. Half your time is in meeting rooms, working out verification routes with quality, regulatory and production; the other half at clinical trial sites. You're seldom in the cleanroom, but every major deviation from the floor comes to you.",
+  "You hold the pipeline chart and the budget. Volume procurement bids, certificate expiry dates and regulatory transition deadlines are all on the same calendar. Each quarter you decide which project keeps burning money and which stops, and then go and talk to the person who's spent three years on it.",
+  "You answer for the compliance and direction of the company's whole product line, dealing with the owner, investors and regulators. At the annual management review you sit in the middle, listen to every department and decide where next year's money goes, and which kinds of products the company will no longer make."
+ ],
+ "work": [
+  "The R&D lead has you compare silicone valve discs from two suppliers. You run thirty of each through repeated puncture, tabulate the leaks and attach it to the design file.",
+  "A line inspector shows you how to read needle-tip angle on the optical comparator. After an afternoon you can tell if the second bevel edge has chipped.",
+  "The regulatory specialist has you check font sizes and warnings on the instructions for use. Using a ruler, you find one line a half-size smaller than the standard requires.",
+  "You and the mold maker's engineer work on the taper of a Luer connector, mailing samples back and forth four times before it passes the fit test.",
+  "You take samples to a third-party lab for cytotoxicity, checking batch, sterilization lot and submission date one by one, and come back with a report in continuous numbering.",
+  "At transfer to production, weld strength differs between day and night shifts. You stand two night shifts and find that the night lead has turned the air pressure down slightly.",
+  "The reviewer's deficiency letter has eleven points. You and the regulatory specialist answer them one by one. For the hardest you go to the clinical site to get the original use records.",
+  "The sterilization plant wants to change its loading pattern, so you lead the revalidation and draw the positions of the biological indicators on a 3D diagram for the sterilization supervisor.",
+  "The sales director wants an anti-backflow claim on a new product. You give him the verification report and point out which lines can be claimed and which can't.",
+  "You and finance build a table showing revenue and upkeep for each registration certificate. Two have never made money since they were granted. It goes on the agenda at the next management review.",
+  "A Korean customer comes to audit and wants to see your supplier controls. You walk the auditor from warehouse to lab. By lunchtime he's still asking.",
+  "An investor brings in a biodegradable stent project. You lay out the registration timeline, clinical costs and line investment on the table, and let him finish the arithmetic himself.",
+  "Regulators hold a company forum. You talk about raw-material supply problems using your own figures, and say nothing about anyone else's."
+ ],
+ "past": [
+  "Your father works at a shipyard in Rongcheng and everyone at home thinks learning a trade is safest. You're decent at chemistry and physics, so-so at biology.",
+  "On your application you see biomedical engineering and take it to be half a doctor. Once you're enrolled it turns out to be mainly circuits and signals.",
+  "In your second year your mother is hospitalized and you spend half an afternoon looking at the infusion pump. Back at school you join a teacher working on oximetry sensors.",
+  "You intern at a medical device company, mostly sticking on barcode labels. You also read through the table of contents of ISO 13485, for something to do.",
+  "A hospital equipment department in Qingdao and this consumables plant in Weihai both offer you a chance. You pick the plant, finding products more interesting than repairs."
+ ],
+ "late": {
+  "pension_note": "Estimate: large manufacturers in Weihai pay contributions steadily, and the pension is enough for everyday expenses locally.",
+  "scenes": [
+   "A small startup hires you as an adviser, two days a month to read their files. They call you teacher and generally don't want to change what you tell them to change.",
+   "The eczema is gone. When you catch that cleanroom suit smell in a hospital corridor now, you realize it's been a while since you were last on the floor.",
+   "Most of the products you built have left the market. After volume procurement the choices have narrowed, and many hospital infusion rooms carry only three or four brands, which everyone has got used to.",
+   "You start walking a stretch along the sea every day, with a step goal. When the wind's up, the color of the water has nothing to do with the sterilization shop's alarm light.",
+   "At the community clinic a nurse puts in a needle and you don't ask what brand. You think about this for several days, and call it learning to let yourself off.",
+   "At a reunion everyone talks about pensions and knees. Nobody talks about registration certificates. This suits you, and after the seafood you go home.",
+   "Your work has changed since you moved, but with an uncertain number you still want the original record. New colleagues say you're hard to deal with.",
+   "A certificate at your old company has expired. The notice is a single line. You think about how many people's four years that line used up, then close the page.",
+   "An old colleague who made needles is opening a hand-brewed coffee shop and asks you to help set the water temperature. First you ask how he got that number.",
+   "A friend in hospital has a bruised hand from the IV catheter and asks if it's a bad needle. You say technique and veins both matter. As you say it you know you don't sound like a person.",
+   "At the supermarket you still check the filing number and expiry date on the backs of bandages and floss. For no reason other than unease if you don't."
+  ],
+  "closing": {
+   "retire": "The sea fog has come back. Shuttle bus headlights go past, one beam after another. About now, the sterilizer takes its next load.",
+   "burnout": "You unsubscribe from the standards emails. The inbox gets a little quieter; the sea, a little louder.",
+   "end": "You reach the hospital entrance with a bag of fruit. The glass doors of the outpatient hall open and close, and everyone inside has their own needle."
+  }
+ }
+}

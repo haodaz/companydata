@@ -1,0 +1,153 @@
+{
+ "id": "testing-qz",
+ "occupation": "Testing and Inspection Management Engineer",
+ "role": "Testing and Inspection Management Engineer at a third-party lab",
+ "headline": "Running quality at a third-party lab in Quanzhou that tests shoes, garments and plumbing fixtures, with customers' sales reps chasing reports to the door, while your raw records, proficiency tests and assessors decide whether a report gets stamped",
+ "unit": "The quality department of a third-party testing organization in Quanzhou, Fujian",
+ "unit_type": "Third-party testing organization",
+ "city": "Quanzhou, Fujian",
+ "city_tier": "Prefecture-level city",
+ "education": "Bachelor's degree (Light Chemical Engineering)",
+ "level": "You spent three years in the chemistry lab on sample prep for restricted substances in shoe materials, and have just moved to quality. You can recite the CMA and CNAS clauses, and have never faced an assessor alone.",
+ "intro": "The lab occupies a five-story building in an industrial zone in Quanzhou. Samples are received on the first floor, flex testers clack away on the second, and the fume hoods on the fourth run all day. You've just transferred from chemistry to the quality department. On your desk are this year's internal audit plan and a note: the CNAS surveillance assessment is next month, and two nonconformities from last time are still open.",
+ "salary_note": "Estimate: quality jobs at third-party labs in Quanzhou pay less than first-tier cities but more than local factory clerks. Year-end bonuses depend on report volume.",
+ "facts": [
+  { "label": "Quality Management Engineer (current level)", "value": "3–7 years, ¥7,500–12,000 a month (national average, estimate)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Authorized Signatory (7–12 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Guiding test staff in hands-on technique", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Building and improving the lab's management system", "source": "AI exposure" },
+  { "label": "Open positions", "value": "72 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You open the LIMS and check today's due reports: forty-three. A sales rep has already sent a WeChat asking if one can move up.",
+  "In the physical lab you check the temperature and humidity log. The ledger by the flex tester is missing an entry from yesterday afternoon. You have the technician add an explanation, but not a number.",
+  "You come across a spectrophotometer's calibration certificate, due next week. The equipment manager says external calibration has a queue. You circle a date on the calendar.",
+  "At the oyster vermicelli stall downstairs, a colleague says one shoe factory has switched materials again this month, and who knows if the phthalates will pass.",
+  "You review the chemistry lab's correction for an internal audit finding. It says training has been strengthened. That won't do. You send it back and ask who was trained, and tested on what.",
+  "A sales rep brings a customer upstairs with a previous report, asking if a value can be written as not detected. You ask them to sit, and pour some tea.",
+  "You check the proficiency testing returns. Aniline this year is satisfactory. A project next door came back questionable. You start on the investigation form.",
+  "Time to go, and the flex tester's still running. What it does is one shoe's whole life, a hundred thousand bends, with the result due tomorrow morning."
+ ],
+ "ladder": [
+  { "title": "Test Engineer", "stage": "Producing data", "focus": "Prepare samples, run instruments, write raw records, learn method standards" },
+  { "title": "Quality Management Engineer", "stage": "Running the system", "focus": "Manage procedures, internal audits and equipment calibration, follow up complaints and nonconformities" },
+  { "title": "Authorized Signatory", "stage": "Signing reports", "focus": "Review raw records and reports, sign within your authorized scope, answer for the results" },
+  { "title": "Quality Manager", "stage": "Running quality", "focus": "Answer for the whole management system, hold management reviews, face assessors and regulators" },
+  { "title": "Lab General Manager", "stage": "Running the lab", "focus": "Manage people, accreditation and business, decide which tests to add or drop" }
+ ],
+ "ai_tasks": [
+  { "name": "Building and improving the lab's management system", "how": "AI can draft policies against standards and regulations and spot gaps. Whether to set them that way, and how they fit this lab's practice and appetite for risk, is for people to decide and answer for." },
+  { "name": "Writing and revising the quality manual and procedures", "how": "AI can draft a manual and procedures by clause, standardize format and compare versions. People spot-check key clauses against actual practice." },
+  { "name": "Improving testing workflows", "how": "AI can analyze workflow data, find bottlenecks and repeated steps and propose fixes. People go to the bench to see what's really done, weigh interests across departments and decide how to change it." },
+  { "name": "Running internal audits and management reviews", "how": "AI can generate checklists, compile records and flag leads for nonconformities. Interviews on site, judging how serious a problem is, driving fixes and making review decisions take people." },
+  { "name": "Reviewing test reports and raw records", "how": "AI can check calculations, format, signatures and contradictions, quickly picking out anomalies. Expert judgment on results and legal responsibility for signing a report rest with people." },
+  { "name": "Guiding test staff in hands-on technique", "how": "AI can supply procedures and training materials. Demonstrating on the spot, correcting technique, and judging a person's ability and growth is mostly done face to face." },
+  { "name": "Overseeing equipment calibration and intermediate checks", "how": "AI can generate schedules and reminders and watch for drift. Confirming a device's physical state, dealing with anomalies and deciding to take it out of service is for people." },
+  { "name": "Organizing interlaboratory comparisons and proficiency testing", "how": "AI can help choose schemes, analyze results and suggest reasons for outliers. Running the scheme, preparing and moving samples, and digging into root causes of poor results takes people." }
+ ],
+ "events": {
+  "e_first_audit": "The first time an assessor asks for a balance's intermediate check record, you run up three flights to find it. He holds it, looks, points at a date and asks whether that was a Sunday.",
+  "e_pt_fail": "A proficiency test comes back unsatisfactory and that test stops being reported externally. You and the chemists go through standard solutions, sample prep and instruments item by item. Three weeks later the cause turns out to be a bottle of reagent shelved in the wrong place.",
+  "e_season": "Export shoe orders rush samples in for spring: over seven hundred in one week. Quality staff are pulled in to check data, and on Sunday night you finish reviewing your hundredth record.",
+  "e_client_gift": "A shoe-factory sales rep drops off a box of Tieguanyin, saying it's nothing, just please hurry next week's report. You log the tea at the front desk, send it back that afternoon, and write down the date on the form.",
+  "e_smell": "You walk into the chemistry lab and the solvent smell is stronger than usual; the fume hood airflow has dropped. Years of soaking in this smell have left your nose a little better than the alarm, and more easily inflamed.",
+  "e_eye": "Buying shoes, you first turn to the tongue for the standard number, then bend the sole. Whoever's with you has gone on to the next store, and looks back to find you still feeling the midsole.",
+  "e_pass_audit": "The reassessment ends, and the team leader reads out no major nonconformities, only three minor ones. The director takes everyone out for ginger duck, and through the meal you're still thinking about how to write those three.",
+  "e_standard_new": "A national standard changes editions, and over thirty tests need method change verification, with the old edition withdrawn. The technicians complain for two weeks. You make a table of the differences and post it on each lab door.",
+  "e_spot_check": "Market regulators come to spot-check reports, picking ten at random and asking you to pull up raw data on the spot. A recording rule you changed six months ago saves you a lot this time.",
+  "e_price_war": "A competitor next door cuts routine quotes by 30 percent and several old customers begin comparing prices. The sales director asks if one round of internal review could go. You point to the clause in the procedure.",
+  "e_ai_review": "A report review system goes live, automatically catching calculations, units and missing signatures. In its first month it finds more errors than people did. It also doesn't know that this shoe factory's samples are always like that, and can't say if it's a problem.",
+  "e_back_neck": "Reviewing reports has done in your neck and lower back, and most of your medical card goes to massage clinics. You stack a few withdrawn standards on the desk to raise the screen.",
+  "e_authorized_exam": "A technician you've trained fails the authorized signatory assessment the first time. The assessor asked about the method's uncertainty and his answer sounded memorized. He comes back and says he won't memorize anymore.",
+  "e_merger": "A national testing group acquires you. Chemistry moves to Fuzhou, leaving only physical testing and sample intake in Quanzhou. The next day the LIMS has a new login page, and half the names on it are gone.",
+  "e_fake_report": "Someone uses a report on your letterhead to bid on a tender, and its number doesn't exist. You write a statement to the tendering party and put an anti-counterfeit QR code on the agenda.",
+  "e_new_young": "A young quality specialist asks why learn the clauses when AI can write procedures. You put a document covered in an assessor's red marks in front of him and ask him to tell you where the problems are.",
+  "e_sink_market": "A plumbing factory in Nan'an has an export batch that needs lead leaching tests, and the plant manager brings the samples himself. When you've explained the turnaround he puts his cigarette back in the pack and says, then I'll wait.",
+  "e_final_review": "You've been using this management review agenda for years. This year you add a separate item for customers altering report figures. The sales director doesn't interrupt you this time."
+ },
+ "choices": {
+  "c_customer_num": { "title": "Can this number be written as not detected", "situation": "A long-time shoe-factory customer asks: the value is right at the method's detection limit, can it read not detected? The batch has a container to catch, the sales rep is looking at you, and this account brings in several hundred thousand a year.", "options": [
+   { "label": "Report it as is, suggest a retest", "result": "You have chemistry redo a fresh portion. The customer waits two more days and the result is the same. The sales rep doesn't talk to you for days." },
+   { "label": "Check the method basis first", "result": "You and the technical supervisor go through the standard, confirm how the value should be reported, and call the customer to explain it point by point." }
+  ] },
+  "c_cma_exam": { "title": "Internal auditor course, or statistics", "situation": "The company has a place on an internal auditor course and one on measurement uncertainty and statistics, at the same time. The first you could use right away. The second would let you really read the numbers.", "options": [
+   { "label": "Internal auditor course", "result": "You learn how to sample and how to ask. In the next internal audit you stump the head of chemistry twice." },
+   { "label": "Uncertainty and statistics", "result": "It takes you three months to properly understand En values and z-scores. After that you read proficiency results faster than anyone." }
+  ] },
+  "c_signatory": { "title": "Applying to be an Authorized Signatory", "situation": "An Authorized Signatory has to pass the assessors' examination and know methods and standards. Once your name is on a report, its problems are yours. You have plenty to do already, and you'd have to master both shoe materials and plumbing.", "options": [
+   { "label": "Apply for Authorized Signatory", "result": "You spend six months in the standards for both fields. On the day of the exam, the assessor asks about the method you're least sure of. You answer, and say where you're unsure." },
+   { "label": "Two more years on the system", "result": "You say you aren't confident enough to sign yet, and keep managing audits and calibration. In these two years you start reading reports differently." }
+  ] },
+  "c_brand": { "title": "Going to a brand's quality team", "situation": "A sportswear brand's quality department in Jinjiang wants you at 40 percent more pay, with no more assessments to manage. But you'd cross to the other side, and become the one who holds a report and picks at suppliers.", "options": [
+   { "label": "Go to the brand", "result": "You resign and hand in your access card at the front desk.", "end": "You do quality control at the shoe brand, reading thousands of test reports a year. You can tell from where a decimal point sits which lab wrote it." },
+   { "label": "Stay in third-party testing", "result": "You say you like a position that leans on neither side. They say no one will thank you for it either." }
+  ] },
+  "c_ai_doc": { "title": "Letting AI rewrite the procedures", "situation": "The group has rolled out a tool that can rewrite the whole quality manual to the new edition, saving a month or two. But when an assessor asks if you actually do it this way, someone still has to be able to answer.", "options": [
+   { "label": "Use it, but verify every clause", "result": "The tool gives a first draft, and you and each lab head check every clause against real practice, changing a third. Faster than handwriting it all, but not as fast as advertised." },
+   { "label": "Keep writing it yourself", "result": "You keep writing clause by clause and by month two everyone is fed up. But at assessment, everyone knows what they wrote." }
+  ] },
+  "c_qm": { "title": "Taking over as Quality Manager", "situation": "The lab's Quality Manager is about to retire. This job answers for the whole management system. You'd have to hold your ground against the general manager, and be first in line when assessors come.", "options": [
+   { "label": "Become Quality Manager", "result": "You take over the audit plan and management review, and the first thing you do is separate quotes from technical review. Sales comes to talk to you that same month." },
+   { "label": "Keep signing reports", "result": "You say you still like reading data. The new manager is five years younger than you and always asks you to speak first in meetings." }
+  ] },
+  "c_merge_choice": { "title": "The lab is moving to Fuzhou", "situation": "The group is moving chemistry to Fuzhou. You can go with it, or stay in Quanzhou and run intake and physical testing. Your home is in Quanzhou, but staying means managing less and less.", "options": [
+   { "label": "Weekend marriage, go to Fuzhou", "result": "You rent a single room in Fuzhou and take the bullet train home every Friday. The new lab is big, and you know very few people there." },
+   { "label": "Stay in Quanzhou", "result": "You stay with the physical testing and a few old customers. Upstairs, chemistry is empty, the hood ducts still connected to the roof." }
+  ] },
+  "c_consult": { "title": "Going into assessment and consulting", "situation": "A consultancy wants you to coach labs on accreditation, and you could serve as an assessor too, with over a hundred days of travel a year. You'd stop running one lab and start finding problems in other people's.", "options": [
+   { "label": "Go consult", "result": "You wheel your suitcase out the door.", "end": "You coach labs through accreditation, spending each month in a different city going through someone else's intermediate check records. You never again let a Sunday date slip by." },
+   { "label": "Stay", "result": "You say you haven't finished finding this lab's problems. They laugh and say no one ever does." }
+  ] }
+ },
+ "endings": {
+  "retire": "The accreditation certificate outlasts your retirement date by two years, and the renewal file stays on the shared drive. You clear the sticky notes off your desk. Going downstairs, you can hear the flex tester on the second floor still running. Waiting at a red light, you notice the shoes you've worn for five years still haven't cracked at the bend.",
+  "burnout": "Your neck and eyes stop cooperating after all those reports, so the company has you run customer training and stop signing. You take your slides around shoe factories, explaining clauses to sales reps. Without that signature, you sleep better at night, and also feel something's gone."
+ },
+ "stages": [
+  "You manage procedures, internal audit plans and calibration ledgers, walking between labs every day to check records, conditions and certificates. Technicians find you irritating, and you know what they're up against. Unlike when you ran tests, you used to answer only for your own data. Now you answer for other people's.",
+  "You review dozens of reports a day, checking raw records, calculations and the basis for each judgment, then sign within your authorized scope. Sales reps push, customers ask, and your name sits at the bottom of every page. You rarely run instruments now, but when a number's off, you can say which step went wrong.",
+  "You run the lab's whole quality system, organize internal audits and management reviews, and face CNAS assessors and regulators' spot checks. The general manager wants the figures, the technicians want you to fend off customers. Your job is to find a position among price, turnaround and credibility that holds up, and to write it down.",
+  "You look after accreditation, people, customers and money. Which tests to expand, which to drop, how to serve the group's demands and Quanzhou's customers: that's for you to say. You seldom read individual reports now, but when something goes wrong, the first call comes to you."
+ ],
+ "work": [
+  "The equipment manager brings a calibration certificate with a larger correction than last time. You pull the intermediate check curve, recommend taking this balance out of service, and put a yellow label on it.",
+  "The head of chemistry says the internal audit is too picky. You show him last assessment's nonconformities and point to number three. That's the same spot.",
+  "A customer complains two labs got different results. You get the other lab's report, go through method and prep line by line, and find they used a different edition of the standard.",
+  "You see leather moisture lower than usual in a report and send it back, asking the technician to pull the record from the climate chamber first.",
+  "A sales rep brings in a plumbing factory's report and asks for one more line of conclusion. You say it can read tested items conform, and not product is qualified. He'll have to tell the customer.",
+  "A new technician has crossed out a record entry. You have him draw a single line, sign and date it, and tell him why correction fluid isn't allowed.",
+  "Before management review you boil a year of complaints, nonconformities and proficiency results down to ten pages, and put the ugliest page first.",
+  "The team leader wants to see retained samples. You take him to the basement and match shelf numbers against the LIMS in front of him.",
+  "The general manager wants a new test to take market share. You take the equipment, staffing and method validation timeline to him and say nine months at best.",
+  "You discuss next year's budget with group headquarters, asking for a new chromatograph for Quanzhou. Your reason is that shoe-material samples here are double those in Fuzhou.",
+  "The owner of a long-standing customer wants to meet to discuss cooperation. You have the sales director accompany you, and keep the technical reviewers out of the meeting room."
+ ],
+ "past": [
+  "Your family's in Jinjiang and your relatives all work in shoe factories. In summer holidays you help them put glue on soles.",
+  "You pick light chemical engineering for college and your relatives say you're coming back to manage leather. You just find chemistry interesting.",
+  "You intern at a textile dyeing plant, recording vat temperatures every day, and first hear someone mention azo dyes.",
+  "After graduating you join this testing organization's chemistry lab, doing sample prep on shoe materials, gloved and weighing dozens a day.",
+  "You ask to move to quality. The head of chemistry says you're going from where the work gets done to where people pick at it."
+ ],
+ "late": {
+  "pension_note": "Estimate: few private testing firms in Quanzhou contribute on actual wages, so the pension is in the just-enough range.",
+  "scenes": [
+   "A former colleague's small lab asks you to help prepare for assessment, one day a week. You don't take pay. You ask for lunch.",
+   "Reports are now mostly reviewed by the system and signed electronically. You go to the neighborhood to read health-supplement labels for the elderly. Those with batch numbers you check; those without, you tell them not to buy.",
+   "That five-story building is cross-border e-commerce offices now. You listen as you pass. No sound from the second floor.",
+   "You stop looking at the work group chats. For the first few weeks you feel there's a report unreviewed, and then little by little you don't.",
+   "Three medications haven't fully cured your sinusitis. The doctor asks what you used to do. You say smelling things.",
+   "At a tea table you brew Tieguanyin and a friend asks about the pesticide residue. You say you don't know, go ahead and drink. All you do now is pour.",
+   "On the other side now, you see third-party reports getting prettier and prettier, and you find yourself calling more often to ask for the raw records.",
+   "You hear your old lab's reassessment was a near thing. You only ask which clauses, then start recalling how the old editions read.",
+   "Your annuity is somewhat better than classmates who stayed in testing. But most people who saw this trade out have a lab they can name. You don't.",
+   "At the supermarket you read the batch number and date on the formula tin, put it back, and go on to the next. It's a free hobby.",
+   "Someone at home forwards a screenshot of a checkup report and asks if the number's high. You first ask which institution, and whether it has the accreditation mark, before saying anything else."
+  ],
+  "closing": {
+   "retire": "You take off your shoes and set them straight. A little sand in the tread, and the bend is still good.",
+   "burnout": "The tea's gone cold. You add a little hot water. No one needs to sign for the numbers on this one.",
+   "end": "The suitcase wheels rattle at the intersection. At the next lab, you'll start with the temperature and humidity records."
+  }
+ }
+}

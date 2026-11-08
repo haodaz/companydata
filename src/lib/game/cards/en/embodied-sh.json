@@ -1,0 +1,158 @@
+{
+ "id": "embodied-sh",
+ "occupation": "Embodied AI Algorithm Engineer",
+ "role": "Embodied AI Algorithm Engineer at a humanoid robot startup",
+ "headline": "At a humanoid robot startup in Shanghai, watching a real machine knock over a cup under the gantry by day and tuning reward functions in Isaac Sim by night, with next month's demo day deciding the company's next funding round",
+ "unit": "The algorithm team of a humanoid robot startup in Zhangjiang, Shanghai",
+ "unit_type": "Robotics startup",
+ "city": "Shanghai",
+ "city_tier": "First-tier city",
+ "education": "Master's degree (Control Science and Engineering)",
+ "level": "You've read over a hundred papers and can make a quadruped walk nicely in simulation. You have never seen a real robot knock over a cup.",
+ "intro": "One floor of this building in Zhangjiang has been turned into a test field. Under a gantry hangs a humanoid robot one meter sixty tall, the paint on its wrists already rubbed away. On your first day the team lead tells you not to rush into the code; go help the data people by wearing the teleoperation headset for a while. Investors are coming next month to see the demo. This machine has to put a cup on a tray, ten times in a row.",
+ "salary_note": "Estimate: algorithm jobs at Shanghai humanoid startups pay cash plus options, generously when funding lands, and sometimes late when the account runs low.",
+ "facts": [
+  { "label": "Algorithm Engineer (current level)", "value": "0–2 years, ¥18,700–27,500 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Senior Algorithm Engineer (2–5 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥55,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Integrating and debugging on the real robot", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Designing reinforcement learning and imitation learning algorithms", "source": "AI exposure" },
+  { "label": "Open positions", "value": "41 related listings nationwide, 12 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "First thing, you check last night's training curves. Eight thousand parallel environments have climbed to a 91 percent success rate. In simulation, every robot is a star.",
+  "Standup. Hardware says the left pinky's tendon has snapped again, so the real robot only has one hand today.",
+  "Your takeout sits on the robot's tooling rack. You eat while watching yesterday's failures; the fingers meet the cup's rim a fraction of a centimeter too soon.",
+  "Deploying to the real robot. The gantry eases off, the robot reaches, the cup tips, water spills across the battery cover, and everyone shouts cut the power at the same moment.",
+  "A data collector has been teleoperating for four hours and his shoulders won't lift. Looking at the data, you see about a fifth of the trajectories were recorded while his mind wandered.",
+  "Changing the reward function. The last version taught the robot to push the cup to the tray's edge with its wrist. High score. Not at all what you meant.",
+  "The CEO comes by and asks if the demo's stable. You say seven out of ten. He says investors only watch once.",
+  "You submit tonight's experiments to the cluster and bike back to your rented room. On the way you slow for a couple of steps to watch a child pick up a cup, wanting to see which finger touches first."
+ ],
+ "ladder": [
+  { "title": "Algorithm Engineer", "stage": "One skill working", "focus": "Build training environments, run experiments, get a grasping or walking skill onto the real robot" },
+  { "title": "Senior Algorithm Engineer", "stage": "Owning a module", "focus": "Own manipulation or locomotion, set evaluation metrics, integrate with hardware" },
+  { "title": "Algorithm Expert", "stage": "Setting the route", "focus": "Decide model architecture and data strategy, judge which demos show real ability" },
+  { "title": "Head of Algorithms", "stage": "Leading the team", "focus": "Lead the algorithm team, balance research, demos and customer delivery, face investors and customers" },
+  { "title": "Chief Scientist", "stage": "Setting direction", "focus": "Decide which technical bet the company makes, answer for the long-term result" }
+ ],
+ "ai_tasks": [
+  { "name": "Integrating and debugging on the real robot", "how": "Timing, communications, hot joints, slipping floors: a person has to stand by the machine, look, change something and try again." },
+  { "name": "Designing reinforcement learning and imitation learning algorithms", "how": "AI can write algorithm skeletons and first-draft reward functions. Why the real robot can't learn it is for people to work out." },
+  { "name": "Tackling sim-to-real transfer", "how": "AI can reproduce existing methods and set up comparisons. Where the gap between simulation and reality comes from is still an open question." },
+  { "name": "Writing ROS nodes and tuning scripts", "how": "Routine code and configuration are mostly generated automatically. People review and integrate them." }
+ ],
+ "events": {
+  "e_first_fall": "The first time your policy runs on the real robot, it pitches forward before finishing a single step. The gantry catches it and the knee motor reports overcurrent. The hardware engineer doesn't say a word and quietly fetches a multimeter.",
+  "e_hand_pinch": "Adjusting fingers on the real robot, the gripper closes suddenly and your hand comes out purple. The safety officer posts in the group chat for the seventh time, e-stop on before debugging. This time, with a picture of your hand.",
+  "e_sim_gap": "A 95 percent grasp in simulation is 60 percent on the real thing. You randomize friction across the board and add the wrist camera's latency to the model before it climbs into the seventies.",
+  "e_demo_day": "The night before demo day you all stay up, recreating the venue's lights and flooring. Next day the investors take their seats, the robot lifts the cup, its hand shakes a little as it sets it down, but it holds steady. Nobody makes a sound.",
+  "e_demo_fail": "At an expo the robot gets halfway across, the venue's Wi-Fi interferes, and it lies down flat on the stand. The video goes online with comedy music. The next day you go back to the test field to work on network fallback.",
+  "e_new_model": "Someone publishes a new end-to-end model and your team's two years of hierarchical planning look clumsy overnight. Monday the team lead says let's pause this and everyone read that paper.",
+  "e_neck": "Your neck and wrists have begun to go, from too long at a screen and always half-crouching beside the robot. The physical therapist asks what you do. You say you teach robots to walk.",
+  "e_funding": "A new funding round lands, red packets go around the group chat, and badges are reissued. You work out your options. At this valuation they'd cover a down payment in Shanghai. At this valuation, of course.",
+  "e_payday": "An investor's money doesn't arrive on time and this month's pay comes in two installments. HR's notice uses the phrase optimizing cash rhythm. You buy the cheapest box of rice balls at the convenience store downstairs.",
+  "e_factory_poc": "You follow the robot into a car plant for a proof of concept. The station's takt is forty-five seconds; the robot takes sixty. The section leader says slow is fine, just don't scratch my car.",
+  "e_eye": "At a coffee shop you watch a barista pull out a straw with one hand and start counting degrees of freedom. A friend asks why you're staring at her hand. You hurriedly explain, and it gets worse the more you explain.",
+  "e_gpu": "The CFO puts the compute bill on one slide, and a line on it points to your training jobs. You start prioritizing experiments, and everyone learns to think for five minutes before submitting.",
+  "e_ai_codes": "AI now writes most of the ROS nodes and training scripts, and a new intern can set up an environment in a week. The team isn't short of people who write code. It's short of people who know why the robot fell.",
+  "e_shut_down": "After a failed round the company announces it's dissolving, and creditors put seals on the robots. You carry a box of your things to another company on the same street. The lanyard's a different color. The gantry looks about the same.",
+  "e_teleop_worker": "A data-collection plant opens out of town, hundreds of contract workers in headsets folding clothes eight hours a day. You go to accept the data. One worker asks: when these clothes are all folded, will you still need us?",
+  "e_real_order": "The robot gets its first real order: twenty units, shelf tidying at a warehouse. It's small, but the ledger says revenue, not fundraising. The whole company goes to see it accepted.",
+  "e_family": "At the kindergarten's family sports day the teacher has everyone build with blocks. Your kid does well. You spend the whole time watching the small fingers, and forget to take a photo.",
+  "e_old_paper": "You read a younger researcher's new paper. The method's beautiful, and its references include a short paper you published ten years ago. You close the laptop and go to the test field for a while to watch their gantry.",
+  "e_late_job": "Robots are now in plenty of plants and warehouses, and more of your work is safety assessment and assigning responsibility. When something goes wrong, first you have to establish whether the model decided or a person did."
+ },
+ "choices": {
+  "c_real_or_sim": { "title": "Stay by the robot, or go back to the algorithms", "situation": "Your lead says nobody on the algorithm team wants to work by the real robot, all grease and cables. Your classmates are publishing at top conferences. The hardware side doesn't yield papers, but it's what actually makes the robot stand up.", "options": [
+   { "label": "Go to the real robot", "result": "After six months with hardware you can read joint currents on an oscilloscope, and you understand the sound a motor makes before it burns out." },
+   { "label": "Focus on models", "result": "You publish a paper and get a bit of a name. When deploying the model, you still have to trouble the hardware people." }
+  ] },
+  "c_demo_fake": { "title": "Should the demo video be sped up", "situation": "Folding clothes in next week's promotional video really takes four minutes. The CEO says cut it to 4x and put small print in the corner. He also wants to mix in some teleoperated shots, unlabeled.", "options": [
+   { "label": "Label it, even if it looks worse", "result": "The video goes out, the numbers are flat, and the CEO ignores you for days. Six months later another company's video gets exposed, and you've dodged one." },
+   { "label": "Speed is fine, label the teleop", "result": "You spend half a day arguing with marketing over the small print. In the end it's 4x, with one line about teleoperation. Neither side is quite happy." }
+  ] },
+  "c_senior": { "title": "Promotion to Senior Algorithm Engineer", "situation": "The company is promoting a batch of Senior Algorithm Engineers. You could take over hand manipulation, the hardest area and the easiest way to be embarrassed on demo day. Or you could keep running experiments for other people's projects.", "options": [
+   { "label": "Take on manipulation", "result": "Eighteen months of grinding takes the success rate from 60 to 80 percent. On demo day, investors take photos as the robot unscrews a bottle cap." },
+   { "label": "Keep supporting others", "result": "Your work is steadier and you get home earlier. Your name isn't on the promotion list." }
+  ] },
+  "c_big_tech": { "title": "A big tech robotics division", "situation": "A big internet company's robotics division is poaching: one and a half times your total pay, cash with no discount. But that project has been through three heads already, and you don't know how long the division will last.", "options": [
+   { "label": "Go to big tech", "result": "You clear your desk and return the teleoperation controller to the data team.", "end": "You go to the big company's robotics division, reorganized every six months. The code gets cleaner and the real robot gets farther away. The division changes its name several times, and your badge goes along." },
+   { "label": "Stay at the startup", "result": "You say your options haven't vested. HR says the offer's good till the end of the month." }
+  ] },
+  "c_salary_cut": { "title": "Four months of runway", "situation": "At an all-hands meeting the company announces there's enough in the account for four months of salaries, and the next round isn't closed. The CEO asks the algorithm team to take a 30 percent pay cut in exchange for extra options.", "options": [
+   { "label": "Take the cut", "result": "You earn less for several months, a pile of numbers gets added to your options, and your landlord's rent increase arrives right on time." },
+   { "label": "Refuse, start looking", "result": "You say you've got a family to support and quietly update your resume. The company does eventually raise money, and things are slightly awkward among a few of you." }
+  ] },
+  "c_expert": { "title": "Applying to be Algorithm Expert", "situation": "The Algorithm Expert has to set the route: keep building your own models, or adapt open-source large models. Going your own way burns money and may lead nowhere. Adapting means the company soon has no moat.", "options": [
+   { "label": "Argue for in-house, apply for Algorithm Expert", "result": "You spend an hour in front of the technical committee and persuade the CTO to keep some compute for in-house work. For the next two years, every weekly report has to justify your progress." },
+   { "label": "Argue for adapting open source", "result": "You take the fast route and the product ships on time. Six months later, a competitor does the same." }
+  ] },
+  "c_lead": { "title": "Taking over as Head of Algorithms", "situation": "The Head of Algorithms has quit. The job means telling investors the technical story, holding the team together and deciding which direction to cut. Your code-writing days are essentially over.", "options": [
+   { "label": "Take the job", "result": "The first time you tell investors this can't be done yet, they frown. You start reading cash flow forecasts every month." },
+   { "label": "Stay in research", "result": "The new head comes in and you go on with two people on the long-term problems of the hand. It never produces results. It never gets cut." }
+  ] },
+  "c_professor": { "title": "Back to school as a teacher", "situation": "A university automation school offers you a faculty post, starting a research group from nothing, at less than half your pay, with no more cash flow to watch. For an engineer in your thirties, this may be the last window into a university.", "options": [
+   { "label": "Go back to school", "result": "You accept the appointment and go to see the lab they've given you.", "end": "You go back to the university to supervise students, with one old robot arm in the lab. When a student's program grasps a cup, you still move to where you can catch it." },
+   { "label": "Keep at the startup", "result": "You say you'll do a few more years. The school says that position might not exist next year." }
+  ] },
+  "c_integration": { "title": "Going into factory integration", "situation": "An industrial automation integrator wants you to lead the algorithm side of smart production lines. There are no frontier models, only line takt and customer acceptance. You've also tired of the route changing every two years.", "options": [
+   { "label": "Go to the factory", "result": "You change into safety shoes and are in the shop by the second week.", "end": "You go to the integrator, your work moving from humanoid robots to unglamorous line stations. Yield goes up a fraction of a point and the customer signs the acceptance form, which you never used to care so much about." },
+   { "label": "Keep on with humanoids", "result": "You say you still want to see this thing make it into a home. As you say it, you aren't sure how many years you have left." }
+  ] }
+ },
+ "endings": {
+  "retire": "At sixty, humanoid robots aren't news anymore; they do unphotogenic work in warehouses and factories. You finish your paperwork and walk through the test field. The gantry has long since gone, replaced by a row of charging posts. One robot is changing another's battery, fingers meeting the latch first, very lightly.",
+  "burnout": "Your neck, your tendons and the company's annual upheaval together deliver you to long-term leave. You stop running models and following funding, and turn off the training curve notifications one by one. One day at home, pouring water, your hand slows by itself as the cup nears full. You pause, and drink the water."
+ },
+ "stages": [
+  "Your job is building Isaac Sim scenes, writing reward functions, running thousands of parallel environments and working a grasping skill onto the real robot bit by bit. You deal most with the data collectors and hardware engineers: one gives you data, the other repairs hands. What you hear most is: e-stop first.",
+  "You own one module of manipulation or locomotion, define how success gets measured, and schedule time on the real robot. Arguing with hardware becomes routine; motor temperature and your model take turns giving way, and that's negotiated every week. The difference: when a demo fails, they look at you first.",
+  "You judge routes: VLA or hierarchical control, how much data and how to collect it, which success rates are real and which are overfit to one table. You spend more time in meetings with the CTO and data team, but one day each week you're always standing in front of the real robot.",
+  "You lead a team of thirty or forty and decide who goes in which direction. Investors want the technical story, customers want delivery dates, the PhDs want to publish and need some compute saved for them. You write less and less code, and look at cash flow more and more.",
+  "You decide which route the company stakes itself on and what the robot should and shouldn't do five years out. You shuttle among regulators' consultations, industry standards and the board, and every statement has to divide what's possible from what isn't. You haven't touched a teleoperation controller in years, but you still understand the sounds of the test field."
+ ],
+ "work": [
+  "A data collector quietly tells you his hands were shaky recording today. You tag that batch separately, compare at training, and the success rate differs by eight points.",
+  "You randomize cup mass in simulation from fifty to four hundred grams. A hardware engineer looks at it and says real cups have water in them, and water sloshes.",
+  "In the small hours you change a wrist camera calibration, and next morning the grasp position comes back 1.5 centimeters to the left. Your lead posts that commit in the group chat.",
+  "You ask a hardware engineer about raising finger force control to a thousand hertz. He throws you the thermal data, and you settle on eight hundred.",
+  "You design a door handle test set, twenty kinds mounted on a board. When investors come they don't want the venue changed, so the board goes up on the stand.",
+  "An intern's new model is up five points on the eval set. You have him sort the failures by type and find all the cups are white.",
+  "The CTO asks whether to buy another company's dataset. You look at samples and teleop jitter is too high. You take him the analysis and the budget isn't approved.",
+  "At an internal review you break down a fine-looking demo video frame by frame and point out that a teleoperator took over at second twelve. The room goes silent.",
+  "A car plant process engineer comes to discuss a proof of concept. You pin down takt and error tolerance, then cross two very cool tasks off the whiteboard.",
+  "You and HR go over the team's attrition risk: two core engineers have received offers at once. You take each to lunch separately and talk about different things.",
+  "An investor asks why delivery slipped. You bring up a chart of field failures and tell him that 40 percent of them have nothing to do with the algorithm. It's the floor.",
+  "A standards working group discusses safety levels for robots in homes. You put your own company's fall statistics on the table, and your peers begin to share theirs.",
+  "The board has to choose between two routes. You write one page on each route's burn rate and what failure looks like, and leave the decision for the meeting."
+ ],
+ "past": [
+  "You grow up in Nantong. The junior-high robotics club has three members and one small car, and always gets stuck on the second turn at competitions.",
+  "You study automation, and half your class wants to transfer to computer science. You waver too, until a control theory course keeps you.",
+  "In your fourth year you join a lab working on quadrupeds. The first time you see one slip on grass and stand back up, you watch it many times over.",
+  "In grad school your adviser has you reproduce a grasping paper. It takes three months to find its success rate only holds on one specific tabletop.",
+  "In campus recruiting the big companies pay more than this one, but you come to Zhangjiang anyway. You tell your family it's a robot company, and they ask if it does housework."
+ ],
+ "late": {
+  "pension_note": "Estimate: social insurance paid at less than the full high base, with gaps at startups. The pension is far below what you used to earn; savings and early stock make up the rest.",
+  "scenes": [
+   "You hold an expert title at a trade association and attend a few safety reviews a year. You speak more briefly than you used to, mostly asking how many times it's fallen.",
+   "Your daughter bought the home care robot that helps your parents stand and passes them water. Its fingers are much better than those you tuned. Only the small pause as it hands over the water do you recognize.",
+   "Twice a month you teach neighborhood children to build small robots. Their cars get stuck on the second turn. You don't fix it for them.",
+   "The rehab therapist teaches you to rotate your wrist, round and round, slowly. You recall these joints' torques, then tell yourself you don't need to know that now.",
+   "The company whose options you held never went public, and the numbers became a worthless notice. For a while you calculated many times. You don't anymore.",
+   "You've taken up woodworking. The legs of your stools are always a little off, and need shimming. There's no such thing as success rate, and you find that a relief.",
+   "Former colleagues in your new place still talk funding and routes. Sometimes you open a demo they've posted, and out of habit scrub to second twelve, to see if anyone took over.",
+   "That building in Zhangjiang houses a chip company now, and the load-rated floor suits them well. No one knows what those gantry holes were for.",
+   "Some of your classmates have rung the bell at a stock exchange, some long ago moved to selling insurance. You're somewhere in between, with a steady job and a few nights of regret.",
+   "A supermarket's restocking robot blocks the aisle. As you step around it you still glance at the wrist. That joint's design hasn't changed much in ten years.",
+   "Your father's old now and his hands shake, and he needs two to hold a bowl. You watch him and don't think about what kind of control problem this is. It wouldn't help."
+  ],
+  "closing": {
+   "retire": "The cup goes down on the table without a sound. You spent thirty-odd years teaching this, and now, watching others do it, you no longer count.",
+   "burnout": "Sawdust covers the floor and the stool still rocks. You sit on it, it rocks once more, and that's that.",
+   "end": "A new video lands on your phone, a robot folding clothes. You check the length, don't bother about the speed marker in the corner, and turn the phone face down."
+  }
+ }
+}

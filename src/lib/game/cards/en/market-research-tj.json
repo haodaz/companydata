@@ -1,0 +1,154 @@
+{
+ "id": "market-research-tj",
+ "occupation": "Market Research Analyst",
+ "role": "Market Research Analyst",
+ "headline": "At a local market research firm in Tianjin's Xiaobailou district, an analyst working out what consumers really think for brands of milk, cars and home appliances",
+ "unit": "A local market research firm in Tianjin (about fifty people, doing quantitative fieldwork and qualitative research)",
+ "unit_type": "Market research firm",
+ "city": "Tianjin",
+ "city_tier": "New first-tier city",
+ "education": "Bachelor's degree (Sociology)",
+ "level": "Questionnaire routing and cross-tabs you have down. What the client behind the one-way mirror wants to hear, you're still learning to make out.",
+ "intro": "The firm is on the fourteenth floor of an old office tower in Xiaobailou. In the meeting room there's a one-way mirror, and behind the mirror is where clients eat takeout. Tonight's first focus group is eight mothers talking about yogurt, and the fieldwork supervisor has just discovered that one of them has been here three times in the past six months, though her screener says never. You're holding the list. Forty minutes to go.",
+ "salary_note": "Estimate: a local Tianjin research firm pays below foreign research houses in Beijing and Shanghai, and a bit above ordinary office work in the city.",
+ "facts": [
+  { "label": "Researcher / Market Research Analyst (current level)", "value": "2–4 years, ¥9,180–13,500 a month (national average, derived from pay by experience)", "source": "Pay by experience" },
+  { "label": "Next level up", "value": "Senior Researcher / Market Research Manager / Assistant Research Manager (4–7 years)", "source": "Career map" },
+  { "label": "Pay after 10+ years", "value": "¥22,600 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Moderating a consumer focus group", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Running a round of fieldwork quality control and back-checks", "source": "AI exposure" },
+  { "label": "Open positions", "value": "529 related listings nationwide, 3 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Off the subway at Xiaobailou, you buy a jianbing guozi with two eggs at the foot of the building. In the elevator you open your email. At one in the morning the client revised question seventeen.",
+  "You rework the questionnaire. The client wants to ask about flavor and packaging in the same question. You explain that this is a double-barreled question and the answers can't be counted. She replies: then add parentheses.",
+  "Running cross-tabs in SPSS, you find the thirty-five to forty-four group is short by half. You call the fieldwork department to ask whether the interviewers in Hexi district ever went out.",
+  "The fieldwork supervisor delivers the back-check results. Of every ten questionnaires, two respondents say no one ever asked them. You scrap the batch and the interviewer's pay for the month is docked.",
+  "You update the monthly competitor database. A dairy company has another new carton. You enter the screenshots and prices line by line, knowing this job won't belong to people much longer.",
+  "Writing conclusions in PowerPoint, you change the headline on page three from Consumer Preference Rising to Only People Already Drinking It Like It More. Your supervisor has you change half of it back.",
+  "The focus group begins. The moderator asks what everyone had for breakfast. You take notes behind the one-way mirror, while the client's brand manager behind you pushes her rice aside and starts to get nervous.",
+  "You see off the last respondent and hand over the incentive money, two hundred yuan each. You clear away the yogurt samples and step out of the building, and the wind off the Hai River jolts you awake."
+ ],
+ "ladder": [
+  { "title": "Research Assistant / Market Research Associate", "stage": "Entry", "focus": "Questionnaire execution, data cleaning, first report drafts and information gathering" },
+  { "title": "Researcher / Market Research Analyst", "stage": "Junior", "focus": "Design and analyze projects on your own, build competitor databases, and write the reports" },
+  { "title": "Senior Researcher / Market Research Manager / Assistant Research Manager", "stage": "Mid-level", "focus": "Organize special studies, combine qualitative and quantitative work, report to management, and manage projects" },
+  { "title": "Research Manager / Senior Research Manager", "stage": "Senior", "focus": "Manage clients and project portfolios, and offer strategic advice" },
+  { "title": "Research Director / Head of Market Insights", "stage": "Executive", "focus": "Team and methodology, and decision support for the business" }
+ ],
+ "ai_tasks": [
+  { "name": "Running a round of fieldwork quality control and back-checks", "how": "AI can batch-flag speeders, straight-liners, duplicates and logical contradictions. People decide which samples to throw out and whether to do call-backs, and they take up responsibility with the subcontractor." },
+  { "name": "Completing data analysis and a report for a quantitative project", "how": "AI handles data cleaning, cross-tabs, significance tests, charts and the first draft. People set the analysis plan, explain odd results, and decide whether the conclusions hold up." },
+  { "name": "Moderating a consumer focus group", "how": "Controlling the room, following up, reading a respondent's hesitation and mood are mainly the work of a person. AI only helps with transcription and sorting opinions afterward." },
+  { "name": "Building and updating the competitor database", "how": "AI can keep collecting public competitor information, filing it, comparing it, and writing up summaries. A person only needs to check now and then that sources are reliable and no key competitors are missing." },
+  { "name": "Designing a consumer questionnaire and pretesting it", "how": "AI can draft questions to the research goals, check routing and wording bias, and even run simulated answers. People settle what questions need testing and find real respondents for the pretest." },
+  { "name": "Writing an analysis of industry and market trends", "how": "AI searches, reads and summarizes large amounts of industry material and lists leads on trends. People judge what's true and current, and work out what the trend means for this company." },
+  { "name": "Managing several research projects in parallel", "how": "AI can schedule, send reminders, roll up status and tidy meeting notes. People coordinate resources, choose priorities, and deal with clients, colleagues and suppliers." },
+  { "name": "Turning research conclusions into business strategy recommendations", "how": "AI can list options and drafts. Weighing them against the company's situation, persuading the business side and answering for the advice remains mainly up to people." }
+ ],
+ "events": {
+  "e_mirror": "In a focus group, a woman says: this yogurt, there's nothing wrong with it, you just don't want another once it's gone. Behind the one-way mirror nobody makes a sound. The line ends up on page one of the report.",
+  "e_fake": "In one batch of questionnaires from the fieldwork supplier, every answer time is exactly three minutes. Under the quality rules you throw out all three hundred, and the project slips a week. The supplier's boss calls you, very polite in tone, very unpleasant in substance.",
+  "e_tracker": "The brand tracker enters a new quarter. The same questions have been asked for six years, and the curve is sagging slightly. Every quarter the client asks if it's a sampling problem, and every quarter you lay out the sample structure again.",
+  "e_bid": "November is budget season for clients, and the tender documents arrive one after another. You work three straight nights on a pitch with forty pages of methodology, and the client says they've chosen the cheaper firm.",
+  "e_auntie": "Aunt Liu has done street interviews for fifteen years and can tell within three minutes at a mall entrance who will stop. You follow her for a day and learn more than from any methods class. You also get blisters.",
+  "e_voice": "After two straight weeks of moderating focus groups your throat has turned to sandpaper. The ENT doctor says vocal nodules, gives you medicine, and tells you to talk less. Talking without pause happens to be this trade's capital.",
+  "e_client_right": "Your research on a car client's new model direction pointed to risks, and the brand team pushed ahead anyway. It sells so-so. At the postmortem they quote your report page as if they'd listened to you all along.",
+  "e_payment": "One client's final payment is nine months late. The payment terms are in the contract, but without an invoice accepted no money comes in. Salaries that month arrive three days late.",
+  "e_pro_respondent": "That regular old man has turned up again under another name. The supervisor posts his photo in the blacklist group. He's later recognized at another firm's focus group, everyone has a good laugh, and all the incentive money has already been paid.",
+  "e_cvs": "At the supermarket a homemaker lifts two cartons of milk and compares them for a long time. You stand behind her, motionless, waiting to see which one she puts down. Your spouse is two aisles away before coming back to call you.",
+  "e_online": "Online panels are cheap and fast, and central-location and street-intercept jobs fall by half in a year. In Aunt Liu's interviewers' group chat, fewer and fewer people send messages.",
+  "e_ai_clean": "AI has taken over cleaning and cross-tabs, and a first draft is ready in an afternoon. The client finds out and knocks twenty percent off the next quote.",
+  "e_ai_synth": "A vendor comes to sell synthetic respondents, a thousand virtual consumers answering in half an hour. You try it on a question with a known answer. The result is very similar, and very much like a nicely written essay.",
+  "e_ai_focus": "Transcription and sorting of opinions now take seconds. But the machine doesn't know that when the third respondent said it's quite good, she was rubbing the rim of her cup. That detail is in your moderator's notes.",
+  "e_inhouse": "The biggest dairy client has built its own consumer insights team, and a tracker that ran for nine years will not be renewed. You write the final report. The appendix is nine years of curves.",
+  "e_trip": "On a lower-tier market project you take the slow green train to Cangzhou and Hengshui. A county supermarket owner says: survey or no survey, I know what sells this year by looking at the boxes out back.",
+  "e_bonus": "Project bonuses are settled, and one big annual job puts an extra six weeks of pay in the whole group's pockets. You buy a new washing machine for home and find yourself reading the satisfaction card at the back of the manual.",
+  "e_neck": "Making PowerPoints gives you tendinitis in the right wrist, and you switch to a vertical mouse. A report runs one hundred twenty pages. What the client remembers is one of them."
+ },
+ "choices": {
+  "c_truth": { "title": "Whether to soften the conclusion", "situation": "A new product test came out mediocre. The brand manager hints that this report is going to his boss, and could low acceptance be written as room for improvement? The next project is also in his hands.", "options": [
+   { "label": "Stay accurate, say it differently", "result": "You keep the numbers and make the recommendations more concrete. He's not pleased, but after the meeting he privately asks how it should really be changed." },
+   { "label": "Polish it his way", "result": "Room for improvement goes to the meeting. The product launches later, half-alive. He never mentions it again, and hands you the next project as usual." }
+  ] },
+  "c_senior": { "title": "Go for Senior Researcher, or switch to qualitative", "situation": "The firm's promotion to Senior Researcher tests quantitative skills and reporting. But you've been getting hooked on moderating focus groups lately, a path with no clear ladder.", "options": [
+   { "label": "Go for Senior Researcher", "result": "You spend weekends redoing regressions and clustering, and in your defense you explain a minimum sample size clearly. Your name goes on the list." },
+   { "label": "Learn moderating, go qualitative", "result": "You sit in on every focus group and start running small ones. Promotion is a little slower, but clients begin to ask for you by name." }
+  ] },
+  "c_bj": { "title": "A foreign research firm in Beijing is hiring", "situation": "The intercity train to Beijing takes thirty minutes. A foreign research firm offers thirty percent more, all global brands, and you'd either commute every day or move your household.", "options": [
+   { "label": "Go to Beijing", "result": "You become a familiar face on the intercity, see the global standard questionnaire template, and learn to write conclusions in English." },
+   { "label": "Stay in Tianjin", "result": "You turn it down. On weekends you still ride a bike along the Five Avenues. Your clients have less glamour, and the projects are yours from start to finish." }
+  ] },
+  "c_manager": { "title": "Compete for Research Manager", "situation": "A Research Manager leads a group and carries a sales target, bringing in three million yuan of projects a year. You love writing reports and don't love drinking with clients, but without this step your pay stays as it is.", "options": [
+   { "label": "Compete for Research Manager", "result": "In your first year you eat more than sixty meals with clients, and land an annual framework with a home appliance maker." },
+   { "label": "Stay expert, skip the sales", "result": "You stay on the research side and answer only for method. Your income grows slowly, and your evenings are your own." }
+  ] },
+  "c_vendor": { "title": "Whether to cut interviewers' fees", "situation": "The client has squeezed the project's profit, and the boss tells you to cut interviewers' pay from twenty-five yuan a completed questionnaire to twenty. Aunt Liu and the others have been doing this for over ten years and are the people you trust most. If you don't cut, the job loses money.", "options": [
+   { "label": "Cut a little, add a completion bonus", "result": "You devise a top-up based on completion rate, and the books work out. Two veteran interviewers still quit." },
+   { "label": "Don't cut, save elsewhere", "result": "You moderate the qualitative part yourself and save the fee for an outside moderator. That month you talk yourself hoarse." }
+  ] },
+  "c_ai": { "title": "AI is entering the workflow. Will you design it?", "situation": "The boss wants AI handling cleaning, coding and report first drafts. Someone must set the rules: which conclusions need human review, and whether synthetic samples can go in formal reports. It doesn't count toward your numbers, and it will upset people.", "options": [
+   { "label": "Take it on", "result": "You write the first quality checklist, which says synthetic data must be labeled separately. Later other firms come and copy it, and you don't stop them." },
+   { "label": "Stick to projects", "result": "You'd rather hold on to your clients and let the young ones tinker. Two years later, reports no longer look the way you know them." }
+  ] },
+  "c_brand": { "title": "A client invites you over", "situation": "A client you've worked with for five years wants to poach you as consumer insights manager. No more pitches and no more ten rounds of questionnaire edits. You'd be the one buying research from others.", "options": [
+   { "label": "Go client-side", "result": "You clear your desk, send your moderator guides over to the group, and say goodbye to Aunt Liu.", "end": "You go client-side, and now it's your turn to eat takeout behind the one-way mirror. When a young agency presenter reaches page three, you feel nervous for them." },
+   { "label": "Stay on the agency side", "result": "You want to see more industries first. Yogurt, cars, washing machines: in each of them someone is hesitating." }
+  ] },
+  "c_close": { "title": "The firm is being acquired", "situation": "A data company wants to buy your firm, but only the panel and the client list, and the research team will be cut in half. The boss asks if you'll stay to sort things out or take the money and leave.", "options": [
+   { "label": "Open a small studio", "result": "You take two qualitative colleagues along. When they take down the firm's one-way mirror, you buy it.", "end": "You rent two rooms in Nankai district and do qualitative research for small brands only. A dozen projects a year is enough to live on. Often there's no one behind the mirror." },
+   { "label": "Stay and sort it out", "result": "You stay, settle the final payments for dozens of interviewers one by one, and put together the client files the new owner wants." }
+  ] }
+ },
+ "endings": {
+  "retire": "The final project presentation runs until five in the afternoon. The client says the conclusions are very illuminating. You close the laptop. You've heard this sentence for more than thirty years. The wind off the Hai River is the same as your first year, except that nobody stands on the street with a clipboard anymore.",
+  "burnout": "Halfway through tender season your voice gives out completely, and later you can't even open PowerPoint. You take long leave and do not go back. You box up the years of questionnaires by date, and while taping it shut you think that no one ever asked if you were satisfied."
+ },
+ "stages": [
+  "You begin managing a project alone: writing the questionnaire, liaising with fieldwork, cleaning data, and turning SPSS output into a report. The supervisor is your left hand, and the client's brand specialist is the first email you answer each day. Unlike an assistant, your name is on the first draft, and if it's wrong, you go and explain.",
+  "You have three or four projects at once, with quantitative and qualitative work to combine, and you are now the one presenting to management. You start deciding the fieldwork vendors' contracts and quality-check rates. You moderate focus groups yourself too, revising the discussion guide several times, because one badly asked question will have a whole room agreeing with you.",
+  "You carry a sales target and manage a client portfolio. Every quarter you watch whose framework needs renewing and whose final payment is outstanding. In reports you only revise the last conclusions and recommendations, so they will stand up in front of the client's boss. Unlike the level below, what you ask now is whether this client still wants research next year.",
+  "The team, the methodology and the firm's rice bowl are all in your hands now. You set quality standards, decide how far AI goes, and at dinners with the client's CMO you talk about next year's budget, not question seventeen. What you write most these days are headcount sheets and a twice-yearly internal training."
+ ],
+ "work": [
+  "Liao, the fieldwork supervisor, brings over a questionnaire too neatly answered. You filter in Excel for samples answering C all the way down, find forty-seven, call them back, and finally scrap thirty-one.",
+  "At pretest an old man asks what purchase frequency means. You change the wording to how many times a month do you buy it. The client's specialist says it's not professional enough, and you send her the recording of the old man.",
+  "A client wants a competitor price table. You go to six supermarkets in Nankai and Hedong and photograph the promotional tags on the shelves, then find online price gaps are double the ones in stores, and you give that a page of its own.",
+  "In a focus group, one father is setting the tone and everyone follows him. You ask him to try a sample first, and turn to the quietest mother, who finally says the first true thing of the half hour.",
+  "You run a clustering for an appliance client that yields five types of people. The brand director says the fourth type doesn't exist. You play the interview recording of a single father working in Binhai, and the room goes quiet for a few seconds.",
+  "A fieldwork supplier wants to lower the back-check rate from thirty percent to fifteen. You change the figure back in the contract appendix and add one clause: keep recordings for six months.",
+  "Before the annual framework ends you spend an afternoon with the client's procurement, negotiating unit prices on twenty-six projects line by line. They want ten percent off. You give them an extra data dashboard and settle at eight.",
+  "A new researcher named Ge writes his report too beautifully. You have him delete every adjective and see if the conclusions still stand. After deleting, it's eleven pages shorter.",
+  "You set AI use rules for the whole firm. Rule one: every quoted respondent line must trace back to a recording. One director says it's too much trouble, and you ask him to read aloud a line the machine made up.",
+  "The client's CMO asks what's still needed if next year's budget is cut in half. You draw three questions on a napkin, and say to answer only those and leave the rest for now."
+ ],
+ "past": [
+  "In an old compound in Tianjin's Hedong district, your mother works as a supermarket promoter and comes home muttering about who picked up which yogurt today and put it back. You find it dull and remember all of it.",
+  "You choose sociology for your major. Your father asks what it's for, and you can't answer. Your relatives think it's the study of how to get along with people.",
+  "A fieldwork course takes you to a village in Jizhou, and the villagers correct your questionnaire to your face. Your teacher says this is the most expensive lesson of your year, and it was free.",
+  "You send out applications everywhere, and only market research firms want sociology graduates. Your first job is research assistant, cleaning data all day and going home smelling of photocopier.",
+  "You see a car project through, spending seven days crouched in a mall on Nanjing Road. The following year you become an analyst, and for the first time a report carries your name."
+ ],
+ "late": {
+  "pension_note": "Estimate: enterprise employee pension with a middling replacement rate against Tianjin's average wage.",
+  "scenes": [
+   "The neighborhood committee sends around a satisfaction survey. In red pen you correct three double-barreled questions, standardize the scale to five points, and send it back. The director says you certainly filled this one in carefully.",
+   "The old trouble with your vocal cords is still there, and you talk more slowly now. Out on walks you listen to people chat and silently code them: complaint, complaint, boast, complaint.",
+   "You sign up for calligraphy at a senior college, and the teacher asks why everyone is there. You nearly sort the open-ended answers into categories, and in the end you write down: nothing better to do.",
+   "Brands now use models to simulate ten thousand consumers and say it's more accurate than real people. You once tried opening one of those reports. Reading it through, you can't say exactly where it's wrong, and you close it.",
+   "You refuse anything that calls for an opinion, including the five-star rating on food delivery.",
+   "After you've recovered you work odd shifts at a bookstore, and at the register you hear people choosing books. You don't analyze them anymore. You just straighten the ones that have slid out of line.",
+   "Your throat is seventy percent better, and you don't want to see any of those tender documents again. What you remember is that woman saying: you just don't want another once it's gone.",
+   "The new company's employee satisfaction score is very high. You've read the questionnaire and know that item would score high however you asked it. You don't point this out to anyone.",
+   "The agency's pitch says AI-driven insights. You ask where the sample comes from. The young man's answer is very fluent, and doesn't answer it.",
+   "The trade doesn't quite go by that name now. You sell tea from a little shop of your own and ask customers what they like without using any scale.",
+   "Someone at the supermarket is handing out samples, and passes you a little cup of yogurt and asks what you think. You say it's quite good, then laugh at yourself.",
+   "Aunt Liu hasn't been walking so well this past year. The old interviewers' group chat is still there, and now and then someone sends a good-morning picture of lotus flowers."
+  ],
+  "closing": {
+   "retire": "The wind on the Hai River scatters the smoke from the jianbing stall. Someone is asking: two eggs?",
+   "burnout": "The room is quiet. Today, no one asks you anything.",
+   "end": "The shelf has new packaging again. You pick one up and put it back."
+  }
+ }
+}

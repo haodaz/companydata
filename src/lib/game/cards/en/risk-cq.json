@@ -1,0 +1,153 @@
+{
+ "id": "risk-cq",
+ "occupation": "Risk Control Specialist",
+ "role": "Risk Control Specialist at a Consumer Finance Company",
+ "headline": "In Chongqing's Jiangbeizui financial district, a junior credit-risk analyst at a licensed consumer finance company, deciding every day how much a batch of strangers can borrow",
+ "unit": "A licensed consumer finance company in Chongqing",
+ "unit_type": "Licensed consumer finance company",
+ "city": "Chongqing",
+ "city_tier": "New first-tier city",
+ "education": "Bachelor's degree (Financial Engineering)",
+ "level": "You can write SQL and read approval and delinquency rates. Who stops being able to borrow when a rule changes is something you have not really thought about yet.",
+ "intro": "Your desk is on the twenty-seventh floor in Jiangbeizui, looking across at the towers of the Yuzhong peninsula. In your third week your supervisor pushes a table over to you: four thousand one hundred people the system rejected yesterday. Pull two hundred, he says, and see if we were right. You start with the first row. Male, forty-one, Jiulongpo district. Under occupation he has written: hotpot restaurant.",
+ "salary_note": "Estimate: a licensed consumer finance firm in Chongqing pays less than the same job in Beijing, Shanghai or Shenzhen, and more than ordinary back-office finance work locally.",
+ "facts": [
+  { "label": "Risk Control Specialist (current level)", "value": "0–2 years, ¥6,000–10,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Risk Strategy Analyst (2–5 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "The final credit decision on exceptional customers", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "First-pass customer credit assessment", "source": "AI exposure" },
+  { "label": "Open positions", "value": "40 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The train crosses the Yangtze, and someone in the carriage is applying for an installment plan on their phone. Your first job is to open last night's batch results and see whether the system threw any errors.",
+  "Morning numbers meeting. The business side says the approval rate fell two points yesterday, and you have until ten to say which rule did it.",
+  "You write SQL for a rule backtest: if that line had been looser, how many more loans would have gone out, and how many of those borrowers would be late within three months. The query takes twenty minutes.",
+  "Downstairs for Chongqing noodles. Over lunch a colleague mentions that the credit review group has caught another batch of applications dressed up by a loan broker, the emergency contacts all in consecutive numbers.",
+  "You spot-check rejected applications and make callback calls. The man you reach is on a construction site, with a lot of wind on the line. He asks you which part exactly wasn't good enough. All you can say is that the overall score did not pass.",
+  "You go through the vintage tables with the post-loan team. This month's roll from M1 to M2 is climbing. A colleague there says the accounts from the heatwave shutdowns are starting to come home.",
+  "The funding partner wants its monthly risk briefing. You recheck how every chart is defined. Everything has to match to two decimal places.",
+  "Back at your rental in Nan'an, up more than a hundred steps. Your phone reminds you that this month's credit card bill is out, and it occurs to you that you, too, are a row in somebody's table."
+ ],
+ "ladder": [
+  { "title": "Risk Control Specialist", "stage": "Run the numbers", "focus": "Review applications, run reports and backtest rules, until you understand every rejection code" },
+  { "title": "Risk Strategy Analyst", "stage": "Write strategy", "focus": "Own the admission, credit-limit and pricing strategy for one product line, and watch the vintages and roll rates" },
+  { "title": "Risk Manager", "stage": "Carry the target", "focus": "Lead a small team, negotiate with sales, post-loan and funders, and answer for a product line's bad-loan rate" },
+  { "title": "Director of Risk", "stage": "Whole company", "focus": "Manage the company's risk appetite and deal with regulators and shareholders" },
+  { "title": "Chief Risk Officer", "stage": "Accountable", "focus": "The signature on the risk report. The post requires regulatory approval" }
+ ],
+ "ai_tasks": [
+  { "name": "The final credit decision on exceptional customers", "how": "AI suggests a limit. Whether a borderline customer gets credit, and how much, is decided by a person, who also answers for the result." },
+  { "name": "First-pass customer credit assessment", "how": "Models sort customer information automatically and produce scores and rejection reasons. People set the standards and spot-check the results." },
+  { "name": "Strategy backtests and reports", "how": "AI writes the query code and produces vintage analysis and attribution. A person judges whether that attribution makes business sense." },
+  { "name": "Post-loan warnings and collection scripts", "how": "The system watches repayment behavior and drafts reminders. A person finds out why this borrower can't pay, and whether there's a deal to be done." }
+ ],
+ "events": {
+  "e_vintage": "The first small rule you launched on your own shows a vintage curve 0.3 points below the control group three months later. Your supervisor adds a line to the weekly report. You keep a screenshot.",
+  "e_heat": "In August's heat, factories go on rotating shutdowns, and in September delinquencies start to rise. Sales says it's the weather. Post-loan says it's the customer mix. You break the table down district by district till one in the morning.",
+  "e_spring": "Applications double before the Spring Festival, and at the first billing date after the holiday delinquencies double too. It happens every year, and every year the meeting feels like a first discovery.",
+  "e_agent": "The anti-fraud model catches a batch of applications from a loan broker. Following the thread, the review group finds that all these people paid the broker a packaging fee, which makes them victims too.",
+  "e_complaint": "A complaint reaches you: a customer says their limit was cut for no reason. You trace it to an update of the income model. Your draft reply goes through five versions, because Legal says the word model cannot appear in it.",
+  "e_inspect": "Regulators arrive for two weeks of on-site inspection. The meeting room door stays shut. You pull three years of approval records from their list, and for every single loan you must be able to say who approved it and when.",
+  "e_rate": "Word comes that the pricing ceiling is lowered. The whole company's strategy must be recalculated. Customers whose rates used to cover their risk no longer do, and the admission line can only go up.",
+  "e_friend": "An old classmate asks to borrow thirty thousand for cash flow. Before feelings enter into it, your head has run through his debt, his industry and his cash flow. You lend him ten thousand, and the number makes you think a little less of yourself.",
+  "e_thyroid": "Your medical report now includes a grade 3 thyroid nodule and mild fatty liver. You compare notes and find the whole team has them, like a very stable vintage curve.",
+  "e_quarter": "The week before quarterly results, the bad-loan definition the shareholders want differs from the regulator's by one layer. You make two sets of tables and explain each. You can't deceive either, and neither looks good.",
+  "e_good_year": "Asset quality holds steady this year, and your year-end bonus is two months more than the year before last. Sales says it's because they sold well. Your team doesn't argue. You all know what the vintage table says.",
+  "e_hotpot": "At a team dinner in a hotpot place you sit working out the owner's table turnover and rent, and blurt out a question about monthly takings. She takes you for someone looking to buy her out.",
+  "e_ai_model": "A new scoring model launches and manual review falls by seventy percent. Some of the women in the review group move to post-loan, others leave. Their desks are left with several thriving pots of pothos.",
+  "e_ai_sql": "AI can now write the data pulls and backtests in a few minutes. You have more time, and more questions to answer: why was this person rejected, in plain words?",
+  "e_ai_drift": "The model drifts quietly on a county-level customer segment. The approval rate looks good, and three months later the roll rate looks good too, in the wrong direction. You catch the first signs on the PSI and shut down that small slice in time.",
+  "e_line_stop": "The funder tightens up, and an installment product you've worked on for four years stops lending. Half the team is reassigned. The existing book must be run down to the last settled loan, and your strategy sheet changes from whom to lend to into how to close out.",
+  "e_stairs": "On a weekend climb up Nanshan, your knees quit halfway. Eight years at a desk, and Chongqing's slopes have started collecting on the debt.",
+  "e_school": "The month-end batch run lands on your child's parent-teacher meeting. You check the vintage table on your phone from the last row of the classroom. When the teacher calls on you to speak, you say: it's broadly under control."
+ },
+ "choices": {
+  "c_loosen": { "title": "Sales wants a line loosened", "situation": "Lending is two hundred million short this quarter, and the head of sales comes to you: can you loosen admission for food-delivery riders? Their income isn't bad, just unsteady. The backtest could go either way.", "options": [
+   { "label": "Try a small loosening for a month", "result": "The loosened slice comes in a bit worse than expected by month three, and many of them did borrow from a legitimate lender for the first time. Each side has reason to say it was right." },
+   { "label": "Not enough data, say no", "result": "You send back the backtest. The sales head replies in the group chat with one word: noted. They miss the quarter, and the blame lands on risk." }
+  ] },
+  "c_frm": { "title": "Get certified and move up to Risk Strategy Analyst", "situation": "Internal promotion to Risk Strategy Analyst favors those with an FRM. The two exam levels take three or four hundred hours, and you leave work at nine in the evening.", "options": [
+   { "label": "Give up every weekend", "result": "You spend ten months in a study room in Guanyinqiao, memorizing from value-at-risk to operational risk. The certificate arrives, and your knees and your relationships are a little in arrears." },
+   { "label": "Go deeper on your own line", "result": "You skip the exam and read through three years of vintages for this product. When business questions come up, you answer faster than anyone." }
+  ] },
+  "c_outsource": { "title": "Whether to change the collections vendor", "situation": "The outsourced firm with the best recovery rate also draws the most complaints. The firm with few complaints recovers two points less. Two points is a quarter's profit. Complaints are regulatory demerits, and also specific people on the other end of the phone.", "options": [
+   { "label": "Switch to the firm with fewer complaints", "result": "Complaints fall forty percent, and quarterly profit thins out. Finance comes to you. You show them the complaints table, and they show you the profit table." },
+   { "label": "Keep the high recoveries, tighten QA", "result": "You add more call sampling and red lines for scripts. Recoveries hold, complaints fall by only a little. There's no clean answer here. You keep listening to the recordings every week." }
+  ] },
+  "c_city": { "title": "A big platform in Shenzhen wants you", "situation": "A large loan-facilitation platform offers one and a half times your pay to do the same thing in Shenzhen, with a customer base ten times larger. Your parents are in Shapingba, and you've only just got used to this city's ups and downs.", "options": [
+   { "label": "Go to Shenzhen", "result": "You spend another three years in Nanshan, seeing bigger samples and nine a.m. elevator lines. Later you transfer to the regional center in Chongqing, and the pay doesn't come back down." },
+   { "label": "Stay in Chongqing", "result": "You thank the headhunter. On weekends you go to Shapingba for dinner as usual, and the twice-cooked pork on the table is more solid than any job grade." }
+  ] },
+  "c_manager": { "title": "Compete for Risk Manager", "situation": "The Risk Manager post has opened up. It means leading six people and fighting with sales in the product committee. You write strategy very well, but you have never told a director no to their face.", "options": [
+   { "label": "Compete", "result": "In your defense, someone asks when you would say no to a deal that looks profitable. You describe the county-level drift, and another time when you judged it wrong." },
+   { "label": "Stay on the expert track", "result": "You say you're better suited to looking at numbers. While others are in meetings, you divide model monitoring one layer finer." }
+  ] },
+  "c_llm": { "title": "Using a large language model to explain rejections", "situation": "The company wants a large model to generate explanations for rejected customers automatically. Complaints would fall, but if it says what it shouldn't, risk is responsible. The director asks if you want to take the project.", "options": [
+   { "label": "Take it and set the red lines", "result": "You write more than ninety things it must never say and review tens of thousands of replies. Complaints go down, and you learn another way of managing a colleague who doesn't get tired." },
+   { "label": "Wait a while", "result": "You write a risk opinion and the project is postponed six months. Six months on, another department takes it up, and your team reviews their work." }
+  ] },
+  "c_bank": { "title": "A local bank is hiring", "situation": "A local city commercial bank has an open credit management post for experienced hires. Thirty percent less pay, but nine to six, and no more delivery riders' vintages. Your medical report keeps getting longer.", "options": [
+   { "label": "Go to the bank", "result": "You resign, leaving the monitoring dashboards and documentation on the shared drive.", "end": "You join the bank's credit management department and start reviewing collateral for corporate loans. No one asks you anymore whether a forty-one-year-old hotpot owner qualifies. Now it's factories and land." },
+   { "label": "A few more years", "result": "You stay. The vintages in this trade haven't yet reached the month when you can see how things turned out." }
+  ] },
+  "c_exit": { "title": "The company folds into headquarters", "situation": "After a shareholder reshuffle, the strategy team is being merged into headquarters in another city, with only operations left in Chongqing. You can follow at half a grade lower, or take severance and leave. You're past forty now, and every three years this trade changes its rules.", "options": [
+   { "label": "Take the severance", "result": "You pack up your years of strategy documents for the archive, confirm the confidentiality terms with Legal, and turn off the VPN.", "end": "You take the severance and work as a compliance and risk consultant to small lenders and auto finance firms, paid by the day. Reading someone else's vintage table, you still ask first which year the loans were made." },
+   { "label": "Follow to headquarters", "result": "You drag your suitcase to another city and take the Friday night train back to Chongqing. You're half a grade lower. The vintage table looks the same." }
+  ] }
+ },
+ "endings": {
+  "retire": "You sign the year's risk report, and the write-off list is a page shorter than when you started. The loans keep moving, one by one, and no account closes because someone retires. Leaving, you pass through the lobby, where an ad by the door says: up to two hundred thousand, in your account in three minutes.",
+  "burnout": "First you can't sleep, then the words month-end set your heart racing. The nodule goes up a grade. You apply to be moved, and in the month you finish handing over, you leave the vintage table unopened for the first time. You begin to teach yourself not to estimate anyone."
+ },
+ "stages": [
+  "Your job is working out the rejection reasons one by one: batch results, review queues and rule backtests, all in Hive and the reporting platform. The women in credit review teach you how to listen on the phone, and the seniors in strategy teach you to read vintages. Your conclusions still need someone to recheck them, and you can't change anything in production.",
+  "One product line's admission, limits and pricing are yours now. You write strategy documents, run gray releases, watch the vintages and roll rates, and find out only three months later whether you were right. Sales comes to you for approval rate, post-loan for explanations. Unlike a specialist, you now answer for results that haven't happened yet.",
+  "You lead six people and have a vote on the product committee. Half your time goes to explaining why not, the other half to explaining how it could work. Funders' due diligence, partner credit lines and your staff's promotion files all land on your desk. You can still read SQL, but you rarely write it yourself.",
+  "You manage the company's risk appetite statement, the document that sets the year's direction. The quarterly risk report goes to the board, and when regulators come you're first into the room. Between profit and bad loans you must give one number, and every department knows who said it.",
+  "Your appointment was approved by the regulator, and the last signature on the risk report is yours. You rarely see single applications, and more often sit with shareholders, regulators and Legal, judging how big a mistake this company can take next year. Others can leave work saying the system decided. You can't."
+ ],
+ "work": [
+  "Sister Duan from credit review plays you a recording in which the applicant pauses three seconds before giving his employer's address. She says the model can't see those three seconds, and you add a note in the review system.",
+  "You export the sample hit by one rule into Excel and find more than two hundred rejected people all listed the same closed-down factory. You mark it in your backtest report.",
+  "On a callback to a pickled-mustard factory worker from Fuling, she asks if she can pay in parts. You check the system and tell her how to apply in the app. On the other end of the line she writes it down twice.",
+  "The post-loan supervisor brings over a batch of accounts more than three payments behind. You match them to their original limits and find that the more fully a limit was given, the sooner trouble came. The next version of the strategy pulls back one notch.",
+  "In week two of a gray release you notice on the monitoring dashboard that Wanzhou's approval rate is well above other districts. You trace it to a phone shop running group applications and open a ticket with anti-fraud.",
+  "A product manager wants to raise first-time limits to twenty thousand. You run expected loss for three plans in Python and make one chart page. He reads it and changes the proposal to twelve thousand.",
+  "A funder's risk rep comes for due diligence and wants the last six periods of roll rates. You prepare a two-page note on definitions in advance, explain in person why July ran high, and they renew the line.",
+  "Your staffer Du has made the approval rate look good, and at the weekly meeting you have him walk through the rejected sample too. Halfway through, he finds on his own that one channel was left out.",
+  "The sales director brings a fruit plate to your office and says this month is just a bit short. You push half the plate back, along with the expected-loss table for three months out.",
+  "A shareholder on the board asks if the bad-loan rate can come down another half a point. You circle a line in the risk appetite statement and tell him how much income he'd have to give up to get it.",
+  "The inspection team raises a model-governance finding. You organize the remediation report, naming an owner and a deadline for every item, with your own name on the first line.",
+  "The annual risk report reaches its eleventh draft, and the general counsel is still revising the word basically. On page four you add one sentence: this year's greatest risk is that we don't yet know these new customers well enough.",
+  "A new Director of Risk asks you how to judge whether a partner is reliable. You tell him to first sit in their customer service center for an afternoon listening to calls, and then come back to the data."
+ ],
+ "past": [
+  "Your family is in Yongchuan, and your father runs a freight truck bought on installments. The mood at home changes every fifteenth of the month. You learned early what a monthly payment is.",
+  "You choose financial engineering because it sounds both rich and technical. The college is in Chengdu, your first time away from Chongqing, and you discover that roads elsewhere are flat.",
+  "Databases is your best course. You make a small program to straighten out a student club's accounts. A senior tells you that in finance, an arts student who can write SQL is worth more than one who can give slides.",
+  "A summer internship in post-loan at a small lender, two months of making reminder calls. Some people cry, some swear, and some very politely ask if it can wait another week.",
+  "Before graduation you hope for Shanghai, but this licensed firm in Chongqing is the only one offering a risk job at campus recruiting. Your father says it's better to do the accounts for others than to be accounted for."
+ ],
+ "late": {
+  "pension_note": "Estimate: enterprise employee pension contributed at a fairly high base, with an average replacement rate, topped up a little by annuity and savings.",
+  "scenes": [
+   "In your first month of retirement, no monitoring alerts reach your phone. You still wake early at the start of the month, and find there's no table left that needs you.",
+   "The neighborhood asks you to talk to older residents about scams. Halfway through you pull out the installment rate and work it out for them. Several old ladies put on their reading glasses and pay more attention than at the health-supplement talks.",
+   "A relative who runs a shop asks you to look at his books. One look at the takings tells you in which month he'll go under first. You tell him. He doesn't believe you. The next year it's that month. You feel no satisfaction at all.",
+   "The rules of the trade have changed several more times. The lines you once fought over one by one are now invisible weights in a model. Watching the news you no longer work out anybody's sums, and care only whether the bougainvillea in the compound is flowering.",
+   "You delete all the finance apps from your phone. When people post their bills on social media, you no longer guess at their debts.",
+   "You keep the books half-days for the neighborhood, three hundred yuan an entry at most, and you can find a one-cent mistake quickly. Work like this makes you feel safe.",
+   "Your thyroid recheck runs on a two-year vintage. You go on time and store the reports in one folder. The nodule stays as it was.",
+   "At the new job the numbers are much larger and the people far fewer. Now and then you miss the hesitation in those credit-review calls, and later realize you don't, really.",
+   "Someone asks what all these years of risk control actually achieved. You say it let some people borrow and kept others from it. As for exactly who, that's in the tables, and you don't know either.",
+   "You leave the trade entirely and open a small hardware store in an old neighborhood by the Jialing River. Neighbors who want credit get it, and the accounts are kept on the back of the door.",
+   "At a bank counter the clerk says the system won't allow it. You badly want to ask which rule. The words reach your lips and turn into thank you.",
+   "Your knees creak on the slopes, and you plan your route step by step: the Eighteen Steps or around by the elevator. It's like managing your own body's credit limit."
+  ],
+  "closing": {
+   "retire": "Mist rises off the river, and the far bank's towers fade floor by floor. There is no bill for you to answer for this month.",
+   "burnout": "The banyan outside the door has put out new leaves. You don't estimate how many more years it will grow.",
+   "end": "The city's lights are still on, and behind each one is a loan not yet paid off. They have little to do with you now."
+  }
+ }
+}

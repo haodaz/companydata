@@ -1,0 +1,172 @@
+{
+ "id": "stats-fy",
+ "occupation": "Statistician",
+ "role": "County Survey Team Statistical Investigator",
+ "headline": "A statistics graduate back in northern Anhui, pricing vegetables, cutting wheat plots and looking after a few dozen household bookkeepers for a county survey team",
+ "unit": "The statistical survey team of a county under Fuyang, Anhui (fourteen staff, reporting up its own vertical line rather than to the county)",
+ "unit_type": "County statistical survey team (civil service)",
+ "city": "Fuyang, Anhui (county seat)",
+ "city_tier": "County town",
+ "education": "Bachelor's degree (Statistics)",
+ "level": "You have studied sampling distributions and regression. Which household's dog dislikes strangers and which stallholder quotes a fake price, you will have to learn one door at a time.",
+ "intro": "Fourteen people on the team, and an office on the third floor of a six-story building on the old street of the county town. On your first day the team head hands you a handheld price terminal and a form: by Friday, bring back the prices of thirty-seven vegetables from three markets in town. For celery, record the price actually paid for medium-grade stalks, not the one the seller is shouting. You studied sampling distributions for four years. Only today do you learn that samples haggle.",
+ "salary_note": "Estimate: a civil servant in a northern Anhui county. Salary plus year-end performance pay sits below the national figure for statistics jobs, with steady benefits.",
+ "facts": [
+  {
+   "label": "Staff Member, Grade 1 (current level)",
+   "value": "0–4 years, ¥2,800–3,800 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Principal Staff Member, Grade 4 (4–10 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Household interviews and earning the trust of sampled families",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Collecting and recognizing prices",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "6 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "The vegetable market in town is just getting loud. You carry a plastic bag and blend in with the shoppers, listening to the old woman ahead of you talk green peppers down from five yuan to four-twenty. Four-twenty is the number you need.",
+  "Back at the office you upload. The system pops up: green peppers up 38 percent on the previous period, please give a reason. You type: prolonged rain, local greenhouse output down, fewer shipments from outside.",
+  "You phone your household bookkeepers one by one to remind them this month's accounts are due. One old man says he did keep the book. He just used it to prop up the wok.",
+  "Team meeting on June's wheat cutting. The sampled plots are little squares on a map. The team head says whichever one gets drawn is the one you cut, including the poor ones.",
+  "You ride your e-bike out to the village. In a sampled family's main room you sit on a low stool and ask how much the son sent back from Shanghai this month. That goes down as transfer income.",
+  "Entering the ledgers. One household spent more than eight thousand this month. You go back and check: cataract surgery for the old man. You note it, or the reviewers upstream won't let it through.",
+  "A plate of gelatiao noodles by the road, an extra spoonful of sesame paste. The owner asks what you do. You say you work at an office. It's a rule of the trade not to go around saying what you're surveying.",
+  "Your phone goes. A bookkeeper has sent a sixty-one-second voice message asking whether fertilizer counts as living expenses. You reply: no, that's a production cost, please put it on its own line."
+ ],
+ "ladder": [
+  { "title": "Staff Member, Grade 1", "stage": "Fieldwork", "focus": "Pricing, household visits, seasonal crop cutting and data entry, filling in every original form so it stands up to inspection" },
+  { "title": "Principal Staff Member, Grade 4", "stage": "Own a specialty", "focus": "Run one specialty on your own, whether households, prices or farming, and review the numbers from assistant enumerators" },
+  { "title": "Principal Staff Member, Grade 3", "stage": "Quality control", "focus": "Own the design and data quality of one specialty for the whole county, write the analysis, and face the inspections" },
+  { "title": "Principal Staff Member, Grade 2 / Deputy Team Head", "stage": "Oversee", "focus": "Oversee several specialties, plan the year's survey calendar, and allocate the team's people and cars" },
+  { "title": "Principal Staff Member, Grade 1 / Team Head", "stage": "Run the team", "focus": "Answer for the independence and quality of the county's survey data, and be the one who appears, up the line and outward" }
+ ],
+ "ai_tasks": [
+  { "name": "Household interviews and earning the trust of sampled families", "how": "AI can suggest what to ask this household. Sitting down in someone's main room and getting them willing to talk about income and spending still takes a person making trip after trip." },
+  { "name": "Collecting and recognizing prices", "how": "A photo of a price tag is enough for the handheld to read the item and price, and supermarket numbers arrive straight from the checkout system. A person only spot-checks the grades and whether market prices are the real ones." },
+  { "name": "Reviewing household ledgers", "how": "The system flags pages where income and spending don't match or swing oddly. A person phones back and finds out what that money actually was." },
+  { "name": "First drafts of the monthly data analysis", "how": "AI writes up the year-on-year and month-on-month figures and charts in minutes. A person judges why this county's numbers moved this way, and which sentences can go in." }
+ ],
+ "events": {
+  "e_wheat": "Early June, and the wheat of northern Anhui has turned three days ahead of the forecast. You go into the fields with a tape measure and cut, thresh, test moisture and weigh, one sample square after another. By the third day of sun the skin on the back of your neck has come off. The numbers go to two decimal places.",
+  "e_keeper": "An old woman who has kept household accounts for nine years is writing larger and larger. At year's end you bring the thank-you rice and oil. She opens the year's book for you, and even the bag of sunflower seeds she sent you home with at New Year has been entered under gifts.",
+  "e_census": "The once-a-decade census arrives. Half the doors in the village are padlocked, the people off in factories in Kunshan and Ningbo. You confirm a place of residence over video with somebody's son while the shift-change bell rings behind him.",
+  "e_rotate": "Household samples rotate every five years. All thirty families you know so well drop out. At the first new household the door opens and they ask what you've come to collect. You spend forty minutes explaining on the doorstep.",
+  "e_dog": "On a household visit, a badly tied yellow dog bites your calf. The rabies shots take several trips to the township clinic. From then on you enter any yard by first finding where the rope is fixed.",
+  "e_check": "A data-quality inspection team from the province turns up in the county without notice. They want original records, weighing slips from the wheat, and face-to-face checks with sampled households. Three days turn up just two small errors in form. The team head comes back with two watermelons.",
+  "e_hog": "Within a year pork falls from twenty-eight yuan to eleven. You take the price at a butcher's slab while the butcher you know works out aloud what he loses on each pig. You can only record the price, not his expression.",
+  "e_pickup": "For the ten days of wheat cutting you leave before light and get back after dark, and picking up from kindergarten falls to your spouse and the neighbors in turn. Your child takes to calling June the month Mom and Dad get sunburned.",
+  "e_flood": "Rain all through July, and two sampled autumn-grain plots near the Huai River go under. You go out in rubber boots to confirm the damaged area, come back to rework the backup sampling plan, and fill in six explanatory forms.",
+  "e_waist": "After more than ten years on an e-bike down country roads, two vertebrae in your lower back sit too close together on the film. When rain is coming you know a day before the forecast does.",
+  "e_spring": "The days around the fifth of the lunar new year are the best for the labor survey, because everyone who works away is home. You walk through scraps of firecracker paper and in one morning learn where seventeen people from one village work and what they earn.",
+  "e_ai_price": "The handheld gets an upgrade: a photo of the price tag and it reads the item and price. Supermarkets are easier still, the numbers coming straight from the checkout. Market stallholders don't write price tags, so you still have to go and listen.",
+  "e_ai_flag": "The review system now marks suspicious pages in red first. One family has been flagged three months running. you call and find the old man is at the hospital caring for a relative, and a nephew has been keeping the book, every entry marked about.",
+  "e_ai_report": "AI writes the first draft of the monthly analysis in a few minutes, year-on-year and month-on-month all correct. You cut its smoothest sentence, because the reason it gives for this year's wheat increase in this county is not the reason.",
+  "e_merge": "The city rolls out centralized data review, and some of the county team's checking powers move upstairs. You go from reviewing and then reporting to reporting and then waiting. A screen for tracking progress appears in the office.",
+  "e_award": "In the provincial summer-grain quality notice, your county ranks near the top. The reward is one commendation and a team dinner of mutton soup. The team head clips the notice to the inside of the filing cabinet door.",
+  "e_savings": "Your year-end performance pay arrives, less than your classmate in Suzhou gets as one month's bonus. But your parents tell everyone they meet: ours works in an office.",
+  "e_eyes": "Even with reading glasses you can't tell the 3s from the 8s in handwritten ledgers. You set a rule for the assistant enumerators: if you can't read it, send it back rather than guess."
+ },
+ "choices": {
+  "c_quit_keeper": { "title": "A bookkeeper wants out", "situation": "A sampled household says keeping accounts is too much trouble and wants to stop. The rules allow you to bring in a reserve household, but this one is among the few in the village living entirely on wages from migrant work, and swapping it would tilt the mix a little.", "options": [
+   { "label": "Keep going back", "result": "You make five trips, set up the bookkeeping app on his phone, and teach his daughter as well. The family keeps accounts for four more years." },
+   { "label": "Use the reserve household", "result": "The reserve household starts keeping accounts in its second week. There's nothing wrong with it under the rules. You simply know that this village's sample now lacks one way of getting by." }
+  ] },
+  "c_cert": { "title": "Take the intermediate statistician exam and go for Principal Staff Member, Grade 4", "situation": "An intermediate statistician's certificate helps your case for Grade 4 Principal Staff Member, but June and October are for cutting crops. All your study time has been taken by wheat and corn.", "options": [
+   { "label": "Study at night", "result": "You grind through statistical practice in your dorm and pass the following year. There's a new line on your form, and you have firmer ground when promotion comes up." },
+   { "label": "Learn the roads first", "result": "The certificate can wait. You could ride every road in all eighteen townships with your eyes shut. That's a skill too, though not one that goes on the form." }
+  ] },
+  "c_leave_city": { "title": "A classmate calls from Suzhou", "situation": "A college classmate does data work at a consumer-goods company in Suzhou and needs someone who understands sampling, at two and a half times your pay. You haven't been past probation long, and your parents' legs are starting to go.", "options": [
+   { "label": "Resign, go to Suzhou", "result": "You hand in your resignation, with the handheld and the contact sheet for twenty-odd households set out in perfect order.", "end": "You go to Suzhou and spend your days facing sales and inventory. The boss wants to know how much will sell next quarter. You give him a range. He asks you to give him a number." },
+   { "label": "Stay", "result": "You send your classmate a sticker saying no thanks. On Friday you still have vegetables to price." }
+  ] },
+  "c_ask": { "title": "Someone asks for a number at dinner", "situation": "At a friend's dinner, a county cadre you know asks roughly how this year's summer grain yield is looking. Survey results can't be shared before release, but you live in the same county town, and your children go to the same school.", "options": [
+   { "label": "Say wait for the release", "result": "You smile and say to wait for the release. The conversation moves on, and you aren't invited to the next few dinners." },
+   { "label": "Say the wheat looks fine", "result": "You say the wheat looks all right this year, the kind of thing anyone in the village can see for themselves. He nods. At home you go over the sentence twice, decide you didn't cross the line, and aren't entirely sure." }
+  ] },
+  "c_city": { "title": "A secondment to the city team", "situation": "The city team needs someone to write analysis, on a two-year secondment. You could see numbers for the whole city and be better remembered by those above. But home is in the county, and the temporary city dorm sleeps four.", "options": [
+   { "label": "Go to the city", "result": "In two years you write more than forty analyses, and learn what it means for one sentence to be edited by five people." },
+   { "label": "Stay with the county team", "result": "You keep going out to the villages. Not one sampled household drops out in the county that year." }
+  ] },
+  "c_sanji": { "title": "Compete for Principal Staff Member, Grade 3", "situation": "In this round the county team has one slot for Grade 3 Principal Staff Member, and your deskmate got here three years before you. The team head asks you in private whether you want to go for it.", "options": [
+   { "label": "Compete", "result": "Your application says seven years without an error. For a long time afterward your deskmate talks to you only about work." },
+   { "label": "Let your deskmate have it", "result": "You tell him it's his turn. He buys you a mutton soup. As for when the next round will come, nobody knows." }
+  ] },
+  "c_ai": { "title": "The province wants people for a data-review unit", "situation": "The province is drawing people from the grass roots to learn R and write automated review rules, and to maintain the anomaly-flagging model for the whole province. You'd need two years of catching up, with less time in the villages.", "options": [
+   { "label": "Sign up", "result": "At forty you write your first line of R and find your old grounding in sampling all comes into use. When the system flags the wrong thing, you can say where it went wrong." },
+   { "label": "Keep visiting households", "result": "Someone ought to know what the family behind the ledger is like. You stay on your e-bike." }
+  ] },
+  "c_transfer": { "title": "The county wants to transfer you", "situation": "The county development department needs a deputy who understands data, and someone comes to ask if you'd move across. A bigger platform, messier work. On the survey team your position has more or less topped out.", "options": [
+   { "label": "Transfer", "result": "You sign the handover list, adding an extra page to the specifications for those thirty-seven vegetables.", "end": "You move to another county department and start writing reports with other people's numbers. Every time you see a decimal point on a table, you want to ask how it was cut." },
+   { "label": "Stay on the survey team", "result": "You thank them. There's wheat to cut in June, and this year's sample has drawn the farthest township again." }
+  ] }
+ },
+ "endings": {
+  "retire": "You finish your retirement paperwork, the handheld long since on its fourth generation. For your final wheat season you stay out of the field and only sign the weighing slips. As you walk down the old street it's the hour for taking prices, and the stallholders are still shouting fake ones.",
+  "burnout": "First your back gives out on you, then your eyes. You leave household visits for a desk job and later take medical retirement. The handwriting in those ledgers is beyond you now. When the team's car goes to the countryside, no one calls you."
+ },
+ "stages": [
+  "Your hands hold the three basics: ten-day price collection, household ledgers, and seasonal crop surveys. To stallholders you must be a customer, to bookkeepers a younger relative, to reviewers a witness. Handheld, paper ledger, tape measure, moisture meter: none can be used wrongly, because one wrong number makes everyone after you correct it.",
+  "You begin to run one specialty alone, with assistant enumerators hired from the villages, mostly village accountants and retired primary-school teachers. You review the accounts they send in and go to the fields to spot-check the squares they measured. The difference from the level below: other people's mistakes now count as yours.",
+  "The plan for one specialty across the county is now yours to write: how to update the sampling frame, when to bring in reserve households, what to show when inspectors come. You spend less time in fields and more reviewing forms, writing analysis, and answering queries from above in the system. One sentence of reasons for a data swing takes many drafts before it can go.",
+  "You oversee several specialties, and the year's survey calendar hangs in your head: wheat, early rice, autumn grain, the four quarters of household totals, and another layer on top in census years. There are only two cars and always three people too few. The duty roster is the document you labor over most.",
+  "The team's numbers finally rest with you. You explain swings to the province, make clear to the county what can be said and when, and fight for the small attendance allowance of assistant enumerators who have done this for twenty years. What you hold most often now is a signing pen and a cup of strong tea. Going into the fields is something you do only when you want to."
+ ],
+ "work": [
+  "The tofu seller notices you're back asking prices and teases you that in three years you've never bought a single block. You solemnly buy two, enter the paid price on the handheld, and fill in the spec field: soft tofu, loose.",
+  "A village accountant takes you into a sampled plot. You stretch the tape to mark a one-square-meter square and push bamboo markers into the four corners. He wants to shift it two steps toward thicker wheat. You put the markers back where the draw said.",
+  "You keep accounts for an old man who can't read. He says, you write, I'll read it out: second month, twelfth day, paid Sun Ergou back three hundred. You ask who Sun Ergou is. He says that needn't go in.",
+  "A retired primary-school teacher hands in a stack of ledgers, the writing neater than print, except that all of March is in round numbers. You go to see her and learn she was in hospital that month and filled it in from memory. You ask her to say so plainly in the notes.",
+  "You take a moisture meter to spot-check township wheat weighing, and the electronic scale is off by eighty grams. You set the calibration weight on it and enter the difference on the check sheet. The township enumerator doesn't quite buy it and weighs it all again.",
+  "The labor survey forms come in after New Year, and one village has twenty fewer migrant workers than last year. Going house by house you find a shoe factory has moved back to the next county over, and you write that in the notes.",
+  "A new sample round means rebuilding the frame from household registers and power-use data. You spend three days with the meter reader from the power station, working out which homes haven't drawn electricity in years and are truly empty.",
+  "Your analysis comes back a third time with only a few words on it: reasons more specific. You phone two grain-buying stations and put the new-wheat market date and the buying price in the second paragraph.",
+  "The census-year duty roster goes on the wall, fourteen people across eighteen townships. The driver points out that the bridge between two townships is under repair, and you redo the whole route in red pen.",
+  "A young staffer brings you a flagged ledger page and asks if it can simply be deleted. You tell him to call the household first. He comes back saying they married off a daughter that month.",
+  "The provincial team calls to ask why household income this quarter is lower than the next county's. You send the returnee table and the note about the shoe factory stoppage, then talk it through for ten minutes. They say to put it in the formal reply.",
+  "The enumerators' attendance allowance hasn't risen in years, and two village accountants want to stop. You take a budget sheet to the city team twice. Each gets eighty yuan more a month, and both stay."
+ ],
+ "past": [
+  "Your parents are at an electronics factory in Ningbo and send money home each month. Your grandmother has you write it down on the back of your homework book, so nobody can later say where it went.",
+  "When you fill in your college choices your teacher says statistics is employable. You have no idea what statisticians do. It seems close to math, with less to memorize, so you put down a finance college in Hefei.",
+  "Your sampling professor sends you out to the school gate with questionnaires. You collect sixty, and eleven are in the same handwriting. It's the first time you understand that people fill in data.",
+  "Your internship is calculating sales at a consumer-goods company, in a heavily air-conditioned office. On the phone your father asks where you work. You can't quite explain, and he can't quite explain it to the village.",
+  "Your second go at the civil service exam. The job table lists a county survey team, statistics majors required, forty kilometers from home. The ratio of applicants is much lower than for provincial posts, and you pass the written exam and the interview."
+ ],
+ "late": {
+  "pension_note": "Estimate: civil service pension plus occupational annuity. The replacement rate is fairly high, but on a county-level base.",
+  "scenes": [
+   "You walk into the market with a basket. The moment a seller names a price your head discounts the fake part. Your spouse tells you to stop haggling. You say this isn't haggling, it's collection.",
+   "The residential compound is replacing its elevators, and the owners' committee asks you to tally opinions. You propose stratifying by floor. They tell you going door to door will do. You go door to door, and stratify it too. No one wants that table.",
+   "Your spine has become a monthly survey: which day it hurt, which disc, how many pills. You keep it in Excel and show it to the rehab doctor, who says it's the cleanest history he's ever seen.",
+   "Most of the market has been pulled down, and prices now go straight from the checkout systems to the database. The young people on the county team no longer get up early. You think that's fine. You just don't know who can still hear four-twenty.",
+   "In your first year of medical retirement you look at no numbers at all. You even turn off the step counter on your phone, and sleep till you wake every noon.",
+   "You go to rehab twice a week and read the insurance reimbursement rates more closely than anyone. There's an extra line on the bill, and you point it out to the young woman at the window.",
+   "The neighborhood needs someone to help with a survey of older residents' needs and comes to ask you. You say your eyes aren't up to it, and merely fix their questions: the answers need to be mutually exclusive.",
+   "Your new employer's reports are beautifully made. In your first week you ask three times how this number is defined. A colleague quietly asks what you used to do.",
+   "The company says the sample is big enough, no need for sampling. You think of saying something about populations and samples. You think again, and turn to the next slide.",
+   "You've stopped thinking about vegetable prices altogether. Only when you file taxes do you feel that this form is far worse designed than the household ledgers were.",
+   "In June you take the high-speed train across northern Anhui. Everyone in the carriage is on their phones. You look through the glass at the wheat and estimate the yield at around nine hundred twenty catties per mu.",
+   "The news says national household income is up by a few percent. Someone beside you says they haven't felt it. You don't argue. You know where that number comes from, and you know it isn't talking about anyone in particular."
+  ],
+  "closing": {
+   "retire": "The calls of the morning market drift indoors. One block of soft tofu, three-fifty. Today that's the paid price.",
+   "burnout": "The afternoon sun has moved to the corner of the table. The ledgers stopped long ago. The tea is still warm.",
+   "end": "For many years you counted other things somewhere else. Each June, the wheat turned yellow as usual."
+  }
+ }
+}

@@ -1,0 +1,183 @@
+{
+ "id": "simulation-zz",
+ "occupation": "Simulation Engineer",
+ "role": "Simulation Engineer at a rail equipment manufacturer",
+ "headline": "Building meshes and running solvers in the simulation group of a rail equipment maker in Zhuzhou, where a red patch on a contour plot has to persuade a designer to change a drawing, and only the strain gauges on the real thing tell you whether you were right",
+ "unit": "The simulation group in the technical center of a rail equipment manufacturer in Zhuzhou, Hunan",
+ "unit_type": "Rail equipment manufacturer",
+ "city": "Zhuzhou, Hunan",
+ "city_tier": "Prefecture-level city",
+ "education": "Master's degree (Solid Mechanics)",
+ "level": "You've read the finite-element textbooks twice and can make HyperMesh produce a mesh with no errors. You have never seen what a real weld looks like.",
+ "intro": "The plum rains haven't left Zhuzhou. In the simulation group you are given a workstation and a job ticket: the geometry of a bogie frame, due next Wednesday. On the cluster's queue next door, thirty-one jobs are ahead of you. The engineer training you says go down to the shop and look at a real frame first, then come back and mesh it.",
+ "salary_note": "Estimate: rail equipment makers in Zhuzhou pay by grade plus project bonuses, well below CAE jobs in the Yangtze Delta, but the income is steady and the local cost of living is low.",
+ "facts": [
+  {
+   "label": "Assistant Simulation Engineer (current level)",
+   "value": "0–2 years, ¥7,300–10,000 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Simulation Engineer (2–6 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥25,800 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Persuading designers to change a structure based on simulation results",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Meshing and setting boundary conditions",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "119 related listings nationwide, 1 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "You open the workstation and check last night's jobs. Eleven hours on the cluster, one distorted element error, an empty result.",
+  "Cleaning geometry. The design group's model still has every small hole, chamfer and thread. You judge one by one what can go. Remove the wrong one and the answer goes wrong with it.",
+  "A designer strolls over with his mug and asks if his rib can lose two millimeters. You say you'd have to run it. He says when don't you.",
+  "The canteen's chili-fried pork is as salty as ever. At the next table the electrical engineers are saying this month's project bonus is waiting on milestone acceptance again.",
+  "You go to the test rig to check strain gauge positions: twelve around the weld. You photograph them and match them to node numbers in your model.",
+  "Writing the calculation report. One page of conclusions, three of assumptions. The unwritten rule here: people only read page one, and if something goes wrong they check page three.",
+  "Before leaving you submit three load cases to run overnight. Compute is cheap tonight and no one's fighting for it.",
+  "At home you open the job page on your phone to confirm there are no errors. Weekends in this line of work are often spent waiting for something else to finish calculating."
+ ],
+ "ladder": [
+  { "title": "Assistant Simulation Engineer", "stage": "Meshing", "focus": "Clean geometry, mesh, run routine load cases, learn to tell whether a result is right" },
+  { "title": "Simulation Engineer", "stage": "Independent analysis", "focus": "Own strength, modal and fatigue analysis of components, write calculation reports, correlate with tests" },
+  { "title": "Senior Simulation Engineer", "stage": "Setting methods", "focus": "Own whole-vehicle and multiphysics analysis, set modeling standards, carry weight in design reviews" },
+  { "title": "Head of the Simulation Group", "stage": "Leading the group", "focus": "Manage people and compute, schedule project milestones, sign off on conclusions sent outside" },
+  { "title": "Chief Simulation Expert", "stage": "Final say", "focus": "Set the company's simulation direction, the migration to domestic software, and external technical defense" }
+ ],
+ "ai_tasks": [
+  { "name": "Persuading designers to change a structure based on simulation results", "how": "AI can organize the meeting materials. Getting a designer to accept that red patch and redraw it, between deadlines and cost, takes credibility and accountability." },
+  { "name": "Meshing and setting boundary conditions", "how": "Scripts and AI can clean geometry, mesh in batches and apply templates. A person decides what can be simplified and whether the loads match reality." },
+  { "name": "Correcting models against test data", "how": "AI can compare curves in bulk. Whether the gap comes from the model or from a badly placed strain gauge takes someone who knows the floor." },
+  { "name": "Writing standardized CAE reports", "how": "Charts and result descriptions are mostly automatic. People check the conclusions and residual risks." }
+ ],
+ "events": {
+  "e_real_weld": "For the first time you go with the welding shop to look at an actual weld. The undercut is nothing like the smooth line in your model. You come back and redo how you handle the weld toe.",
+  "e_mesh_bad": "The engineer training you asks one question about your contour plot: if you double the mesh density, is that peak still there? You run it overnight. It changes by 40 percent. It was a singularity.",
+  "e_design_freeze": "A week before design freeze, every component wants results at once. On the ninth straight day at the workstation you finish the last load case and discover the boundary conditions were updated on Monday.",
+  "e_field_test": "You spend a month with the line-test crew, in a hotel by day, and at night waiting for the test train and watching strain curves on the data logger. When it comes within 6 percent of your model, you finish your cold boxed dinner on the train.",
+  "e_neck": "A few years of two monitors and your neck has begun to speak up, with headaches at night. The physical therapist feels around and asks if you sit like this, head pushed forward, all day.",
+  "e_bid": "An overseas metro tender needs a crash-energy analysis in the technical bid. Four days before the deadline you reorganize the load cases against the European standard and write the English captions in the middle of the night.",
+  "e_redline": "In a design review you say the fatigue life on this section is too short. The design lead produces the service record of the previous generation: no problems all these years. You don't argue. You go back and redo it with actual line spectra.",
+  "e_saved": "The bogie frame finishes its full fatigue cycles on the rig with no cracks, right where you predicted it would hold. The design lead walks past and leaves a packet of betel nut on your desk, which counts as an admission.",
+  "e_eye": "In a restaurant your fingers find a weld on the chair and you begin wondering what the stress concentration factor is on that square corner. A friend asks what you're thinking about. You say, what to eat.",
+  "e_budget": "The annual license for the commercial software has gone up again, and there aren't enough tokens for three groups. The group head draws up a table of who gets how many cores, and everyone reads it to see whose milestone is closest.",
+  "e_ai_mesh": "New tools clean geometry and mesh on their own; a month's work takes two days. Two contractors in the meshing group aren't renewed, and a new printer soon sits on their desks.",
+  "e_ai_wrong": "An auto-generated report looks wonderful but has dropped a constraint. You only see it after turning to the assumptions page. From then on, you require every report to put assumptions on page one.",
+  "e_platform_end": "The vehicle platform you've calculated for six years is discontinued; new projects use another structure. The calibrated models sit on the server, and six months later a cleanup script moves them to an archive directory.",
+  "e_family_shift": "Line tests take a month at a time, and parent-teacher meetings always fall to your spouse. There is no complaint on the phone, only next term's whole schedule, sent to you.",
+  "e_domestic": "The company pushes a domestic solver and you correlate it on old models. Eight of thirty cases are off by a fair amount. You send a table of the differences to the vendor, and their engineer comes to stay in Zhuzhou for two weeks.",
+  "e_merge_rooms": "A reorganization folds the structures, fluids and electromagnetics groups together, and only one of the three leads stays. After the meeting the fluids people carry their mugs back to their desks without saying much.",
+  "e_teach": "The new PhD's contour plots are better looking than yours. You tell him to ignore them and sum the reaction forces against the total load. It's off by 3 percent. He spends the afternoon looking.",
+  "e_sign": "An external calculation report needs your signature, a thick stack with thirty years of service behind it. You read the assumptions pages one extra time before pulling the cap off your pen.",
+  "e_late_bid": "More and more of your work is technical defense meetings, with the client's experts younger than you. You speak slowly, and say what can be calculated and what can't."
+ },
+ "choices": {
+  "c_script": { "title": "Learn scripting, or dig into the mechanics", "situation": "All the group's scripts were written by one man, who's about to transfer. The engineer training you thinks young people should get the theory down first. You're only on chapter three of the fatigue book.", "options": [
+   { "label": "Learn Python and TCL", "result": "You write a batch plotting script and the younger engineers start asking you for it. The book is still on chapter three." },
+   { "label": "Finish the fatigue book", "result": "You finish it. When you go back to the calculation reports, you know why that factor gets multiplied in." }
+  ] },
+  "c_freeze_truth": { "title": "That red patch before the freeze", "situation": "Three days before design freeze, you find a weld with low fatigue margin. It might just be a conservative model. If you say so the drawing changes and the delay is on you. If you don't, the test may still catch it.", "options": [
+   { "label": "Put it in the report", "result": "You list it as a residual risk and the drawing changes in three days. The design lead scowls for two weeks. The milestone doesn't really slip." },
+   { "label": "Refine the mesh first", "result": "You run two more days and the conclusion is still unclear. You write one line, recommend the test focus here, and everyone follows that line." }
+  ] },
+  "c_senior": { "title": "Applying for Senior Simulation Engineer", "situation": "Becoming a Senior Simulation Engineer takes papers and proof of having led a project. No one wants the whole-vehicle aerodynamic noise problem. Crack it and it's your signature work; fail and two years are gone.", "options": [
+   { "label": "Take on the problem", "result": "You grind the wind tunnel data against the model for two years, and the noise sources finally line up. Someone at the review asks questions for ten minutes, and you answer for ten minutes." },
+   { "label": "Stick to components", "result": "You keep doing frames, which you're good at, without a slip. The slot goes to someone else this year, and you don't mind much." }
+  ] },
+  "c_vendor": { "title": "Technical support at a software company", "situation": "A reseller of simulation software wants you in Shanghai as a support engineer, at about half again your pay. You'd see models from many industries, but never again sign your name to a conclusion.", "options": [
+   { "label": "Go to Shanghai", "result": "You resign and give up the rented room by the river.", "end": "You go to Shanghai and do technical support for simulation software, spending your days getting other companies' jobs to run. You've seen everyone's cars, ships and chips. None of them is yours." },
+   { "label": "Stay in Zhuzhou", "result": "You say you still want to see the train you calculated run. The reseller says he's heard that reason before, and those people came eventually." }
+  ] },
+  "c_ai_flow": { "title": "Building the automated workflow", "situation": "The company wants an automated modeling and reporting pipeline, and someone has to extract the rules from existing projects. Build it and in three years the group won't need this many people. Don't and another department will.", "options": [
+   { "label": "You'll build it", "result": "You turn more than a decade of experience into rules and checks. Toward the end you realize many of those rules were just something someone jotted down back then." },
+   { "label": "Stay on the hard problems", "result": "The IT people build the pipeline, not very well. For complex coupled cases, they still have to call you." }
+  ] },
+  "c_manager": { "title": "Applying to head the Simulation Group", "situation": "The Head of the Simulation Group position is open. It means deciding whose jobs run first, who travels, whose bonus is a bit smaller, and fighting the design department for a voice.", "options": [
+   { "label": "Apply to head the group", "result": "You tidy the scripts on your workstation, then start on rosters and budgets. Your own jobs go untouched for a month." },
+   { "label": "Stay on the technical track", "result": "You keep calculating. The new head is three years younger than you and still comes to ask when something's wrong." }
+  ] },
+  "c_ev": { "title": "An offer from an EV maker", "situation": "An electric-car maker in Changsha is poaching CAE people, at more than twice your pay, with a new model every year. Your home is in Zhuzhou and your kid has just started primary school. Close as Changsha is, it's still a weekly commute.", "options": [
+   { "label": "Go to the carmaker", "result": "You work out the number and sign.", "end": "You go to the carmaker in Changsha, calculating battery packs and crashes. The pace is twice as fast and each car's life is much shorter. Now and then you remember that a train runs for thirty years." },
+   { "label": "Stay in rail", "result": "You say cars change every two years and you still like the slow stuff. Your pay is a notch below your classmates', and when you say this it isn't entirely true." },
+   { "label": "Help out on the side", "result": "With your employer's approval you take on one outside review. You get a glimpse of how the carmaker works, and come back thinking neither side has it easy." }
+  ] },
+  "c_overseas_test": { "title": "Six months at an overseas site", "situation": "A South American project needs someone on-site for line tests, twelve hours off your time zone, a good allowance, six months away. It's a chance to validate your model on someone else's track, and home will have to carry on without you.", "options": [
+   { "label": "Go to the site", "result": "In a foreign depot you apply strain gauges and learn the Spanish for stop. The data you bring back is good for two papers." },
+   { "label": "Send someone younger", "result": "The younger engineer goes. You watch the data remotely from Zhuzhou, losing sleep to the same time difference, but at least you go home at night." }
+  ] },
+  "c_teach": { "title": "Teaching at a vocational college", "situation": "A vocational college in Zhuzhou has a teaching opening in rail and wants someone with engineering experience. Summers and winters off, 30 percent less pay, and your projects go to someone else.", "options": [
+   { "label": "Go teach", "result": "You put in the transfer request and stand at a lectern next term.", "end": "You teach mechanics of materials and intro finite elements at the college. Most of the students don't want the formulas, so you project a photo of a real frame. Sometimes that works." },
+   { "label": "Stay at the company", "result": "You say you want to see this platform off the line first. On the phone they say they don't know when they'll hire next." }
+  ] }
+ },
+ "endings": {
+  "retire": "The week your paperwork clears, one last correlation case you submitted is still in the queue. You don't go look at the result. In the afternoon you walk under the railway bridge as a train goes over, estimate its passing frequency, and find it about right.",
+  "burnout": "Your neck and the headaches keep you farther and farther from the workstation. The company moves you to standards, managing specifications and documents, no longer responsible for any conclusion. By four in the afternoon the office is mostly empty, and the wind from the server room comes through two walls."
+ },
+ "stages": [
+  "Your job is to clean up the design group's CATIA models, extract midsurfaces, build shell meshes and hand them piece by piece to the engineer training you. Someone else chooses the solver and someone else reads the result. You are often sent to the shop and test rig to compare against the real thing, then come back and fix what you assumed.",
+  "Now you take a component on your own, from HyperMesh through ANSYS to the finished report. Designers come straight to you, asking whether they can cut weight or change plate thickness. The difference: your name is on the report now, and when it's wrong you do the explaining.",
+  "You own the whole-vehicle model, putting body modes, aerodynamic loads and converter cooling together. You set the modeling standards and send back new hires' models. In design reviews you have to say on the spot how far to trust a result, and when to stop calculating.",
+  "Budgets, cluster queue rules and subcontracts have appeared on your desk. Every week you go over milestones with project managers, fight for test-rig time, and shield your people from the design department's rush jobs. You rarely mesh now. With a report you read the assumptions first; with a person you see whether they'll admit to being unsure.",
+  "You set the company's simulation direction: which load cases can replace tests with calculation, which discipline moves to domestic software first. When clients and experts ask, you answer. What you say goes into technical specifications, so you say it more slowly than before, and more often say: we can't calculate this accurately."
+ ],
+ "work": [
+  "The electrical group sends a cabinet model with thousands of threaded bolts. You remove them by script, then add back the dozen that carry load by hand, and pass it to your lead for checking.",
+  "A test technician has you record accelerometer positions. After measuring with a tape, you find that the model's origin and theirs are off by one coupler length.",
+  "You help your lead with mesh independence, one model at four densities. The third and fourth converge, and you put all four curves on one chart.",
+  "A designer wants a lightening hole in the side frame. You run three shapes, put stress and weight in one table, and he picks the second and quietly changes two ribs.",
+  "A body modal test comes in 0.8 Hz below your result. You and the tester go through the mode shape and find you took the floor adhesive's stiffness too high.",
+  "The welding process people ask if this joint can go from a T to a lap. You run it with the hot-spot stress method and put the conclusion and the uncertainty in an email.",
+  "A converter cabinet overheats and electrical and structures blame each other. You build a coupled fluid-thermal model, go to feel the air inlet on the rig, and trace it to a vent blocked by cables.",
+  "Reviewing a new hire's model, you have him read every contact pair aloud. At the seventh he stops by himself.",
+  "The client's technical adviser wants the crash-energy correlation. You put the sled test curve next to the calculated one and mark the section that doesn't match. You don't crop it out.",
+  "Two projects want the test rig at the same time. You spend an afternoon on the schedule with both project managers and the head of the lab, and in the end your engineers take weekend duty.",
+  "A subcontractor delivers an aerodynamics report with lovely figures. You ask for the mesh and residual records too. Their project manager says that isn't in the contract.",
+  "At a specification revision meeting you argue all afternoon to let some load cases be partly replaced by correlated calculation, and you set the bar for correlation high.",
+  "A vendor's sales director asks you to appear on their stage. You send him the comparison list of domestic and imported software and tell him to read it before deciding if he still wants you."
+ ],
+ "past": [
+  "You grow up in Zhuzhou with the factory railway at your door, locomotives easing out new cars. Your father is a fitter in the shop and doesn't say much at home.",
+  "Filling in college choices, your father says don't go into a factory. You pick engineering mechanics, thinking that's an office major. The first theoretical mechanics course flattens you.",
+  "A junior-year design project has you run finite elements on a cantilever beam. It's your first contour plot, and you think it's better looking than the formulas in the book.",
+  "You do a master's in solid mechanics, on residual welding stress. Your adviser's industry project sends you to the plant three times.",
+  "Most of your classmates go to carmakers in Shanghai. You take the offer from the company at your doorstep at 30 percent less. For the first time your father asks what exactly you do."
+ ],
+ "late": {
+  "pension_note": "Estimate: large equipment makers pay contributions in full and have an enterprise annuity. The pension is plenty in Zhuzhou.",
+  "scenes": [
+   "The company rehires you for specification review, but you only last a year. The later review forms are all clicks in a system, and you feel it makes little difference whether you click.",
+   "In your neighborhood you check the steel frame of someone's sunroom, free of charge. They ask how many years it'll last. You say it depends on the wind load. They say just tell me how many years.",
+   "Young people now say that most body structure load cases no longer need anyone to mesh them. It doesn't make you sad. You'd only like to ask whether anyone still writes that list of assumptions.",
+   "The doctor says stop bending your neck. You prop your phone at eye level and everybody thinks you're taking a selfie.",
+   "In those years in standards you fixed a lot of typos and a few coefficients that had actually always been wrong. No one gave you credit for it.",
+   "You swim three times a week now, not fast. The rail by the pool wobbles a little. You go around it and don't calculate anything.",
+   "After changing jobs you realize how much you used to care about those thirty-year numbers. What you handle now will be forgotten in a year or two.",
+   "Your name is still on calculation reports for old projects, in the reviewer column. Trains of that platform are still running, and sometimes at a station you count their bogies.",
+   "At your retirement checkup you compare notes with colleagues, and your neck turns out to be all right. Maybe it wasn't a complete loss, you think.",
+   "Your kid's bicycle stand breaks. You look at the crack's direction first and tell him it's fatigue. He asks if you can get a refund.",
+   "On a bullet train crossing a bridge, the water on your tray ripples slightly. You estimate the frequency. Next to you someone scrolls short videos. This train has nothing to do with you anymore."
+  ],
+  "closing": {
+   "retire": "An evening freight crosses the bridge slowly. The joints sound even. That stretch is all right this year.",
+   "burnout": "Your neck brace comes off and goes on the corner of the desk. The room holds only the fan. It is slightly eccentric, and runs well enough.",
+   "end": "You close the laptop. Somewhere a job is still in a queue. Its turn will come tonight."
+  }
+ }
+}

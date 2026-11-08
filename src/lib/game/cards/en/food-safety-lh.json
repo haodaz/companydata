@@ -1,0 +1,156 @@
+{
+ "id": "food-safety-lh",
+ "occupation": "Food Safety Manager",
+ "role": "Food safety manager at a latiao factory",
+ "headline": "A quality inspector at a seasoned-flour-snack factory in Luohe, Henan, with an extruder, a water activity meter and peroxide value reports at hand, reeking of chili and cumin. When the back-to-school rush comes, the whole plant is waiting for your signature",
+ "unit": "A mid-sized seasoned-flour-snack factory in Luohe, four lines, about three hundred people",
+ "unit_type": "Private food processor",
+ "city": "Luohe, Henan",
+ "city_tier": "Fourth-tier (food industry city)",
+ "education": "Bachelor's (food quality and safety)",
+ "level": "You've memorized a few national standards and can run the water activity meter. When it comes to signing for a real batch, your hand still shakes a little",
+ "intro": "The factory is in the Luohe economic development zone, and when the wind comes off the Sha River, half the road smells of chili and cumin. When you get back to your rented room smelling of it, your roommate says it's like sleeping with a sack of latiao, the spicy flour-gluten strips that made this town. Every day now you put on a white coat and walk into the extrusion hall with a temperature probe and a record sheet. Whether this batch ships before the new school term comes down to your name, the last one on the form.",
+ "salary_note": "Estimate: quality jobs at Luohe food plants pay about 40 percent below the national figure, but rent and food are cheap.",
+ "facts": [
+  {
+   "label": "Quality Control Specialist (current level)",
+   "value": "0–2 years, ¥2,700–3,500 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Food Safety Manager (2–6 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥6,100 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "On-site checks of ingredients and workshops",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Records and license expiry reminders",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "34 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "Change your shoes, wash your hands, go through the air shower. First thing, you check last night's retained samples: 25-gram bags lined up by batch, none missing.",
+  "Flour comes in. You feel it with your hand, then run the moisture. This is new-crop wheat with different gluten, so the extrusion settings will have to follow. The workshop head frowns as you explain.",
+  "Sensory panel. Seven people in a row chew through today's three batches, scoring as they go, sipping water, carrying on. By the tenth strip your tongue has given up.",
+  "The peppery soup in the canteen is spicier than the latiao. The lab sends over a report: the peroxide value has some way to go before the limit. You relax, and make a mental note of which batch of oil this was.",
+  "On your rounds at the mixing room, a worker's glove has a small hole that he hasn't noticed. You call him aside and have him change it, keeping your voice low.",
+  "The production supervisor comes to you with a release form: this is back-to-school stock, and the truck has been waiting at the gate for an hour and a half. You tell him the report is still missing one item.",
+  "You wash your hair three times, and the smell of the workshop is still in your scalp. You enter the day's inspection sheet in the system line by line. Every “normal” on it, you've thought about."
+ ],
+ "ladder": [
+  { "title": "Quality Control Specialist", "stage": "Line rounds", "focus": "Walk the lines, take samples, fill in records, run water activity and sensory tests, learn to call and hold a batch" },
+  { "title": "Food Safety Manager", "stage": "Own a line", "focus": "Own a line's risk list, supplier documentation and weekly checks, and sign release forms" },
+  { "title": "Food Safety Supervisor", "stage": "Own the system", "focus": "Lead the quality team, maintain the HACCP system, accompany customer audits and regulatory inspections" },
+  { "title": "Quality Manager", "stage": "Department head", "focus": "Run the lab and plant-wide quality, set standards, haggle with production and sales" },
+  { "title": "Food Safety Director", "stage": "Carrying the liability", "focus": "One of the company's first-line responsible persons for food safety, liable outside the company and saying no inside it" }
+ ],
+ "ai_tasks": [
+  { "name": "On-site checks of ingredients and workshops", "how": "Whether a sack of chili powder is damp, whether a floor drain is clean, takes someone to look, smell and touch." },
+  { "name": "Handling inspections and traceability", "how": "Only a person can stand across from an inspector, explain what happened, decide, and take responsibility." },
+  { "name": "Records and license expiry reminders", "how": "Certificates, training records and renewal alerts are mostly handled by the system. People spot-check that they're true." },
+  { "name": "Drafting procedures and risk lists", "how": "AI can draft from the regulations. These have to be revised around this plant's extruders and shifts." },
+  { "name": "Inspection logs and corrective follow-up", "how": "The system compiles and flags overdue items. Hazards still have to be found by someone on the floor." },
+  { "name": "Training slides and exam questions", "how": "AI generates slides and question banks. Whether workers took it in, you find out by watching their hands on the line." }
+ ],
+ "events": {
+  "e_new_wheat": "In June the new wheat comes in, the flour's gluten changes, the extruded sheet goes soft and water activity wanders. You and the lab run data for two weeks straight and bring the settings back. Not one batch from that stretch goes over.",
+  "e_first_stop": "The first batch you hold is held because the printed production date is crooked and a scanner can't read it. The workshop head walks up to you and asks how old you are. That night the batch is relabeled and goes out before dawn. Before leaving, the driver gives a long blast of the horn under your window.",
+  "e_tongue": "A few years on the sensory panel, and your tongue can no longer tell slight differences in heat. Your calibration score falls below the new hires'. Tongues in this trade have years of service too. You step off the panel and stick to data and rechecks.",
+  "e_stomach": "An endoscopy shows erosive gastritis, the product of more than ten years of salty, spicy tasting. The gastroenterologist's slip says bland diet. You bring it back to the factory, and someone on the sensory panel hands you today's first strip.",
+  "e_school": "Ahead of the new term, another crackdown on snacks sold around schools arrives, and street stalls' latiao is tested lot by lot. Distributors call demanding every report on these batches. You send the document package to seventeen of them.",
+  "e_gb2760": "The national standard on food additives is revised, and one preservative can no longer be used in this category. R&D has to reformulate, the workshop has to run trials, old stock has to clear. You've been given only a one-year transition, and you write the countdown on the whiteboard.",
+  "e_spot_check": "Market regulators make an unannounced inspection and show up at the gate at two o'clock; no one has phoned ahead. They go straight to the batching room and page back three months in the additive weighing records. You stand beside them and hand them each page they ask for, correctly.",
+  "e_audit": "A supermarket chain's third-party auditor comes for three days. At a floor drain cover she squats and shines a flashlight. The photo goes into her report as a major nonconformity. It takes you three weeks to regrade every floor drain in the plant.",
+  "e_chili": "Guizhou's chili crop falls short this year, and purchasing switches to a new supplier. The powder they send is suspiciously red. You add a Sudan Red test, which comes back clean. You still write down the supplier's name, and the next lot will get the extra test too.",
+  "e_summer_mold": "In July and August the air is thick with moisture, and one lot's bags in the warehouse puff up a little. You recall all of it to the plant and open it carton by carton, and find poor heat seals. The warehouse is all chili and stifling heat for a week.",
+  "e_expo": "Luohe's food expo is on and the boss has you stand at the booth to answer foreign buyers' questions. A Southeast Asian customer holds up the package and asks where the allergen labeling is, and you show him. He nods, and asks what year your HACCP certificate is from.",
+  "e_ai_camera": "AI cameras go up in the workshop, automatically catching who's without a hairnet, who didn't wash long enough, and sending dozens of alerts a day. The workers give you a nickname, the Hundred Eyes. You spend half a day shutting off all the wrong alerts, one by one.",
+  "e_ai_record": "Inspection logs are now generated automatically, and the forms look better than they ever have. Then one inspector asks why all this month's problems were discovered on Tuesdays. You look, and it's the template.",
+  "e_complain": "A parent posts that there's a foreign object in a pack of latiao, with a picture. You pull the batch, metal detector records and retained samples, and the retained samples are all fine; what's in the picture is a bit of plastic seal. You write eight pages about this, and in time, nobody looks at that post anymore.",
+  "e_smell": "On the day of a blind date you bathe twice, and the person across from you still sniffs and asks what you had for lunch. The one you end up marrying is the one who says, that smells pretty good.",
+  "e_export": "The company lands export orders, which call for testing preservatives and colorings against the destination country's standards, unlike China's. That year you learn the regulatory abbreviations for several countries, and how to answer the trade department's emails in the middle of the night.",
+  "e_line_closed": "Sales of the old large gluten strip drop steeply, and one line is dismantled to make low-fat konjac snacks. That line's HACCP plan, risk list and training records are all void. You put a seal on the filing cabinet, and the new line starts again from page one.",
+  "e_inspector_son": "A quality inspector you once trained passes the exam for the market regulator, and one day comes in uniform to inspect you. He calls you teacher, then squats and examines the floor drain more closely than anyone. You feel a little proud of him, and a little tight in the chest."
+ },
+ "choices": {
+  "c_borderline": { "title": "Just under the limit", "situation": "This batch's peroxide value is within standard, but only just, and it may exceed the limit near the end of its shelf life. Back-to-school trucks are at the gate, and the head of sales is standing in person at the lab door. The box on this release form is yours.", "options": [ { "label": "Release it with a shorter date", "result": "You shorten the internal shelf life and send this batch to nearby distributors first. It goes out. You keep its retained sample on the shelf you look at most, until it expires." }, { "label": "Hold it for a retest", "result": "The trucks leave, a good part of the order falls through, and the head of sales doesn't speak to you for a full quarter. The retest passes, and that makes you feel worse." } ] },
+  "c_haccp": { "title": "HACCP internal auditor", "situation": "Only one person at the plant holds an internal auditor certificate, and when audits come, he runs himself ragged. You could pay half the tuition and study for a week in Zhengzhou, then take over all the internal audit records when you get back.", "options": [ { "label": "Go and get certified", "result": "You study for a week in Zhengzhou, then go back through each line's hazard analysis, and turn up two corners no one had looked at." }, { "label": "Not yet", "result": "You keep working from forms other people wrote. Why the forms are written that way, you never do find out." } ] },
+  "c_gift": { "title": "Two cartons of cigarettes", "situation": "A new spice supplier has to get past you, and the sales rep arrives with two cartons of cigarettes, just a token, he says. His paperwork is missing a test report, and he says he'll send it next week. Purchasing says this one's cheap, and the company needs it fast.", "options": [ { "label": "Return them and wait for the paperwork", "result": "He carries the cigarettes away and sends the report three days later. Purchasing says you make trouble, and this supplier never again dares to miss a document." }, { "label": "Take the goods, get the paperwork later", "result": "You don't take the cigarettes, but the goods come in. The paperwork arrives a month later. The date you write in the ledger is one you yourself would rather not look at." } ] },
+  "c_supervisor": { "title": "Applying for Food Safety Supervisor", "situation": "The Food Safety Supervisor post is open. The workshop wants someone easygoing, the boss wants someone who knows the system. In every customer audit and regulatory inspection, this person is the first to step forward. You'll have to stand up and say what you'd choose.", "options": [ { "label": "Apply", "result": "You say: when I say stop, please stop; you can curse me afterward. The workshop head laughs out loud from his seat. You get the post, and that account is now open." }, { "label": "Stay with your line", "result": "You say you don't want to argue every day and stay on the line. The new hire the boss brings in comes to you in the first month to ask: who actually runs this workshop?" } ] },
+  "c_ai": { "title": "Designing human-machine inspections", "situation": "The cameras and systems are all in, but alerts are so many that the workshop wants to shut it off. The boss wants you to lead a redesign: what goes to the machines and what requires a person to walk the floor. It doesn't count toward your KPIs, and it will likely eat your weekends.", "options": [ { "label": "Lead it", "result": "You get the alerts down from several hundred a day to twenty, and move human inspection to places machines can't see: floor drains, mezzanines and the ten minutes before a shift change." }, { "label": "Stay out of it", "result": "IT takes over, and the alerts keep coming. Workers learn to behave themselves under the cameras and act differently once out of frame." } ] },
+  "c_zhengzhou": { "title": "The restaurant chain in Zhengzhou", "situation": "A Zhengzhou restaurant chain's central kitchen is poaching people. Thirty percent more pay, hundreds of outlets, and rules completely unlike the factory ones you know. You've only been paying off the Luohe apartment for a few years, and your spouse's job is here.", "options": [ { "label": "Go to Zhengzhou", "result": "You start dealing with store managers, checking cold chains and retained samples. On weekends you take the high-speed train home. The cumin smell slowly leaves you, and you're a little sorry about it." }, { "label": "Stay in Luohe", "result": "You stay. The smell stays too, the monthly pay is unchanged, and dinner is more often at your own table." } ] },
+  "c_manager": { "title": "Applying for Quality Manager", "situation": "The Quality Manager is retiring, and the boss asks if you want the post. It means deciding the lab's budget, and pounding the table against the head of sales at production meetings. Your child is in the last year of high school.", "options": [ { "label": "Take the post", "result": "You accept. From now on at production meetings you sit across from the head of sales, and your tea never stays hot long enough to drink." }, { "label": "Wait until the exams are over", "result": "Someone else takes it. When the boss asks again the following year, you find you weren't that sorry after all." } ] },
+  "c_regulator": { "title": "The civil service exam for market regulators", "situation": "The market regulation bureau is recruiting civil servants with a food background, and you meet all the requirements. You'd go from looking after one factory to looking after a whole area of them. A little less money, and nobody ever again standing at the lab door to hurry you.", "options": [ { "label": "Take the exam", "end": "You put on the uniform and walk into another factory's workshop for the first time. When you squat to examine a floor drain, that factory's quality inspector stands behind you, and his hand trembles a little.", "result": "You finish your ledgers and hand them over." }, { "label": "Don't", "result": "You say it's too difficult, and you haven't really thought it through. The next batch's release form arrives, and you pick up your pen." } ] },
+  "c_factory_sold": { "title": "The factory is changing hands", "situation": "The boss is getting old and has sold out to a snack-food group that has its own quality system and will send its own people. You could stay on as a deputy, or use your connections to become a compliance consultant for small factories.", "options": [ { "label": "Go out as a consultant", "end": "You lease a small car and drive around the small workshops in the Luohe area. You still talk about floor drains, retained samples and supplier paperwork, only now you're paid by the visit, and you no longer sign release forms.", "result": "You write out a clear index of the filing cabinets for the people from headquarters." }, { "label": "Stay and cooperate", "result": "You stay on as a deputy, sending headquarters the same report in the same format every week. Their template has no line for new wheat, so every June you have to explain it to them." } ] }
+ },
+ "endings": {
+  "retire": "When the time comes the company holds a send-off, with its own new low-fat products on the table, which nobody eats. Your authority to sign release forms goes to the next person, and your name in the system turns gray. Before leaving, you stop by the retained-samples room, all lined up by batch. When they expire, someone will deal with them.",
+  "burnout": "Your stomach gets steadily worse. The hospital's note forbids spicy food, which at a latiao factory amounts to a retirement notice. You ask for a post that doesn't involve tasting or walking the line, and the company says no such post exists. You resign, taking with you only a smell that takes months to wear off."
+ },
+ "stages": [
+  "You walk the line twice a day, take temperatures with a probe and send samples to the lab, and water activity, salt and sensory all go through your hands. The record sheets get typed into the system line by line, and if one number is wrong, your supervisor has you run it again. The workers see a kid fresh out of school, and when you talk they listen and go on working.",
+  "One line's risk list is yours now. You write weekly checks, chase supplier paperwork, and your signature is on the release form. You talk with the workshop head about when to stop the line, and with purchasing about which materials can't come in. At the level below, you found the problems. At this level, once they've been found, you decide what happens.",
+  "The plant's HACCP system and traceability drills are yours, with three or four inspectors under you. During a customer audit you walk the whole route with them and turn each nonconformity into a corrective report. A few times a year you stand across from the regulators, and explain this factory on its behalf.",
+  "You run the lab and the whole quality department: budget, equipment, people, and a weekly fight at the production and sales meeting. You no longer go look at floor drains; you look at reject curves and the causes of complaints. When a new standard appears you're the first to read it, and the one to tell the boss this is money that has to be spent.",
+  "Your name is on the company's food safety responsibility statement. If anything happens, you are the first to be summoned. You run the monthly review, talk privately with the boss about what can be cut and what can't, and deal with regulators and the trade association. When you say no, this factory has to stop and listen."
+ ],
+ "work": [
+  "You take a sample on Line 1, and the probe reads two degrees below the sheet. You call over the inspector who trains you. She taps the probe and has you check it against the reference thermometer.",
+  "The lab's titration runs high three times in a row. The old technician next to you sniffs the reagent bottle, says it's been around too long, and switches it. The fourth run is normal.",
+  "At new-worker training you teach the seven steps of hand washing. At step three, an older woman asks what to do when so much washing splits your hands. The next day you bring a jar of hand cream.",
+  "On a cumin test report, the supplier's stamp date is three days earlier than the sampling date. You phone them and get a long stammer, and the lot goes back.",
+  "You add one line to the risk list: loading ingredients in the ten minutes before a shift change. The workshop head asks why, and you line up the past six months of anomalies by time and show him.",
+  "The electronic scale in the mixing room is drifting. You check it with weights and find it eight grams off. Eight grams short in a batch of seasoning: you do the sums, and this whole week's product needs rechecking.",
+  "In a traceability drill the auditor points to any bag of finished product and wants it tracked to raw materials in two hours. You take one hour forty minutes, held up by an abbreviation on one flour receipt.",
+  "A young inspector on your team holds a batch, and the workshop head yells him back. You don't go to the workshop to argue. You have him lay out his data once more, and go back there with him.",
+  "Item 14 of the corrective report: the auditor wants the “root cause.” You cross out “employee negligence” and write: this spot is out of reach, and people have been standing on tiptoe for it.",
+  "At the production and sales meeting the head of sales wants a longer shelf life on a new product. You throw the accelerated-test curves on the screen, and everyone looks for some time at the point at month nine.",
+  "The lab wants a new gas chromatograph, and finance asks if the old one can go two more years. You list a year of outside testing costs and turnaround times, and half the request is approved.",
+  "The regulators call in all the city's food safety directors. You speak for five minutes about how you handled a borderline batch, including which step you were slow on.",
+  "The boss wants to cut two items from the lab's outside tests. You talk for half an hour by the flower bed at the factory gate, and in the end you keep one. The other, you say, is on my tab."
+ ],
+ "past": [
+  "Your home is in Linying County, where the village grows wheat and red chilies. Walking past the drying grounds after school, the whole road stings. You assume air is like this everywhere.",
+  "The year you choose a major, your uncle is working at a ham factory in Luohe, and he says people will always need to eat. You choose food quality and safety.",
+  "In your second year of college you take a bag of snacks from the campus shop to the lab for the first time, and the numbers on the label are off from what you measure. You and your roommate finish the bag.",
+  "Your graduation internship is at a dairy, six months in the lab. Your main impression is that the test tubes are not what the book drew.",
+  "You want to return to Henan and apply to several Luohe factories. The interviewer at this latiao maker asks if you're afraid of spicy food. You say no. That isn't what you should be afraid of, he says."
+ ],
+ "late": {
+  "pension_note": "Estimate: over thirty years of contributions in Luohe bring a pension of a little over 40 percent of final base pay, which is enough to live on here.",
+  "scenes": [
+   "In the supermarket you flip everything over first to see the production license number and the first two ingredients. Your spouse has gone a long way ahead with the cart, and looks back to find you still in that aisle.",
+   "You've stopped putting chili on your noodles. Ten-plus years of tasting has left you with a tongue that can tell if the flour is from new wheat. Nobody asks, and you don't mention it.",
+   "The factory's AI can now smell things, and half the new lab hires do data. The old chimney has new paint. You bicycle past, and the wind smells as it always did.",
+   "A snack shop opens at the gate of your compound. You go in and look first at its floor drain, then at whether the fridge has a thermometer on it. The owner asks what you'd like. An egg pancake, you say. No chili.",
+   "Your stomach has to be nursed along, with three meals by the clock. You drew up the schedule yourself in the format of an inspection sheet, with a signature box for each item.",
+   "You work as a lunch monitor at the neighborhood elementary school, checking retained samples and food temperatures for 1,200 yuan a month. The children are very loud when they eat.",
+   "Everything tastes bland. Others eat hotpot and you pick out a piece of winter melon. Sometimes you catch a whiff of cumin, sniff, and guess this lot's origin.",
+   "For the first six months the smell slowly leaves your body. Your pillow no longer smells of cumin, and you hardly recognize it as yours.",
+   "Latiao comes in low-fat, high-protein versions now, the packaging written up like health food. Kids still love it, adults still say the stuff is dirty, and you never take up the subject.",
+   "Your kind of skill sounds like an extravagance in a small workshop. Does one floor drain really cost that much, they ask. You begin working it out for them, and halfway through someone asks if you'd like tea.",
+   "Eating at a relative's home, your eye goes straight to the fridge: raw and cooked in together. You praise the food aloud, and your chopsticks hover for a second over the cold dish.",
+   "Each June when the new wheat comes in, relatives in the village send a bag of flour. You grab a handful and squeeze: low gluten this year. You tell no one and steam a pot of buns."
+  ],
+  "closing": {
+   "retire": "The wind comes off the Sha River and half the road is spicy. You breathe in. This year's chilies are better than last year's.",
+   "burnout": "Steam rises in the kitchen from the buns. There's no seasoning in them, and that's all right too.",
+   "end": "You write the date on the seam of a sack of flour, in neat characters. Nobody is coming to check. It's just what you do."
+  }
+ }
+}

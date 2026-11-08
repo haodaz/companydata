@@ -1,0 +1,158 @@
+{
+ "id": "forensics-hz",
+ "occupation": "Digital Forensics Analyst",
+ "role": "Digital Forensics Analyst at a judicial appraisal institute",
+ "headline": "Handling evidence at a judicial appraisal institute in Hangzhou, where a seal, a hash value and a page of procedure notes all have to answer the same question in court: how can you prove no one touched it in between",
+ "unit": "The digital evidence office of a judicial appraisal institute in Hangzhou",
+ "unit_type": "Judicial appraisal institution",
+ "city": "Hangzhou, Zhejiang",
+ "city_tier": "New first-tier city",
+ "education": "Bachelor's degree (Information Security)",
+ "level": "You studied operating systems and network security at school. You're seeing for the first time an evidence intake form with twenty-seven fields.",
+ "intro": "The institute is on the twelfth floor of an office tower on the north bank of the Qiantang River, behind two card readers. Your first job is in the evidence room, going through last week's sealed bags, photographing each, weighing it and checking the signatures on the seal. The appraiser training you says that in this line of work, when you do well no one knows, and one wrong date makes it all for nothing.",
+ "salary_note": "Estimate: forensics jobs at judicial appraisal institutes in Hangzhou pay a base plus commission on appraisals, below internet security jobs and above most local clerical work. Overtime falls mostly at year-end.",
+ "facts": [
+  { "label": "Appraisal Assistant (current level)", "value": "0–3 years, ¥6,500–9,500 a month (national average, estimate)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Licensed Forensic Appraiser (3–8 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥28,500 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Being questioned in court", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "First-pass screening and sorting of extracted data", "source": "AI exposure" },
+  { "label": "Open positions", "value": "26 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You card into the evidence room, check the temperature, humidity and access logs, and open the in-and-out register. Anything that leaves a cabinet needs someone's signature.",
+  "A court's judicial technician brings a submission. You open the outer package together and check the letter of engagement. The stamp across the seal has to be photographed clearly, and both sides sign.",
+  "Writing procedure notes. Each step's time, operator and reviewer go in. The appraiser training you says to write them so a stranger could do it all again.",
+  "Takeout waits downstairs for twenty minutes. A colleague says a lawyer's coming this afternoon, and reminds everyone not to discuss any matter in the corridor.",
+  "Checking hash values, a long string that has to match the extraction record exactly. You read, a colleague checks, and by the end both of your eyes are swimming.",
+  "Writing the opinion. You can say examination found, you can't say proves. The director has corrected that same word three times.",
+  "A party's relative is waiting downstairs, wanting news. The front desk says it can't be disclosed. You all leave by the side door.",
+  "Year-end backlog, and you're still checking page numbers on an attachment. Someone's running along the Qiantang below, the lights in long strips."
+ ],
+ "ladder": [
+  { "title": "Appraisal Assistant", "stage": "Intake and records", "focus": "Log, seal and photograph evidence, keep procedure notes, assist appraisers" },
+  { "title": "Licensed Forensic Appraiser", "stage": "Signing opinions", "focus": "With a license, take on appraisals independently, sign opinions and testify in court" },
+  { "title": "Authorized Reviewer", "stage": "Reviewing", "focus": "Review others' processes and conclusions, handle difficult engagements" },
+  { "title": "Technical Director", "stage": "Running methods", "focus": "Own methods, standards and proficiency tests, lead accreditation reviews" },
+  { "title": "Institute Director", "stage": "Running the institute", "focus": "Manage people, accreditation and sources of engagements, answer for the institute's reputation" }
+ ],
+ "ai_tasks": [
+  { "name": "Being questioned in court", "how": "The appraiser has to stand up in person, answer every question from opposing counsel, and sign the conclusion." },
+  { "name": "Extracting and securing digital data on site", "how": "Faced with real devices and procedural rules, AI can at most remind you of the steps. A person has to do it and sign." },
+  { "name": "First-pass screening and sorting of extracted data", "how": "AI can arrange timelines and sort files. Whether the result is reliable and how to explain it is for people to judge and verify." },
+  { "name": "Drafting the frame and lists for an expert opinion", "how": "Format, evidence lists and standard wording are mostly automatic. People answer for conclusions and their basis." }
+ ],
+ "events": {
+  "e_first_form": "On the intake form you write the submission time as 2 p.m. The letter of engagement says 14:20. The appraiser training you makes you write an explanation and attach it to the file. That page, you're told, will now follow this opinion forever.",
+  "e_two_people": "Working on a weekend, you think you'll finish alone. The director calls and asks where the second person is. You pack up and go home, and on Monday two of you do it over.",
+  "e_year_end": "In December courts rush to hit closure targets and engagements arrive batch after batch. Your thirty-working-day limits are charted on a wall, and someone sleeps at the office for two nights.",
+  "e_new_devices": "New systems and devices come out and the institute's tools have to wait for vendor updates. Asked how long, all you can say is that present methods can't yield a conclusion. No side likes hearing that.",
+  "e_eyes": "Years of comparing long strings on screen and your vision drops fast, with dry eye too. The ophthalmologist prescribes artificial tears. One bottle on the desk, one in your bag.",
+  "e_license": "You pass the justice bureau's assessment and receive your forensic appraiser license. The day your name goes on the register, the director says from now on you'll answer for what you sign for the rest of your life.",
+  "e_first_court": "Your first time in court, opposing counsel questions you for forty minutes, all boiling down to one line: how can you prove no one touched it in between. You turn the records for the judge page by page. Back at the institute, your stomach hurts all night.",
+  "e_family_ask": "A relative asks through someone whether you could have a look at a spouse's phone. You say it can't be touched without a letter of engagement, and even with one it wouldn't fall to you. The table goes briefly cold.",
+  "e_eye": "A family member forwards a chat screenshot and your first response is to ask for the original and the time. They say it's only a joke. You say I know, but look, this time format's wrong.",
+  "e_ai_screen": "The institute brings in AI-assisted sorting and timeline work shrinks by more than half. What can go in an opinion takes three meetings to settle. The conclusion: name the tool, and be able to say which step it did.",
+  "e_pt": "Proficiency results arrive: yours satisfactory, the institute next door unsatisfactory, with one service suspended. Your engagements go up a little. No one says this is a good thing.",
+  "e_lawyer_call": "A lawyer invites you for coffee, and within a few sentences is asking if you could offer an inclination. You put your share on the table and write it up in the visitors' record the next day.",
+  "e_commute": "The institute takes on on-site work out of town, and half the month you're on bullet trains. You can't do the after-school pickups. You and your spouse share a calendar, which is full of your trips.",
+  "e_stomach": "You can't eat before court, and that has never gone away. There are now two things always in your bag: stomach medicine and printed procedure notes.",
+  "e_threat": "One opinion leaves a party very unhappy and a complaint arrives at the justice bureau. You spend a week writing an account of events. The review finds no procedural problem. That week, there really was no sleep.",
+  "e_junior": "A new assistant asks why a failed attempt has to go in the notes. You tell him the hardest moment in court is when someone else says the step you didn't write down.",
+  "e_license_renew": "The institute's license is up for renewal: register, instruments and premises are checked item by item. You spend two months going through archives. Some decades-old files have yellowed, and not one can be missing.",
+  "e_merge": "Authorities tidy up smaller institutes and two are merged. Moving evidence cabinets takes a week, each item re-registered, and handover sheets fill two volumes.",
+  "e_late_court": "You rarely testify yourself anymore. Younger appraisers come to you before going to court. You have them do just one thing: read the notes from page one again, out loud."
+ },
+ "choices": {
+  "c_cert": { "title": "Get certified, or follow matters first", "situation": "The institute will let you take the digital forensics skills certificate and a professional credential, and it would take some time. The appraiser training you thinks learning the process comes first.", "options": [
+   { "label": "Go for the certificates", "result": "You study on weekends and earn the certificate. With more theory behind you, you see that no box on the record form can be missed." },
+   { "label": "Follow matters first", "result": "You go through one full engagement from intake to archive. Now you know in your bones which step is most error-prone." }
+  ] },
+  "c_scope": { "title": "The client wants a narrower scope", "situation": "The engaging lawyer calls, wanting you to appraise only the portion of data that helps his side. The letter of engagement is his to write, and this seems to make sense, but it strikes you that the resulting opinion would be a bit off.", "options": [
+   { "label": "Do as engaged, and state the scope", "result": "You work as engaged and put in the opinion, very clearly, what was and wasn't examined. The lawyer isn't pleased when he reads it." },
+   { "label": "Suggest changing the engagement", "result": "You ask the director to explain to the lawyer what an overly narrow scope could mean. They end up adding a portion, and it takes two more weeks." }
+  ] },
+  "c_license": { "title": "Applying to practice as a Licensed Forensic Appraiser", "situation": "To become a Licensed Forensic Appraiser you need enough years, an exam and an institute's recommendation. After that, your name goes on opinions, and you go to court. You've been wondering if you're ready.", "options": [
+   { "label": "Apply for the license", "result": "You study for six months, until the corners of the procedural rules curl. After the exam, you spend a night reading the first opinion to carry your name." },
+   { "label": "Two more years as assistant", "result": "You say there's no rush, and follow a few more complicated engagements. The director doesn't press you, but the place goes to someone else this year." }
+  ] },
+  "c_corp": { "title": "Internal investigations at a big company", "situation": "The internal control department of a Hangzhou internet company wants someone for data compliance and internal investigations, at double your pay. It's still digital evidence, but there's no court and no name on anything, only the company to answer to.", "options": [
+   { "label": "Go to the big company", "result": "You hand in your notice and complete the paperwork on the register as well.", "end": "You go to the internet company's internal control department, where the process is looser and the pay is better. Sometimes, looking at an investigation report, you still want to ask who the reviewer was." },
+   { "label": "Stay at the institute", "result": "You say you'd like to stand up in court a few more times. They say you'll figure it out by then." }
+  ] },
+  "c_ai_write": { "title": "Whether to mention AI in an opinion", "situation": "The institute uses AI-assisted sorting and lawyers are beginning to ask in court who reached this part of the conclusion. The director asks you to draft an internal rule. Too detailed and the tool can't be used; too vague and no one can answer in court.", "options": [
+   { "label": "You draft the rules", "result": "You write twelve points: AI for first-pass sorting only, human verification recorded separately. Two other institutes later ask for the document." },
+   { "label": "Wait for an industry standard", "result": "You say not to invent rules before standards come out. The institute keeps using it and explains matters one by one when they come up." }
+  ] },
+  "c_reviewer": { "title": "Taking on the Authorized Reviewer role", "situation": "An Authorized Reviewer signs a second time on someone else's opinion. If there's a problem you send a colleague's work back, even if they're your senior. No one remembers you when nothing goes wrong, and when it does you share the blame.", "options": [
+   { "label": "Become an Authorized Reviewer", "result": "The first opinion you send back is by the appraiser who trained you. He takes it away, reads it for a long time, changes a time, and comes back to give you a nod." },
+   { "label": "Stay on your own matters", "result": "You say you like working a thing from start to finish. You have plenty of matters, and someone else does the reviewing." }
+  ] },
+  "c_tech_lead": { "title": "Taking over as Technical Director", "situation": "The director wants you as Technical Director, to manage method validation, proficiency tests and accreditation reviews. It's seldom in court, mostly dealing with the justice bureau and assessors, and sorting out divisions of work among colleagues.", "options": [
+   { "label": "Become Technical Director", "result": "You rewrite the work instructions from start to finish and colleagues complain about the word count. At the next review the experts find little to fault." },
+   { "label": "Keep reviewing", "result": "You keep reviewing. Courts need senior people, and someone needs to read the raw records." }
+  ] },
+  "c_law_firm": { "title": "An adviser's post at a law firm", "situation": "A large law firm wants a digital evidence adviser to help lawyers spot gaps in opposing opinions. More money, no duty rosters. But you'd go from writing opinions to picking them apart.", "options": [
+   { "label": "Go to the firm", "result": "You finish the deregistration paperwork and cross yourself off the register.", "end": "You become the firm's digital evidence adviser, reading other people's procedure notes for a living. When you reach the page where the times don't match, you know better than anyone what the person writing it was thinking." },
+   { "label": "Keep signing", "result": "You say you'd like your name to stay there. Your friend at the firm says that name isn't worth that kind of money." },
+   { "label": "Just give a talk", "result": "You decline the adviser's post and agree to give one internal talk on rules of evidence at the firm, having cleared with the director what you will and won't cover." }
+  ] },
+  "c_teach": { "title": "Teaching at a police academy", "situation": "A police academy wants you as a full-time teacher, on rules of evidence and appraisal procedure, with winters and summers off. Less money, and no more checking attachment page numbers late on winter nights.", "options": [
+   { "label": "Go teach", "result": "You put in the transfer request and start preparing lessons.", "end": "You teach at the police academy. Your first class isn't on technique. You hand out a blank intake form and have the students fill it in. Twenty-seven fields, and the fastest student makes four mistakes." },
+   { "label": "Stay a few more years", "result": "You say you still have a few appraisers to bring along. The academy says the next hire may take three years." }
+  ] }
+ },
+ "endings": {
+  "retire": "The month you reach retirement age your final review goes into the archive. Its file number follows tens of thousands of others, and the next will continue the count. You complete your deregistration and the clerk clicks once in the system. Leaving the tower, you check your phone's time against the lobby clock. Four seconds off.",
+  "burnout": "Dry eye, insomnia and a bad stomach drag on for years. You stop testifying and stop signing, and are moved to archives and accreditation materials. Your name's no longer on the evidence cabinet access list. You sort electronic files by year in the document system and shut down at five sharp."
+ },
+ "stages": [
+  "Your job is intake, photographs, registration, sealing and procedure notes, following an appraiser step by step, recording the time of every action. You often deal with court technicians and lawyers' assistants, politely, saying nothing extra. What you hold most are intake forms and evidence bags.",
+  "You take on engagements yourself, from assessing whether to accept, through the plan, to finishing and writing the opinion, and signing your own name. When the court calls you, you go and stand in the appraiser's box. Unlike as an assistant, every blank in the notes is now somewhere someone can question you.",
+  "You read several of other people's opinions a day, from letter of engagement to archive. Sending one back takes a reason, and a tolerance for colleagues' faces. Difficult engagements come to you first: whether to accept, how far to go, and the nerve to write unable to determine.",
+  "You manage the institute's methods and work instructions, organize proficiency tests and equipment checks, and face the justice bureau's reviews. When new kinds of data appear, you decide when work can begin and how far validation has to go. You testify less, and more people come to ask how to answer.",
+  "You answer for the institute's accreditation, people and reputation. Engagements have to come from many sources, not just one; you decide whether to take controversial ones; when a colleague is complained about you find out first. You deal with courts, the justice bureau and the bar, and every meeting has to leave a record."
+ ],
+ "work": [
+  "A court technician brings three sealed bags, one with a small tear at the stamp across the seal. You photograph it first, have them note it on the intake form, and only then open the bag.",
+  "The appraiser training you has you check an archived file from the beginning. You find page 17 of an attachment numbered twice, and renumber the entire table of contents.",
+  "The evidence cabinet register has a slip of the pen. The director has you correct it by the rules, drawing a line, signing and leaving the original legible at a glance.",
+  "A judge phones to ask whether a term in the opinion could be put in plain language. You add a paragraph of explanation and leave the original term in parentheses.",
+  "You get a summons to testify. A week ahead you put the notes, hash list and copy of the engagement letter in order and add three tabs.",
+  "An engagement is beyond your capabilities. You write a declination and tell the client which type of institution could take it.",
+  "Reviewing an opinion, you find the conclusion says half a sentence more than the examination results. You circle that half. The appraiser checks for a day, then removes it.",
+  "A young appraiser testifies for the first time and you sit in the gallery. Afterward you tell him only one thing: next time don't rush to answer, say the question back first.",
+  "Assessors want to pull three archived files. You have the archivist pull them at random from the cabinets in front of them, then go through them page by page together.",
+  "The institute is buying a new tool. You draw up a validation plan comparing old and new for consistency, write the differences into the technical file, and present them at a department meeting.",
+  "A law firm wants a long-term relationship with the institute. You have them go through the normal engagement process and add a recusal clause to the memorandum.",
+  "You take the annual report to the justice bureau, each figure checked, and include last year's complaints and how they were handled."
+ ],
+ "past": [
+  "Your family's in Jinhua and your parents run a print shop. You grow up fixing computers and reinstalling systems, with every relative's old hard drive brought to you.",
+  "You apply for information security, wanting to do attack and defense at a big company. In your class you find that everyone's better than you.",
+  "You take an elective on evidence law. The teacher explains the three attributes of evidence, and for the first time you feel technology has to answer to other rules as well.",
+  "You intern at a network security company, writing many weekly reports. Near graduation you see a judicial appraisal institute's job posting.",
+  "The security company offers ¥3,000 more than this place. The director tells you what's needed here is being able to explain a thing clearly, which strikes you as a novel thing to hear."
+ ],
+ "late": {
+  "pension_note": "Estimate: private appraisal institutes in Hangzhou contribute at varying rates of actual pay. The pension is enough to live on and below state-sector levels.",
+  "scenes": [
+   "You give a few classes at the appraisal association's training sessions, all on how to write notes. Young people in the audience take pictures. You say, remember: don't photograph me, photograph this page.",
+   "You've had eye surgery and everything looks much brighter. You can read the time on supermarket receipts, and tell the cashier the clock's two minutes fast.",
+   "AI can write nearly a whole opinion now, and appraisers' work looks more and more like checking and testifying. You hear that in court, what they get asked most is still that one question: did anyone touch it in between.",
+   "After your stomach stops hurting, you start to suspect it was those courtrooms that hurt. The doctor says that's hard to answer and tells you to eat less chili.",
+   "You're indifferent to your phone now, reading messages and letting them go. Family says you've gotten lazy. You say this is what it's like to stop keeping records.",
+   "You don't miss those years much. What comes up is mostly a few nights and stomach medicine. Now and then you recall a clean file, and that's about it.",
+   "At your new job nobody puts version numbers on files. You bring it up once and are told you're too tense. After that you only do it on your own.",
+   "In a casebook you come across an opinion you signed years ago, the name removed. You recognize that paragraph at once. You don't tell anyone.",
+   "You do the sums: better pay than the colleagues who stayed. And yet those nights coming back from court with a sore stomach sometimes seem to be the only time you were truly serious.",
+   "Someone's forwarded a recording in a group chat, with lots of convincing detail. You ask where it came from. Your friend says you're no fun at all.",
+   "At home, contracts and insurance policies are numbered by year, each with its own list. Your kid says you've turned the house into an archive. You say you'll find it useful one day."
+  ],
+  "closing": {
+   "retire": "You set the clock at home. The second hand reaches the hour, less than a second off your phone.",
+   "burnout": "The pillbox is divided by week, seven compartments. Which one's today, you needn't check any record.",
+   "end": "Saving a file, the system quietly notes the time. You look at that string of digits and don't check it against anything."
+  }
+ }
+}

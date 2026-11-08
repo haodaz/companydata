@@ -1,0 +1,199 @@
+{
+ "id": "prepress-lf",
+ "occupation": "Desktop Publisher",
+ "role": "Prepress Typesetting Apprentice",
+ "headline": "A vocational-college print graduate, newly hired into the prepress shop of a book printer in Langfang, working all day on textbooks and study guides sent out by Beijing publishers",
+ "unit": "The prepress shop of a book printing plant in Langfang",
+ "unit_type": "Book printing plant",
+ "city": "Langfang",
+ "city_tier": "Third-tier city",
+ "education": "Associate degree (print media technology)",
+ "level": "You can use InDesign and Founder's typesetting software. You still count imposition schemes on your fingers, and you have never output a plate on your own.",
+ "intro": "Most of the printing plants around Langfang live on Beijing's work: books are edited up there and only turn into paper down here. You are assigned to the prepress shop, with one desk, two screens and a loupe with a scale etched in it. The team lead drags a study guide PDF over to you and says the bleed is short. Learn to see that first.",
+ "salary_note": "Estimated: a private book printer in Langfang pays below the national average, and overtime in peak season makes up some of it.",
+ "facts": [
+  { "label": "Prepress Typesetting Apprentice (current level)", "value": "0–2 years, ¥3,800–5,200 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Prepress Typesetter (2–6 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Reading press sheets and deciding how to fix a plate", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "File preflight and error reports", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Forklifts unloading paper reels block the gate. You thread your way into prepress and check the night shift's output sheet: how many plates the CTP burned, and which ones the presses sent back.",
+  "A Beijing editor sends a package of PDFs. You run preflight: fonts embedded, images at 300 dpi, a full 3 mm of bleed. It comes back red, and you rewrite the message three times before you send her the screenshot.",
+  "Imposition. A sixteen-mo study guide laid out in the software. Get one page number wrong and a whole signature runs backward.",
+  "The team lead comes by to spot-check your blueprint proof. She doesn't read a word. She puts a loupe to the crop marks and those few millimeters of spine.",
+  "Shouting on the floor: the black type on signature seven looks fuzzy. You carry the file down. Press captain Gan points at the sheet and says four-color black. Back at your desk you check, and the text has indeed been converted to four colors.",
+  "You fix a square root in a math problem in Founder's layout software. The manuscript has a character the font doesn't include, so you build it out of radicals and align it at 400 percent.",
+  "With back-to-school orders piled up, you have missed the six o'clock factory bus three days running. The smell of plate developer stays in your cuffs.",
+  "On the way home, a bubble tea shop's sign has wider gaps on one side than the other. You stare at it through a whole red light."
+ ],
+ "ladder": [
+  { "title": "Prepress Typesetting Apprentice", "stage": "Apprentice", "focus": "Preflighting files, correcting proofs, learning imposition from the team lead" },
+  { "title": "Prepress Typesetter", "stage": "Own plates", "focus": "Imposing and outputting independently, answering for every plate, moving up by not wasting any" },
+  { "title": "Prepress Process Technician", "stage": "Process", "focus": "Setting standards for color, trapping and creep, and handling the hard plates the presses reject" },
+  { "title": "Prepress Supervisor", "stage": "Running the team", "focus": "Scheduling production, managing the CTP and plate room, answering to publishers and the press floor" },
+  { "title": "Deputy Plant Manager for Production and Technology", "stage": "Running the plant", "focus": "Plant-wide process, equipment investment and quality failures, and deciding which work to take" }
+ ],
+ "ai_tasks": [
+  { "name": "Reading press sheets and deciding how to fix a plate", "how": "AI can read color bar data. What this paper did with the ink and why the press captain won't accept this plate take someone walking down to the floor with the sheet in hand." },
+  { "name": "File preflight and error reports", "how": "Software checks fonts, resolution and bleed in seconds. People handle the few items it can't explain." },
+  { "name": "Automated layout of textbooks and books", "how": "Templates and models can set a whole manuscript. People spot-check formulas, page numbers and rare characters." },
+  { "name": "Imposition and folding schemes", "how": "Software works out the imposition from trim size and binding. The grain of this paper and the temper of this folder are for a person to call." },
+  { "name": "Color management and proof matching", "how": "ICC profiles can calibrate themselves. When a client says the red is wrong, someone has to go and find out what wrong means." },
+  { "name": "Building rare characters and restoring old books", "how": "AI can generate glyphs and remove stains. Which mark is a wormhole and which is a stroke needs someone who knows." }
+ ],
+ "events": {
+  "e_waste": "A plate you imposed goes to press, and three thousand sheets in, someone finds a signature with its pages reversed. The waste paper stacks up to your waist. The team lead goes to explain it to the shop manager for you.",
+  "e_font": "A book cover uses an unlicensed typeface, and the font company's letter arrives at the plant. From then on the job ticket has a new field, Font Source, and the client has to sign it.",
+  "e_august": "In August everyone races to get autumn study guides to schools before term starts. Prepress runs two shifts for twenty days, and you see imposition schemes with your eyes shut. On overtime payday the whole team goes out for skewers.",
+  "e_neck": "Your neck won't turn. On the X-ray your spine is as straight as a ruler. You prop your monitor up on two spoiled sample books.",
+  "e_alert": "Autumn and winter bring air-quality alerts, and printing and lamination stop on notice. When an alert lifts, the presses have three days to swallow the backlog. You output the plates in advance and label them in press order, and for once the shop manager has no one to yell at.",
+  "e_gold": "October is peak season for wall and desk calendars. A bank's desk calendar calls for gold foil, and the client has a digit wrong in the color number. You catch it against the swatch book, and the sales rep buys you a soda.",
+  "e_dict": "In the proofs of a dictionary you notice an entry missing from the radical index. It isn't prepress's job, but you stick a note on it anyway. The editor mails a box of Beijing pastries with the page number on the card.",
+  "e_laser": "The CTP's laser head is aging, leaving a line on the aluminum plates too fine to see until the second signature prints. A service engineer comes out, and you hand him tools and learn to check plates with a dot meter.",
+  "e_debt": "A study guide company's bill is seven months late, and the boss has you export every revision record as evidence. That's how you learn what the contract pays for one page you correct: ¥1.20.",
+  "e_digital": "The plant buys a digital press: no plates, viable at two hundred copies. For the first time you typeset a self-published book of poems. The author is past seventy and has one request. Make the type a size bigger.",
+  "e_eye": "The eye clinic says dry eye, plus reading glasses earlier than expected. The drops move next to your keyboard. Your loupe gets replaced by one with a light.",
+  "e_ai_green": "Publishers start using automated layout systems. The PDFs arrive flawless, and your preflight reports are solid green. Work that took four people now takes two.",
+  "e_ai_page": "A machine-set study guide has a table of contents one page off from the text. The system's self-check says pass. Thirty thousand copies are already scheduled on press when you count it out, page by page, on the folded sample.",
+  "e_merge": "Prepress and customer service are merged into one department, and the Typesetting Team sign comes down. Your desk doesn't move. The ticket system gains a column for customer satisfaction.",
+  "e_short": "Study guide print runs drop from fifty thousand to eight thousand, and the presses start fighting over short jobs. You now change more plates in a day than you once did in a week.",
+  "e_kid": "The new kid calls crop marks little crosses and has never seen film, but can write a script that batch-processes three hundred files in an hour. You laugh at each other and each learn half.",
+  "e_move": "The plant moves from the edge of town into an industrial park, adding forty minutes to your commute. On the day the CTP is moved, it takes all afternoon to level it.",
+  "e_finger": "The skin on your fingertips has worn thin enough that you can tell paper weight with one rub. Purchasing brings in new offset stock, you say it's under 70 grams, and the scale finds it two grams short. The supplier concedes.",
+  "e_waist": "Your lower back starts up too. You ask for a standing desk, admin says there's no budget, and you pay for it yourself.",
+  "e_ancient": "An antiquarian press brings in an old book for facsimile. The wormholes in the scans must stay and the stains must go, and only a person can tell them apart. It takes you two months, slower than any August rush."
+ },
+ "choices": {
+  "c_cover": {
+   "title": "Cover design, or stay with text and imposition",
+   "situation": "The cover team needs people. The work is pretty, and your name can go on the copyright page. The team lead says staying has its points too: the plant is always short of people who understand imposition.",
+   "options": [
+    { "label": "Stay and learn imposition", "result": "You learn imposition, creep and grain through and through. You have nothing to say about covers, but when a press has trouble they call you first." },
+    { "label": "Go to the cover team", "result": "For the first time you see a cover you made in a bookstore. The pay doesn't change, but publishers' designers start adding you on WeChat to make changes directly." }
+   ]
+  },
+  "c_beijing": {
+   "title": "Join a scholarly typesetting firm in Beijing",
+   "situation": "A Beijing firm that sets only academic books is hiring. Lots of formulas and foreign languages, and nearly a third more pay. Commuting back and forth between Hebei and Beijing would cost you an hour and a half of sleep a day.",
+   "options": [
+    { "label": "Go, and commute", "result": "You learn to set chemical formulas and Sanskrit transliteration, and to sleep standing on the early train." },
+    { "label": "Stay at the plant", "result": "Most of that extra hour and a half goes to the night's output sheets. At least you can walk home." }
+   ]
+  },
+  "c_craft": {
+   "title": "Compete for Prepress Process Technician",
+   "situation": "The current technician is moving to quality control, and the plant is holding a contest for the post of Prepress Process Technician. There's a test on color management and a live explanation of what went wrong with a rejected plate. Preparing will eat the whole off-season.",
+   "options": [
+    { "label": "Sign up and spend the off-season", "result": "You memorize ICC curves and dot gain. While you explain the plate on stage, Gan nods from the audience." },
+    { "label": "Don't compete, take side jobs", "result": "You take outsourced imposition from a few small plants nearby, cents a page. One off-season brings in nearly half a year's rent." }
+   ]
+  },
+  "c_shift": {
+   "title": "The night-shift bonus and the school run",
+   "situation": "The CTP night shift pays ¥1,200 more a month. But your child has started primary school and gets out at four, the grandparents can't walk that far anymore, and someone has to be at the gate by four thirty.",
+   "options": [
+    { "label": "Ask for straight days and leave at 4:30", "result": "You make up the hours through lunch. The shop manager signs off, and also remembers you as the one who leaves early." },
+    { "label": "Stay on nights and do the pickups", "result": "You sleep four hours in the daytime and doze across from your child at homework. The ¥1,200 arrives in full." }
+   ]
+  },
+  "c_ai": {
+   "title": "Learn to build AI typesetting templates?",
+   "situation": "Publishers' automated layout needs people to maintain style templates. The plant asks who will learn: some scripting, some meetings with the software company. Skip it, and there will be less work in your hands every year.",
+   "options": [
+    { "label": "Learn it, starting with style sheets", "result": "You break down thirty years of one publisher's house style into rules. In the first book that runs clean, every error is somewhere you forgot to write a rule." },
+    { "label": "Don't, stick to process and hard plates", "result": "You keep setting what machines can't: old books, maps, vertical text. Less work, but work no one else can do." }
+   ]
+  },
+  "c_studio": {
+   "title": "A few publishers want you to go solo",
+   "situation": "Editors you have worked with for years say that if you open your own studio, the academic typesetting is yours. No social insurance, no factory bus, and payment terms start at six months.",
+   "options": [
+    { "label": "Go out on your own", "result": "You rent a room in a residential building, buy two monitors, and start writing invoices to yourself.", "end": "You left the plant and opened a typesetting studio in a rented room in Langfang. The editors' manuscripts kept coming, one book after another. There was just no one anymore to go down to the floor and argue on your behalf." },
+    { "label": "Stay at the plant", "result": "You decline. One editor later gives the work to someone else. Another still turns up now and then to ask about fonts." }
+   ]
+  },
+  "c_lead": {
+   "title": "Compete for Prepress Supervisor",
+   "situation": "The Prepress Supervisor is retiring. Taking over means taking over August's schedule, the CTP service contract and everyone's moods. You would rarely touch a plate again.",
+   "options": [
+    { "label": "Compete", "result": "Your screen changes from imposition software to a production schedule, and you spend more time in meetings than on output." },
+    { "label": "Don't, keep making plates", "result": "The new supervisor is six years younger than you, and the hard plates still land on your desk." }
+   ]
+  },
+  "c_buyout": {
+   "title": "The plant is sold and prepress moves away",
+   "situation": "A big printing group buys the plant and consolidates prepress at its Tianjin base. Files will travel by network and Langfang will only print. You can go to Tianjin, take a payout and leave, or move to the floor as a quality inspector.",
+   "options": [
+    { "label": "Take the payout and leave", "result": "You sign, and work out your years of service at one month's pay per year.", "end": "After the acquisition you took the payout and left. More than twenty years of prepress were settled in one sum. The presses in Langfang are still running, on plates sent from Tianjin." },
+    { "label": "Move to QC, stay in Langfang", "result": "You go from the person who makes plates to the person who finds fault with them. A little less pay, and you make the factory bus." },
+    { "label": "Go to the Tianjin base", "result": "You leave Monday morning and come back Friday night. Your dorm window looks straight at the new CTP line." }
+   ]
+  },
+  "c_vice": {
+   "title": "Compete for Deputy Plant Manager for Production and Technology",
+   "situation": "The plant director asks whether you will compete to become deputy manager for production and technology, with equipment investment and quality failures under you. Take it, and you decide whether the plant buys its next machine, a number that would keep your whole team for years.",
+   "options": [
+    { "label": "Take it", "result": "The first time you sign an equipment contract, your hand moves more slowly than it did on your first plate." },
+    { "label": "Don't, work through to retirement", "result": "You tell the director you can read plates but not spreadsheets. Fine, he says, then this August's hard plates are still yours." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "The August you turn sixty, the autumn study guides are in the same rush. Only the people have changed, and the output sheets are no longer paper. Your employee number is deactivated. The loupe goes home with you, half its scale worn away. On your way back you are still judging the letter spacing on the signs, one by one.",
+  "burnout": "Your neck and your eyes file their complaints together, and the hospital form says not suited to long periods at a desk. You complete the paperwork and write your account and password on a handover ticket. Half a lifetime in front of a screen, and as you leave there are still crop marks swimming in front of your eyes."
+ },
+ "stages": [
+  "Mostly you preflight files and correct proofs: working through an editor's red marks one by one and sending error screenshots back to Beijing. You only get to look at the team lead's blueprints. The output button isn't yours yet. What you have to learn is which errors you can fix and which need the publisher's signature.",
+  "Imposition, RIP and output are all yours, and the aluminum plates carry your employee number. A plate costs over thirty yuan, and a spoiled one means paperwork. You begin talking directly to press captains. When one complains about the ink-water balance, you first have to work out whether it's the plate or the ink.",
+  "You no longer output by signature. You set the rules: how much dot gain on this paper, how many hundredths of a millimeter of creep for saddle stitching, where to trap. Rejected plates come to your desk first, and you take the sheet and a dot meter to the floor. Whether a plate can run is your call, and so is the blame.",
+  "Your main tools are the production schedule and the phone. Which book goes first in August, who pays the CTP service fee, what to say when a publisher is pressing for delivery. When someone on the team wastes a plate, you explain it for them at the morning meeting and chew them out privately afterward.",
+  "You read plant-wide waste rates, equipment depreciation and client payment cycles, and you go to Beijing every month to see publishers' production directors. Replace the old press or not, accept short runs or not, who pays for a quality failure: it all has to add up on your desk. You rarely open imposition software anymore."
+ ],
+ "work": [
+  "An editor marks up a page of formulas in tiny red script. You make forty corrections against the proof. The forty-first is her own mistake, and you bring it up on QQ very carefully.",
+  "The team lead has you hand-fold a sixteen-page dummy, number it in pencil and unfold it. Only then do you see why page 1 sits beside page 16.",
+  "A sales rep brings a company annual report made in Word and asks you to make it printable. The images were all saved off web pages at 72 dpi. Your preflight sheet fills with crosses.",
+  "In a saddle-stitched album, the inner pages creep outward toward the center. You work out the creep from the paper thickness, shift the trim position on the second plate by 0.8 mm, and it binds up aligned.",
+  "Gan's half-size press keeps reading plates as too light. You take a dot meter to the machine and find it's the blanket that needs changing. He glares at you. The next day he changes it.",
+  "An old Founder file won't open. You pull the galleys from an ancient machine in the storeroom and reset a reprinted English vocabulary book page by page.",
+  "The same red is right on coated stock and dull on offset. You build two curves, write down which paper takes which on the process sheet, and tape it next to the RIP computer.",
+  "A publisher wants seven spot colors in an atlas, and the press has four units. You and Cai from quality work it out over two days and split it into two passes.",
+  "Fine white type on a cover is half swallowed by the black ground. You cut the trap from 0.1 to 0.05 and send the rep to ask whether the client will accept the text half a weight heavier.",
+  "August twentieth, and three books are all overdue. You shuffle the schedule five times, then phone a Beijing production department and say which one can come two days late. A few seconds of silence, and they agree.",
+  "The CTP service contract expires and the vendor quotes a twenty percent increase. You pull three years of fault tickets, go through them line by line with their engineer, and knock half of it back off.",
+  "A batch of study guides has to be recalled for missing pages. You take the print orders and binding records to Beijing and, in the publisher's meeting room, separate the responsibility section by section.",
+  "Sales wants a packaging job. You work through the plant's paper path, inks and certification requirements and tell him this press can't do food packaging. The job can't be taken."
+ ],
+ "past": [
+  "Your uncle runs the copy shop in town. On school breaks you bind bid documents for him and learn to tell with one sweep of the hand whether pages are missing.",
+  "You lean toward the humanities, and you don't get into the art class. A teacher says printing plants need people who can read type too.",
+  "You apply to a vocational college for print media technology. Your uncle says it's a steady field. Neither of you knows quite what's steady about it.",
+  "In practical class you touch an offset press for the first time and come away with blue hands. The teacher holds up a color bar and has you hunt for magenta dots with a loupe.",
+  "Your work placement is in the prepress department of a packaging plant in Tianjin, and for six months all you do is fix barcodes. You decide you'd like to make books.",
+  "At the campus job fair, HR from the Langfang plant says: you definitely did exercises from the books we print when you were a kid. You think about it. You did."
+ ],
+ "late": {
+  "pension_note": "Estimated: an employee pension, with contributions at the lower base typical of private plants.",
+  "scenes": [
+   "The neighborhood seniors' calligraphy class wants a catalog printed, and you lay it out alone at ¥80 a copy. A full 3 mm of bleed. The copy shop owner thinks you're a lot of trouble.",
+   "At the supermarket you look first at the seam on the milk carton. If the registration is off by half a hair, you put it back. Your family points out that the milk is fine.",
+   "You hear only one person now watches over prepress at the plant, green lights ticking across a screen. You ask whether the CTP is still loud. They say it was replaced by a silent one long ago.",
+   "Your farsightedness keeps deepening, and your phone is on the largest type. You once wrote to a small newspaper that the letter spacing on its seniors' page was too tight. No one replied.",
+   "After a year of not touching a computer, your neck is a little better. Twice a week you go in for traction. The rules on the insurance reimbursement form are crooked.",
+   "You help out at a print and copy shop at a county intersection, doing ID photos and binding bids. You're on your feet all day, and it feels better than sitting did.",
+   "You still don't read e-books. A short while in front of a lit screen and your eyes run. You read paper slowly too, and typos make you angry first.",
+   "You thought going solo meant freedom. It turned out to mean freedom of payment terms. One press kept you waiting eleven months, and you learned to open emails with kindly note.",
+   "These days you make booklets for a few independent publishers, three hundred copies at a time. No royalties. One line of credit, in small type.",
+   "You are out of this trade for good and run a small shop. The price labels come off a thermal printer. You have never adjusted the spacing. You don't care to.",
+   "In a bookstore you feel the spine first and check the gutter next. Reading it comes third. When the clerk asks if you need help, you say no, this perfect binding is quite good.",
+   "Your child brings home a college textbook, and you recognize the format. It's from a publisher whose house style you once worked on. The book was machine-set, and the formulas align better than yours did. You admit it."
+  ],
+  "closing": {
+   "retire": "A blank-covered sample book sits on the table, a misprint the plant couldn't bring itself to throw away. Its pages sound lovely when they turn.",
+   "burnout": "The window is open. The wind lifts a corner of the page and lets it fall, and you don't weigh it down.",
+   "end": "The studio light is off. The printer's standby light is still a single green dot."
+  }
+ }
+}

@@ -1,0 +1,198 @@
+{
+ "id": "admin-asst-bb",
+ "occupation": "Executive Assistant and Secretary",
+ "role": "Administrative Clerk",
+ "headline": "A vocational-college graduate at a private glass-processing company in Bengbu, handling the seal register, meeting minutes, vehicle dispatch and visitors for the general office",
+ "unit": "The general office of a glass-processing company in Bengbu",
+ "unit_type": "Private manufacturer",
+ "city": "Bengbu",
+ "city_tier": "Third-tier city",
+ "education": "Associate degree (secretarial studies)",
+ "level": "You type fast and know Excel. You can't yet tell which seal goes on which piece of paper.",
+ "intro": "This plant sits in Bengbu's glass industrial park, where trucks loaded with glass are always backing up at the gate. The general office has four desks, and yours directly faces the seal register. The office director shows you a bunch of cabinet keys and says just one thing: the seals are here, and so is your rice bowl.",
+ "salary_note": "Estimated: a private manufacturer in Bengbu pays below the national average, with a small year-end bonus.",
+ "facts": [
+  { "label": "Administrative Clerk (current level)", "value": "0–2 years, ¥3,400–4,800 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Administrative Assistant (2–6 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Receiving visitors and coordinating on the spot", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Meeting minutes", "source": "AI exposure" },
+  { "label": "Open positions", "value": "31 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Half an hour before work you open the windows, boil water, wipe down the general manager's desk and stack today's documents by urgency.",
+  "A workshop director wants a seal. The request is missing a signature, and he says the boss okayed it verbally. You smile and hand the form back.",
+  "The quarterly business review. You sit in the corner recording and taking notes. When departments' figures don't match, everyone looks your way, as if you'd know.",
+  "Driver Wei says the car has to go to Bengbu South Station for a client this afternoon. Miao from finance needs it to go to the bank. You rearrange the dispatch sheet again and again.",
+  "You write the minutes. The general manager lost his temper in the meeting. Those lines can't be written down and their meaning has to be. You put: relevant departments are asked to attach great importance.",
+  "You compare prices from three office suppliers. The water delivery man calls to raise his price by fifty fen. You write it down and wait for the contract to end before you bring it up.",
+  "A client is auditing the plant tomorrow. You set out name cards in the meeting room, the seat of honor facing the door, test the projector three times and turn every water bottle label outward.",
+  "On the bus home, friends are arranging dinner in a group chat, and you automatically ask how many people, what time, and who's booking the private room."
+ ],
+ "ladder": [
+  { "title": "Administrative Clerk", "stage": "Odd jobs", "focus": "Handling documents, ordering meals and cars, keeping registers, learning how the company works" },
+  { "title": "Administrative Assistant", "stage": "Following through", "focus": "Attending meetings, writing minutes, handling seals and visitors, seeing things through" },
+  { "title": "Administrative Supervisor", "stage": "Own area", "focus": "Facilities, licenses, budgets and vendors, leading two or three clerks" },
+  { "title": "Assistant to the General Manager", "stage": "At his side", "focus": "Managing the boss's time, screening, passing on messages, following up" },
+  { "title": "Vice President of Administration", "stage": "The whole picture", "focus": "Administration, legal liaison and government relations, taking part in company decisions" }
+ ],
+ "ai_tasks": [
+  { "name": "Receiving visitors and coordinating on the spot", "how": "AI can schedule a trip. When a client's face changes or the boss turns up half an hour late, someone has to smooth it over right there." },
+  { "name": "Meeting minutes", "how": "Transcription and summaries are already quite accurate. People only change the few sentences that can't be written down." },
+  { "name": "Scheduling and travel arrangements", "how": "The system finds open slots and books tickets. People decide who goes first." },
+  { "name": "Seal approvals and license records", "how": "Electronic workflows handle approvals and expiry reminders. Whether this seal should go on, a person has to answer for." },
+  { "name": "Vendor price comparisons and purchase requests", "how": "AI compares prices and creates requests. Why this water supplier can't be replaced is something only a person knows." },
+  { "name": "Follow-up and carrying messages between departments", "how": "AI can send automatic reminders. What to say and when to say it is still up to people." }
+ ],
+ "events": {
+  "e_seal": "You put the contract seal on a document that needed the company seal, and the other side sends it back. The director has you redo it. The crossed-out line stays in the register for a long time.",
+  "e_visit": "A client auditing the plant asks where the restroom is, then asks how many people work here. You can answer the first and not the second. That night you memorize the company brochure.",
+  "e_annual": "The company's annual filing is due by the end of June, and several licenses expire at the same time. You make a table with each expiry date in red and stick it inside the cabinet door.",
+  "e_gift": "Before Mid-Autumn you have to send hairy crabs from Wuhe to sixty-seven clients. You check addresses past midnight, and a box still goes off to a company that has moved.",
+  "e_annual_party": "The annual party's acts, raffle and hotel are all yours. The first-prize TV was bought on credit. The boss draws his own number, the room freezes for two seconds, and you quickly have the host draw again.",
+  "e_flood": "In July the Huai River rises and the plant needs a flood watch rota. You put Driver Wei and the young man from the warehouse on the first shift, then go along at midnight with two cases of instant noodles.",
+  "e_throat": "Your voice goes hoarse every afternoon, and the hospital says chronic pharyngitis. A jar of sterculia seeds appears on your desk. You keep answering the phone in the same polite voice.",
+  "e_wrist": "Your right wrist hurts when it moves, so you switch to the upright kind of mouse. The minutes get written as before.",
+  "e_contract": "Finance needs a lease from three years ago that everyone thinks is lost. You find it by file number in the fourth row of the archive. Miao is so pleased she approves your expense claim early.",
+  "e_oa": "The company installs an office automation system and paper memos are abolished. You enter more than ten years of procedures item by item. Older staff can't use it, you teach them by hand, and they blame you anyway.",
+  "e_ai_note": "Meeting minutes now generate themselves as soon as a meeting ends, with speakers marked. You change seven things in the first one before sending it. Three are the boss's angry remarks.",
+  "e_ai_share": "Travel, cars and stationery all feed into a shared system, and the office's clerks go from three to one. When the two girls leave, you write their separation letters.",
+  "e_ai_mis": "The system automatically books the boss two people who should never share a table, back to back. You catch it ten minutes ahead and take one of them to the workshop to see the new line.",
+  "e_guest": "Now when you enter a restaurant's private room you look first at where the seat of honor is and which door the food comes through. At a friends' dinner you find you've seated everyone.",
+  "e_boss": "The boss's son returns from elsewhere to take over. The first thing he does is remove the tea table from the general manager's office and bring in a stand-up meeting table. You learn a new way of asking for approval.",
+  "e_audit": "IPO advisers arrive and want five years of seal records. You carry out twenty-odd registers. A lawyer goes through them for two days and asks only three questions.",
+  "e_kid": "There's a client dinner in the evening and your child has a fever, so you ask someone to do the pickup. The next day the boss asks about the client, and you recite the person's dietary restrictions and hobbies word for word.",
+  "e_slow": "A new crop of young people call you Teacher. They write documents quickly and make mistakes quickly. You tell them this sentence can't go out. They ask why. You think it over for a long while and can't say.",
+  "e_ear": "When people talk you automatically sort it into one, two, three, and mark who's responsible and by what day. Your family says you sound like you're issuing a notice.",
+  "e_back": "Your back and neck both need attention. Every day at three you stand in the pantry writing emails, and colleagues assume you are supervising."
+ },
+ "choices": {
+  "c_exam": {
+   "title": "Take the civil service or public institution exam?",
+   "situation": "A classmate has become a community worker in Huaishang District and asks you to prep with her. On one side, stability and a guaranteed floor of benefits. On the other, this job you are just getting the hang of, and studying every night.",
+   "options": [
+    { "label": "Study and give it a try", "result": "You pass with decent interview marks. The medical checkup falls on the company's anniversary party.", "end": "You joined the community office. Paper memos, seal registers and receiving visitors were all still there. Only the letterhead changed, and the salary came on time." },
+    { "label": "Don't, get good at this first", "result": "You congratulate your classmate and spend your weekends learning from the director how to draft letters." }
+   ]
+  },
+  "c_asst": {
+   "title": "Go for the Administrative Assistant slot",
+   "situation": "The director says the office will promote someone to Administrative Assistant, and you and the colleague at the next desk both have a chance. You'd have to volunteer to take over the minutes of the general manager's meetings, which is volunteering for overtime.",
+   "options": [
+    { "label": "Take over the minutes", "result": "The boss strikes out half of your first set of minutes. By the fifth he changes only two words." },
+    { "label": "Don't compete, leave on time", "result": "The next desk gets promoted. Your evenings are still yours, and you start going to yoga on weekends." }
+   ]
+  },
+  "c_seal": {
+   "title": "The boss tells you to stamp it first",
+   "situation": "Sales urgently needs a contract that legal hasn't reviewed. The general manager calls from out of town: stamp it, and I'll sort out the paperwork when I'm back. The rules say no. Your rice bowl seems to say no as well.",
+   "options": [
+    { "label": "Stamp it as he says", "result": "The contract goes out. In the register you write approved by general manager by phone, with the date and time down to the minute." },
+    { "label": "Ask him to send a message first", "result": "You say: Boss, please send me a message and I'll keep it on file. Two seconds of silence, and he sends it. After that, his calls tend to be more complete." }
+   ]
+  },
+  "c_hr": {
+   "title": "Move to HR, or stay in admin",
+   "situation": "HR is short of people and asks if you'd come over. That path is clear and has certificates to earn. Admin is a mess, but the road that runs past the boss only goes through here.",
+   "options": [
+    { "label": "Stay in admin", "result": "You go on handling odds and ends, and go on knowing every single thing that happens at the company." },
+    { "label": "Move to HR", "result": "You change desks and begin learning about social insurance bases and labor contracts. From now on you know more of the payroll numbers than anybody." }
+   ]
+  },
+  "c_lead": {
+   "title": "Compete for Administrative Supervisor",
+   "situation": "The Administrative Supervisor's seat is open. Facilities, budgets and vendors: you'd be negotiating with the canteen's head cook and the security chief. You wouldn't be just the one passing messages anymore.",
+   "options": [
+    { "label": "Compete", "result": "In your first week the canteen erupts over vegetable prices. You lay out three suppliers' invoices on the table and let everybody look." },
+    { "label": "Don't compete", "result": "The new supervisor is hired from outside. Three months on, still not knowing which suppliers can safely be offended, they keep coming to ask you." }
+   ]
+  },
+  "c_ai": {
+   "title": "Take over the office workflow system?",
+   "situation": "The boss wants all office work wired into an AI system and needs someone to configure workflows and permissions. If you take it on, you will personally cross out the tasks under you, one after another.",
+   "options": [
+    { "label": "Take it", "result": "You learn permissions and workflows. The very first thing you cut is the vehicle dispatch sheet you've been filling out for eight years." },
+    { "label": "Don't, manage people and matters", "result": "You put your energy into what the system can't reach: who shouldn't see whom today, and what's appropriate to send." }
+   ]
+  },
+  "c_gm": {
+   "title": "Become Assistant to the General Manager",
+   "situation": "The boss wants an Assistant to the General Manager: phone on seven days a week, traveling with him, knowing a great deal and able to say little. His wife has also started asking you about things.",
+   "options": [
+    { "label": "Take it", "result": "Your phone is never on silent again. You also learn to drink a cup of tea on the boss's behalf at table, and finish his sentences." },
+    { "label": "Don't, keep to admin", "result": "You tell the boss you'd rather look after buildings and cars. He gives a small smile. Later someone from outside gets the job." }
+   ]
+  },
+  "c_move": {
+   "title": "Headquarters moves to Hefei",
+   "situation": "Headquarters is moving to Hefei. Admin staff who go will rent there and come back to Bengbu at weekends. If you stay, the Bengbu plant keeps one admin person, or else you can take a payout.",
+   "options": [
+    { "label": "Take the payout, try something else", "result": "You hand over the twenty-odd seal registers properly, signing page after page.", "end": "When headquarters moved away you took the payout and helped a relative start a small company in Bengbu, keeping the books, the people and the seals. This time the seal is your own, and it comes down more slowly." },
+    { "label": "Go to Hefei", "result": "You rent a one-bedroom near the government district. It's forty minutes on the high-speed train, and the Monday morning carriage is full of people like you." },
+    { "label": "Stay at the Bengbu plant", "result": "The office is down to you alone. The plant's business isn't large, and you begin to have time to finish a cup of tea." }
+   ]
+  },
+  "c_vp": {
+   "title": "Compete for Vice President of Administration",
+   "situation": "The boss is creating a Vice President of Administration post covering admin, legal and government liaison. You never studied management, but you have seen every contract this company has signed.",
+   "options": [
+    { "label": "Compete", "result": "In your presentation you skip strategy and say that in all these years not one company license has lapsed." },
+    { "label": "Don't compete", "result": "You say you're close to retirement and it isn't worth the trouble. At three you go off to the pantry, as usual, to stand and write emails." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "By the month you turn sixty, the company's seals have long since gone electronic and the registers have gone into the archive. You finish your retirement paperwork, and a young woman in HR sends the procedure to your phone, with a prompt the system generated by itself. You have said a great many things for this company over the years. Today no one needs you to write the minutes.",
+  "burnout": "Your throat, your back and your wrist take turns raising the alarm, and your heart races whenever the boss's phone call comes. You resign. The handover list runs to eleven pages, a whole one of them on who can't sit at a table with whom. On the day you go, the canteen's head cook gives you an extra ladle of soup."
+ },
+ "stages": [
+  "Every day you handle parcels and documents, keep the seal register, book meeting rooms, order boxed lunches and write Driver Wei's trips on the dispatch sheet. The director speaks in short sentences, and you have to hear whether they mean urgent or not. Your most important skill is remembering everyone's extension and who shouldn't be scheduled together.",
+  "You take minutes at the general manager's meetings and follow up on every item, chasing the workshop, sales and finance, and closing tickets one by one in the office system. When clients come you take them from the station to the meeting room and back to the hotel. Unlike a clerk, when something doesn't get done, people now ask you instead of the director.",
+  "You manage the facilities budget, license renewals, vendor contracts and the security and cleaning staff. Two clerks work under you. Once a month you reconcile accounts with the canteen, and once a month you have a row with property management. You no longer put out the name cards yourself, but when they are wrong you are the one who explains.",
+  "Your job is the boss's time: who can see him, who waits, which document must be read today. You block calls, pass along unpleasant messages and carry two phones on trips. Department directors begin being polite to you, and begin being wary of you.",
+  "You run administration, liaise with legal and government departments, and have a vote at the business meetings. Whether the company moves or rents, how to handle an outside inspection: it all comes to you first. Others write your documents now. You only check that the few sentences that shouldn't be in there aren't."
+ ],
+ "work": [
+  "The workshop sends over a handwritten leave note. It needs the director's signature, then HR's. You run up and down three floors and learn to phone first next time.",
+  "The courier delivers a box of samples to the wrong place. You open it at the front desk and find a client's glass samples. You run to quality control and put it in the right hands yourself.",
+  "The printer jams all morning. You tape the consumables and repair number to the side of the machine, and by the next week people are calling it.",
+  "The general manager says to get on this. You write the responsible person and a date in the follow-up sheet. On the third day you ask, and the sales manager says what thing? You send him the timestamp in the recording.",
+  "A client changes at short notice to arrive at South Station from Hefei. Wei's car is out, so you call a van, put water and materials in it beforehand and hold up a sign at the exit yourself.",
+  "Numbering last year's contracts by the filing rules, you find two with the same number. After a long search it turns out one contract was signed twice.",
+  "The air conditioning service contract expires. You put three quotes and last year's repair count in one table and write the boss a three-line conclusion. He asks only why you didn't pick the cheapest.",
+  "Safety inspectors are coming. You and the security chief check the fire extinguishers one by one and find six out of date, replaced that afternoon.",
+  "The canteen's head cook and the buyer are shouting about the price of a pound of pork. You pull up three months of invoices, and both of them fall silent.",
+  "The boss has a dinner with a major client, who turns up with a friend from a competitor. At the door you switch two name cards, then go in and pour the tea.",
+  "An anonymous complaint about someone arrives addressed to the boss, in handwriting you recognize. You pull out only the facts and keep the letter yourself.",
+  "Before the IPO the seal history must be cleared up. Over three days with the lawyers you find a guarantee letter from ten years ago, and you also know who had it stamped.",
+  "The plant is relocating. You go through the planning and environmental counters. Your table has sixteen columns, and behind each column is one person's phone number."
+ ],
+ "past": [
+  "Your mother was once a cashier at the township supply co-op and always pressed receipts flat, one by one. That's how she watched over your handwriting too.",
+  "Your grades are average, and your homeroom teacher has you collect and keep the class money. The books are never once wrong.",
+  "You study secretarial work at a vocational college in Bengbu. There are forty in the class, thirty-eight of them girls. The first thing the teacher covers is document format.",
+  "You intern at a building materials company for ¥800 a month and learn how to use a fax machine and how to talk to the gatekeeper.",
+  "You earn a computer certificate and an office software certificate, print twenty copies of your résumé and send them to the plants in the industrial park."
+ ],
+ "late": {
+  "pension_note": "Estimated: an employee pension at Bengbu's local contribution base.",
+  "scenes": [
+   "The homeowners' committee asks you to help write a notice. You change please cooperate into the time, the place and the consequences. The property office says this person is formidable.",
+   "A relative holds a wedding banquet and gives you the seating plan. You go through the guest list three times, separate two branches of the family that haven't spoken for years, and put a cheerful aunt between them.",
+   "Your old company has changed systems again. Someone in the group chat brings up seal procedures. You no longer respond, and you mute your phone.",
+   "These days at the hospital your phone arranges everything. You still arrive forty minutes early, with your thermos ready.",
+   "You change your phone number and give it only to family. For the first month, your stomach tightens when someone else's ringtone goes off.",
+   "You help out at a stationery shop by a primary school, taking money and straightening shelves. No one needs minutes from you, and your voice slowly recovers.",
+   "The wrist never fully came back, and on overcast days you can't open a jar. It doesn't count as a work injury, and there's nowhere to claim it.",
+   "In the new place, people still come to you for a seal, a form, an explanation. You realize this work can't be moved away from.",
+   "You never have to put out name cards again. But at meetings in other offices, you still give the water bottles on the table a turn, labels outward.",
+   "You've wondered whether you'd have made vice president if you'd stayed. You thought about it for two days. Then you went and learned to swim.",
+   "A friend's kid asks whether secretarial studies are still worth it. You say go study something else, then add: but being able to write clearly is useful whenever.",
+   "Your savings aren't large, and each month's spending is logged on a sheet with clear categories. You've given the sheet a file number too."
+  ],
+  "closing": {
+   "retire": "There is a folder on the desk, and you have not labeled it.",
+   "burnout": "The phone hasn't rung all day. You turn it over and check the battery.",
+   "end": "You square up a sheet of paper, clip it, and put it where it belongs."
+  }
+ }
+}

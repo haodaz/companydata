@@ -1,0 +1,153 @@
+{
+ "id": "family-edu-yb",
+ "occupation": "Family Education Instructor",
+ "role": "Family education instructor",
+ "headline": "After three years as a substitute teacher in a township school, you moved to a family education center in Yibin that lives on contracts from the Women's Federation and local schools. At seven-thirty in the evening, when parents get off work, your shift begins",
+ "unit": "A family education service center in Yibin, a private nonprofit with seven staff",
+ "unit_type": "Private nonprofit living on government and school contracts",
+ "city": "Yibin, Sichuan",
+ "city_tier": "Third-tier",
+ "education": "Bachelor's (elementary education)",
+ "level": "You can give a parenting talk. When a parent asks afterward, “So what do I do about my kid?”, you still can't quite catch it",
+ "intro": "The center is on the sixth floor of an office building on the south bank, its windows facing the place where the two rivers meet. The year's income comes from three sources: Women's Federation projects, talks for schools, and a staff program for the battery plant's union. Whoever pays late, the salaries come late. At seven-thirty tonight, forty parents will arrive for a session on “When Your Child Won't Talk.” You are running the sign-in. Next time, it's your turn to speak.",
+ "salary_note": "Estimate: agencies like this in Yibin pay from project funds, more than 40 percent below the national figure. When project money arrives late, so do wages.",
+ "facts": [
+  {
+   "label": "Assistant Family Education Instructor (current level)",
+   "value": "0–2 years, ¥2,400–3,100 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Family Education Instructor (2–5 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥5,600 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Mediating between family members",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Policy explainers and parenting-class handouts",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "4 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "First thing at the center, you reconcile last week's sign-in sheets, photos and satisfaction surveys. If one of the three is missing, that event doesn't get paid.",
+  "You go to an elementary school in Cuiping District to set up next month's parents' talk. The moral-education director says to avoid monthly exams, avoid duty week, avoid the district inspection. By the end, the only slot left is a Thursday at dusk.",
+  "Downstairs the burning noodles leave your lips numb. In the parents' group chat someone has sent four voice messages, fifty-nine seconds each. You put in your earbuds and listen.",
+  "A grandmother brings a boy in for a consultation. She does most of the talking; the boy looks at the sand timer on the table. You pass it to him and let her talk for three minutes first.",
+  "The supervisor who trains you goes through your case notes and pencils a line under one phrase: “Mother too anxious.” Is that something you saw, or something you feel?",
+  "The parents come in still smelling of the factory, some of them in work uniforms. You have to finish your first sentence before they take out their phones.",
+  "The chairs go back in place. One father stays behind until everyone has left, and then asks you whether his son won't talk to him because he's always been away."
+ ],
+ "ladder": [
+  { "title": "Assistant Family Education Instructor", "stage": "Project support", "focus": "Assist with talks, run sign-ins and records, set up parent groups, get certified, learn to listen to parents" },
+  { "title": "Family Education Instructor", "stage": "Own casework", "focus": "Teach parent classes and take your own families, write family plans, work with schools and communities" },
+  { "title": "Senior Family Education Instructor", "stage": "Project lead", "focus": "Lead a project team, write bids and final reports, decide which families need a referral" },
+  { "title": "Family Education Supervisor", "stage": "Clinical supervision", "focus": "Supervise younger instructors' cases, set the agency's service boundaries, negotiate with funders" }
+ ],
+ "ai_tasks": [
+  { "name": "Mediating between family members", "how": "Grandfather, mother and child each tell a different story. Whose word can be trusted, and who shouldn't be pushed any further today, takes a person in the room." },
+  { "name": "Deciding when to refer", "how": "Whether a child is acting out or needs a specialist has to be judged by a person, who also answers for the judgment." },
+  { "name": "Policy explainers and parenting-class handouts", "how": "AI can quickly turn statutes and concepts into something parents can read. A person checks the law and decides what to teach." },
+  { "name": "Drafting family plans", "how": "AI can write a first draft and weekly checklists from age and circumstance. A person has to revise them around this family's shifts, money and relationships, then help carry them out." },
+  { "name": "Online camp Q&A and check-in reminders", "how": "AI can watch the group, answer the usual questions and nag people to check in. It takes a person to notice one parent's sentence is off." },
+  { "name": "Bids and final reports", "how": "AI can compile data and write a draft. What the funder really wants is known only to someone who has worked the project." }
+ ],
+ "events": {
+  "e_first_talk": "Fifteen minutes into your first parent talk, a father in the back row starts playing short videos out loud. You stop and ask how old his child is. Eleven, he says. You say it can't have been easy to get here tonight, and he puts his phone face down. It occurs to you later that you can't remember a thing you taught that day, only that one sentence.",
+  "e_cert_mess": "You see an ad in your feed for a “Family Education Instructor” certificate: 3,800 yuan, seven days online, guaranteed pass. A parent in your class asks if yours is that kind. You explain for ten minutes and the more you explain, the more it sounds like that kind.",
+  "e_september": "In the two weeks before school starts in September, the consultation line gets three times the usual calls, all of them variations on one sentence: the kid won't go to school. You and a colleague take turns on the phone until your voice is so hoarse that callers ask if you have a cold.",
+  "e_late_pay": "Three months after the final report goes in, the money is still in the treasury's queue. Salaries are seven weeks late. The director covers part of them with a loan against her own car. You run a tab at the noodle shop downstairs, twice.",
+  "e_acceptance": "At the year-end review the funder wants “number of beneficiaries.” You reconcile group check-ins against sign-in sheets three times, and one event doesn't add up. You put down the lower number. The director sighs and leaves it.",
+  "e_battery_shift": "Workers at the battery plant run four crews on three shifts, so you make a chart matching children's routines to their parents' schedules. For the first time someone tells you he finally knows which nights he can reach his kid on video.",
+  "e_rural": "You go to a village school in Pingshan to give a talk on families whose children are left behind by migrant parents. Four hours of mountain road, and everyone who comes is a grandparent. Your slides are useless and there's no projector anyway, so you sit on a low stool and ask what the kids like to eat, and you go on asking until it's dark.",
+  "e_refer": "One middle schooler's situation is beyond what you can handle. You suggest the parents see a specialist at the city hospital, and they don't take it well: our child isn't sick. Two months later the mother sends a text saying they went, and thank you. Nothing else.",
+  "e_throat": "After a few years of evening talks, chronic pharyngitis is your permanent companion. You keep malva nut tea in your bag; forty minutes in, your voice splits from the bottom up. You learn to use a microphone. You also learn to say less.",
+  "e_own_kid": "You've given hundreds of talks on how to communicate with your child. A month before your own child's high school entrance exam, all you get at dinner is “Mm.” You tell your spouse this is normal at this stage, then shut yourself in the bathroom and read your own handout again. Not one line of it helps.",
+  "e_fenliu": "Every April and May, as the split between academic and vocational high schools looms, parent classes overflow. A mother who runs a barbecue stall asks if vocational school is really okay. You talk to her for half an hour before you realize she doesn't want an answer. She wants to hear someone say: it's okay.",
+  "e_ai_camp": "The online parents' camp gets an AI helper. Three hundred parents' check-ins and routine questions, answered overnight, in a kinder tone than yours. Your job is now to look through the log each day and spot the three entries that are off. It can't do that yet.",
+  "e_ai_parent": "A parent comes in with a family plan written by AI, four pages long, all very sensible. Item one is an hour of daily parent-child time. This father is a long-haul trucker.",
+  "e_tender_lost": "After four years, your community project goes back out to tender. A company from Chengdu bids thirty percent lower and wins. The center lets two people go. The families you've followed for two years are handed to a team that has never met them.",
+  "e_thanks": "As a parents' meeting breaks up, an elderly grandmother slips a few homemade preserved eggs into your bag. The child she raised refused school last year; now he comes home every week to fight with her. Fighting is good, she says.",
+  "e_sup_tired": "At a supervision meeting a young colleague starts talking about her cases and ends up in tears. What you do at a moment like this isn't comfort. You ask how many she's taken on this week, and you cross two off her schedule.",
+  "e_budget_cut": "Government contract budgets are cut by forty percent this year. Parent classes in schools fall from four a term to one. The center goes from seven people to four, and you start writing the social media posts yourself, signing for deliveries, changing the classroom light tubes.",
+  "e_river": "On an evening in flood season you and your coworkers walk to Hejiang Gate after work to look at the water. The Jinsha is yellow and the Min is green, and for a stretch you can clearly see the line. A colleague says it's a bit like what you all do. You say please don't, we're off the clock."
+ },
+ "choices": {
+  "c_secret": { "title": "A mother wants to know what her daughter said", "situation": "A seventh-grade girl talks with you for forty minutes. Afterward her mother pulls you into the stairwell: what did she say? Tell me. I paid for this. Nothing is dangerous, but the girl did say things her mother won't like.", "options": [ { "label": "Give only the general direction", "result": "You tell the mother what's on the girl's mind but not her words. The mother isn't happy. The girl comes back next week." }, { "label": "Tell her some of it, to keep her calm", "result": "The mother goes home and uses what you said. The girl doesn't come next week, or ever again." } ] },
+  "c_sell_cert": { "title": "Your name on the flyer", "situation": "A training company wants your name and photo on a brochure for its certificate course: “Yibin's Senior Family Education Expert.” Five thousand yuan per session. Your salary is late again this month.", "options": [ { "label": "Take the money", "result": "Your photo appears on elevator ads, with better hair than you've got. At the second session a student asks if the certificate can be rented out to a company." }, { "label": "Say no", "result": "You thank them and they find someone else. The face in the elevator ad is two years younger than yours." } ] },
+  "c_exam": { "title": "Applying for Family Education Instructor", "situation": "The center wants to name a Family Education Instructor who can take cases alone, which requires a proper occupational skills certificate. You'd spend two weeks off work at a training in Chengdu. The exam isn't easy, and the center will pay half.", "options": [ { "label": "Go to Chengdu", "result": "In a rented room in Chengdu you read child development from page one. When you get back, your own name appears at last on the case notes." }, { "label": "Follow for another year", "result": "You sit in with your supervisor for one more year. You can now guess the second half of her sentences, and your own voice still sounds hollow." } ] },
+  "c_senior": { "title": "Applying for Senior Family Education Instructor", "situation": "The city Women's Federation is reviewing candidates for Senior Family Education Instructor. You must submit case reports and service hours. If you get it, you can lead a project team, which also means writing bids and meeting funders, and even fewer free evenings.", "options": [ { "label": "Apply", "result": "You anonymize your years of cases and bind them in a thick volume. A reviewer asks: is there one in here you got wrong? You tell her about one." }, { "label": "Stay face to face", "result": "You say you don't want to write bids. The director keeps you on the evening sessions, and you go on seeing a few regular families every week." } ] },
+  "c_ai": { "title": "Learning to run a camp with AI", "situation": "A funder requires “intelligent Q&A” for the online parents' camp, and nobody at the center knows how. You could spend six months figuring it out, or outsource it to a vendor and give away half the money.", "options": [ { "label": "Learn it yourself", "result": "You write the AI a list of things it must never say, each item with a real family behind it. That list later becomes the most valuable thing the center owns." }, { "label": "Outsource it", "result": "The vendor's AI answers smoothly. Once it tells a worried mother, “This is very common, try to relax.” You follow up with a phone call." } ] },
+  "c_tender": { "title": "How low to bid", "situation": "With the next round of tenders coming, the director asks whether you should cut the bid to a number that can win. If you do, the center lives, but each event's budget will cover only bottled water, and each case only one follow-up.", "options": [ { "label": "Cut it and survive", "result": "You win. Each event's budget reads like someone wringing out a towel, and the final report is the best-looking you've ever filed." }, { "label": "Hold your standard", "result": "You lose. The center shrinks, and the few who remain get through the year on one-off school talks." } ] },
+  "c_online": { "title": "The online platform in Chengdu", "situation": "A Chengdu online parenting platform wants you to record courses, for more than double your income. What you'd be writing are hit headlines: “Three Sentences That Make Your Child Do Their Homework.” You could move your household there, or let this ride go by.", "options": [ { "label": "Go record courses", "result": "You learn to smile for a camera and to name the pain point in the first three seconds. One clip gets several million views. You've never met one parent in the comments." }, { "label": "Stay in Yibin", "result": "Your classes don't get millions of views. Every night there are thirty or forty people, some in work uniforms." } ] },
+  "c_school_post": { "title": "Exam for a school counselor post", "situation": "The district education bureau is hiring full-time school mental health teachers, with permanent state posts, winter and summer breaks, benefits paid on time. The price is serving only one school from here on, and leaving the families you've followed for years.", "options": [ { "label": "Take the exam", "end": "You pass. On the first day of term you don't know a single parent at the gate. The door says “Counseling Room,” and everyone who comes the first week has been led there by a homeroom teacher.", "result": "You close out your open cases, one by one." }, { "label": "Don't", "result": "The notice expires. The next month's pay is nine days late." } ] },
+  "c_close": { "title": "The contract has run out", "situation": "The biggest contract has ended and the funder won't renew it. The director wants to dissolve the center and asks if you'd like to take over the license. If you do, you carry six or seven salaries and the rent yourself; if not, this work in Yibin is more or less finished.", "options": [ { "label": "Let it go", "end": "The day the center is dissolved you close the parent groups one by one. Before leaving, one parent writes: “Teacher, where are you all going?” You haven't worked out how to answer.", "result": "You start sending out résumés." }, { "label": "Take over the license", "result": "You become the legal representative. Your first task is going to the bank to open an account. Your second is discovering there's only three months' rent in it." } ] }
+ },
+ "endings": {
+  "retire": "When the time comes you close out your last few cases and lock the files as required, the retention period written on the seal. Some of the children from those families are older now than you were then. At Hejiang Gate the water is still half yellow and half green, and you no longer have to explain to anyone what it resembles.",
+  "burnout": "Your voice goes first: growths on the vocal cords, and orders to talk less. Someone who lives by talking is told to talk less. You try for six months to carry on in writing, but parents want to hear you. You transfer your cases and begin practicing how not to say more than a hundred sentences a day."
+ },
+ "stages": [
+  "Three or four events a week: setting up the room, signing people in, taking photos, collecting surveys, pulling questions out of the group chats for the speaker. In your spare moments you sit beside your supervisor during consultations, taking notes and saying nothing. The beneficiary count in Excel and the activity ledger are yours; when the funder checks, you're the first one they ask.",
+  "You take families on your own now: fifty minutes at a time, listening first, then drawing up this household's routines and who does what, a one-page plan, a follow-up in two weeks. School moral-education directors and neighborhood Women's Federation heads ask you to speak, and you learn to find the cracks in their calendars. The difference from before: the name signed under the case notes is yours.",
+  "Half your time goes to bids and final reports, half to the evening talks. You have three or four young people under you and help them decide which families they can work with and which to refer to a hospital or social work station. You negotiate budgets with section chiefs, and when an event goes wrong, you're the one who stands in front.",
+  "You seldom take new families. Each week you listen to younger instructors present their cases, with a pencil in your hand and a document on service boundaries, which sets out what must be referred and what must never be said. Funders want numbers, young staff need someone to catch them, and both ends meet at you."
+ ],
+ "work": [
+  "Before Wednesday's evening session you set out the sign-in sheet at the door. A mother in a work uniform can't write, so you write her name for her. She takes the pen back and traces over it herself.",
+  "The final report is twelve satisfaction surveys short. Your supervisor says not to fill them in: call those twelve parents. You phone until nine at night and get seven back.",
+  "Two mothers start fighting in the parent group over whose child hit first. You forward both messages to your supervisor privately. She replies: say nothing in the group; call each of them tonight.",
+  "Three generations of a family come in. You draw up a schedule on a sheet of white paper: grandfather's trip to the market, mother's night shift, the child's evening study hall. Only when it's finished does everyone realize that the whole family is home together one morning a week, on Tuesdays.",
+  "An elementary school in Cuiping asks you to talk about phone management. You bring a three-column agreement template and have the parents fill it out on the spot. You collect thirty-one; twenty of them mention only what the child must do.",
+  "A father says his son won't study. You have him write down everything he said to the boy yesterday. He writes six sentences, four of them “Is your homework done?” He turns the paper over himself.",
+  "The night before the bid deadline, page 37's proof of past performance is missing a stamp. You drive to Jiang'an to find the project director, get it stamped downstairs from his home, and make it back just as the print shop is closing.",
+  "A young instructor says she can't judge one child's situation. You listen to the recording and tell her to talk to the parents about a referral this week, and you sit beside her when she makes the call.",
+  "A Women's Federation section chief asks if you can reach five thousand beneficiaries this year. You do the math for her: five thousand people is one text message apiece. She pauses, and says, how about four thousand.",
+  "At Friday's supervision a young colleague's notes read “Parents uncooperative.” You pencil a line under it and ask her: on which day next week can this family actually do what you suggested?",
+  "You write the boundary document for the center's AI helper, item by item: what it can't answer, what goes to a person. By item forty you notice all of them come from trouble you've had over the years.",
+  "The funder's new section chief has just been transferred in, and asks you what good this project actually does. You leave the slides alone and spread a family's four-year follow-up timeline on the table, names removed."
+ ],
+ "past": [
+  "You go to junior high in Gao County. Your parents are working in Guangdong, a phone call once a month, and you live with your grandmother. When the homeroom teacher visits one day, she boils every egg in the house.",
+  "When it's time to choose a college major, your uncle says teaching is steady. You study elementary education at a local teachers college.",
+  "You don't pass the exam for a permanent state post, so you become a substitute at a township school, at a little over two thousand yuan a month. Half the parents of the children in your class are away, and those who come to parents' meetings are mostly old people.",
+  "A boy in your class stops coming, and you walk seven kilometers to his home. His grandmother is sitting on the threshold. His parents come back at New Year, she says; I can't make him. On the way back, you think that teaching doesn't seem to reach this far.",
+  "When your substitute term ends, you see a family education center hiring on the Women's Federation's social media page: 3,500 yuan a month with benefits. You write the center a letter about those seven kilometers."
+ ],
+ "late": {
+  "pension_note": "Estimate: the nonprofit paid in on a low base, with a few months' gap when project money ran short. The pension covers ordinary life in Yibin and not much more.",
+  "scenes": [
+   "You start making dinner at five, an hour that for over twenty years you spent rushing to a classroom. For the first six months it seems too early to eat. Nobody else is off work yet.",
+   "Outside the neighborhood mahjong room, someone complains to you about a daughter-in-law, and you nod and listen. You have a rule now: a retired person only listens, offers no plan, and charges nothing.",
+   "AI answers everything now, and the parents' groups have gone nearly silent. Sometimes you wonder if that's good, or if those words are simply being said to something else.",
+   "In a restaurant you watch a table of people: who puts food in whose bowl, who looks down when someone else is talking. Your spouse says you're working again. You pick up your chopsticks. The second dish has gone cold.",
+   "For the first month after the vocal cord surgery you talk to your family on a small whiteboard. Writing is slower than speaking, and you find that with most sentences, you lose interest halfway through.",
+   "You look after the community reading room and don't have to say more than a hundred sentences a day. Kids come to return books after school, and you stamp the cards and ask them nothing more. It isn't easy.",
+   "Half a lifetime of talking leaves a grain of sand in your voice. People assume you smoke, and you can't be bothered to explain. The malva nut tea in your bag has been replaced by mints.",
+   "At the new job, things are arranged by others and you go home on time. For a month, not waiting on anybody's final payment makes life feel slightly unreal.",
+   "A former colleague adds you to a group where people pass along news of the trade: who has dissolved, where there's a new tender. After two years of reading it, you leave.",
+   "The elevator ads still say “Family Education Expert,” with a younger set of faces. The price has gone from 3,800 to 6,800. Your own certificate has long since expired. No one has ever asked.",
+   "Your child is grown, and only calls home with good news. You know what that means. You also know not to ask.",
+   "To this day you dislike the word “should.” When someone says it, something chimes in your ear. In the supermarket, somebody is lecturing their child, and you go around by another aisle."
+  ],
+  "closing": {
+   "retire": "The steps at Hejiang Gate go under and come back. At seven-thirty in the evening you are at home, and nobody is waiting for your first sentence.",
+   "burnout": "At four-thirty in the afternoon, the lights come on in the reading room. You stamp the date on a card and put the stamp back on the pad, and the lid closes with a small click.",
+   "end": "By the river, a family of three is having a fight, and the sound drifts over. You listen to two sentences and walk on. No follow-up tonight."
+  }
+ }
+}

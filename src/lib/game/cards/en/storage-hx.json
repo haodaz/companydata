@@ -1,0 +1,151 @@
+{
+ "id": "storage-hx",
+ "occupation": "Energy Storage Station Operations Specialist",
+ "role": "Solar-Storage Station Duty Operator",
+ "headline": "A duty operator on the Gobi at three thousand meters, looking after a sea of solar panels and dozens of battery containers, twenty days on and ten days off",
+ "unit": "A solar-plus-storage station in Haixi, Qinghai (posted by a renewable-energy operations company)",
+ "unit_type": "Renewable-energy station operations company",
+ "city": "Haixi, Qinghai",
+ "city_tier": "Fourth-tier",
+ "education": "Three-year college diploma (Electrical Automation)",
+ "level": "You have a low-voltage electrician's certificate and know words like BMS and PCS. How many breaths one flight of ladder takes at altitude, you haven't found out yet.",
+ "intro": "From Delingha it's two more hours in the station's pickup, and then the road is only ruts. Solar panels run to the horizon. At their far end stand thirty-odd white battery containers with their air-conditioning units droning. The shift leader hands you a hard hat and a radio and tells you two things. There's little oxygen here, so walk slowly. And if the grid dispatcher's phone rings, answer it first and catch your breath afterward.",
+ "salary_note": "Estimate: on-site and high-altitude allowances at remote stations put pay above the national figure for duty positions at this level.",
+ "facts": [
+  { "label": "Duty Operator (current level)", "value": "0–3 years, ¥6,500–9,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Lead Operator (3–7 years)", "source": "Common in the trade" },
+  { "label": "Pay after 3–5 years", "value": "¥8,300 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "On-site commissioning and grid-connection acceptance", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Monitoring battery operating data", "source": "AI exposure" },
+  { "label": "Open positions", "value": "5 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The panels start generating as soon as the sun is up. You hand over shifts in the control room, going through last night's alarms and defect records line by line. The smell of instant noodles hasn't cleared.",
+  "You check the planned curve on the EMS: charge at noon, discharge at evening peak. The dispatcher changes the power setpoint at short notice. You repeat the order back, then write it in the duty log.",
+  "With an infrared thermometer on your back you go to inspect the battery containers. One container's round leaves you winded as if you had climbed five floors. What must be touched, listened to and looked at can't be skipped.",
+  "The vegetable truck comes once a week, and by Friday only potatoes and cabbage remain. The cook has one pressure cooker, and it keeps the noodles a little chewy.",
+  "Container two reports a cell temperature-difference alarm. You and the assistant operator go to confirm on site. A liquid-cooling valve wasn't fully open. You adjust it and watch for another half hour.",
+  "The sand comes up, and nothing outside can be seen. You move the filter-change plan three days ahead and note which panel sections need washing.",
+  "Evening peak. The station discharges on dispatch, and the curve tracks closely, so this month's assessment should cost less. You watch the SOC fall a little at a time.",
+  "The dorm gets just two bars of signal. You video-call home in Xining, and the picture freezes on your spouse frowning. Your head aches in the night, and you bring the oxygen bag to your pillow."
+ ],
+ "ladder": [
+  { "title": "Duty Operator", "stage": "Watch the board", "focus": "Monitor, inspect and record defects, learning to follow dispatch and read alarms" },
+  { "title": "Lead Operator", "stage": "Run a shift", "focus": "Own a shift's safety and operations, review switching orders and lead the handling of alarms" },
+  { "title": "Station Manager", "stage": "Run the station", "focus": "Manage the people, defects, assessments and settlement for the whole station, and deal with dispatch and equipment makers" },
+  { "title": "Regional Operations Manager", "stage": "Run the region", "focus": "Manage central monitoring, spares and budget for several stations, and decide which to refit first" },
+  { "title": "Director of Operations", "stage": "Whole company", "focus": "Manage operating standards, budgets and warranty negotiations for all of the company's stations" }
+ ],
+ "ai_tasks": [
+  { "name": "On-site commissioning and grid-connection acceptance", "how": "AI helps check the lists. Being on site to wire up, test together, deal with every party and sign off takes a person." },
+  { "name": "Monitoring battery operating data", "how": "Models watch SOC, SOH and charge-discharge efficiency around the clock, produce daily reports automatically and flag abnormal trends. People spot-check the definitions and conclusions now and then." },
+  { "name": "Alarm grading and fault diagnosis", "how": "The system consolidates and grades alarms and offers likely causes. Confirming on site, isolating and restoring, and judging safety are all up to people." },
+  { "name": "Inspection plans and spare-parts forecasts", "how": "AI uses equipment condition to set inspection priorities. People go up, look, touch and measure, and make the final call on the plan." },
+  { "name": "Checking assessments and power settlement", "how": "AI checks electricity volumes and estimates assessment penalties. Dealing with dispatch and the settlement side, and appealing the results, are handled by people." }
+ ],
+ "events": {
+  "e_altitude": "Your first week on station your head hurts so much you can't sleep at night, and walking feels like treading on cotton. By week three you've recovered, but your red blood count is on its way up, and the doctor at your checkup reminds you to keep track of that number.",
+  "e_sand": "A sandstorm blows for two days, and the filters on the liquid-cooling units mat into felt. You take turns changing them, chewing sand as you take down and refit dozens of filters. Only then does output slowly return to the curve.",
+  "e_winter": "On a January night it's twenty-eight below, and the battery containers need heating to hold temperature. You walk the rounds with your tools and your gloves stick to an iron handle. The first thing you record when you get back is the antifreeze concentration.",
+  "e_exam": "The monthly assessment slip comes down: primary frequency response missed its mark, and a good deal was deducted. Before settlement day you pull up that stretch of the curve, check it second by second and write an appeal, and get half of it back.",
+  "e_alarm": "At three in the morning the BMS reports a cell-string temperature-rise alarm. You isolate it by the book, notify the manufacturer, and stay until the numbers come down at daybreak. It later proves to be a sensor problem. The log runs to four pages, and no word can be wrong.",
+  "e_warranty": "The manufacturer's warranty is about to run out and its service engineers pull off site. From now on any broken panel or module goes through procurement, and getting a spare ordered and up the mountain takes more than a month.",
+  "e_soh": "The first-phase batteries fall to eighty percent SOH, and earnings get thinner each year. You show the company the degradation curve. A third of the replacement budget is approved, enough to change the two worst containers first.",
+  "e_family": "On twenty days on and ten off, your spouse attends every parent-teacher meeting alone. Your child writes in a composition that Dad's job is watching the sun. The teacher phones to ask what sort of work that is.",
+  "e_dog": "The station dog follows the inspection every day as far as row twelve, then sits and waits for you to come back. Later you write its name into the duty handover log: Assistant Operator.",
+  "e_oxygen": "Off station you go to Xining, and then on a work trip down to Lanzhou, where low altitude leaves you oxygen-drunk and drowsy all day. You sleep fourteen hours at the hotel, and in the meeting somebody asks if you've been drinking.",
+  "e_good_month": "Plenty of sunlight this month, the curve tracks close, no penalties, and the station places first in the monthly assessment for the first time. The bonus for all hands is a box of mutton and two bags of fresh vegetables, and everyone is very pleased.",
+  "e_ear": "You've listened to the drone in the PCS containers for over ten years, and at your checkup your hearing chart has a piece missing. You talk loudly now. Your spouse says you're addressing the whole station.",
+  "e_ai_watch": "The new AI monitoring system consolidates two hundred alarms a day into a dozen or so, and the control room goes quiet. But one small temperature difference it merged away is something you detected on your rounds with the back of your hand.",
+  "e_ai_center": "The company sets up a remote central control room. This station goes from three shifts to minimal staffing, its headcount from eighteen to seven. Some are transferred, some go home, and half the dorm building stands empty.",
+  "e_ai_drone": "Drone inspection can cover all the panels in a day, with hot spots boxed automatically. You follow after, confirming only the few panels inside the red boxes. Your legs have an easier time, and there's no less work for your hands.",
+  "e_rain": "A rare downpour comes to the Gobi, and the cable trenches in the low spots fill with water. You pump all night in rubber boots. The next day a fine layer of green comes up from the ground, and the cook says that's what passes for spring here.",
+  "e_skin": "Ultraviolet and sand give you a raw red face. Back in Xining for a haircut, the barber asks if you've just come in from the fields. You use half a bottle of sunscreen at a time, and it makes little difference.",
+  "e_commission": "On the phase-two expansion, new battery containers need commissioning. You spend over forty days on site. On the day of grid-connection acceptance you stand at the very back of a crowd, and on the form, in the space for a signature, is your name."
+ },
+ "choices": {
+  "c_highcert": { "title": "Take the high-voltage certificate, go for Lead Operator", "situation": "To be a Lead Operator you need a high-voltage electrician's certificate and to pass the station's qualification test. You'd have to squeeze the book into twenty days on duty, and in your ten days off all you want is to go home and lie down.", "options": [
+   { "label": "Study in the dorm", "result": "Between headaches and instant noodles you memorize the procedures. By the time the certificate arrives, the whole book has gone fuzzy with handling." },
+   { "label": "Learn on shift first", "result": "You don't rush the exam. You follow the old shift leader from container to container, and this year you learn where every valve is hidden." }
+  ] },
+  "c_rule": { "title": "Whether to follow this procedure", "situation": "A string with a suspected fault must be isolated before evening peak. By procedure you wait for the manufacturer to confirm, but waiting will miss the discharge window, and the month's assessment will be docked. The shift leader says it's your call.", "options": [
+   { "label": "Wait for the manufacturer", "result": "You miss the window and are docked. By the time the manufacturer calls, it's fully dark, and the fault turns out to be minor. The station manager doesn't say whether you were right or wrong." },
+   { "label": "Isolate now, paperwork later", "result": "The discharge goes off on time, and the process gains one more explanatory form. The safety officer comes to check on you specially and has you sign the paper." }
+  ] },
+  "c_home": { "title": "Your spouse wants you off the mountain", "situation": "Your child has started primary school, and your spouse can't manage alone in Xining. The company's central control post is in Xining: twenty percent less pay, no allowances, and no more twenty on, ten off.", "options": [
+   { "label": "Two more years", "result": "You spend your leave on school runs and cooking. Your child does well on a test and sends you a picture, which reaches you a day late." },
+   { "label": "Apply to come down", "result": "You transfer to central control, watching screens all day. What you see is the same station's curves, and you never miss another parent-teacher meeting." }
+  ] },
+  "c_zhanzhang": { "title": "Compete for Station Manager", "situation": "The Station Manager is leaving, and there's an internal competition. The post means managing assessments, settlement, a dozen people's moods and every switching order, with long-term residence on site, and maybe a chance at bigger projects.", "options": [
+   { "label": "Compete for Station Manager", "result": "In your defense you describe that night's alarm, including the step that almost went wrong." },
+   { "label": "Stay the technical backbone", "result": "You say you'd rather stay near the equipment. The new station manager always comes to ask you first." }
+  ] },
+  "c_ai": { "title": "Whether to learn to look after the models", "situation": "The company is picking people from the stations to maintain AI alarm rules and data quality. It gets you off site sooner, but you'd start from Python, and have to prove that field experience really can be written down as rules.", "options": [
+   { "label": "Sign up", "result": "You break years of inspection experience into rule after rule, and the model's false alarms halve. For the first time you feel that even what the back of your hand knows can be written down." },
+   { "label": "Stay in the field", "result": "Somebody has to go into the containers. You keep doing rounds. However the system consolidates, it won't climb a ladder for you." }
+  ] },
+  "c_inland": { "title": "An inland storage company is hiring", "situation": "A storage-system manufacturer inland wants field service engineers. You'd come back down to four hundred meters at about the same pay, but you'd be flying all over China without knowing which hotel you'd sleep in next week.", "options": [
+   { "label": "Go to the manufacturer", "result": "You roll up your dorm quilt, leave the oxygen bag in the duty room, and say goodbye to Assistant Operator.", "end": "You do field service for a manufacturer, repairing the same containers in coastal industrial parks. There is plenty of oxygen and the air sticks to you. Something always feels off, and eventually you realize it's that there's no sand." },
+   { "label": "Stay at the station", "result": "You decline. The next settlement day's curve is still waiting for you to check." }
+  ] },
+  "c_retire_site": { "title": "The old station is being retired", "situation": "The phase-one batteries have reached end of life, the whole station will be refitted, and half the staff will move to new sites. Your health numbers are plain on your checkup. The company asks if you'd go to the next project, at higher altitude, as the person in charge.", "options": [
+   { "label": "Come off site, back to Xining", "result": "You finish the handover and bind the defect ledger from phase one to the present, leaving it with the station.", "end": "You go back to Xining and do power settlement for an electricity retailer. The curves are the same kind of curves. You don't have to climb ladders, and no one calls you in the night." },
+   { "label": "Go to the new project", "result": "You go up an even higher mountain. The headaches come on faster than when you were young, and you deal with them faster too." }
+  ] }
+ },
+ "endings": {
+  "retire": "You put your duty log back in the archive cabinet. The station is on its second generation of batteries now. The dog that followed your rounds has long since been replaced by its descendants. The road down has been graded, and two hours have become one and a half. You fall asleep in the passenger seat, and for the first time there is no headache.",
+  "burnout": "On your checkup there are arrows beside your red blood cells and your blood pressure, and the hospital tells you to stay away from high altitude. The company moves you off site, and later you take medical retirement. At home in Xining you still wake at the exact time in the night that dispatch ought to be calling."
+ },
+ "stages": [
+  "You follow the lead operator reading meters, walking the containers and recording defects, watching the power curve on the EMS with an infrared thermometer and a multimeter in hand. The lead operator answers dispatch, and you listen beside him to learn how to repeat an order back. On a switching order you are the one being supervised, and every press of a button has someone watching.",
+  "A shift is yours. You review switching orders and lead the assistant operators on alarms, and on the phone you confirm load and time with dispatch, word for word. When a manufacturer's engineer comes to the station you watch him work and stop him from taking shortcuts. Unlike a duty operator, whatever happens on this shift has your name in the log.",
+  "The rosters, assessments, spares and moods of a dozen-plus people are yours. At month's end you work out the frequency-regulation assessment and power settlement, take appeals to dispatch, and argue warranty liability with manufacturers. You walk fewer rounds. Your desk has more purchase orders and safety checklists, and the truck up to the station is yours to arrange too.",
+  "You manage central monitoring and spares for several stations, most of the time on the road or in front of a remote dashboard. Which station gets new batteries first, which defect can wait, where the budget goes: you set the order. Station managers phone all day long, and you must be able to hear which call is really urgent.",
+  "The company's operations standards and the budgets of all its stations are yours. You negotiate warranty terms with battery makers, discuss rule changes with the grid side, and go back to headquarters to explain why earnings fell short of the feasibility report. You also must decide whether a batch of batteries that still works should be retired."
+ ],
+ "work": [
+  "The lead operator has you measure container seven again with the infrared thermometer. On the third string you read a point four degrees above the others. Back in the control room you check the BMS curve, it matches, and he writes your finding into the defect book.",
+  "The driver of the washing truck works out with you what dust is costing on this row of panels, and from a generation comparison you figure it's worth cleaning. The water comes in by truck. He says it's dearer than bottled.",
+  "The first time you hear a dispatch order, you grip your pen and copy the power figure three times. The lead operator reads your log and tells you to write the time to the second.",
+  "Your assistant operator Cheng has left a step out of a switching order. You catch it before signing and make him go to the container and read it through again. At step four, his voice drops.",
+  "A manufacturer's commissioning engineer wants to skip an insulation test to catch a flight. You put a megohmmeter down in front of him. He runs the test, catches the next bus, and doesn't bring it up again.",
+  "The dispatcher on the phone asks for more discharge power at short notice. You check the SOC and temperature and name a figure you can deliver. He says all right, and neither of you adds another word.",
+  "The monthly settlement sheet is short by more than thirty megawatt-hours. You put the meter records, dispatch orders and curves on one Excel sheet, go through them item by item on the phone with the settlement officer, and get it back.",
+  "The canteen reports fresh vegetables are short again. You change the supply truck's route so it brings spares as well. The station's weekly report gains a line: this week we ate tomatoes.",
+  "A safety inspection team comes to the station and pulls up a two-year-old defect record. You take them on site, where the repair marks are still visible, and the closure form's date is right to the day.",
+  "Three stations all need spares and inventory covers two. You pull each station's SOH and defect ledger and phone the managers to explain the order. One of them doesn't reply for half a day.",
+  "On the remote dashboard you notice one station's discharge efficiency has been low for two straight weeks. The manager says nothing's wrong. You ask him to pull up the liquid-cooling return temperature, and the problem is on the second page.",
+  "In warranty talks the battery maker says the degradation is within contract. You put three years of SOH data and ambient temperature on the table and ask them to explain why two stations from the same batch are five points apart.",
+  "Finance wants to see the gap between the feasibility report and actual earnings. You take the statements over, and on page six point out that the original report never counted the cost of cleaning off sand."
+ ],
+ "past": [
+  "Your family lives in a county town in eastern Qinghai. Your father drives at a mine and hardly gets home in a year. He says one day you should find a job somewhere with electricity, and stay out of the pit.",
+  "At vocational college you choose electrical automation, having heard you could get into a power plant after graduation. In the training lab you wire up a star-delta starter with your own hands for the first time.",
+  "Your internship is with a substation maintenance crew in Xining. The veteran teaching you to test insulation has you read every number aloud. You think it's for teaching, and only later learn it's for safety.",
+  "At graduation a renewable-energy operations company comes to recruit on campus. The talk says the high-altitude allowance is generous. It doesn't say you'll spend more than two hundred days a year on station.",
+  "You go up with your first project to a station near Golmud, an eleven-hour ride. In those six months you pass the low-voltage electrician exam, and move to this solar-storage station as a duty operator."
+ ],
+ "late": {
+  "pension_note": "Estimate: enterprise employee pension contributed on wages including the altitude allowance, with a middling to fairly high replacement rate.",
+  "scenes": [
+   "You've moved to Xining, and you still wake at three in the morning. There are no alarms in the room, only the radiator pipes knocking, and you get up to check the water pressure anyway.",
+   "The compound puts solar on its roof, and the management invites residents to take a look. You go over and ask first about the string orientation and the inverter brand. The property manager begins addressing you very seriously as teacher.",
+   "Your blood pressure and red cells still need regular checks. The doctor asks how many years you spent at altitude. You say over thirty, and he turns back two pages in your file.",
+   "The old phase one has long been dismantled and its batteries recycled, and the ground now holds a third generation. Only two people remain on duty. When you hear this, you work out how many ladders that means.",
+   "You stay at your son's place at low altitude for a while. For the first month you're always drowsy, with more oxygen and more sleep.",
+   "At a hospital recheck you lay out years of checkup reports in order. The doctor says your file is more complete than the records office. You say it's defect closure.",
+   "The news says Haixi has added so much new renewable capacity. You turn the television down and go water the tomatoes in the sunroom. These tomatoes need no truck all year.",
+   "There's no sand at the new job, but you always want to seal up the windows. Your colleagues tell you there isn't that much dust here.",
+   "A coastal station has a small problem, and a young engineer calls you. You hear him read out the data, and tell him to go check the liquid-cooling valve first.",
+   "In the county town you help people install home solar water heaters. It's small work. When you climb a roof you don't lose your breath, and that in itself seems good.",
+   "On a sunny day you go out, look up and estimate the day's irradiance. That number has nothing much to do with you now.",
+   "You can't quite hear high notes now, and the family have learned to stand on your left when they talk. When the house is quiet, it still seems to you that some machine is running."
+  ],
+  "closing": {
+   "retire": "The wind still comes from the west, the sun rises here as usual every day, and the curve has nothing to do with you.",
+   "burnout": "The pills are sorted by the week. Today's compartment is empty, and no phone will ring tonight.",
+   "end": "Now and then you think of those white containers. Their data is still traveling to somewhere."
+  }
+ }
+}

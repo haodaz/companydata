@@ -1,0 +1,158 @@
+{
+ "id": "pharma-rd-tz",
+ "occupation": "Pharmaceutical R&D Scientist",
+ "role": "Process R&D Associate Scientist at a CMO",
+ "headline": "At a contract drug development and manufacturing firm in Taizhou's medical city, an associate scientist taking other companies' new drugs from a few grams to several hundred kilos",
+ "unit": "A contract drug research and manufacturing company (CMO) in Taizhou's medical city",
+ "unit_type": "Pharmaceutical contract development and manufacturing company",
+ "city": "Taizhou, Jiangsu",
+ "city_tier": "Third-tier",
+ "education": "Master's degree (Medicinal Chemistry)",
+ "level": "Your column chromatography is beautiful. Why ninety percent yield on the bench falls to seventy-two when scaled up, you'll have to go to the plant to learn.",
+ "intro": "The lab building is at the far end of the park, and the corridor tells you which group is using dichloromethane today. The first exam question at induction: what do you do if you make an error in a lab record? The answer isn't correction fluid. It's one line through it, your signature, the date, the reason. Your group leader sets a black gel pen on your lab notebook and says this will do you more good than your degree.",
+ "salary_note": "Estimate: a CMO in Taizhou's medical city pays about twenty percent below the same job in Shanghai, with lower living costs too.",
+ "facts": [
+  { "label": "Associate Scientist (current level)", "value": "0–2 years, ¥7,225–10,625 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Scientist (2–5 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥24,300 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Project planning and leading a team", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Synthetic route design", "source": "AI exposure" },
+  { "label": "Open positions", "value": "320 related listings nationwide, 10 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You change into your lab coat and pass through the air shower. A reaction held warm overnight has run fourteen hours. First you take a sample, spot a TLC plate, and wait for the HPLC result.",
+  "Morning project meeting. The client wants the intermediate two weeks early. Your group leader drags the line on the Gantt chart to the left, and everyone stares at that line.",
+  "Charging the reactor. Weighing takes two people checking, and every gram goes into the notebook. In two layers of gloves you tighten the clamp on the flask, and your fingertips go a little numb.",
+  "After the canteen you hear a colleague from QA in the corridor: last week's deviation still isn't closed, and they need further investigation data from your group.",
+  "On the HPLC trace is a new unknown peak at 0.15 percent, sitting right on the reporting threshold. You mark it and begin to work out where it came from.",
+  "Column chromatography: most of a bottle of solvent goes through, and the separated fractions slowly concentrate on the rotary evaporator. The fume hood glass reflects your rather expressionless face.",
+  "A phone conference with an American client, for whom it is morning. Their chemist asks about the impurity's origin, and in halting English you walk through the mechanism.",
+  "You finish today's electronic records. The audit trail has logged every one of your changes. Back at the dorm your hair still carries that smell."
+ ],
+ "ladder": [
+  { "title": "Associate Scientist", "stage": "Run experiments", "focus": "Do bench-scale work, run HPLC, keep lab records, and learn every rule of GMP" },
+  { "title": "Scientist", "stage": "Independent", "focus": "Own process development for one intermediate, and take part in pilot-scale work" },
+  { "title": "Senior Scientist", "stage": "Lead projects", "focus": "Own a project's route, impurity studies and tech transfer, and face client audits" },
+  { "title": "Project Lead", "stage": "Lead a team", "focus": "Lead a project group, manage schedule, client communication and milestone payments, and answer for the filing documents" },
+  { "title": "R&D Director", "stage": "Whole department", "focus": "Manage the R&D department's people, platforms and choice of projects, and handle regulatory inspections" }
+ ],
+ "ai_tasks": [
+  { "name": "Project planning and leading a team", "how": "AI can schedule and roll up project data. Assigning work, negotiating with clients and answering for results takes someone with real technical background." },
+  { "name": "Synthetic route design", "how": "AI proposes routes and predicts impurities and conditions. People verify at the bench and judge which route will scale and what cost it can bear." },
+  { "name": "Literature and patent search", "how": "AI reads literature and patents in bulk and lists known routes and risks. People only spot-check whether the citations are real." },
+  { "name": "Drafting regulatory filings", "how": "AI drafts CTD sections and assembles data tables. People check the source of every figure, weigh the regulatory limits and sign off." }
+ ],
+ "events": {
+  "e_scale": "Ninety percent on the bench, and the first run in a fifty-liter reactor gives seventy-two. You spend three days squatting in the plant and find the problem is the addition rate. A reactor loses heat far more slowly than a flask, something the books don't go into in detail.",
+  "e_impurity": "You chase that 0.15 percent unknown peak for five weeks, isolating it and running mass spec and NMR until you pin down the structure. In the report it comes to one line. Your group leader treats you to morning tea, with a half-hour wait for the crab-roe soup dumplings.",
+  "e_deviation": "A pilot batch ran two degrees over for ten minutes. A deviation report is opened: root cause, impact assessment, CAPA, none of it can be skipped. You and QA go through it in a meeting room for three evenings.",
+  "e_audit": "A client's auditor flies in from Switzerland and spends three days going through more than four hundred pages of records. The problem found is one inconsistent date format. On leaving he shakes hands and hands over a list of twelve observations.",
+  "e_kill": "The client's phase two clinical data disappoints, and the project is terminated. The intermediate you worked on for two years will never become a drug. Final payment is settled per contract, and the same day the project team is split up among other groups.",
+  "e_skin": "The eczema on your hands keeps coming back. The dermatologist says it's the gloves and solvents together. You start wearing cotton gloves underneath, and in summer it feels like steaming your hands.",
+  "e_nose": "In your building's elevator you catch a trace of ethyl acetate and ask a neighbor if she's been doing her nails. She's startled. Your spouse says your nose is better than a dog's these days.",
+  "e_batch": "All three process validation batches pass, and the release sheet shows a string of consecutive batch numbers. You and the plant manager stand outside the clean area sharing a smoke. You quit two years ago. Just this one.",
+  "e_inspect": "Drug regulators arrive for an on-site inspection, open the electronic system to view the audit trail, and pull original chromatograms from three years back. Everyone is very quiet, and every printer in the building is running.",
+  "e_price": "After centralized drug procurement squeezes clients' margins, they ask for another twenty percent off process costs. You replace one column chromatography step with a recrystallization, and the money and solvent saved go in the weekly report.",
+  "e_order_slump": "A capital winter comes, and orders from biotech startups suddenly fall forty percent. The company trims staff. One floor of the lab building empties, half the fume hoods are shut down, and the corridors don't smell nearly as strong.",
+  "e_commute": "Your spouse works in Nanjing, and weekends are spent going back and forth. When your child is about to start primary school you do the sums again and again, and in the end your spouse quits to come to Taizhou. At home that conversation still isn't over.",
+  "e_ai_route": "The synthetic route AI proposes looks lovely at first glance, but one step uses a reagent that can't be scaled at all. You point this out at the review meeting, and also admit that its third step really is better than what you had thought of.",
+  "e_ai_lit": "AI runs the literature and patent search in one night and lists infringement risks as well. You spot-check twenty items, and one cited paper doesn't exist. You write that into the usage guidelines.",
+  "e_ai_ctd": "AI lays out the first draft of CTD Module 3 in a few hours, and you spend even more time than before checking it: every number has to go back to its original chromatogram.",
+  "e_ai_robot": "The automated platform screens ninety-six sets of conditions in a night. Fewer associate scientists are hired, and the first thing the young ones learn is to write scripts for the platform.",
+  "e_tea": "A client rep visits Taizhou and you take him for morning tea. The knife work on the shredded tofu has him taking a dozen pictures. Later on, in an email, this comes before the technical issues.",
+  "e_bonus": "A milestone is delivered on time, the client pays, and your project bonus arrives. You pay off part of the car loan and put the rest toward your child's tuition.",
+  "e_ring": "After years of bending in front of fume hoods, your back and neck both ache, and you have to get up when you've been sitting a while. In project meetings, you've become the one who always stands."
+ },
+ "choices": {
+  "c_backdate": { "title": "A record entered late", "situation": "Last night you charged the reactor and forgot to write it down at once, and only remembered today. A senior colleague says everyone fills things in like this, just put yesterday's time. But the notebook says real-time records.", "options": [
+   { "label": "Enter it late, state why", "result": "You write an explanation, QA has you in for half an hour, and a minor deviation is opened. For several days your seniors hardly talk to you." },
+   { "label": "Fill it in as you were told", "result": "No one finds out. Every time you press save in the system afterward, you think of that page. Once the audit trail goes live, this can never happen again." }
+  ] },
+  "c_shop": { "title": "Go to the plant, move up to Scientist", "situation": "The company says those seeking promotion to Scientist had better follow a pilot run on the plant floor first. That's three rotating shifts for six months, but you would see what the lab never shows.", "options": [
+   { "label": "Work the plant shifts", "result": "You follow two batches, and it's all sweat in front of the reactor in the middle of the night. Scale-up finally has a feel in your hands." },
+   { "label": "Stay in the lab", "result": "You want to do your impurity studies thoroughly. That report is solid, and some people still say you've never seen a real reactor." }
+  ] },
+  "c_sh": { "title": "An innovative drug firm in Shanghai is hiring", "situation": "An innovative drug company in Zhangjiang, Shanghai, is hiring for process development at forty percent more pay, with plenty of options and much higher rent. The company has money for three years, or maybe less.", "options": [
+   { "label": "Go to Shanghai", "result": "You spend four years in Zhangjiang working on your own company's molecule, and live through layoffs too. Back at a CMO, you have a better understanding of client anxiety." },
+   { "label": "Stay in Taizhou", "result": "Taizhou's housing prices and morning tea make you reluctant to leave. In these years you handle more than a dozen molecules." }
+  ] },
+  "c_gaoji": { "title": "Going for Senior Scientist", "situation": "Promotion to Senior Scientist looks at project results and client audit records. There's a tough tech-transfer project right now, and if it goes badly you take the blame.", "options": [
+   { "label": "Take on the mess", "result": "It takes you eight months to complete the transfer, changing routes once along the way. The client writes one line of thanks in an email." },
+   { "label": "Steadily deliver your own projects", "result": "You deliver your existing projects step by step. You're not in this round's review, and life goes on smoothly." }
+  ] },
+  "c_client_ask": { "title": "A client asks you to hurry", "situation": "The client's fundraising hinges on this batch, and they want the interim stability results early. The results haven't reached the required time point, but if you don't provide them, this client may well not survive.", "options": [
+   { "label": "Give only data at time points reached", "result": "You write a long email of explanation. The other company's CEO calls, sounding very tired, and says he understands. Six months later the company changes management." },
+   { "label": "Give the trend, mark it incomplete", "result": "You provide a summary clearly labeled informal, time point not reached. They get their funding. QA frowns at you for quite a while." }
+  ] },
+  "c_pm": { "title": "Compete for Project Lead", "situation": "A Project Lead leads a group, spends days in client meetings and nights revising reports, and carries collections. You love reading chromatograms, but after this step there won't be many chances to touch a lab bench.", "options": [
+   { "label": "Compete", "result": "You take over a group of five and a Gantt chart. The first time you write our judgment is in a report, your palms are sweating." },
+   { "label": "Stay on the technical track", "result": "You say you'd like to keep reading spectra. When tough process problems come up, everybody still brings them to you." }
+  ] },
+  "c_ai": { "title": "Lead the AI route-screening work?", "situation": "The company has bought a route design and automated screening platform. A chemist is needed to turn experience into data the model can use, and to clean ten years of lab records. This doesn't count toward project bonuses.", "options": [
+   { "label": "Lead it", "result": "You lead the structuring of dozens of notebooks. The first thing the model learns is the experiments that failed." },
+   { "label": "Stick to projects", "result": "You say your deliveries are the priority. A year later the platform is live, and you have to learn to write records in a format someone else set." }
+  ] },
+  "c_reg": { "title": "Move into drug registration", "situation": "The company's regulatory affairs team needs someone who knows the process, to write filings and talk with the drug review center. No more smelling solvents, your hands can heal, but you'd be leaving the lab bench for good.", "options": [
+   { "label": "Move to regulatory", "result": "You archive your lab records, hang your coat back in the locker, and complete the transfer.", "end": "You move to drug registration and deal every day with requests for supplementary data. The eczema on your hands clears up. You used to explain where this peak came from. Now you ask others where it came from." },
+   { "label": "Stay in R&D", "result": "You still want to watch reactions. Another pair of gloves tears." }
+  ] },
+  "c_exit": { "title": "A college wants you to teach", "situation": "A vocational college in Taizhou is starting a pharmaceutical course and wants teachers with industry experience. Half the pay, and the summer and winter breaks are real. Company orders haven't been good lately.", "options": [
+   { "label": "Go and teach", "result": "You pack your books, pocket that black gel pen, and walk out through the air shower.", "end": "You go to the vocational college and teach pharmaceutical processing. Your first lesson is still how to correct a lab record: one line through it, your signature, the date, the reason. The students keep their heads down and write." },
+   { "label": "Stay on", "result": "You stay. The project has two more batches to validate, and you want to see them released." }
+  ] }
+ },
+ "endings": {
+  "retire": "You sign the last report before you retire, your signature less tidy than in your twenties. Most of the molecules you handled never became drugs. A few did, and they sit on pharmacy shelves, and the package inserts don't carry your name. You walk through the air shower, and this time the smell is blown clean away.",
+  "burnout": "After back-to-back filings and inspections you begin counting batch numbers at night, and the eczema and a tight chest arrive together. You ask to leave R&D, take a long leave, and never go back to the lab building. You would still recognize the smell of that corridor. These days you walk around it."
+ },
+ "stages": [
+  "Your days are bench work: weighing, charging, temperature control, spotting plates, running columns, writing every number in your lab notebook. The HPLC sequence runs overnight and you read the traces in the morning. The scientist supervising you goes through your notebook, and so does QA. Your conclusions count only with someone else's signature, and any error means a line through it, a signature, a reason.",
+  "One intermediate's process is yours now. You design condition screens, write scale-up plans, and watch the reactor with the operators in the pilot plant. Your data has started showing up in the client's weekly reports, and QA's deviation investigations name you. Unlike an associate, you have to be able to explain for yourself why a step is done this way.",
+  "A project's route and impurity control are yours to decide. You do tech transfer, writing the process into documents the plant can read, and at client audits you take the presenter's seat. You begin looking at cost and patents and coordinating synthesis, analysis and plant, and bench work is more often for the young ones while you read the traces.",
+  "You lead five or six people, managing schedule, milestones and collections. Each week brings several client calls in different time zones, and when a project has a deviation, you are the first to write the explanation. The process section of the CTD is approved by you. The tools you use most these days are the Gantt chart and email.",
+  "The R&D department's people, equipment, platforms and project direction are in your hands. You watch how clients' fundraising is going, which kinds of molecules are worth investing in, and whether you'll get through the next regulatory inspection. When inspectors come, you're the one seated opposite answering questions, and you answer for every record in the building."
+ ],
+ "work": [
+  "Qian in analytics sends your chromatogram back, saying the baseline isn't flat. You change mobile phase and inject again. The peak shape on the second shot is symmetrical, and your notebook gains another line through it.",
+  "In the fume hood you run a half-meter silica column. A senior labmate passing by says your elution gradient is too steep. You slow it down, and the two spots really do separate on the plate.",
+  "A QA specialist checks your weighing records and finds a balance calibration label two days out of date. You quickly report it, and all of that day's weighings are re-verified.",
+  "Luo, an operator in the plant, says this reactor has a dead spot in its stirring, and you try moving the addition port. The second batch's yield goes from seventy-two back to eighty-five, and the scale-up plan gets a new version.",
+  "A client's chemist questions the endpoint determination of one step by email. You put the IPC data and trace on one page. He replies with one line: OK, proceed.",
+  "The crystal form keeps coming out wrong in recrystallization. You compare a dozen batches by XRPD, trace it to cooling rate, and write the cooling curve into the process procedure.",
+  "A Swiss auditor asks how a genotoxic impurity is controlled. You pull up the risk assessment and validated method and go through them point by point, and he makes a tick in his notes.",
+  "At a tech-transfer meeting the plant manager says this process document is too idealized. You take two of his shift leaders to the lab, redo it with them, and change three details in the document.",
+  "A client's project manager says a milestone will slip and payment with it. You find that clause in the contract appendix, spend forty minutes on the phone, and get it split into two payments.",
+  "New hire Wang's first deviation investigation gives human error as the root cause. You return the report and tell him to ask why five more times. The fifth why leads to the shift schedule.",
+  "The boss wants to take on a high-potency project. You work out the cost of containment equipment and likely payments, and show him a single page. The two of you talk in the office until nine and decide to leave it until next year.",
+  "An inspector asks about a chromatogram from five years ago. You have the archivist pull the original data and audit trail, and ten minutes later they're on the table. The inspector nods and moves on to the next item."
+ ],
+ "past": [
+  "Your family is in Xinghua. Your grandmother takes a medicine and has you read the package insert to her every time. It's the first you know that some words are more binding than people's orders.",
+  "You choose pharmacy, and your parents think you might get into a hospital. In organic chemistry lab the smell of ether makes you want to throw up on the spot, and you finish the experiment.",
+  "You just miss a guaranteed graduate spot and pass the exam for medicinal chemistry at your own university. Your advisor's project is on a class of anti-tumor scaffolds, and you stay in the lab until the dorms close.",
+  "In your second year of graduate school you intern in the analytical lab of a drug company, calibrating balances and mixing mobile phase every day. You learn that a drug doesn't count just because it got made. You have to prove every step was done this way.",
+  "Sending out résumés before finishing your master's, you find Shanghai's jobs all want PhDs. Taizhou is close to home and this CMO pays enough. The first interview question is: have you ever had a flask go wrong?"
+ ],
+ "late": {
+  "pension_note": "Estimate: enterprise employee pension on a third-tier city base, plus company annuity.",
+  "scenes": [
+   "You start making your own tofu, weighing soybeans by the gram and watching the soy milk with a thermometer. Your spouse says you're running a pilot.",
+   "Buying medicine at the pharmacy, you first check the batch number, the manufacturer and the list of excipients. The clerk asks if you have some allergy. You say no, just looking.",
+   "The skin on your hands has healed, but your fingerprints are much fainter, and the phone's fingerprint unlock works only some of the time. It might count as an occupational injury, and there's nowhere to claim it.",
+   "A drug you once worked on has made it onto the national insurance list, and a neighbor says it works well. You don't mention your connection. At home you look it up, and its process has been changed past your recognizing.",
+   "You won't go into any room with a smell, and change to a barbershop that doesn't do perms.",
+   "At the community health station you read the package inserts aloud to old people. The print is too small for them. You read slowly, and you don't explain the mechanism.",
+   "Your chest is much better. The medical city has hired another batch of young people. Riding past on the bus, you turn your head to the other side of the river.",
+   "The new job is very clean, and your skin no longer cracks. Sometimes you actually sniff your sleeve. It smells of nothing.",
+   "When you see news of a drug approval you first look up who its CMO was. You find it, it's someone you know, and you send a thumbs-up.",
+   "You haven't thought about yield for a long time now, except when making sweet and sour ribs, when you still can't help calculating it.",
+   "Having shredded tofu at a morning tea shop, you watch the chef cut the tofu with more attention than a process validation. One block cut into more than a dozen layers: that's what reproducible scale-up means.",
+   "At home you read a hospital prescription's insert from start to finish under the lamp. Every word on it was checked by somebody, somewhere, on some night."
+  ],
+  "closing": {
+   "retire": "A fine day, and you leave the window open. The only smell in the room is cooking.",
+   "burnout": "The Fengcheng River moves slowly past. Your hands are clean, and there's nothing that needs recording.",
+   "end": "For some reactions, you never learned the final yield."
+  }
+ }
+}

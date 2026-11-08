@@ -1,0 +1,189 @@
+{
+ "id": "botanist-xsbn",
+ "occupation": "Botanist",
+ "role": "Research Intern",
+ "headline": "A master's graduate posted from the north to a botanical garden in Xishuangbanna, spending every day with forest plots, the herbarium and the ginger family",
+ "unit": "A research group at a botanical garden in Xishuangbanna",
+ "unit_type": "Research institution (botanical garden)",
+ "city": "Xishuangbanna",
+ "city_tier": "Prefecture",
+ "education": "Master's degree (botany)",
+ "level": "You can name several hundred northern plants. Down here, eight out of ten at your feet are strangers.",
+ "intro": "The plane comes down from the north and the air turns thick enough to wring out. Plants here don't reason by season. When the rains come, everything grows. Your group leader hands you a diameter tape for measuring trees, a box of aluminum tags and a pair of leech socks. The trees in these plots are for keeping track of the rest of your life, he says. Start by remembering the first one.",
+ "salary_note": "Estimated: a research institute's salary plus performance pay, partly from project funds. Lower than first-tier cities, but living costs are lower too.",
+ "facts": [
+  { "label": "Research Intern (current level)", "value": "0–3 years, ¥5,000–7,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Assistant Research Fellow (3–8 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Field collecting and observing living plants", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "First-pass identification from photos", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The fog hasn't lifted. You shoulder your collecting bag, GPS and pruning shears and follow ranger He's motorbike into the hills, the wheels throwing up red mud.",
+  "Into the plot. You measure the trees one by one, the tape held tight against the red paint line on the trunk. He calls out the numbers and you write them down. Moss has half covered the numbers on the aluminum tags.",
+  "The rain arrives without warning, and you push your notebook into a waterproof bag. Three leeches are climbing your socks. You wipe them off with tobacco water and don't count the marks on your legs.",
+  "You eat a rice ball under a great buttressed root. Nearby a clump of ginger is in flower, and it will be gone by tonight. You photograph it, dissect it and put it in alcohol on the spot.",
+  "Back in the specimen room you press specimens: changing blotting paper, spreading leaves to show both faces, writing the collection number. The drying oven is full of the smell of hay.",
+  "A gardener from the living collections finds you. An accession tag has fallen off. You check against the accession cards and identify the seedlings back again, one at a time.",
+  "A row of silica gel tubes sits in the lab. You number the leaves you collected this afternoon and put them in. Your neck is stiffening in front of the microscope.",
+  "Geckos on the dorm wall. You send your spouse in Kunming a picture of a flower. A question mark comes back, asking what this is."
+ ],
+ "ladder": [
+  { "title": "Research Intern", "stage": "In the plots", "focus": "Field surveys, specimen work, phenology records, getting to know one plant group well" },
+  { "title": "Assistant Research Fellow", "stage": "Own project", "focus": "Applying for youth grants and publishing independently, advancing on papers and funding" },
+  { "title": "Associate Research Fellow", "stage": "Students", "focus": "Leading general grants, supervising graduate students, keeping a research line going" },
+  { "title": "Research Fellow", "stage": "Directing", "focus": "Setting research direction, reviewing manuscripts, evaluating projects" },
+  { "title": "Group Leader", "stage": "Running the group", "focus": "People, funding and the long-term continuity of the forest plots" }
+ ],
+ "ai_tasks": [
+  { "name": "Field collecting and observing living plants", "how": "AI can't walk into a forest in the rainy season. A flower that opens for one day needs someone to wait for it." },
+  { "name": "First-pass identification from photos", "how": "Phone apps are accurate on common species now. People only look at the ones they aren't sure about." },
+  { "name": "Reading phenology camera images", "how": "Flowering and fruiting times can be extracted automatically. People spot-check and correct them." },
+  { "name": "Digitizing specimens and entering data", "how": "Handwritten labels on herbarium sheets can be transcribed automatically. People check old place names and collection numbers." },
+  { "name": "Taxonomic revision and judging new species", "how": "AI can compare sequences and morphology. A person has to answer for whether this is a new species." },
+  { "name": "Experimental design and writing papers", "how": "AI helps with statistics, searching the literature and polishing English. How to ask the question is for a person to think of." }
+ ],
+ "events": {
+  "e_miss": "You write the wrong hill as the collecting site on a specimen. The herbarium curator finds it and has you check all three hundred from the same batch.",
+  "e_leech": "In rainy-season plots, land leeches work their way in through trouser cuffs and collars. Back at the dorm you find your socks stained red. The itching lasts more than a month and leaves a few dark marks.",
+  "e_census": "The five-yearly plot census begins, with tens of thousands of trees to measure again. It takes the whole dry season. When you finish, the list has some new trees on it, and some gone.",
+  "e_fund": "Grant applications close in March. You revise until the final night, and the system hangs for ten minutes before it submits. Results come out in August, and your name isn't on the list.",
+  "e_paper": "A paper you've had under submission for a year and a half is finally accepted. The reviewer raised just one question, about the colors in the third figure.",
+  "e_new": "In a valley you collect a ginger with an odd-looking inflorescence. You compare it against every type specimen, then the sequences, and conclude it's new. The type specimen goes into the herbarium, and the register records your collection number.",
+  "e_visitor": "In peak season the garden is full of visitors and research staff take turns giving tours. A child asks you if this tree feels pain. You think about it and say it won't tell you.",
+  "e_apart": "Your spouse's transfer falls through again. You've been living apart for six years now, and a year's plane tickets would buy a good camera.",
+  "e_skin": "With the constant damp, eczema flares again and again. The ointment shares a bag with your pruning shears.",
+  "e_contract": "Time for your contract-term review, with a form to fill in on papers, grants and students. You finish and realize there is nowhere to put these five years of measured trees.",
+  "e_ai_id": "Phone identification keeps getting better, and one snapshot brings up the name of a common species. Students stop bringing keys to the field. You make them bring keys, because the leaves of close relatives look the same.",
+  "e_ai_label": "The herbarium digitizes hundreds of thousands of sheets, with handwritten labels transcribed automatically. You see an old collector's writing turned into the wrong place name. You flag it. You flag the next one too.",
+  "e_ai_wrong": "One paper uses a model to assign a batch of specimens to a single species. You go to the herbarium, take out the flowers and dissect them. The model has merged two species into one. You write to the journal.",
+  "e_tower": "Lightning knocks out sensors on the canopy observation tower, and you climb dozens of meters to replace them. The wind up there is nothing like the wind below. You see the tops of leaves you've only ever seen from underneath.",
+  "e_neck": "More time dissecting flowers under the microscope, and your neck and eyes are protesting. You add an angled eyepiece to the stereo microscope.",
+  "e_student": "Your grad student graduates and goes to a company to work on data. Leaving, she says, I can still tell those two leaves apart. You say that will do.",
+  "e_group": "The institute changes direction, and the taxonomy group is folded into a Biodiversity Informatics Group. You are still responsible for the herbarium. The heading on the funding ledger has changed.",
+  "e_street": "Home in the north to visit family, you notice the sign on a roadside planting has the Latin name wrong, and take a photo. Your family asks what you're doing. You say this whole genus is wrong.",
+  "e_old_tree": "The first tree you ever measured is noticeably thicker at this census. The diameter goes into the system, and the curve runs along smoothly."
+ },
+ "choices": {
+  "c_phd": {
+   "title": "A PhD while working, or get the field years in first",
+   "situation": "Your group leader says that if you want to move up, you can't get around a doctorate. Part-time would take five or six years, with field seasons and experiments piled together. Without it you could keep doing good work on the plots, but your title will stall.",
+   "options": [
+    { "label": "Do the PhD while working", "result": "You measure trees by day and run PCR by night. The acknowledgments in your thesis are shorter than anyone's." },
+    { "label": "Get solid plot work done first", "result": "You become the person who knows the most trees, and students and rangers come to ask you. Your record still says master's." }
+   ]
+  },
+  "c_taxon": {
+   "title": "Stay in taxonomy, or move to genomics",
+   "situation": "Taxonomy doesn't produce many papers and grants are hard to win. A genomics line in the group is hiring. Papers come fast, but you'd be moving from the field into the lab.",
+   "options": [
+    { "label": "Stay in taxonomy", "result": "You keep wrestling with this one family, at most two papers a year, each one backed by specimens." },
+    { "label": "Move to genomics", "result": "You learn to write bioinformatics scripts. There are more papers, and your field boots go in the corner." }
+   ]
+  },
+  "c_kunming": {
+   "title": "Transfer to the institute in Kunming",
+   "situation": "Your spouse is in Kunming, and the institute there has an opening. It would end living apart, but you would have to let go of the plots and this research line.",
+   "options": [
+    { "label": "Transfer to Kunming", "result": "You say goodbye to the plots and for the first time you have weekends.", "end": "You moved to Kunming, and your later research was all on specimens and screens. Every five years the plot census data is emailed to you. The attachment is very large. You download it every time." },
+    { "label": "Stay", "result": "You go on living apart and go on paying for tickets. The post later goes to a colleague." }
+   ]
+  },
+  "c_assoc": {
+   "title": "Apply for Associate Research Fellow",
+   "situation": "Becoming an Associate Research Fellow depends on papers and grants, and your long-term plot data isn't on the form. If you rush that data into a paper now, you'd be using several colleagues' years of work too.",
+   "options": [
+    { "label": "Write it with colleagues", "result": "It takes a long time to settle the author order. The paper comes out with your name second, and everyone can still eat together." },
+    { "label": "Quickly publish one solo", "result": "The paper comes out fast and your form looks good. Later, nobody at that canteen table calls you over." }
+   ]
+  },
+  "c_ai": {
+   "title": "Feed the plot data to a model?",
+   "situation": "A team wants to train a model on decades of plot data, for more papers and more funding. But someone has to clean the data and set the rules on who can use it and how they are credited.",
+   "options": [
+    { "label": "Do it and set the rules", "result": "You write rules for data use and in the first year clean out more than two thousand entry errors. Nobody can see this work, and it's what mattered most." },
+    { "label": "Don't, taxonomy first", "result": "The data stays on the group's hard drive. Other teams use other data and publish all the same." }
+   ]
+  },
+  "c_flower": {
+   "title": "A Kunming flower company comes calling",
+   "situation": "A company breeding ornamental gingers and orchids wants you as chief scientist at double the pay. You know every species in that genus, and you also know which ones shouldn't be put on sale.",
+   "options": [
+    { "label": "Join the company", "result": "You take off your leech socks and begin reading greenhouse orders and patent applications.", "end": "You went to Kunming to breed flowers, looking over ten thousand hybrid seedlings a year. The flowers are bigger than the wild ones and the colors brighter, and they sell well. You think about the plots only at night." },
+    { "label": "Stay at the institute", "result": "You decline politely and go back to writing that grant." }
+   ]
+  },
+  "c_full": {
+   "title": "Apply for Research Fellow",
+   "situation": "The Research Fellow application runs over a hundred pages. The institute has one slot, and your competition is a colleague who joined the same year. The two of you have fallen over together in those plots.",
+   "options": [
+    { "label": "Apply and compete", "result": "Before the defense the two of you meet for a meal at the canteen, and neither mentions it." },
+    { "label": "Step aside for a year", "result": "You say next year. You don't know how many of those next years are left." }
+   ]
+  },
+  "c_head": {
+   "title": "Take over as Group Leader",
+   "situation": "The old leader has retired and the institute asks if you will take over as Group Leader. Take it, and the plots have to be kept going, people fed, and funding found every year. You probably won't have time for those few genera you wanted to work out.",
+   "options": [
+    { "label": "Take it", "result": "Your schedule goes from phenology tables to budget sheets. The first money goes to fixing the road to the plots." },
+    { "label": "Don't, stay in the field", "result": "You turn it down and keep going to the plots. The new leader is ten years younger and calls you Teacher in every meeting." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "The dry season of the year you turn sixty, at the seventh plot census, your name is not on the field list. The herbarium's collection numbers run up to the sheet before your retirement, and the next one has someone else's surname. What goes with you are those few dark marks on your legs that have never faded.",
+  "burnout": "Your neck, your eczema and year after year of grant writing all accumulate. You apply to stop field work and later just step down. You deposit every specimen you hold, write out your collecting records cleanly, and put a list of the unfinished genera on one page in the group's shared drive."
+ },
+ "stages": [
+  "Four days a week you are in the field: measuring trunks, recording phenology, collecting specimens, then pressing, changing papers and writing labels back at the lab. The herbarium curator watches your collection numbers, and ranger He teaches you to read the trails. You go into the forest to find answers to questions from people above you, and your name comes near the end of the author list.",
+  "You have your own topic and a small youth grant. You write proposals, design sampling, dissect flowers under the microscope and look at sequences alongside morphology. Grad students sometimes come to ask you things. Unlike before, the questions are now yours to ask, and yours to fail at.",
+  "You supervise three or four grad students, lead a general grant and review other people's manuscripts. You run back and forth between field plans, expense claims and thesis defenses, and revising students' papers is slower than writing your own. You still go to the plots, but more often to check students are measuring right.",
+  "You set directions, watch the whole group's data quality, evaluate other people's projects and write recommendations for younger scientists. You must go and fight for funding to maintain the herbarium and the plots. You get to the field only a few times a year, and when you do you pick the trees hardest to identify.",
+  "You manage a group's people, money and those plots spanning decades. Budgets, contract reviews and where students go all need your decision. The most important thing you do is make sure that thirty years from now somebody is still in this forest, measuring trees at the same red paint line."
+ ],
+ "work": [
+  "Ranger He points at a tree and says it's evergreen. You spend twenty minutes in the key. He waits, squatting down for a cigarette, and it turns out he's right.",
+  "Your pressed specimens come out with the leaves crumpled. The curator brings a sheet of watercolor paper and shows you how to spread every leaf flat on the blotter. The next day you press twenty.",
+  "You're filling in accession cards for the living collections. One card gives the origin as on the hill. You ask a gardener, who thinks for a long time and says that gully behind the back hill.",
+  "You revise your youth grant through seven drafts. Your group leader circles the research aims and says these three are really one. You go and rewrite it.",
+  "Under the stereo microscope you dissect a flower whose stamen appendage is only a few millimeters long. You tease it open with forceps and take a dozen pictures through the eyepiece with your phone.",
+  "PCR bands fail for three days in a row. You change primers, then enzymes, and find at last that the silica gel has taken up moisture and the samples went moldy long ago.",
+  "Half of your grad student's first round of sampling records have no elevation. You take her back through three gullies and say nothing harsh.",
+  "Reviewing someone's description of a new species, you borrow the type specimen and find it's the same as a species published twenty years ago. You write five pages of comments.",
+  "For a project mid-term check you write out the motorbike fuel explanation three times on the expense claim. Finance says it has to read field survey transport.",
+  "You write a recommendation that sets out eight years of a young colleague's plot work. Only on page two do you mention his papers.",
+  "On a funding review panel you vote for a taxonomy project and give a single reason: if this doesn't get done, nobody will do it.",
+  "The road to the plots has washed out in the rains and the project budget can't cover the repair. You go to three departments, finally reallocate it from an equipment fund, and write six pages of explanation.",
+  "Two young people's contracts expire at the same time and there are one and a half slots. You lay out five years of their data and the human side on the table and think about it for a week."
+ ],
+ "past": [
+  "Your family lives in a small county in Hebei, with hills of vitex and wild jujube behind it. A biology teacher once took you all to make leaf-vein bookmarks.",
+  "Your first choice was clinical medicine, and you got moved to biological sciences. In your first week you consider switching majors.",
+  "Your botany field course goes to the Taihang Mountains. For the first time you work out a grass's name yourself with a key, and it makes you happier than a perfect test score.",
+  "You test into grad school and pick plant systematics. Your advisor has a neat stack of pressed specimens on his desk and says this field doesn't earn money.",
+  "In grad school you go with the team to collect in the south and step into a tropical forest for the first time, and find leaves big enough to keep off the rain.",
+  "At graduation a northern middle school has a permanent post waiting, and this botanical garden in Xishuangbanna is hiring research interns. You leave both forms on the table for a week, and pick the far one."
+ ],
+ "late": {
+  "pension_note": "Estimated: retirement pay for a research public institution.",
+  "scenes": [
+   "You go back to the family home in the north. Nothing grows outside the first winter, so you keep a few pots of ginger indoors. When they flower someone passing asks if they are orchids.",
+   "The neighborhood's planting strips are getting new seedlings, and you offer an opinion: of these two together, one wants water and the other fears it. The property office says the client decided. So you correct the Latin name on the sign.",
+   "Your old plots now have a full set of automatic cameras, and younger people say every tree has a digital identity. You ask whether anyone still measures with a tape.",
+   "You no longer identify plants. In the park when a child asks you what this is called, you say take a picture with a phone. It sees better than I do.",
+   "You sleep for three months first. For the first time, rain on the roof doesn't make you think of the road to the plots.",
+   "A county middle school asks you to teach an elective, showing children how to press specimens. It doesn't pay much. Their leaves all come out crumpled, and you don't correct them.",
+   "The skin trouble has followed you all your life. It's better in dry places, but when a program about the rainy season comes on TV, your hands begin to itch.",
+   "In your new place you earn more than before. Yet when you see someone's paper on this genus, you still click on it, and start with the references.",
+   "You never have to write a grant again. But around March twentieth every year, you don't sleep well for a few days. That date has grown into your body.",
+   "An old colleague, retiring, names you in his acknowledgments: thanks to those who measured trees together back then. You see it and send him a photo of a ginger flower.",
+   "In the city you always walk with your head down, using phyllotaxy and leaf veins as landmarks. You take a street more slowly than others and arrive later.",
+   "The specimens you pressed are still in the herbarium, frozen at minus twenty against insects, and can last another two hundred years. You work it out: longer than any sentence you've ever written."
+  ],
+  "closing": {
+   "retire": "The ginger in the pot has put up a new shoot. You measure it with a finger and record nothing.",
+   "burnout": "The rain has stopped and the eaves are dripping, one drop after another, and you don't count them.",
+   "end": "A leaf on the table has dried through, its edges curling slightly."
+  }
+ }
+}

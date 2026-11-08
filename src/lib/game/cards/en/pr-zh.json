@@ -1,0 +1,131 @@
+{
+ "id": "pr-zh",
+ "occupation": "Public Relations Specialist",
+ "role": "PR specialist at a printer-supplies company",
+ "headline": "A journalism degree that didn't lead to a newspaper: you joined the PR department of a listed printer-consumables maker in Zhuhai, writing releases, watching sentiment, keeping the media contact list, your phone on 24 hours a day, and on the night of March 15 nobody in the department sleeps",
+ "unit": "The brand and PR department of a listed printer-consumables company in Zhuhai, five people",
+ "unit_type": "Listed manufacturing company",
+ "city": "Zhuhai, Guangdong",
+ "city_tier": "Second-tier (Pearl River Delta)",
+ "education": "Bachelor's (journalism)",
+ "level": "Your copy reads smoothly. You can't yet tell which sentence in a press release is written for investors and which is written for lawyers",
+ "intro": "The company's building stands in the Nanping industrial zone, with the smell of toner and injection molding drifting up from below and a view of the sea from the roof. Its toner cartridges and ink tanks sell in more than a hundred countries, and an ordinary person will go a lifetime without remembering its name. Your job is precisely to make people remember the good and not remember the rest. On your first day your supervisor hands you a work phone and says this one has no silent mode.",
+ "salary_note": "Estimate: PR jobs at Zhuhai manufacturers pay a little less than in Guangzhou and Shenzhen. Bonuses at a listed company track results and can double in a good year.",
+ "facts": [
+  { "label": "PR Specialist (current level)", "value": "0–2 years, ¥5,270–7,750 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Senior PR Specialist (2–5 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥18,600 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Setting the company's tone in a crisis", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Drafting releases and rewriting them per channel", "source": "AI exposure" },
+  { "label": "Open positions", "value": "26 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "On your commute you scroll the sentiment system's morning report. Forty-seven mentions of the company last night: forty-six job postings, and one person asking why a cartridge leaks toner.",
+  "The securities department sends over key points from the quarterly report for you to turn into a release. You smooth out “year-on-year growth.” Securities changes it back and adds: this sentence cannot be touched.",
+  "Lunch with a trade reporter over Chaoshan beef hotpot in Jida. He asks what this year's trade show budget is. You ask which kindergarten his kid goes to.",
+  "Legal forwards an email: there's movement in an overseas competitor's patent suit. Before you leave today you need three versions of a statement: what to say if we win, if we lose, if we settle.",
+  "You lay out the visitor flow for next month's consumables expo. The boss's instructions: make it grand, don't spend money.",
+  "Sales complains that the website's news hasn't been updated in ages. You check. The latest item is one you posted two weeks ago: 83 views, 12 of them yours.",
+  "The work phone rings. A self-media account has sent a screenshot asking if the company would like to respond. The price is in the second message."
+ ],
+ "ladder": [
+  { "title": "PR Specialist", "stage": "Copy and monitoring", "focus": "Write releases and the in-house magazine, do the daily sentiment report, keep the media list, work events on site" },
+  { "title": "Senior PR Specialist", "stage": "Own projects", "focus": "Run trade shows and media events yourself, write message guidance, build your own relationships with reporters" },
+  { "title": "PR Supervisor", "stage": "Small team", "focus": "Lead two or three people, handle communications for quarterly reports and earnings calls, be first response on public sentiment" },
+  { "title": "PR Manager", "stage": "Department head", "focus": "Run the budget and vendors, report straight to senior management, set crisis plans" },
+  { "title": "Director of Public Affairs", "stage": "External face", "focus": "Manage government relations, industry associations and overall reputation, and speak for the company in the hardest rooms" }
+ ],
+ "ai_tasks": [
+  { "name": "Setting the company's tone in a crisis", "how": "What the first sentence says, who says it, and where it stops takes someone to judge, and someone to answer for it." },
+  { "name": "Keeping up with reporters and associations", "how": "Whether someone will call you before running a story depends on years of dealings." },
+  { "name": "Drafting releases and rewriting them per channel", "how": "AI turns out a draft in minutes and adapts it for every platform. A person checks the facts and the tone." },
+  { "name": "Sentiment monitoring and daily reports", "how": "AI can crawl, sort and summarize. Which signal really matters takes someone who knows the company's position." },
+  { "name": "Planning and reviewing events", "how": "AI can produce plans and analyze the numbers. The floor and the sense of proportion belong to people." },
+  { "name": "Earnings call Q&A guidance", "how": "AI can predict questions and draft answers. Every sentence still has to be cleared with securities and legal." }
+ ],
+ "events": {
+  "e_first_release": "In the first press release you send out, you demote a vice president by one rank. Your supervisor doesn't scold you. She has you call five publications one by one to correct it, and by the end you know how many characters are in that title better than he does.",
+  "e_315": "On the evening of March 15, Consumer Rights Day, the whole department stays in to watch the national exposé broadcast, with takeout on the table and three versions of an emergency statement. From eight o'clock, each time an industry is named, nobody speaks. A little after ten it ends. Your turn hasn't come this year. Your supervisor deletes the statements. You'll write them again next year.",
+  "e_quarter": "The week before quarterly results is the quiet period, when nothing can be said. Investors post more than sixty questions on the exchange's interactive platform, and you and securities come up with ten ways of writing “Thank you for your interest.”",
+  "e_expo": "Every October the consumables expo opens on your doorstep and dealers come from all over the world, South American English mingling with Chaoshan dialect. You stand in the hall for four days. Your heels blister, you bandage them, and you go back the next day.",
+  "e_typhoon": "A typhoon hits your September media event. The venue in Hengqin loses power first, and the reporters who flew in are stuck at their hotel. You move half the salon to the lobby and get through the afternoon on instant noodles. People bring up that event for years.",
+  "e_journalist_gone": "Updating the media list, you change nine reporters' employers this year. Three newspapers have stopped printing, and an editor who covered the trade for fifteen years has gone into selling insurance. Year by year your dinners shift from being about coverage to being about the old days.",
+  "e_patent": "The company is pulled into a Section 337 investigation overseas, and legal demands that every external statement pass through them. One thirty-word statement is edited from Monday to Friday. The final version does not contain a single active-voice sentence.",
+  "e_leak_toner": "A print shop owner posts a video saying a cartridge leaked toner and ruined a client's contract. It isn't viral, but some of his followers are procurement people. With two boxes of new cartridges and an engineer, you drive to Dongguan the same day.",
+  "e_stomach": "You've lost count of all the dinners. The endoscopy report says chronic atrophic gastritis. You begin pouring tea into your liquor glass at banquets. Some of the reporters notice, and nod to you when they raise their glasses.",
+  "e_sleep": "You start waking at three or four in the morning. The first thing you do is reach for the phone. No messages, and no getting back to sleep. Your spouse says it's the same on vacation. The work phone sits at the very back of the nightstand; your hand knows the way in the dark.",
+  "e_ai_draft": "The company gets an AI writing tool. A quarterly release takes three minutes, better than the interns and faster than you. The department's intern slots shrink from three to one, and your job becomes finding which sentence in what it wrote is made up.",
+  "e_ai_rumor": "Asked if your company can be trusted, an AI assistant pins another company's penalty from years ago on you. There's no reporter to call and no editor to find. You write three hundred words into a feedback box.",
+  "e_visit": "A delegation from the district is coming for a look. You plan the route: which workshops, how many minutes in front of which display board, who stands to the left. You walk it four times in three days. The visit ends twenty minutes early. Everyone is relieved, and slightly let down.",
+  "e_mooncake": "Compliance cuts the Mid-Autumn gift budget to under two hundred yuan a box, while the list doubles. You and a coworker stick shipping labels in the warehouse until midnight, and by the end your hands are covered with gold dust from the mooncake boxes.",
+  "e_bonus": "Overseas markets are good this year, and the bonus is the biggest in company history. You take your spouse to Macau for a meal, only a few dozen minutes on foot through the border crossing, and for the first time in all these years you're not going there to host anyone.",
+  "e_merger": "The company is acquired by a larger group, and your department is folded into the group brand center. The office address still says Zhuhai, but the reporting line runs to Beijing. In the first week, you are told to rewrite the message library you've used for more than ten years according to headquarters' template.",
+  "e_young": "A new hire makes a short video of cartridges being assembled in the workshop, set to a drumbeat, and it gets several hundred thousand views. She asks you why that doesn't count as proper communications. You give it serious thought, and can't say.",
+  "e_bridge": "The bridge across the sea opens between the cities, and a reporter from a Hong Kong financial outlet will finally come to Zhuhai for dinner. You wait for him at a seafood place on Lovers' Road. He arrives an hour late and says: long bridge, short story."
+ },
+ "choices": {
+  "c_delete": { "title": "The price in the second message", "situation": "A self-media account has written a half-true piece claiming your products have hidden dangers, and it messages you: twenty thousand yuan, the post comes down, and we'll write a positive one. Your supervisor says you decide; it can go under marketing expenses anyway.", "options": [ { "label": "Pay to take it down", "result": "The post vanishes the next day. Three months later, another account, same writing style, asks thirty thousand." }, { "label": "Stand firm and publish the facts", "result": "You write a page of data and copy the industry association. The piece spreads further, then in the second week people lose interest. You don't sleep much in those two weeks." } ] },
+  "c_batch": { "title": "“Isolated batches”", "situation": "A batch of cartridges really is faulty, more than thirty thousand units. The boss wants you to write “minor defects in isolated batches.” Whether thirty thousand counts as isolated, the numbers in your hands are clear enough.", "options": [ { "label": "Write what the boss says", "result": "The release goes out without a ripple. Six months later, an e-commerce customer posts the sentence side by side with the actual figure. You write a second release, longer than the first." }, { "label": "Fight to include the number", "result": "You argue with the boss for twenty minutes, and what goes out says “approximately 30,000 units.” He doesn't look straight at you for two weeks. The dealers don't kick up a fuss." } ] },
+  "c_envelope": { "title": "Travel money", "situation": "At the sign-in table for a press conference, your supervisor has you prepare envelopes of cash, as is the custom. Compliance sent out a notice last month forbidding it. Some of the older reporters come for this, and you've known them for years.", "options": [ { "label": "Prepare the envelopes", "result": "The event goes smoothly and the stories all appear. You book the envelopes under “miscellaneous conference costs,” in especially small handwriting." }, { "label": "Switch to compliant gifts", "result": "The older reporters take a box of tea each and don't come again. From now on some numbers on your list will ring a long time before anyone picks up." } ] },
+  "c_supervisor": { "title": "Applying for PR Supervisor", "situation": "The PR Supervisor position has opened up. It means taking on quarterly report communications and first response to sentiment, and your phone never leaves your hand at night. The other option is to keep your energy for what you actually want to write, such as the company's thirty-year history.", "options": [ { "label": "Apply", "result": "At the internal review you walk through how a recent flare-up was handled, including the step you got wrong. Among those voting, the head of securities gives you the highest mark." }, { "label": "Keep writing", "result": "The thirty-year history takes two years and runs to five hundred copies. In the foreword the boss mentions your name, with one character wrong." } ] },
+  "c_ai_lib": { "title": "Building the company's message library", "situation": "With AI writing the copy, nobody in the department keeps track of what the company has actually said or must not say. You could spend six months breaking over a decade of releases, messaging and legal opinions into a structured library, or go on relying on memory.", "options": [ { "label": "Build it", "result": "You write out each “must not say,” with source and date. AI makes far fewer mistakes after that, and you become the person in the company who knows these things best." }, { "label": "Rely on memory", "result": "Your memory really is better than the system. Until you take a vacation, and AI sends out a retracted figure again." } ] },
+  "c_agency": { "title": "The Guangzhou agency", "situation": "A PR agency in Guangzhou wants to poach you as a client director, serving five or six consumer brands, for forty percent more money and weekends that aren't weekends. You now know toner well enough to smell the batch.", "options": [ { "label": "Go to Guangzhou", "result": "You roll your suitcase onto the intercity train and start worrying simultaneously on behalf of a milk tea brand, a carmaker and a cosmetics company. Your income rises. You can't tell which brand to be proud of." }, { "label": "Stay in Zhuhai", "result": "You stay. Some afternoons you still get to walk by the sea, and then you go on smelling cartridges." } ] },
+  "c_manager": { "title": "Applying for PR Manager", "situation": "Your supervisor tells you the PR Manager is moving to headquarters. The post reports straight to senior management and controls budget and vendors. The application is a three-year plan that has to say clearly which things will stop and which people won't be needed.", "options": [ { "label": "Write the plan and apply", "result": "You write the department down from five people to three plus AI. The plan passes. What comes next is going to talk to those two people, one at a time." }, { "label": "Protect your team", "result": "You stay a supervisor. A new manager comes in from outside and, in the second month, somebody writes that layoff plan anyway." } ] },
+  "c_teach": { "title": "Teaching, or running accounts", "situation": "A university in Tangjiawan wants a lecturer with practical experience, at sixty percent of your pay, and with young students. A friend is recruiting for a business running short-video accounts for companies, good money and no floor. The group's brand budget gets smaller every year.", "options": [ { "label": "Teach practice at the university", "end": "You pack up the work phone and return it to admin. Your first class is on how to write a letter of apology, and the students all bow their heads and take notes.", "result": "You export your contact list and save it to your own computer." }, { "label": "Run accounts with your friend", "end": "You and your friend rent an office in Xiangzhou and start writing scripts for a local hotpot chain. In the first month you post to seventeen accounts and clear eight thousand yuan.", "result": "You tell your supervisor you're going out to try something." }, { "label": "Stay put", "result": "You stay at the company with your phone on, and next March 15 you will be sitting at that same conference table." } ] }
+ },
+ "endings": {
+  "retire": "Your retirement goes through, the work phone goes back to admin, and its passcode is reset. No media report on the occasion. You've written about seven thousand press releases in your life, and not one carried your name. The smell of toner still drifts up from below, and in some office somewhere in the world, some page with printing on it is still being printed.",
+  "burnout": "Between your stomach and your sleep, your annual checkup needs a binder clip. On a Friday you sign over your login to the sentiment system and say you need some time to rest. The company sends an internal email, tastefully worded. It's a template you once wrote yourself."
+ },
+ "stages": [
+  "Each morning you produce the sentiment report. During the day you write press releases and the company magazine, and revise until the bosses are satisfied. The media contact list is an Excel sheet you maintain, over three hundred names, with each person's birthday, tastes and beat in the notes. At events you handle badges and sign-in, and getting the microphone to the right spot when a leader speaks.",
+  "You run your own projects now: media hosting at the consumables expo, a product briefing, a promotional booklet for overseas dealers. You write the Q&A guidance yourself, take reporters to dinner, and explain what can't be written. The difference from the level below: when something goes wrong now, the first call comes to you.",
+  "You lead two or three people, and quarterly results and earnings calls are yours. When the sentiment system raises an alarm you have thirty minutes to decide: ignore it, respond, or escalate. Securities, legal and sales each have their own version, and you must find one sentence among them that all three will sign.",
+  "You no longer write copy; you edit it and decide whose goes out. Department budget, vendor pitches and agency contracts are signed by you. Once a week you meet senior management and tell them what not to say and where. They often don't listen and come back later for you to clean it up.",
+  "Your calendar belongs to zone administrators, industry associations and overseas law firms. You stand to the leader's left during visits, speak for the whole industry at the association's annual meeting, and make sure a settlement statement in a dozen languages has no translation that costs the company anything. Those under you who don't write outnumber those who do."
+ ],
+ "work": [
+  "A post in the daily report says “a certain cartridge maker is behind on payments.” You spend two hours looking into it; it's another company with a similar name. Your supervisor says don't delete it, add a line: Not ours, keep watching.",
+  "The night before the earnings call, your supervisor has you delete every “very” from the executive's speech. Forty-one in total. The next day he reads three of them aloud anyway.",
+  "You phone an editor on your list to check an address. You're the first PR person who has ever asked me where I live now, she says. The last one is still sending mooncakes to my employer from three years ago.",
+  "The day before the expo opens, the English on a display board spells Compatible wrong. You wait outside the ad shop in the middle of the night for a reprint, get it at two, and by nine the next morning it's up.",
+  "A trade reporter is writing about a patent dispute and asks what you can share. You give him reference numbers for three public filings and one sentence: beyond these, I really can't. His story comes out without a factual error.",
+  "After half a day of arguing with the head of sales, you turn “world-leading” in a new-product release into “among the top in shipments of compatible toner cartridges,” with the year of the data noted after it.",
+  "Before the earnings call goes live you go through version seven of the Q&A with securities. One hundred twenty questions. “Will there be layoffs?” is rewritten eleven times, and the final answer comes in at twelve characters.",
+  "At nine at night, the sentiment system pops up a dealer's complaint. You call your colleague back from dinner and set a response time thirty minutes out. Your final verdict: don't respond publicly; phone him.",
+  "A new colleague has written “it is understood that” in a release. You circle it and ask: understood by whom? She thinks about it and deletes the entire paragraph.",
+  "At a pitch, three PR agencies take turns presenting, all with insight pages from the same AI tool. The only question you ask is: what did we get wrong last year? Two of them can't answer.",
+  "An executive plans to criticize a rival at an industry forum. You cut that passage from his speech and add a note: if this is said, legal will be busy for six months. He keeps half of it.",
+  "The industrial park's management committee is holding a business roundtable. You write three things the company wants to say on a card and hand it to the boss. He doesn't say the third, which you had hoped he wouldn't.",
+  "A settlement statement has to go out in Chinese, English and Spanish at once. The law firm's English reads “without admitting liability.” You have the translator make the Chinese just as cold."
+ ],
+ "past": [
+  "You run the school paper at your high school in Zhongshan and write a piece about the canteen raising its prices. A teacher takes it away and it becomes “the canteen has improved its quality of service.” It's your first sight of this way of writing, and you're a little impressed.",
+  "When you apply for journalism, your family all say a reporter is a fine thing to be. At the time this was still somewhat true.",
+  "You intern at a newspaper in Guangzhou, trailing a mentor to more than ten press conferences a month. You don't dare take the envelopes. Your mentor says: we'll talk about that later.",
+  "The paper's hiring freezes that year. You watch older classmates leave for PR agencies, and notice the meals they treat you to have improved.",
+  "After a few applications, the interviewer at the Zhuhai printer-consumables company asks if you know what a toner cartridge is. You say no. He says: good. Nobody else will know what you're writing about either."
+ ],
+ "late": {
+  "pension_note": "Estimate: over thirty years of contributions on Zhuhai's social insurance base brings a pension of about 45 percent of final base pay. Bonuses don't count.",
+  "scenes": [
+   "You set your phone to silent for the first time. The next morning you check it seventeen times. Nobody has been looking for you. You turn the ringer back on.",
+   "The homeowners' committee's notices are dreadful, and you finally can't take it and offer to help. In the management office's letter of apology, you strike out “for the inconvenience” and ask them what, exactly, broke.",
+   "Reading the news, you count the subjects in each letter of apology. These days they are all written by AI. The sentences are very good, and none of them has a subject.",
+   "Nobody keeps a printer at home anymore, and the company moved on to other things. Now and then in a copy shop in some old neighborhood, you see one of your cartridges. The owner says this brand works well.",
+   "Your stomach can hardly take anything, and you learn to drink congee and to tell the saltiness of plain rice porridge. After thirty years of banquets, the hardest thing to arrange turns out to be a bowl of congee.",
+   "The waking at four in the morning has never gone away. You walk on Lovers' Road and meet the anglers, the runners, the others like you who are awake. You nod and ask each other nothing.",
+   "At the seniors' university in your community, you teach memoir writing for fifty yuan a class. Everybody wants to write themselves a little better. Fine, you say, but first write down what happened.",
+   "The new job doesn't need you awake at night. One night you wake at three as usual and realize suddenly it has nothing to do with you anymore, which makes it harder to sleep.",
+   "A new hire you once trained now does crisis communications for a big company. Something big happens. You read the statement, and can see at once who wrote the second paragraph.",
+   "Of the more than three hundred names on your list, only forty-some still answer. On the night of March 15 you watch a movie, and only as you're going to bed do you remember what day it is.",
+   "At a dinner with friends someone says the wrong thing, and your first instinct is how to smooth it over. You hold back, and let it land on the table to see what happens.",
+   "Greeting cards, promotional texts, hospital reminders: in your head you cross out the words “Dear Valued,” and see how much of what's left is real."
+  ],
+  "closing": {
+   "retire": "The wind off the sea snaps the flags along Lovers' Road. Nothing in today's news requires you to explain it.",
+   "burnout": "In the early morning the sea is gray, and slowly takes on color. No one is waiting on a statement. You put your hands back in your pockets.",
+   "end": "The phone rings. It's a delivery. You answer and let the person finish speaking. This call requires no guidance at all."
+  }
+ }
+}
