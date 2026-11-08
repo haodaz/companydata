@@ -24,7 +24,9 @@ function parseSalary(s: string): [number, number] {
     if (!unit && !per && raw < 100 && /^\s*(?:[-–~至]\s*\d+\s*)?年/.test(t.slice((m.index || 0) + m[0].length - (m[0].length - m[1].length)))) continue;   // 「3-5 年」「3年」这类年限（bds 装调工 11-07 被读成 3,000）
     let n = /万|w/i.test(unit) ? raw * 10000 : /k|千/i.test(unit) ? raw * 1000 : raw;
     if (/年/.test(per) || /年薪/.test(t.slice(Math.max(0, (m.index || 0) - 3), m.index))) n /= 12;
-    if (n > 0) nums.push(n < 300 ? n * 1000 : n);
+    if (/日薪|每天|\/\s*天|一天/.test(t)) n *= 22;   // 日薪按一个月 22 天折成月薪（机器人兼职「日薪约 200-250 元」11-07 被读成 25 万）
+    else if (n > 0 && n < 300) n *= 1000;
+    if (n > 0) nums.push(n);
   }
   return nums.length ? [Math.min(...nums), Math.max(...nums) * (nums.length === 1 ? 1.5 : 1)] : [0, 0];
 }

@@ -1,0 +1,196 @@
+{
+ "id": "telecom-eng-gy",
+ "occupation": "Telecommunications Systems Engineer",
+ "role": "Telecom Systems Engineer (Metro Network and Data Center Egress)",
+ "headline": "Fourth year out of a telecom engineering degree: a carrier's systems engineer in Guizhou who runs the metro network and data center egress at a server campus tucked into the hills of Gui'an New Area, and spends seven or eight nights a month on cutovers",
+ "unit": "Cloud and network operations center, Guizhou provincial branch of a telecom carrier, based at the Gui'an data center campus",
+ "unit_type": "Provincial branch of a telecom carrier",
+ "city": "Guiyang (Gui'an New Area)",
+ "city_tier": "Provincial capital",
+ "education": "Bachelor's (Telecommunications Engineering)",
+ "level": "You can write your own cutover plan for a metro network expansion and get it through review, and you locate level-two alarms yourself. You know BGP and SRv6 inside out; 5G core signaling still sends you back to the specs. You have just passed your HCIP.",
+ "intro": "You studied telecom engineering, signed with this carrier's Guizhou branch at a campus job fair, and were posted to the data center campus in Gui'an New Area. These past few years one machine hall after another has gone up in the folds of the hills, computing power from the east has been moving here, and the metro network and egress bandwidth get expanded every year. From today, every cutover plan you write will be typed in, line by line, by you, in a machine room at one in the morning.",
+ "salary_note": "Estimate: the carrier's Guizhou branch pays a post salary plus performance pay, ten to twenty percent below the national figure, which leans on equipment makers and cloud companies in first-tier cities. There is an allowance for night cutovers, benefits and housing fund are steady, and with Guiyang's low house prices life is roomier than for classmates in Shenzhen.",
+ "facts": [
+  { "label": "Telecom Systems Engineer (current level)", "value": "2-5 years, ¥9,000–15,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Senior Network Systems Specialist (5-8 years)", "source": "Career map" },
+  { "label": "Pay after 10+ years", "value": "¥26,500 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Running the annual cutover on the provincial SPN backbone ring and verifying service end to end", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Forecasting BRAS session trends and preloading QoS policy before the midday peak", "source": "AI exposure" },
+  { "label": "Open positions", "value": "73 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "From your rented flat in Huaxi you take the campus shuttle into Gui'an. Fog the whole way, and in the folds of the hills machine halls one after another, gray-white, without windows.",
+  "The network management platform has left dozens of alarms overnight, and you go through them one by one. Most are flaps that healed themselves. One aggregation switch's optical power is slowly sinking, and you send a work order to the maintenance contractor.",
+  "Cutover review meeting. You present next week's plan for expanding a data center egress. The senior expert from the network department turns to the rollback page and asks how long rollback takes. Fifteen minutes, you say. Have you rehearsed it, he asks.",
+  "In the campus canteen, a bowl of changwang noodles, the chili oil bright red. Across the table, engineers from the cloud company next door are talking about which hall has run out of power again.",
+  "In the lab environment you run the cutover script through once, bring up two routers in the simulator, tear down the BGP session and rebuild it, timing how many seconds service drops.",
+  "Before leaving you answer a complaint from an enterprise customer: their leased line drops packets at night. You pull up the port traffic graph, see it maxing out at nine every evening, and reply suggesting more bandwidth.",
+  "Back at the machine hall. There is a small cutover tonight. In the operations room you make a cup of roxburgh rose juice, print the plan and the rollback steps, and circle the key commands in pen.",
+  "The cutover window opens. You type the first command into the terminal, and on the phone the duty operator at the provincial network management center checks services with you one by one. Outside, the fog is yellow under the streetlights."
+ ],
+ "ladder": [
+  { "title": "Assistant Network Engineer", "stage": "Junior", "focus": "Learn the city network's element topology and machine-room safety rules; run routine equipment checks and configuration pushes and shadow night cutovers on site. You move up through zero operating errors and solid basic troubleshooting." },
+  { "title": "Telecom Systems Engineer", "stage": "Intermediate", "focus": "Write cutover plans for metro network expansion and core equipment upgrades on your own; own level-two alarm localization, routine security hardening and emergency troubleshooting. You move up through review pass rates and delivering complex cutovers." },
+  { "title": "Senior Network Systems Specialist", "stage": "Senior", "focus": "Lead the architecture rollout for provincial and city backbone transport and 5G core evolution; lead major cyber defense drills and pin down hard cross-domain faults; push automated inspection toolchains into use. You move up through network-wide SLA gains and the engineers you train." },
+  { "title": "Cloud Network Architect", "stage": "Expert / management", "focus": "Plan cloud-network convergence for the carrier or industry private networks, design computing-network interconnection and build the security defense system; answer for the technical investment and safety floor of large telecom projects." }
+ ],
+ "ai_tasks": [
+  { "name": "Forecasting BRAS session trends and preloading QoS policy before the midday peak", "how": "AI analyzes historical traffic to forecast the peak and drafts the QoS policy. A person only needs to review the key parameters quickly before nine in the morning and push it with one click." },
+  { "name": "Finding and fixing abnormal UPF user-plane traffic steering that drops VoNR calls", "how": "AI correlates alarm logs with configuration snapshots in real time and pinpoints the exact wrong policy line within seconds. A person confirms the fix is safe and carries out the recovery." },
+  { "name": "Running the annual cutover on the provincial SPN backbone ring and verifying service end to end", "how": "It involves swapping physical optical modules and cutting over on site before dawn. AI can only help check the script logic; the core operations, answering for emergencies and the end-to-end verification have to be done by people." },
+  { "name": "Writing and deploying an automated inspection bot for the 5G standalone core", "how": "AI helps generate the Python inspection code skeleton and anomaly detection rules. A person defines the business logic of the health checks and integrates the script into the DevOps pipeline." },
+  { "name": "Running red-team penetration tests against the IMS core", "how": "AI automates large-scale protocol fuzzing and weak-password scanning. A person designs the attack path scenarios, interprets complex signaling hijack results and assesses the business risk." },
+  { "name": "End-to-end acceptance testing of a new 5G private network for an industrial internet site", "how": "It means going onto the factory floor to measure physical indicators like PLC latency. AI can't replace tracking down interference on site, talking with the customer, or the responsibility of signing final acceptance." }
+ ],
+ "events": {
+  "e_first_cutover": "Your first big cutover as lead author starts at two in the morning, and by ten past four every service has been verified, twenty minutes ahead of plan. You walk out of the machine hall. It's still dark, and the air is cool.",
+  "e_rollback": "Halfway through a cutover, a card in an old device won't come up and service won't recover. Ten minutes before the window closes you decide to roll back, and step by step, by the plan, you back out. By daybreak everything is as it was, and you are told to write a report.",
+  "e_fiber_cut": "An excavator on a road project slices through a trunk fiber cable, and the alarms fill the screen at once. While you shift traffic onto the backup route, you call the line maintenance crew to get up the mountain. They say that stretch of road is impassable in the rain.",
+  "e_landslide": "A week of rain, and a hillside collapses in southern Guizhou, cutting both fiber cables running in that direction. You hold the machine room all night, rescuing several counties' services one by one over detour routes.",
+  "e_hw_drill": "For the three weeks of the national cyber defense drill you take turns in the security duty room, watching scan after scan in the firewall logs. One night you catch a probe from overseas and trace it to an old network management server whose default password nobody had changed.",
+  "e_night_body": "Seven or eight nights a month on cutovers, and the sleep the next day never makes up for it. You notice your hair falling out, and the people at the pharmacy downstairs know you by sight now.",
+  "e_ai_qos": "The network management platform now does traffic forecasting, drafting the evening peak's QoS policy automatically each morning. You only need to look over the key parameters before nine and click to push it. What used to take a morning of calculation takes ten minutes.",
+  "e_ai_rootcause": "On a VoNR call drop, the intelligent operations system ties the alarm logs to the configuration snapshots within seconds and flags a mistyped steering policy line. You don't rush to fix it. First you work out why it was wrong, and find a change last week that skipped review.",
+  "e_east_west": "Another internet company from the east moves a training cluster to Gui'an and wants two high-bandwidth direct links to the Yangtze River Delta. You work overtime for two months to turn them up, and on the day they go live their operations team drops a big red envelope of cash into the group chat.",
+  "e_love": "An operations engineer at one of the cloud companies on campus is always buying coffee at the same convenience store as you in the small hours. Later you spend weekends together eating braised pig's trotters in Qingyan old town. She says the two of you know the night on this campus better than anyone.",
+  "e_house": "You buy a three-bedroom with a balcony in Huaxi, the down payment your own savings plus help from your parents. When classmates in Shenzhen hear the total price, they assume you've left off a zero.",
+  "e_baby": "Your child is born. On the last day of paternity leave an emergency cutover calls you back to the machine hall anyway, and you spend the whole night with your phone, looking at baby photos and alarms.",
+  "e_cert_hcie": "You pass the expert-level datacom certification. The lab exam keeps you in the test center for eight hours, and your legs are weak when you come out. On the provincial branch's list of technical experts, your name moves up a line.",
+  "e_mine_5g": "A coal mine in Liupanshui is building a 5G private network, and you go underground to test latency. The cage drops seven hundred meters, and with a cap lamp and a test set you measure it base station by base station.",
+  "e_mistake": "During a small daytime change you leave out one keyword, and a whole city's broadband users drop for six minutes. You've restored it by the time the complaint calls come in, but it still goes out in a company-wide circular.",
+  "e_power_outage": "Mains power fails at one machine hall, and of the diesel generators one starts and the other doesn't. You and the power crew stand in the machine room watching the UPS charge drop bar by bar. With ten minutes left, the second one finally kicks in.",
+  "e_expo": "Every May at the big data expo you are sent to keep the venue network up. Thousands of people connect to the Wi-Fi at once, and you watch the back end for three days. The opening day livestream doesn't stall for a second.",
+  "e_layoff_vendor": "Once automated inspection is live, the maintenance contractor cuts half its people. The contractor's guy you've worked with for five years goes home to Zunyi, and before he leaves you share a cigarette with him at the machine room door.",
+  "e_parents": "Your mother is in hospital back home in Anshun, and you take a week off to stay with her. The signal on the ward is bad, so you stand by the window at the end of the corridor and handle an alarm remotely over your phone's hotspot.",
+  "e_mentee": "The new engineer you've been training leads his first cutover on his own and sends you a message at three in the morning: all services up. You send back a thumbs-up from bed and fall asleep again.",
+  "e_eyes": "Years of terminals and big network screens have left your eyes very dry and your neck stiff. You keep a bottle of artificial tears on your desk and remind yourself to get up and walk a lap every hour.",
+  "e_cloud_net": "The province's computing dispatch platform is joining several carriers' and several clouds' resources into one network, and you are pulled into the core team to draw the architecture. One diagram goes through seventeen versions and ends up on the wall of the campus exhibition hall."
+ },
+ "choices": {
+  "c_core_5g": {
+   "title": "Move to the 5G core and go for Senior Network Systems Specialist",
+   "situation": "The network department is putting together a 5G core maintenance team, and the director asks if you'll join. It means chewing through the 3GPP specs from scratch and learning signaling analysis, handing your metro work to someone else. That is the road to Senior Network Systems Specialist, but for the first year you will be the greenest person on the team.",
+   "options": [
+    { "label": "Join the core team", "result": "In the lab you capture attach and session setup signaling hundreds of times and draw sequence diagrams until midnight. Six months later, when the team has a tricky call drop, they ask you first." },
+    { "label": "Stay on the metro network and go deep", "result": "You become one of the people who knows the province's metro network best: when each device went in, which link runs over which mountain, it's all in your head." }
+   ]
+  },
+  "c_automation": {
+   "title": "Whether to go into automated operations",
+   "situation": "The provincial branch is pushing automated inspection and intelligent operations and wants a few people who know networks and are willing to code to build the toolchain. You know some Python but not well. You'd have to learn Ansible, pipelines and telemetry from scratch, with half as many cutovers.",
+   "options": [
+    { "label": "Go, learn to build tools", "result": "Your first inspection script sweeps every aggregation switch in the province and produces a report in ten minutes. Six months later, the team is used to checking what your bot says first." },
+    { "label": "No, cutovers need people", "result": "You stay in the cutover windows. After the toolchain goes live it throws one false alarm that drags you out of bed at night, and one look tells you it's the script's fault." }
+   ]
+  },
+  "c_shenzhen": {
+   "title": "Go to an equipment maker in Shenzhen",
+   "situation": "Your university roommate works on core network products at an equipment maker in Shenzhen and offers a referral: double the pay, delivery trips all over the country, overtime as a matter of course. Your girlfriend is in Guiyang, your parents in Anshun, and you've just paid the down payment on a flat.",
+   "options": [
+    { "label": "Go to Shenzhen", "result": "You resign and fly to Shenzhen with a backpack.", "end": "You became a core network delivery engineer for an equipment maker, spending nights in machine rooms all over the country. Once, on a trip to Gui'an, you see an old colleague on the campus shuttle and nod to each other across the aisle." },
+    { "label": "Stay in Guiyang", "result": "You turn your roommate down. He says you've been in the mountains too long. Someone has to run the network in the mountains too, you say, and summers here don't need air conditioning." }
+   ]
+  },
+  "c_onsite_county": {
+   "title": "Take a posting to a county branch in southeastern Guizhou",
+   "situation": "The company wants young core staff to spend two years at county branches, each running one county's network. You'd be on your own, expected to know everything, with priority for promotion when you come back. But it is more than four hours from Guiyang, on mountain roads.",
+   "options": [
+    { "label": "Go down for two years", "result": "In the county you run base stations, fiber and enterprise leased lines, and once even fix the township government's printer. When you come back two years later, a network topology reads like a map of your own home." },
+    { "label": "No, stay at the provincial branch", "result": "You stay in Gui'an. The posting goes to a colleague from your intake year, and when he comes back he makes team lead a step ahead of you." }
+   ]
+  },
+  "c_security": {
+   "title": "Move into network security",
+   "situation": "The company's security department is short of people and has noticed how you did in the cyber defense drills. They want you full time on attack, defense and penetration testing. About the same pay, fresher work, an information security certificate to earn. But what you have built up on networks all these years would slowly go unused.",
+   "options": [
+    { "label": "Move to security", "result": "You join the security department and start looking at the network you know so well through an attacker's eyes.", "end": "You became an attack-and-defense engineer in the carrier's security department, hunting for holes in your own company's network. Every year at the drill you go and check on the devices you used to run, to see whether their passwords have been changed." },
+    { "label": "Stay in the network department", "result": "You decline, saying networks and security can't be separated, and you can do security well from the network side. From then on every cutover plan you write has an extra page of hardening." },
+    { "label": "Stay, and volunteer for the blue team", "result": "You don't transfer, but every year you sign up for the drill's blue team. After three weeks of watches each time, you understand half of what attack and defense are about." }
+   ]
+  },
+  "c_architect": {
+   "title": "Compete for Cloud Network Architect",
+   "situation": "The provincial branch is setting up a cloud-network convergence architecture group and needs a Cloud Network Architect to lead computing network planning and the security defense system. You'd present a three-year plan and answer for big projects' technical investment and safety floor. If you get it, you will hardly ever type commands in the middle of the night again.",
+   "options": [
+    { "label": "Put your name in", "result": "You spend a month on the plan, from the national east-to-west computing program down to the campus's power and water. At the defense a judge asks: and what if in ten years computing stops moving west? You answer for ten minutes." },
+    { "label": "Stay out, be the frontline expert", "result": "You don't apply. You are still in the machine room at night, taking two apprentices through the province's hardest cutovers, watching other people go to meetings." }
+   ]
+  },
+  "c_child_city": {
+   "title": "With your child starting school, move to Chengdu?",
+   "situation": "The group's research institute in Chengdu is hiring network planners: twenty percent more pay, no night shifts, and better schools for your child. But your spouse works in Guiyang, and both sets of grandparents are in Guizhou.",
+   "options": [
+    { "label": "Move the family to Chengdu", "result": "You do planning at the institute, working by day and sleeping at night, and for the first time you feel like a normal person. Your spouse finds a new job in Chengdu, and on weekends the family goes out for hotpot." },
+    { "label": "Stay in Guiyang", "result": "You stay, and on weekends take your child to Guanshan Lake Park. There are as many night shifts as ever, and your child already knows that when you go out at midnight, you're going to fix the network." }
+   ]
+  },
+  "c_presale": {
+   "title": "Join the government and enterprise division as a solutions manager",
+   "situation": "The government and enterprise division wants someone who knows networks as a solutions manager, writing private network proposals for government, energy and mining clients and sitting in on negotiations. There's commission, there's drinking, there are trips to the prefectures. You'd go from the person who fixes the network to the person who sells it.",
+   "options": [
+    { "label": "Go to government and enterprise", "result": "At your first dinner with a client you drink three glasses and explain the proposal more clearly than usual. That mine's private network is signed in the end, and you get a commission." },
+    { "label": "Stay in the network department", "result": "You say you can't drink and can't talk in generalities. The division still sends you their proposals to check, and in the comments you write line by line what can't be done." }
+   ]
+  },
+  "c_mentor_late": {
+   "title": "Come off cutover duty and train new engineers",
+   "situation": "You are nearly fifty, after twenty years of nights. The department head says he can take you off the cutover roster to train new people and review plans full time, with your income down by the night allowance.",
+   "options": [
+    { "label": "Come off duty, train new people", "result": "Every day you read the new engineers' plans, writing most on the rollback pages. You go to sleep at ten at night, which takes some getting used to." },
+    { "label": "Keep doing nights", "result": "You stay on the roster. The young ones say that with you on the other end of the phone during a major cutover, they dare to give the command." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last working day you archive the cutover plans of all these years, several hundred of them, filed by year on the shared drive. When you walk out of the machine hall it is evening, the fog is rising in the hills again, and the status lights of the halls blink in the fog one after another. Not one of them is red.",
+  "burnout": "In a cutover window one winter, staring at the screen, you suddenly can't read the text and your heart is pounding. The doctor tells you no more late nights, and the company moves you to documentation and asset management. You go home on time every day. Passing the operations room now and then, you still glance at the alarms on the big screen."
+ },
+ "stages": [
+  "Your week is plans and windows: by day you write cutover plans for metro expansions and egress upgrades and get grilled on rollback by senior experts in review; at night you type the commands in the machine room by the plan, with the provincial network management duty operator on the phone. You locate level-two alarms yourself and answer enterprise customers' packet-loss complaints yourself. At hand: SecureCRT, the network management platform and a printed topology map covered in pen circles.",
+  "You no longer run one metro network but the evolution of the province's backbone transport and 5G core: drawing architecture, settling plans, leading the hunt to pin down hard cross-province, cross-discipline faults. In the cyber defense drill you lead the blue team, and the automated inspection toolchain gets built in your hands. You have three or four young engineers, and yours is the final signature on their cutover plans.",
+  "As Cloud Network Architect, you hold the province's cloud-network convergence plan and the interconnection design for the computing network. Your time is in meeting rooms, talking with group headquarters, cloud companies and the government's big data bureau, and the technical investment and safety floor of big projects need your signature. You rarely go into a machine room at night anymore, but on the night of a major cutover your phone stays on."
+ ],
+ "work": [
+  "The contractor's guy swaps an optical module and tells you it's done. You check the receive power in the terminal: three dB below normal. You tell him to clean the fiber connector again.",
+  "In review the senior expert asks how long routing takes to converge on rollback. Right there you tear down the BGP session in the simulator, time it and read it out: twenty-eight seconds.",
+  "An enterprise customer says their leased line is slow. You pull up the port traffic graph, take a screenshot of it maxed out at nine in the evening, attach it to an email and lay out three expansion options with prices.",
+  "A cross-province VoLTE call drop, and three vendors blaming each other. You line up all three sides' signaling message by message, draw the sequence diagram, and point at the seventh message: here.",
+  "A new engineer hands in a cutover plan whose rollback section is one sentence: restore original configuration. Beside it you write: where is the original configuration, who types it, how long.",
+  "On the third night of drill duty you see a very slow, very patient scan in the firewall logs. You don't block it. You have someone watch where it goes, and the next day you map its path.",
+  "A computing interconnection plan claims end-to-end latency under twenty milliseconds. On the review form you ask: which cable does Gui'an to Shanghai take, and does it detour via Guangzhou?",
+  "The government's big data bureau comes to a meeting wanting several prefectures' government clouds connected. On the whiteboard you draw three circles and two lines and say: connect these two first, and the third waits for fiber.",
+  "The day before an annual major cutover, you call the team lead into your office, ask him nothing, and just have him play you the video of the rollback rehearsal once through."
+ ],
+ "past": [
+  "You go to middle school in Anshun. Your family runs a little corner shop with a sign by the door saying it takes broadband sign-ups on the carrier's behalf, and someone from the carrier's shop comes once a month to collect the forms.",
+  "Your gaokao (college entrance exam) gets you into an engineering university in the southwest, and you put down telecom engineering. Everyone will be online someday, your father says. Somebody has to look after that wire.",
+  "In your second year you build a routed network in the lab simulator for the first time. When the three routers learn each other's routes, you are too excited to sleep that night.",
+  "Over the summer you intern at a telecom maintenance contractor, climbing base station towers with a technician for two weeks. You come back sunburned and peeling, and decide you'll sit in machine rooms, not climb towers.",
+  "In the autumn hiring season you get offers from an equipment maker in Shenzhen and from this carrier in Guizhou. You choose to come back to Guizhou: close to home, and you've heard Gui'an is building the biggest cluster of data centers in the country.",
+  "You start with rotations at a retail shop and a city branch, then join the cloud and network operations center as an assistant engineer, shadowing night cutovers. The first time, at three in the morning, you hear your mentor call a rollback.",
+  "Your first cutover plan passes review and you are confirmed in the post. That year you pass the senior datacom certification and rent a room in Huaxi with a view of the hills."
+ ],
+ "late": {
+  "pension_note": "Estimate: the carrier pays the basic enterprise employee pension plus an enterprise annuity. With long contribution years and a steady base, after retirement you get roughly half your final monthly salary.",
+  "scenes": [
+   "Your first month of retirement you always wake at one in the morning and lie waiting for the phone to ring. It doesn't. You hear rain outside the window and drift off again.",
+   "A small company that builds campus networks hires you as an adviser a few days a month to look over their plans. On the rollback page of the first one you write half a page of comments.",
+   "On your balcony in Huaxi you grow a few pots of orchids and water them every morning. Your child is at university in another province and complains on a video call that the dorm internet is slow, and you talk them through the router settings remotely.",
+   "Driving past Gui'an, you see twice as many machine halls in the hills as when you retired. The fog is thick outside the window, and you remember how cool the air was all those years walking out of the halls before dawn.",
+   "Your first few months in the records office you sort out more than a decade of equipment ledgers one by one, and go to sleep at ten. Your heartbeat slowly steadies, and you start getting up early to climb the hills.",
+   "A young engineer comes looking for the records on an old device: he has a cutover on it tonight and isn't sure of himself. You tell him all that device's quirks, and when you're done you sit there a moment, a little dazed.",
+   "When you reach the age you retire, on a pension a bit smaller than colleagues who held on to the end. You and your spouse go back to Anshun for half a year, and you install a very fast router in the old house.",
+   "Your first year out of the network department you still wake in the night and reach for your phone to check alarms. Nobody at the new job looks for you at night, and somehow that keeps you awake.",
+   "Back in Gui'an on an errand, you pass your old machine hall. Your access card stopped working long ago. You stand at the door a while and hear the fans inside, the same as ever.",
+   "The new engineer you trained back then is a team lead now and sends you a screenshot: the province's metro network availability for the year has gained another nine after the decimal point.",
+   "The network management platform keeps getting smarter: alarms merge themselves, plans draft themselves. But in the small hours of every major cutover, there still has to be one person at a terminal deciding whether to type that line.",
+   "Your granddaughter asks where the videos on the phone come from. You point at the hills out the window and say: from a great many buildings over there, where someone is always awake."
+  ],
+  "closing": {
+   "retire": "Many years later, on a rainy night at home in Huaxi, you watch an old film and the picture never stalls once. Right now, you think, in some machine hall beyond those hills, a young engineer is probably sitting at a terminal waiting for the cutover window to open.",
+   "burnout": "Many years later, back in your hometown, you fix a neighbor's router that keeps dropping. After the restart its lights turn green one by one. The neighbor asks how you know this stuff. Used to do it, you say.",
+   "end": "Many years later, on an old computer, you find a folder holding the first cutover plan you ever wrote. On the rollback page, in the senior expert's red: have you rehearsed it? You look at it a while, then close the folder."
+  }
+ }
+}

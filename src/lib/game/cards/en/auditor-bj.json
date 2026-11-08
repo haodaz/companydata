@@ -1,0 +1,207 @@
+{
+ "id": "auditor-bj",
+ "occupation": "Auditor",
+ "role": "Audit Associate at an Accounting Firm (First Busy Season)",
+ "headline": "Fresh out of an accounting degree: an audit associate at a large Beijing accounting firm whose first busy season means counting stock in provincial cold stores and vouching documents in a client's meeting room until midnight",
+ "unit": "Audit department of a large accounting firm near the Guomao business district, Beijing",
+ "unit_type": "Large accounting firm",
+ "city": "Beijing",
+ "city_tier": "First-tier city",
+ "education": "Bachelor's (Accounting)",
+ "level": "You are fluent with pivot tables and VLOOKUP and have been through the accounting standards once. Vouching and confirmations you are doing for real for the first time; you often get the workpaper index numbers wrong, and you have passed only one CPA paper.",
+ "intro": "You started in September, spent a month in training on the standards and the audit software, and in November were put on the annual audit team for a listed company. The client is a cold-chain food group with factories and cold stores in Hebei and Shandong, and the report has to be out before April 30. From today, in the client's meeting room and in cold stores at minus eighteen, you will turn this company's books over one page at a time.",
+ "salary_note": "Estimate: audit associates at large Beijing firms start twenty to thirty percent above the national figure. Busy season means heavy overtime that isn't paid by the hour, though taxis after ten at night can be expensed. In the first few years pay rises come with promotions, a jump at each grade.",
+ "facts": [
+  { "label": "Junior Auditor (current level)", "value": "0-2 years, ¥6,000–12,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Senior Auditor (2-5 years)", "source": "Career map" },
+  { "label": "Pay after 10+ years", "value": "¥30,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Observing the count of cold-chain inventory and fixed assets on site", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Checking cash on site and reviewing the bank reconciliation", "source": "AI exposure" },
+  { "label": "Open positions", "value": "329 related listings nationwide, 43 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You wake in the second bedroom of a shared flat in Tuanjiehu. Your flatmate has already left. Two crowded subway stops to Guomao, and at the convenience store downstairs, a rice ball and an Americano.",
+  "Today the team is at the client's headquarters, and you and the senior auditor take a taxi over. The client has cleared out a small windowless meeting room for you, the table piled with boxes of vouchers.",
+  "Vouching. Working from the sample list, you dig out one book after another, matching invoices, contracts, goods-received notes and payment slips, ticking the workpaper. One invoice's date doesn't match. You photograph it and highlight it yellow.",
+  "Staff lunch in the client's canteen, the team squeezed around one table. The senior auditor eats while looking at her phone and says the manager wants to see your cash workpapers this afternoon.",
+  "You go to the client's finance department for a detailed schedule, for the third time. The cashier says she's working on it. You stand by her desk and don't leave, and ten minutes later the schedule arrives.",
+  "Sorting the bank confirmation replies: scan, enter, compare, one after another. One bank's reply is off by more than eight hundred thousand. You stare at the screen a long time and type in the difference column: to be followed up.",
+  "Takeaway arrives in the meeting room, and you fix index numbers while eating from the box. The manager has left twelve review notes in the system. One of them says only: basis?",
+  "Done for the night, a taxi home. The Third Ring Road outside the window is still lit. On your phone you start on two CPA accounting questions and fall asleep on the second."
+ ],
+ "ladder": [
+  { "title": "Junior Auditor", "stage": "Junior / Associate", "focus": "Vouch, send confirmations, observe counts on site and prepare workpapers for basic accounts like cash, receivables and payables, and expenses. You move up through solid workpapers, efficient execution and passing some of the CPA papers." },
+  { "title": "Senior Auditor", "stage": "Intermediate", "focus": "As field in-charge (FIC), schedule the fieldwork and take on complex core accounts like revenue, inventory, long-term investments and impairment, while training new staff. You move up by leading a full annual audit or IPO engagement on your own and passing all CPA papers." },
+  { "title": "Audit Manager", "stage": "Management", "focus": "Own the engagement's overall professional risk, staffing and budget, lead the conversations on major audit adjustments and issue the first draft of the audit report. You move up by delivering several engagements in parallel, keeping client relationships and managing team productivity." },
+  { "title": "Senior Audit Manager", "stage": "Senior management", "focus": "Resolve major, difficult accounting disputes, lead quality review on large groups, listed companies and IPO filings, and help partners grow the business. You move up through technical authority, depth with major clients and the ability to win work on your own." },
+  { "title": "Audit Partner", "stage": "Partner", "focus": "Sign the statutory audit report and carry the legal responsibility; lead business development for an industry line or region, deepen the client base and take part in governing the firm. You hold your partnership through continued revenue, industry reputation and an unbroken professional safety record." }
+ ],
+ "ai_tasks": [
+  { "name": "Checking cash on site and reviewing the bank reconciliation", "how": "AI can import bank statements and the cash book in bulk, match them line by line automatically, and list large items in transit and reconciling items. A person asks the accountant for the books on site and works out the real reason behind anything unusual." },
+  { "name": "Checking differences in bank confirmation replies and cash in transit", "how": "AI can compare replies with book balances automatically, flag large differences and check whether the dates on the slips make sense. A person judges what the difference is, reports to the supervising senior and decides what to do next." },
+  { "name": "Writing up the reconciliation of receivables confirmation differences", "how": "AI can draft the reconciliation and match the amounts and dates on refund documents and tax certificates. A person asks the client for the documents, works out why sales were under-recorded and reviews the result." },
+  { "name": "Observing the count of cold-chain inventory and fixed assets on site", "how": "Someone has to be in the cold store, with the warehouse keeper alongside, looking at the frozen goods and fixed assets with their own eyes. Counting and judging condition rest on a person; at most AI helps generate the sample list and pull the differences together afterwards." },
+  { "name": "Filing the workpapers and handing over when leaving the field", "how": "AI can number replies, check records, count sheets and difference workpapers by account, build the index, file it all and produce a handover list. A person only spot-checks that the filing is complete and hands over the key points in person." },
+  { "name": "Test-counting frozen inventory in the cold store and key fixed assets on site", "how": "Someone has to be in the cold-chain warehouse, checking frozen goods and cold store equipment against the count sheet and judging whether books and stock agree. AI can help produce the count sheet and record differences, but it can't inspect the goods for you." },
+  { "name": "Indexing multi-account workpapers and handing over when leaving the field", "how": "AI can gather each account's evidence, count records and reconciliations, sort them and attach them in the workpaper system, and list the day's exceptions. A person confirms the explanations are accurate and hands over to the supervisor." },
+  { "name": "Requesting books and vouchers and building the index for drill-down testing", "how": "AI can generate the list of vouchers to pull from the audit plan and index the documents as they arrive. A person asks the client's finance staff for them face to face, chases what's missing, and judges what to focus on and how hard to push." },
+  { "name": "Checking bank statements and preparing the bank reconciliation workpaper", "how": "AI can match the cash book against the statements line by line, produce a first draft of the reconciliation and flag suspicious transactions. A person drills into the vouchers behind the exceptions, judges whether reconciling items are genuine and answers for the workpaper's conclusion." },
+  { "name": "Reconciling and verifying differences in receivables, payables and bank confirmations", "how": "AI can pull the confirmation replies together, compare differences and list exceptions. A person chases the client for vouchers, works out the causes of under-recorded sales and large bank differences, and decides how to reconcile and whether to escalate." }
+ ],
+ "events": {
+  "e_stocktake": "On December 31 you observe the count in a cold store in Hebei. Minus eighteen, wearing an army greatcoat borrowed from the client, you count cartons of frozen goods stack by stack. When you come out your eyebrows are frosted and the handwriting on your count sheet shakes.",
+  "e_found_issue": "Vouching, you find a large piece of year-end revenue whose dispatch note is dated January. You report it to the senior auditor. He looks it over, gets the manager, and they dig into it all afternoon. In the end the client books an adjustment. In the group chat the manager writes: who found this one?",
+  "e_busy_season": "In the last three weeks of busy season you are not in bed before one in the morning a single night. The report comes out on the evening of April 29, the team goes for Peking duck, and you fall asleep face down on the table mid-meal.",
+  "e_cpa_pass": "In November the CPA results come out, and you have passed three papers in one go. You make no sound at your desk and send the screenshot to your mother, who replies with a string of emoji you can't decipher.",
+  "e_cpa_fail": "Fifty-eight on the CPA audit paper, two points short. All those standards you memorized in the gaps of busy season were for nothing this year, and next year you'll have to learn them all again.",
+  "e_ai_bank": "The firm brings in a new audit tool. Feed in bank statements and the cash book, and within minutes it has matched every line and listed every reconciling item. Work that took you three days now just means watching the dozen or so lines in red.",
+  "e_ai_workpaper": "The workpaper system can now index and file confirmation replies, count sheets and reconciliations by itself. Reviewing, you find it has filed two confirmations under the wrong account. You move them back and click Feedback in the system.",
+  "e_junior_less": "This year's campus intake has been cut by a third, and your team has no new associates. Most of the vouching and matching that used to go to new staff is done by tools now, and the rest you just do yourself.",
+  "e_client_fight": "The client's CFO refuses an impairment you've proposed and bangs the table in the meeting room. Sitting beside the manager, you walk through the inventory aging schedule once more, and you sound steadier than you expected.",
+  "e_love": "At the client you meet a young person in treasury who always gives you an extra copy when you come for payment slips. On the last day of the engagement he asks you to dinner and says: finally, we're not client and auditor anymore.",
+  "e_rent": "The landlord raises the rent. For a month you waver between Tuanjiehu and Guanzhuang, and in the end move out by the Batong subway line: forty minutes more commuting each day, fifteen hundred a month less rent.",
+  "e_house": "You and your spouse buy a small two-bedroom in Tongzhou. The down payment drains both families, and the mortgage is twelve thousand a month. Signing the contract, you work it out: exactly your monthly pay back then.",
+  "e_baby": "Your baby is born in January, right in busy season. Holding the baby in the hospital corridor you take a call from the manager, then go back and glance at the review notes on a workpaper.",
+  "e_regulator": "A rival firm is suspended after a listed client's accounting fraud, and the whole profession tenses up. Your firm adds another round of quality review, and your workpapers are pulled out and read page by page. Luckily, not one page is a problem.",
+  "e_layoff": "In one quarter the firm lets a batch of people go, a third of your intake year. On Friday afternoon a whole row of desks is empty, and you help one of them carry a box to the lift.",
+  "e_fraud_sense": "Several of a client's biggest customers were registered in the same month at the same address. You pull up their business registration records and lay them side by side. The manager studies them a long time and says this engagement's risk needs reassessing.",
+  "e_travel": "This year you are on the road a hundred and forty days: coal yards in Ordos, livestock farms in Weifang, a chemical plant in Yichang. Your phone holds more than a hundred photos of invoices and not one selfie.",
+  "e_mentor": "Every night after ten, the senior auditor supervising you walks you through what's wrong with your workpapers. When busy season ends she moves to another team, and before she goes she sends you the vouching checklist she put together herself.",
+  "e_team": "Nobody on your engagement team leaves this year. On the last day of busy season you take everyone for crayfish on Guijie, and a new associate, a little drunk, says working for you has been the most comfortable year of his three.",
+  "e_health": "Your checkup report has an arrow beside a thyroid nodule, fatty liver and a reversed neck curve. You fold the report into an annual audit file and tell yourself you'll get rechecked once this season's over.",
+  "e_parents": "Your father is in hospital back home, the week before the report is signed. You take the high-speed train back to sit with him for two days and do three conference calls in the ward corridor.",
+  "e_big_client": "A private group you've audited for five years finally decides to list and asks for your team by name for the IPO audit. At an internal meeting the partner says: this client is one you brought in."
+ },
+ "choices": {
+  "c_cpa": {
+   "title": "No let-up in busy season: sit five CPA papers in one year",
+   "situation": "Those ahead of you say that to make Senior Auditor and lead fieldwork you need at least half the CPA papers, ideally all six professional papers within two years. But busy season runs to midnight every day, and you can only do practice questions in taxis and while waiting for confirmations.",
+   "options": [
+    { "label": "Sit five, grit your teeth", "result": "On high-speed trains and under hotel desk lamps you work through thousands of questions. When the last paper is over in August, you go back to the hotel and sleep for fourteen hours." },
+    { "label": "Sit two, steady pace", "result": "Each year you pass two papers steadily, and some weekends you even get to climb the Fragrant Hills. Someone from your intake finishes all the papers a year ahead of you and is promoted before you." }
+   ]
+  },
+  "c_ipo": {
+   "title": "Join the IPO team",
+   "situation": "The firm is putting together an IPO engagement. The client is in Shenzhen, three years and one interim period of financials all have to be re-audited, and you'd be on site eight months a year. This team is the fastest route to Senior Auditor. Or stay in Beijing on a few stable annual audits.",
+   "options": [
+    { "label": "Join the IPO team", "result": "You spend most of a year in the client's building in Shenzhen and learn how to answer the stock exchange's inquiry letters, every question backed by three pages of workpapers." },
+    { "label": "Stay in Beijing on annual audits", "result": "You do three established clients: familiar processes, familiar people, and some evenings you're home for dinner. In the year of promotions you are in the middle of the list." }
+   ]
+  },
+  "c_data_tools": {
+   "title": "Whether to learn audit data analytics",
+   "situation": "The firm has set up a digital audit group and is pulling people off engagements to learn SQL, Python and the new analytics tools, running full-population tests for every team. For those six months you'd be split between the two, and your engagement team will feel you're not there.",
+   "options": [
+    { "label": "Go, do data", "result": "The first SQL you write runs through three million of a client's sales records and turns up twenty-odd large invoices issued at weekends in the small hours. From then on the manager has you run every big client first." },
+    { "label": "No, stay on engagements", "result": "You keep vouching, sending confirmations and training new staff on engagements. Whatever the data group turns up, it is still people like you who go and check it, one document at a time." }
+   ]
+  },
+  "c_ib": {
+   "title": "Jump to an investment bank at a securities firm",
+   "situation": "A sponsor representative you met on the IPO asks if you'd like to join as an investment banking project manager: noticeably more pay, a bonus when deals close, and the sponsor representative competency exam to pass first. Banking means late nights too, just a different kind.",
+   "options": [
+    { "label": "Go into banking", "result": "You hand in your resignation. At the exit interview the manager says: don't bring your deals to us for audit later. We'll know you too well to find fault.", "end": "You became a project manager in a securities firm's investment banking division, writing prospectuses for companies and answering regulators' inquiries. Whenever you see an audit report from a firm, you turn first to the notes, and look at whether that number was one somebody stayed up for." },
+    { "label": "Stay at the firm", "result": "You don't go. You say you want to take auditing all the way to the day you can sign. Fair enough, he says. I'll come to you later." },
+    { "label": "Pass the sponsor exam first, then see", "result": "Outside busy season you learn a whole set of investment banking regulations and pass. The qualification just sits there. You don't leave, but you read inquiry letters with different eyes." }
+   ]
+  },
+  "c_manager": {
+   "title": "Go for Audit Manager",
+   "situation": "The partner says there are two Audit Manager slots this year, for people who can carry three or four engagements at once, manage budgets and negotiate major adjustments with clients. Your hands are already full. To be promoted, you'd have to take on a difficult new client.",
+   "options": [
+    { "label": "Take the new client, go for manager", "result": "That year you run four engagements at once and sit in six meetings a day, your phone ringing from morning to night. You read the promotion email in the client's restroom." },
+    { "label": "Do what's in hand well first", "result": "You don't take it, and deliver all three engagements on time without a single major problem. The slot goes to someone else, and the partner says you're first in line next year." }
+   ]
+  },
+  "c_internal": {
+   "title": "Do internal audit at a central state-owned group",
+   "situation": "A central state-owned group's audit department is hiring internal auditors: nine to six, a few trips a year, pay down twenty percent to start, but no more busy seasons. You would go from someone looking at the books from outside to someone looking from within.",
+   "options": [
+    { "label": "Go into internal audit", "result": "You settle in at the group's audit department, auditing subsidiaries' procurement and construction, and for the first time get two days off in a row at weekends. Once you turn up a problem in a construction contract, and it makes you more nervous than anything at the firm." },
+    { "label": "Stay at the firm", "result": "You turn it down. Leave now, you say, and you'll never sign a report. That busy season, once again, midnight passes while you're in a client's meeting room." }
+   ]
+  },
+  "c_cfo": {
+   "title": "Become CFO at a client company",
+   "situation": "A private company you've audited for five years is going to list, and the owner wants you as CFO, with stock options and double the pay. You know every number in that company's books, and you know where they aren't quite clean.",
+   "options": [
+    { "label": "Go and be CFO", "result": "You first step back from the engagement as the rules require, then join the company, and the first thing you do is clean up those few unclean entries.", "end": "You became CFO of a private company. Every April you sit on the other side of the table, waiting for the young people from the audit firm to come and vouch your documents." },
+    { "label": "Stay at the firm", "result": "You decline the owner. He hires someone else, and in the year it lists you see the company's name in the news and glance at the notes to its financial statements again." }
+   ]
+  },
+  "c_hometown": {
+   "title": "Go back to a firm in your home provincial capital",
+   "situation": "A local firm in your home provincial capital wants you back as a department manager. Over thirty percent less pay, not as much travel, and your parents twenty minutes' drive away. But the clients and contacts you've built in Beijing would be cut off.",
+   "options": [
+    { "label": "Go home", "result": "You go back to the provincial capital and audit local state companies and a few pre-IPO firms. Smaller engagements, more favors owed. On weekends you can have dinner at your parents'." },
+    { "label": "Stay in Beijing", "result": "You turn it down. At New Year your mother asks when you'll be less busy. After April, you say." }
+   ]
+  },
+  "c_partner": {
+   "title": "Go for Audit Partner",
+   "situation": "This year the firm is choosing audit partners, looking at how much revenue you bring in, whether any report you've issued has gone wrong, and whether you have a name in the industry. As partner, your name goes on the audit report, and if something goes wrong the responsibility is yours too.",
+   "options": [
+    { "label": "Go for partner", "result": "That year you fly to more than forty cities to meet clients, speak at three industry conferences, and hand in a sixty-page business plan." },
+    { "label": "No, be the technical senior manager", "result": "You say you're not good at bringing in business and would rather guard quality. The firm gives you all the hardest reviews, and some people call you the floor." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "Your last busy season ends. You sign the last report and put your fountain pen back in the drawer. Outside the office window is the Guomao night, several floors in the building still lit, and you know that up there a group of people in their twenties are fixing index numbers. You switch off the light, go down and take a taxi, and this time you don't ask for a receipt.",
+  "burnout": "That April, standing up in a client's meeting room, the world goes black, and you wake in hospital. The doctor says it is years of late nights and urges you to live differently. You leave engagement work and move to the firm's quality control department, reviewing workpapers. You go home on time every day. Passing the engagement rooms, you still glance at the people inside."
+ },
+ "stages": [
+  "Yours is the lowest and most concrete work: vouching from the sample list, matching invoices and contracts, sending confirmations to banks and the client's customers and chasing replies, observing counts in warehouses and cold stores, scanning every piece of evidence, indexing it and attaching it in the workpaper system. Above you is the senior auditor, who reviews every workpaper you produce; across from you are the client's cashier and accountants, who always say they're working on it.",
+  "You're field in-charge now: how the team is scheduled at the client and who does which account is your call. You take on the hard accounts yourself, revenue, inventory, long-term investments, impairment, and lead two or three associates, reviewing their workpapers. Questions from the client's CFO you take first, and if you can't settle them you go to the manager. On your laptop: the audit software, Excel and a dozen group chats.",
+  "As Audit Manager you have three or four engagements at once, with every engagement's risk, budget and staffing to arrange. You take major audit adjustments to the client's CFO and owner, issue the first draft of the report and pass it to the partner. You don't do workpapers anymore, but many of the review notes on them are yours.",
+  "As Senior Audit Manager, the firm's hardest accounting disputes and the quality review of listed companies and IPOs land on your desk. You start going with partners to meet prospective clients, writing bids and speaking on new standards at industry events. When a young manager can't make a call, you get the phone call, even at midnight.",
+  "As Audit Partner, yours is the name signed on the last page of the audit report. Half your year goes to meeting clients, growing the business and running an industry line, half to reviewing the major judgments your teams send up. At regulators' inspections and audit committee meetings, you are the one in the front seat."
+ ],
+ "work": [
+  "You search the voucher boxes for a payment slip for forty minutes without finding it. The cashier takes it out of her drawer: this one was kept separately. You note on the workpaper: held separately.",
+  "At the count, the warehouse keeper says that whole stack is the same batch. You have him move the outer layer. The cartons inside were produced two years ago.",
+  "One of the client's customers never replies to the confirmation. You call five times, and finally their accountant says: you are the most persistent auditor I've ever met. The reply arrives the next day.",
+  "You draw up next week's field plan, give inventory and revenue to your two most careful people, and take the hardest account, long-term equity investments, yourself.",
+  "A new associate has addressed a confirmation to the address the client gave him. You have him look up the registered business address. The two addresses are different.",
+  "The client's accountant says this expense belongs to last year and needn't be adjusted. You lay the contract, invoice and acceptance note out in a line in front of her. She looks at them a long time and says: adjust it, then.",
+  "The client's owner takes you to dinner and asks between courses whether that impairment could wait a year. You finish your bowl of noodles and say it can't wait. I'll send you the calculation tomorrow.",
+  "All three engagements are over budget. At the weekly meeting you project everyone's timesheets, cut two procedures you can do without and keep one you can't.",
+  "A senior auditor's inventory workpaper is beautifully done, but on the count sheet the counter's name is blank. You call her over, say nothing, and point at the box.",
+  "There's a dispute over when a listed company should recognize revenue, and three managers disagree. You put the new standard's clauses, two regulatory cases and the original contract on the table together and hold a two-hour meeting.",
+  "You go with the partner to meet the owner of a company preparing to list. He asks you one question: once we're listed, will you be harder to deal with than now? Yes, you say.",
+  "At one in the morning a young manager calls to ask whether a related-party transaction needs disclosing. You hear him out, say disclose it, then read him the names of the three documents he'll need, one by one.",
+  "The day before signing, you read the key matters in an audit report once more, call in the engagement manager and ask him: have you actually been out to see that distributor?",
+  "The regulator inspects the firm and picks out a report you signed. You sit in the meeting room with the inspectors for three days, and for every question there is a workpaper to turn to.",
+  "At the audit committee, an independent director asks what worries you most this year. The aging of receivables, you say, and put a table up on the projector."
+ ],
+ "past": [
+  "You go to middle school in a prefecture-level city in Henan. Your mother is a cashier in the finance office of a state company, and at the end of every month she brings the ledgers home and checks them page by page at the dinner table.",
+  "Your gaokao (college entrance exam) gets you into a finance and economics university in Beijing, and you put down accounting. Accounting is safe, your mother says. What you want to learn, you say, is how to tell whether someone's books are wrong.",
+  "In your second year you read a listed company's annual report for the first time, spending three nights on the notes, and in the dorm you explain to your roommates why receivables are growing faster than revenue.",
+  "In the winter break of your third year you intern in audit at a firm and on day one are sent to a bank to pull statements, standing at the counter all afternoon. That night you write in your diary: so auditing is done with your legs.",
+  "In the autumn hiring season you interview with seven firms and get an offer from this one. The day you sign you go to Guomao to look at their office tower, and tilt your head back counting to the forty-something floor."
+ ],
+ "late": {
+  "pension_note": "Estimate: the firm pays into Beijing's basic enterprise employee pension, with a cap on the contribution base, so in the high-salary years you contribute at the ceiling. After retirement you get roughly forty percent of your final monthly salary. Partners rely on their own savings and private insurance.",
+  "scenes": [
+   "Your first April of retirement you are in nobody's meeting room. At home you make a pot of tea, open your laptop and read a few listed companies' annual reports like novels.",
+   "A listed company invites you to be an independent director and chair of its audit committee. At the first meeting you turn to page thirty-seven of the notes and ask a question that makes the CFO sweat.",
+   "You find a park near your home in Tongzhou and walk a lap every morning. Your daughter is in consulting in Shanghai and up late every night too. When you warn her, she says: weren't you the same?",
+   "A few of the people you trained come to see you at New Year: one is a partner now, one a listed company's CFO. Over dinner they argue about whether an impairment should be booked.",
+   "Your first few months in quality control you go home on time every day and sleep seven hours a night. You read workpapers even more closely than before, and the young ones dread your review notes.",
+   "A young auditor comes to you with a botched workpaper, eyes red. You straighten it out with her and say: go back on site tomorrow and look again. Don't be afraid to go back.",
+   "When you reach the age you retire. The pension isn't much, but you saved some back then. In your neighborhood you help old people read investment product contracts, explaining line by line where the traps are.",
+   "Your first year away from the firm, every April you still sleep badly and dream of a report that won't get signed. You wake, remember it isn't yours anymore, and lie there a while.",
+   "At your new job you're asked to liaise with the auditors, and the one who comes to vouch your documents is a kid of barely twenty with cold-store frost on his eyebrows. You pour him a cup of hot water.",
+   "The senior auditor who trained you has made partner. Running into you at an industry event, she says she still shows new staff your cold-store count sheet from that first year.",
+   "Audit tools keep getting smarter: matching, filing and indexing don't need people anymore. But every December 31 someone still has to put on an army greatcoat, walk into a cold store and count, carton by carton.",
+   "Your grandson asks what you used to do. Checked accounts, you say. He asks if that's like the police. No, you say, it's helping everyone be sure a number is true."
+  ],
+  "closing": {
+   "retire": "Many years later, one April, you sit in the sun on a park bench. Beside you two young people are on the phone talking about confirmations, adjustments, index numbers. You listen, smile a little, and don't turn around.",
+   "burnout": "Many years later, sorting old things at home, you come across a photocopy of the count sheet from your first busy season, the writing shaky from the cold. You smooth it flat and slip it into a book.",
+   "end": "Many years later, in a drawer, you find your certificate for passing all the CPA papers. In the photo you are very young, with shadows under your eyes. You look at it a while, then put it back."
+  }
+ }
+}

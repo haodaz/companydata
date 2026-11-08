@@ -13,5 +13,8 @@
 - [ ] **community-worker-sh**：最后一级写成进街道社区自治办。
 - [ ] **护士 ICU（nurse-sh-icu）**：护士长那一级月薪在部分局里到五六万，偏高，可再调 salary_factor。
 
+- [ ] **auditor-bj**：模拟里 33% 做到合伙人，对大所偏乐观，可调低 growth。
+- [ ] **emergency_dispatchers（重庆 120 调度）**：库里 AI 替代性是防汛抢险的活，卡上 ai_override 手写了 120 调度；阶梯是应急指挥中心的通用职称。
+
 ## 新卡写作中跳过的
 （第二、三波 agent 报回来的跳过项记在这里）

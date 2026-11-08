@@ -1,0 +1,201 @@
+{
+ "id": "dispatcher-cq",
+ "occupation": "Emergency Dispatcher",
+ "role": "120 Emergency Medical Dispatcher (Newly Cleared to Work Solo)",
+ "headline": "After three years as an emergency room nurse at a district hospital, she tested into Chongqing's 120 emergency command center: a dispatcher who has just put on the headset to take calls alone, and spends her days finding people in a city of addresses stacked up the hillsides",
+ "unit": "120 dispatch hall of a municipal emergency medical center, Chongqing",
+ "unit_type": "Municipal emergency medical center (public institution)",
+ "city": "Chongqing",
+ "city_tier": "Municipality directly under the central government",
+ "education": "Associate degree (Nursing)",
+ "level": "Three years in the ER taught you the difference between chest pain and stomach pain. You are new to the dispatch system. You know the phone instructions for CPR by heart but have used them for real only once, and Chongqing addresses often take you three tries.",
+ "intro": "For three years you were a nurse in a district hospital's emergency department, used to the moment an ambulance pulls up at the door. Last year you passed the exam for the 120 command center (120 is China's ambulance number), and moved from the stretcher end to the telephone end. After three months of shadowing, yesterday you passed your final assessment. From today, some of the calls for help that come in from across Chongqing will land straight in your headset, and in one minute you have to hear clearly: where is this person, what has happened, which ambulance goes.",
+ "salary_note": "Estimate: dispatchers at Chongqing's emergency center are paid a public institution post salary plus performance pay and a night allowance, roughly the national figure. Contract staff get noticeably less than those with a permanent state post; once you win one, it is steady and rises slowly.",
+ "facts": [
+  { "label": "Command Center Duty Officer (current level)", "value": "0-2 years, ¥4,500–7,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Assistant Emergency Dispatcher (2-4 years)", "source": "Career map" },
+  { "label": "Pay after 10+ years", "value": "¥10,200 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Talking a family member through CPR over the phone", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Locating the caller and checking a multi-level address", "source": "AI exposure" },
+  { "label": "Open positions", "value": "6 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You leave home in Nanping and take the light rail across the Yangtze. The carriage is packed, there is mist on the river, and on the far bank the buildings grow up the hillside layer on layer.",
+  "Handover. The night dispatcher passes you three ambulances still out, a road accident patient not yet at hospital, and word that one hospital's emergency department is full. You put on the headset and sign in to the system.",
+  "First call: an old man at home with chest pain. While you ask his age, history, whether he is sweating, you search the map for the address. Eighth floor, the caller says, you come straight in off the road. You know that building's ground floor is down by the river.",
+  "A drunk calls for the fifth time, wanting an ambulance to take him home. You run through the protocol questions, log it as an invalid call and hang up. The next light is already flashing.",
+  "Lunch in turns, fifteen minutes. The canteen has twice-cooked pork today. You get a few mouthfuls down, ears still buzzing as if the phone were ringing.",
+  "On the line is a young man in tears: his father has collapsed and isn't moving. You tell him to put the phone on speaker beside him and push to your count: one, two, three, four. You keep counting until the ambulance siren comes through the phone.",
+  "Forty degrees on a July afternoon, and the heatstroke calls come one after another. Every ambulance is out. You watch the little vehicle icons on the big screen to see which one frees up first.",
+  "End of shift. You take off the headset, and it has pressed a groove into your ear. On the light rail home you set your phone to silent. You don't want to answer a single call."
+ ],
+ "ladder": [
+  { "title": "Command Center Duty Officer", "stage": "Settling in", "focus": "Take calls and log them, dispatch by protocol and track the basics on your own. You may only work after passing the pre-service assessment and the annual hands-on refresher." },
+  { "title": "Assistant Emergency Dispatcher", "stage": "Building up", "focus": "Take on triage by severity, coordinate across several lines and file first reports; handle incidents below Level III on your own. Requires the provincial dispatcher qualification certificate." },
+  { "title": "Emergency Dispatch Supervisor", "stage": "Backbone", "focus": "Lead dispatch for major incidents from start to finish, organize revisions of response plans and train new staff; authorized to report directly to the city command. Requires passing the intermediate professional title review set by the emergency management ministry." },
+  { "title": "Emergency Command Expert", "stage": "Leading the field", "focus": "Take part in drafting national response plans, designing cross-province coordination and defining requirements for intelligent dispatch systems; may be appointed to the emergency management ministry's expert pool." }
+ ],
+ "ai_tasks": [
+  { "name": "Locating the caller and checking a multi-level address", "how": "When the call connects, AI can give the phone's location automatically, match it to the address database and suggest nearby door numbers and landmarks. Among the height differences and old buildings of a mountain city, a person still has to ask line by line which floor, which flat, which entrance, and answer for the ambulance sent." },
+  { "name": "Transcribing calls and suggesting a severity level", "how": "AI can transcribe as it listens, pull out the complaint, age and danger signs, and suggest a level and a dispatch. A person listens to the breathing, the tone and the background, judges whether the transcript and level are right, and dialects and vague phrasing especially need a person's call." },
+  { "name": "Talking a family member through CPR over the phone", "how": "AI can pop up the standard instructions and a rhythm prompt. But getting a panicking, sobbing relative to steady down, push to your count, and judging whether they're doing it right depends on the dispatcher's voice and quick thinking, and the responsibility is a person's." },
+  { "name": "Sending the nearest ambulance and recommending a route", "how": "The system can recommend the closest free ambulance and route from live vehicle positions, traffic and station status. The dispatcher only confirms, and changes it when there's a road closure, an ambulance held at a hospital or a special patient." },
+  { "name": "Spotting repeat nuisance calls and invalid calls", "how": "AI can flag likely nuisance and invalid calls from number history and call content, and prompt the dispatcher to handle them by protocol. A person still answers every call to make sure it isn't a real emergency." },
+  { "name": "Dispatching many ambulances and spreading patients across hospitals in a mass-casualty incident", "how": "AI can pull together hospital beds, available vehicles and casualty numbers and suggest a distribution plan. But with dozens of calls coming in and not enough ambulances, who goes first and where they're taken involves weighing lives and answering for it afterwards, and must be decided by a person." },
+  { "name": "Coordinating with 110 police and 119 fire", "how": "AI can push incident details and sync locations and progress automatically. A person on the hotline confirms what the other side needs, who gets there first and who commands on scene, and lines up what each service does." },
+  { "name": "Filing call records and handover notes", "how": "The system can compile calls, dispatches, arrivals and hospital handovers into call records and handover sheets automatically. A person only spot-checks the ambulances still out and the open incidents, and briefs the next shift on the key points." }
+ ],
+ "events": {
+  "e_first_cpr": "The first time you talk someone through CPR on your own, a daughter pushes on her mother's chest at home for eleven minutes until the ambulance doctor comes through the door. Later you hear the old woman came round and was eating rice porridge in hospital.",
+  "e_lost": "There's a call you couldn't hold on to. By the time the ambulance arrived, it was too late. After your shift you sit in the stairwell outside the dispatch hall for a long time. Your shift leader comes out, says nothing, and sits down beside you.",
+  "e_address": "The caller says he is in that building near Liziba where the light rail runs through it, and can't say which floor or which flat. You search the map, ask what shops are by the door, have him go to the window and say what he can see, and in the end pin him down by a hotpot restaurant's sign.",
+  "e_prank": "One number calls more than a dozen times in a night: swearing, singing, silence. By protocol you must answer and ask every time. You hang up on the fourteenth, take two deep breaths, and pick up the next light.",
+  "e_heat": "Twenty days straight above forty degrees, and twice the usual calls for heatstroke and old people overcome by heat. Not enough ambulances. While you take calls, you tell relatives to move the person into the shade and wipe them down with wet towels.",
+  "e_wildfire": "That summer fire breaks out on the hills of Beibei, and vehicles and crews from across the city are sent that way. You hold the hall for two nights straight, the ambulances you dispatch coming back one by one and going out again one by one.",
+  "e_ai_locate": "The system now does automatic location: the moment a call connects, a blue dot appears on the map, accurate to a few dozen meters. You still ask what floor, because in Chongqing a few dozen meters can mean ten storeys.",
+  "e_ai_triage": "The dispatch system can now transcribe a call and suggest a severity level as it goes. Once it marks a middle-aged man who says his chest feels off as routine. Listening to him breathe, you change it to the highest level and send the ambulance with a defibrillator.",
+  "e_dialect": "An old man calls from the mountains of Chengkou, his dialect so thick you catch only half, and the transcription gets not one word right. You ask a colleague who grew up in Kaixian to take it. Two sentences in, he says: his wife has had a fall.",
+  "e_bed_block": "The big hospitals' emergency departments are full, and ambulances sit at their doors waiting to hand over patients, an hour or more at a time. You watch the number of free ambulances in the city shrink on the big screen and call hospital after hospital to ask how many more they can take.",
+  "e_mass": "A coach overturns on the expressway, and dozens of calls come in at once. You trigger the mass-casualty plan, pulling ambulances from neighboring districts while spreading the injured across several hospitals. For two hours you don't drink a drop of water.",
+  "e_thanks": "A family whose baby you helped deliver over the phone brings a silk banner and a box of celebration sweets on the baby's one-month day. The banner goes up on the hall wall, and when you pass it you sneak a look at the words.",
+  "e_complaint": "A relative complains that you asked too many questions and the ambulance came too slowly, and the recording is pulled to review. Your boss listens and says you did nothing wrong. That night you still go over it again and again, wondering which question you could have skipped.",
+  "e_love": "One of the ambulance drivers always reports back over the radio crisp and clear when he returns. Later you end up sitting together at a station dinner, and he says he'd known your voice for ages.",
+  "e_house": "You buy a two-bedroom in Nan'an with a view of the river, the down payment your savings plus help from your parents. Chongqing prices aren't high. The mortgage weighs on you, but every morning from the balcony you can watch the light rail cross the river.",
+  "e_baby": "A baby joins the family. On your first night shift back from leave, a call comes in about an infant with a fever and seizures. Your voice is steadier than usual. Only after you hang up do your hands start to shake.",
+  "e_sleep": "Switching between day and night shifts, you start to lose sleep, and when you close your eyes you hear phones ringing. The counselor the center brings in suggests doing something after work that has nothing to do with sound, and you start walking on Nanshan.",
+  "e_bianzhi": "The center gets a few permanent posts, and you pass the exam for one. Your contract changes from hired staff to a permanent state post, a few more lines appear on your payslip, and your mother says on the phone: now you can rest easy.",
+  "e_trainee": "The new dispatcher you're training talks someone through CPR alone for the first time, hangs up and just sits there, stunned. You hand her a cup of water and say: you did it right. The next light's on.",
+  "e_flood": "The Yangtze and the Jialing rise together, water gets into the streets around Ciqikou, and people in several old housing blocks are trapped upstairs. You keep a hotline open with the 119 command center, working out building by building who gets moved first.",
+  "e_voice": "Over a dozen years your voice has gone hoarse, and every winter your throat hurts. The doctor says it's vocal nodules and tells you to talk less. You smile. Talking is my job, you say.",
+  "e_parents": "One night shift an address pops up in the system: your parents' building. Your palms go cold. You pick up: it's the upstairs neighbor. After you hang up you step out to call your mother. She's already asleep."
+ },
+ "choices": {
+  "c_cert": {
+   "title": "Earn the dispatcher qualification and go for Assistant Emergency Dispatcher",
+   "situation": "The center says that to triage, coordinate several lines and handle incidents on your own, you need the province's dispatcher qualification certificate, the threshold for Assistant Emergency Dispatcher. Studying means squeezing time between shifts, and the exam is half protocols and response plans, half simulated calls.",
+   "options": [
+    { "label": "Sign up, study after night shifts", "result": "You copy the severity criteria for every kind of case into a little notebook and memorize them on the light rail after night shifts. In the simulated call round, the examiner plays an old man who can't explain his address, and you get it out of him." },
+    { "label": "Take another year of calls first", "result": "You take another year of calls and meet every kind there is. When you sit it the following year, the simulated calls feel easier than the real thing." }
+   ]
+  },
+  "c_back_er": {
+   "title": "Go back to the emergency department as a nurse",
+   "situation": "Your old head nurse calls: the ER is short of people, would you come back? Back there you stand all day and run all day, but you see patients' faces and get to do something with your own hands. Here, you only ever hear voices, and never know what happened afterwards.",
+   "options": [
+    { "label": "Go back to the ER", "result": "You put in your request, and on your last shift you disinfect the headset and hang it back in its place.", "end": "You went back to the emergency department, pushing stretchers, putting in lines, running in behind the ambulances. Every time a 120 ambulance pulls up at the door, you wonder who took that call." },
+    { "label": "Stay at the dispatch center", "result": "You tell the head nurse you'll do a few more years. After handovers you start calling hospitals to ask what became of the people you sent ambulances to." },
+    { "label": "Stay, and work one ER shift a month", "result": "You ask to go back to the ER for one shift a month. Taking calls again, you know what the people at the other end will do first when the ambulance arrives." }
+   ]
+  },
+  "c_ai_system": {
+   "title": "Whether to help build the intelligent dispatch system",
+   "situation": "The center is bringing in a new generation of intelligent dispatch: automatic location, voice transcription, severity suggestions, nearest-vehicle dispatch. The vendor wants a few frontline dispatchers to set requirements and run tests. It means a lot of meetings and a lot of recordings, and half as many calls.",
+   "options": [
+    { "label": "Go, work with the system", "result": "You listen to more than a thousand recordings, marking for the vendor which phrases mean real danger and which are just how Chongqing people talk. A tight heart and a heart that feels off are not the same thing, and you write half a page on it in the requirements document." },
+    { "label": "No, stay on the headset", "result": "You keep taking calls one after another. Once the system is live you look at its severity suggestions too, but when it comes to what you click, you still listen to the breathing on the line." }
+   ]
+  },
+  "c_district": {
+   "title": "Transfer to a district emergency sub-center",
+   "situation": "The emergency sub-center in Wanzhou needs a dispatcher who can lead a shift. Half as many calls, long mountain roads, and an ambulance that goes out can take over an hour to get back. You'd lead a shift sooner there, but your home is in the main city.",
+   "options": [
+    { "label": "Go to Wanzhou", "result": "You spend three years in Wanzhou and learn to dispatch in mountains without road names, by which village, which pass, whether there's a school nearby. When you come back to the main city, a shift lead post is waiting for you." },
+    { "label": "Stay in the main city", "result": "You stay. The calls are as many as ever, and you get faster and faster at finding people in the stacked addresses of the main city. A colleague says you have a 3D Chongqing in your head." }
+   ]
+  },
+  "c_lead": {
+   "title": "Compete for Emergency Dispatch Supervisor",
+   "situation": "The hall needs a dispatch supervisor who can lead the whole dispatch for major incidents, revise response plans and train new staff, and who has passed the intermediate title review. As supervisor, you'd be the one in the hall making the final call on whether to send ambulances and how many.",
+   "options": [
+    { "label": "Put your name in", "result": "You stay up nights writing proposed revisions to the mass-casualty dispatch plan, and in your defense talk about the overturned coach. A judge asks what was hardest. Deciding which ambulance goes where first, you say." },
+    { "label": "Stay out, keep taking calls", "result": "You don't apply. You still want to take the calls yourself, you say. Once the new supervisor is in, the toughest calls often get passed to you." }
+   ]
+  },
+  "c_trauma": {
+   "title": "Whether to take a break",
+   "situation": "After several calls in a row you couldn't hold on to, you start jolting awake at night. The center's counselor suggests six months in a training post: no calls, just reviewing recordings and teaching new staff, with less performance pay.",
+   "options": [
+    { "label": "Take six months in training", "result": "For six months you don't wear the headset, listening to other people's recordings every day and teaching new staff. The day you come back, you pick up the first call and your voice is still steady." },
+    { "label": "No break, keep going", "result": "You say you don't need it. You start walking Nanshan every day after work, as far as the spot where you can see the whole Yuzhong peninsula, and then back." }
+   ]
+  },
+  "c_city_ops": {
+   "title": "Move to the city operations management center",
+   "situation": "The city's new operations management center is hiring, putting 110, 119, 120, the 12345 hotline, traffic, water and power all on one big screen, and it wants people who know dispatch for integrated assessment. No night shifts, a bit more pay, and you'd no longer be only about ambulances.",
+   "options": [
+    { "label": "Go to the operations center", "result": "You move to an even bigger screen, showing not just ambulances but fire engines, police cars, pipe networks and traffic lights.", "end": "You became an integrated assessment officer at the city operations management center, watching the heartbeat of a whole city. Whenever a red 120 dot pops up on the big screen, you still listen without meaning to, as if the headset were still on." },
+    { "label": "Stay at 120", "result": "You don't go. That screen is too big, you say. You'd rather stay close to the phone." }
+   ]
+  },
+  "c_expert": {
+   "title": "Apply to be an Emergency Command Expert in the expert pool",
+   "situation": "The city recommends you for the emergency command expert pool: drafting response plans, cross-province coordination, setting requirements for the new intelligent dispatch system. You'd be writing submissions, traveling to meetings and lecturing in the districts, with less and less time in the hall.",
+   "options": [
+    { "label": "Apply as an expert", "result": "You write more than twenty pages, reviewing every mass-casualty dispatch of these years. At the defense, when you get to the overturned coach, one of the experts in the audience nods." },
+    { "label": "Don't apply, keep the hall", "result": "You let someone else take the chance and stay in the hall leading shifts. Every year in new-staff training, the first class is still yours." }
+   ]
+  },
+  "c_late_off": {
+   "title": "Come off nights and move to quality control",
+   "situation": "You're past fifty, night shifts are harder and harder to get through, and your voice has gone hoarse. The center says it can move you to the quality control section: listening to recordings, checking compliance, running reviews, no more nights, minus the night allowance.",
+   "options": [
+    { "label": "Move to quality control", "result": "Every day you listen to dozens of recordings and write feedback for each dispatcher. The line you write most often: here, you could have asked once more which floor." },
+    { "label": "Keep working shifts", "result": "Your name stays on the roster. The young ones say that with you in the hall at night, they feel steadier when something big happens." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "Your last shift is a day shift. You take your last call, dispatch the ambulance, and only when the little vehicle icon starts moving on the big screen do you take off the headset. You wipe it clean and hand it to the young dispatcher taking over. Outside, mist has risen on the Yangtze again, and somewhere far off there is a siren. You stop to listen a while, then walk on to the light rail station.",
+  "burnout": "That winter, on a night shift, you pick up a call, open your mouth, and not a word comes out. The doctor says it is years of stress and tells you to leave the front line. The center moves you to the records room. You go home on time every day. Passing the dispatch hall now and then, you still stand at the door a while, listening to the phones inside."
+ },
+ "stages": [
+  "You sit in the hall with the headset on, one call after another: get the address, the symptoms, the age, fill in the call record in the system, choose the level, dispatch, then watch whether the ambulance gets there. Beside you sits the senior dispatcher leading your shift; when you're unsure of a call she reaches over and presses monitor. At hand: a dog-eared deck of triage cards and the CPR instructions taped to the edge of your screen.",
+  "You do your own triage now, one line taking the call, another coordinating with hospitals, stations, 110 and 119. Incidents below Level III you handle to the end yourself, and you write the first report. You have to know every ambulance in the city on the big screen: which station is empty, which hospital is full, without looking.",
+  "As dispatch supervisor you sit at the raised desk at the back of the hall. When something major comes in, how many ambulances, whether to trigger the mass-casualty plan, which hospitals to spread patients to, is your call, and you report straight to the city. You revise plans, set rosters and train new staff, and in recording reviews you're the one who presses pause, clip by clip.",
+  "From the expert pool you help draft city and cross-province response plans, set requirements for the next dispatch system and lecture at the district sub-centers. You no longer run the hall day to day, but on the night of a major incident you sit at the back and listen without a word, and when a young supervisor isn't sure, they glance back at you."
+ ],
+ "work": [
+  "A child calls to say grandma is asleep and won't wake up. You slow down and ask what's outside his door. A man selling cold noodles, he says. You tell him to give the phone to the noodle seller downstairs.",
+  "The senior dispatcher listens to one of your recordings and says your questions were all right, just in the wrong order: address first, then the illness. Where the person is always comes first.",
+  "The ambulance doctor on scene radios that he can't find the building. You call the caller back and have him stand on the balcony waving his phone torch, and the doctor says over the radio: got it.",
+  "Two chest-pain calls come in at once, and there's only one ambulance near. You weigh the two people's ages and symptoms and send it to the one who is sweating and can't finish a sentence.",
+  "A hospital says its ER is full and won't take a patient. You describe the case over the phone and point out that theirs is the only hospital nearby with a cath lab. A few seconds of silence. Bring him in, they say.",
+  "On the hotline, 119 reports a building on fire with people trapped. Before they've finished you've already sent one ambulance each from the two nearest stations.",
+  "In a review session you play a recording and pause it at forty seconds, and ask the new dispatcher: after he said my mother can't breathe, why were you still asking whether she had her insurance card?",
+  "Revising the mass-casualty plan, you add a table to the distribution page: how many critical patients each hospital can take at once, the numbers rechecked by phone every quarter.",
+  "The same few names keep turning up on the night roster. You add your own, then go and talk one by one with two old colleagues who only ever work days.",
+  "The new version of the intelligent dispatch system is about to go live. You have the vendor test it first on the hundred hardest calls of the past year. It gets eleven wrong, and you write down why for each one.",
+  "At a cross-province exercise, a major crash is staged on the expressway at the Sichuan–Chongqing border. From the assessors' seats you watch whose ambulances arrive first and write on the form: radio traffic needs a single shared channel.",
+  "Lecturing at the Chengkou sub-center to a handful of new recruits, you play a recording in dialect and ask how many words they caught. Then you tell them about the time you asked a colleague to take a call."
+ ],
+ "past": [
+  "You go to middle school in an outlying district of Chongqing, living halfway up a hill, with a long flight of stone steps down to the town. One year your grandmother fell at home. The ambulance couldn't get up there, and neighbors took turns carrying her down on their backs.",
+  "Your gaokao (college entrance exam) score isn't high, and you put down nursing. Nursing is safe, your mother says, you'll always find work. You think of your grandmother that time, say nothing, and fill it in.",
+  "On placement you rotate into the emergency department, and for the first time you run alongside a stretcher, taking a patient off an ambulance, your hands soaked in sweat. People in emergency, your supervisor says, need quick legs and a clear voice.",
+  "After graduating you pass the exam for the district hospital and are put in the ER. You quickly learn to hear one sentence clearly through the din, and you see how doctors and nurses rush out together the moment an ambulance stops at the door.",
+  "On night duty in the ER you keep hearing 120 calls one after another. Once you overhear a dispatcher on the phone teaching a relative chest compressions, and think how steady that voice is. You start watching for 120 center job openings.",
+  "You pass the exam for the 120 command center and shadow for three months. Sitting in the hall for the first time amid a roomful of ringing phones, you find it louder than the ER, and quieter too."
+ ],
+ "late": {
+  "pension_note": "Estimate: permanent staff at the emergency center draw the pension for government and public institution employees plus an occupational annuity. With long contribution years, after retirement you get roughly sixty percent of your final monthly salary.",
+  "scenes": [
+   "Your first month of retirement, when your phone rings your heart still tightens. You pick up: a sales call. You hang up laughing and change the ringtone to an old song.",
+   "The neighborhood committee asks you to teach residents first aid, and you kneel on a mat showing them compressions, counting out loud. An old woman at the back says your voice sounds like one she's heard somewhere.",
+   "Every morning you walk up Nanshan and rest at the spot where you can see the two rivers meet. The city below keeps growing, and the ambulances on its roads get faster every year.",
+   "The center invites the old dispatchers back for a talk. The screens in the hall are new, and the young ones' headsets are much lighter. You sit at the back a while and listen to them take a call. They ask better questions than you did.",
+   "Your first few months in the records room you sort the paper call records and file them one by one. With no more talking, your voice slowly recovers, and you can sleep at night again.",
+   "A young dispatcher comes to the records room after a night shift and says there was a call last night she couldn't hold on to. You make her a cup of tea and sit beside her saying nothing, the way your shift leader once did for you.",
+   "When you reach the age you retire. You and your husband grow a few pots of flowers in the estate, and whenever an old person downstairs feels unwell, the neighbors come knocking at your door first.",
+   "Your first year away from 120, when you hear a siren in the street you still stop to see which way it's going, and guess which station it came from.",
+   "At your new job you're used to giving the address first. Colleagues laugh at you. Old habit, you say. Where the person is always comes first.",
+   "The new dispatcher you trained is a supervisor now and messages you: today I talked someone through CPR, and they were brought back. The same count you taught me.",
+   "Dispatch systems keep getting smarter, location, transcription and triage all faster. But in Chongqing's old buildings, in dialects that won't come clear, there still has to be one person at this end of the phone, asking slowly, one question at a time.",
+   "Your grandson asks what you used to do. Answered the phone, you say. What's hard about that, he says. The hard part, you tell him, is that the person on the other end is frightened, and you can't be."
+  ],
+  "closing": {
+   "retire": "Many years later, one night on the balcony looking at the river, a light rail train slides out of a building on the far bank in a string of lights. Far off an ambulance crosses the bridge, its siren fading. You know that right now someone with a headset on is asking: which floor are you on?",
+   "burnout": "Many years later, in the estate, you see a little boy fall over and cry for his mother. You crouch down and ask him slowly which building he lives in, which floor. When he's told you, he stops crying.",
+   "end": "Many years later, in a drawer, you find the CPR card that was taped to the edge of your screen, its corners curled. You look at it a while and count softly once through, one, two, three, four, then put it back."
+  }
+ }
+}

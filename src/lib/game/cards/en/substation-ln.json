@@ -1,0 +1,210 @@
+{
+ "id": "substation-ln",
+ "occupation": "Substation Operator",
+ "role": "Operator, 220 kV Substation (Assistant on Shift)",
+ "headline": "Second year out of a power college's company-sponsored class: a substation operator for the Tieling power supply company, working rotating shifts at a 220 kV substation on the plains of northern Liaoning and just beginning to call out switching orders beside a mentor",
+ "unit": "Substation operations center, Tieling power supply company, Liaoning; a 220 kV substation on the edge of town",
+ "unit_type": "Prefecture-level power supply company substation",
+ "city": "Tieling",
+ "city_tier": "Prefecture-level city",
+ "education": "Associate degree (Power Plants and Power Systems, company-sponsored class at a power vocational college)",
+ "level": "You have passed the closed-book exams on safety and operating rules and can walk a full inspection round on your own. In switching you are still only the one reading the orders aloud, and your palms sweat.",
+ "intro": "You studied in a company-sponsored class at a power vocational college, signed with the Tieling power supply company the year you graduated, and were sent to this 220 kV substation on the edge of town. It sits in the middle of the corn fields: three main transformers, a dozen-odd outgoing lines, minus thirty in winter, and in summer, when the thunderstorms roll in, the alarms all go off at once. From today you work four crews on three shifts here with your mentor, and the first thing to learn is to read every line of a switching order clearly in front of high-voltage equipment.",
+ "salary_note": "Estimate: prefecture-level power supply companies in northern Liaoning pay State Grid post salaries plus performance pay, with a night-shift allowance, a little under the national figure. Full social insurance plus housing fund and annuity, and a year-end bonus: in Tieling, an employer people envy.",
+ "facts": [
+  { "label": "Substation Operator, Junior (current level)", "value": "0-2 years, ¥5,000–8,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Substation Operator, Intermediate (2-5 years)", "source": "Career map" },
+  { "label": "Pay after 3–5 years", "value": "¥9,500 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Testing for voltage and fitting earthing leads in a de-energized bay", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Diagnosing a line trip and filing the follow-up field report", "source": "AI exposure" },
+  { "label": "Open positions", "value": "23 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The shift bus heads out of town between harvested corn fields, stalks stacked in bundles. In the distance, a line of pylons carries the conductors all the way into the substation.",
+  "Handover. The night operator passes you the unreset alarms, two work permits not yet closed, and the numbers of one set of earthing leads, item by item. You go out with him and check them on site, and back inside you both sign.",
+  "Routine inspection. With the inspection card and an infrared thermometer you follow the route through the switchyard: transformer oil levels, the sound, any smell of burning. On one set of disconnector contacts you read a high temperature and log it as a defect.",
+  "The dispatcher calls with an order: take a 66 kV line out for maintenance. Your mentor has you draft the switching order. You write more than twenty steps against the single-line diagram. He reads it, crosses out one line and says the order is backwards.",
+  "The station's little kitchen, cooking on rotation. Today it is pickled cabbage stewed with glass noodles. Your mentor says he pickled the cabbage himself last autumn.",
+  "You rehearse the order on the mimic board, then go out to the switchyard. You read each step aloud, your mentor repeats it, glances at the equipment label and says: correct, execute. Only then do you throw the switch.",
+  "The maintenance crew arrives to work. Following the permit, you set up the safety measures, hang the warning signs, point out which parts are live, and watch the person in charge sign the authorization box.",
+  "At night only the two operators on duty are left. The monitoring screens flicker. You write the day's last entry in the operating log, and outside the window there is only the hum of the transformers."
+ ],
+ "ladder": [
+  { "title": "Substation Operator, Junior", "stage": "Settling in", "focus": "Run routine inspections, switching operations and operating records fluently; pass the safety rules exam and the three permit-role qualifications; handle a single equipment fault on your own; confirmed in the post after the intermediate skill grade." },
+  { "title": "Substation Operator, Intermediate", "stage": "Building up", "focus": "Serve as lead operator on a monitoring or operations crew on your own; lead work permit authorization and first response to incidents; train new staff; earn the senior skill grade. Prize-winners at prefecture-level competitions get priority for crew leader." },
+  { "title": "Substation Crew Leader / Control Center Shift Supervisor", "stage": "Backbone", "focus": "Run one operations crew (three to five substations) or one centralized control station; hold the monthly operations analysis; manage safety risk; lead the spring and autumn maintenance seasons. Requires technician grade and three years as lead operator." },
+  { "title": "Substation Operations Specialist (County or City Company)", "stage": "Professional lead", "focus": "Set the unit's operating strategy, revise the rules and roll out new technology; guide frontline stations in closing out defects; take part as an expert in the provincial company's anti-accident measures. Requires senior technician grade, an engineer title, and a city-level model worker or technical champion award." },
+  { "title": "Provincial Substation Operations Manager / Deputy Director, Operations Center", "stage": "System-wide influence", "focus": "Coordinate operating standards across the province or region, the evolution of the intelligent inspection platform, and review of major retrofit plans; represent the unit in drafting State Grid technical standards. Requires a full senior professional title or provincial chief expert status." }
+ ],
+ "ai_tasks": [
+  { "name": "Diagnosing a line trip and filing the follow-up field report", "how": "In the background AI can merge alarms, suggest the likely fault type and draft the first report. The operator confirms the breaker's actual state, goes out to check the equipment and surroundings, and answers for the first report and the call to dispatch." },
+  { "name": "Drafting a switching order and rehearsing it", "how": "AI can generate a first draft from the single-line diagram and a library of standard orders, and check the step sequence and the equipment's double names. The operator checks it against how the station is actually running, answers for the order and runs the rehearsal." },
+  { "name": "Shift handover and filing the operating logs", "how": "AI can gather unreset alarms, work permit status and the day's records into a handover sheet and point out gaps. The operator has to check the tools and earthing leads in person on site, confirm the handover face to face and sign for it." },
+  { "name": "Testing for voltage and fitting earthing leads in a de-energized bay", "how": "At most AI stands by with step prompts and checks equipment numbers. Walking up beside a live bay to confirm the position, testing with the voltage detector and hanging the earthing leads take a person's hands, with a supervisor watching, and the responsibility is a person's too." },
+  { "name": "Daily equipment inspection and spotting defects", "how": "Online monitoring and image recognition can help AI find leaks, rust and abnormal gauges and generate a defect record. The operator walks the route in person, judging by eye, ear and nose, and follows the defect through to repair." },
+  { "name": "Checking the handover and the safety tools", "how": "AI can pull together the last shift's log, alarms and permit progress and flag tools due for testing. The operator checks the insulated tools' condition personally and confirms conditions are fit for the shift." },
+  { "name": "Drafting a switching order from a dispatch maintenance instruction and rehearsing it at the desk", "how": "AI can read the dispatch instruction, check the equipment's double names and generate a first draft. The operator repeats the instruction back, reviews the order, and rehearses it with a mentor on the mimic board to make sure every step is understood." },
+  { "name": "Morning inspection of the 110 kV switchgear and spotting defects", "how": "Through cameras or an inspection robot AI can help spot damp, leaks and other anomalies and keep the images. The operator goes into the equipment area, keeps safe clearance, identifies the live boundary, judges the defect on site and reports it." },
+  { "name": "Diagnosing a sudden alarm from a thunderstorm trip and filing a proper first report", "how": "AI can quickly pull protection operations and sequence-of-events data, sort out the order of events and draft the first report. The operator silences the alarm, confirms the breaker changed position, checks the equipment on site and reports formally to dispatch, answering for the judgment." },
+  { "name": "Switching bay 112 to maintenance: testing for voltage and fitting earthing leads on site", "how": "AI can prompt the steps beforehand, but going into the bay under supervision, confirming it is truly isolated, testing for voltage and hanging the short-circuit earthing leads are high-risk field actions that a person must do by hand and answer for." },
+  { "name": "Filing the digital operating log and closing out the handover", "how": "AI can pull inspections, trip responses, operating records, earthing lead numbers and permit details from each system, build the log and write the handover summary. The operator only spot-checks the key items and signs for receipt." }
+ ],
+ "events": {
+  "e_first_op": "For the first time you supervise as lead operator, taking the new assistant through a whole line outage order. When the last step is done you realize the back of your shirt is soaked.",
+  "e_magpie": "Spring again, and the magpies are building on the gantry. The wire they've carried in is less than a meter from the busbar. You and maintenance apply for an outage to take the nest down. The next day they build another one beside it.",
+  "e_thunder_trip": "A July thunderstorm night: a line trips and the alarms all go off at once. By the rules you silence them, read the protection, go out to check the breaker's position, and run back through the rain to report to dispatch. Your raincoat is full of water.",
+  "e_cold": "Minus thirty-two in January. On a night round your hands freeze inside your gloves until you can't grip the thermometer. Back in the duty room you hold them against the radiator for half an hour before your fingers have feeling again.",
+  "e_night_shift": "A month of nights in a row, and you can't sleep by day or feel tired at night. Your mother says on the phone that you sound like an old man. You tell her the signal at the station is bad.",
+  "e_wrong_bay": "Halfway through an operation your mentor suddenly presses down on your hand: you are standing at the bay next door. The blood drains from your face. That night he says nothing. The next day at the shift meeting he tells a story from when he was young.",
+  "e_contest": "The city company holds a substation operations skills competition. On the simulator you handle a transformer differential trip four minutes faster than the runner-up and take first place.",
+  "e_robot": "An inspection robot arrives at the station and runs its track three times a day, faster than any person at infrared readings, gauge readings and photos. The route that took you over an hour, it covers in forty minutes and sends back a report.",
+  "e_one_click": "The station switches to one-click sequential control. Switching that used to mean half an hour running back and forth is done with a few clicks on the monitoring screen. You still go out to see whether the disconnector is fully home. A green light on a screen doesn't count.",
+  "e_unmanned": "The station goes unmanned, and your operations crew now covers five substations, driving every day along the highways between the corn fields. A new app on your phone pushes alarms, and it goes off in the middle of the night too.",
+  "e_ai_ticket": "The system can draft switching orders itself now. A dispatch instruction comes in and it lays out twenty-odd steps in seconds. You check each one. Once it gives a set of disconnectors their old number from before the retrofit, and you catch it rehearsing on the mimic board.",
+  "e_love": "A young woman from the marketing department comes out to read meters and asks the way at the station gate. Later you spend weekends together at Longshou Mountain. She says you always talk like you are reading a switching order, one pause per line.",
+  "e_wedding": "You hold the banquet in Tieling, swapping three shifts with colleagues to make it. At the wedding your mentor drinks too much and tells your spouse this kid writes clean switching orders.",
+  "e_house": "You buy a three-bedroom in the new district. Tieling prices aren't high, and with the down payment and a housing fund loan the mortgage is under a third of your pay. Classmates who bought in Shenyang click their tongues with envy.",
+  "e_baby": "The day your child is born you are on night shift. After handover you ride to the hospital, and by the time you get there the baby has already been brought out. Looking at that wrinkled little face at the door of the delivery room, you aren't tired anymore.",
+  "e_ice_storm": "Freezing rain coats the conductors in a finger's thickness of ice, and line after line trips. You hold the station for two days and two nights, shifting load back and forth with dispatch, eating dumplings colleagues brought out from town.",
+  "e_wind_farm": "One wind farm after another in Xifeng and Changtu connects to the grid, and the power flow through your station keeps reversing. You learn the operating rules for renewable connections all over again and draw a diagram in the shift book for everyone.",
+  "e_mentor_retire": "Your mentor retires. On his last shift he doesn't touch a switching order. He walks the station once and lays a hand on the oldest transformer. When he leaves he gives you his handwritten book of operating notes.",
+  "e_spring_check": "Spring maintenance season, with outages rotating through five stations. In one month you sign more than sixty work permits. When the last one is closed, you sit in the car for ten minutes before starting it.",
+  "e_father": "Your father throws out his back stripping corn at home in Kaiyuan. You take a few days off, go back and bring in the last half mu of his field for him. Back on night shift, your hands still carry cuts from the corn leaves.",
+  "e_apprentice": "Your apprentice passes the three permit-role qualifications and acts as work permit authorizer on his own for the first time. Before he signs, he looks up at you. You nod.",
+  "e_young_leave": "Of the graduates sent here these past few years, half test their way back to Shenyang or head south within two years. The crew's average age keeps rising, and fewer and fewer names on the roster can work nights.",
+  "e_back": "Years of rotating shifts and winters out in the cold have left their mark on your stomach and your back. Your checkup shows H. pylori, and the doctor tells you to eat regular meals. You smile."
+ },
+ "choices": {
+  "c_three_kinds": {
+   "title": "Take the three permit-role qualifications and go for Substation Operator, Intermediate",
+   "situation": "The station chief says you can sit this year's exam for work permit issuer, person in charge and authorizer. Only with it can you be lead operator and compete for Substation Operator, Intermediate. Studying will eat the rest days between shifts, and both the written exam and the interview are run by the safety supervision department.",
+   "options": [
+    { "label": "Sign up, study after night shifts", "result": "You read the safety rules until the pages fray, and after each night shift you study for two hours in the dormitory before sleeping. At the interview the safety officer asks about a detail of earthing leads, and you give him the numbering rules." },
+    { "label": "Next year, more switching with the mentor first", "result": "You follow your mentor for another year and do more than a hundred switching orders, large and small. When you sit it the following year, the questions seem easier than the book." }
+   ]
+  },
+  "c_shenyang": {
+   "title": "Transfer to the ultra-high-voltage converter station near Shenyang",
+   "situation": "A converter station in the province is hiring operators, out in the Shenyang suburbs. Higher pay, the newest equipment, and a whole DC system to learn from scratch. Your girlfriend is in Tieling, your parents in Kaiyuan, and none of them want you to go.",
+   "options": [
+    { "label": "Go to the converter station", "result": "One look at the outside of the valve hall and you feel everything you learned has to start over. On weekends you take the hour-long high-speed train back to Tieling, studying DC control and protection on the way." },
+    { "label": "Stay in Tieling", "result": "You don't apply. On weekends you can go home to Kaiyuan for dinner, and your father says the line outside our door comes from your station too." }
+   ]
+  },
+  "c_robot_admin": {
+   "title": "Whether to take charge of smart inspection",
+   "situation": "The company wants one person on each crew to manage the inspection robots, the cameras and the alarm analysis rules: learning data and systems, and finding fault with the vendor too. The station chief says most inspection will rely on them before long, but you worry about drifting further from the equipment.",
+   "options": [
+    { "label": "Learn it, look after the machines", "result": "You learn to set the robot's inspection points and tune its recognition thresholds. It mistakes a glint on the conservator for a leak, and you crouch beside it comparing all afternoon before fixing that rule." },
+    { "label": "No, keep walking the route yourself", "result": "You still walk the route every day and press your ear to the transformer tank to listen. You read the robot's reports too, but you trust your own nose more." }
+   ]
+  },
+  "c_dispatch": {
+   "title": "Compete for control room operator at city dispatch",
+   "situation": "The city dispatch monitoring crew has two openings: two years as lead operator, an exam on dispatch rules, and a test on the OMS system. There you would sit in front of the big screen, handling alarms and remote control for dozens of stations across the city, no more running out through wind and snow. But you would no longer be an operations person.",
+   "options": [
+    { "label": "Sit the dispatch exam", "result": "You make it into the control center. On your first day at the big screen, the station you worked at is just a tiny box on the display.", "end": "You became a control room operator at city dispatch, watching the city's stations light and dim on the big screen. On thunderstorm nights you still wonder who is running out through the rain to look at that breaker." },
+    { "label": "Stay in operations", "result": "You don't apply. You say you like the smell of the equipment. A colleague says the station has addled your brain." },
+    { "label": "Shadow dispatch for three months first", "result": "You ask to shadow the monitoring crew for three months. Back at the station, you finally understand why dispatch is always chasing you for a report." }
+   ]
+  },
+  "c_leader": {
+   "title": "Compete for Substation Crew Leader",
+   "situation": "The old crew leader is being transferred, leaving the post of Substation Crew Leader open: five stations, the shift roster for a dozen people, safety, spring and autumn maintenance. You need technician grade, three years as lead operator, and a talk on how you would run things. As leader you still work nights, with twice the responsibility.",
+   "options": [
+    { "label": "Put your name in", "result": "You stay up several nights writing your pitch, about closing out defects across five stations. When you come out of the panel, it is snowing." },
+    { "label": "Stay out, be the technical backbone", "result": "You let a colleague a few years older take it. Once he is leader, he still calls you first for the hard orders." }
+   ]
+  },
+  "c_wind_ops": {
+   "title": "Run operations at a renewable energy station",
+   "situation": "A central state-owned company's wind farm in Changtu is hiring an operations lead for its booster substation: more than thirty percent more pay, a 220 kV booster station and dozens of turbines, few people and plenty to do, over a hundred kilometers from home, back twice a month.",
+   "options": [
+    { "label": "Go to the wind farm", "result": "You hand in your resignation. The station chief doesn't press you to stay. The booster station out there runs on the same rules as ours, he says.", "end": "You went to run the booster station at the Changtu wind farm, standing under the turbines watching three blades turn slowly overhead. Now and then a former colleague's voice comes over the dispatch line, and you both pretend not to know each other and repeat the orders back by the rules." },
+    { "label": "Stay with the power supply company", "result": "You stay, and not one month of social insurance is missed. At year's end a classmate who went to the wind farm sends a photo: behind him, a white plain of snow and turbines." }
+   ]
+  },
+  "c_title": {
+   "title": "Senior technician grade and an engineer title: go for Substation Operations Specialist",
+   "situation": "The county company's Substation Operations Specialist post needs senior technician grade plus an engineer title, and a technical champion award. You would have to write papers, produce a QC project and prepare for skill assessment, all on top of crew leading. Your child has started primary school, and your spouse has been the one watching the homework.",
+   "options": [
+    { "label": "Go for it, one piece at a time", "result": "Over those two years you write three papers and one QC project. At the defense a judge asks about a sticking disconnector, and you talk for twenty minutes." },
+    { "label": "Not now, be with your child", "result": "You can pick your child up from school twice a week now. The specialist post goes to someone else. You are still crew leader, and the five stations need as much as ever." }
+   ]
+  },
+  "c_province": {
+   "title": "Move to the provincial company as Substation Operations Manager",
+   "situation": "The provincial operations department wants to second you to work on the intelligent inspection platform and the province-wide operating standards. Do well, and you could stay as the provincial company's Substation Operations Manager. Renting in Shenyang, home once a week, meetings and paperwork every day, never touching a switching order again.",
+   "options": [
+    { "label": "Go to the provincial company", "result": "You spend a year in a Shenyang office block revising standard clauses, asking of each one whether the people at a frontline station can actually follow it. The handover checklist you propose is printed into the province-wide rules." },
+    { "label": "Stay in Tieling", "result": "You turn down the secondment, saying the young ones at the station aren't trained up yet. That winter there is freezing rain, and you hold the station for two more nights." }
+   ]
+  },
+  "c_off_shift": {
+   "title": "Come off shifts and train new staff at the training center",
+   "situation": "You are past fifty, and night shifts are getting harder to get through. The company's training center needs a hands-on simulator coach: no shifts, pay down by the night allowance, facing batch after batch of new graduates.",
+   "options": [
+    { "label": "Go to the training center", "result": "In the simulator room you show the new hires again and again how to handle a transformer losing voltage. When you get to reading the order aloud, you make them say it loud." },
+    { "label": "Keep working shifts", "result": "Your name stays on the night roster. The young ones call you old master, and say they feel steadier with you there on a thunderstorm night." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "Your last shift is a day shift. You and the person taking over check the earthing leads on site together, and back inside you sign the handover record and write the date and the weather. As you leave the gate the corn fields are green again, a row of pylons carries the conductors into the distance, and the transformers are still humming.",
+  "burnout": "That winter you collapse on the path through the switchyard during a night round, and a colleague helps you back to the duty room. The doctor says years of rotating shifts have worn your body down, and the company moves you to logistics, looking after tools. You go home on time every day. When you pass the station, you still tilt your head to listen to the transformers."
+ },
+ "stages": [
+  "You are the assistant on shift, always a step behind: handing over with your mentor, counting earthing leads, walking the switchyard by the inspection card, checking disconnector contacts one by one with the thermometer. In switching you read the orders and your mentor supervises; work permits you may copy, not sign. The voice you deal with most is the dispatcher's on the phone, and every sentence you repeat back.",
+  "You are lead operator now. Dispatch orders come to you and you repeat them back; you draft and review the switching orders, take the assistant out, and supervise from behind. When maintenance arrives you are the authorizer: you set up the safety measures and you sign. In an incident you read the protection first and report to dispatch first, and you can sort the D5000 monitoring system's alarms by weight with your eyes shut.",
+  "You lead the operations crew: five stations and a roster for a dozen people. Once a month you run the operations analysis and go through the defects one by one; for spring and autumn maintenance you plan the outages and settle the timing between maintenance and dispatch. You spend more time in the car than at any station, with PMS to-dos and your crew's calls on your phone.",
+  "As Substation Operations Specialist at the county company, you revise the unit's operating rules and push smart inspection and one-click sequential control. When a frontline station can't close out a defect, the call comes to you. You inspect stations, reading handover records and permit compliance rates, and when the province revises its anti-accident measures you go as an expert to give your view.",
+  "At the provincial company you oversee operating standards for the whole province, review major retrofit plans and watch every release of the intelligent inspection platform. You visit dozens of stations a year and sit with operators at the screens to watch how they hand over. In meetings you always ask one question: can this be done at a station at minus thirty?"
+ ],
+ "work": [
+  "Your mentor has you take the contact temperature on a set of disconnectors, and you report a number. He takes the thermometer, reads it from another angle: eight degrees higher. You measured the insulator post, he says.",
+  "Reading an order aloud for the first time, at step seven you say close instead of open. Your mentor doesn't move. He just looks at you. You stop and read it again, much louder.",
+  "Counting earthing leads at handover, one set is missing from the cabinet. You and the night operator search the switchyard for twenty minutes and finally find it beside the toolbox maintenance left behind.",
+  "The maintenance crew's person in charge wants to open up one more bay to work on. It isn't on the permit. You don't authorize it and send him back to amend the permit. He grumbles for ages, then amends it.",
+  "In the middle of the night the screen shows a DC earth fault. You and the assistant pull circuit after circuit with an insulation tester until three in the morning. It is a terminal box with snowmelt in it.",
+  "You repeat back a dispatch order and something about the equipment number feels wrong, so you ask again. The dispatcher checks and says he misread it. Thank you.",
+  "Planning spring outages, maintenance at three stations lands in the same week. You make three calls to the maintenance crew leader and spend an afternoon wearing down dispatch, and move one of them.",
+  "A new crew member's inspection records have been copy-pasted for three months. You don't name him in the meeting. You put him in the car and walk his station with him.",
+  "At the operations analysis meeting you project three months of dissolved gas data for one transformer on the wall, point at the acetylene line and say: this one needs early maintenance.",
+  "Revising the operating rules, you spell out in more detail the clause that still requires checking positions on site after one-click control, so every step has someone looking and someone signing.",
+  "On a spot check at one station the handover records are immaculate, but in a cabinet you find two pairs of insulated gloves past their test date. You photograph them on the spot and put it in the circular.",
+  "At the provincial meeting on revising anti-accident measures, you bring a photo of icing taken at a station and say northern stations can't copy the southern clauses on ice prevention.",
+  "A new release of the intelligent inspection platform is due. You have the vendor try it for three months at the oldest station in Tieling first. If it works at an old station, you say, it'll work at a new one.",
+  "A full retrofit plan for a 220 kV station comes to you for review. On the outage sequence page you write: winter load is high, move this to autumn maintenance.",
+  "At the provincial operations competition final, from the judges' table you watch a young operator handle a transformer losing voltage, and you see yourself, years ago, in the simulator room."
+ ],
+ "past": [
+  "You go to middle school in the countryside outside Kaiyuan, with a utility pole right outside your door. The people at the power station, your father says, never get caught in the wind or rain, and get paid every month.",
+  "Your gaokao (college entrance exam) score falls just short of a bachelor's program. Your head teacher says the company-sponsored class at a power vocational college goes straight into the power supply company after graduation. Your father asks around and has you apply.",
+  "Half the sponsored class is electrical fundamentals, half substation operation. On your first visit to the training substation you stand in front of a retired transformer and think it looks like a sleeping ox.",
+  "At college you get the high-voltage electrician's special operations permit and spend two months interning at a 66 kV station, reading meters with the operators.",
+  "You pass the graduation assessment and sign with the Tieling power supply company. In three months of State Grid induction training you handle your first incident on the simulator, all thumbs.",
+  "You are assigned to this 220 kV station, shadow your mentor for three months, and pass the closed-book safety and operating rules exams. The shift supervisor signs your shadowing record."
+ ],
+ "late": {
+  "pension_note": "Estimate: the power supply company pays the basic enterprise employee pension plus an enterprise annuity. With a steady base and long contribution years, after retirement you get a little more than half your final monthly salary.",
+  "scenes": [
+   "Your first month of retirement you still wake at two in the morning and lie listening to the wind outside, waiting for an alarm. Nothing comes. You turn over and go back to sleep.",
+   "You go back to Kaiyuan and plant a vegetable plot. At the edge of the field you see a new row of poles, count them one by one, and say this line comes out of your station.",
+   "Your child works in Shenyang and comes home for dinner on weekends. You ask if the power goes out much at the office. Never, your child says. You nod and say nothing.",
+   "The station went unmanned long ago. Passing by, you stop outside the wall a while. The transformers have been replaced, and the new ones are quieter.",
+   "Your first few months in logistics you check the test dates on insulated gloves and voltage detectors every day, meticulously. You sleep through the night now, and your stomach slowly gets better.",
+   "A young operator comes to sign out earthing leads and says two lines tripped in last night's storm. You ask what he looked at first. The protection, he says. Right, you say, and add: don't forget to go out on site.",
+   "When you reach the age you retire, on a pension neither large nor small. You and your spouse join the square dancing in the compound, and when a stairwell light fails, the neighbors all come knocking on your door.",
+   "Your first year off the operations crew, you still say things twice out of habit. A new colleague asks why. Back then, you tell him, one wrong word could cause an accident.",
+   "In your new post you hear the old station has a new inspection robot, and the magpie nests come back every year. You smile and think some things machines can't manage.",
+   "The apprentice you trained is crew leader now. On the night freezing rain trips the lines one winter, he calls you to say it's all handled, the way you used to do it.",
+   "There are fewer and fewer people in substations and more cameras and robots. But at every switching operation, someone still has to stand in front of the disconnector and see with their own eyes whether it is home.",
+   "Your grandchild asks where electricity comes from. You take the child to the edge of town to look at the pylons and say it comes all the way along there, past a lot of people like you who stayed awake all night."
+  ],
+  "closing": {
+   "retire": "Many years later, on a winter night with heavy snow outside, not one light in the city has gone out. You sit by the window and hear, faintly in the distance, a transformer humming, like the one outside the duty room window all those years ago.",
+   "burnout": "Many years later you replace a switch for a neighbor downstairs, and when you are done you test it with a voltage pen, then test it again. The neighbor laughs at you for being so careful. Habit, you say.",
+   "end": "Many years later, in a drawer, you find that handwritten book of operating notes. On the first page, in your mentor's hand: look first, then read aloud, then act. You look at it a while and put it back where it was."
+  }
+ }
+}

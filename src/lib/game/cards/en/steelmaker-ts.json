@@ -1,0 +1,203 @@
+{
+ "id": "steelmaker-ts",
+ "occupation": "Steelmaker (Furnace Operator)",
+ "role": "Converter Steelmaking Operator (Apprentice)",
+ "headline": "Two years in the army, then in through the veterans' hiring track at a big Tangshan steel mill: a steelmaking apprentice in an aluminized heat suit, learning from his master to take temperatures and samples in front of a 120-ton converter",
+ "unit": "Converter shop, steelmaking plant of a large private steel group in Tangshan, Hebei",
+ "unit_type": "Large private steel mill",
+ "city": "Tangshan",
+ "city_tier": "Prefecture-level city",
+ "education": "High school, plus two years of military service (veterans' hiring track, three months of intensive training at the mill)",
+ "level": "You have just passed safety training and the pre-service assessment, and with your master watching you can take temperatures, pull samples and add fluxes. When the furnace mouth starts to smoke your chest still tightens, and you can't yet take in everything on the control console.",
+ "intro": "You served two years in the army, came home to Tangshan when you were discharged, and got into this steel mill through the veterans' track, then trained for three months in the converter shop. A 120-ton converter: one heat of steel from charging the hot metal to tapping takes under forty minutes, and the flame at the furnace mouth is white. From today you stand in front of the furnace beside your master, learning to hear the furnace's voice, read the color of the flame, and push a temperature probe steadily into steel at more than sixteen hundred degrees.",
+ "salary_note": "Estimate: furnace crews at big Tangshan mills are paid a post wage plus a per-ton piece rate and a high-temperature allowance, about ten percent above the national figure. In years of winter production limits and low steel prices output is cut back, and take-home pay drops.",
+ "facts": [
+  { "label": "Steelmaking Operator, Apprentice (current level)", "value": "0-1 years, ¥5,000–7,500 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Lead Converter Operator (1-3 years)", "source": "Career map" },
+  { "label": "Pay after 10+ years", "value": "¥10,500 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Controlling the lance and slag during the blow, and handling cooling water faults", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Pre-shift handover and equipment safety rounds", "source": "AI exposure" },
+  { "label": "Open positions", "value": "3 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You ride your e-bike from home in Fengnan to the mill, past rows of blast furnaces and gas holders on both sides of the road. The sky is a grayish yellow, and the air smells of rust.",
+  "Pre-shift meeting. The furnace chief reads out today's steel grades and number of heats, and the safety officer checks everyone's gear: aluminized suit, face shield, heat-resistant gloves, steel-toed boots, nothing missing.",
+  "The overhead crane tips a ladle of hot metal into the furnace, and sparks pour out like rain. You stand behind the safety line watching your master tilt the furnace and lower the lance at the console. The furnace mouth roars and the flame leaps up.",
+  "Halfway through the blow, your master has you watch the flame: from red to yellow to white, the sound from dull to shrill. The furnace talks, he says. You have to learn to listen.",
+  "Temperature and sample. In the aluminized suit you walk up to the furnace mouth, and the heat hits you all at once, your face shield running with sweat. You push the probe into the steel, count to three, pull it out. Your hand shakes a little.",
+  "Lunch in the crew's rest room, your box filled from the canteen with pork stewed with glass noodles and two steamed buns. You drain two bottles of salted soda in one go, and the back of your work shirt has dried white.",
+  "Tapping. The furnace tilts slowly, and steel runs from the taphole into the ladle, too bright to look at. Beside it, on your master's word, you add the alloys, one bag after another.",
+  "Slag splashing, cleaning the furnace mouth, filling in the log and handing over. When you come out of the shower there is a new little burn scar on your wrist, and on the way home the setting sun turns the chimneys orange."
+ ],
+ "ladder": [
+  { "title": "Steelmaking Operator (Apprentice)", "stage": "Settling in", "focus": "Master standard operations for single steps (charging, temperature measurement, tapping) and pass the pre-service assessment. You move up through a zero-accident record and your master's evaluation." },
+  { "title": "Lead Converter Operator", "stage": "Working on your own", "focus": "Run the whole heat from start to finish on your own, hitting the endpoint accurately (at least 92 percent). You move up through process stability and how efficiently you handle abnormal situations." },
+  { "title": "Steelmaking Technician (Senior Grade)", "stage": "Technical backbone", "focus": "Lead the fix for typical quality problems (like unstable decarburization in the RH degasser), write SOPs and train new staff. You move up through the national vocational skill grade certificate and process improvements." },
+  { "title": "Steelmaking Section Chief / Process Technician", "stage": "Management", "focus": "Coordinate production plans across several furnaces, work with upstream and downstream processes, and push cost-cutting projects. You move up through cross-process coordination and your use of digital tools." }
+ ],
+ "ai_tasks": [
+  { "name": "Pre-shift handover and equipment safety rounds", "how": "AI can pull up the last shift's records, gather equipment alarms and cooling water trends, and check the furnace start conditions list automatically. A person has to go out on site to look at the lining and the lance, check the tilting mechanism, and sign for the safety of the start." },
+  { "name": "Charging the converter and setting the bulk material model parameters", "how": "AI and the model can check the charge sheet and weighing data automatically, write the charge parameters into the blowing model and flag deviations. A person does the actual work of adding scrap, pouring hot metal and feeding materials, and confirms the data matches what's physically there." },
+  { "name": "Controlling the lance and stabilizing the slag during the blow, and handling cooling water faults", "how": "AI can recommend lance height and lime additions from off-gas analysis and slag images and warn early of abnormal cooling water flow. A person watches the furnace and makes the final lance call, stepping in urgently if cooling water flow plunges, and answers for it." },
+  { "name": "Judging endpoint carbon and temperature and adjusting to hit the tapping window", "how": "AI can predict endpoint carbon and temperature from the sublance data and suggest amounts of iron ore for cooling, lime for slag and bottom argon. A person judges from the furnace whether to trust it, decides the actual additions and fine-tuning, and makes sure both targets are hit." },
+  { "name": "Slag splashing to protect the lining, and the post-heat handover log", "how": "AI can compile the whole process's data into a review log automatically and prompt the splashing parameters. A person runs the slag splash blowing on site, clears the spatter around the furnace mouth, judges the lining's condition from experience and completes the handover." },
+  { "name": "Tilting the converter to tap, alloying and cutting off the slag precisely", "how": "AI can calculate alloy additions from the measured endpoint and sample results and help detect slag carryover. A person tilts the furnace, controls the taphole and the tilt angle, judges the moment to stop the slag on site, and answers for the quality of the steel." },
+  { "name": "Checking furnace status at handover and the safety round before starting", "how": "AI can check the last shift's furnace status against this heat's targets, analyze cooling water fluctuations logged overnight and point out risks. A person cross-checks the cooling circuits, tilting mechanism and safety interlocks on site and signs to get permission to start." },
+  { "name": "Verifying the charge mix and charging the furnace", "how": "AI can compare the charge sheet with the weighing curves automatically and alarm on wrong materials, missing materials and odd fluctuations. A person works with the second furnace chief on the actual charging, confirms the materials are right, and deals with whatever comes up on site." },
+  { "name": "Controlling the lance and slag during the blow, and handling cooling water faults", "how": "AI can provide analysis and alarms from off-gas curves and slag images. But a drop in lance cooling water flow is an accident risk: a person has to raise the lance and pause fast, find the cooling fault on site, and answer for the outcome." },
+  { "name": "Sublance measurement and endpoint temperature and carbon control", "how": "AI can calculate ore, lime and bottom argon adjustments from the gap between the sublance readings and targets. A person operates the sublance, judges whether the data can be trusted, and decides on additions and stirring to bring the steel into the target range." },
+  { "name": "Tapping with slag cut-off, coordinated with deoxidation and alloying", "how": "AI can calculate alloy additions by recipe, link to the ladle weighing data and suggest bottom argon settings. Once the steel is in spec, a person tilts the furnace to tap, judges the moment for slag cut-off on site, and answers for the tap." }
+ ],
+ "events": {
+  "e_first_tap": "For the first time your master lets you tap from the console yourself. Watching the tilt angle and the stream, you cut off the slag cleanly at the first try. When the lab results come back the chemistry is all in range, and your master claps you on the back.",
+  "e_slop": "Mid-blow the furnace suddenly slops, slag boiling over the mouth. As your master taught you, you raise the lance at once and fall back. Beyond the safety line the floor is scattered with black slag. That night the sound fills your dreams.",
+  "e_heat": "In the dog days it's over fifty degrees in the shop, and a stint at the furnace soaks you in sweat. You drink six bottles of salted soda in one shift and are still dizzy when you clock off, lying down in the rest room half an hour before you can ride home.",
+  "e_burn": "Charging, a lump of slag splashes onto your calf and burns through your trousers. The mill doctor dresses it and you're off three days. When you come back your master hands you a new pair of leg guards: take the extra two minutes and put them on.",
+  "e_master": "Your master has worked the furnace more than twenty years and can tell the steel's temperature from the flame's color to within ten degrees. He has you guess a number before every reading. After three months of guessing, you're within twenty.",
+  "e_smart_model": "The mill brings in an intelligent steelmaking model that sets lance height and additions automatically from off-gas and sublance data. The endpoint hit rate climbs from the low eighties to over ninety percent, and at the console you click Confirm more often than you adjust by hand.",
+  "e_model_wrong": "One heat's scrap has a batch of wet material mixed in. The model doesn't know and gives the usual lance height. The furnace sounds wrong to you. You lower the lance by hand and add a batch of lime, and keep a slop from happening. Afterwards the vendor sends someone to take that heat's data away.",
+  "e_one_key": "The shop goes over to one-click steelmaking, and the control room moves to a building a hundred meters from the furnace, watching the mouth through glass and screens. Less time standing at the furnace, fewer burn scars, and yet you feel farther from it.",
+  "e_limit": "Once winter sets in the environmental production limits begin, furnaces taking turns to stand idle, and your crew works only a dozen-odd days a month. Pay drops by a third. With time on your hands at home, you help your father rebuild the coal shed in the yard.",
+  "e_price_down": "Steel prices slide for a year, the mill talks of nothing but cost cutting, and the cost per ton has to come down another twenty yuan. The shop meeting says to use a little less alloy per heat. You work at it all night and find a little room at the bottom of the chemistry spec.",
+  "e_contest": "At the group's steelmaker skills contest you take first place for hitting both endpoint carbon and temperature, winning five thousand yuan and a gold trophy. You put the trophy on the TV cabinet at home, and your mother dusts it every day.",
+  "e_love": "A young woman in the lab takes in the steel samples you bring every day. Once she sees the burn scar on your wrist and hands you a tube of burn cream. Later you walk by Nanhu Lake together on weekends, and she says you always smell of iron.",
+  "e_wedding": "You hold the wedding in Fengnan, more than thirty tables, and the whole crew comes. Your master gets drunk and tells the bride this kid reads the flame true and will be a furnace chief someday.",
+  "e_house": "You buy a three-bedroom in Lunan district, the down payment pooled by both families. Tangshan prices aren't high, the mortgage less than half your pay, and on moving day you make sure your parents step through the door first.",
+  "e_baby": "The day your son is born you've just rotated onto nights. After handover you ride to the hospital with furnace dust still on your face. The nurse sends you to wash first, and at the basin you look at yourself in the mirror and grin.",
+  "e_relocate": "The city is cutting capacity, the mill's old furnaces are shut down, and the new ones move to the seafront at Caofeidian. You ride the commuter bus over an hour each way. The new shop is tall and bright, and through the windows you can see the sea.",
+  "e_ultra_low": "The mill does an ultra-low emissions retrofit, replacing all the dust collection and flue gas systems. There's less smoke in the shop, and the water running off you in the shower after work isn't as black.",
+  "e_apprentice": "Your apprentice taps a heat by himself for the first time and cuts off the slag clean. He looks back at you. You nod, the way your master used to.",
+  "e_master_retire": "Your master retires. On his last shift he doesn't take the console. He stands at the furnace a while watching the last heat run into the ladle. When he leaves he gives you the blue-glass furnace viewer he used for more than ten years.",
+  "e_lungs": "At the mill checkup your hearing and lung function each have a low reading. The doctor tells you to wear your earplugs and mask. With earplugs in at the furnace, you say, you can't hear the furnace. The doctor doesn't say anything more.",
+  "e_father": "Your father hurts his back working in the village, and you take a few days off to look after him. When you get back, the crew has covered three shifts for you, and you treat them to a barbecue.",
+  "e_young_less": "Fewer and fewer young people are hired these years, and fewer still are willing to stand at the furnace. The shop's average age is past forty, and every year it gets harder to fill the night roster."
+ },
+ "choices": {
+  "c_main_op": {
+   "title": "Sit the exam for Lead Converter Operator",
+   "situation": "The shop holds the lead operator exam every six months. Pass, and you can run a whole heat on your own, with a pay rise. It tests the endpoint hit rate, handling abnormal situations and the console. Studying will eat the rest days between shifts, and your master says you're not quite there yet and could wait.",
+   "options": [
+    { "label": "Sign up for the exam", "result": "After night shifts you practice on the simulator and learn the responses to dozens of abnormal situations by heart. On the practical exam heat, you hit both endpoint carbon and temperature." },
+    { "label": "Listen to your master, six more months", "result": "You follow him six more months, guessing the temperature before every reading. When you sit it, the examiner says you read the flame better than some old lead operators." }
+   ]
+  },
+  "c_degree": {
+   "title": "Study for a part-time associate degree",
+   "situation": "The mill and a local vocational university run a part-time program in iron and steel metallurgy: three years for an associate degree, useful later for technician grade or moving to process technician. Classes are at weekends and the mill pays half the fees, but shift workers often work weekends.",
+   "options": [
+    { "label": "Sign up", "result": "For three years your weekends are either in class or at the furnace, and you fail metallurgical principles once. The day you get the diploma you put it with your army discharge certificate." },
+    { "label": "No, the craft is at the furnace", "result": "You don't sign up. Steelmaking comes down to reading the flame and feel, you say, which no book can write down. When it comes to technician grade, you spend an extra year preparing." }
+   ]
+  },
+  "c_model": {
+   "title": "Whether to work with the intelligent steelmaking model",
+   "situation": "The mill has brought in an intelligent steelmaking system and wants a few furnace hands to tune the model and label data with the vendor's engineers, teaching the machine what the old masters know. For a year you'd be split between the two, with half the piece-rate pay from the furnace.",
+   "options": [
+    { "label": "Go, teach the machine to read the flame", "result": "You help the vendor label hundreds of heats' flame images and furnace sounds one by one: normal, about to slop, running hot. The first time the model steers clear of a slop on its own, the vendor's engineer takes you to dinner." },
+    { "label": "No, stay with the furnace", "result": "You stay at the furnace. Once the model is live, whenever it errors, the first person the control room calls is you: how does this heat look to you?" }
+   ]
+  },
+  "c_indonesia": {
+   "title": "Go to the overseas plant in Indonesia",
+   "situation": "The group's new steel mill in Indonesia needs a batch of skilled furnace hands to train local workers: a two-year contract at more than double your pay, room and board, home once a year. Your son is small. If you want to go, go, your wife says. I've got the family.",
+   "options": [
+    { "label": "Go to Indonesia for two years", "result": "In a new shop near the equator you train a dozen local apprentices, teaching them to read the flame with your hands. When you come back two years later your bankbook is much fatter, and your son hides behind his mother when he sees you." },
+    { "label": "Stay in Tangshan", "result": "You don't go. You can pick your son up from school every day, and at kindergarten he draws a picture of a big fiery pot, which he says is where Daddy works." }
+   ]
+  },
+  "c_technician": {
+   "title": "Go for Steelmaking Technician",
+   "situation": "The shop is putting forward people for Steelmaking Technician: a skill grade certificate, a process improvement and apprentices trained. You have an idea: adjust the slag splashing parameters so the lining lasts a few hundred more heats. But the improvement takes your own time, and if it fails you'll catch it.",
+   "options": [
+    { "label": "Do the improvement, go for technician", "result": "You and the process engineer try it for three months, and lining life goes from eight thousand-odd heats to just over ten thousand. The report runs twenty pages, and at the defense you're so nervous you skip lines reading it." },
+    { "label": "Not now, run more heats", "result": "You don't apply. That year you run more than a thousand heats without a single accident. Colleagues who made technician often come to ask you about furnace conditions." }
+   ]
+  },
+  "c_automation": {
+   "title": "Move into intelligent manufacturing systems maintenance",
+   "situation": "The mill's digital department is short of people who know steelmaking and are willing to learn PLCs and industrial networks, to maintain the control systems and intelligent models. No shifts, no standing at the furnace, certificates to earn and programming to learn, and no pay rise at first.",
+   "options": [
+    { "label": "Move to the digital department", "result": "You earn the industrial internet certificate and move into an air-conditioned server room, and for the first time go to work in winter wearing a sweater.", "end": "You became a systems maintenance engineer in the mill's digital department, looking after the very system you used to click every day at the furnace. Whenever the model alarms, you still walk to the window first to look at the flame at the furnace mouth." },
+    { "label": "Stay at the furnace", "result": "You don't go. Leave the furnace and you'll lose the knack of reading the flame, you say. You need to keep these eyes." },
+    { "label": "Stay at the furnace, and be the model's liaison on the floor", "result": "You're still on furnace shifts, but when the model throws odd numbers the digital people come to check with you first. You learn to read a few charts, and teach them a few times to listen to the furnace." }
+   ]
+  },
+  "c_foreman": {
+   "title": "Become Steelmaking Section Chief",
+   "situation": "The old section chief is moving to the new plant, and the shop wants you to take over as Steelmaking Section Chief: scheduling three furnaces, hot metal from upstream and casting downstream, the cost targets. You'd go from the furnace to the dispatch office, meetings and reports every day, carrying the can for your crews.",
+   "options": [
+    { "label": "Take section chief", "result": "At your first production meeting the casting section chief says the hot metal came late, and the blast furnace people say you were slow pouring it. You listen for twenty minutes, take out a timetable, and prise a few of those ten minutes out of each side." },
+    { "label": "No, stay at the furnace training apprentices", "result": "You turn it down, saying you're better suited to the furnace. Once the new section chief takes over, the hardest grades still get scheduled on your shift." }
+   ]
+  },
+  "c_trucking": {
+   "title": "Go into trucking with your cousin",
+   "situation": "Your cousin hauls steel out of Tangshan port and has bought two semi-trailers. He wants you to buy a share and drive one. In good years for steel you'd earn twice what the mill pays; in bad ones the truck sits idle and the loan still has to be paid. Your wife isn't keen. At least the mill is steady, she says.",
+   "options": [
+    { "label": "Quit and go trucking", "result": "You resign, put your savings into a share, and spend a month at driving school earning your heavy vehicle license.", "end": "You became a semi-trailer driver hauling steel, back and forth between Tangshan port and the mills. When you drive a coil load in through a mill gate, you always roll down the window and breathe in that familiar smell of rust." },
+    { "label": "Stay at the mill", "result": "You don't buy in. Your cousin earns well for two years, then steel prices fall and he sells a truck to pay off the loan. Over New Year dinner he says: you were the steady one." }
+   ]
+  },
+  "c_late": {
+   "title": "Leave the furnace for equipment inspection and safety watch",
+   "situation": "You're past fifty, there are more arrows on your checkup every year, and the furnace heat is harder to bear every year. The shop says it can move you to equipment inspection and safety watch, away from the furnace mouth, minus the high-temperature allowance and piece rate.",
+   "options": [
+    { "label": "Move to inspection and safety watch", "result": "Every day you circle the furnaces with your inspection meter, listening to the tilting mechanism and checking cooling pipe temperatures. Before the young ones go up to the furnace, you check each one's gear." },
+    { "label": "Stay at the furnace until retirement", "result": "You're still at the furnace. The young ones call you old chief and say that with you beside them reading the flame, they feel sure of themselves." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last shift you don't take the console. You stand at the furnace watching the last heat run into the ladle, still bright enough to make you squint. You wipe the blue-glass viewer clean and give it to your apprentice. Leaving through the mill gate it's evening, and behind the chimneys the sky is orange, just as it was your first day.",
+  "burnout": "That summer you pass out at the furnace and are helped to the rest room, waking with the temperature probe still in your hand. The doctor says your body can't take the heat any longer, and the mill moves you to the stores looking after refractories. You go home on time every day. When you pass the converter shop, you still stop to listen to the sounds inside."
+ },
+ "stages": [
+  "You are the furnace apprentice, and all your work is single steps: going up to the furnace mouth in the aluminized suit to take temperatures and samples, adding lime and alloys on command, cleaning the mouth and patching the taphole after a tap. Your master is at the console; you stand behind him watching him tilt and lower the lance, learning to judge from the flame's color and the furnace's sound how far the heat has gone.",
+  "You're lead operator now: a whole heat, from pouring the hot metal to tapping, is yours at the console: set the lance height, control the slag, read the sublance data, judge the endpoint, cut off the slag and tap. Beside you an apprentice runs to the furnace mouth, and you give him his orders one at a time. The lab's slips, the crane scheduling, the casting shop calling for steel, all come to you.",
+  "As steelmaking technician, when there's a hard grade or a furnace that keeps going wrong, the process engineers come to you first. You write standard work cards for the shop, train two or three apprentices, and work on slag splashing and endpoint control improvements with the process engineers; when the intelligent model's numbers look off, the control room calls you over for a look.",
+  "As section chief you run three converters and a few dozen people, and your days are scheduling, matching hot metal and casting, and watching cost per ton and safety targets. Half your time is meetings and reports in the dispatch office, half walking the shop; when something goes wrong at a furnace you're first to arrive, and you write the report and take the responsibility afterwards."
+ ],
+ "work": [
+  "Your master sends you to take a sample at the furnace mouth. You don't push the sampler in deep enough, and the sample comes out hollow. He doesn't scold you. He sends you back: push it in, count to five.",
+  "After tapping you and an old hand patch the taphole, poking the slag out bit by bit with a steel rod and then pressing refractory clay in. Patch this badly, he says, and it'll leak next heat.",
+  "At handover you write one heat's addition in the log with an extra zero. The furnace chief glances at it, circles it in red, and has you check it against the weighbridge slip yourself.",
+  "The sublance shows carbon two hundredths high, but the temperature is fine. At the console you add a little ore and blow for half a minute. Measure again: both on target.",
+  "At the end of the tap the infrared view shows slag coming. You tilt back just as the slag-stopping dart drops, and the slag layer in the ladle stays under three centimeters.",
+  "The caster calls chasing steel: the tundish is nearly empty. You glance at the blow's progress and say four more minutes. Slow your casting speed a little till then.",
+  "A new grade comes out high in phosphorus three heats in a row. You lay the three heats' slag samples and temperature curves side by side and find the early slag forms too late. You change when the lime goes in, and the fourth heat is in spec.",
+  "You write the shop's standard work card for slag splashing, putting nitrogen pressure, lance height and time in one table and drawing a sketch of lining wear beside it.",
+  "The intelligent model gives a lance height that's too high, and the young man in the control room is afraid to change it. You go over and listen to the furnace a while and say: down twenty centimeters. He lowers it, and the furnace's sound smooths out at once.",
+  "At the morning production meeting the blast furnace says today's hot metal is high in silicon. On the spot you reschedule all three furnaces, moving the hard grades to the afternoon.",
+  "At the quarterly cost meeting you bring out a table: three kilograms less alloy per heat saves over two million a year, but only if the endpoint hit rate holds above ninety-five percent.",
+  "A night shift has a small slop, and nobody is hurt. The next day you spend an hour with the crew at the furnace going over that heat's data line by line, and in the end change one operating rule."
+ ],
+ "past": [
+  "You go to middle school in a village in Fengnan, with a small steel mill at the east end of the village, and the night sky is always red. Your father drove an overhead crane at that mill. Later it was shut down and he went home to farm.",
+  "You don't do well in high school and don't want to keep studying. When army recruiters come to give a talk at school, you sign up and pass the medical first time. Your mother cries all night.",
+  "You join the army. Three months of basic training burn you so dark only your teeth show white. In the army you learn to act on orders, and to stand a long time somewhere very hot.",
+  "Your two years done, you're discharged and go home to Tangshan. The family asks around and hears the big steel mills have a special hiring track for veterans, with a higher starting wage, and you apply.",
+  "At the mill you spend three months at the training center on safety, equipment and emergencies, running hundreds of heats on the simulator. The first time you walk into the converter shop, the roar of hot metal being poured makes you step back."
+ ],
+ "late": {
+  "pension_note": "Estimate: the mill pays the basic enterprise employee pension, with a contribution base that floats with piece-rate pay, and in some years high-temperature jobs count as special work types that allow retiring a few years early. After retirement you get a little over forty percent of your final monthly wage.",
+  "scenes": [
+   "Your first month of retirement you wake and look first at what color the sky is. It's blue, much bluer than when you were young.",
+   "A small steel mill asks you to be a technical adviser, a few days a month, looking at their furnaces. You stand at the furnace and listen a while, and tell them why their endpoint is always off.",
+   "Every morning you walk a lap of Nanhu Park, which used to be land that sank over the coal mines and is now all trees and water. You tell the old men out walking that under this lake there used to be nothing but coal.",
+   "Your grandson's school takes a trip to the steel mill, and he comes home and tells you there are no people where they make steel, only screens. You smile and say a lot of people used to stand there, and you were one of them.",
+   "Your first few months in the stores looking after refractories, you count, issue materials and check slips, and never wear the aluminized suit again. The burn scars on your wrist slowly fade, and you sleep soundly.",
+   "A young furnace hand comes to sign out refractory clay and says last night's taphole patch didn't hold, and leaked a little. You spend a long time telling him how to press the clay. When he's gone you stand there thinking for a long while.",
+   "When you reach the age you retire, on a modest pension. In the village you fix farm machines and weld iron gates for people, and the neighbors say you have steady hands. You got them at the furnace, you say.",
+   "Your first year away from the furnace, whenever you pass the mill you take an extra look at the chimneys. When the smoke is white, you know the furnaces are running today.",
+   "Back at the mill on an errand, you run into people from your old crew. Only two people stand at the furnace now, they say, and the rest are in the control room. That's good, you say. Fewer burns.",
+   "The apprentice you trained is a section chief now. He comes to see you at New Year with two bottles of liquor and says he's still teaching others to read the flame the way you taught him.",
+   "There are fewer people in the mill and more models and screens. But before every furnace is started, someone still has to walk to the mouth, look at the lining with their own eyes and sign their name.",
+   "Your grandson asks how you got the scars on your hands. Splashed by molten steel, you say. He asks what color molten steel is. Brighter than the sun, you say. Look too long and it hurts your eyes."
+  ],
+  "closing": {
+   "retire": "Many years later, one evening on the roof of your building, you look east toward the mill, and there's a touch of orange on the horizon. You narrow your eyes, and seem to hear again the roar of hot metal pouring, then the furnace's sound slowly turning shrill.",
+   "burnout": "Many years later, one winter, you light the stove in the yard and the flame turns from red to yellow. You crouch by it watching a while and murmur a temperature to yourself. Your grandson asks what you said. Nothing, you say.",
+   "end": "Many years later, in a drawer, you find the blue-glass furnace viewer, a few fine scratches on the lens. You hold it up to the sun outside the window, and the sun becomes a small blue dot. You put it back."
+  }
+ }
+}

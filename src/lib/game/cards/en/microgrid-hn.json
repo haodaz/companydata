@@ -1,0 +1,199 @@
+{
+ "id": "microgrid-hn",
+ "occupation": "Microgrid Operator",
+ "role": "Island Microgrid Operator",
+ "headline": "An electrical engineering graduate who did three years of distribution maintenance in Haikou, then won a posting to a populated island in the South China Sea: a microgrid operator keeping watch over its solar panels, batteries and diesel generators, home only when the supply ship sails, once every two months",
+ "unit": "Island microgrid operations station of a Hainan energy company, on a populated island in Sansha",
+ "unit_type": "Off-grid island microgrid",
+ "city": "Sansha (stationed on the island; home in Haikou)",
+ "city_tier": "Island",
+ "education": "Bachelor's (Electrical Engineering and Automation)",
+ "level": "Three years of distribution maintenance: switching, patrols and protection relays you know well. You can produce day-ahead strategies in the EMS yourself. Black start you have only done in drills, and you are still learning the island's weather and the diesel generators' moods.",
+ "intro": "You spent three years on distribution maintenance at a power station in Haikou, and last year won an internal posting to the microgrid operations station on this island. A few hundred permanent residents, a clinic, a primary school, a desalination plant, all running on solar panels on the rooftops and spare ground, a few shipping containers of batteries and two diesel generators, with not one cable to the mainland. From today you keep watch here for two months at a stretch, and not one light on the island is allowed to go out.",
+ "salary_note": "Estimate: Hainan energy companies pay post salaries well below the career map's national figure (which leans on integrated energy companies in the Yangtze River Delta). The island allowance and remote-hardship pay make up part of it, coming to about eighty percent of the national figure; the month of rotation back in Haikou is paid at base salary only.",
+ "facts": [
+  { "label": "Microgrid Operator (current level)", "value": "2-5 years, ¥12,000–20,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Senior Microgrid Operator (5-8 years)", "source": "Career map" },
+  { "label": "Pay after 10+ years", "value": "¥19,200 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Running a black start drill", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "A full monitoring check and inspection round after taking over the shift", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Outside the dormitory window is the sea, and the sun is fierce as soon as it's light. You drink a cup of coffee brought from Haikou and check the forecast on your phone: sunny, showers this afternoon.",
+  "Handover. The night operator passes you the batteries' state of charge, the diesel tank level, and word that the desalination plant wants an extra set of pumps tonight. In the EMS you go through the night's alarms one by one.",
+  "Inspection round. You walk the solar arrays checking the panels for bird droppings and salt crust, open the battery containers to check the temperature of each cluster. The fans in the inverter room drone, and another patch of rust has appeared on a cabinet hinge.",
+  "Solar output peaks at noon and the batteries are almost full. In the EMS you start a set of pumps at the desalination plant early, soaking up the surplus so none of the solar power goes to waste.",
+  "The canteen has fresh greens today, brought by the supply ship the day before yesterday. You take an extra spoonful and sit with the clinic doctor, who says the air conditioning needs fixing again.",
+  "A shower sweeps over, and in ten minutes solar output drops by more than half. The batteries take up the load, the frequency wobbles and steadies. You watch the screen with your hand beside the diesel start button, and in the end you don't press it.",
+  "The sun goes down, the batteries start discharging, and the island's lights come on one by one. You produce the day-ahead forecast, schedule tomorrow's charging and discharging, and phone it through to the dispatch center in Haikou.",
+  "After work you take a walk along the jetty. The sea breeze is warm, and overhead there are as many stars as spilled salt. You video call home, the signal coming and going, your mother's face freezing on the screen."
+ ],
+ "ladder": [
+  { "title": "Microgrid Duty Operator", "stage": "Junior", "focus": "Run the EMS and SCADA systems fluently, carry out standard switching and transfer procedures, and keep accurate operating logs. You move up through disciplined execution and quick response to faults." },
+  { "title": "Microgrid Operator", "stage": "Intermediate", "focus": "Set intraday dispatch strategy on your own, forecast load, run black start drills and produce performance assessments. You move up through results from strategy optimization (for example, monthly arbitrage gains of at least 12 percent) and certifications (power market trader, microgrid operation permit)." },
+  { "title": "Senior Microgrid Operator", "stage": "Senior", "focus": "Lead full-cycle operation of microgrids across settings (industrial parks, islands, data centers), lead demand response bidding and settlement, and guide the team in iterating AI strategies. You move up through project return on investment, client satisfaction and awards at provincial skills competitions or above." },
+  { "title": "Integrated Energy Operations Expert", "stage": "Expert / chief", "focus": "Help write industry standards, take overall control of provincial microgrid demonstration projects and advise local governments on paths to carbon peak and neutrality. You move up through technical output (patents, software copyrights, standards), integrating resources across fields and selection for national talent programs." }
+ ],
+ "ai_tasks": [
+  { "name": "Running a black start drill", "how": "AI can help draft the drill plan, step checklist and the review afterwards. But rebuilding voltage after a total blackout and restoring load stage by stage needs a person commanding on site, answerable for the equipment and safety." },
+  { "name": "A full monitoring check and inspection round after taking over the shift", "how": "AI can check EMS data automatically, merge and filter alarms and flag abnormal trends. The site inspection of battery containers, inverter room and switch room, and dealing with alarms, still fall to a person." },
+  { "name": "Forecasting day-ahead and issuing the next day's operating strategy", "how": "AI forecasts solar output and load from weather forecasts and history and drafts the battery charge and discharge strategy. A person only spot-checks forecast error and adjusts for extreme weather or special maintenance." },
+  { "name": "Switching the microgrid to island mode to keep supply when a main grid line faults", "how": "AI can detect the line trip, prompt the transfer conditions and generate a load and storage plan for island operation. Ordering the transfer, keeping the island stable and keeping supply going are a person's decisions and responsibility." },
+  { "name": "Handling a battery cluster temperature difference alarm", "how": "AI compares cluster temperatures, historical curves and cooling system data and gives a first judgment of a cooling fault or a battery problem. A person goes to check on site and decides whether to derate, take the cluster offline or call for repair." },
+  { "name": "Producing a monthly operations analysis report", "how": "AI automatically gathers generation, self-consumption, battery cycles, savings on electricity bills and fault records, and generates charts and analysis text. A person only checks the definitions, adds context from the site and spot-checks the conclusions." },
+  { "name": "Pre-discharging the batteries fifteen minutes before the midday solar peak", "how": "From the solar forecast and the export limit, AI calculates the pre-discharge automatically and executes it in grid-connected mode. A person steps in only when the forecast is off or equipment misbehaves, and spot-checks the results." },
+  { "name": "Restoring supply after inverter AC-side overcurrent protection trips", "how": "AI can pull the fault recording and protection logs and suggest likely causes. Finding the short circuit, isolating the fault, confirming it's safe and restarting the inverter all need a person's judgment on site and their accountability." },
+  { "name": "Compiling the quarterly assessment of green power consumption and carbon reduction", "how": "AI extracts and calculates consumption and carbon reduction indicators from the EMS and trading data and drafts the report. A person confirms the accounting method and data definitions and answers for the truth of subsidy claims and ESG disclosures." },
+  { "name": "Quarterly testing of lightning protection earthing resistance at field control boxes on an agrivoltaic project", "how": "AI can schedule the tests, send reminders and compile the report. Taking the instruments into the fields to measure earthing resistance, judging whether it passes and fixing it is all hands-on work for a person." },
+  { "name": "Taking part in a joint day-ahead market clearing simulation at the regional distribution dispatch desk", "how": "AI can generate the next day's bid plan and simulate returns at different prices. A person works out the microgrid's real operating constraints with the control center and decides the final bidding strategy." }
+ ],
+ "events": {
+  "e_typhoon": "A typhoon passes straight over the island. You reinforce the solar mounts in advance, seal the battery containers, and fill the diesel generators and keep them on standby. On the night of the strongest wind the island's power doesn't drop for a second, and the next day you gather half a sack of broken glass and branches off the roofs.",
+  "e_blackstart": "A lightning strike trips the protection and the whole island goes dark. Following the plan you start the diesels first, build up voltage, then restore circuit after circuit: clinic, desalination plant, school, homes. Forty minutes later the last circuit is back, and only then do you find your palms are soaked.",
+  "e_supply_late": "Rough seas delay the supply ship a week. The canteen runs out of greens and the diesel runs low. You lower the generators' start threshold a notch and check the sky a few more times a day.",
+  "e_salt": "Salt spray corrodes the terminals in a combiner box, and in the night it reports an earth fault. You search the arrays with a torch for two hours and finally find it in the very last row.",
+  "e_ai_forecast": "The EMS gets a new forecasting model that produces solar and load curves from the weather forecast every day and schedules the batteries itself. You only need to spot-check, but it doesn't know the school is holding its sports day tomorrow, and you nudge the midday load up by hand.",
+  "e_ai_battery": "Comparing temperature curves across clusters, the system flags an abnormal temperature difference in one cluster three days early and suggests the cooling fan may be the problem. You go into the container: the fan's filter is clogged with salt and sand. Once you change it, the difference goes away.",
+  "e_lonely": "In your seventh week on the island you start counting the days. At night you sit alone on the jetty watching the lights of the odd fishing boat far off. When you get back to the dorm, a colleague has left a bowl of sweet soup he made himself by your door.",
+  "e_cable": "A subsea cable reaches the island, and for the first time the microgrid can connect to the main grid. At the moment of connection you watch the synchroscope, the needle turning slowly to zero, and close the breaker.",
+  "e_diesel_less": "Battery capacity is doubled, and the diesels' running time falls from over a thousand hours a year to fewer than a hundred. The supply ship carries several tons less diesel, and a certain smell is gone from the island air.",
+  "e_turtle": "On a night round past the beach you see a sea turtle come ashore to lay her eggs. You switch off your torch and stand well back until she has crawled back to the sea, then go on your way.",
+  "e_love": "A young doctor on rotation at the island clinic keeps coming to the operations station to borrow power strips. Later you watch the sunset from the jetty many times together, and in your month of rest in Haikou you go together to the arcaded old street for bowls of qingbuliang.",
+  "e_house": "You buy a two-bedroom in Jiangdong, Haikou, the down payment saved from years of island allowance. The renovation happens while you're on the island, all by video, and you still spot that the workers have put a socket in upside down.",
+  "e_baby": "When your child is born you're on the island, a typhoon has come through and the supply ship isn't sailing. You see your baby for the first time on a video call that drops three times. A week later you get on the ship, seasick the whole way, and still grinning when you step off.",
+  "e_heat": "In July it's forty degrees outside the battery containers, and inside the air conditioners alarm one after another. You crouch inside repairing them all afternoon, come out with clothes you could wring water from, and drink three bottles of desalinated water before you recover.",
+  "e_demand_response": "Once connected, you bid the microgrid into a demand response event for the first time. That evening you discharge all the batteries and push the desalination pumps back two hours, the month-end settlement brings in an extra sum, and the company names you in the group chat.",
+  "e_contest": "At the province's new power system skills competition you take first prize in island operation and black start. The presenter asks where you work. On an island, you say, and somebody in the audience laughs.",
+  "e_family_far": "Your child's school holds a parents' meeting while you're on the island. The teacher posts a photo in the group: the chair beside your child's seat is empty. You look at it a long time and save the photo.",
+  "e_skin": "Years in the island sun have left sunspots across the backs of your hands and your neck, and the damp has got into your knees so they ache whenever it's overcast. The clinic doctor tells you to wear sleeve covers. You do, you say, and the sun still gets through.",
+  "e_new_hire": "The new operator you brought out to the island produces a day-ahead strategy on his own for the first time, and adds a rule you never taught him: when the fishing boats come back to port, leave extra headroom for the cold store on the jetty. You read it and change nothing.",
+  "e_parents": "Your father is in hospital back home in Wenchang while you're on the island. You ask a colleague in Haikou to visit him, call every evening from the island, and the moment the supply ship docks you ask for leave.",
+  "e_zero_carbon": "The island's microgrid is named a zero-carbon demonstration project, and reporters come out to film. You stand in front of the solar arrays and talk for ten minutes. When it airs there is one sentence left: not one light on the island has ever gone out."
+ },
+ "choices": {
+  "c_cert": {
+   "title": "Earn the power market trader certificate and go for Senior Microgrid Operator",
+   "situation": "The company says the microgrid will be connected and in the market someday, and to make Senior Microgrid Operator you'll need the power market trader certificate and results worth showing. You'd have to study on the island, where the internet comes and goes and online lectures keep freezing.",
+   "options": [
+    { "label": "Go for it, study on the island", "result": "You download the lectures and work through them in the dorm, doing hundreds of spot-market clearing problems. The day the exam is over, the supply ship happens to arrive, and you send a screenshot of your score home." },
+    { "label": "Master the island's operation first", "result": "You learn the quirks of every piece of equipment on the island and go a whole year without an unplanned outage. You sit the certificate two years later." }
+   ]
+  },
+  "c_ai_strategy": {
+   "title": "Whether to help build AI dispatch strategy",
+   "situation": "The company wants AI to dispatch several islands' and industrial parks' microgrids together, and needs someone who knows the field to join the platform team in Haikou and teach the model what's special about the islands. You'd no longer be stationed on the island, but you'd learn data and algorithms from scratch and often argue with the people writing the code.",
+   "options": [
+    { "label": "Join the platform team", "result": "In the requirements document you write a page on things that only happen on islands: supply ships, fishing seasons, racing to store desalinated water before a typhoon, school sports days. The first time the model heads off a diesel shortage before a typhoon on its own, the team lead takes you out for coconut chicken." },
+    { "label": "No, keep the island", "result": "You stay on the island. When the platform's strategies come down you check them every day, fix what's wrong by hand and write a note back. The platform team says your notes are more accurate than the model." }
+   ]
+  },
+  "c_park": {
+   "title": "Transfer back to the industrial park microgrid in Haikou",
+   "situation": "The company has built a microgrid at an industrial park in Haikou and wants someone with island experience to run it: home every day, no island allowance, a good deal less pay. Your wife says your child will start school soon and the family needs you. You feel there are still a few things on the island you haven't finished.",
+   "options": [
+    { "label": "Transfer back to Haikou", "result": "You can pick your child up after work now. The park's microgrid is tied to the main grid, with half as much going on, and you start working out how to use the batteries to cut electricity bills for the factories in the park." },
+    { "label": "Stay on the island", "result": "You tell your wife two more years. In your month back in Haikou, you do every school run yourself." }
+   ]
+  },
+  "c_senior": {
+   "title": "Compete for Senior Microgrid Operator",
+   "situation": "The company wants a Senior Microgrid Operator to run microgrids across three settings, island, industrial park and data center, handle demand response bidding and settlement, and lead the team in iterating AI strategies. You'd present a returns plan, and if you get it you'll be shuttling between Haikou and the island.",
+   "options": [
+    { "label": "Put your name in", "result": "You turn the island's operating data from these years into a thirty-page plan. When you get to diesel running hours falling from over a thousand to under a hundred, a judge stops writing and looks up at you." },
+    { "label": "Stay out, keep one island well", "result": "You don't apply. One island is enough to worry about, you say. On the new senior operator's first trip out, he finds you first and spends an afternoon over tea." }
+   ]
+  },
+  "c_vpp": {
+   "title": "Go to Shenzhen to work on virtual power plants",
+   "situation": "A virtual power plant company in Shenzhen wants you, aggregating thousands of charging posts, batteries and air conditioners to bid into the power market, at one and a half times your pay. You'd leave the island and the equipment you can see and touch, and spend your days on bids and curves.",
+   "options": [
+    { "label": "Go to Shenzhen", "result": "You leave the island on the supply ship for the last time. Long after it's put out to sea, you can still see the solar panels flashing in the sun.", "end": "You became an operations manager at a virtual power plant company in Shenzhen, aggregating thousands of unseen devices into bids every day. Whenever a typhoon crosses the South China Sea, you open the weather map to see how close it is to that island." },
+    { "label": "Stay in Hainan", "result": "You don't go. You like electricity you can touch, you tell them. Then come and have tea with us when you're in Shenzhen on business, they say." },
+    { "label": "Stay, and run an island aggregation pilot for them", "result": "You don't switch jobs, but you help that company run a small pilot on the island, connecting a few dozen air conditioners to their platform. Your name goes on the pilot report." }
+   ]
+  },
+  "c_more_islands": {
+   "title": "Go and build new islands",
+   "situation": "The company is building microgrids on two smaller islands and needs someone to lead the team for three years from site selection and design to commissioning. Those islands don't even have a canteen: prefab huts and tinned food. But it's a project from scratch.",
+   "options": [
+    { "label": "Lead the build", "result": "You live in a prefab hut for three years and revise the drawings dozens of times. On commissioning day, for the first time the islanders don't have to listen to a diesel generator at night. You sign the commissioning record, with another patch of sunspots on your hands." },
+    { "label": "No, stay on your island", "result": "You recommend a young colleague. He calls once a month with questions, and you go through his plans with him over the phone." }
+   ]
+  },
+  "c_trade": {
+   "title": "Become a green power trading adviser",
+   "situation": "An electricity retailer wants you as a green power trading adviser, helping Hainan's hotels, duty-free shops and factories buy green power and account for carbon. Thirty percent more pay, an office job in Haikou. You'd go from the person guarding the power to the person selling it.",
+   "options": [
+    { "label": "Join the electricity retailer", "result": "You hand over your island duties, and on your last inspection round you write a date in marker on a battery container door.", "end": "You became a green power trading adviser at an electricity retailer, helping clients trace where every kilowatt-hour comes from. Whenever you explain green power to a client, you tell them about an island where the electricity comes from the sun on the rooftops." },
+    { "label": "Stay in microgrids", "result": "You don't go. You still haven't shut down all that island's diesels, you say." }
+   ]
+  },
+  "c_expert": {
+   "title": "Go for Integrated Energy Operations Expert",
+   "situation": "The province is drafting a local standard for island microgrids and asks you to lead it. Do it well and you could become an Integrated Energy Operations Expert, advising the government on carbon goals. You'd be writing submissions, holding review meetings and leading research projects, and handing the island over to the young ones.",
+   "options": [
+    { "label": "Lead the standard", "result": "You add a chapter to the standard on operating before and after typhoons, writing in every typhoon of these years. At the review meeting one expert says only someone who has lived on an island could have written that chapter." },
+    { "label": "Don't lead, stay in operations", "result": "You recommend someone else to lead and write only the typhoon chapter yourself. When the standard is published, your name is on the last line of the drafters' list." }
+   ]
+  },
+  "c_late": {
+   "title": "Stop being stationed on the island",
+   "situation": "You're past fifty, your knees and skin can't take the island's damp and sun anymore, and you get worse seasickness on the supply ship than you used to. The company says you can stay in Haikou doing remote monitoring and training new staff, no more island postings and no more island allowance.",
+   "options": [
+    { "label": "Stay in Haikou", "result": "Every day at the monitoring center in Haikou you watch the EMS for several islands, and when something happens on one, the young ones call you first. You can have dinner at home in the evenings." },
+    { "label": "Keep the island postings until retirement", "result": "You stay on the rotation. The young ones say that with you on the island in typhoon season, they can sleep." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "Leaving the island for the last time, you look back from the jetty: the solar panels shine in the sun one after another, and on a battery container door is the date you once wrote in marker. The supply ship sounds its horn and the island slowly shrinks. That night the island's lights come on as usual, and at home in Haikou you open the EMS on your phone and take one last look.",
+  "burnout": "That typhoon season you stay up several nights running on the island, and on the supply ship back for your rotation you collapse. The doctor says your body can't take island postings anymore, and the company moves you to the records office to sort the islands' operating archives. You go home on time every day. On the nights a typhoon comes, you still lie awake listening to the wind outside."
+ },
+ "stages": [
+  "You keep a whole island's power on your own: every day you watch solar output, battery state of charge, frequency and diesel levels in the EMS, produce day-ahead forecasts and charging strategies, run black start drills and write the month-end performance report. You deal with the dispatch center in Haikou and with the island's desalination plant, clinic and school; at hand are the EMS, a diesel generator manual and the typhoon emergency plan.",
+  "As senior operator you run more than one island: the industrial park in Haikou and a data center's microgrid too. You lead demand response bidding and settlement, take the young ones through iterations of AI strategy and work out the returns for every setting. You shuttle between Haikou and the islands, with more time in meetings and less crouching in battery containers.",
+  "As an integrated energy operations expert you help write industry standards, take overall control of the province's island and park demonstration projects, and explain to local government how to reach the carbon goals. What you write now are standards, plans and review comments; when a typhoon comes, the duty operators on several islands still tag you first in the group chat."
+ ],
+ "work": [
+  "The desalination plant manager calls to say he wants two more sets of pumps tonight. You glance at the state of charge and say yes, but the batteries need filling before the sun goes down, so he should start an hour later.",
+  "You take a multimeter to measure a row of solar strings, and one reads well below the rest. You follow the wiring panel by panel and find a scorched junction box on the back of one module.",
+  "The day before a typhoon, you write the diesel start threshold, the batteries' reserve state of charge and the order for shutting down the desalination pumps on a sheet of paper and tape it to the control room door.",
+  "A factory owner in the park wants to save more on electricity. You pull up three months of his load curves and say: run the air compressors at midday instead, and you'll save twenty thousand a month.",
+  "The AI's battery strategy for the data center puts all the discharging in the evening peak. You check the contract and say there's a reserve capacity commitment here too: thirty percent has to stay untouched.",
+  "On a new operator's first trip to the island, you walk the inspection route with him, stopping at every battery container door to tell him which year its air conditioner was repaired.",
+  "An island microgrid plan from a county comes to you for review, and the battery capacity is too small. In your comments you write: size it for the ships stopping for seven days in a typhoon, not three.",
+  "Speaking to city officials about the carbon goals, you skip the slides and show one chart: the island's diesel running hours, falling from over a thousand to a few dozen.",
+  "A young member of the standards drafting group asks why the frequency limits for island operation are set where they are. You dig out the fault recording from a typhoon night ten years ago and let him see for himself."
+ ],
+ "past": [
+  "You grow up by the sea in Wenchang, in a fishing family. Every summer when a typhoon comes the village loses power, and your father mends nets by the light of a kerosene lamp, saying electricity is worth more than fish.",
+  "Your gaokao (college entrance exam) gets you into a power engineering university on the mainland, and you put down electrical engineering and automation. Learn it and come back, your father says, and then nobody will need a kerosene lamp in a typhoon.",
+  "In the summer of your third year you go home to Hainan and intern at a solar power station. Standing among tens of thousands of panels for the first time, dizzy with heat, you think they look like a shining sea.",
+  "After graduating you come back to Hainan, join the power supply system in Haikou through campus hiring, and are put on a distribution maintenance crew, switching, patrolling lines and doing repairs with your mentor, out all night on typhoon nights.",
+  "You earn your microgrid operation permit, and at a training session you hear about the island microgrids: no main grid, nothing but solar, batteries and diesel. You go home and read about them all night.",
+  "The operations station holds an internal selection, and you apply. At the interview you talk about the kerosene lamp on typhoon nights when you were a child. A month later you're on the supply ship to the island, seasick the whole way."
+ ],
+ "late": {
+  "pension_note": "Estimate: the energy company pays the basic enterprise employee pension plus an enterprise annuity. The island allowance isn't counted in the contribution base, so after retirement you get roughly half your final monthly salary.",
+  "scenes": [
+   "Your first typhoon season in retirement, you stay home in Haikou with the islands' EMS open on your phone, watching until the typhoon has passed. You're not on the island anymore, your wife says. Habit, you say.",
+   "A company making batteries for islands hires you as an adviser a few days a month to look over their plans. On the first one you draw a circle: size for seven days with the ships stopped by a typhoon.",
+   "You go back to Wenchang, and every roof in the village has solar panels now; the power never goes out in typhoons anymore. Your father gave up fishing long ago. Sitting at the door, he says: what you said back then came true.",
+   "You take a cruise ship out to that island once more. The solar panels have been replaced with new ones, and there's another row of battery containers. You stop a while at the old container door. The marker writing can no longer be read.",
+   "Your first few months in the records office you file years of island operating logs one by one, a page for every typhoon. Your knees slowly stop aching, and you sleep through until morning.",
+   "A young operator comes to the records office before his first island posting and asks what matters most on a typhoon night. You pull out an old log and say: look at this page. Keep the clinic going first.",
+   "When you reach the age you retire, on a modest pension. In your Haikou housing estate you look over neighbors' quotes for solar and batteries, telling them whose battery cabinets can stand up to salt spray.",
+   "Your first year away from the island, you still check the South China Sea weather map every morning first, to see whether a typhoon is heading that island's way.",
+   "You see in the news that the island's microgrid has been expanded again, and one of the diesel generators has been taken out. You forward the story to an old colleague, who replies with a smiley face.",
+   "The new operator you once brought to the island is a senior operator now and sends you a photo: the island at night, lights shining one by one, and beneath it a line: this typhoon season, not one second off.",
+   "More and more of the forecasting and dispatch is done by AI, and the strategy can change dozens of times a day. But on the night a typhoon passes over, there still has to be one person in the island's control room with a hand beside the diesel button.",
+   "Your grandson asks where the island's electricity comes from. You point at the sun and say: from up there, stored by day and used at night. And when the sun goes down? he asks. That's why someone has to keep watch, you say."
+  ],
+  "closing": {
+   "retire": "Many years later, one night, Haikou loses power for a while and the building goes dark. You sit on the balcony looking at the distant sea and think of that island, where right now the batteries are discharging and not one light at the clinic or the school has gone out.",
+   "burnout": "Many years later you fit a small solar panel on the balcony and wire it to a battery to power the little lamp on the flower stand. After dark the lamp comes on, and you watch it a while, as if watching a very, very small island.",
+   "end": "Many years later, in a drawer, you find the sheet listing the order for shutting down the pumps before a typhoon, its edges yellowed by sea air. You look at it a while, fold it up and put it back."
+  }
+ }
+}

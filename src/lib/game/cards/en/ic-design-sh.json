@@ -1,0 +1,205 @@
+{
+ "id": "ic-design-sh",
+ "occupation": "Integrated Circuit Design Engineer",
+ "role": "Digital IC Front-End Design Engineer (Junior)",
+ "headline": "Second year out of a microelectronics master's: a digital front-end engineer at a Zhangjiang chip design company building AI inference chips, who writes RTL, lives in waveforms and timing reports, and is about to see a first tapeout",
+ "unit": "A fabless design company making edge AI inference chips, Zhangjiang, Shanghai",
+ "unit_type": "Chip design company",
+ "city": "Shanghai (Zhangjiang, Pudong)",
+ "city_tier": "First-tier city",
+ "education": "Master's (Microelectronics and Solid-State Electronics)",
+ "level": "You can write the RTL for a bus interface module on your own, build a simple testbench, and read Design Compiler and PrimeTime reports. Clock domain crossings and low power you still have to ask your mentor about, and before your first tapeout you are not at all sure of yourself.",
+ "intro": "For your master's you built a small RISC-V core, and after graduating you signed with this Zhangjiang company making edge AI inference chips, writing RTL on the digital front-end team. Yours is one interface module on the on-chip bus. In three months the whole chip tapes out: tens of millions of yuan in mask costs, and if it fails, half a year lost. From today, every line of Verilog you write will be etched into silicon, past changing.",
+ "salary_note": "Estimate: Zhangjiang design companies pay new master's graduates far above the national figure (the career map's junior band is conservative), and the gap narrows from intermediate level on. There are stock options, paper money until the company lists, and in years when the industry is cold the raises stop.",
+ "facts": [
+  { "label": "Digital IC Design Engineer, Junior (current level)", "value": "0-2 years, ¥8,000–14,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Digital IC Design Engineer, Intermediate (2-5 years)", "source": "Career map" },
+  { "label": "Pay after 10+ years", "value": "¥65,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Reviewing code changes and handing constraint data over to the back end", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Taking an interface task and laying out the bus spec baseline", "source": "AI exposure" },
+  { "label": "Open positions", "value": "782 related listings nationwide, 195 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "From your shared flat in Tangzhen you ride a share bike to the tech park, past row after row of glass buildings. Outside them, people in windbreakers with laptop backpacks queue at the breakfast carts.",
+  "You open a terminal and check last night's regression on the server first: seven of three hundred tests failed. You pull the first failing waveform into Verdi and trace back from the clock edge where it went wrong.",
+  "Team stand-up. The verification engineer says your module locks up under backpressure. You say you'll have an answer this afternoon. Your mentor says nothing, just makes a note in his notebook.",
+  "In the canteen downstairs, an eight-yuan bowl of noodles with a pork chop. The back-end engineer across the table complains that half the constraints the front end gives them are wrong.",
+  "Found it at last: in one corner case, valid and ready are waiting on each other. You change three lines, push to Gerrit with a long explanation, and add a stimulus aimed squarely at that corner.",
+  "Synthesis. Design Compiler runs forty minutes, and while you wait you read the AXI protocol in the original English, filling one page's margins with notes.",
+  "The timing report comes out: worst negative slack minus zero point one. You go through the violating paths one by one in PrimeTime and find you left out a multicycle constraint yourself.",
+  "You queue tonight's regression on the server and grab the last simulation license. When you close your laptop half the building's lights are still on, and riding home, the Zhangjiang roads are empty."
+ ],
+ "ladder": [
+  { "title": "Digital IC Design Engineer, Junior", "stage": "Junior", "focus": "Complete RTL coding, simulation debugging, basic synthesis and timing checks for a single module on your own; read the spec and work through the checklist. You move up through code quality, how fast you close bugs and how complete your documentation is." },
+  { "title": "Digital IC Design Engineer, Intermediate", "stage": "Intermediate", "focus": "Own subsystem-level design (a CPU subsystem or a video codec pipeline); lead interface definitions between modules and timing closure; set the DV plan and hit coverage targets. You move up through closing the full flow and the quality of your cross-team work." },
+  { "title": "Senior Digital IC Design Engineer", "stage": "Senior", "focus": "Lead chip-level microarchitecture choices and key technical decisions (cache coherence protocols, low-power strategy); lead multi-module integration and pre-silicon verification; solve tapeout-level hard problems like corner failures and EM/IR. You move up through the weight of your technical decisions and mass-production success." },
+  { "title": "Principal Engineer (Digital IC)", "stage": "Expert", "focus": "Serve as overall technical lead for a product line (an AI accelerator, an automotive MCU); set the PDK adaptation strategy, unify verification methodology and write company design standards; review major technical plans and carry the technical risk. You move up through your voice in the industry and patent and standards contributions." },
+  { "title": "Chief Digital IC Architect", "stage": "Chief architect", "focus": "Set the technology roadmap across the company's whole chip range; work with foundries on joint development of new processes; lead national or provincial IC research programs; hold a veto on the technology committee. You move up through strategic technology planning and influence across the ecosystem." }
+ ],
+ "ai_tasks": [
+  { "name": "Taking an interface task and laying out the bus spec baseline", "how": "AI can read the spec, pull out the interface signals, clock domains and reset relationships, and organize them into a baseline table. A person only spot-checks the key entries to confirm nothing has been missed or misread." },
+  { "name": "Finding and fixing an interface deadlock and filling in the verification stimulus", "how": "AI can help read waveforms and logs, guess at possible causes of the deadlock, and draft a fix and test stimulus. A person has to confirm the real root cause against the design intent, decide how to change it, and answer for whether verification is sufficient." },
+  { "name": "Checking timing violations and revising the SDC constraints", "how": "AI can parse timing reports, list the violating paths and point out likely constraint problems. A person has to judge whether generated clocks and CDC exceptions are real and reasonable, because a wrong constraint buries tapeout risk, and someone must answer for it." },
+  { "name": "Reviewing code changes and handing constraint data over to the back end", "how": "AI can help assemble review materials and a first draft of the handover document. The review discussion, the judgment calls between mentor and verification engineers, confirming the handover with the back end and carrying the responsibility mostly fall to people." },
+  { "name": "Breaking down the interface spec and writing a checklist", "how": "AI can break down handshake rules and clock domain crossings from the spec automatically and produce a checklist. A person only needs to review it and add the implicit conventions the spec never wrote down." },
+  { "name": "Locating a handshake deadlock and fixing the RTL logic", "how": "AI can analyze circular wait patterns in valid/ready backpressure, point to suspect code and draft a fix. A person checks whether the fix complies with the protocol and overall timing, and runs regression to confirm there are no side effects." }
+ ],
+ "events": {
+  "e_tapeout": "For the last two weeks before tapeout the whole team lives in a hotel near the office. The night signoff passes and the data goes to the foundry, the project manager buys a pile of barbecue skewers, and halfway through eating you can't keep your eyes open.",
+  "e_silicon_back": "The silicon is back. In the lab, the test engineer powers up the board, the first line of serial log appears on the screen, and the registers in your interface module read back correctly. When nobody is looking, you clench your fist.",
+  "e_silicon_bug": "Silicon testing turns up a bug: at the hot corner, one path occasionally gets it wrong. In the end it isn't your module, but you stay up for a month like everyone else, working around it in software, to be fixed in the next version.",
+  "e_ai_rtl": "The company brings in an AI coding assistant that reads a page of spec and produces the RTL for an interface module and a set of stimulus. You read it line by line. It has written a reset as synchronous, against the convention for the whole chip. You fix it and leave a comment to teach it.",
+  "e_ai_sta": "You hand the timing report to the AI assistant, and in seconds it lists every violating path, sorts them by likely cause and drafts a few constraints for you. One it suggests setting as a false path. One look tells you no: that's a real clock domain crossing.",
+  "e_junior_gone": "The team hires no new graduates this year. The small modules and test cases that used to be practice for newcomers, AI now writes a first version of, and a few of you old hands review them and merge them in. It worries you a little: who's going to take over from you?",
+  "e_funding": "The company closes a new round, and the all-staff email says the valuation has doubled. You work out what your options are worth: on paper, enough for a down payment. Then you close the calculator.",
+  "e_winter": "The industry cools and the next round falls through. The company lays off a third of its people, two from your team. At your desk you help one of them hand over the code on his laptop, until nine at night.",
+  "e_foundry": "The overseas foundry you'd booked tightens access to its advanced process, and the next-generation chip has to move to a domestic one. New PDK, new libraries: you tear down half a year's work and start again.",
+  "e_license": "The month before tapeout there aren't enough simulation licenses, so people get up at two in the morning to queue regressions and post an emoji in the group chat when they get one. Your alarm is set for twenty nights running.",
+  "e_love": "A researcher at a biotech company in the next building often rides the same tech-park shuttle as you. Later you spend weekends together in Chuansha old town, talking about each other's work that neither of you understands, and having a great time.",
+  "e_house": "You buy a secondhand seventy-square-meter flat in Zhoupu. The down payment is pooled from both families plus your year-end bonuses, the mortgage fifteen thousand a month. The day you sign, you go back to the office and run regressions all night.",
+  "e_baby": "Your child is born. You take a week off and sleep a few nights on a folding chair at the hospital. A colleague messages the regression results: all passed.",
+  "e_patent": "An area-saving arbitration structure you came up with is filed as a patent, and the company pays a five-thousand-yuan bonus. When the certificate arrives, you send a photo to your old master's supervisor.",
+  "e_headhunter": "Headhunters call you twice a week. A GPU company offers forty percent more than you earn now. You don't move, but you update your résumé.",
+  "e_35": "You turn thirty-five. Your checkup has a few arrows, and friends your age are being laid off one after another. You start running on weekends, and start paying attention to the new tools the young people on the team use.",
+  "e_mentor": "Reviewing your code, your mentor stops at a clock domain crossing. He doesn't tell you it's wrong. He asks: what happens if this signal gets sampled twice on the other side? You think about it all night, and the next day add a synchronizer yourself.",
+  "e_car_chip": "The company takes on an automotive-grade chip, and functional safety requires a safety mechanism and fault analysis for every module. You take the team back through your own designs, and several hundred pages of documentation appear.",
+  "e_mass_production": "The chip goes into mass production, inside a door-entry camera. You see one at the gate of your housing estate and stop to look at it a while. The security guard asks who you're looking for.",
+  "e_eyes": "Years of staring at waveforms, and by evening your eyes can't make out the thin lines on the screen. You bump Verdi's font up two sizes and get a pair of blue-light glasses.",
+  "e_parents": "Your father is in hospital back home, right in the tapeout push. You take an overnight high-speed train back, connect to the company VPN on a hotspot in the ward, and read timing reports while you wait for him to wake.",
+  "e_isscc": "The architecture paper on this generation of your chips is accepted at the international solid-state circuits conference, and you give a twenty-minute talk in English. Afterwards someone from a big foreign firm comes to ask for your card."
+ },
+ "choices": {
+  "c_own_subsystem": {
+   "title": "Volunteer for a subsystem and go for Digital IC Design Engineer, Intermediate",
+   "situation": "The next-generation chip needs its video codec pipeline redone, and the team lead asks who wants it. Taking it means stepping up from a module to a subsystem: defining interfaces, managing timing closure, writing the DV plan with verification. That's the hurdle for Digital IC Design Engineer, Intermediate. But right now your own module still keeps throwing bugs.",
+   "options": [
+    { "label": "Raise your hand", "result": "For those six months you hardly ever leave before eleven, and the interface document goes through twenty-three versions. The day the subsystem first passes every test, the team lead puts your name on the first line of the weekly report." },
+    { "label": "Get your own module solid first", "result": "You take your module to a hundred percent coverage and write documentation anyone can follow. The subsystem goes to a teammate who joined a year before you, and you assist him." }
+   ]
+  },
+  "c_ai_flow": {
+   "title": "Whether to build the AI-assisted design flow",
+   "situation": "The CTO wants AI writing RTL, writing stimulus and reading timing reports across the company, and is taking one person from the front-end team to work with the CAD group on building the flow and setting the rules. You'd spend half your time writing scripts and running evaluations, and your own design work would slow down.",
+   "options": [
+    { "label": "Go and build the flow", "result": "You put together an evaluation: have the AI write a hundred modules, pick out the ten patterns it gets wrong most, and turn them into a company-wide checklist. From then on, it's the first thing new hires read." },
+    { "label": "No, stick to design", "result": "You keep writing it all yourself line by line. When AI-generated code is merged, you review it harder than anyone, and the team says if it gets past you, it won't go wrong." }
+   ]
+  },
+  "c_big_or_startup": {
+   "title": "Jump to a giant, or start up with old colleagues",
+   "situation": "A big mobile chip company offers thirty percent more: a big platform, stable processes, and you'd be one of thousands. Your senior from grad school wants you as the first front-end engineer at his new company: same pay, lots of options, and nobody can say whether it'll survive next year.",
+   "options": [
+    { "label": "Go to the giant", "result": "At the big company you own only a tiny piece of a huge chip, but you learn how thousands of people build one chip together. Your payslip is thicker, and the weekly report format is stricter than your code." },
+    { "label": "Start up with your senior", "result": "You do everything: write RTL, build the verification environment, run synthesis, even help with interviews. The day the first chip tapes out, all fifteen people at the company crowd into one meeting room to watch the data go out." },
+    { "label": "Stay at your current company", "result": "You go to neither. When the team lead finds out, he hands you a key module the next quarter." }
+   ]
+  },
+  "c_senior": {
+   "title": "Go for Senior Digital IC Design Engineer and lead the microarchitecture",
+   "situation": "The cache and low-power plan for the next chip isn't settled. The architect asks you for a microarchitecture proposal to be reviewed alongside another team's. Win it, and that's Senior Digital IC Design Engineer work. Lose, and months of your weekends were for nothing.",
+   "options": [
+    { "label": "Write the proposal, go to review", "result": "You spend three months of evenings and weekends building a performance model, and in the review put both proposals' area, power and bandwidth on one chart. They choose yours, and the architect says: you own the next version." },
+    { "label": "Don't compete, do the integration well", "result": "You put your effort into multi-module integration, and that chip's integration passes first time. The review goes with the other proposal, and in the meeting you point out two holes in it, both of which get fixed." }
+   ]
+  },
+  "c_eda": {
+   "title": "Move to an EDA company to work on timing algorithms",
+   "situation": "A domestic EDA company is hiring timing analysis algorithm engineers and likes your grasp of STA and your scripting. You'd go from using the tools to building them, from writing Verilog to writing C++, and never chase a tapeout again.",
+   "options": [
+    { "label": "Go to the EDA company", "result": "You resign, and on your last day tidy up your pile of timing scripts and leave them for the team.", "end": "You became a timing algorithm engineer at a domestic EDA company, your code running inside other people's chip designs. Every time a customer reports a timing analysis bug, you remember the nights you spent in front of PrimeTime." },
+    { "label": "Stay in design", "result": "You don't go. You still want to watch what you write turn into silicon, you say. That year the module you led tapes out successfully on the first try." },
+    { "label": "Stay, and contribute to open-source EDA on the side", "result": "On weekends you send a few patches to an open-source timing tool, and they're merged into the main branch. Back at work, you read PrimeTime reports with one more layer of understanding." }
+   ]
+  },
+  "c_xian": {
+   "title": "Transfer to the Xi'an R&D center",
+   "situation": "The company has opened an R&D center in Xi'an and wants a front-end lead who can run a team there, paid at eighty percent of the Shanghai rate, with house prices under a third of Shanghai's. Your spouse works in Shanghai, your child is at kindergarten in Shanghai, and your parents are back home in Shaanxi.",
+   "options": [
+    { "label": "Move the family to Xi'an", "result": "You buy a big three-bedroom in the high-tech zone and can drive home to see your parents on weekends. The Xi'an team is all new people, and you train them one by one from scratch." },
+    { "label": "Stay in Shanghai", "result": "You stay, and on weekends take your child to Century Park. The Xi'an center ends up with someone else in charge, who now and then calls you with a timing question." }
+   ]
+  },
+  "c_principal": {
+   "title": "Compete for Principal Engineer, technical lead of a product line",
+   "situation": "The company needs a Principal Engineer for its automotive MCU product line, responsible for the whole line's technical plans, verification methods and design standards, signing major plans and carrying the risk. You'd have to go from writing designs to managing technology, running reviews and meeting customers.",
+   "options": [
+    { "label": "Compete for it", "result": "You prepare a fifty-page technology roadmap. When you reach the functional safety chapter, the CEO stops you and asks a great many questions. A month later the appointment email goes out." },
+    { "label": "Stay out, stay on the design front line", "result": "You say you still want to write designs yourself. Once the new principal engineer takes over, the hardest module still goes to you." }
+   ]
+  },
+  "c_vc": {
+   "title": "Join an investment firm to look at chip deals",
+   "situation": "An investment firm's hard-tech team wants you for industry research on chip design, EDA and IP deals, helping them judge whether a company's technology is really any good. About the same pay, no tapeouts, plenty of travel, reports to write and tea with founders.",
+   "options": [
+    { "label": "Join the investment firm", "result": "You hand over your work and go to your new job in clothes without a badge.", "end": "You became an investment manager on a hard-tech team, looking at a hundred-odd chip companies a year. Whenever a founder says their chip worked on the first tapeout, you ask: on the day the silicon came back, what time did you start powering up?" },
+    { "label": "Stay at the company", "result": "You don't go. You say you can read waveforms, not people. Later that firm invests in your company, and among its due diligence team is a university classmate of yours." }
+   ]
+  },
+  "c_chief": {
+   "title": "Become Chief Digital IC Architect, or step back to technical expert",
+   "situation": "The company's chief architect is retiring, and the board wants someone from inside to set the technology roadmap across the whole chip range and work with foundries on new processes. You're one of the candidates, but you're past fifty, and your health and energy aren't what they were.",
+   "options": [
+    { "label": "Take chief architect", "result": "For the first time you use your veto on the technology committee, against a proposal that looked beautiful. That night you sit alone in your office until very late." },
+    { "label": "Step back to expert, train the young", "result": "You let someone younger take the post and stay on as an expert, reviewing and mentoring, leaving at seven every day and starting to learn to cook." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you lay the chips you worked on over the years out on your desk, one by one; some are long out of production. You put them in a small box and take them home. Leaving the park it is evening, the glass buildings of Zhangjiang lighting up one after another, and you know that inside many people are staring at waveforms, waiting for a clock edge.",
+  "burnout": "One early morning before a tapeout, at your desk, your heart starts racing until you can't breathe, and a colleague takes you to hospital. The doctor says you need to rest, and the company moves you to technical documentation and training. You go home on time every day. Passing the lab now and then, you still stop to look at the lights on the boards."
+ },
+ "stages": [
+  "You own one module: reading the English spec, writing RTL, building the most basic testbench, running simulations in VCS and tracing waveforms in Verdi, running Design Compiler and reading PrimeTime timing reports. Your mentor reviews your code once a week, verification engineers' bug tickets land straight in your name, and every change you push waits on Gerrit for someone to approve.",
+  "You own a subsystem: the interfaces between modules are yours to define, timing closure yours to watch, the DV plan yours to write with verification, coverage yours to chase to the end. You start handing constraints over to the back end, checking register maps with software and arguing area with the architect, and one or two new engineers' code has to get past you first.",
+  "As a senior design engineer you start setting microarchitecture: how the cache is organized, how many power domains for low power, how the modules integrate. At pre-silicon signoff you have to explain clearly what risks remain; when a hard corner problem shows up before tapeout, everyone looks at you. You write less code and more proposals and review comments.",
+  "As Principal Engineer of a product line, you set the technical direction for a few dozen people: writing design standards, unifying verification methods, reviewing every major plan and signing it. Half your week is in meeting rooms with marketing, customers and the foundry; the rest of the time you still open Verdi to look at the hardest bug.",
+  "As chief architect you decide what chips the company will make three or five years from now and on whose process. You go to foundries to negotiate joint development, defend research programs before ministries, and approve or veto at the technology committee. You haven't written a line of RTL in a long time, but one glance tells you which clock domain a young engineer hasn't thought through."
+ ],
+ "work": [
+  "A verification engineer files a bug: your FIFO keeps writing when it's full. You trace it in Verdi for two hours, find the full flag is one cycle late, and change it to an early check.",
+  "You run SpyGlass on clock domain crossings for the first time and get more than forty warnings. Your mentor goes through them with you one by one: thirty are real problems, and the rest go into the waiver notes.",
+  "A back-end engineer comes to ask why one clock's constraint is written the way it is. You can't answer, go back and dig through the spec for ages, and find you copied the divide ratio wrong.",
+  "Going over the register map with the software team, they want one more status bit. You work out the area and say yes, but it has to move to another address so the driver doesn't change.",
+  "A new engineer's state machine has seven states. In review you draw a diagram showing four are enough, and the other three are edge cases he hasn't thought through.",
+  "Coverage is stuck at ninety-seven percent, and the missing part is all in one abnormal-reset corner. You and the verification engineer write a dedicated test, run it overnight, and hit it.",
+  "A week before signoff, one path violates by three hundredths of a nanosecond at the slow corner. The back end wants to change the placement. You look at the logic, split a comparator into two stages, and timing closes the next day.",
+  "At the architecture review, marketing wants one more feature. On the whiteboard you sketch the area and power and say: we can add it, the chip gets a yuan more expensive, your call.",
+  "In silicon testing a low-power mode won't wake up. You take two people into the lab with an oscilloscope on the supply rails and find in the small hours that an isolation cell's enable comes too late.",
+  "An automotive customer comes for a functional safety audit and turns to your fault analysis report. You pull up the coverage of every safety mechanism on the spot and talk it through all afternoon.",
+  "Two teams escalate a fight over timing margin on the same SRAM to you. You hear them out, split the margin in half and say: build it this way for now, and we'll adjust once silicon data is back.",
+  "In the new version of the design standards you add a chapter: how to review AI-generated code and which parts must be written by people. When it's done, you review last week's commits against it yourself first.",
+  "People from the foundry come to discuss joint development of a new process and show you a page of yield curves. You ask: how many of the wafers on this curve are real customer chips?",
+  "At the technology committee, one team's proposal has beautiful performance but an estimated power model. You don't veto it. You just require measured data within a month.",
+  "You give a lecture at a university's school of microelectronics, and afterwards a graduate student brings you a RISC-V core he wrote. You look at it for ten minutes and point out a clock domain crossing."
+ ],
+ "past": [
+  "You go to middle school in a county town in Shaanxi, and your favorite class is physics. You once took the family radio apart and put it back together with two screws left over. It still played.",
+  "Your gaokao (college entrance exam) gets you into an engineering university in Xi'an, and you put down electronic science and technology. That year the news is full of talk about the country being choked on chips. Then go and learn to make them, your father says.",
+  "In your second year you write a running-lights program in Verilog for the first time and download it onto an FPGA board. Eight LEDs light up one after another, and you watch them in the lab for a long time.",
+  "You're admitted without exam to a master's in microelectronics at a university in Shanghai, building a small RISC-V core with your supervisor, running simulations on the server past midnight, and hearing for the first time what a tapeout is.",
+  "In the summer of your second graduate year you intern at a chip company in Zhangjiang, doing verification. A test you write catches a real bug, and the engineer supervising you buys you a bubble tea.",
+  "In the autumn hiring season you get three offers and choose this company, because every question the interviewer asked was about a chip they were really building. On your first day you get a server account and a two-hundred-page spec."
+ ],
+ "late": {
+  "pension_note": "Estimate: the design company pays into Shanghai's basic enterprise employee pension, and in the high-salary years the contribution base hits the ceiling, so after retirement you get only a little over thirty percent of your final monthly salary. Options and savings are the bulk of your retirement.",
+  "scenes": [
+   "Your first week of retirement you wake and reach for your laptop to see whether last night's regression finished. You smile, get up and water the flowers on the balcony.",
+   "A university invites you to teach a chip design practice course for graduate students twice a week. You turn the pitfalls of all these years into assignments, and the students groan.",
+   "You buy an open-source FPGA board and at home build a little game console for your grandson. He asks why not just play on the tablet. Because this one I made myself, you say.",
+   "The chip you worked on is long out of production. At a secondhand market you spot an old door-entry camera, buy it, take it apart at home, and look at the marking on the chip.",
+   "Your first few months on the training team you go home on time every day and start walking around the estate. The racing heart slowly settles, and you teach the new hires in even finer detail than you used to write code.",
+   "A young engineer comes to ask about a clock domain crossing. You draw two flip-flops on the whiteboard and talk for half an hour. As he leaves he says thank you. Don't copy me and stay up all night, you say.",
+   "When you reach the age you retire. The pension isn't much, but the options from early on became some savings. You and your spouse go back to Shaanxi for half a year and plant a grape trellis in the courtyard at home.",
+   "Your first year off the design team, you still wake in the night thinking of some timing that wouldn't close. Then you remember it isn't your problem anymore.",
+   "Back in Zhangjiang for an industry conference, you pass your old company's building. The breakfast cart is still at the door. You buy a rice ball and eat it standing by the road.",
+   "The new engineer you trained back then is an architect now and sends you a photo of first silicon lighting up, with one line: first time right.",
+   "AI writes more and more of the RTL, and there are fewer and fewer newcomers. But on the night before every tapeout, someone still has to face the signoff report and decide whether to press that key.",
+   "Your granddaughter asks who made the chip in the phone. A great many people, you say, each one a little piece, like a very, very big jigsaw. You put in a few of the pieces."
+  ],
+  "closing": {
+   "retire": "Many years later, one night on the balcony, you look at the city lights, one after another, like an enormous chip layout. You think of the day the first silicon powered up, and the line of text on the serial port, green on a black screen.",
+   "burnout": "Many years later, in a box of old books, you find the AXI protocol covered in your notes, the margins faded. Leafing through, you see a question mark you once drew beside a timing diagram, and smile.",
+   "end": "Many years later, in a drawer, you find a sample of the first chip you helped tape out, in a small antistatic bag labeled with a date in your own hand. You look at it a while and put it back where it was."
+  }
+ }
+}

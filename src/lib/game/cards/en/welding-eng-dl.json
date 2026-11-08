@@ -1,0 +1,195 @@
+{
+ "id": "welding-eng-dl",
+ "occupation": "Welding Engineer",
+ "role": "Welding Process Engineer (Hull and Cargo Tanks)",
+ "headline": "Four years out of an engineering university's welding program, freshly through the International Welding Engineer exams: a process engineer at a Dalian shipyard who spends every day running between the building berth and the procedure qualification lab",
+ "unit": "Welding process office, technical center of a large shipyard in Dalian, Liaoning",
+ "unit_type": "Large state-owned shipyard",
+ "city": "Dalian",
+ "city_tier": "Second-tier city",
+ "education": "Bachelor's (Materials Forming and Control Engineering, welding track)",
+ "level": "You can write a WPS on your own and carry a procedure qualification from test plate to final report. You have just finished the International Welding Engineer exams, and the classification society surveyors know your face now, but the low-temperature steel for the cargo tanks is not yet yours to sign.",
+ "intro": "You have been at this shipyard a little over three years, from copying weld records for your mentor to writing a WPS of your own and sending it to the classification society for approval. Last month you sat the final module of the International Welding Engineer exams. The yard has just won a batch of gas carriers with low-temperature cargo tanks, and the head of the process office has handed you two of the procedure qualifications. From today, every amperage and voltage you put on paper will be followed by hundreds of welders.",
+ "salary_note": "Estimate: engineers at state-owned yards in Dalian earn a post salary plus a performance bonus, a little more than ten percent below the national figure, which leans on private equipment makers in the Yangtze and Pearl River deltas. In years when the order book is full there are project bonuses, and the housing fund contributions are generous.",
+ "facts": [
+  { "label": "Welding Process Engineer (current level)", "value": "2-5 years, ¥10,000–18,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Senior Welding Process Engineer (5-8 years)", "source": "Career map" },
+  { "label": "Pay in the first year", "value": "¥12,800 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Welding the test plates and sealing the process parameters", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Tracing porosity defects on the line back to their cause", "source": "AI exposure" },
+  { "label": "Open positions", "value": "40 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You leave your rented flat in Ganjingzi and catch the yard's commuter bus toward the sea. Out the window, row after row of gantry cranes, yellow and red, with gulls sitting on top.",
+  "At the office block you change into overalls and safety boots and open your email first: the classification society has three comments on the WPS you submitted last week. The second says the basis for your preheat temperature is unclear.",
+  "To the lab. The welder has already beveled the test plate. You check the preheat with a temperature crayon, watch him strike the arc, and after every pass you log the current, voltage, travel speed and interpass temperature.",
+  "The workshop calls: a fillet weld on one of the blocks keeps coming out porous. You ride over on the yard's old bicycle, crouch for a look at the wire spool, then at the big door hanging open overhead. Too much wind off the sea.",
+  "In the canteen you get a plate of sweet-and-sour crispy pork and rice and sit with the rest of the process office. All the talk is about whose test plate cracked in the bend test this time.",
+  "At your desk you revise a work instruction, drawing the weld sequence as diagrams and marking arrows one sheet at a time, so even welders who hate reading can see it at a glance.",
+  "The materials lab sends the impact test report on last week's plates. In the minus forty-six degree set, one value is low. You stare at that number a long time and decide to cut a piece tomorrow for metallography.",
+  "On the commuter bus home you put in earphones and read the English text of the rules. By the time the bus passes Xinghai Bay, the sea outside is already dark."
+ ],
+ "ladder": [
+  { "title": "Assistant Welding Process Engineer", "stage": "Assistant", "focus": "Rooted on the shop floor, learning the manual and automated arc welding equipment. Under senior engineers, you write basic work instructions (SOPs), follow test plates, record parameters, and chase surface defects like heavy spatter and undercut." },
+  { "title": "Welding Process Engineer", "stage": "Intermediate", "focus": "Lead the full procedure qualification (PQR) process on your own; run design reviews for welding fixtures and robot teaching and commissioning; use quality tools to solve batch porosity, incomplete penetration and other hidden defects; answer for line yield and takt time." },
+  { "title": "Senior Welding Process Engineer", "stage": "Senior", "focus": "Own welding process development and line planning in new product introduction (NPI/APQP); solve hard problems like distortion control in complex structures and hot and cold cracking; lead ISO 3834, EN 15085 or ASME certification and external audits; bring in laser welding or automated welding cells." },
+  { "title": "Chief Welding Engineer", "stage": "Expert", "focus": "Set the company-wide strategy and long-range process roadmap for joining technology; lead dissimilar-material joining and the architecture of digital, intelligent welding systems; as the Responsible Welding Coordinator, sign off on the structural safety of major equipment; unify process standards across plants and build the talent pipeline." }
+ ],
+ "ai_tasks": [
+  { "name": "Welding the test plates and sealing the process parameters", "how": "AI can help set up the parameter log template and check that the traceability information is complete. But welding the plate by hand, judging the weld pool and bead on the spot, sealing the test plate and signing for it all fall to a person." },
+  { "name": "Tracing porosity defects on the line back to their cause", "how": "AI can compare equipment monitoring data, past parameters and consumable batches, and list the suspects and the order to check them. The engineer has to go to the line, check the gas path, look at the welds, find the real root cause and decide which work in progress to quarantine." },
+  { "name": "Writing and issuing a temporary process control card and closing out the handover", "how": "AI can draft the control card and handover record from the findings, keeping the format right and nothing left out. Whether the measures are workable, what to do with the quarantined parts and how to verify the next day are the engineer's call, and the engineer has to explain them to the crew." },
+  { "name": "Welding a test plate and sealing the retest data", "how": "AI can help check the process card revision and automatically gather the process data and consumable batches. Actually welding the 6 mm test plate, locking the data and sealing it for testing still need the engineer on site, hands on and accountable." }
+ ],
+ "events": {
+  "e_pqr_pass": "Your first procedure qualification for low-temperature cargo tank steel passes tensile, bend and impact on the first try. The surveyor signs the report and says, almost in passing: clean work.",
+  "e_bend_crack": "One set of test plates cracks in the root bend test, and the whole qualification has to start over. You go through the records for three days and finally find that the batch of wire had taken on damp. The warehouse's drying log was missing a column.",
+  "e_master_welder": "An old welding technician close to retirement welds to your procedure and then comes to find you. Nobody on the berth, he says, is going to stand around waiting for the interpass temperature you wrote. You argue in the lab all afternoon and end up with a number that can actually be welded.",
+  "e_winter_preheat": "In the last month of the lunar year it is minus fifteen on the berth, and the wind off the sea nearly knocks you over. You go block by block checking preheat with your temperature crayon, gloves frozen stiff. By evening your face has gone numb.",
+  "e_shipowner_audit": "The owner's site inspector is an exacting Scandinavian who goes through your procedure qualifications page by page. You answer him in English, point by point. The one you can't answer, you promise in writing by tomorrow. The next day he reads it and nods.",
+  "e_love": "The new inspector in the materials lab always asks one more question when she brings a report over: why is this number off? Later the two of you spend weekends looking at the sea at Bangchui Island, and on the way back one day she says your eyes light up when you talk about welds.",
+  "e_house": "You buy a secondhand two-bedroom in Ganjingzi, not far from the commuter bus stop. The down payment empties what you've saved these past few years, and the housing fund loan comes out every month on time.",
+  "e_baby": "Your child is born. You take paternity leave, and on your first day back you nearly sign the baby's name in the signature box of a qualification report.",
+  "e_seam_data": "Every welding machine in the shop is now hooked into a weld data system, and the current curve of every seam comes up the wire. The system flags in red any joint that goes outside the WPS, and every morning you look at that map of red dots first.",
+  "e_ai_rootcause": "Another batch of blocks comes out porous. The analysis system cross-checks consumable batches, machine parameters and the day's humidity and ranks a list of suspects. The wire is at the top. You go to the line and find a length of gas hose flattened by a forklift.",
+  "e_wps_draft": "The technical center brings in an assistant that drafts process documents. Feed it the drawings and the rules, and a few minutes later it produces a respectable-looking draft WPS. You check it line by line. In one place it has copied a clause from a different classification society. You strike it out and rewrite it.",
+  "e_slump": "The ship market drops, new orders dry up, and the project bonus stops for a year. Nobody in the process office says much, and a few of the younger engineers quietly leave for new-energy car plants in the south.",
+  "e_lng_tank": "The yard takes on its first Invar membrane cargo tanks, and you are pulled into the task force. You spend half a year in a welding room held at constant temperature and humidity, try more than a hundred test pieces, and narrow the parameter window for the automatic welder bit by bit.",
+  "e_crack_found": "A delivered ship comes back for warranty work, and a crack shows up in one corner of a cargo tank. In the end it traces back to a fixture clamped too tight that year. The owner doesn't hold anyone liable over your analysis report. You don't sleep properly for two weeks.",
+  "e_launch": "The gas carrier leaves the dock, and you stand on the quay watching the tugs draw it out bit by bit. The owner's representative shakes your hand and thanks you. You are thinking about the thousands of meters of weld in its tanks, and the qualifications you signed that are inside them.",
+  "e_standard": "The industry association is revising a group standard for welding low-temperature marine steels and invites you onto the drafting group. The preheat clause you propose goes into the main text, and for the first time you see your name on the list of a standard's drafters.",
+  "e_parents": "Your father is in hospital back in his home county, and for three weekends running you take the bullet train there and back. A qualification is stuck in your hands, and a colleague minds the lab for you for two days.",
+  "e_young_eng": "The new engineer you are training finishes his first qualification on his own. When he hands in the report you correct only two units. He asks how much was corrected on your first one. A whole page of red, you tell him.",
+  "e_neck": "Half your years in front of a screen and half crawling through blocks, and your back and neck have started to complain. Two more arrows appear on your checkup report, and you put a footrest under your desk.",
+  "e_robot_station": "The flat-panel block line gets a row of welding robots, and it falls to you to translate the manual procedures into robot parameters and weave paths. The first month, their welds look like snakes. By the third, they are more even than the old hands'.",
+  "e_headhunter": "A headhunter calls: a battery tray plant in the south wants a process lead who knows laser welding, at twice what you earn now. You don't say yes, but that night you stand on the balcony a long time.",
+  "e_union_trip": "The union organizes a trip to see the cherry blossoms at Lushun, and you take your family. On the coach back, an old welder in the row ahead points at a ship out at sea and says: that one's ours, built ten years ago."
+ },
+ "choices": {
+  "c_iwe_next": {
+   "title": "With the International Welding Engineer certificate in hand, go for Senior Welding Process Engineer",
+   "situation": "The certificate is yours. Your boss says the cargo tank product development is short of people, and if you take it on you will lead the preparation for the ISO 3834 external audit, which nobody gets to Senior Welding Process Engineer without. But it means overtime every day for a year, running between the lab and the berth.",
+   "options": [
+    { "label": "Take it, lead the audit", "result": "You are at the yard almost every Saturday that year, and by the three days the auditors are on site your voice is gone. Your boss makes a copy of the certificate of approval and gives it to you." },
+    { "label": "Do the qualifications in hand properly first", "result": "You make your two qualifications so solid nobody can fault a number, and you go home on time more often. The audit goes to a colleague in the next group, who makes senior a year before you." }
+   ]
+  },
+  "c_ndt_cert": {
+   "title": "Sit the Level 2 non-destructive testing exam",
+   "situation": "Your boss says a welding engineer who can read films and ultrasonic traces has something to stand on when arguing with quality control. Level 2 means more than a month of full-time training away, and the qualifications on your desk will be late.",
+   "options": [
+    { "label": "Go and sit it", "result": "In the course you look at hundreds of radiographs on the light box. Back at the yard, one glance at a QC report tells you which defects are real and which are artifacts." },
+    { "label": "Skip it, reading reports is enough", "result": "You keep your time for qualifications and the shop. Now and then you disagree with QC, and you have to ask their Level 2 to come and read the film with you." }
+   ]
+  },
+  "c_south_ev": {
+   "title": "Go south to do laser welding at a new-energy car plant",
+   "situation": "A university classmate is process manager at a battery plant in Changzhou and wants you to run the laser and friction stir welding lines for battery trays. Double the pay, takt time counted in seconds, often no weekends. Half of what you learned at the shipyard about thick plate and low-temperature steel won't be any use there.",
+   "options": [
+    { "label": "Go south to the battery plant", "result": "You pack a box of standards and head south, and for the first time you see a line that welds a whole tray in a minute.", "end": "You became laser welding process lead at a battery plant, where takt time is counted in seconds. Now and then the news shows a new ship out of Dalian, and you watch the clip to the end." },
+    { "label": "Stay at the shipyard", "result": "You turn your classmate down. He says you are guarding a slow industry. Ships are slow, you say, but they have to sail for thirty years." },
+    { "label": "Stay, and look over his processes remotely on weekends", "result": "Every weekend you spend half a day on the weld photos and parameter sheets he sends, and you learn a good deal about laser welding. He mails you two boxes of Changzhou pickled radish and calls it your consulting fee." }
+   ]
+  },
+  "c_ai_data": {
+   "title": "Whether to lead the weld data system",
+   "situation": "The yard wants to connect the data from every welding machine for defect prediction and parameter recommendations, and the IT center needs someone who knows the process to lead it. Take it, and you will be learning data and sitting through endless meetings with the software vendor, with half your qualifications handed off.",
+   "options": [
+    { "label": "Lead it, learn to work with data", "result": "For the first time you write into a requirements document how an interpass temperature overrun should be judged, and the software people ask you twenty times what interpass means. Six months later, one look at a red dot tells you whether it's real." },
+    { "label": "Decline, stay in the lab", "result": "You are still at the test plates every day watching the weld pool. Once the system goes live its recommended parameters are often off, and the shop still calls you first." }
+   ]
+  },
+  "c_site_or_office": {
+   "title": "Post on the berth, or back to the technical center",
+   "situation": "The dock needs a welding engineer on site full time, with an extra site allowance: every day on the berth, baked in summer and frozen in winter. The technical center wants to keep you in the building on new product development, a step closer to Senior Welding Process Engineer.",
+   "options": [
+    { "label": "Go and live on the berth", "result": "You spend two years in a shipping-container office beside the berth. Every welder knows you, and you could name the hard seams with your eyes shut." },
+    { "label": "Back to the technical center", "result": "You start writing process plans for new products, sitting in reviews, arguing groove designs with the design institute. You get out to the berth less, and your tan slowly fades." }
+   ]
+  },
+  "c_child_school": {
+   "title": "With your child starting school, transfer to Shenyang?",
+   "situation": "The group has a pressure vessel plant in Shenyang that needs a head of welding, a grade higher and a little more pay. Your spouse's parents live in Shenyang, and someone could pick your child up from school. But the research project you are on in Dalian is only half done.",
+   "options": [
+    { "label": "Transfer to Shenyang", "result": "You move from ships to pressure vessels: hydrogenation reactors and spherical tanks, plate from tens of millimeters to two hundred. Grandma picks your child up from school now." },
+    { "label": "Stay in Dalian", "result": "You and your spouse take turns asking for time off to fetch your child, and on weekends you bring the grandparents to stay. The day the project closes out, you go home and sleep." }
+   ]
+  },
+  "c_chief": {
+   "title": "Compete for Chief Welding Engineer",
+   "situation": "The old chief engineer is retiring, and the yard has opened the post of Chief Welding Engineer. As chief, you would be the one who signs for the safety of major structures, with process unification across plants and the talent pipeline under you. You might never again have time to weld a test plate yourself.",
+   "options": [
+    { "label": "Put your name in", "result": "You prepare a forty-page presentation, from cargo tanks to digital welding. On the day you run five minutes over, and nobody cuts you off." },
+    { "label": "Stay out, be the technical expert", "result": "You let the post go and keep leading the task force. The first thing the new chief does is call you to his office and ask the whole story behind those cargo tank qualifications." }
+   ]
+  },
+  "c_robot_vendor": {
+   "title": "Become a welding product manager at a robot company",
+   "situation": "A welding robot company wants you as industry product manager for shipbuilding and steel structures, flying all over to pitch solutions to customers, for thirty percent more pay. You would go from the person who uses the equipment to the person who sells it.",
+   "options": [
+    { "label": "Go to the robot company", "result": "You hand in your resignation. Your boss doesn't try to keep you. He only says: when you come back selling, don't sell us anything that doesn't work here.", "end": "You became an industry product manager at a welding robot company, flying to dozens of shipyards a year. Every time you walk onto someone else's berth, you look at their welds before you open your mouth about solutions." },
+    { "label": "Stay at the shipyard", "result": "You turn them down. Later that company's robots come into your yard, and during commissioning their engineers keep coming to ask your advice." }
+   ]
+  },
+  "c_teach": {
+   "title": "Become an instructor for welding engineers at a training center",
+   "situation": "You are fifty. A welding training and certification body asks you to teach the International Welding Engineer course and take batch after batch of young engineers through their exams. A good deal less pay, and no more of the signatures that sit on your chest.",
+   "options": [
+    { "label": "Go and teach", "result": "You turn the failure cases of all these years into several hundred slides.", "end": "At the front of the training center, you point at a slide of a cracked bend specimen and ask the young people in the room: so where do you think this weld went wrong?" },
+    { "label": "Stay at the yard until retirement", "result": "You decline, saying there is a new ship type the yard hasn't mastered yet. That winter you freeze on the berth for another month." },
+    { "label": "Stay, and teach twice a month", "result": "You agree with the training center on two Saturdays a month. Half the room are young people from other plants, and after class someone always follows you into the corridor to ask about their own yard." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you clear out the cupboards in the process office, stack dozens of qualification reports by year, and hand them to the person taking over. The commuter bus passes the dock, where a new ship has just been painted, gray-white in the setting sun. You don't look back. You know it will sail for thirty years.",
+  "burnout": "That year two projects land on top of each other, and as you stand up in a review meeting the room goes black. The doctor orders three months' rest, and the yard moves you to the standards office to manage documents. You go home on time every day. Now and then someone comes in with a drawing, and you still put on your reading glasses and look very carefully."
+ },
+ "stages": [
+  "You have three or four procedure qualifications running at once: writing the preliminary WPS, watching welders weld the test plates, sending them to the lab for tensile, bend and impact, compiling the PQR for the classification society. When the shop gets porosity or lack of fusion, the phone rings at your desk first. You have to be able to talk to welders, QC and surveyors alike, with a temperature crayon, a weld gauge and a stack of NB/T 47014 clauses in hand.",
+  "You no longer just run qualifications; you own a new ship type's welding process from drawing to launch. In APQP reviews you settle grooves with the design institute, plan which seams on the block line go to the robots, and lead two young engineers through a full set of work instructions. ISO 3834 audits and the owner's inspectors: you are the one standing in front answering.",
+  "You are the last signature on welding at the yard: welding plans for major structures, process standards across plants, new materials coming in, all need your pen on the review form. You go to more meetings than you go to the berth, with a dozen process engineers and a data team under you, and you speak at the group, the classification society and the industry association."
+ ],
+ "work": [
+  "Old Sun finishes a pass on the test plate. You check the interpass temperature with your crayon: thirty degrees over what the WPS says. You tell him to stop and wait for the plate to cool before the next pass.",
+  "The surveyor wants a chemical analysis of the deposited weld metal for one consumable. You go through every filing cabinet and finally find the numbers on the back of the manufacturer's quality certificate.",
+  "Undercut on a fillet weld in the shop is out of tolerance. You measure a dozen spots with the weld gauge, then rewrite the torch-angle line in the work instruction with a drawing.",
+  "On the design institute's new block drawing, one groove sits where no torch can reach. In the review meeting you turn to that page, draw a circle and say: this has to change.",
+  "Test-welding at the robot cell, the weave is set too wide and the bead rolls over at both toes. You and the commissioning engineer crouch by the torch, bringing the weave width back a millimeter at a time.",
+  "The new engineer writes his first work instruction and copies the preheat temperature from a different steel grade. You don't correct it for him. You open the rules at that page and leave it on his desk.",
+  "The welding plan for an offshore platform's leg reaches your desk. You read it three times, sign the review form, and write one line in the margin: keep the heat treatment records for every furnace load.",
+  "At the group's process unification meeting, three plants use three different wires for the same joint. You lay the three qualifications side by side and talk all afternoon. By the end of the meeting, one has been chosen.",
+  "The data team brings a defect-prediction model report claiming ninety percent accuracy. You pick ten joints it has flagged in red and send people to the line to radiograph them one by one."
+ ],
+ "past": [
+  "You are at middle school in a county town in southern Liaoning. Your father is a fitter at a local machine repair works, and the talk at the dinner table is mostly about what job the works has taken on now.",
+  "Your gaokao (college entrance exam) score gets you into an engineering university in the northeast, and you put down Materials Forming and Control Engineering. Welding is a trade, your father says. Study that and you'll never go hungry.",
+  "In your second year you pick the welding track. The first time you hold a TIG torch in the training shop, your test plate comes out crooked. The old technician running the class says: an engineer who can't weld writes procedures nobody respects.",
+  "Over the summer you intern at a shipyard in Dalian. Standing at the edge of the dock for the first time, you look up and can't see the top of the ship. When you get back, you change your thesis topic to welded joints in high-strength marine steel.",
+  "In the autumn hiring season you get offers from a car maker and from this shipyard, the car maker paying two thousand more. You choose the shipyard, because the engineer who supervised your internship told you a ship's welds have to take thirty years of waves.",
+  "You start with half a year rotating through the shop, crawling through tanks with the welders, then join the process office as an assistant engineer: copying records for your mentor, following test plates, writing your first work instruction.",
+  "You sign up for the International Welding Engineer course, working by day and grinding through four modules of textbooks at night and on weekends. The day you finish the last exam, you call your father from outside the exam hall."
+ ],
+ "late": {
+  "pension_note": "Estimate: a state-owned shipyard pays the basic enterprise employee pension plus an enterprise annuity. With long contribution years and a steady base, after retirement you get roughly half your final monthly salary.",
+  "scenes": [
+   "Your first week of retirement you still wake at six and reach for your phone to see if the berth has called. It hasn't. You make a pot of tea and watch the sea all morning.",
+   "A private pressure vessel maker hires you as a technical adviser, two days a week, to review their qualification reports. You draw a dozen red circles on the first one, and the owner says you're worth it.",
+   "Your child works in the south, and you and your spouse spend two months there each winter. Watching someone in the compound install window grilles, you can't help pointing out that the welds are rushed.",
+   "The yard invites the old engineers back for a talk. On the technical center wall you see a photo of a cargo tank, and in the caption below is the number of the qualification you did that year.",
+   "Your first few months in the standards office, you sort documents and fix numbering every day, and it's still light when you go home. You start walking by the sea and catching up on the sleep of all those years.",
+   "A young engineer comes to you with a qualification he has botched and is afraid to tell his boss. You go through it with him all evening, and in the end say only: weld it again, and this time watch the interpass temperature.",
+   "When you reach the age you retire. Your pension is a bit less than colleagues who stayed on the front line to the end. You don't mind much, and in the mornings you go to Xinghai Square to watch people fly kites.",
+   "Your first year away from the shipyard, you keep standing beside the new plant's lines thinking about what this weld would look like on the berth.",
+   "Back in Dalian on an errand, you take the bus that goes past the yard on purpose. The guard at the gate is someone new. You stand across the road for a while and don't go in.",
+   "The young engineer you trained has become head of the process office, and he sends you a photo: the work instruction you wrote is still taped to the toolshed door on the berth.",
+   "There are more and more robots on the berth, and flat butt welds hardly need people anymore. But the first procedure qualification for every new ship type still needs someone standing at the test plate, watching it welded one pass at a time.",
+   "Your grandson asks what you used to do. Built ships, you say. He asks if that means hitting things with a hammer. No, you say, it means telling other people how big a flame to use."
+  ],
+  "closing": {
+   "retire": "Many years later, on an autumn walk by the sea at Laohutan, a big ship moves slowly along the distant channel. You squint at its side and think of the qualification reports you signed in those years, one after another, all inside ships like that one, out at sea.",
+   "burnout": "Many years later, repotting plants on the balcony, you find a joint on the wire stand has come apart. You dig out an old soldering iron, crouch down and mend it, and run a finger over it: you still care whether it is round.",
+   "end": "Many years later, at the bottom of the bookcase, you find the International Welding Engineer textbook, and between its pages a ticket from the shipyard's commuter bus. You look at it a while, then tuck it back into the same page."
+  }
+ }
+}

@@ -1,0 +1,199 @@
+{
+ "id": "robot-tech-sz",
+ "occupation": "Embodied AI Robot Application Technician",
+ "role": "Embodied AI Robot Application Technician (On-Site at a Client Factory)",
+ "headline": "A vocational college robotics graduate who spent a year folding clothes through a VR headset at a data collection center, then, newly made a technician, was posted to a factory in Dongguan to keep three humanoid robots carrying parts bins beside the production line: an application technician for a Shenzhen robot company",
+ "unit": "Delivery department of a humanoid robot company in Nanshan, Shenzhen, stationed at an auto parts factory in Dongguan",
+ "unit_type": "Humanoid robot startup",
+ "city": "Shenzhen (stationed in Dongguan)",
+ "city_tier": "First-tier city",
+ "education": "Associate degree (Industrial Robotics Technology)",
+ "level": "You have logged more than a thousand hours of teleoperated data collection, can record and replay ROS2 bags and change parameters, and write Python scripts to sort data. Swapping the fingers on a dexterous hand and calibrating cameras on site you've only just learned, and when the client asks about the model you still have no answer.",
+ "intro": "For a year you worked at the company's data collection center in a VR headset and motion-capture gloves, making robots fold clothes, sort blocks and open drawers over and over, more than a thousand hours of data. Last month you became an application technician and were posted to an auto parts factory in Dongguan: three humanoid robots are to carry parts bins beside the production line, and the client says if the success rate doesn't reach ninety-five percent within three months, they're sending them back. From today you have to get these three machines working in a real factory, and get the workers on the line to trust them.",
+ "salary_note": "Estimate: application technicians at Shenzhen robot companies earn a base ten to twenty percent above the national figure, plus an allowance and housing when stationed at a client. The company is still burning money: in years when funding goes well pay rises fast, in years when it doesn't, bonuses may be held back.",
+ "facts": [
+  { "label": "Robot Application Technician / Field Support (current level)", "value": "1-3 years, ¥6,630–9,750 a month (national average, estimated from pay by experience)", "source": "Pay by experience" },
+  { "label": "Next level up", "value": "Robot Trainer / Application Engineer (3-5 years)", "source": "Career map" },
+  { "label": "Pay after 3–5 years", "value": "¥10,200 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "A shift of teleoperated data collection, following the task script", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Cleaning and labeling a batch of collected data for the algorithm team", "source": "AI exposure" },
+  { "label": "Open positions", "value": "11 related listings nationwide, 5 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You wake in the factory dormitory, a four-bed room shared with three of the client's maintenance men. A plate of rice noodle rolls in the canteen, then the walk to the workshop past a row of mango trees along the factory road.",
+  "Power-on self-checks. The three robots stand in a row in the charging area. You check each one's battery, joint temperatures and camera feed, and note in your notebook the version number of the new model pushed overnight.",
+  "The robots go live. They take parts bins from the racks and walk twenty meters to set them beside the stations on the line. The women on the line keep looking back as they fit parts, and someone films on their phone.",
+  "Robot two's grip slips on a bin, which ends up askew on the rack. You hit the emergency stop and go over: one finger sensor on the dexterous hand is reading wrong. You take a spare from your tool kit and crouch on the floor to swap it.",
+  "Boxed lunch at the workshop door with the client's equipment manager. How much does one of these cost, he asks, and can it replace a person? Not yet, you say. He smiles.",
+  "You pull up the morning's run logs and go through the twelve failures one by one, clipping the video and tagging each: which was the lighting, which a deformed bin, which the model grasping off center.",
+  "Video call with the algorithm team in Shenzhen. You play them the twelve clips one by one. They say they need more data on half-open bins. You say you'll collect it tomorrow.",
+  "After hours the workshop is quiet. You put on the headset and teleoperate robot one, reaching again and again for a bin with its lid half open, and record forty takes before going back to the dorm."
+ ],
+ "ladder": [
+  { "title": "Robot Data Collector / Teleoperator", "stage": "Entry", "focus": "Wear the gear and teleoperate robots to collect data by SOP, keeping valid hours and quality up. Part-time work is mostly paid by the day; full-time is a proper employment contract. You move to technician through hands-on skill and disciplined execution." },
+  { "title": "Robot Application Technician / Field Support", "stage": "Junior", "focus": "Clean and label data, deploy and debug real robots, train customers and handle after-sales maintenance. Companies typically take three months to a year to train someone for the post." },
+  { "title": "Robot Trainer / Application Engineer", "stage": "Intermediate", "focus": "Design collection tasks and scenarios, fine-tune and adapt models, and own performance monitoring on a delivery project on your own." },
+  { "title": "Field Technical Lead / Solutions Engineer", "stage": "Senior", "focus": "Coordinate deployments across several projects, turn customer needs into solutions, and manage the collection and field teams." },
+  { "title": "Embodied AI Application Expert / Delivery Director", "stage": "Expert", "focus": "Define application standards and the training system, and push robots into large-scale use in industry, services and hazardous work." }
+ ],
+ "ai_tasks": [
+  { "name": "A shift of teleoperated data collection, following the task script", "how": "Teleoperation means a person controlling the real robot by hand to carry out the scripted moves. That is where the data comes from, and AI can't replace it. At most AI helps schedule shifts, track collection progress and flag missed moves." },
+  { "name": "Cleaning and labeling a batch of collected data for the algorithm team", "how": "AI can slice clips automatically, pre-label them and screen out obviously bad data. A person spot-checks label quality, judges edge cases (did the move really succeed?), and sets what to keep and drop by the algorithm team's needs." },
+  { "name": "Deploying robots at a client site and training the operators", "how": "It means installing, tuning and validating on site and training the client's operators face to face, which takes hands-on skill and communication. AI can only help generate deployment checklists and first drafts of training materials." },
+  { "name": "Troubleshooting a robot that keeps failing the same task on site", "how": "AI can read the logs and compare alarm records to suggest whether it's hardware, perception or the model. A person goes on site to look at the machine, swaps parts to test, makes the final call on the root cause and answers for the fix." },
+  { "name": "Designing collection tasks for a new scenario and fine-tuning the model", "how": "AI can help break the scenario down, draft collection scripts, and run fine-tuning experiments and compare results. A person decides what must be collected to cover the real situation of restocking shelves, organizes the collection, validates on the real robot and judges whether it can be delivered." },
+  { "name": "Reviewing a week of run data and proposing maintenance and improvements", "how": "AI can pull together success rates, faults and alarms across sites, sort them and draft a to-do list. A person only spot-checks and makes the final call on priorities that involve client sites." }
+ ],
+ "events": {
+  "e_rate_up": "In your tenth week on site, the success rate on the dashboard tops ninety-five percent for the first time. The client's equipment manager stands looking at it a while, then turns and offers you a cigarette. You say you don't smoke, so he tucks it into your tool kit.",
+  "e_fall": "Robot one slips on an oily patch of floor and cracks the casing on one leg. Nobody is hurt, but that day everyone in the workshop is looking at you. You write the incident report and mark off a no-go zone on the floor.",
+  "e_worker_doubt": "A woman who has worked the line for more than ten years asks you whether, once it learns, they won't need her anymore. You think for a long time and say right now it can only carry boxes, and fitting parts still takes her. She doesn't ask again, and the next day brings you a bag of lychees from her own trees.",
+  "e_ota": "The company pushes a new model version overnight, and by morning the robots' grasp on the bins is much smoother, though now and then they pause an extra second when setting one down. You record thirty clips and send them back, and the next version fixes it.",
+  "e_autolabel": "The data platform now labels automatically, slicing and tagging a day's collection in a few minutes. You spot-check a hundred and find seven where not held securely has been labeled success. You fix them and add a criterion to the rules.",
+  "e_sim_data": "The simulation platform can now generate tens of thousands of synthetic examples on its own, and the company cuts its teleoperators by half. You're still collecting, all of it the part simulation can't fake: shiny things, soft things, half-open things, stuck things.",
+  "e_vip_visit": "City officials come to tour the factory, and the client wants the robots to carry bins for them. The night before you run the route twenty times, and the next day the three machines don't drop a single bin. The officials shake hands with a robot.",
+  "e_funding": "The company closes a big funding round, and the news says it's valued in the billions. Someone drops a red envelope of cash in the all-staff group chat and you grab eight yuan eighty, and at your desk an email arrives with a raise.",
+  "e_bubble": "The industry cools, and several competitors lay people off or fold. The company delays bonuses by three months, and a third of the delivery department leaves. In the group chat you watch avatar after avatar go gray, and keep answering clients' messages.",
+  "e_night_fix": "The client suddenly adds a night shift to raise output, and the robots have to work it too. At two in the morning one of robot three's joints alarms for overheating. You climb out of bed in the dorm, take the casing off in the workshop to check the fan, and are at it until dawn.",
+  "e_love": "A young woman from the client factory's quality department keeps coming to watch the robots work and asks you what the world looks like to them. You put the camera feed up on your laptop to show her, and later you go cycling around Songshan Lake together on weekends.",
+  "e_rent": "When your posting ends you go back to Shenzhen and rent a single room with a balcony in an urban village in Xili, two thousand eight hundred a month. Your work clothes hang on the balcony, and the sweet soup shop downstairs stays open past midnight.",
+  "e_upgrade_degree": "You enroll in an adult program to top up to a bachelor's in automation. Classes are on weekends, and on weekday nights in the factory dorm you watch online linear algebra lectures. Your roommates say you're back in your last year of high school.",
+  "e_overseas": "The company lands an overseas client, and you're sent to a factory in Mexico for two months of deployment. You talk to local engineers through a translation app and use your hands to teach them to hit the emergency stop.",
+  "e_house": "You can't afford a home in Shenzhen, so you and your wife buy a two-bedroom near Songshan Lake in Dongguan, the down payment pooled by both sets of parents. Every Monday morning you drive more than an hour to Shenzhen.",
+  "e_baby": "Your child is born. The first toy you buy is a little walking robot. The baby can't grasp yet, so you play with it yourself in the living room all evening.",
+  "e_standard": "The industry association is drafting safety rules for humanoid robots working in factories and invites you to talk about life on site. You describe the oily floor and the fall, and after the meeting that clause is written into the draft.",
+  "e_mass_deploy": "The auto parts factory orders fifty robots in one go. You go back to the workshop where you were stationed and see a row of robots standing by the racks. The woman on the line is still there, and waves to you.",
+  "e_back": "Years of crouching to swap parts and hauling spare-parts cases, and your back starts to hurt. Your checkup says herniated disc, and the doctor tells you to stop lifting heavy things. You smile and say they're the ones lifting heavy things now.",
+  "e_parents": "Your mother is in hospital back home in Hunan while you're stationed at a client, and you can't get long leave. You video call every night, take the high-speed train back on weekends, and are back in the workshop Monday morning.",
+  "e_apprentice": "The new technician you trained goes out on his first solo posting. Three weeks later he sends a dashboard screenshot: ninety-six percent. Below it, one line: boss, I marked off the oil patch as a no-go zone too."
+ },
+ "choices": {
+  "c_trainer": {
+   "title": "Volunteer to design collection tasks and go for Robot Trainer",
+   "situation": "The algorithm team needs someone to design collection tasks and fine-tune the model for a new scenario, restocking supermarket shelves, and asks whether anyone in delivery will lead it. Taking it is the road to Robot Trainer, but you'd be writing task scripts and running experiments while stationed on site, and blame from both sides could land on you.",
+   "options": [
+    { "label": "Take it on, design it yourself", "result": "In the company's mock supermarket you build three rows of shelves and write forty collection tasks, from pick up a shampoo bottle that's fallen over to nudge out the milk jammed at the very back. The fine-tuned model works on a real shelf, and the algorithm team adds you to their group chat." },
+    { "label": "Keep the posting steady first", "result": "You don't take it, and keep the three machines in Dongguan running steadily, and the client renews for a year. The restocking project goes to another technician, and you warn him about plenty of on-site pitfalls." }
+   ]
+  },
+  "c_ai_tools": {
+   "title": "Whether to learn the simulation and auto-labeling toolchain",
+   "situation": "The company wants to chain collection, cleaning, labeling and simulation into one pipeline, and is picking a few frontline technicians to learn it, who will then own data quality and the simulated scenes. You'd learn the simulation platform and data tools from scratch, and lose the on-site allowance.",
+   "options": [
+    { "label": "Go, run the data pipeline", "result": "You learn to scan a factory floor into a digital scene, have the robot carry a bin ten thousand times in simulation, then pick out the corners where it fails most and go collect those on the real robot." },
+    { "label": "No, stay in the field", "result": "You keep moving between factories. When a model made in simulation reaches a site, you're often the first to spot where it's off." }
+   ]
+  },
+  "c_algo": {
+   "title": "Finish the bachelor's top-up and move into algorithms",
+   "situation": "You've finished the top-up degree, and the algorithm team lead says he can give you a chance: start in data engineering and work toward model training. You'd put down your wrench and spares and learn deep learning from scratch, with a small pay cut at first and maybe faster raises later.",
+   "options": [
+    { "label": "Move to the algorithm team", "result": "You hand your tool kit to the technician taking over and move to a desk on the algorithm team. On your screen, run logs give way to loss curves.", "end": "You became an engineer on a robot company's algorithm team, training models that run on hundreds of machines. Whenever a model goes wrong in the field, you want to go and crouch on site and watch, not just read the logs." },
+    { "label": "Stay in applications", "result": "You decline. You like watching machines work in real factories, you say. Then send us plenty of good data, the lead says." },
+    { "label": "Stay in applications, spend a day a week with the algorithm team", "result": "You agree with the lead to spend one day a week with the algorithm team, watching how they train models. Back in the field, the data you collect starts to have a purpose." }
+   ]
+  },
+  "c_rival": {
+   "title": "Jump to a big company's robotics division",
+   "situation": "A big phone and car maker has set up a robotics division and offers you forty percent more: a big platform, lots of equipment, and you'd be a small cog in a big department. At your current company, you delivered the first client, and the boss says the next big project is yours.",
+   "options": [
+    { "label": "Go to the big company", "result": "You join the big company, deploying in its own factories, with long processes and endless approvals. Your payslip is thicker, but in six months you touch a real robot twice." },
+    { "label": "Stay at the startup", "result": "You stay. The boss keeps his word: the next project is a logistics warehouse with twenty machines, and you're the field lead." }
+   ]
+  },
+  "c_lead": {
+   "title": "Become Field Technical Lead",
+   "situation": "The company has taken on three projects at once, a logistics warehouse, a car plant and a hotel, and needs a Field Technical Lead to coordinate deployment, deal with clients and manage the collection and field teams. You'd go from the one turning screws to the one in meetings every day, allocating people and arguing requirements with clients.",
+   "options": [
+    { "label": "Take it", "result": "You shuttle between three sites with a dozen group chats open on your phone. The hotel client wants the robot to deliver meals and chat too. In the meeting you say: let's get it opening doors reliably first." },
+    { "label": "No, focus on one project", "result": "You decline, and take the logistics warehouse to the highest success rate in the company. The new lead often holds up your project as the model." }
+   ]
+  },
+  "c_hometown": {
+   "title": "Go back to the robot training ground in Changsha",
+   "situation": "The capital of your home province, Hunan, has opened an embodied AI robot training ground and wants someone with field experience to lead a collection team and run training. Seventy percent of Shenzhen pay, an hour's drive from your parents, a long-term contract outside the permanent staff.",
+   "options": [
+    { "label": "Go back to Changsha", "result": "At the training ground you lead twenty-odd new graduates collecting data, teaching them to wear the headset, follow the SOP and check valid hours. On weekends you can go home for your mother's fish head with chopped chilies." },
+    { "label": "Stay in Shenzhen", "result": "You don't go back. At New Year your mother asks what that robot can actually do. You show her a clip of it carrying bins, and she watches it three times." }
+   ]
+  },
+  "c_factory_auto": {
+   "title": "Become automation manager at a client factory",
+   "situation": "The owner of the auto parts factory wants to poach you as the plant's automation manager, in charge of all its robots, robot arms and line upgrades. Thirty percent more pay, no more postings all over, but you'd go from selling robots to using them.",
+   "options": [
+    { "label": "Become automation manager", "result": "You hand in your resignation, wrap up your last project and drive to Dongguan.", "end": "You became automation manager at an auto parts factory, in charge of dozens of robots. Whenever the robot company sends a new technician to be stationed there, you take him to dinner and tell him which patch of the workshop floor has oil on it." },
+    { "label": "Stay at the robot company", "result": "You turn the owner down. Later he orders twenty more and asks for you by name to deploy them." }
+   ]
+  },
+  "c_director": {
+   "title": "Become Delivery Director and set the application standards",
+   "situation": "The company needs a Delivery Director to set company-wide deployment standards and the training system, and push robots into large-scale use in factories, supermarkets and hazardous work. You'd be traveling all year, meeting clients and writing standards, and would never again crouch on the floor swapping fingers.",
+   "options": [
+    { "label": "Become Delivery Director", "result": "Your first deployment standard runs over a hundred pages, and chapter one is safety: emergency stops, no-go zones, floor checks. The first thing every new technician does is learn it by heart." },
+    { "label": "No, stay on the front line training people", "result": "You say you still like being on site. When the new director takes over, the hardest sites still go to you." }
+   ]
+  },
+  "c_late": {
+   "title": "Stop the postings and teach at the training center",
+   "situation": "You're in your forties, your back is bad, and years of factory dorms have worn you out. The company's training center needs an instructor on field deployment: no travel, a good deal less pay, batch after batch of new technicians in front of you.",
+   "options": [
+    { "label": "Become an instructor", "result": "You turn the fault photos and videos of all these years into course material, and the first lesson is about that oily floor. The young ones laugh. You don't." },
+    { "label": "Keep going out to sites", "result": "You keep going. The young ones say that with you on site, clients don't panic." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you visit the company's showroom, where robots from every generation stand in a row. The oldest is the model you kept carrying parts bins in Dongguan. You touch its hand; you've lost count of how many times you replaced those finger sensors. It's evening when you leave, the Nanshan towers lit up, and downstairs a delivery robot passing you stops to let you go first.",
+  "burnout": "That year, rushing a delivery, you stay up three nights running in a warehouse, and on the fourth morning you crouch to change a part and can't get up. The doctor says your back and your heart both need rest. The company brings you back to headquarters to write after-sales documentation. You go home on time every day. Passing the test floor, you still stop a while to watch robots walking."
+ },
+ "stages": [
+  "You are stationed in the client's workshop, running power-on checks every day, reading run logs and handling faults on site: swapping dexterous-hand fingers, calibrating cameras, checking batteries and joint temperatures. You clip and tag the failures for the algorithm team, and teach the client's operators hands-on how to hit the emergency stop. At hand: a laptop, ROS2's bag tools, a bag of spares and a VR headset.",
+  "As a trainer you start designing collection tasks for new scenarios: which moves, how many takes, in what lighting and arrangements, all written into your task scripts. You run fine-tuning with the algorithm team and validate on real robots; a delivery project's success-rate dashboard hangs under your name, and you present at the client's weekly review.",
+  "As field technical lead you run several projects at once, with a collection team and a few on-site technicians under you. You discuss requirements with clients, write deployment plans, allocate people and equipment, and in meetings you're the one who says clearly what can be done and what can't yet. You go to sites less, and when you do, it's for the hardest one.",
+  "As Delivery Director you set company-wide deployment standards and the training system, and decide which industries the robots go into first and how to scale. You meet big clients' owners and people from the industry association, and write standards and training syllabi; new technicians' first lesson is still yours, and it is still about emergency stops and floors."
+ ],
+ "work": [
+  "Robot three keeps grasping off center at the same rack. You crouch and watch a long time, and find one of the strip lights above it flickering, so the camera sees the bin go light and dark. You report it and the client replaces the tube.",
+  "The client's maintenance man wants to learn how to change a robot's battery. You show him once, he does it himself the next day, and sends you a photo when he's done.",
+  "You cut a week of failures into a three-minute video, sorted into five causes, and send it to the algorithm team. The lead replies: the clearest feedback we've ever had.",
+  "Writing collection tasks for the hotel scenario, you add a line to the script: door handles come round, long and push-down; collect two hundred takes of each, with both left and right hands.",
+  "The fine-tuned model succeeds ninety-eight percent of the time in simulation and only eighty on the real robot. You film on site all afternoon and find the real shelf dividers are two millimeters thinner than the simulated ones.",
+  "A new teleoperator's data has a high reject rate. You put on a headset and collect alongside him for an hour, and tell him not to move so fast: the robot's hand can't keep up with yours.",
+  "The logistics warehouse client wants the robots working twenty-two hours a day. In the planning meeting you work it out for him: charging, maintenance, part swaps, eighteen hours at most, or they'll break.",
+  "Planning next month's staffing: two at the car plant, three at the warehouse, one at the hotel. For the hotel, the hardest, you put yourself down as well.",
+  "One project's success rate slides for two weeks straight and the on-site technician can't find out why. You fly out and spend a day there, and find the client has switched to a batch of bins one shade darker.",
+  "Reviewing a deployment plan for chemical plant inspection, you write on the explosion-protection page: until it has explosion-proof certification, not one unit goes into the tank farm.",
+  "The training center's new course book reaches you, and you rewrite chapter one as a story: an oily floor and a robot that fell.",
+  "The owner of a big supermarket chain asks when robots will take over restocking a whole store. Do one store for six months first, you say, and let the data speak."
+ ],
+ "past": [
+  "You go to middle school in a county town in Hunan and spend all your free time at the phone repair shop in town, watching the owner take phones apart and swap screens. At home you take the old radio apart too.",
+  "Your gaokao (college entrance exam) score isn't enough for a bachelor's, and you put down industrial robotics at a vocational college. The prospectus shows an orange robot arm, and you think it looks great.",
+  "In your second year, in the college training lab, you program a robot arm by teaching for the first time, making it carry a block from here to there. It takes all afternoon before it stops hitting the table.",
+  "For your graduation internship you go to an electronics factory in Shenzhen, looking after six robot arms on a line. An engineer there says someday there'll be robots that walk. Then that's what I'll work on, you say.",
+  "After graduating you start as a part-time data collector for a labor agency, two hundred yuan a day, wearing a headset to make robots fold clothes. Two months in, this company hires you as a full-time teleoperator.",
+  "You spend a year collecting data at the center, fast and clean, and write a few small scripts to sort it. When the delivery department asks for people, your team lead recommends you."
+ ],
+ "late": {
+  "pension_note": "Estimate: the robot company pays into Shenzhen's basic enterprise employee pension. Your contribution base was low in the early years and you changed companies a few times along the way, so after retirement you get roughly forty percent of your final monthly salary.",
+  "scenes": [
+   "Your first week of retirement you wake up and don't check the success rate on any dashboard. You go down for breakfast, and a robot is stocking the convenience store. You stand and watch it pick up five bottles of water without dropping one.",
+   "A vocational college asks you to teach a field course on embodied AI once a week. You bring a bag of old dexterous-hand fingers and have the students take them apart one by one to look at the sensors.",
+   "There's a care robot at home that fetches medicine for you and your wife and reminds you to eat. Once it gets stuck on the doorsill. You crouch to look and say this doorsill's data wasn't collected enough.",
+   "Your grandson wins a prize with his school robotics club and comes home to tell you how his robot walks. When he's done you ask him: and what does it do when there's oil on the floor?",
+   "Your first few months writing after-sales documents at headquarters, you go home on time every day and your back slowly stops hurting. The fault manual you write is twice as thick as the old one, and every entry is something you once fixed crouching on a floor.",
+   "A young technician calls from a site to ask why the robot's hand keeps losing its grip. You listen for two minutes and say: go and see whether the lights are flickering. Ten minutes later he calls back: they are.",
+   "When you reach the age you retire, on a small pension. You go back home to Hunan for a while and repair robot vacuums and e-bikes in town, twenty yuan a job.",
+   "Your first year out of robotics, whenever you walk into a factory, a mall or a hotel, your eyes go first to whether there's a robot, its hands, its feet, and whether the floor is clean.",
+   "You see in the news that your old company has gone public, the newest humanoid robot standing on the stage. You zoom into the photo to look at its hands. The fingers look much like the ones you used to swap.",
+   "The new technician you trained back then is Delivery Director now and sends you a photo: three hundred robots in one factory, and a line underneath: all deployed by your emergency stop rules.",
+   "Simulation and models keep getting stronger, and robots need less and less teaching. But the first time any new machine walks into a real factory, someone still has to crouch beside it and watch it reach out for the first time.",
+   "Your granddaughter asks how robots learn to do things. A great many people taught them, over and over, you say, wearing goggles and gloves, for a very long time, and you were one of them."
+  ],
+  "closing": {
+   "retire": "Many years later, out walking in your housing estate one evening, a robot comes from the parcel lockers carrying a box, walking steadily. It stops in front of you to let you pass. You nod to it, as to an old colleague.",
+   "burnout": "Many years later, on the balcony, you fix your grandson's toy robot: open the casing, replace a broken wire, close it up, and it walks again. You watch it reach the wall and turn, and smile.",
+   "end": "Many years later, in a drawer, you find the VR headset, a layer of dust on its lenses. You put it on and look: dark inside, nothing there. You take it off, wipe it with your sleeve and put it back."
+  }
+ }
+}
