@@ -1,0 +1,179 @@
+{
+  "id": "trade-yiwu",
+  "occupation": "Foreign Trade Sales Representative",
+  "role": "New sales rep at a small-commodities export company",
+  "headline": "Fresh out of a business English degree: a new export sales rep in Yiwu who spends the day walking foreign buyers through the trade city, stall by stall, looking at samples and haggling, and answers clients in the Middle East and South America in the small hours",
+  "unit": "A ten-person small-commodities export company in Yiwu (jewelry, stationery, holiday goods)",
+  "unit_type": "Small-commodities trading company",
+  "city": "Yiwu",
+  "city_tier": "County-level city",
+  "education": "Bachelor's degree in Business English",
+  "level": "You can greet buyers, quote prices and write a proforma invoice in English and a few phrases of Spanish. Shipping documents and customs declarations you are still learning from the older reps. You don't have a single client of your own yet.",
+  "intro": "You are the third sales rep the company has hired this year; neither of the first two made it through probation. The boss's wife leads you to a stall in District 2 of the International Trade City, points at rows and rows of hair clips and key rings, and says that for every single thing here you must be able to give three selling points in English. As of today your phone holds a second number, just for foreign buyers, and it can ring at any hour.",
+  "salary_note": "Estimate: export sales reps in Yiwu have a low base salary and live mainly on commission from orders. In a good year they can make more than double the national average; here it is estimated at 1.1 times.",
+  "facts": [
+    { "label": "Trade Assistant / Order Coordinator (current level)", "value": "0-1 years, ¥4,420–6,500 a month (national average, derived from pay by experience)", "source": "Pay by experience" },
+    { "label": "Next level up", "value": "Foreign Trade Sales Rep (1-3 years)", "source": "Career map" },
+    { "label": "Pay after 10+ years", "value": "¥15,500 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Hosting clients for three days at a trade fair, then following up", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Drawing up a plan to open a target market", "source": "AI exposure" },
+    { "label": "Open positions", "value": "383 related listings nationwide (mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "A bowl of sauce-tossed noodles at a breakfast shop on Binwang Road, and a night's worth of messages on your phone: a client in Dubai asking the price of Christmas baubles, a client in Chile sending a string of Spanish voice notes.",
+    "At the trade city. Stallholders are wiping down samples behind half-raised shutters. You follow an older rep from stall to stall, writing down each one's minimum order, lead time, and how much they'll come down.",
+    "A client from Jordan arrives, and you walk the jewelry section with him for three hours. Every item he sees, he asks if it can be cheaper. You tap a number into your calculator, then turn away to phone the factory.",
+    "A boxed lunch in the stairwell, answering a South American client as you eat. AI translates the Spanish smoothly, but he wants to know whether you can put his own label on the goods, and that you have to ask the factory.",
+    "Out to a small workshop on the edge of town to look at samples. The owner's wife talks in Yiwu dialect while she packs. You catch half of it, and the half you catch is that delivery is slipping a week.",
+    "Back at the office, writing quotes and proforma invoices. The boss glances over and says you've underestimated freight. You dig out the ocean rates from the freight forwarder and do the sums again.",
+    "With the older rep to the warehouse to supervise loading. One forty-foot container holds goods from more than thirty suppliers. Packing list in hand, you check the shipping marks carton by carton, and at the very end you're two cartons short.",
+    "Lying in bed in your rented room. It's just the end of the working day in Dubai, and a client sends one line: OK, send PI. You sit up and open your laptop."
+  ],
+  "ladder": [
+    { "title": "Trade Assistant / Order Coordinator", "stage": "Entry", "focus": "Learn the documents, the platforms and the process." },
+    { "title": "Foreign Trade Sales Rep", "stage": "Junior", "focus": "Find clients, quote, follow orders through, and collect payment." },
+    { "title": "Senior Sales Rep / Sales Supervisor", "stage": "Mid-level", "focus": "Negotiate and sign deals on your own, and manage key accounts and risk." },
+    { "title": "Foreign Trade Manager", "stage": "Senior", "focus": "Draw up the overseas business plan, open markets, lead a team, and control risk." },
+    { "title": "Foreign Trade Director", "stage": "Executive", "focus": "Overseas market strategy and managing multiple teams." }
+  ],
+  "ai_tasks": [
+    { "name": "Drawing up a plan to open a target market", "how": "AI helps pull together public information on the market, map competitors and client profiles, and draft the first version of the plan. Which market to choose, how much to put in, and how much risk you can carry, a person decides." },
+    { "name": "Answering a platform inquiry with a quote within 24 hours", "how": "AI can read and translate an inquiry quickly and draft a reply from the product information and the existing price list. A person checks cost and margin and judges whether the buyer is trustworthy, and follows high-value inquiries personally." },
+    { "name": "Negotiating and signing the PI and collecting the deposit", "how": "AI generates the PI from the agreed prices and terms and checks the quantities and amounts. Concessions in the negotiation, trade-offs on payment terms, and judging the risk of not getting paid, a person makes the call on." },
+    { "name": "Checking a letter of credit and preparing the full set of documents", "how": "AI can compare the letter of credit clause by clause, generate and check the invoice, packing list and other documents, and find the discrepancies. Decisions that carry responsibility, such as whether to ask for an amendment or risk presenting the documents anyway, are a person's." },
+    { "name": "Booking export freight, declaring customs and supervising loading", "how": "AI and the systems can fill in booking forms and customs paperwork and check the details. Supervising the container being loaded and sorting out surprises on the spot still need a person there." },
+    { "name": "Hosting clients for three days at a trade fair, then following up", "how": "AI can help prepare materials, sort business cards, and draft follow-up emails afterward. Three days of meeting people face to face, building trust and reading their reactions rest on a person." },
+    { "name": "Handling a client's quality complaint after delivery", "how": "AI can help assemble the order records and photo evidence, translate, and draft the reply. Judging who is at fault, negotiating compensation and holding on to the relationship rest mainly on a person taking responsibility and talking it through." }
+  ],
+  "events": {
+    "e_first_order": "The first order you negotiated yourself: five thousand plastic hair clips for a client in Tanzania, with a profit under ¥2,000. The day the goods left port, you posted a photo of the bill of lading to your feed.",
+    "e_wrong_mark": "Checking documents, you missed a shipping mark, and a consignment got stuck in port in Jeddah. The client shouted down the phone for twenty minutes, and the company paid the freight.",
+    "e_scam": "Someone claiming to be a big South American buyer wants you to ship first and be paid later, on an order so large it makes your heart pound. An older rep stops you. Only later do you learn it's a scam that has been going around the trade for years.",
+    "e_ai_reply": "The company brings in an AI inquiry assistant. Inquiries that arrive in the night, it reads first, translates, and drafts replies from the price list. In the morning you only check costs and choose which clients to pursue. At last you can sleep until six.",
+    "e_fair": "Your first trip with the boss to the Canton Fair in Guangzhou. In three days you meet more than forty clients, collect a stack of business cards, and lose your voice. Back home, three of them turn into orders.",
+    "e_spanish": "There are more and more South American clients, so you sign up for an evening Spanish class. Six months later you can haggle on the phone with a client in Chile.",
+    "e_ramadan": "The run-up to Ramadan is peak season for Middle Eastern clients. Order after order; for a month you go to bed at two in the morning. When the commission lands at month's end, you send money to your parents.",
+    "e_freight": "Ocean freight triples in a month. Several orders you already quoted either ship at a loss or get renegotiated with the client. For a week straight you make a dozen-odd calls a day.",
+    "e_ai_docs": "The documents system can now compare letter-of-credit terms automatically and generate invoices and packing lists. The company goes from three documents clerks to one. The boss says from now on reps check their own documents, and you have one more thing to learn.",
+    "e_rules": "A market's tariffs and certification rules change overnight, and a batch of your holiday goods is held at customs. You spend three days working through the English regulations and supply an extra test report before it's released.",
+    "e_ai_bypass": "A client uses AI to compare prices online, goes around you and finds the factory directly. For the first time you realize that the part of the money you're worth in the middle has to be proven by something else.",
+    "e_friend_client": "An Iraqi client you've worked with for five years comes to Yiwu and takes you to dinner, bringing a box of dates and photos of his children. Business is in English. Over dinner he teaches you to say thank you in Arabic.",
+    "e_bad_debt": "A client you've worked with for years suddenly stops answering. More than ¥200,000 in final payment can't be recovered, and under the commission rules you cover part of it too.",
+    "e_love": "You get to know the child of the family at the next stall. They speak fluent Yiwu dialect and twice help you haggle with difficult stallholders.",
+    "e_marry": "You get married. The banquet is thirty tables, half of them your clients and suppliers. An Egyptian client sits at the head table in his long robe and shares half a glass of baijiu with your father.",
+    "e_house": "You buy an apartment in Yiwu. The down payment uses up these years of commissions and part of both sets of parents' savings.",
+    "e_child": "The night your child is born, you are still answering clients. Later, the first English your child learns is the phrase you say most on the phone: no problem.",
+    "e_market_shift": "Stallholders in the trade city start livestreaming and taking export orders themselves. One day you see the daughter of that hair-clip stall from years ago presenting the new styles to a camera in fluent English.",
+    "e_teach": "The new rep you're training lands a first order: a thousand key rings for a client in Peru. Thrilled, the new rep buys bubble tea for the whole office.",
+    "e_parent": "Your father is in hospital back home. In the corridor outside his ward you answer three clients' emails, and a nurse takes you for a salesperson.",
+    "e_eyes": "Years of late nights at the computer, and your eyes are dry and your neck stiff. You start walking two laps of Xiu Lake Park every evening.",
+    "e_next_gen": "The son of that Iraqi client comes to Yiwu to take over the business. On his first day he comes to find you. His father told him to deal only with you, he says."
+  },
+  "choices": {
+    "c_docs": {
+      "title": "Learn documents first, or chase clients first",
+      "situation": "The veteran who handles shipping documents is about to retire, and the boss says you could get a documents certification and learn letters of credit and customs inside out. But clients in the trade city don't wait. Any day you're not there, someone from another company is standing next to that buyer.",
+      "options": [
+        { "label": "Study documents at night", "result": "You worked through the letter-of-credit rules and a pile of customs material and passed the certification. From then on, any order with discrepancies came to you first." },
+        { "label": "Chase clients day and night", "result": "You got to know half the stallholders in the trade city and soon had a few small clients. But whenever an order got complicated, you still had to beg the veteran for help." }
+      ]
+    },
+    "c_solo": {
+      "title": "Move from order coordinator to sales rep with your own clients",
+      "situation": "After two years of following orders, the boss says you can take over a longtime Middle Eastern client on your own: big orders, many demands, hard pressure on price. Take it, and your commission doubles. Anything that goes wrong is on you too.",
+      "options": [
+        { "label": "Take it", "result": "For the first time you negotiated a whole forty-foot container yourself. The client was so demanding you answered dozens of messages in the middle of the night. The day the goods reached port safely, the boss took you to dinner." },
+        { "label": "Follow orders for one more year", "result": "You weren't in a hurry, and went over every step again. People who joined when you did were already earning big commissions." }
+      ]
+    },
+    "c_factory": {
+      "title": "Join a factory's export department",
+      "situation": "The owner of a Christmas-goods factory likes you and invites you into his export department: a somewhat higher base salary, only one product category, and a chance to know it far more deeply. Stay at the trading company, and you sell everything, with many clients and commissions that depend on luck.",
+      "options": [
+        { "label": "Join the factory's export department", "result": "You came to understand molds and costs, how many steps a bauble goes through from injection molding to packaging. You quoted with confidence. It's just that clients only wanted that one kind of goods." },
+        { "label": "Stay at the trading company", "result": "You went on finding goods in the trade city for clients. You'd sold everything and knew a little about everything, and your client list grew longer and longer." }
+      ]
+    },
+    "c_ai": {
+      "title": "Build the company's AI quoting library or not",
+      "situation": "The boss has seen other firms answering inquiries and quoting with AI, and wants you to turn the company's information on several thousand products, with prices, minimum orders and factory details, into a knowledge base AI can use. It would take months, and meanwhile your clients would be handed to others.",
+      "options": [
+        { "label": "Take it on", "result": "You entered several thousand item numbers one by one, marking which prices had room to move and which factories were reliable. Once the library was built, the company answered inquiries twice as fast, and the boss gave you a small profit share." },
+        { "label": "Pass, and keep chasing clients", "result": "You held on to your own clients and used the AI tools as others had built them. Sometimes the prices it sent out hadn't even got the freight right." }
+      ]
+    },
+    "c_market": {
+      "title": "Focus on the Middle East or South America",
+      "situation": "The company wants each rep to claim a market. Middle Eastern clients buy in volume and run on relationships, with peak season following Ramadan and Eid. South American clients are scattered, far away and slow to pay, but fewer people compete for them, and you know a little Spanish.",
+      "options": [
+        { "label": "Focus on the Middle East", "result": "You learned not to bother clients during Ramadan and to have goods ready a month before Eid. The orders became steady, and the favors owed grew heavier and heavier." },
+        { "label": "Focus on South America", "result": "You began living on Chilean and Peruvian time, holding video calls at four in the morning. Not many clients, but every one of them dealt only with you." }
+      ]
+    },
+    "c_crossborder": {
+      "title": "Move into cross-border e-commerce",
+      "situation": "A college classmate runs a cross-border e-commerce business in Hangzhou with his own brand and his own online store. He wants you to manage supply chain and product selection, since no one knows Yiwu's suppliers like you. Good pay, but from then on what you deal with is platform rules, not people.",
+      "options": [
+        { "label": "Go into cross-border e-commerce", "result": "You passed the number reserved for foreign buyers to your apprentice and went to Hangzhou.", "end": "You went to Hangzhou to do cross-border e-commerce, watching ratings and ad spend on the platform dashboard every day. One call could still bring in anything from Yiwu. Only, you never again walked foreign buyers through the trade city." },
+        { "label": "Stay in Yiwu", "result": "You introduced your classmate to a few reliable factories and kept walking the trade city yourself. You like haggling with people face to face." }
+      ]
+    },
+    "c_manager": {
+      "title": "Become foreign trade manager and lead a team",
+      "situation": "The boss wants to expand and hire five more new reps, and wants you as foreign trade manager: leading the team, setting market plans, controlling the risk of unpaid orders. Some of your own clients would go to the new hires.",
+      "options": [
+        { "label": "Take it on", "result": "Every day you taught the new hires to write cold emails and checked their quotes. Your own orders fell, and the team's orders rose. At year's end your share came to a little more than when you chased clients alone." },
+        { "label": "Don't lead a team; keep your own clients", "result": "You let another veteran rep take the post and kept working on your own. Your clients trusted you as much as ever. Only, in company meetings, you sat further and further back." }
+      ]
+    },
+    "c_soho": {
+      "title": "Go out on your own as a one-person shop",
+      "situation": "You have a dozen-odd longtime clients, and a few factories are willing to give you credit terms. Plenty of people your age have gone out on their own: one business license, one computer, one phone. But if you leave, what about the clients at your boss's company? Your conscience won't let it go.",
+      "options": [
+        { "label": "Go out on your own", "result": "You had a farewell dinner with the boss and agreed that you would ask him first before taking on any of the old clients.", "end": "You registered a small trading company of your own. The office was the study at home, with a chart of a dozen-odd countries' time zones on the wall. The first person to call was that old Iraqi client." },
+        { "label": "Stay, and negotiate a share with the boss", "result": "The boss gave you a stake in the company, and you kept working there. The clients were still yours, and someone else carried the risk with you." }
+      ]
+    },
+    "c_director": {
+      "title": "Become foreign trade director",
+      "situation": "The company has grown, with its own factory and three sales teams, and the boss wants you as foreign trade director over market strategy and several teams. You'd have to fly abroad often for trade shows and clients, and learn to fire people.",
+      "options": [
+        { "label": "Take it on", "result": "You flew more than a dozen trips a year, Dubai, São Paulo, Lagos, and came home each time to a desk covered with other people's quotes and papers waiting for your signature." },
+        { "label": "Don't become director", "result": "You pushed a younger person up, kept a few of your oldest clients, and every year before Ramadan still followed each order personally." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "The year you turned fifty-five, you handed your last few clients to your apprentice, and on handover day made a video call to each of them. Some of the clients had become their sons. You took one last walk through the trade city. The hair-clip stall was still there, its owner's hair completely white, and she pressed a handful of the newest clips on you. On the way home, your phone was quiet.",
+    "burnout": "After that year's peak season, sitting at your computer before dawn, you suddenly couldn't breathe and were taken to the emergency room. The doctor said it was years of late nights and anxiety, and told you to stop answering messages in the middle of the night. You handed off your clients and shut down the number reserved for foreign buyers. For a long time afterward, the chime of a phone made your chest tighten."
+  },
+  "past": [
+    "You were in your last year of middle school in a small town in Anhui, and English was the only subject you ever got full marks in. People from town who had gone to do business in Yiwu got rich and drove home for New Year, full of stories about foreigners coming to buy things.",
+    "Your high school entrance exam got you into the county's No. 1 High School. Your father was a machine mechanic at a sock factory in Yiwu. Every Spring Festival he came home with a bag of socks from the factory and one piece of advice: study hard, don't end up like me.",
+    "Your gaokao (college entrance exam) score was good enough for a provincial university, and you put down business English. Your father said that with English you could do business with foreigners, and wouldn't have to fix machines in a workshop.",
+    "The summer after your second year you went to see your father in Yiwu and spent a month as a temporary interpreter for a stallholder in the trade city, at ¥200 a day. A Nigerian buyer bought thirty cartons of phone cases and insisted on a photo with you.",
+    "In your third year you passed TEM-8, the top national exam for English majors, and the intermediate business English certificate, and taught yourself a little Spanish online. Some classmates studied for graduate school, some for the civil service. You wanted to go to the trade city, where there was business every day.",
+    "In your last semester you interned as an order coordinator at an export company and for the first time went through the whole cycle: quote, contract, shipment, payment. At a job fair as you were graduating, the boss's wife at your current company listened to you speak English for a minute and told you to start next week."
+  ],
+  "late": {
+    "pension_note": "Estimate: small export firms in Yiwu mostly pay social insurance on the minimum base, and commission doesn't count toward contributions, so your pension is about thirty percent of your final monthly salary. The savings and property built from those years of commission are what really carry you in old age.",
+    "scenes": [
+      "The first month after handing over your clients, you still wake at one every morning and reach for your phone to see if there's word from the Middle East. Eventually you set the alarm for seven and go play badminton in the park.",
+      "Your old company brings you back as a consultant a few times a month, to walk new reps through letters of credit and teach them to judge whether a client can be trusted. The young people answer inquiries with AI ten times faster than you ever did, but which client is lying, you can tell at a glance.",
+      "Your pension isn't much, but over the years you put away two apartments: one to live in, one rented to foreigners who come to Yiwu to trade. The tenants are a Yemeni family, and on holidays they bring up a plate of sweets.",
+      "After leaving the trade you spent a year back in your home county, sleeping until you woke and helping your father grow vegetables. That number has been disconnected, but sometimes you still remember its last four digits.",
+      "You teach business English at a vocational school in Yiwu. Students ask whether foreign trade pays well. When it pays, you tell them, you don't sleep.",
+      "Your health has recovered somewhat. In Xiu Lake Park you run into the older rep who trained you. He quit long ago and sells kites at the park gate. You buy one and sit talking with him until dark.",
+      "You've started another kind of business, at a completely different pace. For the first month you still worked out exchange rates and freight out of habit. Later you realized you barely needed to.",
+      "A few years into the new work, with its ups and downs, you often think back to the years of haggling with foreign buyers in the trade city, and feel that was when you learned fastest.",
+      "The son of that old Iraqi client comes to China and makes a detour to see you, bringing a box of dates. His father is still in good health, he says, and asks when you're coming to Baghdad.",
+      "Later, in foreign trade, inquiries, quotes and documents were almost all handed to AI, and the stallholders talked to foreign buyers through their own translation devices. But those three days at the trade fair, and the phone call after a shipment goes wrong, still needed someone to show up.",
+      "The International Trade City opens yet another new district. You take your grandson around, and he points at the rows of shelves and asks where all these things get sold. You think about it and say: everywhere."
+    ],
+    "closing": {
+      "retire": "One evening many years later, you are picking over vegetables on the balcony when a holiday greeting in Arabic pops up on your phone. You can't really read it, but you carefully reply: Thank you, and to you too.",
+      "burnout": "Many years later, you are sitting in the sun in the courtyard back home when a neighbor's child brings over English homework. You read it through with him once, and when you're done, you peel him an apple.",
+      "end": "Many years later, in a drawer, you find a stack of old business cards printed with addresses in a dozen-odd countries. Most of the names no longer match a face. The one on top, you still remember."
+    }
+  }
+}

@@ -1,0 +1,188 @@
+{
+  "id": "barista-sh",
+  "occupation": "Barista",
+  "role": "Trainee barista at a specialty coffee shop",
+  "headline": "A trainee barista from Jiangxi who spent six months pressing buttons at a chain store in Nanchang, then came to a twelve-seat specialty cafe in Shanghai to start over from washing cups",
+  "unit": "A specialty coffee shop in Shanghai's old garden-villa quarter",
+  "unit_type": "Specialty coffee shop",
+  "city": "Shanghai",
+  "city_tier": "Tier 1",
+  "education": "Associate degree, three-year vocational college (Hotel Management)",
+  "level": "You have pulled thousands of cups on fully automatic machines and are only just getting the feel of a semi-automatic. Your latte art stops at a heart, you have never done a pour-over, and you can't yet recite all the origins of the beans",
+  "intro": "At the chain store in Nanchang you could turn out two hundred cups in a morning rush, all by pressing buttons on the machine. Now you stand behind the bar of a Shanghai cafe with twelve seats. The owner hands you a cloth and says: wash cups, learn the beans, and in three months we'll talk about the bar. As of today your name is on the bottom line of the rota.",
+  "salary_note": "Estimate: during the trainee period a Shanghai specialty cafe pays a little over ¥5,000 take-home, 20-30% above the national figure. The shop is small; moving up depends on your craft and on running a shop, and there are few places above store manager.",
+  "facts": [
+    { "label": "Trainee Barista (current level)", "value": "0-0.5 years, ¥3,500–5,000 a month (national average)", "source": "Career map" },
+    { "label": "Next level up", "value": "Barista (0.5-2 years)", "source": "Career map" },
+    { "label": "Monthly pay, 10+ years in the field", "value": "¥11,000 (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Catching a mixed-up milk order in the lunch rush and coordinating the remake", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Calibrating the grinder and espresso extraction settings before the rush", "source": "AI exposure" },
+    { "label": "Open positions", "value": "101 related job listings nationwide, 2 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "You leave the second bedroom of a shared flat in Minhang and change metro lines twice. On the train you recite today's bean list: a washed Ethiopian, an anaerobic Colombian, and the house espresso blend.",
+    "Opening. Backflush the group heads, purge the steam wand, grind off two doses before you start calibrating. The owner tastes your espresso and says it's sour. Half a step finer.",
+    "The morning rush is regulars from the office towers nearby. One older woman has an oat latte, light ice, every day. You write on the cup label: oat, steam separately, and switch to the pitcher with the green tape.",
+    "When it quiets down, you practice steaming in the corner with water and a squirt of dish soap, pouring out pitcher after pitcher. The owner walks past and says: today, push out the third layer of the tulip.",
+    "Weekend, and a line of people taking photos forms at the door. A girl holds up her phone and asks if you can make the drink from Xiaohongshu, the lifestyle app everyone posts to. You glance at the picture and look back at the owner.",
+    "Cupping. Six cups in a row: break the crust, smell, slurp. You hunt across the flavor wheel for ages and write down only citrus and a bit like tea.",
+    "Closing. Take apart the group heads, soak the baskets, mop the floor, sort the rubbish, and log today's waste: two cartons of milk past their date, one bag of beans open too long.",
+    "Back at the flat you scroll through videos of other people pouring swans for a while, and reply to your mother back home: already ate."
+  ],
+  "ladder": [
+    { "title": "Trainee Barista", "stage": "Apprentice / entry", "focus": "Learn closing and cleaning at the bar, restocking supplies, basic Americanos and milk drinks, and packing delivery orders. You become permanent by passing the standard procedures assessment." },
+    { "title": "Barista", "stage": "Pulling your own shots", "focus": "Run the bar alone through the morning rush; master morning grinder calibration, espresso extraction, standard latte art and everyday pour-overs. You are promoted on speed and consistent flavor." },
+    { "title": "Senior Barista", "stage": "Technical core", "focus": "Run quality checks at the bar, train new staff, create advanced single-origin pour-overs and develop signature drinks. You move up on solid craft and basic stock management." },
+    { "title": "Assistant Store Manager", "stage": "First-line management", "focus": "Help the store manager with rush-hour scheduling, ordering and checking deliveries, handling complaints and the monthly stocktake. You earn a shop of your own on how well you lead a team and run daily operations." },
+    { "title": "Store Manager", "stage": "Running a shop", "focus": "Oversee the shop's quality, service and cleanliness standards, its profit and loss, staff turnover and the community of regulars. You are promoted on hitting the shop's profit targets." }
+  ],
+  "ai_tasks": [
+    { "name": "Catching a mixed-up milk order in the lunch rush and coordinating the remake", "how": "AI can't help with the judgment on the spot. A person has to stop the drink there and then, check for allergens, calm the customer and organize the remake, and a person answers for it if something goes wrong." },
+    { "name": "Calibrating the grinder and espresso extraction settings before the rush", "how": "Smart grinders and espresso machines can record flow rate and extraction time and suggest which way to adjust. A person does the tasting and judging, and makes the fine adjustments by hand until it tastes right." },
+    { "name": "Steaming milk and pouring basic latte art", "how": "Letting in air, building the whirlpool, the angle of the wrist: these are skills of the hand that a person has to practice. Machines can only make simple patterns and struggle to pour art with a personal touch consistently." },
+    { "name": "Morning opening checks, cleaning and sanitizing, and checking ingredients", "how": "The system can generate the opening checklist, flag expiry dates and pull together the morning briefing. A person switches on the machines, cleans and sanitizes, and checks the actual stock." },
+    { "name": "Taking orders at the counter, marking special cup labels and checking drinks before they go out", "how": "The ordering system can pick up special requests automatically, print cup labels and remind you to use a separate pitcher for oat milk. A person talks to customers face to face, spot-checks drinks before they go out, and handles last-minute changes." },
+    { "name": "Stocktaking, drafting order suggestions and training key routines", "how": "AI can total up the stocktake from consumption data and suggest what to order. A person checks the physical stock, reviews what went wrong with mixed-up orders, and personally trains new staff in the routines that prevent mistakes." },
+    { "name": "Evening closing: sanitizing, shutting down equipment and handing over the sorted rubbish", "how": "Deep sanitizing, equipment maintenance and sorting the rubbish are physical work on site that machines can't replace. At most AI helps write up the handover notes." },
+    { "name": "Making milk foam and pouring standard latte art", "how": "Steaming silky foam and pouring a heart, tulip or rosetta consistently comes down to feel and endless practice. AI can only demonstrate or score; the cup still needs a person." },
+    { "name": "Taking orders and serving oat milk without mistakes", "how": "The system can automatically flag orders with allergens or special milks and remind you to check. A person keeps things physically separate, checks the labels, catches wrong orders and talks to customers face to face." },
+    { "name": "Opening checks, cleaning and sanitizing, and prep for the morning briefing", "how": "AI can work out how much to prep from the order forecast and flag expiry dates. A person switches on the machines, cleans and sanitizes, checks the actual state of the beans and dairy, and does the mixing." },
+    { "name": "Closing: sanitizing and cleaning, counting supplies, handover and training", "how": "AI can help count what's left and organize the day's operational problems. Backflushing the group heads, equipment maintenance, sorting rubbish and the debrief with trainees are still done by people." }
+  ],
+  "events": {
+    "e_milk_bubble": "For the first month your milk kept coming out with big bubbles, and a regular pushed a latte straight back to you. You stood in the back alley for five minutes, then went back in and steamed another pitcher.",
+    "e_first_weekend": "For the first time you carried a whole weekend morning rush alone, without a single mistake. At closing the owner made you a pour-over with the most expensive beans in the shop.",
+    "e_oat_catch": "In the lunch rush a colleague grabbed the wrong pitcher for a drink that should have been oat milk. You smelled something off just before it went out and pulled the cup back. The customer said she was allergic to cow's milk.",
+    "e_move_twice": "The landlord of your shared flat decided to sell, and you moved twice in one month, ending up in a partitioned room forty minutes from the shop, its window facing someone else's air-conditioning unit.",
+    "e_contest_out": "You entered a city latte art competition and were knocked out in the first round because your pattern was lopsided. Back home you practiced swans for a month until the neck finally stood up.",
+    "e_contest_final": "You made the final of a local latte art competition, and the shop posted a photo of that cup on its WeChat account. For several weekends after, people would sit down and ask straight away whether you were on the bar today.",
+    "e_cheap_chain": "A chain selling coffee for ten-odd yuan a cup opened downstairs, and a third of the weekday regulars stopped coming. The owner started doing the accounts himself after closing, and the sums kept him up until midnight.",
+    "e_love": "You met someone who worked in roasting at a cupping session. Your first date was at someone else's cafe, the two of you spending ages picking faults in one latte.",
+    "e_wedding": "You didn't hold the wedding in Shanghai but went home to Jiangxi and laid on twenty tables. You brought a bag of beans you had roasted yourself for every table, and the relatives asked whether you steep these or chew them.",
+    "e_smart_grinder": "The shop switched to a grinder and espresso machine that record flow curves, so morning calibration no longer meant tasting shot after shot until your tongue went numb. But however good the curve looked, the taste in the cup still needed your nod.",
+    "e_ai_order": "The ordering system put out suggestions for orders and prep every day. Once it went by the weather forecast and ordered half the usual milk, but the temperature dropped that day and a big crowd came in the afternoon. You ran next door and cleared the convenience store's shelves.",
+    "e_wrist": "Hundreds of tamps and portafilter turns every day gave you tendinitis in your right wrist. The doctor told you to use less force, and you started practicing tamping with your left.",
+    "e_child": "Your child was born. Childcare in Shanghai was too expensive, so after the first birthday the child went back to Jiangxi to live with their grandmother. On the weekly video call, the child reaches first for the cup of latte art you hold up to the screen.",
+    "e_father_ill": "A call from home: your father was in hospital. You took two weeks off to sit with him, and when you came back there was a new person covering your shifts on the bar, and the cups were arranged differently.",
+    "e_apprentice": "The trainee you were teaching poured a tulip on their own for the first time, took a photo and sent it to you, followed by three exclamation marks.",
+    "e_bad_review": "A review on a ratings site said the barista was cold. That day you had been on your feet for ten hours. The shop had you write a page explaining what happened.",
+    "e_rent_up": "When the lease ran out, the landlord raised the rent by forty percent in one go. The shop moved two streets away into a residential area, and half the regulars followed.",
+    "e_old_regular": "A regular who used to come every day ten years ago pushed a stroller through the door. Her child was walking now, she said, and she ordered the same oat latte, light ice. You didn't make her say it twice.",
+    "e_bean_price": "Green coffee prices rose two years running, and a pour-over went up five yuan. To every regular who asked, you explained at the bar how the rains had been in the growing regions this year.",
+    "e_house": "After ten-odd years of saving, you put down the deposit on a small two-bedroom in Kunshan, just outside Shanghai. Every day you take the early train into the city, long enough to recite the new bean list once through.",
+    "e_knees": "After more than ten years standing behind the bar, your knees and back started hurting together. You laid a thick anti-fatigue mat at your station, and the young ones teased you for doing standing yoga.",
+    "e_student_shop": "The kid who once learned latte art under you opened a shop of their own and invited you to pour the first cup on opening day. You poured a swan. Your hand shook a little.",
+    "e_robot_cafe": "The machines in the shopping mall could pour neat hearts now, for ¥9.90 a cup. If anything, the people who came to you were more willing to sit down and ask which estate this bean was from and how its year had been.",
+    "e_palate": "Your palate wasn't as sharp as it used to be. At cuppings you let the young ones speak first, then nodded or shook your head."
+  },
+  "choices": {
+    "c_sca": {
+      "title": "Pay for a certificate yourself before you're made permanent",
+      "situation": "The intermediate course from the SCA, the international Specialty Coffee Association, costs over ¥3,000, most of a month's pay for you. The owner says it's up to you; the shop only looks at the cups you make. But every other shop hiring in Shanghai lists it on the job ad.",
+      "options": [
+        { "label": "Pay for it yourself", "result": "Three weekends of classes, and on the day of the blind tasting your palms were soaked. You stuck the certificate on the wall of your rented room, and ate instant noodles for quite a few meals that month." },
+        { "label": "Skip it and stay after work to practice", "result": "You stayed an extra hour after closing every day, and the owner had a key to the shop cut for you. No certificate, but your hands grew steadier and steadier." }
+      ]
+    },
+    "c_nanchang": {
+      "title": "Your old employer in Nanchang wants you back",
+      "situation": "The Nanchang chain is opening a new store, and your old store manager calls to say you could come back as assistant manager: a little more pay than now, much cheaper rent, two hours by high-speed rail from home.",
+      "options": [
+        { "label": "Go back to Nanchang as assistant manager", "result": "You were back at a bar of buttons, only now you also did the rota, the stocktake and the complaints. You could go home for dinner at weekends. The pour-over kettle went into a cupboard." },
+        { "label": "Stay in Shanghai", "result": "You said you'd give it two more years. After you hung up you went back to calibrating the grinder, and that day you got the espresso right on the first try." }
+      ]
+    },
+    "c_path": {
+      "title": "Focus on brewing, or on latte art",
+      "situation": "The owner says one person only has so much energy. Either you stay with him for cuppings and pour-over practice and go the way of really knowing beans, or you compete in latte art, where a name comes faster.",
+      "options": [
+        { "label": "Cuppings and pour-overs", "result": "You drank a hundred-odd cups of black coffee a week, and the flavor words in your notebook went from three to thirty. Regulars started asking you which one you'd recommend today." },
+        { "label": "Compete in latte art", "result": "Your latte art videos were shared thousands of times online, and at weekends people came specially to film. But when the owner asked how a particular bean was processed, you had to check the bag first." }
+      ]
+    },
+    "c_qgrader": {
+      "title": "Take the Q Grader exam",
+      "situation": "The training for the international Q Grader coffee taster's certificate means six straight days of exams, nineteen tests. Fees plus travel come to over ¥20,000, and if you fail you pay for the retakes yourself. Pass, and roasters and green coffee traders will come looking for you.",
+      "options": [
+        { "label": "Grit your teeth and take it", "result": "In the exam room you sat two rounds of triangulation cupping, and by the end of the smell test you couldn't smell anything at all. You only passed everything on the second attempt, and slept a whole day in the hotel." },
+        { "label": "Keep the money for now", "result": "You put the money into a separate bank card and wrote a note on it: shop." }
+      ]
+    },
+    "c_roaster": {
+      "title": "Go to a roastery",
+      "situation": "The roastery that delivers your beans is hiring a roaster and has noticed your palate. No bar, no customers to deal with. Every day you'd watch over one machine and its temperature curve, for noticeably more pay.",
+      "options": [
+        { "label": "Go to the roastery", "result": "You put on heat-proof gloves and spent every day, morning to night, listening for first crack and second crack, never again having to smile at customers.", "end": "You became a roaster at a roastery, your beans shipped every day to dozens of shops. Now and then, passing a cafe, you go in and order a cup and guess whether you roasted it." },
+        { "label": "Stay behind the bar", "result": "You said you still liked watching a customer take the first sip. The delivery man shrugged and brought the beans as usual the next week." }
+      ]
+    },
+    "c_own_shop": {
+      "title": "Open your own shop",
+      "situation": "There is some money saved on that card with the note shop. A twenty-square-meter shopfront at the gate of a housing estate is up for transfer. The transfer fee, the fit-out and a secondhand two-group machine would just about empty all your savings.",
+      "options": [
+        { "label": "Take it on alone", "result": "The first month after opening you stood fourteen hours a day, and the takings barely covered the rent. By the third month, the old lady upstairs had started coming down every day for an Americano. For her husband, she said." },
+        { "label": "Bring in a friend as partner", "result": "Two of you split the money, and split the arguments too. The menu went through three versions, and nobody was quite happy with the final one, but the shop opened." },
+        { "label": "Wait a while longer", "result": "You watched someone else turn the shopfront into a bubble tea shop. You told yourself: when my craft is a bit better, when there's a bit more money." }
+      ]
+    },
+    "c_ai_rules": {
+      "title": "Who sets the rules to prevent mistakes",
+      "situation": "The ordering system can flag allergens automatically and suggest orders, but someone has to write in, one by one, which orders need a human check, how to keep oat milk separate, and when the order suggestions can't be trusted. No extra pay.",
+      "options": [
+        { "label": "Take it on and write them one by one", "result": "You dug up every wrong order you had caught over the years and turned them into twenty-odd rules. For six months the shop didn't have a single milk mix-up, and the order sheet stopped lurching around with the weather forecast." },
+        { "label": "Leave it and focus on the bar", "result": "Head office sent someone to set the rules. You thought a few of them were wrong and raised it twice, with no reply. You still smell every cup yourself before it goes out." }
+      ]
+    },
+    "c_home": {
+      "title": "Go back to Jiangxi or not",
+      "situation": "Your child is about to start primary school back home, and your mother's back is bad; she can't look after them any more. Nanchang has plenty of specialty shops now too, and someone asks if you want to come back. The Shanghai shop has only just steadied.",
+      "options": [
+        { "label": "Go back and open a neighborhood shop in Nanchang", "result": "Rent in Nanchang is a third of Shanghai's, and a pour-over sells for only half the price. You open after dropping your child at school, and one of your regulars is the mother of a primary school classmate of yours." },
+        { "label": "Stay in Shanghai and bring the child over", "result": "You squeezed into an even smaller flat and spent six months chasing paperwork for your child's school registration. Bit by bit the Jiangxi accent faded from your child's Mandarin." },
+        { "label": "Become an instructor at a training school", "result": "You qualified as a certified instructor and began teaching class after class how to distribute, tamp and steam milk. Paid by the hour, and no more weekends on the bar.", "end": "You became an instructor at a coffee training school, a classroom with eight machines. You still lean in to smell the milk before each student's cup goes out." }
+      ]
+    },
+    "c_district": {
+      "title": "Head office wants you as an area supervisor",
+      "situation": "A specialty coffee chain is expanding and asks you to be an area supervisor, responsible for the drinks and staff of a dozen-odd shops. No more standing behind the bar, a different shop every day of the week, for much more pay.",
+      "options": [
+        { "label": "Go to head office as a supervisor", "result": "You carry a refractometer everywhere. In each shop you measure the TDS first, then check whether the group heads were wiped clean. Behind your back the staff call you the one who smells.", "end": "You became an area supervisor for a coffee chain, visiting a dozen-odd shops a week. The pour-over kettle you used for over a decade sits on the kitchen shelf at home." },
+        { "label": "Stay at your own bar", "result": "You turned it down. The next morning you ground off two doses as usual before calibrating. Outside the window the plane tree leaves were starting to turn yellow." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you still open at seven-forty, grind off two doses, calibrate, taste. The regulars have all heard. Someone brings flowers; someone orders the oat latte, light ice, that you could make more than a decade ago. At closing you take the group heads apart and soak them, and hand the keys to the young ones. Out the door, you look back once at the lamp over the bar.",
+    "burnout": "That morning rush you knocked over two pitchers of milk in a row, your wrist hurting too much to grip the handle. You sat in the back alley a long time and wrote the owner a very long message, then cut it short. At the end of the month you handed in your keys and found work near home where you didn't have to stand for long. When you pass a cafe and smell beans roasting, you slow down."
+  },
+  "past": [
+    "Your zhongkao, the high school entrance exam, came out middling, so you stayed in the county town for an ordinary high school. Your father worked on construction sites in another province, and your mother ran a breakfast stall in the township. Every morning at five you helped her cook the rice noodles, and went to school only once the customers had gone.",
+    "Your gaokao (college entrance exam) score was only enough for a vocational college. You chose hotel management at a school in Nanchang, because the prospectus promised internships at five-star hotels in Shanghai and Hangzhou. You wanted to see a big city.",
+    "Your internship placed you in the breakfast restaurant of a hotel in Hangzhou, where they put you on the coffee machine. A foreign guest wanted a double espresso every morning. One day he said this one's good, and you made a note of which grind setting you had used that day.",
+    "After graduating you went back to Nanchang. Hotel front desk paid a little over ¥3,000 a month, so you turned around and joined a coffee chain as a trainee barista. Press a button on the fully automatic machine and a cup comes out; two hundred cups a day in the morning rush. In six months you didn't learn a single new pattern.",
+    "On a day off you went to the only shop in Nanchang that did pour-overs. The owner made you a cup and said it tasted like peaches. You didn't believe him, took another sip. It really did.",
+    "At the end of the year you saw online that a specialty cafe in Shanghai was hiring trainees. In the photos, the bar was covered in tools you couldn't name. You saved two months' pay, quit, bought a high-speed train ticket to Shanghai, and told your mother you were going to learn a trade."
+  ],
+  "late": {
+    "pension_note": "Estimate: Shanghai's urban employee pension scheme. Cafes mostly pay in on a low base, and there were gaps in contributions while you ran a shop or went home. In retirement you get roughly 40% of your last monthly salary.",
+    "scenes": [
+      "Your first month of retirement you still wake before seven, grind beans at home and brew yourself a cup, and only when it's done remember you don't have to go out today.",
+      "A former apprentice asks you into their shop two afternoons a week to lead cuppings. You don't stand behind the bar. You just sit there slurping, nodding, writing a few words in a notebook.",
+      "The pension arrives on time each month. After the building fees and the groceries there isn't much left. You and your spouse agree on one trip a year. Last year it was Yunnan, to see a coffee farm.",
+      "For the first few months after leaving the bar, you worked stocking shelves at the neighborhood supermarket, sitting down whenever you could. Your wrist slowly stopped hurting. The smell from the coffee shop downstairs still wakes you in the morning.",
+      "You bought a tiny semi-automatic machine for home and make lattes for the family at weekends. Your child says they're better than the ones outside. You know that's just to please you.",
+      "A regular from years ago recognized you on the metro and asked which shop you were at now. You said you'd stopped. She said what a shame. You smiled and said you still remembered her oat latte, light ice.",
+      "After the change of job, for the first time you sat on the customer side of a bar on a weekday morning, watching someone else calibrate the grinder, and kept your hands to yourself.",
+      "The income is steady, and your weekends are free. Now and then your old shop calls you in to cover a day, and the moment you step behind the bar your hands move before your head does.",
+      "At a trade show you ran into the owner from back then. His hair had gone completely white, and the shop was still open. You stood by a booth drinking a cup someone else had made, and both said it was sour.",
+      "By now most cups in delivery and chain stores came out of machines, and the systems worked out ordering and rotas too. The person behind the bar of a small shop, chatting with you about beans, had become something people went looking for.",
+      "You went back to Jiangxi for New Year, and next to your mother's old breakfast stall in the township a little cafe had opened, run by someone barely past twenty. You ordered a cup and talked grinders with them for half an hour.",
+      "Your hands aren't so steady now. You can't pour a swan, but a heart still works. For the grandchildren's birthdays you make each of them a hot chocolate with a lopsided heart on top."
+    ],
+    "closing": {
+      "retire": "One morning many years later, you sit in the sun on the balcony, a cup you brewed yourself beside you, gone cold without your getting to it. Downstairs someone pushes open the cafe door, the bell rings once, and without thinking you look up and say: morning.",
+      "burnout": "Many years later, you walk slow laps of the garden in your housing estate. Passing a new coffee shop, you stand at the window a while watching a young barista steam milk. You think he lifts his wrist too high. You don't go in to tell him.",
+      "end": "Many years later, clearing out a drawer, you find your first SCA certificate, its edges curled. On the back, in ballpoint, is a grind setting you wrote down back then. You can no longer remember which bean it was for."
+    }
+  }
+}

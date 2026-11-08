@@ -1,0 +1,180 @@
+{
+  "id": "ev-inspector-hf",
+  "occupation": "EV Test Technician",
+  "role": "End-of-line test technician (apprentice), final assembly",
+  "headline": "Fresh out of a vocational college EV program, working two rotating shifts at the end-of-line test station in a Hefei electric carmaker's final assembly plant, learning from your master how to power cars up and down safely",
+  "unit": "The final assembly plant of an electric vehicle maker in Hefei",
+  "unit_type": "Electric vehicle maker",
+  "city": "Hefei",
+  "city_tier": "New first-tier city",
+  "education": "Vocational college diploma (New Energy Vehicle Technology)",
+  "level": "You've just got your low-voltage electrician's license. You can power a car up and down by the procedure and help your master take insulation and equipotential measurements. You don't yet recognize all the fault codes on the diagnostic tool.",
+  "intro": "You graduated in New Energy Vehicle Technology from a vocational college, and a school-company partnership sent you straight into the final assembly plant of this Hefei carmaker. The end-of-line test station has twelve people a shift, and every ninety seconds a new car rolls up. Your master told you just one thing: until the high voltage is fully down, keep your hands off. As of today your employee number is on the day-shift rota. Next week you rotate to nights.",
+  "salary_note": "Estimate: base pay for front-line test technicians at Hefei carmakers isn't high, but with night-shift allowances on the rotating schedule and overtime at full production, take-home is roughly level with the national average. In months when output is cut, it drops by a chunk.",
+  "facts": [
+    { "label": "EV Test Technician, apprentice / assistant (current level)", "value": "0–1 years, ¥6,375–9,375 a month (national average, estimated from pay by experience)", "source": "Pay by experience" },
+    { "label": "Next level up", "value": "EV Test Technician (1–3 years)", "source": "Career map" },
+    { "label": "Pay at 3–5 years", "value": "¥14,200 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Measuring a charging socket's insulation resistance and equipotential bonding by hand", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Charging safety inspection of an all-electric commercial vehicle", "source": "AI exposure" },
+    { "label": "Open positions", "value": "2 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "Alarms go off one after another through the dorm. You pull on your antistatic overalls and insulated boots, buy two steamed buns from the breakfast cart at the plant gate, and squeeze onto the shuttle to final assembly.",
+    "Shift handover. Nights have left three cars with yellow tags in the repair bay: one with a battery management system (BMS) communication fault, one with low insulation at the charging port, and one nobody could pin down, marked only “abnormal noise”.",
+    "A car rolls off the assembly line. You plug in the diagnostic head and scan the VIN, and down the screen the battery, motor and electronics checks turn green one by one. Ninety seconds. Next car.",
+    "A car shows red on insulation resistance. First you power it down, lock out and tag out, and wait five minutes, then put on insulated gloves and take the meter to the charging socket. Your master stands behind you watching, without a word.",
+    "The canteen is full of young people in the same overalls, most of them from vocational schools all over Anhui. The next table is talking about which battery plant pays more and which line is cutting shifts again.",
+    "A new model is ramping up and the takt time has been squeezed another five seconds. The wheels spin on the dynamometer rollers; you watch the motor and inverter temperature curves while signing the test sheet for the car before.",
+    "The system generates this shift's test report on its own. You check the records for the few cars that failed and sign with your employee number. One car is left in the repair bay for nights.",
+    "Back at the dorm, a shower, then in bed scrolling job apps and a few pages of beginner videos on CANoe, the vehicle network tool. Halfway through one you fall asleep and the phone drops on your face."
+  ],
+  "ladder": [
+    { "title": "EV Test Technician (apprentice / assistant)", "stage": "Entry", "focus": "Learn high-voltage safety and test line operation from your master, and get to know the inspection procedures." },
+    { "title": "EV Test Technician", "stage": "Junior", "focus": "Carry out battery charging tests and electrical safety tests on your own and write the reports." },
+    { "title": "EV Test Engineer", "stage": "Mid-level", "focus": "Analyze battery, motor and electronics faults with diagnostic and CAN bus tools, and maintain equipment calibration." },
+    { "title": "Test Team Lead / Technical Lead", "stage": "Senior", "focus": "Run type-approval test projects, the lab's quality system and the team." },
+    { "title": "Test Station Manager / Lab Director", "stage": "Principal", "focus": "Manage the whole operation and accreditation of an inspection body." }
+  ],
+  "ai_tasks": [
+    { "name": "Charging safety inspection of an all-electric commercial vehicle", "how": "AI runs the charging protocol handshake and records the data automatically; a person watches for abnormal interruptions and confirms the vehicle's physical connection." },
+    { "name": "Discharge testing and reading motor and inverter temperatures", "how": "AI reads and analyzes motor and inverter temperature curves in real time; a person only steps in to recheck when the system flags something." },
+    { "name": "Measuring a charging socket's insulation resistance and equipotential bonding by hand", "how": "Because it involves physical contact and hand work in nonstandard situations, a person has to take the measurements on site with a meter." },
+    { "name": "BMS boundary testing against test cases", "how": "AI generates and runs large numbers of boundary test cases automatically; a person defines the test strategy and reviews the protection logic in extreme cases." },
+    { "name": "Power-up check of battery, motor and electronics at end of line", "how": "AI pulls the power-up signals and fault codes through the interface automatically; a person only handles the rare case where communication fails." },
+    { "name": "Issuing and filing the inspection report", "how": "AI generates a standardized inspection report from the test data and files it; a person just gives the final signature." },
+    { "name": "Interim equipment checks and sending instruments for calibration", "how": "It involves moving physical equipment, coordinating the calibration process and keeping the paper certificates, so a person has to do it." },
+    { "name": "Handling a battery temperature alarm during inspection", "how": "AI makes a first diagnosis of the alarm and offers past cases for reference; a person makes the final safety call using what they smell and hear on site." },
+    { "name": "Taking a newcomer through their qualification assessment", "how": "It's about passing on experience, correcting hand technique and building a sense of responsibility, so it has to be taught face to face by someone with years on the job." }
+  ],
+  "events": {
+    "e_first_catch": "A car passes every check, but the high-voltage interlock reading looks off to you, so you call your master over. You open it up: a connector isn't fully seated. Your master pats you on the shoulder and says nothing.",
+    "e_ramp": "A new model is launching and deliveries have to be rushed. The plant goes to two twelve-hour shifts with only two days off a month. Your payslip looks good; coming off nights, you don't even want to eat.",
+    "e_price_war": "A price war breaks out among carmakers and the cars drop another ¥10,000-plus. The takt time is squeezed and squeezed; not one test item is dropped, and the time left for each car keeps shrinking.",
+    "e_auto_dtc": "End-of-line testing gets automatic diagnostics. A car pulls into the station and the system reads the battery, motor and electronics power-up signals and fault codes by itself; you only deal with the few it isn't sure about. The station goes from twelve people to eight.",
+    "e_auto_report": "No more filling in test reports by hand, either. As soon as the data's in, the system generates and files the report. Your job each day becomes reading the few lines it highlights in yellow, then signing. The signature is your employee number.",
+    "e_thermal": "During a charging test a car's battery temperature alarm goes off. While the system is still deciding, you smell something strange and sweet, hit the emergency stop and push the car into the isolation bay. When they open the pack, one cell really has swollen.",
+    "e_miss": "A batch of cars reaches customers and a few report charging faults, traced back to a shift you passed. Your pay isn't docked, but you stand through an hour of the quality meeting.",
+    "e_contest": "You enter the provincial EV inspection skills competition and post the fastest time of anyone in fault-finding. Back at the plant, the workshop director reads out your name at the morning meeting.",
+    "e_export": "The plant's cars are going to be exported to Europe, and you're pulled in to support certification testing. For the first time you work through insulation tests and post-crash power cutoff checks against a standard written in English, clause by clause.",
+    "e_calibration": "An insulation and withstand-voltage tester's calibration certificate has expired, and the new one isn't back yet. Quality wants to shut your station down. You make three trips to the metrology institute and get the certificate back before three in the afternoon.",
+    "e_love": "The process engineer from the next station always lingers a little longer when they come over to look into a problem. Later the two of you sign up for the same week of nights, and after the shift go for a bowl of beef soup.",
+    "e_wedding": "You hold the wedding back home. The betrothal gift was settled by the two families together; the banquet is forty tables, and up on stage you're so nervous you get one character of your new spouse's name wrong.",
+    "e_house": "You buy a small three-bedroom in Hefei's economic development zone. The down payment is half a lifetime of savings from both sets of grandparents, and the mortgage takes half your pay.",
+    "e_baby": "Your child is born. All that month you're on nights: by day home holding the baby, by night at the plant checking cars, lights on at both ends.",
+    "e_cut": "Sales don't keep up, and final assembly goes from two shifts to one. Some people are reassigned to other plants. You stay, but the night-shift allowance is gone from your pay.",
+    "e_parents": "Your father has farmed all his life, and this year his back finally won't bend. You bring him to Hefei to see a doctor. He stays two weeks and every day asks when he can go back to bring in the wheat.",
+    "e_solid": "A new generation of batteries goes into the cars and more than half the test procedures change, with several new items for thermal runaway protection. You retake the qualification alongside the young ones. You're slower than they are, but you don't get a single question wrong.",
+    "e_apprentice": "Your apprentice correctly diagnoses a car's insulation fault on his own for the first time. He turns to look at you. You don't say anything either, just pat him on the shoulder.",
+    "e_merger": "Another Hefei carmaker is bought out. The brand changes; the plant is still there. Of your classmates working there, some change overalls and carry on, and some go home.",
+    "e_unmanned": "The end-of-line test station is nearly empty of people now: cameras, robot arms and automatic diagnostics all the way through. The plant keeps just a few people on watch, to handle cars the machines can't judge, measure the nonstandard sockets by hand, and train newcomers. You're one of them.",
+    "e_legs": "After a dozen-odd years standing at a station, veins have crept up your calves. The doctor says varicose veins, stand less. You buy compression socks, and the next day you stand as usual.",
+    "e_classmate": "In your vocational college group chat, someone has gone to a new plant abroad and posts photos of a factory sign in another script. Someone else has gone back to their county town to open an EV repair shop, and says business is so-so, but no shift work."
+  },
+  "choices": {
+    "c_canoe": {
+      "title": "Teach yourself CANoe after work and get your high-voltage license",
+      "situation": "Your master says reading green lights at end of line doesn't count as a skill. To move up you have to be able to read BMS data streams, use CANoe, and hold a high-voltage electrician's license. But after a twelve-hour shift, all you want is to lie down.",
+      "options": [
+        { "label": "Teach yourself and get the license", "result": "For six months you study videos on a secondhand laptop in the dorm, and you sit the high-voltage exam straight off a night shift. The first time you read a car's BMS messages on your own, you're so happy you send your master a screenshot." },
+        { "label": "Just do your shifts well for now", "result": "You leave on time every day, and on weekends go for barbecue and ball games with coworkers. Your master never brings it up again, and you're not on the next list sent for training." }
+      ]
+    },
+    "c_degree": {
+      "title": "Do a part-time bachelor's degree",
+      "situation": "Engineer openings at the plant list a bachelor's degree. An engineering university in Hefei runs a part-time diploma-to-degree program with weekend classes, a little over ¥10,000 for three years. The plant can adjust your shifts, but no promises.",
+      "options": [
+        { "label": "Sign up and go to class on weekends", "result": "Over three years you memorize countless formulas on the shuttle, and for two terms you go to class straight off night shifts. The day you get your diploma, the workshop director has you hand in a copy." },
+        { "label": "Don't; rely on what your hands can do", "result": "You keep your weekends. Engineer posts open a few times and you never apply; you know your résumé won't get through the first round." }
+      ]
+    },
+    "c_newplant": {
+      "title": "Jump to a new brand's plant",
+      "situation": "Another startup carmaker has opened a plant in Hefei and is fighting for experienced test technicians: twenty percent more pay, and the title of team leader. But the brand has only sold cars for a year, and online there's every kind of rumor.",
+      "options": [
+        { "label": "Make the jump", "result": "Everything at the new plant is new. You help commission the test line and learn more than in three years at the old plant. Only, every time you see the sales rankings, you do a little math in your head." },
+        { "label": "Stay at the old plant", "result": "You stay. Six months later the new plant starts cutting shifts, and former coworkers come asking if your side is hiring." }
+      ]
+    },
+    "c_engineer": {
+      "title": "Apply for EV Test Engineer",
+      "situation": "An EV Test Engineer post has opened in the plant: analyzing battery, motor and electronics faults, maintaining equipment calibration, and writing automated test scripts. Four people apply. Two have bachelor's degrees.",
+      "options": [
+        { "label": "Apply, and present your fault cases", "result": "You compile the fifty-odd fault cases you've noted over the years into a booklet and turn its pages for them one by one at the interview. The week before the result, you hardly sleep." },
+        { "label": "Don't apply; be the old hand at the station", "result": "You're still at the end-of-line station, and become the fastest person in the plant. When the new graduates with degrees hit a problem, they come to you first." }
+      ]
+    },
+    "c_ai_audit": {
+      "title": "Audit the AI inspection model?",
+      "situation": "More and more of the plant's inspection is judged by models, and Quality wants a few people who know the floor to review its false alarms and misses full time, labeling data and revising decision rules. The work is new and in an office, but nobody can say what job it will count as later.",
+      "options": [
+        { "label": "Go, and wrestle with the model", "result": "Every day you look through hundreds of cars the model has judged, find where it's unsure, and go back to the floor to recheck. Once you discover it's been treating a kind of socket wear as normal; after the rules change, the repair rate drops noticeably." },
+        { "label": "Stay with the real cars", "result": "You stay on the floor, measuring by hand the sockets machines can't measure and handling the cars machines can't judge. There are fewer and fewer people at the station. You're one of the few who stay." }
+      ]
+    },
+    "c_battery": {
+      "title": "Become a test engineer at a battery plant",
+      "situation": "A power battery maker is expanding in Hefei and hiring cell and pack test engineers. More pay than now, no rotating shifts, but you'd go from cars to cells, watching charge-discharge cabinets in a climate-controlled lab from morning till night.",
+      "options": [
+        { "label": "Go to the battery plant", "result": "You hand in your resignation, and on your last shift you wipe down your station.", "end": "You went to the battery plant's test lab and read hundreds of charge-discharge curves a day. You never again stood at a station where a car arrived every ninety seconds, though now and then you remembered that sweet smell." },
+        { "label": "Stay at the carmaker", "result": "You turn it down. You say you still like watching a whole car roll off the line, sound from end to end." }
+      ]
+    },
+    "c_abroad": {
+      "title": "Two years at an overseas plant",
+      "situation": "The company has built a new plant abroad and is sending a group of veteran test technicians from Hefei to train local workers: two years, more than double the pay. Your child has just started kindergarten. Your family says it's your call.",
+      "options": [
+        { "label": "Go to the overseas plant", "result": "In a place where you can't understand the language, you teach local workers to power cars up and down with hand gestures and a translation app. In two years you come home once, and your child hides behind their mother when they see you." },
+        { "label": "Stay in Hefei", "result": "The place goes to someone else. For those two years you pick your child up from school every day and take them to car shows on weekends. They can name every car there." }
+      ]
+    },
+    "c_leader": {
+      "title": "Take over as test team lead",
+      "situation": "The old team lead has been transferred, and the plant wants you to take over: one team and the whole test system, with your signature on type-approval tests and internal audits. Meetings by day, data at night; the hands-on work would have to wait.",
+      "options": [
+        { "label": "Take over as team lead", "result": "You start doing rotas, internal audits and handling the auditors. You sign more and more, and measure fewer and fewer cars yourself. At the year-end awards, your team comes first." },
+        { "label": "Don't; stay on the technical side", "result": "You recommend a young person from your team. You keep doing fault analysis, and when there's a tricky car, he still comes to find you." }
+      ]
+    },
+    "c_station": {
+      "title": "Go home to be a vehicle inspector",
+      "situation": "The motor vehicle inspection station in your home county is hiring inspectors. There are more and more electric cars, and they're short of people who understand batteries, motors and electronics. Less pay than now, close to your parents, no more shift work.",
+      "options": [
+        { "label": "Go back to the county inspection station", "result": "You rent out the Hefei flat and take the family back to the county town.", "end": "At the county inspection station you did annual checks on one commercial vehicle after another. People you'd known all your life drove in, you plugged in the diagnostic head, and told them the battery was fine, good for a few more years." },
+        { "label": "Stay in Hefei", "result": "You say a few more years. On the phone your father says he's fine. Beside him your mother calls out: your father's just being stubborn." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last shift you don't go to the station. You stand at the plant door for a while. A car rolls off the test line, the robot arms draw back, a row of green lights on the screen, and no one there. You hand your badge to the shift leader and take off the insulated boots you've worn for decades. The soles are worn shiny.",
+    "burnout": "That day, coming off nights, you sleep past your stop on the shuttle and wake not knowing where you are. The arrows on your checkup form are lined up in a row, and your family doesn't let you argue anymore. You transfer to the warehouse to look after spare parts: day shifts, out at five-thirty sharp. When you pass the test line, you still glance at the green lights on the screen."
+  },
+  "past": [
+    "Your high school entrance exam results were middling, and you wavered between the regular high school in the county and a vocational school in the city. Your father ran an excavator on building sites far from home. He said learn a trade that has to do with machines, and you'll never go hungry wherever you are.",
+    "You went into the auto repair class at the county vocational school, still learning engines and gearboxes. In the training workshop there was an old sedan taken apart and put back together so many times you could find every bolt with your eyes closed.",
+    "In the vocational gaokao (college entrance exam), you got into New Energy Vehicle Technology at a vocational college in Hefei. The teacher said auto repair now meant electric; fewer and fewer people would be fixing gas cars.",
+    "The first time you took apart a traction battery pack, the teacher had the whole class memorize high-voltage safety procedures for a week first. You earned your low-voltage electrician's license in class. It was the first certificate you ever got.",
+    "In your third year you did a work placement. The college had a partnership with this carmaker, and you were assigned to the end-of-line test station in final assembly. When the placement ended, HR asked if you'd stay. You said yes."
+  ],
+  "late": {
+    "pension_note": "Estimate: front-line carmaker staff are paid under the basic employee pension scheme, with contributions based on wages. Your pension will be roughly 40 percent of your final monthly pay; an enterprise annuity depends on whether the plant offers one.",
+    "scenes": [
+      "Your first week of retirement you still wake at six. You buy two steamed buns from the breakfast stall downstairs and sit at the compound gate watching cars go by. Most are models you've never seen.",
+      "The vocational school asks you back as a part-time workshop teacher, two classes a week, teaching kids to power cars up and down. The first thing you say is what your master once said to you: until the high voltage is fully down, keep your hands off.",
+      "Your pension arrives on time every month, enough to live on. You and your spouse do the sums. Your child is buying a flat in another city and would like a little help from home. You give half your savings.",
+      "You look after spare parts in the warehouse, issuing stock by the order sheet and doing counts. Your pay is down by a chunk, and for the first time you fall asleep before ten at night.",
+      "A young technician from the test line comes for parts and mentions a car with a fault nobody can diagnose. You listen a moment and tell him to measure the charging socket's equipotential bonding. He goes off only half believing you.",
+      "You reach retirement age and do the paperwork. The varicose veins in your legs have eased a little. Every afternoon you walk two laps of the park and watch chess games with a crowd of old men.",
+      "For your first year away from the carmaker, on the road you still glance at every car's badge without thinking, wondering which line it came off.",
+      "Your old master has retired and you go to see him. He asks how the new place is. You say not bad. He says then that's good, and the two of you sit all afternoon in the beef soup shop by the plant gate.",
+      "You've become an old hand in your new trade. Now and then a young person asks what you did before. You say you checked cars in Hefei, one by one, ninety seconds a car.",
+      "Later, nearly all the testing at Hefei's car plants is done by machines. Only the nonstandard sockets, the cars the machines can't judge, still need someone to put on insulated gloves and take a meter to them.",
+      "Your grandchild, sitting in your car, asks how a car knows it isn't broken. You think a long while and say people used to check them one by one; later machines checked them; and what the machines can't make out, a person still checks."
+    ],
+    "closing": {
+      "retire": "Many years later, one evening, you see a car charging below your building, the light on the charging gun blinking. You crouch to look at the socket. Clean. You stand up and go home.",
+      "burnout": "Many years later you're sitting in the sun on a park bench beside a row of shared e-bikes. One has its battery compartment not quite shut. You walk over and press it gently. Click.",
+      "end": "Many years later, in a cupboard, you find that low-voltage electrician's license, the first certificate you ever got. The person in the photo is nineteen, hair cropped very short. You look at him and smile."
+    }
+  }
+}

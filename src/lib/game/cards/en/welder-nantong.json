@@ -1,0 +1,186 @@
+{
+  "id": "welder-nantong",
+  "occupation": "Welder",
+  "role": "Hull Block Arc Welder (Intermediate Grade)",
+  "headline": "Third year out of the welding class at a technical school: an arc welder at a Nantong shipyard who spends his days crawling through double-bottom tanks, welding overhead, while working toward his senior grade and his classification society certificate",
+  "unit": "Hull workshop, a shipyard in Nantong, Jiangsu",
+  "unit_type": "Large shipyard",
+  "city": "Nantong",
+  "city_tier": "Second-tier city",
+  "education": "Technical school (welding)",
+  "level": "You hold the special-operations permit for fusion welding and the intermediate grade certificate. Your CO₂ gas-shielded welds pass X-ray on the first try in flat, vertical and horizontal positions. Overhead, you still often leave undercut, and you're practicing.",
+  "intro": "You have been welding at this shipyard for three years, working your way up from grinder to welding a whole hull block on your own. The workshop has just taken a batch of orders for big ships, booked out three years ahead, and your team leader has moved you into the double bottom to weld the seams right above your head. From today, neck craned back, you have to earn your senior grade and the classification society's certificate.",
+  "salary_note": "Estimate: welders at Nantong shipyards are paid by the hour and by the piece. In years when orders are strong there's lots of overtime, and skilled hands take home ten to twenty percent above the national average. When the ship market goes quiet, only base pay is left, and it falls below the national average.",
+  "facts": [
+    { "label": "Structural Welder (current level)", "value": "1-3 years, ¥6,000–9,000 a month (national average)", "source": "Career map" },
+    { "label": "Next level up", "value": "High-Pressure Pipe Welder (3-6 years)", "source": "Career map" },
+    { "label": "Pay in the first year", "value": "¥8,800 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Flat-position root and cap passes on a V-groove in Q345B steel plate (SMAW/GTAW combination)", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Reading the WPS and filling in the pre-weld self-inspection checklist", "source": "AI exposure" },
+    { "label": "Open positions", "value": "2 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "The alarm goes off. In your rented room in the urban village outside the yard, you pull on canvas overalls riddled with tiny burn holes and ride your e-bike toward the river. The red lights on top of the gantry cranes are still on.",
+    "The pre-shift meeting. The team leader reads out today's block numbers and seam numbers. The safety officer checks everyone's hot-work permit and the tank gas test sheet. No one goes below without a signature.",
+    "You squeeze through a manhole into the double bottom. The space is only half a person high. The welding gun is clipped to your belt, a work lamp hangs over your head, and the ventilation hose hums behind you.",
+    "Overhead welding. The seam is twenty centimeters above your face and the molten metal wants to fall. Your left hand braces your right wrist, and in your goggles there is only a single white-hot point. By the end of one seam, your neck has locked.",
+    "You climb out to eat, squatting in the shade of a hull block over a boxed lunch. The back of your overalls has a white ring of dried salt. The fellow from Guizhou on your crew says the per-meter rate over in Zhoushan has gone up again.",
+    "The inspector comes with a weld gauge to measure reinforcement, knocks off the slag and studies it a long while, then circles a patch of undercut in red: repair it, before the X-rays this afternoon.",
+    "In July the tank is over forty degrees, and what the hose blows in is hot air. Every hour you climb up for a breath, gulp half a bottle of salted soda, and crawl back down.",
+    "Overtime until half past seven, then you clock your hours. At the little restaurant by the yard gate, a bowl of noodles and a bottle of beer. You scroll through theory questions for the senior grade exam on your phone, and fall asleep scrolling."
+  ],
+  "ladder": [
+    { "title": "Trainee Welder", "stage": "Entry", "focus": "Cutting, grinding, preheating, and the basics of flat and flat fillet welding. You move up by getting the special-operations permit issued by the provincial emergency management department and producing welds that look right." },
+    { "title": "Structural Welder", "stage": "Intermediate", "focus": "Read assembly drawings on your own and handle vertical, horizontal and fillet welds on steel structures or machine parts. You move up by mastering combined TIG and stick welding and welding in every position." },
+    { "title": "High-Pressure Pipe Welder", "stage": "Senior", "focus": "All-position, one-side welds with full back-side formation on pressure vessels and pressurized piping. You move up by earning the special-equipment welder certificate from the market regulator and a first-time pass rate above 98 percent on radiographic and ultrasonic testing." },
+    { "title": "Welding Technician", "stage": "Senior technician", "focus": "Crack the workshop's hardest welds in dissimilar steels and special alloys, guide procedure qualification, and help commission automated lines. You move up through your ability to solve difficult welding problems and to pass the craft on to your crew." },
+    { "title": "Senior Welding Technician", "stage": "Master of the craft", "focus": "Solve the process bottlenecks in major projects and advanced equipment, apply to found a skills master studio, and lead company-wide welding process innovation and automation upgrades." }
+  ],
+  "ai_tasks": [
+    { "name": "Reading the WPS and filling in the pre-weld self-inspection checklist", "how": "AI can check the welding procedure specification against the drawings and the work order, pre-fill the checklist automatically, and flag where the material or parameters don't match. A person still has to confirm the groove and the material against the actual piece, and sign the checklist." },
+    { "name": "Flat-position root and cap passes on a V-groove in Q345B steel plate (SMAW/GTAW combination)", "how": "Penetration, heat input and bead shape on a load-bearing seam come down to your hands and your judgment on the spot. At most AI helps look up parameter ranges and organize acceptance standards. The welding itself, and the feel for how the weld should look, only a person can do." },
+    { "name": "Repairing lack of fusion in an SA376 TP316LN stainless steel weld on a nuclear plant's main coolant pipe", "how": "Repairs on a nuclear main pipe carry extremely high risk and heavy responsibility. AI can help look up the HAF603 and RCC-M clauses and past repair records. Locating the defect, grinding it out, welding the repair and overseeing the process must be done by certified people with their own hands, who answer for it." },
+    { "name": "Tuning robot paths and process parameters for laser-MIG hybrid welding of EV battery trays", "how": "AI can optimize offline programming, simulate the process window, and recommend parameter changes from porosity and lack-of-fusion data. A person does the teaching on site, watches the weld pool, verifies with real welds, judges the true cause of porosity, and finally confirms the process is ready for mass production." },
+    { "name": "Assembling an automatic welding system for a long-distance pipeline in the field and test-welding the first joint", "how": "The automatic welder comes with its own parameter library, and AI can help load parameters, suggest groove adjustments and analyze test-weld data. Assembling the equipment in the field, tuning it, judging the test weld, and accepting it against SY/T 4109 and API 1104 still need a person on site." },
+    { "name": "Baking and issuing low-hydrogen electrodes", "how": "AI or the system can prompt the electrode type, baking temperature and time from the WPS and keep the issue log. A person actually bakes them, manages the holding ovens, and catches electrodes that have taken on damp or been out too long." },
+    { "name": "Getting a hot-work permit and posting a fire watch before welding in the shop", "how": "Getting the permit, judging what nearby might burn, assigning the fire watch and confirming the safety measures all depend on judgment on site and a signature. At most AI helps generate the permit template and checklist prompts." },
+    { "name": "Vertical CO₂ gas-shielded welding on H-beams", "how": "Vertical welding relies on feel to control the weld pool and the bead, and positions and conditions on site change endlessly. AI can only offer parameter references or help with training. The welding itself is done by a person." },
+    { "name": "TIG root pass on stainless pipe with argon back purge", "how": "A TIG root on a pressure-vessel nozzle relies on feel to control penetration and the back side of the bead, as well as managing the argon flow and coverage behind it. AI can offer parameter prompts. The work and the judgment rest on a person." },
+    { "name": "Welding inside a vessel in a confined space", "how": "Confined-space work involves ventilation, gas testing, a standby attendant and emergency response, with high risk on site and real responsibility. AI can help generate the checklist, but going in, welding and judging safety must be a person's job." },
+    { "name": "Repairing a weld that failed radiographic testing", "how": "AI can help read the X-ray film, identify and locate slag lines, analyze likely causes and draft a repair plan. A person confirms the defect's location on site, removes it, welds the repair, and arranges the re-inspection and sign-off." },
+    { "name": "Renewing the special-equipment welder certificate before it expires", "how": "AI or the system can track the certificate's expiry date, send reminders, assemble the application and list the exam items. A person only needs to confirm the details are right and sit any required exam or review." }
+  ],
+  "events": {
+    "e_master_wrist": "The old master on your crew, close to retirement, sees you keep leaving undercut overhead. He crouches down and tells you not to use only your arm: let your waist carry the gun. He runs a bead to show you, even as fish scales.",
+    "e_first_rt": "An overhead butt weld of yours passes X-ray on the first try. The inspector holds the film up to the light and says this one can be the sample.",
+    "e_spark_collar": "A bead of molten metal drops from overhead into your collar. Your hands don't stop; you finish the seam before you climb out. It leaves a coin-sized mark on your neck, and the next day you go back into the tank as usual.",
+    "e_boom_overtime": "The ship market is booming, orders one after another, and for three months the workshop doesn't take a single Sunday off. Your pay slip is a good deal thicker than last year's. Every night you get home and drop straight into sleep.",
+    "e_near_miss": "In the next block over, someone goes into a tank without waiting for the gas test signature and is dragged out and taken to hospital. He's all right. Since then, every time before you go below, you read the numbers on the test sheet with your own eyes.",
+    "e_contest": "You represent the workshop at the city's welding skills competition and take third place with your overhead test plate. The yard posts your name on the red honor board outside the canteen, and your mother makes the photo her WeChat profile picture.",
+    "e_love": "A young woman from the paint shop gets her lunch at the same canteen window as you every day. Once, when it's raining, you give her the rain cape from your e-bike. After that, the two of you often walk together.",
+    "e_wedding": "You hold the wedding back home. The bride price, the banquet, the three pieces of gold jewelry: years of saved wages hit bottom at once. At the wedding your father drinks too much and grabs people to tell them his son builds big ships.",
+    "e_baby": "The day your child is born you are in the tank with your phone left outside. When you come out there are eleven missed calls. You rush to the hospital still covered in welding fumes, and the nurse won't let you in.",
+    "e_house": "You buy a small two-bedroom on the edge of Nantong's city district. Both sets of parents pooled the down payment. With the mortgage pressing on you, you never turn down overtime again.",
+    "e_robot_line": "The flat-block assembly line brings in welding robots, and more than half of the flat butt welding disappears overnight. What's left for people are the corners robots can't get into: tank bottoms, where the floors and frames cross, overhead.",
+    "e_ai_film": "Inspection brings in a film-reading system. The slag line inside your seam, it marks before the inspector does. You grind, repair and re-shoot, and the system goes over it once more before letting it pass.",
+    "e_slump": "The ship market falls. The workshop sends people home on rotation, and only base pay goes out. Your roommate from back home returns to Guizhou, saying even delivering takeout is better than waiting around here.",
+    "e_lng": "The yard takes on its first LNG carrier. Welders for the Invar steel have to be tested all over again, and twenty people from across the yard are picked for training. Your name is on the first page.",
+    "e_launch": "The ship you welded is named and delivered, and the owner cuts the ribbon on the dock as fireworks go off. You stand at the very back of the crowd, looking at the bottom of the hull from far away. Hundreds of your overhead seams are in there.",
+    "e_lung": "At the yard's checkup, your chest X-ray says increased lung markings. The doctor tells you to watch your protection. You switch to a dust mask with an exhalation valve and never take it off in the tank, however hot.",
+    "e_father": "A call from home: your father fell off his bike in the township and has a steel plate in his leg now. You take ten days off to go back. That month, your hours are cut in half.",
+    "e_apprentice": "Your apprentice passes the special-equipment welder certificate. The day he gets it, he insists on taking you to dinner and orders a whole table of dishes you'd never let yourself order.",
+    "e_knees": "Years of welding squatting, kneeling and face-up, and your knees and neck are the first to give. You need a hand to get in and out of manholes, and your neck creaks when you turn over at night.",
+    "e_young_gone": "Half the new welders the workshop hired this year are in their forties. You go to the technical school to recruit, and the first question from the kids in the room is: Is there shipyard work where you don't crawl into tanks?",
+    "e_weld_qr": "Every seam is now scanned and tied to the welder's number, the welding machine's current curve and the electrode batch. When a seam goes wrong, one look tells you who, which day, and which pack of electrodes. You weld a little more slowly than before.",
+    "e_deferred_pay": "At the year-end settlement, the workshop says part of the pay for hours worked will be held over until next year. You watch hundreds of people flood the group chat, and in the end you go to see the team leader on your own.",
+    "e_ear": "Years of grinding inside steel tanks, and everything in your left ear sounds as if through a layer of cloth. When your child talks to you, you have to turn your head to hear."
+  },
+  "choices": {
+    "c_ccs": {
+      "title": "Practice after work for the senior grade and the classification society certificate",
+      "situation": "The workshop is sending a group to sit the senior grade and the classification society's overhead certificate. Only with those can you take High-Pressure Pipe Welder work, welding pressure lines and engine-room piping. The practice booths open only after work, and those hours are when you'd normally earn overtime.",
+      "options": [
+        { "label": "Sign up and practice in the booths after work", "result": "In two months you burned through more than thirty test plates, and the electrode stubs filled a bucket. On exam day your hands were steady. Only on the way home did you notice your palms were covered in blisters." },
+        { "label": "Skip the exam for now and take more piecework", "result": "Those two months your pay was the highest on the crew, and you sent a sum home. On the next list of people sent for testing, the team leader didn't ask you again." }
+      ]
+    },
+    "c_zhoushan": {
+      "title": "Join a subcontract crew in Zhoushan with your fellow villager",
+      "situation": "Your roommate from back home is joining a subcontract crew at a ship repair yard in Zhoushan, paid by the meter at thirty percent more than here, and wants you along. But there's no proper contract, social insurance depends on the boss's mood, and repair work is dirty, rushed, and runs through the night.",
+      "options": [
+        { "label": "Go to Zhoushan and earn by the meter", "result": "The first year you earned a good deal more than at the yard, and learned what it means to repair a ship in three days and three nights. At year's end the boss took two extra months to pay up." },
+        { "label": "Stay at the yard", "result": "You stayed. Your pay rose step by step, and your social insurance never missed a month. Your fellow villager later sent a photo of himself standing beside a new car." }
+      ]
+    },
+    "c_robot": {
+      "title": "Learn to program welding robots or not",
+      "situation": "The block workshop has brought in welding robots and is picking welders to learn teaching and offline programming, at base pay only for the six months of training. The workshop director says there'll be more and more of them. But you know the tank bottoms robots can't reach will always be short of people.",
+      "options": [
+        { "label": "Go learn, and work with the robots", "result": "You went from welding face-up to watching a screen and adjusting paths. When the robot left porosity, it was still you who crouched down to look at the pool and judge whether it was the parameters or the groove." },
+        { "label": "Don't go; someone has to do the tank work", "result": "You became one of the people in the workshop who knew the double bottom best, and whenever something was hard to weld, the team leader thought of you first. Only, on the pay slips, the ones tuning robots rose faster than you." }
+      ]
+    },
+    "c_ndt": {
+      "title": "Get certified in inspection and move to quality control",
+      "situation": "Your child is due soon, and your family doesn't want you crawling into tanks anymore. The quality department is hiring. With Level 2 in ultrasonic and radiographic testing you could transfer: a white hard hat, no more welding fumes, though less pay at first.",
+      "options": [
+        { "label": "Get UT and RT certified and move to quality control", "result": "You passed Level 2 in inspection and walked from one end of the weld to the other.", "end": "You put on a white hard hat and walked between the hull blocks with a probe and a weld gauge. Now and then, chipping open a seam, you could tell at a glance whether the hands that welded it had been steady that day." },
+        { "label": "Stay behind the welding gun", "result": "You told your family a few more years. That night you smoked half a pack on the balcony, and the next day you left the house before six as usual." }
+      ]
+    },
+    "c_foreman": {
+      "title": "Become crew leader, or go for welding technician",
+      "situation": "The old team leader has retired, and the workshop wants you to take over the crew, managing the hours, safety and progress of a dozen-odd people. Meanwhile the technical department urges you not to drop the craft: take on dissimilar steels and special alloys and qualify as a welding technician. Both need you, and there's only one of you.",
+      "options": [
+        { "label": "Take over as crew leader", "result": "You began assigning work, counting hours, and arguing with inspectors on your crew's behalf. You held the gun less and less. When pay was divided at month's end, someone always felt shortchanged." },
+        { "label": "Just weld, and go for technician", "result": "You worked through a round of procedure qualifications on stainless and low-temperature steel with the technical department, welding hundreds of test plates. When newcomers on the crew hit a difficult seam, they started calling you master." }
+      ]
+    },
+    "c_hometown": {
+      "title": "Go back to a steel structure plant in your home county",
+      "situation": "A steel structure plant has opened in your home county town, and the owner has sent word asking you to head the welding shop: twenty percent less pay, no tanks, twenty minutes from home. Your child is in primary school now, and the grandparents have been raising them.",
+      "options": [
+        { "label": "Go back to the county", "result": "You could pick your child up from school every day. What you welded were steel beams for factory buildings, mostly flat and vertical. Your overhead skill slowly went unused." },
+        { "label": "Stay at the shipyard", "result": "You turned it down. On the weekend video call your child asked when you were coming home. When this ship is delivered, you said." }
+      ]
+    },
+    "c_master": {
+      "title": "Apply for a skills master studio and Senior Welding Technician",
+      "situation": "The yard wants to apply for a city-level skills master studio under your name. It means leading a problem-solving project, training a group of apprentices and writing a set of repair work instructions, and the Senior Welding Technician assessment looks at the same things. All of it on top of your regular work.",
+      "options": [
+        { "label": "Apply, under your name", "result": "The day the studio's plaque went up, you had your photo taken standing beneath it, not knowing what to do with your hands. For the next year you sat through more meetings than you welded seams." },
+        { "label": "Don't apply; train the few apprentices you have", "result": "The slot went to another workshop. You were still in the tanks every day, taking your two apprentices through it one seam at a time." }
+      ]
+    },
+    "c_teacher": {
+      "title": "Become a practical training teacher at the technician college",
+      "situation": "The technical school you attended has been upgraded to a technician college, and it's short of veterans to teach welding practice. The principal has sent someone to ask you. Winter and summer breaks, less pay than now, and no more tanks.",
+      "options": [
+        { "label": "Go teach welding at the school", "result": "You got your skills assessor's certificate and moved into the college's training building.", "end": "Under the fume extraction hoods, you look over the students' test plates row by row. One kid's overhead beads keep sagging. You crouch down and tell him not to use only his arm: let your waist carry the gun." },
+        { "label": "Stay at the yard and train apprentices", "result": "You declined, saying there were still a few seams on the ships that needed a person. That winter, your neck flared up again." }
+      ]
+    },
+    "c_monitor": {
+      "title": "Come out of the tanks to be a hot-work attendant and trainer",
+      "situation": "You're in your early fifties, and every year there are more arrows on your checkup. The workshop director says he can move you to hot-work attendant and training new hires. No more tanks, and no more piecework pay either.",
+      "options": [
+        { "label": "Become attendant and trainer", "result": "Every day you sit beside a manhole, reading test sheets, watching the hoses, watching young people go in and come out. You talk more in a day than you used to in a month." },
+        { "label": "Keep going into the tanks until you can't", "result": "You are still the last one to climb out of the tank. Behind your back the young ones call you Old Overhead. You hear it and say nothing." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last shift you didn't go below. You stood beside the block watching your apprentice weld. When the end-of-shift bell rang, you hung your scorched, yellowed welding mask back in the tool locker. On the locker door, the red honor board from that skills competition more than twenty years ago was still taped up. As you walked out the yard gate, another new ship was on sea trials out on the river, and its horn sounded twice.",
+    "burnout": "That day you climbed out of the manhole and sat on the deck a long time without getting up; your knees and your back wouldn't answer. The yard doctor wrote you an order, and the workshop moved you to the stores to manage welding consumables. You leave on time every day, and when you pass the hull blocks you still look up at the rows of seams."
+  },
+  "past": [
+    "Your high school entrance exam score was twenty-odd points short of the line for academic high school. Your father was a bricklayer in the township. Better to learn a trade at a technical school, he said, than sit at the bottom of an academic high school. A recruiter came to the village and said shipyards were short of welders, and placement after graduation was guaranteed.",
+    "You entered the welding class at a technical school in the city. The first semester was all grinding and drawing. You first held a welding gun in the second semester. When the arc struck, you shut your eyes without meaning to.",
+    "At school you earned the special-operations permit for fusion welding and thermal cutting. Half your class went to electronics factories after getting it, saying welding was too hard. You stayed in welding.",
+    "Your work placement sent you to this shipyard, starting with grinding bevels, chipping slag and flat fillet welds. The master training you said: three months of flat welding first. If you can't weld flat, don't even think about vertical.",
+    "After technical school you stayed at the yard as a contract worker and passed the intermediate grade. In your first year one of your vertical welds failed X-ray, and you were docked half a month's bonus. You repaired that seam three times.",
+    "Vertical and horizontal both passed, and the team leader started sending you into the double bottom. The first time you welded overhead, molten metal dripped into your sleeve. Only when you got home that night did you see the string of small blisters up your arm."
+  ],
+  "late": {
+    "pension_note": "Estimate: shipyard contract workers draw the basic pension for enterprise employees, with contributions that float with piecework pay. After retirement that comes to about forty percent of your final monthly wage. There is no occupational annuity.",
+    "scenes": [
+      "Your first month of retirement, you still wake a little after five. You ride your e-bike down to the river and stop outside the yard gate for a while, watching the morning shift go in, wave after wave.",
+      "A small shipyard asks you to be its welding consultant two days a week. No tanks. You only look at drawings and test plates, and tell the young ones which end of a seam to weld first.",
+      "Your pension arrives on time every month, enough to feed and clothe the two of you, and the mortgage is long paid. Your child works in Suzhou and wants to buy a home. You give half your savings, and don't dare touch the rest.",
+      "Downstairs in your compound, you weld a neighbor's broken iron gate with a small welder they borrowed. When you're done you look it over and say the current on this machine isn't steady. The neighbor doesn't understand, and insists you take a bag of tangerines.",
+      "You manage welding consumables in the stores, handing out electrodes, wire and shielding gas by the requisition. The pay is a notch lower. At night your knees don't hurt, and you sleep straight through.",
+      "A young welder comes to draw electrodes and mentions a seam in the double bottom no one can get right. You open your mouth, then swallow what you were going to say, and sign the slip.",
+      "You reach retirement age and do the paperwork on time. The pension isn't much, so you and your wife open a small repair stand at the compound gate, patching tires and welding bike baskets, a few dozen yuan a day.",
+      "Your first year without a welding gun, your hands always felt empty. When you smell welding fumes from a repair shop by the road, you stand there a little longer.",
+      "You've found your footing in the new job. When you go back to the yard on errands, people from your old crew still use your nickname. No one asks why you left, and you don't bring it up.",
+      "One of the people you trained has become a welding technician. The day he qualifies he calls you, and the first thing he says is: Master, I'm carrying the gun with my waist now.",
+      "The yard brought in more robots later, and you hardly see a person on the flat butt welds anymore. But the seams at the tank bottoms, where the floors and frames cross, and overhead, still need someone to crawl in and weld them, one by one.",
+      "Your neck stiffens whenever it rains, from welding face-up when you were young. Your grandson asks what you used to do. Built big ships, you tell him. He asks how big. Longer than this whole building, you say."
+    ],
+    "closing": {
+      "retire": "One evening many years later, you are walking slowly along the river embankment when a newly launched ship comes down from upstream. You squint at its waterline and think of the hundreds of overhead seams you welded, and which seas they are on now.",
+      "burnout": "Many years later, at the repair stand in your compound, you finish welding a bike basket for a child. You push up your mask and let him touch the seam. Wait till it's cool before you ride, you tell him. Don't burn your hand.",
+      "end": "Many years later, in a drawer, you come across your special-operations permit, its lamination gone yellow. In the photo you are eighteen, your eyes not yet dazzled by the arc. You look at it a while, then put it back."
+    }
+  }
+}

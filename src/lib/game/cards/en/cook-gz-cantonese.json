@@ -1,0 +1,187 @@
+{
+  "id": "cook-gz-cantonese",
+  "occupation": "Chinese Cook",
+  "role": "Chopping-board apprentice at an old Cantonese restaurant",
+  "headline": "Fresh out of a vocational school cooking class and up from Maoming, a chopping-board apprentice in the kitchen of an old-name Cantonese restaurant in Guangzhou, learning to sharpen knives and cut ginger flowers from a master who has worked the board for thirty years",
+  "unit": "A decades-old, old-name Cantonese restaurant in Xiguan, the old west of Guangzhou",
+  "unit_type": "Old-name restaurant",
+  "city": "Guangzhou",
+  "city_tier": "Tier 1",
+  "education": "Vocational high school (Chinese Cooking)",
+  "level": "At vocational school you practiced tossing the wok and basic knife work, and can cut shreds and slices. You can't bone a whole chicken yet, and you don't know all the Cantonese aromatics",
+  "intro": "The day after your vocational school graduation, you dragged a suitcase onto a coach from Maoming to Guangzhou. The old master in the restaurant kitchen glanced at your hands, tossed you a knife and a basket of ginger, and said: cut the ginger flowers all the same size first. Until you can, you don't work the board. As of today, at the board furthest back in the kitchen, there is a place for you to stand.",
+  "salary_note": "Estimate: apprentices at an old-name Guangzhou restaurant get board and lodging and take home a little over ¥4,000, about the national figure. Once you reach head wok or head chef, old-name restaurants pay upper-middle by Guangzhou standards, but noticeably less than the new high-end Cantonese places.",
+  "facts": [
+    { "label": "Plating Assistant (current level)", "value": "0-1 years, ¥3,500–5,500 a month (national average)", "source": "Career map" },
+    { "label": "Next level up", "value": "Chopping-Board Prep Cook (1-3 years)", "source": "Career map" },
+    { "label": "Monthly pay, 10+ years in the field", "value": "¥12,000 (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Cutting raw meat before service and dealing on the spot with aromatics that have gone wrong", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Weighing and mixing standard compound sauces and portioning and labeling semi-finished food", "source": "AI exposure" },
+    { "label": "Open positions", "value": "0 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "The staff dorm is in an old alley behind the restaurant, six to a room. You climb down from the top bunk as quietly as you can. The dim sum cooks went downstairs at four.",
+    "Deliveries. Live fish thrash in plastic tubs, and free-range chickens come in cage after cage. The master presses a fish's eye with a finger, pinches a chicken's breast, waves his hand. Two cages go back.",
+    "Morning tea opens, and the dining room is already full of old uncles at their yum cha. At the board you cut the aromatics: ginger flowers, scallion lengths, minced garlic, shreds of aged tangerine peel, one plate of each, lined up on steel trays.",
+    "The master teaches you to bone a chicken. The tip of the knife follows the bone, and the whole bird has to come away as one unbroken sheet of skin and meat. You bone three and tear two. The master doesn't shout. He just tells you to use them for the staff meal.",
+    "Lunch service. The ticket printer spits out order after order: two steamed spare ribs in black bean sauce, half a white-cut chicken. You portion to each ticket, weigh it, plate it and push it to the plating station. Over at the woks they're already shouting for people.",
+    "The break between services. A folding table in the back alley; the staff meal is a pot of choy sum stir-fried with Cantonese sausage. The master sits in a corner with his bowl and asks you in Cantonese whether you eat pig's blood curd back home.",
+    "Tonight is a birthday banquet for thirty tables. You fillet and slice a whole crate of grass carp and lay the slices out one by one. Your fingers, soaking in ice water, have gone numb.",
+    "Closing. Scrub the boards, brush the floor, put the leftover prep in the cold room, sharpen your knife. The master's knife is nearly twenty years old, its blade a finger's width narrower than when it was new. When he sharpens it, you stand beside him and watch."
+  ],
+  "ladder": [
+    { "title": "Plating Assistant", "stage": "Entry / trainee", "focus": "Handle rough prep, killing at the water station, cutting aromatics, restocking seasonings at the plating station, and plating and garnishing dishes on the way out. You move up to the board or the wok on quick hands, getting things done, and knowing the menu and the flow of orders by heart." },
+    { "title": "Chopping-Board Prep Cook", "stage": "Junior / support", "focus": "Break down whole chickens, whole fish and meat into precise cuts, do decorative knife work, and portion main and side ingredients to standard ratios. You move up to the wok line on knife speed, yield control, and practicing tossing the wok in your spare time." },
+    { "title": "Wok Cook", "stage": "Intermediate / core", "focus": "Run a wok on your own: stir-frying, deep-frying, braising and stewing everyday hot dishes on the third or second wok. You move up to head wok and management on consistent quality, steady texture and color, and speed at peak hours." },
+    { "title": "Head Wok Supervisor", "stage": "Senior / core", "focus": "Cook the signature dishes and high-end banquet dishes at the head wok, coordinate the flow of orders during service, and help oversee quality and train apprentices. You move up to sous chef or head chef on solid craft, command of the line and handling complaints." },
+    { "title": "Head Chef", "stage": "Expert / management", "focus": "Run the whole kitchen: menu pricing, margin accounting, acceptance standards for suppliers' ingredients, and food safety. Your position rests on the restaurant's reputation for its food, a stable team and hitting margin targets." }
+  ],
+  "ai_tasks": [
+    { "name": "Cutting raw meat before service and dealing on the spot with aromatics that have gone wrong", "how": "AI can't help with the knife work or reacting on the spot. A person has to cut diced meat to spec by hand under pressure, judge whether abnormal meat can be used, and manage the flow of the kitchen to prevent cross-contamination." },
+    { "name": "Weighing and mixing standard compound sauces and portioning and labeling semi-finished food", "how": "AI can scale standard recipes into batch ratios and generate labels and traceability records. Weighing, mixing, tasting, portioning and handling inspections still have to be done by a person, who answers for the flavor." },
+    { "name": "Morning checks, first-in-first-out storage of near-expiry stock, and isolating it", "how": "AI can check orders against stock, flag items close to expiry and send an alert when the cold room alarm goes off. Going through the store to look at the food itself, judging whether it has spoiled, moving and isolating it takes a person's hands." },
+    { "name": "Standardized high-heat stir-frying at peak hours and coordinating service", "how": "At most AI helps put the orders in sequence. The heat, the tossing, working with the plating station and the woks on the spot, and checking how each dish looks at the pass all depend on a person's feel and judgment." },
+    { "name": "Shutting down and sanitizing equipment at closing, and stocktaking and reviewing what was used", "how": "AI can total up consumption and generate the next day's restocking estimate. Switching off, filtering oil, cleaning, sanitizing and counting the physical stock have to be done in person, and a person decides how much to restock." },
+    { "name": "Morning handover checks before service and first-in-first-out prep", "how": "AI can estimate prep from bookings, list what to count and flag shelf lives. A person goes into the store to count on the spot, checks the state of the ingredients and completes the handover." },
+    { "name": "Making base sauces to standard recipes and managing portioning and labels", "how": "AI can work out batch quantities from the order volume and generate compliant labels automatically. A person weighs, blends, tastes and labels, keeping the flavor consistent." },
+    { "name": "Stir-frying Kung Pao chicken at standard heat and plating it", "how": "Fast stir-frying in a hot wok comes down to a person's feel and command of the heat and the order the ingredients go in. At most AI offers a standard recipe for reference; it can't take the wok." },
+    { "name": "Working the plating station at peak hours and checking how dishes look on the way out", "how": "At peak hours the plating station has to adjust side ingredients on the spot, watch the state of the food, and handle surprises like a group booking turning up early. AI can only help a little with order prompts." },
+    { "name": "Emergency transfer of raw meat when the cold room temperature alarm goes off", "how": "AI monitors temperatures, raises the alarm sooner and provides a checklist of what to do. A person has to check the food at once, judge what can be kept and what must be thrown out, and move it by hand." },
+    { "name": "Cleaning and maintaining equipment at closing and signing off the stocktake", "how": "AI can total up the stocktake, generate order estimates and the sign-off sheet. A person switches off and cleans, sanitizes and clears away, counts the physical stock, and walks the stations with the head chef to sign and take responsibility." }
+  ],
+  "events": {
+    "e_cut_finger": "Rushing orders at lunch, you cut your own finger. The master took one look, told you to bandage it and put on a finger cot, and said: next time, move the knife slower and your hand faster.",
+    "e_first_chicken": "For the first time you boned a whole chicken without a single tear in the skin. The master held it up to the light, looked it over, said nothing, and put it in with the birthday banquet batch.",
+    "e_homesick": "Spring Festival is the restaurant's busiest time, and for the first time you didn't go home for New Year. On New Year's Eve after closing, you phoned your mother from the back alley. Firecrackers were going off at her end. You said it was lively here too.",
+    "e_sandbag": "Every afternoon break you went to the back alley and tossed a sandbag in a wok until your wrist swelled. Once the second wok cook let you stir-fry the choy sum for the staff meal in his place. The heat was a little off, he said; the oil temperature was all right.",
+    "e_cold_room": "In the middle of the night the cold room temperature alarm went off, and a checklist of what to do popped up on your phone. You and the senior apprentice on duty rushed back to the kitchen and went through the raw meat crate by crate, moving what could be kept, weighing and logging what couldn't, and throwing it out.",
+    "e_wedding_banquet": "At a wedding banquet for eighty tables, you prepped five tables short on your dish, and they started shouting at the pass. Without a word, the master took the knife and made up the shortfall in ten minutes. You didn't dare look up all night.",
+    "e_food_blogger": "A food blogger filmed the restaurant's white-cut chicken, the video went viral, and the queue at the door stretched to the end of the street. That month the kitchen chopped an extra hundred-odd chickens a day, and your knife cuts never once slipped.",
+    "e_love": "A floor captain came to the back alley for a cigarette every break. One day she asked if you could make sampan congee. You made it. She said it was too salty. The next day she came back.",
+    "e_closed_months": "The restaurant closed for three months of renovation and paid only basic wages. You spent three months frying noodles for someone at a night market food stall, and when you came back you found your control of the heat had gone wild.",
+    "e_contest": "You represented the restaurant in a Cantonese cooking skills competition. In the knife work round, your shreds of radish were fine enough to thread a needle. You won a silver, and the certificate went up on the door of the kitchen changing room.",
+    "e_wedding": "You got married. The banquet wasn't held at your own restaurant; the master said you can't taste the food in your own place. You laid on thirty tables back in Maoming and cooked half of them yourself.",
+    "e_ai_prep": "The restaurant brought in a system that generated the next day's prep list automatically from bookings. The first month it kept underestimating the char siu for morning tea. You corrected the list every morning, and it took until the third month before it got it right.",
+    "e_master_retire": "The master retired and went back to his home village. On the day he left, he laid the knife a finger narrower than new on your board, and gave no instructions at all.",
+    "e_child": "Your child was born on a Sunday, with three banquets at the restaurant. You kept watch outside the delivery room all night, and at six in the morning you were back in the kitchen.",
+    "e_central_kitchen": "The group built a central kitchen, and the char siu sauce, the black bean sauce and the ginger-scallion relish for the white-cut chicken were all delivered from it. The kitchen lost three people and half the work on your board disappeared, but old customers kept saying those sauces didn't taste like they used to.",
+    "e_burn": "At peak hour a ladle of hot oil splashed onto the back of your hand. You ran it under ice water, put on some ointment and kept cooking. That patch of skin has been darker than the rest ever since.",
+    "e_apprentice": "The new apprentice's ginger flowers came out all different sizes. You didn't scold him. You tossed him a basket of ginger and said, come back when they're all the same size. He cut for three days, and you stood beside him and watched.",
+    "e_house": "You put down the deposit on a flat in Zengcheng, on the edge of Guangzhou. Every night after closing you ride forty minutes home on an e-bike, and by the time you get there your child is already asleep.",
+    "e_parents": "Your father had a fall back home in Maoming. You took a week off and went back, and phoned the restaurant from the hospital corridor to go over the next day's prep.",
+    "e_sop_data": "Head office sent people to film you cooking, calling out the grams and seconds for every step; they said they were turning it into standard data for the new branches. You told them heat isn't something you can count in seconds. They wrote down a number anyway.",
+    "e_old_customer": "An old uncle who had been coming for yum cha for decades asked to see the kitchen, and said today's black bean spare ribs had the old taste back. The floor manager called you out of the kitchen.",
+    "e_veins": "After twenty-odd years standing at the stove, the veins in your calves had swollen up one by one, and the doctor told you to wear compression stockings. In summer the kitchen is over forty degrees Celsius, and you still wear them.",
+    "e_smell": "You noticed you needed an extra taste to judge the salt. You started letting your apprentice taste first, then hand you the spoon.",
+    "e_young_cooks": "Fewer and fewer young people came to the kitchen as apprentices; many new restaurants just used sauce packs and automatic stir-fry machines. The restaurant's board was down to you and two masters in their forties, and the three of you still boned the chickens by hand."
+  },
+  "choices": {
+    "c_stay_master": {
+      "title": "Stay with the master, or go to a chain",
+      "situation": "Your vocational school classmates went to a fast-food chain's central kitchen. Base pay a thousand yuan more than yours, full social insurance and housing fund, two days off a week. They post their pay slips in the group chat and ask how much ginger you wash a month.",
+      "options": [
+        { "label": "Stay with the master", "result": "You still cut ginger flowers, boned chickens and sharpened knives every day. The master doesn't say much, but he started letting you prep the birthday banquet dishes beside him." },
+        { "label": "Go to the chain's central kitchen", "result": "Every day you cut the same ingredients to the same SOP, clock off after eight hours, and get paid on time. Six months in, you realized you hadn't touched a whole chicken in a long time." }
+      ]
+    },
+    "c_cert_mid": {
+      "title": "Sit the intermediate cook certificate or not",
+      "situation": "The restaurant says those with the intermediate (Level 4) certificate get a ¥200 monthly skills allowance, and it counts for future grading. The exam means a prep course, and the theory you memorize is all nutrition and food safety law. The master says none of that ever cooked a dish.",
+      "options": [
+        { "label": "Take the course and sit it", "result": "You memorized books on your top bunk for a month. The practical exam was mapo tofu. Yours wasn't very Sichuan, but you passed." },
+        { "label": "Skip it and rely on your hands", "result": "You spent all the time you would have spent memorizing on tossing the sandbag. No certificate, but when the second wok cook took leave, the head chef started calling on you to cover." }
+      ]
+    },
+    "c_stove": {
+      "title": "The second wok is open: compete for a wok cook's place",
+      "situation": "The second wok cook has jumped ship to Shenzhen, and the head chef will pick someone from the boards to move up to the wok. Your senior apprentice came three years before you, and everyone assumes it will be him. Your knife work is better than his, and your wok tossing isn't bad either.",
+      "options": [
+        { "label": "Go for it", "result": "Every night after closing you stayed an hour to practice small high-heat stir-fries, and the head chef tested you on three dishes. You got the second wok. For months afterward your senior apprentice only nodded when he saw you." },
+        { "label": "Let your senior apprentice have it", "result": "Your senior apprentice moved up to the wok. He took you out for a late-night meal and said he would teach you what he knew at the wok. You stood at the board for two more years, until your knife work was good enough to cut with your eyes closed." }
+      ]
+    },
+    "c_prepared": {
+      "title": "Go into prepared-meal development at a food factory",
+      "situation": "A food factory making prepared meals is poaching cooks who know Cantonese food, to turn restaurant dishes into ready-to-heat packs. Thirty percent more pay, office hours, no standing at the stove. Only, from now on your food would sit in supermarket freezers.",
+      "options": [
+        { "label": "Go to the food factory", "result": "You put on a white coat and cooked one dish twenty times on an induction hob in a lab, noting the grams every time. The day your first pack went on sale, you bought one at the supermarket and took it home. Cooked up, it didn't taste like yours.", "end": "You became a prepared-meal developer at a food factory, with a dozen-odd packs in the freezers that came from your hands. At New Year and holidays back in Maoming, you still cook the family's food yourself." },
+        { "label": "Stay at the restaurant", "result": "You turned it down. That night after closing, you sharpened the master's knife once more." }
+      ]
+    },
+    "c_city": {
+      "title": "Shenzhen, or back to Maoming",
+      "situation": "A new high-end Cantonese restaurant in Shenzhen is poaching people, offering half as much again as you earn now. Your cousin back home in Maoming wants to go in with you on a dai pai dong, an open-air food stall, in the township. Here at the restaurant, you have only just found your footing.",
+      "options": [
+        { "label": "Go to the high-end place in Shenzhen", "result": "They use ingredients you have never seen, and plating one dish takes tweezers. The pay went up. You take the high-speed train back to Guangzhou one day a week, and your child has started to be shy of you." },
+        { "label": "Go back to Maoming and open a dai pai dong", "result": "You went back to the township and worked one roaring wok from dusk until the small hours. The customers are all people you know, and so are the ones who eat on credit. You don't earn much, but at night you can have a late supper with your family." },
+        { "label": "Stay at the restaurant", "result": "You didn't move. The next year the restaurant was awarded a plaque for passing down intangible cultural heritage skills, hung by the door, and your name was the last one in the column of inheritors." }
+      ]
+    },
+    "c_sop": {
+      "title": "Write the master's dishes down as data",
+      "situation": "The group is opening branches and wants to turn the restaurant's signature dishes into standard data to feed the new branches' systems and stir-fry machines, and asks you to lead it. A few of the old masters are unwilling. Write down what's in your hands, they say, and it isn't that taste any more.",
+      "options": [
+        { "label": "Lead the writing", "result": "You broke dish after dish down into grams, oil temperatures and seconds, and after every line you added: watch the wok hei, the breath of the wok, not the stopwatch. When the new branch opened, the old masters said the taste was a bit off, but edible." },
+        { "label": "Decline and stand with the old masters", "result": "Head office sent someone else to write it. The new branch's food later made the ratings site's top list, and someone in the reviews wrote that it didn't taste like the old shop. You read it and said nothing." }
+      ]
+    },
+    "c_head_wok": {
+      "title": "Apply for head wok supervisor",
+      "situation": "The head wok cook's back has gone, and he has moved to a lighter role. The head wok supervisor runs the whole wok line: the banquet signature dishes are yours, and so are the complaints. The other applicant is a young cook from a five-star hotel.",
+      "options": [
+        { "label": "Apply", "result": "You cooked steamed fish head in black bean sauce and dry-fried beef ho fun, with no flourishes at all. One of the judges was an old uncle. When he finished, he put down his chopsticks and said: that's the taste." },
+        { "label": "Don't apply; stay on the second wok", "result": "The young cook got the head wok, and the menu gained several dishes with foams and petals. You kept cooking what you cook, and slept better at night than before." }
+      ]
+    },
+    "c_teacher": {
+      "title": "Become a cooking teacher at a vocational school",
+      "situation": "The vocational school you went to asks you back as a practical training teacher. Winter and summer holidays, no evening service, a bit less pay than now. The admissions teacher says fewer and fewer kids sign up for cooking these days.",
+      "options": [
+        { "label": "Go back and teach", "result": "In the training kitchen you teach a crowd of sixteen- and seventeen-year-olds to cut ginger flowers, the way the master taught you, tossing them basket after basket of ginger.", "end": "You became a cooking instructor at a vocational high school, seeing off a class every year. A few went to restaurants in Guangzhou, and at New Year they send you a box of sausages they made themselves." },
+        { "label": "Stay at the stove", "result": "You said you would cook a few more years. The admissions teacher left a stack of flyers, and you used them to steady your chopping board." }
+      ]
+    },
+    "c_head_chef": {
+      "title": "The head chef's job",
+      "situation": "The old head chef is retiring and has recommended you. The head chef handles menu pricing, margins, suppliers and the rota for twenty-odd people, and never has time to bone a chicken by hand again.",
+      "options": [
+        { "label": "Take it", "result": "Every day you look at the margin sheet before the stoves, and haggle with suppliers half a day over the price of a jin of chicken. Now and then when evening service is short-handed, you still roll up your sleeves and take the head wok." },
+        { "label": "Recommend your own apprentice", "result": "You put your apprentice forward and kept to the board and the head wok yourself. In meetings you sit at the back, and every time your apprentice says something, he glances at you." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you are still in the kitchen at six-thirty for deliveries. You press a fish's eye, pinch a chicken's breast, send one cage back. You don't work the wok at lunch. Beside the board you bone a chicken, without a single tear in the skin. After closing you sharpen the knife, two fingers narrower now than when it was new, and leave it on your apprentice's board, with no instructions at all.",
+    "burnout": "That summer the kitchen was over forty degrees, and standing by the stove you blacked out. Your apprentice helped you out to sit in the back alley. You only heard half of what the doctor said. You handed in your notice and went back to Maoming. When someone in the township holds a banquet, they sometimes ask you to come and keep an eye on the heat."
+  },
+  "past": [
+    "You grew up in the countryside outside Maoming, where your parents ran a small restaurant in the township. After school you helped by the stove picking over vegetables and washing dishes, and at thirteen you could already make a decent plate of fried ho fun.",
+    "Your zhongkao, the high school entrance exam, came out dozens of points short of the county's regular high schools. Your father said if you can't study, learn a trade; a cook never starves. You applied to the Chinese cooking program at a vocational high school in the city.",
+    "In your first year at vocational school, the teachers taught standard Sichuan and Shandong dishes. You tossed the wok better than anyone, but your shreds always came out uneven. Your teacher said your hands were quick and your heart was impatient.",
+    "In second year you did a work placement at a restaurant in Guangzhou and saw an old-name kitchen's chopping board for the first time: a master in his fifties boned a chicken in a minute, the skin and meat whole as a piece of clothing.",
+    "On the last day of the placement, that master asked where you wanted to go after graduating. Here, you said. You can come, he said, but be ready to spend three years doing nothing but cutting ginger.",
+    "Before graduating you got the beginner (Level 5) certificate and a health certificate, turned down the fast-food chain the school recommended, and phoned the restaurant's HR."
+  ],
+  "late": {
+    "pension_note": "Estimate: Guangzhou's urban employee pension scheme. Restaurants mostly pay in on a low base, and changing employers left gaps in contributions. In retirement you get roughly 40% of your last monthly salary; being rehired to train apprentices brings in a separate income.",
+    "scenes": [
+      "Your first week of retirement you still wake at five-thirty. You take a turn round the wet market, spend ages telling the chicken seller the difference between free-range birds and three-yellow chickens, and in the end buy nothing.",
+      "The restaurant rehired you three mornings a week. You don't work the wok. You just stand by the board watching the young ones bone chickens and cut aromatics, and whenever someone's knife moves too fast, you reach out and tap the back of their hand.",
+      "The pension is a little over ¥4,000 a month, and with the rehire money it is enough to live on. You hang Cantonese sausages to dry on the balcony of the flat in Zengcheng, a whole row at a time, and the neighbors all come asking for some.",
+      "For the first few months back in Maoming you hardly went into the kitchen, and ate what the family cooked without comment. One day you couldn't stand it any longer, took the spatula and stir-fried the greens all over again.",
+      "Someone in the township held a full-month banquet for a new baby and asked you to be the head cook. With two young helpers you put out twenty tables in one night. The next day your legs were too swollen to get out of bed, and your heart felt wonderful.",
+      "An old colleague from Guangzhou came to see you in Maoming and said the restaurant had moved to new premises, and the woks had been switched to induction; you can't see the flame any more. You asked if there was still wok hei. A little, he said.",
+      "In your first month away from the kitchen, you kept waking at eleven at night, the sound of the ticket printer spitting out orders still in your ears.",
+      "An apprentice you trained made it to the second wok, and posted a photo on WeChat of a whole chicken he had boned, captioned: the master taught me. You liked it, then zoomed in on the photo to look at the knife cuts.",
+      "The old-name restaurant has branches in several cities now, and the white-cut chicken on the menu comes from the central kitchen. You took your grandson once. He said it was delicious. You said it was all right.",
+      "Many restaurants use automatic stir-fry machines now, and the systems work out prep and restocking. Boning a whole chicken, and the few banquet dishes that live or die by the heat, still need a person at the stove, cooking them one wok at a time.",
+      "Your wrist aches whenever the damp return-of-the-south weather comes, from tossing sandbags when you were young. At New Year you still chop a white-cut chicken with your own hands, and when you plate it you turn the chicken's head toward the oldest person in the family.",
+      "You went back to Xiguan once. Where the old restaurant used to be, there is a viral bubble tea shop now. You stood at the door a while, pointed up to the second floor and told your grandson: behind that window was the chopping board."
+    ],
+    "closing": {
+      "retire": "One morning many years later, you are peeling garlic on the balcony, and before you know it you have minced it, every piece the same size. Your granddaughter asks why you don't use a machine. Machine-minced garlic weeps water, you say.",
+      "burnout": "Many years later, your nephew has taken over the wok at the little restaurant in the township. You sit on a bamboo chair by the door listening to the sound from the wok, and at one sizzle you know the heat is too high. You call out, and he answers from inside.",
+      "end": "Many years later, sorting through old things, you find the knife the master left you, wrapped in newspaper, its blade as narrow as a willow leaf. You find a whetstone, sit on the balcony, and slowly sharpen it all afternoon."
+    }
+  }
+}

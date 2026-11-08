@@ -1,0 +1,179 @@
+{
+  "id": "agri-tech-gansu",
+  "occupation": "Agricultural Technician",
+  "role": "Trainee extension agent, county agricultural extension station",
+  "headline": "An agronomy graduate sent back to a home county on a service contract, riding the station's old motorbike through the hills of Gansu to teach farmers how to grow potatoes and plastic-mulched corn",
+  "unit": "The agricultural extension center of a county in central Gansu",
+  "unit_type": "County agricultural extension station (public institution)",
+  "city": "A county in Gansu",
+  "city_tier": "County town",
+  "education": "BSc in Agronomy (state-sponsored, with a service contract)",
+  "level": "You have studied crop science and plant protection, you can tell potato late blight from northern corn leaf blight, but you still can't talk a man who has farmed for forty years into changing his seed",
+  "intro": "You studied agronomy for four years, and the contract you signed before graduating says it plainly: at least five years of service back in your home county. The county extension center sits in a two-story building from the nineties. The extension section is five people, you included, and between you they look after the potatoes and corn of all eighteen townships. As of today the key to the station's old motorbike is yours. Tomorrow morning you ride out to check for late blight.",
+  "salary_note": "Estimate: a new hire's pay at a county-level public institution in Gansu, plus the township work allowance, comes to a little over 70% of the national figure. Raises come slowly even as your professional title rises, and the farm manager and director salaries of the corporate track are out of reach in a county.",
+  "facts": [
+    { "label": "Assistant Agricultural Technician (current level)", "value": "0-1 years, ¥4,000–6,000 a month (national average)", "source": "Career map" },
+    { "label": "Next level up", "value": "Agricultural Technician (1-3 years)", "source": "Career map" },
+    { "label": "Monthly pay, first year in the field", "value": "¥6,500 (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Taking emergency control of a greenhouse during a midday heat spike and directing the cooling", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Morning greenhouse sensor rounds and cross-checking readings from multiple sensors", "source": "AI exposure" },
+    { "label": "Open positions", "value": "90 related job listings nationwide (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "In the station's staff dorm you boil a kettle and brew a pot of guan guan tea, the strong clay-pot tea of these hills, then eat a bowl of sour jiangshui noodles at the little place by the gate. The owner asks which township it is today.",
+    "You ride the old motorbike up into the hills. Terraced fields climb on both sides, the plastic mulch flashing white in the sun, one slope after another, the phone signal coming and going.",
+    "You crouch in a potato field turning over leaves, looking for the ring of white mold on the underside. You find a suspicious lesion, photograph it, log the coordinates and send it up to the province's pest and disease monitoring system.",
+    "In the courtyard of the village committee you teach the growers who turned up how to mix the spray and when to apply it. Of the dozen or so who came, the youngest is past fifty. The young people are all away working in the cities.",
+    "Lunch at a big grower's house: a plate of stir-fried potato, a bowl of pickled greens, two steamed buns. He asks if seed potatoes can be cheaper this year. You say you only handle the technical side. He says, then put in a word for us.",
+    "The cooperative's crop-spraying drone lifts off at the edge of the field. You check the mix ratio and the dose per mu. The pilot is a young man back from working elsewhere, two years younger than you.",
+    "Back at the station, forms: soil testing and fertilizer plans, pest bulletins, paperwork for the high-standard farmland project. The same numbers go into three different systems. It gets dark early outside, and you are the last one left in the building.",
+    "Someone in the WeChat group sends more photos of leaves, asking if the plants are sick. You zoom in on each one and reply with a few lines. The last message is a voice note from an old man speaking in dialect. You play it three times."
+  ],
+  "ladder": [
+    { "title": "Assistant Agricultural Technician", "stage": "Assistant / trainee", "focus": "Learn how the crops on the base grow; do the daily field rounds and check-ins, first-pass pest and disease screening, basic operation of farm machinery and the farm records. You move up on hard work in the field and accurate data." },
+    { "title": "Agricultural Technician", "stage": "Junior / independent", "focus": "Run a greenhouse block or several hundred mu of fields on your own for the whole growing season: irrigation and fertilizer, climate control, crop protection and spraying, and directing the farmhands on site. You move up on crop survival rates in your block, how well pests and disease are kept down, and your trial results." },
+    { "title": "Agricultural Technical Supervisor", "stage": "Core / senior", "focus": "Put multi-variety planting plans into practice on the base and solve technical problems, manage a team of technicians, coordinate trials of new seeds, pesticides and fertilizers, and draft early versions of growing protocols. You move up by cutting input costs per mu and raising the share of top-grade produce." },
+    { "title": "Farm Manager (Crop Production)", "stage": "Management / expert", "focus": "Oversee the technical protocols and production schedule of a large modern agricultural park or a base of a thousand mu or more, integrate smart-farming equipment, and connect production quality to sales. You are promoted on the farm's total yield, output value against target, and how well you standardize operations." },
+    { "title": "Director of Agricultural Production", "stage": "Director / senior expert", "focus": "Oversee agronomy R&D across all of a group's production bases, roll out technical standards, run centralized purchasing of farm supplies, and defend against major production disasters. You hold the post on group-wide gains in production efficiency and the company's standing in the industry." }
+  ],
+  "ai_tasks": [
+    { "name": "Taking emergency control of a greenhouse during a midday heat spike and directing the cooling", "how": "AI can compare readings from many sensors in real time, flag ones that may be wrong and suggest how to cool down. But deciding what is real, going in to take manual control of the fans, wet pads and shade screens, and answering for any crop losses must be done by a person." },
+    { "name": "Morning greenhouse sensor rounds and cross-checking readings from multiple sensors", "how": "AI pulls together the overnight alarms, checks them against the harvest plan and marks abnormal sensor readings. A person walks into the greenhouse and looks, touches and smells, checks whether a sensor is blocked or dirty, judges how the plants are doing, and sets the baseline for the day." },
+    { "name": "Calibrating and locking in climate-control settings during tomato fruit set", "how": "AI draws on past data and fruit-set experience to propose thresholds for ventilation, shading, supplementary light and CO₂, and simulates the effect. A person adjusts the plan to the day's weather and what is actually happening in the greenhouse, then confirms, locks it in and leaves a record." },
+    { "name": "Reading images of leaf pests and disease and linking them to targeted green pest control", "how": "AI identifies sticky-trap and leaf photos, gives a first estimate of whitefly numbers and leaf mold severity, and recommends a control plan. A person goes down the rows to recheck the difficult lesions, decides whether to release natural predators or spray, and carries it out on site." },
+    { "name": "Adjusting fertigation recipes and fine-tuning pulse irrigation during fruit set", "how": "AI uses substrate EC, drainage data and the heat forecast to work out candidate fertilizer injection ratios and irrigation pulses. A person goes to the pump room to check how much stock solution is left and how the equipment is running, judges whether the plan makes sense, and watches how the crop responds afterward." },
+    { "name": "Rechecking harvest grading and logging the tracing of problems", "how": "AI does a first grading by image recognition, automatically links fruit batches to the periods when something went wrong, and drafts the log. A person spot-checks fruit hit by the heat (quality, soft fruit, cracking), makes the call on disputed batches, and helps with packing and labeling." },
+    { "name": "End-of-day review of production data and handover filing", "how": "AI automatically compiles the rounds, calibrations, images, fertigation and harvest records into a weekly report and a list of priorities for the next day. A person only needs to read it through quickly, add anything unusual that happened on site, and confirm the handover." }
+  ],
+  "events": {
+    "e_blight_forecast": "You saw late blight coming and posted a warning in the group three days early, then phoned every village. That year the next county lost whole hillsides of potatoes. Your township saved most of theirs.",
+    "e_drought": "A whole spring without one soaking rain. The mulched corn came up thin and patchy. You counted seedlings row by row, working out whether there was still time to resow, while the farmer squatted at the edge of the field smoking and said nothing.",
+    "e_hail": "A hailstorm stripped a village's potato seedlings down to bare stalks. You went with the insurance assessors to survey the damage, field by field. An old woman held on to your sleeve and would not let go.",
+    "e_seed_trial": "The farmers wouldn't switch to virus-free seed potatoes; too expensive, they said. You borrowed two mu at the edge of the village, planted half with the old seed and half with the virus-free kind. On digging day the whole village came to watch. The next year half of them switched.",
+    "e_price_crash": "Potato prices fell to just over ten fen a jin (half a kilo), and the cellars filled with potatoes nobody would buy. A man phoned to curse you: he had only planted so much because you told him to. You didn't argue. The next day you went to help him find a starch factory to sell to.",
+    "e_good_year": "That year the rain came evenly and prices were good. One grower bought a new three-wheeler, drove it to the station gate, leaned on the horn and insisted on taking you home to drink.",
+    "e_ai_photo": "The province's monitoring system could now read photos. A farmer took a picture of a leaf and got an answer, and the calls asking you about sick plants fell by half. But for the handful it got wrong, you still had to ride out and look.",
+    "e_ai_report": "No more filling in daily and weekly reports by hand. Field rounds, drone data, pest bulletins: the system compiled them into a draft by itself. You spent ten minutes a day reading it and adding what it couldn't know, like what someone said to you at the edge of their field.",
+    "e_village_team": "You were seconded for a year to a rural revitalization team stationed in a village. You lived in a small room at the village committee, helped fill in forms, repaired water cellars, and mediated between two families fighting over a field boundary.",
+    "e_paperwork": "The high-standard farmland project had an inspection coming. You and your colleagues stayed up five nights straight catching up on the paperwork, until the printer jammed so often it started to smoke. The inspectors spent twenty minutes in the fields.",
+    "e_love": "Your mother got someone to set you up with a nurse from the county hospital. You were late to the first meeting because there was a lesion in a field you had to photograph. She said it was fine; she often worked late too.",
+    "e_wedding": "You got married. The bride price and the flat in the county town emptied out everything you and your parents had saved over the years, and you borrowed some from relatives. At the wedding the station chief drank more than you did.",
+    "e_baby": "The baby was born at the busiest point of the autumn harvest. By day you measured yields in the fields, by night you sat with them in the hospital. The first time you changed a diaper, your hands were clumsier than when you hand-pollinated corn.",
+    "e_parents_farm": "Your parents still farm a dozen or so mu back home. Your father said you teach other people to farm in the county but leave your own family's land alone. That weekend you went back to help dig potatoes, and your back hurt for three days.",
+    "e_drone_license": "You got your license as a crop-spraying drone operator. The first time you flew a two-hundred-mu field by yourself, a crowd of farmers gathered round when it landed, more than ever came to your classes.",
+    "e_slip": "On a mountain road after rain, the motorbike slid out on a bend, and you and the bike went into the ditch. Only a twisted ankle. You were on a crutch for two weeks and still went out to the fields.",
+    "e_expert": "Experts from the provincial academy of agricultural sciences came to run variety trials in the county and chose you to run things in the field. Three years of trial data went into a paper. The last name in the author list was yours.",
+    "e_classmate": "A university classmate became a base manager at an agriculture company. His WeChat feed was all multi-span greenhouses and a new car. He asked if you wanted to join him; the pay was three times yours. You said you would think about it.",
+    "e_reform": "In a government reorganization, the extension center was merged into a service center under the county bureau of agriculture and rural affairs. The sign at the gate changed, the people didn't, and there was one more kind of form.",
+    "e_returnee": "A young man who had gone away to university came back to his village and leased three hundred mu, planted with the variety you had been promoting. He messaged you questions on WeChat every day, in more detail than you ever asked yours.",
+    "e_main_variety": "The potato variety you had promoted for ten years became the main variety in the whole county. At the county's year-end meeting nobody mentioned your name, but you knew which two mu of land it had started on.",
+    "e_knees": "Years of crouching in fields to turn leaves and bouncing along mountain roads, and your knees and back gave out first. Going uphill you had to stop twice. Now you rode out in the station's pickup."
+  },
+  "choices": {
+    "c_grad": {
+      "title": "Break the contract for grad school, or serve out your term",
+      "situation": "Everyone in your dorm is studying for the graduate entrance exam, and one has already got into the agricultural university in the provincial capital. Your service contract says five full years. Breaking it means paying back your tuition and a mark on your credit record. The station chief says if you go, the extension section is down to four.",
+      "options": [
+        { "label": "Pay the penalty and sit the exam", "result": "You paid back the tuition, studied for a year and got into the master's program at the agricultural university in the provincial capital.", "end": "You went to the capital for your master's and stayed on as a breeder at a seed company. Every autumn when you go back to the county, you stand for a while at the edge of those two mu of trial field." },
+        { "label": "Stay and serve out your term", "result": "You packed the exam books into a cardboard box and pushed it under the bed. That autumn, the virus-free seed potatoes you had promoted in the village yielded thirty percent more per mu than the year before." }
+      ]
+    },
+    "c_title": {
+      "title": "Stay up writing papers for a professional title",
+      "situation": "To be promoted to assistant agronomist, and then agronomist, you need a record of results, published papers, and to have led an extension demonstration project at city level or above. Few people at the station can write. The chief says you will have to sort it out yourself, and none of your daytime work goes away.",
+      "options": [
+        { "label": "Lead a demonstration project and write at night", "result": "That year you went out to the villages by day and revised papers at night in the staff dorm; the desk lamp broke once. When the results came out, you went down the list three times before you found your name." },
+        { "label": "Skip it and focus on the fields", "result": "You didn't apply. That year you spent more days in the field than anyone else at the station. Your name wasn't on the promotion list, and your pay slip didn't change." }
+      ]
+    },
+    "c_seedco": {
+      "title": "Go to a seed company in the Hexi Corridor as a base technician",
+      "situation": "A corn seed company in Zhangye offers you a job as a base technician at one and a half times your pay. No permanent post. From sowing to harvest you would live out on the fields for most of the year, overseeing detasseling and isolation on several thousand mu of seed fields.",
+      "options": [
+        { "label": "Join the seed company", "result": "You lived season after season at the edge of the Gobi in the Hexi Corridor and learned what the county could never have taught you in a lifetime: how to manage big fields, how to work out costs, and how a boss sees you." },
+        { "label": "Stay at the county station", "result": "You said your service term wasn't over, and your home was here. The company's man left a business card. You tucked it into your crop protection handbook." }
+      ]
+    },
+    "c_smart": {
+      "title": "Go to the provincial capital to study smart farming",
+      "situation": "The province is running a smart-farming course: remote sensing to monitor crop growth, drone prescription maps, variable-rate fertilizing. Three months, living in the capital. The station says you can go, as long as you hand over your projects properly before you leave.",
+      "options": [
+        { "label": "Go", "result": "You came back with a laptop and a pile of software you had never seen. The first time you used a remote-sensing image to find a field that wasn't growing right, the farmer said you could tell without even setting foot in it. Like magic." },
+        { "label": "Don't go; the fields need people", "result": "The place went to another county. You kept walking the fields one by one. The farmers said you diagnosed better than that software. You smiled and said nothing." }
+      ]
+    },
+    "c_township": {
+      "title": "Become deputy head of a township, in charge of agriculture",
+      "situation": "The county Party organization department calls you in for a talk. A township needs a deputy head who understands farming; would you go? Take this road and from now on you are an official, not a technician.",
+      "options": [
+        { "label": "Go to the township as an official", "result": "You moved into the township government dorm. Meetings, inspections, handling petitions. You went out to the fields less.", "end": "You became an official in the township, and over the years you were moved from post to post, but never out of agriculture. Whenever a meeting turns to pest control you always say a little more than you need to. The people below you don't know you were once an extension agent." },
+        { "label": "Stay in a technical post", "result": "You said you weren't cut out to be an official. The man from the organization department nodded and made a note in his book." }
+      ]
+    },
+    "c_seed_base": {
+      "title": "Go into seed potato breeding with a big grower",
+      "situation": "A big grower in the village wants to build a base for breeding virus-free seed potatoes and asks you to buy in: you bring the know-how, he puts up most of the land and money. Whether someone at a public institution can do this, the rules are vague.",
+      "options": [
+        { "label": "Invest and take a stake", "result": "The first two years, one profit, one loss. In the third the market was good and you got a share of the money. People at the station gossiped, so you put the stake in your spouse's name." },
+        { "label": "Give the know-how, not money", "result": "You still went to the base often to help, and took not a cent. At New Year he brought two sacks of seed potatoes. You accepted one." }
+      ]
+    },
+    "c_project": {
+      "title": "Lead the county's potato industry project",
+      "situation": "The county has won a provincial project to upgrade its potato industry, worth tens of millions of yuan. It needs someone who knows the technical side to write the plan, run the demonstrations and see it through inspection. If it goes well, the credit is yours. If it goes wrong, so is the blame.",
+      "options": [
+        { "label": "Take it on", "result": "For three years you covered every demonstration site in the county, and the project was rated excellent at final inspection. You lost more than five kilos, and your checkup report gained an arrow." },
+        { "label": "Pass it on and do your own work well", "result": "The project went to someone else at the bureau; you chipped in a few ideas. Those years you got home on time and never missed a parents' meeting at school." }
+      ]
+    },
+    "c_city": {
+      "title": "Transfer to the city, or stay in the county",
+      "situation": "Your child is about to start middle school, and your spouse wants to move to the city, where the schools are better. The city's extension center has an opening and is willing to take you. But in the county you know the land of every township; in the city you would be starting over.",
+      "options": [
+        { "label": "Transfer to the city", "result": "You started over in a city office building, in charge of more land and further from it. Every spring sowing you go back to the county for a look around, and the farmers still call you by your childhood name." },
+        { "label": "Stay in the county", "result": "Your spouse took the child to school in the city, and on weekends you ride the bus two hours to join them. The county's fields you still know one by one." }
+      ]
+    },
+    "c_second_line": {
+      "title": "Keep training people in the field, or step back to a desk",
+      "situation": "Two new contract graduates have joined the station, as clueless as you once were. The chief says at your age you could step back, look after the records and mentor the young ones. But they say they want to go out to the fields with you.",
+      "options": [
+        { "label": "Take them out to the fields", "result": "You sat in the pickup's passenger seat giving directions and let the young ones crouch down to turn the leaves. The look on their faces when they found their first late blight lesion was exactly the look you once had." },
+        { "label": "Step back to a desk", "result": "At the station you sorted thirty years of pest and disease records and filled two cabinets with them. When the young ones don't know something, they come and look through your notebooks." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you didn't go out to the fields. You wheeled out the old motorbike you hadn't ridden in years and wiped it down. The young ones took a group photo with you in the courtyard, the two-story building behind you. After work you walked to the edge of the county town and looked out at the far terraces, the mulch catching the sunset layer by layer.",
+    "burnout": "That autumn you crouched down in a field and for a long time couldn't get up. The doctor said your back and knees couldn't take this kind of running around any more. You transferred to the bureau to look after the archives and kept regular hours. When the first rain of spring falls, you still stand at the window working out which township should be sowing."
+  },
+  "past": [
+    "You went to middle school in the township, an hour's walk each way on mountain paths. Your family grew a dozen or so mu of potatoes and corn, and in the busy season you took leave to help dig potatoes. The mud on your hands took several washes to come off.",
+    "You tested into the county's No. 1 High School. Your father said once you got out, don't come back to farm. Your mother said once you got out, don't forget to come back and visit.",
+    "Your gaokao (college entrance exam) score just cleared the line for top-tier universities. The province had a state-funded program training agriculture students for their home counties: free tuition, and a permanent state post back in the county after graduation. You did the family's sums, put down agronomy and signed the contract.",
+    "In your second year you ran your first field trial in the university's experimental plots, measuring the height of corn plants one by one. When you finished, you found the rain had soaked your notebook, and you measured them all again.",
+    "In your fourth year you interned at a county extension station, going out with an old station chief close to retirement. One look at a leaf and he knew whether it was hungry or sick. You asked how he could tell. Forty years of looking, he said.",
+    "You graduated and went back to the county as the contract said, passed the written exam for public institution jobs, spent a year at a township extension station, and this year moved up to the county extension center."
+  ],
+  "late": {
+    "pension_note": "Estimate: permanent staff at county-level public institutions draw a pension from the government and public institution scheme plus an occupational annuity, about 60-70% of their last monthly salary. County pay starts low, so the amount itself isn't large.",
+    "scenes": [
+      "Your first spring of retirement, you dug a small plot below your building in the county town and planted a few rows of potatoes. A neighbor asked why bother with so few. You said it settles your mind to see them.",
+      "The cooperative asked you to be their technical adviser. You go a few times a month, in a car a young person drives. The drones over the fields fly much faster than you ever did, but they still come to ask you which field to spray first.",
+      "The pension arrives on time every month, enough for two people to live on in the county town. Your child works in Lanzhou; when they bought a flat you gave most of your savings, and kept the rest for doctors.",
+      "At the bureau you look after the archives, entering thirty years of monitoring records into the computer one notebook at a time. One is from your first year, the handwriting crooked, a dried leaf pressed inside.",
+      "Your back got a little better, and you started walking by the river in the county town. Once you ran into an old farmer who recognized you. If you hadn't phoned that year, he said, his whole crop would have rotted in the ground.",
+      "At retirement age you finished the paperwork and went back to your home village. Your parents' land had long since been leased out, planted with the variety you once promoted. You stood at the edge of the field for a long time.",
+      "The first year after leaving the station, you still opened the weather forecast on rainy days and worked out whether late blight would come. Later you found it was a habit you couldn't break.",
+      "Back in the county on an errand, you passed the old two-story building. It had been renovated. A row of drones was parked by the door, and no motorbikes.",
+      "An old colleague from the station retired and posted a photo in the group: the five of you in your twenties at the edge of a field. You looked at it for a long time and replied with one word: Good.",
+      "Later most of the county's land was farmed by cooperatives and big growers: drones spraying, satellites watching the crops, a farmer snapping a photo to learn what disease he had. But every year there were still a few fields the machines couldn't read, and someone still had to ride up into the hills to look.",
+      "Your grandchild came to the county town for the summer holidays, and you took them to dig potatoes in a field outside town. They dug up a big one and held it up, delighted. You took it and looked it over and said, good variety, this one. Virus-free."
+    ],
+    "closing": {
+      "retire": "One autumn many years later, you sit beside the little plot below your building, watching your grandchild drop potatoes into a basket one by one. On the far hills the mulch shines layer upon layer, like the slopes you rode past when you were young.",
+      "burnout": "Many years later, you grow a few pots of chilies and one pot of potatoes on your balcony. Every morning you crouch down and turn the leaves to check for white mold underneath. If there is none, you stand up and go boil water for tea.",
+      "end": "Many years later, at the bottom of a cupboard, you find the service contract, the paper gone yellow, signed by you at eighteen. You look at it for a while, then put it away with your diploma."
+    }
+  }
+}

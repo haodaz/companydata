@@ -1,0 +1,185 @@
+{
+  "id": "securities-sh",
+  "occupation": "Securities Analyst",
+  "role": "Research assistant, new energy team, brokerage research institute",
+  "headline": "Just confirmed as a research assistant at a Shanghai brokerage's research institute: you trail the chief analyst on solar and lithium battery site visits, and the morning meeting notes are due before seven every day",
+  "unit": "The new energy team at the research institute of a leading Shanghai brokerage",
+  "unit_type": "Brokerage research institute",
+  "city": "Shanghai",
+  "city_tier": "First-tier city",
+  "education": "Master of Finance (an elite \"985\" university; bachelor's in materials science and engineering)",
+  "level": "You can update the earnings models for the dozen-plus companies the team covers on your own; your notes need two rounds of edits from the chief before they go out, and your name isn't on a report cover yet",
+  "intro": "You interned at this institute for seven months. At your summer review, the chief asked you exactly one question: which way will polysilicon prices go next quarter? Once confirmed, you were assigned to the new energy team, four people: the chief, two analysts and you, covering twenty-odd companies in solar, lithium batteries and energy storage. As of today, the morning meeting notes due before seven every day are yours, and so is every roadshow deck in the run-up to the analyst rankings.",
+  "salary_note": "Estimate: base pay at a leading Shanghai brokerage's research institute is well above the national average, estimated here at 1.4 times. The year-end bonus depends on the team's ranking and its broker votes and isn't counted here.",
+  "facts": [
+    { "label": "Assistant Analyst (current level)", "value": "0–2 years, ¥10,000–18,000 a month (national average)", "source": "Career map" },
+    { "label": "Next level up", "value": "Sector Analyst (2–4 years)", "source": "Career map" },
+    { "label": "Pay after 5–10 years", "value": "¥37,007 a month (national average)", "source": "Pay by experience" },
+    { "label": "Where AI is moving in", "value": "Digging out a company's real profit before the morning meeting and laying out the risks", "source": "AI exposure" },
+    { "label": "Open positions", "value": "562 related listings nationwide, 167 in this city (the listings are mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "The first trains on Metro Line 2 aren't crowded yet. In the carriage you get through overnight moves in US new energy stocks and three companies' evening announcements.",
+    "The morning notes go into the internal group chat: a module maker announced a profit jump last night, and you squeeze the key points into three lines. On the phone, the chief changes one word.",
+    "Morning meeting. Macro, strategy and each sector team take their turn. When it's new energy, the chief speaks for two minutes, and from the back row you check the numbers against the chart you made.",
+    "Fixing the model. The price lines for polysilicon, cells and modules are updated weekly, and one wrong cell reference throws off the entire earnings forecast.",
+    "Conference call. Dozens of fund managers and analysts are on the line while the chief talks about energy storage tenders. You handle muting, recording and the Q&A notes, and any figure someone asks for has to reach her phone within five seconds.",
+    "Going over roadshow decks with sales: tomorrow the chief flies to Beijing to see four mutual funds. You're on the seventh version when sales says one of them has just cut its lithium battery holdings, so the opening needs a different angle.",
+    "A battery maker drops its quarterly results in the evening, and you have two hours to get a first-draft note out. The chief reads it in a taxi and replies: too long.",
+    "You submit the report in the compliance system. While it waits for review, you finish a takeout dinner gone cold at your desk in Lujiazui."
+  ],
+  "ladder": [
+    { "title": "Assistant Analyst", "stage": "Junior", "focus": "Do the groundwork: pulling data, breaking down financial statements, morning notes and basic model updates; you move up on accurate data and fast, reliable delivery." },
+    { "title": "Sector Analyst", "stage": "Mainstay", "focus": "Earn your byline and cover a sub-sector and individual stocks on your own; write in-depth sector reports, run company visits yourself and take regular roadshows; you move up on solid deep-dive research and good client feedback." },
+    { "title": "Senior Analyst", "stage": "Senior", "focus": "Build a complete investment framework for the sector and lead pricing on the core names; work closely with mutual fund and insurance clients and bring in a steady stream of broker votes, the scores that decide how trading commissions are split; you move up on stock-picking hit rate and vote rankings." },
+    { "title": "Chief Analyst", "stage": "Senior expert", "focus": "Head the sector team, lead it, own research quality and develop the bench; hold market-wide pricing power and industry influence (such as top marks in institutional votes) and lead major calls; your position rests on revenue and reputation." },
+    { "title": "Deputy Head of Research", "stage": "Management", "focus": "Oversee a major cluster of sectors or macro and strategy, guide the institute's research system and compliance, manage relationships with key mutual fund and insurance clients and drive coordination across business lines." }
+  ],
+  "ai_tasks": [
+    { "name": "Digging out a company's real profit before the morning meeting and laying out the risks", "how": "AI can read the financials and footnotes fast, pull out anomalies in receivables, inventory and cash flow, and draft the key points. Risks like channel stuffing that need site visits and experience to spot, and the final view and risk warning, are decided by a person who answers to the fund managers." },
+    { "name": "Getting to the bottom of earnings quality and giving a risk call at the morning meeting", "how": "AI compares the Q3 report against history, strips out one-off items and calculates recurring profit and its cash content. A person judges which adjustments are reasonable, whether it really warrants telling clients to cut, and how to say it." },
+    { "name": "Explaining an unusual stock move within 30 minutes of the close", "how": "AI can pull together announcements, news, the exchange's top-trader lists, fund flows and online chatter into candidate explanations and a first draft. The real driver often hides in market rumors and behind the trading desks; a person has to call it from trading experience and channel checks, and own the conclusion." },
+    { "name": "A forensic earnings-quality report within 48 hours of quarterly results", "how": "AI can check whether the statements tie together, catch accounting policy changes, compare peers and flag suspicious line items, taking much of the grunt work out of those 48 hours. Whether the numbers are dressed up, and whether to say so, takes a person's professional skepticism, checks with the company or its channels, and a signature." },
+    { "name": "Building the value-chain framework before the first deep dive on a newly covered sector", "how": "AI can map the value chain quickly, organize policy documents and past research, gather available data and rough out a framework. What the framework keeps and drops, the forward-looking calls, checking whether the data is real and interviewing experts and industry insiders are led by a person." },
+    { "name": "Starting a rapid impact assessment within two hours of a regulator's inquiry letter", "how": "AI can read the inquiry letter at once, search for similar past cases, list the business and financial points involved and draft an impact assessment. Judging how the company will respond, what the regulator intends and how the market will feel, and the line to give institutional clients, need a person to sign off." },
+    { "name": "Building a cross-sector comparison matrix before the annual strategy report", "how": "AI can pull and calculate each sector's momentum, valuation percentiles and fund-flow indicators and generate the matrix automatically. How to set the weights, how to quantify policy support, and the final allocation and view are set by a person who carries the judgment." }
+  ],
+  "events": {
+    "e_first_trip": "On a site visit with the chief to a solar cell factory in Jiangsu, you stand beside the line counting the equipment brands and how many machines are running, and put it in your notes. At the next morning meeting, the chief quotes that line.",
+    "e_unit_error": "A note you sent out has the wrong unit on an installed-capacity figure, and a fund manager points it out in the group chat. The chief calls that night. She doesn't shout; she just has you turn your checking process into a table and tape it beside your monitor.",
+    "e_ranking_season": "In the month before the analyst rankings, the team runs more than twenty roadshows a week. For three weeks straight you don't leave the office tower before two in the morning, and the taxi drivers start to recognize you.",
+    "e_name_on_cover": "The first time you see your own name and license number on a report cover, you screenshot it for your master's supervisor, who replies with a thumbs-up.",
+    "e_ranking_win": "The team makes the top three in the analyst ranking that matters most in your sector. The day the year-end bonus lands, you send your parents some money and don't tell them how much you got.",
+    "e_ranking_lose": "The rankings come out and the team has dropped out of the top five. The chief sits in the meeting room for a long time. From the next week, the roadshow schedule gets even fuller.",
+    "e_ai_audit": "The institute brings in an AI earnings assistant: ten minutes after a quarterly report, you have a first draft of the cross-checks and anomalous line items. You no longer stay up all night pulling apart three statements, but the chief insists you find the source for every conclusion yourself.",
+    "e_ai_attribution": "AI can now turn a stock's after-hours move into a one-page explanation from announcements, top-trader lists and chatter in half an hour. One day you notice it has taken a rumor from someone's dinner party as the cause, and you fix it before it goes out.",
+    "e_ai_juniors": "The team is down to one new research assistant. The data and groundwork that used to take three people is now one person plus an AI workflow. You spend more of your time teaching her to tell when the AI is confidently making things up.",
+    "e_price_war": "Prices fall all the way down the value chain, and the companies you cover post losses one after another. On a conference call a fund manager asks straight out: is this sector even worth researching anymore?",
+    "e_cycle_up": "Energy storage orders suddenly explode. A niche deep dive you wrote two years ago that nobody read gets dug up by clients and passed around a dozen group chats. That month the conference calls run until ten at night.",
+    "e_compliance": "A report is sent back by compliance three times because the basis for revising the earnings forecast isn't spelled out, and goes out two days late. The client meeting it was for has already happened.",
+    "e_commission_cut": "Mutual funds cut their fees, trading commissions fall again and again, and the institute's commission income drops by a large chunk. Your year-end bonus is half of last year's, and at an all-hands meeting the institute says research needs to reach out to industry and corporate clients.",
+    "e_love": "At an industry forum you meet an engineer who builds energy storage systems. They can't follow you on valuation, and you can't follow them on cell consistency. You arrange a second meeting.",
+    "e_marry": "You get married. On the morning of the wedding you're still answering a fund manager's WeChat, and the emcee has to call your name twice.",
+    "e_house": "You buy a small two-bedroom outside the Outer Ring Road. The down payment comes from both families plus several years of your bonuses, and the mortgage leaves your salary account on time every month.",
+    "e_child": "Your child is born during ranking season. In the corridor outside the delivery room you finish revising a roadshow deck. Every time you think of it afterwards, you're a little disappointed in yourself.",
+    "e_parent": "A call from home: your father is in the hospital. You book the earliest high-speed train and take two conference calls on the way. By the time you reach the ward, he's asleep.",
+    "e_expert_network": "You've built up a network along the value chain: a battery maker's technical director, an equipment maker's head of sales, the owners of storage plants. Some news you hear two weeks before the announcement, and you're even clearer about what you can't say.",
+    "e_dinner_hint": "Over dinner a fund manager hints that perhaps you could give him an early look at the view you're publishing tomorrow. You laugh and change the subject. Next quarter, his firm's votes for your team drop a notch.",
+    "e_neck": "Your right hand starts going numb, and the X-ray shows your neck has lost its curve. The doctor tells you to stand up every forty minutes. You set an alarm and never once stand up on time.",
+    "e_market_drop": "The market falls day after day, and several of your recommendations drop 30% in a month. A client calls you out by name in the group chat. You rewrite the whole argument; the conclusion doesn't change, and your palms are soaked before you hit send.",
+    "e_old_report": "A young analyst shares the storage deep dive you wrote more than ten years ago in the team chat as starter reading. He doesn't know you wrote it, and you don't tell him."
+  },
+  "choices": {
+    "c_cert": {
+      "title": "Which exam to study for after work",
+      "situation": "You've passed the securities qualification exam and the competency exam for publishing research, but your byline has to wait for the years to add up. Of the team's two analysts, one is studying for CFA Level II and the other for the accounting and audit papers of the CPA. The time you have left each day is only enough for one.",
+      "options": [
+        { "label": "Go for the CFA", "result": "Your weekends go to ethics and fixed income, and two years later you pass Level III. English-language roadshows for foreign clients no longer scare you." },
+        { "label": "Take the CPA accounting and audit papers", "result": "You start seeing at a glance what's wrong with receivables and inventory, and your red-flag notes come out faster than anyone's on the team." },
+        { "label": "Skip the exams and spend the time on site visits", "result": "You visit three more factories a month and get on first-name terms with the line supervisors. The certificates line on your resume just stays empty." }
+      ]
+    },
+    "c_sign": {
+      "title": "Going for a byline as Sector Analyst",
+      "situation": "You've been a research assistant for almost two years, and the team keeps saying that next year you'll cover energy storage on your own. This year the institute has given the new energy team only one promotion to Sector Analyst, and the other assistant is someone the chief brought over from another brokerage.",
+      "options": [
+        { "label": "Volunteer to take on energy storage", "result": "In three months you write an eighty-page storage deep dive. The chief only signs off on the third version, and your name is finally printed on the cover." },
+        { "label": "Wait for the chief to decide", "result": "You keep the team's groundwork watertight. The chief appreciates it, but the promotion goes to the other assistant first." },
+        { "label": "Move to a smaller brokerage with an immediate byline", "result": "They give you a byline and a niche. The platform is small and the big clients' roadshows are out of reach, but every report is your own." }
+      ]
+    },
+    "c_ai": {
+      "title": "Running the team's AI workflow",
+      "situation": "The institute has given every team an AI research assistant, and someone has to write the prompting guidelines, build the financials and visit notes into a knowledge base, and decide which conclusions must be checked by a human. It doesn't count as a report and earns nothing in the rankings.",
+      "options": [
+        { "label": "Take it on", "result": "You spend six months turning ten years of the team's models and notes into a library the AI can read. In earnings season the team's first drafts come twice as fast, and other teams start copying your guidelines." },
+        { "label": "Pass, and focus on writing reports", "result": "You write a few more deep dives. You use the AI tools by rules someone else set, and sometimes you have to rewrite its first drafts from scratch." }
+      ]
+    },
+    "c_buyside": {
+      "title": "Going to the buy side",
+      "situation": "The investment director of a mutual fund asks if you'd like to join as an analyst, with a chance of managing a fund later. No more broker votes, roadshows or rankings; but you'd go from advising other people to answering yourself for a portfolio going up or down.",
+      "options": [
+        { "label": "Join the mutual fund as an analyst", "result": "You pack up the visit notes on your desk and move to another tower in Lujiazui.", "end": "You join a mutual fund as a new energy analyst, and three years later start managing a small fund. The first number you look at after every close is now your own net asset value." },
+        { "label": "Stay on the sell side", "result": "You say no, and that evening you run a conference call as usual. Six months later you see that fund on your client list; its analyst has been replaced." },
+        { "label": "Stay, and negotiate a raise", "result": "The institute bumps you up a grade, on condition that the team makes the top five in next year's rankings." }
+      ]
+    },
+    "c_coverage": {
+      "title": "Sticking with new energy or switching tracks",
+      "situation": "New energy has been cold for two years, and the institute wants to build up coverage of AI computing and robotics. They ask whether you'll move over, bringing a few storage companies with you. Clients are paying close attention to the new area, but you don't have a single industry contact there.",
+      "options": [
+        { "label": "Move to AI computing and robotics", "result": "You start again from reading IPO prospectuses. The first year you get nothing in the rankings; in the second, fund managers start asking for you by name." },
+        { "label": "Stick with new energy", "result": "You keep watching polysilicon and cell prices. When the market is cold hardly anyone listens, and when the cycle turns you're the first to speak up." }
+      ]
+    },
+    "c_senior": {
+      "title": "Pushing for Senior Analyst, or keeping a life",
+      "situation": "Making Senior Analyst takes a few well-known calls and steady broker votes, which means three or four roadshows a week and half your time on the road for the next two years. Your child has just started kindergarten, and your family wants you to fly less.",
+      "options": [
+        { "label": "Push for it", "result": "You take more than ninety flights in a year and your votes make the institute's top ten. On the day of your promotion you eat a bowl of noodles in the lounge at Hongqiao Airport." },
+        { "label": "Slow down", "result": "You turn down half your out-of-town roadshows and do the school run for a year. The new analyst on the team starts pulling in more votes than you." }
+      ]
+    },
+    "c_chief": {
+      "title": "Applying for Chief Analyst",
+      "situation": "The old chief is leaving to become a partner at a private fund, and the institute will pick a successor from the team or from outside. Whoever takes it leads the team, carries the rankings and manages the votes, and everyone's year-end bonus rides on your ranking.",
+      "options": [
+        { "label": "Apply for chief", "result": "You take over as chief, and in the first year's rankings you come sixth. At the annual dinner you raise a glass to each person on the team, then go home and sit alone until dawn." },
+        { "label": "Follow the old chief to the private fund", "result": "The old chief says private markets look at companies that haven't listed yet, and your industry network is exactly what's needed.", "end": "You follow the old chief to a private equity fund and start looking at battery and equipment makers before they go public. Your reports no longer carry your name, and you don't enter the rankings anymore." },
+        { "label": "Don't apply; settle in as a senior analyst", "result": "You recommend the outside candidate and carry on covering a few companies you know well. Life gets steadier, and your voice gets quieter." }
+      ]
+    },
+    "c_dongmi": {
+      "title": "A listed company wants you as board secretary",
+      "situation": "The chairman of an energy storage company you've covered for ten years asks you to become the board secretary, in charge of investor relations and capital markets, with pay and stock options steadier than the institute's. You know the other side of the earnings call all too well.",
+      "options": [
+        { "label": "Become board secretary", "result": "You hand over your coverage, and for the first time you're on the side that gets visited.", "end": "You become board secretary at that storage company. At earnings briefings you sit on stage answering questions from young analysts who are just like you used to be." },
+        { "label": "Stay at the institute", "result": "You politely decline. Next quarter you write a note on that company as usual, with a neutral rating, and on the phone the chairman gives a short laugh." }
+      ]
+    },
+    "c_vice": {
+      "title": "Running for Deputy Head of Research",
+      "situation": "The institute is promoting a deputy head of research to oversee the big technology and manufacturing teams, compliance, clients and the research system, with almost no writing of your own. The candidates are you and the chief of the macro team.",
+      "options": [
+        { "label": "Go for deputy head", "result": "You start managing budgets and compliance for more than a dozen teams. Your desk is covered in other people's reports, and all you change is words in the titles." },
+        { "label": "Stay on the front line writing reports", "result": "You back the other candidate and keep going out on site, in your forties and still counting machines on factory floors." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "The day your last report goes out is a Friday, and compliance clears it in ten minutes. You pack twenty-odd years of visit notes from your desk into a cardboard box, and the young person who'll sit there comes over to help you tape it shut. When the elevator reaches the ground floor, the lights of Lujiazui are coming on one block at a time, and you don't take out your phone the way you used to.",
+    "burnout": "The second week after that year's rankings, halfway through a conference call, you suddenly couldn't remember what the next slide was for. Several lines of your checkup had arrows next to them, and the doctor asked how long it had been since you'd slept a full six hours. You resigned, went nowhere, and slept at home for a month first. When you pass the big screen outside a brokerage branch, you still stop to check on new energy stocks."
+  },
+  "past": [
+    "The year of your high-school entrance exams, you lived in a county town in Jiangsu. Your father was a workshop manager at a solar module factory; in those years the factory paid big year-end bonuses, and everyone in the county said solar was the business to be in.",
+    "In the summer after your second year of high school you visited your father at the factory. Cell after cell on the line glowed blue under the lights. One day the whole world will use these, he said.",
+    "In the gaokao (college entrance exam) you got into materials science and engineering at an elite \"985\" university. Your father hoped you'd come back to the factory as an engineer. You weren't sure, but you applied anyway.",
+    "In your third year of university, your father's factory shut down for six months in a price war, and he sat at home all day watching a stock app. For the first time you read a solar company's annual report properly, and found you understood more of it than he did.",
+    "You started teaching yourself accounting and valuation, sat in on investment classes at the business school, and decided to switch to a professional master's in finance. Your supervisor urged you to do a PhD. You said you wanted to see how money flowed into this industry.",
+    "You got into your university's Master of Finance. In your first term you applied for internships at a dozen brokerage research institutes, and only one new energy team replied. The interview question was to estimate a polysilicon maker's profit for next year.",
+    "You completed seven months interning at this institute, passed the summer review and were kept on, and passed the securities qualification and analyst competency exams. Your roommate asked what an analyst does. You said: every day, before seven, you write up what happened yesterday."
+  ],
+  "late": {
+    "pension_note": "Estimate: brokerages pay into the standard employee pension scheme, which caps the contribution base, so high earners retire on only about 30% of their final monthly pay. Sell-side analysts leave the front line around fifty but can't draw a pension until the statutory retirement age; bonuses and the enterprise annuity are separate.",
+    "scenes": [
+      "The first Monday after leaving the institute, you still wake at six. You go out for a run, come back and open your laptop before you remember the morning meeting doesn't need you anymore.",
+      "A new energy company asks you to be an independent director: a few meetings a year, a few proposals to read. For the first time you sit on the other side of an earnings briefing, listening to young analysts' questions. One of them is a very good question.",
+      "You teach a sector research course in a university's Master of Finance program. The students can build a model with AI in ten minutes; you make them go stand in a factory for a day first.",
+      "When you reach the age to draw your pension, the number is far less than one month's pay used to be. Luckily your savings and the flat are enough, and you and your spouse put each year's trips into the calendar, the way you used to schedule roadshows.",
+      "After you quit you slept at home for a whole month with your phone on silent. For the first time, no announcement alerts arrived in the small hours.",
+      "You advise an industrial investment fund two days a week. No reports, just helping them look at deals. The money is much less, and in the evenings you can sit with your child over homework.",
+      "Old colleagues take you to dinner and say each team at the institute now gets just one research assistant, with all the groundwork handed to AI. You ask if the rankings are still as cutthroat. They smile and don't answer.",
+      "New desk, new way of looking at things. A mistake used to mean revising a report; now it means losing money, or being stumped on stage. You lose two and a half kilos in the first year.",
+      "Little by little you find your footing in the new role. When old colleagues from the institute come on site visits, you take them to lunch downstairs and talk about the industry, never about positions.",
+      "At an industry conference you run into your old chief. Her hair has gone white, and she's still talking about energy storage. You stand in the corridor for half an hour, arguing over a number just like you did more than ten years ago.",
+      "Later on, the institute's morning notes are generated by AI at six every morning, and the young people only check them and fix the wording. When you hear this you feel a little let down, and then think those years of early mornings weren't entirely for nothing.",
+      "Half of the twenty-odd companies you once covered are gone. On the roof of your building you see a row of solar panels, stand there a while, and work out their cost per kilowatt-hour in your head."
+    ],
+    "closing": {
+      "retire": "Many years later, one morning in the sun on your balcony, your phone pings with a battery maker's quarterly results. You open it, glance at the gross margin, close it, and go back to watering the flowers.",
+      "burnout": "Many years later you're learning tai chi in the park, and the old man teaching says your shoulders are too tight. You smile, and slowly let out a breath.",
+      "end": "Many years later, clearing out an old computer, you find a folder called \"Morning Meeting Notes\" with more than two thousand documents in it. You don't open any of them. You just look at the date on the earliest one."
+    }
+  }
+}

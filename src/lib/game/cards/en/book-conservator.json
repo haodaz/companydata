@@ -1,0 +1,179 @@
+{
+  "id": "book-conservator",
+  "occupation": "Rare Book Conservator",
+  "role": "Rare book conservator at a provincial library (assistant librarian)",
+  "headline": "Five years into a provincial library in the south after a master's in conservation, a rare book conservator who has been mending one worm-eaten Qing-dynasty local gazetteer for nearly a year and still isn't done",
+  "unit": "The rare book conservation room of a provincial library in the south",
+  "unit_type": "Provincial public library",
+  "city": "A provincial capital in the south",
+  "city_tier": "Provincial capital",
+  "education": "Master's (Conservation Technology for Cultural Relics)",
+  "level": "You can fill wormholes, reinforce tears and restore thread bindings on your own, and have repaired twenty or thirty volumes of ordinary old books. Severe book bricks and carbonized, brittle leaves still need your mentor watching beside you",
+  "intro": "The conservation room is on the fourth floor of the library's old building. Its windows face north, the blackout blinds are drawn all year, and each of the three workbenches has its own cold light lamp. This is your fifth year at the library. Your mentor has six years until she retires. There are three of you in the room, and more than two thousand volumes in the stacks waiting their turn. As of today you carry on with volume three of that Qing gazetteer, leaf forty-seven, its wormholes like a sieve.",
+  "salary_note": "Estimate: a permanent state post at a provincial library, paid by public institution grade plus performance pay. A southern provincial capital pays slightly above the national median. Conservation posts get no extra allowance, so it comes to about 95% of the national figure.",
+  "facts": [
+    { "label": "Assistant Librarian / Conservation Worker, junior to intermediate (current level)", "value": "2-5 years, ¥6,000–8,500 a month (national average)", "source": "Career map" },
+    { "label": "Next level up", "value": "Librarian / Conservator, senior worker or technician (5-9 years)", "source": "Career map" },
+    { "label": "Monthly pay, 10+ years in the field", "value": "¥12,000 (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Mixing gluten-free conservation paste and choosing and matching repair paper", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Opening-time stack inspections and documenting damage in old books", "source": "AI exposure" },
+    { "label": "Open positions", "value": "0 related job listings nationwide (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "You swipe into the library and go to the stacks first to check temperature and humidity. It's plum rain season, and the dehumidifier's tank filled overnight. You empty it and write in the log: humidity 62 percent.",
+    "White coat on, hands washed, no gloves: mending books takes touch. You take volume three of the gazetteer out of its cabinet. The unbound leaves are interleaved with blotting paper, each with its own number.",
+    "Mixing paste. From the fridge you take the wheat starch you washed free of gluten last week, add warm water and stir until it clings to the brush without dripping. Too thick and the paper wrinkles; too thin and it won't hold.",
+    "Choosing repair paper. You lay a dozen kinds of bamboo paper one by one on the light table beside the original leaf, comparing the chain lines, the thickness, the color. The closest one is still a little too white, so you give it a wash of acorn-cup dye.",
+    "Filling holes. With the tip of your tweezers you lift a tiny piece of repair paper, tear its edges to feather them, lay it over the back of a wormhole and press it down bit by bit with the brush. By the end of the morning you have finished two folded double leaves, and your neck has gone stiff.",
+    "Lunch in the canteen. Colleagues talk about promotions and which primary school their kids will get into. You look down and find paste still under your nails. All the while you are thinking about the ink on the leaf waiting for you this afternoon.",
+    "You start separating two leaves stuck together. You have just misted them with moisture when you see the ink of a character at the edge begin to bleed. You stop at once and call your mentor. The two of you lean over the magnifier for a long time, and switch to separating them dry.",
+    "The mended leaves go between blotting paper under wooden boards. You fill in the conservation record: before photos, where the damage was, which batch of paper, how thin the paste, how many hours. Before turning off the light, you lay a sheet of xuan paper over the unfinished leaf."
+  ],
+  "ladder": [
+    { "title": "Trainee Rare Book Conservator", "stage": "Apprentice / trainee", "focus": "Under a senior master, mix paste, test pH, remove dust and flatten leaves, and do basic tear reinforcement and hole filling on ordinary old books. You move up on steady hands and solid fundamentals." },
+    { "title": "Assistant Librarian / Conservation Worker (junior to intermediate)", "stage": "Junior / practiced", "focus": "On your own, take apart, repair, align and thread-bind Grade 3 rare books and regular special collections, and document damage to standard. You move up on the number of volumes you have repaired alone and by gaining the assistant title or a skills certificate." },
+    { "title": "Librarian / Conservator (senior worker / technician)", "stage": "Intermediate / core", "focus": "Take on damage in Grade 2 books and above: separating severely compacted book bricks, repairing carbonized and brittle leaves, and restoring special binding forms. You win an intermediate title on solving difficult damage yourself and on academic papers in conservation." },
+    { "title": "Associate Research Librarian / Senior Conservator (technician / senior technician)", "stage": "Senior / experienced", "focus": "Lead the conservation plans and the hands-on work for books on the National List of Precious Ancient Books, and run research on deacidifying and consolidating paper with modern instruments. You are promoted on leading key rescue projects and passing review for an associate senior title in cultural heritage." },
+    { "title": "Research Librarian / Chief Rare Book Conservator", "stage": "Full senior / expert", "focus": "As an inheritor of national intangible cultural heritage or a technical leader, oversee the repair of national treasure books, lead the drafting of national industry standards, and run a training workshop with apprentices. Your standing rests on a very high scholarly reputation and major awards in heritage science." }
+  ],
+  "ai_tasks": [
+    { "name": "Opening-time stack inspections and documenting damage in old books", "how": "AI can take data from temperature and humidity sensors for automatic monitoring and alerts, and help organize the record forms. A person examines the leaves by hand, judges what is real damage, and signs for it." },
+    { "name": "Mixing gluten-free conservation paste and choosing and matching repair paper", "how": "Choosing paper means looking at fibers, chain lines and thickness, and judging by touch and by holding it to the light; the paste's strength is mixed by feel. At most AI helps look up records and suggest reference recipes. A person makes the final choice and mixes it." },
+    { "name": "Emergency moisture control and reinforcing and filling fragile leaves", "how": "Controlling moisture, isolating dampness and applying paste with minimal moisture are skills of the hand on fragile paper, and once ink bleeds it can't be undone. AI can't help with judgment on the spot; a person is responsible throughout." },
+    { "name": "Flattening repaired leaves and binding them in their original form", "how": "Pressing flat, folding and aligning the leaves, sewing the thread binding through the original holes all depend on touch and an understanding of the book's original form. AI can only supply binding references from similar books; the work is done by a person." },
+    { "name": "Taking post-repair images and resetting and handing over the workstation", "how": "AI can sort images, lay out before-and-after comparisons, account for materials and draft the conservation record. A person handles framing and detail in the photography, checks the record, and cleans the workstation and returns the book to its cabinet by hand." },
+    { "name": "Ordering and flattening leaves and restoring traditional thread binding", "how": "Re-humidifying and pressing, aligning and folding, punching holes and sewing are all fine work on a physical book that need touch and judgment about the original. AI can't do it for you; a person does it by hand." },
+    { "name": "Opening-time stack inspections and logging books received for repair", "how": "AI can record environmental data automatically and generate handover lists and templates for initial condition reports. A person opens the stacks, receives the books on site and confirms their condition." },
+    { "name": "Surveying damage on a single leaf and documenting and marking its boundaries", "how": "AI can help identify damage in microscope or multispectral images, mark suspect areas automatically and classify them. A person judges the type of damage from the object itself, decides which original features must be kept, and answers for the conclusion." },
+    { "name": "Adjusting the work order when the ink of a title label bleeds", "how": "When a moisture test shows ink bleeding, you have to stop at once and change the plan. This is an emergency judgment on the spot with irreversible consequences. AI can help record it and update the work order afterward; the decision and the work are a person's." },
+    { "name": "Mixing gluten-free paste and matching handmade repair paper", "how": "AI can turn the survey data into parameters and help search records for matching paper samples. A person mixes the paste, chooses paper against the light, cuts it, and settles the final plan by feel and experience." },
+    { "name": "Dusting, reinforcing tears and filling wormholes on a single leaf", "how": "Dusting with a soft brush, reinforcing tears and the fine work of filling wormholes are all done on the original, with almost no room for error. AI can't lend a hand; a person does all of it personally." }
+  ],
+  "events": {
+    "e_book_brick": "The library cleared out an old storeroom and found a stack of old account books stuck together into a brick. Your mentor took you through separating it. Humidify, wait, lift a layer, wait again. In three months you had freed forty leaves, and the writing on the first one was still legible.",
+    "e_mold": "In the return-of-the-south weather, when the damp comes back with spring, a corner of the stacks went wet, and mold spots appeared on the spines of several cases of books. The whole room dropped everything: open the boxes, disinfect, air them volume by volume. Two weeks of it, and not one leaf of your own book got touched.",
+    "e_exhibit": "An incomplete copy you repaired went into the library's exhibition of classic books. On opening day a small child pressed against the glass case for a long time and asked his mother: who fixed this book?",
+    "e_slip": "Once, separating leaves wet, you went too fast, and a small piece of the leaf crumbled on the tip of your tweezers. You pieced the fragments back together and wrote it all down in the conservation record, exactly as it happened. You didn't sleep that night.",
+    "e_neck": "Seven or eight hours a day with your head bent, and your neck trouble flared up, your fingers going numb, the tip of the tweezers shaking. You put a sloped book rest on your bench. Colleagues teased you that it looked like you were doing calligraphy.",
+    "e_eyes": "Reading chain lines got harder and harder, and you got a head-mounted magnifier. Filling a wormhole takes twice as long as it used to, but the fill is every bit as good.",
+    "e_love": "At the library's weekend reading group you met a secondary school history teacher. He asked you a question about editions, and you talked until closing time. At your wedding, the favors you gave the guests were little booklets you had thread-bound yourself.",
+    "e_child": "Your child was born. When you came back to the conservation room after maternity leave, you found your hands had gone rusty. The first wormhole you filled that day, you took off and redid three times.",
+    "e_house": "With both your housing funds you bought a small two-bedroom flat in the east of the city, forty minutes from the library by metro. The down payment emptied out everything you had. You kept the study for a small workbench.",
+    "e_classmate": "At a class reunion, a classmate who went into an auction house said her commission from one spring sale was worth two years of your salary. She asked, are you still mending books? You said yes, still mending.",
+    "e_ai_detect": "The library brought in multispectral imaging and AI damage detection. Wormholes, mold spots and acidified areas were circled automatically, and documenting the damage in a volume went from a full day to an hour. You only check the places it gets wrong.",
+    "e_ai_wrong": "The AI circled the vermilion annotations an earlier scholar had written on a leaf as stains and suggested cleaning them. On the review form you struck it out and wrote beside it: original annotations, must be kept.",
+    "e_digitize": "The library's rare book digitization project had thirty thousand leaves to scan. Before scanning, you had to assess every volume: could it be opened, could it be flattened. You worked overtime for two months straight, and the scanner operators all got to know you.",
+    "e_flood": "A county library in the neighboring province flooded, and a batch of local gazetteers was soaked. You went with the rescue team: freeze them first, thaw them in batches, then separate and dry them leaf by leaf. You stayed there twenty days.",
+    "e_documentary": "A documentary about rare book conservation went viral, and the line of people wanting to visit and sign up for taster classes stretched into the next month. The library director asked you to run weekend classes, teaching primary school kids to mend a torn sheet of paper.",
+    "e_paper_mill": "The handmade bamboo paper workshop that had supplied your repair paper for years closed down. The owner said no young person wanted to stand at the vat forming sheets. The box of bamboo paper you stockpiled gets one sheet smaller with every sheet you use.",
+    "e_kpi": "The library reformed its performance pay, and the number of volumes repaired went into the assessment. You take most of a year to repair one book. Ranked by volumes, you came last in the whole library, and your performance pay dropped noticeably.",
+    "e_parents": "Back home your father was diagnosed with a chronic illness that needed regular checkups. Each month you take a day off and ride the high-speed train back to go with him to the doctor, and the conservation room's schedule slips a little further.",
+    "e_mentor_retire": "Your mentor retired. On her last day she left you the horseshoe knife she had used for thirty years, its handle wrapped in old tape. The hand matters more than the knife, she said.",
+    "e_national_list": "Three of the library's books were chosen for the National List of Precious Ancient Books, and the conservation plans had to be sent up for review. You wrote the plan for one of them. At the expert meeting not a word was changed.",
+    "e_apprentice": "A girl from a vocational college's conservation program came to intern and learned tear reinforcement from you. In her third week she finished a leaf without a single wrinkle for the first time, and held it up to the lamp to look at it again and again.",
+    "e_talk": "At a national conference on rare book conservation techniques you presented the slow method you had worked out for separating book bricks. Afterward people from several libraries came to ask for your process notes.",
+    "e_genealogy": "An old gentleman donated his family's genealogy, handed down from his ancestors, to the library, and said he would like to see it once it was mended. On the day it was finished, he sat at the door of the conservation room, put on his reading glasses, and turned the leaves one by one until he reached his father's name.",
+    "e_first_book": "During a routine check, you called up the book you repaired in your first year at the library. Twenty years on, the repair paper and the original had yellowed to the same shade. Without turning to the back, even you couldn't find where the fills were."
+  },
+  "choices": {
+    "c_guanyuan": {
+      "title": "Apply for the title of librarian",
+      "situation": "You have the years to apply for the intermediate title. To become a librarian you need conservation results and a paper on conservation. The gazetteer in your hands is nearly a year in and not yet finished, and you haven't written a word of the paper.",
+      "options": [
+        { "label": "Write the paper after work and apply on time", "result": "You turned your years of paper pH measurements into a paper, writing until midnight, and it took three journals before it was published. The gazetteer fell two months behind." },
+        { "label": "Finish the book first and apply a year later", "result": "You finished volume three, and the whole room came to watch on binding day. Your title came a year late, and so did the next step on your pay slip." }
+      ]
+    },
+    "c_training": {
+      "title": "Go to Beijing for a year of advanced training",
+      "situation": "A national advanced training course in rare book conservation is taking applicants: a year in Beijing, repairing rare editions under master conservators. The library has one place. If you go, the conservation room is down to two people, and there are people at home who need you too.",
+      "options": [
+        { "label": "Go to Beijing", "result": "In a Beijing conservation room you touched a Song-dynasty edition for the first time. When the master watched you finish a leaf, all he said was: make the paste ten percent thinner. When you came back, your hands were steadier than when you left." },
+        { "label": "Give the place to a colleague", "result": "You stayed and carried two people's work, and the queue in the stacks shrank by a few dozen volumes. A year later your colleague came back and told you about Beijing, and you listened very closely." }
+      ]
+    },
+    "c_auction": {
+      "title": "An auction house tries to poach you",
+      "situation": "The rare books department of an auction house needs someone for authentication and valuation. They have noticed your eye for paper and editions and for spotting repairs and fakery, and offer three times your current pay. If you go, you stop mending books.",
+      "options": [
+        { "label": "Go to the auction house", "result": "You put on a suit, and before each spring and autumn sale you turn the pages of other people's books under the preview lights, judging what they are worth.", "end": "You became an authenticator in an auction house's rare books department. You have turned far more books under the lamp than you ever mended, and now and then, when you see one that was crudely repaired, you feel a small ache for it." },
+        { "label": "Stay in the conservation room", "result": "You turned them down and mixed paste as usual the next day. On payday at the end of the month you remembered that number, then bent your head and filled another hole." }
+      ]
+    },
+    "c_ai_project": {
+      "title": "Join the AI damage detection project or not",
+      "situation": "The library is partnering with a university on AI detection of damage in old books and a database of paper samples. They need someone who knows conservation to label, review and set the rules, for three years. If you join, the books in your hands will have to slow down.",
+      "options": [
+        { "label": "Join the project and do the labeling and review", "result": "You labeled tens of thousands of damage images and taught it to tell wormholes from rodent bites, mold spots from water stains. When the project closed, every repair paper you had ever matched was in the sample database." },
+        { "label": "Stay at your workbench", "result": "You finished six books in a year, more than anyone. When the system went live you used it by the rules someone else had set. You thought a few of them were wrong and said so, and your comments went to the back of the queue." }
+      ]
+    },
+    "c_direction": {
+      "title": "Go toward instruments or toward the hand",
+      "situation": "The conservation room is splitting into two directions. One is research: analyzing paper with electron microscopes and infrared spectroscopy, deacidification and consolidation. The other is learning inpainting and completing missing strokes, and traditional paper dyeing, from an old master brought in from outside. You only have the energy for one.",
+      "options": [
+        { "label": "Learn instrumental analysis and research deacidification", "result": "You spent three years in the lab, published a few papers and applied for a provincial research grant. You had less time to mend books, but you could explain why each sheet of paper decays." },
+        { "label": "Learn inpainting from the old master", "result": "You learned to dye dozens of old shades with acorn cups, phellodendron bark and tea, and to complete a character's missing strokes so that nobody can see the join. You didn't write a single paper." }
+      ]
+    },
+    "c_fugao": {
+      "title": "Apply for an associate senior title",
+      "situation": "The library has only two associate senior places this year, and you need to have led a key rescue project for rare books and published in core journals. A colleague in the same room has applied too; he joined the library two years before you.",
+      "options": [
+        { "label": "Apply, and lead a rescue project", "result": "You led the rescue repair of a precious book, rewrote the plan five times in a year, and on review day, when you finished speaking, every question the experts asked was one you could answer." },
+        { "label": "Let your colleague go first and apply next year", "result": "Your colleague got the title and treated the whole room to dinner. From then on, he always brought the hardest books in the room to you first to ask." }
+      ]
+    },
+    "c_museum": {
+      "title": "A museum wants to transfer you",
+      "situation": "A museum is building up preventive conservation in its collections department and wants you to run the monitoring systems for temperature, humidity, light, insects and mold in its stores. One grade higher, no more bending over books, and your neck can finally rest.",
+      "options": [
+        { "label": "Transfer to the museum", "result": "Every day you watch temperature and humidity curves on a screen and the readings of rows of sensors. The books are all locked in cabinets.", "end": "You transferred to a museum's collections department, in charge of the temperature and humidity of the whole store. Now and then, passing the conservation room, you go in and stand a while to smell the paste." },
+        { "label": "Stay in the conservation room", "result": "You turned it down, and the next day put on your magnifier and carried on with that Ming-dynasty printed edition." }
+      ]
+    },
+    "c_zhenggao": {
+      "title": "Go for the full senior title, or train apprentices",
+      "situation": "The library wants to set up a rare book conservation training studio in your name, devoted to apprentices. The full senior title requires leading a national project and helping draft industry standards. Both take a person whole. You are fifty, and your eyes and neck are only good for one.",
+      "options": [
+        { "label": "Go for the full senior title and help draft the standard", "result": "You wrote your years of process notes into a draft industry standard, sat through a year of meetings, and changed the wording in dozens of places." },
+        { "label": "Devote yourself to apprentices", "result": "The studio opened its doors. You take three apprentices a year, starting them on washing the gluten out of flour, and for the first month you let them do nothing but practice tearing paper edges." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you hand the horseshoe knife with the old tape on its handle to your apprentice, and lay xuan paper over the unfinished leaf on your workbench. You wrote conservation records for thirty years, and stacked up they come to half a person's height. On your way downstairs the plum rains still haven't stopped. You look back at the fourth floor, and in that north-facing window the lamp is still on.",
+    "burnout": "That day you picked up a piece of repair paper and your fingers wouldn't stop shaking; three times you tried to lay it in place and missed. Your neck X-ray hung on the doctor's light box, and he said you couldn't keep bending your head like this. You transferred to the library's reading room, issuing cards and finding books for readers. When someone borrows a facsimile of an old book, you take an extra look at the cover."
+  },
+  "past": [
+    "The summer of your zhongkao, the high school entrance exam, you found a box of old books in the attic at your grandfather's house, a corner gnawed by rats. He grieved over it for days. You stuck it back together for him with clear tape. He said you had ruined it.",
+    "When classes split in your second year of high school you chose sciences. Chemistry was your best subject, and your teacher said you were suited to materials or pharmacy, good for finding work later.",
+    "Filling in your gaokao (college entrance exam) choices, you spent a whole evening torn between chemistry and a university's program in conservation technology for cultural relics. You thought of your grandfather's box of books and put down conservation. Your family asked what you do with that degree. You couldn't really say.",
+    "In your third year you interned at a museum and for the first time watched an old master mend a book: a lamp, a pair of tweezers, a bowl of paste, a whole afternoon in one seat. You watched beside him for two weeks without daring to try.",
+    "After your bachelor's, half your classmates went into testing jobs at companies. You stayed on for a master's at the same university, working with your supervisor on deacidifying paper artifacts, measuring the pH of paper every day.",
+    "In the second year of your master's you spent three months as an apprentice at a national rare book conservation training center. For the first month they only let you wash gluten and tear paper edges. When you came back you knew that what you wanted was the work of the hands, not only experiments.",
+    "After your master's you passed the unified exam for public institutions and joined the provincial library's conservation room, with a permanent state post and the title of assistant librarian. The next year you earned the vocational certificate for cultural relic conservators, and only then did your mentor let you repair a book on your own."
+  ],
+  "late": {
+    "pension_note": "Estimate: permanent staff at a provincial library draw a pension from the government and public institution scheme plus an occupational annuity, a little over 60% of the last monthly salary, not counting performance pay.",
+    "scenes": [
+      "Your first month of retirement you still wake at eight-twenty. You take the metro to the library, don't go up to the fourth floor, and spend a while in the ground-floor exhibition hall looking at the book you repaired in its glass case.",
+      "The training center asks you back to teach apprentices two days a week. What you teach most is still those same few lines: paste better thin than thick, repair paper better thin than thick, and when in doubt, stop.",
+      "The pension arrives on time each month, enough for you and your spouse to live on, and enough to visit a few paper workshops each year to buy paper. You turned the balcony into a small workbench, and once repaired a neighbor's damp old photo album.",
+      "Your apprentice got the associate senior title and phoned to tell you. The first thing she said was: Shifu, I've finished that Ming edition.",
+      "In your first month in the reading room your hands always felt empty. Before leaving each day, you still straighten the pens and notebooks on your desk, the way you would tidy a workbench.",
+      "A year of physiotherapy did your neck a lot of good. Sometimes the young ones from the conservation room come downstairs to ask whether a leaf should be separated dry or wet, and you tell them after one look at the photo.",
+      "You started a class at the community university for older people, teaching how to mend old books and family genealogies with paste. Most of the students are retirees, and the books they bring are more varied than anything you have seen.",
+      "The first year after leaving the conservation room, there was never any paste on your fingers again, and the space under your nails was perfectly clean. You weren't quite used to it.",
+      "In someone else's book you came across your own old way of mending: on the back of a leaf, the edges of the repair paper torn so finely. You thought for a long time and couldn't remember which year you had repaired it.",
+      "An old colleague retired, and you went to the farewell dinner. The conservation room has new cold light lamps and a multispectral scanner now, but the workbenches are still the same three, and the tweezers are still in the drawers.",
+      "The library's AI can now circle all the damage in a volume in a few minutes and match reference papers, and the conservation record drafts itself. But which original features must stay, and whether to stop when the ink bleeds, are still for the person under the lamp to decide.",
+      "Your eyes have grown very weak, and you have to hold the newspaper far away to read it. But touch a sheet of paper and you can still tell bamboo paper from bark paper, and which kind of chain lines it has."
+    ],
+    "closing": {
+      "retire": "One rainy day many years later, you are leafing through an old book at home when you come to a page with a wormhole. You look at it for a long time, don't reach for the tweezers, and only close the book gently and put it back on the shelf.",
+      "burnout": "Many years later, you are sitting in the sun on the balcony when your granddaughter brings you a torn picture and asks you to stick it back together. You find a little bowl of paste, tear a strip with a feathered edge, and mend the tear. She says she can't see where it was.",
+      "end": "Many years later, you pass the old library. The north-facing window on the fourth floor has its blind drawn. You stand across the road and think of the lamp behind that blind, and the leaf of a book under it."
+    }
+  }
+}

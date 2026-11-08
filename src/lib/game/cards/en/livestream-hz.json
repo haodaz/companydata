@@ -1,0 +1,177 @@
+{
+  "id": "livestream-hz",
+  "occupation": "Livestream Commerce Operator",
+  "role": "Livestream Operations Specialist, livestream e-commerce company",
+  "headline": "A livestream operator at a livestream-selling company in Hangzhou's Binjiang district, three years out of a junior college e-commerce program, picking products and reading data by day and manning the control desk until the stream ends past midnight",
+  "unit": "A livestream e-commerce company in Binjiang, Hangzhou (streaming rooms for several womenswear and beauty shops)",
+  "unit_type": "Livestream e-commerce company",
+  "city": "Hangzhou",
+  "city_tier": "New Tier 1",
+  "education": "Junior college diploma (E-commerce)",
+  "level": "You can plan a six-hour stream's product lineup on your own, watch the paid traffic and feed the host her lines. You've never managed anyone, and never carried a major sales festival from end to end.",
+  "intro": "You started as an intern on the floor, working the chat and the hype, and have moved through three streaming rooms at this company. Last month the supervisor who trained you left for a competitor, and the boss handed you a womenswear account that streams every day: two hosts, a floor controller, a console operator listing products and changing prices, on air at seven every evening. From today, every data sheet this room produces is yours to explain.",
+  "salary_note": "Estimate: livestream operators in Hangzhou earn a base salary plus commission on gross sales, taken at 1.2 times the national figure. Commission rises and falls with the stream; a good month can pay double a bad one.",
+  "facts": [
+    { "label": "Livestream Operations Specialist (current level)", "value": "1–3 years, ¥8,000–15,000 a month (national average)", "source": "Career map" },
+    { "label": "Next level up", "value": "Livestream Operations Supervisor (3–5 years)", "source": "Career map" },
+    { "label": "Pay at 1–3 years", "value": "¥11,500 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Emergency coordination when traffic floods in during a major sale, and keeping the room steady", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Pre-stream handover checks and lineup rehearsal", "source": "AI exposure" },
+    { "label": "Open positions", "value": "18 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "You wake in your rented room, and the first thing you do is open the dashboard for last night's numbers: average watch time down eight seconds, returns climbing on one jacket.",
+    "The product meeting at the office. The sourcing team brings in twenty-odd new samples. You put each one on, feel the fabric, check the seams, and pick eight for tonight's lineup.",
+    "Going over the script with the host. Her voice is a little hoarse, so you change the order and hand the hardest-on-the-throat giveaway pitch to the floor controller to shout.",
+    "Paid traffic. You watch spend and conversion on the cold start. ¥500 in and nothing's moving; you kill one campaign and swap the main product photo.",
+    "On air. At the control desk you post product links, change prices, drop lucky bags and watch the live viewer count. Someone in the comments says the last item pills; through the earpiece you tell the host to answer right away.",
+    "Peak traffic. Viewers surge, items run low one after another. You confirm restocks with the warehouse with one hand and pass the host the selling points for the next item with the other.",
+    "Off air. The ring lights go dark; you and the floor controller hang the samples back on the rack and export the data. AI has already drafted the post-stream review, and you change three of its conclusions.",
+    "A taxi home. Several floors of the Binjiang office towers are still lit. The driver asks if you work in livestreaming. You say yes."
+  ],
+  "ladder": [
+    { "title": "Livestream Operations Assistant", "stage": "Assistant", "focus": "Run the control desk smoothly, list and delist products, do basic reviews. Zero-error execution and quick reactions earn you trust and the chance to run a single stream on your own." },
+    { "title": "Livestream Operations Specialist", "stage": "Mid-level", "focus": "Plan single streams on your own (script, schedule, paid traffic, review) and answer for each stream's gross sales and sales per thousand viewers. Prove yourself through data attribution and higher conversion on campaigns, and move up to coordinating multiple platforms and accounts." },
+    { "title": "Livestream Operations Supervisor", "stage": "Senior", "focus": "Manage a team of 3–5, owning the brand's annual livestream plan across Douyin and WeChat Channels, building a bench of hosts and standardizing procedures. Promotion comes through team productivity and hitting annual sales targets." },
+    { "title": "Head of Livestream Operations", "stage": "Strategy", "focus": "Report to the CMO or e-commerce VP and set the omnichannel livestream strategy: private-traffic streams, brand-run streams working alongside influencer streams, new-product launch playbooks. Promotion rests on business results (livestreaming's share of sales, customer lifetime value) and industry standing, such as a case featured in a platform white paper." }
+  ],
+  "ai_tasks": [
+    { "name": "Pre-stream handover checks and lineup rehearsal", "how": "AI and scripts can check SKUs, prices and stock against a list and generate a rehearsal checklist. Whether the equipment, lighting, network and physical samples are actually in place still needs someone in the room to confirm, and someone to pick up the after-sales problems the last shift left behind." },
+    { "name": "Running the opening and keeping up with the live comments", "how": "AI can pick out the questions that keep coming up in the comments, auto-reply to common ones and flag when to release a giveaway. A person has to follow the host's rhythm and decide when the giveaway goes out and how to lift the mood." },
+    { "name": "Emergency coordination when traffic floods in during a major sale, and keeping the room steady", "how": "AI can warn of falling retention, low stock and banned words, and offer backup lines. In the flood you have to make the calls on prompting, pacing, giveaways and blocking all at once, and answer for what happens. That is mostly down to people." },
+    { "name": "Post-stream review, handover, and delivering clips of the best-sellers", "how": "AI can export the data, check the metrics, draft the review and mark highlights by popularity and conversion. A person decides why the numbers moved, picks the clips truly worth cutting, and makes the key points clear to the editor and the night shift." },
+    { "name": "Running the opening and warming up a new account", "how": "AI can write opening lines and first-timer giveaway copy, and watch arrivals and engagement. Breaking the ice depends on the rapport between host and console operator; how to lift the comments and when to release a giveaway are calls for a person." },
+    { "name": "Running the control desk through a traffic surge and bringing the room back to steady", "how": "AI supplies real-time alerts and suggested lines. But when traffic spikes, stock runs out and the comments turn skeptical all at once, what comes first and whether to release a giveaway have to be judged, and answered for, by a person on the spot." },
+    { "name": "Exporting the data at the end of the stream, sending clips to the editor and handing over the shift", "how": "Data summaries, draft reviews, first-pass clip selection and handover notes can mostly be done by AI automatically. A person only needs to spot-check the metrics and clip choices, and add whatever needs saying in person at the handover." }
+  ],
+  "events": {
+    "e_first_hit": "A basic shirt you put in the lineup suddenly takes off and sells more than four thousand pieces in a night. The next day the boss drops a big red-envelope cash gift in the group chat and names you.",
+    "e_violation": "The host says, offhand, \"lowest price anywhere online,\" and the room is penalized for a violation: three days of throttled traffic, and the numbers fall back to where they were six months ago. That night you go through the banned-words list again and tape it beside the teleprompter.",
+    "e_double11": "Singles' Day. For twenty days straight you come in at one in the afternoon and leave at four in the morning. On the last night, gross sales break the record, and you fall asleep at the control desk.",
+    "e_anchor_leave": "The host you built up from nothing is poached by another company. More than half the followers go with her, and the room has to build its account again from scratch.",
+    "e_return_rate": "A dress sells out, and two weeks later returns hit 70 percent. When you add it up, the stream lost money. The boss asks whether you felt the fabric when you picked it.",
+    "e_ai_review": "The company brings in AI tools for reviews and clips. Ten minutes after going off air, the data report, the draft review and the highlight clips are all done. You no longer stay up until five making spreadsheets, but you do have to work out which of its conclusions are wrong.",
+    "e_ai_comment": "AI starts answering the sizing and shipping questions in the comments, and the floor controller's work drops by half. One night it takes a complaint for a question and replies with a smiley face. You spend a long time apologizing in the comments.",
+    "e_ai_anchor": "The company opens several rooms with digital-human hosts that stream twenty-four hours a day, and the cheap goods all move over. The rooms with real hosts keep only the items that need the fabric explained and someone to try them on.",
+    "e_algorithm": "The platform changes its algorithm again, and the old trick of holding stock back to build hype stops working overnight. Everyone in the industry chat is asking what to do. No one knows.",
+    "e_regulation": "New rules for livestream commerce take effect, with hard requirements on pricing, advertising and after-sales. The company hires a compliance officer, and every script you write goes past her. If anything, you sleep better.",
+    "e_love": "You meet the video editor from the room next door in the elevator in the small hours. Your schedules are exactly the same. Your first date is barbecue skewers after going off air.",
+    "e_marry": "You get married. The wedding is set for an April with no big sales, and you book the time off six months ahead. Between toasts you still sneak a look at the dashboard.",
+    "e_house": "You buy a small flat on the outskirts of Hangzhou, the down payment pooled by both families. You start working out whether each month's commission will cover the mortgage.",
+    "e_child": "Your child is born. For the first time, at eight in the evening, you're lying in bed with no idea what's happening in the streaming room.",
+    "e_stomach": "Your stomach gives out first. Years of eating your first meal in the afternoon and takeout in the small hours; the endoscopy report says chronic gastritis. The doctor tells you to eat regular meals. You smile a little.",
+    "e_parent": "Your father comes to Hangzhou for treatment. By day you queue with him for registration and tests, by night you go back to the stream. For a month you don't get one full night's sleep.",
+    "e_company_fold": "The company runs out of cash, and the boss sends a letter to all staff. You and a dozen colleagues never see your last two months of commission. In the queue at the labor arbitration window, the people ahead of you are from another livestreaming company.",
+    "e_case_study": "The playbook you built, combining brand-run streams with influencer streams, is written up by the platform as an industry case study, and several brands come to the boss to talk business.",
+    "e_intern": "An intern you trained carries a six-hour stream on her own for the first time. Afterward she sends you a long voice message. You listen to it twice.",
+    "e_age_line": "At a job fair, many livestreaming companies' postings say \"under 35.\" You look back at your own team. The youngest is twenty.",
+    "e_old_fan": "A longtime follower writes in the comments that she's been buying from this room since its first year, and today she's here to pick a graduation present for her daughter. The host reads it aloud. At the control desk, you stop for two seconds."
+  },
+  "choices": {
+    "c_degree": {
+      "title": "Upgrade to a bachelor's degree?",
+      "situation": "More and more new hires at the company have bachelor's degrees, and brand-side job postings ask for one as a minimum. You could enroll in an adult bachelor's program, with weekend classes for two and a half years. But your room goes on air at seven every night, and weekends are exactly when traffic is best.",
+      "options": [
+        { "label": "Enroll", "result": "You watch online lectures after going off air in the small hours, and take leave on weekends to sit exams. Two and a half years later you have the degree, and the next time you change jobs your résumé clears one more hurdle." },
+        { "label": "Skip it, build real experience", "result": "You give every weekend to the stream and run over a hundred more streams in a year. Your track record counts for more than a diploma, though a few brands' doors never open." }
+      ]
+    },
+    "c_brand": {
+      "title": "Go to a brand, or stay at the agency?",
+      "situation": "The e-commerce team of a domestic beauty brand wants to hire you away to run its own streams: higher base pay, more regular hours, but only one brand to sell and less commission. Your current company takes any product, builds accounts fast and makes money fast, and turns over its staff three times a year.",
+      "options": [
+        { "label": "Go run the brand's streams", "result": "Every day you sell the same set of products. You start to understand ingredients and repeat purchases, and the numbers stop lurching up and down. For the first time, you finish work before midnight." },
+        { "label": "Stay at the agency", "result": "You keep selling three product categories a night. You learn to figure out any streaming room within half an hour, and learn not to get too close to any one host." }
+      ]
+    },
+    "c_zhuguan": {
+      "title": "Go for livestream operations supervisor?",
+      "situation": "The company has opened three new streaming rooms and will promote one specialist to supervisor, leading three to five people and owning schedules, the host bench and standard procedures. You and another colleague are both in the running. The boss says it goes to whoever hits more of their sales target next quarter.",
+      "options": [
+        { "label": "Push the numbers and win it", "result": "That quarter you stream two extra hours a day and squeeze every fen out of the traffic budget, finishing three points ahead of your rival. The day you're promoted, you sleep at your desk all afternoon." },
+        { "label": "Don't compete, keep your room steady", "result": "You don't fight for those few points. The other colleague becomes supervisor, and you become the one on her team who can carry anything." }
+      ]
+    },
+    "c_ai": {
+      "title": "Lead the split of work between people and AI?",
+      "situation": "The company is handing reviews, clips and comment replies to AI, and bringing in digital-human hosts. The boss asks who will lead the design of the human-AI division of labor and the emergency plan for big sales. It doesn't count toward sales; do it well and no one praises you, and if something goes wrong you take the blame.",
+      "options": [
+        { "label": "Take the lead", "result": "You spend months calibrating the AI review metrics one by one, and write the plan for who handles what, human or AI, when traffic floods in during a big sale. In the end the whole company works from your sheets." },
+        { "label": "Pass, stay with the human rooms", "result": "You keep watching the control desk and the hosts, and use the AI tools by other people's rules. Sometimes you think the clips it recommends aren't the highlights of the stream at all." }
+      ]
+    },
+    "c_anchor": {
+      "title": "Go on camera as a host",
+      "situation": "One night a host comes down with a high fever, and you step in and stream for three hours. The numbers don't even drop. The boss asks whether you'd like to switch to hosting: much higher commission, but your face and your voice would belong to the stream, and after thirty the road is hard to call.",
+      "options": [
+        { "label": "Become a host", "result": "You walk from the control desk to the front of the camera.", "end": "Under a new name, you began talking fabrics and sizes on camera. In the first month you lost your voice three times, and earned commission like you'd never seen." },
+        { "label": "Stay behind the camera", "result": "You send the boss the recording of that night and say you'd still rather run the data and the lineup. After that, the hosts speak to you a good deal more politely." }
+      ]
+    },
+    "c_hometown": {
+      "title": "Go home, or stay in Hangzhou?",
+      "situation": "Your home county has started livestreaming for its local industries. The county investment office calls: come back and run a farm-produce streaming room, with subsidies, a dorm, and your parents nearby. Hangzhou's house prices and its small-hours taxis you already know far too well.",
+      "options": [
+        { "label": "Go back and stream for the county", "result": "You go home to the county and lead a group of fresh graduates selling mountain produce and tea on air. The pay is less, and you eat at your parents' table every day." },
+        { "label": "Stay in Hangzhou", "result": "You thank the investment office, hang up and go back to the traffic data. On the phone your mother says: Then come home early for New Year." }
+      ]
+    },
+    "c_private": {
+      "title": "Move into private-traffic growth",
+      "situation": "A chain of mother-and-baby stores asks you to head its private traffic: moving customers gathered in livestreams into WeChat Work, group chats and mini-programs, and getting them to buy again. No more staying up till the small hours, but no more of that heart-pounding night when the numbers jump tenfold either.",
+      "options": [
+        { "label": "Go into private traffic", "result": "You hand over the streaming room. After your last stream, the floor controller gives you an old ring light.", "end": "You went to a chain brand to grow its private traffic, spending your days on repeat-purchase rates and group-chat messages, in bed before ten at night. When you come across someone else's stream now and then, you watch a while to see how they've built the lineup." },
+        { "label": "Stay in livestreaming", "result": "You say you'll do a few more years, while your body can still take it. That night you stay with the stream until three." }
+      ]
+    },
+    "c_head": {
+      "title": "Become head of livestream operations",
+      "situation": "The boss wants to go omnichannel and is looking for a head of livestream operations who reports to him directly, running brand streams, influencer streams, product launches and a team of a dozen or more. You'd sign off on the year's sales, and draw up the list for every round of layoffs.",
+      "options": [
+        { "label": "Take it", "result": "You start sitting in a dozen meetings a week, working out productivity, return on spend, which rooms stay and which go. The day of your first layoffs, you stand in the stairwell for a long time." },
+        { "label": "Pass, keep leading a small team", "result": "You recommend a director from outside and keep running three streaming rooms, still at the control desk every night. Only the number on your payslip stops moving." }
+      ]
+    },
+    "c_own": {
+      "title": "Strike out on your own as a stream agency",
+      "situation": "Several longtime brand clients say that if you go out on your own, they'll hand you their livestream operations. You'd rent the space, hire the hosts and front the money for paid traffic yourself. The profit would be yours. So would the losses.",
+      "options": [
+        { "label": "Go it alone", "result": "You and two old colleagues pool your money and sign a lease on one floor of a factory building.", "end": "You built four streaming rooms in a factory building on the west side of the city, with your own sign by the door. On opening night, you were still sitting at the control desk." },
+        { "label": "Stay at the company", "result": "You introduce the clients to the boss and get a small share of profits in return. You know those clients were really there for you." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "The year you turn forty-five, you hand your last streaming room to a young operator you trained. For the final stream you don't sit at the control desk; you stand behind the ring lights and watch it all the way through. When it ends, someone calls out your name, and everyone in the room applauds. You and the floor controller hang the samples back on the rack, and for the first time you walk out of the building before two in the morning.",
+    "burnout": "After that year's big sale, you wake at four in the morning several days running with your heart racing and refusing to slow down; your hands shake when you open the dashboard. The doctor says it's anxiety and you should stop for a while. You resign, copy several hundred review sheets onto a hard drive and put it in a drawer. For six months you don't watch a single stream. When you finally stumble on one, you can't help counting the viewers."
+  },
+  "past": [
+    "You were in your last year of middle school in a county town in Anhui. Your parents worked at a garment factory in Hangzhou, and you lived with your grandmother, scrolling short videos on her phone for a while every evening.",
+    "You didn't make it into the county's top high school and went to an ordinary one. One summer you visited your parents in Hangzhou, and in a wholesale clothing market you saw someone holding up a phone to the clothes, calling \"my darlings,\" and clearing a whole row of racks in one night.",
+    "Your gaokao (college entrance exam) score just cleared the line for junior colleges. You chose the e-commerce program at a vocational college in Hangzhou, because it was near your parents and the fees weren't high.",
+    "The summer after your second year you interned at an influencer agency, starting on the floor: calling out the lucky bags, hanging samples, cleaning the streaming room in the small hours. After twenty-odd streams, the supervisor took the first review you wrote and used it as a template for new hires.",
+    "After graduating you were taken on full-time at that company, and passed the certificate for internet marketing specialists. Some classmates went on to upgrade their degrees, some went home. You stayed in Binjiang.",
+    "You moved to the livestream e-commerce company you work for now, starting on the console, and six months later were picking lineups and buying traffic yourself. In your first month you set up a coupon wrong and lost ¥20,000 in one night. Your supervisor took the hit for you."
+  ],
+  "late": {
+    "pension_note": "Estimate: livestream companies mostly pay social insurance at the minimum base, some years not at all, and commission isn't counted toward it. After you leave, you keep paying in yourself, and draw a pension only at the statutory retirement age: about 30 percent of your final monthly pay.",
+    "scenes": [
+      "For the first month after leaving the streaming room, you come wide awake at seven every evening, your body sure it's time to go on air. You force yourself to sleep at eleven, and it takes three weeks to turn around.",
+      "You teach part-time at a vocational college, covering livestream operations for e-commerce students. They ask how to build an account for a digital-human room. Sit at the console for a hundred real streams first, you tell them.",
+      "You find a daytime job as an e-commerce consultant for a brand. You keep paying your social insurance yourself; you've worked out that what you'll draw at retirement age isn't much. At least the mortgage is nearly paid off.",
+      "After quitting you live at home in the county for three months, woken every morning by the roosters, sitting in the sun with your grandmother in the afternoons. You leave the work group chats one by one. At the last one, you hesitate.",
+      "You open a small clothing shop in the county town. You take the photos yourself and post them on WeChat Moments, and now and then go live to a few dozen viewers. You don't look at the data anymore.",
+      "Your stomach still isn't good. You give up late-night snacks and coffee and go to bed at ten. Half the colleagues you used to stay up with have left the business too.",
+      "You start living a different way: hours, income, the people you deal with every day, all of it changed. For the first month you keep waking in the night and reaching for your phone to see if anyone needs you.",
+      "The new work slowly finds its feet. You discover that the knack the streaming room drilled into you, deciding in thirty seconds whether something is worth doing, works anywhere.",
+      "At a dinner you run into the supervisor who trained you. He left livestreaming long ago and went home to grow tea. You raise a glass, and talk only about those nights in your first year when you lost money.",
+      "In the streaming rooms that came later, AI did the reviews, the clips and the comment replies, and digital-human hosts never went off air. But on the night of a big sale, someone still had to sit at the control desk and make every call.",
+      "You pass the office tower in Binjiang. That floor is now an AI company, its lights still on in the small hours. You stand across the street watching for a while, smile, and walk on."
+    ],
+    "closing": {
+      "retire": "Many years later, one evening, your granddaughter holds up her phone to show you a livestream. You glance at the viewer count in the top right corner and say: That one needs restocking.",
+      "burnout": "Many years later, one afternoon, you're folding clothes in your little shop in the county town. Sun comes in, a slow song is playing. Someone pushes the door open and asks a price. You look up, smile, and say: Take your time.",
+      "end": "Many years later, on an old hard drive, you find the review sheet from your first stream. The number in the sales column is laughably small. You look at it a long time, then rename the file \"First stream.\""
+    }
+  }
+}

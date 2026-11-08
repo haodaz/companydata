@@ -1,0 +1,204 @@
+{
+  "id": "preschool-county",
+  "occupation": "Preschool Teacher",
+  "role": "Lead teacher for the senior class at a public kindergarten in a county town",
+  "headline": "Your tenth year leading the senior class at a public kindergarten in a Hunan county town, where half the children's parents work in Guangdong",
+  "unit": "A public kindergarten in the town center of a county in Hunan",
+  "unit_type": "Public county-town kindergarten",
+  "city": "A county in Hunan",
+  "city_tier": "County town",
+  "education": "Junior college diploma in preschool education",
+  "level": "On your own you can run a day for thirty-five children without a single thing slipping, and you could put together the inspection paperwork with your eyes closed",
+  "intro": "You've worked at a public kindergarten in a Hunan county town for ten years. You hold a permanent state post and lead the senior class, the five- and six-year-olds. There are thirty-five children in your class, and the people who drop them off and pick them up are mostly grandparents. Their parents are in Guangdong and Zhejiang and come home at New Year. Each year the youngest class is harder to fill; the classroom at the end of the corridor has been empty for a whole term. As of today, you have many more years to spend here.",
+  "salary_note": "Estimate: a permanent post at a public kindergarten in a Hunan county town. Pay plus performance bonus is steady but low, roughly 60% of the national average.",
+  "facts": [
+    { "label": "Current rung: Lead Teacher", "value": "Runs all care and teaching for one class on their own, ¥5,000–8,500 a month (national average)", "source": "Career map" },
+    { "label": "Next level up: Teaching-Research Lead / Year-Group Lead", "value": "¥7,500–12,000 a month (national average); requires a public demonstration lesson or research project at district level or above", "source": "Career map" },
+    { "label": "Pay after 10+ years", "value": "¥7,800 a month (national average; noticeably lower in county towns)", "source": "Pay by experience" },
+    { "label": "Open positions", "value": "478 related listings nationwide; no county-level figures, mostly campus hiring and internships", "source": "Job listings" },
+    { "label": "What AI can't take", "value": "Morning health checks at the gate, nap-time rounds, minor injuries at pickup: all of it needs a person there who's accountable", "source": "AI exposure" },
+    { "label": "New work AI brings", "value": "Reviewing AI-drafted activity plans and messages to parents, and keeping the human-plus-machine workflow for observation records running", "source": "AI exposure" }
+  ],
+  "day": [
+    "Up. You do your own child's hair and tuck a steamed bun into her hand. Out the door on your e-bike, past the noodle shop, with no time to sit down for a bowl of rice noodles.",
+    "You stand at the gate doing morning health checks: look at the throat, feel the forehead, check the palms. Mostly it's grandmothers bringing the children, telling you in dialect who coughed last night and who skipped breakfast. You answer and take notes at the same time.",
+    "A boy clings to his grandmother's leg, crying. You crouch down and take him from her. She turns and walks away fast, and you know it's because she's afraid she'll cry too.",
+    "Group activity on how seeds sprout. Half the children have grown vegetables at home and know more than city kids would, so you let them do the talking. The observation notes will have to be caught up this afternoon.",
+    "Outdoor play. You stand at the spot between the slide and the sandpit where you can see both. The care assistant is off today, so it's just you watching thirty-five children.",
+    "Lunch. You keep an eye on the bowls of the two children with allergies, then hurry along the slow eaters one by one. You don't get to your own food until they're all asleep, and by then it's cold.",
+    "Nap-time rounds. One little girl can only fall asleep if you pat her back every day at noon. You pat with one hand and fill in the safety log for the inspection on your phone with the other.",
+    "Pickup. The grandparents stand in a row at the gate, and you go down the line telling each one who fell over today, who wet themselves. One grandfather can't hear you, so you say it again, louder.",
+    "After your own child is asleep, you answer private messages in the parents' group from mothers and fathers in Guangdong who've just finished work. You still have to sort today's photos into the children's growth portfolios. The county inspects next week."
+  ],
+  "ladder": [
+    { "title": "Assistant Teacher / Trainee Teacher", "stage": "Learning the ropes", "focus": "Learn the daily routine, set up classroom habits, support the lead teacher; you're confirmed after passing the kindergarten's review, and a teaching certificate is a hard requirement." },
+    { "title": "Lead Teacher", "stage": "Running your own class", "focus": "Run all care and teaching for one class, design themed activities, communicate well with families and handle the usual emergencies; a B rating or above makes you eligible for district rising-star awards." },
+    { "title": "Teaching-Research Lead / Year-Group Lead", "stage": "Professional mainstay", "focus": "Lead the kindergarten's in-house teaching research, mentor new teachers, take part in curriculum review and quality assessment; needs a public lesson or research project at district level or above. The key springboard to management or expert roles." },
+    { "title": "Executive Principal / Vice Principal", "stage": "Management", "focus": "Take full charge of care and teaching, staff development, safety and compliance; requires the Kindergarten Principal Training Certificate. Most are promoted from inside public kindergartens or hired competitively from strong private ones." },
+    { "title": "District Subject Leader / Head of a City Master Teacher Studio", "stage": "Regional influence", "focus": "Lead teaching reform across the region, train teachers and help develop local curriculum resources; appointed through review by the education bureau, with a special allowance." }
+  ],
+  "ai_tasks": [
+    { "name": "Leading a group lesson on seed germination and observing the process", "how": "AI can help design an activity that blends science and language, prepare a list of questions and an observation template. Holding a whole class's attention in the room, making sure every child gets a turn and reading how each one is doing are still the teacher's job." },
+    { "name": "Disinfecting the classroom and preparing materials before opening", "how": "Airing the room, wiping and disinfecting, counting and topping up materials in each play area are physical work and judgment on the spot. At most AI generates a checklist and reminders; the hands-on work and the final check are human." },
+    { "name": "Morning health checks at the gate and settling upset children", "how": "AI can't do a first health screen at the gate, and it can't hug a crying child. Reading a child's face, hearing what the family tells you and easing separation anxiety all need a person." },
+    { "name": "Running outdoor exercise and observing behavior during free play", "how": "Positioning yourself outdoors to head off danger and stopping a fight the moment it starts is physical work in the moment, and AI can't take it. Afterwards AI can turn scattered observation notes into structured records, with a person judging and confirming them." },
+    { "name": "Mealtime care and settling children at nap time", "how": "Supervising hand-washing, watching allergy meals so nothing gets swapped, soothing children who can't sleep and doing constant rounds are all presence and responsibility. At most AI helps keep the allergy list and reminder chart; the checking is still done by a person." },
+    { "name": "Getting children up and dressed after naps and supporting individual moods", "how": "Waking them in groups, helping with the toilet and clothes, sitting one-on-one with a child who's low: this rests on being there and physical care. AI can't replace it, and a person adjusts the plan to how each child is doing." },
+    { "name": "Handling small incidents at pickup and handing children back to their families", "how": "A scratch or a fight has to be dealt with on the spot and then explained to the parent face to face; empathy and accountability can only come from a person. AI can help draft written messages or an incident template, which the teacher edits before sending." },
+    { "name": "Disinfecting before opening and checking care and teaching supplies", "how": "Going over hygiene and safety with the care assistant and restocking supplies is physical, on-site work. AI can supply checklists and inventory reminders; the inspection and the final check are human." },
+    { "name": "Morning reception and helping children through drop-off", "how": "Watching for health at the gate, reading a child's mood and handing over face to face all need someone there. AI can only help afterwards by summarizing the day's handover notes." },
+    { "name": "Tidying up at pickup, dealing with minor injuries and talking with families", "how": "Organizing cleanup, treating small injuries, talking to parents in person and again in the evening all require someone accountable on the spot. AI can help polish the evening message and write up what happened, but the wording and the tone are the teacher's call." }
+  ],
+  "events": {
+    "e01": "A left-behind child in your class misses a whole week. You ride to his home and learn that his grandmother is in the hospital and he's been eating with the neighbors. You get in touch with his father in Dongguan and work out with the principal to reduce his meal fees.",
+    "e02": "Two children fight over a toy, and one comes away with a scratch across his face. That night his mother video-calls from Guangdong demanding to see the CCTV, and the next day she posts photos in the parents' group. You write the incident report three times.",
+    "e03": "At the senior class graduation, several parents have taken leave and come all the way back from Guangdong. A child who hardly ever speaks recites his poem on stage, then runs down and throws his arms around you.",
+    "e04": "Autumn enrollment, and the youngest class fills only just over half the expected places. Two classes are merged into one. A young contract teacher isn't renewed; on her last day she spends a long time packing up her things in the office.",
+    "e05": "The county comes to assess care and teaching quality. For two weeks you go back to the kindergarten every evening to set up play corners, catch up on observation notes and redo the wall displays. The inspection team stays forty minutes and leaves.",
+    "e06": "The kindergarten starts asking teachers to generate themed activity plans with AI. What it writes is beautifully formatted, but half the materials can't be bought anywhere in a county town. It takes you an evening of rewriting to make one usable.",
+    "e07": "The home-school app launches AI-written feedback for parents. The grandmothers say they can't follow the long sentences and still want you to tell them in person at the gate. You start rewriting every message in plain words before sending it.",
+    "e08": "Your voice goes again. The doctor says it's chronic pharyngitis and tells you to talk less. You go to work the next day as usual and turn story time into the children taking turns telling stories.",
+    "e09": "You and your partner put a down payment on a flat in the county town's new district, with many years of mortgage ahead. On the way to see it one weekend, you're working out which school district your own child will be in next year.",
+    "e10": "In the year-end awards you're named an Outstanding Teacher at county level. The day the certificate arrives, you photograph it and send it to your mother.",
+    "e11": "You notice a child in your class is clearly behind his peers in speech and doesn't really meet people's eyes. You spend days choosing your words before bringing it up with his parents, who work far away, and suggesting an assessment at the hospital in the city.",
+    "e12": "A cross-disciplinary themed activity you designed wins second prize in the county's model lesson competition. The teaching researcher says it could go forward to the city.",
+    "e13": "Your herniated disc flares up again, and it hurts even to bend down and tie a child's shoes. You take a week off; when you come back, the care assistant has quietly taken over the shoelaces.",
+    "e14": "Two newly hired teachers with permanent posts are assigned to the kindergarten, and the principal has you mentor them. In the first month they cry twice. Now they can run pickup on their own.",
+    "e15": "A tall boy stops you in the supermarket and says you used to be his teacher. It takes you a while to place him: at nap time he always had to hold on to the hem of your shirt.",
+    "e16": "The county closes and merges three township kindergartens, and some of their teachers and children move to yours. Your class is full again, but enrollment in the years below keeps shrinking.",
+    "e17": "Your title review goes through and you become a Level One Teacher. There's an extra line on your pay slip.",
+    "e18": "At lunch a child chokes on a grape and his face starts turning purple. Two steps and you're there doing the Heimlich, and the grape comes out. Your hands shake all afternoon.",
+    "e19": "Flu season. Half the class is off sick, and you take temperatures several extra times at the morning check. In the end you go down too, three days of fever.",
+    "e20": "You're vice principal now. The canteen, fire safety, the school bus and the accounts all need your signature. It's been a long time since you spent a whole day in a classroom.",
+    "e21": "A teacher you mentored passes the exam for a public kindergarten in Changsha. Before she leaves she takes you to dinner and says a county town can't hold on to people.",
+    "e22": "A smart health-check machine is installed at the gate: it scans hands, takes temperatures and photographs throats. But the children who cry and won't come in still need you to crouch down and carry them through.",
+    "e23": "Your father is diagnosed with a heart problem and has to be hospitalized in Changsha. You take two weeks off to look after him and leave the class to the assistant teacher.",
+    "e24": "A parent reposts a video you shot during an activity, the children singing a nursery rhyme in dialect, to a short-video platform, and the views climb fast. The principal tells you to blur the children's faces next time.",
+    "e25": "The staff checkup finds a thyroid nodule. The doctor says to watch it for now. You start having trouble sleeping, and wake in the night thinking about which child didn't finish lunch.",
+    "e26": "A teaching researcher from the city comes down to observe without warning. After watching your free-play session, she says it's the best lesson she's seen in the county this term.",
+    "e27": "Your own child is taking the high-school entrance exam. Every day after work you rush home to cook, then go back to the kindergarten to work late on paperwork. You lose weight that half year."
+  },
+  "choices": {
+    "c01": {
+      "title": "The county model lesson competition",
+      "situation": "The county education bureau asks each kindergarten to put forward a model lesson for the district competition. The principal is looking at you; no one from your kindergarten has entered in three years. Polishing it will eat two months of evenings, and the lesson plan has to weave together all five learning areas.",
+      "options": [
+        { "label": "Enter, and polish it yourself", "result": "You work through several weekends and rewrite the lesson seven times. Prize or no prize, your record finally has its first district-level achievement." },
+        { "label": "Enter, and have AI do a first draft to revise", "result": "The draft comes fast, but in many places it doesn't sound like anything your children would say. By the end you can't really say how much time you saved, but you've learned how to tell AI what you want." },
+        { "label": "Let the young new teacher take it", "result": "You help her polish the lesson behind the scenes. She wins and thanks you on stage. The principal doesn't bring up entering again." }
+      ]
+    },
+    "c02": {
+      "title": "A rural exchange",
+      "situation": "A senior professional title requires experience teaching in the countryside. The county has a place for a two-year exchange at a township central kindergarten, where a class has only a dozen or so children, there are just three teachers, and it's forty minutes' drive from home.",
+      "options": [
+        { "label": "Go", "result": "You leave early and come back late every day, and in winter your hands go stiff on the handlebars. Most of the children there live with their grandparents, and what you do there feels more like teaching than anything in the county town." },
+        { "label": "Don't go; wait for the next round", "result": "You stay in the county town, where running your class comes easily. Your title is pushed back a few years, and some of the people who started with you have already got theirs." }
+      ]
+    },
+    "c03": {
+      "title": "A call from Changsha",
+      "situation": "An old classmate is an assistant principal at a high-end private kindergarten in Changsha and asks if you'll come. The pay is well above what you make now. The condition is that you give up your permanent post, and your child would have to change schools. Plenty of private kindergartens have closed in recent years, but hers still has steady enrollment.",
+      "options": [
+        { "label": "Give up the post and go to Changsha", "result": "Your pay goes up and your class gets smaller, but the parents ask for several times as much, and the group chat pings even in the middle of the night. Your place in the county town is filled quickly." },
+        { "label": "Stay", "result": "You hang up, and the next morning you're at the gate doing health checks as usual. The post is still yours, and the number on your pay slip hasn't changed." },
+        { "label": "Spend two months of the summer training at her kindergarten", "result": "You see how city kindergartens set up their play corners and run their teaching research, and when you come back you remake your own class along those lines. The cost is a summer without a single day off." }
+      ]
+    },
+    "c04": {
+      "title": "The smart preschool platform",
+      "situation": "The county is rolling out a growth portfolio and home-school system, where AI turns photos and notes into observation records. The principal wants someone to be the system administrator for the whole kindergarten: setting the workflow, handling privacy and teaching the other teachers to use it.",
+      "options": [
+        { "label": "Take on the administrator role", "result": "You set the rules for the whole kindergarten: what to record, how to record it, what must never be uploaded. When the older teachers object, you teach them one by one, hands on. Later, at a county meeting, you're asked by name to present." },
+        { "label": "Just learn to use it for your own class", "result": "You save some of the time you used to spend on weekly observation notes, and leave alone the features you can't get used to." },
+        { "label": "Avoid it as much as you can", "result": "You keep writing your observation notes by hand, one by one, until an inspection team asks why your class's data entry is below target." }
+      ]
+    },
+    "c05": {
+      "title": "Teaching-Research Lead",
+      "situation": "The old teaching-research lead has retired. The principal wants you to take over: lead the in-house teaching research, mentor new teachers and apply for a city-level research project. You'd still be running your class.",
+      "options": [
+        { "label": "Take it", "result": "You start writing the project application, running research meetings and observing the new teachers' lessons. The hours after ten at night stop being yours." },
+        { "label": "Turn it down and focus on your class", "result": "You know every child in your class by their pet name. But at kindergarten meetings, your seat drifts further and further toward the back." }
+      ]
+    },
+    "c06": {
+      "title": "The toddler class",
+      "situation": "With enrollment falling short, the kindergarten wants to open a class for two- and three-year-olds. A private childcare center has also opened in town and is hiring an experienced supervisor, who'd need to pass the infant and toddler development guide certificate. A toddler class means changing nappies, spoon-feeding and soothing tears all day.",
+      "options": [
+        { "label": "Get certified and become a supervisor at the childcare center", "result": "You give up your permanent post to set care standards, train new staff and field parents' questions.", "end": "You leave the kindergarten and become a supervisor at a childcare center in the county town. Every day you face even smaller children and even more anxious parents." },
+        { "label": "Stay and volunteer for the toddler class", "result": "You relearn how to hold a two-year-old and how to tell whether a cry means hungry or tired. It's exhausting, and the principal remembers that you stepped up." },
+        { "label": "Keep the senior class", "result": "The toddler class goes to a young teacher. But your senior class really does get smaller every year." }
+      ]
+    },
+    "c07": {
+      "title": "Principal qualification training",
+      "situation": "The vice principal is being transferred. The county education bureau wants you to enroll in principal qualification training, two hundred hours plus a work placement; pass, and you're in line for vice principal. At the same time, the county's teaching research office is hiring a preschool teaching researcher, which requires a senior title and a city-level research project.",
+      "options": [
+        { "label": "Do the training and go into management", "result": "You train in the provincial capital for several months, and when you come back you take over safety, the canteen and personnel. There are more places for your signature and less time in classrooms." },
+        { "label": "Apply to be the county's preschool teaching researcher", "result": "You get into the research office and start traveling from kindergarten to kindergarten.", "end": "From teacher of one class you become teaching researcher for every kindergarten in the county, observing other people's lessons and carrying what works on to the next one." },
+        { "label": "Apply for neither and stay with teaching research", "result": "You're still running your class, mentoring newcomers, doing research. People say it's a shame. You let it pass." }
+      ]
+    },
+    "c08": {
+      "title": "A part-time master's",
+      "situation": "The preschool education program at a vocational college in the city is hiring teachers with both classroom and industry experience, and values frontline teaching research. You'd need a master's in education first. Part-time, it takes three years, with weekends back and forth to Changsha.",
+      "options": [
+        { "label": "Do it, aiming for the college", "result": "For three years you spend most weekends on a long-distance bus. After you graduate the college offers you a lecturer post, and you bring your growth portfolios and research projects into the classroom.", "end": "You leave the kindergarten to become a lecturer in preschool education at a vocational college. The students in front of you will one day go off to teach in county-town kindergartens." },
+        { "label": "Do it, but stay put", "result": "Your qualifications go up and your research gets more serious. Only, for those three years, most of the household falls on your partner." },
+        { "label": "Don't do it", "result": "You keep your weekends for your family and your back." }
+      ]
+    },
+    "c09": {
+      "title": "A master teacher studio",
+      "situation": "The city education bureau is selecting heads for master teacher studios, and no one from your county has ever been one. A studio head mentors the best teachers across the county, develops local curriculum and takes lessons out to township kindergartens, with a special allowance. None of your work at the kindergarten goes away.",
+      "options": [
+        { "label": "Apply", "result": "You're selected. Your weekends fill up with outreach lessons and training sessions, and the young teachers across the county all call you shifu, master." },
+        { "label": "Don't apply; look after this kindergarten", "result": "You put your strength into the kindergarten and steady, one by one, the classes that are close to being merged." }
+      ]
+    },
+    "c10": {
+      "title": "Moving to the city",
+      "situation": "Your child has got into a high school in the city, your parents are getting old, and the hospitals there are more convenient. A public kindergarten in the city has a transfer place, and you could keep your permanent post, but everything you've built up in the county would be gone.",
+      "options": [
+        { "label": "Transfer to the city", "result": "You start over and are the outsider again at a new kindergarten. After work you can pick your child up at the school gate, and on weekends you take your parents to their checkups." },
+        { "label": "Stay in the county", "result": "Every Friday evening you drive to the city, and every Sunday evening you drive back. You could walk the road to the kindergarten gate with your eyes shut." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you're still at the gate at half past seven. Among the people dropping off their children, a young mother says you were her teacher when she was little. At lunch you don't eat in the office; you do one more round of the nap room. At pickup, you hand in your keys.",
+    "burnout": "That morning you bent down at the gate to take a child, and your back wouldn't straighten. Sick leave stretched from two weeks to a whole term, and when you came back the principal moved you to the support office. From its window you can still see the children lining up for morning exercises in the yard."
+  },
+  "past": [
+    "When you finished middle school your grades were ordinary, but you could sing and dance. Your homeroom teacher recommended a five-year preschool teaching program and said there'd be a job at the end of it.",
+    "You went to the preschool teachers' college in the city. It took a whole winter for your fingers on the piano to go from stiff to supple.",
+    "After graduating with your junior college diploma you got your teaching certificate and spent a year with the youngest class at a private kindergarten in the county town, for ¥1,800 a month.",
+    "The county held an open exam for public kindergarten teachers. You came third and got a permanent post. Your mother cried on the phone.",
+    "You took your first class all the way from the youngest year to the senior class, three years. On graduation day, one child wrapped herself around your leg and wouldn't let go.",
+    "You got married. Some of the parents of children you'd taught came to the wedding.",
+    "You became a lead teacher, and from that year on the inspection paperwork was yours. You learned to keep the children company at nap time while planning next week's activities in your head."
+  ],
+  "late": {
+    "pension_note": "Estimate: a permanent post at a public kindergarten, with a basic pension plus an occupational annuity. The replacement rate is around 70%, but county-town salaries are a low base.",
+    "scenes": [
+      "The day you retire, the kindergarten is down to a single class of little ones. The principal says it may be merged with the one next door. You nod, and put your keys on the desk.",
+      "A family asks you to help look after their grandson. Every afternoon you pick him up, and on the way you teach him the nursery song you taught for decades.",
+      "You dance in the square in the county town, and the spot at the front is always kept for you. People say your moves are so precise. You say: I've had practice.",
+      "You take long-term sick leave, and later move to the education bureau as a records clerk. No more standing at the kindergarten gate greeting and sending off.",
+      "A child in the supermarket recognizes you and shouts \"Teacher!\" You turn around and pat his head.",
+      "You learn to write reports with AI, then go over them yourself, because it writes too much like officialese.",
+      "You give up your permanent post, and no one in the family understands. You say you want to try Changsha and open your own picture-book library.",
+      "Business at the picture-book library is up and down, but every weekend there are children sitting on the floor listening to you read.",
+      "Back in the county town, you walk past your old kindergarten. The gate now opens onto a daycare for the elderly. The iron gate is the same iron gate.",
+      "Later, AI writes the first drafts of the observation notes and growth portfolios, and teachers revise them. The young teachers say it saves so much time they can play with the children a little longer. Good, you say.",
+      "One of the children from your very first class has become a kindergarten teacher too. She sends you a photo: her class is planting seeds.",
+      "You dig out an old cardboard box full of the pictures children have drawn for you over the years. Some of the colors have faded. You spread them out one by one and let them sit in the sun all afternoon."
+    ],
+    "closing": {
+      "retire": "Many years later, early one morning, you pass a kindergarten. At the gate a young teacher crouches down to take a child's schoolbag. You watch from across the road for a long time before going on to buy your vegetables.",
+      "burnout": "Many years later, sorting files at the education bureau for the last time, you come across a set of inspection papers from thirty years ago. The handwriting is yours, neat and careful.",
+      "end": "Many years later the picture-book library closes. On the last day you give the books away to the children who come, and keep just one for yourself: the one you read to your very first class."
+    }
+  }
+}

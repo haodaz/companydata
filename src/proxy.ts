@@ -59,6 +59,7 @@ export async function proxy(req: NextRequest) {
   // 其余任何地址（/work、/lab、/college、/admin……）一律回游戏首页，接口 404——别从这个域名摸到真活、百业、学院（用户 11-07）
   if (/(^|\.)1job1life\.com$/.test(host)) {
     if (pathname === '/') return NextResponse.rewrite(new URL('/game', req.url));
+    if (pathname === '/en') return NextResponse.rewrite(new URL('/game/en', req.url));   // 英文版 One Job, One Life
     if (pathname === '/game' || pathname.startsWith('/game/') || pathname === '/favicon.ico') return NextResponse.next();
     if (pathname.startsWith('/api/game/') && req.method === 'GET') return NextResponse.next();
     if (pathname.startsWith('/api/')) return NextResponse.json({ ok: false, error: 'not found' }, { status: 404 });

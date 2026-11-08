@@ -1,0 +1,364 @@
+{
+  "id": "dev-hz-bigco",
+  "occupation": "Software Engineer",
+  "role": "Backend engineer, trading platform",
+  "headline": "A backend engineer at a big Hangzhou internet company, three years in, guarding the order pipeline through a third Singles' Day",
+  "unit": "The trading platform department of a big internet company in Hangzhou",
+  "unit_type": "Big internet company",
+  "city": "Hangzhou",
+  "city_tier": "New first-tier city",
+  "education": "Master's in Computer Science, top-tier (Project 985) university",
+  "level": "You can own the design, integration and release of a mid-sized module on the order pipeline, and hold your own through an alert when you're on call.",
+  "intro": "You live in Binjiang, renting the second bedroom of a flat four subway stops from the campus. The department name on your badge has changed twice; the order and discount calculation services you own have never changed hands. This year the team is pushing an AI coding assistant, and at the end of October full-pipeline load testing begins again. Your mentor has just transferred to another business line, so some calls will be yours to make from now on. As of today, the person getting @-mentioned in the alert group is you.",
+  "salary_note": "Estimate: at a leading Hangzhou internet company around level P6, cash plus year-end bonus runs well above the national figure for 3–5 years' experience, with stock on top; estimated at 1.8 times.",
+  "facts": [
+    {
+      "label": "Current level",
+      "value": "Software Engineer (independent contributor, 2–4 years, ¥15,000–25,000 a month nationally)",
+      "source": "Career map"
+    },
+    {
+      "label": "Pay at 3–5 years",
+      "value": "¥18,200 a month (national average)",
+      "source": "Pay by experience"
+    },
+    {
+      "label": "Pay after 10+ years",
+      "value": "¥32,800 a month (national average)",
+      "source": "Pay by experience"
+    },
+    {
+      "label": "Next level up",
+      "value": "Senior Software Engineer, 4–7 years; promotion comes from designing for load, weight in code review, and catching what falls",
+      "source": "Career map"
+    },
+    {
+      "label": "AI can already take over",
+      "value": "Analyzing the impact of yesterday's code changes before stand-up; a person only spot-checks the key conclusions",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "485 nationwide, 28 in Hangzhou (mostly graduate hiring and internships, few experienced hires)",
+      "source": "Job listings"
+    }
+  ],
+  "day": [
+    "You get up on the alarm's second ring. First you reach for your phone and check the alert group: only two blips overnight, both recovered on their own. You breathe out.",
+    "You squeeze onto the subway to campus, where shared e-bikes are piled in a row at the gate. Before you've even made coffee, you open the AI's summary of yesterday's change impact and pick out the two items touching payment callbacks to check against the original commits.",
+    "Fifteen-minute stand-up. Product wants to add a stackable cross-store discount rule before the big sale, and in your head you count how many new money-loss test cases that means.",
+    "In the canteen line, the team next door is talking about who's been “adjusted” this time. You stay out of it and look down at your number in the queue app.",
+    "Writing a new branch of the discount calculation. The AI assistant fills in a big chunk; you read it line by line and change one way of handling currency precision back to what the company standard requires.",
+    "Aligning definitions with QA and the downstream clearing and settlement team. The whiteboard fills with the order state machine, and the last arrow takes twenty minutes of argument.",
+    "Dinner at the office, then back to your desk. The load-test schedule is taped to the edge of your screen: twenty-some days left on the countdown.",
+    "Evening release window. You watch the canary dashboard as traffic ramps up, and only when the first batch's error rate holds steady do you dare go for a glass of water.",
+    "A taxi home, the lights along the Qiantang River still on outside the window. After a shower, before you lie down, you refresh the alert group one more time."
+  ],
+  "ladder": [
+    {
+      "title": "Junior Software Engineer",
+      "stage": "Entry",
+      "focus": "Learn the business and the code structure under a mentor, deliver your piece of a module and fix common bugs on time and to standard. Promotion comes from clean code and getting tasks done."
+    },
+    {
+      "title": "Software Engineer",
+      "stage": "Independent contributor",
+      "focus": "Own a mid-sized business module end to end: development, integration testing, release and operations. Promotion comes from closing the loop on delivery and handling incidents reliably."
+    },
+    {
+      "title": "Senior Software Engineer",
+      "stage": "Core engineer",
+      "focus": "Lead design and the hardest technical problems on core business systems, and coach junior and mid-level engineers. Promotion comes from designing for load, having weight in code review, and being the one who catches what falls."
+    },
+    {
+      "title": "Staff Engineer",
+      "stage": "Technical expert",
+      "focus": "Own architecture and stack choices for a whole business line, crack the key technical problems and turn components into reusable assets. Promotion comes from breaking through hard bottlenecks and lifting engineering productivity."
+    },
+    {
+      "title": "Systems Architect",
+      "stage": "Architecture leadership",
+      "focus": "Plan the company-wide technical roadmap, bridge business and technology, and decide major technical investments and how tech debt gets paid down. Your standing comes from foresight across the whole architecture and from business results."
+    }
+  ],
+  "ai_tasks": [
+    {
+      "name": "Refactoring the historical order export to page through tens of millions of rows",
+      "how": "AI can read the code, propose streaming export, cursor pagination, async jobs and chunked file writes, and generate most of the code and tests. A person has to fit the plan to real data volumes, the database and finance's reconciliation rules, and prove under load testing that it no longer runs out of memory."
+    },
+    {
+      "name": "Finishing a canary release of the payment service before the lunch rush",
+      "how": "AI can write the release scripts, watch canary metrics and compare errors between old and new versions. A person decides how fast to ramp traffic, and answers for what happens on the core payment path."
+    },
+    {
+      "name": "Finding and fixing timeouts on the medical insurance settlement API",
+      "how": "AI can sort through logs, traces and monitoring data and list likely causes of the delay. A person has to go into the government cloud to check the network, cross-domain and dependency issues, and coordinate the investigation with the medical insurance bureau and other teams."
+    },
+    {
+      "name": "Adapting an in-car voice SDK's JNI layer to the Qualcomm SA8295P chip",
+      "how": "AI can explain the chip documentation, draft JNI interface code and troubleshoot common build errors. A person has to debug on the real chip in the lab, solve low-level performance and stability problems, and work with the chipmaker and the carmaker."
+    },
+    {
+      "name": "Producing a performance baseline report for an OCR service in a Xinchuang (domestic IT replacement) environment",
+      "how": "AI can draft the test plan from the evaluation guidelines, write load-test scripts, compile the data and draft the report. A person has to run the tests on real Kunpeng servers with UOS, check how accuracy is measured, and answer for the conclusions."
+    },
+    {
+      "name": "Producing the annual tech debt health report and pushing the top three fixes",
+      "how": "AI can pull trends from SonarQube and Jira data, classify problems and draft the report. A person has to judge which debt really hurts the business, pick the top three, and persuade the architecture committee to fund them."
+    },
+    {
+      "name": "Analyzing the impact of yesterday's code changes before the daily stand-up",
+      "how": "AI reads the previous day's merge requests, maps the modules and call chains they touch, lists the core paths and risks affected, and writes a summary for the morning meeting. A person just skims it and spot-checks the key conclusions."
+    },
+    {
+      "name": "Emergency rollback of a faulty production release",
+      "how": "AI can watch the alerts, trigger the rollback script and run basic functional checks. A person decides whether to roll back, authorizes it, and leads the post-mortem, because when core transactions fail someone has to answer for it."
+    },
+    {
+      "name": "Connecting the e-medical insurance credential SDK to the provincial government cloud's unified identity platform",
+      "how": "AI can read the interface spec and generate the integration code and test cases. A person has to work on-site at the government cloud to connect to the identity platform, handle identity verification and compliance, and sign off the launch."
+    },
+    {
+      "name": "Leading the hunt for interference sources during automotive-grade EMC testing of an in-car voice SDK",
+      "how": "AI can only help look up EMC references and analyze test data. Finding the interference source means measuring with real equipment in the lab, changing hardware and software, and working with a third-party testing lab; it depends mostly on hands-on experience."
+    }
+  ],
+  "events": {
+    "e_d11_watch": "At midnight on Singles' Day you're on watch in the war room. The transaction peak climbs and climbs and then levels off smoothly. Your services don't throw a single alert, and the team hands out midnight red envelopes.",
+    "e_money_loss": "The discount branch you changed missed an edge case in stacking. At two in the morning the money-loss alarm goes off: emergency group, stop the bleeding, roll back, compensate. In the post-mortem you're named as the person primarily responsible.",
+    "e_ai_standup": "The team hands the pre-stand-up change impact analysis to AI. Every morning a summary appears on its own, and you go from reading dozens of merge requests to spot-checking three or five.",
+    "e_ai_review_catch": "A piece of AI-generated inventory deduction code looks very clean. In review you find it will oversell under concurrency and send it back to be rewritten. The case later goes into the team's review checklist.",
+    "e_reorg_absorb": "A department reshuffle; a few people leave the team. You stay, but the three old systems they leave behind are put under your name, with one page of documentation between them.",
+    "e_jd_market": "You spend an evening scrolling the job apps. Most of what's posted in Hangzhou is graduate hiring and internships, with hardly any experienced-hire slots for someone at your years. You save your résumé back to drafts.",
+    "e_open_source": "A fix you submitted to a widely used open-source message queue is merged into the main branch. For the first time, your name is in its commit history.",
+    "e_marriage": "You get married. The wedding is set for after Singles' Day; the dates on your leave request took three rounds of negotiation with your manager.",
+    "e_house": "You buy a flat in Hangzhou. The day the down payment comes together, you do the math: for the next thirty years you have to be at your desk on time every month.",
+    "e_child": "The week your child is born falls right in load testing. In the hospital corridor you look at the load-test report once on your phone, then switch it off.",
+    "e_parent_ill": "A call from home: your father is in the hospital. You book the earliest high-speed train, and for three days your laptop stays open on a folding chair in the ward.",
+    "e_mentor_junior": "The graduate hire you're mentoring does his first release on his own. Not one line of the release ticket needs your changes. He posts an emoji in the group; you reply with a thumbs-up.",
+    "e_checkup": "Your annual checkup has a few more arrows on it: loss of the curve in your neck, high uric acid, a small nodule on your thyroid. The doctor says come back regularly.",
+    "e_bad_perf": "At year's end you get an unflattering performance rating. Your manager says it's a quota thing. Your year-end bonus shrinks by a chunk, and so does your stock grant.",
+    "e_ai_rollback": "The release system now has AI watching canaries. One late night it detects an anomaly and has the rollback ready, but it still phones you awake, because only a person can press the button.",
+    "e_ai_no_junior": "This year the team has no headcount for junior engineers. Most interface code is generated by AI, and your days become reviewing code, writing rules and deciding which steps a person must confirm.",
+    "e_tech_debt": "You use AI to pull data from the quality platform and ticket system and draft the annual tech debt report. Of the top three you picked, the architecture committee cuts one.",
+    "e_limiter_win": "The rate limiting and circuit breaking you led for the order pipeline is triggered for real for the first time at a big-sale peak. The system degrades gracefully, no cascade, and your post-mortem doc gets forwarded to other departments.",
+    "e_ancestor_code": "A newcomer quotes a ten-year-old piece of core code in a review and asks who wrote it. You say you did. A small laugh goes around the room.",
+    "e_west_lake": "One weekend off call, you cycle all the way around West Lake and sit by the water for a long time. Your phone doesn't ring once.",
+    "e_reporting_line": "Your business line is folded into another division. In one year you report to three different people, and each time you explain from the start why the system looks the way it does.",
+    "e_stock_vest": "A batch of stock vests just as the share price is near a low. You look at the number and decide not to sell for now.",
+    "e_35": "In the week of your thirty-fifth birthday, you scroll past several posts about middle-aged engineers at big tech firms, and stare at the screen on the subway until you miss your stop.",
+    "e_conf_talk": "You speak on capacity planning for order pipelines at a tech conference. Afterward seven or eight people queue to add you on WeChat. Two are headhunters.",
+    "e_school_run": "Your child starts primary school, and two days a week you leave your desk before six to do the pickup. Someone says behind your back that you're not as committed lately.",
+    "e_advisor": "You show up more and more in design reviews and incident post-mortems. The code you commit yourself comes to a few dozen lines a quarter."
+  },
+  "choices": {
+    "c_ai_pilot": {
+      "title": "The AI coding assistant: where do you stand?",
+      "situation": "The team is pushing an AI coding assistant and your manager wants someone to lead it: decide which code AI may write and which steps need human review, and present it to the whole team. The order pipeline can't afford mistakes, and the big sale is close.",
+      "options": [
+        {
+          "label": "Take it and lead the team's human-AI pilot",
+          "result": "By day you write trading code, by night review guidelines and red lines for AI use. For the month before the big sale you barely sleep a full night, but from then on these questions all get forwarded to you."
+        },
+        {
+          "label": "Use it as a tool and save your energy for the pipeline",
+          "result": "You let it fill in boilerplate and write the core logic yourself as before. Life is steady; only, when the rules are set later, not one of them is yours."
+        },
+        {
+          "label": "Hand-write the core path and keep AI at arm's length",
+          "result": "Your modules go a year without an incident, but in the quarterly productivity stats your delivery numbers are at the bottom, and your manager has a talk with you."
+        }
+      ]
+    },
+    "c_promo_senior": {
+      "title": "Go for senior?",
+      "situation": "Promotion nominations are open. A senior engineer has to make the case for designing for load and catching what falls. You have this year's big-sale stability project, but the money-loss prevention work isn't finished.",
+      "options": [
+        {
+          "label": "Defend with the big-sale stability project",
+          "result": "On the day, the panel fires four disaster-recovery questions at you and you answer three and a half. You pass. Afterward you coach two newcomers, and your name moves up the on-call rota."
+        },
+        {
+          "label": "Give it another year and finish loss prevention first",
+          "result": "You make the prevention system very solid, only the person who joined with you gets promoted first, and on the weekly report's CC list your name comes after his."
+        }
+      ]
+    },
+    "c_hop": {
+      "title": "Jump or stay?",
+      "situation": "Two offers arrive at once: a big tech payments team in Shanghai offering more money, and a cross-border e-commerce startup in Hangzhou offering options and ownership of a bigger system. Your current team has only just settled down.",
+      "options": [
+        {
+          "label": "Join the payments team in Shanghai",
+          "result": "Your pay goes up a notch, and you start taking the high-speed train between the two cities on weekends. The flat you rent is smaller than in Hangzhou, and the commute is longer."
+        },
+        {
+          "label": "Go to the Hangzhou startup as system owner",
+          "result": "From database choice to release process, you have the final say, and the outages at dawn are yours alone to carry. Whether the options ever pay out, you'll know in a few years."
+        },
+        {
+          "label": "Stay",
+          "result": "You turn down both calls and keep guarding the systems you know, so well you could recite every interface's timeout with your eyes closed, and so well it's starting to feel stale."
+        }
+      ]
+    },
+    "c_ruankao": {
+      "title": "Sit the senior-level national software exam?",
+      "situation": "A friend has moved to a bank's tech subsidiary and says they value the senior-level Systems Architect qualification from the national software exam. Nobody at a big tech company cares about it, but it would take months of weekends.",
+      "options": [
+        {
+          "label": "Sign up; weekends of past papers and essays",
+          "result": "In your rented room you write out several practice essays stroke by stroke by hand, and leave the exam hall with an aching wrist. You get the certificate. Nobody on the team knows, but you have one more way out."
+        },
+        {
+          "label": "Skip it; keep weekends for yourself",
+          "result": "You spend those months of weekends hiking and sleeping. Later, when a bank job ad says the qualification is preferred, you look at it a second time."
+        }
+      ]
+    },
+    "c_home": {
+      "title": "Go back home?",
+      "situation": "Your parents are getting older. A state-owned bank's tech subsidiary in your home provincial capital is hiring backend engineers: nine to six, Singles' Day has nothing to do with you, and the pay is a little over half what you make now.",
+      "options": [
+        {
+          "label": "Go home to the bank's tech subsidiary",
+          "result": "For the first time you're eating dinner at home at seven. The systems are old and the processes long; one change request goes through three approvals, and your skills slowly fall behind your old colleagues'."
+        },
+        {
+          "label": "Stay in Hangzhou and have your parents come for a while",
+          "result": "Your parents stay two months, find nobody to talk to in the city, and go home. A few more high-speed train tickets each month."
+        },
+        {
+          "label": "Stay in Hangzhou and send more money home",
+          "result": "Money is taken care of. What gets said on the phone isn't. Every video call, they look a little older."
+        }
+      ]
+    },
+    "c_track": {
+      "title": "Staff engineer, or a change of direction?",
+      "situation": "Your manager says you can apply for staff engineer and take on architecture for the whole trading line. Meanwhile the product lead for the developer platform wants to poach you as a technical product manager, saying you know what engineers want.",
+      "options": [
+        {
+          "label": "Apply for staff engineer and take the whole line's architecture",
+          "result": "You start writing tech selection docs and three-year roadmaps. You're in more reviews than you write code, and when something breaks, the first call is to you."
+        },
+        {
+          "label": "Become a technical product manager for developer tools",
+          "result": "You hand over the on-call phone and start writing requirements docs.",
+          "end": "You went from writing code to defining tools. The platform many engineers use every day: you wrote the first version of its requirements."
+        },
+        {
+          "label": "Neither: stay a front-line senior engineer",
+          "result": "You still write the hardest parts of the code, only now new architecture proposals are presented by someone else, and you listen from the audience."
+        }
+      ]
+    },
+    "c_reorg35": {
+      "title": "Around the time of the list",
+      "situation": "A new round of reorganization; your business is shrinking. HR tips you off privately: you can transfer internally to the AI platform team and start over, or take severance and go. Separately, a cloud provider is hiring solutions architects.",
+      "options": [
+        {
+          "label": "Transfer to the AI platform team and start over",
+          "result": "You sit in meetings with people ten years younger, write down the words you don't understand and look them up at night. Only after three months can you start offering opinions."
+        },
+        {
+          "label": "Become a solutions architect at a cloud provider",
+          "result": "You start traveling to meet government and financial clients, presenting solutions and drawing architecture diagrams.",
+          "end": "You went from building trading systems to designing systems for others. You made gold status on frequent-flyer miles, and seldom logged into your own code repositories again."
+        },
+        {
+          "label": "Take severance and move to a mid-sized company",
+          "result": "The new company is smaller and you're the most senior person there. Your pay drops; your weekends go quiet."
+        }
+      ]
+    },
+    "c_architect": {
+      "title": "Architect, or lead a team?",
+      "situation": "The company is choosing its next systems architect, to set the overall technical direction and tech debt investment. At the same time the director of engineering post is open: a team of more than a hundred, budget and people.",
+      "options": [
+        {
+          "label": "Compete for systems architect",
+          "result": "You take on the company-wide architecture blueprint. Every technical investment needs your signature, and you have to explain to the business why each is worth it."
+        },
+        {
+          "label": "Become director of engineering",
+          "result": "Your calendar fills with one-on-ones and budget meetings.",
+          "end": "You became head of an engineering team of a hundred people. What you opened most was no longer code, but the hiring board and the budget sheet."
+        },
+        {
+          "label": "Go for neither: be the most senior person on the front line",
+          "result": "You still review the most critical code. Promotion windows close one after another, and you don't find it much of a loss."
+        }
+      ]
+    },
+    "c_presales": {
+      "title": "A fork in your forties",
+      "situation": "A company that makes industry software invites you into technical presales: helping the sales team through bid defenses, proofs of concept and the technical sections of tenders. Good pay, mostly on talk and experience, and no more night shifts.",
+      "options": [
+        {
+          "label": "Go into technical presales",
+          "result": "You start traveling in a shirt, telling evaluation panels at tenders how much traffic a system can take.",
+          "end": "For many years you talked about other people's systems in meeting rooms. Now and then you dreamed of an alert sound at night, and woke to find your phone on silent."
+        },
+        {
+          "label": "Stay where you are",
+          "result": "Your name is still on the on-call rota, only now you're more often the last one woken."
+        }
+      ]
+    },
+    "c_slowdown": {
+      "title": "Slow down?",
+      "situation": "Your body is starting to send reminders. The company has a role in internal tools and technical governance: a slower pace, nowhere near the big sales. Or you can keep heading toward chief architect.",
+      "options": [
+        {
+          "label": "Keep heading toward chief architect",
+          "result": "You start planning infrastructure across divisions: travel, reviews, briefings. Your calendar is fuller than it was ten years ago."
+        },
+        {
+          "label": "Move to technical governance and slow down",
+          "result": "You start leaving on time and learn to swim on weekends. When young colleagues hit a hard problem, they still come quietly to find you."
+        },
+        {
+          "label": "Leave big tech early",
+          "result": "You hand in your badge and clear a desk at home.",
+          "end": "You left big tech early. You took on some consulting now and then, and spent more of your time cooking, being with your parents, and finishing the books you'd left half-read for over a decade."
+        }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you hand the on-call phone to an engineer more than twenty years younger, and tell him which alerts can wait and which ones mean getting up in the middle of the night. Your badge beeps one last time at the gate. On the subway home you reach into your pocket out of habit. It's empty. That night, a little rain falls on Hangzhou.",
+    "burnout": "After that predawn incident is fixed, you sit at your desk until it's light, and suddenly can't take in a single word on the screen. The doctor writes you a sick note; your manager says rest first, your seat will be kept. You lie at home for a long time. You mute the alert group, and later leave it."
+  },
+  "past": [
+    "You went to a key high school in a prefecture-level city in Jiangxi and won a provincial second prize in the physics olympiad. Your homeroom teacher said you were made for engineering.",
+    "The gaokao (college entrance exam) got you into the computer science department of a top-tier (Project 985) university. The day the admission letter arrived, your father set off a string of firecrackers downstairs.",
+    "In second year you started grinding algorithm problems and spent two years on the bench of the school's programming contest team, learning how to stay sharp at three in the morning.",
+    "You were recommended into the master's program at the same university without the entrance exam. Your advisor took on industry contracts, and you spent two years in the lab writing backend services, learning for the first time that “production” and “offline” are two different things.",
+    "The summer after your first year of the master's, you interned at this big Hangzhou company. You did one night shift alongside your mentor and watched the sales curve leap at midnight.",
+    "You passed the defense to turn your internship into a full-time job, and signed an offer that said “Trading Platform Department” without asking your family.",
+    "On your second Singles' Day, a cache configuration you wrote caused a failure, and in the post-mortem you read out your own report word by word. Your mentor patted you on the shoulder. The next month he transferred out."
+  ],
+  "late": {
+    "pension_note": "Estimate: standard employee pension scheme. Big tech mostly pays in at the ceiling, so your pension replaces a bit over 40 percent of your pay; savings and company stock are a separate matter.",
+    "scenes": [
+      "The year you retire, you still have a little unsold company stock. You've never brought yourself to look at what it's worth now.",
+      "You sign up for a calligraphy class at the senior university. Your hand is steady when you write, the way it was when you changed production configs.",
+      "The Hangzhou mortgage is paid off. You and your spouse move to a compound a bit farther from West Lake, with a market downstairs.",
+      "You hand in your resignation. HR asks why, and you write “personal development”. Really it's those arrows on your checkup.",
+      "You go back to your hometown in Jiangxi for a year and walk with your parents to the vegetable plot every day. One by one, you leave the alert groups on your phone.",
+      "You teach programming at a vocational school. Students ask what big tech is like. You say: bright. Bright at night, too.",
+      "The day you leave big tech, you hand back your badge, and your account in the system is disabled before the end of the workday, neat and clean.",
+      "The new work goes in fits and starts, but there's no more Singles' Day. Your first November with no watch to keep, you can't sleep for a few nights.",
+      "One year you go back near the campus for a meal. The sign on that building has changed. You stand across the road looking at it for a long time.",
+      "The order service you wrote was later mostly rewritten with AI's help. A former colleague posts a screenshot in the group: “That comment of yours is still in there.”",
+      "Your daughter starts primary school. You show her how to build a “queueing system” out of blocks, and she asks why everyone can't just go through the door together.",
+      "At a checkup, the doctor asks why your neck is so bad. You think about it and say you stared at screens too long when you were young."
+    ],
+    "closing": {
+      "retire": "Many years later, at midnight on Singles' Day, you still wake and reach for the phone by the bed. The screen lights up for a moment: only the weather forecast. You turn over and fall back asleep.",
+      "burnout": "Many years later, in the vocational school's computer lab, you shut down the last machine. The fans stop one by one, and the room is so quiet you can hear the corridor lights humming.",
+      "end": "Many years later, in a café in an unfamiliar city, you hear two young people at the next table arguing over a production incident. You don't turn around. The corner of your mouth moves."
+    }
+  }
+}

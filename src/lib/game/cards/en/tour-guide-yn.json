@@ -1,0 +1,185 @@
+{
+  "id": "tour-guide-yn",
+  "occupation": "Tour Guide",
+  "role": "Local Guide, Kunming–Dali–Lijiang Route",
+  "headline": "Third year with a guide's license, sleeping more than two hundred nights a year on tour buses and in group hotels: a Yunnan local guide running the six-day Kunming–Dali–Lijiang circuit",
+  "unit": "Inbound tours department of a travel agency in Kunming",
+  "unit_type": "Local inbound travel agency",
+  "city": "Kunming",
+  "city_tier": "Provincial capital",
+  "education": "Three-year college diploma (Tourism Management)",
+  "level": "You can take a pooled group of thirty or forty travelers through six days and five nights on your own, and you know the scripts for the Stone Forest, the old towns and the snow mountain by heart. Foreign languages and school study-tour lessons, you can't yet manage.",
+  "intro": "You have been on the books of a Kunming travel agency's inbound department for three years, your guide's license pinned to your chest and more than thirty drivers' and restaurant owners' numbers saved in your phone. July is peak season, and the scheduler has put your name on four back-to-back six-day Kunming–Dali–Lijiang tours, with one night in between to change clothes. From today, you hold up the little yellow flag at the arrivals exit of Changshui Airport and meet the first group.",
+  "salary_note": "Estimate: local guides in Kunming have a very low base salary. Most income is a per-day guiding fee plus tips. Since the crackdown on forced shopping, commissions from shops have shrunk. Peak season is frantic and the off season empty, and over the year it averages out to about eighty percent of the national average.",
+  "facts": [
+    { "label": "Junior Tour Guide (current level)", "value": "1-3 years, ¥5,000–10,000 a month (national average)", "source": "Career map" },
+    { "label": "Next level up", "value": "Intermediate Tour Guide (3-5 years)", "source": "Career map" },
+    { "label": "Pay after 10+ years", "value": "¥14,500 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Evacuating tourists safely and rerouting the trip when a rainstorm hits without warning", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Completing real-name checks and the double-signed safety briefing 30 minutes before departure", "source": "AI exposure" },
+    { "label": "Open positions", "value": "7 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "A group hotel in Lijiang. You make the wake-up calls room by room. Today is the snow mountain, and you need to make the first cable car. Someone picks up and asks if they can skip it; they drank too much at a bar in the old town last night.",
+    "Head count at the bus door: thirty-five, two missing. You go upstairs and knock. An auntie is digging through her suitcase for her blood pressure pills. On the way back you hand out the rented down jackets and oxygen canisters one by one.",
+    "In line for the cable car at Glacier Park. You check in on the regulators' app on your phone, then tell everyone about the thirteen peaks of Jade Dragon Snow Mountain and Sanduo, the Naxi people's protector god. A man asks if he can smoke up top.",
+    "Lining up for photos at the 4,500-meter sign. A young man's lips are turning purple. You sit him down on oxygen, let the driver know, and ride the cable car down with him first.",
+    "The group lunch, eight dishes and a soup. At the door you go over the menu with the restaurant owner. Guests complain there's no chili, so you get a dish of it from the kitchen, then squat by the back door eating a bowl of rice noodles yourself.",
+    "Blue Moon Valley. Someone holds up the itinerary and asks how the White Water River it lists can be this place. You explain twice that it's the same spot. Back on the bus you talk about the Dongba script and have everyone draw their zodiac animal in a notebook.",
+    "Free time at the entrance to the old town. You post the meeting point and tomorrow's departure time in the group chat, then post again: don't follow anyone touting on the street, and ask the price before you buy.",
+    "Back in your room, you reconcile accounts with the scheduler, photographing and uploading receipts for tickets, meals and the bus. Tomorrow at seven you leave for Dali. You haven't showered yet, and two days of clothes are soaking in the washing machine."
+  ],
+  "ladder": [
+    { "title": "Trainee Tour Guide", "stage": "Trainee / assistant", "focus": "Ride along to learn the standard procedures for local and through-guiding, practice explaining single sites, and help the lead guide with check-ins, meals and rooms. You are taken on permanently after passing an assessment tour with no complaints." },
+    { "title": "Junior Tour Guide", "stage": "Junior, independent", "focus": "Take routine pooled groups, regional local tours and through-guide work on your own. Keep the pace right and handle surprises, building seniority through a steady number of tours and good reviews." },
+    { "title": "Intermediate Tour Guide", "stage": "Core guide", "focus": "Lead the higher-priced boutique small groups, foreign-language groups for overseas visitors, or high-end custom tours for government and corporate clients. Deep knowledge of history and culture, real experience handling complex emergencies, and the intermediate guide grade." },
+    { "title": "Senior Tour Guide", "stage": "Senior expert", "focus": "Deliver complex custom tours across regions, high-end study tours, and large outbound groups. Train trainee guides, write route standards, and hold the national senior guide certificate." },
+    { "title": "Special-Grade Tour Guide", "stage": "Industry leader", "focus": "A master at the top of the profession: lead development of signature cultural-tourism routes and study-tour curricula, take part in industry training and judging, and speak for cultural-tourism brands. The path leads to partnership in an agency or running your own studio." }
+  ],
+  "ai_tasks": [
+    { "name": "Evacuating tourists safely and rerouting the trip when a rainstorm hits without warning", "how": "AI can check weather warnings in real time and work out alternative descent routes and transport connections. But calming a frightened crowd on the spot, making the call, and answering for the whole group's safety come down to the guide alone." },
+    { "name": "Handling an emergency descent and evacuation in sudden severe weather", "how": "AI can help calculate descent times and look up train rebookings and shuttle buses. Steadying agitated tourists on the mountain, changing routes in the moment, coordinating vehicles and taking responsibility must be done by a person." },
+    { "name": "Completing real-name checks and the double-signed safety briefing 30 minutes before departure", "how": "AI can match ID details automatically, generate the safety notice, and flag what's missing. At the entrance, a person checks the real faces against the IDs, explains the risks, and signs once sure the tourists understand." },
+    { "name": "Delivering a three-part cultural talk on a moving tour bus and adjusting it on the fly", "how": "AI can write a three-part script tailored to the group's ages and interests and prepare stories and quiz material. On the bus, a person watches how the group reacts, changes the pace and adds interaction as needed, and tells it in their own style." },
+    { "name": "Handling a tourist's sudden heart palpitations and starting the three-level response chain", "how": "AI can prompt first-aid steps, help find the nearest hospital and call emergency services. Judging how serious it is, giving aid on the spot, calming the family and deciding whether to call an ambulance have to be done by a person who is there." },
+    { "name": "Designing an intangible-heritage micro-lesson tailored to the group and delivering it on site", "how": "AI can quickly generate a micro-lesson script, interactive questions and illustrated materials from the group's profile. A person gets the students involved on site, keeps order in the exhibition hall, answers questions as they come, and checks that the content is accurate." },
+    { "name": "Settling accounts with local suppliers and producing a supply-chain health report", "how": "AI can reconcile accounts automatically, total the costs, and generate supplier assessments and a health report. A person only needs to spot-check unusual entries and talk to suppliers when there's a dispute." }
+  ],
+  "events": {
+    "e_altitude": "On the snow mountain an old man's blood oxygen drops to the low eighties. You hold him up all the way down the cable car and take him to a hospital in Lijiang. That day, the rest of the group finished Blue Moon Valley with the driver.",
+    "e_long_review": "A family group from Beijing goes home and posts a long travelogue online, with a whole section on what you told them on the bus about the Nanzhao kingdom and the Kingdom of Dali. The agency posts screenshots in the guides' group chat.",
+    "e_jade_complaint": "After getting home, a tourist decides the bracelet she bought at a jade shop wasn't worth it and complains to the 12345 government hotline. You are called in to explain. The shop was printed on the itinerary, but what the guest remembers is you.",
+    "e_off_season": "Once mid-November passes, the groups vanish. You guide just three days that month. Rent and your Huabei credit bill are covered by what little you saved in peak season.",
+    "e_landslide": "Rainy season, on the road to Lijiang: a landslide ahead, and the bus is stuck in the mountains for five hours. You hold the microphone and tell stories for five hours, sharing out the biscuits and water on board. Not one person complains.",
+    "e_love": "You get together with the person in the operations department who always schedules your tours. From then on your schedule is a little tighter, and colleagues joke in the group chat that you're the guide with someone on the inside.",
+    "e_wedding": "The wedding is back home in Chuxiong, a long-street banquet of twenty tables laid out through the village. You take a week off, the first since you started. An older guide at the agency takes your two groups.",
+    "e_child": "The day your child is born you are guiding a group beside Erhai Lake, and get your first look over video. A few aunties in the group find out and, as they get off the bus, press a red envelope of money into your hands.",
+    "e_house": "You put down a down payment in Chenggong, ten minutes by bike from the high-speed rail station; after a tour you no longer need two transfers to get home. Once the mortgage comes out, the off season is even harder to get through.",
+    "e_ai_audio": "The old towns and scenic areas now have AI audio-guide earpieces and digital-human guides, and tourists listen as they walk. On the bus you start on the Kingdom of Dali, and someone in the back row says: The earpiece already covered that.",
+    "e_ai_settle": "The agency switches to a new system. Tickets, meals and buses are reconciled automatically, and it flags first which suppliers are late and which have overcharged. You no longer photograph receipts one by one at night.",
+    "e_ai_script": "You start having AI rework your script for each group: an adventure quest for primary schoolers, old movies for the seniors. You edit the scripts again yourself, and on the bus you switch on the fly depending on people's faces.",
+    "e_voice": "Four groups back to back in peak season, and your voice is gone. Even with your clip-on amplifier you can only gesture. You drink malva-nut tea for a week, and the guests are especially kind to you.",
+    "e_stomach": "Years of group meals, eating whenever the schedule says, and your checkup finds chronic gastritis. From then on your bag holds a box of stomach pills, next to the motion-sickness tablets you carry for guests.",
+    "e_parent": "Your father falls at home in Chuxiong and is admitted to hospital. You are guiding in Lijiang and there's no one to hand the group to. After seeing off the last of the guests, you take the last bullet train that night to get back.",
+    "e_return_guest": "An auntie from Shanghai you guided five years ago comes back to Yunnan with three generations of her family and asks the agency for you by name. She still remembers the story of Ashima you told at the Stone Forest.",
+    "e_study_tour": "Summer brings more school study tours: a busload of thirty middle schoolers. You have to teach tie-dye, take roll, keep anyone from jumping onto the rocks by Erhai Lake, and collect phones at night.",
+    "e_hotel_dispute": "A guest is angry that the hotel isn't the one on the itinerary and makes a scene the whole ride. Following the contract, you find one of the same grade and move him. The next morning he posts in the group chat: Thanks for your hard work, guide.",
+    "e_hsr": "The high-speed line from Lijiang to Shangri-La opens, and the six-day itinerary shrinks to four. The groups come one after another. You lead more groups, and have less time to talk on the bus.",
+    "e_live": "A fellow guide livestreams at the entrance to the old town and sells tens of thousands of yuan in flower cakes and tickets in one night. At a meeting, the agency tells every guide to open an account.",
+    "e_wallet": "A tourist loses his wallet in Shuanglang. You pull the surveillance footage, go to the police station, and finally find it wedged in a chair at the previous restaurant. After he gets home, he mails the agency a handwritten letter.",
+    "e_torch": "On the night of the Torch Festival you take your group to the square in Chuxiong and dance around the bonfire until midnight. Several guests say it was the best night of the whole trip. You think so too.",
+    "e_knee": "More than ten years of climbing the old towns' flagstone streets and the snow mountain's boardwalks, and your knees click on every stair. The doctor tells you to avoid slopes. You smile. Next week you have three snow mountain groups.",
+    "e_apprentice": "The agency assigns two newly licensed young guides to your groups. You teach them how to count heads on a bus, how to negotiate extra dishes with a restaurant, and how to take over the conversation before a guest blows up."
+  },
+  "choices": {
+    "c_mid_grade": {
+      "title": "Sit the intermediate tour guide grade",
+      "situation": "You've had your license two full years. The agency says intermediate guides can take the higher-priced boutique groups, at a higher daily fee. The exam covers specialized guiding knowledge, and you have to submit a guiding script of your own. The only time to study is the off season.",
+      "options": [
+        { "label": "Take a prep class in the off season", "result": "That winter you hardly guided at all. In your rented room you worked through the books on Nanzhao history and Naxi ancient music, and your script went through seven drafts." },
+        { "label": "Skip it for now and pick up odd jobs in the off season", "result": "All winter you did Stone Forest day trips and airport drop-offs. You saved a little money, and kept telling the same stories." }
+      ]
+    },
+    "c_small_group": {
+      "title": "Regular groups or boutique small groups",
+      "situation": "Another agency wants you to lead boutique small groups: a dozen or so people per bus, no shopping stops, a higher fee. But the groups are unreliable, and you'd have to build your own repeat customers. Your current agency has regular groups every day, with two shopping stops on the itinerary.",
+      "options": [
+        { "label": "Go lead boutique small groups", "result": "For the first time you could stop by Erhai Lake and talk for half an hour without looking at your watch. The first six months there were few groups, and for two months you earned almost nothing." },
+        { "label": "Stay with your agency and lead regular groups", "result": "The groups kept coming, one after another, and the money was steady. Only, the little speech before each shopping stop, you said faster and faster." }
+      ]
+    },
+    "c_language": {
+      "title": "Learn a foreign language or not",
+      "situation": "More inbound groups are coming from Southeast Asia, Europe and America, and a foreign-language guide earns twice your daily fee. The language exam means memorizing vocabulary from scratch and practicing speaking. You've barely touched English since the gaokao.",
+      "options": [
+        { "label": "Study English every night after the tour and sit the language exam", "result": "For two years you practiced pronunciation into your phone in group-hotel corridors, and passed on the second try. On your first foreign group you froze mid-sentence, and the guests waited patiently for you." },
+        { "label": "Skip it, and go deeper with Chinese groups", "result": "You put your effort into local history. You could tell the story of every one of the Kingdom of Dali's twenty-two kings. Only, the foreign groups never came your way." }
+      ]
+    },
+    "c_desk": {
+      "title": "Come off the road for a desk job",
+      "situation": "Your family says they don't want you living on the road all year. A post has opened in the agency's operations department: scheduling tours, booking rooms, negotiating with suppliers. Home on time, less money, and no more tour buses.",
+      "options": [
+        { "label": "Move to operations", "result": "You put the little yellow flag away in a cupboard, and for the first time spent a whole peak season at home.", "end": "You took a desk in the agency's operations office, scheduling tours for other guides. In July the phone rang from morning to night, but you could go home for dinner." },
+        { "label": "Stay on the road", "result": "You told your family a few more years. That year, you could count the nights you slept at home on your fingers." }
+      ]
+    },
+    "c_video": {
+      "title": "Make short videos or not",
+      "situation": "More and more tourists come after watching short videos, planning their own routes and finding their own guides. The agency says guides need their own accounts to pull in direct customers, and a cultural-tourism livestream channel wants to hire you away as a full-time host. You're not good at talking to a camera.",
+      "options": [
+        { "label": "Film old-town talks after your tours", "result": "You made more than a hundred videos and two took off. More people messaged you about custom tours, and you often edited until the small hours." },
+        { "label": "Go full time as a livestream host", "result": "You put on an ethnic costume and stood before the camera at the old-town entrance, talking more in one night than over a whole tour.", "end": "You became a host on a cultural-tourism livestream, selling tickets and flower cakes every night under the old town's lanterns. Now and then an old guest in the comments calls you guide." },
+        { "label": "Skip it and keep telling it well on the bus", "result": "You still relied on repeat customers won busload by busload. Slow, but they were all people who knew you." }
+      ]
+    },
+    "c_senior_grade": {
+      "title": "Apply for senior tour guide",
+      "situation": "Two years at intermediate, and enough days guided. Applying for senior means case analysis and composing a guiding script on the spot. The agency says if you make it, you can train new guides and write route standards. But this year you'd have to take thirty percent fewer groups to prepare.",
+      "options": [
+        { "label": "Take fewer groups and prepare properly", "result": "You wrote up the landslides, altitude sickness and complaints you'd handled over the years as a dozen-odd cases. On exam day, the question you drew was altitude sickness on the snow mountain." },
+        { "label": "Can't give up peak season; next year", "result": "You ran another full peak season and saved a bit more. Two people from your cohort made senior first." }
+      ]
+    },
+    "c_research_tour": {
+      "title": "Switch to school study tours",
+      "situation": "School study tours pay well and have no shopping stops, but leading them requires a study-tour instructor's certificate, and you'd need to design worksheets and turn tie-dye and Dongba paper into a lesson. You're used to groups of adults.",
+      "options": [
+        { "label": "Get the instructor's certificate and lead study tours", "result": "You turned the Stone Forest into a geology lesson and Xizhou into an architecture lesson. Summers you never stopped moving. Winters and the rest of the year, there were fewer groups." },
+        { "label": "Keep leading adult groups", "result": "You still told stories on the bus and checked menus before meals. After all these years, you know when to talk and when to let everyone sleep." }
+      ]
+    },
+    "c_studio": {
+      "title": "Go independent or stay with the agency",
+      "situation": "Your WeChat holds more than a thousand past guests, and someone urges you to open a custom-tour studio under an agency's license and take private groups yourself. The agency's boss, meanwhile, wants you as manager of the guiding department, assigning tours and training new guides.",
+      "options": [
+        { "label": "Open a custom-tour studio", "result": "You scouted routes yourself, worked out your own costs, answered your own phone. A good month was worth three of the old ones; a bad one, you paid the bus out of your own pocket." },
+        { "label": "Become guiding department manager", "result": "You led just one group a week. The rest of the time it was scheduling, hearing complaints and teaching new guides, and the work group chats on your phone went from three to thirty." },
+        { "label": "Neither; keep guiding", "result": "You are still the one holding the little yellow flag, and the agency sends you its hardest groups." }
+      ]
+    },
+    "c_snow_line": {
+      "title": "Keep running the snow mountain route or not",
+      "situation": "You are in your forties. The snow mountain route is the most tiring and pays the best. The agency says you could switch to day trips around Kunming, or become a resident guide at one scenic site, and stop living on the road.",
+      "options": [
+        { "label": "Keep running the long route", "result": "You still go up to 4,500 meters several times a month. You're on your third pair of knee braces, and the young guides call you Old Snow Mountain." },
+        { "label": "Switch to short routes and resident guiding", "result": "You can go home every night now. You tell the same few rocks and the same few streets. The income drops a notch, and your knees stop clicking." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "Your last group was a six-day tour. You saw the guests off at the security line at Changshui Airport, waving to each one. On the ride back, Old Yang the driver played the same few old songs. You rolled up the little yellow flag, tucked it beside your guide's license, and put them both in a drawer. The next morning at five-thirty you woke up. Outside the window, there was no one to call.",
+    "burnout": "That peak season, on your third group, you reached Dali, picked up the microphone on the bus, and no voice came out, and your knees were trembling. You handed the group to a young guide the agency sent and took the bullet train back to Kunming. You never took the long route again. You sold tickets at the gate of a scenic spot near home, and now and then told a stretch of history to a few independent travelers. When you hear someone blow a whistle to gather a group, you still turn your head."
+  },
+  "past": [
+    "You finished middle school in a township up in the hills of Chuxiong, where your family grew flue-cured tobacco. Your high school entrance exam score just scraped into the county's No. 1 High School. Your mother said go study, and don't come back to grow tobacco.",
+    "The summer of your second year of high school, you worked at a guesthouse in Dali's old town, and every day watched guides lead lines of people past the door behind little flags. One guide stood outside your door for ten minutes explaining the Three Pagodas, and you listened harder than the tourists.",
+    "Your gaokao (college entrance exam) score was twenty-odd points short of the line for a bachelor's degree. Leafing through the application guide, you saw a three-year tourism management diploma at a vocational college in Kunming. The brochure said Yunnan is short of guides. You put it down.",
+    "In your second year you sat the national tour guide qualification. You passed the written part, but for the live guiding you drew the Stone Forest, and you were so nervous you told Ashima's story as if she were two different people. You passed the following year.",
+    "For your graduation internship you joined the inbound department of a Kunming agency, and spent the better part of a year following a guide with fifteen years behind him. He taught you to count heads first when you board, to look in the kitchen before a meal, and to hand over a bottle of water first when guests start arguing.",
+    "After graduation the agency registered your electronic guide's license. Your first solo tour was a Stone Forest day trip. Halfway through you forgot your lines, and had to tell everyone to take photos first.",
+    "You started running the six-day Kunming–Dali–Lijiang route. Your first peak season, you went back to your rented room only twice a month, and for the first time earned enough to send a sum home."
+  ],
+  "late": {
+    "pension_note": "Estimate: most local guides pay their own social insurance at the lowest tier, either as freelancers or through the agency that holds their license. The contribution base is low and the years often have gaps, so the pension comes to only a little over thirty percent of your final monthly income.",
+    "scenes": [
+      "Your first July off the road, you can't stay home. You go stand at the arrivals exit of Changshui Airport for a while, watching other guides hold up signs to meet their groups. One of them is holding the flag of your old agency.",
+      "The agency invites you back to teach new guides twice a month. What you talk about most isn't the scripts. It's how to read the color of someone's lips on the snow mountain, and what to say on a bus stuck for five hours.",
+      "Your pension arrives every month. It isn't much, but with a little rent from the place in Chenggong, you get by. You and your spouse have agreed: when your grandson's summer break comes, you'll take him around Kunming, Dali and Lijiang yourselves, no tour group.",
+      "You really do take your grandson up Jade Dragon Snow Mountain. He listens to the AI audio-guide earpiece with total absorption. You hold back a long while, and then tell him about Sanduo anyway.",
+      "After leaving the long route you sold tickets at a scenic site's gate for six months. No wake-up calls, no head counts, and yet you often woke on your own at five-thirty.",
+      "You have minor surgery on your knee and three months to recover. Old colleagues from the agency visit and tell you groups are booked online and reviewed online now, and guides check in on an app the moment they board. Not like your day.",
+      "In your housing compound you become an unpaid guide for a few retirees, taking them on the subway to Dianchi Lake to see the gulls. You tell them the same things you used to tell on the bus, and they love it.",
+      "Your first month off the tour bus, something always seemed missing. No heads to count in the morning, no accounts to settle at night, and yet your phone rang even more than when you were guiding.",
+      "Once, through work, you ran into the old guide who trained you. He was still running the snow mountain route, his hair completely white. He said you were right to leave. Then he said it was a shame.",
+      "A young guide at the agency asks you how to run an old route. You draw it for him on paper, and stop halfway: that rice noodle shop closed long ago.",
+      "You hear that these days, settling accounts, assigning rooms and dealing with suppliers is all done by the system, and AI writes the script to suit each group. But when someone can't catch their breath on the snow mountain, or a landslide blocks the road and the question is whether to turn back, the guide on the bus still has to decide.",
+      "You dig out an old notebook recording what went wrong on every tour over the years: who got altitude sickness where, which day the traffic jammed where, which restaurant kept a clean kitchen. Turning page after page, it's like running the route all over again."
+    ],
+    "closing": {
+      "retire": "One evening many years later, you are airing quilts on the balcony when a tour bus passes below, someone in the window holding up a little flag. Without thinking, you start counting the heads on board. Halfway through, you laugh at yourself.",
+      "burnout": "Many years later you are walking slowly beside Dianchi Lake, the gulls settling flock by flock. A visitor from out of town asks you the way to the Ethnic Village. You point it out and, without meaning to, tell him a little about it. When you finish, he asks: You used to be a tour guide, didn't you?",
+      "end": "Many years later, in a drawer, you find the rolled-up little yellow flag, its cloth faded to white. You unroll it, look for a moment, and roll it back up again, like putting away a trip you never quite finished."
+    }
+  }
+}

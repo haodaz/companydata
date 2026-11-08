@@ -1,0 +1,173 @@
+{
+  "id": "security-guard-bj",
+  "occupation": "Security Guard",
+  "role": "Residential security officer (guard)",
+  "headline": "A man from Zhoukou, Henan, who tied rebar on Beijing building sites for more than ten years, switched trades after hurting his back, and at forty-eight stands the east gate of an upscale housing estate",
+  "unit": "The security department of an upscale residential estate's property management in Beijing",
+  "unit_type": "Branded property management company",
+  "city": "Beijing",
+  "city_tier": "First-tier city",
+  "education": "Middle school",
+  "level": "You got your security guard license last year and have worked the gate, the car barrier and patrol. You know more than half the residents by sight, and their dogs; the big screens in the fire control room still mostly baffle you",
+  "intro": "You spent more than ten years on building sites: rebar, scaffolding, formwork, all of it. The year before last you twisted your back climbing down from the scaffold, and after that the foreman stopped giving you work at height. A man from your home county got you a job as a guard at an upscale housing estate in Beijing, and the property company put all the new hires through the security guard license. You live in the staff dorm in the basement, eight to a room; the young man in the bunk above you is more than twenty years your junior. As of today your post for the year is the east gate, morning shift, on at seven.",
+  "salary_note": "Estimate: a guard at an upscale Beijing estate earns about ¥5,000–6,000 a month, with a bed and one meal provided by the property company, roughly 20% above the national average. Squad leader and supervisor don't pay much more.",
+  "facts": [
+    { "label": "Security Officer (current level)", "value": "0–1 years, ¥3,500–5,500 a month (national average)", "source": "Career map" },
+    { "label": "Next level up", "value": "Security Squad Leader (1–3 years)", "source": "Career map" },
+    { "label": "Pay after 10+ years", "value": "¥6,800 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Responding to a smoke alarm in the underground garage and handing it over", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Writing the quarterly security risk assessment for a big shopping complex's underground car park", "source": "AI exposure" },
+    { "label": "Open positions", "value": "2 related listings nationwide, 0 in this city (the listings are mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "There are no windows in the basement. When the alarm goes, the young man in the top bunk rolls over. You wash your face at the sink at the end of the corridor, do up your uniform buttons one by one, and set your cap straight.",
+    "Roll call before the shift. The squad leader inspects turnout: is the cap straight, are the shoes shined, is the radio charged. You stand in the front row, back straighter than anyone's.",
+    "You take over the east gate. Morning rush: car after car on the school run. The barrier reads the plates and lifts by itself, and you stand outside the guard booth and salute. Some residents nod to you; some are looking at their phones.",
+    "A delivery rider wants to take a meal up to a flat, and the rules say no. You call the resident for him; no answer. He's stamping his feet with frustration, so you have him leave the food at the booth and text the resident yourself.",
+    "Relieved for lunch: the canteen's one meat dish and two vegetables. Afterwards you video-call home. Your wife is out in the field picking corn, and behind the camera your grandson shouts, Grandpa!",
+    "Patrol. With the guard-tour wand you check in at building after building, looking over the fire hydrants, the electrical rooms, the garage doors. Someone's charging an e-bike in the stairwell of Building 6. You pull the plug and stick a notice on it.",
+    "An old woman who lives alone can't lift a bag of rice. You carry it into the elevator for her and up to her door. She insists on giving you an apple. You pocket it and eat it back at the booth.",
+    "End of shift. Outside the dorm you squat with a man from home and smoke a cigarette, talking over whether to ask for nights next month. Nights pay ¥200 more a month."
+  ],
+  "ladder": [
+    { "title": "Security Officer", "stage": "Entry / front line", "focus": "Rotate through gate and patrol posts, keep strictly to visitor logs, guard tours and shift handovers, earn the security guard license and keep a record of zero violations and zero complaints." },
+    { "title": "Security Squad Leader", "stage": "Frontline mainstay", "focus": "Draw up the squad's rosters and run roll call, watch the fire control monitoring screens, earn the fire control certificate; you move up by leading in emergencies and turning up reliably." },
+    { "title": "Security Supervisor", "stage": "Middle management", "focus": "Oversee public order and fire safety for a single site, organize drills for the whole team and handle inspections by the police and fire services; you move up on how well risks are managed." },
+    { "title": "Site Security Manager", "stage": "Senior management", "focus": "Plan the combined manpower and technical security system for a large commercial complex or industrial park, manage the security budget and assess outside contractors." },
+    { "title": "Director of Property Security", "stage": "Expert / director", "focus": "Set regional security and risk standards for the group and crisis response strategy, lead the move to smart security and build an effective organization of a thousand people or more." }
+  ],
+  "ai_tasks": [
+    { "name": "Responding to a smoke alarm in the underground garage and handing it over", "how": "AI can help receive the smoke alarm and bring up the location and nearby cameras. But smelling the air, judging whether there's an open flame, getting people clear and coordinating with the maintenance crew face to face all need a person on the spot. Afterwards, AI can help write up the record and handover." },
+    { "name": "Checking the pedestrian and vehicle flow at the entrances before the morning rush", "how": "At most AI prompts the checklist and monitors whether devices are online. Someone still has to walk the site checking every turnstile, railing and traffic cone, moving them as needed and adapting to the day's crowds; schoolchildren's safety is involved, and the responsibility is a person's." },
+    { "name": "Responding to an armed disturbance outside the cash area of a bank branch", "how": "AI can help spot trouble through the cameras and save the footage automatically. But separating the crowd, calming people down, judging how dangerous it is, calling the police and backing them up all mean a person facing the risk directly and bearing the responsibility." },
+    { "name": "Writing the quarterly security risk assessment for a big shopping complex's underground car park", "how": "AI can gather the relevant regulations, compile equipment and patrol data and generate charts and a first draft. A person has to inspect the structure, the equipment and the gaps in management on site, judge how serious the risks are, write recommendations that can actually be carried out, and sign for them." },
+    { "name": "First-line screening for prohibited items at a hospital outpatient hall and handing them over", "how": "AI can help pick out what might be knives or liquids on the X-ray image and flag bags to look at. A person decides whether to open a bag, separates person from bag, talks to them, and hands things over as the law requires; any confrontation on the spot is also a person's to handle." },
+    { "name": "Running a counter-drone drill around the main venue of a big event at a convention center", "how": "AI can help monitor the airspace, identify incoming targets, record test data and analyze coverage from each position. A person operates the equipment on the ground, checks the regulations and the plan, moves the positions based on the results, and answers for the jamming range and for safety." }
+  ],
+  "events": {
+    "e_owner_yells": "A resident's friend drives up without being registered and is stopped at the gate. He rolls down his window and swears at you for five minutes while a line of cars builds up behind him. You only let him in once he's registered, as the rules say. The next day the property office tells you he's filed a complaint.",
+    "e_spring_festival": "You stay on duty over Spring Festival, at triple pay. In the guard booth you watch the whole New Year's Eve gala on your phone, and at midnight you call home. Your wife says she's saved some dumplings for you; she'll put them in the pot when you get back.",
+    "e_tailgate": "You know the cars of all four hundred-odd households by now. A strange car tries to tailgate a resident's car in, and before the barrier can react you step out and stop it. It turns out to be a salesman.",
+    "e_lost_kid": "A four-year-old goes missing in the estate and his parents are in tears. You call it in on the radio, pull up the cameras and search building by building. Twenty minutes later you find him under the slide in the playground, fast asleep.",
+    "e_garage_smoke": "In the middle of the night the smoke alarm goes off in the underground garage. You're the first one down. It smells of burning: an e-bike battery has swollen and is smoking. You put it out with an extinguisher, stand guard until the maintenance crew come to cut the power, and back at the booth write down everything that happened, point by point.",
+    "e_grandchild": "Your elder son, back home, has another little girl. You take five days off, ride an old green slow train all night, and walk your granddaughter round and round the yard, saying this one's got a strong grip.",
+    "e_back": "Your old back injury flares up; by afternoon on your post you can't straighten up. You secretly stick on a few medicated plasters and don't dare tell the squad leader, in case you're moved to a post even further out.",
+    "e_late_wage": "The property company changes contractors, and for two months your wages come half a month late. Two men in the dorm roll up their bedding and leave. You lie on your bunk doing sums all night.",
+    "e_ai_gate": "The estate switches to face-recognition gates and plate recognition. The gate post goes from three people to one, and you're moved to patrol. The visitor log you used for years goes into a cupboard in the booth.",
+    "e_ai_alarm": "The cameras get AI recognition: anyone climbing the wall, anyone hanging around too long below a building, sets off an alert. It goes off a dozen times a night, mostly stray cats and plastic bags blowing in the wind, but every single time someone has to go and look.",
+    "e_son_wedding": "Your younger son is buying a flat in the county town back in Zhoukou to get married. Between the bride price and the down payment, you send home everything you've saved these past years and borrow ¥20,000 from a man from home.",
+    "e_poster": "Someone posts a photo in the residents' group of you holding an umbrella over an old man in the rain, half your body soaked. The property company prints it as a poster and puts it up on the notice board at the east gate.",
+    "e_fire_drill": "The estate holds a fire drill. For the first time you aim a fire hose at an empty lot, and the kickback nearly knocks you off your feet. The young man from the fire station corrects your grip and says, Uncle, you've got to sink your weight.",
+    "e_parking_fight": "Two residents get into a shouting match over a parking space and look about to come to blows. You step in between them and talk each one down, your voice lower than theirs. Back at the booth your hands are still shaking.",
+    "e_wife_comes": "There isn't much left to do on the land, so your wife comes to Beijing too and takes a cleaning job at the estate next door. You rent a single-story room in an urban village. For the first time in more than ten years you live together every day, and in the evenings you eat noodles she's rolled by hand.",
+    "e_blood_pressure": "The property company arranges health checks, and you're found to have high blood pressure. The doctor tells you not to stay up at night. You swap your night shifts to the young men and take one pill every morning with cold water.",
+    "e_heat": "At the end of July the guard booth's air conditioner is broken for a week. You drink eight bottles of water a day and go home with a headache too bad to sleep. The next day you're still on at seven.",
+    "e_young_policy": "The property company's new manager says the team needs to get younger and moves several guards over fifty-five to the garage post. Your name is on the list. In the garage, you don't see the sun all day.",
+    "e_old_lady": "The old woman whose rice you carried up so many times is taken south by her daughter. On moving day, she has her daughter wheel her chair to the east gate to say goodbye to you, and gives you a pair of sheepskin gloves.",
+    "e_mentor": "You start training the young men who've just joined: how to greet the couriers, how to stop someone without starting a fight. Call him brother first, then ask which building he's going to.",
+    "e_mother_falls": "Your mother back home, past eighty, has a fall. You hear it from your wife on the phone, take leave that same day, buy a ticket back to Zhoukou, and keep watch in the corridor of the county hospital for five days.",
+    "e_social_security": "You go to the social insurance counter and ask. The pension contributions you pay in Beijing won't reach the full fifteen years until you're past sixty. Back at the dorm you write one line in your little notebook: not a single year can be missed."
+  },
+  "choices": {
+    "c_night": {
+      "title": "Days or nights",
+      "situation": "Nights pay ¥200 more a month and you can still sleep during the day, so the young men in the dorm all fight for them. But you're nearly fifty, and one night up takes two days to get over.",
+      "options": [
+        { "label": "Take nights for the extra money", "result": "You keep watch over the east gate and the monitor screens at night, watching the late cars come in one by one. By day you sleep in the basement, and never quite soundly." },
+        { "label": "Stay on days", "result": "You stay on the day shift and slowly get to know the residents who leave early and come home late. At New Year someone brings you a box of mandarins." }
+      ]
+    },
+    "c_fire_cert": {
+      "title": "The fire equipment operator's certificate",
+      "situation": "The property company says the fire control room is short of licensed staff; pass the fire equipment operator's certificate and you could work shifts in there, for a few hundred more a month. It means memorizing and a theory exam, and you haven't touched a textbook in the thirty-odd years since middle school.",
+      "options": [
+        { "label": "Take a course and sit the exam", "result": "In the dorm, by flashlight, you memorize the buttons on the alarm control panel. It takes two tries to pass. From then on you sit in the fire control room, watching dozens of screens." },
+        { "label": "Skip it and keep standing guard", "result": "Standing guard feels solid to you, and you'll take a few hundred less for it. You spend the time after your shift on video calls home." }
+      ]
+    },
+    "c_squad_lead": {
+      "title": "Becoming squad leader",
+      "situation": "Your squad leader has gone back to his hometown, and the manager asks if you'll take over. You'd handle rosters, roll call and inspections for a dozen-plus men, all younger than you, and you still can't really work the digital roster on your phone.",
+      "options": [
+        { "label": "Take it on", "result": "You get the young man in the top bunk to teach you to make the roster in a spreadsheet, and before meetings you write what you need to say on the back of a cigarette pack. You get the roster wrong twice the first month, and never again after that." },
+        { "label": "Pass it to someone else", "result": "You say you're too old and recommend an ex-soldier. Once he's in charge, he always saves you a good post on the roster." }
+      ]
+    },
+    "c_move": {
+      "title": "Trying somewhere else",
+      "situation": "A man from home who guards an office building says it's five days on, two off, out of the wind and sun, for a bit less money. Another one does security screening at a hospital outpatient department, for a bit more, dealing every day with patients' frantic families.",
+      "options": [
+        { "label": "Go to the office building", "result": "You move to an office building lobby, warm in winter and cool in summer. Every day you watch young people swipe their cards in and out, and you get two days off at the weekend." },
+        { "label": "Go to the hospital screening", "result": "You man the scanner in the outpatient hall. The screen flags suspicious bags, but whether to open one, and how to say it, is still up to you. By the end of the day your voice is gone." },
+        { "label": "Stay at the estate", "result": "You don't leave. You know everyone in the estate now, and even the dogs at the east gate don't bark at you." }
+      ]
+    },
+    "c_smart_patrol": {
+      "title": "Learning the smart patrol system",
+      "situation": "The property company brings in a smart patrol system: alerts on your phone, photo uploads, voice notes for the records. The manager says every older guard has to learn it, and anyone who can't goes to the garage to watch the cars.",
+      "options": [
+        { "label": "Have your grandson teach you", "result": "On weekend video calls your grandson shows you step by step where to tap, and you write it all in your little notebook. Before long your patrol records are more complete than the young men's." },
+        { "label": "Don't learn it; go to the garage", "result": "The garage is quiet and the work is simple. You just don't see the sun all day. You start playing Chinese chess with the old man who minds the cars." }
+      ]
+    },
+    "c_supervisor": {
+      "title": "Applying for security supervisor",
+      "situation": "The site's security supervisor has been transferred. The manager wants you and a management trainee with a junior college diploma to compete for the job. It means writing drill plans and handling inspections with the police station and the fire service, and you'd have to write all the paperwork yourself.",
+      "options": [
+        { "label": "Apply", "result": "You get a retired teacher who lives in the estate to help you revise your drill plan, and read your speech out twenty times. When you give it on stage, you don't look at your notes." },
+        { "label": "Let the young man have it", "result": "You tell him to handle the paperwork and you'll help him lead the team. He becomes supervisor, and on drill day he puts you at the very front of the line." }
+      ]
+    },
+    "c_go_home": {
+      "title": "Going home",
+      "situation": "Your younger son has opened a small grocery in the county town and wants you back to help mind it, so the family can be together. But your Beijing pension contributions are still a few years short of the full fifteen.",
+      "options": [
+        { "label": "Go back to Zhoukou and help your son with the shop", "result": "You give up your bunk in the dorm, stuff your bedding and the sheepskin gloves into a woven plastic bag, and get on the bus back to Zhoukou.", "end": "You go back to the county town in Zhoukou and set a chair outside your son's grocery. When the delivery trucks come, you still raise a hand out of habit and wave them back." },
+        { "label": "Stay in Beijing until the contributions are complete", "result": "On the phone you tell your son to wait a few more years. After you hang up, you go and take the night shift at the booth." }
+      ]
+    },
+    "c_sixty": {
+      "title": "Past sixty",
+      "situation": "You're past sixty, and the property company says from now on you can only sign a casual labor agreement, and your post moves from the gate to watching the monitors at night. Your wife says there's enough money now; come home. You've done the sums: two more years would save one more year of your grandson's school fees.",
+      "options": [
+        { "label": "Two more years watching the monitors", "result": "Every night you sit in the fire control room watching the screen square by square, and when you get sleepy you stand up and walk a couple of laps." },
+        { "label": "Go home with your wife", "result": "You return your uniform to the property company and collect your last month's pay.", "end": "You and your wife go back to your village in Zhoukou and take the land back on. In the evenings, under the big pagoda tree at the edge of the village, you tell people about the cars and the dogs in that Beijing estate." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "Your last shift is at the east gate, same as ever. You hand the log, the radio and the keys to the young man taking over, one by one, and tell him the dog at that flat in Building 3 is shy of strangers, so don't put your hand out. A few longtime residents hear you're leaving and come down for a photo with you. You walk out with your woven bag and look back at the barrier. It's lifting to let a car in.",
+    "burnout": "That winter your blood pressure wouldn't come down, and twice on your post everything went dark before your eyes. The squad leader told you to take a rest, and you knew yourself you couldn't keep going. You packed up your bedding in the dorm and got on the bus back to Zhoukou. As it passed the Fifth Ring Road, you unclipped the badge from your chest and put it in your jacket pocket."
+  },
+  "past": [
+    "The year you finished middle school, you were in the countryside outside Zhoukou, five people in the family farming six mu of land, about an acre. Your grades weren't bad, but the family couldn't find the money for high school fees, so you followed some people from the village to a brickworks in Zhengzhou.",
+    "After a few years at the brickworks you married a girl from the next village and built a three-room tiled house back home, with money borrowed from relatives.",
+    "The year your elder son was born, you followed a labor contractor to building sites in Beijing, starting as a laborer and learning to tie rebar. You went home once a year, and at New Year your son hid behind his mother and wouldn't call you Dad.",
+    "You worked your way up from laborer to skilled hand, good at rebar and scaffolding, earning over ¥300 a day. But wages were only settled at the end of the year, and one year the contractor ran off. You squatted outside the labor market for two weeks.",
+    "That winter you twisted your back climbing down from the scaffold and lay in the site shed for a month. The foreman never said he didn't want you, but he never gave you work at height again.",
+    "A man from home working as a guard at a Beijing housing estate said the property company was hiring: under fifty, healthy, no criminal record. At the interview the manager saw how straight you stood and asked if you'd been in the army. No, you said, I just got used to standing on building sites.",
+    "The property company sent all of you to sit the security guard license. In the training class you memorized the Regulations on the Administration of Security Services until midnight. The day you passed, you called your wife and told her you wouldn't have to climb up high anymore."
+  ],
+  "late": {
+    "pension_note": "Estimate: you only began paying into Beijing's urban employee pension at forty-seven, reaching the minimum fifteen years just at retirement, at the lowest tier. The pension comes to about 30% of your final monthly pay, plus a little from the rural residents' pension back home.",
+    "scenes": [
+      "Your first month back home in Zhoukou, you still wake at six every day and get up to sweep the yard, the way you used to sweep the patch of ground in front of the booth.",
+      "Your Beijing pension arrives for the first time, a little over ¥2,000. Your wife says it beats farming. You don't say anything, and put the money on the card you're saving for your grandson's schooling.",
+      "The village has a new concrete road but no streetlights. You buy yourself a flashlight and walk a loop of the village every night. The village Party secretary laughs and calls it an occupational habit.",
+      "One of the residents from the estate comes across a video your grandson posted and comments: \"Isn't that the old guard from the east gate?\" You have your grandson reply for you: doing well, thanks.",
+      "Back home, your blood pressure slowly settles. You take your pills on time, and in the afternoons you sit in the sun at your door and look up whenever you hear a car horn.",
+      "You didn't pay into the pension long enough, so each month you get only the hundred or two from the rural residents' pension. You get by on a little from each of your two sons every month, and two mu of vegetables.",
+      "A supermarket in the county town is hiring someone to mind the door. You go and ask, and they say you're too old. At home you take out your old uniform and air it in the sun, then fold it and put it away again.",
+      "The day you leave Beijing, the men from home see you off at the station. You leave the electric blanket in the dorm to the young man in the top bunk, so he won't freeze coming back from nights.",
+      "There's not much money to be made back home, but you don't have to answer to anyone either. You learn to check Beijing's weather on your phone, and on the day it snows you send a voice message to the men still there: it's cold in the booth, wrap up warm.",
+      "Your grandson gets into a university in Zhengzhou. You take him on the first day, and when you see the guard at the school gate you nod to him, and he nods back.",
+      "Later you hear that the estate's gate posts have all been replaced with turnstiles and cameras, with one person left in the fire control room watching screens. But when the garage starts smoking at night, or an old person wanders off, someone still has to run over.",
+      "Your back aches whenever it's overcast. The building sites left it to you, and the years of standing guard added their share. You often tell your grandson that in this life, if you can earn your money standing up, you haven't done badly."
+    ],
+    "closing": {
+      "retire": "Many years later, one evening under the big pagoda tree at the edge of the village, a car with out-of-province plates drives in to ask the way. You stand up and point him in the right direction, fingers held straight and close together.",
+      "burnout": "Many years later the jujube tree in your yard bears fruit. You pick a basketful and have your grandson post it to the man from home who's still a guard in Beijing. You've kept his address in that little notebook all along.",
+      "end": "Many years later you find your security guard license in a cupboard. In the photo your hair is still black. You look at it for a while, then put it away with the household register."
+    }
+  }
+}

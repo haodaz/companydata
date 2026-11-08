@@ -1,0 +1,182 @@
+{
+  "id": "community-worker-sh",
+  "occupation": "Community Worker",
+  "role": "Full-time community worker at a residents' committee",
+  "headline": "A social work graduate who spent three years running projects at a social work agency, passed into a residents' committee in old Shanghai this year, and now looks after twelve walk-up blocks of old public housing alone",
+  "unit": "A residents' committee under a street office in Shanghai's old city",
+  "unit_type": "Residents' committee (community worker hired by the street office)",
+  "city": "Shanghai",
+  "city_tier": "Tier 1",
+  "education": "BA (Social Work)",
+  "level": "You worked three years as a project social worker at an agency. Home visits and case notes are second nature, and you already hold the assistant social worker certificate. The residents' committee's government systems and ledgers you can't yet tell apart",
+  "intro": "You spent three years as a project social worker at an agency, working in several street office districts, on contracts renewed one year at a time. This year you sat the district's unified recruitment for community workers and were assigned to a residents' committee in the old city. Your patch is twelve six-story blocks of old public housing with no lifts. Of the four-hundred-odd households, more than sixty are older people living alone. The list runs page after page, and now it is all yours. As of today, there is a desk for you in the committee's north-facing office.",
+  "salary_note": "Estimate: Shanghai community workers are paid on the district's unified pay scale, averaging about ¥140,000–150,000 a year, far above the national figure (pay by experience starts at ¥3,800 a month). Estimated at 1.8 times the national figure.",
+  "facts": [
+    { "label": "Full-time Community Worker, entry post (current level)", "value": "0-2 years, ¥5,100–12,333 a month (national average, derived from pay by experience)", "source": "Pay by experience" },
+    { "label": "Next level up", "value": "Community Worker, intermediate post / Area Lead (2-5 years)", "source": "Career map" },
+    { "label": "Monthly pay, 10+ years in the field", "value": "¥5,900 (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Mediating a dispute between neighbors over a leak from upstairs", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Doing the week's grid visits and entering them into the platform", "source": "AI exposure" },
+    { "label": "Open positions", "value": "0 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "You ride a shared bike through the lanes of the longtang and open up the residents' committee. Two aunties are already sitting at the door. One has come to ask about the old-age allowance; the other says the flat upstairs is leaking again.",
+    "Morning meeting. The Party secretary runs through the day: grid visits, an inspection of the meal service point, and an audit of the ledgers by the district this afternoon. You fill a whole page of your notebook.",
+    "Home visits. You climb to the sixth floor of Block 7. The old man who lives alone looks through the peephole for a long time before he opens. You chat with him in Shanghainese for twenty minutes and note down that his blood pressure pills are almost gone and the stairwell light is broken.",
+    "Lunch at the community meal point. The aunties and uncles line up to swipe their cards. One old woman's card has run dry. You cover it for her and go back to check whether her allowance has come through.",
+    "Back in the office, data entry: visit records, hazard reports, the ledger of families in hardship. Three systems, each entered separately; the same old person's details typed in three times.",
+    "Mediation. The bathroom on the third floor of Block 4 is leaking through into the ceiling on the second. The two families stand in the stairwell, each telling their own story. You stand on tiptoe studying the water stain for ages, and arrange for the property management company to come and check the pipes tomorrow.",
+    "The district's auditors go through the ledgers and find an old file from before you took over with several signatures missing. You apologize while noting it down, and plan to come in at the weekend to fix it.",
+    "Just before you finish, the phone rings: an old woman who lives alone hasn't had her lights on for two days, and a neighbor is worried. You and the block leader go up and knock. It turns out she went to stay at her daughter's for two days and forgot to tell anyone. When you come down, the streetlights in the lane are already on."
+  ],
+  "ladder": [
+    { "title": "Full-time Community Worker (entry post)", "stage": "Entry", "focus": "Handle visits, information gathering, errands on residents' behalf and the ledgers for one grid; pass induction training and the annual assessment." },
+    { "title": "Community Worker (intermediate post) / Area Lead", "stage": "Junior / intermediate", "focus": "Take charge of one line of work on your own (civil affairs, public order, Party building and so on) or one area, handling mediation and emergencies." },
+    { "title": "Deputy Director / Member, Residents' Committee", "stage": "Intermediate / senior", "focus": "Be elected onto the two committees (the community Party committee and the residents' committee), oversee several lines of work and coordinate resources from many sides." },
+    { "title": "Community Party Secretary / Director of the Residents' Committee", "stage": "Senior", "focus": "Take overall charge of the community's Party building, governance and services, with training at least once a year." },
+    { "title": "Public Institution Staff / Street Office Official", "stage": "Veteran", "focus": "Outstanding community Party secretaries can be given a permanent state post, or enter the street office through targeted recruitment." }
+  ],
+  "ai_tasks": [
+    { "name": "Doing the week's grid visits and entering them into the platform", "how": "AI can turn speech into text, fill in forms automatically, generate and order visit lists, and flag repeated requests and risk signals in the records. Going into homes to understand things face to face, judging hazards and earning residents' trust must be done in person, and a person has to check what gets entered." },
+    { "name": "Handling medical insurance and old-age allowance paperwork for older people living alone", "how": "AI can list the documents needed, explain the process, pre-fill forms and send reminders about deadlines. Visiting to confirm what the old person really wants and how they are, checking ID, going with them and following up takes a person, and a person has to guard their information and take responsibility for acting on their behalf." },
+    { "name": "Mediating a dispute between neighbors over a leak from upstairs", "how": "AI can help look up the relevant rules, set out the usual ways responsibility for leaks is handled, and draft the mediation record. But calming tempers, judging each side's bottom line, seeing the damage on site, getting both sides to give ground and answering for the mediation all rest on a person." },
+    { "name": "Organizing a community cultural event", "how": "AI can draft the event plan, budget, notices, posters and volunteer rota. Finding out what older residents really like, raising funds and volunteers, handling surprises on the day and looking after those who can't get around easily takes a person." },
+    { "name": "Organizing the community's flood response after a rainstorm warning", "how": "AI can pull warnings together, send group notices automatically, generate inspection checklists and duty logs, and flag priority groups from the lists. Checking low-lying areas and basements in person, knocking on doors to persuade people to move, directing the emergency on the ground and reporting decisions upward must be a person's responsibility." },
+    { "name": "Leading residents' negotiations over retrofitting a lift in an old housing block", "how": "AI can organize the policies and subsidy terms, compare the costs of options, and draft materials and minutes for the meetings. But working on owners on the low floors and the high floors, defusing the standoff, and getting the property company, the builders and the government to agree all depend on the credibility and patience of the secretary and the community workers. AI can't replace that." }
+  ],
+  "events": {
+    "e_names": "After three months of visits you knew the name, door number and medication of every older person living alone on your patch. One old woman started calling you xiao nü, the Shanghai word for a little one, and peeled oranges for you whenever you came.",
+    "e_ledger": "In the month before the year-end assessment, ledgers, forms and inspection files covered half your desk. Three weekends in a row you sat in the office collecting missing signatures and photos and binding it all into volumes.",
+    "e_typhoon": "A typhoon came through, and the rainstorm warning went up to orange. The system sent out notices automatically, but it still had to be you knocking door to door, persuading the old people on the ground floors to come up to the residents' committee. You kept watch all night on the office's folding bed.",
+    "e_scam": "An old woman got a call from someone claiming to be the police and the courts, and set off to the bank to transfer money. The bank teller phoned you. You half ran to the branch and sat beside her at the counter for an hour until you talked her out of it.",
+    "e_12345": "One household complained that the new communal clothes rack downstairs blocked their light, and called the 12345 city hotline three times. Each time you had to write a reply, go round, take photos, and reply again.",
+    "e_ai_visit": "The district rolled out an AI visit assistant. It records during home visits, and back at the office the system produces the visit record and a list of hazards automatically; you only check and correct. Once it wrote down her daughter comes once a week as no children. It gave you a fright, and you fixed it at once.",
+    "e_ai_errand": "For errands like the old-age allowance and medical insurance claims, AI can list the documents and pre-fill the forms first. At the door you only need to check ID, make sure you understand what the old person wants, and get a signature. In an afternoon you can get round twice as many households.",
+    "e_dating": "At a youth mixer run by the street office's Youth League committee, you met someone who worked in administration at the district hospital. You were half an hour late to your first date, because an old man had fallen in a stairwell and you were waiting for the ambulance.",
+    "e_wedding": "You got married. At the banquet the Party secretary came round to toast and said, laughing, that from now on people at your residents' committee shouldn't switch their phones off at weekends either.",
+    "e_house": "You bought a small two-bedroom flat beyond the outer ring road. The down payment emptied out both families' savings. Your commute is an hour each way, and on the metro you answer messages in the work groups.",
+    "e_baby": "Your child was born. When you came back to the residents' committee after your leave, the aunties on your patch took turns bringing little sweaters they had knitted. One had sleeves of different lengths.",
+    "e_care_home": "An old man you visited, who lived alone, grew frailer and frailer. You helped him apply for home nursing under long-term care insurance, and made trip after trip to find him a bed in a care home. The day he moved into the street office's care home, you spent the whole afternoon helping him settle in.",
+    "e_old_photos": "You ran an old photos event, asking older residents to bring out pictures from decades ago and tell how the lane used to look. The district paper came and gave it a full page. One old uncle had the paper framed.",
+    "e_dibao": "A family in hardship failed their review for the minimum living allowance, and the head of the household stood outside the residents' committee cursing you for a whole morning. You didn't make the rules, but when you got home you didn't want to say a word.",
+    "e_renewal": "A row of old houses on your patch was listed for redevelopment and expropriation. You went along on the household surveys. Some families had waited twenty years for this; some would not sign whatever happened. Every night at eight you were still out in the lane.",
+    "e_colleague_quits": "A colleague who joined the same year as you passed the civil service exam. Her patch came to you for the time being, and the number of households you had to visit doubled overnight.",
+    "e_father": "Your father, back in the old family home in the suburbs, was diagnosed with a chronic illness that needed regular checkups. Every two months you took a day off to queue at the hospital with him and collect his medicine, and caught up on visit records that night.",
+    "e_phone_class": "More and more things had to be done on a phone, and the old people couldn't manage. You started a phone class at the residents' committee, teaching them every Wednesday afternoon to book hospital appointments in an app, check their medical insurance and video call their grandchildren, and kept a staffed counter for those who couldn't.",
+    "e_qingtuan": "In the block that finally had its lift fitted, an old woman in her eighties went downstairs by herself to buy groceries for the first time. On the way back she stood at the residents' committee door for a while, said nothing, and pressed a bag of qingtuan, green sticky rice dumplings, into your hands.",
+    "e_new_hires": "Two fresh graduates joined the residents' committee. You took them up the stairs on visits and taught them to step back half a pace after knocking, so whoever is inside can see you clearly through the peephole.",
+    "e_knees": "Ten-odd years of climbing to sixth floors, and your knees started to hurt. You schedule the top-floor households for the mornings, and coming down you hold the rail, one step at a time.",
+    "e_wire_fire": "Wiring caught fire in the middle of the night in an old building on your patch; luckily it was put out early. You got there at three in the morning, settled a few elderly households at the residents' committee for the night, and at daybreak helped them contact the insurer and the repair crews.",
+    "e_new_faces": "Of the old people living alone on your list when you first came, some have moved into care homes and some have been taken in by their children. The newcomers are mostly young renters, out all day, and at night they don't open when you knock."
+  },
+  "choices": {
+    "c_sw_cert": {
+      "title": "Sit the intermediate social worker exam",
+      "situation": "You hold the assistant social worker certificate. The district pays a monthly allowance to those who pass the intermediate social worker exam, and it's a requirement for the intermediate community worker post later. But the exam means memorizing several books, and you already get off work at eight.",
+      "options": [
+        { "label": "Study practice questions at night and sit it", "result": "You studied on the metro and in the queue at the meal point. The day you passed happened to be the old woman's birthday, and you brought her a slice of cake." },
+        { "label": "Get to know your patch first", "result": "You spent all your time on visits, and the people on your patch trusted you more and more. The certificate got pushed back a bit." }
+      ]
+    },
+    "c_civil_exam": {
+      "title": "Sit the civil service exam too or not",
+      "situation": "A university classmate is preparing for the civil service exam and asks you to sit it with her. However good the residents' committee is, she says, it isn't a permanent state post, and there are no professional titles. You have only just got to know your patch, and the old people have only just learned your face.",
+      "options": [
+        { "label": "Sit it together", "result": "You passed into a district government bureau. On handover day you went through the list for your patch page by page with your replacement, for a whole afternoon.", "end": "You became a civil servant in a district government bureau and took a seat in the government building. Now and then, out in the neighborhoods on an inspection, you pause in the stairwell of an old public housing block and listen for whether anyone is home." },
+        { "label": "Stay at the residents' committee", "result": "You didn't sign up. The day your classmate got in she took you to dinner and asked if you regretted it. You said there were still a few households on your patch you hadn't got round to." }
+      ]
+    },
+    "c_elevator": {
+      "title": "Lead the lift retrofit or not",
+      "situation": "A six-story block on your patch is getting a lift fitted. The families on the first and second floors are firmly against it; the old people on the sixth have waited ten years. The street office asks whether you will lead the negotiations. Pull it off and it's an achievement; fail and you've offended both sides.",
+      "options": [
+        { "label": "Lead the negotiations", "result": "You held eleven coordination meetings and went door to door. In the end, the ground-floor household's condition was that you go with him to see a finished lift in another estate. On the day they signed, you sat in the stairwell for a long time." },
+        { "label": "Leave it to the block leader and the property company", "result": "You helped put the paperwork together but didn't stand out front. Two years on, nothing had been decided, and the old man on the sixth floor stopped mentioning the lift when he saw you." }
+      ]
+    },
+    "c_vice_director": {
+      "title": "Run for deputy director of the residents' committee or not",
+      "situation": "The election is coming up, and the Party secretary recommends you run for deputy director of the residents' committee. On the two committees you would oversee several lines of work, with even more overtime, and whether you get in depends on the residents' vote.",
+      "options": [
+        { "label": "Run", "result": "On election day, several old women came downstairs on their walking sticks to vote. Once elected, you took charge of civil affairs and public order." },
+        { "label": "Don't run", "result": "You said you wanted a few more years on your patch. The secretary nodded and didn't push." }
+      ]
+    },
+    "c_ai_ledger": {
+      "title": "Take on the AI ledger pilot or not",
+      "situation": "The street office is piloting an AI ledger system and needs one person to lead checking the visit records the AI generates, and to design a fallback process, run by people, for old people who can't use phones. Extra work, no extra money.",
+      "options": [
+        { "label": "Take it on", "result": "You picked out hundreds of wrong and missing entries and decided which things needed a person at the door and which could be done online. Later every residents' committee in the street office district worked from your flowchart." },
+        { "label": "Turn it down", "result": "When the system went live you used it as told. Data entry was easier, though there were a few rules you thought were wrong, and nobody asked you." }
+      ]
+    },
+    "c_school": {
+      "title": "After your child starts school",
+      "situation": "Your child is about to start primary school, and home beyond the outer ring road is far from the school and even farther from the residents' committee. A section of the street office is borrowing staff: office work, regular hours. Or you could apply to move to a residents' committee near home and learn everything from scratch.",
+      "options": [
+        { "label": "Go on secondment to the street office", "result": "You spend your days on reports and documents and leave on time to pick up your child. Sometimes old people from your patch phone you, and you still help find things out for them." },
+        { "label": "Move to a residents' committee near home", "result": "The new patch is a commercial housing estate: lifts, access control, an owners' committee, a whole different set of problems. You start again from the first door." },
+        { "label": "Stay on your old patch", "result": "You spend an extra two hours a day on the road, and your child's grandmother picks them up from school. When people on your patch see you, the first thing they ask is still how the child is." }
+      ]
+    },
+    "c_secretary": {
+      "title": "Take over as community Party secretary or not",
+      "situation": "The old secretary is retiring, and the street office is looking for a successor. The community Party secretary runs everything: Party building, governance, services. Dozens of inspections a year, and a phone that can never be switched off.",
+      "options": [
+        { "label": "Take on the burden", "result": "You took over from the old secretary, and a red telephone appeared on your desk. In the first month you lost five jin, two and a half kilos." },
+        { "label": "Don't compete; run your own lines well", "result": "You recommended another committee member and stayed on civil affairs. When something comes up on the patch, people still come to you first." }
+      ]
+    },
+    "c_bianzhi": {
+      "title": "Sit the exam for a permanent state post or not",
+      "situation": "The street office has targeted recruitment for outstanding secretaries, and places for staff to be brought under public institution management. Both mean an exam. Pass, and your position is secure, though you may be moved out of the community to an office job at the street office.",
+      "options": [
+        { "label": "Sit the exam", "result": "You walked into the exam hall in your forties, surrounded by people in their twenties. After you passed, your work ID changed color." },
+        { "label": "Stay in the community", "result": "You said you couldn't leave the lanes, and didn't sign up. At the end of the year, the silk banner the old people gave the residents' committee still had your name on it." }
+      ]
+    },
+    "c_property": {
+      "title": "An offer from a property company",
+      "situation": "A property management company asks you to be a project manager running a big new residential estate, for thirty percent more money. What they want is your knack with residents, and the people you know in the street office.",
+      "options": [
+        { "label": "Go to the property company", "result": "You handed in your resignation. The secretary tried twice to keep you, then signed it.", "end": "You became a project manager at a property management company. At owners' general meetings, you still make a habit of saying hello first to the old people sitting at the back." },
+        { "label": "Stay at the residents' committee", "result": "You politely declined. That evening you went on your visits to Block 7 as usual. The light on the sixth floor was on." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you don't do visits. In the office you hand the young person taking over the list for the twelve blocks, the keys, and the old notebook full of phone numbers. In the afternoon a few aunties come to the residents' committee with a box of wontons they made themselves. When you go downstairs, someone in the lane is airing quilts, and the sixth-floor window of Block 7 is open.",
+    "burnout": "For a while your heart raced every time the phone rang, and at night you filled in forms in your dreams. After your checkup, the doctor told you to rest first. You handed in your resignation. The Party secretary looked at it for a long time, then signed. The day you walked out of the residents' committee it was sunny, and you didn't look back at that north-facing window."
+  },
+  "past": [
+    "You grew up in a town on the outskirts of Shanghai, where your parents ran a breakfast shop. You tested into the district's key high school and boarded there, going home at weekends to help wrap wontons.",
+    "In the summer of your second year of high school you volunteered at the town's old people's home, and spent a month playing Chinese checkers with an old woman who hardly spoke. Before term started, she called you by your name for the first time.",
+    "Your gaokao (college entrance exam) score was middling. On the application form you saw the words social work, thought of that old woman, and put it down. Your mother asked what you do with that later. You couldn't really say.",
+    "In your third year you interned at a street office's social work station, working on cases of older people living alone under a supervisor. For the first time you understood what it is like for a person to go a whole week without speaking to anyone.",
+    "After your degree you didn't go on to a master's. You joined a social work agency as a project social worker, following government-contracted service projects from one street office district to the next, on one-year contracts, for low pay.",
+    "You passed the assistant social worker certificate. In three years your projects moved through three street office districts, and every time you had just got close to the old people, the project ended. You started looking for somewhere you wouldn't have to start over every year.",
+    "The district advertised for community workers: the written exam counted for forty percent, the interview for sixty. At the interview the examiners had you role-play persuading an old person who refused to leave a condemned building. You spoke for ten minutes, and nobody interrupted you."
+  ],
+  "late": {
+    "pension_note": "Estimate: Shanghai community workers pay into the urban employee pension scheme, with the contribution base tied to salary. The pension is about half the last monthly salary.",
+    "scenes": [
+      "In your first month of retirement you still glance at your patch's WeChat group every morning. Someone asks how to apply for the old-age allowance. You hold back from replying and wait for the young ones to answer.",
+      "The residents' committee asks you to be a block leader, and you say yes at once. Each month you go and sit for a while with a few old people who live alone. Only now there's no system to enter it into.",
+      "The pension arrives on time each month, enough to live on. You signed up for a calligraphy class at the university for older people, and the person sitting next to you is an auntie from your old patch.",
+      "The old public housing where you spent decades is being redeveloped block by block. You went back to have a look. The stairwell lights in Block 7 have been replaced with sensor lights that come on when you stamp your foot.",
+      "In your first month away from the residents' committee, you left the dozens of work groups on your phone one by one. When you got to your patch's group you paused for a long time, then stayed in it, on mute.",
+      "You volunteer half days at the community canteen near home, serving food and clearing bowls, no ledgers to write. One auntie says your hand doesn't shake when you serve; anyone can tell you've done this line of work.",
+      "You took on supervision for a few social work agencies, teaching twice a month. What you teach is how to get a door open that doesn't want to open.",
+      "After changing jobs, whenever you pass old public housing you still look up to see whose windowsill flowers have died with nobody to clear them.",
+      "The new job pays more than the residents' committee did. You put your old visit notebooks on the top shelf of the bookcase. Now and then an old person from your patch phones, and you still answer.",
+      "You went back to the old patch on an errand. The residents' committee was a new crowd now; only the old rattan chair by the door was still there. You sat in it a while, and someone recognized you and called your name.",
+      "Later the visit records were all generated automatically by AI, and the ledgers no longer had to be bound page by page by hand. But knocking on the door, sitting down and listening to an old person finish what they have to say still needed someone to go.",
+      "You have reached the age of being visited yourself. The one who comes is a young social worker. After knocking, she steps back half a pace. You see it through the peephole, and smile."
+    ],
+    "closing": {
+      "retire": "One afternoon many years later, you are sitting on a bench in your estate when a young social worker comes over with a tablet to ask how your health is. When you have answered, you mention in passing that the doorbell at the third-floor flat is broken; she'll need to knock.",
+      "burnout": "Many years later, you are airing quilts on the balcony when someone below calls up to ask the way. You lean out and point him in the right direction, and watch him turn into that lane.",
+      "end": "Many years later, sorting old things, you come across the list for your patch, the paper gone yellow, little stars drawn beside several names. You can't remember what the stars meant. You tuck it back into the notebook."
+    }
+  }
+}

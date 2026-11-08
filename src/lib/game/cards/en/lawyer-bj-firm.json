@@ -1,0 +1,200 @@
+{
+  "id": "lawyer-bj-firm",
+  "occupation": "Lawyer",
+  "role": "First-year salaried associate, M&A team (trainee period)",
+  "headline": "A first-year in a Guomao office tower, billing in six-minute increments, one year short of a license to practice",
+  "unit": "Corporate M&A team at a leading domestic law firm in Beijing",
+  "unit_type": "Leading law firm",
+  "city": "Beijing",
+  "city_tier": "Tier 1",
+  "education": "Master of Laws from a top university",
+  "level": "You hold a trainee certificate and can draft the due-diligence working papers for the labor and material-contracts sections on your own. Your memos still get rewritten sentence by sentence by a senior associate.",
+  "intro": "You sit high up in an office tower on Beijing's East Third Ring Road. Taped to your desk are the team phone list and a sheet of billing codes; on your screen, three virtual data rooms. You've passed the national bar exam, but you won't get your license until your traineeship is up and you've passed the bar association interview. Until then you can't sign a single legal opinion. This morning the partner posted one line in the group chat: \"New deal, first issues list due tomorrow morning.\" From today, every six minutes of yours goes on a timesheet.",
+  "salary_note": "Estimate: a leading Beijing firm pays first-year associates with master's degrees from top schools well above the national figure. Stacking the premium for a Tier 1 city on the premium for a top firm gives roughly 2.1 times the national average.",
+  "facts": [
+    { "label": "Trainee lawyer pay", "value": "¥4,000–15,000 a month (national average)", "source": "Career map" },
+    { "label": "Pay in the first year", "value": "¥11,424 a month (national average)", "source": "Pay by experience" },
+    { "label": "Pay at 5–10 years", "value": "¥33,730 a month (national average)", "source": "Pay by experience" },
+    { "label": "Equity partner pay", "value": "¥60,000–150,000 a month, 8+ years (national average)", "source": "Career map" },
+    { "label": "First-pass contract risk review", "value": "AI can take over the first draft; lawyers spot-check the key clauses", "source": "AI exposure" },
+    { "label": "Open positions", "value": "101 nationwide, 25 in Beijing, mostly campus hiring and internships", "source": "Job listings" }
+  ],
+  "day": [
+    "Out of the shared flat in Tuanjiehu and onto a packed Line 10 to Guomao. You buy a rice ball at the convenience store downstairs and, while you're at it, reply on your phone to the comments a senior associate sent at two in the morning.",
+    "Swipe your badge, go up, open the timekeeping system, and fill in the four hours you didn't get to last night. Not one billing code can be wrong.",
+    "Into the virtual data room. The target company has uploaded more than three hundred procurement contracts, and you go through them one by one for change-of-control, exclusivity and third-party guarantee clauses, copying each into the diligence table.",
+    "Takeout in the pantry with others from your intake, talking about whose team lost someone again and whose partner holds conference calls on weekends too.",
+    "You follow a senior associate to the client's plant in Yizhuang for on-site interviews. You take the notes, and the interview memo has to be written up in the car on the way back.",
+    "The firm's AI tool has flagged the risk points across a batch of lease agreements. You check each one against the original and find it has treated a terminated agreement as still in force.",
+    "Dinner is takeout on the firm's account. You start the legal issues memo, with an English version to go out alongside it, because the buyer is an overseas fund.",
+    "You send the first issues list to the senior associate and wait for him to reply \"Received.\" After ten, taxis go on expenses. You stand downstairs waiting for your car; half the towers on the street are still lit.",
+    "Before you're home, the partner replies in the group chat: \"Rewrite Part Three.\" You set your laptop bag down by the bed and set the alarm for seven."
+  ],
+  "ladder": [
+    { "title": "Trainee Lawyer", "stage": "Traineeship", "focus": "Help your supervising lawyer with basic desk work: searching statutes and precedent cases, organizing and filing evidence, case filing and service of process, accompanying them to hearings and client meetings. Complete the bar association's mandatory one-year traineeship, then prepare for and pass its admission interview to practice independently." },
+    { "title": "Junior Associate", "stage": "Junior", "focus": "Appear in court on routine litigation as lead or principal second chair, or independently handle day-to-day contract revisions and transactional memos for retainer clients. What makes you indispensable to a partner is uncompromising quality, a near-zero error rate and reliable delivery." },
+    { "title": "Senior Associate", "stage": "Senior", "focus": "Handle major, difficult litigation or large M&A and financing deals, lead complex courtroom arguments or deal negotiations, and supervise and sign off on the work of trainees and junior associates. Mature problem-solving and client satisfaction are what carry you toward management and partnership." },
+    { "title": "Salaried Partner", "stage": "Junior partner", "focus": "Take overall responsibility for the team's work and coordinate shared client matters, while carrying your own revenue target and the pressure to bring in clients. The move to equity rests on steady delivery for major clients, early success at winning business, and contributions to managing the firm's teams." },
+    { "title": "Equity Partner", "stage": "Equity", "focus": "Part of the firm's core decision-making and a sharer in its profits. Lead business development with major clients in your sector and carry the revenue targets of the firm or a large team, creating value through your standing in the industry, deep client loyalty, high-value mandates and leadership." }
+  ],
+  "ai_tasks": [
+    { "name": "Reviewing high-risk clauses in commercial contracts and proposing revisions", "how": "AI can read through a lease quickly, flag the usual high-risk clauses, and produce redlines and a first-draft risk summary. The lawyer has to weigh the client's business goals and bottom line in negotiation to judge which risks actually matter, and answer for the final opinion." },
+    { "name": "Discussing a case remotely and setting the litigation to-do list", "how": "AI can take the minutes, lay out the timeline of facts, and list the gaps in evidence and the action items. The lawyer has to hear what the client isn't quite saying in the meeting, judge how fatal a weak point in the evidence is, and decide who does what." },
+    { "name": "Assembling the evidence file for litigation and handing it over", "how": "AI can sort and number documentary and electronic evidence into a chain, draft the complaint and evidence list, and organize the file. The lawyer has to check whether the evidence actually proves the facts in dispute, decide how to frame the claims, and sign off." },
+    { "name": "Checking a party's change of registration and fixing a filing problem on the spot", "how": "AI can at most help compare documents and draft the corrections. Thinking on your feet in the court's filing hall, pulling registration records from the market regulator, talking to the clerk at the window and deciding there and then how to fix it is mostly done by a person on the spot." },
+    { "name": "A quick first-pass risk review and redline of a commercial lease", "how": "For a first review inside 15 minutes, AI can largely handle the read-through, the risk summary and the first draft of the redlines. The supervising lawyer or assistant only needs to spot-check the key clauses, then take the comments into the negotiation." },
+    { "name": "Fixing a sudden party-identity problem at filing in a commercial suit and closing out the file", "how": "AI can check party information, draft the correction documents, organize the file and generate a handover checklist. A person has to go to the window and deal with what comes up, confirm the chain of evidence and the limits of asset preservation with Mr. Chen, and answer for the filing and preservation decisions." }
+  ],
+  "events": {
+    "e01": "A listed company's acquisition is racing toward closing. For three weeks straight you sleep fewer than five hours a night, and at month's end there isn't one empty cell on your timesheet.",
+    "e02": "Your memo on defects in the target company's licenses goes straight to the client with only two words changed by the partner.",
+    "e03": "You missed a third-party guarantee contract in the data room. A senior associate finds it a week before closing. No one says your name in the meeting, but you know whose section it was.",
+    "e04": "At year's end the firm pays bonuses by hours and reviews. You send part of yours home and save the rest.",
+    "e05": "The firm launches an AI for contract review. Lease redlines that used to take you all night now come out as a first draft in a dozen minutes, and your job is to spot-check the key clauses.",
+    "e06": "A due-diligence report drafted by AI cites a ministry regulation that has been repealed. You catch it while verifying line by line, and the partner makes a point of mentioning it at the weekly meeting.",
+    "e07": "Of the five people who joined the firm with you, three have gone in-house. At the farewell dinner everyone says the same thing: weekends off are wonderful.",
+    "e08": "The deal you've worked on for six months reaches the final round, and the buyer's investment committee kills it. The bill goes out, and the client accepts only half the hours.",
+    "e09": "You go alone to the market regulator to pull the target company's historical registration records. The clerk says your papers are incomplete; you amend the power of attorney on the spot and have the records the same day.",
+    "e10": "On a cross-border deal you negotiate for two weeks across time zones with the other side's overseas counsel. At three in the morning the representations and warranties are finally agreed.",
+    "e11": "You get married. On the morning of the wedding you're still answering client emails. In the afternoon you change into your suit and hand your phone to the best man.",
+    "e12": "You buy a flat out by Beijing's Fifth Ring Road. The down payment empties your savings and your family's, and the mortgage comes out automatically every month.",
+    "e13": "Your medical report has two new lines: a thyroid nodule and a reversed curve in your neck. The doctor tells you to stay up less. You smile a little.",
+    "e14": "The working papers from the trainee you supervise are riddled with errors and gaps. You redo them over the weekend and write him a page of notes on what to fix.",
+    "e15": "Your child is born. Outside the delivery room you're still on a conference call, thumb on the mute button all night.",
+    "e16": "A college classmate who has become board secretary at a private company hands you its financing deal. It's the first piece of business with your name on it.",
+    "e17": "You fall well short of your annual revenue target and your year-end share is cut. The conversation with the management committee is very polite.",
+    "e18": "The firm issues human-AI collaboration guidelines. First-year hiring on the team is cut in half, and diligence tables now go through AI first.",
+    "e19": "A major client of many years gets a new general counsel and moves all its work to another firm. A large slice of your annual revenue disappears at once.",
+    "e20": "A practical article you wrote on national security review of foreign acquisitions gets shared widely in legal circles, and several companies come looking for you.",
+    "e21": "Your father is admitted to hospital for surgery. For two months you shuttle between Beijing and your hometown, and finish revising a share transfer agreement in the ward corridor.",
+    "e22": "The trainee you once supervised is voted into the partnership at this year's partners' meeting.",
+    "e23": "A client finishes a deal and then sits on the legal fees. You chase it for a year, and in the end settle at a discount.",
+    "e24": "The diligence papers a young lawyer clears in a day with AI would have taken you a week back then. Now your work is mostly reading the conclusions, signing, and answering for them.",
+    "e25": "Your child is going abroad to study, and you set aside a large sum for tuition and living costs in one go.",
+    "e26": "Your herniated disc flares up. You put a standing desk in your office and take conference calls on your feet.",
+    "e27": "The firm's management committee changes over, and several partners leave with their teams to set up their own firm. The profit rules at your level are rewritten along with it."
+  },
+  "choices": {
+    "c01": {
+      "title": "Traineeship's end: the admission interview",
+      "situation": "Your year as a trainee is almost up, and the bar association interview falls in the same week as a deal closing. You need two days off to prepare, and the team is already short-handed.",
+      "options": [
+        { "label": "Take the leave and prepare properly", "result": "You get your license without a hitch, but there's plenty of resentment on the team over closing week, and a senior associate gives a good section to someone else." },
+        { "label": "Carry the deal and the interview both", "result": "You finish the closing documents overnight, then go to the interview. You pass that too. After that week you're sick for ten days." },
+        { "label": "Ask to move to the next interview round", "result": "The deal goes beautifully and the partner remembers you. Your license comes a few months later, and so does the title on your business card." }
+      ]
+    },
+    "c02": {
+      "title": "Be an early AI tester?",
+      "situation": "The firm is piloting a legal AI assistant for quickly extracting diligence tables and pre-screening compliance. Each team must put forward one person, who will spend extra time writing prompts, testing for risks and logging problems.",
+      "options": [
+        { "label": "Sign up and become the team's AI expert", "result": "Your output doubles, and you also gain a job nobody bills for. The partner starts handing you the work of designing processes." },
+        { "label": "Pass, keep polishing your drafting", "result": "Your working papers are still the cleanest on the team, but two years later the new hires are faster than you with the tools." }
+      ]
+    },
+    "c03": {
+      "title": "A headhunter from a foreign firm",
+      "situation": "The Beijing office of a foreign law firm offers you considerably more than you make now, doing purely cross-border M&A. But in China they can't issue opinions on Chinese law, and partnership slots are extremely rare.",
+      "options": [
+        { "label": "Jump to the foreign firm", "result": "Your pay goes up and your English emails get smoother and smoother, but you're further than ever from the step of signing your name." },
+        { "label": "Stay at your firm", "result": "You keep building seniority where you are. Your pay doesn't change, and the partner begins letting you lead small deals." },
+        { "label": "Move to a boutique and switch to antitrust", "result": "The work is narrower and deeper and the hours a little shorter, but your M&A experience means starting over." }
+      ]
+    },
+    "c04": {
+      "title": "An LLM abroad",
+      "situation": "Several people on the team, before making senior associate, went to the US for a one-year Master of Laws and then sat the New York bar, and came back able to take more cross-border work. You'd pay your own way and stop for a year.",
+      "options": [
+        { "label": "Quit and go", "result": "The year eats most of your savings. You come back with a foreign license and a circle of classmates, and someone else already in your old seat." },
+        { "label": "Don't go, keep working at the firm", "result": "You save the money and a year of your life. On cross-border deals you're still the one who covers the Chinese law." }
+      ]
+    },
+    "c05": {
+      "title": "The big deal before senior associate",
+      "situation": "The partner wants you to lead the legal work on a major asset restructuring. Pull it off and you make senior associate, but it means six months on call at every hour, and your mother has just been diagnosed with a chronic illness.",
+      "options": [
+        { "label": "Take it", "result": "The deal closes and you make senior associate. In those six months you go home few enough times to count on one hand." },
+        { "label": "Turn it down, take a slower deal", "result": "You spend more time with your family. Senior associate slips back more than a year, and afterward the partner asks other people first about the important things." }
+      ]
+    },
+    "c06": {
+      "title": "A client asks you to be its general counsel",
+      "situation": "A listed company you've served for three years invites you to be its general counsel: no timesheets, stock options, and from now on you're the client.",
+      "options": [
+        { "label": "Go in-house as general counsel", "result": "You move into the client's office building. From now on, you're the one reviewing lawyers' bills.", "end": "You left the firm to become general counsel of a listed company, and stayed on the client's side of the table until you retired." },
+        { "label": "Stay and go for partner", "result": "You decline. The client says the door will always be open. You know it won't." },
+        { "label": "Join a private equity firm as investment director", "result": "You go from reading contracts to reading deals, and in your first year you run straight into a market where no one can exit.", "end": "You changed careers to work as an investment director at a fund, and never filled in a timesheet again." }
+      ]
+    },
+    "c07": {
+      "title": "Salaried partner, or the branch office",
+      "situation": "Head office offers you a salaried partnership, with your own revenue target to carry. Meanwhile the firm is opening a branch in the provincial capital of your home province and wants you to go as managing partner.",
+      "options": [
+        { "label": "Stay in Beijing as salaried partner", "result": "New business cards. In the first year your target alone keeps you up at night, and you start learning how to take clients to dinner." },
+        { "label": "Go home to run the branch", "result": "Your income drops, your parents are half an hour's drive away, there aren't many big deals locally, and you have to build everything yourself." },
+        { "label": "Hold off, stay a senior associate", "result": "You dodge the targets, and watch people who came after you join the partners' group chat first." }
+      ]
+    },
+    "c08": {
+      "title": "Buying into the equity partnership",
+      "situation": "The partners' meeting is ready to vote you in as an equity partner. You'd put up capital, share in profits and losses from then on, and someone at the firm is competing with you for the same industry clients.",
+      "options": [
+        { "label": "Put up the capital", "result": "You hand over a large sum, and your name goes into the partnership register. From now on the firm's rent and its losses are your business too." },
+        { "label": "Take your team to another firm as partner", "result": "The terms there are better, but everyone has to settle in again, and some of your clients from the old firm don't follow." },
+        { "label": "Wait, stay a solid salaried partner", "result": "You keep your cash and your sleep, and your income stops at that ceiling." }
+      ]
+    },
+    "c09": {
+      "title": "The firm's rules for working with AI",
+      "situation": "The management committee needs someone to lead the rulemaking: which steps go to AI for first review, which require a human signature, how client data is kept separate. The work brings in no revenue, and if something goes wrong, it's on you.",
+      "options": [
+        { "label": "Lead it", "result": "You spend most of a year in meetings, writing rules, and handling the first complaint about AI citing the wrong statute. The firm gets faster; your revenue drops a notch." },
+        { "label": "Don't lead, focus on clients", "result": "Someone else sets the rules and you follow them. A few of them strike you now and then as awkward." }
+      ]
+    },
+    "c10": {
+      "title": "Arbitrator, or your own firm",
+      "situation": "An arbitration commission invites you onto its panel of arbitrators. At the same time, several veteran partners want to bring you out to found a new firm, with you as managing director.",
+      "options": [
+        { "label": "Accept the panel seat, alongside the practice", "result": "You begin sitting on the other side of the table, listening to both sides' lawyers. Your calendar fills up further, and your reputation climbs steadily." },
+        { "label": "Leave and found the firm", "result": "You stake your savings and your name. In the first year the rent, the staff and the systems are all your problem." },
+        { "label": "Arbitrate full-time, leave practice", "result": "You stop competing for clients. Life grows quiet, and your income much smaller.", "end": "You left practice to hear cases full-time at an arbitration commission. Later, many young lawyers knew you only as the arbitrator who hardly spoke." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you hand your office key to the admin staff. In the cabinet, the stack of early diligence papers still carries your pencil notes. Downstairs it's the same street, the towers still half lit. You don't take a taxi. You walk a stretch of the East Third Ring Road, your phone quiet in your pocket.",
+    "burnout": "That morning you sit at your desk looking at the comments on the screen and can't take in a single word. You send the partner a very short message, and that afternoon you register at the hospital. A few months later you hand back your access card, and your name in the timekeeping system turns gray."
+  },
+  "past": [
+    "You went to high school in a county town in Shandong, and won first place in the city debate competition. Your mother said you had a sharp tongue and should become a lawyer.",
+    "The gaokao (college entrance exam) got you into one of Beijing's strongest law and political science universities. On your first trip to Beijing you queued an hour for a taxi at the train station.",
+    "In your third year you began studying for the national bar exam. You sat at the same window seat on the third floor of the library for a whole year, and your civil law book went fuzzy at the edges.",
+    "You passed the bar. You called home from outside your dorm; the signal dropped twice, and your mother still heard.",
+    "You were recommended straight into a Master of Laws without an entrance exam, and worked on your supervisor's company law research. That summer you interned at a foreign firm and revised a contract until four in the morning for the first time.",
+    "Then six months interning with this leading domestic firm's M&A team, where the senior associate supervising you said your working papers were clean.",
+    "In the autumn hiring season you got a return offer. You rented a room in a shared flat near Guomao. Outside the window were the lights of office towers, much brighter than the streetlamps by your dorm."
+  ],
+  "late": {
+    "pension_note": "Estimate: most lawyers are in the employees' pension scheme, contributing on their actual pay base. The replacement rate is low, and in old age you live mainly on what you've saved yourself.",
+    "scenes": [
+      "The firm throws you a small farewell party. The young lawyers all call you \"teacher\" now, and nobody bills in six-minute increments anymore.",
+      "The son of an old client calls and asks you to tea, to talk about handing the family business to the next generation. You go, and don't charge.",
+      "You teach a semester of M&A practice to graduate students. When you get to valuation-adjustment clauses, the kind founders bet their companies on, someone in the room laughs.",
+      "The day you leave the firm is a weekday, at noon. You're alone in the elevator. The screen is showing a news story about a merger. You don't watch to the end.",
+      "You take an in-house legal job at a state-owned company, nine to five, and for the first time put your phone on silent for a weekend.",
+      "Now and then you still dream of the data room: open one folder and there's another folder inside, and you can never find that signature page.",
+      "You hand your license back to the bar association. The clerk who stamps it says: What a shame.",
+      "In your new seat you still think like a lawyer. With any contract, the first thing you look for is the breach clause.",
+      "Of the people you pulled all-nighters with back then, some became partners, some went home. You're all in one group chat, and only talk at New Year.",
+      "Later on, diligence papers mostly go through AI first, and young lawyers check only the few spots marked in red. You remember those nights of turning pages one by one.",
+      "Back home in Shandong, someone from the county brings you a land-transfer contract to look at. You put on your reading glasses and walk him through it clause by clause.",
+      "Once you printed out all your timesheets from those years: a thick stack. Later you threw it away, keeping only one page from the first year."
+    ],
+    "closing": {
+      "retire": "Many years later, one afternoon, you're reading the paper on the balcony. A merger story mentions a company you once worked on. You read the paragraph twice, then go and water the plants.",
+      "burnout": "Many years later you pass along the East Third Ring Road. The tower is still there, its upper floors still half lit. You wait a while at the light. It turns green, and you cross.",
+      "end": "Many years later someone asks whether you regret leaving the firm. You say those years taught you one thing: however complicated something is, it gets written out clearly one clause at a time."
+    }
+  }
+}

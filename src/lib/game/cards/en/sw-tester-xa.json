@@ -1,0 +1,181 @@
+{
+  "id": "sw-tester-xa",
+  "occupation": "Software Test Engineer",
+  "role": "Software Test Engineer (Junior)",
+  "headline": "Second year out of a computer science degree: a junior test engineer in Xi'an's Software New Town, writing automated test cases for banking systems and hearing every day that testing will be the first job AI replaces",
+  "unit": "Testing department of a banking-software company in Xi'an's High-Tech Zone",
+  "unit_type": "Software company (industry solutions)",
+  "city": "Xi'an",
+  "city_tier": "New first-tier city",
+  "education": "Bachelor's degree (Computer Science and Technology)",
+  "level": "Solid at functional testing. You can test APIs with Postman and query data with SQL, and you can write automation scripts inside an existing framework, but you can't yet build the framework itself.",
+  "intro": "The company is on the eleventh floor of a glass tower in Software New Town. The testing department is thirty-odd people, seated next to the developers with a row of potted pothos between them. You are in your second year out of school, assigned to the wealth-management module of a mobile banking app, with more than four hundred automated test cases to your name. Yesterday your team lead forwarded an article to the group chat titled Testing Is the First Job AI Will Replace. No one replied. From today you go on watching the test cases that turn red in the pipeline.",
+  "salary_note": "Estimate: starting pay for testers at Xi'an software companies is well below Beijing, Shanghai and Shenzhen. Companies doing bank projects are a little steadier than outsourcing shops, at about eighty percent of the national average.",
+  "facts": [
+    { "label": "Software Test Engineer, Junior (current level)", "value": "0-2 years, ¥6,000–10,000 a month (national average)", "source": "Career map" },
+    { "label": "Next level up", "value": "Test Engineer / Automation Test Engineer (2-4 years)", "source": "Career map" },
+    { "label": "Pay after 10+ years", "value": "¥14,053 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Running a chaos-engineering random pod termination experiment and verifying that autoscaling actually works", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Tracking down a boundary bug in checkout discount pricing and filing a release-blocking bug report", "source": "AI exposure" },
+    { "label": "Open positions", "value": "947 related listings nationwide, 25 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "You leave your shared flat in the urban village, buy a roujiamo, the Xi'an flatbread stuffed with braised pork, downstairs, and squeeze onto the subway to Software New Town. Half the car is carrying laptop bags. The other half is scrolling job apps.",
+    "You open last night's pipeline report: 640 automated cases ran, 23 went red. You go through the logs one by one. Did the script fall behind a page redesign, or is it a real bug?",
+    "Stand-up. You say the redemption API has a rounding problem on amounts. The developer says: It works on my machine. You paste the steps to reproduce it into the group chat.",
+    "Writing cases for a new requirement. Redeeming a wealth product means thinking about public holidays, settlement times, partial redemptions, zero balances. You list them by boundary value, one by one, until you reach number fifty.",
+    "Retesting. The bug the developer says is fixed, you click through again: still one fen off. For the third time you send the ticket back and set its status to Reopened.",
+    "The team next door is trying AI-generated test cases. Feed it one requirements document and in ten minutes out come two hundred cases. You lean over and watch a while, and notice it never thought of public holidays.",
+    "Release night. You watch the regression run on staging. You ordered a bowl of biangbiang noodles, the broad hand-pulled Shaanxi kind, and only remember to eat it after it's gone cold.",
+    "Production verification passes. In the release group you reply with two words: Test passed. You take a cab back to the urban village. The driver asks if you're a programmer. You say not really."
+  ],
+  "ladder": [
+    { "title": "Software Test Engineer (Junior)", "stage": "Junior", "focus": "Run functional tests on your own, file accurate defect reports, and use Jira, Postman and SQL fluently. You move up to mid-level through solid execution, writing up what you learn without being asked, and ISTQB certification." },
+    { "title": "Test Engineer / Automation Test Engineer", "stage": "Mid-level", "focus": "Lead test design for a module, write maintainable automation scripts, and do entry-level API and performance testing. Promotion rests on automation coverage, how well you work across teams, and getting technical plans into real use." },
+    { "title": "Senior Test Engineer / Performance Test Engineer / Security Test Engineer", "stage": "Senior", "focus": "Own the quality strategy for complex systems, lead specialist testing in performance, security and compatibility, and make testing more efficient. Promotion rests on technical depth, such as JMeter tuning or modeling penetration paths, using quality data to drive improvement, and training newcomers." },
+    { "title": "Test Architect / Test Manager / QA Manager", "stage": "Expert / management", "focus": "Define the organization's testing stack, build its quality metrics, and coordinate quality goals across many projects. Promotion rests on technical foresight, such as exploring AI in testing, governing process, and business results, such as cutting escaped defects by 30 percent." }
+  ],
+  "ai_tasks": [
+    { "name": "Tracking down a boundary bug in checkout discount pricing and filing a release-blocking bug report", "how": "AI can help read the API data and logs, summarize the anomalies, and draft a standard defect report. A person has to judge whether this boundary bug really should block the release, and answer for the go-live decision with the clock running down." },
+    { "name": "Running smoke tests after each daily build and approving the pipeline to proceed", "how": "Running smoke tests automatically after a build and deciding whether the main branch can move on to further testing was always work for scripts and pipelines. AI can also read the failure logs and sort the causes. A person only needs to spot-check that the release rules still make sense and deal with unusual alerts." },
+    { "name": "Writing and running a compatibility test matrix for a newly integrated third-party payment SDK", "how": "AI can generate a first draft of the compatibility matrix and test scripts from the SDK documentation, and a cloud device farm runs them in bulk. A person decides what to cover based on real users' phone models and sales channels, and checks that payments truly behave the same in every environment." },
+    { "name": "Running risk-based performance testing and locating a database connection pool bottleneck", "how": "AI can analyze monitoring metrics, slow queries and thread stacks, and quickly point to likely spots where the connection pool is leaking. A person sets the load scenarios by risk, reproduces and verifies the problem in a real environment, and confirms the root cause and the fix with development and operations." },
+    { "name": "Auditing requirements for testability before the sprint review and producing a risk list", "how": "AI can read the whole PRD, mark vague wording and missing scenarios, and draft measurable criteria. A person has to understand what the business intends, clarify it face to face with the product manager and push for changes, and judge which risks are worth raising at the review." },
+    { "name": "Running a chaos-engineering random pod termination experiment and verifying autoscaling", "how": "AI can help write the experiment plan and sort the logs afterward. But injecting the failure on staging, watching how scaling and health checks play off each other, judging whether an anomaly is acceptable, and getting development and operations to fix things together rest mostly on a person's grasp of the system and command of the moment." }
+  ],
+  "events": {
+    "e_escape": "A discount-stacking problem you missed went live, and you were called back to the office on the weekend. The first slide of the post-mortem says Missed in testing, followed by your name.",
+    "e_blocker": "The night before a release, you find a blocking defect: under certain conditions, transfer amounts are calculated wrong. The release slips two days, and the next day the client's project manager calls specially to thank you.",
+    "e_ai_cases": "The company brings in a tool that generates test cases and scripts with AI. API cases that took you a week, it drafts in half a day. Your job becomes finding which boundaries it missed and which expected results it got wrong.",
+    "e_layoff": "The testing department cuts a third of its people. The day the list comes out, no one on the floor says a word. Everyone left takes on an extra project, and beside your desk two chairs sit empty.",
+    "e_yearend": "At year's end the bank systems all go live at once. For a month you never leave before eleven, and you spend weekends in the office too. The year-end bonus is a little bigger.",
+    "e_love": "In a night-running group that loops the city wall, you meet someone. After your third full lap of the wall together, the two of you sit on the steps outside Yongning Gate and talk until past midnight.",
+    "e_wedding": "The wedding is held back home in Weinan, a rolling banquet filling the whole courtyard. The bride price, the feast, the three pieces of gold jewelry: nearly everything you saved in these working years goes on this one day.",
+    "e_house": "You put a down payment on an apartment in Chang'an District, a fifteen-minute walk from the subway. The mortgage takes half your salary, and from then on you check the job apps even more often.",
+    "e_child": "You take leave the day your child is born. Waiting outside the delivery room, your phone keeps going off with production alerts. You switch it to silent.",
+    "e_35": "You spend an evening on job sites. Eight out of ten similar positions say Under 35. That year, you are thirty-four.",
+    "e_share": "At an internal talk you share a plugin you wrote for generating test data. The developers start using it, and their team lead tags you in the group chat to say thanks, the first time ever.",
+    "e_neck": "Your neck and eyes are the first to protest. You get a standing desk and an ergonomic chair and stand up once an hour. The stand-up finally lives up to its name.",
+    "e_parents": "Your mother has an operation in Weinan. You take a week off to stay at her bedside, laptop along, and retest two defects in the hospital corridor.",
+    "e_ai_smoke": "Smoke tests after each daily build and approving the pipeline now belong entirely to AI, which even sorts the causes of failure first. You no longer have to get up at night to check build results.",
+    "e_ai_misjudge": "The AI labels a batch of failed cases as environment flakiness and lets them through. Something feels wrong to you. You spend an afternoon in the logs and find a real database timeout.",
+    "e_classmate": "Your college roommate went to a big tech company in Shenzhen as a test developer. The year-end bonus he posts on his feed is your salary for a year.",
+    "e_perf": "During a load test you watch the monitoring and the thread stacks for two days and pin down a connection pool leak. The development lead reads your report and says: I wrote that. I'll fix it.",
+    "e_mentor": "Two new graduates join the department and you train them. The first time you see them find a problem in the logs on their own and write a clean, clear defect report, you are happier than when you find a bug yourself.",
+    "e_onsite": "You are sent to work on site at the client's data center for three months. Your desk is next to the server room, getting in and out means badging through three doors, and phones aren't allowed inside.",
+    "e_checkup": "Your checkup shows fatty liver and high uric acid. You start walking one stop after work before getting on the subway, and swap takeout for the company canteen.",
+    "e_acquired": "The company is bought by a big tech firm. The defect system, the pipeline and the coding standards are all replaced. You spend two months relearning everything. Your badge changes color, and your salary goes up a little.",
+    "e_school": "Your child is about to start primary school. You spend six months working out the school-district business, and in the end it takes connections, waiting in line, and a sponsorship payment. Of all the transfers you've ever tested in banking systems, this one hurts the most.",
+    "e_old_script": "A new hire digs up an old script in the pipeline that has been running for more than ten years, and asks who wrote the comment in it: Don't delete, needed for holidays. You say I did."
+  },
+  "choices": {
+    "c_code": {
+      "title": "Learn to code or not",
+      "situation": "Your team lead sits you down: next year, testing by clicking through pages by hand is basically finished. To make mid-level you need to learn Python, build your own automation framework, and wire it into the pipeline. After work, all you want is to lie down and scroll your phone.",
+      "options": [
+        { "label": "Learn Python and automation frameworks after work", "result": "You studied two hours every night and rewrote the company's scripts from scratch. The day it first ran clean in the pipeline, you took a screenshot and sent it to yourself." },
+        { "label": "Master the business first", "result": "You learned the rules of wealth products, transfers and clearing better than the developers did, and everyone came to you with business questions. Your code was still written inside other people's frameworks." }
+      ]
+    },
+    "c_bigco": {
+      "title": "Take a contractor job at a big tech company or not",
+      "situation": "A big tech company's R&D center in Xi'an is hiring contract testers at forty percent more than you earn now. You'd be on an outsourcing firm's books, with a badge in a different color from regular staff. You could eat in the canteen, but not go to the annual party.",
+      "options": [
+        { "label": "Go contract at the big company", "result": "You saw thousands of builds a day and pipelines with tens of thousands of cases, and your overtime doubled. In two years, not one conversion to regular staff came to your team." },
+        { "label": "Stay at your current company", "result": "You stayed. The projects were still the same few bank systems, and you became the person on the team who knew the wealth module best." }
+      ]
+    },
+    "c_ai_platform": {
+      "title": "Take on the AI testing platform or not",
+      "situation": "The company wants to build a platform where AI generates test cases and automatically reviews defect reports. It needs a tester to lead it, writing the prompting guidelines and deciding what goes to AI and what a person must look at. No one wants it. Someone says privately that it's digging your own grave.",
+      "options": [
+        { "label": "Take it and set the rules", "result": "You compared AI-written and human-written cases line by line and compiled a list of the scenarios it usually misses. Once the platform went live, every tester in the company followed the guidelines you wrote." },
+        { "label": "Pass, and focus on specialist testing", "result": "You put your energy into performance and security testing, work AI couldn't do well yet. When the platform went live you used it by someone else's rules and grumbled now and then." }
+      ]
+    },
+    "c_direction": {
+      "title": "Which way to go",
+      "situation": "After a few years of testing, you have to pick a direction: go deep on performance, load testing and tuning; go deep on security, certifications and penetration; or switch to product management, since the product director says no one spots problems in requirements better than you.",
+      "options": [
+        { "label": "Go deep on performance testing", "result": "You learned to read from a mass of monitoring curves which line of SQL was slow. Before big sales and year-end launches, the load testing came to you." },
+        { "label": "Go deep on security and get a penetration testing certification", "result": "You spent a year in the practice range and got certified, then began running penetration tests on bank systems. The client's security department asked for you by name." },
+        { "label": "Switch to product management", "result": "You started drawing prototypes and writing requirements, and every one of them ended with a section on how to test it.", "end": "You became a product manager. Your requirements documents always ended with a section on how to test it, and the testers said you were the easiest product manager to work with." }
+      ]
+    },
+    "c_shenzhen": {
+      "title": "Leave Xi'an or not",
+      "situation": "Your partner has a good offer in Shenzhen, and you've passed an interview for a senior tester job at a Shenzhen company that would double your pay. But the Xi'an mortgage is still being paid, and your parents are in Weinan, an hour away by high-speed train.",
+      "options": [
+        { "label": "Go to Shenzhen together", "result": "You rented a forty-square-meter flat in Nanshan. You saw bigger systems, and later nights at the office. A trip back to Weinan went from one hour to a whole day." },
+        { "label": "Stay in Xi'an", "result": "In the end your partner didn't go either. On weekends you take your child to fly kites below the city wall, and on Monday you go to Software New Town as usual." }
+      ]
+    },
+    "c_manager": {
+      "title": "Become test manager or stay technical",
+      "situation": "The test manager's job is open: twenty people, setting quality targets, and arguing with the R&D director at release reviews about whether a version ships. You'd rather sit down and read logs and write code.",
+      "options": [
+        { "label": "Go for it and lead the team", "result": "You started writing weekly reports, assigning people, and banging the table at release meetings: this version can't go out. After a year you wrote ninety percent less code, and production incidents were down thirty percent." },
+        { "label": "Stay on the technical track", "result": "You let a more talkative colleague have the job and kept digging into performance and test frameworks. The hardest problems on the team still found their way to you." }
+      ]
+    },
+    "c_35": {
+      "title": "The year you turn thirty-five",
+      "situation": "Another round of optimization at the company, and HR invites you for coffee: take N+1 severance (a month's pay for every year worked, plus one) and go, or transfer to project delivery. You have twenty years left on the mortgage, and your child has just started primary school.",
+      "options": [
+        { "label": "Take N+1 and join a state-owned company's tech subsidiary", "result": "The new place doesn't do much overtime, and pays a notch less. You still test bank systems, only the process is much slower: one release goes through three rounds of approval." },
+        { "label": "Stay and move to project delivery", "result": "You started going out to client sites and supporting launches. You still do testing, just with a pile of meetings on top." },
+        { "label": "Take the money and sit the civil-service exams for a public institution", "result": "You signed up right at the age-thirty-five cutoff and tested into the information center of a public institution.", "end": "You tested into the information center of a public institution, looking after a few servers and an office system. Every afternoon you leave at five-thirty on the dot and go pick up your child at the school gate." }
+      ]
+    },
+    "c_studio": {
+      "title": "Old colleagues ask you to go in with them",
+      "situation": "A few former colleagues who left big tech companies have started a testing services firm in Xi'an, taking crowdtesting and third-party evaluation work. They want you in as a partner running the technical side. You'd have to put in money, and go find clients yourself.",
+      "options": [
+        { "label": "Go in with them", "result": "For the first time you worried about making payroll, and for the first time you signed a deal you had negotiated yourself. The company survived, and a patch of your hair went gray." },
+        { "label": "Decline and stay where you are", "result": "You turned them down. Every New Year you still have dinner with them and hear about the latest big contract they've landed." }
+      ]
+    },
+    "c_late_career": {
+      "title": "How to spend the last ten-odd years",
+      "situation": "You are in your early fifties. Half the people on your team are barely older than your child, and AI writes most scripts faster than any person. The company asks whether you'd like to move to quality auditing: reviewing processes and assessing maturity, no more watching releases.",
+      "options": [
+        { "label": "Move to quality auditing", "result": "You began going from team to team with the standards in hand, combing through documents and writing up corrective actions. The young people were a little afraid of you, and a little in awe." },
+        { "label": "Stay on the front line", "result": "You stayed in the release group. At every major launch, the last person to reply Test passed was still you." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you went through every script you had written, one by one, and spelled out in the handover document which ones must not be deleted, and why. In the afternoon the team ordered you a cake that said Test Passed. At the end of the day you shut down your computer and glanced at the pipeline on the screen: green. Walking out of the glass tower, you saw the lights of Software New Town on, floor after floor.",
+    "burnout": "That release night, you stared at the logs on the screen, read one line three times without taking it in, and felt your heart racing. The next day you took extended leave; the doctor said you needed a rest. You never went back to the testing department, and found a job where you leave on time. Now and then, when your phone chimes, you still think it's an alert."
+  },
+  "past": [
+    "You were in your last year of middle school in a county town in Weinan, and your family ran a hardware shop. Your high school entrance exam got you into the best high school in the county. Your father said you should study computers and work in an office, not haul stock like him.",
+    "The summer after your first year of high school, your father found you an old computer at the secondhand market. You broke it three times installing the operating system and got it right the fourth. From then on the family router and printer were your job.",
+    "Your gaokao (college entrance exam) score cleared the line for second-tier universities with some room to spare. You put down computer science and technology at an ordinary university in Xi'an, thinking it was close to home and the tuition wasn't high.",
+    "In your second year you failed data structures, and realized for the first time that you weren't the fastest coder in the class. But in every group project, you were always the one who found what was wrong with everyone else's program.",
+    "In your third year you sent out thirty resumes for developer internships and heard back from none. One company invited you to interview for a testing internship and asked you, on the spot, to design test cases for an elevator. You filled a whole page and got the job.",
+    "After graduation you were hired through campus recruiting into this company's testing department, starting at under ¥8,000 a month. When you called home you said you worked in software. You didn't say testing.",
+    "Your first year, you clicked through pages by hand thousands of times and got your ISTQB Foundation certificate. The first blocking defect you filed on your own pushed a release back a day."
+  ],
+  "late": {
+    "pension_note": "Estimate: the basic pension for enterprise employees. In Xi'an contributions follow your salary but are capped, and gaps between jobs leave holes. Your pension comes to about forty percent of your final monthly salary.",
+    "scenes": [
+      "Your first week of retirement, you still check your phone at eleven at night out of habit. No release group, no alerts. Only a photo your child sent.",
+      "Your old company brings you back as a consultant for six months, to explain the traps buried in the old systems: public holidays, leap years, year-end clearing. The young people say AI doesn't know any of this. Of course it doesn't, you say. None of it was ever written down.",
+      "Your pension arrives every month, enough for you and your partner to live on in Xi'an, and the mortgage on the place in Chang'an District is long paid off. Every spring you go back to Weinan for two months, fixing relatives' phones and installing their apps.",
+      "For the first few months after leaving the testing department, you sleep a lot. One day at the bank, the queue-ticket machine freezes. You stand in front of it a long time, and stop yourself from poking at it.",
+      "You run the systems at a property management company. Each day it's adjusting the door access and exporting reports. The pay is much lower, and your heart no longer races.",
+      "Your old colleagues start a group chat. Everyone is somewhere different now; some are still testing, one has opened a guesthouse. Someone posts a screenshot of a production incident. You can see at a glance it's a boundary-value problem. You type out a paragraph, then delete it.",
+      "Your first month out of testing, the first thing you write still ends, out of habit, with a section on how to verify it.",
+      "At a meeting you run into your old test lead, who is now director of quality. These days AI writes the test cases, he says, and people only set the rules. Then he says that if you had stayed back then, his job would be yours.",
+      "Your child gets into university to study software engineering. After a summer internship he asks which is better, testing or development. You think a long time and say: someone has to do both.",
+      "You hear that at the company now, smoke tests, regression and test cases are mostly done by AI, and the testers spend their time reviewing it and setting its rules. Only, on the night before a release, the call on whether it can ship still has to come from a person.",
+      "You help your partner make a transfer on her mobile banking app. Looking at the confirmation screen, you catch yourself wondering what would happen if someone entered 0.005. You don't try it. You press Confirm."
+    ],
+    "closing": {
+      "retire": "One evening many years later, you and your partner are walking slowly along the foot of the city wall when a group of young people runs past. You remember that decades ago, on this same road, you ran your first full lap of the wall beside someone.",
+      "burnout": "Many years later, on the balcony, you teach your granddaughter a little game. She finds a spot where she can get stuck, and squeals with delight. That's called finding a bug, you tell her. You have to write it down.",
+      "end": "Many years later, on your computer, you come across an old folder: the four hundred-odd test cases you wrote in your second year out of school. You open one and read it from start to finish. Not bad, you think."
+    }
+  }
+}

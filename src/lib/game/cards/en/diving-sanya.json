@@ -1,0 +1,183 @@
+{
+  "id": "diving-sanya",
+  "occupation": "Scuba Diving Instructor",
+  "role": "Open Water instructor at a dive shop",
+  "headline": "Five years a product manager in Beijing, laid off, severance spent on an instructor's license: now in your second year teaching try-dives and certification courses at a dive shop in Sanya",
+  "unit": "A dive shop near Dadonghai Bay, Sanya",
+  "unit_type": "Island dive shop",
+  "city": "Sanya",
+  "city_tier": "Third-tier city (tourist town)",
+  "education": "Bachelor's degree (Information Management)",
+  "level": "One year since your Open Water Scuba Instructor (OWSI) rating. You've certified thirty-odd students and taken a few hundred guests on try-dives. You know your rescue drills cold, but you can't yet teach a single specialty course.",
+  "intro": "A year ago you were writing requirements documents in Beijing. Now at seven every morning you're hauling tanks on the pier. Your severance went almost entirely on certifications and gear. Last winter you got your instructor's license, and now you teach try-dives and certification courses at this dive shop in Sanya. As of today, on the shop's rota you're “Instructor”, no longer “the new one”.",
+  "salary_note": "Estimate: dive instructors in Sanya earn a low base and live on hourly fees and commission. In the winter high season a month can bring ¥10,000–20,000; in the summer typhoon season it may be base pay only. Across the year, about 10-plus percent below the national average.",
+  "facts": [
+    { "label": "Open Water Scuba Instructor (current level)", "value": "1–2 years, ¥6,000–12,000 a month (national average)", "source": "Career map" },
+    { "label": "Next level up", "value": "Master Scuba Diver Trainer (2–4 years)", "source": "Career map" },
+    { "label": "Pay at 5–10 years", "value": "¥26,169 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Handling a student on a reef dive whose mask floods and who bolts for the surface in panic", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Final pre-dive gear checks and safety screening", "source": "AI exposure" },
+    { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "You live in an urban village two streets back from the sea, and the chickens downstairs have already crowed. You ride your e-bike to the shop, checking sea conditions on your phone as you go: northeast wind, force three, half-meter swell. Boats can go out.",
+    "The pier. You and the divemaster load forty tanks onto the boat, cracking each valve to listen and glancing at the gauge. One is leaking; you tag it with red tape and set it back.",
+    "Four students today, two of them programmers from Beijing. You watch them fill in the medical questionnaire. The system has already flagged one in red, “sinus surgery last week”, and you go over and talk with him for five minutes, then have him just ride the boat today.",
+    "First dive. You kneel on the sand at eight meters and watch the students clear their masks one by one. A young woman breathes in a mouthful of water and her eyes go very wide. You take her hand, point to your own eyes, and have her watch you breathe.",
+    "Back on the boat, guests are either seasick or taking photos. You eat a boxed lunch while filling in the logbook: maximum depth, air used, whose weights are two pounds too heavy.",
+    "Afternoon try-dives. A tour guide brings a busload of tour-group guests, and they go in one after another, twenty minutes each. You lead them by the hand along the reef to see clownfish, saying the same things twenty times over.",
+    "Back to port. Rinse the gear, hang the BCDs to dry, hang up the regulators. One second stage is breathing rough; you take it apart for a look and write it on the handover sheet.",
+    "Back in your rented room, there's still seawater sound in your ears. You open your laptop. Old colleagues in a group chat are discussing yet another reorganization. You read for a while, then close it."
+  ],
+  "ladder": [
+    { "title": "Divemaster", "stage": "Trainee and assistant", "focus": "Maintain gear and logistics, run the compressor, help instructors manage groups and guide certified divers on fun dives. Promotion comes from building your dive log and passing the Instructor Development Course (IDC) exams." },
+    { "title": "Open Water Scuba Instructor", "stage": "Junior instructor", "focus": "Teach Open Water and Advanced Open Water certification courses on your own with a zero-incident record, and earn China's national vocational certificate for diving instruction so you're working fully within the rules." },
+    { "title": "Master Scuba Diver Trainer", "stage": "Senior and specialty instructor", "focus": "Teach higher-priced specialty courses such as nitrox, deep and sidemount, earn extra from underwater photography and filming, and begin leading dive trips at home and abroad." },
+    { "title": "IDC Staff Instructor", "stage": "Head of instruction", "focus": "Oversee teaching quality at a dive center or club, assess and mentor the instructor team, coordinate emergency plans, and assist on Instructor Development Courses (IDC)." },
+    { "title": "Course Director", "stage": "Industry expert and mentor", "focus": "The top of the recreational diving teaching system. Run your own IDC instructor courses with the authority to evaluate and sign off instructor candidates, or run a branded dive school as a partner." }
+  ],
+  "ai_tasks": [
+    { "name": "Final pre-dive gear checks and safety screening", "how": "AI can flag contraindications in the medical questionnaire and no-fly intervals automatically, and draft briefing points and a checklist. Tank seals and gear condition have to be checked by the instructor's own hands, and the instructor decides who goes in and answers for it." },
+    { "name": "Handling a student on a reef dive whose mask floods and who bolts for the surface in panic", "how": "When a student panics underwater, you have to steady them within arm's reach using your eyes, hand signals and touch, give them air and control the ascent. Only an instructor in the water can do that. AI can't help." },
+    { "name": "Post-dive gear rinse, re-inspection and operations handover", "how": "AI can compile logs, sort complaint records and generate the handover sheet, and remind you when gear is due for inspection. The instructor has to lead students in cleaning and disinfecting, isolate and check faulty gear, and sign off the handover." },
+    { "name": "Morning tank sorting and dive health and safety clearance", "how": "AI can compile tank readings, supply lists and guests' flight intervals and recommend go or reschedule. The fill station and tanks need someone to verify on site, and the final clearance is the instructor's call and responsibility." },
+    { "name": "Assembling and final-checking scuba gear and giving the departure safety briefing", "how": "AI can suggest weighting from body weight, gear and water temperature, and draft the briefing and checklist. The instructor has to assemble and leak-test the gear by hand, give the briefing face to face, and watch whether guests have understood." },
+    { "name": "Guiding a reef tour underwater and handling a student's panic and aborted dive", "how": "Leading underwater, you watch the surroundings while keeping an eye on each student's breathing, air and expression, and act the instant something goes wrong. It rests entirely on an instructor's experience and judgment in the water. AI can barely take any of it." },
+    { "name": "Post-dive gear cleaning and disinfection, log review and handover", "how": "AI can organize post-dive logs, record faulty gear, write the handover summary and draft responses to complaints. Cleaning and disinfecting gear and re-checking faults takes hands, and so does calming an unhappy guest." }
+  ],
+  "events": {
+    "e_panic_save": "At twelve meters a student suddenly spits out his regulator and bolts upward. You grab his BCD, push your spare second stage into his mouth, and rise slowly with him. Back on the boat he sits a long time before he speaks.",
+    "e_typhoon": "Two typhoons come back to back and you don't go out for a month. You get only base pay, help a friend clean rooms at their guesthouse, and lash the tanks in rows inside the shop.",
+    "e_ear": "Four dives a day for a week straight, and your left ear starts to hurt and go muffled. The doctor says middle-ear infection, two weeks out of the water. Someone else has to cover your courses.",
+    "e_turtle": "On the last dive of a certification course, a sea turtle swims right over your heads. The students gesture wildly underwater. Back on the boat one of them cries and says it's the most beautiful thing she's ever seen.",
+    "e_ex_colleague": "Colleagues from your old company come to Sanya on a team-building trip, and one of them is booked for a try-dive with you. She recognizes you on the boat, stares for a long moment, and asks how you're doing now. You say not bad, and fasten her mask for her.",
+    "e_sunburn": "Your face and the backs of your hands are tanned two different colors, with a wetsuit line around your neck. On a video call your mother asks how you got so dark: are you working on a building site?",
+    "e_notion_sop": "You turn the shop's boat procedures, gear checks and student records into a set of spreadsheets. The owner says nobody's ever done that before and has the whole shop use them.",
+    "e_coral_bleach": "That summer the water runs hot, and great swathes of your usual reef turn white. You take students down and don't know how to explain it to them. Underwater you just point, and shake your head.",
+    "e_love": "For months you keep running into an instructor from another shop on the pier. One windy day with no boats out, you go to Houhai village together for a bowl of seafood congee.",
+    "e_ai_screen": "The shop's system now cross-checks guests' flight times against their medical questionnaires and flags “not enough time between diving and flying”. Once it misses a guest who changed his flight; you only find out because you happen to ask him on the pier.",
+    "e_ai_weight": "The system starts recommending weights by body weight, wetsuit thickness and water temperature. The new divemaster follows it to the letter, and a guest floats underwater like a balloon. You tell him a recommendation is a recommendation; before going down, have them test it at the surface.",
+    "e_shop_runs": "The owner of the dive shop next door disappears with the money from prepaid cards, and dozens of guests crowd your door asking if they can finish their courses with you. Your owner takes half of them at cost.",
+    "e_parents_visit": "Your parents come from Hebei to see you in Sanya, and sit outside the shop all morning watching you haul tanks. At dinner your father says sitting in an office in Beijing was fine, and this is fine too, just too much sun.",
+    "e_wedding": "You marry without a banquet; the two families share one meal in Sanya. The two of you take a photo underwater holding up a slate that reads “Bride / Groom”, and the shop turns it into an ad.",
+    "e_student_instructor": "A student you once certified becomes an instructor three years later. Before taking her own first students into the water, she messages you to ask how you held her hand that time.",
+    "e_child": "Your child is born. Outside the delivery room you look out the window at the sea. It's very windy that day, and none of the boats leave harbor.",
+    "e_cleanup": "You organize an underwater cleanup at the shop, and students pull two sacks of fishing net and plastic bottles out of the cracks in the reef. Local news films a few shots, and sign-ups go up a bit that month.",
+    "e_house": "You put a down payment on a small flat on the outskirts of Sanya. The monthly mortgage is easy in winter; in summer you have to count what you spend.",
+    "e_dcs_scare": "A guest did too many repetitive dives on his own dive computer, and on shore his shoulder starts to hurt. You put him on oxygen at once and get him to a hospital with a hyperbaric chamber. He turns out fine. You don't sleep all night.",
+    "e_back": "A dozen-odd years of hauling tanks on boats, and your back goes first. You start letting the young divemasters do the carrying while you count on the pier.",
+    "e_skin": "The dermatologist looks at the patches on the backs of your hands and says with years of sun you need to be careful, and prescribes a tube of cream. From then on you wear a full-length wetsuit in the water, however hot it is.",
+    "e_old_student": "A student from ten years ago brings her child to sign up for a youth diving course and asks for you by name. She says she still remembers how firmly you held her hand on her first dive.",
+    "e_slow_up": "You notice your ears take longer and longer to equalize on the way down, and after a dive you're breathing harder than the young ones. You hand over the deep courses and teach only in the shallows."
+  },
+  "choices": {
+    "c_guozhi": {
+      "title": "Sit the national diving certificate",
+      "situation": "Hainan is cracking down on compliance in dive businesses and requires instructors to hold the national vocational certificate for social sports instruction (diving). The exam is in Haikou and would cost you a week of high-season courses, though the fee is small. The owner says no rush, wait until they actually check.",
+      "options": [
+        { "label": "Take leave in high season to sit it", "result": "You teach a week less and lose that commission. Not long after the certificate comes through, the maritime and sports authorities run a joint inspection, and only you and the owner in the whole shop hold one." },
+        { "label": "Earn the high-season money first", "result": "You take twenty-some people in a week and put aside summer's rent. On the day of the inspection, the owner has you spend the afternoon sorting gear in the storeroom." }
+      ]
+    },
+    "c_off_season": {
+      "title": "Southeast Asia for typhoon season?",
+      "situation": "Summer in Sanya brings typhoons and dive shops half shut down. A shop in the Philippines is hiring Chinese-speaking instructors: room and board, paid by the course, three months. Or you can stay in Sanya doing pool try-dives and running the shop's Xiaohongshu account.",
+      "options": [
+        { "label": "Teach in Southeast Asia for three months", "result": "You dive three times a day there, see whale sharks and schools of barracuda, and learn to give briefings in English. When you come back, your logbook is twice as thick." },
+        { "label": "Stay in Sanya and run things online", "result": "You bring out everything you knew from product work: guides, short videos. The shop's winter bookings fill up early. You yourself barely get in the water for three months." }
+      ]
+    },
+    "c_assembly": {
+      "title": "The try-dive assembly line",
+      "situation": "The owner has signed deals with several travel agencies, and guides bring busloads of tour groups a day: twenty minutes a head, with higher commission than certification courses. The owner wants you to lead this line. You'd rather teach certification courses: fewer people, and you can actually teach something.",
+      "options": [
+        { "label": "Lead the tour groups", "result": "You go in six or seven times a day, each time leading someone who can't swim to look at clownfish for twenty minutes. You earn more, your ears start to hurt, and it's been a long time since you properly explained dive physics to anyone." },
+        { "label": "Teach certification courses only", "result": "You turn down the tour groups and your income drops by a chunk. But among your students, some start coming from other cities specifically to take their advanced course with you." }
+      ]
+    },
+    "c_msdt": {
+      "title": "Go for Master Scuba Diver Trainer",
+      "situation": "To become a Master Scuba Diver Trainer you first need five specialty instructor ratings and twenty-five certifications issued. Specialty instructor training plus gear runs ¥20,000–30,000; once you have it you can teach higher-priced courses like nitrox, deep and sidemount.",
+      "options": [
+        { "label": "Earn them one by one", "result": "Over a year and more, you pass nitrox, deep, night, navigation and buoyancy. The day you issue your twenty-fifth certification, you buy everyone coconut water outside the shop." },
+        { "label": "Not yet", "result": "You keep the money for rent. When a guest asks for a specialty course, you pass them to another instructor and keep teaching the basics." }
+      ]
+    },
+    "c_beijing": {
+      "title": "Back to Beijing",
+      "situation": "Your old boss has started a company making a product for outdoor sports and wants you back as head of product. He says you understand product and diving both; nobody's better suited. The pay is three times what you earn now.",
+      "options": [
+        { "label": "Go back to Beijing", "result": "You leave your gear at the shop and buy a ticket to Beijing. In your first week of meetings you doodle a dive hand signal in your notebook out of habit, then cross it out.", "end": "You went back to Beijing as head of product at an outdoor sports company. Every winter you took a week off to fly to Sanya, do a few dives, and go back to your meetings." },
+        { "label": "Stay by the sea", "result": "You turn him down. He says call anytime if you change your mind. That evening you sit on the pier a long time, watching the last boat come in." }
+      ]
+    },
+    "c_camera": {
+      "title": "Buy underwater camera gear",
+      "situation": "More and more guests want to be filmed underwater. A housing, strobes and a macro lens come to ¥30,000–40,000. Shoot well, and one filming job pays as much as two courses. Shoot badly, and the kit is a pile of expensive metal.",
+      "options": [
+        { "label": "Grit your teeth and buy it", "result": "You spend six months learning to light, and the first few dozen times everything comes out as blue fog. Then a magazine buys one of your clownfish photos for its cover, and filming bookings stretch into next month." },
+        { "label": "Don't buy; focus on teaching", "result": "You shoot casually on an action camera and guests are happy enough. The money goes into a bank card with a note on it: “boat”." }
+      ]
+    },
+    "c_partner": {
+      "title": "Become a partner in a dive shop",
+      "situation": "The owner wants to hand you half the shop: you buy in, run teaching and safety, and he runs the boats and the customers. The buy-in is ¥200,000. What you've saved these years, plus a little help from family, is just enough.",
+      "options": [
+        { "label": "Buy in as a partner", "result": "You start reading the books, haggling with the boat captain and handling complaints at midnight. Less time in the water, more to worry about. When the year-end dividend comes, for the first time the shop feels like yours." },
+        { "label": "Stay an instructor", "result": "You say you just want to dive. The owner finds someone else to buy in. The new partner wants more tour groups, and the two of you argue a few more times." }
+      ]
+    },
+    "c_ai_safety": {
+      "title": "Who builds the safety records?",
+      "situation": "The industry association is pushing a dive safety system that screens medical questionnaires automatically, calculates flying intervals and recommends weights, and every shop has to upload its gear and incident records. The shop needs someone to enter years of paper logs and decide which recommendations a person must double-check.",
+      "options": [
+        { "label": "Take it on, entry by entry", "result": "You spend three months entering thousands of log entries, then write a list of “where not to trust the system”. The association later passes your list to several other shops." },
+        { "label": "Let the system do its job; you do yours underwater", "result": "Data entry goes to the front desk. You read whatever the system recommends, but before every guest goes in, you check their gear yourself once more." }
+      ]
+    },
+    "c_forty": {
+      "title": "Still diving after forty?",
+      "situation": "Your ears and your back are reminding you of your age. Going up, you could aim for Course Director and train instructors, but the selection course is abroad, expensive and hard. Going out, a resort is hiring an operations director to run the boats, the rooms and the dive shop. No more diving.",
+      "options": [
+        { "label": "Go for Course Director", "result": "At the selection course abroad you're examined ten days straight, the oldest in the class. Back home you start running instructor development courses, watching group after group earn their instructor's license." },
+        { "label": "Come ashore and run a resort", "result": "You put on a shirt and spend your days on occupancy rates, boat schedules and complaints. The dive shop is on the resort's pier, and every day as you pass you stop for a while.", "end": "You became operations director of an island resort, running a few boats and a dive shop. Every evening you stood on the pier watching the divers board one by one." },
+        { "label": "Keep teaching", "result": "You still haul tanks at seven every morning, only you let the young ones carry the heavy ones. You say you'll think about it the day you can't go down anymore." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you take a shallow try-dive: an old couple, both past sixty. You lead them by the hand across the sand at five meters to watch a school of small fish, and back on the boat the woman says they'll come again. You rinse the regulator you've used for many years, hang it on the shop wall, and tell the new instructor it still works.",
+    "burnout": "That day at ten meters, your ears won't equalize no matter what, and you have to signal the divemaster to finish with the students. The doctor says your ears can't go on like this. You hang up your gear and take over the front desk and the rota. Every morning as the boats leave harbor, you still go down to the pier and count the tanks."
+  },
+  "past": [
+    "You grew up in a county town in Hebei, far from the sea. You tested into the key high school in the city. Your father was a middle-school teacher, and to him a good university and Beijing were the best road there was.",
+    "The gaokao (college entrance exam) got you into Information Management at a university in Beijing. The first time you went to Beidaihe was the summer after second year. You stood on the beach and didn't dare go in. You couldn't swim.",
+    "After graduating you joined a big internet company as a product manager. You lived in Huilongguan, wrote requirements docs and sat in review meetings all day, wrote weekly reports until midnight, and earned five times what your father did.",
+    "On annual leave that year you went with colleagues to an island in Southeast Asia and put on a tank for the first time, on a boat. At eight meters all you could hear was your own breathing. You stayed down forty minutes and didn't think of a single requirement.",
+    "Back in Beijing you learned to swim, and every holiday you earned another diving certification: advanced, rescue, nitrox, filling your logbook page by page. Your colleagues said you were going on vacation. You knew you weren't.",
+    "The company had layoffs, and your whole team was “optimized” out. With your severance in hand you sat up all night in your rented room, and the next day messaged a dive shop in Sanya to ask if they took divemaster interns.",
+    "You spent six months in Sanya hauling tanks and guiding fun dives, logged enough dives, took the IDC, and passed the two-day instructor exam. On the phone your mother asked, “So will you ever come back to Beijing?” You said you'd do it for now and see."
+  ],
+  "late": {
+    "pension_note": "Estimate: in Beijing you paid social insurance on a fairly high base. In Sanya, dive shops often paid in at the minimum and stopped in the off season; later you made up contributions as a flexible worker. Your pension will be roughly 35 percent of your final monthly pay.",
+    "scenes": [
+      "In your first month of retirement you still wake at six-thirty and check sea conditions on your phone: northeast wind, force three, boats can go out. You read it, switch it off, and go to the market for a fish.",
+      "The shop still invites you once a week to teach dive theory, decompression and gases to students in certification courses. When you get to “ascend slowly, never hold your breath”, you always say it one extra time.",
+      "Your pension is a little over ¥2,000 a month. With one room of the flat rented to a young person learning to dive, it's enough to live on. Prices in Sanya have gone up a lot, and you and your spouse mostly eat at home.",
+      "For the first few months out of the water you spend your days at the shop's front desk doing the rota, the accounts and the phone. Your ears stop hurting. There's a hollow place in you.",
+      "The doctor allows you to snorkel in the shallows. You drift slowly along the reef in a mask, watching students below clearing their masks, as if watching yourself many years ago.",
+      "A former student has become a Course Director and comes to Sanya to run an instructor course. She asks you to give the candidates a session on handling panic underwater. You speak very slowly, and the room is completely silent.",
+      "For your first month away from the dive shop you still check sea conditions every day, and on calm days you work out in your head how many dives the boats could do.",
+      "On your office desk you keep a tank valve as a paperweight. A new colleague asks what it is. You say it's a thing that lets people breathe underwater.",
+      "Every winter you still go back to Sanya for a few dives. The old shop has a new owner, and the underwater photo of you and the slate is still on the wall.",
+      "Health screening, weight recommendations and logs at the dive shop have all gone to the system, and guests can watch the whole briefing on their phones. Holding a panicked person's hand within arm's reach and waiting for their breathing to slow is still something only an instructor can do.",
+      "Part of that bleached reef slowly grows back. Snorkeling, you see a few new clumps of staghorn coral and give them a thumbs-up underwater. Nobody's around to see.",
+      "On overcast days your ears hum, a leftover from five dives a day when you were young. Your grandchild asks what the bottom of the sea sounds like. You say it doesn't sound like anything. Only your own breathing."
+    ],
+    "closing": {
+      "retire": "Many years later, one evening, you sit on the rocks by the sea and watch the last dive boat come home. Someone on deck makes the “OK” sign above the water. You lift your hand and make one back.",
+      "burnout": "Many years later, at the edge of your compound's pool, you teach your grandchild to hold his breath, face in the water, counting to five. He comes up and says he saw tiles. You say yes, and one day he'll see fish.",
+      "end": "Many years later, sorting through old things, you find that dive logbook. The last page gives a date, a dive site, maximum depth eighteen meters, and a note of just two words: “Very still.”"
+    }
+  }
+}

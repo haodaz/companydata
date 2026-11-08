@@ -1,0 +1,181 @@
+{
+  "id": "dentist-hz",
+  "occupation": "Dentist",
+  "role": "General dentist at a private dental clinic chain",
+  "headline": "A general dentist in Hangzhou, four years out of dental school, working a clinic on the fourth floor of a shopping mall: a dozen-plus patients a day, and every month a quota for implants and average spend per patient",
+  "unit": "A private dental clinic chain in Hangzhou (the West City mall branch)",
+  "unit_type": "Private dental clinic chain",
+  "city": "Hangzhou",
+  "city_tier": "New first-tier city",
+  "education": "Bachelor of Dental Surgery (five-year program)",
+  "level": "You can handle root canals, fillings and wisdom teeth on your own. You've placed a dozen or so simple implants in back teeth. You haven't yet sat the exam for the mid-level title.",
+  "intro": "You spent three years at a private clinic in the prefecture-level city you grew up in, passed your medical licensing exam, and moved to this chain in Hangzhou. The branch sits on the fourth floor of a mall on the city's west side: six dental chairs, and a screen at the front desk that scrolls each dentist's bookings all day. As of today your name is on the door of Room 3, and the branch manager has set your first month's target: eight implants.",
+  "salary_note": "Estimate: base pay at private dental chains in Hangzhou is modest; more than half of income is commission on treatments and implants. Estimated at 1.15 times the national average. The gap widens once you become a lead implant or orthodontics dentist.",
+  "facts": [
+    { "label": "Dental Resident (current level)", "value": "1–3 years, ¥7,000–14,000 a month (national average)", "source": "Career map" },
+    { "label": "Next level up", "value": "Attending General Dentist (3–5 years)", "source": "Career map" },
+    { "label": "Pay after 10+ years", "value": "¥26,000 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Placing a resin filling for a first-visit patient, working four-handed with a dental nurse", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Leading the plan and surgical guide for a single back-tooth implant with immediate loading", "source": "AI exposure" },
+    { "label": "Open positions", "value": "6 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "The mall isn't open yet. You take the staff corridor up to the fourth floor, change into scrubs and glance at the front-desk screen: fourteen appointments today, two new patients, one second-stage implant.",
+    "Morning meeting. The manager reads out last month's numbers for each dentist. The colleague who placed the most implants gets a red envelope of cash; you come fifth. Beside you a nurse is sticking sterilization labels on instrument trays.",
+    "The first patient works in an office tower nearby. A back tooth has hurt for a week and he's been too scared to come. You take an X-ray, open the tooth, and only when the rubber dam goes on does his grip on the armrest loosen.",
+    "An older woman comes in for a filling, and the treatment consultant at her side pitches a full-mouth implant package. You wait for the consultant to finish, then tell her these teeth can actually be saved.",
+    "Lunch in the staff room, forty minutes. You spent over an hour this morning bent over a root canal behind magnifying loupes, and now your neck is so stiff you have to turn it with your hand.",
+    "A horizontally impacted wisdom tooth. On the CBCT scan the roots sit right against the nerve canal in the jaw. You take it out in three pieces. The patient spits out the cotton and asks, “That's it?”",
+    "Planning an implant case. You load the intraoral scan into the software and the AI places the implants on its own. You move one half a millimeter toward the tongue, then explain three times what the price includes.",
+    "The last appointment before the mall closes is a stitch removal. You finish your notes, post today's numbers in the work group chat, and take the subway back to your rented room, still answering patients on WeChat on the way."
+  ],
+  "ladder": [
+    { "title": "Dental Intern", "stage": "Assistant and training", "focus": "Assist senior dentists four-handed: pass instruments chairside, run suction, handle disinfection and infection control. Under supervision, do basic exams, cleanings and chart entry. The main goal is to pass the dental licensing exam on the first try." },
+    { "title": "Dental Resident", "stage": "Early practice", "focus": "You can prescribe and run your own chair. Do fillings, single-root and simple two-root canals, impressions for removable dentures and routine extractions on your own. Build up case numbers and pass the residency training exit exam." },
+    { "title": "Attending General Dentist", "stage": "Independent general practice", "focus": "Appointed to the mid-level title, you become a mainstay of the clinic. Handle difficult root canals (calcified or curved), all-ceramic minimally invasive crowns and bridges, and low-risk impacted wisdom teeth; begin taking on basic implants or early orthodontics." },
+    { "title": "Associate Chief Dentist", "stage": "Senior specialist", "focus": "Develop a clear subspecialty in implants, orthodontics or cosmetic restoration. Handle complex implants with bone grafting or severe skeletal malocclusion, teach younger dentists and consult on high-risk cases. In a public hospital you apply for the associate senior title; in a private chain you become lead specialist." },
+    { "title": "Clinical Director", "stage": "Clinical leadership and management", "focus": "Own the clinic's quality of care, bring in new techniques and lead multidisciplinary case conferences (MDT). Oversee compliance and build the dentist team. Usually comes with a share of profits or a partnership stake." }
+  ],
+  "ai_tasks": [
+    { "name": "Placing a resin filling for a first-visit patient, working four-handed", "how": "A resin filling comes down to the hands, the rhythm with your nurse and the trust of the person in the chair. AI can't do that. At most it reads the images and flags how far the decay goes; a person does the work and the talking." },
+    { "name": "Incision and drainage of an acute periapical abscess", "how": "Draining an abscess means judging fast on the spot, cutting precisely and keeping the infection from spreading, and someone has to answer if it goes wrong. AI can pull up the history and flag drug contraindications; the procedure and the call stay with a person." },
+    { "name": "Leading the plan and surgical guide for a single back-tooth implant with immediate loading", "how": "AI can process the images, measure the bone and propose the implant site and a draft guide. The dentist checks the plan makes sense, coordinates with radiology, prosthodontics and the dental lab, and answers for the result." },
+    { "name": "Behavior guidance for early orthodontics in children, and fitting a first functional appliance", "how": "Guiding a child takes watching, soothing and earning trust in the room, and a first appliance has to be adjusted by hand. AI can help prepare notes for parents and send follow-up reminders; the core is still a person." },
+    { "name": "Running a multidisciplinary consult (MDT) for a full-mouth bite reconstruction", "how": "AI can gather the history, images and exam data and produce a bite analysis and options for discussion. The specialists weigh it all against what the patient wants, and in the consult they make the call and own it." }
+  ],
+  "events": {
+    "e_root_save": "A molar every other dentist said should come out: under the microscope you find a fourth canal. At the three-month check the shadow at the root tip has shrunk, and the patient writes you a long review online.",
+    "e_quota_miss": "At month's end you're two implants short. The manager calls you in and says your treatment plans are too conservative. Your commission this month is cut in half.",
+    "e_crown_color": "A patient gets an all-ceramic crown, decides it isn't white enough and leaves a one-star review online. Customer service has you call to apologize. You match the shade again and remake it for free.",
+    "e_nurse": "The nurse you work with has seven years in, and knows the routine better than you. The instrument is always in your hand half a second before you ask. Together you fit in two extra patients a day.",
+    "e_kid_patient": "A five-year-old comes in crying. You crouch down and let him touch the suction tube. The second time, he climbs into the chair by himself. From then on his mother only books you.",
+    "e_ai_imaging": "The branch brings in AI image reading. Take a panoramic X-ray and decay and root-tip shadows light up red on their own; first visits go twice as fast. Once it marks an old filling as a cavity and the patient nearly asks to have it drilled on the spot.",
+    "e_ai_plan": "Implant plans now start as an AI draft: bone measurements, implant model, surgical guide, all of it. Your job becomes checking, correcting, signing, and explaining to patients why you're not following the computer exactly.",
+    "e_price_cut": "National bulk purchasing comes to dental implants, and the price of one falls to a third of what it was. The branch rewrites the commission scheme three times. More patients come; each implant earns less.",
+    "e_neck": "Years of working with your head tilted into other people's mouths catch up with your neck and lower back, and your right little finger starts going numb. You switch to a dentist's stool with a backrest and stretch for twenty minutes in the staff room every lunch.",
+    "e_mentor": "Head office brings in the head of prosthodontics from a public hospital to teach once a month. You show him three of your failed cases, and he walks through each one, telling you where your thinking went wrong.",
+    "e_love": "You meet a trainer from the gym next door in the elevator. On your first dinner together they ask whether cleanings really wear down your enamel.",
+    "e_marry": "You get married. At the banquet a whole table of relatives take turns opening their mouths for you to look at. You laugh and tell them to come by the clinic next week for an X-ray.",
+    "e_house": "You buy a secondhand flat on the west side. The down payment is pooled from both sets of parents and the two of you. With the mortgage pressing, you start volunteering for evening appointments.",
+    "e_child": "Your child is born. You take two weeks off, and on your first day back the manager has filled your whole schedule.",
+    "e_store_close": "The chain grew too fast. Two branches on the east side close, and some dentists never get their last two months of commission. Your branch survives, only now the supplies are switching to cheaper brands.",
+    "e_implant_fail": "An implant works loose and falls out six months later, and the patient wants a full refund. You go through every record: poor bone, and he never stopped smoking. In the end you place a new one for him and don't charge.",
+    "e_regulation": "The health inspectors come checking infection control and advertising. The “Zero-Yuan Implants” poster outside the door has to come down, and the front desk is retrained on what it can say. You feel something in you unclench.",
+    "e_chairside": "The branch buys chairside digital equipment: scan the tooth and an hour or so later the patient has a ceramic inlay, no second trip. You spend three weekends learning it and now you're the one in the branch who uses it best.",
+    "e_parent": "Back home, your mother is diagnosed with diabetes, and several of her teeth have gone with gum disease. On weekends you drive three hours to sit by her bed and teach her to floss.",
+    "e_teach": "Two young dentists, freshly licensed, join the branch. You have them practice canal preparation on extracted teeth, and watch them place a rubber dam on their own for the first time.",
+    "e_old_patient": "The college student whose root canal you did ten years ago comes in with his daughter, just started primary school, for a cavity. He says that tooth is still fine.",
+    "e_presbyopia": "Farsightedness arrives. You switch to stronger loupes, and when you switch on the headlamp the nurse says you look like you're going down a mine."
+  },
+  "choices": {
+    "c_zhuzhi": {
+      "title": "Sit the exam for Attending General Dentist?",
+      "situation": "With four years of work after your bachelor's, you're eligible for the mid-level title this year. Private clinics don't care much about titles, and the manager says the time would be better spent placing more implants. But the chain's internal grading, and any future job elsewhere, look at this certificate first.",
+      "options": [
+        { "label": "Sign up and study at night", "result": "You study in your rented room after work for four months, and on the morning of the exam you still take an emergency patient. The certificate comes through and the branch moves you up a grade." },
+        { "label": "Skip it and hit your numbers", "result": "You give all your time to patients and implant counts. Your commission goes up; your grade stays where it was." }
+      ]
+    },
+    "c_guipei": {
+      "title": "Go back to a public hospital for three years of residency training",
+      "situation": "You never did a professional master's or residency training. This year a provincial dental hospital's training program has opened places to people already working: three years, a stipend of a little over ¥3,000 a month. Without the residency certificate it will be hard ever to join a public hospital or reach a senior title.",
+      "options": [
+        { "label": "Quit and do the residency", "result": "You're back to rotating behind teachers: restorative, prosthodontics, surgery, orthodontics, one department at a time. Three years later you have one more certificate, and three years less pay than people your age." },
+        { "label": "Stay with the chain", "result": "You keep seeing patients above the mall, your hands getting surer all the time, but every application you send to a public hospital is cut in the first round." }
+      ]
+    },
+    "c_specialty": {
+      "title": "Implants or orthodontics?",
+      "situation": "The branch wants to train specialists. Head office will pay to send one person through a full implant course; the other place is for clear aligners. Implants pay fast and the quotas are heavy. An orthodontic case runs two or three years, and you need the patience for it.",
+      "options": [
+        { "label": "Learn implants", "result": "You go from single back teeth to sinus lifts and same-day extraction-and-implant. In one year you place over two hundred implants, your commission doubles, and at night you often dream of drill bits." },
+        { "label": "Learn orthodontics", "result": "You spend over a year learning cephalometrics and treatment design. The day your first patients have their braces off, they bring you flowers. The money is slow, but patients are willing to stay with you for two or three years." },
+        { "label": "Neither: be a good generalist", "result": "You keep seeing everything, and your fillings and root canals get finer and finer. Patients say you're the dentist in the branch who never upsells. Your income sits in the middle of the branch." }
+      ]
+    },
+    "c_extract": {
+      "title": "Pull this tooth and implant, or save it?",
+      "situation": "A patient in his fifties. With a root canal the molar could last another five to ten years; pulled and replaced, it would close the gap in your monthly target. The consultant has already mentioned an implant to him. He looks at you, waiting for a word.",
+      "options": [
+        { "label": "Tell him the truth: save it if you can", "result": "You do the root canal and a crown, and he thanks you over and over. At month's end you're one implant short, and the manager calls you out by name in the group chat." },
+        { "label": "Go with the target and suggest an implant", "result": "The surgery goes smoothly and the patient is happy. Only, that night, you look at the root X-ray one more time." }
+      ]
+    },
+    "c_ai": {
+      "title": "Lead the AI diagnosis rollout?",
+      "situation": "Head office is rolling out an AI first-visit and implant-planning system across every Hangzhou branch and needs a clinician to set the rules: which images AI reads first, which plans a dentist must review from scratch, when to call in a senior consult. No extra commission, two online meetings a week.",
+      "options": [
+        { "label": "Take it on", "result": "You check hundreds of AI readings one by one for misses and false alarms. The review checklist you write ends up in use across the whole chain." },
+        { "label": "Pass", "result": "You use AI by someone else's rules and spend the saved time on a few more patients. Now and then the rules feel written by people who have never touched a patient." }
+      ]
+    },
+    "c_trainer": {
+      "title": "Become a clinical trainer for an equipment maker",
+      "situation": "A clear aligner company asks you to be a clinical trainer, teaching cases and design software to dentists all over the country. No chair time, no weekend overtime, but you'd be on the road half of every month.",
+      "options": [
+        { "label": "Become a trainer", "result": "You hand over your patients and leave the mouth mirror you're used to in a drawer in Room 3.", "end": "You became a clinical trainer for a clear aligner company, teaching cases in hotel conference rooms around the country to young dentists who looked just like you once did." },
+        { "label": "Stay in practice", "result": "You turn it down. The next morning a young man comes in who hasn't slept all night for toothache. You open the tooth, and he falls asleep in the chair." }
+      ]
+    },
+    "c_fugao": {
+      "title": "Associate Chief Dentist, or lead specialist?",
+      "situation": "The branch is promoting a lead specialist in implants or orthodontics. Private practice doesn't grant titles; it looks at case numbers, reputation and teaching. The other road is back into the public system for the Associate Chief title, which takes papers, the residency certificate and years served.",
+      "options": [
+        { "label": "Go for lead specialist in the chain", "result": "You start taking the bone-graft cases other dentists can't, travel on weekends to present cases in other cities, and the branch puts your photo on the elevator ads." },
+        { "label": "Go for the senior title", "result": "You grind for two years writing papers and earning continuing-education credits. The day the results come out, people in the branch say you're the first Associate Chief Dentist in the whole chain." },
+        { "label": "Go for neither", "result": "You keep to Room 3 and leave on time every day. One by one, the young dentists' photos go up on the ads." }
+      ]
+    },
+    "c_open": {
+      "title": "Open your own clinic",
+      "situation": "Over the years you've built a following of patients who stay with you, and a friend in dental materials will put up half the money for a three-chair clinic in a ground-floor shop in your housing compound. Rent, licenses, equipment, infection control: all of it would be on you.",
+      "options": [
+        { "label": "Go out and open it", "result": "You spend half a year chasing approvals, choose the lettering for the sign yourself, and on opening day you stand outside the door for a long time.", "end": "You opened a three-chair clinic on the ground floor of your housing compound. Your first patient was the woman you once filled teeth for, ten years earlier, above the mall." },
+        { "label": "Stay with the chain", "result": "You introduce your friend to someone else and keep seeing patients above the mall. There's a corner of you that never quite gets tidied away." }
+      ]
+    },
+    "c_dean": {
+      "title": "Become Clinical Director",
+      "situation": "The chain is upgrading your branch into a regional center and asks you to be its Clinical Director: quality of care, the dentist team, new techniques, with a share of profits. Your own appointments would be cut in half.",
+      "options": [
+        { "label": "Take the directorship", "result": "You start overseeing case quality and scheduling for more than a dozen dentists. At weekly meetings you talk most about infection control and complaints, and you see patients only two days a week." },
+        { "label": "Stay a dentist", "result": "You recommend a colleague who wants to manage people more, and keep seeing patients full days. While your hands are still steady, you don't want to leave the chair." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you book only three patients, all of them old ones. In the afternoon you tidy the room, wipe clean the mouth mirror you've used for more than ten years and leave it in the drawer for the young dentist taking over. The mall has been renovated twice; by the fourth-floor elevator it's still the same bubble tea shop. You take the staff corridor down, the same as on your first day.",
+    "burnout": "That afternoon, halfway through a wisdom tooth, your right hand suddenly loses its strength and the instrument hangs in the air at the patient's lips for several seconds. You let a colleague take over and sit in the staff room until the mall closes. The scans show a disc in your neck pressing on a nerve, and the doctor says no more long hours with your head bent. You resign. Afterward, brushing your teeth, you still find yourself checking them one by one in the mirror."
+  },
+  "past": [
+    "The year you were fourteen, in a prefecture-level city in Zhejiang, you had toothache for a whole term. In the end you went to a small clinic on the corner. The dentist wore magnifying loupes and had very steady hands, and the night after the filling you slept straight through till morning.",
+    "In your second year of high school you chose physics, chemistry and biology. Your mother was a nurse at a township clinic. She said being a doctor was too hard, being a dentist was a bit better: no night shifts.",
+    "You missed the cutoff for dentistry in the gaokao (college entrance exam) by a few points, spent a year retaking it, and got into the five-year dental program at a medical university in your province. Your father worked out the tuition against what you'd earn someday, and nodded.",
+    "In your third year, practicing tooth preparation on mannequin heads, you ruined more than a dozen plastic teeth. Your instructor said you rushed it. That term you spent an extra hour in the lab every night.",
+    "In your fifth year you interned in the dental department of a top-tier (Grade 3A) hospital. Half your classmates were preparing for professional master's programs. Your family had already stretched to put you through school, and you decided to work first, save money, and get licensed.",
+    "After graduating you became an assistant at a private dental clinic back in your hometown: chairside for the senior dentist all day, suction, sterilizing instruments, and at night in the dorm, studying for the licensing exam.",
+    "You passed the dental licensing exam on the first try and started seeing your own patients. After three years, a recruiter for the Hangzhou chain found you. Base plus commission was double what you made. You packed one suitcase and left."
+  ],
+  "late": {
+    "pension_note": "Estimate: private clinics pay into the standard employee pension scheme, many on a low contribution base, and commission isn't counted toward it. Your pension will be roughly 30 to 40 percent of your final monthly pay.",
+    "scenes": [
+      "In your first month of retirement, old patients still message you on WeChat asking what to do about toothache. You answer every one, and always end with: go to the clinic and get an X-ray.",
+      "The branch brings you back two half-days a week, seeing only old patients and difficult root canals. On the front-desk screen there are no longer any numbers after your name.",
+      "The pension comes in. It isn't much. With what you've saved over the years and the flat, everyday life is fine; a trip somewhere far would take more working out.",
+      "After leaving the clinic you spend two years as a product consultant for a dental equipment distributor. You sit in an office looking at photos of other people's cases, and slowly your neck gets better.",
+      "You take a job in the dental room of a community health center: checkups, cleanings and teaching people to brush. You see fewer than ten people a day. The pay is half what it was, and there are no targets.",
+      "At the supermarket you run into the five-year-old who used to be afraid of dentists, now in high school. His mother tugs him over to say hello. He grins, and his teeth are very straight.",
+      "You've left the room on the mall's fourth floor. For the first month, every morning at 8:45 you check your phone without thinking, waiting for the meeting notice.",
+      "The new days are more tiring than you imagined, and freer. At last you can do only the treatment you believe is right; the price is doing the sums at the end of every month.",
+      "At an industry conference you run into your old branch manager, who now runs every branch in a province. He asks if you regret it. You say there's plenty you regret, but not this.",
+      "Later AI can read the images, plan the cases and print the guides, and young dentists get through cases twice as fast as you once did. But filling a tooth, opening a canal, coaxing a child into the chair: someone in gloves still has to do it, bit by bit.",
+      "Your neck aches whenever it rains, and you've kept for decades the habit of rolling your head as you walk. Your grandchild asks why you always tilt your head. You say it was so you could see into other people's mouths.",
+      "You walk past the mall. The fourth floor is a children's play center now. You stand at the foot of the escalator looking up for a while, and can't remember which way Room 3 used to be."
+    ],
+    "closing": {
+      "retire": "Many years later, one evening, you brush your own teeth with the Bass technique you used to teach your patients: one tooth at a time, unhurried.",
+      "burnout": "Many years later, sitting in the sun on a bench in your compound, the old man beside you says his teeth are so bad he can't chew anything. You have him open his mouth, take a look, and tell him they can be saved: at the hospital, don't let them rush to pull them.",
+      "end": "Many years later, rummaging in a cupboard, you find a box of impression material long past its date. You throw it out, then give the old mouth mirror a wipe and put it back in the drawer."
+    }
+  }
+}

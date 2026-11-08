@@ -1,0 +1,201 @@
+{
+  "id": "nurse-sh-icu",
+  "occupation": "Nurse",
+  "role": "Senior Nurse, General ICU (level N2)",
+  "headline": "A nurse in her fifth year in the general ICU of a top-tier Shanghai hospital, looking after two critical-care beds on rotating shifts",
+  "unit": "General ICU of a top-tier (Grade 3A) hospital in Shanghai",
+  "unit_type": "Top-tier (Grade 3A) hospital",
+  "city": "Shanghai",
+  "city_tier": "Tier 1",
+  "education": "Bachelor's degree in Nursing",
+  "level": "You can manage two critical beds on ventilators and continuous dialysis (CRRT) on your own, assist with prone-position ventilation, and hold the ward together on nights.",
+  "intro": "You work in the general ICU of a top-tier (Grade 3A) hospital in Shanghai: nursing level N2, three rotating shifts, two beds' worth of monitors and lines to watch every shift. Some of the nurses who started with you have moved to outpatients; some are preparing for specialist nurse training. Last week the head nurse asked what your plans were this year, and you didn't have an answer. From today you'll carry on with this work year after year, or find a different way to do it.",
+  "salary_note": "Estimate: ICU nurses at Shanghai's top-tier hospitals get night-shift pay and a critical-care performance multiplier, and incomes in a Tier 1 city run well above the national figure. Taken at about 1.6 times.",
+  "facts": [
+    { "label": "Pay at Senior Nurse level (national average)", "value": "¥6,000–9,000 a month", "source": "Career map" },
+    { "label": "Pay at 3–5 years (national average)", "value": "¥17,787 a month", "source": "Pay by experience" },
+    { "label": "Pay at 5–10 years (national average)", "value": "¥17,002 a month", "source": "Pay by experience" },
+    { "label": "Requirements to compete for head nurse", "value": "3 years as Senior Nurse + management training certificate + top 20% in performance reviews for the last 2 years", "source": "Career map" },
+    { "label": "Airway humidification and closed suctioning", "value": "AI can't take it; a nurse has to do it at the bedside", "source": "AI exposure" },
+    { "label": "Open positions", "value": "4 nationwide, 0 in Shanghai (mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "You don't get up until the alarm's second ring. Your rented flat in an old walk-up is four subway stops from the hospital, and in the rush-hour crush you lean against the door and close your eyes for another five minutes.",
+    "Into scrubs and onto the unit. First the assignment board: today you have beds 7 and 8. One is in septic shock on CRRT, the other is on the second day after surgery and still intubated.",
+    "Bedside handover. The night nurse goes through it point by point: pump rates, ins and outs, skin. You reach over and feel for the pulse on the top of bed 8's foot.",
+    "The unit director leads the doctors' rounds. You report the overnight vital signs and get asked about the lactate trend. Luckily you'd looked.",
+    "Closed suctioning for bed 7, then turning him and changing the CRRT replacement fluid. The early-warning system pops up on the monitor three times; twice it's a false alarm. You check each one and sign.",
+    "The half-hour afternoon visit. Through her protective gown, bed 7's daughter asks you whether her father can hear her. Yes, you say. Talk to him a little more.",
+    "You finish the nursing notes, count the controlled drugs and the crash cart, and sign off with the incoming nurse. You leave forty minutes later than you should have.",
+    "Next week you're on the long night shift, and this is when you'll be walking in. Three in the morning is the hardest; a cup of instant coffee and walking the beds back and forth get you to daylight."
+  ],
+  "ladder": [
+    { "title": "Nurse (junior)", "stage": "Getting started", "focus": "Carry out basic procedures and doctors' orders fluently and pass the Senior Nurse exam. What counts is following procedure and a record with zero errors." },
+    { "title": "Senior Nurse", "stage": "Building skill", "focus": "Take on critical and emergency care and triage on your own, and take part in quality control. Advancement rests on BLS/ACLS certification, success in handling emergencies and how well you train student nurses." },
+    { "title": "Supervisor Nurse", "stage": "Specialist mainstay", "focus": "Lead quality improvement in your specialty and put policy priorities such as rehabilitation and community care into practice. Advancement rests on specialist certificates, approved research projects and leading continuing-education programs at city level or above." },
+    { "title": "Associate Chief Nurse", "stage": "Professional leadership", "focus": "Build the department's specialist nursing system, develop the next tier of nurses and produce research. Advancement rests on SCI-indexed papers, provincial or ministerial research projects and contributing to industry guidelines." },
+    { "title": "Chief Nurse", "stage": "Field authority", "focus": "Set regional nursing standards, drive policy into practice (expanding rehabilitation, rolling out long-term care insurance) and hold national academic posts. Advancement rests on national projects, lead authorship of industry white papers and international exchange." }
+  ],
+  "ai_tasks": [
+    { "name": "Shift handover in emergency and checking emergency equipment and drugs", "how": "AI can generate inventory lists, flag expiry dates and automatically match drug and equipment records. Nurses still have to count by hand, check the seals, verify the controlled drugs, and sign and answer for anything amiss." },
+    { "name": "Rounds on observation patients and spotting early signs of deterioration", "how": "AI can keep calculating early-warning scores from monitor data and nursing notes and flag changing trends. The nurse has to look at the patient's color at the bedside, feel the skin's temperature, ask how they feel, judge whether they're really getting worse, and decide whether to call the doctor." },
+    { "name": "Triage of multiple emergency patients and sorting mass casualties", "how": "AI can help rank patients and flag risks. But in a chaotic scene, deciding fast who gets treated first, leading new nurses and calming families all depend on a nurse making the call on the spot and owning it." },
+    { "name": "Coordinated resuscitation for hemorrhagic shock after trauma", "how": "At most, AI can prompt the protocol from the side and log the times. Getting IV access, running fluids, stopping the bleeding, giving drugs, watching the monitor and working with the doctors all come down to the nurse's hands and reactions in the moment." },
+    { "name": "Escorting critical patients through fast-track tests and transfers, and handing over to the ICU", "how": "AI can summarize the patient's condition automatically and draft the handover sheet. Keeping vital signs stable in transit, dealing with whatever happens and doing the SBAR handover face to face are still the nurse's job." },
+    { "name": "Taking morning vital signs across the ward and screening for abnormal readings", "how": "AI or connected devices can enter the data automatically, mark abnormal values and produce a priority list. Nurses still have to take measurements at the bedside, observe each patient and recheck abnormal results." },
+    { "name": "Airway humidification and closed suctioning for critical patients", "how": "AI can only remind you of the procedure and record what the secretions look like. Suctioning is done on the patient's body and involves sterility, pressure, timing and handling risk; a nurse has to do it." },
+    { "name": "Organizing and leading the interdisciplinary SBAR handover for critical patients", "how": "AI can pull a first-draft SBAR together from the chart, orders and nursing notes. The nurse has to verify it, pick out what matters and lead the multidisciplinary team's discussion in person." },
+    { "name": "Setting up an insulin pump for a diabetic patient and teaching them to use it", "how": "AI can help check dose calculations, produce personalized teaching materials and set follow-up reminders. The nurse has to fit the pump, adjust the settings, teach hands-on, and adapt to how much the patient understands and accepts." },
+    { "name": "Screening older inpatients for frailty and putting the fall-prevention bundle in place", "how": "AI can help collate assessment scores, remind you when to rescreen and suggest items for the intervention bundle. The nurse has to measure walking speed and check balance at the bedside, observe the patient, and work with the family to put fall prevention into practice." }
+  ],
+  "events": {
+    "e01": "An elderly man in septic shock whom you nursed comes off the ventilator and goes back to a general ward. His daughter brings a silk banner of thanks, and it's hung above the nurses' station.",
+    "e02": "After three night shifts in a row you fall asleep on the subway and miss your stop. When you wake, you're at the end of the line.",
+    "e03": "Late one night the patient in the next bed goes into ventricular fibrillation. You're the first to notice and start compressions. At the next morning's meeting, the director mentions you by name.",
+    "e04": "A relative who thinks visiting time is too short shouts at you in the corridor for ten minutes, then files a complaint with the medical affairs office. The investigation finds nothing wrong with the procedure.",
+    "e05": "At the year-end bonus allocation, the ICU's performance multiplier is higher than the general wards', and you get a fairly decent bonus.",
+    "e06": "You get married. You can only scrape together ten days of wedding leave, and the head nurse reworks a whole month's roster to make it happen.",
+    "e07": "You're pregnant. The unit moves you away from radiation and chemotherapy drugs and onto regular day shifts, with only one bed to manage.",
+    "e08": "You and your spouse sign for a secondhand two-bedroom flat near the Outer Ring Road. The down payment empties both families' savings, and the mortgage is now counted into every night shift to come.",
+    "e09": "Your father back home is found to have a lung nodule and needs surgery. You take a week off to stay at his bedside, and watch the ward nurse change his dressing, biting your tongue the whole time.",
+    "e10": "The hospital launches an ICU early-warning system that scores the monitor data automatically and pops up alerts. In the first three months there are many false alarms, and every shift you have to go to the bedside to verify each one before signing.",
+    "e11": "Nursing notes now start as an AI draft built from orders and monitor data. You spend nearly an hour less each shift catching up on notes, but before signing you have to check every line for details attached to the wrong patient.",
+    "e12": "You go with a patient on ECMO to CT, eyes on the monitor the whole way, and back on the unit you hand over every time point clearly in SBAR format.",
+    "e13": "Checking orders, you find a heparin dose with an extra zero and stop it before it's given. Afterward the doctor comes over specially to thank you.",
+    "e14": "At handover you forget to mention a central venous catheter that's nearly due for removal. It's logged as an adverse event, and you write a root-cause analysis.",
+    "e15": "The winter peak of respiratory illness: every ICU bed is full and extra beds are going in. For a month, every shift, you manage one more bed than usual.",
+    "e16": "A checkup finds a herniated lumbar disc. The doctor says it's built up over years of turning patients and prone positioning, and tells you to bend less.",
+    "e17": "The student nurse you supervise comes top of the group in the end-of-rotation clinical skills exam, and the teaching ratings place you among the best on the unit.",
+    "e18": "The city-level continuing-education program in critical-care nursing that you lead opens, and more than a hundred nurses from other hospitals fill the lecture hall.",
+    "e19": "Your ICU pressure-injury prevention project wins hospital-level funding. It isn't much money, but at last your promotion file has something solid in it.",
+    "e20": "You help write an industry guideline on critical-care specialist nursing, your name in the middle of the editorial board list.",
+    "e21": "A young patient who has been in the ICU for two months never makes it home. After your shift that day you sit in the changing room for a long time.",
+    "e22": "Your child starts primary school, with the grandparents doing the school run. When you try to sleep after a night shift, messages in the parents' group chat keep waking you.",
+    "e23": "The mobile nursing cart gets voice entry and automatic stock counting, and nobody has to remember expiry dates anymore. Counting the controlled drugs still needs your signature and a colleague's.",
+    "e24": "A young nurse you trained wins the head nurse post on another unit, and comes back to take you to dinner.",
+    "e25": "The premium ward of a private international hospital sends word through a contact asking whether you'd come over. The offer isn't low. You don't go, but for days you keep doing the math.",
+    "e26": "Years of nights on top of age: your sleep gets lighter and lighter, and the day before a long night shift your heart starts racing.",
+    "e27": "At the Nurses' Day awards you're named one of the hospital's outstanding nurses. The certificate and a bunch of flowers sit at the nurses' station for a week."
+  },
+  "choices": {
+    "c01": {
+      "title": "Specialist training, or outpatients?",
+      "situation": "Applications are open this year for Shanghai's ICU specialist nurse training, three months away from work at a training base. Outpatients happens to be short-staffed too: regular day shifts, no nights. The head nurse wants your answer by the end of the month.",
+      "options": [
+        { "label": "Apply for ICU specialist training", "result": "Three months off the unit, and when you're back you're lead nurse on CRRT and ECMO. Nights as usual, and an even fuller roster." },
+        { "label": "Ask to transfer to outpatients", "result": "Eight to five, weekends off, a noticeably smaller bonus. Six months later you realize you read monitor waveforms more slowly than you used to." },
+        { "label": "Stay put, keep building seniority on shifts", "result": "Life goes on as before. There'll be places again next year, but someone from your intake already has the certificate." }
+      ]
+    },
+    "c02": {
+      "title": "Go for Supervisor Nurse",
+      "situation": "Registration for the Supervisor Nurse exam is about to open, and the unit's promotion queue also looks at specialist certificates and research projects. After a night shift all you want is to lie down at home, and the study materials on your desk are gathering dust.",
+      "options": [
+        { "label": "Study in your spare time and apply for a project too", "result": "You pass, and the project comes together as well. For those six months you hardly have a full day off." },
+        { "label": "Wait a year, look after home first", "result": "Your family breathes easier, and you slip back one place in the promotion queue." }
+      ]
+    },
+    "c03": {
+      "title": "A part-time master's?",
+      "situation": "The hospital and a medical university are running a part-time master's in nursing, weekend classes, tuition at your own expense. If you ever want associate senior rank, research or a teaching post, your degree is a hurdle.",
+      "options": [
+        { "label": "Enroll, go to class on weekends", "result": "For three years you switch back and forth between night shifts and your thesis. On graduation day, no one in your family has time to come." },
+        { "label": "Don't, keep the time for clinical work and life", "result": "Your weekends are your own. It's just that later, reading job requirements, your eyes linger a few seconds longer." }
+      ]
+    },
+    "c04": {
+      "title": "Sit the US RN exam?",
+      "situation": "A classmate from your nurse residency training has passed the NCLEX-RN and is going through EB-3, the employment-based green card. She sends you her UWorld login and her IELTS materials, and says ICU experience is in high demand over there.",
+      "options": [
+        { "label": "Study for IELTS and the NCLEX, go the EB-3 route", "result": "Two years of studying, then credentialing and the wait for a visa date, and finally an offer from an American employer.", "end": "You started over as a new nurse in the ICU of a hospital in the American Midwest. Your pay multiplied several times, and you still sometimes stumbled over the English at handover." },
+        { "label": "Just work on professional English, read guidelines and write papers", "result": "You start reading English-language guidelines with ease. The first paper you submit is rejected twice." },
+        { "label": "Don't bother, stay here", "result": "You pass the materials on to a younger colleague and carry on working." }
+      ]
+    },
+    "c05": {
+      "title": "Compete for head nurse",
+      "situation": "The old head nurse is retiring. The requirements are three years as Senior Nurse, a management training certificate and top 20 percent in performance reviews for the last two years, and you meet them all. As head nurse, the rosters, complaints and quality inspections would all be on you.",
+      "options": [
+        { "label": "Put your name forward", "result": "You become head nurse. No more night shifts, but you never dare put your phone on silent, day or night." },
+        { "label": "Don't compete, stay at the bedside as specialist team lead", "result": "You keep taking the sickest patients. The new head nurse is two years younger than you." }
+      ]
+    },
+    "c06": {
+      "title": "Stay in Shanghai, or go home?",
+      "situation": "A top-tier hospital in the prefecture-level city back home is building a critical-care department and offers a permanent state post, twenty minutes' drive from your parents. In Shanghai, the mortgage, your child's school place and your parents' health all hang in the air.",
+      "options": [
+        { "label": "Go home", "result": "Your pay drops by a big slice and your parents live close by. You become the most experienced person on the unit, and the one most often called back in for overtime." },
+        { "label": "Stay in Shanghai", "result": "You sign on to another year of mortgage payments, and install a video camera at your parents' place." }
+      ]
+    },
+    "c07": {
+      "title": "The human-AI workflow group",
+      "situation": "The hospital is setting up a working group on human-AI nursing workflows, to decide which steps go to AI and which must be checked by a person, and asks if you'll join. Meetings, data, writing standards, and not one bit less clinical work.",
+      "options": [
+        { "label": "Join, learn to read data and set rules", "result": "In meetings you start arguing alert thresholds with the IT department and the vendor's engineers, and you leave work later and later." },
+        { "label": "Decline, focus on the bedside", "result": "Once the rules are set you follow them. A few seem wrong to you, but nobody ever asked." }
+      ]
+    },
+    "c08": {
+      "title": "A few ways out of the ICU",
+      "situation": "Your back is getting worse and the long night shifts harder to bear. The rehabilitation department is hiring nurses who've completed provincial rehab specialist training, and a community health center is filling the post of manager of its long-term care insurance nursing center.",
+      "options": [
+        { "label": "Train as a rehab specialist nurse and move to rehab", "result": "You learn swallowing screens and therapeutic positioning. The patients make slow progress, but you get to watch them get better bit by bit." },
+        { "label": "Compete to run the community nursing center", "result": "You spend six months mastering the rules on insurance payments, and you get the post.", "end": "You left the top-tier hospital to draw up home-visit rosters at a community nursing center, dealing with long-term care insurance assessors, and never touched a ventilator again." },
+        { "label": "Stay in the ICU", "result": "You buy a back brace and keep doing nights. When young nurses have a difficult patient, you're the first one they come to." }
+      ]
+    },
+    "c09": {
+      "title": "Push for associate senior rank?",
+      "situation": "Associate Chief Nurse requires SCI-indexed papers or a provincial or ministerial project, and two colleagues of your seniority are both pushing hard. You have the data. What you lack is time, and a mentor willing to take you on.",
+      "options": [
+        { "label": "Push, squeeze in time for papers and projects", "result": "After seven drafts, the paper is accepted, and you get the rank. Over those two years, your medical reports sprout several more arrows." },
+        { "label": "Don't, become a clinical teacher", "result": "You put your energy into training new nurses. Your name isn't on the promotion list." }
+      ]
+    },
+    "c10": {
+      "title": "The last stretch",
+      "situation": "A university's nursing school is hiring associate seniors with clinical experience as lecturers; the hospital is pushing you to go for Chief Nurse, which takes national projects and academic posts. Or you could choose none of it, and train people on the unit until you retire.",
+      "options": [
+        { "label": "Go to the university as a lecturer", "result": "You earn your university teaching qualification and begin preparing classes.", "end": "You left the ward for the lectern, teaching twenty-year-olds the right pressure and timing for suctioning. Halfway through, you'd find yourself remembering a particular night shift." },
+        { "label": "Go for Chief Nurse", "result": "You start traveling to meetings constantly and lead the writing of regional nursing standards, spending less and less time on the unit." },
+        { "label": "Stay on the front line with the young ones", "result": "You stop watching titles. Every day before handover, you read through the new nurses' notes." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "Your last shift is a day shift. You hand your two beds to a nurse you trained, and she runs the handover in the order you taught her. Your locker is emptied; all that's left is a worn pair of nursing shoes and half a packet of biscuits. You come out the hospital's side door just in time for the evening rush on the subway.",
+    "burnout": "That day, after handing over the night shift, you sit at the nurses' station and can't get up to go and change. The medical reports, the insomnia and the back pain are all laid out in front of you. You apply for a transfer and leave the ICU. Later, passing the hospital, you look up without meaning to for that floor's windows."
+  },
+  "past": [
+    "You went to high school in a county town in Anhui. The year your grandmother was in hospital, you spent a whole summer at her bedside, watching the nurses change her dressings, quick and gentle.",
+    "Your gaokao (college entrance exam) score was neither high nor low, and you put down nursing. Your father said nursing was stable, your mother said it was too hard. In the end they let you decide.",
+    "In your final year you interned at this top-tier hospital in Shanghai. The month you rotated through the ICU, you joined a resuscitation for the first time, doing compressions until your wrists shook.",
+    "You passed the nurse licensing exam and the hospital kept you on. The head nurse said the ICU was short of people and asked if you'd come. You said yes.",
+    "Your first year, following your preceptor, you memorized drugs, lines and alarm tones. Once on a night shift you cried in the medication room. The next day you came to work as usual.",
+    "The first time you managed two beds on your own, the night was very long. At handover at daybreak you realized you hadn't had a sip of water.",
+    "You were promoted to Senior Nurse and started supervising students, and found yourself sounding more and more like your old preceptor."
+  ],
+  "late": {
+    "pension_note": "Estimate: a public hospital's basic pension plus occupational annuity, replacing a little over half of your pay.",
+    "scenes": [
+      "On the day you retire, you leave your nursing shoes in the locker. The head nurse says she'll keep them for you as a memento. Never mind, you say. Give them to someone who needs them.",
+      "You volunteer for two years at the community health center, taking old people's blood pressure and listening to them talk about their children while you do.",
+      "Your knees aren't so good now. When you were young you walked twenty thousand steps a night shift. Now you hold the rail going downstairs.",
+      "You transfer to the health checkup center, regular hours. Your first weekend you sleep till noon and wake to sunlight on the quilt.",
+      "When you hear an ambulance, you still count the seconds without thinking, then remind yourself: not your patient anymore.",
+      "You qualify as a health manager and work at a private clinic. When clients ask why you left the hospital, you just smile.",
+      "The day you leave clinical work, your colleagues take your photo at the nurses' station, with a row of monitors behind you.",
+      "You do clinical training for a medical device company, showing young nurses how to set ventilators. Every so often you hear yourself say \"back in our day.\"",
+      "Now and then an old colleague messages to ask about a setting, and you can answer without looking it up.",
+      "Later, vital signs in the ICU were all captured and flagged automatically. A nurse you trained tells you they no longer copy everything out by hand every hour on nights. That's good, you say.",
+      "When your mother is in hospital, you stand at her bedside watching the nurse work, and keep your hands to yourself.",
+      "Packing things up, you find a little notebook full of drug-dose conversions, its corners worn round."
+    ],
+    "closing": {
+      "retire": "Many years later, you're walking in the park with your grandson. Someone on a bench is unwell. You go over, crouch down, rest your fingers on his wrist, and count for a while.",
+      "burnout": "Many years later, leaving the health checkup center for the last time, you pass the hospital's main building. The lights are still on on the ICU floor, exactly as they were back then.",
+      "end": "Many years later, after you teach your last class, a student raises her hand and says she works on the very unit you used to."
+    }
+  }
+}

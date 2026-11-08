@@ -1,0 +1,182 @@
+{
+  "id": "forensic-city",
+  "occupation": "Forensic Pathologist",
+  "role": "Forensic Examiner, Criminal Investigation Division, Municipal Public Security Bureau",
+  "headline": "A forensic examiner in the criminal investigation division of a prefecture-level city's police bureau in southwest China, in your second year on the job, going out to crime scenes with a mentor of twenty-odd years and handling injury assessments every day",
+  "unit": "Forensic Office, Technical Unit, Criminal Investigation Division, Public Security Bureau of a prefecture-level city in southwest China",
+  "unit_type": "Prefecture-level city police bureau",
+  "city": "A prefecture-level city in southwest China",
+  "city_tier": "Prefecture-level city",
+  "education": "Bachelor's degree in Forensic Medicine (five-year program)",
+  "level": "You can examine injuries and draft minor-injury assessment reports on your own. Autopsies you still do alongside your mentor, and your registration as a certified forensic expert hasn't come through yet.",
+  "intro": "You are the second graduate in forensic medicine the city bureau has hired in recent years. The forensic office has three people: your mentor, who has done this for over twenty years; a doctor who transferred in from clinical medicine; and you. From today your name sits next to your mentor's on the duty roster. The duty phone stays on twenty-four hours a day. When it rings, you go, whether you were eating or asleep.",
+  "salary_note": "Estimate: a police officer's salary in a prefecture-level city in the southwest, plus rank allowance and overtime pay, taken at 80 percent of the national figure. It's a permanent state post, and pay rises slowly with rank and grade.",
+  "facts": [
+    { "label": "Assistant Forensic Examiner / Forensic Physician, junior (current level)", "value": "0–3 years, ¥5,525–8,125 a month (national average, derived from pay-by-experience data)", "source": "Pay by experience" },
+    { "label": "Next level up", "value": "Forensic Physician / Registered Forensic Expert (3–6 years)", "source": "Career map" },
+    { "label": "Pay after 10+ years", "value": "¥16,800 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Performing an autopsy and determining the cause of death", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Assessing the severity of an injury", "source": "AI exposure" },
+    { "label": "Open positions", "value": "25 related listings nationwide (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "A bowl of rice noodles in the bureau canteen, the duty phone beside the bowl. No calls last night. Your mentor calls that luck.",
+    "The forensic clinic opens. In the corridor sit people waiting for injury assessments: an old man pushed over in a quarrel between neighbors, a young man from a drunken fight. The two families sit three chairs apart, and nobody says a word.",
+    "Examinations of the living. You measure wounds, read the X-rays, ask how each injury happened, and go through the injury-severity standards clause by clause. Your mentor watches you write, now and then tapping the page with his pen.",
+    "The phone rings: a body by a fish pond out in one of the rural counties. You, your mentor, a trace-evidence officer and a photographer get into the police car. An hour of winding mountain road, and no one in the car speaks.",
+    "Light rain at the scene; villagers smoke outside the cordon tape. You put on a protective suit and photograph, record and measure in order, the soles of your shoes thick with mud. The smell is still on you after two showers back home.",
+    "The autopsy room is kept very cold. Your mentor leads; you take notes, collect samples, label them. In over an hour the two of you exchange fewer than ten sentences.",
+    "The family arrives. In the reception room you tell them how long the next steps will take. The mother grips a plastic bag the whole time. She doesn't cry, and she doesn't ask a single question.",
+    "Back in the office you write up the examination record and fill in the lab submission forms. Pathology and toxicology have to go to the provincial lab, a wait of one or two weeks. Before turning off the light, you read through tomorrow's court report once more."
+  ],
+  "ladder": [
+    { "title": "Assistant Forensic Examiner / Forensic Physician (junior)", "stage": "Entry", "focus": "Assist your mentor at autopsies, examinations of the living and scene investigations, and draft assessment reports." },
+    { "title": "Forensic Physician / Registered Forensic Expert", "stage": "Junior", "focus": "Once registered as a forensic expert, take cases on your own, examine, issue expert opinions and testify in court. With a bachelor's degree, five years at this level qualifies you for Senior Forensic Examiner." },
+    { "title": "Senior Forensic Examiner", "stage": "Mid-level", "focus": "Review difficult cases and train others. Five years after reaching this intermediate title, a bachelor's holder can apply for associate senior rank." },
+    { "title": "Associate Chief / Chief Forensic Physician", "stage": "Senior", "focus": "Final technical sign-off, research and standards, heading a forensic institute or a criminal forensics department." }
+  ],
+  "ai_tasks": [
+    { "name": "Performing an autopsy and determining the cause of death", "how": "The incisions, the sampling, the judgments made at the table and the signature that carries the responsibility can only come from a person. AI can help read scans, organize examination records and draft the first version of the report, but the cause of death is the forensic pathologist's call." },
+    { "name": "Assessing the severity of an injury", "how": "AI can read X-rays, match findings to clauses in the grading standards and pre-fill the report template. The physical examination of the living, the analysis of how the injury relates to the way it was inflicted, and the final grade have to be checked and owned by the expert." },
+    { "name": "Taking part in a homicide scene investigation", "how": "Getting to the scene, reading the position of the body and the traces around it, and working face to face with forensics technicians and detectives all require someone there. AI can at most help sort scene photos and notes; it can't stand in for the investigator's judgment." },
+    { "name": "Accepting a commission and completing the assessment on deadline", "how": "Intake registration, checking that materials are complete, assignment reminders and deadline tracking are procedural, and AI and the system can mostly run them on their own. People only need to spot-check, and decide who to assign when a case is unusual." },
+    { "name": "Testifying in court and facing cross-examination", "how": "Being cross-examined and answering the defense and the judge on the spot means facing them in person and bearing the responsibility. AI can only help sort the materials beforehand and rehearse the questions that might come." },
+    { "name": "Handling expert registration and the annual review", "how": "Checking application materials, matching them against the requirements, review reminders and filling in forms are things AI can largely take over. A person only needs to confirm eligibility, sign and submit." },
+    { "name": "Reviewing a difficult assessment and convening an expert panel", "how": "AI can compile the separate opinions, find where they disagree, and search for similar literature and standards. How the panel is run, which expert views to weigh most, and the final review conclusion are decided, and owned, by people." },
+    { "name": "Guiding a new examiner through a first independent examination", "how": "Training a newcomer means teaching autopsy technique, how to handle a scene and professional judgment hand over hand; it is skill passed from person to person. AI can support with a case library, answers on procedure and review materials." }
+  ],
+  "events": {
+    "e_first_solo": "You finish your first assessment report on your own: a grade-two minor injury. Your mentor makes four corrections. Before he signs, he asks you: could you explain every line of this in court?",
+    "e_night_call": "The duty phone rings at three in the morning: a fall from a cliff in the mountains. You wait in the rain for four hours while the rescue team clears the road. By the time you're back it's daylight, and you go straight to open the clinic.",
+    "e_blind_date": "On a blind date you're asked what you do, and you say technical work at the police bureau. On the second date the other person gets the full answer. There is no third.",
+    "e_case_match": "A case has dragged on for six months. The weapon you inferred in your report matches what is finally found. The task force posts two words in the group chat: Case closed. You stand outside the autopsy room for a while.",
+    "e_court": "Your first time testifying. The defense lawyer questions your examination methods for forty minutes. You answer slowly, palms soaked. After the court adjourns, the prosecutor pats you on the shoulder.",
+    "e_injury_dispute": "Whether an injury is graded slight or minor decides whether the other side faces criminal charges. The two families take turns coming to find you at the clinic; someone in the corridor accuses you of taking money. You re-check every examination record. Your conclusion doesn't change.",
+    "e_ai_docs": "The bureau installs an assessment support system: intake, document checks and deadline reminders are automatic, and AI pre-fills the boilerplate of injury reports, leaving you only the findings and the analysis to write. For the first time, you leave work before nine at night.",
+    "e_ai_misread": "The AI's reading flags a fracture as old, which nearly gets an injury grade wrong. You lay the X-ray from the day of the injury next to one from three months earlier, compare them side by side, and change the conclusion back.",
+    "e_child_case": "A case involving a child. After the examination you sit in the car a long time before driving back to the bureau. That month, for the first time, you go to see the bureau's counselor of your own accord.",
+    "e_disaster": "A landslide in the neighboring county, and every forensic examiner in the city is sent to identify the dead. You work nine days straight in a makeshift tent, and remember every name the families give when they come to claim someone.",
+    "e_love": "At the city's police skills competition you meet a community officer from a local station. They are the first person to hear about your work without frowning.",
+    "e_marry": "You get married. The night before the wedding you're still out at a scene, and only change out of your muddy shoes the next morning. Neither set of parents says anything.",
+    "e_house": "You take out a mortgage on a three-bedroom flat in the city, fifteen minutes' drive from the bureau, so you can get there faster when they call at night.",
+    "e_child": "Your child is born. Bathing him for the first time, your hands are more careful than they have been anywhere.",
+    "e_mentor_retire": "Your mentor retires. Before he goes he leaves you twenty-odd years of work notebooks. On the flyleaf he has written: Look first, then think, then write.",
+    "e_understaff": "The forensic office has only ever had three posts, and the counties below the city send their cases to you too. In one year you go out to more than a hundred scenes. On Chinese New Year's Eve you're on the road.",
+    "e_province_train": "You're seconded to the provincial capital for three months of pathology training, and see difficult cases you wouldn't meet in years in the city.",
+    "e_cold_case": "A case from more than ten years ago moves forward thanks to new DNA matching. You dig out the original examination record. It's in your mentor's handwriting.",
+    "e_new_center": "The city bureau builds a new forensic center, with a CT scanner and its own autopsy suite. Half as many samples go to the provincial lab now, and conclusions come much faster.",
+    "e_parent": "Your father is admitted to hospital for surgery. Outside the ward you listen to the doctor explain the risks, sitting on the family's side for the first time.",
+    "e_teach": "The bureau hires two new forensic medicine graduates. You take them to their first scene. On the drive back one of them stares out the window the whole way. You don't ask anything; you buy him a bowl of noodles.",
+    "e_back": "Years of bending over the table have given you a herniated disc. You keep a back brace in the office and wear it under your uniform at scenes.",
+    "e_oranges": "After a verdict comes down, a mother comes to the bureau. She says nothing, just leaves a bag of oranges from her own trees for the forensic office."
+  },
+  "choices": {
+    "c_register": {
+      "title": "Apply for registration and become an examiner who can sign",
+      "situation": "For over a year you've signed beside your mentor as \"assisting examiner.\" Once you meet the time and assessment requirements you can apply to register as a forensic expert: from then on you issue opinions on your own, testify on your own, and carry the responsibility on your own.",
+      "options": [
+        { "label": "Apply as soon as possible", "result": "You spend two months preparing the assessment materials. When the registration comes through, you stand by the printer for a long time looking at the first report that carries your signature alone." },
+        { "label": "One more year with your mentor", "result": "You see dozens more difficult cases and sign a year later. Your mentor says it was a year well spent." }
+      ]
+    },
+    "c_master": {
+      "title": "A part-time master's degree",
+      "situation": "A medical university in the provincial capital offers a part-time master's in pathology. Finish it, and you can apply for the intermediate title two years sooner, with a door open later to the provincial department or a university. The price is three years of weekends and holidays, and the cases won't get any fewer.",
+      "options": [
+        { "label": "Do it", "result": "You read papers in the car on the way to scenes and stay up late in the office writing your thesis. Three years later you have a master's degree, and your supervisor asks whether you'd like to go on for a doctorate." },
+        { "label": "Skip it, do the cases right", "result": "On weekends you make extra trips to scenes out in the counties and your hands grow surer, though the education line on your résumé still says bachelor's." }
+      ]
+    },
+    "c_zhujian": {
+      "title": "Apply for the intermediate title (Senior Forensic Examiner)",
+      "situation": "Five years since your degree: you can apply for the intermediate title. It takes a case summary, a record of achievements and an assessment. The bureau's quota is tight this year, and another colleague got here two years before you.",
+      "options": [
+        { "label": "Go all out", "result": "From five years of assessments you pick a dozen or so representative cases and write them up, through dozens of late nights. At the defense, the panel asks only about the ones you know best." },
+        { "label": "Let the senior colleague go first", "result": "You step back. Your colleague gets the title and takes you out for a drink. You're a year behind, and no one in the office mentions it again." }
+      ]
+    },
+    "c_ai": {
+      "title": "Lead the human-AI assessment workflow?",
+      "situation": "The provincial department is piloting AI-assisted image reading and first-draft reports, and the city bureau needs someone to lead it: which steps go to the system, which conclusions a person must review, whose fault it is when something goes wrong. It doesn't count toward your record, and there's no overtime pay.",
+      "options": [
+        { "label": "Take it on", "result": "You check several hundred of the system's drafts for errors line by line. The review guidelines you write are circulated by the provincial department to every city." },
+        { "label": "Pass", "result": "You use the system by a process someone else wrote, and spend the time saved on more examinations. A few of the rules strike you as too loose." }
+      ]
+    },
+    "c_province": {
+      "title": "Go to the provincial department?",
+      "situation": "The provincial forensic science institute wants one technical expert from each city: a bigger platform, harder cases, better equipment. But you'd have to leave this city, and rearrange your child's school and your spouse's job.",
+      "options": [
+        { "label": "Go to the province", "result": "You rent a flat in the provincial capital and get home twice a month. The cases are far harder than in the city; you learn more in a year than in the previous three." },
+        { "label": "Stay at the city bureau", "result": "You turn it down. The city can't do without you, and you can't do without that bowl of noodles every morning and the light left on when you come home." }
+      ]
+    },
+    "c_insurance": {
+      "title": "Personal-injury claims at an insurance company",
+      "situation": "An insurer's claims center wants to hire you away for personal-injury claims and medical review: one and a half times your current pay, nine to five, no scenes, no night duty. But you would no longer be a police officer.",
+      "options": [
+        { "label": "Go to the insurer", "result": "You hand in your resignation, and return the duty phone and your scene kit to the office.", "end": "You took off the uniform and went to review personal-injury claims at an insurance company, reading medical records and payout forms all day. At night, finally, your phone could go on silent." },
+        { "label": "Stay", "result": "You say thank you. That night the duty phone rings, and you put on your shoes and go out without a second's hesitation." }
+      ]
+    },
+    "c_teacher": {
+      "title": "Go back to your old university to teach",
+      "situation": "Your old university is short of teachers with field experience. The department head calls to ask whether you'd come back to teach injury pathology and scene investigation, on the condition that you do a PhD first.",
+      "options": [
+        { "label": "Go back for the PhD and teach", "result": "You return to your old university with more than ten years of work notebooks.", "end": "You went back to your old university for a PhD and stayed on to teach. On the first day of every term, you told them about that fish pond in the rain, your first scene." },
+        { "label": "Stay on the front line", "result": "You turn a few representative cases into teaching materials and mail them to the department head, and stay to keep going out to scenes." }
+      ]
+    },
+    "c_fugao": {
+      "title": "Go for associate senior rank",
+      "situation": "Five years at the intermediate title: you can go for associate senior. It takes research projects, papers and reviews of difficult cases, and you'd have to squeeze research time out of the casework. The bureau would also like someone of that rank to represent it.",
+      "options": [
+        { "label": "Go for it", "result": "You lead a city-level research project and publish three papers. The year you get the rank you're in your early forties, and the office has an associate senior for the first time." },
+        { "label": "Let it go, focus on cases", "result": "You give all your time to scenes and the clinic. Every year your assessment count is the highest in the bureau, and your title stays where it is." }
+      ]
+    },
+    "c_lead": {
+      "title": "Take over the technical unit?",
+      "situation": "The head of the technical unit is retiring and the bureau wants you to take over: physical evidence, trace evidence, DNA, imaging, the whole lot, along with meetings, staff and budgets. Take it, and you'll rarely stand at the table again.",
+      "options": [
+        { "label": "Take over the unit", "result": "Your desk gains another phone and a stack of reports. Young officers call you before heading out to a scene, and you always say: Don't rush. Look first." },
+        { "label": "Stay in the forensic office", "result": "You recommend your old partner from trace evidence and carry on training apprentices and going to scenes, still hauling your kit up mountains in your fifties." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last shift you don't go out to a scene. In the office you sort more than a decade of work notebooks and hand them to your apprentice, together with the one your mentor left. The duty phone lies on the desk. You look at it a while and don't pick it up again. On your way downstairs the canteen auntie asks whether you'll still come for noodles tomorrow. You say you will.",
+    "burnout": "For a while you can't sleep at all; when you close your eyes, you see the day's scene, and you wake with a start even when the duty phone is silent. The bureau's psychologist suggests you stop for a while. You transfer to the archives, sorting case files every day and leaving on time. When you hear a patrol car head out from below, you still go to the window and watch for a moment."
+  },
+  "past": [
+    "In your third year of middle school in a small county town in southern Sichuan, your favorite thing was an old book from your grandfather's shelves about ancient coroners' inquests. You couldn't follow most of it. You remembered only the preface saying that nothing weighs more than a human life.",
+    "In your second year of high school, something no one could explain happened in town. A family's son died by the river, and all sorts of stories went round, until a forensic examiner came from the city and set it straight. It was the first time you knew the job existed.",
+    "Your gaokao (college entrance exam) score fell a few points short for medical university, so you spent a year retaking it. The second time, you wrote forensic medicine on your application form. Your mother asked what that was. Pretty much a doctor, you said, and she believed you.",
+    "The first time you entered the dissection lab, in your third year, two classmates later switched majors. You sat in the corridor for ten minutes, then went back in and finished the class.",
+    "In your fifth year you interned at a city police forensic office and went out to your first scene. That night you called home and talked about the weather for a long time.",
+    "After graduation you missed the police recruitment exam by two points. You took a job as an assistant at a forensic assessment firm in the provincial capital, sorting disability-assessment files by day and studying at night.",
+    "The next year you passed, for a forensic technical post in this prefecture-level city in the southwest, four hundred kilometers from home. Six months of police academy training. The first time you put on the uniform, you took a photo for your mother."
+  ],
+  "late": {
+    "pension_note": "Estimate: a police officer in a permanent state post is paid a pension under the government institutions' scheme plus an occupational annuity, roughly 70 percent of final monthly salary. Overtime pay isn't counted.",
+    "scenes": [
+      "Your first month of retirement, you still keep the phone by your pillow with the ringer on. One night it really does ring: a sales call. You sit up, and it's a long time before you fall asleep again.",
+      "A forensic assessment firm in the city asks you to consult two days a week, reviewing difficult injury assessments. No scenes, no more climbing mountains.",
+      "The pension arrives on time every month. You and your spouse get by, and can even help your child with a bit of the mortgage. On your medical report, beside the line about your spine, the doctor tells you to stop lifting heavy things.",
+      "Your apprentice makes Senior Forensic Examiner and calls to ask about a case. You hear him out and say only: Look first, then think, then write. On the other end of the line, he laughs.",
+      "In your first year in the archives you re-sort more than a decade of case files by year. Some names you still remember. Some you can no longer place.",
+      "You sign up for a pottery class. With clay on your hands, your mind goes quiet. The teacher says your hands are very steady and asks what you used to do. Technical work at the police bureau, you say.",
+      "The bureau later sets up regular counseling for everyone who works scenes; the young ones go and sit down with someone after coming back. When you hear about it, you think it should have happened long ago.",
+      "You change jobs. Your hours are normal now, and your phone can go silent at night. For the first few months you still wake at seven-thirty and reach for your uniform.",
+      "When your new colleagues learn what you used to do, they always want to ask and don't quite dare. You usually tell them only about the rainy mountain roads and the long waiting, and nothing else.",
+      "You go to your mentor's eightieth birthday. The room is full of people he trained, some still at the bureau, some gone like you. Everyone gathers around him, and nobody mentions a case.",
+      "In the assessment process that came later, intake, document checks and report templates were handed to the system. But someone still has to go to the scene, and someone still has to stand at the table, sign, and go to court.",
+      "The rice-noodle shop on the old street is now run by the owner's son, and the broth tastes the same. You sit by the door, the way you did on duty, so you can get up at any moment."
+    ],
+    "closing": {
+      "retire": "Many years later, on a rainy day, you sit by the window peeling an orange. The rain falls fine and thick, the way it did that year by the fish pond. You finish peeling it and hand it to your grandson.",
+      "burnout": "Many years later, you walk slowly around your housing compound as it gets dark and the streetlights come on one by one. The phone in your pocket stays quiet. You finish one lap, and walk another.",
+      "end": "Many years later, deep in a wardrobe, you find your old police uniform, the shoulder boards still on it. You fold it again, put it back where it was, and close the wardrobe door."
+    }
+  }
+}

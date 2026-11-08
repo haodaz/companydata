@@ -1,0 +1,204 @@
+{
+  "id": "nurse-town",
+  "occupation": "Nurse",
+  "role": "Township clinic nurse (not yet licensed)",
+  "headline": "A new nurse at a township clinic in Sichuan, fresh out of nursing school: injections, dressings, vaccinations, village follow-ups and the public-health data entry, all of it yours",
+  "unit": "A township clinic in a county in Sichuan",
+  "unit_type": "Township clinic",
+  "city": "A township in a county in Sichuan",
+  "city_tier": "Township",
+  "education": "Vocational secondary school (nursing)",
+  "level": "You can give injections, change dressings and work the public-health system, but you haven't passed the licensing exam yet, so your supervising nurse has to countersign every procedure",
+  "intro": "You work at the township clinic in a hilly county in Sichuan. Out front is the old street that jams with three-wheelers on market day. There aren't many nurses here, so injections, dressings, vaccinations, village rounds, data entry: wherever there's a gap, you fill it. Your nursing-school diploma is in a drawer; the nursing license is still an exam away, and your supervisor says to get your hands steady first. As of today, you are this clinic's nurse.",
+  "salary_note": "Estimate: a contract nurse outside the permanent staff at a Sichuan township clinic earns well below the national average, and bonuses swing with public-health inspections and patient volume.",
+  "facts": [
+    { "label": "Starting rung", "value": "Nurse (junior), early adjustment stage, 0–2 years, ¥4,500–6,000 a month (national average)", "source": "Career map" },
+    { "label": "First-year monthly pay", "value": "¥6,963 (national average)", "source": "Pay by experience" },
+    { "label": "Entry requirement", "value": "A nurse practising license; no license, no clinical nursing", "source": "Career map" },
+    { "label": "Next level up", "value": "Senior Nurse, 2–5 years, ¥6,000–9,000 a month (national average)", "source": "Career map" },
+    { "label": "What AI can't take", "value": "Triage in a crowded emergency room and sorting mass casualties: who gets treated first, calming the families. A nurse has to make that call on the spot", "source": "AI exposure" },
+    { "label": "Open positions", "value": "4 related listings nationwide; no county-level figures, mostly campus hiring and internships", "source": "Job listings" }
+  ],
+  "day": [
+    "You wake up in the staff dorm behind the clinic. Someone from the village is already knocking on the pharmacy window downstairs. It's market day.",
+    "Into your scrubs and clocked in. A line has formed outside the injection room, people clutching the slips from the doctor and medicine they brought from home.",
+    "Mornings are the vaccination clinic: register, check, scan, inject, then watch the parents sit with their babies in the observation area for a full thirty minutes. You can't skip a single step.",
+    "An old man comes into the treatment room with a sickle cut on his hand. You clean it, dress it, and tell him to stop pressing cigarette ash into wounds.",
+    "Lunch in the canteen, one meat dish and two vegetables. You shovel it down and squeeze in a check of the morning's vaccination records.",
+    "You ride out to the villages on the back of the village doctor's motorbike with the family-doctor team: blood pressure, blood sugar, and at every door the same question, have you stopped your pills again?",
+    "Back at the clinic you key in the public-health follow-up forms. The system lags, there are too many forms, and the county inspects at the end of the month.",
+    "Handover. You write tomorrow's list of chronic patients due back on the whiteboard.",
+    "In the dorm, under the desk lamp, you work through practice questions for the licensing exam. Now and then someone calls you downstairs. On nights, it's just you and the doctor on duty."
+  ],
+  "ladder": [
+    { "title": "Nurse (junior)", "stage": "Learning the ropes", "focus": "Carry out basic procedures and doctors' orders fluently and pass the Senior Nurse exam; it rests on doing things by the book with a clean error record" },
+    { "title": "Senior Nurse", "stage": "Skills taking shape", "focus": "Handle emergency assists and triage on your own and take part in quality control; it rests on BLS/ACLS certification, emergency outcomes and how your trainees turn out" },
+    { "title": "Supervising Nurse", "stage": "Specialist backbone", "focus": "Lead quality improvement in a specialty and put policy priorities like rehab and community care into practice; it rests on specialty certificates, funded projects and running continuing-education programs at city level or above" },
+    { "title": "Associate Chief Nurse", "stage": "Leading the field", "focus": "Build the department's specialty nursing system, train the next tier and produce research; it rests on SCI papers, provincial or ministerial grants and co-writing industry guidelines" },
+    { "title": "Chief Nurse", "stage": "Recognized authority", "focus": "Set regional nursing standards, push policy into practice (such as expanding rehab care or rolling out long-term care insurance) and hold national academic posts; it rests on national projects, lead authorship of industry white papers and international exchange" }
+  ],
+  "ai_tasks": [
+    { "name": "Emergency shift handover and checks on crash-cart equipment and drugs", "how": "AI can generate the inventory list, flag expiry dates and cross-check drug and equipment records. The nurse still counts by hand, checks the seals, verifies the narcotics and signs for anything off." },
+    { "name": "Rounds on observation patients and early warning of deterioration", "how": "AI can keep calculating warning scores from monitor data and nursing notes and flag trends. The nurse still stands at the bedside, looks at the face, feels the skin, asks how they feel, decides whether it's really getting worse, and whether to call the doctor." },
+    { "name": "Triage of multiple emergency patients and mass casualties", "how": "AI can help rank patients and flag risks. But in a chaotic room, deciding who goes first, guiding new staff and calming families all come down to a nurse making the call and owning it." },
+    { "name": "Team resuscitation for traumatic hemorrhagic shock", "how": "At most AI stands by prompting the protocol and logging times. Starting IV lines, fluids, stopping the bleeding, giving drugs, watching the monitor, working with the doctor: that is all the nurse's hands and nerve." },
+    { "name": "Escorting critical patients through the fast track and handing over to the ICU", "how": "AI can summarize the case and draft the handover sheet. Keeping vital signs up in transit, handling whatever happens on the way and giving the SBAR handover face to face are still the nurse's job." },
+    { "name": "Morning vital signs for a ward of inpatients and first-pass screening for abnormal results", "how": "AI or networked devices can enter the data, flag abnormal values and produce a priority list. The nurse still goes to the bedside, measures, watches the patient and rechecks anything abnormal." },
+    { "name": "Airway humidification and closed suctioning for critical patients", "how": "AI can only remind you of the protocol and record what comes up. Suctioning is done on a living patient, with sterility, pressure, timing and risk all in play. A nurse has to do it." },
+    { "name": "Leading a cross-disciplinary SBAR handover for critical patients", "how": "AI can pull an SBAR draft from the chart, orders and nursing notes. The nurse checks it, picks out what matters and leads the multidisciplinary team through it in the room." },
+    { "name": "Setting up an insulin pump for a diabetic patient and teaching them to use it", "how": "AI can help double-check dose calculations, generate tailored teaching materials and set follow-up reminders. The nurse fits the pump, adjusts the settings, teaches it hands-on and adapts to how much the patient takes in." },
+    { "name": "Frailty screening for elderly inpatients and putting a fall-prevention bundle into practice", "how": "AI can organize assessment scores, remind you when to rescreen and suggest items for the bundle. The nurse measures walking speed, checks balance at the bedside, watches the patient and works through the precautions with the family." }
+  ],
+  "events": {
+    "e01": "On market day the line for the injection room runs out into the street. You give a whole string of intramuscular shots before noon, and at lunch your wrist is too sore to hold your bowl steady.",
+    "e02": "An old woman with veins as thin as thread. You hit the vein on the first try, and back in her village she tells everyone that the young girl at the clinic has steady hands.",
+    "e03": "Year-end public-health inspection. The follow-up forms you stayed up nights catching up on are spot-checked by the county, found to have logic errors, and sent back to be redone, all of them.",
+    "e04": "A child turns pale in the observation area after a vaccine. You follow protocol and call the county hospital, and the child comes round. Later the parents bring a basket of farm eggs.",
+    "e05": "On a night shift a drunk man comes in after a fall and curses at you in the treatment room for half an hour. It stops only when the doctor on duty calls the police.",
+    "e06": "While a chest-pain patient waits for the county hospital's ambulance, you get a line in and send over an ECG. On the phone the county ER doctor says you handled it right.",
+    "e07": "Money is tight at the clinic, and bonuses for the contract staff come two months late.",
+    "e08": "You get married. The banquet is laid out on an open courtyard in the township, and your colleagues chip in for a gift.",
+    "e09": "Your baby is born. Back from maternity leave, the vaccination clinic is packed, and you have to time breastfeeding to the gaps in the observation schedule.",
+    "e10": "The county ranks its family-doctor teams and yours comes first. Your name is on the commendation list.",
+    "e11": "Flood season, and the river rises through the township. You spend days at the evacuation site with the medical team, then come home and sleep a full day.",
+    "e12": "An old man with diabetes follows the diet sheet you wrote him for half a year and his blood sugar holds steady. At New Year he brings you a slab of cured pork.",
+    "e13": "The county brings in automated follow-up calls. Most of the routine calls to hypertension and diabetes patients are now made by a machine, and you switch to handling the list of anomalies it flags.",
+    "e14": "The public-health system starts writing follow-up records on its own. Once it swaps an old man's systolic and diastolic readings, and you catch it before signing.",
+    "e15": "You take out a mortgage on a flat in the county town. The payment comes out of your wages first each month, and you only get there on weekends.",
+    "e16": "Your father has a stroke while working in the fields. You get a classmate at the county hospital to find him a bed and take two weeks off to sit with him.",
+    "e17": "A patient's relative phones in a complaint that the IV took too long, and the clinic docks your bonus for the month.",
+    "e18": "Long-term care insurance reaches your county, and the clinic starts doing home nursing. You are one of the first nurses walking into village homes with a kit on your back.",
+    "e19": "A nursing student you trained passes her licensing exam and calls just to tell you.",
+    "e20": "Years of bending over dressings and bumping along village roads give you a herniated disc. It's a week before you can get out of bed.",
+    "e21": "At the city nursing association's annual meeting you talk about how you do chronic-disease follow-up at the grassroots level. Afterwards people come up and ask for your forms.",
+    "e22": "Elderly people living alone are given connected wristbands. Most of the midnight alarms are false. One night it's real; you ride over on your e-bike and get him into the ambulance.",
+    "e23": "Your child gets into a university in another province. You see them off at the station, and when you come back the dorm room is half empty.",
+    "e24": "Your mother slowly comes to need someone with her at all times. After work you go over to turn her and feed her.",
+    "e25": "More and more young people leave the township. Clinic visits fall, and your bonus shrinks with them.",
+    "e26": "A child you once vaccinated comes in carrying her own baby for shots, and recognizes you at a glance.",
+    "e27": "The young nurses who've just joined are used to having AI write their nursing notes; you do the final check and sign-off. The errors you catch end up as case studies in the clinic's training."
+  },
+  "choices": {
+    "c01": {
+      "title": "Three months before the licensing exam",
+      "situation": "The nursing licensing exam is three months away. One of the nurses is going on maternity leave, and the director wants you to cover the vaccination clinic full-time.",
+      "options": [
+        { "label": "Cover it and study at night in the dorm", "result": "The director remembers you. You scrape through the exam, and lose weight over those three months." },
+        { "label": "Tell the director you can only do half days so you can study", "result": "You pass comfortably, but when the good shifts get handed out later, the director doesn't think of you." },
+        { "label": "Pay for an in-person cram course in the county town and travel back and forth on weekends", "result": "Your score is excellent. Your money and your weekends went into it." }
+      ]
+    },
+    "c02": {
+      "title": "A job in Chengdu",
+      "situation": "A top-tier (Grade 3A) hospital in Chengdu is hiring contract nurses. A classmate from nursing school is already there; she says there are a lot of night shifts, but the pay is several times what you make now, and you'd learn completely different things.",
+      "options": [
+        { "label": "Go to Chengdu", "result": "You move into a shared flat on the edge of the city. Rotating shifts, endless patients; your skills grow fast, and you can't help with anything back home." },
+        { "label": "Stay in the township and wait for the exam for a permanent state post", "result": "Life goes on as before with your parents close by, while the city in your classmates' feeds drifts further away." },
+        { "label": "Stay, and enroll in a part-time bachelor's degree by correspondence", "result": "Work by day, classes on weekends. The fees aren't cheap, and your qualifications move up a notch." }
+      ]
+    },
+    "c03": {
+      "title": "The Senior Nurse exam and an ER placement",
+      "situation": "This year you're eligible for the Senior Nurse exam, and the county hospital's emergency department has offered the clinic one three-month training placement, with a rotation in triage. But your child is small, and the clinic is short-handed.",
+      "options": [
+        { "label": "Take the exam and do the ER placement", "result": "You triage hundreds of patients in the ER and come back sure of yourself with whoever walks in. For half a year you barely sleep through the night." },
+        { "label": "Take the exam, skip the placement", "result": "You get the certificate. Your hands still know only the clinic's routines, and you're there for your family." },
+        { "label": "Skip the exam this year and catch your breath", "result": "You spend one whole winter with your child. The people who started with you are already called Senior Nurse." }
+      ]
+    },
+    "c04": {
+      "title": "A permanent post, but in the mountains",
+      "situation": "The county is recruiting for permanent state posts at township clinics. Your score is high enough, but the opening is at an even more remote mountain clinic, two bus changes from home.",
+      "options": [
+        { "label": "Go to the mountains and take the permanent post", "result": "Your pay is secure, with full social insurance and a path for professional titles. You get home once a week, and your child starts to cling to Grandma." },
+        { "label": "Turn it down and stay on contract in the township", "result": "You're still in the courtyard you know. Every payday you work out the gap between you and the permanent staff." },
+        { "label": "Stop sitting exams and go to a private hospital in the county town", "result": "You're closer to home and paid a little more, but the contract is renewed year by year and no one looks after your professional title." }
+      ]
+    },
+    "c05": {
+      "title": "A place on the rehab specialty course",
+      "situation": "The province is running a training course for rehabilitation specialist nurses, and the clinic is setting up rehab beds. They ask if you'll go. The course is in Chengdu, months away from home.",
+      "options": [
+        { "label": "Go to Chengdu for the course", "result": "You learn positioning for stroke patients and swallowing screens, and come back as the clinic's go-to for rehab. The weight at home falls entirely on your partner." },
+        { "label": "Stay on family-doctor work and chronic-disease follow-up", "result": "You look after the chronic patients of a handful of villages, knowing the list better each year. The specialist path goes to someone else." },
+        { "label": "Use the certificate to move to an elder care home with medical services in the county town", "result": "You quit the clinic as soon as you have the certificate.", "end": "You move to an elder care home with medical services in the county town as a rehab specialist nurse, leading the care workers as they turn, exercise and feed elderly people who can no longer look after themselves. The rest of your working life happens inside that building." }
+      ]
+    },
+    "c06": {
+      "title": "The AI follow-up platform needs people",
+      "situation": "The county health commission is rolling out a smart public-health platform. AI makes the follow-up calls, writes the records and raises alerts, and they want frontline nurses to help design the workflow and review what the AI produces.",
+      "options": [
+        { "label": "Sign up as an early user", "result": "A year of meetings and endless feedback forms. The platform changes in several places because of you, and you become the person at the clinic who knows it best." },
+        { "label": "Just learn to use it", "result": "You can work the system. Other people made the rules, and where they don't fit, you make do." },
+        { "label": "Avoid it as long as possible and stick to paper and phone calls", "result": "You still call every household yourself, and the old folks know your voice. But the clinic's inspections start marking you down as slow." }
+      ]
+    },
+    "c07": {
+      "title": "Applying for promotion",
+      "situation": "The clinic's head nurse is retiring. Applicants need three years as a Senior Nurse, a management training certificate and a top-20% performance rating in the past two years. At the same time, a community health center in the county town is hiring a head for its long-term care insurance nursing center.",
+      "options": [
+        { "label": "Apply for head nurse at your clinic", "result": "You get it. Rosters, supplies, inspections and the blame are all yours now, and you spend less time giving injections." },
+        { "label": "Apply to head the community nursing center in the county town", "result": "You memorize the insurance payment rules and the home-care procedures and go to the interview.", "end": "You transfer to the community health center in the county town and run a team of home-care nurses. For the second half of your career you deal with long-term care claims and the homes of people who can no longer care for themselves." },
+        { "label": "Apply for neither and stay on the front line", "result": "You keep running between the injection room and the village roads. The new head nurse is a few years younger than you." }
+      ]
+    },
+    "c08": {
+      "title": "Supervising Nurse",
+      "situation": "You're now eligible for Supervising Nurse. There's an exam, and after promotion the clinic's specialty work and quality control will land on you as well.",
+      "options": [
+        { "label": "Sit the exam and give it everything", "result": "You pass, and start leading the clinic's nursing quality control and continuing education." },
+        { "label": "Wait another two years", "result": "You give your energy to your child's move up to middle school, and the title waits." }
+      ]
+    },
+    "c09": {
+      "title": "Going for associate senior",
+      "situation": "There is a separate review track for Associate Chief Nurse at the grassroots level, but it still requires research projects and papers, and the county has very few places.",
+      "options": [
+        { "label": "Take on a project and write up grassroots chronic-disease follow-up", "result": "For two years your weekends go to sorting data. You're approved on the second try, and your back is worse." },
+        { "label": "Stop chasing it; Supervising Nurse until retirement", "result": "You give your evenings back to your family. You know every name on the list of those who were approved." }
+      ]
+    },
+    "c10": {
+      "title": "The last few years",
+      "situation": "Retirement is close. A private elder care company in the county town offers you a high salary to be its head of nursing, while the clinic hopes you'll stay and train the new nurses. Your back is weighing in too.",
+      "options": [
+        { "label": "Stay and train the new nurses", "result": "Bit by bit you pass on all of it to the young nurses: the injections, the follow-ups, the way you talk to the villagers." },
+        { "label": "Go to the private elder care company", "result": "You take early retirement.", "end": "You become head of nursing at an elder care home in the county town: rosters, training care workers, getting through inspections. The pay is better than the clinic's, and you spend your last working years there." },
+        { "label": "Ask to move to the public-health office and a desk", "result": "No more bending over dressings. Your days are data and reports, and now and then you're called to the injection room to help out." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you still clock in at 7:50, and there's still a line outside the injection room. At lunch the canteen gives you an extra helping of twice-cooked pork, and the young nurses chip in for a cake. You hand over the key to the treatment room, and on your way downstairs someone from the village recognizes you and asks if you'll be in tomorrow.",
+    "burnout": "That year your back gave out, and your sleep with it. One day, coming back from the villages, you fell asleep on the back of the motorbike and nearly toppled off. You put in your request and left the injection room and the village roads behind. Later, when you run into old patients in the township, they still call you the young girl, and ask you how to take their blood-pressure pills."
+  },
+  "past": [
+    "You didn't get into the county high school after the middle-school exams, and cried at home for a whole afternoon. Your mother said: go to nursing school, become a nurse, have a trade.",
+    "You went to the nursing school in the city. The fees came from the family selling a pig. The first time you put a needle into a practice arm, it took you seven tries.",
+    "Your placement was at the county hospital, working rotating shifts behind the older nurses, sleeping on the narrow bed in the duty room at night, listening to the trolleys roll past outside.",
+    "You graduated from nursing school. The county hospital had stopped hiring nurses with only a vocational diploma, but the township clinic, ten kilometers from home, was hiring. You applied.",
+    "The clinic gave you a dorm room with a window onto the old street. The day you reported for work happened to be market day, and you stood at the injection room door all morning."
+  ],
+  "late": {
+    "pension_note": "Estimate: township clinic posts are mostly permanent state posts, with a basic pension plus an occupational annuity. The replacement rate is fairly high, but on a low base.",
+    "scenes": [
+      "After you retire, the old folks in the township still come to you to have their blood pressure checked. You set a stool out in the yard, and once you've measured them they sit and chat.",
+      "Your pension isn't much, but it goes far enough in the township. You buy your granddaughter a violin. She plays it terribly, and you love listening.",
+      "The clinic is renovated, and the young nurses invite you to see it. You run your hand along the new treatment cart and say it pushes much better than the old one.",
+      "You fall ill, and get moved to the pharmacy. No more village rounds; every day you fill prescriptions and balance the books.",
+      "Someone from the village stops you in the street to ask what to do about a child's fever. You tell them: go to the clinic, ask for whoever's on duty.",
+      "You learn to read the follow-up data on your phone, and now and then you help the new nurses check their forms.",
+      "The day you leave the clinic, the director says that with you gone the vaccinations will be short-handed again. You hand over the key to the vaccination room.",
+      "You go to an elder care home in Chengdu as a nursing team leader, looking after twenty old people, a few of them about your grandmother's age.",
+      "Back in the township for New Year, the old street is as crowded as ever on market day. There's a new sign over the clinic door.",
+      "Later on, most of the public-health data uploads itself from wristbands and blood-pressure cuffs, and the young nurses go out to the villages with nothing but a tablet. You think of all those nights under the lamp filling in forms one box at a time.",
+      "One of the young nurses you trained gets a job at the county hospital. When she comes back to see you in her white coat, the way she talks is a little like you.",
+      "You dig out your nursing-school graduation photo. That's you at the very end of the row, hair in a ponytail, smiling a little nervously."
+    ],
+    "closing": {
+      "retire": "Many years later, on a market day, you sit in a teahouse on the old street watching young mothers line up outside the clinic for their babies' vaccines. The tea in your hand slowly goes cold.",
+      "burnout": "Many years later, the pharmacy gets an automatic dispensing machine. The last time you go to see it, it clicks away counting pills. You listen for a while, then go home.",
+      "end": "Many years later, at the care home, you're trimming an old woman's fingernails. She asks what you used to do. You say you were a nurse in a township. No wonder, she says, your hands are so steady."
+    }
+  }
+}

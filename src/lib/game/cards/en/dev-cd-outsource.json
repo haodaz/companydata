@@ -1,0 +1,202 @@
+{
+  "id": "dev-cd-outsource",
+  "occupation": "Software Engineer",
+  "role": "Junior Java developer (outsourced, on-site at the client)",
+  "headline": "A 22-year-old new programmer at a small outsourcing firm in Chengdu, stationed on-site at banks and government projects, writing Java and reworking requirements",
+  "unit": "A 40-person software outsourcing firm in Chengdu",
+  "unit_type": "Small outsourcing firm",
+  "city": "Chengdu",
+  "city_tier": "New first-tier city",
+  "education": "Bachelor's in Computer Science and Technology, second-tier university",
+  "level": "You can follow the senior staff's code to modify basic data-entry pages and reports. You've never carried a production release on your own.",
+  "intro": "You're in a bank's technology park on the south side of Chengdu. Your badge is outsourcing blue; you sit in the same row as the client's red badges but can't eat in the same canteen. The firm has forty people in all, most of them stationed year-round beside server rooms at banks and government service centers, and you're the youngest of this batch. Your team lead hands you an intranet computer that can't reach the outside internet and says start with this month's change requests. As of today, you write other people's systems.",
+  "salary_note": "Estimate: Chengdu runs below the national average overall. A 40-person outsourcer lives on day rates with thin margins, so take-home pay for newcomers is noticeably low; estimated at 0.6 times the national figure.",
+  "facts": [
+    { "label": "Junior Software Engineer pay (national average)", "value": "¥8,000–15,000 a month", "source": "Career map" },
+    { "label": "Pay in the first year (national average)", "value": "¥8,500 a month", "source": "Pay by experience" },
+    { "label": "Pay after 10+ years (national average)", "value": "¥32,800 a month", "source": "Pay by experience" },
+    { "label": "Time to reach Software Engineer (mid-level)", "value": "Usually 2–4 years", "source": "Career map" },
+    { "label": "Open positions (nationwide / this city)", "value": "485 nationwide, 13 in this city (mostly graduate hiring and internships)", "source": "Job listings" },
+    { "label": "Work already handed to AI", "value": "Analyzing the impact of yesterday's code changes before the daily stand-up", "source": "AI exposure" }
+  ],
+  "day": [
+    "Three flatmates, one bathroom. Downstairs you buy a guokui flatbread to eat on the walk, and squeeze onto the rush-hour subway.",
+    "At the gate of the bank's tech park you scan a visitor code. Your phone goes into a locker outside the development area; USB drives are banned, no exceptions.",
+    "Stand-up. Staff from three outsourcing firms stand in a row while the client's project manager asks each of you for progress by name. Your change request has been pulled forward another two days.",
+    "The intranet machine can't get online. You can't work out an error, so you go out to the stairwell, look it up on your phone, and type the fix back in letter by letter.",
+    "Outsourced staff can't use their cards in the client's canteen, so you and a colleague go to a hole-in-the-wall place outside the park for a bowl of maocai at a dozen-odd yuan, talking over whose firm is behind on wages again.",
+    "Someone from the business side comes over: the “loan amount” figure in the report should now be counted by the date funds arrive. The logic you finished last week has to be torn down.",
+    "The client's people trickle home. Your row of lights stays on. The team lead says there's a release window tonight and nobody leaves.",
+    "You wait while ops pushes the release step by step through the bastion host, watching the logs scroll. Only after you've checked one query page do you dare breathe out.",
+    "You miss the last subway. The firm doesn't reimburse taxis. At the gate of your compound you eat a late bowl of chaoshou wontons, go up and fall straight asleep."
+  ],
+  "ladder": [
+    { "title": "Junior Software Engineer", "stage": "Entry", "focus": "Learn the business and the code structure under a mentor, deliver your piece of a module and fix common bugs on time and to standard. Promotion comes from clean code and getting tasks done." },
+    { "title": "Software Engineer", "stage": "Independent contributor", "focus": "Own a mid-sized business module end to end: development, integration testing, release and operations. Promotion comes from closing the loop on delivery and handling incidents reliably." },
+    { "title": "Senior Software Engineer", "stage": "Core engineer", "focus": "Lead design and the hardest technical problems on core business systems, and coach junior and mid-level engineers. Promotion comes from designing for load, having weight in code review, and being the one who catches what falls." },
+    { "title": "Staff Engineer", "stage": "Technical expert", "focus": "Own architecture and stack choices for a whole business line, crack the key technical problems and turn components into reusable assets. Promotion comes from breaking through hard bottlenecks and lifting engineering productivity." },
+    { "title": "Systems Architect", "stage": "Architecture leadership", "focus": "Plan the company-wide technical roadmap, bridge business and technology, and decide major technical investments and how tech debt gets paid down. Your standing comes from foresight across the whole architecture and from business results." }
+  ],
+  "ai_tasks": [
+    { "name": "Refactoring the historical order export to page through tens of millions of rows", "how": "AI can read the code, propose streaming export, cursor pagination, async jobs and chunked file writes, and generate most of the code and tests. A person has to fit the plan to real data volumes, the database and finance's reconciliation rules, and prove under load testing that it no longer runs out of memory." },
+    { "name": "Finishing a canary release of the payment service before the lunch rush", "how": "AI can write the release scripts, watch canary metrics and compare errors between old and new versions. A person decides how fast to ramp traffic, and answers for what happens on the core payment path." },
+    { "name": "Finding and fixing timeouts on the medical insurance settlement API", "how": "AI can sort through logs, traces and monitoring data and list likely causes of the delay. A person has to go into the government cloud to check the network, cross-domain and dependency issues, and coordinate the investigation with the medical insurance bureau and other teams." },
+    { "name": "Adapting an in-car voice SDK's JNI layer to the Qualcomm SA8295P chip", "how": "AI can explain the chip documentation, draft JNI interface code and troubleshoot common build errors. A person has to debug on the real chip in the lab, solve low-level performance and stability problems, and work with the chipmaker and the carmaker." },
+    { "name": "Producing a performance baseline report for an OCR service in a Xinchuang (domestic IT replacement) environment", "how": "AI can draft the test plan from the evaluation guidelines, write load-test scripts, compile the data and draft the report. A person has to run the tests on real Kunpeng servers with UOS, check how accuracy is measured, and answer for the conclusions." },
+    { "name": "Producing the annual tech debt health report and pushing the top three fixes", "how": "AI can pull trends from SonarQube and Jira data, classify problems and draft the report. A person has to judge which debt really hurts the business, pick the top three, and persuade the architecture committee to fund them." },
+    { "name": "Analyzing the impact of yesterday's code changes before the daily stand-up", "how": "AI reads the previous day's merge requests, maps the modules and call chains they touch, lists the core paths and risks affected, and writes a summary for the morning meeting. A person just skims it and spot-checks the key conclusions." },
+    { "name": "Emergency rollback of a faulty production release", "how": "AI can watch the alerts, trigger the rollback script and run basic functional checks. A person decides whether to roll back, authorizes it, and leads the post-mortem, because when core transactions fail someone has to answer for it." },
+    { "name": "Connecting the e-medical insurance credential SDK to the provincial government cloud's unified identity platform", "how": "AI can read the interface spec and generate the integration code and test cases. A person has to work on-site at the government cloud to connect to the identity platform, handle identity verification and compliance, and sign off the launch." },
+    { "name": "Leading the hunt for interference sources during automotive-grade EMC testing of an in-car voice SDK", "how": "AI can only help look up EMC references and analyze test data. Finding the interference source means measuring with real equipment in the lab, changing hardware and software, and working with a third-party testing lab; it depends mostly on hands-on experience." }
+  ],
+  "events": {
+    "e_first_bug": "Your first time touching production, you write a date format backwards. The overnight reconciliation batch spits out a pile of errors, and your team lead stays with you in the server room fixing data until three in the morning.",
+    "e_mentor": "A permanent employee of the client next to you notices you're always digging through the old batch-job code. At lunch he pulls you over and walks you through the entire batch process from start to finish.",
+    "e_rent": "Your landlord says a new mall has opened by the subway exit, so from next quarter the rent goes up ¥300 a month.",
+    "e_hike": "On the weekend you spend a day climbing Mount Qingcheng with college friends. Coming down you eat bobo chicken, skewers in a bowl of chili oil, and forget a whole week of change requests.",
+    "e_salary_late": "The client's payment is stuck in an approval chain, and the firm takes six weeks to pay wages in full. The boss posts a very long voice message of apology in the group chat.",
+    "e_bench": "The on-site project passes acceptance and you're called back to the office to be “on the bench” for two weeks, reading documentation at an empty desk on base pay only.",
+    "e_overtime_case": "A colleague who quit takes the firm to labor arbitration for overtime pay and wins. From next month, release nights earn time off in lieu.",
+    "e_xinchuang": "A government project has to migrate to domestic technology, swapping in a Chinese-made database. You go through hundreds of SQL statements, fixing the dialect differences one by one and load-testing each.",
+    "e_outage": "At the start-of-month peak for social insurance payments, the government system's APIs time out across the board. You keep watch in the server room for two nights, and it turns out the database connection pool was set too small.",
+    "e_ai_impact": "The client starts using AI to generate the daily code change impact analysis automatically. The stand-up summary you used to spend half an hour on every morning now takes a glance.",
+    "e_marry": "You and the person you've been with for years get your marriage certificate. The banquet is in your home county town: thirty tables.",
+    "e_ai_review": "A colleague's AI-generated query code hides a SQL injection, and you catch it in code review. The client's project manager names you in the group chat.",
+    "e_house": "You buy a small two-bedroom outside the ring expressway. The down payment empties both families' savings, and after that you never again think about quitting without another job lined up.",
+    "e_layoff": "The firm loses a framework contract with a big bank and cuts a third of its people. You stay, but there's no year-end bonus that year.",
+    "e_child": "Your child is born. In the corridor outside the delivery room you're still taking a call about a release rollback.",
+    "e_bid": "The firm needs senior engineers' résumés to dress up a bid, and the technical proposal carries your name. The bid wins, and the boss hands out a red envelope.",
+    "e_junior_leave": "Two newcomers you trained hand over hand jump to big tech firms within the same month. Before they go they take you out for hotpot.",
+    "e_checkup": "The company checkup says fatty liver and loss of the curve in your neck. The doctor says someone your age shouldn't have scans like these.",
+    "e_ai_rules": "The client asks you to set the rules: across releases, rollbacks and data permissions, which steps AI runs on its own and which need a person to click confirm.",
+    "e_ai_crud": "The client buys an AI coding tool, and the work on data-entry pages shrinks by more than half. In the next contract the day rate for outsourced staff is cut along with it.",
+    "e_parent_ill": "Back home your father is diagnosed with a heart problem. You take a week off and stay with him through surgery at the hospital in the city.",
+    "e_age35": "You notice many listings on the job apps say “under 35”, and headhunters call less than they did a few years ago.",
+    "e_old_code": "A bank report module you wrote ten years ago is still running in production. A young new hire brings you the code and asks why you wrote it this way back then.",
+    "e_parents_care": "Your mother lives alone in an outlying county. You start driving back every Saturday to fix her TV and check her pill box.",
+    "e_techdebt": "With AI you pull years of quality scans and ticket data into a tech debt report. The architecture committee funds the three items you picked.",
+    "e_back": "Your herniated disc flares up. You lie flat at home for two weeks, logging into the bastion host remotely a few times to check alerts.",
+    "e_teacher": "The new project manager is twenty years younger than you and calls you “teacher” in every meeting, asking you to explain the old core system."
+  },
+  "choices": {
+    "c_first_jump": {
+      "title": "Your first job change",
+      "situation": "After a full year on-site, the firm gives you a ¥500 raise. A classmate says in the group chat that a big tech company in Shenzhen is hiring outsourced staff, and a larger outsourcer in Chengdu is poaching people too.",
+      "options": [
+        { "label": "Stay and wait for next year's raise", "result": "You know this bank's systems and people now. The business staff come straight to you with problems. Your pay is the same number." },
+        { "label": "Jump to a 200-person outsourcer in Chengdu", "result": "Your pay goes up a notch, the projects are better run and code review is stricter. But your on-site posting moves to the north of the city, adding forty minutes to the commute." },
+        { "label": "Go to Shenzhen as an outsourced worker at a big tech firm", "result": "You drag your suitcase to Shenzhen. The pay is a good deal higher, you see far bigger systems, and you see the invisible line between the outsourced desks and the permanent ones." }
+      ]
+    },
+    "c_selflearn": {
+      "title": "The two hours after work",
+      "situation": "Day after day the project is changing fields and adjusting reports, and you know that if this goes on you'll only get better at reworking requirements. Between leaving work and sleep, you have two hours.",
+      "options": [
+        { "label": "Grind problems, read High Performance MySQL", "result": "You work through the popular LeetCode problems one by one and set up a local environment to read execution plans. Now when you look at the client's slow SQL you see at once where the index stops working." },
+        { "label": "Learn Docker and CI, and push a pipeline at work", "result": "You get automated builds running on the project and your team lead is pleased, but the client's ops team finds it a hassle, and half your time goes into persuading people." },
+        { "label": "Stop studying; keep it for life", "result": "You start playing ball on weekends and walking Yulin Road with your partner in the evenings. You feel more alive. The skills on your résumé are the same few lines." }
+      ]
+    },
+    "c_mid": {
+      "title": "Take on a government module alone",
+      "situation": "Your team lead wants to hand you an entire module of a government approval system: requirements to launch, integration, on-call, all yours. The last person on it was just pulled off after the client complained.",
+      "options": [
+        { "label": "Take it and carry it end to end", "result": "In three months you make countless trips to the government service hall, get yelled at and get praised. On launch day you know you can now deliver on your own." },
+        { "label": "Turn it down and stay in support", "result": "You keep your evenings, but your team lead gives several later chances to other people and stops asking your opinion in meetings." }
+      ]
+    },
+    "c_ruankao": {
+      "title": "Sit the senior-level national software exam?",
+      "situation": "When the firm bids for bank and government contracts, the scoring sheet gives points for the senior-level national software qualification (Systems Analyst or Systems Architect). The boss says he'll raise your pay if you pass, but you study on your own time.",
+      "options": [
+        { "label": "Sign up and study for a year", "result": "A year of weekends goes on past papers and practice essays. The day you pass, the boss puts a scan of your certificate into every bid." },
+        { "label": "Skip it and put the time into projects", "result": "You do two more projects and your work gets more solid, only in bids your résumé comes after colleagues who have the certificate." }
+      ]
+    },
+    "c_city": {
+      "title": "Stay in Chengdu, go to a bigger city, or go home",
+      "situation": "A former colleague is a team lead at a mid-sized company in Hangzhou and wants you to join. Your parents, in a prefecture-level city in northern Sichuan, say a state-owned company's IT center there is hiring. In Chengdu, the projects are the same projects.",
+      "options": [
+        { "label": "Stay in Chengdu", "result": "You keep rotating between familiar clients. The food suits you, home is close, and your raises keep coming at Chengdu speed." },
+        { "label": "Go to Hangzhou", "result": "The pay is a big step up and the tech stack is newer, but rent doubles, and the times you go home in a year can be counted on your fingers." },
+        { "label": "Go home to the state-owned company's IT center", "result": "You go home and look after the server room and a few internal systems at the IT center. Nine to five; you write less and less code, and on weekends you take your parents out for mutton soup.", "end": "You left front-line development and worked steadily at a state-owned company's IT center back home until you retired." }
+      ]
+    },
+    "c_presales": {
+      "title": "The boss wants you in presales",
+      "situation": "The firm needs someone technical to go with sales to bank and government tenders, handling technical Q&A and proofs of concept. The boss says you explain things clearly, and the commission is decent.",
+      "options": [
+        { "label": "Move to technical presales", "result": "You start wearing shirts, writing tender responses and presenting solutions at bid evaluations. At banquets you learn to say little and keep pouring tea.", "end": "You moved into technical presales, from the person who writes the code to the person who pitches the solution." },
+        { "label": "Stay in development", "result": "You politely decline and keep writing code. Someone else takes presales, and that year his commission is a good deal more than your bonus." }
+      ]
+    },
+    "c_ai": {
+      "title": "Take on the AI rollout?",
+      "situation": "The client requires every outsourcing team to use AI coding tools, and the firm wants someone dedicated to reviewing AI-written code and setting the rules for human-AI releases. It's new; nobody knows who gets credit if it goes well, but everybody knows who takes the blame if it doesn't.",
+      "options": [
+        { "label": "Take it and lead the AI rollout", "result": "Every day you review piles of AI-written code and decide which steps need a human to confirm. You work many late nights, and become the person in the firm who understands this best." },
+        { "label": "Pass, and rely on your own craft", "result": "You keep writing core logic by hand, steady and slow, and gradually find you can't join in on what people discuss in reviews." }
+      ]
+    },
+    "c_35": {
+      "title": "The year you turn thirty-five",
+      "situation": "The firm wants you to become a project manager over an on-site team of twenty-odd people. The client bank's tech subsidiary has an experienced-hire opening and would take you. Or you can stay and push for staff engineer.",
+      "options": [
+        { "label": "Push for staff engineer", "result": "You start owning tech choices and the hardest problems for a whole business line. When alerts fire at night, you're the first call, and your hair goes fastest too." },
+        { "label": "Join the client's tech subsidiary", "result": "You put on a red badge and can eat in the canteen. The work is stable, but much of it gets subcontracted to outsourcers, and you go from writing code to managing them." },
+        { "label": "Become a project manager", "result": "You start scheduling person-days, handling the client and chasing payments. You touch code less, and your phone rings dozens of times a day.", "end": "You became a project manager, and for many years led on-site teams around Chengdu's banks and government offices." }
+      ]
+    },
+    "c_peak": {
+      "title": "The last step up",
+      "situation": "A company serving government and financial clients wants you as a solutions architect, facing customers directly. Your own firm is considering you for systems architect, setting the company-wide technical direction and tech debt policy.",
+      "options": [
+        { "label": "Stay and go for systems architect", "result": "You start drawing the technical blueprint for the whole firm, deciding where the money goes and which debt gets paid first. Every decision has someone who disagrees." },
+        { "label": "Become a solutions architect", "result": "You cross to the client side, flying around the country to pitch solutions. Your technical grounding is your best calling card; you rarely make it home for dinner.", "end": "You became a solutions architect, pitching to government and financial clients for more than a decade." },
+        { "label": "No more promotions; stay on the front line with the core code", "result": "You turn down management and architecture and keep guarding the hardest few pieces of code. Your pay stops climbing much, and you feel more settled for it." }
+      ]
+    },
+    "c_late": {
+      "title": "The last few years",
+      "situation": "The firm asks how you want to spend your last few years: stay on call holding up production, or step back to train newcomers and document the old systems only you understand.",
+      "options": [
+        { "label": "Stay on call on the front line", "result": "You're still the first one woken in the night. When the young ones watch you handle an incident, there's a little awe in their eyes." },
+        { "label": "Step back and train newcomers", "result": "You write up the old systems' traps in document after document, gradually stop taking alert calls, and get home for dinner." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you hand over your bastion host account and sign the permissions form. A newcomer helps you carry the monitor you used for years downstairs; outside, a light rain is falling. You sit for a while in the wonton shop at the park gate. Your phone is very quiet. No alerts.",
+    "burnout": "After that release night, your hands won't stop shaking in the taxi, and the next day you can't get out of bed. You take extended leave and never go back to the server room. You delete the project code on your computer and keep just one folder: the first piece of Java you ever wrote that ran."
+  },
+  "past": [
+    "You test into the No. 2 High School in the county. Your family lives in a town under Ziyang; your parents do renovation work in Chengdu and come home twice a year.",
+    "In the gaokao (college entrance exam) you come in a dozen-odd points below the cutoff for first-tier universities. You fill your application form with a string of “computer science”, because your cousin says it's easy to find work.",
+    "You get into Computer Science and Technology at a second-tier university in Chengdu. Six to a dorm room, four of them gaming, you among them.",
+    "The summer after second year you take a two-month Java course at a training school. Half the fee you earn handing out flyers; the other half you ask your mother for.",
+    "In the autumn hiring season you send more than eighty résumés and don't get a single first interview at a big tech firm. In spring an HR person at an outsourcing firm says on the phone, “On-site at the client, lunch included.” You say yes.",
+    "Three days after your thesis defense you drag your suitcase into a shared flat near the office: ¥800 a month, one bathroom shared with two strangers."
+  ],
+  "late": {
+    "pension_note": "Estimate: standard employee pension scheme. In outsourcing you mostly paid in at the minimum base, so your pension replaces around 40 percent of your pay.",
+    "scenes": [
+      "You do the retirement paperwork at the social insurance office counter. The clerk asks what base you paid in at. You say the minimum, most years. She nods and says nothing more.",
+      "A young man you once trained invites you to his company to talk about “how to retire an old system”. You talk all afternoon, and on the subway home realize you still remember the table names in that bank's core system.",
+      "On the day your pension comes in, you go to the market and buy a fish. It's enough, not generous; you and your spouse change your travel plans to trips close to home.",
+      "The day you leave the on-site job you don't say goodbye to the client's people, just leave your badge at the front desk. For the next six months you don't want to touch anything, and your phone stays on Do Not Disturb.",
+      "You open a little shop at the gate of your compound fixing computers and installing systems. Most of the customers are old people whose phone text is too small, and you make it bigger for them.",
+      "Now and then you still dream of a release window: two in the morning, the logs rolling up screen after screen. You wake to find it's already light outside.",
+      "When you leave programming, the firm happens to be closing out another project, and nobody notices your desk is empty.",
+      "The new job is nine to six. For the first time you see a Chengdu sunset on a weekday evening, and it feels a little strange.",
+      "At a class reunion, the few still writing code talk about large language models. You listen, and now and then put in a story from your on-site days. They all laugh.",
+      "The government booking system you wrote is eventually replaced wholesale, by a new one built with AI's help. You see it on the news the day it launches. The interface looks better than yours did.",
+      "Your child is choosing a college major and asks whether to study computer science. You think for a long time and say: go ahead, but don't learn only how to build data-entry pages.",
+      "You dig out the old laptop. The hard drive still holds the code from your first job. The variable names were chosen with great care."
+    ],
+    "closing": {
+      "retire": "Many years later, one afternoon, you're playing Chinese chess with an old neighbor in the teahouse downstairs. Someone's phone has frozen and they hand it to you. You press a few things and hand it back.",
+      "burnout": "Many years later the repair shop gets a new sign with the same few words on it. The young people who bring things in call you “master”. You don't tell them you used to write programs too.",
+      "end": "Many years later you pass that tech park. The guards at the gate have changed several times over. The blue badges and the red badges look about the same to you now."
+    }
+  }
+}

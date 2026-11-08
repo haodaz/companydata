@@ -1,0 +1,202 @@
+{
+  "id": "surgeon-bj-neuro",
+  "occupation": "Surgeon",
+  "role": "Associate Chief Physician, Neurosurgery",
+  "headline": "An associate chief neurosurgeon at one of Beijing's leading top-tier (Grade 3A) hospitals, operating on brain tumors and cerebrovascular disease, stuck at the threshold of promotion to full chief",
+  "unit": "Department of Neurosurgery, a leading top-tier (Grade 3A) hospital in Beijing",
+  "unit_type": "Top-tier (Grade 3A) hospital",
+  "city": "Beijing",
+  "city_tier": "First-tier city",
+  "education": "MD-PhD in clinical medicine (eight-year combined program), plus three years of residency training",
+  "level": "You can lead Grade IV operations on your own, such as glioma and meningioma resection and aneurysm clipping. Complex skull-base cases and high-grade vascular disease you still do under a senior surgeon.",
+  "intro": "You work in neurosurgery at one of Beijing's leading top-tier hospitals. You have been an associate chief physician for several years now. Your operating list is full, and your clinic appointments are gone the moment they are released. To be promoted to chief physician you still need a General Program grant from the National Natural Science Foundation and a paper or two that count. Several associate chiefs in the department came up with you, and there are only so many slots. From today, every box on that form is yours to fill, year by year.",
+  "salary_note": "Estimate: senior neurosurgeons at Beijing's leading top-tier hospitals earn well above the national average, here taken as about 1.5 times, not counting outside income such as fees for operating at other hospitals.",
+  "facts": [
+    { "label": "Associate Chief Physician pay (national average)", "value": "¥22,000–40,000 a month", "source": "Career map" },
+    { "label": "Chief Physician pay (national average)", "value": "¥35,000–70,000 a month", "source": "Career map" },
+    { "label": "Pay after 10+ years (national average)", "value": "¥48,000 a month", "source": "Pay by experience" },
+    { "label": "What it takes to make full chief", "value": "Difficult Grade IV operations + leading an NSFC General Program grant + helping write clinical guidelines", "source": "Career map" },
+    { "label": "Can AI take the hands-on work", "value": "Debridement and opening the abdomen, AI can't take; post-op complication assessment is done by people and machines together", "source": "AI exposure" },
+    { "label": "Open positions", "value": "20 nationwide, 9 in Beijing (mostly campus hiring and internships; few experienced hires)", "source": "Job listings" }
+  ],
+  "day": [
+    "You wake before the alarm. In the car, the navigation reads out where the Second Ring Road is jammed, and you answer two data questions from your graduate students on your phone.",
+    "First stop at the department is the ICU, to see yesterday's glioma. Pupils, drains, serum sodium, one by one. Then you sign the few orders the night shift left for you.",
+    "Morning handover. A dozen-odd people crowd into the teaching room. The chief resident reads out the night's emergencies, and the department head asks you, by name, what exactly is causing the fever in the post-op patient on your team.",
+    "First case of the day. Once the microscope swings into place you are there for five or six hours, navigation and neuromonitoring running. Head down, your neck protesting. Your hands can't shake.",
+    "Off the table, you swallow a few bites of a boxed lunch gone cold, then go out to talk with a family. They came overnight by train from another province, gripping a stack of scans and opinions from three hospitals.",
+    "The afternoon case is an anterior communicating artery aneurysm. After the clip, angiography confirms the vessel is open. You let your first assistant close and go out to write the operative note.",
+    "The patients squeezed into extra clinic slots are waiting outside your office door. One paid a scalper several times the price for the appointment. You read the scans, write the admission slip, and tell him the wait for a bed will be long.",
+    "The ward goes quiet. In your office you open the grant application. The section on preliminary work is on its seventh draft, and it still doesn't feel solid enough.",
+    "By the time you get home your child is asleep. Your phone is on silent but you don't dare switch it off. You are second on call tonight; if a ruptured aneurysm comes in, you go back."
+  ],
+  "ladder": [
+    { "title": "Resident Physician", "stage": "Residency training", "focus": "Rotate through the surgical wards: manage beds, change dressings, take out stitches, write the records, and follow the emergency shifts. Second assistant and retractor holder in the operating room. Promotion comes with a medical license and passing the residency exit exam." },
+    { "title": "Attending Physician", "stage": "Independent clinician", "focus": "Run a team on the ward, staff a specialty clinic, lead routine Grade I and II operations on your own, and do Grade III operations with a senior surgeon. Usually includes a year as chief resident, living in the hospital around the clock. Promotion to associate chief rests on your case count, first-author SCI papers, and provincial research grants." },
+    { "title": "Associate Chief Physician", "stage": "Core specialist", "focus": "Lead Grade III and IV operations on your own, perform minimally invasive and core specialty techniques, and direct rescues of the department's hardest and most critical cases. Teach residents and graduate students. The push to full chief takes breakthroughs in difficult Grade IV operations, leading a national grant such as an NSFC General Program project, and helping write clinical guidelines." },
+    { "title": "Chief Physician", "stage": "Top attending specialist", "focus": "Lead a care team as attending and principal investigator. Operate on the highest-risk and rarest complex cases, translate new techniques into clinical use, and run multi-center randomized trials. Own the department's quality control and the training of young doctors, and hold seats on national or provincial specialty committees." },
+    { "title": "Department Head", "stage": "Department leader", "focus": "Run every part of the surgical department: patient safety, performance pay, bed turnover and long-term strategy. Build it into a national key clinical specialty, lead major clinical translation, and speak for the hospital in regional and international academic circles." }
+  ],
+  "ai_tasks": [
+    { "name": "Debriding and suturing an emergency forearm laceration", "how": "AI can't help with the hands-on work: debridement, local anesthetic and layered suturing are all done by the doctor's own hands, along with judging on the spot how deep the wound is and whether tendons, nerves or vessels are hurt. At most AI helps write the record and reminds you of routine steps like tetanus." },
+    { "name": "Opening the abdomen through a McBurney incision for appendectomy", "how": "Cutting down through the anatomical layers into the abdomen depends on feel and on what your teachers showed you. AI can't do it. It can help review the anatomy and replay surgical video before the operation; a person does the actual work and adapts in the moment." },
+    { "name": "Exploring an emergency adhesive bowel obstruction and judging bowel viability", "how": "AI can combine the imaging, labs and pre-op information and flag the risk of ischemia. The color of the bowel, whether it moves, whether the vessels pulse, have to be seen and felt in the operation. Whether to keep it and how much to resect, the doctor decides and answers for." },
+    { "name": "Assessing and managing post-op fever and anastomotic infection after abdominal surgery", "how": "AI can pull together changes in temperature, heart rate, labs and drain fluid, flag a possible anastomotic leak, and draft the consult request and handover summary. The bedside exam, judging how serious it is, the drains and dressings, and talking to the consulting teams are the doctor's." },
+    { "name": "Judging and managing bowel viability during emergency exploratory laparotomy", "how": "AI can provide imaging analysis and risk flags before surgery, and serve as a reference during it. Whether dark purple bowel is still alive is judged by the doctor, looking at the color, feeling for a pulse, watching for movement, and deciding with the senior surgeon. The responsibility is human." },
+    { "name": "Managing an anastomotic leak with abscess after colorectal surgery, start to finish", "how": "AI can watch the numbers continuously, warn early of a leak, and assemble the materials for the multidisciplinary team and the handover points. The doctor examines on rounds, judges, runs the discussion, chooses the minimally invasive drainage, and at handover makes the risk clear and confirms the next doctor has taken it on." }
+  ],
+  "events": {
+    "e_nsfc_fail": "The NSFC results are out. The General Program grant missed again. The reviewers wrote: insufficient novelty, weak preliminary work.",
+    "e_nsfc_win": "The General Program grant finally came through. Not much money, but the emptiest box on your promotion file is filled.",
+    "e_paper_accept": "Your team's cohort study on post-op glioma patients was accepted by a respectable journal. Three graduate students spent two years on that data.",
+    "e_paper_reject": "Third round of revisions, and the reviewer raised new questions. In the end it was rejected anyway, and you have to start over at another journal.",
+    "e_night_aneurysm": "At two in the morning, the emergency room brings in a ruptured aneurysm. You come back in and clip it. A few days later, in his hospital bed, the man recognizes his family.",
+    "e_reoperation": "A post-op patient develops a delayed bleed and goes back for emergency surgery. The family breaks down at the nurses' station, and the medical affairs office sends someone to pull the records.",
+    "e_banner": "An old craftsman whose meningioma you removed comes back for his follow-up carrying a silk banner of thanks. In the corridor he insists on bowing to you, and you spend a long time trying to stop him.",
+    "e_scalper": "A patient tells you he paid several times the price to buy your appointment from a scalper. Not long after, the hospital changes its real-name booking rules once again.",
+    "e_lawsuit": "You are sued over an operation from two years ago. The medical review finds you not liable, but the court appearances, the written statements and the records reviews drag on for more than a year.",
+    "e_flying_knife": "On the weekend you travel to a city hospital in another province to consult and operate. The local surgeon assists, and afterward he keeps you for an hour of questions.",
+    "e_parent_ill": "A call from home: your father is in the hospital. You can't get away, so you read his scans remotely, ask a former classmate there to look in on him, and send money home.",
+    "e_child_school": "The year your child moved up to middle school, you didn't make a single parents' meeting. The day the results came out you were in the operating room. Your spouse told you by WeChat.",
+    "e_school_house": "For the school district, the family grits its teeth and trades into a cramped old walk-up. The down payment takes nearly all your savings from these years.",
+    "e_neck": "The scans from your checkup show a herniated disc in your neck. The doctor tells you to look down less. You look at next week's operating schedule and put the scans in a drawer.",
+    "e_ai_records": "The hospital's AI records system goes live. It drafts post-op notes and discharge summaries, and you stay up an hour less each day. But every one still has to be checked word by word before you sign.",
+    "e_ai_false_alarm": "The AI flags a post-op patient for possible intracranial infection. You order a repeat lumbar puncture and it's ruled out. The chart says no action for now, and the name signed under it is yours.",
+    "e_ai_missed": "The system raised no alert that day. On rounds you felt the patient was a little slower than yesterday and ordered a CT at once. The bleed was caught early, and handled in time.",
+    "e_student": "Your doctoral student won a national scholarship and, after his defense, stayed on in the department. The first time he closed a skull on his own, you stood beside him and didn't say a word.",
+    "e_mdt": "At the hospital-wide multidisciplinary meeting you argue for a long time with radiation oncology over a recurrent glioma. You settle on surgery first, then chemoradiation. Later it proves to have been the right path.",
+    "e_robot": "The hospital brings in a neurosurgical robot. You do the animal trials and get certified, and you lead the first round of stereotactic biopsies yourself.",
+    "e_guideline": "You are pulled onto the writing group for a national expert consensus, responsible for the chapter on intraoperative neuromonitoring. The revisions take the better part of a year.",
+    "e_headhunter": "Someone from a private physician group takes you to dinner and names a price several times what you earn now. No one at the table mentions how complications get handled.",
+    "e_job_board": "Helping a student look at job listings, you find there are only 20 related positions posted nationwide, 9 in Beijing, most of them campus hiring and internships. Senior doctors who want to move don't go through that door.",
+    "e_quality_notice": "In a hospital quality inspection, a pre-op discussion record from your team is missing a signature. The team is named in a hospital-wide notice, and that month's performance pay is docked.",
+    "e_drg": "Diagnosis-related group payment rolls out across the board, and average length of stay becomes a hard target. You start watching which day after surgery each patient can be transferred back to a local hospital.",
+    "e_running": "A classmate collapsed beside the operating table. Since then you've been getting up early to run, and you gave up the pack of cigarettes you smoked at night.",
+    "e_anniversary": "On your wedding anniversary, the emergency room calls you in. The restaurant reservation is canceled. When you get home, the flowers are already in a vase.",
+    "e_old_patient": "A girl you operated on ten years ago comes back for a follow-up. She has graduated from university now. She still has the diagram you drew for her family in the case notes, she says."
+  },
+  "choices": {
+    "c_nsfc": {
+      "title": "How to write the NSFC application",
+      "situation": "Two months to the NSFC deadline. The department head hints that if you miss again this year, your promotion will have to wait. But your team has six or seven operations scheduled every week, for patients who have waited months.",
+      "options": [
+        { "label": "Hand off half your operations and shut yourself in to write", "result": "Your case count dropped noticeably, and your team's beds went to other teams. The application is much stronger. Whether it wins is still luck." },
+        { "label": "Keep operating and write at night", "result": "Standing at the table by day, revising by night. Even you weren't happy with what you submitted. You lost three kilos in those two months." },
+        { "label": "Join a basic-science collaborator's grant as a participant", "result": "Less pressure, and the paper collaborations go smoothly. But promotion requires leading a grant, and that box is still empty." }
+      ]
+    },
+    "c_professor": {
+      "title": "Go for full chief this round or not",
+      "situation": "This year the department has one chief physician slot. You and another associate chief are about evenly matched: he has more papers, you have more operations. The hospital has also opened a branch campus, and no one wants the chief physician post there.",
+      "options": [
+        { "label": "Go for it this year and pack the file", "result": "At your defense you finished showing your surgical videos, and the committee asked only about papers. When the list came out, you were on it. From then on everyone assumed you should be busier." },
+        { "label": "Step back a year and shore up the papers", "result": "You gave up the slot, and your colleague took you to dinner. This year you finished two papers. What next year will bring, no one can say." },
+        { "label": "Go to the branch campus as chief physician with your own team", "result": "You got the title first. But the branch has fewer patients and older equipment, you commute two hours a day, and the good operations at the main campus no longer come your way." }
+      ]
+    },
+    "c_private_group": {
+      "title": "A physician group comes recruiting",
+      "situation": "A physician group running high-end neurosurgery makes an offer: partner status, a share of every operation, and the say over their day-surgery center. But once you leave the state system, you will never get back to this volume of patients or this kind of platform.",
+      "options": [
+        { "label": "Resign and join as partner", "result": "You handed in your resignation. The department head didn't try to keep you.", "end": "You became a surgical partner at a private hospital. Fewer operations, and you chose simpler patients. Outside your clinic window, there was no longer a line forming before dawn." },
+        { "label": "Stay, and operate for them on weekends", "result": "On weekends you operate at their place, and your income goes up a good deal. At Monday morning handover you are often still yawning." },
+        { "label": "Decline, and stay focused on the hospital", "result": "You turned them down. The number in your account didn't change. The next complex skull-base case went on your list." }
+      ]
+    },
+    "c_hometown": {
+      "title": "Go back to your home province as department head",
+      "situation": "A top-tier hospital in your home province's capital is rebuilding its neurosurgery department. The hospital president comes to Beijing in person: the head's post is yours, with jobs for your family and schools for your child. Your parents are getting old, and they have always lived back home.",
+      "options": [
+        { "label": "Go back and build a department from scratch", "result": "You took two students with you and built the department starting from buying a microscope. Patients felt the Beijing expert had come home. But often you couldn't find a first assistant able to keep up with you." },
+        { "label": "Stay in Beijing", "result": "You said thank you on the phone. Your parents said it was fine. After you hung up, you sat in your office a long time." },
+        { "label": "Stay, but go back once a month to operate", "result": "You became their visiting expert, flying back once a month. You tried to look after both ends, and both ends felt you weren't there enough." }
+      ]
+    },
+    "c_ai_workflow": {
+      "title": "Lead the AI perioperative workflow or not",
+      "situation": "The hospital wants to wire AI alerts and the records system into neurosurgery's perioperative workflow, and the IT department wants a clinician to lead it: which numbers AI watches, and which must be confirmed by a doctor on rounds and spelled out at handover. None of it counts as operations or papers.",
+      "options": [
+        { "label": "Lead it and help design it from the ground up", "result": "You spent most of a year arguing thresholds with engineers and rewriting handover templates. There were two false-alarm scares. In the end the workflow ran, and it became a paper too." },
+        { "label": "Use it but stay out of it, and focus on surgery", "result": "Once it went live you used it as usual. You couldn't find big faults, and couldn't say what was wrong with it either. When young doctors had questions, they went to someone else." },
+        { "label": "Put your own student forward to do it", "result": "Your student threw himself into it, and the results carried your name as corresponding author. But many details of the workflow, you never really thought through." }
+      ]
+    },
+    "c_endovascular": {
+      "title": "Learn endovascular intervention too",
+      "situation": "More and more cerebrovascular disease is treated through the vessels, and the hybrid operating room is built. You are good at open clipping, but intervention means learning catheters from scratch, watching over the shoulders of people ten years younger.",
+      "options": [
+        { "label": "Swallow your pride and learn intervention from the start", "result": "The first year you were often clumsier than the students. From the second year on, for complex cases you could make the call on either open surgery or intervention." },
+        { "label": "Hold on to open microsurgery", "result": "Your open operations got finer and finer, but there were fewer vascular patients each year. What reached you were mostly the hard cases intervention couldn't handle." }
+      ]
+    },
+    "c_chief": {
+      "title": "Run for department head",
+      "situation": "The old department head has reached retirement age, and the hospital is holding an open competition for the post. Win it, and you manage performance pay, bed turnover, and building a national key specialty. Meetings will certainly eat a big piece of your operating time.",
+      "options": [
+        { "label": "Put your name in", "result": "You finished presenting your plan for the department, and the hospital leaders asked only one thing: bed turnover. You were chosen. In the first month you sat through more than twenty meetings." },
+        { "label": "Stay out of it and remain an attending", "result": "The new head is a colleague two years younger than you. When he sets the operating schedule, he always asks you first. You still stand at the table four days a week." }
+      ]
+    },
+    "c_industry": {
+      "title": "Leave the operating table for industry",
+      "situation": "A surgical robot company wants a head of clinical affairs to run product validation and work with experts nationwide. A healthcare venture fund wants a partner who knows neurosurgery to do due diligence. Both say people like you are hard to find.",
+      "options": [
+        { "label": "Become head of clinical affairs at the device company", "result": "You took off your scrubs and put on a shirt.", "end": "You became head of clinical affairs at a device company, teaching others to use the robot in the animal lab, watching other surgeons step into the place where you used to stand." },
+        { "label": "Join the healthcare investment firm", "result": "You started reading financial statements and other people's business plans.", "end": "You became a healthcare investor. When you judge whether a technology is worth anything, you still ask first: does it actually work at the operating table?" },
+        { "label": "Consult only, and stay in clinical work", "result": "You signed a consulting contract, went to meetings on weekends, and kept operating the rest of the week. The hospital issued new rules on outside work, and you filled out a stack of disclosure forms." }
+      ]
+    },
+    "c_vice_president": {
+      "title": "The post of vice president for medical affairs",
+      "situation": "The hospital's Party committee calls you in. They want you to become vice president for medical affairs, in charge of quality and clinical operations. Take it, and you are more or less done leading operations.",
+      "options": [
+        { "label": "Accept", "result": "You signed the letter of appointment.", "end": "You became vice president for medical affairs. Every day you read the hospital's adverse-event reports. Sometimes, passing the neurosurgery operating rooms, you stand at the door for a moment and then move on." },
+        { "label": "Decline, and stay in the department", "result": "You said you wanted a few more years of operating. The leadership didn't press, and they never called you in for that kind of talk again." }
+      ]
+    },
+    "c_last_years": {
+      "title": "How to spend the last few years",
+      "situation": "A few years from retirement. You know for yourself how steady your hands still are. The young surgeons can take most Grade IV operations now, and private hospitals are asking about your plans after retirement.",
+      "options": [
+        { "label": "Hand over gradually, keep only the hardest cases", "result": "You passed most operations to your students and stood beside them watching. Your case count fell. The few cases no one else was sure of, you still did yourself." },
+        { "label": "Stay at full load until the last day", "result": "Your schedule was as full as it had been ten years earlier. After each operation you had to sit a long time in the locker room before you could tie your shoes." },
+        { "label": "Step down early and go to a private hospital", "result": "You filed to leave frontline clinical work early.", "end": "You saw patients at a private hospital, three half-days a week. Not many patients, and you had time to explain every scan from beginning to end." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "For your last operation, you let your student lead and took the first assistant's place. Afterward you took out the surgical clogs you had worn for so many years, thought about it, and put them back. Leaving the inpatient building, you saw people already lining up at the registration window. You stood at the door a while, then walked toward the subway.",
+    "burnout": "That day after the operation, your hands shook in the locker room for a long time. You told no one. The next day you went to the medical affairs office and took yourself off next month's operating schedule entirely. Later you moved to a post that kept you away from the table. Sometimes, when the phone rings at night, your hand still reaches for it without thinking."
+  },
+  "past": [
+    "You went to a key high school in a prefecture-level city in Hebei, always near the top of your year. Your father was a fitter, and he said people with good hands should become surgeons.",
+    "Your gaokao (college entrance exam) score got you into an eight-year medical program in Beijing. The day the admission letter came, your father bought dinner for his whole workshop.",
+    "In your fifth year, you went into a neurosurgery operating room for the first time. Standing at the very back, you couldn't see a thing. All you heard was the suction.",
+    "After your doctorate, you stayed on as a resident in this hospital's neurosurgery department. Your first month, you slept on the ward more than twenty nights.",
+    "Residency training passed, every certificate in hand, you began operating on skulls under a senior surgeon.",
+    "Promoted to attending, you spent a year as chief resident, practically living in the hospital. Your daughter was born on a day you were on call.",
+    "You made associate chief physician and led your first aneurysm clipping on your own. Afterward you sat in the locker room for a long time."
+  ],
+  "late": {
+    "pension_note": "Estimate: basic pension plus the occupational annuity at a public hospital replaces around sixty percent of your pay; post-retirement contracts and consultations are extra.",
+    "scenes": [
+      "After retirement the hospital hires you back for two years. No more operations, only the expert clinic. Your appointments still vanish the moment they are released.",
+      "You start writing a book of surgical notes for young doctors, writing and revising and revising again. Some of the drawings you make yourself, line by line.",
+      "Your hands have begun to shake a little. Nothing anyone would notice, but you know. You put your surgical loupes at the very back of the cabinet.",
+      "You step away from clinical work and go to the teaching office to supervise residents. The first time you stand beside someone else doing the operation you know best, you watch the whole thing with your fists clenched.",
+      "You have surgery on your neck. The surgeon is a student you once trained.",
+      "You consult at the community clinic near home, once a week, reading scans and giving advice. On the way home you buy a bunch of flowers.",
+      "You leave the public hospital to become a medical adviser at a device company. Signing the contract, you look at the pay sheet for a long time.",
+      "You present clinical data on surgical robots at a conference. Your old peers sit in the audience, and a few of them nod to you.",
+      "Now and then an old patient calls about a follow-up, and you still explain it to them point by point.",
+      "Later, the department's pre-op imaging analysis and risk flags were all drafted by AI first. You looked at it once and said it was quite accurate. It just couldn't take responsibility.",
+      "When your daughter sits the gaokao, she asks whether she should study medicine. You tell her medicine is hard. She says she knows. She grew up watching you.",
+      "A silk banner arrives, sent by the family of a patient from more than ten years ago. Their child got into university this year, they say."
+    ],
+    "closing": {
+      "retire": "One winter morning many years later, you are walking in your housing compound, snow settling on your shoulders. Over by the inpatient building a helicopter is landing. You stop and watch for a while, then walk on.",
+      "burnout": "Many years later, one of the residents you trained becomes a department head. At the start of a lecture he says he learned to hold the suction standing beside your table.",
+      "end": "Many years later, at a coffee break during a conference, a young doctor stops you and says he has read what you wrote. You tell him it was all written too slowly."
+    }
+  }
+}

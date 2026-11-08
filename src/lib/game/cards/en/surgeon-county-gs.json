@@ -1,0 +1,198 @@
+{
+  "id": "surgeon-county-gs",
+  "occupation": "Surgeon",
+  "role": "Resident Physician, General Surgery (including Colorectal)",
+  "headline": "Just back in the county after three years of residency training in the provincial capital: a general surgery resident at the county hospital who takes every operation and covers every shift",
+  "unit": "Department of General Surgery, a county People's Hospital in Henan",
+  "unit_type": "County hospital",
+  "city": "A county in Henan",
+  "city_tier": "County town",
+  "education": "Bachelor's degree in clinical medicine (five-year program)",
+  "level": "Residency training passed. You can do hemorrhoids, appendectomies, inguinal hernias, and wound debridement and suturing on your own. In laparoscopic surgery, you have only ever held the camera.",
+  "intro": "You did three years of residency training at a top-tier hospital in the provincial capital and came home with your certificate to the county People's Hospital. The department has six doctors for forty beds, with extra beds lining the corridor. The first time the department head met you, he asked whether you could do a laparoscopic appendectomy. As of today your name is on the general surgery night roster, and your first night shift is tonight.",
+  "salary_note": "Estimate: a resident at a county hospital in Henan takes home about forty to fifty percent of the national average. Performance pay follows your case count, and the gap narrows a little as your title rises.",
+  "facts": [
+    { "label": "Resident stage", "value": "0-3 years, ¥5,000–10,000 a month (national average)", "source": "Career map" },
+    { "label": "Hard requirements for attending", "value": "Residency training certificate + medical license", "source": "Career map" },
+    { "label": "Attending Physician pay", "value": "¥12,000–22,000 a month (national average)", "source": "Career map" },
+    { "label": "Pay after 10+ years", "value": "¥48,000 a month (national average)", "source": "Pay by experience" },
+    { "label": "Debridement and suturing, opening the abdomen for an appendix", "value": "AI can't take these; they are done by a doctor's own hands", "source": "AI exposure" },
+    { "label": "Open positions", "value": "20 related listings nationwide; no figures for county towns", "source": "Job listings" }
+  ],
+  "day": [
+    "Up at the first ring of the alarm. You ride your e-bike through a night market that hasn't packed up yet and drink a bowl of hulatang, the peppery breakfast soup, at the stall outside the hospital gate. Two patients' relatives say hello to you on the way in.",
+    "Handover. The colleague on nights has red eyes. He reports one emergency appendix and two drunken injuries, and three more extra beds in the corridor.",
+    "Rounds with the department head. The old man recovering from hemorrhoid surgery says sitting hurts and won't go home. The old woman after her hernia repair says the hospital costs too much and insists on leaving today. You go back and forth between the two beds, coaxing both.",
+    "In theater. This morning: two mixed hemorrhoids and a hernia repair. Handing you suture, the scrub nurse asks whether the operating rooms in the provincial capital really have air conditioning you can set.",
+    "In the canteen line, a relative chases you down and stuffs a pack of cigarettes in your pocket. You pull it out and push it back. Your food has gone cold.",
+    "Emergency calls: a farm three-wheeler rolled into a ditch, and a man's shin is laid open. You debride it and close it in layers, checking along the way for tendon damage, then order a tetanus shot.",
+    "Pre-op consent. The patient's son works away from home in another province. On speakerphone you go through the risks one by one. From the other end he asks only one thing: Wouldn't it be safer to have it done in the provincial capital?",
+    "Catching up on records. The hospital system freezes at the end of every working day. By the time you have typed up three full admission notes and two operative reports, it's dark.",
+    "Night shift. You've just lain down when the nurse knocks. A young man has had pain in his lower right abdomen all afternoon. You press on McBurney's point and call anesthesia."
+  ],
+  "ladder": [
+    { "title": "Resident Physician", "stage": "Residency training", "focus": "Rotate through the surgical wards: manage beds, change dressings, take out stitches, write the records, and follow the emergency shifts. Second assistant and retractor holder in the operating room. Promotion comes with a medical license and passing the residency exit exam." },
+    { "title": "Attending Physician", "stage": "Independent clinician", "focus": "Run a team on the ward, staff a specialty clinic, lead routine Grade I and II operations on your own, and do Grade III operations with a senior surgeon. Usually includes a year as chief resident, living in the hospital around the clock. Promotion to associate chief rests on your case count, first-author SCI papers, and provincial research grants." },
+    { "title": "Associate Chief Physician", "stage": "Core specialist", "focus": "Lead Grade III and IV operations on your own, perform minimally invasive and core specialty techniques, and direct rescues of the department's hardest and most critical cases. Teach residents and graduate students. The push to full chief takes breakthroughs in difficult Grade IV operations, leading a national grant such as a National Natural Science Foundation General Program project, and helping write clinical guidelines." },
+    { "title": "Chief Physician", "stage": "Top attending specialist", "focus": "Lead a care team as attending and principal investigator. Operate on the highest-risk and rarest complex cases, translate new techniques into clinical use, and run multi-center randomized trials. Own the department's quality control and the training of young doctors, and hold seats on national or provincial specialty committees." },
+    { "title": "Department Head", "stage": "Department leader", "focus": "Run every part of the surgical department: patient safety, performance pay, bed turnover and long-term strategy. Build it into a national key clinical specialty, lead major clinical translation, and speak for the hospital in regional and international academic circles." }
+  ],
+  "ai_tasks": [
+    { "name": "Debriding and suturing an emergency forearm laceration", "how": "AI can't help with the hands-on work: debridement, local anesthetic and layered suturing are all done by the doctor's own hands, along with judging on the spot how deep the wound is and whether tendons, nerves or vessels are hurt. At most AI helps write the record and reminds you of routine steps like tetanus." },
+    { "name": "Opening the abdomen through a McBurney incision for appendectomy", "how": "Cutting down through the anatomical layers into the abdomen depends on feel and on what your teachers showed you. AI can't do it. It can help review the anatomy and replay surgical video before the operation; a person does the actual work and adapts in the moment." },
+    { "name": "Exploring an emergency adhesive bowel obstruction and judging bowel viability", "how": "AI can combine the imaging, labs and pre-op information and flag the risk of ischemia. The color of the bowel, whether it moves, whether the vessels pulse, have to be seen and felt in the operation. Whether to keep it and how much to resect, the doctor decides and answers for." },
+    { "name": "Assessing and managing post-op fever and anastomotic infection after abdominal surgery", "how": "AI can pull together changes in temperature, heart rate, labs and drain fluid, flag a possible anastomotic leak, and draft the consult request and handover summary. The bedside exam, judging how serious it is, the drains and dressings, and talking to the consulting teams are the doctor's." },
+    { "name": "Judging and managing bowel viability during emergency exploratory laparotomy", "how": "AI can provide imaging analysis and risk flags before surgery, and serve as a reference during it. Whether dark purple bowel is still alive is judged by the doctor, looking at the color, feeling for a pulse, watching for movement, and deciding with the senior surgeon. The responsibility is human." },
+    { "name": "Managing an anastomotic leak with abscess after colorectal surgery, start to finish", "how": "AI can watch the numbers continuously, warn early of a leak, and assemble the materials for the multidisciplinary team and the handover points. The doctor examines on rounds, judges, runs the discussion, chooses the minimally invasive drainage, and at handover makes the risk clear and confirms the next doctor has taken it on." }
+  ],
+  "events": {
+    "e_double_appendix": "Two emergency appendectomies back to back on one night shift. When the second is done it's already light, and you go straight on to day rounds.",
+    "e_harvest_trauma": "During the two weeks of the wheat harvest, farm-machine injuries and falls come in wave after wave. The emergency room runs so low on suture kits it has to borrow from the operating theater.",
+    "e_pennant": "An old man you did a hernia repair on has his grandson drive him over in a three-wheeler to deliver a silk banner of thanks. It hangs in the department corridor, and the next day a patient points at it and asks for you.",
+    "e_scar_dispute": "After her stitches came out, a young woman with a facial wound felt the scar was too visible. Her family argued at the nurses' station all afternoon, and in the end it went to the medical dispute mediation committee.",
+    "e_go_provincial": "Every test done, the plan settled, and the family still takes the patient off to the provincial capital. Seeing a doctor in the county just doesn't feel safe, they say.",
+    "e_herbal_wash": "The old doctor in the colorectal clinic teaches you his herbal recipe for post-op sitz baths. Your hemorrhoid patients hurt much less after soaking, and at follow-up some come specially to thank you.",
+    "e_marriage": "Through an introduction you meet a teacher at the county's No. 1 High School. After a year together, you marry. The bride price and the banquet eat most of your savings at a stroke.",
+    "e_house": "You pay the down payment on a three-bedroom apartment in the county's new district, ten minutes from the hospital by bike. When the night shift calls, you can be there right away.",
+    "e_child": "The day your child is born you are in the middle of an operation. When you come out, your phone shows more than a dozen missed calls.",
+    "e_colleague_leave": "A young doctor in the department passes the graduate exam and leaves. No one replaces him, and your night shifts go from two a week to three.",
+    "e_alliance_expert": "The county joins a medical alliance with a top-tier hospital in the provincial capital, and every week an expert comes down to operate. You first-assist him and pick up a few techniques you have never seen in the county.",
+    "e_township": "Before promotion you have to serve at the grassroots level, so you are sent to a township clinic for six months. Most days it's colds and dressing changes. Your hands go a little rusty.",
+    "e_ai_records": "The hospital brings in an AI records assistant. Post-op notes and handover summaries come out as drafts automatically, and you only check and correct them. You get off half an hour earlier.",
+    "e_ai_false_alarm": "In the middle of the night the AI flags a post-op patient as high risk for anastomotic leak. You get up, examine him, check the drain: a false alarm. The following week, one it didn't flag, you caught on rounds yourself.",
+    "e_ai_remote": "The county hooks up to remote consultation. AI pulls the imaging and labs together first, and an expert in the provincial capital can give an opinion in ten minutes. Fewer people get transferred out.",
+    "e_mesh_price": "Hernia mesh is put through national volume-based procurement and the price drops. What patients pay out of pocket falls by a big margin, and for those few months old people who had put off surgery for years line up for it.",
+    "e_drg_cut": "Medical insurance payment reform changes how the department's performance pay is calculated. Your bonus this quarter shrinks noticeably, and at the meeting the department head tells everyone to keep hospital stays short.",
+    "e_leak_lawsuit": "After a colon operation, the anastomosis leaks. After a second operation the patient recovers, but the family sues anyway. The hospital pays out, your performance pay is docked, and you write a self-criticism.",
+    "e_parent_ill": "Your father has a stroke and is admitted to the hospital's own neurology department. Every day after surgery you go upstairs to see him first, then back down to your own patients.",
+    "e_classmate": "A class reunion. Classmates who stayed at top-tier hospitals in the capital are already leading Grade IV operations. Over dinner they talk about research projects and national grants, and you have little to add.",
+    "e_teach": "Two young doctors from the rural-commitment training program join the department. You teach them knots and dressings hand over hand, and for the first time you watch them close a wound on their own.",
+    "e_day_surgery": "The hospital opens a day-surgery center. Hemorrhoids and small hernias go home the same day. Your beds turn over faster, and you get called at night less.",
+    "e_back": "After a long operation you can't straighten your back. The scan shows a herniated lumbar disc. You start keeping a back brace by the operating room door.",
+    "e_old_patient": "The young man whose appendix you took out more than ten years ago brings his own child to the emergency room. He walks in and asks for you by name.",
+    "e_presbyopia": "Sewing with fine thread, you find you can't see the tip of the needle anymore. You get a pair of surgical loupes, and the nurses laugh that you look like a watchmaker.",
+    "e_paper": "Over several weekends you write up a few rare abdominal trauma cases from the department as a case report. It is published in a provincial journal."
+  },
+  "choices": {
+    "c_laparoscope": {
+      "title": "Go to the provincial capital to train in laparoscopy or not",
+      "situation": "The department's old laparoscope gets used only a handful of times a year. The department head says the hospital has one funded place for six months of laparoscopic training at a top-tier hospital in the provincial capital. But if you go, someone else has to carry your night shifts.",
+      "options": [
+        { "label": "Go and learn laparoscopy", "result": "You practiced peeling grapes in a simulator box until midnight, and came back able to do laparoscopic appendectomies and gallbladders. But your colleagues covered your nights for six months, and there's an edge in how they talk to you." },
+        { "label": "Stay, cover the nights, and master open surgery", "result": "In one year you did more open operations than in three years of training. The department head thinks highly of you. But when the hospital buys new laparoscopic equipment, you are not in the first group to use it." }
+      ]
+    },
+    "c_zhuzhi": {
+      "title": "The year as chief resident",
+      "situation": "You have the years to sit the attending exam. The department head asks you to serve a year as chief resident: twenty-four hours a day in the hospital, with emergencies, consults and extra beds all on you.",
+      "options": [
+        { "label": "Take the chief resident year and sit the exam too", "result": "That year you slept more in the on-call room than at home, and you memorized for the exam after night shifts. The day the certificate came, you were promoted to attending." },
+        { "label": "Turn it down and look after your family first", "result": "You went home on time and were with your family. Your attending title came a year late, and when the department head drew up the operating list, he began thinking of others first." }
+      ]
+    },
+    "c_city": {
+      "title": "Stay in the county or go to the provincial capital",
+      "situation": "The doctor who supervised your residency says a hospital in the capital is hiring. A private colorectal hospital there has also named a price, well above what you earn now. And the county department can barely spare you.",
+      "options": [
+        { "label": "Sit the graduate exam and do a clinical master's in the capital", "result": "You were back to living on a student stipend, the oldest graduate student on the ward. But three years later you had the degree, and had seen bigger operations." },
+        { "label": "Join the private colorectal hospital in the capital", "result": "Your income doubled, and you saw dozens of patients a day. But the operations grew more and more alike, and your performance pay included targets you'd rather not look at." },
+        { "label": "Stay at the county hospital", "result": "You kept taking everything. More and more people in the county knew you. The new techniques in your classmates' group chat, you could only watch on video." }
+      ]
+    },
+    "c_ai": {
+      "title": "Take on the AI perioperative system or not",
+      "situation": "The hospital is piloting an AI system for post-op warnings, and the IT department needs a clinician to lead it: which steps AI watches the numbers on, and which must have a doctor on rounds and at handover. No extra pay.",
+      "options": [
+        { "label": "Take it on and lead the design", "result": "You sat through dozens of meetings and checked the AI's false alarms and misses one by one. Once the workflow was settled, handover sheets across the hospital followed your version." },
+        { "label": "Pass, and focus on operating", "result": "You did quite a few more operations. When the system went live you followed rules someone else set, and now and then felt a few of them didn't quite make sense." }
+      ]
+    },
+    "c_subspecialty": {
+      "title": "Which direction to specialize in",
+      "situation": "The department is splitting into subspecialties, and the head asks you to choose: colorectal, or laparoscopic gastrointestinal cancer. Colorectal has plenty of patients and little risk. Cancer surgery is hard and high-risk, but the county has always been short of people who can do it.",
+      "options": [
+        { "label": "Specialize in colorectal", "result": "Your clinic was full every day. Everyone in the county knew whom to see for hemorrhoids. Only the difficult operations drifted further and further from you." },
+        { "label": "Specialize in laparoscopic GI cancer", "result": "You began doing Grade III operations alongside experts from the capital. The pressure was heavy; every case meant studying the scans for days in advance. But your skill went up." }
+      ]
+    },
+    "c_device": {
+      "title": "An offer from a device company",
+      "situation": "A laparoscopic device company whose reps are often in the department is hiring a clinical affairs manager. They like that you operate well and get along with doctors, and they offer more than twice what you earn now.",
+      "options": [
+        { "label": "Take off the white coat and join the device company", "result": "You put on a suit and spent your weeks rushing between operating rooms and meetings in several cities. You earned more, and no more night shifts. No more operating either.", "end": "You became clinical affairs manager at a device company. Sometimes, passing the county hospital, you stand for a moment outside the operating room door." },
+        { "label": "Stay in clinical work", "result": "You turned it down and did rounds as usual the next day. Sometimes, looking at your pay slip, you remember that number." }
+      ]
+    },
+    "c_fugao": {
+      "title": "Applying for associate chief physician",
+      "situation": "You have the years. The grassroots track has looser requirements and comes faster, but the title is recognized only within the county. The regular track needs papers and research projects, and you have written very few.",
+      "options": [
+        { "label": "Take the grassroots track", "result": "You made associate chief physician without trouble, and your pay went up a grade. It's just that outside the county, this certificate doesn't count for much." },
+        { "label": "Stay up writing papers and take the regular track", "result": "You spent two years of weekends writing papers and applying for a city-level research grant. By the time you made it, your hair had thinned a good deal. But the title is recognized anywhere." },
+        { "label": "Hold off for now", "result": "You didn't want promotion to get in the way of operating. Life got a little easier, and younger doctors began to overtake you." }
+      ]
+    },
+    "c_zhenggao": {
+      "title": "Push for full chief or hold on to the operating table",
+      "situation": "The hospital encourages you to apply for chief physician. That takes new techniques, research projects, and young doctors you've trained to show results. You are around fifty. At the table you can still hold up; off the table, the paperwork is piled mountain-high.",
+      "options": [
+        { "label": "Push for full chief", "result": "You brought two new techniques to the county and trained a successor who could take over. The day you were named chief physician, you were in the emergency room stitching a wound." },
+        { "label": "Let the title go and just treat patients", "result": "You gave all your energy to patients, and your clinic slots grew harder and harder to get. Only, at meetings, your seat slowly moved further back." }
+      ]
+    },
+    "c_private": {
+      "title": "A physician group comes recruiting",
+      "situation": "A physician group in the provincial capital wants you as a partner, to open a day-surgery center and do signature minimally invasive procedures. What they want is your reputation across the surrounding counties.",
+      "options": [
+        { "label": "Become a partner", "result": "Every week you traveled between partner hospitals in several counties. Your income multiplied, and for the first time you had to worry about rent and cash flow.", "end": "You became a partner in a physician group, doing operations you chose yourself, never again on the county hospital's night roster." },
+        { "label": "Stay at the county hospital", "result": "You politely declined. Your old patients in the county are still looking for you, and you can't leave that operating room either." }
+      ]
+    },
+    "c_director": {
+      "title": "Run for department head",
+      "situation": "The old department head is retiring, and the hospital asks you to compete for head of general surgery. From then on you would manage performance pay, bed turnover and patient safety, and operate less.",
+      "options": [
+        { "label": "Run for department head", "result": "You became department head. The reports on your desk were thicker than the operating schedule. You scheduled the young doctors for fewer night shifts than you had worked at their age." },
+        { "label": "Leave it to the young and keep operating", "result": "You recommended a doctor you had trained yourself, and kept three days of operations a week. While your hands are steady, you want a few more years of it." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you had no operations, only one round of the ward. The silk banner in the corridor had faded, and a few new ones hung beside it. At handover you went through all forty beds one by one while the young doctors took notes. Going downstairs, the hulatang stall outside the gate was still open, and the owner asked if you'd be back tomorrow.",
+    "burnout": "That day, off a night shift, you sat in the on-call room a long time and couldn't remember how you had closed the operation you just finished. Your checkup came back with a row of arrows, and no one at home said a word. You filed a request and transferred to the health-checkup center, where you leave on time every day. When you hear an ambulance pull into emergency, you still look up."
+  },
+  "past": [
+    "Your high school entrance exam got you into the top class at the county's No. 1 High School. Your father ran building supplies around the county town, and your mother kept a small shop in the township. No one at home knew anything about getting into college. All they knew was that No. 1 High was close, and you could come home for dinner on weekends.",
+    "In your second year of high school, your grandfather woke up in the night with stomach pain and was taken to the county People's Hospital. It was his appendix. You waited in the corridor until dawn, and saw a doctor in blue scrubs come out, pull down his mask and say: He's all right now. You remembered that.",
+    "Your gaokao (college entrance exam) score was about thirty points above the line for first-tier universities in your province, and nowhere near enough for an eight-year medical program. Your family added up the tuition, and you put down the five-year clinical medicine program at a medical university in the provincial capital. Your mother said a doctor never goes hungry anywhere. You didn't argue.",
+    "In your third year, in systematic anatomy, you stood longer in front of the specimens than anyone, and learned for the first time where a hernia pushes through. From then on, every elective you chose was in surgery.",
+    "In your fifth year you interned at a hospital in a prefecture-level city. Half your classmates were studying for a clinical master's, the five-plus-three track. You bought the books too, but your younger sister had just started high school that year, and the family's building-supplies business was struggling. You decided against graduate school and went straight into residency training after graduation. At least it paid a stipend.",
+    "After graduation you tested into the residency program at a top-tier hospital in the provincial capital as an unsponsored trainee, in general surgery. The stipend came to just over ¥2,000 a month, and you shared a flat with three other residents in the old staff housing behind the hospital.",
+    "In your second year of training you passed the medical licensing exam. That same year, at two in the morning, you closed a forearm laceration on your own for the first time. Your supervising doctor glanced at it, said nothing, and went off to sign.",
+    "In your last year of training, in laparoscopic surgery you only ever held the camera; the lead surgeon's place never came your way. The county People's Hospital posted an open recruitment notice: a permanent state post, twenty minutes from home. You took a day off to sit the written exam and interview back in the county, and two weeks later the call came with the offer."
+  ],
+  "late": {
+    "pension_note": "Estimate: permanent staff at a county public hospital draw the pension for government and public institutions plus the occupational annuity. After retirement that comes to about sixty percent of your final monthly salary, not counting the performance bonus.",
+    "scenes": [
+      "Your first month of retirement, you still wake at six. You go eat a bowl of hulatang outside the hospital gate. You don't go in. You stand across the street a while, watching the night-shift ambulances pull in.",
+      "The hospital hires you back to staff the expert clinic, two half-days a week, no operating. Most of the hernia patients are old men. One touch and you know which kind it is, and before you write anything, you let them finish talking.",
+      "One of the department's young surgeons finishes his first laparoscopic radical gastrectomy on his own and sends you a photo after the operation. You look at it a long time and reply with one word: Good.",
+      "Your pension arrives on time every month. You and your spouse have done the math: enough for daily life, enough for your grandson's after-school classes. Only, since county housing prices went up, helping your child with a down payment in the provincial capital is something you haven't dared bring up.",
+      "Years of three night shifts a week, and your back and stomach gave out first. You applied for a transfer to the hospital's health-checkup center to read reports, and you no longer take emergency calls. For the first month, you still woke at night to a phone that wasn't ringing.",
+      "The work at the checkup center is regular. Machines have already screened most of the reports, and you only look at the items marked in red. Your pay drops a notch. At night, you sleep straight through.",
+      "A young doctor recognizes you in the canteen. When he was an intern, he says, the first suturing he ever watched was yours. You nod, and don't mention that you haven't held a needle driver in years.",
+      "You give up your permanent post and go to a medical device company in the provincial capital to do clinical support, following laparoscopic equipment into operating rooms across many hospitals, standing off the table explaining settings. On the phone your mother asks three times: You're really giving up the state post?",
+      "You earn more than in the county, travel a lot, and live in budget hotels. Once, during a case, the surgeon asked midway whether you could look at a bleeder. You said you can't scrub in anymore. He paused a moment before he remembered.",
+      "You go back to the county for a product presentation. The meeting room is one floor above your old department. The old head has retired, and his successor is a colleague who joined the same year you did. He buys you a bowl of huimian, Henan's stewed noodles, downstairs, and the two of you hardly talk about surgery.",
+      "The county hospital installs an intraoperative assist system that scores the bowel's blood supply on screen. But whether to cut, someone still has to reach in and feel, look with their own eyes, and decide. Debridement and suturing, open appendectomies, the young doctors still do stitch by stitch.",
+      "At the vegetable market a woman selling greens stops you. More than ten years ago, she says, you operated on her husband's hernia in the middle of the night, and she forces a bunch of garlic shoots on you. You think hard and still can't remember which case it was.",
+      "Your back aches whenever it rains, from standing seven or eight hours at the table when you were young. Your child works in the provincial capital and comes home only at New Year. Your granddaughter asks whether being a doctor means giving shots all day. Surgeons don't give shots, you tell her. They sew.",
+      "The county hospital moves to a new campus, the old building is torn down, and the hulatang stall at the gate has changed hands. Passing the construction site, you point at an empty patch and tell your spouse: That was the general surgery corridor. The extra beds reached all the way to the stairs."
+    ],
+    "closing": {
+      "retire": "One morning many years later, you are peeling an egg for your granddaughter on the balcony when an ambulance sounds below. Without thinking you glance at the clock. A quarter past seven. Handover time.",
+      "burnout": "Many years later you walk slow laps in the garden of your compound; your back isn't good, and you don't walk fast. A neighbor's child scrapes a knee, and you crouch to take a look. It's nothing, you say. Go home and dab on some iodine.",
+      "end": "Many years later, rummaging in a drawer, you come across your residency certificate, its cover gone soft. You open it, look at the photo of yourself at twenty-six, put it back, and keep looking for the warranty card you were after."
+    }
+  }
+}

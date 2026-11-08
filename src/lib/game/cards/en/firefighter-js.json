@@ -1,0 +1,183 @@
+{
+  "id": "firefighter-js",
+  "occupation": "Firefighter-First Responder",
+  "role": "Firefighter at a special service station (probationary)",
+  "headline": "Two years in the army, then home and straight into a special service station of a fire and rescue division in a Jiangsu city: a new firefighter on 24-hour standby, turnout gear hanging at the head of your bed",
+  "unit": "Special service station, fire and rescue division of a prefecture-level city in Jiangsu",
+  "unit_type": "National comprehensive fire and rescue service",
+  "city": "A prefecture-level city in Jiangsu",
+  "city_tier": "Prefecture-level city",
+  "education": "High school (army veteran)",
+  "level": "You've just finished three months of recruit training. You can get a breathing apparatus on in under a minute and throw a hose out clean, and you've just earned your first-aid certificate. You've never really been inside a fire.",
+  "intro": "You served two years in the army, and the autumn you were discharged, the fire and rescue service happened to be recruiting from veterans. On the weighted stair climb you came first in your group. After three months of recruit training you were posted to the city's special service station, the unit for the hardest rescues. Your bunk is on the third floor, your turnout gear hangs at the head of the bed, your boots stand underneath it. As of today, when the alarm sounds, you have one minute to be sitting in the truck.",
+  "salary_note": "Estimate: firefighters in the national comprehensive fire and rescue service are paid on national pay scales, veterans can be placed on the scale by years served, and Jiangsu adds local allowances. That comes to about 30 percent above the database figure, which is based on local full-time brigade hiring.",
+  "facts": [
+    { "label": "Newly recruited firefighter, probationary (current level)", "value": "0–6 months, ¥4,500–6,750 a month (national average, estimated from pay by experience)", "source": "Pay by experience" },
+    { "label": "Next level up", "value": "Firefighter / Fire Rescue First Responder, Grade 1 Step 1 (6 months–3 years)", "source": "Career map" },
+    { "label": "Pay after 10+ years", "value": "¥9,100 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "First aid at a fire scene for casualties of smoke inhalation", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Daily equipment checks and restocking rescue gear", "source": "AI exposure" },
+    { "label": "Open positions", "value": "0 related listings nationwide (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "Reveille. Fold the quilt, square away your bunk. The quilt has to have sharp edges, the same as in the army, except at the end of the corridor there's now a row of turnout gear hanging ready.",
+    "Morning PT. Five kilometers plus push-ups, the station chief holding the stopwatch. A quick shower after; four steamed buns each in the canteen. You eat five.",
+    "Vehicle and equipment check, truck by truck: nozzles, hydraulic cutters, breathing-apparatus cylinder pressure, AED charge. The squad leader ticks each item in his book; read out one number wrong and he makes you read it again.",
+    "Training. Two-section ladder, weighted stair climb: up eleven floors carrying thirty-odd jin (over fifteen kilos) of gear. Coming down your legs are shaking. The instructor says go again.",
+    "Alarm. In the stairwell of an old housing block, an e-bike on charge is smoking. You're on scene in seven minutes; the property manager has already cut the power. For the first time you carry a hose nozzle into a stairwell, a blot of orange-red on the thermal camera screen.",
+    "Fire safety talk at a primary school. Kids scramble to touch your helmet. A boy asks if you're afraid of fire. You say yes, so you practice every day.",
+    "After dinner, theory: combustion science, hazardous chemicals. The political instructor plays the review video of a call from last month, stopping frame by frame to show who stood in the wrong place.",
+    "The alarm again in the night. Two trucks have rear-ended each other at a highway exit, the cab crushed out of shape. You follow the veterans carrying the spreader. By the time you're back at the station it's nearly light, and after a shower it's time for morning PT."
+  ],
+  "ladder": [
+    { "title": "Newly recruited firefighter (probationary)", "stage": "Entry", "focus": "At least three months of pre-service training; fail the assessment and you're out. Earn your first-aid certificate." },
+    { "title": "Firefighter / Fire Rescue First Responder (Grade 1 Step 1)", "stage": "Junior", "focus": "Go out on calls with your shift, handle first aid on scene, and keep your CPR and trauma care sharp. Driver posts pay more." },
+    { "title": "Senior First Responder / Deputy Squad Leader", "stage": "Mid-level", "focus": "Responsible for the station's rescue equipment and training, and for triage at scenes with multiple casualties." },
+    { "title": "Squad Leader / Specialist Rescue Team Member", "stage": "Senior", "focus": "Lead your shift on calls, command a crew, and train with specialist rescue units." },
+    { "title": "Assistant Station Chief / Fire and Rescue Commander", "stage": "Principal", "focus": "Incident command, post-incident reviews and running the team." }
+  ],
+  "ai_tasks": [
+    { "name": "Daily equipment checks and restocking rescue gear", "how": "AI and IoT tags can track AED charge, oxygen pressure and supply expiry dates automatically, send reminders before things lapse and generate a restock list. A person still has to go onto the truck to count, test and confirm the gear actually works." },
+    { "name": "First aid at a fire scene for casualties of smoke inhalation", "how": "There's smoke and danger, the casualty is unconscious, and it takes human hands to assess, open the airway, give oxygen and do CPR. At most AI can prompt the CPR rhythm or keep time; the actual work and the handover to the 120 ambulance crew are a person's job." },
+    { "name": "Cutting a person free at a traffic accident and immobilizing them for transport", "how": "The vehicle is crushed and the scene unpredictable. Stabilizing the car, cutting, stopping bleeding, splinting and carrying all take skilled hands and judgment on the spot, and someone has to answer for the casualty's safety. At most AI can look up the car's structural data; it can't do the work." },
+    { "name": "Taking Red Cross emergency first-aid training and passing the assessment", "how": "AI can run the online question bank, theory practice, personalized review and progress tracking. Hands-on teaching, correcting technique, and assessment and certification are still done by licensed instructors in person." },
+    { "name": "Triage at a scene with multiple casualties", "how": "AI can prompt the triage procedure, record casualty details, and total up numbers and status for command. Who's critical and who gets treated first is decided, and owned, by the senior first responder on scene, from observation and experience." },
+    { "name": "Running the station's quarterly first-aid refresher training", "how": "AI can help plan the refreshers, generate questions and assessment sheets, and track who hasn't met the standard. Hands-on practice in CPR, AED and bandaging, and the scoring, have to be done by a person in the room." }
+  ],
+  "events": {
+    "e_first_fire": "Your first real fire: a kitchen in an old housing block. You hold the hose coupling while smoke presses down from the top of the stairwell, and inside your mask there's only the sound of your own breathing. When you come out, the political instructor pats you on the shoulder and says nothing.",
+    "e_summer_calls": "The dog days of summer, seven calls in one day: a fire, two hornets' nests, a child locked out on a balcony, three people trapped in elevators. Your turnout gear is soaked inside and out, and at evening roll call you nearly fall asleep standing up.",
+    "e_cat_video": "A cat is stuck on an air-conditioner unit outside the sixth floor. You go down on a safety line and carry it back. Someone below films it and posts it online; it gets hundreds of thousands of likes, and your mother calls to ask if that's you.",
+    "e_mom_visit": "Your mother comes to the station to see you for the first time. She stands at the garage door looking at the fire trucks for a long time, and as she leaves she presses a bag of salted duck eggs into your hand to share with your squad.",
+    "e_flood": "In flood season you're sent to reinforce another city. For more than ten days you sleep in tents by the levee, ferrying old people out of villages in an inflatable boat, trip after trip. The day you come back you're so sunburned only your teeth are white.",
+    "e_extrication": "A predawn rear-end crash on the highway. For the first time you work the hydraulic cutters yourself to take a door off: stabilize the car, cut the pillar, spread it open, and finally, with your teammates, lift the driver level and steady onto the 120 ambulance stretcher.",
+    "e_dull_week": "Two weeks in a row with no real calls, only fitness training and equipment maintenance. Every day starts to feel exactly the same, and at night you lie in your bunk counting the cracks in the ceiling.",
+    "e_dating": "On leave at home you go on a matchmaking date. She's a nurse at the township clinic. At first she minds that you can only come home a few times a month; then one day she rides two hours on the bus on her own to bring a box of dumplings to the station gate.",
+    "e_wedding": "You get married, the banquet booked for your two days of leave. On your first shift after the wedding leave, a storage tank at the chemical industrial park starts smoking. In the truck you send her a message: I'll call you later.",
+    "e_baby": "The day your child is born you're on duty. The station gives you leave, and by the time you rush into the hospital the baby has been bathed and wrapped in a little quilt. The nurse says you smell of smoke and should wash your hands first.",
+    "e_house": "You put a down payment on a two-bedroom near the division. The mortgage takes a third of your pay. On moving day you only get half a day off, and your spouse and her brother carry the furniture up piece by piece.",
+    "e_hazmat": "A valve is leaking on a storage tank at the chemical park. You spend over two hours sealing it in heavy hazmat suits. When you take the suit off, the clothes underneath could be wrung out, and you sit on the back of the truck a long time before you stand up.",
+    "e_ai_gear": "The station tags every truck's equipment electronically, and a tablet sends reminders for expiring cylinders, low AED charge and supplies about to lapse. The morning count drops from forty minutes to twenty, but your squad leader still has you touch and test every item by hand.",
+    "e_ai_quiz": "The theory part of first-aid refreshers moves to an online AI question bank that keeps serving up the questions you got wrong. For the CPR practical, it's still the instructor kneeling by the mannequin, watching the depth and rhythm of your compressions.",
+    "e_ai_dispatch": "The command center brings in smart dispatch: the moment an emergency call comes in, the system recommends which trucks to send and the route. Once it recommends a road closed for construction. The driver swears and takes his own turn.",
+    "e_criticized": "On one call, you climb over onto a balcony before your safety line is clipped. The person is saved, but at the post-incident review you're criticized by name, and you lose that month's commendation.",
+    "e_mate_leaves": "A teammate from your recruiting class passes the local civil service exam and treats the whole squad to barbecue before he leaves. He gives you his turnout boots, already broken in.",
+    "e_commend": "At the year-end review you're awarded a personal commendation. The certificate is mailed home, and your father slides it under the glass on the table in the main room. Every visitor has to take a look.",
+    "e_knee": "A decade or so of weighted stair climbs, and your knees start creaking every time you take the stairs. The team doctor takes an X-ray and tells you to cut down on long runs. You still run every day, just a little slower.",
+    "e_father_hurt": "Back home your father falls while driving farm machinery and hurts his leg. On leave you sit with him for two days, then have to rush back for duty. All the hospital visits and bills after that are your spouse, on her own.",
+    "e_teach_recruits": "A few new recruits are posted to the station, and you teach them to get into turnout gear and a breathing apparatus in under a minute. Watching them climb to the eleventh floor under gear for the first time, you remember your own shaking legs.",
+    "e_kid_essay": "Your child writes in a school essay: “My dad is a firefighter. He only comes home a few times a month, and when he does, he sleeps.” The teacher gives it top marks. Your spouse sends you a photo of it, and you read it several times in the garage.",
+    "e_fitness_test": "At the annual fitness test, your five kilometers are over two minutes slower than the young ones'. The political instructor says nothing, just moves your name from the entry team to the support team.",
+    "e_no_sleep": "That month there are several predawn calls in a row, and when you get back and lie down you can't sleep; the alarm keeps ringing in your ears. One night you just get up, go to the garage, and count the water tender's equipment all over again."
+  },
+  "choices": {
+    "c_driver": {
+      "title": "Get a heavy vehicle license and become a driver?",
+      "situation": "The station is short of fire truck drivers, and the driver post pays more. First you'd need a B2 heavy vehicle license, then training on fire trucks. But drivers don't go in with the entry team; on calls they stay with the truck and supply the water.",
+      "options": [
+        { "label": "Get the B2 and drive the water tender", "result": "You get the B2 license, then spend three months reversing on the training ground. From then on the water tender is yours to drive. On calls you mind the pump and watch your teammates run into the stairwell." },
+        { "label": "Stay on the entry team", "result": "You stay an entry firefighter, going in with the first wave every time. Your hands get surer and surer, and you get more and more tired." }
+      ]
+    },
+    "c_rescue_camp": {
+      "title": "Sign up for specialist rescue training?",
+      "situation": "Provincial command is selecting people for water rescue training: three months in another city, and once certified you join the specialist rescue team, first to be called in flood season and typhoons. The station is already short-handed.",
+      "options": [
+        { "label": "Sign up for the training", "result": "You spend three months soaking in a reservoir in winter, learning to throw a line and right a capsized boat in fast water. When you come back certified, every flood season your name heads the list." },
+        { "label": "Don't; stay and cover shifts", "result": "You give the place to someone else and cover a lot of extra shifts at the station. The political instructor doesn't say anything, but at the year-end awards he puts your name near the top." }
+      ]
+    },
+    "c_backbone": {
+      "title": "Become the station's senior first responder?",
+      "situation": "The station wants one person to run the rescue equipment and quarterly refreshers, as its senior first responder, and to handle triage at multiple-casualty scenes. You'd first have to qualify as a Red Cross first-aid instructor, and the logbooks would be yours too.",
+      "options": [
+        { "label": "Take it, and qualify as an instructor", "result": "You spend two rounds of leave qualifying as a first-aid instructor. The station's refreshers are now yours: whoever doesn't compress deep enough, whoever bandages too loose, has to do it again in front of you." },
+        { "label": "Just do the calls", "result": "You don't want to spend every day on logbooks and forms. You stay an ordinary firefighter, and on calls you're still out in front." }
+      ]
+    },
+    "c_family_move": {
+      "title": "Move the family to the city?",
+      "situation": "Your spouse works at the township clinic back home, and your child will start kindergarten soon. Moving the family near the division means she quits and looks for work again. If you don't, you'll keep living apart and seeing each other a few times a month.",
+      "options": [
+        { "label": "Move the family here", "result": "She quits the township clinic and finds new work at a community hospital in the city, for noticeably less pay. On your days off you can go home for dinner, and your child starts to recognize your footsteps." },
+        { "label": "Live apart for now", "result": "There's a bit more money at home, and you go back a few times a month. Each time you leave, your child hugs your legs, and your spouse lifts him away, saying Daddy has to go to work." }
+      ]
+    },
+    "c_leave_station": {
+      "title": "A call from your old squad leader",
+      "situation": "Your old squad leader from the army now heads the company fire brigade at a chemical industrial park. He calls to say they're short of people: more pay than you're on now, regular hours, home five nights a week. The city's emergency medical center is also hiring EMTs, and your first-aid experience would count.",
+      "options": [
+        { "label": "Join the chemical park's fire brigade", "result": "You take off the fire and rescue service uniform and put on the park brigade's. The first weekend, you take your child to the park.", "end": "You became a company firefighter at a chemical industrial park. Every day after work you could pick your child up from school, and the park's fire trucks were newer than the station's." },
+        { "label": "Qualify as an EMT and join 120", "result": "You earn your EMT certificate and join the city's emergency medical center, trading the hose for a stretcher.", "end": "You became an EMT at the city's emergency medical center. The alarm bell became a call from dispatch, and you still made a habit of being in the vehicle within a minute." },
+        { "label": "Stay at the special service station", "result": "You thank your old squad leader, and that night you stand your watch as usual. On the phone your spouse is quiet for a moment, then says: then do it well." }
+      ]
+    },
+    "c_ai_trial": {
+      "title": "Trial the AI rescue system?",
+      "situation": "The division is piloting IoT equipment management and an on-scene triage assistant, and needs a veteran who knows first aid to test it: reviewing the AI's alerts and prompts and helping set how people and machine work together. It would eat into your days off, with no extra pay.",
+      "options": [
+        { "label": "Trial it and help set the rules", "result": "You log the AI's false alarms and misses one by one, and argue with the engineers more than once. In the end the equipment count sheets and triage records for the whole division come out the way you revised them." },
+        { "label": "Leave it alone; do it the old way", "result": "You still touch every piece of equipment each morning. Once the system goes live you use it as told, and now and then, finding it prompts too much, you switch a few alerts off." }
+      ]
+    },
+    "c_squad_lead": {
+      "title": "Compete for squad leader",
+      "situation": "The squad leader who trained you has been transferred to fire inspection, and the station is choosing a new one: lead seven or eight people on calls, command a crew on scene, write the post-incident reviews, and carry the responsibility for safety.",
+      "options": [
+        { "label": "Compete for squad leader", "result": "You become squad leader. Before going into every fire you count your people, and coming out you count again. Only when the count is right do you take off your helmet." },
+        { "label": "Let your partner have it", "result": "You recommend the man you've worked alongside for years and stay on as an entry firefighter. On his first day in the job he buys you a bowl of noodles." }
+      ]
+    },
+    "c_commander": {
+      "title": "Sit the commander exam and become assistant station chief",
+      "situation": "The division is running a commander selection for outstanding firefighters. Pass, and you spend a year training at the academy, then return as assistant station chief, handling incident command, post-incident reviews and the team. You're in your early thirties; you'd have to hit the books again, and be away from home for a year.",
+      "options": [
+        { "label": "Sit the exam", "result": "At the academy you attend classes, sit exams and write incident reviews alongside a crowd of young people. When you come back, you spend more time in the command vehicle than in stairwells." },
+        { "label": "Stay on the front line", "result": "You say you'd still rather hold a hose, and don't sign up. The station chief gives you a look and says then train the new recruits well." }
+      ]
+    },
+    "c_off_frontline": {
+      "title": "Leave front-line calls?",
+      "situation": "Every year the fitness test gets harder, and your knees are bad now. The division asks whether you'd move to fire safety education and inspection. The Red Cross training center is also looking for first-aid trainers with real-world experience.",
+      "options": [
+        { "label": "Move to fire safety education", "result": "You start spending your days at schools, factories and care homes, giving talks and teaching people to use extinguishers. Fewer calls; your knees improve a little. Only, at night, when you hear an alarm, you still sit up." },
+        { "label": "Become a public first-aid trainer", "result": "You complete your discharge paperwork and become a first-aid trainer at the Red Cross training center.", "end": "You became an emergency first-aid trainer, teaching classes at companies and schools every week, kneeling beside the mannequin and teaching people to press: 100 to 120 a minute, five to six centimeters deep." },
+        { "label": "Keep going out on calls", "result": "You tell the political instructor a few more years. You strap your knee braces tight and still run morning PT every day, only now you split the five kilometers into two." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last shift you don't go out on a call. In the garage you wipe the water tender down from end to end. At handover you give the equipment book to the young squad leader, and he reads it through without missing an item. You fold your turnout gear into the locker; your boots still stand under the bed. As you go out the main gate, the new recruit on guard salutes you.",
+    "burnout": "That year your checkup puts your knees and back in red, and at night every sound sets your heart racing. The division reassigns you to fire inspection, regular hours. You move out of the station dorm. Your first night sleeping at home, you wake once at two in the morning. The flat is very quiet."
+  },
+  "past": [
+    "After middle school, with middling grades, you went to the ordinary high school in your county. Your father farmed back home in northern Jiangsu and drove a combine harvester for hire on the side. Your favorite class was PE.",
+    "The winter of your first year of high school, a family's haystack in the village caught fire, and the fire truck from the town took twenty minutes to get there. Squeezed into the crowd, you watched them drag hose section by section across the ridges between the fields.",
+    "Your gaokao (college entrance exam) score fell short of the cutoff for a bachelor's program. Your father said join the army, they'll find you something when you get out. You signed up, passed the medical first time, and that autumn boarded a train heading north.",
+    "In two years of service you got your five kilometers down to twenty minutes, earned a company commendation once, and learned to fold your quilt into the army's “tofu block”. Near the end the political instructor asked if you wanted to sign on as an NCO. You thought about it all night and said you wanted to go back to Jiangsu.",
+    "The year you were discharged, the fire and rescue service was recruiting from veterans. Medical, political vetting, fitness, psychological test, interview, one hurdle after another. On the weighted stair climb you beat the next fastest in your group by half a floor.",
+    "Three months of recruit training at the provincial training base, starting from how to put on turnout gear, and you earned your Red Cross first-aid certificate. When postings were assigned, you put down the special service station. The instructor said that one's the hardest."
+  ],
+  "late": {
+    "pension_note": "Estimate: members of the national comprehensive fire and rescue service are covered by the public-sector pension scheme plus an occupational annuity. Your pension will be a little over 60 percent of your final monthly pay.",
+    "scenes": [
+      "In your first month of retirement you still wake at six-thirty every day and go downstairs for two laps. On the second lap your knees remind you to slow down.",
+      "The neighborhood committee asks you to be a fire safety volunteer, checking e-bike charging in a few old housing blocks each month. At a glance you can tell which cable strung down from a window is trouble.",
+      "Your pension arrives on time every month, and with your spouse's it's enough to get by. Your child works in Nanjing and is buying a flat. You put together part of the down payment; the rest he'll pay off slowly himself.",
+      "At the division's gathering for retired members you see the instructor from your recruit training, his hair now completely white. The two of you sit at the garage door for ages arguing over which truck was hardest to drive.",
+      "In your first year in fire inspection you spend your days checking fire exits at malls and factories, in office uniform. One day you pass the special service station. The garage door is open. You don't go in.",
+      "Your knee has a small operation and heals well. You start cycling with your child on weekends. This year you spend more nights at home than in the last ten years put together.",
+      "The young firefighters at the station ask you back to give a class. You talk about how to count stairs in smoke you can't see through: eighteen steps a floor, feel for the wall at the turn.",
+      "For your first month at the new job you always arrive twenty minutes before everyone else and check the equipment on the vehicle. Your colleagues laugh that you think you're still at the station.",
+      "At the new job you can go home every day, and the money isn't bad. Your daughter says your temper is better than it used to be. You say it's that you sleep better than you used to.",
+      "At the new place you train a few young people, and the first thing you teach is what the station taught you: check your own gear first, then worry about anyone else's.",
+      "The station has new trucks now, with reconnaissance drones and firefighting robots; machines go first into the dangerous places to look. But cutting people free, carrying them out, feeling along a wall in smoke to find someone, still has to be done by a person, step by step.",
+      "In your old comrades' group chat someone posts an old photo: the lot of you at twenty, standing in front of the garage, all your turnout gear a size too big. You save it and make it your phone's lock screen."
+    ],
+    "closing": {
+      "retire": "Many years later, on a summer night, a fire truck drives past below, no siren. You stand on the balcony watching it turn the corner, and the fan in your hand stops for a moment.",
+      "burnout": "Many years later you're showing your neighbors in the compound how to use an extinguisher: pull the pin, aim the hose, squeeze the handle, very slowly. A few children nearby are copying you.",
+      "end": "Many years later, deep in a cupboard, you find your old turnout boots, the soles worn flat. You wipe them with a cloth and put them back where they were, the way you'd put away something you'll need tomorrow."
+    }
+  }
+}

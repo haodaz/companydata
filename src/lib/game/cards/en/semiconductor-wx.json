@@ -1,0 +1,180 @@
+{
+  "id": "semiconductor-wx",
+  "occupation": "Semiconductor Process Engineer",
+  "role": "Assistant Etch Process Engineer",
+  "headline": "First year out of a master's in microelectronics: an assistant process engineer in a bunny suit, working rotating day and night shifts, keeping pace with the tools in the etch module of a 12-inch wafer fab in Wuxi",
+  "unit": "Etch process module, a 12-inch wafer fab in Wuxi",
+  "unit_type": "12-inch (300 mm) wafer fab",
+  "city": "Wuxi",
+  "city_tier": "New first-tier city",
+  "education": "Master's degree (Microelectronic Science and Engineering)",
+  "level": "Three months of rotation behind you and just assigned to etch. You can clear the common FDC alarms by the SOP and read a cross-section on the SEM, but you have never changed a recipe on your own.",
+  "intro": "You spent three years on a master's in microelectronics, writing a thesis that simulated plasma etching. Now, for the first time, you are standing beside a real etch tool. The module runs twenty-odd tools across four rotating crews, and the senior engineer training you looks after six of them alone. As of today your name is on the etch shift roster: two day shifts, two night shifts, four days off. The phone call at three in the morning is yours to answer now.",
+  "salary_note": "Estimate: a 12-inch fab in Wuxi pays a new master's graduate, shift allowance included, roughly the national average. The year-end bonus rides on how full the fab ran that year, and in a bad year a large part of it disappears.",
+  "facts": [
+    { "label": "Assistant Process Engineer (current level)", "value": "0-2 years, ¥11,000–16,000 a month (national average)", "source": "Career map" },
+    { "label": "Next level up", "value": "Process Engineer (2-4 years)", "source": "Career map" },
+    { "label": "Pay after 10+ years", "value": "¥38,000 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Verifying coating uniformity on the first photoresist wafer", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Tracing abnormal emulsion breakdown and large-particle punch-through in CMP slurry", "source": "AI exposure" },
+    { "label": "Open positions", "value": "376 related listings nationwide, 49 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "In the company apartment block at the edge of the fab, you brush your teeth while reading the night-shift group chat: two etch tools still haven't recovered after maintenance, and a lot is on hold, waiting for the day crew.",
+    "Before the fab: change shoes, step into the one-piece cleanroom suit, hood, mask, two layers of gloves, then the air shower. No phone, no paper, no ballpoint pens. All that shows of you is a pair of eyes.",
+    "Shift handover. Under the yellow light of the lithography bay, the night engineer has covered a whiteboard with tool numbers. Tool three's RF reflected power spiked twice overnight, he says. He didn't dare touch it.",
+    "You pull up the FDC traces on the tool screen and lay them against the last three days. You call over the equipment engineer, and the two of you gesture through your masks for a long while before either can make out what the other is saying.",
+    "Out of the fab for lunch. Getting out of the suit and back into it takes twenty minutes, so many people stay in and wait until the end of the shift. You come out and bolt your food in the canteen. Fifteen minutes.",
+    "Measuring dummy wafers. On the CD-SEM the line width is two nanometers off. You want to change the recipe. Your mentor says not yet: check the chamber first. Changing parameters is the last thing you do.",
+    "The out-of-control review. In a meeting room the product and yield engineers project a wafer map onto the wall, point to the ring of lost yield around the edge, and ask whether etch can explain it.",
+    "Your turn on nights. At three in the morning a tool alarms, and a FOUP of twenty-five wafers sits waiting in front of it. Whether to hold the lot is your call. You stare at the trace. Your palms are sweating."
+  ],
+  "ladder": [
+    { "title": "Assistant Process Engineer", "stage": "Junior", "focus": "Learn the cleanroom and the operating rules for the tools in one module. Mostly daily tool checks, entering and watching SPC data, and first-pass review of low-risk held wafers. You move up once you can cover a night shift alone, run the SOPs fluently, and handle the common parameter alarms without a single mistake." },
+    { "title": "Process Engineer", "stage": "Core engineer", "focus": "The main owner of a process module such as PECVD thin film or etch. Write and optimize recipes on your own, chase down out-of-control and out-of-spec excursions, and run routine DOE experiments to improve uniformity. You move up once you can handle a major line-down incident by yourself and measurably tighten the process window." },
+    { "title": "Senior Process Engineer", "stage": "Senior", "focus": "Break the hardest bottlenecks in the module, lead difficult failure analysis down to the physical mechanism, and drive qualification of new tools and new consumables. You move up by beating a key killer defect, lifting the module's yield noticeably, and training junior engineers." },
+    { "title": "Staff Process Engineer", "stage": "Expert / module lead", "focus": "Run the technical work and capacity of an entire process section, such as lithography or diffusion. Build the APC and FDC process-control systems and own the transfer of new process nodes. You move up through a major technology leap, a fab-wide step change in yield, or a real cut in the cost of making a wafer." },
+    { "title": "Principal Process Engineer", "stage": "Technical leader", "focus": "Set the fab's overall process roadmap, lead development of advanced nodes, and decide on major tool purchases. You are the final word on manufacturing problems that cross modules, and you build the next generations of the technical team." }
+  ],
+  "ai_tasks": [
+    { "name": "Tracing abnormal emulsion breakdown and large-particle punch-through in CMP slurry", "how": "AI can organize the physical and chemical data, compare against past scratch cases, and draft the first version of the incident report. A person has to reproduce the breakdown and the filter failure on the test bench, overturn the wrong hunches, and sign off on the root cause." },
+    { "name": "Tracing large-particle punch-through in slurry and finding why it destabilized", "how": "AI can pull together the material properties and flow-loop test data, look up the usual mechanisms for agglomeration and particle breakthrough, and list what to check. A person designs and runs the flow-loop tests by hand, judges which mechanism is most believable, and makes the call on what to do." },
+    { "name": "Verifying coating uniformity on the first photoresist wafer", "how": "Coating, measuring film thickness, and checking by eye and by instrument for delamination, bubbles and particles all have to be done by hand in the cleanroom, while you learn the craft under a senior engineer's eye. At most, AI helps tidy and log the thickness-map data." },
+    { "name": "Responding to repeated FDC alarms on an etch tool and holding the lot", "how": "AI can read the FDC traces in real time, match them to past alarms, and offer a first call on whether the lot is out of control, with the risks. A person weighs the tool's condition and what is happening on the shift, decides whether to hold, and answers for locking that FOUP." },
+    { "name": "Leading qualification of an ALD process for a new low-k dielectric precursor", "how": "AI can design the experiments, analyze the data, draft the qualification report, and check against the literature. A person runs the ALD process on the tool, judges film quality and integration risk, and works with the customer and the second-source supplier to push the qualification through." },
+    { "name": "Closing out short-channel failures caused by lithography-to-etch overlay shift", "how": "AI can analyze the threshold-voltage distribution, correlate it with overlay data, and suggest which way to correct the recipe. A person pulls together the product, equipment and integration engineers, confirms the failure-analysis conclusion, and decides on and verifies a fix within 72 hours." },
+    { "name": "Writing a new CMP process FMEA and training the whole team on it", "how": "AI can draft the FMEA from past failures and process documents, list potential failure modes, and generate training materials and test questions. A person calibrates severity and detectability against the real line, leads the discussion with process, equipment and quality engineers, and runs the exam." }
+  ],
+  "events": {
+    "e_first_ooc": "For the first time you held a lot on your own judgment. The next day the measurements came back: it really was the chamber. Your mentor wrote one line in the handover log. Good call.",
+    "e_3am": "Three in the morning on a day off, and the phone calls you back to the fab. A tool is alarming over and over, and the line is waiting for you. By the time you are suited up and inside, it still isn't light.",
+    "e_scrap": "You released a lot you thought was fine. Later measurements showed it had been etched straight through. All twenty-five wafers were scrapped. The scrap form asks for a reason, and you wrote it three times.",
+    "e_vendor_gone": "The foreign tool maker pulled its field engineers out, and spare parts are now six months away. For the first time you open a chamber yourselves, swap the parts, and retune the matching network. After two nights without sleep, the tool runs again.",
+    "e_yield_win": "The edge-yield project you led worked: the ring around the wafer's edge stopped failing. At the quarterly meeting the fab director read out your name, and your bonus came to an extra month's salary.",
+    "e_domestic_tool": "The fab took delivery of its first Chinese-made etch tool. It has to run thousands of wafers before it can go into production. You eat boxed lunches beside it with the tool maker's engineers for three months, and your name goes on the qualification report.",
+    "e_downcycle": "The industry has turned down. The fab runs at seventy percent, the year-end bonus is cut in half, and this year's graduates have had their start dates pushed back. In the canteen, people talk more quietly.",
+    "e_newfab": "Phase two of the fab is finished, and more than a hundred new hires arrive at once. You are sent to take them through their rotations while still covering shifts. Your voice is hoarse for two weeks.",
+    "e_fdc_ai": "The FDC system now has automated judgment. When an alarm comes in, it checks the history first and gives an initial call on whether to hold the lot. You get woken up less at night. But when it says hold, the signature is still yours.",
+    "e_fmea_ai": "AI can draft an FMEA or a root-cause report overnight, citing more past cases than you remember. You spend a morning editing it, cutting the parts that sound right but don't hold true on your tools.",
+    "e_headhunter": "Headhunters call three times a week: a tool maker, a fab in Shanghai, a startup you have never heard of that just raised money. Each offer is higher than the last. You tell them all you'll think about it.",
+    "e_love": "A yield engineer who joined the same year as you always sits across from you in meetings. One night you are both on shift, and you end up talking by the vending machine in the break area until dawn.",
+    "e_wedding": "You had your wedding. To find three days when neither of you was on shift, you traded shifts with colleagues for a month.",
+    "e_house": "You bought an apartment in Xinwu District, twenty minutes from the fab. Half the down payment came from both sets of parents. The mortgage is exactly your salary.",
+    "e_baby": "The baby was born. Coming off a night shift, you go to the postpartum care center. The nurse hands you the baby and you hold him, so tired you could fall asleep standing up.",
+    "e_patent": "A chamber-cleaning method you proposed went in for a patent. The day it was granted, you photographed the certificate and sent it to your master's supervisor. He replied with a thumbs-up.",
+    "e_checkup": "Years of night shifts, and your checkup results now carry a few arrows pointing up. The doctor asks if you often stay up late. You say it's work. He doesn't say anything else, just writes you an order to come back in six months.",
+    "e_power_dip": "A voltage sag on the grid, and every tool in the fab went down at once. For the next seventy-two hours you never left the site, bringing the tools back up one by one and deciding lot by lot which work in progress could be saved.",
+    "e_gas": "One of the specialty gases used in etching has tripled in price, and some weeks it doesn't come at all. The module asks you to qualify a substitute. You go through every paper you can find and run more than two hundred wafers.",
+    "e_passed_over": "This year's promotion list came out. A colleague from the next group, who joined the same year, is on it. You aren't. You stand in the stairwell for a while, then go back to the meeting.",
+    "e_parents": "Your mother calls: your father is in the hospital. Nothing serious, but someone has to look after him. You swap four shifts and drive back to your hometown, taking two calls from the line on the way.",
+    "e_mentee": "The first junior engineer you trained has been promoted, and he takes the whole group to dinner. Raising his glass, he says that the first time he held a lot at three in the morning, you were on the phone with him, reading the trace together.",
+    "e_lightsout": "In the new fab building, people hardly need to go inside anymore. Overhead rails move the wafers, the tools tune themselves, and the system handles alarms first. You spend most of your time in an office reading data, and some months you go into the fab only a few times."
+  },
+  "choices": {
+    "c_nightshift": {
+      "title": "Go independent as a process engineer sooner",
+      "situation": "Your mentor says the module is short-handed. If you can cover night shifts alone soon and handle alarms without mistakes, next year you could own a whole tool module and be promoted to process engineer. It also means more night shifts, and being on call on your days off.",
+      "options": [
+        { "label": "Volunteer for extra night shifts", "result": "That year you saw more alarms than others see in three. You came to know the fab at dawn like your own home. At your checkup, your resting heart rate was well above other people your age." },
+        { "label": "Keep pace with your mentor", "result": "You work the shifts on the roster, and on your days off you switch off your phone and sleep. Two people from your intake go independent before you. Your mentor says there's no hurry; slow has its own advantages." }
+      ]
+    },
+    "c_shanghai": {
+      "title": "Move to an advanced-node fab in Shanghai",
+      "situation": "A fab in Shanghai working on advanced nodes offers you thirty percent more. Etch engineers with production experience are exactly what they want. But rent there is twice what it is in Wuxi, you would have to learn a different tool from scratch, and your girlfriend works in Wuxi.",
+      "options": [
+        { "label": "Go to Shanghai", "result": "You got to see finer nodes, and you moved into an old housing compound forty minutes from the fab. On weekends you take the high-speed train back to Wuxi. Forty minutes. Sometimes you fall asleep before it arrives." },
+        { "label": "Stay in Wuxi", "result": "You stayed, and came to know this line better and better. The Shanghai fab called twice more. Both times you said not for now." }
+      ]
+    },
+    "c_data": {
+      "title": "Learn to code and build alarm models, or go deep on failure analysis",
+      "situation": "The fab's smart-manufacturing group is hiring people who know the tools, to help build FDC early-warning models and label data. But the failure-analysis team in your module is short too: SEM, TEM, chasing each defect back to its cause. You only have enough of yourself for one.",
+      "options": [
+        { "label": "Learn to code and build the models", "result": "You learn Python after work and wrestle with data on weekends. The first model throws false alarms everywhere. The third can finally see a chamber going bad two hours ahead." },
+        { "label": "Go deep on failure analysis", "result": "In the FA lab you looked at thousands of cross-sections and became the person in the module who reads defect shapes best. Someone else built the models." }
+      ]
+    },
+    "c_vendor": {
+      "title": "Become an applications engineer for a tool maker",
+      "situation": "A Chinese maker of etch tools is expanding and wants you as a field applications engineer, tuning new tools in customers' fabs. Thirty percent more pay and no shifts, but constant travel. You would go from the person buying the tools to the person selling them.",
+      "options": [
+        { "label": "Join the tool maker", "result": "You handed in your resignation. On your last night shift you wrote a long page in the handover log.", "end": "You carried your laptop to wafer fabs across half of China, changing into a new cleanroom suit at every one. When a customer's engineer called at dawn, you recognized the trace before they did." },
+        { "label": "Stay at the fab", "result": "You turned it down. You said you wanted to watch the tools you had tuned keep running." }
+      ]
+    },
+    "c_npi": {
+      "title": "Take on production qualification for the Chinese-made tool",
+      "situation": "The fab wants to move a Chinese-made tool from evaluation into production, and no one wants the job. If it works, the whole fab takes the credit; if it fails, it's on you alone. Your section chief says if you see it through, your name will be on next year's promotion list.",
+      "options": [
+        { "label": "Take it", "result": "With two people and the tool maker, you ground it out for a year, more than ten thousand wafers. The day it went into production, you stood in front of the tool a long time, watching the first lot move on to the next step." },
+        { "label": "Pass, and keep your own tools steady", "result": "The tools in your care ran the most stable in the module. The qualification went to someone else. It took a year and a half, and it went into production too." }
+      ]
+    },
+    "c_dayshift": {
+      "title": "Move to a fixed day-shift job",
+      "situation": "Your child has started kindergarten, and your spouse works shifts too, so often neither adult is home. The module has a fixed day-shift job: documents, training, change control. Less pay, and a step further from the line.",
+      "options": [
+        { "label": "Take the day job", "result": "You leave at six every evening and can pick your child up. It's just that the three a.m. alarms are someone else's now." },
+        { "label": "Keep working shifts", "result": "You and your spouse stagger your shifts and hire a nanny. When your child draws the family, you are inside a round dome." }
+      ]
+    },
+    "c_newsite": {
+      "title": "Head a section at a new fab in another province",
+      "situation": "The group has built a new fab in central-western China and is moving a batch of experienced engineers from Wuxi to staff it. They want you to set up the etch line and lead the team there, with a higher grade and higher pay. Your home is in Wuxi, and so is your mortgage.",
+      "options": [
+        { "label": "Go build the new line", "result": "You started from an empty building and watched the tools arrive and power up one by one. For two years you went home once a month, and your child started calling you my business-trip dad." },
+        { "label": "Stay in Wuxi", "result": "You stayed, and the post went to someone else. The day the new fab started production, you saw the photos in the group chat and gave them a like." }
+      ]
+    },
+    "c_manage": {
+      "title": "Become section chief over forty people, or stay technical",
+      "situation": "The old section chief has moved to headquarters, and the fab wants you to take over: schedules, performance reviews and hiring for forty people. There is also an expert seat open on the technical committee. It handles only the hardest problems, and no people.",
+      "options": [
+        { "label": "Become section chief", "result": "Now you sit through eight meetings a day, and what you look at is people and spreadsheets. You look at tool screens less and less. When someone resigns, you sit with them in the interview room for an hour." },
+        { "label": "Stay on the technical track", "result": "You joined the technical committee, and every problem you get is one nobody else could solve. Your title didn't change. Your office gained a whiteboard." }
+      ]
+    },
+    "c_fabless": {
+      "title": "Become a product engineer at a chip design company",
+      "situation": "A chip design company is looking for a product engineer who understands manufacturing: someone to deal with the foundry, follow tape-outs, and analyze customer complaints. No fab, no shifts. But you would go from making chips to waiting for them.",
+      "options": [
+        { "label": "Join the design company", "result": "You took off the cleanroom suit. Going through the air shower for the last time, you looked back down the yellow-lit corridor.", "end": "You became a product engineer at a chip design company. Whenever wafers came back from a tape-out, you looked at the etch layer first, the way you would recognize an old friend's handwriting." },
+        { "label": "Stay in the fab", "result": "You said you still liked being close to the tools. That day you went back into the fab, put on the suit, heard the tools humming, and felt settled." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you went into the fab once more. Change shoes, put on the suit, the air shower: the same routine you learned decades ago. You stood in front of a tool for a while. The trace on the screen ran flat and steady, and no one needed your signature. On the way out you handed your badge to the youngest engineer in the module, who was looking at an alarm you had never seen either.",
+    "burnout": "That morning the phone rang before dawn again. You answered and listened for a long time without understanding which tool they meant. The next day you applied for a transfer to the fab's training center, where you teach new hires cleanroom rules and SPC. You work days now and put your phone on silent at night. Only sometimes, waking in the dark, your hand still reaches for it."
+  },
+  "past": [
+    "Your high school entrance exam got you into the best high school in the city. Your father ran a hardware shop in the township, and your mother worked at a textile mill. School was your call, they said. They didn't understand it.",
+    "The year you sat the gaokao (college entrance exam), the news talked every day about China being choked off from chips. Your score was good enough for a mid-ranked major at a top national university, and you put down microelectronic science and engineering. Your father asked if that meant fixing computers. You said more or less.",
+    "Second year, semiconductor physics. Band diagrams scared off half your classmates. You liked it, the feeling of something you could never see or touch that still came out right on paper, and you started living in the lab.",
+    "At graduation, half your class went into internet companies and half went on to graduate school. You were recommended for a master's at your own university, simulating plasma etching. Your supervisor said wafer fabs fight over process master's students.",
+    "In the fall hiring season of your last year, you had offers from three wafer fabs. You chose the one in Wuxi: two hours from home by high-speed train, and apartments you could actually afford. The day you signed, you put on a cleanroom suit for the first time, as an intern.",
+    "Your first three months were a rotation through thin film, lithography, etch and diffusion. The week you reached etch, you saw the purple glow inside a chamber for the first time. When it came time to choose, you wrote down etch."
+  ],
+  "late": {
+    "pension_note": "Estimate: wafer fabs pay into the basic pension for enterprise employees, and contributions are capped, so in your high-salary years you can't pay in on your full pay. With the company annuity added, your pension comes to roughly thirty to forty percent of your final salary.",
+    "scenes": [
+      "Your first month of retirement, you still check your phone out of habit, afraid of missing an alarm. The group chat is quiet. You mute the night-shift group, then unmute it.",
+      "A young Chinese tool maker asks you to consult, a few days a month, reading traces and explaining chambers to their young engineers. They call you teacher. It takes some getting used to.",
+      "Your pension is a good deal less than your salary was, but the mortgage is long paid off and there is enough saved. You and your wife sign up for a photography class at the senior university. Everything you shoot is the fab at night.",
+      "You teach at the training center, a dozen-odd classes a week. A new hire asks what it feels like to hold a lot at three in the morning. You say your palms sweat. They laugh. You don't.",
+      "A few of the arrows on your checkup have gone away, and you have taken up running. Once, jogging past the fab, you see the night crew smoking by the gate. You recognize one of them and wave.",
+      "When you reach retirement age you finish the paperwork and leave your stack of training notes to whoever takes over. The top page says: changing parameters is the last thing you do.",
+      "Your first year away from the fab, something always felt missing at the new job. It took you a while to work out what: the cleanroom suit, and the hum of the tools.",
+      "The old module holds a reunion and invites you. You barely know the tools they talk about now. But when someone brings up the year the whole fab lost power, everyone remembers exactly what they were doing.",
+      "In your new line of work, you became one of the old hands too. A young person asks why you left the fab back then. You think about it and say you wanted to get close to chips a different way.",
+      "Later, wafer fabs barely needed people inside. The system handled alarms and tuned the parameters on its own. But whenever a problem appeared that no one had seen before, someone still had to put on the suit and go stand in front of the tool to look.",
+      "Your grandson is playing with your old phone and asks who made the chip inside it. Many people, you tell him. And one thin layer of it, your generation cut, one wafer at a time."
+    ],
+    "closing": {
+      "retire": "Many years later you wake in the night and look at the clock. Three a.m. No sound outside, and the phone isn't ringing. You lie back down, think of that purple glow inside the chamber, and slowly fall asleep again.",
+      "burnout": "Many years later you do tai chi in the park with a group of old people, slow movements, even breath. At the closing form you press both hands down, as if smoothing a jumping trace gently flat.",
+      "end": "Many years later, digging through a drawer, you find a photo from your master's graduation. You are standing in the lab, and on the screen behind you is a plasma simulation. You look at it for a while, then slip it between the pages of a book."
+    }
+  }
+}

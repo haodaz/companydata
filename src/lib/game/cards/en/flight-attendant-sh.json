@@ -1,0 +1,184 @@
+{
+  "id": "flight-attendant-sh",
+  "occupation": "Flight Attendant",
+  "role": "Trainee Flight Attendant",
+  "headline": "A tourism-management graduate who has just finished initial training at a major Shanghai airline, flying a domestic route today for the first time under an instructor",
+  "unit": "Cabin Services Department, a major airline in Shanghai",
+  "unit_type": "Major state-owned airline",
+  "city": "Shanghai",
+  "city_tier": "Tier 1",
+  "education": "Bachelor's degree (Tourism Management)",
+  "level": "Initial training just completed: a dozen trips down the evacuation slide, ditching drills done, commands shouted loud and clear. The meal cart still wobbles, and your supervised flight hours stand at zero.",
+  "intro": "You studied tourism management. In your final year of college you answered an airline's open recruitment call, and at the interview they measured your height three times. Initial training lasted three months: a dozen times down the slide of the cabin simulator, hauling a life raft across a pool, shouting commands until your voice went. From today you wear a trainee badge and fly your first sector beside an instructor: Shanghai to Chengdu, wheels up at 7:40 a.m.",
+  "salary_note": "Estimate: hourly flight pay at a major airline based in Shanghai runs well above the national average. Base pay is low during the trainee period; once you fly solo, the more you fly the more you earn. Estimated at 1.1–1.2 times the national figure.",
+  "facts": [
+    { "label": "Trainee Flight Attendant (current level)", "value": "0–1 years, ¥3,000–6,000 a month (national average)", "source": "Career map" },
+    { "label": "Next level up", "value": "Economy Class Flight Attendant (1–3 years)", "source": "Career map" },
+    { "label": "Pay after 10+ years", "value": "¥20,000 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Walking the cabin during taxi for the safety check, and making sure everyone is seated before takeoff", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Holding the crew briefing within 120 minutes of departure and signing the electronic minutes", "source": "AI exposure" },
+    { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "The alarm goes off. Hair up in a bun, makeup on: hairnet, hairspray and lipstick shade all by the manual, done inside twenty minutes. A spare pair of tights goes in your bag.",
+    "The crew bus to the airport briefing room. Sign in, breathalyzer. The purser runs the pre-flight briefing and calls on you: \"What's the command for arming the slide at door L2?\" You answer. Your palms are wet.",
+    "On board, you check the emergency equipment: fire extinguishers, oxygen bottles, first-aid kit, flashlights, ticking each one off. Back in the aft galley you count the meals and come up two vegetarian short. You report it to the purser right away.",
+    "Boarding. You stand at the door and say \"Welcome aboard\" two hundred times and more. A middle-aged man is jamming an oversized case into the overhead bin; you go up on tiptoe and help him move it somewhere else.",
+    "Safety check before taxi, row by row: seatbelts, tray tables, window shades. The passenger in 12C won't put his laptop away. You crouch beside him and say it again, and only then does he close it.",
+    "Cruise, and the meal cart. The seatbelt sign comes on for turbulence; you pull the hot-water pot back in and work your way aft, hand on the seatbacks. Your instructor watches from the galley and says nothing.",
+    "Landing in Chengdu: deplane, clean the cabin, board again, and forty minutes later you head back to Shanghai. You eat half a bread roll standing in the galley and tuck the other half back in your bag.",
+    "Back in Shanghai, the post-flight debrief. Your instructor says you read the announcements too fast: \"If the passengers can't hear it, you never said it.\" Back at the dorm you go through tomorrow's route and the aircraft manual one more time."
+  ],
+  "ladder": [
+    { "title": "Trainee Flight Attendant", "stage": "Trainee", "focus": "Complete the airline's ground theory and emergency-procedures training, pass the aircraft type exam, learn the duties of every crew position on one type under an instructor, log the required supervised hours (about 60–100) and pass the solo check." },
+    { "title": "Economy Class Flight Attendant", "stage": "Junior", "focus": "Fly domestic and short-haul international routes in economy on your own, handling takeoff and landing safety checks, meal service and sudden turbulence efficiently. Zero safety errors and steadily built hours (to about 1,500–2,000) earn you a shot at the premium-cabin assessment." },
+    { "title": "Premium Cabin Flight Attendant", "stage": "Mid-level", "focus": "Serve high-end passengers in business and first class and fly long-haul international routes. Build a reputation through refined service, language skills and defusing complaints in the air; reach about 3,000 flight hours and enter selection for the purser track." },
+    { "title": "Purser", "stage": "Senior", "focus": "Run the whole cabin on narrow-body aircraft (such as the A320 or B737): lead the pre-flight briefing, assign safety duties, run the debrief, and coordinate with the flight deck and air marshals when something goes wrong. Promotion comes through team management, a clean safety record and service ratings." },
+    { "title": "Cabin Manager", "stage": "Expert", "focus": "Command the large multi-cabin crews of wide-body aircraft (such as the A350 or B787) on major intercontinental routes or VIP charters. Own safety for the whole journey, handle crises across countries and cultures, and work with cabin-services management to put service and safety policy into practice." }
+  ],
+  "ai_tasks": [
+    { "name": "Walking the cabin during taxi for the safety check, and making sure everyone is seated before takeoff", "how": "At most, AI can run a countdown and a checklist in the background. The real work is walking the aisle and looking at each row, talking round the passengers who resist, confirming seatbelts and bags are secure, then strapping yourself in and reporting forward. Someone has to be physically there." },
+    { "name": "Clearing takeoff hazards in the cabin during taxi and getting everyone seated", "how": "AI can flag the timings and the usual violations. Spotting and fixing problems row by row, persuading passengers to cooperate, taking your own brace position and reporting it all rests on the flight attendant's judgment on the spot." },
+    { "name": "Holding the crew briefing within 120 minutes of departure and signing the electronic minutes", "how": "AI can pull together flight details, weather, aircraft type and passengers' special needs, draft risk notes and duty assignments, and tidy up the minutes. Discussing it face to face, judging how serious each risk is, agreeing who does what and signing your name to it are done by people." },
+    { "name": "Giving the cabin safety demonstration in the last 3 minutes before takeoff, with a two-person cross-check", "how": "AI or the video system can supply the standard demonstration in Chinese and English, play it automatically and help check the sequence. Seeing whether passengers are actually watching, getting the movements right, cross-checking with a colleague and handling passengers with special needs still fall to the flight attendant." },
+    { "name": "A passenger collapses from a cardiac event at cruise: the full in-flight first-aid sequence inside 5 minutes", "how": "AI can prompt the first-aid steps, help look up medical history and connect to medical support on the ground. Feeling for a pulse, checking consciousness, doing CPR, using the onboard medical kit, calming the people around and reporting to the captain have to be done, and answered for, by a person who is there." },
+    { "name": "Preparing personalized service for premium passengers in the 40 minutes before descent", "how": "AI can work through passenger profiles for meal preferences, upgrade history and entry-document reminders, and produce a service list and suggested phrasing. Talking to people in person, reading their mood, adjusting on the fly and handling last-minute changes and complaints is the flight attendant's job." },
+    { "name": "Opening door L1 and deploying the slide within 30 seconds of a water landing, then directing passengers out", "how": "In an extreme situation measured in seconds, AI can't lend a hand. Opening the door, inflating the slide, breaking windows, shouting commands and pulling people out depend entirely on the flight attendant's strength, muscle memory from training and reactions in the moment." }
+  ],
+  "events": {
+    "e_turbulence": "Your first severe turbulence, halfway down the aisle with the meal cart. You brake it on command, drop into the nearest empty seat, buckle up and grip the armrest the whole way, still smiling.",
+    "e_solo": "Your supervised hours are finally logged. On the day of your solo check the instructor asks only two questions. After she signs, she says, \"You fly on your own now.\" That evening you stand outside the dorm and talk to your family on the phone for a long time.",
+    "e_redeye": "Three days straight of pre-dawn departures. Your sleep falls apart and your stomach aches without stopping. After landing you go back to the dorm and sleep fourteen hours, and wake not knowing whether it's morning or night.",
+    "e_syncope": "At cruise an elderly man suddenly passes out. You and the purser check his consciousness, find a pulse, bring the oxygen; an announcement turns up a doctor, and the captain requests priority landing. When he leaves the plane he's awake, and he takes your hand and thanks you.",
+    "e_complaint": "A passenger didn't get the meal he wanted and files a complaint after landing. You write a three-page account. Your performance rating for the month still drops a grade.",
+    "e_drawing": "A child on her first flight draws you a picture; in it you are bigger than the plane. Her parents write the airline a letter of thanks, and Cabin Services pins it to the notice board.",
+    "e_unruly": "A drunk passenger starts shouting and won't stop. You and the air marshal follow the procedure, note the times, record witness statements, and hand him over to airport police on landing. Only back in the galley do you notice your hands shaking.",
+    "e_dating": "You get back in touch with a college classmate who works in Lujiazui, the financial district. Your schedules never line up; in three months you see each other five times, always somewhere near the airport.",
+    "e_wedding": "You get married. The wedding falls in your week of time off. You've flown to the honeymoon city more than thirty times, and this is the first time you've left the airport.",
+    "e_house": "You put a down payment on a small two-bedroom near Pudong Airport, a twenty-minute taxi from the gate. Between the mortgage and the building fees, you start asking for extra sectors.",
+    "e_pregnant": "Pregnancy grounds you, as the rules require. You move to ground duty sorting paperwork and your income drops by more than half. The day the baby arrives, the women on your crew fill the group chat with little airplane emojis.",
+    "e_medical": "At the annual aircrew medical one reading comes back high, and the doctor wants to see you again in a month. That month you skip late-night snacks and skip rope in your dorm room every day.",
+    "e_ai_brief": "The airline rolls out an AI pre-flight assistant: weather, aircraft, special passengers and risk notes in one draft at the press of a button. At the briefing the crew goes through it on a tablet line by line, confirming each point, and it counts only once the purser signs.",
+    "e_ai_profile": "Service lists are now generated from passenger profiles: who doesn't eat cilantro, who complained last time, who needs reminding about the arrival card. Once it mixes up two passengers with the same name, and you only catch it because you ask one extra question in person.",
+    "e_safety_video": "The safety demonstration is now a video from start to finish; you no longer stand in the aisle miming the life vest. But in those last minutes before takeoff you still walk the rows, checking who's watching and who's asleep with earbuds in.",
+    "e_slump": "Fuel prices rise, passenger numbers fall, and the airline cuts a batch of routes. Your monthly hours drop by half, and so does your pay. With the time on your hands, you sit the TOEIC at home.",
+    "e_longhaul": "Your first intercontinental flight: thirteen hours, then two days' rest at the outstation. You buy a huge bag of snacks at a local supermarket and share them out to your crew back home.",
+    "e_veins": "Years of pushing carts and standing for hours on end have caught up with your lower back and the veins in your calves. You start flying in medical compression stockings, and after every flight you put your legs up against the wall.",
+    "e_kid_fever": "The night your child runs a fever, you're on a layover. On video he cries for his mother. You sing him a nursery song twice into the screen from your hotel room, and only after you hang up do you let yourself cry.",
+    "e_mentee": "A new flight attendant you trained handles her first case on her own, a passenger with low blood sugar: steady him, give him sugar, log it, report it, not one step out of order. After landing she sends you a long message.",
+    "e_mom_comes": "After she retires, your mother moves to Shanghai to help with the baby. She sleeps on a folding bed in the living room, and stays for years. Whenever you fly home, there's a bowl of food waiting on the table under an upturned plate.",
+    "e_new_manual": "At a debrief, a flight attendant fresh off her solo check quietly reminds you that the announcement scripts have been replaced with a new version. You spend the night reading the new manual aloud, and the next day you don't miss a word.",
+    "e_delay": "Thunderstorms, and four hours waiting on the runway. You bring water to a full cabin, explain, apologize; someone pounds a tray table, someone falls asleep. You land at one in the morning.",
+    "e_forty": "Past forty, a night flight takes two days to recover from. You start requesting fewer red-eyes and leave them to the younger crew who need the extra hourly pay."
+  },
+  "choices": {
+    "c_english": {
+      "title": "Sit the exams for announcer rating and international-route English?",
+      "situation": "Cabin Services is picking people for the international-route pool, which means passing the TOEIC and a bilingual Chinese-English announcer rating. Fail, and you fly domestic only. But studying will eat into rest time you barely have.",
+      "options": [
+        { "label": "Study after every flight", "result": "You practice announcements into your phone in the dorm until your roommate can recite them too. Once you pass, intercontinental routes begin to appear on your roster." },
+        { "label": "Get solid on domestic first", "result": "You fly a lot more domestic sectors, your hours climb fast, and your payslip looks a little better. Your name isn't on the international list, for now." }
+      ]
+    },
+    "c_premium": {
+      "title": "Try for the premium cabin?",
+      "situation": "Your hours are nearly there, and Cabin Services opens selection for business and first class: wine pairing, tea service, premium-cabin procedures, then another supervised assessment. Miss this round and you wait another year.",
+      "options": [
+        { "label": "Sign up, learn wine and tea", "result": "You memorize the regions and pairings of dozens of wines. The first time you pour red wine in business class your hand is steady. The passenger doesn't notice. You do." },
+        { "label": "Skip it, stay in economy", "result": "Economy is crowded and busy, and you get fast enough to serve a whole row in ten minutes. Several people from your intake have already moved up front." }
+      ]
+    },
+    "c_airline": {
+      "title": "Switch airlines?",
+      "situation": "A Middle Eastern carrier is recruiting in Shanghai: high pay, routes all over the world, company housing abroad. A private Chinese airline is also offering you a higher hourly rate and a denser schedule. You've only just found your footing where you are.",
+      "options": [
+        { "label": "Go to the Middle Eastern carrier", "result": "You live for some years in company housing at the edge of the desert and fly to five continents. You get home to Shanghai twice a year, and your mother says you've gotten darker again." },
+        { "label": "Go private, fly more, earn more", "result": "The hourly rate is higher and your monthly flying hits the legal limit. The number on your bank card goes up. Your evenings at home go down." },
+        { "label": "Stay where you are", "result": "You don't leave. An old purser says you're steady, and starts handing you the difficult sectors." }
+      ]
+    },
+    "c_bizjet": {
+      "title": "An offer from business aviation",
+      "situation": "A business-jet company is looking for a flight attendant: one attendant per aircraft, serving entrepreneurs and their guests, double the pay, on call at any hour, no fixed roster. It's your English and premium-cabin experience they want.",
+      "options": [
+        { "label": "Go fly business jets", "result": "You leave the big airline. Your first flight is on a plane with twelve seats and three passengers.", "end": "You became a business-jet flight attendant, one aircraft serving a handful of people. Your phone stayed on around the clock, and your packed suitcase always waited by the door." },
+        { "label": "Stay with the airline", "result": "You turn it down. You did the math on the money, and on a life of being on call." }
+      ]
+    },
+    "c_kid": {
+      "title": "How to fly once your child starts school",
+      "situation": "Your child is about to start primary school, and your spouse's job is demanding too. You can apply to fly only domestic short-haul, out in the morning and home at night: fewer hours, 20 percent less pay. Keep flying international and you'll need a nanny, or your parents.",
+      "options": [
+        { "label": "Apply for short-haul only", "result": "You're home every night and can go to parent-teacher meetings on weekends. Your pay drops a notch, and your name is gone from the long-haul list." },
+        { "label": "Keep flying, hire a nanny", "result": "You keep flying intercontinental, and every week the nanny sends you photos of your child. At one parent-teacher meeting, the teacher asks whether the child's mother lives abroad." },
+        { "label": "Bring your parents to Shanghai", "result": "You bring your mother and father up from your hometown. The flat gains two beds and a great deal of nagging, and someone is always there at the school gate." }
+      ]
+    },
+    "c_purser": {
+      "title": "Compete for purser",
+      "situation": "Your hours are enough, and Cabin Services opens the purser competition: a joint drill in the simulator, unannounced emergencies, watching how you decide and how you assign tasks. If you get it, the safety of the entire cabin, and every complaint, is yours.",
+      "options": [
+        { "label": "Go for it", "result": "In the drill, smoke suddenly fills the simulator. You shout commands, assign people, report to the captain, without a pause for breath. Afterward the examiner says one thing: clear division of duties." },
+        { "label": "Wait another year", "result": "You don't feel ready and let the slot go to someone else. That year you fly a little lighter, and learn a lot from watching others lead their crews." }
+      ]
+    },
+    "c_ai_cabin": {
+      "title": "Volunteer to test the AI cabin workflow?",
+      "situation": "The airline is piloting a human-AI cabin workflow and needs frontline flight attendants to test it: review the service lists and risk notes the AI generates, and sort out what can be trusted and what a person must check. It will cost you days off.",
+      "options": [
+        { "label": "Volunteer", "result": "In the simulator you pick holes in the system line by line. When the new pre-flight checklist comes out, three of its items were changed on your say-so." },
+        { "label": "Skip it, use what you're given", "result": "Once the system goes live you use it as is. Sometimes it feels long-winded, but it saves you a good deal of writing things down." }
+      ]
+    },
+    "c_instructor": {
+      "title": "Move to the ground as an instructor?",
+      "situation": "The training center is hiring cabin instructors: no more flying, nine to five, teaching new crew the slides and evacuation commands. You'd lose the big slice of income that comes from hourly flight pay, but you'd be home for dinner every night.",
+      "options": [
+        { "label": "Go to the training center", "result": "You pass the instructor appointment, hand back your aircrew ID, and get a ground-staff badge in its place.", "end": "You became a cabin crew instructor. Every day you stood at the door of the simulator, listening to one batch of new crew after another shout, \"Release your seatbelt, come this way.\"" },
+        { "label": "Keep flying", "result": "You say you want a few more years in the air. That night you wheel your suitcase out the door, under the light your spouse left on for you." }
+      ]
+    },
+    "c_cabin_manager": {
+      "title": "Go for cabin manager",
+      "situation": "The airline has taken delivery of several wide-bodies and needs cabin managers for intercontinental routes and charters. You're in your early forties: it means re-sitting the English rating and another year of long-haul. Leading crews on narrow-bodies, you could do it in your sleep.",
+      "options": [
+        { "label": "Go for cabin manager", "result": "You go back to practice tests and announcement drills. The first time you lead a crew of more than a dozen on an intercontinental flight, your legs are swollen when you land, and not one person on the crew has made a mistake." },
+        { "label": "Stay on narrow-bodies", "result": "You keep leading crews on domestic routes. You know every jet bridge and every ground team at every airport, and life runs steady." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "Your last flight is Shanghai to Sanya, and the purser makes a point of putting you at door L1. After landing the captain says over the PA, \"Today is the last flight of one of our veteran flight attendants,\" and the cabin breaks into applause. You bow. As you leave the plane you unpin the wings from your chest and slip them into your uniform pocket. After that you move to the ground, and work in the Cabin Services office until you retire.",
+    "burnout": "For a while you keep waking in the night. After landing you still hear the engines, and your back hurts too much to push the cart. A few arrows on your medical report ground you for good. You move to ground duty doing crew scheduling, nine to five. Planes take off and land outside the window, and you no longer look up to see whose they are."
+  },
+  "past": [
+    "You grew up in a small city in Anhui province, where your parents ran a stationery shop in the county seat. By the third year of middle school you were already 1.68 meters tall. The PE teacher wanted you for volleyball; your mother said no.",
+    "The summer after your first year of high school, you took your first flight, to visit relatives in Beijing. A flight attendant crouched to help with your seatbelt and smiled: \"First time flying?\" You remembered her bun.",
+    "Your score on the gaokao (college entrance exam) cleared the line for second-tier universities. You wanted to apply for a flight attendant program; your mother said that was a job for the young and pretty that wouldn't last. In the end you put down tourism management at a university in the provincial capital. You could be a tour guide, she said, or work in a hotel.",
+    "In your third year of college you interned on the front desk of a five-star hotel, working rotating shifts. You found you didn't mind being tired. What you minded was standing in one spot and not moving.",
+    "In the first term of your final year, several major airlines held open recruitment for graduates of regular universities, any major. You went to Shanghai to interview. The first round measured your height, watched you walk and checked for scars; the second had you introduce yourself in English. After that came the medical and a political background check.",
+    "When the offer came, you went into the training center full-time for two or three months: emergency equipment, evacuation commands, first aid and dangerous goods, one exam after another, until you held your cabin crew training certificate."
+  ],
+  "late": {
+    "pension_note": "Estimate: a state-owned airline contributes through the urban employees' pension scheme plus an enterprise annuity. Hourly flight pay doesn't fully count toward the contribution base, and income drops after moving to the ground, so the pension comes to a little over 40 percent of your monthly pay in your last flying years.",
+    "scenes": [
+      "The first Spring Festival after you're grounded, you eat a whole New Year's Eve dinner at home for the first time. Nobody is waiting downstairs for the crew bus at four in the morning.",
+      "A vocational college asks you to teach deportment to its flight attendant students. They stand in a row, and you go down the line adjusting each one's chin and shoulders.",
+      "The pension is a good deal less than you earned flying. You and your spouse work it out: the mortgage is paid off, there's enough to live on. You just don't buy a plane ticket on a whim anymore and go.",
+      "The women from your intake get together once. One has opened a flower shop, one flies business jets, one went to the training center. When they line up for the photo they still stand in a row out of habit, feet set in a T.",
+      "For your first six months on the ground you sit at the scheduling computer, slotting other people's names into 5 a.m. departures. When you reach the route you used to fly, you stop for a moment.",
+      "Your back slowly mends, and you start swimming once a week. In the pool you think of hauling the life raft in initial training, and wonder how your arms were ever that strong.",
+      "You take your child to the airport for summer camp. At security a young flight attendant recognizes you: you flew her first sector with her. You say you stopped flying long ago. She says she still remembers you telling her to slow down on the announcements.",
+      "For the first month after leaving the cabin, you still check the weather every morning, looking for thunderstorms, before you remember it has nothing to do with you anymore.",
+      "The new work pays differently and keeps different hours. It takes you nearly a year to stop jolting awake at night and reaching for your phone to check the roster.",
+      "When you fly somewhere yourself, before you sit down you still glance at the nearest emergency exit and count how many rows away it is.",
+      "The new aircraft have cabin robots that hand out water and blankets, and the pre-flight checklists are all generated by the system. But opening the door, deploying the slide, shouting commands through smoke and pulling people out is still a flight attendant's job.",
+      "The year your child sits the gaokao, they ask whether they should try for flight attendant too. Go and get your height measured first, you say, and then think about whether you can stand getting up at four in the morning."
+    ],
+    "closing": {
+      "retire": "Many years later, one evening, you sit by the river watching planes come down one after another toward Pudong. As each one lowers its landing gear, you count in your head: ten, nine, eight.",
+      "burnout": "Many years later, you take your granddaughter on her first flight. Before takeoff you fasten her seatbelt and pull it snug, then let it out a notch.",
+      "end": "Many years later, on an old phone, you find a photo from the day of your first solo flight: the uniform a little too big, the smile trying very hard. You look at it for a while, and don't delete it."
+    }
+  }
+}

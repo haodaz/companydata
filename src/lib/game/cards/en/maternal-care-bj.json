@@ -1,0 +1,175 @@
+{
+  "id": "maternal-care-bj",
+  "occupation": "Maternity and Newborn Care Specialist",
+  "role": "Gold-tier live-in maternity nanny (yuesao)",
+  "headline": "A gold-tier maternity nanny from the mountains of Sichuan, eight years living in with Beijing families, more than seventy babies cared for, booked solid until next spring, with a daughter back home in her final year of high school",
+  "unit": "A Beijing home-services company that employs its nannies directly (live-in bookings)",
+  "unit_type": "Home-services company, live-in",
+  "city": "Beijing",
+  "city_tier": "Tier 1",
+  "education": "Middle school (Maternity and Newborn Care vocational certificate, Infant Care certificate)",
+  "level": "More than seventy babies, including twins, preemies and C-section mothers. Your technique for unblocking milk ducts is passed by word of mouth from one client to the next. A booking runs 26 days, and you're booked solid until next spring.",
+  "intro": "This is your eighth year as a yuesao, the live-in nanny who looks after a mother and newborn through the traditional month of postpartum confinement. You've cared for more than seventy babies in Beijing; the company's system rates you gold-tier, and your next booking is usually a friend of the last. Today is the first day of a new one. You wheel the suitcase you've used for five years out of the last family's home and take the subway straight to the next. The mother had a C-section yesterday. For the next twenty-six days, you sleep beside the baby's crib.",
+  "salary_note": "Estimate: a gold-tier yuesao in Beijing earns about ¥18,000–26,000 for a 26-day booking, but there are gaps between bookings. At ten-odd bookings a year, it works out per month to about 85 percent of the national figure.",
+  "facts": [
+    { "label": "Gold-tier Maternity Care Specialist (current level)", "value": "5–8 years, ¥20,000–35,000 a month (national average)", "source": "Career map" },
+    { "label": "Next level up", "value": "Maternity Care Supervisor (8+ years)", "source": "Career map" },
+    { "label": "Pay after 10+ years", "value": "¥22,000 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Cleaning and caring for the newborn, and the focused checks on jaundice, the umbilical stump and the diaper area", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Checking the mother's recovery meals, and the end-of-day handover and settling the baby", "source": "AI exposure" },
+    { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "The baby makes two small sounds and you're already awake. Change the diaper, check the umbilical stump, hold him up to the window light to look for jaundice, and write in your notebook: fed 60 ml, two stools, color normal.",
+    "Into the kitchen. The first week is shenghua tang, the herbal broth for clearing the womb, and millet porridge; going by the mother's constitution, you use half a spoon less brown sugar. These are the no-salt days, so you lift the flavor with scallion and ginger.",
+    "You wash the mother, check her incision, press gently on her uterus, then teach her to breastfeed lying on her side. The latch is wrong, so you adjust it bit by bit with your own hands. The pain brings her to tears. You say, Let's try once more.",
+    "Bath time for the baby, then massage and gentle exercises. The grandmother films on her phone and asks whether the water isn't a little cold. You dip your elbow in to show her.",
+    "The mother's breasts are engorged, hard and hot. You spend an hour working the lumps loose bit by bit. Lunch is a pot of pig's-trotter soup; you stand at the stove and eat two mouthfuls of leftover rice.",
+    "The baby is asleep, and you video-call your daughter back home. She's in her dorm working through practice problems and asks if you'll be back for National Day. You say you will, once this booking's done.",
+    "The new father comes home from work, and you teach him to burp the baby and to soothe colic with the airplane hold. He fumbles, and the baby cries even louder on his arm.",
+    "Your third time up in the night: mix the formula, feed, burp. The baby sleeps. You lie down on the folding bed beside the crib, one hand still resting on the rail."
+  ],
+  "ladder": [
+    { "title": "Junior Maternity Care Specialist", "stage": "Trainee", "focus": "Work at a postpartum center under an experienced trainer, or take basic budget bookings through a platform. Master everyday newborn care and standard confinement meals, and take bookings on your own with zero safety errors." },
+    { "title": "Intermediate Maternity Care Specialist", "stage": "Independent", "focus": "Take on 26-day, round-the-clock live-in bookings on your own, or serve as a lead caregiver at a confinement center. Get on top of unblocking milk ducts, newborn jaundice and colic, and build a reputation for referrals." },
+    { "title": "Senior Maternity Care Specialist", "stage": "Experienced", "focus": "Handle difficult C-section wound care, severe engorgement, premature and low-birth-weight babies and highly sensitive constitutions with confidence. Offer basic postpartum recovery guidance and become a top-rated mainstay of a platform or agency." },
+    { "title": "Gold-tier Maternity Care Specialist", "stage": "Top tier", "focus": "Serve high-net-worth families, usually booked six months or more ahead. Bring deep experience with twins and complications of prematurity, along with postpartum emotional support and early learning, commanding a premium for both skill and client trust." },
+    { "title": "Maternity Care Supervisor", "stage": "Management", "focus": "Step back gradually from round-the-clock live-in physical work and move to a confinement center or the headquarters of a home-services chain: auditing quality of care, handling medical emergencies, running hands-on assessments and training the next generation." }
+  ],
+  "ai_tasks": [
+    { "name": "Cleaning and caring for the newborn, and the focused checks on jaundice, the umbilical stump and the diaper area", "how": "Wiping, disinfecting the umbilical stump, caring for the diaper area and sterilizing bottles all take hands, and AI can't do them. Jaundice is judged by eye; AI can at most remind you when to recheck and help keep records. Whether something is wrong is for a person to decide." },
+    { "name": "Morning rounds: reading the baby's signs and tummy massage for gas", "how": "Opening the door to see how the baby is, feeling for temperature and doing the massage all happen in the room and rely on touch and experience; AI can't do them. AI can suggest the usual procedures. A person makes the judgment and reports to medical staff and the family." },
+    { "name": "Coaching breastfeeding positions and watching how well mother and baby tolerate feeding", "how": "Correcting the position and judging the latch and swallowing take hands-on help and close watching, as well as calming the mother. AI can only offer feeding information and record templates; a person judges and guides the mother through it." },
+    { "name": "Checking the mother's recovery meals, and the end-of-day handover and settling the baby", "how": "AI can help check the meal plan and fluid schedule and turn the day's records into a handover sheet. Checking lochia and the wound, settling the baby to sleep, and handing over the key points to the night shift in person all have to be done by a person." },
+    { "name": "Morning supplies check, and judging and handling sudden changes in the baby's signs", "how": "With a sudden low fever, a bloated tummy or a stuffy room, a person has to judge on the spot, act and report. AI can remind you of the equipment list and the emergency steps, but it can't replace the person who is there." },
+    { "name": "Daily newborn cleaning and focused care of the umbilical stump and diaper area", "how": "Bathing, checking the skin for jaundice, disinfecting the umbilical stump, changing diapers: all handwork and judgment by eye, and AI can hardly help. At most it helps keep records and reminds you of care milestones." },
+    { "name": "Guiding postpartum breastfeeding and helping with recovery exercises", "how": "AI can produce the key points of recovery exercises, check meal and fluid arrangements and record what's been done. Adjusting the nursing position, leading the exercises and watching the wound and lochia need a person in the room to judge and guide." },
+    { "name": "Sorting and sterilizing bottles and clothes, and the night-shift handover across all the baby's signs", "how": "AI can pull together the records of feeds, wet diapers, jaundice and the rest into a handover sheet, and remind you of the sterilizing steps. Washing bottles and clothes, rechecking the baby, settling it by the crib and handing over face to face are still done by a person." }
+  ],
+  "events": {
+    "e_praise": "At the end of a booking the mother holds you and cries, then writes eight hundred words of praise in the company app. Your next booking is her colleague.",
+    "e_mother_in_law": "You land a mother-in-law who tastes every confinement meal before it goes in: too bland, and you're holding the baby wrong. There's a camera in the living room. You finish the full twenty-six days. There's no renewal.",
+    "e_jaundice": "On day five a baby's jaundice keeps deepening. You check twice with the skin bilirubin meter and urge the family to go to hospital at once. Three days under the blue lights. On the day they're discharged, the father calls you specially.",
+    "e_mastitis": "The mother's milk backs up and she runs a fever. For two nights you help her express every two hours. On the third day the fever breaks, and your own wrist is too swollen to twist open a bottle cap.",
+    "e_gaokao": "On the two days of your daughter's gaokao, you're on a booking and can't get leave. When it's over she messages you: \"Mom, I think it went OK.\" You stand in the kitchen smiling at your phone for ages, and the soup nearly boils over.",
+    "e_tuition": "Your daughter gets into a university in Chengdu. Tuition, living costs, a computer: you add it up, and it means two more bookings a year.",
+    "e_twins": "You take a booking for premature twins. In twenty-six days you never sleep a full night. When the month ends, both babies have put on more than a kilo. You've lost two and a half.",
+    "e_gap": "Hardly anyone gives birth around Spring Festival. You spend twenty days in the agency's basement waiting for work, at ¥30 a night for a bed, and the women in your room scroll the job groups all day long.",
+    "e_bracelet": "A family says a gold bracelet has gone missing and searches your suitcase in front of you. Three days later it turns up down the side of the sofa. The family says sorry.",
+    "e_ai_log": "The company app adds AI care records: say the feeds, diapers and jaundice once, and the system turns them into charts and a handover sheet for the parents. Young parents love the charts. You still write it all in your notebook too.",
+    "e_ai_advice": "A new mother comes to you with parenting advice from an AI on her phone, asking whether the baby cries at night because he's short of calcium. You go through it point by point, what's right and what she shouldn't trust yet. Afterward she turns off half the app's notifications.",
+    "e_husband": "Your husband drives freight in your home county, and you see each other twice a year. On the phone he says his back is giving out. You send ¥10,000 home and tell him not to tough it out, to go and get an X-ray.",
+    "e_wrist": "Years of holding babies and massaging breasts, and your tendons and lower back flare up together. Before the next booking you have to spend two days at a massage parlor under medicated plasters.",
+    "e_in_law_stroke": "Your mother-in-law back home has a stroke, and someone in the family has to be there. You cancel a booking and go home for a month. Not a yuan comes in that month, and the two bookings lined up for your return to Beijing go to someone else.",
+    "e_second_baby": "A family you looked after three years ago has a second child and asks for you by name. The first one can run now; he flings himself at you the moment the door opens, shouting \"Auntie!\" You crouch down. He still remembers how you smell.",
+    "e_new_standard": "Beijing issues new standards for home services: certificates, medical checks and background checks all go into the system. The company sends you to sit the certificate in postpartum recovery guidance, and you sit in the front row of the training class.",
+    "e_daughter_bf": "Your daughter graduates and stays in Chengdu for work, and brings home a boyfriend for you to meet. That day you cook a whole table of dishes, more carefully than any confinement meal.",
+    "e_grandson": "Your daughter has a baby. You turn down two bookings and go back to Chengdu to look after your own grandson through his first month: twenty-six days, not a yuan charged, and not one fewer time up in the night.",
+    "e_club": "Several confinement centers open nearby, with young caregivers, full sets of equipment and prices on a big screen. Your live-in bookings drop a little, and your rate gets pushed down a little too.",
+    "e_eyes": "Mixing formula one night, you can't read the markings on the bottle. From then on there's a pair of reading glasses in your apron pocket.",
+    "e_colic": "A baby with colic cries all night. You carry him in the airplane hold back and forth across the living room for four hours. At dawn he finally sleeps, and you fall asleep leaning against the sofa.",
+    "e_apprentice": "The company asks you to take a newly certified girl from your home region along on a booking. You teach her how to support the neck when turning the baby, and how to tell at a glance whether there's enough milk. When she finishes her first booking on her own she sends you a big red-envelope cash gift. You send it back."
+  },
+  "choices": {
+    "c_vip": {
+      "title": "Take the preemie booking?",
+      "situation": "An old client refers a family paying half again your usual rate: forty-two days live-in, cameras on the whole time, a detailed care log every day. The baby was born at thirty-two weeks and has just come out of the NICU.",
+      "options": [
+        { "label": "Take it", "result": "You learn kangaroo care and log temperature and feeds every three hours. After forty-two days the baby's weight has doubled, and the family recommends you to a whole circle of friends." },
+        { "label": "Pass, stick to referrals from people you know", "result": "You turn it down and take another friend of an old client. Life goes on as usual, and your mind is at ease." }
+      ]
+    },
+    "c_rehab": {
+      "title": "Learn postpartum recovery?",
+      "situation": "The company is running postpartum recovery training. The fee is over ¥10,000; afterward you could do daytime recovery sessions by appointment, no living in. Or you could try for international lactation consultant, which means clocking clinical hours and studying materials in English. You're forty-five, and you put the books down a long time ago.",
+      "options": [
+        { "label": "Sign up for postpartum recovery", "result": "In the training class you learn to test for abdominal separation with your hands on a model pelvis. Three months later you have the certificate." },
+        { "label": "Skip it, keep living in", "result": "You work it out: one course means two fewer bookings. You keep living in. What your hands know, they learned one booking at a time." }
+      ]
+    },
+    "c_club_offer": {
+      "title": "Take a fixed post at a confinement center?",
+      "situation": "A high-end confinement center invites you to be its head of care: regular shifts, no living in, one day off a week, social insurance paid. But you'd earn 20 percent less a month than living in.",
+      "options": [
+        { "label": "Go to the confinement center", "result": "You have your own desk and a duty roster, manage a dozen young caregivers, and can go back to your rented room to sleep at night." },
+        { "label": "Keep taking live-in bookings", "result": "You say you'd like a few more years while your hands are still quick. The money has to be saved for your daughter." }
+      ]
+    },
+    "c_videos": {
+      "title": "Record teaching videos?",
+      "situation": "The company is making an AI maternity-care course and wants gold-tier nannies to record dozens of videos teaching newcomers how to burp a baby, check for jaundice and work a hard lump loose, to train an AI assistant and new staff. A few hundred yuan a lesson, squeezed into your time off.",
+      "options": [
+        { "label": "Record them", "result": "You demonstrate dozens of times to the camera with a silicone doll in your arms, speaking slower than usual. Later the new girls say they learned from your videos." },
+        { "label": "Don't", "result": "You say a screen can't learn what hands know, and go off to your next booking." }
+      ]
+    },
+    "c_supervisor": {
+      "title": "Become a maternity care supervisor?",
+      "situation": "Company headquarters asks you to be a maternity care supervisor: in charge of service quality for forty nannies, with spot checks, hands-on assessments and training new hires, and first out the door when any family has an emergency. No more living in, and a little less pay than taking bookings.",
+      "options": [
+        { "label": "Become a supervisor", "result": "Every day you visit several homes for spot checks, scoresheet in hand, watching young nannies bathe babies and mix formula. When something's wrong, you take over on the spot and do it yourself once." },
+        { "label": "Stay on the front line", "result": "You say you still like keeping watch over one baby and seeing him grow day by day." }
+      ]
+    },
+    "c_chengdu": {
+      "title": "Move back to Chengdu?",
+      "situation": "Your daughter has settled in Chengdu and wants you to come back. Nannies earn less there, she says, but the family would be in one city and you could see your grandson on weekends. Your old clients in Beijing are still booking you.",
+      "options": [
+        { "label": "Take bookings in Chengdu", "result": "You build up clients in Chengdu from scratch. Each booking pays 30 percent less, but on weekends you can eat at your daughter's place." },
+        { "label": "Stay in Beijing", "result": "On the phone you tell your daughter a few more years. After you hang up, you go into the kitchen and turn down the flame under the fish soup." }
+      ]
+    },
+    "c_trainer": {
+      "title": "Teach, or open a studio?",
+      "situation": "Several of the apprentices you trained are now taking bookings in Beijing. A training school invites you to teach maternity care skills; some old clients urge you to open a small studio of your own, taking bookings, assigning them and training people.",
+      "options": [
+        { "label": "Become a trainer", "result": "You earn your trainer qualification. The first time you stand at the front of a classroom, your palms are soaked.", "end": "You became a maternity care trainer at a vocational school. On the lectern sat a silicone doll, and you showed students how to support the neck when turning a baby, exactly the way you learned it eight years before." },
+        { "label": "Open a small studio", "result": "You rent a small room, hang up a sign, and have six people working for you. Client calls, apprentices' schedules, the platform's cut: it all rests on you." },
+        { "label": "Keep taking bookings yourself", "result": "You say yes to no one, and wheel your suitcase to the next family." }
+      ]
+    },
+    "c_stop_live_in": {
+      "title": "Keep living in?",
+      "situation": "You're past fifty. After getting up three times in a night it takes days to recover, and your blood pressure on the medical report climbs every year. Daytime home visits for lactation and postpartum recovery can still pay, just less.",
+      "options": [
+        { "label": "Stop living in, days only", "result": "You tell the company you won't take live-in bookings anymore, and put the suitcase away under the bed.", "end": "You stopped living in. By day you visited homes to help with breastfeeding and postpartum recovery, and at night you went back to your own rented room to sleep. The first time you woke from a full night's sleep, it was already broad daylight." },
+        { "label": "A few more years", "result": "You book another full year. Before every booking, you spend two days at the massage parlor under medicated plasters first." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "Your last booking is an old client's second child. On the day the month ends, the baby falls asleep in your arms after a feed. You go through the handover notebook page by page with the new parents, then label each container of soup in the freezer with its date. You wheel your suitcase downstairs. One of its wheels hardly turns anymore.",
+    "burnout": "After that year's run of bookings, your back won't straighten and your wrists are too swollen to hold a bottle. You cancel the bookings you'd lined up and take the train home to Sichuan. Your first night back you sleep twelve hours. When you wake, you reach out to the side of the bed. There's no crib there."
+  },
+  "past": [
+    "You grew up in a village in a mountain county in Sichuan. The year you finished middle school, your family couldn't afford to keep both you and your younger brother in school, so you went to a garment factory in Chengdu to work a sewing machine.",
+    "At the factory you met a man from your home region. After you married, you went back to the county town. He drove freight; you opened a little corner shop in the township.",
+    "Your daughter was born. You couldn't afford anyone to help you through your confinement month, so your mother came down from the village to look after you, and taught you how to bathe the baby, testing the water with your elbow.",
+    "A supermarket opened in the township and the corner shop's trade dried up. Your daughter's schooling cost money, and your husband still owed on his truck. A woman from your village was working as a yuesao in Beijing, and when she came home for New Year she said she earned over ¥10,000 a month.",
+    "You spent a month at a training school registered with the county labor bureau, passed the Maternity and Newborn Care vocational certificate, got your health certificate, and followed a woman from home to Beijing. On your first booking, an old hand lived in alongside you and showed you the ropes.",
+    "After two years you had dozens of good reviews, and went on to earn the Infant Care certificate and learn to unblock milk ducts. That year you looked after twins for the first time and lost four kilos in twenty-six days, and the company raised your rating to senior.",
+    "Your bookings stretched six months out, most of them friends of the last family. The company made you gold-tier, and with that year's bonus you bought your daughter a computer for her studies."
+  ],
+  "late": {
+    "pension_note": "Estimate: all these years as a yuesao you were self-employed, paying only into the basic pension for rural and urban residents back home plus a few years of social insurance as a flexible worker. The pension is very low, about 30 percent of your final monthly income.",
+    "scenes": [
+      "Your first month back in Sichuan, you still wake at two in the morning. You lie and listen for a while. No baby is crying. You drift off again.",
+      "The pension comes in, together with what you paid in those flexible-work years: a little over ¥1,000 a month. You put the money you saved in Beijing into a fixed deposit, keeping a share aside for doctor's bills.",
+      "When a family in the county town has a baby, they go through several layers of connections to ask you to come and look. You teach the grandmother how to bathe the baby and don't take any money. They insist on pressing two free-range chickens on you.",
+      "The mother of the first baby you ever looked after posts a photo on WeChat Moments of her son finishing primary school. He's nearly up to his father's shoulder. You give it a like, dig out your old care notebook and look through it for a long time.",
+      "Half a year resting at home and your back slowly mends, though your wrists still ache whenever it rains. Your husband has learned to cook a few dishes, and when he brings them out he waits for you to say whether the salt's right.",
+      "The township clinic asks you to give two talks at its class for expectant mothers, on breastfeeding and burping. The young mothers in the audience record on their phones. You speak more slowly than you did in Beijing.",
+      "You didn't save as much as you'd hoped. You spend two years on day shifts at a confinement center in the county town, training young caregivers, no more nights.",
+      "For the first time, you rent a room in Beijing just for yourself, a dozen square meters with a south-facing window. You buy a little rice cooker, and the first meal you make is a bowl of noodles for you.",
+      "Several of the apprentices and students you trained are booked six months out now too. They call you Shifu, master, and send you red envelopes at festivals. You send them all back, keeping only a box of oranges.",
+      "Your grandson comes to see you in Beijing for the summer holidays, and you take him to Tiananmen. He asks what you used to do in Beijing. Helped other families look after their little babies, you say. Did you look after me? he asks. Long ago, you say.",
+      "Later the confinement centers had monitoring cameras and smart mattresses; when the baby woke and how much it drank were all on a screen. But bathing, checking jaundice, working a hard lump loose still needed someone at the bedside with their hands.",
+      "Your daughter says a yuesao in Beijing now charges a good deal more per booking than you did, and everyone has to hold several certificates. Take the exams, you say, and train your hands too. You don't learn milk by watching."
+    ],
+    "closing": {
+      "retire": "Many years later, one afternoon in the yard at home, you trim your granddaughter's fingernails, holding her small hand, one clip at a time, as steady as you were on all those nights in Beijing.",
+      "burnout": "Many years later, on market day in the township, you come across a young mother holding a newborn who's crying hard. You go over, tell her to try holding him another way, lift him upright against her shoulder and pat a few times. The baby burps, and stops crying.",
+      "end": "Many years later, on an old phone, you find the one-month photos of more than seventy babies, each with a name and birthday noted underneath. You scroll down through them one by one. Halfway through, the water boils, and you get up to turn off the stove."
+    }
+  }
+}

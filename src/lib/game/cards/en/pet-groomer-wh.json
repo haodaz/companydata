@@ -1,0 +1,181 @@
+{
+  "id": "pet-groomer-wh",
+  "occupation": "Pet Groomer",
+  "role": "Trainee groomer at a pet shop (starting with bathing)",
+  "headline": "A high-school graduate with three months of grooming school and a freshly passed C-grade certificate, at a pet shop on the ground floor of a Wuhan housing estate, where you bathe dogs for six months before you're allowed to touch the scissors",
+  "unit": "A pet shop on the ground floor of a housing estate in Hankou, Wuhan (grooming, boarding, pet food)",
+  "unit_type": "Neighborhood pet shop",
+  "city": "Wuhan",
+  "city_tier": "New first-tier city",
+  "education": "High school + three months at a pet grooming school",
+  "level": "C-grade certificate just passed. You've clipped dozens of teddy-bear cuts on practice dummies and exactly three on live dogs. You can bathe, blow-dry and express anal glands; you haven't handled a cat on your own yet",
+  "intro": "You spent three months at grooming school clipping fake dogs, passed your C-grade certificate, and came to this pet shop under a housing estate in Hankou with a set of scissors you bought yourself. The manager glanced at your certificate, pointed at the high-velocity dryer in the back room and said: bathe for six months, and once you understand bathing, you can get on the table. As of today, the name tag pinned to your apron says \"Bather.\"",
+  "salary_note": "Estimate: a bather at a neighborhood pet shop in Wuhan takes home around ¥4,000 in base pay and commission, a little over 10% below the national average. Once you're doing your own styling and have regulars, commission becomes most of it.",
+  "facts": [
+    { "label": "Pet Bather (current level)", "value": "0–1 years, ¥3,000–5,000 a month (national average)", "source": "Career map" },
+    { "label": "Next level up", "value": "Junior Pet Groomer (1–2 years)", "source": "Career map" },
+    { "label": "Pay after 10+ years", "value": "¥13,000 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Specialist degreasing and dematting for cats", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Intake checks and bathing plans for a bichon frise", "source": "AI exposure" },
+    { "label": "Open positions", "value": "167 related listings nationwide, 4 in this city (the listings are mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "Breakfast from the stall downstairs, a bowl of hot dry noodles you stir as you walk, the way Wuhan does it. At the shop door, the corgi boarding overnight is already barking at you through the glass.",
+    "Disinfect before opening. Wipe down the grooming tables, soak the scissors and combs, and pull a wad of yesterday's dog hair out of the dryer filter.",
+    "First up is a bichon. Handing over the leash, the owner says: \"Last time it was too short. Make the face rounder this time.\" In the log book you write \"round face\" and circle it.",
+    "A golden retriever goes into the tub, forty kilos of him, and halfway through he shakes water all over you. Drying takes forty minutes, and the dryer is so loud you can't hear the manager calling you.",
+    "A Ragdoll cat comes in for a degreasing bath; the owner says she bites at home. The manager puts on gloves and has you hold the towel beside her while you watch how she cradles the cat's chin, a little at a time.",
+    "In a quiet moment you practice trimming the hair between a poodle's paw pads. The manager watches for a second and says you're gripping the scissors too hard. Loosen the wrist.",
+    "Evening rush, and the owners picking up their dogs are lined up at the door. Someone takes a photo and says, \"Why does it look different from last time?\" You keep your head down, sweeping hair off the floor.",
+    "Closing. Fresh water for the boarders, lights off. Back in your shared flat you stand under the shower for a long time. The dog hair on your clothes never quite comes off with the lint roller."
+  ],
+  "ladder": [
+    { "title": "Pet Bather", "stage": "Apprentice / assistant", "focus": "Do the heavy physical work: daily baths, blow-drying and fluffing, dematting and combing, cleanup; you earn your first chance with the clippers through fluency and steady handling of dogs." },
+    { "title": "Junior Pet Groomer", "stage": "Working solo", "focus": "Do everyday cute-style trims on common breeds like poodles and bichons on your own, plus basic cat baths; you move up on speed, evenness of the cut and complaint rate." },
+    { "title": "Senior Pet Groomer", "stage": "Mainstay / fine work", "focus": "Take the high-ticket complex styles, specialty spa treatments and grooming for aggressive or easily stressed dogs and cats; your standing rises with a steady rate of repeat clients and a higher average ticket." },
+    { "title": "Grooming Supervisor", "stage": "Technical lead", "focus": "Run quality checks on the shop's grooming, train new assistants and junior groomers, be the last line on complaints, and manage coats for show dogs." },
+    { "title": "Pet Salon Manager", "stage": "Expert and operations", "focus": "Run the shop's grooming business, control supply costs, grow membership through referrals and look after high-value clients, or run your own boutique studio." }
+  ],
+  "ai_tasks": [
+    { "name": "Intake checks and bathing plans for a bichon frise", "how": "From intake photos, the owner's health history and past records, AI can flag likely risks like skin problems and mats and draft talking points and a bathing plan. The intake exam, feeling the dog over, a low-stress trim of the paw pads and the final conversation about risks all need a person there, hands on, judging and taking responsibility." },
+    { "name": "Specialist degreasing and dematting for cats", "how": "At most AI helps log and prompt the steps. Ninety to a hundred and twenty minutes of degreasing, dematting and ear cleaning means feeling for matted coat and the state of the skin while keeping the cat calm. It's handwork from start to finish, and only a person can do it." },
+    { "name": "A full Japanese-style teddy cut for a Pomeranian", "how": "AI can turn the owner's reference picture into a preview of the finished style, break the cut into steps and help pin down what the owner wants. Four to five hours of fine trimming, keeping it symmetrical and watching how much the dog can take are all done by a person. AI can't lend a hand." },
+    { "name": "Handling a dog that suddenly panics on the table", "how": "Panic happens within minutes. A person has to read it on the spot, restrain the dog safely, calm it and risk the bite. At most AI helps review it afterwards, or provides training material on spotting stress signals." },
+    { "name": "A deep cooling spa for an Alaskan Malamute in summer", "how": "AI can suggest appointment times based on the weather and the dog, pull together heatstroke precautions and keep the records. The microbubble wash, laser therapy and cool drying need a person running the equipment and watching the dog, ready to step in the moment it's in distress." },
+    { "name": "Coaching trainees through a full mock CKU C-grade assessment", "how": "AI can set theory questions, mark answers and put first-pass marks on recorded trims and handling, saving the instructor time. The model trims, the on-the-spot critique of how stress was handled and the judgment on whether a newcomer is ready still fall to the instructor." }
+  ],
+  "events": {
+    "e_first_bite": "A Shiba Inu whips its head round while you're clipping its nails and bites the back of your hand. The manager takes you for a rabies shot, and on the way back says: next time, watch which way its ears go first.",
+    "e_first_cut": "The manager finally lets you trim a poodle on your own. When the owner comes to pick him up she holds him up and turns him around and says, \"Nice.\" In the back room you grin to yourself for ages.",
+    "e_new_year_rush": "In the two weeks before Chinese New Year, every dog in Wuhan needs a bath. You wash fourteen a day and run the dryer until eleven at night, until you can't lift your arms.",
+    "e_skin_find": "Bathing an old bichon, you feel a ring of red rash on his belly and tell the owner to take him to the vet next door. It's a fungal infection. Later the owner comes into the shop just to thank you.",
+    "e_too_short": "You take a poodle's ear fur too short. The owner cries in the shop; she says it was the prettiest part of the dog she's had for ten years. The manager waives the bill, and you bow to her.",
+    "e_summer_heat": "Wuhan in July. The air conditioning in the shop is turned all the way down, and with the dryer on it's still a steamer. Halfway through drying, an Alaskan Malamute starts panting hard. You stop at once and lay him on a cooling mat.",
+    "e_cat_allergy": "After more than a year of doing cats, you start sneezing the moment you walk into the shop, and your eyes itch. The doctor says it's a cat allergy. You start working in a mask and take a pill after work.",
+    "e_regular": "One owner brings her Pomeranian in on the same day every month and will only see you; if you're booked, she waits. For the first time, your appointment book says \"requested.\"",
+    "e_love": "An assistant from the vet clinic next door keeps coming over to borrow things. One thing leads to another, and one weekend the two of you take the shop's boarding dogs for a walk around East Lake.",
+    "e_contest": "You enter a grooming competition, cute-style category. The night before, you work on the bichon's face until the small hours. You take third place, and the trophy sits on the shop counter.",
+    "e_ai_preview": "The shop launches a mini-app: the owner uploads a reference picture and AI shows what the dog will look like after the cut. There are fewer arguments, but now people come in with heavily edited photos from the internet and insist you make their dog look like that.",
+    "e_ai_intake": "The questionnaire and photos owners fill in before a visit now go through the system first, which flags mats, skin problems and \"possible stress.\" It marks a golden retriever \"gentle,\" and while you're drying his head he nearly bites you.",
+    "e_wedding": "You get married, with the banquet back home in Xiaogan. You give the borrowed white bichon riding in the wedding car a bow-tie cut, and your relatives take more photos of it than of the couple.",
+    "e_wrist": "After a few years of gripping scissors, you develop tendonitis in your right wrist and have to rest twice per dog. You switch to a lighter pair of scissors that costs over ¥1,000 more.",
+    "e_old_dog": "The Pomeranian you've trimmed for years has grown old, and the owner says this will be his last bath. You trim especially slowly, and when you're done you tie a red bow at his neck.",
+    "e_child": "Your child is born. Back at the shop after your leave, your hands are a bit rusty on the first day, but all the customers come by to look at the baby photos.",
+    "e_chain_open": "A pet salon chain opens in the mall with half-price bath packages. Your shop loses a good share of its walk-ins; the ones who stay are the regulars who ask for you.",
+    "e_apprentice": "The new bather gets scratched by a cat for the first time and hides in the back room crying. You teach her the towel wrap the manager once taught you, then stay with her until that cat is bathed.",
+    "e_parents": "Your father back in Xiaogan is in the hospital. Once a week after work you drive back and sit with him on the ward until midnight, then race back the next morning to groom dogs.",
+    "e_house": "The two of you put a down payment on a flat in one of Wuhan's new districts. There's a pet shop right under the building, and every time you walk past you glance inside.",
+    "e_back": "More than ten years of lifting dogs onto the table and bending over to trim paws, and you have a herniated disc. You fit a foot-pedal lift to the grooming table and get the young staff to lift the big dogs.",
+    "e_second_gen": "A primary-school kid who used to come in with a poodle walks through the door with a dog of his own, and says you trimmed every dog his family had when he was little.",
+    "e_eyes": "You can see the fur around their eyes less and less clearly, and you start wearing reading glasses. The owners say you trim even finer with them on."
+  },
+  "choices": {
+    "c_practice": {
+      "title": "Staying after work to practice",
+      "situation": "The manager says another six months of bathing before you get on the table. You want to start cutting sooner, but practicing means staying after closing to work on the boarding dogs and a dummy leg, and getting home after ten every night.",
+      "options": [
+        { "label": "Stay and practice", "result": "Two extra hours a day, and three months later the manager lets you trim your first poodle on your own. Your back has started to ache." },
+        { "label": "Go at the shop's pace", "result": "You leave on time and walk along the riverbank on weekends. When the manager puts you on the table six months later, your baths are the cleanest in the shop." }
+      ]
+    },
+    "c_b_cert": {
+      "title": "Sitting the B-grade certificate",
+      "situation": "The grooming school is enrolling an advanced B-grade course: show trims, hand-stripping schnauzers, six weeks, a little over ¥10,000 for tuition and the exam, close to three months of your pay. With it you could take on high-ticket styling.",
+      "options": [
+        { "label": "Take leave and sit it", "result": "You ask the manager for six weeks off and trim until late every night in the school dorm. When you come back with the certificate, the manager raises your price per dog by ¥50." },
+        { "label": "Hold on to the money for now", "result": "You don't go. You buy a few online video courses on show trims and practice the motions in front of the screen at night. You get the gist." }
+      ]
+    },
+    "c_cat": {
+      "title": "Specializing in cats",
+      "situation": "More and more people in Wuhan keep cats, and few groomers can handle them; degreasing and dematting a longhair pays ¥300–400 a job. But cats are hard work, scratches and bites are routine, and you're a little allergic.",
+      "options": [
+        { "label": "Specialize in cats", "result": "You take a cat-specialist workshop and learn silent drying and towel wrapping. Your arms are never without a scratch, and your bookings run two weeks out." },
+        { "label": "Keep styling dogs", "result": "You stick with your poodles, bichons and Pomeranians, and your cute faces get rounder and rounder. Owners say they can tell your work at a glance." }
+      ]
+    },
+    "c_move": {
+      "title": "A vet hospital, Shanghai, or staying put",
+      "situation": "The grooming department of a vet hospital chain is trying to poach you, with full benefits and training. A high-end salon in Shanghai is hiring too, at one and a half times what you make now. The manager says if you stay, she'll raise your commission.",
+      "options": [
+        { "label": "Go to the vet hospital chain", "result": "Every day you care for cats and dogs recovering from surgery or with skin conditions, with a vet always next door. You do less styling and learn more about illness than ever before." },
+        { "label": "Go to the high-end salon in Shanghai", "result": "A spa for one dog there takes three hours, and clients drive in. You save a good amount each month, though rent eats half of it, and going home to Wuhan for New Year feels like visiting." },
+        { "label": "Stay at the neighborhood shop", "result": "The manager keeps her word on the commission. Your regulars keep growing; some who move across the river to Hanyang still drive back to have you do their dogs." }
+      ]
+    },
+    "c_studio": {
+      "title": "Opening your own studio",
+      "situation": "You have over a hundred regulars who ask for you by name. People urge you to go out on your own with a small studio: appointments only, no pet food, no boarding. Rent and equipment would come to around ¥100,000, and no one can say whether the clients will follow you.",
+      "options": [
+        { "label": "Open the studio", "result": "On opening day, two-thirds of your regulars turn up. You groom alone from morning to night. You earn more, and when you're sick, the studio stays shut." },
+        { "label": "Keep working at the shop", "result": "You stay. Later the manager partitions off a grooming room just for you, with your name on the door." }
+      ]
+    },
+    "c_ai_file": {
+      "title": "Who builds the pet records and workflows",
+      "situation": "The shop's system can draw up bathing plans and generate style previews, but it often marks stressed dogs as gentle and underrates mats. The vendor says the rules can be rewritten and records built around your experience, but it needs someone who knows the work to put in the time.",
+      "options": [
+        { "label": "Take it on: build the records, rewrite the rules", "result": "For every regular dog and cat you write down their temper, what scares them, where you cut too short last time, and you rewrite dozens of rules. New groomers taking over old clients no longer have to start from scratch." },
+        { "label": "Leave it and trust your own eyes", "result": "You still feel every dog over yourself and check its ears before it goes on the table. Whatever the system says, you treat as a reference." }
+      ]
+    },
+    "c_trainer": {
+      "title": "Switching to pet behavior training",
+      "situation": "More and more owners bring in dogs that bite or bark nonstop and ask what to do. The desensitizing you've learned on the grooming table is exactly what behavior training needs; with a dog-training certification you could take on home visits by yourself.",
+      "options": [
+        { "label": "Get certified and switch to training", "result": "You start making house calls with a bag of treats, an hour a session, teaching owners how to tell a dog to \"wait.\" Your scissors go into a drawer.", "end": "You become a pet behavior trainer, teaching dogs and people in a different housing estate every day how to live together. Now and then an owner asks if you can groom too. Yes, you say, that used to be my job." },
+        { "label": "Keep the scissors", "result": "You refer those owners to a dog trainer you know and go back to shaping your cute faces." }
+      ]
+    },
+    "c_chain_buy": {
+      "title": "A chain wants to buy the shop",
+      "situation": "A pet chain is buying up small shops in Wuhan and wants to take yours, staff and all, and make you grooming supervisor, overseeing quality and training new staff across several shops. If you say no, you'll be competing with it for customers on the same street.",
+      "options": [
+        { "label": "Join the chain as supervisor", "result": "You shuttle between shops checking that the new hires disinfect their scissors and handling complaints. You spend half as much time on the table. Your pay slips get tidier." },
+        { "label": "Say no and go out on your own doing mobile grooming", "result": "You buy a used van, convert it into a mobile grooming van and drive it between estates. Your regulars say this way the dogs don't have to ride in a car and suffer less." }
+      ]
+    },
+    "c_teach": {
+      "title": "The grooming school wants you as an instructor",
+      "situation": "The grooming school you went to is hiring instructors with an A-grade certificate and ten years' experience. Teaching hours in a classroom, no more bending to lift dogs every day, about the same pay, only further from your regulars.",
+      "options": [
+        { "label": "Become an instructor", "result": "You stand at the front of the classroom watching a row of eighteen- and nineteen-year-olds rehearsing their cuts on fake dogs, exactly like you once did.", "end": "You become an instructor at a pet grooming school, with twenty students each intake. For their final exam they trim a poodle, and you insist every face comes out nice and round." },
+        { "label": "Stay at the table", "result": "You say a few more years. When your regulars hear, one of them brings you a small silk pennant that reads \"Official Stylist to the Dogs.\"" }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you still disinfect first: scissors in the solution, filter cleaned out. The last dog in is a white bichon whose mother you also groomed, years ago. The owner takes a photo of the two of you. You wipe clean the set of scissors you've used for decades and put them away in a cloth bag.",
+    "burnout": "That day you lifted a golden retriever onto the table, your back gave way, and you and the dog both ended up sitting on the floor. The dog was fine. You lay in the back room all afternoon. At the end of the month you handed your scissors to your apprentice and found a job where you don't have to bend. When someone walks a dog past you in the estate, you still glance at how its coat's been cut."
+  },
+  "past": [
+    "You grew up in a small town in Xiaogan, where your family had a mutt called Huangdou, Soybean. You got into the county's academic high school with middling scores; your favorite class was biology.",
+    "Your gaokao (college entrance exam) score fell short of the line for a bachelor's degree, and none of the junior-college majors appealed to you. Your mother said go out and work for a while first, so you spent a year serving at a bubble tea shop in Wuhan.",
+    "Next to the bubble tea shop was a pet shop, and every day after your shift you'd stand at the door watching the groomers work on the dogs. Once the manager asked you to help hold a poodle. You held it for an hour and didn't feel tired at all.",
+    "You looked up grooming schools online: three months full-time, ¥12,000 tuition. Your savings weren't enough, so you borrowed ¥5,000 from your mother, who asked three times on the phone, \"Can you really make a living cutting dogs' hair?\"",
+    "The school was on the outskirts of Wuhan, twenty to a class, clipping fake dogs every day and bathing the school's own dogs. The C-grade exam was a lamb cut on a poodle. You passed on your second try.",
+    "At graduation the school recommended a few shops. You picked this one under a housing estate in Hankou, because at the interview the manager let you stroke the old cat she kept in the shop, and it didn't scratch you."
+  ],
+  "late": {
+    "pension_note": "Estimate: Wuhan urban employee pension. Small shops mostly pay in at the minimum base, and the years running a studio or doing mobile grooming were paid as a flexible worker. After retirement you get about 35% of your final monthly pay.",
+    "scenes": [
+      "Your first week of retirement, you walk your own old dog downstairs and stand for a while outside the pet shop in the estate, watching the young staff blow-dry and thinking they hold the dryer too close.",
+      "Your apprentice's shop can't keep up before every New Year and asks you back for two weeks. You only do cats and old dogs. Your hands are slower, but the frightened cats are calmest with you.",
+      "Your pension is a little over ¥2,000 a month, plus a bit you saved when you were young; it's just enough. Your biggest expense is your own dog's vet bills, which run longer than yours.",
+      "Away from the grooming table, your back slowly gets a little better. But the smell of pet shampoo still brings back the roar of the dryer.",
+      "The neighbors know what you used to do, and they're always bringing their dogs over to have their nails clipped. When you're done you pat the dog's head and say: next time, take it to the shop for a proper wash.",
+      "An old regular recognizes you at the market and says her Pomeranian never got a cut that round again. You laugh and say that's because his face was round to begin with.",
+      "In your first month in the new job, for the first time there are no fresh scratches on your hands, and it takes some getting used to.",
+      "A few of the people you trained and taught have opened shops of their own. On opening day they all send you photos: certificates on the wall, scissors on the table.",
+      "You still trim your own dog at home, twice a year. While you're at it, nobody in the house dares say a word.",
+      "Pet shops now leave the bookings, the records and the style previews to software; owners pick haircuts on their phones. Lifting a dog onto the table, holding a trembling cat, reading its ears before it bites, still takes a person.",
+      "Back in Xiaogan for New Year, the town has its first pet shop, run by a woman in her early twenties. You step in, take a look at her scissors, and tell her she keeps them well.",
+      "Your hands have grown a little shaky, and you can't hold scissors steady. Your grandson wants you to give his hamster \"a haircut.\" You laugh and say, that one I really can't do."
+    ],
+    "closing": {
+      "retire": "Many years later, one afternoon on a bench by the river, a bichon you don't know runs up and rubs against your leg. You stroke its face and, without thinking, smooth down a tuft of fur sticking up by its eye.",
+      "burnout": "Many years later, your old dog sleeps at your feet. You run an old comb slowly down its back. With every stroke, its tail moves.",
+      "end": "Many years later, going through old things, you find your C-grade certificate. In the photo you're still twenty, and there's a white dog hair stuck in your hair that nobody noticed when the picture was taken."
+    }
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "id": "pastry-cd-bakery",
+  "occupation": "Pastry Chef",
+  "role": "Baker at a neighborhood bakery",
+  "headline": "Six years tightening screws on an electronics assembly line, now in your fourth year of baking: the baker at the gate of an old Chengdu housing estate who comes in at four every morning to start the dough",
+  "unit": "A neighborhood bakery at the gate of an old housing estate in Chengdu",
+  "unit_type": "Neighborhood bakery",
+  "city": "Chengdu",
+  "city_tier": "New first-tier city",
+  "education": "Vocational secondary school (applied electronics) + three months at a pastry school",
+  "level": "Toast, sourdough-starter mantou buns and pork-floss sponge cakes you could make with your eyes closed; your baguette scoring still isn't pretty, and the owner has to finish off your cake frosting",
+  "intro": "This is your fourth year of baking. Three years ago you quit the electronics factory, took the ¥10,000-odd you'd saved and did three months of pastry school, then a year as an apprentice at a chain bakery, and then came to this little bakery at the gate of an old housing estate. The owner only does cakes; the bread is all yours. As of today, you still come in at four every morning, and the first thing you do is lift the cloth off last night's starter and smell it.",
+  "salary_note": "Estimate: a baker at a neighborhood bakery in Chengdu takes home around ¥5,000, roughly 20% below the national average. The shop is small; to move up you either go to a hotel or a chain, or become the boss yourself.",
+  "facts": [
+    { "label": "Junior Pastry Cook (current level)", "value": "1–3 years, ¥5,000–8,000 a month (national average)", "source": "Career map" },
+    { "label": "Next level up", "value": "Pastry Section Lead (3–5 years)", "source": "Career map" },
+    { "label": "Pay after 10+ years", "value": "¥11,500 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Drawing ingredients for the morning open and piping the shells for religieuse choux", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Calibrating proofer temperature and humidity in the morning and loading the first batch of dough", "source": "AI exposure" },
+    { "label": "Open positions", "value": "10 related listings nationwide, 0 in this city (the listings are mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "You switch off the alarm on the first ring so it won't wake the room next door. You ride your e-bike through streets that are still dark; at the corner the youtiao stall is just lighting its fire.",
+    "Lights on in the shop. You lift the cloth off last night's starter, smell it, pull at it. The mixer starts turning and you push a thermometer into the dough: twenty-six degrees, just right.",
+    "Divide, round, shape. Loaves of toast go into their tins one after another, then into the proofer. You watch the humidity reading on the screen, then press a fingertip into the dough to feel it spring back.",
+    "The first batch comes out of the oven. The shop isn't open yet, but an auntie back from her morning exercises is already at the shutter waiting for mantou, asking through the gap whether there are coconut ones today.",
+    "The owner arrives and takes over today's three birthday cakes. You go to the back to shape baguettes. The score goes crooked again, and you put that one in your own lunch bag.",
+    "Every oven in the back is on; in summer it hits forty degrees in here. You eat cold wontons and check the pre-orders on the delivery app: thirty pork-floss sponge cakes for this afternoon.",
+    "You make tomorrow's pre-ferments, one tub of poolish and one of old dough, cover them and put them in the fridge. You scrub the baking trays one by one and sweep the flour on the floor into a small pile.",
+    "Off work, and the sun is still high. Back in your rented room you pull the blackout curtains and go to sleep. Only now do the kids pour into the shop after school, buying the batch you made this morning."
+  ],
+  "ladder": [
+    { "title": "Pastry Apprentice", "stage": "Apprentice / assistant", "focus": "Weigh ingredients precisely, do basic prep, clean and sanitize trays and moulds; you move up on sharp eyes, quick hands, zero weighing errors and strict hygiene." },
+    { "title": "Junior Pastry Cook", "stage": "Junior / working solo", "focus": "Bake shelf-stable cakes, mix and proof basic sweet breads, cook jams and frost basic cakes on your own; you move up on consistent output and speed." },
+    { "title": "Pastry Section Lead", "stage": "Senior / section mainstay", "focus": "Run the bread section or the cold mousse section on your own shift, take on hard laminated doughs, fine cake piping and basic chocolate work; you move up on mastery of difficult techniques and training apprentices." },
+    { "title": "Pastry Sous Chef", "stage": "Supervisor / production", "focus": "Coordinate the pastry kitchen's daily production schedule, ingredient orders, costing and SOP quality checks, and help the head chef fix technical failures; you move up on organization and cost control." },
+    { "title": "Executive Pastry Chef", "stage": "Head chef / technical lead", "focus": "Lead menu planning, seasonal product development, banquet dessert tables and the department's profit and loss for a luxury hotel or a large bakery brand; you stand on commercial R&D and your name in the trade." }
+  ],
+  "ai_tasks": [
+    { "name": "Drawing ingredients for the morning open and piping the shells for religieuse choux", "how": "At most AI can suggest stock counts and what to draw based on orders and sales. The opening hygiene check, judging what's actually in the fridge and piping the choux by hand still have to be done by a person." },
+    { "name": "Calibrating proofer temperature and humidity in the morning and loading the first batch of dough", "how": "Sensors and software can log temperature and humidity and flag calibration drift. How to load the dough, how much, and whether it's behaving are decided by someone standing there touching and looking at it." },
+    { "name": "Batch-baking baguettes before the lunch rush and checking the crust", "how": "Cameras with image recognition can help judge crust color and the opening of the score and log every batch. When to pull them, how crisp they feel and whether they go out are a person's call." },
+    { "name": "Test-baking a seasonal galette des rois and working out its cost and margin", "how": "AI can break down ingredient waste, labor and energy and draft the new-product cost sheet. How to test it and what to trade off in flavor and price are up to a person, and the final sign-off goes to the store manager." },
+    { "name": "Rescuing proofer data and handling the dough after a sudden power cut", "how": "AI can help export and sort the cached data and suggest, against past records, whether to keep proofing, downgrade or throw out. Judging how alive the dough is comes from experience and the feel of your hands, and the call on cutting losses is a person's to own." },
+    { "name": "Quarterly mock assessment for the pastry chef grade (Level 3 / senior worker)", "how": "The mango mousse, the creative plating and the decorated cake all have to be made by hand on the spot, in front of examiners. AI can at most help look up the standards and think through a plating idea. It can't do it for you." }
+  ],
+  "events": {
+    "e_overproof": "You overslept by twenty minutes and a whole proofer of toast went over; the loaves came out with their tops caved in. The owner didn't say anything. You took the cost of that batch out of your own wages.",
+    "e_power_cut": "In the small hours the power goes out across the estate and the proofer screen goes black. By flashlight you export the cached temperature and humidity, then feel your way through the dough tub by tub: this one can keep going, that one is only good for rusks.",
+    "e_ayi_regular": "An auntie from upstairs buys two mantou every day. One day she brings you a jar of chili bean paste she made herself and says your mantou are \"better than the ones from the grain station back in our day.\"",
+    "e_sourdough": "The sourdough starter you've been feeding for six months finally settles. Someone photographs your country loaf and posts it online, and on weekends young people come all the way from the south side of the city to buy it.",
+    "e_summer_heat": "In July the kitchen is a steamer. Once the ovens are on, the air conditioning doesn't stand a chance. You get heatstroke once and lie on the cardboard boxes in the storeroom for half an hour.",
+    "e_mooncake": "Two weeks before the Mid-Autumn Festival the shop takes a mooncake order from a company. For more than ten days straight you come in at two in the morning and fill mooncakes until you can't feel your fingers.",
+    "e_old_line": "An old workmate from the assembly line comes in for bread. She says your old line has been switched over to robot arms and the people who stayed on just watch screens. You slip two extra sponge cakes into her bag.",
+    "e_love": "The man who delivers the flour every day asks you one extra question: what time do you finish? Half past three, you say. Good, he says, so do I.",
+    "e_wedding": "You hold the wedding banquet back home in Nanchong. The cake is your own, three tiers, frosted until the small hours, and everyone photographs it for ages before it gets cut.",
+    "e_flour_lung": "After years of breathing flour, you cough every time the seasons turn. The doctor says it's allergic rhinitis with the first signs of asthma and tells you to wear a mask at work. You do, and you can't quite smell the sourness of the dough anymore.",
+    "e_chain_opposite": "A national bakery chain opens across the street with buy-one-get-one-free, and within a week half your regulars are gone. Three months later the aunties drift back, one by one.",
+    "e_ai_schedule": "The shop installs a point-of-sale system that writes your daily production plan from yesterday's sales and the weather. On a rainy day it tells you to make 30% less. You do as it says, and that day the estate's water is cut off and everything is gone by mid-morning.",
+    "e_child": "Your child is born. When you leave in the small hours the baby is asleep, and when you get home in the afternoon the baby is asleep. Only on weekends do you see your child awake.",
+    "e_camera_qc": "The shop puts a camera over the cooling rack, and the system scores the color of every batch. It says your baguettes are \"over-colored,\" but the people buying them say that dark crust is exactly what they like.",
+    "e_baguette": "After more baguettes than you can count, your scoring finally opens into a clean, even ear. You take a photo, and the first person you send it to is the teacher from your pastry course.",
+    "e_parents": "Your mother back in Nanchong, already unsteady on her feet, has a fall. You take a week off and go home, sleeping on the floor of the county hospital every night. For that week the owner comes in at four every morning to do the dough herself.",
+    "e_apprentice": "A nineteen-year-old apprentice joins the shop and keeps weighing things wrong. You write the grams for each ingredient on tape and stick it to the bins, just like the station cards on the assembly line.",
+    "e_house": "The two of you put a down payment on a small two-bedroom on the outskirts of Chengdu, forty minutes by bike from the shop. On the road in the small hours, it's just you and the street-sweeping trucks.",
+    "e_rent_close": "The old estate is being redeveloped and the shopfront rent doubles. The bakery moves two streets over. The aunties walk ten minutes further on their canes, and they still come.",
+    "e_wrist": "After more than ten years of kneading, both your wrists are stiff every morning. You soak them in hot water for a while before you can grip a dough scraper.",
+    "e_kid_grown": "A kid who used to come in every day after school for pork-floss sponge cakes comes in one day to order a wedding cake, and says, \"I want it to taste the way it did when I was little.\"",
+    "e_prebake": "A lot of shops switch to frozen dough from a central factory and just bake it off and sell it. You still lift the cloth off the starter and smell it every morning, and young customers ask whether this is \"one of those places that makes it fresh.\"",
+    "e_early_tired": "Past forty, getting up at four gets harder and harder. You start napping on a folding bed in the shop, and wake up just as the dough is ready."
+  },
+  "choices": {
+    "c_cake_or_bread": {
+      "title": "Learn cake piping, or specialize in bread",
+      "situation": "The owner says birthday cakes are what make the shop money. If you learn to frost and pipe, she'll give you half the orders. But you love dough more, and you want to get the baguettes and the sourdough right.",
+      "options": [
+        { "label": "Learn piping in the cold room", "result": "Instead of going home to sleep in the afternoons, you stay in the shop practicing frosting on dummy cakes, and after a month you can get a clean right angle. More cake orders come in, and less sleep." },
+        { "label": "Specialize in bread", "result": "You put everything into dough. You buy a thick book on the science of baking and work through it page by page, running experiments as you go." }
+      ]
+    },
+    "c_cert_senior": {
+      "title": "Sitting the senior pastry certificate",
+      "situation": "A government-registered training center is taking sign-ups for the Western Pastry Chef Level 3 (senior worker) exam: mango mousse, creative plating and a decorated cake. Registration plus training costs over ¥1,000. Passing would bump your pay up a grade, but you've never made anything in front of an examiner.",
+      "options": [
+        { "label": "Sign up and sit it", "result": "In the exam your mousse almost doesn't set. You give it five more minutes in the freezer and pass. The certificate is mailed to the shop, and the owner frames it and hangs it behind the till." },
+        { "label": "Skip it; the customers know you", "result": "You don't go. The aunties don't care about certificates, only your mantou. But later, when a hotel is hiring, you can't get past the resume screen." }
+      ]
+    },
+    "c_hotel": {
+      "title": "The pastry kitchen at a five-star hotel",
+      "situation": "A five-star hotel in Chengdu is hiring for its pastry kitchen, with full social insurance and housing fund and a proper promotion ladder. But you'd have to learn cold-room work and banquet desserts from scratch on rotating early and late shifts, and there'd be no one to feed your sourdough starters.",
+      "options": [
+        { "label": "Go to the hotel", "result": "For the first time you wear a tall white chef's hat. You work the banquet dessert tables behind the head chef and set out three hundred little mousse cups in one night. The aunties ask the owner to find out whether you're coming back." },
+        { "label": "Stay at the neighborhood bakery", "result": "You stay. The owner gives you a ¥300 raise and writes on the little blackboard by the door: \"Our baker makes everything fresh at 4 a.m. every day.\"" }
+      ]
+    },
+    "c_take_over": {
+      "title": "Taking over the shop",
+      "situation": "The owner is going back to her hometown to look after her grandchild and asks if you want to buy the shop: equipment, regulars and the sign, ¥80,000 for the lot. Your savings and your family's together just about cover it, and the mortgage would be tight.",
+      "options": [
+        { "label": "Buy it", "result": "You're the boss now. You still come in at four, and in the afternoons you do the books, the orders and the hiring. The first month you lose ¥2,000; by the third you break even." },
+        { "label": "Don't buy it; find a new employer", "result": "The shop is taken over by someone who makes bubble tea. You go to a bakery in another estate. An old customer runs into you outside the new shop and takes a moment to recognize you." }
+      ]
+    },
+    "c_ai_qc": {
+      "title": "Tuning the production system yourself",
+      "situation": "The production and cost suggestions from the till system are always a little off. It doesn't know there's a street market in the estate on Wednesdays, or that the aunties buy more mantou when it rains. The vendor says you can change the parameters and add your own rules, but it takes time to learn.",
+      "options": [
+        { "label": "Take the time to learn and tune it", "result": "One by one you add the patterns you've written in your notebook over the years: market days, the start of term, cold snaps, water cuts. Six months later you only change a line or two of what it gives you, and leftover dough is down by half." },
+        { "label": "Stick with your notebook", "result": "The system prints its plan, and you bake your bread. On the monthly waste report, you and it are each right about half the time." }
+      ]
+    },
+    "c_hometown": {
+      "title": "Going back to Nanchong",
+      "situation": "Your parents are getting old, your child needs points in Chengdu's residency system to get into school, and the county town back in Nanchong still doesn't have a decent bakery. You've done the sums: if you went back and opened one, the rent would be a quarter of Chengdu's.",
+      "options": [
+        { "label": "Go back and open a shop in the county town", "result": "At first people in town only buy cakes and sponge cakes and find European-style loaves too hard. You make the sourdough a little softer, and six months later people are driving in specially for \"that Chengdu bread.\"" },
+        { "label": "Stay in Chengdu", "result": "You bring your parents to stay for a while. They can't get used to it and go home. Every month you post them a box of rusks, and your mother says she shares them with half the street." }
+      ]
+    },
+    "c_trainer": {
+      "title": "Technical trainer at an ingredients company",
+      "situation": "A company that makes yeast and butter is hiring technical trainers who can both bake and explain, traveling to bakeries and schools to give demonstrations. Office hours, business trips, no four a.m. starts, and noticeably better pay.",
+      "options": [
+        { "label": "Join the ingredients company", "result": "You drag a case full of moulds through every county town in the southwest, giving demonstrations in other people's shops and leaving as soon as you're done.", "end": "You become a baking trainer for an ingredients company, kneading dough on demonstration counters all over the region. When someone asks what you're best at, you say sourdough mantou, and the room laughs." },
+        { "label": "Stay at the shop", "result": "You turn it down. At four the next morning, as usual, you lift the cloth off the starter and smell it." }
+      ]
+    },
+    "c_factory_vice": {
+      "title": "Pastry sous chef at a central factory",
+      "situation": "A local bakery chain has built a central factory and wants you as its pastry sous chef, in charge of production scheduling and quality control for tens of thousands of loaves a day. You wouldn't knead by hand anymore; you'd be managing twenty-odd machines and thirty-odd people.",
+      "options": [
+        { "label": "Go to the central factory", "result": "Every day you work from production schedules and pass-rate reports, writing your own rules for bread into the SOP one line at a time. The machine-kneaded dough is perfectly even. It just doesn't have the warmth of your hands." },
+        { "label": "Stay at the small shop", "result": "You say no. You still like kneading tub by tub, and the aunties asking through the shutter whether there are coconut ones today." }
+      ]
+    },
+    "c_body": {
+      "title": "Keeping the four a.m. shift",
+      "situation": "More and more arrows on your checkup results, and the doctor says years of living upside-down aren't good for you. The young apprentice can take the early shift now; you could move to days doing cakes and new products for a bit less pay. A vocational school is also looking for an experienced practical instructor.",
+      "options": [
+        { "label": "Move to the day shift", "result": "For the first time you wake up at seven, and it's already light. You miss the morning bake. In the afternoon you taste one and tell the apprentice it's half a gram short on salt." },
+        { "label": "Keep the early shift", "result": "You say it's fine; you can't bring yourself to hand the early dough to anyone else. You buy yourself a pair of wrist supports, and a box of melatonin." },
+        { "label": "Teach at the vocational school", "result": "You go to the vocational school and teach teenagers in the practice kitchen to weigh, knead and check the windowpane. When you talk about your years on the assembly line, the kids look up.", "end": "You become the practical pastry instructor at a vocational school, taking two classes a term. In the practice kitchen's fridge you keep the starter you brought with you from the shop." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you still come in at four, lift the cloth off the starter, smell it, and hand it over to your apprentice. When the first mantou come out, someone is waiting at the shutter again; a few of them are the daughters of those aunties. You take a bag home, and on the ride back the sky is just getting light.",
+    "burnout": "That morning you stood at the mixer and couldn't remember how much water this dough took. You sat in the storeroom until dawn, then messaged the owner. You left the kitchen and took a job on the till at a supermarket, starting at eight. When you walk past a bakery and smell toast baking, you still stop for a moment."
+  },
+  "past": [
+    "You grew up in the countryside outside Nanchong while your parents worked in other provinces. Your middle-school exam score wasn't enough for the county's academic high school, and your homeroom teacher said: go to a vocational school, study electronics, it's easy to get factory work.",
+    "After vocational school, the school sent your whole class to an electronics factory on the outskirts of Chengdu. You stood on the line tightening screws into phones, twelve hours a day, two rotating shifts, your number written on the station card.",
+    "You worked your way up to team leader, but the night shifts kept multiplying. Once, coming off nights, you bought a croissant fresh from the oven at the bakery by the factory gate, sat on the curb and ate it, and for the first time you felt like crying.",
+    "The line was being automated and half the team would go. You didn't wait for the notice. You took the ¥10,000-odd you'd saved over six years and enrolled in a three-month full-time course at a pastry school. Your family said you'd lost your mind.",
+    "When the course ended you got your junior certificate and your health certificate and became an apprentice at a national bakery chain, weighing ingredients, scrubbing trays and watching the bakers mix dough. You never weighed anything a gram wrong. The assembly line had trained that into you.",
+    "When your apprenticeship year was up, you saw that this shop at the gate of an old estate was looking for a baker. The owner could only do cakes and would leave all the bread to you. You said you could do it, and at four the next morning you were there.",
+    "By your second year at the shop, the toast and the mantou were its best sellers. You started looking up sourdough methods online and kept a jar of starter in the fridge of your rented room."
+  ],
+  "late": {
+    "pension_note": "Estimate: Chengdu urban employee pension. In the factory years you paid in at the minimum base; at the small shop and as an owner there were gaps, made up later as a flexible worker. After retirement you get a little under 40% of your final monthly pay.",
+    "scenes": [
+      "Your first month of retirement, you still wake at 3:50 and lie in bed listening to the sweeping trucks outside, waiting for daylight before you get up.",
+      "Your apprentice has taken over the shop and asks you back once a week to check the starter. No work, just sitting in the back, smelling it, pinching it, and saying, \"Too much water today.\"",
+      "Your pension is a little over ¥2,000 a month, and with one room of the flat rented out, it's tight but enough. You bake pork-floss sponge cakes for your grandchild in a little home oven, twelve at a time.",
+      "In the first months away from the kitchen you can finally sleep through the night, except that once every morning in the small hours you still wake up and reach out beside you, and there's no dough.",
+      "The bread shelves at the supermarket are all factory bread with a seven-day shelf life. Every time you restock them you give one a squeeze, sigh, and put it back.",
+      "One of the old aunties runs into you at the market and grabs your arm to tell you the mantou at that shop aren't what they used to be. You say the new baker works hard too, then go home and quietly mix a tub of dough.",
+      "In the first week in your new role, you don't leave home until seven, and you sit down at the youtiao stall on the corner for a hot breakfast. It's the first time in years.",
+      "Now and then you drop by the shop at the old estate. The new baker asks how to score a baguette. You pick up the blade and show him. Your hand is still steady.",
+      "In the county town back in Nanchong you see a newly opened bakery with a sourdough country loaf in the window. The owner says he learned at a vocational school. You don't mention who taught the course.",
+      "Most bakeries now run on production software and frozen dough, with cameras watching the color of every batch. Lifting the cloth off the starter in the small hours and pressing it with your hand to tell whether it's ready is still a person's job.",
+      "At a reunion of your old factory workmates, someone says the plant moved away long ago. They ask if you still bake. Sometimes, you say, at home, for the kids.",
+      "Your wrists aren't what they were, and you can't work a big dough anymore. So you make a small tub of sourdough mantou, steam them and hand them round to the old neighbors in your building. They say they taste just like the ones from the shop."
+    ],
+    "closing": {
+      "retire": "Many years later you wake one morning before dawn and don't turn on the light. Downstairs an e-bike goes past, a sack of flour rustling in its basket. Another young one, you think, off to start the dough.",
+      "burnout": "Many years later you sit in the sun on your balcony with a bowl of fresh-steamed mantou. Your granddaughter breaks one open and the steam rises. Slowly, you tell her. It's hot.",
+      "end": "Many years later, sorting through old things, you find your electronics factory ID badge and your pastry course certificate and lay them side by side. In one photo you're in a blue work uniform, in the other a white chef's hat. You're not really smiling in either."
+    }
+  }
+}

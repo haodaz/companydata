@@ -1,0 +1,181 @@
+{
+  "id": "architect-sz",
+  "occupation": "Architect",
+  "role": "Project architect at a large design institute",
+  "headline": "Six years out of a five-year architecture degree, a project architect at a big Shenzhen design institute who could finally run projects alone just as the property market turned, and who watches the desks empty out row by row",
+  "unit": "An architectural design studio inside a large Shenzhen design institute",
+  "unit_type": "Large design institute",
+  "city": "Shenzhen",
+  "city_tier": "Tier 1",
+  "education": "BArch (five-year program)",
+  "level": "You can take a school or social-housing project from concept to construction drawings and through planning approval. You already hold the Class 2 registered architect license and have passed three papers of the Class 1",
+  "intro": "When you joined this design institute, the studio had more than a hundred people and so many property projects that drawings queued to go out. Six years later, a third of the desks are empty, and the progress board on the wall shows only schools, social housing and urban renewal. The studio head hands you a project for a neighborhood primary school and says it is one of the few jobs this year with payment the studio can count on. As of today you are its project architect, and for the first time your name goes in the title block.",
+  "salary_note": "Estimate: base pay plus output bonus for a project architect at a big Shenzhen institute ran well above the national figure in the boom years. Since the downturn the bonus has shrunk with the payments clients actually make, and take-home is only slightly above the national figure.",
+  "facts": [
+    { "label": "Project Architect (current level)", "value": "5-8 years, ¥15,000–25,000 a month (national average)", "source": "Career map" },
+    { "label": "Next level up", "value": "Lead Design Architect (8-12 years)", "source": "Career map" },
+    { "label": "Monthly pay, 10+ years in the field", "value": "¥31,000 (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "An emergency recheck of a foundation pit's shoring design while a red rainstorm warning is in force", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Working out the floor plan of a senior workshop and running age-friendly performance simulations", "source": "AI exposure" },
+    { "label": "Open positions", "value": "33 related job listings nationwide, 2 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "Standing on the metro, you work through the comments the client sent last night. Half the carriage carries laptop backpacks, and every screen is either CAD or a spreadsheet.",
+    "Into the studio. Row after row of desks in the big open office, nearly a third of them empty. One still has a model built by a colleague who left last year, under a layer of dust. Nobody has cleared it.",
+    "The client calls: the facade needs to be a bit more iconic, and the cost has to drop another ten percent. You write two words in your notebook, iconic and ten percent, and draw a line between them.",
+    "Coordination meeting with structural and MEP. The beam depth has squeezed the corridor's clear height down to 2.6 meters, and the basement has lost another twelve parking spaces. Three disciplines run the numbers back and forth across the table.",
+    "Downstairs to the urban village for a plate of braised pork trotter rice, eighteen yuan. In your classmates' group chat someone says their institute has cut pay again. Someone posts a screenshot of a resignation letter, followed by a row of hugs.",
+    "Working through the plan-review comments on the construction drawings. AI has mapped each of the forty-odd comments onto the drawings and marked what needs changing. Escape distances, fire compartments, accessible ramps: whether each fix is right, you still have to check one by one, and sign.",
+    "Out to another project's site to look at the facade mock-up, where you argue with the contractor for twenty minutes over one joint line. The sun heats your hard hat until it burns. Only on the way back do you remember you haven't had any water.",
+    "The design team had AI generate a dozen massing options for the client to see tomorrow morning. You pick three and work them up until they're presentable. In the taxi home you fall asleep in the back seat, and the driver has to call you twice."
+  ],
+  "ladder": [
+    { "title": "Assistant Architect", "stage": "Entry", "focus": "Take your seniors' sketches and turn them around fast: SketchUp models, renderings, layout of presentation documents, and basic CAD plans, elevations, sections and details. You are promoted on speed and error-free drawings." },
+    { "title": "Architect", "stage": "Developing", "focus": "Design single buildings on small and mid-sized projects on your own, or handle the information exchange with other disciplines. Have a firm grip on mandatory fire codes and the quality of construction drawings. You are promoted on solving technical problems by yourself." },
+    { "title": "Project Architect", "stage": "Core", "focus": "Act as the technical and organizational lead on a project: coordinate the schedule across disciplines, handle plan review of construction drawings and planning approval, and start preparing for the registration exams. You are promoted on smooth delivery and how faithfully the building matches the design." },
+    { "title": "Lead Design Architect", "stage": "Expert", "focus": "Lead concept design and competition presentations for major projects, set the design idea and its aesthetic ambition, and drive the team through bids. You are promoted on your win rate and your standing in the industry." },
+    { "title": "Chief Architect", "stage": "Top", "focus": "Give final approval on the technical standards of the whole institute or studio, the quality of final drawings and major strategic schemes; deal with key government and corporate clients; carry lifelong legal liability for the engineering design and the business targets." }
+  ],
+  "ai_tasks": [
+    { "name": "Working out the floor plan of a senior workshop and running age-friendly performance simulations", "how": "AI can quickly generate several sketch layouts and run first-pass simulations of daylight, ventilation and age-friendly dimensions. A person has to judge which one truly works for older people, weigh the conflicts, and, under a mentor, learn to make their own design judgments." },
+    { "name": "Working out the floor plan of an age-friendly community workshop and verifying its performance", "how": "AI generates the plans, runs the environmental simulations and automatically checks accessible circulation against the codes. A person has to hear the real need behind the client's non-expert requests, coordinate everyone, and answer for the final scheme." },
+    { "name": "Compiling the drawing package for a special seismic review of a code-exceeding high-rise within 3 working days", "how": "AI can sort drawings, collate calculation reports, and check that materials are complete and correctly formatted, saving time on layout and filing. Judging what exceeds code, the conceptual seismic design, defending it before the expert panel, and signing for it must be done by a person." },
+    { "name": "Final debugging of an immersive VR presentation package within 24 hours of presenting at the client's office", "how": "AI can help generate models, optimize scenes, and run automated compatibility tests and script checks. Setting up equipment on site, having a backup plan for sudden lag, and pacing the presentation for the client's decision-makers take a person." },
+    { "name": "Completing all mandatory-code corrections and signing them off within 48 hours of the plan-review comments coming back", "how": "AI can compare each comment with the drawings, draft written replies, locate what needs changing and help revise the drawings. Judging whether each mandatory-code correction is really done, and the responsibility of signing it off, can only be carried by a licensed person." },
+    { "name": "An emergency recheck of a foundation pit's shoring design while a red rainstorm warning is in force", "how": "AI can help pull up data, recalculate for rising water levels and flag risk points. But shoring failure in a deep pit is a matter of safety: a person has to judge from conditions on site, decide at once and take responsibility. Time is short and the consequences are severe." },
+    { "name": "Producing a three-star green building pre-assessment report within 72 hours of a bid deadline", "how": "AI can draft the report against the clauses of GB/T50378-2019, list the scoring items, calculate each indicator and generate the text. A person has to confirm whether the design can actually meet the standard, choose which technical measures to keep, and answer for the report's truthfulness, because it directly affects the technical score of the bid." }
+  ],
+  "events": {
+    "e_layoff": "Another round of optimization at the studio. Six people left, two of them from your intake year. You helped one of them pack models and drawings into a cardboard box and walked them to the metro entrance.",
+    "e_unpaid": "Last year's housing project stalled when the developer stopped construction, and only thirty percent of the design fee was ever paid. That was your team's year-end bonus, gone.",
+    "e_pay_cut": "The institute sent a notice: performance pay cut by fifteen percent across the board. Nobody spoke in the meeting. Afterward the tea room was packed, everyone doing their sums under their breath.",
+    "e_license": "You finally passed the last paper of the Class 1 registered architect exam, the design drawing test. The results came out in the small hours. You didn't wake anyone. You sat alone in the living room until it got light.",
+    "e_win_bid": "Your team won the bid for a school. The judges said they liked the wind corridor you left between the two classroom buildings. The studio opened a rare bottle of champagne, half a glass each.",
+    "e_lose_bid": "The competition you had worked on for a month went to a firm that bid at half your price. You saved your favorite image from the submission into a folder called Never Built.",
+    "e_ai_massing": "The institute bought an AI design tool that could produce dozens of massing studies and renderings in a night, and now clients wanted to see ten options the next day. The studio hired no assistant architects this year. Half the work those people used to do, the machine did.",
+    "e_ai_review": "When the plan-review comments came back, AI sorted out the replies and the places to change in two hours. It used to take two all-nighters. But whether each mandatory code was properly met, it was still you who signed.",
+    "e_redraw": "The client brought in a new executive in charge, the scheme was thrown out, and the new presentation was set for a week later. That week you slept four hours a night. The last night you spent on the folding bed in the office.",
+    "e_railing": "On site, the contractor wanted to lower the school's railings by ten centimeters to save money. You stood there with the code book and wore them down for a whole afternoon, and didn't give in. Later the principal phoned specially to thank you.",
+    "e_built": "The primary school you led was finished and opened for classes. You took your parents to see it. You stood at the edge of the playground, the bell rang, and children came running out along the covered walkway you had drawn hundreds of times.",
+    "e_wedding": "You married the person you had been with for five years. The wedding was simple, and you drew the invitations yourself. Half the guests were from the institute, and halfway through the toasts someone stepped out to take a client's call.",
+    "e_house": "You bought a flat in a part of Dongguan that borders Shenzhen. The down payment emptied both families' savings. Every day you commute an hour and a half across the city line, and sketching on the metro became a habit.",
+    "e_baby": "Your child was born. Your parents came from your hometown to help, everyone squeezed into a two-bedroom flat, and every night when you got home the baby was already asleep.",
+    "e_renewal": "Fewer and fewer new buildings went up, and most of what the studio took on became urban renewal and refurbishing old housing estates. You spent two months measuring old houses in an urban village, and for the first time you felt that design doesn't start from a blank sheet.",
+    "e_neck": "Years of staring at a screen revising drawings gave you trouble in your neck and lower back. On the physiotherapist's second press you cried out. She said all you drawing people are like this.",
+    "e_liability": "A project you had signed ten years earlier started leaking through its exterior walls, and the owners complained to the housing and construction authorities. You dug out the old drawings and checked them page by page. In the end it turned out the contractor hadn't built to the drawings, but for those three months you never slept a whole night.",
+    "e_award": "A project you led won the province's award for excellent design. On the day of the ceremony you wore your only suit, and when you went up on stage you found your tie was crooked.",
+    "e_mentee": "The assistant you trained passed the Class 1 registration exam. She took you to dinner and said that the first time she stayed up working through plan-review comments, you sat beside her and taught her to read the mandatory codes one by one.",
+    "e_overseas": "The institute won an industrial park project in Southeast Asia and sent you out for two months. On a tropical site you explained the drawings to local engineers with your hands, and came back several shades darker.",
+    "e_classmate": "Of the thirty people in your undergraduate class, fewer than half still draw buildings. One sells insurance, one went into interior design, and one gives talks on architectural history online, with more followers than your institute's official account.",
+    "e_ai_green": "Now AI wrote the green building pre-assessment reports too: clauses, scoring items, indicator calculations, a whole report overnight. You spent a day checking which measures couldn't actually be built, and struck off a dozen-odd points."
+  },
+  "choices": {
+    "c_client_side": {
+      "title": "Stay at the institute, or jump to the client side",
+      "situation": "The institute is cutting pay and there are fewer projects. A city investment company, one of the government-backed developers, is hiring a design manager: stable, no all-nighters, a little more pay than now. An older schoolmate of yours runs a small practice and says he needs someone who can carry a scheme all the way to construction. The money is less, but the work is all the kind you want to do.",
+      "options": [
+        { "label": "Become a design manager at the city investment company", "result": "You handed in your resignation and took the scale ruler and models from your desk home.", "end": "You went into design management at the city investment company, from the person who draws to the person who reviews. Whenever you see a scheme some young architect on the consultant side stayed up to revise, you first work out in your head how many nights that draft cost them." },
+        { "label": "Join your schoolmate's small practice", "result": "You went from a cog in a big institute to someone who handles everything: design, construction drawings, site visits, chasing payments. In the first year you drew an entire building with your own hands." },
+        { "label": "Stay at the institute", "result": "You stayed. At the end of that year a few more people left the studio, and next to your desk there was one more empty table." }
+      ]
+    },
+    "c_digital": {
+      "title": "Join the institute's digital design group or not",
+      "situation": "The institute has set up a digital design group for parametric design, performance simulation and AI design tools, and is pulling people from every studio. If you go, you hand over your projects, and nobody can yet say how much output the group's work is worth.",
+      "options": [
+        { "label": "Join the digital group", "result": "You went from drawing to setting the rules for the tools: which steps go to AI, which must be judged by a person, how to review what it produces. Three years later every studio in the institute used the process you wrote." },
+        { "label": "Stick with your projects", "result": "You kept turning out construction drawings sheet by sheet and answering review comments one by one, and became the person in the studio clients trusted most. Now and then you glanced at the digital group's weekly report." }
+      ]
+    },
+    "c_competition": {
+      "title": "Lead a team in a district renewal competition",
+      "situation": "The institute head names you to lead the bid for an international competition to renew a whole district, against rivals including foreign firms. Win, and you are credited as lead designer on a big project in your own name. Lose, and three months of work and the studio's bidding costs go down the drain.",
+      "options": [
+        { "label": "Take it on and fight for it", "result": "For those three months your team never had a weekend. On presentation day you spoke for forty minutes, your hands shaking the whole time. The judges' last question was the one you answered best." },
+        { "label": "Pass it to a colleague and do the drawings", "result": "You gave the chance to another team and finished your three sets of construction drawings without a single error. In the end a foreign firm won the competition, and the people on that team came out of it thinner." }
+      ]
+    },
+    "c_branch": {
+      "title": "Transfer to the inland branch",
+      "situation": "The institute has opened a branch in Chengdu, where there are more projects, and wants to send someone from Shenzhen who can run things alone. Half a grade's promotion, a bit less pay, and housing at a third of Shenzhen's prices. Your spouse's job is in Shenzhen.",
+      "options": [
+        { "label": "Go to the Chengdu branch", "result": "You rented a flat in Chengdu and flew back to Shenzhen at weekends. The clients there speak slowly and projects move slowly, but at last you had time to think a little longer over a drawing." },
+        { "label": "Stay in Shenzhen", "result": "You stayed. The branch post went to someone else, who posts a photo of hotpot in the group chat every month." }
+      ]
+    },
+    "c_overseas": {
+      "title": "Two years posted to the Middle East",
+      "situation": "The institute has won a big project in the Middle East and needs a project lead on site for two years, at double pay plus allowances. Your child has just started primary school, and your parents' health is worse every year.",
+      "options": [
+        { "label": "Go to the Middle East", "result": "You lived two years on a site at the edge of the desert and saw construction on a scale you would never see again. On video calls your child grew taller and started calling you the person in the phone." },
+        { "label": "Don't go", "result": "You turned it down. For those two years you picked your child up for swimming lessons every Wednesday evening, and learned to revise drawings on your phone by the pool." }
+      ]
+    },
+    "c_committee": {
+      "title": "Join the institute's technical committee",
+      "situation": "The institute will pick one person from the studios to join the technical committee, which gives final approval on every scheme the institute puts out. Every major bid from now on will need your nod. Once you're in, you'll have less and less time to draw yourself, and you'll answer for other people's drawings too.",
+      "options": [
+        { "label": "Join the technical committee", "result": "You started reviewing other people's schemes, sitting in a great many meetings, signing your name in other people's title blocks. Once you rejected a scheme a young architect had spent a month on, and he walked past you in the corridor without a word." },
+        { "label": "Decline and keep designing", "result": "You said you still wanted to draw. The institute head looked at you and said, then draw. A community center you designed that year became the work you show people most." }
+      ]
+    },
+    "c_software": {
+      "title": "Become a product manager for an AI design tool",
+      "situation": "A software company making AI design tools wants you as a product manager; they say they need someone who has really drawn construction documents. Forty percent more pay, stock options on top. But you would go from the person using the tool to the person building it.",
+      "options": [
+        { "label": "Join the software company", "result": "On your last day at the institute, you sorted the drawings on your computer by year and took a copy with you.", "end": "You went to the software company and spend your days discussing with programmers what it takes for a stairwell to meet code. On the day the tool launched, you watched it draw the escape routes on screen by itself, and thought of all the distances you once measured one by one." },
+        { "label": "Stay at the institute", "result": "You turned it down. You said you still wanted to watch the buildings you drew go up one by one." }
+      ]
+    },
+    "c_studio": {
+      "title": "Open a studio with former colleagues",
+      "situation": "A few old colleagues who left the institute have rented an old factory building in Nanshan and want to start a small studio together. They ask you to be a partner: you would put in some money and bring one or two old clients. Your place at the institute is secure, but you can already see what you will look like in twenty years.",
+      "options": [
+        { "label": "Leave and become a partner", "result": "The first year you got only three small projects, and for two months you couldn't pay salaries. In the third year a village library project made it into a magazine, and the phone started ringing more." },
+        { "label": "Stay at the institute", "result": "You stayed, and some weekends you go and sit in their factory building and help look over drawings. On the plaque by their door, there is one partner's place left blank. It has never been filled." }
+      ]
+    },
+    "c_review_center": {
+      "title": "Move to plan review and full-process consulting",
+      "situation": "The institute is nudging people over forty-five toward construction drawing review and full-process consulting. No more all-nighters on schemes, noticeably less pay, and probably no more work of your own. Your neck and back haven't been right for a long time.",
+      "options": [
+        { "label": "Move to plan review", "result": "You started reviewing other people's drawings, checking them clause by clause against the codes, finding the problems the young ones missed. You leave at seven every evening and have started running around the housing estate." },
+        { "label": "Stay on the front line designing", "result": "You're still on the front line, staying up a little less than the young ones and revising a little more precisely. People in the studio have started calling you laoshi, teacher." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you pack your desk into a cardboard box: a scale ruler, a few worn-down technical pens, a stack of sketches for schemes that were never built. The young ones in the studio, running schemes through AI on their computers, look up to say goodbye. Outside the gate you take the long way round to see the primary school. Children are playing football on the field, and the shadow of the covered walkway falls across the track.",
+    "burnout": "After three straight all-nighters finishing a scheme, you were halfway through the presentation when you suddenly couldn't remember what came on the next slide. At home you lay on the sofa for two days. On the third you went to the institute and applied to move to the archive, sorting old drawings. You leave on time every day, and when you pass the hoarding around a building site you still stop to look at the rendering of the building, and wonder who drew its facade."
+  },
+  "past": [
+    "You went to middle school in a small city in Hunan. Your art teacher said your perspective drawings were more accurate than anyone else's. Your father taught at a secondary school and your mother worked a counter in a department store. They both hoped you would get into a good university.",
+    "Your gaokao (college entrance exam) score was good enough for architecture at one of the Old Eight, the country's most established architecture schools: a five-year program. Your father looked into it for ages and said architects draw houses, that's good, and they earn well too. That year the property market was hot.",
+    "Your first design studio project in second year was a small teahouse. You stayed up three nights building the model, and at the review the tutor said only one thing: nobody could climb this staircase.",
+    "In fourth year you interned at a big institute in Shenzhen and for the first time saw dozens of people stay up all night around a supertall tower scheme. You thought that was the life you wanted. When the internship ended, the studio head said, come back when you graduate.",
+    "After five years of undergrad, half your classmates went abroad for a master's. Your family couldn't afford it, and you wanted to start earning anyway. You took your portfolio to Shenzhen, joined the institute where you had interned, and started as an assistant architect.",
+    "You were promoted to architect and drew dozens of sets of housing construction drawings a year, following up to five projects at once. In those years you passed the Class 2 registration in a rented room in an urban village, and dinner every night was takeout.",
+    "The property market started to slide, and the studio's real estate projects stopped one after another. You were moved onto social housing and schools, took a project through planning approval on your own for the first time, and for the first time went three months in a row without a bonus."
+  ],
+  "late": {
+    "pension_note": "Estimate: the design institute has been restructured into a company, so the pension comes from the basic pension scheme for enterprise employees plus an enterprise annuity. Shenzhen caps the contribution base, so contributions in the high-salary years didn't cover full pay; the pension is about 30-40% of your last monthly salary.",
+    "scenes": [
+      "Your first month of retirement, you still reach for your phone on the metro to look at drawings. Finding none, you look at the buildings out the window instead, guessing one by one which institute drew them.",
+      "The institute rehired you as a technical adviser, two days a week, reviewing schemes for a few important projects. The tools the young ones use you mostly can't work any more, but you can still see at a glance which staircase nobody could climb.",
+      "The pension is a big step down from your salary, and there are a last few years left on the Dongguan mortgage. You and your spouse did the sums. You can get by; trips just have to be in the off season.",
+      "In the archive you sort old drawings, scanning and numbering them roll by roll. One roll is from your twenties. The writing in the title block is so earnest it makes you laugh.",
+      "Your neck got a little better, and you took up watercolors at weekends, nothing but the old houses and alleys of the urban villages. The neighborhood committee hung one on the wall of the community center.",
+      "At retirement age you finished the paperwork. The several thousand rolls in the archive had all been scanned into the computer. The young person taking over asked which roll mattered most. All of them, you said. They all got built.",
+      "The first year after leaving the institute, whenever you passed the hoarding around a building site you still stopped to look at the rendering and fixed a couple of lines on it in your head.",
+      "The old studio crowd got together and invited you. Some still draw, some stopped long ago. When the talk got round to the pay cuts and layoffs of those years, everyone laughed, and after they laughed nobody said anything.",
+      "In your new line of work you became one of the old hands too. A young person asked if you regretted leaving the institute. You thought about it and said the few buildings you drew are all still standing, so no.",
+      "In later years most schemes, renderings and review replies at design institutes came out of AI, and one person could do what a whole team used to. But every title block still needed one licensed person to sign it, and stand guard over that building for decades.",
+      "Your granddaughter's primary school is the very one you drew. At the parents' meeting you sat in the back row and looked up at the ceiling lights, in the positions you and the MEP engineer argued over for a whole afternoon."
+    ],
+    "closing": {
+      "retire": "One evening many years later, you walk your granddaughter past the gate of that primary school. The last bell rings and children run out along the covered walkway, their shadows stretched long across the playground. Your granddaughter asks who built this building. A lot of people did, you say.",
+      "burnout": "Many years later, you sit sketching in an old alley of an urban village. Sunlight slips down between two handshake buildings, so close they almost touch, in a single thin seam. It takes you a long time mixing colors before you get that line of light.",
+      "end": "Many years later, on the top shelf of the bookcase, you find the little teahouse model from your second year, the cardboard gone yellow. You take it down, look at the staircase nobody could climb, and put it back with a smile."
+    }
+  }
+}
