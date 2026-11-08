@@ -1,0 +1,168 @@
+{
+ "id": "seed-zhangye",
+ "occupation": "Plant Breeding and Cultivation Technician",
+ "role": "Technician at a Hybrid Corn Seed Base",
+ "headline": "A new agronomy graduate walking field after field at a corn seed base on the edge of the Gobi in Zhangye, watching over detasseling and isolation",
+ "unit": "The seed production base of a corn seed company in Zhangye",
+ "unit_type": "Seed company production base",
+ "city": "Zhangye, Gansu",
+ "city_tier": "Prefecture-level city",
+ "education": "Bachelor's (agronomy)",
+ "level": "You passed genetics and have never managed a field, and cannot yet tell this year's female rows from the male by their leaves",
+ "intro": "Zhangye sits in the middle of the Hexi Corridor, with the snows of the Qilian Mountains to the south, the Gobi to the north, and between them an oasis watered by snowmelt. A good share of China's corn seed starts here. The company has assigned you to the base in Linze, with more than three thousand mu (about 500 acres) of parent lines. From today you walk this land every day, and first you have to learn which row is the father and which the mother.",
+ "salary_note": "Estimate: technicians at seed bases in Zhangye earn a bit over 70 percent of the national figure, with field and travel allowances in the season and basic pay in the off months.",
+ "facts": [
+  { "label": "Research Assistant / Trial Specialist / Technician (current level)", "value": "0–2 years, ¥4,420–6,500 a month (national average, derived from pay by experience)", "source": "Pay by experience" },
+  { "label": "Next level up", "value": "Assistant Agronomist / Assistant Breeder (1–4 years)", "source": "Career map" },
+  { "label": "Pay after 10+ years", "value": "¥12,600 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Training growers on varieties and cultivation at demonstration fields", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Field trait surveys and data entry", "source": "AI exposure" },
+  { "label": "Open positions", "value": "32 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Just at first light you ride your motorcycle out to the fields. The wind off the Gobi is cool in the morning, and the dew on the corn soaks your trousers to the knee.",
+  "You meet the village seed growers on the field bank. Team leader Lao Sun has his register, and tells you the tassels on that female plot in Team Three have started to show today.",
+  "You go along the female rows plant by plant. The tassels must be pulled before they shed pollen; miss one and the seed can be contaminated. The counter in your hand clicks and clicks.",
+  "Lunch at the edge of the field, saozi noodles brought by a grower's family. The auntie asks if the price can go up this year. All you can say is that you will ask.",
+  "At the worst of the sun you take the isolation map to check boundaries: no other corn within two hundred meters of this plot. A patch of sweet corn growing where it should not makes you frown.",
+  "You go over this round's water tickets with the irrigation man. Your turn at the water falls during the night. Lao Sun says he will stay up for it, and you note the time in your book.",
+  "Back in the base dorm you enter today's detasseling progress and field inspection records in Excel, and send them on to the company's production department.",
+  "Crickets are loud outside the window. You check the weather on your phone. High wind forecast for next week. You send that line to Lao Sun tonight."
+ ],
+ "ladder": [
+  { "title": "Research Assistant / Trial Specialist / Technician", "stage": "Entry", "focus": "Assists breeders with field trials, pollination and seed production, and data collection." },
+  { "title": "Assistant Agronomist / Assistant Breeder", "stage": "Junior", "focus": "Designs trials and evaluates varieties independently, and takes part in choosing crosses." },
+  { "title": "Agronomist / Breeder", "stage": "Mid-level", "focus": "Runs the breeding program for one crop or region and prepares registration and approval materials." },
+  { "title": "Senior Agronomist / Regional Breeder / Associate Research Fellow", "stage": "Senior", "focus": "Manages a regional commercial breeding program and delivers varieties and results." },
+  { "title": "Full Senior Agronomist / Chief Breeder / Research Fellow", "stage": "Principal", "focus": "Sets breeding strategy and oversees germplasm resources and the team." }
+ ],
+ "ai_tasks": [
+  { "name": "Field trait surveys and data entry", "how": "Drones and phone photos with image recognition can automatically measure plant height, emergence and leaf color and send it to the spreadsheet. Spotting disease, judging unusual traits and checking plot numbers still needs someone in the field." },
+  { "name": "Testing a seed lot according to procedure", "how": "AI and imaging equipment can help count grains and judge purity, log results and draft a report against the standards. Sampling, running the instruments, deciding pass or fail and signing it are still the inspector's job." },
+  { "name": "Training growers on varieties and cultivation at demonstration fields", "how": "AI can write outlines, make slides and answer common questions. Standing at the field's edge in front of farmers and dealers, demonstrating and answering local questions, rests on trust and experience. It is mostly a person's work." },
+  { "name": "Laying out a season's variety trial and getting it planted", "how": "AI can generate the trial design, random layout, field map and planting list. Preparing the ground, marking plots, sowing, checking labels and coping with weather and soil moisture still take people." },
+  { "name": "Winter generation-advance breeding in Hainan", "how": "AI can help schedule and keep materials lists and records. Living far from home at the station, managing the field, pollinating, bagging and saving the seed are done by people on the spot, and they carry the responsibility." },
+  { "name": "Marker-assisted selection", "how": "AI can help analyze genotype data, recommend plants and predict which have more potential. Taking samples and extracting DNA in the lab, running the assay, and deciding who stays in light of field performance are human calls." },
+  { "name": "Completing a round of hybrid crosses", "how": "Detasseling and pollinating must be done by hand within a few days of flowering, and timing, handling and pollen purity all matter. AI can at most draw up the cross list and flag flowering dates. The work itself is by hand." },
+  { "name": "Harvest, kernel testing and yield analysis", "how": "AI can run analysis of variance and multiple comparisons, draw charts and write preliminary conclusions, and weights can be entered automatically. Harvesting, threshing, testing, checking odd data and explaining the results take a person." },
+  { "name": "Preparing variety approval dossiers", "how": "AI can organize regional trial data, compile traits, draft the application and check its format. Whether the material is true, the description accurate and the standards met is for a person to answer for and sign." }
+ ],
+ "events": {
+  "e_detassel_rush": "The peak of detasseling landed on a day of 37 degrees Celsius. Everyone in the village who could move went into the fields, and the hired workers from outside were still not enough. You pulled tassels for ten-odd days, and your arms were covered in fine cuts from the leaves.",
+  "e_wind": "A gale swept off the Gobi and flattened three hundred mu of male plants. You and the growers propped up what you could through the night, and you were calculating whether this year's flowering dates would still line up.",
+  "e_frost": "A late cold snap in May left the newly sprouted fields white. You went plot by plot with the insurance adjuster taking photos, and the growers squatted silently on the field banks.",
+  "e_purity_pass": "The field inspector came down for spot checks, and all three thousand mu of yours met the purity standard. At the company briefing the production director read out your name.",
+  "e_mix_field": "One plot's female plants took stray pollen, the purity came in several points short, and the seed had to be downgraded. The contract paid less. The grower came to find you, and you took a good few words on the company's behalf.",
+  "e_water": "The Heihe River's water came late this year, and the rotation schedule changed again and again. A phone call woke you in the night to stand by the channel with the water station staff, checking release times.",
+  "e_old_farmer": "Grandpa Sun, who had grown corn for thirty years, felt a leaf and said this cross needed its water and fertilizer a week later. You half believed it. At autumn's yield test it beat the plot next door by dozens of jin.",
+  "e_hainan": "When winter came you went to Hainan for the generation-advance planting, and spent two-plus months in the fields in Sanya. You got so sunburned your skin peeled. Your friends thought you were on holiday.",
+  "e_mechanize": "The company piloted mechanical detasseling. The machine goes through and people still follow behind to catch what it missed. But the number needed for that field really did fall by more than half.",
+  "e_drone": "The base began flying drones over the fields, with AI counting emergence rates and detasseling progress and sending it straight to the sheet. You walk a lot less now. The system cannot tell a contaminated seedling, though, so you still go and look.",
+  "e_ai_phenotype": "AI's picks on trait selection differed from yours by several individual plants. You went into the field and looked at each one. On a few it was right. On a few it had mistaken diseased leaves for a nice color.",
+  "e_ai_report": "AI can now organize the first draft of the approval dossier, and regional trial data are compiled with a click. Three nights without sleep became one, though you still have to check every number yourself.",
+  "e_payment": "The company was short of cash, and payments to growers fell two months behind. People in the village asked you whenever they saw you. All you could say was: soon.",
+  "e_fake_seed": "Someone was selling seed in bags with the company's name on them. The seed station came to investigate, and you took the retained samples in for comparison. It took three weeks.",
+  "e_love": "At an extension training in the county you met a teacher from the county middle school. The first time you had a meal together, the cuts on your hands gave her a fright.",
+  "e_house": "You bought a place in Ganzhou District in Zhangye, where you can see the Qilian snow from the window. Over the year the time you spend at that window adds up to only a few days.",
+  "e_child": "Your child was born in July, right at the height of detasseling. You got to the hospital overnight, held the baby for an hour, and were back in the field at five the next morning.",
+  "e_sunburn": "After more than ten years of northwest sun, your doctor tells you to watch your skin and to stop spending whole days in the field. You buy a bigger hat and keep walking.",
+  "e_parent_ill": "Your mother went into the county hospital back home. You took three days of leave at harvest, and by the time you returned, someone else had already signed off a plot.",
+  "e_apprentice": "A new master's graduate could not get the notation for ear height and plant height straight. You walked him through the trial field and told him that a number recorded wrong is worse than none.",
+  "e_variety_pass": "A cross you helped develop passed provincial approval. On the certificate is a string of names, with yours in the middle, and the next year it was planted on fifty thousand mu in Zhangye."
+ },
+ "choices": {
+  "c_learn_field": { "title": "Follow Lao Sun into the field, or stay in the office", "situation": "The company has a new data platform, and the production department wants a young person in the office to enter data. Lao Sun says if you really want to do this work, then don't go near an office in July.", "options": [
+   { "label": "Go out with Lao Sun for a season", "result": "After a whole season the only white thing left on you was your teeth. By autumn you could tell at a glance which plot was short of males. Lao Sun went on calling you kid." },
+   { "label": "Master the system in the office", "result": "You sorted out more than ten years of the base's ledgers, and the production department could not do without you. Out in the field, when a grower asks you something, you still have to go back and look it up." }
+  ] },
+  "c_assistant": { "title": "Apply for Assistant Agronomist", "situation": "You have the years, and the company tells you to prepare for Assistant Agronomist. You need to hand in a trial summary. All you have are some field notebooks, and it has to be written after the harvest. If you get the title, you have a say in trial design.", "options": [
+   { "label": "Write the trial summary", "result": "You went back through three years of field records in Excel and learned for the first time how to run an analysis of variance. By the time the certificate came, the weather had turned cold." },
+   { "label": "Not this year", "result": "You wanted one more year in the fields. The next year a colleague's title came through, and his name began appearing on the trial lists instead of yours." }
+  ] },
+  "c_ai_field": { "title": "Who checks the drone data", "situation": "The company is building a field data platform, and the drone and phone images need someone to check them and set the rules. No pay for it, and it eats the time you would use for writing up. But whoever sets the rules will be listened to later on.", "options": [
+   { "label": "Take it", "result": "You took the drones to the field edge and compared again and again, and wrote more than ten common misreads into rules. Other bases began using your rules later." },
+   { "label": "Skip it and mind the fields", "result": "You walked more plots and autumn's yields looked good. After the system went live you used the rules others had set, and now and then felt some of them were wrong." }
+  ] },
+  "c_seed_trader": { "title": "A seed dealer comes hiring", "situation": "A dealer in seed and farm supplies wants you for technical sales across Gansu and Ningxia, at 40 percent more pay. You know the varieties and you know a good number of large growers. But it would take you off the breeding fields.", "options": [
+   { "label": "Go into technical sales", "result": "You drive between Hexi and Ningxia, talking varieties, water and fertilizer. Your sales went up, and your hands have no leaf cuts anymore.", "end": "You became a technical sales rep for farm supplies, seed bags and yield charts always in the car, and people on the field banks still call you teacher." },
+   { "label": "Stay at the base", "result": "You turned it down and went out to the field at five the next morning. On payday you thought about that number for a moment, and went to check the wind." }
+  ] },
+  "c_agronomist": { "title": "Apply for Agronomist", "situation": "The company has put you forward for Agronomist (intermediate title), which requires a paper or results. It wants you to run a regional cross trial, but the application needs two results and you are one short.", "options": [
+   { "label": "Write the paper and take the project", "result": "You rested not at all that winter, and turned your regional trial results into a paper in a provincial journal. When the Agronomist certificate came, you also had one more trial field." },
+   { "label": "Do the trials well, titles later", "result": "You made the trials solid and let the results build up slowly. You missed this round of review, and your raise came two years late." }
+  ] },
+  "c_yangling": { "title": "Go to Yangling or stay in Hexi", "situation": "A seed company's breeding station in Yangling, Shaanxi, wants you for trials on the Huang-Huai-Hai plain, better pay and easier schooling for your child. The Zhangye base is short of people, and this stretch of Gobi-edge land is what you know best.", "options": [
+   { "label": "Go to Yangling", "result": "You moved to the Guanzhong plain, where the humidity is nothing like Hexi and everything has to be relearned. For the first time you met a run of rainy days in October." },
+   { "label": "Stay in Zhangye", "result": "You went on watching over this land. In winter, back in the base dorm, the wind still comes through the crack in the door, and you know when the next one is due." }
+  ] },
+  "c_senior_agron": { "title": "Apply for Senior Agronomist", "situation": "The company needs a Senior Agronomist to lead the Hexi regional breeding program. The review wants three results and one approved variety, and that variety still needs two more years of regional trials. You would give up a few Spring Festivals.", "options": [
+   { "label": "Go for Senior Agronomist", "result": "You spent two Spring Festivals between Sanya and Lanzhou. When the dossier went in, you felt more tired than in your first season of detasseling." },
+   { "label": "Not worth it, run the base", "result": "You said all those materials were not worth a few more plots of walking. You run everything at the base, and you sit in the back row at meetings." }
+  ] },
+  "c_station": { "title": "The extension station is hiring", "situation": "The county agricultural extension station is holding an exam for a permanent state post, right in your field. The pay is lower, but you would not spend your days chasing the wind, or watching the company's mood. Your crosses would go to someone else.", "options": [
+   { "label": "Sit the exam, join the station", "result": "You got in, and began giving talks at the field's edge and handing out leaflets. There is a chair in the office that is really yours.", "end": "You became an extension agent at the county station, giving lessons in the fields each spring, while the wind off the Gobi still blows so you can barely open your eyes." },
+   { "label": "Stay with the seed company", "result": "You folded the notice and tucked it in your field notebook. When July came, you went out to count tassels as usual." }
+  ] },
+  "c_chief": { "title": "Compete for Chief Breeder", "situation": "The company wants to create a Chief Breeder over germplasm resources and the whole breeding line, and you are qualified to try. But you would be based at headquarters, seldom get back to the base, and hand the field work to the young.", "options": [
+   { "label": "Go for Chief Breeder", "result": "You began working with the molecular lab and genotype data, and got quieter. Every July you always found a reason to go back to Zhangye for a few days." },
+   { "label": "Stay at the base", "result": "You gave the position to a young PhD. You are still in the fields. The villagers call you teacher, and only Lao Sun still calls you kid." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last July you still went into the fields, with no counter in your hand. The young people reported the detasseling progress, and you only listened on the bank and looked up at the wind. In the afternoon Grandpa Sun's grandson drove past you on the detasseling machine and honked. You put your field notebooks in the company archive and kept one for yourself.",
+  "burnout": "That July you fainted in the field and Lao Sun's son took you to town on his three-wheeler. After that your back, legs and eyes began to fail, and the doctor told you to stop spending long hours in the field. You handed over your trials and moved to the company archive to sort germplasm cards. Outside the window is the Gobi. When the wind comes up you still lift your head."
+ },
+ "stages": [
+  "With a counter and field notebook you go plot by plot with the team leader: are the female rows clean of tassels, is the male pollen timing right, is anyone else's corn inside the isolation zone. Growers ask about the price and about water and fertilizer, and when you are unsure you write it down. At night the numbers go into Excel, and the first thing the production department asks the next day is that number.",
+  "You now set up variety trials yourself: mark the plots, write labels, randomize, check the field map row by row on planting day. After harvest come kernel testing, weighing and analysis of variance, and a report for the breeder. Growers see you as a technician and the seed station sees you as the base's person, and both want clear answers.",
+  "Hexi's regional trials are yours. You lead two assistants, pick crosses, assign trial sites and take people to Sanya for winter generation planting. Approval dossiers are yours to prepare, dealings with the seed administration too. You have begun using R and molecular marker results. You speak more slowly than you used to, because every number has to have a source.",
+  "You manage a region's commercial breeding program, with dozens of crosses in hand, deciding each year who is cut and who stays. You go to see how they perform on large growers' land, listen to sales on the market, and meet with the company's genotyping platform to compare data. The breeders below you bring their selections, and the final sheet is yours to sign.",
+  "On your desk are the germplasm bank's list and the company's breeding road map for the next decade. You negotiate budgets with headquarters and partnerships with universities, and decide which material to keep and which directions to cut. You seldom pull tassels now, but you still walk the field once a year and feel those leaves with your hand, so you know that what you say is still true."
+ ],
+ "work": [
+  "Lao Sun had you close your eyes and feel two leaves, and guess which was the male. You got it wrong. He laughed and had you look again at the color of the sheath and the width of the blade.",
+  "Someone had planted a few rows of sweet corn at the edge of an isolation zone. You took the map to the owner and proposed the company pay to pull them early. He asked for twice what you expected.",
+  "The first time you filled out a field inspection form you shifted the plot numbers by one row. Lao Sun turned to that page and ran a fingernail down it, and you went back and walked it again.",
+  "On planting day for the variety trial you laid out forty seed bags in order at the field's edge and had Sister Liu hand them over bag by bag according to the map. One wrong bag and the whole plot is wasted.",
+  "At kernel testing the new intern took row counts for kernel counts. You handed him the calipers and had him measure the samples again.",
+  "One plot in the analysis of variance came out absurdly high. You went back to the field and saw a leak at the ditch. You flagged that number with a note in the table.",
+  "In the winter fields at Sanya a local worker asked how to fit this bag. You showed him once and wrote the pollination time on the blackboard.",
+  "The seed administration came to see the trials and kept turning back to one set of regional data. You opened the original notebook to that page and laid it next to the table in front of him.",
+  "The molecular markers said keep this plant. You felt the stalk in the field and it was too soft. You set it aside to see what this year's wind would do.",
+  "At the selection meeting each September you put the performance of seventy or eighty crosses up on the screen. Young breeder Xiao Zheng argued for half an hour. You crossed his out anyway.",
+  "The sales director said growers wanted easy threshing. You took him to a large grower's drying floor and had him grab some ears and rub them himself.",
+  "The genotype platform's engineer said the model had reached 80 percent accuracy. You asked him to bring the other 20 percent, print them one by one, and you took them back to the field to look.",
+  "At the germplasm cold-store count, a batch of old material had not been touched in decades. You wrote keep on the list. Finance asked how much that would cost. You said it could not be calculated.",
+  "In talks with an agricultural university, they wanted your material for papers. You rewrote the scope-of-use clause three times before you let legal send it out.",
+  "At a headquarters strategy meeting they wanted to move everything to silage corn. You drew a question mark on page three, and laid out ten years of Hexi yields and water on the table."
+ ],
+ "past": [
+  "Your home was in Dingxi, where your family grew potatoes and depended on the sky every year. At the high school entrance exam your teacher said if you did not get in, you would be going off to find work. You got in.",
+  "Your gaokao (college entrance exam) score was enough for an agricultural university in Lanzhou. You wanted computer science, did not have the points, and were moved to agronomy. Your father said: you need college to learn farming?",
+  "In your second-year genetics lab you worked out segregation ratios from pea and corn data for the first time. The professor said that calculating well was not as good as growing well. You thought about that for a long time afterward.",
+  "One summer you interned at a trial station in Wuwei and learned detasseling and bagging. After a month your arms were striped red from corn leaves.",
+  "Before graduation your classmates were studying for a master's or the civil service. You sat the graduate exam and missed by a few points. A seed company in Zhangye came to recruit on campus, room and board included, and you would have to work in the fields long-term. You signed."
+ ],
+ "late": {
+  "pension_note": "Estimate: seed companies pay social insurance on the local base, so the pension comes to about 45 to 50 percent of your final monthly pay, slightly higher with a senior title.",
+  "scenes": [
+   "Your first retired summer, you could not sit still once July came, and rode the bus back to the base for a look around. A young man offered you a cigarette. You did not take it. You asked about the wind.",
+   "The company rehires you to look at varieties, two days a week, no field work. You go into the field anyway. Your spouse makes you stamp the dirt from your shoes at the door.",
+   "You and your spouse visit the rainbow mountains at Danxia, and the ticket is more than you expected. On the way back you see acres of seed corn and ask the driver to go slowly, and you count tassels all the way.",
+   "You came in from the fields, and for the first month you could not face going downstairs. On the windowsill is an ear of corn you brought from the base, dried now. You could not throw it out.",
+   "The archive work is light. You enter the cards one by one in the system, and the machine reads faster than you do. You often stop to look at whose handwriting is on a card.",
+   "A technician you once trained comes to see you and says he has become an agronomist. You ask if he still goes into the field. He says he does. You nod and pour him some water.",
+   "You left the base and mailed your field notebooks home. Cleaning out the dorm you pulled a long-dried corn leaf from under the pillow.",
+   "At the new job they call you teacher, and you talk about varieties and water and fertilizer. A farmer asks where this seed really comes from. Zhangye, you say, and he nods.",
+   "You go back to Linze on an errand, and all those fields are detasseled by machine now. A young man at the edge of a field doesn't know you and asks if you are buying seed. Something like that, you say.",
+   "The drone finishes the field and the report is done. But in July someone at the base is still squatting by a plot, turning a leaf over to look.",
+   "The spots on your face get darker every year, left there by the Hexi sun. Your child brings you a sun hat. You say this would have been good thirty years ago.",
+   "In your grandchild's schoolbook there is a picture of corn and the words hybrid vigor. You pick up a pen and draw, at the edge of the picture, one male row and six female rows."
+  ],
+  "closing": {
+   "retire": "One July many years later you are sitting in the yard, and the wind comes from the south with a little of the Qilian cool in it. You look up and say: today's wind is just right for detasseling.",
+   "burnout": "Many years later you plant one corn stalk in a pot on the balcony, only to watch it tassel. Your granddaughter asks if you can eat it. No, you say. This one is just for looking at.",
+   "end": "Many years later you find a packet of seed from those days, the bag gone brittle. You tear a little corner, tip some into your palm, look at the color, and pour it back."
+  }
+ }
+}

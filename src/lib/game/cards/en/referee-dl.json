@@ -1,0 +1,199 @@
+{
+  "id": "referee-dl",
+  "occupation": "Football Referee",
+  "role": "Grade 3 referee in the amateur leagues",
+  "headline": "Twenty-two, you never made the team at sports college, but you got your referee's card; by day you draw up fixtures for an events company, and at weekends you whistle three amateur matches in the wind off Dalian's coast",
+  "unit": "A sports events company in Dalian (running amateur leagues and youth tournaments, and assigning referees)",
+  "unit_type": "Sports events company",
+  "city": "Dalian",
+  "city_tier": "Second-tier",
+  "education": "Bachelor's (Community Sports)",
+  "level": "You know the rules by heart; your whistle isn't loud enough yet",
+  "intro": "In your referee's bag are two whistles, a yellow and a red card, a scorecard and a waterproof pen. Eight o'clock Saturday morning, an artificial pitch in Ganjingzi, two factory teams, two hundred yuan a game. Dalian's wind comes in off the sea and a high ball will turn by itself. You've passed your Grade 3 exam and can recite the laws of the game one by one. From today, men twenty years older than you will shout: Ref, did you see that or not?",
+  "salary_note": "Estimate: most referees live on a day job plus match fees. This counts a salary at the events company plus amateur match pay, a little under the national average in Dalian.",
+  "facts": [
+    { "label": "Grade 3 Referee (current level)", "value": "0-2 years, ¥3,500–5,500 a month (national average, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Grade 2 Referee (2-5 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Calming both sides on the pitch", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Calling offside and whether the ball is out", "source": "AI exposure" },
+    { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "Saturday morning you run five kilometers along Xinghai Bay, and the wind in your mouth tastes of salt. You have three matches today, so you need your legs warm.",
+    "At the ground you check whether the nets are torn, the corner flags are in, and the standing water has been swept off the turf. The two team managers hand you their rosters, and you check the numbers.",
+    "Kickoff. A big guy in the number nine shirt, not much younger than your father, commits his first foul and asks how old you are. You say play on.",
+    "You show your second yellow and the other captain runs over saying he didn't mean it. You stand your ground and have him lower his hands and his voice.",
+    "Full time. You fill in the match report: score, cards, substitutions. A player walking past leaves a banana beside your water bottle without saying anything.",
+    "The afternoon match is youth football, and the parents on the touchline are louder than the players. One father shouts through the fence that he's going to file a complaint. You have the assistant referee write down what he said.",
+    "When the third match ends the sun has gone down over the sea. Your calves start to cramp. You squat at the side of the pitch, peel down your socks and rub in some ointment.",
+    "Home, you open today's video and look for your own mistakes. In the seventy-first minute of the second match you gave a throw-in the wrong way. You pause it and write it in your notebook."
+  ],
+  "ladder": [
+    { "title": "Grade 3 Referee", "stage": "Amateur leagues", "focus": "Referee amateur and youth matches, work as assistant and fourth official; move up on match count and the laws exam" },
+    { "title": "Grade 2 Referee", "stage": "City matches", "focus": "Take the middle in city matches and company leagues; move up on assessors' marks and fitness tests" },
+    { "title": "Grade 1 Referee", "stage": "Provincial matches", "focus": "Referee provincial matches and lead younger crews; move up on match ratings, fitness tests and the laws exam" },
+    { "title": "National Referee", "stage": "National competitions", "focus": "Get on the list for national competitions, with year-round fitness tests and training camps, and every match marked on video" },
+    { "title": "International Referee", "stage": "International matches", "focus": "Very few reach this: refereeing international matches and starting to teach as an instructor" }
+  ],
+  "ai_tasks": [
+    { "name": "Calming both sides on the pitch", "how": "A camera can see the ball; it can't see that two men are about to start arguing. When to call someone over and have a word, and when to reach for a card, takes a person standing right there." },
+    { "name": "Calling offside and whether the ball is out", "how": "Machines track the ball and the players, and offside and goal lines can be drawn in seconds. People check, and tell those on the pitch." },
+    { "name": "Judging how bad a foul is and whether to show a card", "how": "AI can give replays and a suggested decision. Whether it is a foul and whether that card comes out is for the referee to decide on the spot, and to carry." },
+    { "name": "Recording scores and substitutions, filling in match reports", "how": "The system can record goals, substitutions and cards automatically, and the referee only checks and signs after the match." }
+  ],
+  "events": {
+    "e_first_red": "The first time you pull out a red card, your hand is shaking. The young man you send off stands there a long moment before he goes, and leaves the pitch with his shirt off, balled up in his fist.",
+    "e_scold": "After an amateur match a whole team surrounds you, pointing and talking at length, and their families on the touchline join in. You get to the parking lot with your bag before you notice your back is soaked.",
+    "e_good_game": "At the end of a match both captains come over to shake your hand and nobody has argued at all. Going home you feel better than if you'd won.",
+    "e_rule_change": "A new year's Laws of the Game changes a few interpretations of handball and offside. You print the new edition, read it through meals, and mark it up in highlighter until it's all colors.",
+    "e_wind": "December in Jinzhou, wind so strong you can hardly stand. A goal kick floats out and drifts back. You whistle ninety minutes with cracked lips and fingers too stiff to press the scorecard.",
+    "e_fitness_fail": "You come up just short on the interval run in this fitness test and you're stood down from assignments for two months. You buy a different pair of running shoes and get up at five every day.",
+    "e_hamstring": "You feel your hamstring go on a sprint and finish the second half anyway. The doctor says no running for four weeks. You spend four weeks in bed watching video.",
+    "e_ai_offside": "The events company installs a few cameras at matches and the system draws offside lines automatically. After raising his flag, assistant Xiao Xu can't help glancing at the touchline screen.",
+    "e_ai_report": "Match reports are now generated automatically, goals, substitutions and cards all included, and you just check and sign. The waterproof pen you've used for over a decade, you later can't find.",
+    "e_ai_challenge": "Parents on the touchline now play a clip on their phones and say the system calculated it wasn't offside. You tell one: the system calculates position; interfering with play is something a person has to see. He isn't listening.",
+    "e_kid_game": "In a youth match a child tells you he was offside, raising his hand: Ref, it was me. You're taken aback for a moment, nod, and blow the whistle.",
+    "e_family_weekend": "Your daughter's birthday falls on another weekend of away games. By the time you get back from Shenyang the cake has been cut. The piece they've saved you has one blown-out candle on it.",
+    "e_pay_delay": "An amateur event organizer is three months behind and owes you ¥1,400. You send several WeChat messages and every reply is a thumbs-up.",
+    "e_assess": "The assessor's report says: active positioning, clear signals, improved tone in communication during the match. You read the word \"improved\" twice.",
+    "e_house": "You buy an old apartment in Ganjingzi, fifth floor, no elevator. A friend says that counts as training. You say yes it does.",
+    "e_mentor": "A kid who's just passed the exam whistles his first match and afterward crouches at the roadside, staring. You hand him a bottle of water and say: everyone's first red card shakes. So did mine.",
+    "e_old_legs": "You can't outrun a twenty-something fullback anymore, so you start reading play and getting there ahead of time. Players say you're always just there. You don't tell them about your knee.",
+    "e_jd": "You look up the job sites and there isn't a single position called referee. In this trade people whistle themselves into existence.",
+    "e_old_player": "The old number nine can't play now and sits smoking at the side of the pitch. He says to you: the things I used to call you, don't hold them against me. You say: those were on the mild side.",
+    "e_new_system": "The referees' committee starts using an online system to assign, score and report, and your name now has a ranking after it. Every Monday morning, it's the first thing you open."
+  },
+  "choices": {
+    "c_second": {
+      "title": "Sit the Grade 2 Referee exam?",
+      "situation": "The city football association is holding a Grade 2 Referee course this year: pay a fee, take a week off, sit a fitness test and laws exam. Your company has an event to schedule that week. The boss says go ahead, but there goes this month's bonus.",
+      "options": [
+        { "label": "Sit it", "result": "On the course you find out for the first time that if you stand three meters off, the whole angle of the decision changes. Back on the pitch, you begin to run ahead of play." },
+        { "label": "Next year. Get good at matches first", "result": "This year you whistle thirty more amateur matches and your signals steady up a lot. The next year, others from the course are already refereeing in the city." }
+      ]
+    },
+    "c_dinner": {
+      "title": "The boss's seafood dinner before the final",
+      "situation": "The night before a company league final, one team's owner phones to invite the referees for seafood, just to get acquainted. He's a man of some standing locally, and your events company does business with him.",
+      "options": [
+        { "label": "Don't go. No meeting before a match", "result": "You decline politely. The match goes off normally. The company loses a bit of business later, and your boss doesn't say anything about it, or about anything else." },
+        { "label": "Go for a bit, don't drink", "result": "Everybody at the table is very polite and you eat only two shrimp. Throughout the next day's match, you feel like someone is watching every decision." }
+      ]
+    },
+    "c_first": {
+      "title": "Go for Grade 1 Referee",
+      "situation": "Grade 1 Referee is tested at the provincial level: a hard fitness test, the laws in English, and an on-field assessment. You'd have to get up every day for interval runs and drop half your weekend amateur matches, losing over ten thousand yuan a year.",
+      "options": [
+        { "label": "Drop the matches, train", "result": "You get above the fitness line and the assessment match goes cleanly. With less income, your spouse sticks a budget sheet on the fridge." },
+        { "label": "Don't. Amateur matches are fine", "result": "Weekends are full and everyone knows you. People at the touchline start calling you \"the old ref,\" and you're barely over thirty." }
+      ]
+    },
+    "c_coach": {
+      "title": "A youth academy wants you as a coach",
+      "situation": "A youth academy offers much higher pay if you'll get a coaching license and take a boys' team. You'd still be on a pitch at the weekend, only on the sideline. You've refereed all this time and have never considered another direction.",
+      "options": [
+        { "label": "Switch to coaching", "result": "You get your license. You keep the whistles, and put the cards in a box.", "end": "You become a coach at a youth academy, with four teams a week. At youth matches you stand on the sideline, and when a parent yells at the ref through the fence you walk over and ask them to sit back down." },
+        { "label": "Don't. Keep whistling", "result": "You turn it down. On the same pitch one weekend, you see that youth team has a new coach." },
+        { "label": "Coach a team on the side", "result": "You try it for a term and find that when you referee other people's kids, your hand goes soft. You give the team back." }
+      ]
+    },
+    "c_work": {
+      "title": "The day job and the weekend matches",
+      "situation": "The events company wants to make you a project manager, thirty percent more pay, working on-site at weekends. You'd referee much less. National assignments watch the number of matches you've worked.",
+      "options": [
+        { "label": "Take the promotion, whistle less", "result": "Your pay goes up, and you now look at matches in terms of budget and venue. Your matches drop from seventy a year to twenty." },
+        { "label": "Decline; protect your match count", "result": "The boss doesn't quite understand. You still whistle at weekends, your pay doesn't move, and your name shows up more and more in the assessors' notebooks." }
+      ]
+    },
+    "c_ai": {
+      "title": "Learn the assisted-decision system?",
+      "situation": "The association wants a few active referees to learn the assisted-decision system: two months of training, then work as operators in the review room and as instructors. Some say it's the future. Others say learn it and you'll never get back on the pitch.",
+      "options": [
+        { "label": "Learn it", "result": "You learn for the first time when the system gets things wrong, and you come back and write it up in a list for your colleagues." },
+        { "label": "Don't; I use my eyes", "result": "You stay with eyes and positioning. While the young referees look at screens, you look at their feet and their faces." }
+      ]
+    },
+    "c_national": {
+      "title": "Go for National Referee",
+      "situation": "The province is recommending you for the National Referee assessment. If you pass, it means year-round camps and flying all over the country. You're in your thirties, your kid has just started primary school, and your company has already warned you twice about taking too much time off.",
+      "options": [
+        { "label": "Sit for National", "result": "Three weeks of running at a base in the south, and the fitness line is higher than last year. You keep your child's photo tucked into the book of laws." },
+        { "label": "No more. Stay in Dalian", "result": "You go on refereeing provincial matches. This time, you go to the parent-teacher meeting." }
+      ]
+    },
+    "c_pe": {
+      "title": "A school is hiring a PE teacher",
+      "situation": "A middle school in the development zone is hiring a PE teacher, and you have the sports-college degree for it. The pay is steadier than now, with summers and winters off, though you might not whistle on weekends anymore.",
+      "options": [
+        { "label": "Become a teacher", "result": "You put your referee's card in your desk drawer at the office.", "end": "You become a PE teacher at a middle school in the development zone and teach football classes. Between classes you referee little games for them and call them more seriously than anyone, and the kids say this teacher is a stickler." },
+        { "label": "Don't. Still want to whistle", "result": "You don't send a resume. On the pitch that weekend, you call out as usual: play on." },
+        { "label": "Applied, never heard back", "result": "You wait two months with no reply. Your spouse says, fine, that saves you choosing." }
+      ]
+    },
+    "c_mentor": {
+      "title": "Come off the pitch and become an assessor?",
+      "situation": "At your age, the fitness line for high-intensity matches is harder and harder to clear. The referees' committee asks if you want to become an assessor, up in the stands grading the young ones. You could also keep whistling amateur matches.",
+      "options": [
+        { "label": "Become an assessor", "result": "Your first time up in the stands, your hand itches for the whistle. When the young referees come off, the report you pass them is very long." },
+        { "label": "Keep refereeing amateur games", "result": "You're still running on the Ganjingzi turf, just running less and standing better. Everyone on the old factory teams knows you." },
+        { "label": "Go home and open a football ground", "result": "You and a friend lease a plot of land and lay artificial turf.", "end": "You and a friend lease land in Jinzhou and lay down two five-a-side pitches. In the evenings people come to play after work, and nobody asks for a referee. When an argument starts, you put down what you're doing and walk slowly over." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "The last match is between two teams of old men, running more slowly than walking. You blow the final whistle and everybody comes over to shake your hand, some of whom you've known for over twenty years. You put both whistles in your bag and zip it up. The sea wind still comes from that side. The floodlights over the pitch go out one by one.",
+    "burnout": "After that season's fitness test your knee can no longer carry you through a second half. In the middle of a match you can't remember who just fouled whom. You send the referees' committee a message saying this season is your last. The whistle sits for a long time on the shoe cabinet in the entryway."
+  },
+  "stages": [
+    "On amateur league weekends you seldom take the middle. Mostly you carry the assistant's flag or work as fourth official, and before the match you check the nets and verify the rosters. The factory-team old-timers don't take you seriously and call you kid. You know the book of laws thoroughly, yet one handball on an actual pitch involves far more to see than the book says.",
+    "City matches put you in the middle, with two assistants behind you and a five-minute pre-match meeting on how you'll work offside together. An assessor sits in the stands giving marks, and afterward a report sets out your positioning and your signals. The players begin to reason with you, and you begin to learn which remarks to answer and which to let go.",
+    "Forty-odd provincial matches a year, dragging a small suitcase to Shenyang, Jinzhou, Anshan. Interval-run results and match videos go into a system together and get scored. You lead two young assistants and tell them before kickoff: today the first foul sets the tone. Now you're speaking not to factory teams, but to coaching staff and match commissioners.",
+    "National competition, a different city every week, gathering before matches and reviewing after, every call on video with someone going through it frame by frame. You take high-intensity fitness tests, learn the video review system, and have two minutes to make things clear to a head coach. Only on Monday do you find out where you're going next week. The family calendar is all question marks.",
+    "Your whistle is heard in international matches, with several languages around the pitch. Besides refereeing there are continual online assessments and camps, reports to write in English, and classes to give young referees at home. Walking out onto the field, you always think of that turf in Ganjingzi and the number nine who asked how old you were."
+  ],
+  "work": [
+    "Your first time as an assistant you raise your flag half a beat late, and the referee looks back at you. On the next ball, you nail your eyes to the back heel of the second-last defender.",
+    "Checking rosters before a match, a team's number four doesn't match his ID. The manager says that's his brother. You say he can't play under the rules. The man looks at you a long moment, then makes the change himself.",
+    "You mix up the yellow cards on your scorecard, note it in the report afterward, and the referee adds a line below: next time use two colors of pen.",
+    "At the pre-match meeting you tell your two assistants: raise the flag for tight offsides first, I'll make the decision. In the seventieth minute of the second half, that comes in useful.",
+    "The report from assessor Old Meng says: thirtieth minute, position obstructed the assistant's line of sight. You go back onto the field and walk it yourself, and it really did.",
+    "In a company league a player loses it and shouts at you. You call him over, have him look you in the eye and ask: do you still want to play? He nods, drops his head, and runs back.",
+    "In a hotel in Jinzhou you and your two young assistants watch video of the opponents, write down two defenders who like to grab, and tuck the slip of paper in your sock before the match.",
+    "The last two sets of the interval run, listening to the beeper, your face is numb. The examiner ticks the sheet, and you hold on to the rail until you catch your breath.",
+    "The match commissioner asks at the post-match meeting: why no card in the eighty-eighth minute? You say: a card would've sent someone off with two minutes left. I chose to call him over.",
+    "A colleague in the review room says in your earpiece: recommend a review. You run to the screen at the touchline with thirty seconds. You watch once, turn around, and draw a box in the air.",
+    "A head coach is waving at you from the technical area. You go over and say one thing: Coach, I heard you, please return to the technical area. He picks up his jacket, turns and goes back.",
+    "At the post-match video analysis one call is shown six times. You don't explain. You write that ball in your own notebook, and add: next time, two steps sooner.",
+    "The referees' meeting before the match is in English with an interpreter at the back. You tuck a small card up your sleeve with three phrases that players here commonly use.",
+    "At a training course you show a clip of your own early error. The young referees don't dare laugh. You say, I still remember this one. Let's see what went wrong."
+  ],
+  "past": [
+    "As a kid your father takes you to the stadium, where everyone in the stands is cursing the referee. You ask who that person in black is. Your father says: the only person out there with no teammates.",
+    "You sit on the school team's bench for two years. The coach has you whistle a practice game, and you discover for the first time that from the middle of the field you can see the whole match.",
+    "A sports-track student for the gaokao (college entrance exam), you get into a sports college in the province to study community sports. You don't make the college team and spend afternoons drifting around the edge of the pitch.",
+    "Sophomore year you pass your Grade 3 referee exam. Your first match is the campus league, you give a penalty, and your dorm mates don't speak to you for a week.",
+    "Before graduation an events company comes recruiting. The pay is low, and the boss says you can referee on weekends if you want. Your father asks what kind of job that is. You say I get to watch football, and they pay me."
+  ],
+  "late": {
+    "pension_note": "Estimate: enterprise social insurance is paid on the events company salary, with match fees not counted, so the pension is about forty percent of your final monthly pay.",
+    "scenes": [
+      "The first Saturday of your retirement, you still wake at six-thirty. You walk slowly along Xinghai Bay; running is beyond you, and the wind is still salty.",
+      "A neighborhood kids' match has no referee and someone asks you over. You bring no cards, just one whistle, and the phrase you say most in the whole match is: tie your shoelaces.",
+      "Watching football on TV, within half a second you see who's standing in the wrong place. Your spouse says don't argue with the TV. You say I'm not arguing. I'm taking notes.",
+      "The old factory teams have a reunion, and number nine comes too, on a cane. Somebody brings up that old penalty and they argue for half an hour, fiercer than they were back then.",
+      "The first weekend without refereeing, you sit at home until noon. You can see a small piece of a pitch from your balcony with someone running on it. You pull the curtain halfway.",
+      "You help out at a friend's sporting goods shop, selling shin guards and socks. When a child comes in to buy a whistle, you pick out the loudest, then change it for one not quite so loud.",
+      "After the knee replacement, you can walk. You go to see an amateur match and sit alone in the stands, whistling every ball over again in your head.",
+      "The first year after leaving the trade, a friend asks you to referee their game and you wave it off. But when the match starts, you still end up standing in the spot with the best view.",
+      "Packing things up, you find that scorecard, from a match you'd long forgotten. It says two to two. You run a finger over the numbers.",
+      "A young referee sends you a message, asking if you remember him. You gave him a bottle of water after his first match. He now referees provincial games.",
+      "New matches all have machines judging offside, drawing the line more accurately than anyone. When two men square up, the one who walks over still has to be a person in black.",
+      "Dalian's wind hasn't changed. You pass that ground in Ganjingzi. The turf has been replaced several times, and on the goalpost is still a strip of tape you once tied there."
+    ],
+    "closing": {
+      "retire": "The wind over Xinghai Bay has dropped a little this evening. You hang the whistle back around your neck, walk a few steps and take it off again.",
+      "burnout": "A whistle sits on the shoe cabinet by the door. You pick it up and blow; no sound comes. You put it back where it was.",
+      "end": "The floodlights have come on by the pitch and someone is warming up. You stand a while and don't go in."
+    }
+  }
+}

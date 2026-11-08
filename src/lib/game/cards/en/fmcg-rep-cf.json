@@ -1,0 +1,166 @@
+{
+ "id": "fmcg-rep-cf",
+ "occupation": "Sales Representative",
+ "role": "Rural-Route Sales Rep for a Consumer Goods Distributor",
+ "headline": "Driving an old van between village shops in the counties around Chifeng, stocking shelves and collecting what is owed",
+ "unit": "A regional consumer goods distributor in Chifeng",
+ "unit_type": "Regional distributor",
+ "city": "Chifeng, Inner Mongolia",
+ "city_tier": "Prefecture-level city",
+ "education": "Junior college (marketing)",
+ "level": "Two years with a driver's license, a route map someone else drew, and a shaky voice the first time you walk into a village shop alone",
+ "intro": "The company warehouse is on the edge of Chifeng. You have been given a van with more than two hundred thousand kilometers on it and a route: east along National Highway 305, seven townships, eighty-some small shops. Your mentor drove it with you for one week, then tore off the route map and handed it over. From today you go in alone. You straighten the shelf by the door first, and only then do you speak.",
+ "salary_note": "Estimate: local distributors in Chifeng pay low base salaries with commission tied to collections, about 60 to 70 percent of the national sales figure; around the Spring Festival peak it can be a good deal more.",
+ "facts": [
+  { "label": "Sales Representative (current level)", "value": "0–2 years, ¥5,270–7,750 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Senior Sales Representative (2–5 years)", "source": "Common in the trade" },
+  { "label": "Pay after 3–5 years", "value": "¥11,800 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Talking shelf space and stock with shop owners in person", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Planning visit routes and recommending reorder quantities", "source": "AI exposure" },
+  { "label": "Open positions", "value": "196 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "It is still dark at the warehouse gate. You and the stock clerk check the sheet and load the van: instant noodles, ham sausage, bottled water, spicy strips. Heavy cases on the bottom, crushable ones on top.",
+  "The first stop is at the edge of town. The owner is still lighting her stove. You go in and wipe down the drinks display, bring the near-expiry stock to the front, and only then take the order book from your pocket.",
+  "A stretch of road is being repaired, and the van shakes for forty minutes over washboard dirt. All the noodle cases in the back fall over. You get out, stand them up, and smoke a cigarette while you are at it.",
+  "At the shop by the village school the owner says your spicy strips do not move as fast as the other brand. You explain the buy-five-get-one three times before he agrees to try two cases.",
+  "Lunch at a roadside place, mutton offal noodles. The owner is a customer too. You go over the account while you eat. He still owes ¥320 from last month and says he will settle it next trip.",
+  "You take out your phone to photograph the shelves and upload them one by one to the company system. The signal comes and goes. While it spins you lean against the van door, and the wind dries your eyes.",
+  "On the way back, in a village, a shop wants to return a case of yogurt about to expire. You check the dates, promise to swap it next trip, and write his number on the slip.",
+  "Back at the warehouse you hand in the cash and reconcile the sheets, and the supervisor asks how much you collected. You keep the money and the IOUs apart. Your hands smell of cardboard and diesel."
+ ],
+ "ladder": [
+  { "title": "Sales Representative", "stage": "On the route", "focus": "Visits township shops along a set route to stock, tidy and collect; moves up on route collections and display compliance." },
+  { "title": "Senior Sales Representative", "stage": "Mainstay", "focus": "Carries a whole county on their own, handling key accounts and sub-wholesalers; moves up on volume and clean accounts." },
+  { "title": "Sales Supervisor", "stage": "Team lead", "focus": "Leads four or five reps, divides routes, watches expenses and spot-checks shops; moves up on team targets and keeping people." },
+  { "title": "Sales Manager", "stage": "Runs the market", "focus": "Manages citywide channels and brand policies, negotiates listing fees and sets distribution plans; moves up on the size of the book and the trust of the manufacturers." },
+  { "title": "Distribution Partner", "stage": "Shareholder", "focus": "Buys into the company or carves out a territory, carrying inventory, credit and a team, and earns the money of a business owner." }
+ ],
+ "ai_tasks": [
+  { "name": "Talking shelf space and stock with shop owners in person", "how": "AI can tell you what a shop should carry, but the owner trusts the person who has come dozens of times and straightened the shelves. How far to drop the price, how long the account can wait: that gets settled sitting down, face to face." },
+  { "name": "Planning visit routes and recommending reorder quantities", "how": "AI can lay out the day's route from sales, stock and road conditions and work out a suggested order per shop. Which owner is away this week and which road is impassable in winter still has to be corrected by whoever drives it." },
+  { "name": "Photographing shops for display checks", "how": "Take one photo of a shelf on the phone and AI identifies the facing share and gaps and writes up the check. You only have to shoot honestly and correct the obvious misreads." },
+  { "name": "Filing visit records and daily sales reports", "how": "The system pulls orders and location data and drafts the daily report and visit log. You look it over and add the few words the owner said that actually mattered." },
+  { "name": "Reconciling promotional expenses", "how": "AI can compare display photos, agreements and invoices and flag what does not match. Which expense to fight for and how to explain it to the brand is for the rep to negotiate." },
+  { "name": "Collecting payments and handling near-expiry returns", "how": "AI can list aging accounts and near-expiry stock and send reminders. Going into the shop, getting the money, swapping out the old goods and keeping the friendship is something only a person can do." }
+ ],
+ "events": {
+  "e_snow_road": "A heavy snow in December stuck the van on a ridge for two hours. A local man with a tractor finally dragged you out. You gave him a case of instant noodles.",
+  "e_spring_festival": "Before the twentieth of the last lunar month the New Year orders came wave after wave. You ran the route three times a day with hands too cold to write, and that month's commission was more than double the usual.",
+  "e_bad_debt": "A little shop that owed more than ¥4,000 closed down, its owner gone to find work elsewhere, the phone dead. Company rule says the rep bears half. Next month's payslip was a good deal thinner.",
+  "e_drinks": "A big wholesaler wanted to talk annual rebates, and the baijiu kept coming. You woke at noon the next day. The deal was signed.",
+  "e_display_win": "You redid the whole drinks aisle at the supermarket in town, and someone from the brand who was passing took a photo. It ended up in the training slides for the entire region.",
+  "e_flat_tire": "A tire blew halfway down the road and the spare was flat too. You waited three hours by the road. On your phone was the supervisor's second call: are you doing this route today or not?",
+  "e_old_lady": "The old woman at the village-mouth shop has bad eyes, so you always count her stock and do her sums. That day she came out with a bowl of hot milk and would not let you leave until you finished it.",
+  "e_market_day": "On market day in town you set up a table for samples at the entrance. You gave away three cases in a morning, and that afternoon four shops came to you for stock.",
+  "e_ecom_group": "Community group-buying reached the township, at prices below your wholesale. The owners order from you with one hand and ask with the other: why are you so expensive?",
+  "e_b2b_app": "A phone ordering platform spread through the townships, and half the owners learned to place orders on their own. You go to the shops less now, and have more to say when you do.",
+  "e_ai_route": "The company system began drawing your route, a map in your phone each morning. For the first months it kept sending you to a shop that closed last year. Slowly it got better.",
+  "e_ai_photo": "One picture of a shelf and the system works out the facing share. You never have to fill in a display form by hand again. You spend the extra time talking with the owners.",
+  "e_ai_wrong_stock": "Going by last year, the system told a village shop to order ten cases of ice lollies. But that village's school closed this year. You changed it to two cases and wrote the reason in the notes.",
+  "e_love": "A matchmaker introduced you to a young woman who worked the cashier's window at the banner hospital. You were forty minutes late the first time, the van was covered in dust, and she still gave you her number.",
+  "e_house": "You bought a place with an elevator in Chifeng's new district, and the down payment emptied both families' savings. You don't get many full nights' sleep in it.",
+  "e_child": "The day your child was born you were on the Ongniud Banner route, and you drove more than three hundred kilometers back. At the hospital your wife said you smelled like instant noodles.",
+  "e_back": "After more than ten years of lifting cases and bumping over bad roads, your back has stopped obeying. You put a firm cushion on the driver's seat and have to steady yourself getting in and out.",
+  "e_brand_switch": "A brand you had carried for eight years took back the distribution rights and gave them to someone else. Half the warehouse had to go back. The boss smoked in his office all afternoon.",
+  "e_second_gen": "The shop owner got old and her son came back to take over. The young man held out his phone for you to scan into a group chat, and still called you uncle.",
+  "e_parent_ill": "Your mother had a fall at home and went into the hospital. You took your route the long way round to bring her food, set down the thermos, and drove on to the next town.",
+  "e_apprentice": "The new kid was too scared to go into the shop and stood outside five minutes. You said nothing, went in, tidied the owner's shelves, came out and told him: see that? Work first."
+ },
+ "choices": {
+  "c_first_line": { "title": "Whether to push this route deeper", "situation": "The company route ends at the townships, and no one goes into the villages beyond. You want to drive in and sign up dozens more small shops, but you would pay part of the fuel yourself and the roads are bad.", "options": [
+   { "label": "Drive into the villages", "result": "You wrote every village shop in your notebook: name, number, what brand of cigarette he smokes. Sales went up, and the van went in for repairs every few days." },
+   { "label": "Stick to the company route", "result": "You get back to the warehouse on time and eat dinner hot. The commission is what it is, and the numbers on the next route look better than yours." }
+  ] },
+  "c_senior": { "title": "Go for Senior Sales Representative", "situation": "The company will pick one of three reps for promotion to Senior Sales Representative and hand them the key accounts in Aohan. The accounts are difficult and the balances large. Whoever takes them gets that area's annual volume on their record.", "options": [
+   { "label": "Take the key accounts", "result": "You spent two weeks squatting in a wholesaler's storeroom, sorting out his accounts entry by entry. He said nothing, and in spring he took thirty extra cases." },
+   { "label": "Let a colleague have it", "result": "You stayed on your familiar route and life stayed simple. Your colleague took the accounts, and his year-end commission was well above yours." }
+  ] },
+  "c_ai_tool": { "title": "Learn the new system or not", "situation": "The company has brought in AI routing and suggested orders, and the boss asks who will go first. It is a pain to learn, the old reps say their own heads are better, and going first means handing over all your customer data.", "options": [
+   { "label": "Go first and enter it all", "result": "You entered the temperament of all eighty-odd owners in the notes. The system ignored temperament, but the other reps started coming to you." },
+   { "label": "Keep using your notebook", "result": "Your notebook gets thicker and thicker. You seldom look at the system's suggestions. The young reps do." }
+  ] },
+  "c_food_brand": { "title": "A brand is hiring a regional rep", "situation": "The city manager of a national drinks brand has noticed you and wants you as a resident rep, 30 percent more pay with full benefits, based in Hohhot and Baotou, working the big supermarkets. No more villages.", "options": [
+   { "label": "Jump to the brand", "result": "You put on a shirt with a logo, and carry display agreements for the big chains. You will never lift a case yourself again.", "end": "You became a resident rep for a drinks brand, moving among the supermarkets of Hohhot, and your car has never again smelled of instant noodles." },
+   { "label": "Stay in Chifeng", "result": "You said your home was here. The next day you loaded the van as usual, and the city manager sent you a message: take care." }
+  ] },
+  "c_supervisor": { "title": "Become Sales Supervisor", "situation": "The boss wants you to lead four sales reps as Sales Supervisor. You would set routes, watch expenses and carry the target. You would give up your own route, and your commission would be figured on the team.", "options": [
+   { "label": "Take the Sales Supervisor job", "result": "First you rode each person's route with them. Then you cut one route that nobody could ever complete. When someone missed target at month-end, your numbers looked ugly too." },
+   { "label": "Keep your own route", "result": "You said driving beat leading people. The boss did not push. Only, afterward, at meetings, your chair had moved to the back row." }
+  ] },
+  "c_city_or_county": { "title": "Where the child goes to school", "situation": "Your child is about to start primary school. The city schools are good, but you would need to buy in the catchment. You already have a place in the home banner, close to your routes. Your wife says: you decide. But you are home two days a week.", "options": [
+   { "label": "Grit your teeth and buy in the city", "result": "You took on twenty more years of mortgage. You moved your routes closer to the city, the commission shrank, and in the evenings you can watch the homework." },
+   { "label": "Stay in the banner", "result": "Your child goes to school in the banner and the grades are not bad. You still drive the whole city's routes, from farther away, two hundred more kilometers a week." }
+  ] },
+  "c_manager": { "title": "Compete for Sales Manager", "situation": "The boss wants one person running the whole city's business and has you competing with an outside hire. The Sales Manager negotiates brand policy and listing fees and sets the annual distribution plan. Half the time is meetings. The other half is drinking.", "options": [
+   { "label": "Go for Sales Manager", "result": "You brought ten years of route data and spoke to the slow and busy seasons of every banner. When you finished, the brand's man put the outsider's proposal on the bottom of the pile." },
+   { "label": "Don't compete", "result": "The outside hire became manager and in his first year merged two of your routes. You said nothing and drove a few more towns." }
+  ] },
+  "c_own_business": { "title": "Set up on your own", "situation": "You are on good terms with two hundred-odd shops, and a friend in grain and oil urges you to go independent, starting with a few small brands. You would front the stock, hire a van, and carry every debt yourself.", "options": [
+   { "label": "Go independent", "result": "You gave the van keys back and bought an old one the next day. When the owners heard, some took two extra cases, and some asked if they could have longer to pay.", "end": "You rented a storeroom on the edge of Chifeng and became a small boss, with a loud old van parked at the door." },
+   { "label": "Stay with the company", "result": "You took your friend's words to heart and did not move. The salary arrives on time each month, and no one account is yours alone to carry." }
+  ] },
+  "c_partner": { "title": "Buy in as Distribution Partner", "situation": "The boss is getting old and his children will not take over. He asks if you would put in your savings and become a Distribution Partner. From then on you earn the money of the business and lose it too, and the stock in the warehouse and the debts outside are partly yours.", "options": [
+   { "label": "Buy in as Distribution Partner", "result": "You mortgaged part of the house and your name went on the business license. Doing the books at night, for the first time you understood why the boss always smoked." },
+   { "label": "Draw a salary till retirement", "result": "You told the boss you had been a route man your whole life. He laughed and said in that case drive for him a few more years." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last route you did not drive. You sat in the passenger seat and the young man drove. At the shop by the edge of town the owner's daughter-in-law came out and pressed a bag of millet on you. On the way back, on the road that has been repaired and repaired, you told him to slow down. At the warehouse you set your notebook, every page filled, on the table, and did not take it with you.",
+  "burnout": "That winter your back gave out completely, and halfway down a route you had to rest with your head on the steering wheel. You settled every account and drew the route for the man taking over. You were a long time recovering at home. When a van starts up in the street below, you still go to the window to look."
+ },
+ "stages": [
+  "You drive the van and go in shop after shop along the route: tidy the shelves first, fill the facings, then take out the order book to pitch new products and work out credit. Your phone wants a location check-in and shelf photos, and at night you reconcile with the stock clerk. The owners call you young man and you call them uncle and auntie. Whether they will take on stock depends on whether you swapped the goods you said you would.",
+  "You carry a whole county's routes, with a few wholesale shops and the big supermarket in town. Display stacks, buy-one-get-ones, statements of account, and a single rebate agreement takes many rounds of haggling. When someone from the brand comes round, the company sends you along. A storeroom owner asks you to help count, and as you count cases you watch to see whose goods are selling faster.",
+  "You have four or five sales reps under you. Every morning there are ten minutes at the warehouse gate: yesterday's collections, today's stock push. Expense slips need your signature, and overdue accounts are your questions to ask. You take turns riding along, listening from the passenger seat to how they talk to owners. What was once one man's route is now several people's living.",
+  "The whole city's dozen-odd routes are yours, and on your computer are the inventory system and the brand's expense ledger. You negotiate quarterly targets with the manufacturers' regional managers, fight for listing and display fees, and divide the targets by county. When a van breaks down in the night, the call comes to you. You visit shops less often now, and the owners still know you.",
+  "Your name is on the business license. The stock in the warehouse, the money on the books, the pay of a dozen people, you have to figure all of it. You negotiate working capital with the bank and sign distribution agreements with the brands, and at year-end you decide which brand to drop and which person to keep. Sometimes you still drive out to the villages, only now, in the shop, you look first at the owner's account book."
+ ],
+ "work": [
+  "The owner at the edge of town said one case of last trip's ham sausage was damaged. You turned to that page of your order book, struck it out in front of her, wrote it fresh, and carried the broken case to the van.",
+  "The first time you were paid in a wad of crumpled small notes, you counted it three times and were still ¥2 short. The owner fished two coins out of a drawer and said: young man, count faster next time.",
+  "Your mentor taught you to stand in front of a shelf and see which bottle cap has dust on it. You felt along them, swapped the back row to the front, and your hands came away dirty.",
+  "Lao Zhou at the wholesale shop pushed the price down, so you spread last quarter's shipment sheets across his counter and went through them line by line. On the third page he slid his teacup across and said: all right, your way.",
+  "On a ride-along for the brand, you took their young woman to five shops in her white shoes. At the third one she spoke up and asked if the roads here were all like this.",
+  "The display agreement said one month on the end cap. Two weeks later you went back to take more photos and uploaded them, and only then did the reimbursement pass review.",
+  "New rep Xiao Zhao had an account forty days overdue. You rode along with him and found out at the shop that he had simply been too embarrassed to ask. You asked for him once, and had him stand by and watch.",
+  "One sample-tasting expense would not reconcile. You laid three receipts and the photos side by side and saw the same event had been claimed twice. You called in that rep and shut the door.",
+  "At the morning meeting you drew a county on the whiteboard and redrew two routes. The slowest driver got the flattest road.",
+  "The manufacturer's regional manager wanted to add another 20 percent to the target. You made a table of each county's population loss and school mergers from the past year, and showed him only the third row.",
+  "The buyer at a supermarket chain wanted a listing fee. You sat there all afternoon and finally settled on trading display space for half the fee, and rewrote the fine print of the contract yourself.",
+  "The inventory system and the manufacturer's ledger were ¥20,000 apart. You and the older woman in accounts checked it until ten at night, and found a batch of returns booked to the wrong month.",
+  "The account manager from the bank came to see the warehouse, and you counted the stock with him. The working-capital line came through ¥100,000 less than you asked. You did the sums again to see which brand had to go first.",
+  "Lao Gao, one of your old reps, had reached the age where he could no longer drive the routes. You moved him to the warehouse at the same pay. Accounts said that was against the rules. You said take it out of your own share.",
+  "At the year-end accounts a county sub-wholesaler owed ¥170,000. You did not send a rep. You drove out yourself, sat in his shop until dark, and drank three pots of tea."
+ ],
+ "past": [
+  "You got into the high school in the banner. Your father ran a tractor repair shop there, and all your childhood you watched him give credit and chase debts, half an hour to a phone call.",
+  "In the winter break of your last year you helped at a relative's wholesale shop. For the first time you saw how many hands a case of noodles went through between warehouse and village shop, and someone was doing the sums at each one.",
+  "Your gaokao (college entrance exam) score was not high, and you applied for marketing at a vocational college in Hohhot. Your mother asked what you would do with it. Sell things, you said. She said: and you need school for that?",
+  "In your second year you sold phone SIM cards outside the school gate and in a month made more than your living allowance. You began to think that not being afraid of strangers might count as a skill.",
+  "For your graduation placement you did promotions in a big store in Hohhot, eight hours a day on your feet. You found that you preferred driving around, and you wanted to be nearer home.",
+  "You came back to Chifeng, got your license and did half a year of deliveries with a friend. Then you saw a distributor hiring a sales representative who could drive and could take hardship. You went. The boss asked only one thing: are you afraid of mountain roads in winter?"
+ ],
+ "late": {
+  "pension_note": "Estimate: local distributors mostly pay social insurance at the minimum base, so the pension comes to around 30 to 40 percent of your final monthly pay, and lower if you paid in yourself for some years.",
+  "scenes": [
+   "In your first month of retirement you still wake at six, and your hand still goes looking for the van keys. You walk to the little supermarket downstairs and straighten a crooked drink. The owner gives you a look.",
+   "The boss's son finally comes back to run the company and asks about the old routes. You write out a few pages: whose debts to collect slowly, whose dog bites.",
+   "You drive your wife along the old route in the family car, seven townships, more than half the shops gone. The road is beautifully smooth. It takes you three hours.",
+   "You handed over your route and did rehab at home. Lying down you recited the names of all eighty-some shops from the beginning. When you finished you fell asleep.",
+   "You mind a convenience store near your apartment for half the day, with no cases to lift. A young delivery man comes in and you watch him tidy the shelf. It is a little crooked. You don't say anything.",
+   "The woman who ran the shop in town comes to the city to see a doctor, finds you through a friend and brings a bag of millet. She says these days everyone orders on the phone, and no one comes in to talk.",
+   "You handed in the van keys, and a coworker helped you pull out the bag of odds and ends from behind the seat: three pens, half a pack of cigarettes, and a filled-up order book.",
+   "The new work keeps you running. At night, doing the accounts, you still have certain old customers' numbers in your phone. One is labeled: owner at the edge of town, don't press her.",
+   "At a wedding in Chifeng you run into the old stock clerk. He says the warehouse is all barcode guns now. The two of you have a drink and recite all the old license plates.",
+   "Village shops have started using smart ordering, and the system knows better than the owners how many cases to take. But every New Year the owners still ask: what happened to the young man with the van?",
+   "Your back hurts in the cold, and winter is long in Chifeng. Your child, working in Beijing, bought you a massage cushion. You left it on the sofa and went on sitting on a stool.",
+   "You no longer know most of what the supermarket sells. But facing a shelf, you can't help checking the production date. Your wife says you will never change."
+  ],
+  "closing": {
+   "retire": "One winter morning many years later, snow is falling outside. You sit by the window and hear a car downstairs that will not start, once, twice. You look out, and pick up your tea.",
+   "burnout": "Many years later you are sunning on the balcony with an old order book at your elbow. Your grandson asks what the writing is. You say it is some people's names, and the roads to their houses.",
+   "end": "Many years later, on a smooth county road, you ask the driver to pull over for a moment. The little shop by the roadside is gone. You stand there a while, then get back in."
+  }
+ }
+}

@@ -1,0 +1,192 @@
+{
+  "id": "crc-wh",
+  "occupation": "Clinical Research Coordinator",
+  "role": "Clinical Research Coordinator (CRC)",
+  "headline": "A clinical research coordinator whose badge says one thing and whose desk says another: employed by a site management company, stationed at the end of a corridor in a top-tier hospital in Hankou, forever running between doctors, trial participants and monitors",
+  "unit": "A site management organization in Wuhan, stationed in the oncology department of a Hankou hospital",
+  "unit_type": "Site management organization (SMO), stationing staff at hospitals by project",
+  "city": "Wuhan",
+  "city_tier": "New Tier-1 city",
+  "education": "Bachelor's degree (Nursing)",
+  "level": "You've just passed GCP training, you still have to leaf through the protocol, and you often miscount the visit window by a day",
+  "intro": "You studied nursing, and during your internship you found you didn't want to work rotating shifts all your life. Now you carry a backpack every day into the oncology department of a top-tier (Grade 3A) hospital in Hankou, and the badge you wear doesn't carry the hospital's name. From today, when each participant in this trial is due, what blood is to be drawn and what they've signed are all yours to remember.",
+  "salary_note": "Estimate: CRCs stationed in Wuhan by SMO companies earn less than in Beijing, Shanghai and Guangzhou, about 80% of the national average.",
+  "facts": [
+    { "label": "Clinical Research Coordinator (current level)", "value": "0-2 years, ¥5,500–8,000 a month (national average, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Senior Clinical Research Coordinator (2-5 years)", "source": "Common in the trade" },
+    { "label": "Pay after 10+ years", "value": "¥18,000 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Recruiting participants, informed consent and managing visits", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Ethics submissions and site filing before a trial starts", "source": "AI exposure" },
+    { "label": "Open positions", "value": "38 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "At the metro exit you buy a bowl of hot dry noodles and eat as you walk. Two participants are coming today for their Cycle 3 Day 1 visits, and you check the visit windows on your phone once more.",
+    "First stop on the ward is the GCP pharmacy to look at the temperature and humidity log and reconcile the trial drug ledger against stock. Old Hu, the pharmacist, hands you a pen and says yesterday's wasn't signed.",
+    "Auntie Wang, a participant, arrives. You go with her for the blood draw and ECG and clip each report together. She asks why you're not wearing a white coat today, and you say I'm not a nurse.",
+    "At the small desk at the end of the corridor, you enter today's data in the EDC. A query pops up asking why last week's blood pressure was recorded twice.",
+    "The department head's clinic isn't over yet. You wait at the door with a document to be signed, the takeout app open on your phone. You never quite tap to order.",
+    "A CRA flies in from Shanghai for a monitoring visit and sits across your small desk, going through source records and CRFs page by page. Every time she looks up, your heart skips.",
+    "You phone a participant due next week to remind him not to eat the night before. His daughter answers, and asks many questions you can't answer.",
+    "Before leaving you file today's documents in the ISF and write down what to chase tomorrow. The lights are on at the nurses' station, and the night shift has just arrived."
+  ],
+  "ladder": [
+    { "title": "Clinical Research Coordinator", "stage": "Running visits", "focus": "Stationed on the ward following participant visits, entering EDC data, managing files; you move up by avoiding protocol deviations" },
+    { "title": "Senior Clinical Research Coordinator", "stage": "On your own", "focus": "Running complex projects alone, training new staff, handling monitoring and audits" },
+    { "title": "CRC Team Lead", "stage": "Leading a team", "focus": "Managing CRC staffing and quality across a group of hospitals, coordinating investigators and sponsors" },
+    { "title": "Project Manager", "stage": "Running projects", "focus": "Answering for progress, enrollment and budget on multicenter projects, dealing with pharma companies and CROs" },
+    { "title": "Regional Manager", "stage": "Running a region", "focus": "Managing Central China's CRC teams and hospital relationships, answering for profit and compliance" }
+  ],
+  "ai_tasks": [
+    { "name": "Ethics submissions and site filing before a trial starts", "how": "AI can draft from templates, compare submission checklists and flag missing items and version mismatches; people talk to investigators, the trial office and ethics secretaries, follow each hospital's different process, and answer for what's finally submitted." },
+    { "name": "Recruiting participants, informed consent and managing visits", "how": "AI can help screen records against inclusion and exclusion criteria and generate visit reminders; but recruitment conversations, face-to-face consent, reassuring participants and coordinating tests and follow-up all need a person there, answering for participants' rights." },
+    { "name": "Managing and archiving trial documents", "how": "AI can help classify and name files, find gaps and check versions and signature dates; people must confirm that source documents are genuine and traceable, keep filing GCP-compliant, and stand up to questioning at monitoring and audits." },
+    { "name": "Receiving, dispensing and returning trial drugs", "how": "AI can read temperature and humidity logs, detect excursions, generate inventory and count ledgers, and warn of expiry dates; receiving, counting, dispensing and returning the actual drug takes human hands, and people must judge and report how to handle temperature problems." },
+    { "name": "Filling in CRFs and answering data queries", "how": "AI can pre-fill CRFs from records and test reports, check data for consistency and draft query replies; people must confirm each item against source records, answer for data integrity, and work with CRA monitoring and audits." },
+    { "name": "Identifying and helping report serious adverse events", "how": "AI can help detect suspected adverse events in records and visit notes, flag reporting deadlines and draft initial reports; the investigator must judge severity and relation to the drug, and a person files the report and answers for it." }
+  ],
+  "events": {
+    "e1": "You miscount a participant's visit date by one day and earn your first protocol deviation. Writing the deviation report in front of the CRA, your palms are wet. Sister Wen, who's training you, hands you a tissue.",
+    "e2": "An older participant brings you a bag of homemade fish cakes every visit. On the day the trial ends, he says in the corridor that he doesn't need to come anymore, and that he'll kind of miss it.",
+    "e3": "An audit notice arrives, and everyone works until ten for two straight weeks. The small desk at the end of the corridor is buried in ISF binders. You lean against the window and eat a bowl of instant noodles.",
+    "e4": "A participant you've followed stops coming. A family member phones, sounding very calm. You record what has to be recorded, and after work you walk a long way along the Yangtze.",
+    "e5": "The sponsor abruptly ends the project and your work disappears overnight. The company gives you two weeks to get to another hospital. You clear your small desk. The corridor lights are still flickering.",
+    "e6": "AI starts pre-filling CRFs and data entry time halves. Only now you must check each line against source records and leave a verification trail, with your name on every line.",
+    "e7": "You put a down payment on a small place in Sixin, with a sliver of a view of the Han River. Mortgage day and payday are three days apart, and you budget those three days carefully.",
+    "e8": "Torrential rain floods the roads and participants can't get in on time. You phone them one at a time to assess, email the sponsor and record, one by one, the risks of falling outside the window.",
+    "e9": "At an academic meeting you hear the final data of the drug you worked on, and the curves on the slide separate a little. Nobody knows that down in the audience a CRC is quietly counting the people inside them.",
+    "e10": "Colleagues jump one after another to CRA jobs or to pharma. Another farewell dinner. The hotpot restaurant owner knows you all by now.",
+    "e11": "Years of irregular meals, and your stomach aches for quite a while. The gastroenterologist knows you well, and after writing the prescription, asks whether your trial needs any more people next time.",
+    "e12": "At a department meeting the head mentions you, saying the project went so smoothly thanks to you. He has always got your surname wrong. This time he gets it right.",
+    "e13": "AI can now help pick out people in the records who might meet the criteria, page after page of names. When it comes to actually talking with them, you still have to pull your chair over, sit down and go slowly.",
+    "e14": "Your child starts kindergarten, and the teacher asks what the parents do. The child says they're at a hospital, but not doctors and not nurses. The teacher pauses.",
+    "e15": "Pharma budgets tighten and several projects are cut at a stroke. The company's CRCs go on rotation and standby. Two people you lead get called in for a talk, and you walk with them to the elevator.",
+    "e16": "Sister Wen, who once taught you everything, has become an executive at a drug company, and phones to ask you over. You talk for half an hour, and in the end only settle what to eat next time.",
+    "e17": "Filing and version comparison have all gone to the system, and young CRCs don't copy anything out anymore. You notice they write less and less by hand, and ask questions faster and faster.",
+    "e18": "Your parents are getting old and take turns in the hospital. You know this place inside out, yet you find that standing on the family's side, you get nervous too.",
+    "e19": "The small desk at the end of the corridor has been through several CRCs, and it's still there. Passing it now and then, you see a young person look up and ask who you're looking for."
+  },
+  "choices": {
+    "c1": {
+      "title": "The doctor says fill it in for me",
+      "situation": "After a busy day a study doctor asks you to write up the progress note he missed from yesterday's visit, and he'll sign it later. It's a small thing, and other CRCs may have done it too, but GCP is very clear.",
+      "options": [
+        { "label": "Don't write it; wait for him", "result": "He isn't pleased, and you go find him three more times that afternoon. At seven in the evening he writes it himself, and doesn't speak to you again." },
+        { "label": "Write it for him this once", "result": "He is much more polite the next day. No one ever checks that record. Only, every time you see it you feel a little uneasy." }
+      ]
+    },
+    "c2": {
+      "title": "Going for Senior Clinical Research Coordinator",
+      "situation": "The company is promoting a batch of Senior Clinical Research Coordinators on project quality and training results. On your plate is the hardest oncology project, one nobody wanted. There will be no easy days for a year or two.",
+      "options": [
+        { "label": "Take the hardest project", "result": "The protocol runs over a hundred pages, and you wear it out. In an audit the next year, it has no major findings." },
+        { "label": "Keep your current project steady", "result": "Your project runs smoothly and there's nothing anyone remembers it by. At least you leave on time." }
+      ]
+    },
+    "c3": {
+      "title": "Becoming a CRA",
+      "situation": "A CRO is hiring CRAs, with forty percent more pay, traveling the country, and from now on you'd be the one checking others' files. Most CRCs you know treat this as the next stop, and fewer and fewer stay at the hospital.",
+      "options": [
+        { "label": "Become a CRA and change sides", "result": "You clear your small desk and leave your visit reminder sheet for your replacement.", "end": "You dragged your suitcase to hospitals around the country and sat across from other CRCs' small desks. Whenever you turned up a small error, you looked up first and asked: have you eaten?" },
+        { "label": "Stay with the participants", "result": "You turn over the job posting. That afternoon Auntie Wang comes in for a visit and asks whether you've been busy." }
+      ]
+    },
+    "c4": {
+      "title": "Going back to the hospital as a research nurse",
+      "situation": "The head nurse in oncology asks if you'd come back as an in-hospital research nurse. It's a hospital-contract post, steadier than being stationed there, no depending on SMO projects. But you'd be back on night shifts for somewhat less pay.",
+      "options": [
+        { "label": "Go back to the nursing road", "result": "You change back into a white coat, and what people call you finally matches the clothes.", "end": "You went back to the hospital as a research nurse, and participants finally knew what to call you. On night shifts you sometimes walk past that small desk at the end of the corridor." },
+        { "label": "Stay at the SMO", "result": "You thank the head nurse. She says to tell her anytime you want to come back. The door's always open." }
+      ]
+    },
+    "c5": {
+      "title": "Competing for CRC Team Lead",
+      "situation": "Wuhan's CRC Team Lead is leaving and the company likes you for it, but managing means no more following participants, and everyone under you is just out of school. You've thought about this for a long time, and still can't work out which part you actually like.",
+      "options": [
+        { "label": "Compete and try leading people", "result": "In the first month you take five tearful phone calls, and learn to let the other person finish first." },
+        { "label": "Don't lead; keep running projects", "result": "You are still master of that small desk, and when the department head needs something, he still comes straight to you." }
+      ]
+    },
+    "c6": {
+      "title": "Taking on the AI workflow",
+      "situation": "The company is building a document and data workflow with AI, and needs someone who knows the site and knows compliance to set the rules: what machines may do, who's responsible for errors, how to keep verification records. It doesn't count toward project performance.",
+      "options": [
+        { "label": "Take it and draw the lines clearly", "result": "You argue with Quality for three months and produce a twenty-page SOP. The auditor reads it and asks three questions, and you can answer them all." },
+        { "label": "Decline; the site has enough to do", "result": "Another department does it. You use their tools, and sometimes wonder how you'd have written this line." }
+      ]
+    },
+    "c7": {
+      "title": "Moving toward Project Manager",
+      "situation": "The company is starting to take on multicenter projects and needs to promote Project Managers. As one you'd coordinate over a dozen hospitals around the country and often have calls with clients at night. Your child is just learning to talk.",
+      "options": [
+        { "label": "Move up; calls it is", "result": "You learn to hold conference calls on the balcony, and the first English word your child learns is agenda." },
+        { "label": "Stay in Wuhan and hold this patch", "result": "You're still running among the hospitals you know. You do a good many of the kindergarten pickups." }
+      ]
+    },
+    "c8": {
+      "title": "Joining a drug company's clinical operations",
+      "situation": "A drug company's clinical operations department invites you to Shanghai, at thirty-five percent more, and from now on you're the client. For your family it's a big move. For you it's a farewell to corridors you've been walking in Wuhan for over a decade.",
+      "options": [
+        { "label": "Go to Shanghai and be the client", "result": "You resign and leave your Wuhan metro card to a colleague.", "end": "You went to Shanghai and sat down in a drug company's office. On the budget sheet, you always look a little longer than others at the line for SMO fees." },
+        { "label": "Stay; there are people you can't leave", "result": "You politely decline. That month a CRC you've been training passes an audit alone for the first time." },
+        { "label": "Don't go; push for Regional Manager", "result": "You take this chance to have a talk with headquarters, and they agree to let you try running Central China." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "Walking into this hospital for the last time, you stand a while in the oncology corridor. At the small desk an unfamiliar young person is frowning at a computer. Some of the drugs you've followed are on pharmacy shelves now, and your name's not in the package inserts. You don't interrupt. You turn and go downstairs, and the wind off the Yangtze comes in through the crack of a window.",
+    "burnout": "Your stomach and your insomnia have reached the point where they have to be listened to. You hand over your projects one by one, writing each participant's habits into the handover sheet, down to who's afraid of having blood drawn. Later, passing the hospital sometimes, you see a young person with a backpack hurry by, and you stand a while at the curb."
+  },
+  "stages": [
+    "You follow the protocol's visit schedule: reminding participants to come in, going with them for tests, entering chart data into the EDC, then answering queries one by one. Study doctors are busy, so you learn to catch them between clinics for signatures; when the CRA comes to monitor, you have the ISF binders laid out in order. You can't make doctors' judgments for them, but the timing of everything is yours to watch.",
+    "You begin running the most complex oncology projects, training new CRCs and checking their data. You often prepare submissions before ethics committee meetings, and when a serious adverse event occurs, you remind the investigator to report within the deadline. Doctors have begun asking you how to read a clause of the protocol, and you've learned when not to answer.",
+    "You manage a dozen-odd CRCs across several Wuhan hospitals. You assign people, handle departures and handovers, talk projects with department heads, and each month look at reports on enrollment and protocol deviations. Compared with running visits yourself, the hardest thing now is to know what to ask first when a CRC calls you in tears.",
+    "You're responsible for overall progress on multicenter projects, holding weekly calls with drug companies and CROs and speaking in Gantt charts and enrollment curves. You work out budgets, revise plans and deal with the trial offices of every hospital. At this level it's no longer who's coming in for a visit, but whether this project will still be alive next year.",
+    "You manage teams across several Central China provinces, looking at productivity and profit, and handling audits and client complaints. You dine with heads of hospital trial offices and negotiate master agreements with pharma clinical operations directors. You rarely see participants anymore, but in making decisions you still ask what this means for the CRC on site."
+  ],
+  "work": [
+    "Sister Wen has you check the signature dates on an informed consent form. On the third version you find the participant signed a day before the doctor, and hurry off to ask the study doctor.",
+    "Old Hu says the fridge holding this batch of trial drug ran over temperature for two minutes last night. You pull the data logger, send a screenshot in an email to the sponsor, and quarantine the drug until they reply.",
+    "A participant can't get a CT slot, with two days left on the visit window. You run to radiology, talk for a long time with the person at the booking window and get an added slot in the afternoon.",
+    "New hire Xiao Tian has entered a lab unit wrong. You find it in the EDC and have her correct it herself against the source document and write down the reason for the change.",
+    "Xiao Chen, a study doctor, asks if this concomitant medication counts as a deviation. You turn to page 47 of the protocol, point to it, and say this one is for you to judge, I'll help you record it.",
+    "Before an audit you go through each ISF binder again and find one delegation log missing a signature date. You go find that doctor, who has rotated elsewhere, to get a note to file.",
+    "A CRC at the Wuchang hospital is leaving. You arrange the handover, going over twenty-odd participants one by one, even writing into the sheet who's afraid of having blood drawn.",
+    "One project keeps exceeding limits on the deviation report. You spend a day on site with Xiao Tian and find the problem is that the phlebotomy room has changed its closing time.",
+    "A department head finds the stationed CRC too young. You take her work records and enrollment numbers to his office, and sit for twenty minutes, saying very little.",
+    "Enrollment is three months behind. On the conference call you lay out each center's screen-failure reasons in a table, and propose changing one center's recruiting approach.",
+    "The drug company's project lead wants to cut two centers. You work out the money already spent and the participants' continuing follow-up, and get the decision pushed back a quarter.",
+    "A new project assistant sends the wrong version of the budget sheet. You compare the two versions line by line and remind her that on this sheet, every line has someone waiting.",
+    "The head of a trial office mentions that one department's CRCs change too often. You pull the turnover data, then go back and look again at that area's staffing and pay.",
+    "A client comes to you with an audit finding. You match every line of the corrective plan to an owner and a due date, and go to the site yourself to see the first one.",
+    "A vendor demos an AI document tool. You ask them one question: wherever it's made a change, can an audit show who made it?"
+  ],
+  "past": [
+    "Your family is in Xiaogan. Your grandmother has been seeing doctors for years, and since you were small you've gone with her to the county hospital. Nurses walk fast. That's your earliest impression of the work.",
+    "Your gaokao (college entrance exam) score is good enough for nursing at a medical college in the province. Your father says it's easy to find a job. You have no other ideas, so you put it down.",
+    "Interning in a hospital, in the third month of rotating shifts, you fall asleep standing up in the night treatment room for a minute. You wake with an IV slip still in your hand.",
+    "Your clinical teacher says there are a few people in the department who don't wear white coats, doing new drug trials. It's the first time you've heard of GCP. You ask what it is. She doesn't know, she says, but they don't work nights.",
+    "You see a site management company's ad asking for nursing or pharmacy majors, hard workers with basic English. The pay's a little less than nursing. You think for a few days, and apply."
+  ],
+  "late": {
+    "pension_note": "Estimate: SMO companies pay social insurance on a low base; retiring from a Wuhan company brings about 40% of final monthly pay.",
+    "scenes": [
+      "On the first Monday with no email to read, you go downstairs for breakfast and eat a bowl of hot dry noodles very slowly.",
+      "You volunteer at a community health station, helping older people read their test results. Someone asks if you're a doctor. You say no, but let me see if the dates are right.",
+      "One day at a pharmacy you see a familiar drug. You pick it up to look at its approval date, put it back, and stand beside it for a while.",
+      "Walking by East Lake, you still have those long-useless visit reminders in your phone calendar. You've never deleted them.",
+      "You return your badge and leave the project group chats one by one. At the last one you look a moment longer.",
+      "Your stomach is a bit better. You begin to eat on time, and each time you set out the bowl and chopsticks, it feels slightly unfamiliar.",
+      "Your niece asks if she should become a CRC. You tell her first go stand in a hospital corridor for a day, and look at those people with backpacks.",
+      "In your new place, you still write important things down by date and window, even the groceries.",
+      "At an industry meeting you run into your old department head, gone completely white, who gets your surname wrong again.",
+      "Your old colleagues have scattered to drug companies and hospitals around the country. Now and then someone posts a package insert to the group, followed by a string of replies: we ran this one.",
+      "Outside a hospital you see a young person running with an armful of files, shoelaces undone. You want to call out, but they're already inside.",
+      "Clearing out, you find a card written by a participant, the handwriting crooked, with only one line of thanks. You slip it back into that protocol."
+    ],
+    "closing": {
+      "retire": "Evening on the riverbank, a ferry slowly docks. You sit on the steps watching people get on and off, none of them knowing what medicine they'll one day need.",
+      "burnout": "Afternoon sun falls on the balcony, your phone indoors, no date for you to remember. Downstairs someone is calling out, selling lotus root.",
+      "end": "You pass a hospital and look up at the lit windows. At this hour, someone is always checking today's date."
+    }
+  }
+}

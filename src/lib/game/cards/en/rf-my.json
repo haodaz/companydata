@@ -1,0 +1,185 @@
+{
+ "id": "rf-my",
+ "occupation": "RF Engineer",
+ "role": "Assistant RF Engineer, Civil Communications",
+ "headline": "A master's graduate in electromagnetics who came home to Mianyang to join an electronics institute's civil communications section, queueing up for test time behind your mentor",
+ "unit": "An electronics institute in Mianyang (civil communications)",
+ "unit_type": "Electronics research institute",
+ "city": "Mianyang, Sichuan",
+ "city_tier": "Tier-3 city",
+ "education": "MEng in Electromagnetic Field and Wireless Technology",
+ "level": "You know the Smith chart and the simulation software cold and have published one paper. Why the curve on a soldered board comes out so different from the simulation, you still can't quite say.",
+ "intro": "Your mentor sets a palm-sized board in front of you, hands you a soldering iron, and says this match has been fought over for three days, so you carry on. Out the window are the camphor trees along the Fu River. In the hallway hangs the schedule for the test room, and your name is in the very last box. From today on, you are learning something the textbooks left out: why the curve refuses to do what it is told.",
+ "salary_note": "Estimate: pay at a Mianyang institute runs well below the national figure, which is drawn from similar jobs on the coast. Stability is its advantage, and the year-end bonus depends on how the year's work went.",
+ "facts": [
+  { "label": "Assistant Engineer (current level)", "value": "0–3 years, ¥10,000–16,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Engineer (3–8 years)", "source": "Common in the trade" },
+  { "label": "Pay after 5–10 years", "value": "¥40,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Debugging at the test bench, over and over, to pin a problem down", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Batch-processing test data and writing test reports", "source": "AI exposure" },
+  { "label": "Open positions", "value": "61 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "A bowl of rice noodles at the little shop outside the institute gate: two liang, with a spoonful of beef. In front of you in line is the director of the next section, who holds his bowl and nods at you.",
+  "You switch on the instruments to warm up and redo yesterday's calibration first. Your mentor says instruments are like people: don't believe everything they say first thing in the morning.",
+  "Bent over the microscope, you're swapping a capacitor when your hand trembles and the pad nearly lifts. Your mentor coughs behind you. You hold your breath and start again.",
+  "Twice-cooked pork in the canteen. A colleague from the structures group comes over with his tray and asks if your antenna can get any smaller, because the housing won't take it.",
+  "You have two hours in the test room. You set the sample in place, step out and shut the door, and wait at the observation window for the turntable to finish, silently counting how many minutes you have left.",
+  "You put today's data on one plot and send it to the group. The team lead replies with three words: look at it again. You stare at your phone for quite a while.",
+  "It's time to go home, but your mentor is still tuning, so you don't feel you can leave. The two of you face the instrument screen while one cup of tea gets its third refill.",
+  "Back at your parents' place, your mother reheats dinner for the second time. She asks what you did today. You think about it and say: changed a capacitor."
+ ],
+ "ladder": [
+  { "title": "Assistant Engineer", "stage": "With your mentor", "focus": "Soldering boards, tuning and testing beside your mentor, slowly coming to understand the gap between simulation and the real thing" },
+  { "title": "Engineer", "stage": "On your own", "focus": "Solely responsible for designing and tuning a module; you move up by delivering prototypes on time, again and again" },
+  { "title": "Senior Engineer", "stage": "Leading a direction", "focus": "Leading a small team, setting the approach, reviewing designs, discussing needs with customers, acting as technical gatekeeper" },
+  { "title": "Professor-Level Senior Engineer", "stage": "Guarding the field", "focus": "Steering a technical direction over many years, developing the team, and checking the institute's hardest work" }
+ ],
+ "ai_tasks": [
+  { "name": "Debugging at the test bench, over and over, to pin a problem down", "how": "AI can read data, but connecting cables, reproducing the effect, changing parts one at a time, and catching that one remark from your mentor or a colleague all take a person beside the sample." },
+  { "name": "Batch-processing test data and writing test reports", "how": "Instrument data imports automatically, and AI can draw curves, sort anomalies and draft reports. People only check the conclusions." },
+  { "name": "Simulation models and first-pass matching", "how": "AI can generate simulation scripts and first drafts of matching networks. The trade-offs, and responsibility for the result, stay with the designer." },
+  { "name": "Looking things up and writing technical proposals", "how": "AI can pull together standards clauses and draft documents. Whether a proposal can really be built only counts once someone who knows the product has reworked it." }
+ ],
+ "events": {
+  "e_first_tune": "You got a curve into spec on your own for the first time and excitedly called your mentor over. He took one look and said: tap the board and look again.",
+  "e_burn_board": "You forgot the load and powered up anyway. One sample board was ruined, and the group's week along with it. Your mentor didn't scold you at all. He only pinned that board up in front of your desk.",
+  "e_queue": "Right before a deadline the test room was fully booked, and the slot you got was one to three in the morning. When you came out, the only thing lit in the whole building was the water dispenser at the end of the hall.",
+  "e_deadline": "The customer moved up the deadline, and the group worked around the clock for three weeks. On delivery day you fell asleep on the bus and rode two stops too far.",
+  "e_pay_gap": "A senior from your lab posted a screenshot of his pay in Shenzhen to the group chat. You worked it out: two and a half years of your pay equals one of his. He added a line afterward: and I still can't afford a home.",
+  "e_mentor_talk": "Your mentor rarely took anyone to dinner. He told you he once wanted to go south too, and then his daughter was born and he stayed. He kept putting food in your bowl as he said it.",
+  "e_marriage": "At a mixer run by the institute's union you met someone who teaches at a Mianyang middle school. The first time you visited their family you fixed the router, and that was as good as passing.",
+  "e_house": "You bought an apartment in the high-tech zone, twenty minutes by bike from the institute. The mist on the Fu River rises early, and the ride to work is always white.",
+  "e_child": "The second week after your child was born you were on leave at home. Your mentor sent a plot of a curve with just two words: take a look. You held the baby in one arm and started looking.",
+  "e_ai_report": "The institute got an automated test platform. Data goes straight into the database, and reports are one click. You saved a day and a half, and the old engineers said now no one has an excuse not to look at the data.",
+  "e_ai_wrong": "The first-pass match from the AI looked gorgeous in simulation and was way off once soldered. Comparing it to the real thing item by item, you found it had ignored the housing, and you wrote that into the group's prompts.",
+  "e_ai_junior": "A new young hire wrote a proposal in three days with AI, and it read smoothly. You asked two questions he couldn't answer. The next day he rewrote the whole thing himself.",
+  "e_customer_praise": "At an acceptance meeting a customer's chief engineer said this one was steadier than expected. You didn't say anything. You went back to the lab and paged through that board's notebook once more.",
+  "e_paper_block": "Your paper for the title application came back twice, each set of reviewer comments more polite than the last. You revised at home at the screen until midnight and didn't even hear your child speak to you.",
+  "e_parent": "Your father was admitted to the city central hospital, and you and your spouse took turns on the night watch. At least it was in Mianyang, twenty minutes from work to his bedside.",
+  "e_mentor_retire": "The day your mentor retired he left you an old pair of tweezers, the tips ground fine. You tried them. They suit the hand better than any of the new ones you've bought.",
+  "e_eyes": "The solder joints under the microscope have started to blur. You got reading glasses and changed to a stronger eyepiece. When the young ones solder for you, you stand by and only use your mouth.",
+  "e_neck": "Years hunched over a microscope. The doctor saw your neck X-ray and told you to lift your head once an hour. You set an alarm, and when it rings you're always in the middle of tuning something.",
+  "e_phone_signal": "You took your child to the mountains and the phone had no bars at all, until suddenly at the top of the pass it filled up. Your child cheered. You looked up at the tower and said nothing."
+ },
+ "choices": {
+  "c_mentor": {
+   "title": "Going for Engineer: the hardest module",
+   "situation": "Making Engineer means having something that's solely yours. The team lead offers a choice: take the piece nobody wants to touch, which is yours if it works and yours if it doesn't, or keep following your mentor, a bit slower and steadier.",
+   "options": [
+    { "label": "Take it on", "result": "You lived in the lab for most of a year and scrapped several boards, and finally got it tuned by yourself on a Sunday night. On Monday you said nothing and put the notebook on the team lead's desk." },
+    { "label": "Keep following your mentor", "result": "You learned another year at your mentor's side and your hands grew surer. It's just that when names get listed for the group, yours always comes after his." }
+   ]
+  },
+  "c_shenzhen": {
+   "title": "A Shenzhen phone maker's offer",
+   "situation": "A headhunter calls: a phone company in Shenzhen will pay three times what you make. It's another way of living, with housing prices of another kind. Your spouse and your parents are in Mianyang, and your mentor heard about it and didn't ask.",
+   "options": [
+    { "label": "Go to Shenzhen", "result": "You moved your bags into a shared flat in Nanshan. The pay leaped, and you learned for the first time what it means to chase a release. Your mentor sent one message: work well.", "end": "You became an RF specialist at a Shenzhen phone maker. Your badge changed a few times, and in the signal of every generation of phones there is a little something you tuned." },
+    { "label": "Stay in Mianyang", "result": "You turned down the headhunter and took a walk along the Fu River that evening. Your spouse said you were quite talkative today." }
+   ]
+  },
+  "c_chip": {
+   "title": "Learning the chip side",
+   "situation": "The section wants someone to take a step toward RF chips, which means starting from scratch with semiconductors and layout, with nothing to show for the first two years. Staying with board-level work is the path you know, and the one the institute can use right now.",
+   "options": [
+    { "label": "Learn chips", "result": "You went back and forth for two years between a training course in Chengdu and the institute, wearing out a few books. By the third year you and your colleagues had started speaking with a different set of words." },
+    { "label": "Stay at board level", "result": "You refined the craft of board-level work, and when anyone in the institute hits a board they can't tune, you're who they think of." }
+   ]
+  },
+  "c_ai": {
+   "title": "Leading AI-assisted design for the group",
+   "situation": "The institute wants to try AI for first-pass matching and test analysis, and needs someone willing to spend the time and lead. It means sorting through the group's years of data and experience, with not one bit less of your own work.",
+   "options": [
+    { "label": "Lead it", "result": "You spent three months cleaning up the old data so that new hires could produce a decent first draft. Your mentor looked at it and said this thing teaches faster than I did." },
+    { "label": "Decline, get on with the work", "result": "You delivered your tasks on time. The AI tools arrived later anyway, only with rules set by other people." }
+   ]
+  },
+  "c_home": {
+   "title": "Who picks up the child",
+   "situation": "Your spouse has become a homeroom teacher and can't get away in the evenings, and your tasks are always up against a deadline. Your parents are old, and each pickup wears them out. The team lead asks if you'll join the push team for the second half of the year. Do that and you can forget about leaving at six.",
+   "options": [
+    { "label": "Join the push team", "result": "You saw home before dark only a few times that half-year. Every parental signature on your child's homework is your spouse's." },
+    { "label": "Step back and do pickups", "result": "You leave at six every day and stand at the school gate among the grandparents. When your child comes running out, you're there to catch them." }
+   ]
+  },
+  "c_senior": {
+   "title": "Applying for Senior Engineer",
+   "situation": "Senior Engineer slots are tight this year. It takes papers, patents and results as a team lead. Your results are all inside products, and little of it is written down. Another colleague is competing too, and only a partition separates your desks.",
+   "options": [
+    { "label": "Write it up and compete openly", "result": "Boards by day, paper by night, and at your defense you ran over time on one question. When the results came, you had both made it, and a laugh came from behind the partition." },
+    { "label": "Give way this round", "result": "You yielded the slot and your colleague took you to dinner. You went on training the young, with not one less thing on your plate." }
+   ]
+  },
+  "c_teach": {
+   "title": "Teaching at a university",
+   "situation": "A university in Chengdu wants someone with engineering experience back to teach microwave circuits, with a permanent post and winter and summer breaks. The pay is a little less than the institute's, and all that hands-on tuning would turn into something you only describe to students.",
+   "options": [
+    { "label": "Go to the university", "result": "You took that old pair of tweezers to the lectern, and in your first class you had the students solder the simplest possible board with their own hands.", "end": "You became a microwave circuits teacher. Every year a few students learned from your own hands what it means when a curve refuses to do what it is told." },
+    { "label": "Stay at the institute", "result": "You thanked them and went back to the lab. A young man from the next group was already standing at your door again with a board in his arms." }
+   ]
+  },
+  "c_top": {
+   "title": "Applying for Professor-Level Senior Engineer",
+   "situation": "The section head asks if you'll apply for Professor-Level Senior Engineer. It takes a thick enough summary, and moving your energy from the lab to leading a direction, developing people and sitting on review panels. Your hands are still steady, and you don't much want to put down the iron.",
+   "options": [
+    { "label": "Go for it", "result": "You spent a year writing those years into one thick file. After you made it, the tip of your soldering iron began to gather dust." },
+    { "label": "Stay the one with work in hand", "result": "You let the opportunity go to someone else. When young people can't tune a board, they still carry it over to you, set it down and leave." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you don't turn on the instruments. You place the old tweezers in a young colleague's toolbox. The schedule in the hallway became an electronic screen long ago, and this time your name isn't on it. When you get downstairs the mist on the Fu River has lifted. You have one more bowl of noodles at the gate: two liang, with beef.",
+  "burnout": "Your neck and eyes have reached their end and the doctor tells you to stay away from the microscope. You transfer to standards and documentation, and spend your days with one specification after another, leaving on time. When someone goes by your door with a board in their arms you still glance up, and then look back down."
+ },
+ "stages": [
+  "Your day is mostly spent at the bench: changing parts according to your mentor's marked-up schematic, connecting instruments, nudging a curve toward spec bit by bit. The test room has a queue, and when your turn comes you carry your sample in and stand guard over it. Your mentor is the person you talk to most, and the only one who can circle things in your tuning notebook.",
+  "A module is yours now, and from simulation to layout to tuning, it has your name on it. You start meeting with the structures and software groups, tugging over a few millimeters of space, and phoning the engineers on the customer's side. Interns arrive: their questions are yours to answer, and the boards they break are yours to own.",
+  "You lead a team of four or five. The approach is yours to set and the designs yours to review, and your comments begin to appear in other people's tuning notes. When a customer raises a need, you have to judge on the spot what can be done and explain why the rest cannot. You spend less time at the bench and more facing one review form after another.",
+  "You lay out a direction for the section: what it must achieve in a few years and whom to start developing now. Reviews, defenses, postdocs, several half-days a week in meeting rooms. When there's a problem nobody at the institute can tune, sooner or later someone knocks on your door, and you put down your draft and follow them."
+ ],
+ "work": [
+  "Your mentor takes your board and with tweezers nudges a capacitor by a hair, and the curve moves. He says you see, it was telling you all along. You weren't listening.",
+  "Old Zhou has you sort out the instrument cables, which takes all afternoon. He picks one out and says this one has been kinked. Don't trust anything you've measured with it.",
+  "Your first tuning record runs three pages. The team lead keeps one line and asks you: what you changed, what it was before, what it was after. The rest is feelings.",
+  "Old Li from structures brings a housing to discuss and says this is all the space you can have. You sketch three routings on paper. He picks one, and neither of you is what you'd call satisfied.",
+  "A customer's engineer says on the phone that the signal is poor on site. You have him put the sample by the window and test again, while you work down your records at this end, ruling things out one by one.",
+  "An intern changed an instrument setting and didn't change it back, and your whole morning's numbers are wrong. You don't blow up. That afternoon you teach him to make a power-on checklist and tape it beside the instrument.",
+  "At a design review Xiao Tang, a young engineer, uses a new approach. You study it a long while and say it's risky. He says would you try it? You think, and have him build one board to see.",
+  "At a requirements meeting the customer wants smaller, cheaper and better. You put the three specs on the whiteboard and tell them to pick two. Their chief engineer is the first to laugh.",
+  "Year-end reviews. You score your four people and change the youngest's score twice, finally adding one comment: this board was tuned by one person alone.",
+  "Reviewing a young person's title application, you stop at page three and call him to ask if he measured this set of numbers himself. There is a pause on the line.",
+  "At a planning meeting someone says this direction won't be needed in a few more years. You dig the identical sentence out of minutes from ten years ago and read it to the room.",
+  "You knock on the door of the new PhD, whose board has been tuned for two weeks. You don't touch it. You just pull up a stool, sit down, and have him explain from the beginning."
+ ],
+ "past": [
+  "You grew up in Mianyang with both parents working as factory technicians. What your home mostly contained was multimeters and various radios taken apart, and you assumed every home in the world was like that.",
+  "You did well on the gaokao (college entrance exam). Your father spent several days with the admissions handbook and circled an electronics major on your form, saying this trade will always need people.",
+  "Sophomore electromagnetics left most of the class in a fog, and you too. It was only that something invisible could still be calculated, and you found that rather captivating.",
+  "When recommended for graduate school, several classmates chose algorithms and computing. You chose a microwave advisor. People asked what for, and you said I like things I can hold in my hand.",
+  "In your second year of the master's you interned at a company in the south, with high pay and overtime until eleven every night. The first time you tuned up a decent spec, you sat in your rented room staring into space for a long while.",
+  "Before graduation your father's health wasn't good, and you applied to this institute's civil communications section back home. At the interview an old engineer didn't ask about your paper. He handed you a board and asked what you saw."
+ ],
+ "late": {
+  "pension_note": "Estimate: a basic pension plus annuity for institute staff comes to about sixty percent of base pay before retirement, not counting bonuses.",
+  "scenes": [
+   "For the first month of retirement you still walk along the river each day out of habit. When your hands get restless, you take the old radio at home apart and put it back together.",
+   "The institute invites you back to train a batch of new hires, two days a week. You sit behind them saying nothing. After they've struggled a long while they turn around and ask you, and you say only: look at it again.",
+   "The old gang gets together every so often. The whole table complains about their eyes, and when the tea is finished they start arguing about who actually tuned that board all those years ago.",
+   "After you move to documentation there's no more scent of solder on your desk. For the first few weeks you keep missing the smell of rosin, so you put a small tin of it in your drawer.",
+   "Your neck improves a little, and you take the doctor's advice and go swimming. Lifting your head in the water to breathe, for the first time your neck doesn't hurt.",
+   "A young colleague comes to you with an old problem, and you name the cause without looking at the schematic. The surprise on his face keeps you happy for days.",
+   "You hand your work ID back to the institute and pass that noodle shop on the way out the gate. The owner asks why you're here at this hour. You say I'm changing places.",
+   "The instruments at your new place are much newer than the institute's, but you still calibrate before anything else. The young person next to you looks at you the way you once looked at your mentor.",
+   "For your mentor's eightieth birthday you hurry back to Mianyang from out of town. At the banquet he takes your hand, and what he brings up is still that ruined board pinned in front of your desk.",
+   "These days most of the work on a board is AI going through it first, and the young people bring the results to the bench to verify. But once the board is in hand, the curve still refuses to do what it is told.",
+   "Your grandchild makes a video call and the picture stutters. They ask why. You take the phone, walk over to the window, and say here, try standing here.",
+   "The noodle shop at the gate is on its third owner and tastes slightly different. You still order two liang with beef, eat it slowly, and look toward the Fu River."
+  ],
+  "closing": {
+   "retire": "On a misty day many years later you sit at the window repairing an old radio. You turn the dial and at first there is only hiss, and then slowly the sound of someone speaking. You don't turn it any further.",
+   "burnout": "Many years later you are walking downstairs in your compound when your phone loses its signal. You stop, look up, take a few steps, and it comes back. You smile and keep walking.",
+   "end": "Many years later, at the bottom of a box, you find a yellowed circuit board with a few crookedly soldered parts. You hold it to the lamp, give one capacitor a gentle flick with your fingernail, and put it back."
+  }
+ }
+}

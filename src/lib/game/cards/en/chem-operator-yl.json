@@ -1,0 +1,158 @@
+{
+ "id": "chem-operator-yl",
+ "occupation": "Chemical Plant Operator",
+ "role": "Board Operator in a Coal-Chemical Control Room",
+ "headline": "Three years out of vocational college and moved from field operator into the control room of a coal-chemical plant in Yulin, working shifts in front of the DCS screens",
+ "unit": "The control room of the methanol unit at a large coal-chemical company in Yulin",
+ "unit_type": "Large coal-chemical company",
+ "city": "Yulin, Shaanxi",
+ "city_tier": "Prefecture-level city",
+ "education": "Vocational college (applied chemical technology)",
+ "level": "Three years as a field operator, you can find the pipes with your eyes shut, and now at the screens you have found that what you knew was valves, not curves",
+ "intro": "The industrial zone sits at the edge of the Mu Us Desert, rows of plant standing among the sand ridges, its lights at night brighter than Yulin city. You spent three years out on the unit as a field operator, and this month you were moved into the control room as a board operator. From tonight's shift on you face six screens and a two-way radio, and the valves you have held in your hands have turned into numbers.",
+ "salary_note": "Estimate: front-line shift income at Yulin's big coal-chemical companies runs well above the national figure, about 1.35 times once night pay and performance bonuses are counted.",
+ "facts": [
+  { "label": "Board Operator (current level)", "value": "2–5 years, ¥5,355–7,875 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Lead Operator (5–8 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥9,500 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Field rounds on foot: looking, listening, smelling, touching", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Watching DCS trends and alarms", "source": "AI exposure" },
+  { "label": "Open positions", "value": "138 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You get in early. You change at the locker room door and put your phone and lighter in the locker, and the first breath you take in the control room is air conditioning and coffee.",
+  "Shift handover. The day-shift board operator points at the log and says the synthesis reactor inlet temperature drifted a bit this morning, steady now. You go through all six screens together before he signs.",
+  "A level is creeping up. You get on the radio and send Xiao Ma the field operator out for a look. A few minutes later he calls back: a little frost on the impulse line of the level gauge.",
+  "A string of yellow lights up the alarm bar. You open and acknowledge them one at a time. Most are low priority. One you read twice and write in your notebook.",
+  "The sleepiest hour. You get up and fill a cup with strong tea. The shift lead makes a circuit behind you, says nothing, and taps the back of your chair.",
+  "The dispatcher phones to ask for a small load reduction. You check with the lead operator, ease the valve openings a little at a time, eyes on the curve, afraid it will suddenly turn.",
+  "You write the operating record and handover log, and tell the night's story in a few lines. The lead operator next to you reminds you that an abnormality needs its cause written down, not just what you saw.",
+  "End of shift. The commuter bus crosses the sand ridges just as the sun is coming up. You have a bowl of mutton offal soup at the bottom of the dorm, go back, pull the blackout curtains, and sleep until afternoon."
+ ],
+ "ladder": [
+  { "title": "Field Operator", "stage": "On the unit", "focus": "Walks the patrol route looking, listening, smelling and touching, works valves on site and supports the board; moves up by knowing the process and earning special-operations certificates." },
+  { "title": "Board Operator", "stage": "On the screens", "focus": "Monitors and adjusts parameters and writes operating records in the control room; moves up by holding steady conditions and handling alarms." },
+  { "title": "Lead Operator", "stage": "Main control", "focus": "Controls a section of the plant, gives the commands during start-up and shutdown and leads board operators; moves up on start-up experience and a senior certificate." },
+  { "title": "Shift Leader", "stage": "Runs the shift", "focus": "Leads a crew of ten or so, in charge of handovers, work permits, safety and shift targets; moves up by running safe shifts and having the crew's respect." },
+  { "title": "Shift Superintendent", "stage": "Plant-wide dispatch", "focus": "On shift, coordinates the whole complex and utilities, liaises with sections and dispatch, and makes the call in an emergency." }
+ ],
+ "ai_tasks": [
+  { "name": "Field rounds on foot: looking, listening, smelling, touching", "how": "A round means going to the pipe racks and pumps to hear the sound, feel the temperature and smell the air. AI can at most plan the route and log the data. Someone still has to walk it." },
+  { "name": "Watching DCS trends and alarms", "how": "AI can watch the curves around the clock, warn early and filter duplicate alarms. Whether an alarm is a process problem or an instrument problem, and whether to act, is for a person to judge." },
+  { "name": "Start-up, shutdown and load changes", "how": "AI can suggest steps and parameters, and advanced control can make fine adjustments. Whether conditions are met, whether to give the command and how to work with the field operator is a human decision and a human responsibility." },
+  { "name": "Diagnosing and reporting abnormal conditions", "how": "AI can spot deviations sooner, list possible causes and pull up similar history. Weighing the situation on the ground, reporting and directing the response still fall to the person on shift." },
+  { "name": "Writing handover logs and operating reports", "how": "The system pulls the data and drafts reports, handover logs and operating records. A person spot-checks the key items and signs." },
+  { "name": "Checking operating tickets and work permits", "how": "AI can find missing items and conflicts with current conditions. Approval, signature and confirmation on site belong to people, and the name on the permit is a person's." }
+ ],
+ "events": {
+  "e_turnaround": "During the month of the annual turnaround the whole crew took turns going into the equipment for inspection. You stayed in the control room coordinating isolations and lockouts, more than twenty days in a row.",
+  "e_alarm_save": "In the middle of the night an unremarkable trend made you look twice. You sent the field operator to check, and a pump bearing really was starting to run hot. The shift leader brought it up specifically at handover.",
+  "e_trip": "An interlock tripped and half the unit shut down. No one was hurt, but for the next three days you all wrote analysis reports, and every minute of operation had to be accounted for.",
+  "e_sandstorm": "Spring sandstorms turned the plant yellow. Field operators came back from the unit with their ears full of sand, and the air cooler fins needed another round of washing.",
+  "e_drill": "The company ran a plant-wide emergency drill. In the control room you reported, isolated and triggered interlocks according to plan, with an assessor behind you holding a stopwatch. You were forty seconds faster than last time.",
+  "e_night_sleep": "After half a year of steady shifts you began to find you could not sleep. You lie behind the curtains four hours in the daytime with dry, stinging eyes, and the alarm still goes off on time.",
+  "e_coworker_leave": "A board operator from your intake passed the exam for a post back home. One person fewer, and the crew's night shifts got tighter.",
+  "e_bonus": "Methanol prices were good this year and the unit broke its long-run record, and the year-end performance bonus was a good bit bigger than in the past two years.",
+  "e_price_down": "Coal up, product down. The company cut performance pay and the workshop began merging crews. Month after month the payslip showed less than last year.",
+  "e_apc": "The unit got advanced process control and AI alarm filtering, and the yellow alarms fell by more than half. On night shift you can finally give your attention to the few lines that really matter.",
+  "e_ai_log": "The handover log is now drafted by the system, and you only touch up the wording. The first time, the lead operator read it and said it did not say clearly what the cause was.",
+  "e_ai_mismatch": "The coal grade changed, and AI's tuning suggestions suddenly went off. You tracked it by hand the old way for two shifts, wrote up those conditions, and sent them to the engineer.",
+  "e_love": "A matchmaker introduced you to a nurse in Yulin city. You both work nights, so meeting always meant comparing rosters. After two years you married.",
+  "e_house": "You bought a place in Yulin's high-tech zone, more than an hour on the industrial zone's commuter bus. After a shift, the ride home feels longer than the night.",
+  "e_child": "Your child was born while you were on night shift, and you only got there after handover. Holding the baby, you were still thinking about that curve from the first half of the night.",
+  "e_missed_school": "The parent-teacher meeting clashed with your night shift again. The teacher said that in your child's essays, the parents are always asleep.",
+  "e_stomach": "Your stomach has started to go bad. The doctor asks if your meals are regular. You work out your shift pattern and say: regular, I suppose. Every four days it repeats.",
+  "e_parent_ill": "Your father went into the hospital back in Suide. You swapped three shifts with colleagues, drove down to see him, and drove back for the night shift.",
+  "e_apprentice": "A new university graduate asked: why are we waiting for this curve to come back by itself? You did not answer, only had him watch. It came back.",
+  "e_long_run": "Your unit set a long-run record. The workshop took a group photo with you in the second row, and nobody recognized you out of your overalls.",
+  "e_old_gauge": "You could no longer read the numbers on the screens clearly and put a pair of reading glasses on the console. The young people asked why you didn't use large-font mode. You said you weren't used to it."
+ },
+ "choices": {
+  "c_gaojigong": { "title": "Take the senior Chemical Plant Operator certificate", "situation": "The company encourages you to earn the senior Chemical Plant Operator certificate, with classes on your days off, theory and practical. You can work the board without it. But if you want to be a lead operator, people will look for it. And you do not get enough sleep as it is.", "options": [
+   { "label": "Go to class after night shift", "result": "You nodded off in class, and the teacher said that one must be on shifts. On exam day, on the distillation question, you remembered how it sounded on the unit." },
+   { "label": "Catch up on sleep first", "result": "You sleep through every day off and feel a bit better. The certificate can wait a year, and then another year." }
+  ] },
+  "c_ai_trial": { "title": "Lead the AI monitoring trial or not", "situation": "The plant is trying out AI monitoring and needs someone to label ten years of alarm records, telling the system which were real problems and which false. No hours counted, only the gaps in your night shifts.", "options": [
+   { "label": "I will label them", "result": "You went through the records line by line, two hundred per night shift. When the system went live, some of the most annoying false alarms were gone. The young people asked: who did that?" },
+   { "label": "Stay out of it", "result": "You go on using your own eyes and notebook. You use the system too now that it is live. You just keep one eye on it." }
+  ] },
+  "c_zhucao": { "title": "Compete for Lead Operator", "situation": "After the next plant-wide turnaround the unit has to be restarted, and the workshop wants you to compete for Lead Operator. The lead operator gives the commands during start-up and shutdown, one word to open and one word to close, with a field operator's hands behind the screen. One wrong step and the whole crew does it over.", "options": [
+   { "label": "Compete for Lead Operator", "result": "That start-up night you wore out the procedure manual. When feed went in, day was breaking. Nobody spoke. You were all watching that line climb slowly upward." },
+   { "label": "Let the old hands do it", "result": "You said you would like to go through one more start-up. The old master gave the commands, you took notes beside him. The next time, no one came to ask you." }
+  ] },
+  "c_guangdong": { "title": "A southern chemical park comes hiring", "situation": "A new chemical park in Huizhou is hiring board operators with start-up experience, 20 percent better pay, and a chance for your child to go to school somewhere else. But your years of service and your home are in Yulin.", "options": [
+   { "label": "Take the family south", "result": "You could not get used to the damp air, and the roads in the park were clean. In the first year you often wanted a bowl of mutton offal soup." },
+   { "label": "Stay in Yulin", "result": "You said you had gotten used to eating sand here. The commuter bus is the same one, and Lao Zhang is still driving." }
+  ] },
+  "c_day_shift": { "title": "Go to the DCS vendor for field service", "situation": "The vendor that configures your plant's DCS is hiring commissioning engineers who understand the process. Year-round travel, no shifts. The pay is about the same, but you would never work a night shift again.", "options": [
+   { "label": "Take off the overalls and go commission", "result": "You carry your laptop from one chemical park to another, and for the first time look at someone else's curves in a control room during the day.", "end": "You became a field commissioning engineer for a DCS vendor, living in hotels by chemical parks around the country, and you never work shifts again." },
+   { "label": "Keep working shifts", "result": "You stayed, because the shift leader here had never yet told you that you could not do it. At seven in the evening you walked into the control room as usual." }
+  ] },
+  "c_banzhang": { "title": "Compete for Shift Leader", "situation": "The shift leader is being moved and the workshop asks if you would take it. A crew of ten or so, with handovers, permits, and who needs a shift swapped for family reasons. The first name on the safety assessment would be yours.", "options": [
+   { "label": "Compete for Shift Leader", "result": "You started to worry about other people's sleep and other people's children, and you talk more at pre-shift meetings than you used to. When someone on the unit has a glove off, you are the first to walk over." },
+   { "label": "Stay at the screens", "result": "You said people were harder to manage than curves. The workshop picked someone else, and you stayed in the lead operator's chair for years more." }
+  ] },
+  "c_safety": { "title": "Take the Certified Safety Engineer exam", "situation": "The plant's safety and environmental department is short of people. You have been on the front line for more than ten years, and if you pass the Certified Safety Engineer exam you can transfer. Day shift, weekends off, slightly less pay. But once you go, you never return to the unit.", "options": [
+   { "label": "Take the exam, move to safety", "result": "You spent two years chewing through the books and put on a helmet of a different color. When your old mates on the unit saw you coming, they started hiding their cigarettes.", "end": "You became a Certified Safety Engineer in the plant's safety and environmental department, inspecting the unit by day and home for dinner by night, and your child says you talk more now." },
+   { "label": "Stay on the unit", "result": "You put the books back. The night-shift coffee has gotten a little stronger, and you still feel you are the one who knows best what is on the screens." }
+  ] },
+  "c_zhizhang": { "title": "Compete for Shift Superintendent", "situation": "The workshop is naming a Shift Superintendent. On your shift the whole complex and utilities would take your dispatch, and in an emergency the call would be yours. You are getting older, and you know how many more years of nights you can take.", "options": [
+   { "label": "Compete for Shift Superintendent", "result": "You took over the red phone. When it rings at night the whole crew looks at you, and you have to steady your voice first." },
+   { "label": "Lead the shift a few more years", "result": "You gave the chance to a colleague a few years younger. You go on leading your crew, and before you retired you taught a room full of young people how to write a handover log." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last night shift you looked at all six screens from left to right and touched nothing. In the morning at handover you wrote in the log: shift ran normally. The young man taking over signed and took the radio. The commuter bus crossed the sand ridges as the sun rose, and you fell asleep on the bus. This time there was no alarm.",
+  "burnout": "At that year's checkup the doctor pointed out your blood pressure, heart and stomach one by one, and told you to stop working nights. You applied for a day post in the raw materials workshop, for a good deal less pay. On your first evening without a night shift you lay down at seven. At two in the morning your eyes opened, and you looked at the lights outside the window."
+ },
+ "stages": [
+  "You sit before the DCS, mouse in one hand and radio in the other. Temperature, pressure, flow, level: you have to read from each curve what it wants to do next. The field operator is your legs, the lead operator your backbone, and alarms, fine adjustments and operating records all happen on these few screens. You also have to learn when to do nothing.",
+  "You control one section. At start-up and shutdown you give the commands, the board operators adjust, and the field operators open valves on site. You write the procedures and tickets ahead of time and check them, and your senior certificate has to be on the table. When a curve twitches, the whole crew looks at your face first. You used to ask the lead operator. Now people come to ask you.",
+  "You lead a crew of ten or so. At the pre-shift meeting you go over yesterday's abnormalities and today's permits, and work permits need your signature first. Who goes out to the unit, who is not in shape to work at height today, you have to see. At night you walk between the control room and the unit with a patrol device and a hard hat, and in your head a list of whose family has trouble.",
+  "On your shift the whole complex and utilities answer to your dispatch. The dispatch room, power, air separation and every section's shift leader phone you when anything happens, and you have minutes to come up with a plan. By day you attend production meetings, read long-run reports and check conditions with the process engineers. You don't say much. You sign a lot."
+ ],
+ "work": [
+  "On a night shift you were watching the column top pressure creep up 0.02. You adjusted the reflux and waited twenty minutes, and it came back. The old hand glanced over and went on drinking his water.",
+  "Xiao Ma on the unit said a valve was stuck. You read him the opening from the screen, and he told you to open it another 5 percent. From opposite ends of the plant, the two of you got it moving.",
+  "You wrote in the operating record that a parameter was high. The lead operator beside you changed it to why it was high and what you did about it, and said those are the words the next shift needs to read.",
+  "Start-up after the turnaround. You read out the operating ticket item by item and ticked each one as the board operator confirmed it. At item forty-three you stopped and had the field operator go look at the pressure gauge once more.",
+  "A new board operator kept overshooting. You had him take his hand off the mouse and only watch the curve for ten minutes, then asked him what he had just wanted to adjust.",
+  "The process engineer changed a control loop. On the night of the trial run you stayed three extra hours, and watched it go through several cycles before you were satisfied.",
+  "At the pre-shift meeting Lao Li said his wife was in the hospital. You crossed off his night shift, took it yourself, and moved next week's safety training around.",
+  "A hot-work permit came for your signature. You took the gas detector out to the site, tested it twice, and only then wrote your name on the permit.",
+  "Each week you spot-check your crew's handover book. You photocopied the most clearly written page and pinned it to the board behind the control room door.",
+  "In the middle of the night the grid sent a load-shedding notice. You called the air separation lead and the gasification lead in turn, and in five minutes settled which unit would go down first and by how much.",
+  "At the production meeting the plant director wanted a little more load. You put up this month's catalyst activity curve and said one thing: run another half year and the changeout has to come forward.",
+  "The young Shift Superintendent was on his first solo shift. You did not go into the control room. You only left the radio on in your office, on until daybreak."
+ ],
+ "past": [
+  "You got into a high school in Suide. Your family had a few mu of jujube trees and your father did odd jobs at coal mines, and he always said to find work with a real employer.",
+  "Your gaokao (college entrance exam) score only reached the junior college line, and you chose applied chemical technology at a vocational college in the province. A teacher said Yulin's coal-chemical plants were hiring and you would never go hungry.",
+  "In your second year you interned at a chemical plant and saw a whole field of pipe racks for the first time. The old hand had you take a sniff, and taught you which smell was right and which meant you should get out fast.",
+  "After graduation you joined this Yulin company as a field operator, first earning your hazardous chemicals safety certificate and pressure vessel operator's permit.",
+  "You walked the patrol route with an old hand for a year, more than four hundred points. Your eyes, ears and hands slowly learned it, and at night you opened valves in your dreams.",
+  "An old board operator was retiring and the workshop needed someone for the control room. You applied and spent three months memorizing process diagrams. On test day the shift leader patted you on the shoulder."
+ ],
+ "late": {
+  "pension_note": "Estimate: large companies have higher contribution bases and full records, so the pension comes to about 55 percent of your final monthly pay; night pay and bonuses do not count, so it feels like less than the figure.",
+  "scenes": [
+   "In your first month of retirement you keep waking at two in the morning. The kitchen light goes on and off. You drink a glass of water and look out the window. There are no parameters.",
+   "The plant rehires you two days a week to teach new staff about start-ups. The first thing you say is: don't rush to touch it, first look at what it wants to do.",
+   "You and your spouse stay a while in Suide, and the jujube trees in the yard are still bearing. For the first time you sit a whole day in the yard in daylight, and all you hear is insects.",
+   "You moved to days, and later took sick retirement. For the first month you kept waking at handover time, your hand feeling across the bedside and finding no radio.",
+   "You found a job watching the gate at your apartment complex, days only. At night you can finally sleep a little. Only a little. It is enough.",
+   "People from the old crew come to see you, bringing a leg of mutton. They talk about who has retired and who has been promoted, and nobody brings up that checkup.",
+   "You took off your overalls and packed your locker into a cardboard box, a thermos you had used for ten years among the things. You gave yourself three days off and slept badly all three.",
+   "The new job is all in daytime, and at first you cannot adjust. Three-in-the-afternoon sun strikes you as strange. This was the hour you would be sleeping behind the curtains.",
+   "Once, passing Yulin's industrial zone, you see those towers still lit, and several more clusters than there used to be. You roll down the window and sniff. That is the right smell.",
+   "The screens in the control room can tune themselves now, and the young people say a night shift needs only two or three. But the patrol route is still there, and someone still has to walk it, step by step.",
+   "Neither your stomach nor your sleep ever really came back. Your child, married in Xi'an, comes home and says: you still act like you are on shift during the day. You smile.",
+   "More and more trees are planted on the sand ridges, and the old commuter road has become hard to recognize. You tell your grandchild that underneath it is all sand. The child does not believe you."
+  ],
+  "closing": {
+   "retire": "Late one night many years later you wake and walk out to the balcony. The lights of the industrial zone are still on in the distance. You stand a while, go through a handover in your head, and go back to bed.",
+   "burnout": "Many years later you are walking in the courtyard of your building, watching the streetlights come on one by one. You look at your watch. Seven in the evening, time for handover. You walk slowly home.",
+   "end": "Many years later you find an old operating ticket in a drawer, in the handwriting of your younger self. You look at it a while, tuck it back in the book, and go to boil some water."
+  }
+ }
+}

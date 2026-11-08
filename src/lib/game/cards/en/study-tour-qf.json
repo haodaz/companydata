@@ -1,0 +1,198 @@
+{
+  "id": "study-tour-qf",
+  "occupation": "Study Tour Instructor",
+  "role": "Assistant instructor at a study-tour base",
+  "headline": "Twenty-three, a history graduate back in Qufu, holding up a little flag each spring and autumn and counting busloads of schoolchildren among Confucius's temple, mansion and cemetery",
+  "unit": "A study-tour base in Qufu (hosting school groups from Shandong and beyond, about twenty full-time instructors)",
+  "unit_type": "Study-tour base",
+  "city": "Qufu, Shandong",
+  "city_tier": "County-level city",
+  "education": "Bachelor's (History)",
+  "level": "You can make sense of the Analects; you can't yet make forty children be quiet at once",
+  "intro": "The base is in the south of Qufu, a row of imitation-antique gray brick houses with sixty low tables set out in the yard. You're issued a small flag, a voice amplifier and a Study Tour Instructor's Manual, and the first page of the manual isn't about Confucius. It says: at every transfer point, count heads. Next Monday, forty-two fifth graders arrive from Tai'an. From today, every sentence you say has to be a little louder than they are.",
+  "salary_note": "Estimate: Qufu is a county-level city; bases pay a per-group bonus in spring and autumn and thin wages in the off-seasons, about seventy-five percent of the national average.",
+  "facts": [
+    { "label": "Assistant Instructor (current level)", "value": "0-1 years, ¥3,500–5,000 a month (national average, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Study Tour Instructor (1-4 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Running student activities on site", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Drafting study-tour plans", "source": "AI exposure" },
+    { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "At the base gate you count today's lunches: four hundred twenty boxes, and three can't have peanuts. You circle those three in marker and read the names out once.",
+    "The bus arrives. You're first on, wearing your headset mic, and you call good morning. Someone in the back answers \"not good,\" and the whole bus laughs.",
+    "Assembly beneath the Wall of Ten Thousand Ren. You count to forty-one, count again, and get forty-one. The missing one is squatting behind you, tying a shoe.",
+    "Under the old cypresses of the Confucius Temple you tell the story of the Apricot Altar. Halfway through, a kid asks: did Confucius ever have to take tests? You pause for one second and put it to the whole group.",
+    "Lunch. The accompanying teachers sit down to rest. You carry your own box between tables, seeing who isn't eating and who has given their chicken leg away.",
+    "Cinnabar for the writing-brush ceremony and rice paper for the rubbings go out one item at a time, and one child already has ink on their shirt. You hand over a wet wipe and tell them that's a souvenir.",
+    "Back at base each group turns in its task sheet. You leaf through them, and one says: \"What I learned today: a teacher's voice can go hoarse.\"",
+    "Room checks in the dormitory, floor by floor. Afterward you go back to the office, upload today's photos to the parents' group, and double-check tomorrow's weather and backup route."
+  ],
+  "ladder": [
+    { "title": "Assistant Instructor", "stage": "Shadowing", "focus": "Count heads, hand out manuals, run lunch and the bathroom lines; make permanent staff by getting through a season with no mistakes" },
+    { "title": "Study Tour Instructor", "stage": "Leading groups", "focus": "Lead a busload alone: explaining, task sheets, emergencies; advance on repeat bookings from teachers and schools" },
+    { "title": "Curriculum Supervisor", "stage": "Designing courses", "focus": "Design routes and courses, train instructors, negotiate plans with schools; advance when schools adopt your courses" },
+    { "title": "Study Center Director", "stage": "Running the base", "focus": "Run the base's volume, safety, books and partner schools, and be the first signature when something goes wrong" }
+  ],
+  "ai_tasks": [
+    { "name": "Drafting study-tour plans", "how": "AI quickly drafts plans and alternative routes by theme, grade and length. People set the direction according to the school's needs, budget, season and the actual state of the sites." },
+    { "name": "Designing courses and task sheets", "how": "AI can generate outlines, inquiry questions and task-sheet templates and adjust them by grade. People judge whether they fit real children and real conditions, and make them fun and doable." },
+    { "name": "Working with sites and partners", "how": "AI can look up site information, draft letters and compare options. People visit, negotiate price and terms, keep the relationships, and answer for quality." },
+    { "name": "Checking itineraries, transport, meals and lodging", "how": "AI can build timetables, work out routes and mealtimes, generate checklists and flag conflicts. People only spot-check the critical items, such as a bus's papers or what the rooms are really like." },
+    { "name": "Running student activities on site", "how": "AI can offer scripts, groupings and reminders. Gathering the children, moving them, keeping up their spirits and watching every one of them has to be done by a person." },
+    { "name": "Guiding and explaining on site", "how": "AI can prepare scripts, background and sample questions ahead of time. Reading children's faces, asking the right question and handling the unexpected one takes a person." },
+    { "name": "Safety education and risk control", "how": "AI can generate safety notices, emergency plan templates and risk checklists. Checking hazards on site, judging the weather and carrying the responsibility falls to a person." },
+    { "name": "Handling emergencies with students", "how": "At most, AI can offer procedures or help write it up afterward. Judging the situation, helping and calming the child, contacting parents and school, and answering for it all must be done by a person." }
+  ],
+  "events": {
+    "e_voice": "After three days of tours straight, on the fourth morning no sound comes out. A colleague hands you a packet of malva nut tea, and you whisper your way through the Confucian cemetery on the amplifier.",
+    "e_lost_kid": "During a transfer one child goes missing. You walk back and forth through the crowd for twenty minutes and find him at an ice pop stand. You don't yell. Back at base you change the headcount so children watch each other in pairs.",
+    "e_thanks_note": "A fourth grader mails a letter to the base, addressed to \"the teacher who carries the flag.\" The director pins it to the bulletin board.",
+    "e_rain": "A rainstorm hits in the afternoon and the three-hundred-person outdoor archery ritual is canceled. You scatter the children into six classrooms and hold out for two hours with one whiteboard and a box of chalk.",
+    "e_winter_pay": "No groups in the last lunar month, and all that lands in your account is the base pay of ¥2,300. You help out at a relative's supermarket for two weeks, and the phone rings again only after New Year.",
+    "e_allergy": "A child breaks out in a rash after lunch. You go with him to the city hospital and sit until his parents arrive from Jinan. On the drive back, you add a line to your manual.",
+    "e_ai_plan": "A school sends its requirements, you enter the theme and grade, and AI produces a three-day, two-night plan in one minute. The route flows nicely. It also has forty children walking the cemetery at high noon.",
+    "e_ai_schedule": "The checks on buses, meals and lodging go to a system that flags conflicts automatically. You make far fewer calls, but you still go look at the kitchen in person, every time.",
+    "e_ai_guide": "The scenic area adds a voice guide robot that recites its script perfectly. The kids are fascinated for five minutes, then turn to ask you: Teacher, why doesn't it ever get mad?",
+    "e_repeat_school": "The old principal of a primary school in Zaozhuang asks for you by name for the third year running, saying the children come home writing differently.",
+    "e_knee": "After years of more than twenty thousand steps a day, your knee starts to creak on stairs. You quietly memorize which stretches of the temple have steps, as a kind of map.",
+    "e_bus": "Before departure you check the bus papers as always and find the inspection has expired. You stop it on the spot and arrange another. The group leaves fifty minutes late, and the accompanying teacher's face is grim.",
+    "e_low_season": "The education bureau where your students come from issues a notice: spring outings this year need stricter approval. Half a season's groups are canceled one after another, and a layer of poplar fluff settles on the low tables in the yard.",
+    "e_house": "You buy an apartment in Qufu's new district, and half the down payment comes from your parents selling two mu of fruit trees. On moving day you stick the old flag in the balcony railing.",
+    "e_apprentice": "A new college graduate leads a group alone for the first time and phones you that night in tears, saying the kids won't listen. You tell him to count, first, how many kids asked a question today.",
+    "e_old_kid": "A young woman wearing an intern's badge comes up and says: Teacher, you led my group in fifth grade and I still have my rubbing. Now she leads groups at the base next door.",
+    "e_summer_heat": "July summer camp, thirty-seven degrees. You finish every outdoor session before noon and get a touch of heatstroke yourself, getting through to evening on a bottle of herbal cooling tonic.",
+    "e_school_kickback": "On the phone a school's teacher in charge hints that the manuals could go to his relative's print shop. You pass it to the director, who sighs and says to set this booking aside for now.",
+    "e_family": "Your child's parent-teacher conference falls on another out-of-town tour. You send the teacher a message, and the teacher replies: your daughter's essay today is called \"My Mother Has a Flag.\"",
+    "e_jd": "You check the job sites. Positions in this trade nationwide can be counted on one hand, and most are filled through friends. People in this line of work more or less all know each other."
+  },
+  "choices": {
+    "c_guide_cert": {
+      "title": "Tour guide license, or Study Tour Instructor certificate?",
+      "situation": "The base suggests you get at least one credential. A tour guide license lets you take leisure groups in the off-season; the Study Tour Instructor certificate is what schools recognize, but it's useful only in this trade. Doing both means no weekends this year.",
+      "options": [
+        { "label": "The Study Tour Instructor certificate", "result": "You study course design and developmental stages, and learn for the first time that third graders and sixth graders can't be told the same sentence." },
+        { "label": "The guide license, for off-season work", "result": "In the last lunar month you take several tour groups and earn a few thousand yuan. Two years later you notice that, as you talk, you've started steering people toward the shops." }
+      ]
+    },
+    "c_script": {
+      "title": "Memorize the script, or write your own?",
+      "situation": "The base has a standard script; memorize it and you can lead. The director doesn't mind changes, but any error is on you. You notice the kids begin pulling each other's hats at the three-minute mark.",
+      "options": [
+        { "label": "Throw it out, rewrite as questions", "result": "You spend several nights writing \"Why did Zilu get scolded?\" The first time you try it, half the kids raise a hand and the other half fight to." },
+        { "label": "Learn it cold; don't make mistakes", "result": "You can recite all four thousand characters without a slip and the accompanying teachers are reassured. The kids go on pulling each other's hats." }
+      ]
+    },
+    "c_safety": {
+      "title": "The school insists on climbing Mount Ni",
+      "situation": "A school insists on taking the kids up the mountain on the third afternoon, saying the parents have all seen the photos. The forecast says force-four winds. You're responsible for safety, the manual says \"adjust as conditions require,\" and the principal has already called the director.",
+      "options": [
+        { "label": "Hold firm, move it indoors", "result": "The principal is displeased and you don't get the school's business next year. That afternoon the wind did come up, but that isn't the kind of thing you can go around saying." },
+        { "label": "Do as they ask; add staff", "result": "You bring in four extra people and watch every step of the way. Everyone gets down safely and the principal sends the base a pennant. You don't sleep that night." }
+      ]
+    },
+    "c_ai_course": {
+      "title": "Learn to build courses with AI?",
+      "situation": "The base wants every grade's plans and task sheets built into AI, compressing the work of twenty people into five or six. The director asks if you're willing. Once it's done, some of your older colleagues' jobs may be gone.",
+      "options": [
+        { "label": "I'll build it", "result": "You feed in ten years of plans and how children reacted, and you spell out what must be revised by a person. Later, bases from elsewhere come to learn how you did it." },
+        { "label": "Stay out of it. Keep leading groups", "result": "You go on leading one busload after another. One day you notice that nobody in the newly issued plans knows not to walk the cemetery at noon." }
+      ]
+    },
+    "c_supervisor": {
+      "title": "Compete for Curriculum Supervisor",
+      "situation": "The Curriculum Supervisor position is changing hands. It means routes, training, and negotiating with schools, and fewer than twenty days a year with groups. You're good at leading groups, and this might take you away from the children.",
+      "options": [
+        { "label": "Go for it", "result": "At the panel you don't present slides. You present a stack of task sheets the children wrote." },
+        { "label": "No, I love leading groups", "result": "The new supervisor asks you to take new hires along with you, with a little extra pay. You go on carrying the flag." }
+      ]
+    },
+    "c_teacher": {
+      "title": "Go back and test for a teaching post?",
+      "situation": "Your hometown, Zoucheng, is hiring history teachers: a permanent state post, stable, with summers and winters off. Your father says that's a real job, and that you shouldn't spend your life leading kids around.",
+      "options": [
+        { "label": "Take the exam", "result": "You come in second and go through to the interview. The lesson you teach for it is about the Apricot Altar.", "end": "You become a history teacher at a junior high in Zoucheng, fourteen classes a week, and never have to count heads again. When you reach the Spring and Autumn period you can't help going on a little, and the kids don't know why you sound as if you'd been there." },
+        { "label": "Don't. Stay", "result": "Your father doesn't mention it for two months. Then on the phone he asks: when it snows this year, will there be any work?" },
+        { "label": "Study while you work", "result": "You study for one spring and lead groups with your mind elsewhere, and once you're three minutes late noticing a child is missing. You put the books away." }
+      ]
+    },
+    "c_city": {
+      "title": "Jinan comes calling",
+      "situation": "An education group in Jinan offers higher pay for you to design routes across the province, based in Jinan with half your time on the road. Your parents and child are in Qufu.",
+      "options": [
+        { "label": "Go to Jinan", "result": "You get the raise and go home by high-speed rail on weekends, forty minutes each way. For the first time, your routes leave the province." },
+        { "label": "Stay in Qufu", "result": "You still pass the city wall every morning and the pancake seller recognizes you. Your pay is about what it's going to be." }
+      ]
+    },
+    "c_own": {
+      "title": "Start your own study-tour outfit",
+      "situation": "Teachers from several schools say that if you go on your own, their groups will come with you. But you've done the math: licensing, insurance, bus deposits. You'll likely lose money for two years. And if anything happens, yours is the only signature.",
+      "options": [
+        { "label": "Quit and go solo", "result": "You lease an old courtyard east of the city and plant two pomegranate trees yourself.", "end": "You open a studio that takes only small groups, twenty-some a year, and you go along on every one. You don't earn much, and the insurance policies are stacked neatly in the drawer. When the pomegranates fruit in the yard, you let the kids pick them." },
+        { "label": "Stay, and aim for Study Center Director", "result": "You don't leave, and those schools don't leave either. The director notices and starts showing you the books." }
+      ]
+    },
+    "c_director": {
+      "title": "The Study Center Director's burden",
+      "situation": "The old director is retiring and asks if you'll take over as Study Center Director. You'd sign every safety pledge and never sleep soundly in any season. If you refuse, you may be taking orders from someone younger.",
+      "options": [
+        { "label": "Take it", "result": "You walk every transfer point again and sign the pledges. Your family says you've begun to talk in your sleep, and that you're still counting." },
+        { "label": "Decline, keep building courses", "result": "You stay with the curriculum team. The new director comes to you to revise plans and calls you Teacher." },
+        { "label": "Teach study-tour courses at a college", "result": "A vocational college has opened a study-tour major and wants a teacher who has actually led groups.", "end": "You teach Study Tour Course Design at a vocational college. In your first class you have the students line up on the sports field and take attendance three times. They find it strange. They won't on the day they lead a group." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "The last group is a busload of third graders. You tell the story of the old cypresses again, much shorter than ten years ago. At the afternoon assembly you count to forty, count again and get forty, and you hand the little flag to the young person beside you. The cloth on that flagpole has been replaced seven or eight times.",
+    "burnout": "That spring, at a transfer point, you suddenly can't count. Halfway through you've forgotten what came before. Back at base you sit on a bench for a long time. You tell the director you'd like to rest a while, and that rest turns out to be for good. Passing the Wall of Ten Thousand Ren later, you see a small flag moving through the crowd, and you don't go after it."
+  },
+  "stages": [
+    "You walk behind the instructor with the name list and a pack of bandages, in charge of the headcount, the manuals, lunch and the bathroom line. You don't get to explain anything, but the three kids always straggling at the back are yours. The accompanying teachers and the drivers are all older than you, and you learn to greet them first and raise the matter second.",
+    "A bus is now yours. Forty-some kids, from the icebreakers on boarding to the wrap-up on leaving, and the writing-brush ceremony, the rubbings and the task sheets are all in your hands. The school's teacher watches you, the kids watch you, and you begin to have your own way of telling things. You begin, too, to tell the dispatcher: this one is my call.",
+    "You spend fewer than twenty days a year with groups and much more time over course documents and route tables: how many steps for third grade, how many words for sixth. You go to schools to negotiate plans with academic deans, train new instructors, and bargain with sites and restaurants. Other teachers send you their plans before boarding, and they set out carrying your notes.",
+    "The base's volume, its insurance policies, its fire inspections and its payroll have all arrived here. Each year you file with the education and culture-and-tourism bureaus, have dinner with principals, and check eggs with the kitchen staff. The last line of the safety pledge carries your name. Before a trip goes out, you still like to walk the transfer points once."
+  ],
+  "work": [
+    "You hand out manuals for the wrong grade, and fourth graders stare blankly at sixth-grade task sheets. Teacher Li, leading the group, helps you swap them back one at a time and then asks what your name is.",
+    "A child quietly slips you a salted duck egg at lunch, saying they can't get used to it. You peel it, give the child the yolk and eat the white. The child follows you around all the next day.",
+    "Old Sun, the driver, teaches you to check a bus: tire tread, extinguisher, safety hammer. You write it on the back of your manual, and that page ends up more wrinkled than any in the front.",
+    "At the pitch-pot game, a chubby kid who always gets laughed at lands three arrows in a row. You write his name on the whiteboard and have him show the others how to stand.",
+    "Your group is drawing the route of Confucius's travels when one child asks why he didn't take the high-speed train. You have them work out on the map how many days it took, and the answer goes on the back of the task sheet.",
+    "The homeroom teacher tells you quietly that the girl in the third row has parents who've just divorced. When you make the groups, you put her with the two most talkative kids.",
+    "You rewrite the rubbing class task sheet for the fifth time. You cross out \"appreciate the wisdom of the ancients\" and write \"find three characters on the stele you don't know, and guess what they mean.\"",
+    "The dean says the budget covers only two days. You cut one site from the plan to save the evening wrap-up session. She looks at it and says you understand this better than our teachers do.",
+    "New hire Xiao Zhao recites his script too fast. You print it out and draw a little person after each paragraph, telling him to stop there and look at the children's faces.",
+    "You take Old Wei from purchasing to inspect the pork, opening the cooler to see the batch sheet. He says we've used this supplier for ten years with no problems. You say then show me the ten years of receipts.",
+    "The annual insurance comes up. You circle the exclusion clause for outdoor activities on the policy and spend forty minutes on the phone with the agent. It ends up costing six thousand more and gets you one additional line.",
+    "The culture and tourism bureau comes for a spot check. You lay out the year's safety plans, drill records and teachers' signed forms on the conference table and go through them one by one. In the end, they correct one typo."
+  ],
+  "past": [
+    "On a fifth-grade school trip to the Confucius Temple you get lost for ten minutes under the old cypresses. You aren't scared. You only think: this tree is enormous.",
+    "Your high school entrance exam score is ordinary and you go to a high school in Zoucheng, in the humanities track. The history teacher likes to bang on the desk, and you write his jokes in the margins of your textbook.",
+    "When it's time to apply to college your father says go to a teachers' college. You put down History. He asks what history is good for, you say you can teach, and only then does he relax.",
+    "The summer after junior year you intern at a travel agency in Jining and lead a summer camp. A child gets carsick on your shoes. You scrub them and go back the next day.",
+    "You come third on the written exam for a teaching post, and they're hiring two. That autumn you see a study-tour base advertising for someone who knows history, can endure hardship and has a loud voice, and you come back to Qufu."
+  ],
+  "late": {
+    "pension_note": "Estimate: a private study-tour base pays local enterprise social insurance on a low base, so the pension is about forty-five percent of your final monthly pay.",
+    "scenes": [
+      "Your first spring of retirement, you pass the gate of the Confucius Temple just as a busload of kids gets off. You stop and, without meaning to, start counting. You reach thirty-seven and the doors close.",
+      "The base asks you back to give a training session for new staff. You bring no slides, only an old amplifier. When you finish, a young person asks you if it still works.",
+      "In your housing complex you tell your grandson and his classmates the story of Zilu. By the third telling, four more kids have come. You have them pair up and keep an eye on each other.",
+      "Your knee won't carry you far now and you can't manage the temple's stairs. You sit in the sun at the foot of the city wall and hear the guide robot inside telling the Apricot Altar story, word for word.",
+      "For the first month after leaving the base you keep waking in the night, sure a child hasn't gone back to their room. Then you realize you're at home. You lie there a while and fall asleep again.",
+      "You help at the neighborhood's senior college two afternoons a week, teaching older folks to write with a brush. Nobody runs off. You find you don't quite know what to do with that.",
+      "A young father recognizes you at the temple gate and has his child greet you as Teacher. He says you're the one who found him back at the ice pop stand.",
+      "The spring you leave this line of work, your social feed is full of study-tour photos, kids in matching vests. You look at them for a while and like one.",
+      "Moving house you turn up a stack of old task sheets, yellowed. One says, \"What I learned today: a teacher's voice can go hoarse.\" You keep that one.",
+      "You take your own child to the Confucius Temple and manage not to explain anything. Your child asks how old the tree is, and you say: go count.",
+      "The new study-tour plans are written by AI and are more thorough than yours ever were. But each year some child squats down to tie a shoe during a transfer, and that it still doesn't know about.",
+      "It snows in winter and few tourists come to the temple. You walk to the foot of the Wall of Ten Thousand Ren and stand alone for a while. No one has touched the snow on the wall."
+    ],
+    "closing": {
+      "retire": "In the evening at the foot of the city wall the pancake seller packs up. You roll up the little flag in your hand and lean it against the wall.",
+      "burnout": "Class is over at the senior college and the paper lies on the table with the ink still wet. A child runs past the window. You don't count.",
+      "end": "On top of the cabinet sits an old amplifier, its batteries long dead. You wipe off the dust and put it back."
+    }
+  }
+}

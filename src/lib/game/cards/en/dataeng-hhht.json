@@ -1,0 +1,190 @@
+{
+ "id": "dataeng-hhht",
+ "occupation": "Data Engineer",
+ "role": "Junior Data Developer, Data Center Cluster",
+ "headline": "A software engineering graduate at a data services company in the Horinger data center cluster outside Hohhot, keeping watch through the night over batch jobs for clients in the east",
+ "unit": "A data services company in Horinger New Area, Hohhot",
+ "unit_type": "Data and computing services company",
+ "city": "Hohhot, Inner Mongolia (Horinger New Area)",
+ "city_tier": "Tier-2 city",
+ "education": "BEng in Software Engineering",
+ "level": "You write SQL window functions with ease, and you've run Spark in lab classes. What a production table with billions of rows looks like, you've yet to see.",
+ "intro": "The roads in the new area are so wide they seem empty. Windowless gray buildings line up one after another, the wind comes down off the Daqing Mountains, and inside, the servers turn day and night for companies in the east. Your team lead sets up your account and says the overnight batch is yours to watch now, and don't mute the alerts. From today on, your job is to have ready the numbers that people two thousand kilometers away will want to see when they wake up.",
+ "salary_note": "Estimate: data jobs in Hohhot pay about sixty percent of the national figure, which is mostly first-tier big tech, and living costs are far lower.",
+ "facts": [
+  { "label": "Junior Data Developer (current level)", "value": "0–2 years, ¥9,000–16,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Data Developer (2–4 years)", "source": "Career map" },
+  { "label": "Pay after 10+ years", "value": "¥31,500 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Making the call and owning it when production breaks", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Writing routine ETL and data-pull SQL", "source": "AI exposure" },
+  { "label": "Open positions", "value": "228 related listings nationwide, 1 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You board the company shuttle at the gate of your compound in town. Past the south second ring road the view empties out. Before you get off you check your phone: the overnight jobs are all green, the best news of the day.",
+  "Stand-up. A client in Shanghai asks in the group chat why yesterday's order report is short three hundred rows. Your team lead glances at you, and you open the scheduler.",
+  "You trace the lineage layer by layer, ADS back to DWD, and find an upstream field has acquired a new enum value. You write a SQL statement and backfill the missing numbers first.",
+  "Shaomai and mutton offal soup in the canteen. A colleague from operations says over lunch that a row of racks had fan alarms again last night. The wind out here, at least, costs nothing.",
+  "You write ETL for a newly connected business table. There are thirty-odd columns in the field map, and for two of them the documentation and the actual data don't agree.",
+  "A video meeting with the client's product manager. Their \"active users\" are a day off from yours. You paste the definitions into a shared document and go through them sentence by sentence.",
+  "The shuttle left long ago, so you grab a shared ride back to town. The wind rocks the car, and on your phone you go through tonight's scheduler dependencies once more.",
+  "Your phone buzzes. A Spark job has run out of memory. You pull on a jacket and open your laptop, rerunning it and thinking that in five hours, someone in Shanghai will want to see this table."
+ ],
+ "ladder": [
+  { "title": "Junior Data Developer", "stage": "Junior", "focus": "Routine ETL scripts, single-table report pulls, carrying out scheduled database backups and daily cluster checks; you move up by delivering accurately, causing no production incidents and answering business requests quickly" },
+  { "title": "Data Developer", "stage": "Mid-level", "focus": "Designing data warehouse layers (ODS to ADS) for a business line, orchestrating real-time and offline pipelines, basic performance troubleshooting; you move up on modeling quality, end-to-end throughput and pipeline stability" },
+  { "title": "Senior Big Data Developer", "stage": "Senior", "focus": "Tackling high-throughput, low-latency core pipelines (major sales events, complex stream joins), solving data skew and out-of-memory bottlenecks, cutting storage and compute costs; you move up on hard technical wins and resilient architecture" },
+  { "title": "Principal Data Engineer", "stage": "Principal / Expert", "focus": "Setting standards for data flow across complex business domains, leading lakehouse or stream-batch technology choices, building company-wide data security and quality governance; you move up on technical leadership and cross-team influence" },
+  { "title": "Data Architect", "stage": "Architect / Director", "focus": "Planning the enterprise's multi-cloud data foundation and AI data infrastructure (vector databases and pipelines), data asset monetization strategy, top-level technical governance" }
+ ],
+ "ai_tasks": [
+  { "name": "Making the call and owning it when production breaks", "how": "AI can read logs and offer suggestions. At three in the morning, how big the damage is, whether to backfill and whether to tell the client: someone has to decide and carry it." },
+  { "name": "Writing routine ETL and data-pull SQL", "how": "AI can generate scripts and table definitions from field descriptions. People spot-check definitions and edge cases." },
+  { "name": "Parsing lineage and setting data-quality rules", "how": "AI can parse lineage automatically from SQL and scheduler configs and apply common rules. People only look at the unusual ones." },
+  { "name": "Troubleshooting failed batches and data skew", "how": "AI can read logs, locate causes and suggest tuning. Whether to change it, and whom the change will affect, is for a person to judge." },
+  { "name": "Agreeing definitions with the business and layering the warehouse", "how": "AI can draft the modeling plan. What exactly the business means by that word, you have to sit down and work out with a person." }
+ ],
+ "events": {
+  "e_first_fix": "You fixed an alert on your own for the first time, forty minutes from reading the log to finishing the backfill. The next day your team lead wrote in the weekly report: no impact overnight. You read it several times.",
+  "e_wrong_delete": "You ran the wrong partition in production and overwrote a full day of data. The whole team stayed with you backfilling until dawn. Your team lead said only: from now on, two people look at this kind of operation.",
+  "e_oncall": "Your week on call came around, and you were woken four nights out of seven. At Friday's meeting you stared at the screen and for a long while couldn't recall who had just been speaking.",
+  "e_skew": "A major-sale job had been running for eleven hours without finishing. You stared at the Spark UI until you found the skewed key, added salt to spread it, and it finished in forty minutes.",
+  "e_client_scold": "A client in the east posted to the big group chat: \"Is there nobody on duty over there?\" You pulled up months of SLA numbers, didn't send them, and deleted the reply you had written.",
+  "e_wind": "A winter whiteout closed the expressway and the shuttle couldn't get back to town. A whole roomful of you spent the night in the company lounge, while the fans in the machine hall spun more cheerfully than anyone.",
+  "e_marriage": "A classmate introduced you to someone who works at a hospital in Hohhot. Your phone buzzed twice at your first meeting, and they said, maybe go look at your table first. Later you got married.",
+  "e_house": "You bought a place in Saihan District. Colleagues worked out the monthly payment and said classmates in the east would cry to hear it. You stood on the balcony and watched the Daqing Mountains in the distance, not moving at all.",
+  "e_child": "You took leave the night your child was born, and the phone rang anyway. A coworker took over for you. You shoved the phone under the pillow, and for the first time didn't go look at the alert.",
+  "e_ai_sql": "When it comes to writing data-pull SQL, AI is much faster than you are. The business now asks the machine for its numbers directly. Your tickets dropped by half, and your team lead started asking what else you could do.",
+  "e_ai_error": "A script AI generated ran fine and produced numbers, only with refunds counted as sales. You wrote the case into the team's review checklist as item one.",
+  "e_ai_oncall": "Intelligent operations took over half the alerts, retrying and backfilling on its own. You were woken only once this month, and lying back down felt slightly odd.",
+  "e_contract_lost": "The company's biggest client took its data work in-house and the whole project team was disbanded. You were moved to another business line and started over, reading tables.",
+  "e_visit_room": "A friend in operations took you into the machine hall. Row on row of racks hummed, and cold air rose from under your feet. It came to you that the job that wakes you at night has a place where it actually lives.",
+  "e_apprentice": "A new campus hire mistook the production database for the test one, and was stopped by permissions, luckily. Remembering yourself back then, you told the story of that night's backfill and then helped fill out the permission form.",
+  "e_parent": "Your father was diagnosed with a chronic illness, and the family went home to stay with him for two weeks. In the county hospital corridor, on your phone's hotspot, you still fixed two jobs.",
+  "e_tech_old": "The stack you had used for ten years is being replaced. At a meeting the young people said a string of words you had never heard. At home you quietly opened the documentation and read until late.",
+  "e_neck": "Your neck crackles when you turn it, and the little finger on your right hand goes numb. The doctor tells you to look at screens less. You say all right, and on the ride home you open the scheduler panel again.",
+  "e_empty_road": "That road that lay empty when you first came is now lined with data centers on both sides. The young people on the shuttle no longer know what used to be here."
+ },
+ "choices": {
+  "c_promote1": {
+   "title": "Going for Data Developer: taking the old pipeline",
+   "situation": "The team has an old pipeline nobody dares touch, scripts written by several generations of predecessors, and any change sets off alerts. To make Data Developer you need a solid piece of independent delivery. Do you take this tough bone?",
+   "options": [
+    { "label": "Take it and rebuild it", "result": "Over a few months you split it into four layers, and overnight alerts fell by more than half. The handover document ran forty pages. The first page said: don't rush." },
+    { "label": "Do your own tickets well first", "result": "You delivered every ticket on time and your team lead found you reassuring. At review time he asked what you were proudest of, and you had to think for a while." }
+   ]
+  },
+  "c_flink": {
+   "title": "Real-time or stay offline",
+   "situation": "The company is taking on real-time work and needs someone to dig into Flink and Kafka. You would start from zero and pull harder on-call rotations. In the offline warehouse you know your way around, only AI is getting to know that work too.",
+   "options": [
+    { "label": "Go real-time", "result": "You read the official docs three times. The early morning your first stream join ran through, you went for two laps around the building." },
+    { "label": "Master the offline side", "result": "You became the person in the company who knows these tables best. Colleagues with a problem ask you first and the documentation second." }
+   ]
+  },
+  "c_ai": {
+   "title": "Leading the AI data-pull platform",
+   "situation": "The boss wants the business to pull data in plain language. Your tickets would drop by more than half, but someone has to build the semantic layer, definitions and guardrails. If it works you have engineered yourself out of a job, or into a new one.",
+   "options": [
+    { "label": "Lead the build", "result": "You wrote the definitions of hundreds of metrics into rules one by one, and the machine began answering decently. Your job description got rewritten too." },
+    { "label": "Stay out of it", "result": "Outsiders built the platform, and when it gets a number wrong you're still the one who explains. You go on making your tables, only there are fewer and fewer of them." }
+   ]
+  },
+  "c_east": {
+   "title": "A big company in Hangzhou wants you",
+   "situation": "A former coworker refers you to a big company in Hangzhou at more than twice your pay, though housing there costs five or six times what it does here. Your family is all in Hohhot and your spouse's job can't move. If you go, you go alone.",
+   "options": [
+    { "label": "Go to Hangzhou", "result": "You dragged your suitcase to Hangzhou. The cluster was ten times bigger and the overtime doubled. On weekend video calls, you could see the Daqing Mountains from the balcony at home.", "end": "You became a data specialist at a big Hangzhou company. Every time you saw news about the northwest's data centers afterward, you thought of that very windy road." },
+    { "label": "Stay in Hohhot", "result": "You thanked your old coworker and kept riding the shuttle. The day that month's pay landed you looked at the number a while, and then renewed your child's piano lessons." }
+   ]
+  },
+  "c_senior": {
+   "title": "Standing for Senior Big Data Developer",
+   "situation": "The company is putting forward a few people for Senior Big Data Developer this year, each to present a hard-won case. You have a cost-cutting result, but it took resources from another team, and they will be in the audience at your defense.",
+   "options": [
+    { "label": "Get up and present it", "result": "You had the accounts perfectly straight. The other team lead asked you three nasty questions and you answered two and a half. Your name was on the list." },
+    { "label": "Don't apply this round", "result": "You felt another year would be more solid, and you didn't want to fight anyone on stage. At the year-end pay adjustment you came up a little short." }
+   ]
+  },
+  "c_senior2": {
+   "title": "Going for Principal Data Engineer: one data standard",
+   "situation": "Principal Data Engineer takes a record of driving things across departments. The company wants a unified data standard, but every business line has its own numbers and its own temper. Whoever pushes this usually pleases nobody on either side.",
+   "options": [
+    { "label": "Take on the push", "result": "A year and more of alignment meetings and dozens of hearings of \"our situation is rather special,\" and at last a thirty-page standard that most people use." },
+    { "label": "Keep doing hard technical work", "result": "You kept solving the hardest performance problems and your coding hands stayed busy. Others set the company's standards. You contributed a few comments." }
+   ]
+  },
+  "c_product": {
+   "title": "Moving to AI platforms",
+   "situation": "A company doing data infrastructure for large models has made an offer, here in the same park. The work is vector stores and training pipelines, new technology and high pay. The company is only two years old, and nobody knows how long it will last.",
+   "options": [
+    { "label": "Jump ship", "result": "You went to work in a different building on the same windy road. All your new colleagues are younger than you, and your job is to tell them what it means not to change things before launch.", "end": "You moved over to become an AI platform engineer. The pipelines under your care fed one model after another, and the alert that sounded at night had a new tone." },
+    { "label": "Stay where you are", "result": "You chose to stay, since this company could at least make next month's payroll. On the new platform's promotional page, you took a few looks at the job requirements." }
+   ]
+  },
+  "c_architect": {
+   "title": "Standing for Data Architect",
+   "situation": "The boss asks if you'll stand for Data Architect. You would set the whole company's technical direction, talk with clients' CTOs, work out budgets for the team, and more or less stop writing code. You rather like that quiet satisfaction after fixing something in the middle of the night.",
+   "options": [
+    { "label": "Stand for architect", "result": "You took to reading budget sheets and client contracts, and what you write most is slides. One night an alert sounded and you reached for your phone, then found you were no longer on the rota." },
+    { "label": "Stay a front-line expert", "result": "You recommended a colleague from the next team and went on writing code and bringing people along. When the hardest job goes wrong, they still call you." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you silence the on-call group and glance at the scheduler panel one more time: all green. Most of the scripts you wrote are gone, and the comments on two tables still carry your name. Downstairs the wind is as strong as ever, and the rows of gray buildings still have no windows. The shuttle comes. You get on and sit by the window.",
+  "burnout": "After several years of being woken at night, you began waking even when there was no alert. The doctor said regular hours. You told your manager you would stop going on call and moved to a documentation and training role, at noticeably less pay. At night the phone stays in the living room, and you're learning not to look at it."
+ },
+ "stages": [
+  "You take tickets, write SQL, hang your scripts on the scheduler and watch the DAG turn green cell by cell through the night. The numbers the business wants are yours to pull, and one report's definition can bounce back and forth three times. Your team lead reviews your code and circles every hard-coded date. You still have to apply for production access.",
+  "You run the warehouse for a whole business line on your own. The layering from ODS to ADS is yours, and at model reviews it's your turn to present. Your name is on the offline and real-time pipelines, and when something goes wrong the first call comes to you. When interns arrive you set up their accounts and tell them which table never to touch.",
+  "You have the hardest, heaviest pipelines, and the skew, the out-of-memory errors and the costs that go with them. The cluster bill lands in your inbox every month and you take it around to negotiate resources with each business team. Other people's plans now have to get past you, and you spend more time reading code than writing it.",
+  "You set the company's data standards and technology choices, writing the RFCs for how the lakehouse will evolve and which component gets replaced. Half your time goes to alignment meetings, persuading the heads of several business lines to work from one standard. When a major incident happens, the first page of the postmortem carries your name.",
+  "You discuss data foundations with clients' CTOs and do the year's return on investment with the boss, compute and headcount all on one sheet. You barely write code now. You write roadmaps and hiring requirements. On big technical bets the whole company ends up looking to you for a position, and they remember what you said."
+ ],
+ "work": [
+  "Xiao Sun from the business side wants last month's repeat-purchase list. You run it and send it. She says it's shorter than she remembered. You check, and you've filtered out returned orders too.",
+  "The first time you configure dependencies in DolphinScheduler you hook upstream to downstream backward. The next morning a whole row of tasks sits gray waiting for you, while your team lead drinks water nearby and says nothing.",
+  "A senior colleague has you read three hundred lines of old SQL. After two days of drawing a flowchart you find one section of it hasn't been used in five years.",
+  "At a model review Old Han on your team asks why this wide table goes in DWS. You explain for ten minutes. He nods and then asks: and three years from now?",
+  "A client's product manager wants one new dimension. You calculate that it means reflushing two years of history, and tell them this will have to wait until next week, and also cost a bit more in cluster fees.",
+  "You write a one-page prelaunch checklist for the new intern, who tapes it beside his monitor. Half a year later, people from the next team start asking you for that sheet of paper.",
+  "When this month's cluster bill arrives you sort it by table, bring the owner of the top one into a meeting room, and together take half of its unused partitions offline.",
+  "The state of a stream join keeps swelling. You change the TTL and then the key design. After launch you watch the memory curve for three days before you feel safe going to lunch.",
+  "Xiao Meng, the campus hire, has code that runs. All you write in the review is: what if this field is empty? An afternoon passes before the reply comes: let me look again.",
+  "Your lakehouse RFC draws eighty-odd comments from three business teams. You answer them one by one and lose your whole Saturday morning.",
+  "At a major-incident postmortem you don't ask who performed the operation. You only ask why it was possible for one person to perform it successfully, and then you change the permission scheme.",
+  "Two business lines bring their fight over the definition of \"active user\" to you. You write both definitions into one table and add a column: answerable to whom.",
+  "Discussing compliance with a technical head at a bank in the east, you draw on one sheet of paper where data stays, where the backups are and who can see them, and tick off half on the spot.",
+  "At the budget meeting finance wants you to cut twenty percent. You bring out a table sorted by business value, point to the bottom three items and say start there, I'll go tell them.",
+  "You interview a candidate and talk about only one thing: what went wrong at night in a system you were responsible for, and how you told your boss."
+ ],
+ "past": [
+  "You went to middle school in a county of Inner Mongolia. The school computer room had twenty machines, and after class you always wanted to stay a little longer, until the teacher locked up.",
+  "Your gaokao (college entrance exam) score was good enough for a decent university in the region. Your father had heard that computers meant easy jobs, and together, over a phone, you filled in software engineering.",
+  "In sophomore databases, the teacher covered transactions and indexes. In lab you brought a slow query down from over ten seconds to a few dozen milliseconds, and were happy for the entire afternoon.",
+  "The summer after junior year you interned at a company in Beijing, ninety minutes each way on the subway, your shared room too small for a desk. The work wasn't hard. You just kept feeling that your days belonged to someone else.",
+  "Near graduation you heard Horinger New Area was hiring, data centers going up one after another. The pay was less than half of Beijing's, but you did the math and in Hohhot you could afford a home. You sent your resume."
+ ],
+ "late": {
+  "pension_note": "Estimate: a basic pension for company employees, on Hohhot's contribution base, comes to about forty to fifty percent of pre-retirement pay.",
+  "scenes": [
+   "For the first few months of retirement you keep waking at two in the morning and reaching for your phone. There is nothing on it. You turn over and listen to the wind outside.",
+   "Old colleagues organize a tech talk and ask you to tell stories of the incidents from those years. The young ones laugh, not quite believing you really had to write those scripts by hand.",
+   "You make a spreadsheet of utility bills for your homeowners' committee, with some small formulas. The committee chair says this is much clearer than the accounts the property company used to give them.",
+   "After you stop going on call you sleep through a full night for the first time and wake to broad daylight. You sit on the edge of the bed for a good while, not knowing what this day is for.",
+   "You begin walking the paths at Chile Plain, and don't even mind when your phone runs out of battery. Back home you plug it in. There aren't many messages.",
+   "A former coworker asks if you want to come back, saying machines cover all the night shifts now. You think it over and say: let's wait till it's been woken up a few times too.",
+   "The day you leave the company you finish the handover document, delete yourself from the on-call rota, and look at the now-empty column of cells.",
+   "At your new place you still like to look one more time before launch. People laugh at you for being careful. You don't explain, and only tape the checklist up beside your monitor again.",
+   "You go back to Horinger and the roadside trees have grown tall. Your old company has a new name. You stand at the gate a while. The guard asks who you're looking for. You say just passing by.",
+   "AI writes most of the tables now and gives them to people to check. But when the year-end accounts don't match, someone still has to ask what that field really means.",
+   "Your grandchild asks what you used to do. You say I helped people get their numbers right. They ask, can't numbers get right by themselves? You think for a long time and say no.",
+   "Some of those gray buildings have new machines now, and others have been given over to different uses. The wind is the same, coming from the Daqing Mountains. That hasn't changed at all."
+  ],
+  "closing": {
+   "retire": "One night many years later you wake to a great wind outside the window. You look at the clock. Two-twenty. It's very quiet all around. You lie back down and pull up the covers.",
+   "burnout": "Many years later you are on the balcony watching the sunrise, your phone charging indoors. The sky brightens bit by bit, cell by cell, as if something were turning green.",
+   "end": "Many years later, on an old computer, you find a prelaunch checklist you wrote long ago. Item one: don't rush. You look at it and save another copy."
+  }
+ }
+}

@@ -1,0 +1,157 @@
+{
+ "id": "hydrogen-tl",
+ "occupation": "Water Electrolysis Hydrogen Technician",
+ "role": "Water Electrolysis Hydrogen Technician at a Wind-and-Solar Hydrogen Project",
+ "headline": "A hydrogen-program graduate posted to a new wind-and-solar hydrogen plant on the edge of the Horqin Sands in Tongliao, adjusting electrolyzer load to follow the speed of the turbines",
+ "unit": "The hydrogen plant of an integrated wind-and-solar hydrogen project in Tongliao",
+ "unit_type": "Renewable hydrogen project",
+ "city": "Tongliao, Inner Mongolia",
+ "city_tier": "Prefecture-level city",
+ "education": "Vocational college (hydrogen energy technology)",
+ "level": "A year as a field operator on the project, you can draw the whole plant's flow diagram from memory, and your hand still shakes the first time you sit in the control room",
+ "intro": "The plant stands at the edge of the Horqin Sands. Looking out you see rows of turbines and solar panels; looking in, white electrolyzers, rectifier cabinets and hydrogen storage tanks. You spent a year here as a field operator, and this month you were moved into the control room. From today you have to follow the wind in the sky to run the stacks, busy when the wind is strong and busier when it dies.",
+ "salary_note": "Estimate: site jobs on renewable projects include housing and a remote allowance, roughly level with the national figure or a little above; bonuses swing widely when the project's results are uneven.",
+ "facts": [
+  { "label": "Water Electrolysis Hydrogen Technician (Board / Main Control) (current level)", "value": "1–3 years, ¥5,780–8,500 a month (national average, derived from pay by experience)", "source": "Pay by experience" },
+  { "label": "Next level up", "value": "Shift Leader / Shift Superintendent (3–5 years)", "source": "Career map" },
+  { "label": "Pay after 3–5 years", "value": "¥8,500 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Responding to a hydrogen leak alarm", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Adjusting electrolyzer load to follow swings in wind and solar output", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "It is ten minutes on foot from the dorm to the plant, and the wind makes you walk sideways. Before you go in you press your palm on the static discharge ball by the door, and your phone stays in the locker.",
+  "Handover. The night operator says the wind dropped in the small hours and two stacks went down to low load. You take the log and look first at the oxygen-in-hydrogen number.",
+  "The wind power forecast shows a big ramp in the afternoon. You agree with the shift leader to climb the rectifier current ahead of it, step by step, never too fast.",
+  "Lao Han the field operator calls on the radio: the lye level difference on stack three looks large. You pull up the trend on the DCS and tell him to confirm it again on site.",
+  "The canteen has served potato and beef stew four days running. Outside the window is one gray-yellow haze, there is more sand today than yesterday, and the air filter differential is up a little again.",
+  "The wind really comes. The load goes up and up. You keep one eye on stack voltage and the other on the separator level, and the tea beside you has long gone cold.",
+  "The online analyzer needs calibrating. You and the lab tech check dew point and purity together, enter them in the operating record and sign.",
+  "Back at the dorm after your shift, you video-call home. The signal is bad, your parents' faces stutter, and outside the window the red lights on the turbines blink and blink."
+ ],
+ "ladder": [
+  { "title": "Hydrogen Management Trainee / Field Operator", "stage": "Entry", "focus": "Learns principles and process, patrols outside equipment, operates and maintains field equipment." },
+  { "title": "Water Electrolysis Hydrogen Technician (Board / Main Control)", "stage": "Junior", "focus": "Monitors the control board, adjusts parameters, runs purification and compression systems, and earns electrical and special-equipment certificates." },
+  { "title": "Shift Leader / Shift Superintendent", "stage": "Mid-level", "focus": "Leads a shift, handles abnormal conditions and adjusts load to the variable power supply." },
+  { "title": "Operations Supervisor / Hydrogen Plant Manager", "stage": "Senior", "focus": "Manages whole-plant operations, maintenance, safety and performance targets." },
+  { "title": "Head of Hydrogen Production Technology", "stage": "Principal", "focus": "Oversees multi-site operations, process optimization and the safety system." }
+ ],
+ "ai_tasks": [
+  { "name": "Adjusting electrolyzer load to follow swings in wind and solar output", "how": "AI can suggest rectifier current and the number of stacks to run from wind forecasts and stack data, and can even track automatically within set limits. People set the safety boundaries and take over when something odd happens or the equipment's state is unclear." },
+  { "name": "Responding to a hydrogen leak alarm", "how": "AI can see a rising concentration earlier and push an alarm, but isolating, depressurizing, ventilating, evacuating and reporting all need someone on site to judge, act and take responsibility. Lives are involved, and it cannot be left to AI." },
+  { "name": "Starting an electrolyzer up to full load by procedure", "how": "AI can turn the procedure into a checklist and verify that nitrogen purge, heat-up and power-on parameters are met, and log them. A person confirms valves and lines on site and decides if each step can go ahead." },
+  { "name": "Monitoring and handling a rising oxygen-in-hydrogen alarm", "how": "AI can compare the oxygen trend, level differences and analyzer history and suggest a likelier cause: diaphragm, level or instrument drift. A person must verify on site, calibrate the analyzer and decide whether to reduce load or stop the stack." },
+  { "name": "Walking a round of field checks after handover and topping up feedstock", "how": "AI can generate routes, flag missed points and log data. Looking, smelling, listening, touching, testing for leaks and topping up lye and pure water still need a person, in person." },
+  { "name": "Organizing the annual electrolyzer overhaul", "how": "AI can draft the overhaul plan, sequence the work and produce the parts list and report from past records and equipment condition. People set when to stop a stack, coordinate the crews, oversee draining the lye, changing diaphragm seals and pressure tests, and answer for safety and quality." }
+ ],
+ "events": {
+  "e_cold_snap": "In January at thirty below, the heat tracing on the pure water line reported a fault. You spent the night outside in heavy coats checking it. A glove froze to a valve and took two tugs to come free.",
+  "e_sand": "When the spring dust storms come, the compressor filters get changed every three days, and the field operators come in and spit yellow.",
+  "e_curtail": "Several days of light wind and weak sun left the electrolyzers idling at low load, with less than half the usual output. The monthly target was missed, and nobody had much to say.",
+  "e_diaphragm": "Your first electrolyzer overhaul: draining the lye, taking apart the plates, changing diaphragm gaskets. Your hands were spotted with white marks from the lye, and you washed them over and over in boric acid water.",
+  "e_alarm_catch": "The oxygen-in-hydrogen figure crept up, and the trend did not look like instrument drift. You cut the load and had the analyzer calibrated, and the cause turned out to be an aging diaphragm. The shift leader put it on your record.",
+  "e_drill": "The plant ran a hydrogen emergency drill: isolate, depressurize, nitrogen purge, evacuate. The assessors had stopwatches. You were half a minute faster than last time.",
+  "e_visitors": "Another tour group came, in brand-new overalls, taking photos. You were called out to explain, and in five minutes you put green hydrogen into plain words.",
+  "e_lonely": "The project is out at the edge of the county, and you get to town once a month. You planted a few scallions behind the dorm and watered them. The next day the wind blew them over.",
+  "e_ammonia_contract": "The green ammonia line downstream finally signed a long-term contract. The stacks are no longer just idling, and the year-end bonus went up a little too.",
+  "e_no_buyer": "The hydrogen would not sell, and the tanks were full. For most of the day the whole plant waited, and the young people began quietly sending out résumés from the dorm.",
+  "e_ai_load": "AI began giving load suggestions from the wind power forecast, and a whole afternoon went by without a manual ramp. You tried letting go. Your hand stayed hovering over the mouse.",
+  "e_ai_false": "AI said one stack had abnormal oxygen-in-hydrogen and recommended stopping it. You took people out to calibrate and found the analyzer's sample line had frozen. You added it to the false alarm list.",
+  "e_ai_plan": "AI drafted the annual overhaul plan, parts list and all. But it had scheduled the overhaul for April, the best wind of the year. You moved it to August.",
+  "e_love": "Back in Tongliao city for paperwork, you met a young woman who worked at a bank. The first time she heard about your job she asked what this gas was for.",
+  "e_house": "You put a down payment on a place in downtown Tongliao, more than two hundred kilometers from the project. You come home every two weeks, and your shoes on the rack by the door are always clean.",
+  "e_child": "The day your child was born the wind was howling. You swapped shifts with a coworker and drove more than three hours on the expressway, past turbines spinning fast by the road.",
+  "e_coworker_leave": "A classmate who came out with you quit and went back south, saying the wind here blows the spirit out of a person. You saw him off at the station, came back and took on a few extra night shifts.",
+  "e_knee": "From all those winters checking the lines, your knees ache whenever it is cold. You bought knee pads and still walk the whole plant every day.",
+  "e_parent_ill": "Your father went into the hospital at home. You took a few days of leave, and the calls from the project kept coming one after another.",
+  "e_apprentice": "A new kid asked why you have to do a nitrogen purge first. You did not explain the principle. You took him out to the unit and walked him along the line with your finger on it.",
+  "e_second_project": "The company opened another project in Chifeng and sent you to lead the start-up. When you got there you found they were using the very start-up procedure you wrote."
+ },
+ "choices": {
+  "c_cert": { "title": "Take the high-voltage electrician's certificate", "situation": "The plant encourages you to get the high-voltage electrician's special-operations permit, which means classes in Tongliao city at your own expense. You can work the board without it, but on the rectifier side you will only ever stand outside and watch.", "options": [
+   { "label": "Take leave and sit the exam", "result": "You stayed ten days in a small hotel in town and memorized wiring diagrams till your head ached. Back at the plant, the rectifier cabinet opened to you for the first time." },
+   { "label": "Not now", "result": "You saved your leave for going home. Two years on, the new hires had the certificate, and the rectifier shifts went to them." }
+  ] },
+  "c_leave_hub": { "title": "A hydrogen filling station is hiring", "situation": "A hydrogen filling station in Zhengzhou is hiring operators, at about the same pay, in a big city, where you could go home and find someone to date, and still use what you know about storage and safety. Here at the plant there is still only the wind.", "options": [
+   { "label": "Go to the station in Zhengzhou", "result": "You put on a reflective vest and fill one heavy truck after another, and after work you can get a hot bowl of braised noodles. Now and then you think about what the wind was like here.", "end": "You became an operator at a hydrogen station in Zhengzhou, filling heavy trucks every day, and you never again hear the turbines at night." },
+   { "label": "Stay on the project", "result": "You swiped the listing away. The plant is new, and you want to see what it can actually become." }
+  ] },
+  "c_banzhang": { "title": "Compete for Shift Leader", "situation": "The plant is promoting a Shift Leader to run one crew, deal with abnormal conditions and write the plan for handling variable power. Whoever does it has to be the first to pick up the phone on the windiest night.", "options": [
+   { "label": "Compete for Shift Leader", "result": "In your first week you changed the handover form. On the night the wind came, you stood in the control room for seven hours." },
+   { "label": "Get the board job solid first", "result": "You passed it up. Another year went by, and you know the temperament of these stacks better than anyone." }
+  ] },
+  "c_ai_load": { "title": "Someone has to check the AI load control", "situation": "The company is bringing in automatic AI load tracking and needs someone to set the safety boundaries, labeling years of abnormal conditions to tell the system when it must hand control back. The work does not count toward hours.", "options": [
+   { "label": "I will set the boundaries", "result": "You dug out every load drop and every alarm and wrote them up as rules. After it went live, other plants asked for your rules." },
+   { "label": "Let someone else do it", "result": "You still prefer to ramp by hand. After it went live the chances got fewer, and you stand aside and watch it climb." }
+  ] },
+  "c_stay_project": { "title": "Phase two is on hold", "situation": "The green ammonia second phase has been postponed. The company says you can stay or be sent to another province. Stay and the pay is the same with less to do; go to a new project and earn more, farther from home.", "options": [
+   { "label": "Go to the new project", "result": "You dragged your bags to a plant in Xinjiang. The wind there was stronger still, and the three young people you brought were dizzy on the first day." },
+   { "label": "Stay in Tongliao", "result": "You stayed. In the slow days at the plant you filed more than ten years of operating records, and you had more time to video-call home." }
+  ] },
+  "c_zhanzhang": { "title": "Compete for Hydrogen Plant Manager", "situation": "The old manager is going to headquarters, and the company wants you to compete for Hydrogen Plant Manager. Operations, maintenance, safety and targets for the whole plant would be yours, along with grid dispatchers, downstream customers and local emergency authorities.", "options": [
+   { "label": "Compete for Plant Manager", "result": "After that you never dared silence your phone. In the first month you went to the local emergency authority three times and held twelve meetings." },
+   { "label": "Go on leading a shift", "result": "You said you still preferred listening to the stacks. The new manager was sent from headquarters, and for the first month he asked you everything." }
+  ] },
+  "c_vendor": { "title": "An electrolyzer maker comes hiring", "situation": "An electrolyzer manufacturer wants you for field service and system integration, at much better pay, because they need someone who understands operations. But you lack the degree and would have to get a bachelor's, and you would be traveling year-round.", "options": [
+   { "label": "Go to the manufacturer", "result": "You study for a part-time degree while commissioning plants around the country. For the first time you see other people using the kind of abnormality list you once wrote.", "end": "You became a field service engineer for an electrolyzer maker, dozens of projects' operating curves on your laptop, heading wherever the wind comes up." },
+   { "label": "Stay in operations", "result": "You declined. On night duty you went over that offer once more, then got back to watching the curves." }
+  ] },
+  "c_tech_head": { "title": "Compete for Head of Hydrogen Production Technology", "situation": "The company now has four plants and needs a Head of Hydrogen Production Technology to run multi-site operations, process optimization and the safety system. You would be based at headquarters and would have to understand data and write policy. It is not just a matter of watching curves.", "options": [
+   { "label": "Go for Head of Technology", "result": "You moved from the plant to an office tower. The first time you spoke at a headquarters meeting you said: behind these numbers is someone turning a valve by hand at thirty below." },
+   { "label": "Stay at the plant", "result": "You let the chance go. When the spring dust comes you are still standing at the plant gate, watching the turbines start to turn, one after another." }
+  ] }
+ },
+ "endings": {
+  "retire": "Your last shift was a day shift, and the wind was light. In the control room you slowly evened out the load on all four stacks, and wrote the numbers in the log more neatly than usual. At handover the young shift leader asked if there was anything else to pass on. You thought about it and said: in winter, remember to check the heat tracing. Walking out of the plant, you looked back once. The turbines were still turning.",
+  "burnout": "After that winter your knees and blood pressure could not take any more, and the doctor told you no more shifts and no more standing in the cold wind. You handed over your post and moved to the office in downtown Tongliao to keep the ledgers. At three in the afternoon the wind passes outside the window, and you still reach for your phone to look at the wind power curve."
+ },
+ "stages": [
+  "You sit at the DCS in the control room, watching rectifier current, stack voltage, oxygen in hydrogen and separator levels, ramping step by step with the wind and solar forecast. The field operators top up lye and check for leaks on site, and when anything looks off they call you first. Operating records, analyzer calibration and purity data all pass through your hands. As a field operator you used hands and ears. Now you use eyes and judgment.",
+  "You lead a crew; rosters, handovers and abnormal conditions all come to you. The plan for variable power is yours to work out in advance: how many stacks up when the wind comes, how many idling when it goes. When an alarm sounds everyone looks at you first, and the leak detector and nitrogen purge steps you can recite with your eyes shut. You have begun to sign for other people, and to answer for them.",
+  "The plant's operations, maintenance, safety and targets are all on your sheet. You work out plans with grid dispatch, gas volumes with downstream customers, accompany the local emergency authorities on inspections, and set the dates of the electrolyzer overhaul. Your hands hold work permits, maintenance plans and monthly reports. Now and then you walk out on site and feel a pipe, and the young people get nervous.",
+  "You oversee several plants' operating data and the safety system, half your time on planes and high-speed trains. You compare specific energy use across projects, decide which plant changes membranes and which adds stacks, put accident case studies into training, and work out returns on investment with headquarters. You seldom touch a valve anymore, but you still read the procedures others write, line by line."
+ ],
+ "work": [
+  "Lao Han reported the level difference on stack three was large. You pulled up the trend and had him compare with the level gauge on site. The two of you checked three times before putting down your radios.",
+  "The wind forecast and the actual were well apart. You brought the current back by hand, watching the stack voltage slowly fall, and the shift leader passed you a cup of tea from behind.",
+  "On calibration day Xiao Lyu the lab tech said the dew point reading seemed to wander. You switched to another sample line, read it again, and the number held steady.",
+  "At the pre-shift meeting you went through last night's load drop from the start and had each person say what they had been doing at the time. Only at the end did you say where you yourself had gone wrong.",
+  "A field operator by the hydrogen compressor thought he heard a strange noise. You went over with the leak detector and a listening rod, crouched for half an hour, judged it to be a bearing, and wrote the repair order.",
+  "At more than twenty below in the middle of the night you checked the heat tracing section by section with a portable detector. At the seventh joint your flashlight found the break.",
+  "Before the electrolyzer overhaul you went over the work permits three times with the manufacturer and the maintenance lead. The last time you did it standing beside the lye drain line.",
+  "The downstream ammonia dispatcher suddenly wanted more volume. You did the math on the tanks and the wind forecast and replied in two words: can't do. Then half a page of explanation.",
+  "The local emergency authority came to inspect and asked item by item about calibration records for the hydrogen alarms. You handed over the ledger and took them to see a detector that had just been calibrated.",
+  "Specific energy use for all four plants went into one table, Tongliao the lowest. You called its manager to headquarters and had him explain how they ran the stacks, and the other managers took notes.",
+  "The new safety procedures landed on your desk. You sent back the section on hot work around hydrogen with a note in the margin: whoever wrote this step has never been on site.",
+  "The investment team worked out returns on changing membranes using the manufacturer's life figures. You sent them Tongliao's measured decay over the years, and the table was changed the same day."
+ ],
+ "past": [
+  "Your family was in Fuxin, Liaoning, and your father spent half his life in the mines. When the mine closed he did odd jobs elsewhere. He always said: don't learn this, learn something that will still be around.",
+  "Your gaokao (college entrance exam) score reached the junior college line, and on the application form you noticed a new major: hydrogen energy technology. The teacher said nobody knew what would become of it. The tuition, at least, was cheap.",
+  "In your second year you interned at a fuel cell factory and heard for the first time that electrolysis was more than a textbook experiment, that a stack could be bigger than a room.",
+  "At graduation a renewable energy company came to recruit management trainees, willing to move with projects, housing included. You signed, and they said the first stop was Tongliao.",
+  "You took the train to Tongliao and four more hours by road to the project. Your first year you were a field operator, following along with a patrol sheet, and you drew the plant's flow diagram seven times."
+ ],
+ "late": {
+  "pension_note": "Estimate: project companies pay social insurance on the local base, so with a full record the pension is about 45 percent of your final monthly pay; project bonuses do not count.",
+  "scenes": [
+   "After retiring you went back to Fuxin, where the wind in town is mild. For the first month you were always on the balcony looking at the sky, working out how many stacks you would run today if you were at the plant.",
+   "The company asks you back to teach newcomers for a week. You take them out to the heat tracing and have them feel it themselves. It works better than a hundred slides.",
+   "You and your wife take a high-speed train south, and there are turbines turning outside that window too. You count them and say how much hydrogen this stretch could make in a year. She tells you to look at the scenery.",
+   "You handed over your post and recovered in the place in Tongliao. It was strange at first. The apartment was too quiet, no wind and no alarms.",
+   "You took a part-time job with the neighborhood, checking gas alarms for old people. They call you master. You press each one and write it in a notebook.",
+   "Your former apprentice has become a plant manager, and he drives for hours to see you, bringing a case of beef from the plant canteen. You sit and drink tea, and hardly talk about work.",
+   "The day you left the plant the wind was strong. Far down the road you could still see that line of turbines in the mirror. People posted goodbye in the group chat, then started discussing the next shift.",
+   "At the new job everyone talks about the price of hydrogen. Sometimes you think of that valve on the night of thirty below, and feel that only then did you see what hydrogen looks like.",
+   "At a trade show you run into your old shift leader, his hair gone completely white. The two of you stand in front of a demo unit, pointing out to each other what is wrong here and what is wrong there.",
+   "At the new plants, most of the load adjusting has been handed to the system. But every time a leak alarm sounds, the first one running toward it is still somebody in a hard hat.",
+   "Your knees hurt in the cold, and your child wants you to spend the winter in the south. You say you went last year, that the wind there is not enough, and sitting in the sun made you uneasy.",
+   "The bus in the street says hydrogen on its side. Your granddaughter asks what that is. You rest your hand on the side of the bus and say: this may be the wind from Grandpa's day."
+  ],
+  "closing": {
+   "retire": "One early morning many years later the wind rattles the window softly. You wake and listen, and do not get up. You only adjust the load for it, in your head.",
+   "burnout": "Many years later you are watering scallions in the yard, and this time the wind has not knocked them down. You sit on a little stool and watch the tips of the leaves sway.",
+   "end": "Many years later you come across a patrol sheet from those days, with a faint white mark of lye still on it. You rub it with a finger and tuck it back into the notebook."
+  }
+ }
+}

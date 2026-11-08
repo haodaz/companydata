@@ -1,0 +1,165 @@
+{
+ "id": "tea-maker-gy",
+ "occupation": "Beverage Mixologist",
+ "role": "Trainee Beverage Mixologist at a Tea-Drink Shop",
+ "headline": "Fresh out of vocational college, learning to shake drinks at the third station of a chain tea shop in Huaguoyuan, Guiyang",
+ "unit": "A chain tea-drink shop in the Huaguoyuan district of Guiyang",
+ "unit_type": "Chain tea-drink shop",
+ "city": "Guiyang",
+ "city_tier": "Second-tier city",
+ "education": "Vocational college (hotel management)",
+ "level": "Your health certificate has just come through, you know half the recipe sheet by heart, and the cup sealer still seals crooked",
+ "intro": "The shop is wedged between a few thirty-story office towers and a housing estate of tens of thousands, with a steep slope outside the door. It can rain three times a day here, and the delivery orders keep printing anyway. When your placement ended, the manager asked if you would stay, and you nodded. From today you stand at the third station of the bar with a measuring cup in your hand, and the first job is to learn the recipe sheet.",
+ "salary_note": "Estimate: base pay plus commission at a Guiyang chain tea shop runs about 85 percent of the national figure, a little more in peak season and during delivery-app sales, less in the slow months.",
+ "facts": [
+  { "label": "Trainee Beverage Mixologist (current level)", "value": "0–0.5 years, ¥3,500–5,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Senior Beverage Mixologist (0.5–1.5 years)", "source": "Career map" },
+  { "label": "Pay after 3–5 years", "value": "¥6,200 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Mixing and handing out several orders at once in the afternoon rush", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Morning equipment checks and pre-brewing the tea bases before opening", "source": "AI exposure" },
+  { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You roll up the shutter and the ground is still wet. First you check whether the ice machine is full, then you lift out the tea urn steeped last night and taste a spoonful. If it has gone bitter, it gets poured away.",
+  "Slicing lemons, washing roxburgh roses, boiling tapioca pearls. Every tub of ingredients needs a use-by label, and the little paper strips from the printer end up stuck all over your hands.",
+  "The office towers' lunch orders arrive. The ticket printer rattles one after another. At the third station your only job is ice, milk, shake, and pass it to the woman on the sealer.",
+  "The manager quizzes you off the recipe sheet: how many grams of grape pulp, how many seconds to shake. You get one wrong. She has you make it again, takes one sip, and says nothing.",
+  "The rain starts. A courier bursts in dripping and points at his phone, nearly late. You bag up the three cups and slip in an extra sheet of blotting paper without being asked.",
+  "School and office hours collide, and the line at the ordering screen runs out the door. A girl in uniform asks for thirty percent sugar, light ice, no pearls, add coconut jelly. You repeat it twice before you dare key it in.",
+  "Closing. The tea extractor has to be taken apart and washed, the syrup dispenser drained, the floor mats hauled to the door to dry. At the stock count half a box of strawberries is missing, and only the waste log makes the numbers add up.",
+  "You walk down the slope to the corner, where the silk-doll wrap stall is still open. Your wrist aches a little. Your phone lights up with tomorrow's roster: opening shift."
+ ],
+ "ladder": [
+  { "title": "Trainee Beverage Mixologist", "stage": "New starter", "focus": "Learns the bar stations and the full opening and closing routine; moves up by following the recipe SOP to the letter and passing the all-station assessment." },
+  { "title": "Senior Beverage Mixologist", "stage": "Core crew", "focus": "Rotates through every station, carries peak-hour output and ingredient prep; moves up on speed, low waste and training new staff." },
+  { "title": "Shift Supervisor", "stage": "Front-line lead", "focus": "Runs the rhythm of one shift, the roster, the delivery platforms and complaints on the floor; moves up on shift productivity and operating targets." },
+  { "title": "Store Manager", "stage": "Store management", "focus": "Runs people, money and goods at one store and answers for its revenue, margin and food safety; moves up on strong store results and on developing new supervisors." },
+  { "title": "Area Operations Supervisor", "stage": "Area management", "focus": "Oversees a cluster of company-run or franchised stores, supports new openings and audits operating standards; judged on area profit growth and compliance." }
+ ],
+ "ai_tasks": [
+  { "name": "Mixing and handing out several orders at once in the afternoon rush", "how": "AI can at best sequence the orders and flag the ones about to run late. Actually making them, swapping out a black tea past its time, calming the customer who is chasing an order: that takes a person on the spot, with hands that know the work." },
+  { "name": "Morning equipment checks and pre-brewing the tea bases before opening", "how": "If the machines have sensors, AI can remind you when to clean, log the checks and suggest how much tea to brew from past sales. A person still has to inspect, clean and sanitize, and taste the tea to know it is right." },
+  { "name": "Clearing a backlog of offline orders when the POS loses its connection", "how": "When the network goes down, AI and the system are mostly useless. Someone has to take orders by hand, reconcile three channels and enter it all once service returns; AI can only help check afterward for anything missed." },
+  { "name": "Preparing for the quarterly QSC spot audit", "how": "AI can generate a self-check list from the audit standards, sort the paperwork and rehearse the answers. A person has to walk each station, fix what is wrong and answer to the auditors." },
+  { "name": "Leading the flavor blend and draft SOP for a new osmanthus-oolong iced lemon tea", "how": "AI can pull together market research and blind-tasting notes, suggest flavor pairings and draft the SOP and ratios. A person has to taste, judge the balance of osmanthus, oolong and lemon, settle the recipe and prove it can be made at volume." },
+  { "name": "Training and assessing new staff on tea-extraction settings", "how": "AI can produce training materials and test questions and log each trainee's settings and mistakes. A person has to stand beside them, correct the movement and decide if they have really got it." }
+ ],
+ "events": {
+  "e_wrist": "On the day of the delivery-app sale you shook more than four hundred cups by yourself, and the next morning your right hand could not open a bottle cap. The doctor said tendon sheath inflammation. You wore plasters for three weeks and shook with your left.",
+  "e_storm_orders": "First day of the platform discounts, and the tickets came out of the printer and onto the floor. Seven of you worked until one in the morning, and the last bag of pearls was borrowed from the branch next door.",
+  "e_slope_rain": "A downpour turned the slope outside into a river and left every courier stuck halfway. The ice melted in thirty-odd finished drinks. You poured them out and made them again, one by one.",
+  "e_cili_tourist": "In July the people who come to Guiyang to escape the heat start to arrive. A group of aunties from Chongqing asked for the roxburgh rose drink by name, finished one each, then took four more back to the hotel.",
+  "e_bad_review": "A bad review claimed a hair in the cup, photo attached. You went through the security footage until eleven, and the whole make was clean. You still had to post the reply: we are so sorry.",
+  "e_label_qsc": "The QSC spot audit came, and one bottle of syrup had its use-by label dated a day late. The store lost its compliance bonus for the month. You were the one who stuck on that label.",
+  "e_new_kid": "On her first day the new girl whipped the milk foam into water. You said nothing, wrote the whipping time on a slip of paper, and taped it next to the machine.",
+  "e_ice_machine": "The ice machine quit on the hottest day of the year. You hauled six bags of ice back from the supermarket on your e-bike, and from the repairman you learned how to descale it and how to read the water line.",
+  "e_love": "One of the couriers who came for orders always took your trash down with him. After two years together you held the banquet back home in Zunyi.",
+  "e_house": "You put a down payment on a small two-bedroom in the north of Guiyang. The commute takes two transfers, but at least you will never have to move again.",
+  "e_child": "Your child was born. For a while you ran between the hospital and the shop, the late shifts went to other people, the pay shrank, and you got thinner.",
+  "e_ai_queue": "The POS was upgraded, and AI now merges dine-in orders with those from three delivery apps and tells you which cup comes next. There is a lot less shouting at the bar during the rush.",
+  "e_ai_forecast": "Going by last year's sales, the system said stock extra lemons. Then it rained for nine days and the iced lemon tea would not sell. Two cases went to waste, and you went back to reading the weather yourself.",
+  "e_auto_dispense": "Head office gave the shop an automatic dispenser. Syrup and tea come out to order, and a new hire can work the bar in three days. Hand-muddled lemon and tasting still need a person.",
+  "e_price_war": "Every shop in the city was selling at ¥9.9, and yours followed. Cups went up thirty percent, margin went down, and your commission this quarter was ¥600 less than last.",
+  "e_neighbor_close": "The tea shop next door closed after less than a year, and the for-lease sign stayed up two months. Its staff came in to ask if you were hiring.",
+  "e_knee": "After more than ten years on your feet, your knees creak on the way downstairs. You put an anti-fatigue mat under the bar and started doing your reports sitting down.",
+  "e_regular": "The girl who always wanted thirty percent sugar got into a university in another province. She came to buy one last cup and said you were the adult she had talked to most in all three years of high school.",
+  "e_parent_ill": "Your father went into the hospital back home in Zunyi. You could not get long leave, so you came off a night shift, caught the first high-speed train, and rushed back to open the next day.",
+  "e_apprentice_shop": "The first apprentice you trained opened a shop of her own and asked you to try the new drinks on opening day. The way she passed you the cup was exactly the way you do it.",
+  "e_young_words": "The young staff kept saying this one was too milky and that one had something to it. It took you a long while to understand they were paying a compliment."
+ },
+ "choices": {
+  "c_cert": { "title": "Take the Level 4 Beverage Mixologist exam or not", "situation": "An authorized assessment center has opened a class for the Level 4 (intermediate) Beverage Mixologist certificate, theory and practical, a few hundred yuan to enroll, classes on your days off. The shop pays the same either way. The certificate only matters when you try to move up.", "options": [
+   { "label": "Enroll, give up your days off", "result": "For the first time you wrote down tea leaves, water temperature and steep time as notes, and your blend scored highest in the group at the exam. The certificate sits in a drawer. You feel a little steadier." },
+   { "label": "Skip it and sleep", "result": "You slept till noon and went to Qingyun Road for a bowl of intestine noodles. Later, filling out the supervisor application, you left the certificate box blank." }
+  ] },
+  "c_zhiban": { "title": "Apply for Shift Supervisor", "situation": "The evening shift supervisor is being moved, and the manager asks if you want it. The job covers the pace of the shift, the roster, the delivery platforms and complaints on the floor. A few hundred yuan more, and you are the first to arrive and the last to lock up.", "options": [
+   { "label": "Take the shift", "result": "In your first week you took a dressing-down meant for a colleague and defused a line that nearly came to blows. You began to understand why the manager was always watching the screen." },
+   { "label": "Stay at the bar", "result": "You said you only wanted to make the drinks well. The manager gave you a look and handed the slot to someone newer. Your hands got steadier and steadier. Your payslip did not." }
+  ] },
+  "c_ai_setup": { "title": "Who looks after the AI stock planner", "situation": "Head office is pushing AI for stocking and rosters, and every store has to name one person to check the data: weather, school holidays, platform promotions, one line at a time, or the system guesses. No extra pay, a lot more spreadsheets.", "options": [
+   { "label": "I will check it", "result": "You entered Guiyang's rainy seasons and the timetables of the nearby schools. This shop's waste rate fell to the lowest in the area, and your name came up at the regional meeting." },
+   { "label": "Let the system run", "result": "You stocked by the system's numbers. When it was right that was easy, and when it was wrong that was easy too, since the system had done the math." }
+  ] },
+  "c_join_shop": { "title": "Your cousin wants to open a shop in Bijie", "situation": "Your older cousin has found a storefront by a school in a county town in Bijie and wants to take a franchise from a small brand. She needs someone who knows the bar and wants you to buy in. The fee and the equipment come to about ¥200,000. What you have saved is a fraction of that.", "options": [
+   { "label": "Quit and open the shop in Bijie", "result": "You took the store's SOPs home with you, and the first summer covered the rent without a worry. From now on there is no head office, and nobody to catch you.", "end": "You left the chain and now keep your own little shop by a county-town school in Bijie, and when the school bell rings you start shaking." },
+   { "label": "Stay in Guiyang", "result": "You wrote your cousin a stock sheet and a bar flow diagram, which you counted as your share. Every time you visit Bijie, you get a free cup of her milk tea." }
+  ] },
+  "c_chongqing": { "title": "Go open new stores in Chongqing", "situation": "The brand is opening ten stores in Chongqing and is drawing experienced staff from Guiyang to train the new hires. Twenty percent more pay, company dorm. Your child and your home are in Guiyang; you could come back twice a month.", "options": [
+   { "label": "Go to Chongqing", "result": "You opened three new stores on the hills behind Jiefangbei, saw rushes fiercer than anything in Huaguoyuan, and missed a good many birthdays at home." },
+   { "label": "Stay in Guiyang", "result": "You went on running the old store. The regulars remember you, the pay is not high, and you are home in time to read your child a story." }
+  ] },
+  "c_dianzhang": { "title": "Apply for Store Manager", "situation": "The old manager is off to another area, and the region wants you to apply for Store Manager. The revenue, margin and food safety of the store would all sit on you, and each month you would walk the area supervisor through the P&L.", "options": [
+   { "label": "Apply, and learn to read the accounts", "result": "You took apart the delivery commissions, the cost ratios and the staffing one by one, palms sweating as you presented. When you finished the supervisor said: try it your way next month." },
+   { "label": "Run a shift for two more years", "result": "You recommended the supervisor from the other shift. The day she became manager she bought everyone barbecue. You sat in the corner, glad for her, and something else you could not quite name." }
+  ] },
+  "c_cili_recipe": { "title": "Write a local special", "situation": "The area can submit one regional limited edition. You want a Duyun Maojian green tea base with roxburgh rose and a touch of mountain litsea. But roxburgh rose is sour and astringent and the supply is unreliable, and head office R&D replied with one line: send the costing first.", "options": [
+   { "label": "Write the BOM and test it yourself", "result": "You tried more than forty versions, and your mouth was numb at the end of every shift. The final cup sold across Guizhou for a whole summer, and the store's name is printed at the bottom of the recipe sheet." },
+   { "label": "Forget it, sell what head office sends", "result": "You put the page of test notes in a drawer. Head office's seasonal drink was green grape, the same taste nationwide, and it sold quite well." }
+  ] },
+  "c_rd": { "title": "Head office R&D wants people", "situation": "The head office lab is hiring a beverage developer and likes your front-line experience. It means moving to Hangzhou, catching up on food science and flavorings, leaving stores behind for a life of scales and blind-tasting forms.", "options": [
+   { "label": "Join head office R&D", "result": "You walked from the bar into the lab, and the white coat is harder to wear than the apron. On your first blind-tasting form you wrote: too sweet, nobody in Guiyang would drink this.", "end": "You became a beverage developer at a tea-drink headquarters in Hangzhou, and every summer one of the new drinks has a little roxburgh rose quietly slipped in." },
+   { "label": "Stay on the store track", "result": "You stayed. One store problem follows another. Now and then, watching head office's training video for a new drink, you look at the recipe a little longer." }
+  ] },
+  "c_dudao": { "title": "Apply for Area Operations Supervisor", "situation": "The area needs an operations supervisor for a dozen or so stores in Guiyang and Zunyi, running new openings and surprise audits. You would go from the person behind the bar to the person docking everyone's points.", "options": [
+   { "label": "Apply for the job", "result": "Your back seat always holds a checklist and a pair of non-slip shoes. One franchisee pointed at you and said: you came up from the bar, how are you stricter than head office?" },
+   { "label": "Keep this store", "result": "You sat firmly in the manager's chair. Your old customers' children started coming in for summer jobs. You decided this would do." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last day you came in early, lifted out the tea urn and tasted a spoonful. The young manager said you did not need to come in. You said you were only having a look. The shutter went up and the ground was still wet. You walked down the slope to the corner, where the silk-doll wrap stall had a new sign, and the owner still knew you.",
+  "burnout": "That year's checkup lit up red for both back and knees. The doctor asked how long you stood each day, and you started to add it up and could not finish. You handed the keys to your deputy, took long leave, and never went back. Passing a tea shop you still glance at the bar, to see if they are holding the cups right."
+ },
+ "stages": [
+  "You keep the third station: ice, milk, shake, a hundred strokes of the cocktail shaker exactly. The recipe sheet lies under the glass of the counter, and the measuring cup and scale never leave your hand. Get one wrong and the manager makes you drink it. The others are barely older than you, and whoever made the most mistakes that day washes the tea extractor at close.",
+  "Order taking, making, sealing, bagging: whichever station is short, you fill it. A hundred-plus cups an hour at the peak and you carry the bar. In the mornings you boil pearls, brew the tea bases and watch FIFO so the oldest stock goes first. When a new starter cannot keep up they drift behind you for a second, and you have begun to teach.",
+  "You now carry the shift phone. Three delivery back ends and the POS are yours to watch, and you have to call out which order is about to run late and which courier is getting angry. The roster, complaints, swapping stock when something runs out: on this shift it all stops with you. When customers ask for the person in charge, you are the one who walks over, and the smile costs more than it used to.",
+  "At the start of each month you sit down with the store P&L: rent, labor productivity, ingredient cost ratio, delivery commission, line by line with the area supervisor. Hiring, payroll, market-regulator inspections; the person first responsible for food safety is written down as you. You are on the bar less now, but in the worst hour of the day you still tie on an apron and stand at the front.",
+  "You carry weekly reports from a dozen stores and a QSC checklist, and your car goes back and forth between Guiyang and Zunyi. You supervise each new opening for three days and go in person when a franchisee is fighting over commission. When a store's numbers look off, you push the door open and check the floor mats first, then the use-by labels. You no longer make the drinks. You decide whether other people's drinks pass."
+ ],
+ "work": [
+  "The manager pushed a failed milk foam toward you and had you draw a spoon across it. It would not hold. You went back and raised the whipping time from ninety seconds to a hundred and ten.",
+  "The first time you counted the till you were ¥8 off. The woman at the next station helped you go through the refund log and found a delivery order keyed in wrong. You wrote that order number in your notebook.",
+  "The sealer sealed one crooked, and the tea leaked in the courier's hands. You made it again, sealed it, turned it upside down and shook it twice before you dared hand it over.",
+  "A rainy-day delivery surge, and you were covering two stations by yourself. Xiao Yang next to you suddenly had his hands full, so you muddled his three lemons as well, and the rhythm never broke.",
+  "At stock count you noticed the black tea base kept running a little over its theoretical usage. You stood by the extractor for a whole morning shift. The filter had not been washed properly and the water was running slow.",
+  "An old woman asked if there was anything not sweet. You brewed a cup of Duyun Maojian fresh, added a thread of milk, and she sat by the window with it for half an hour.",
+  "At the dinner rush the printer ran out of paper. You shouted for a new roll and at the same time paused two delivery apps for ten minutes on the back end so the backlog could clear.",
+  "A customer said she had a stomachache after her drink and wanted compensation. You pulled up the cup's making record and the ingredient batch, crouched down and talked it through slowly, and in the end went with her to the community clinic.",
+  "Next week's roster: the student workers had exams, the older hands had things to do at home. You moved names around four times and wrote yourself into a double shift on Sunday.",
+  "Delivery commissions went up again. You spread three months of cost ratios on the table and worked out with the area supervisor which two lowest-margin toppings to cut, and how to write the ice measure for large cups exactly.",
+  "The market regulator came to inspect and reached the second shelf of the fridge. You handed over the sanitizing log and the staff health-certificate register, one binder after another. He only looked up to ask about the new hire.",
+  "Xiao Chen wanted to go back to her county town to look after her grandmother and came to resign. You worked out her pay to the last day, and wrote a letter of recommendation for the branch there.",
+  "A surprise audit at a franchise in Zunyi. The owner took your arm and told you how hard the rent was. You nodded, and still photographed the box of expired coconut jelly in her fridge and wrote it into the report.",
+  "Third day after a new opening, and the sealer kept tripping the voltage. You called an electrician, had the staff seal by hand, and had the spare machine driven over from Guiyang overnight.",
+  "At the quarterly area meeting you ranked twelve stores' waste rates on a single page and had the manager of the best one get up and talk. She was more fluent than you were at her age."
+ ],
+ "past": [
+  "You came up a few points short in the high school entrance exam and missed the best school in the county. Your father drove freight in Zunyi and your mother sold vegetables in town. The three of you discussed it over one meal and decided on vocational school, tourism services.",
+  "One summer you worked at a milk tea shop in Zunyi and got your first day's wages in cash: ¥80. The prettiest woman in the shop held her wrist loose when she shook, and you spent the summer copying her.",
+  "You sat the vocational entrance exam and got into a college in Guiyang for hotel management. Your teacher said there might not be many hotel jobs someday, but food work would never leave you hungry.",
+  "In your second year you took a part-time job at the shop outside the college gate and got your health certificate while you were at it. On free afternoons you began to notice which teas were astringent and which were fragrant. The owner taught you that you have to swallow the first taste.",
+  "Your third-year placement had two options: a star-rated hotel out of province, or the chain tea shop in Huaguoyuan. The hotel was in Xiamen. The tea shop was three hours from home. You took the tea shop."
+ ],
+ "late": {
+  "pension_note": "Estimate: chain stores mostly pay social insurance on the local base, so even a full record brings about 40 percent of your final monthly pay; gaps in contributions bring it lower.",
+  "scenes": [
+   "In your first month of retirement you still wake at the old hour. You go downstairs to the tea shop and buy a cup, and watch a girl shaking with too stiff a wrist. You manage not to say anything.",
+   "The company asks you back to give new managers two days of lessons, still on cost ratios and use-by labels. Afterward someone asks if a person can do this all their life. You say: look at me.",
+   "You and your spouse walk by Aha Lake with a flask of your own Maojian. It still rains three times a day in Guiyang. You bring an umbrella and go slowly.",
+   "You quit and stayed home to rest your knees, and for the first month you could hardly be bothered to go downstairs. When your child came home from school and asked why you did not have to go to the shop, you said the shop had enough people now.",
+   "You found half-day work at the community canteen, dishing out food, not too much standing. The pay is much less. You can nap in the afternoon, and you eat dinner at six.",
+   "A former colleague recognizes you on the street and insists on buying you a drink. She orders the old recipe from your day. It is called the Classic Series now.",
+   "You left the bar and nobody cried; they only tossed your name badge into a drawer. The new days began more noisily than you expected.",
+   "The money is harder to earn than at the chain, and more your own. At night, doing the accounts, you still use the cost-ratio template the area handed out years ago.",
+   "Back in Guiyang on an errand you make a point of climbing the slope in Huaguoyuan. The shop has had three brands since. The step at the door has not changed, and it is still slippery.",
+   "The news says tea shops have started using robots to shake drinks. You go to see one. Every movement is perfect. Then someone asks for just a tiny bit less ice, and it cannot answer.",
+   "Your wrist aches on rainy days, and Guiyang has plenty of them. Your daughter bought you a brace. You wear it and carry the groceries with the other hand.",
+   "The supermarket now sells roxburgh rose juice in big bottles, thirty-some yuan a jug. You bring one home, add water and a little honey, taste it. It still needs a touch of mountain litsea."
+  ],
+  "closing": {
+   "retire": "One rainy day many years later you are sitting by the window with a cup of warm Maojian on the table. You pick it up, smell it out of habit, look at the rim, and only then drink.",
+   "burnout": "Many years later you are on a bench in the courtyard in the sun, and your granddaughter runs over holding up a milk tea for you to taste. You take a sip and say: too much sugar. She laughs and runs off.",
+   "end": "Many years later you find your mixologist's certificate in a drawer, the corners curled. You wipe it with your sleeve, put it back, and get up to boil the water."
+  }
+ }
+}

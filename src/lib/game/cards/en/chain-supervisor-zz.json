@@ -1,0 +1,189 @@
+{
+  "id": "chain-supervisor-zz",
+  "occupation": "Chain Operations Manager",
+  "role": "Tea Chain Area Supervisor",
+  "headline": "Up from store manager, a tea chain area supervisor with a store-inspection sheet and a dozen-odd franchises between Zhengzhou and the county towns around it, caught between headquarters and the people who paid for the stores",
+  "unit": "Operations department of a regional tea-drink chain in Zhengzhou",
+  "unit_type": "Tea-drink chain founded in Henan, several hundred stores",
+  "city": "Zhengzhou",
+  "city_tier": "New Tier-1 city",
+  "education": "Associate degree (Chain Operations Management)",
+  "level": "You know every job in a store, but you aren't yet good at reasoning with an owner who put up the money",
+  "intro": "You spent five years at a store on Huayuan Road in Zhengzhou, and in your last year it ranked first in the city on inspections. Headquarters moved you to operations and gave you an inspection sheet, a group chat and fourteen franchises, from downtown malls to the gate of a high school in Xinmi county. From today, you no longer make milk tea. You go tell owners who paid for their stores what's wrong with theirs.",
+  "salary_note": "Estimate: a Zhengzhou tea chain supervisor gets base plus performance pay, lower than Tier-1 cities, at about 85% of the national average.",
+  "facts": [
+    { "label": "Area Supervisor (current level)", "value": "5-9 years, ¥7,000–11,000 a month (national average, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Area Manager (9-14 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Coordinating policy and resources between headquarters and stores", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Inspecting stores and checking that operating standards are followed", "source": "AI exposure" },
+    { "label": "Open positions", "value": "3 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "You have a bowl of spicy pepper soup near Erqi Square and open the area group chat. Last night three stores didn't send closing photos. You tag them one at a time, trying to sound like a friend.",
+    "You take the metro to the first store in Zhongyuan District. Before it opens you stand across the street for a while. One sign light is out, and the poster is last season's.",
+    "Inside, you go down the inspection sheet checking boxes: fridge temperature, ingredient dates, labels on the water tubs. An opened tub of taro paste has no time on it. The clerk says, quietly, that she forgot.",
+    "At the lunch rush you step behind the bar and seal cups. Ten minutes later delivery orders pile up. You can see the new girl shaking tea the wrong way, but the line's long, so you hold your tongue.",
+    "You take the intercity train to Xinzheng, answering thirty-odd messages on the way. Franchisee Old Meng sends a voice note: headquarters' new ingredient costs more, and his store can't sell it.",
+    "Old Meng pulls you out the back door for a smoke and asks if this year's deposit can wait. You can't agree, and you don't want to flatly say no.",
+    "On the way back you write the inspection report, upload photos and enter the deductions. It's this store's second food-safety failure of the month and has to go up. Old Meng's face turns over in your mind.",
+    "When you get home the child's asleep. You pour a cup of unsweetened tea and open last month's numbers for tomorrow's three stores."
+  ],
+  "ladder": [
+    { "title": "Store Manager", "stage": "One store", "focus": "Managing one store's rota, output, ingredients and hygiene; you move up on sales and inspection scores" },
+    { "title": "Area Supervisor", "stage": "Inspecting", "focus": "Managing standards, corrections and training at a dozen-odd franchises; you move up on area scores and franchise renewals" },
+    { "title": "Area Manager", "stage": "One city", "focus": "Managing several supervisors and a city's sales, handling new-store siting and store-closure negotiations" },
+    { "title": "Regional Operations Manager", "stage": "One province", "focus": "Managing a region's operations and training, fighting for budget and policy with headquarters departments" },
+    { "title": "Operations Director", "stage": "Nationwide", "focus": "Managing brand-wide store standards and franchise policy; answering for same-store growth and franchise survival" }
+  ],
+  "ai_tasks": [
+    { "name": "Inspecting stores and checking that operating standards are followed", "how": "AI can use camera footage, check-in forms and image recognition to verify displays, hygiene and uniforms and write reports automatically; people have to feel the atmosphere on site, find what the form misses, and talk things over face to face with the store manager." },
+    { "name": "Training store staff on the job and on service", "how": "AI can generate course materials, quizzes and role-play scripts from standard procedures, and run practice online; people coach on site, demonstrate, watch how staff are doing, and correct and encourage them in the moment." },
+    { "name": "Monitoring stock and ordering, controlling the flow of goods", "how": "AI forecasts replenishment from sales, season and promotions, warns of shortages and slow sellers, and generates order suggestions; people only spot-check odd orders and handle supply emergencies." },
+    { "name": "Analyzing store sales and costs to find improvements", "how": "AI can summarize sales, margin, productivity and cost automatically, compare them and point out anomalies and likely causes; people judge whether those causes hold up in the real store and decide whether to act." },
+    { "name": "Setting and pushing chain and promotion strategy", "how": "AI can draft promotion plans, model audiences and pricing and compare past campaigns; people weigh brand position, franchisee attitudes and resource limits to make the call, and get stores to actually carry it out." },
+    { "name": "Coordinating policy and resources between headquarters and stores", "how": "AI can help organize policy documents and follow up on task lists; but the tug-of-war between headquarters and stores, fighting for resources, persuading and taking responsibility mainly depend on human relationships and judgment." },
+    { "name": "Evaluating new sites and overseeing store openings", "how": "AI can gather foot traffic, competitors, rent and local demographics to score sites, and generate preparation checklists and reminders; people must walk the site, negotiate with landlords, judge a district's potential and coordinate opening day." },
+    { "name": "Handling customer complaints and enforcing service standards", "how": "AI can categorize complaints, summarize frequent problems, draft replies and track progress; people handle individual cases with strong emotions or compensation disputes, and push stores to really improve." }
+  ],
+  "events": {
+    "e1": "The first time you dock a store's points, the owner tears up the inspection sheet in front of the staff. You sit in the car for ten minutes, then send the backup copy to his phone.",
+    "e2": "The owner of the old Xinzheng store pulls you into the back and brings out a basin of beef she stewed herself, saying the method you taught her last time has halved the wait. Only when you've finished eating do you remember you haven't scored the place.",
+    "e3": "When the first heat wave of summer comes, every store is slammed. For two weeks straight you run from morning to night, and you can fall asleep standing on the intercity train.",
+    "e4": "A customer posts a video saying there's something on a cup. The company wants a conclusion that night, and you rush to the store to go through the footage, not sorting out the facts until daybreak.",
+    "e5": "Headquarters brings in camera inspection, and the system automatically catches staff without hats and posts them to the group chat. You've got more time to spend in stores. Only now the staff look at you much as they look at the camera.",
+    "e6": "Three similar shops suddenly open nearby, with a loud war of ¥9.9 deals. Sales at several of your stores fall by a third, and franchisees' calls come in one after another.",
+    "e7": "You put a down payment on a small place at the edge of Zhengdong New District, a few stops from where the metro's been built. Each time you pass the construction site, you work out the day it'll reach your door.",
+    "e8": "An owner in a county town holds on three years, then closes. She gives you the potted pothos from the store, saying it's the only thing in there that did well.",
+    "e9": "A young clerk you once trained opens her own franchise years later. On opening day she saves you the very first cup, with your surname written on it in marker.",
+    "e10": "The replenishment system now orders automatically by weather and sales, and your hand-worked ingredient sheet can retire. Then, the first week of term, it under-stocks the university-town store by a third.",
+    "e11": "Years of eating out and tasting sweet drinks every day, and your blood sugar's a little high. The doctor asks if you drink milk tea. You think about it. It's not an easy question to answer.",
+    "e12": "You race back from Kaifeng for a parent-teacher meeting and catch only the end. The teacher says your child says Mom and Dad are always at other stores.",
+    "e13": "A heavy snow falls on Zhengzhou and delivery stops at all the stores. You tell the group there's no assessment today, close early. A little later several stores post photos of snowmen at their doors.",
+    "e14": "The brand starts opening stores in Southeast Asia and headquarters calls for people. You read the notice, think about the situation at home, and turn it over.",
+    "e15": "The system's data analysis is quicker than everyone who works under you, and the reports land on every franchisee's phone on time. When they've read them, they still phone you and ask: so what am I actually supposed to do?",
+    "e16": "News of the company's funding gets out, and at the annual party the founder talks for a long time about dreams. You think of the few owners who've just closed, and your clapping is a little slow.",
+    "e17": "A supervisor under you is leaving and comes to talk. You talk from afternoon until closing time, and as he goes he says he used to fear your inspections most, and now he most fears your not being there.",
+    "e18": "New products keep multiplying, and young staff can recite twenty-odd recipes. You quietly taste one. Too sweet, or maybe you've gotten old.",
+    "e19": "You begin to forget names, yet you remember where the fridge is in every old store. Young supervisors find it funny and ask whether that store's still open. You can't say for sure anymore."
+  },
+  "choices": {
+    "c1": {
+      "title": "Old Meng's failed inspection",
+      "situation": "It's the second food-safety failure this month for Old Meng's store, and one more report means a fine. His wife has just had surgery, and he's been running the store alone these days. No one else saw this deduction.",
+      "options": [
+        { "label": "Report it as it is", "result": "Old Meng is fined. A few days later you spend an afternoon helping out in his store. Neither of you brings it up." },
+        { "label": "A verbal warning this time", "result": "You write down a pass. At next month's recheck he's doing fine. Only every time you write a report now, you remember this one." }
+      ]
+    },
+    "c2": {
+      "title": "Taking the Chain Operations Manager exam",
+      "situation": "The company has begun requiring supervisors to hold the Chain Operations Manager certificate, and promotion to Area Manager will look at it too. Studying means giving up weekends and evenings, and you've got three stores opening this month.",
+      "options": [
+        { "label": "Make time and pass it", "result": "You memorize store finance models on the high-speed train, turning years of instinct into formulas for the first time." },
+        { "label": "Skip it; get the three stores open first", "result": "All three open smoothly, two of them beautifully. As for the certificate, you say next time." }
+      ]
+    },
+    "c3": {
+      "title": "Competing for Area Manager",
+      "situation": "Zhengzhou's Area Manager has been transferred out of the province, and headquarters opens the post. An Area Manager carries the city's sales and handles store closures personally. You'd have to change how you talk to owners you know well.",
+      "options": [
+        { "label": "Apply, with the area's numbers", "result": "You turn the data on all your stores into a report, and at the interview the director asks you something you've already thought about." },
+        { "label": "Don't apply; supervising is fine", "result": "Your fourteen stores stay the steadiest, and the new Area Manager often comes to ask about some owner's temper." }
+      ]
+    },
+    "c4": {
+      "title": "Opening a franchise of your own",
+      "situation": "You've seen so many stores' books that you know what a well-placed one can earn. An old franchisee is selling the best-located store he has, asking ¥400,000, and wants to know if you'll take it.",
+      "options": [
+        { "label": "Quit and be the owner", "result": "You hand back your inspection sheet, and the next morning open the roller shutter with your own key for the first time.", "end": "You became the kind of owner you used to write up. A young supervisor from headquarters stands at your counter checking boxes. You pour him some water, and wait for him to finish." },
+        { "label": "No, stay on the headquarters side", "result": "The store goes to someone else and does well. On your inspections, you sometimes run its numbers." }
+      ]
+    },
+    "c5": {
+      "title": "Using AI inspection",
+      "situation": "Headquarters is installing full AI inspection, cutting supervisors by a third and moving the rest to coaching franchisees on the business. You have to decide how to divide your department, and what to learn yourself.",
+      "options": [
+        { "label": "Learn it and move to business coaching", "result": "You begin helping owners read their financials and rota models, and for the first time you don't feel like an inspector." },
+        { "label": "Keep inspecting and wait for the system to fail", "result": "The system often fails, and you do always catch it. Only fewer and fewer young people come to learn from you." }
+      ]
+    },
+    "c6": {
+      "title": "Another brand makes an offer",
+      "situation": "A national coffee chain wants you as its Zhengzhou regional head, at thirty percent more. If you go, the franchisees you look after go to someone else. A few of them you walked with all the way from opening day.",
+      "options": [
+        { "label": "Jump and see a bigger system", "result": "The new firm's inspection sheet has two hundred items, all in English. It takes you half a year to learn to speak their language." },
+        { "label": "Stay with them", "result": "You turn it down and tell Old Meng. He says nothing, and the next day sends a box of sweet potatoes he grew himself." }
+      ]
+    },
+    "c7": {
+      "title": "Competing for Regional Operations Manager",
+      "situation": "Headquarters is creating regions, and Henan needs a Regional Operations Manager who'll travel constantly, run the whole province and fight between headquarters departments. Your child is about to enter high school.",
+      "options": [
+        { "label": "Apply; travel it is", "result": "You get a map of the province and a power bank that's never full. Parent-teacher meetings are now your spouse's." },
+        { "label": "Don't apply; see your child through the exams", "result": "You come home every night, and your child finds you annoying. The day the gaokao (college entrance exam) ends, your child asks you to buy a milk tea that isn't your own brand." }
+      ]
+    },
+    "c8": {
+      "title": "Going home",
+      "situation": "A relative in your hometown of Zhoukou has opened a small supermarket, your parents' health isn't what it was, and the company has started trimming older middle managers. Someone asks if you'd go back and use these years' skills in the family store.",
+      "options": [
+        { "label": "Go back to your parents and the small store", "result": "You hand in the company computer and rent out the Zhengzhou apartment.", "end": "You went home to Zhoukou and rearranged your relative's shelves, moving the goods nearest their dates to the front. The store is small. No one gives you a score anymore." },
+        { "label": "Stay in Zhengzhou for a few more years", "result": "You bring your parents to stay for a while. They aren't used to it and go back. You keep riding the intercity train." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last inspection, you bring no sheet and order the simplest drink. Over the decades you've walked through hundreds of Henan's stores, heard the firecrackers at openings, and helped people take their signs down. The clerk doesn't know you, calls you teacher, and hands you the cup. The seal is perfectly flat. You take a sip. It's still too sweet.",
+    "burnout": "Blood sugar, sleeplessness, and dozens of group chats you can never leave: the doctor tells you to stop running around like this. You hand your stores over one by one, explaining what each owner likes to hear and whose books need watching. Later, walking down the street, you see a store with one sign light out. You stop for a few seconds, then walk on."
+  },
+  "stages": [
+    "Each week you go around fourteen stores with the inspection sheet, checking dates, hygiene, product and service, writing reports in the system, assigning fixes, chasing rechecks. You teach new staff to shake tea and work out margins with franchisees. Unlike being a store manager, these stores aren't yours to run. They paid for them, and you have only persuasion and that sheet of deductions.",
+    "With four or five supervisors under you, you look at sales and inspection rankings for dozens of stores in the city. You negotiate leases with landlords, count foot traffic in shopping districts to site new stores, and sit across from franchisees barely holding on to talk through how a closure ends. A supervisor only has to find the problem. You decide what it adds up to.",
+    "You manage a province's supervisors and training, hold the monthly business review, and fight headquarters' supply chain, marketing and finance over policy. The ingredient price on a new product or the subsidy rate on a promotion is yours to argue for the stores. You travel more than you're home, and to look at a store now, you start with three months of numbers.",
+    "In your hands are the brand-wide operations manual and franchise policy, and meetings are about same-store growth, franchise payback periods and food-safety red lines. You argue with the founder and explain closure numbers to investors. Once in a while you walk into a store unannounced, order a drink and watch how the staff seal it. It's the one old habit you've kept for yourself."
+  ],
+  "work": [
+    "Xiao Lü, the store manager in Guancheng District, says the tapioca always comes out hard. You look at their timer and water level, and find the heat setting is labeled wrong. You put on a new label.",
+    "You dock three points from the Jinshui Road store on your sheet, and the store manager sends a voice message saying he'll file a complaint. You send him the store's camera clip of bare hands and add: remind them next time.",
+    "At a new store opening in Xingyang you stand behind the counter two days, walking six student workers through a basic drink dozens of times, and finally weighing it for them on an electronic scale.",
+    "A franchise in a university town has lost money for five months. You pull out rent, productivity and delivery share, and help the owner work out which loses less: selling or closing.",
+    "You go to Zhongmu to look at a new site, standing at the corner for a whole noon with a counter app and then asking at the store next door. Half the foot traffic is just passing through to the bus.",
+    "Xiao Yuan, a supervisor of yours, has grown too close to a franchisee, whose inspection scores keep running high. You send someone else to spot-check, put the two reports side by side and buy him a coffee.",
+    "Headquarters wants to raise the price of cups by ¥0.20 each. You take the margin sheets from every city in Henan to the meeting, and set county-store daily cup counts in front of the head of purchasing.",
+    "Training the province's supervisors, you play a video of a store inspection and have everyone find the problems. Only at the end do you say the biggest problem here is that the supervisor never said hello to the staff.",
+    "The week before a summer hit launches, you stay in the supply-chain group chat until late, splitting the stock sheet again by city to make sure the Anyang and Xinyang stores don't run out.",
+    "You go through the new franchise contract clause by clause with legal, and rewrite the deposit-refund clause so that an ordinary person can read it. Legal says this is bad for the company. You say leave it for now.",
+    "You see an AI-produced list of more than fifty stores to close. You circle three, and call the local supervisor: hasn't this owner just had a second child?",
+    "You take the new vice president to walk stores in a county town. It's the first time he has seen how small the back of a store is. You have him go in and stand for a while."
+  ],
+  "past": [
+    "Your family lives in a village in Zhoukou. You don't do well on the high school entrance exam and your parents send you to vocational school. You pick chain operations because your teacher says you can graduate to store manager, which sounds better than welding.",
+    "You come to Zhengzhou to work a summer at a snack shop. The owner puts you on the register, finds you never get the math wrong, and keeps you on until school starts.",
+    "Your pre-graduation internship is at a milk tea shop, and in the first month your hands blister. For the first time you discover that shaking tea is something you do a thousand times a day.",
+    "You join this brand when it has just a few dozen stores, working as a clerk on Huayuan Road. The store manager teaches you to test temperature on the back of your hand, and you test it there for a whole summer.",
+    "You become a store manager and in your first month lose ¥2,000 in expired ingredients. You arrange every item by date, and that neatness eventually becomes your affliction.",
+    "This year your store ranks first in the city. The supervisor is a middle-aged person who is always frowning, who says on leaving: I'm moving on. Are you coming?"
+  ],
+  "late": {
+    "pension_note": "Estimate: chain companies pay social insurance on a low base; retiring from a Zhengzhou company brings a little over 40% of final monthly pay.",
+    "scenes": [
+      "On the first morning without group chats, you go down for spicy pepper soup and watch the owner set out his seasonings. You look a second longer at his vinegar pot and say nothing.",
+      "A new milk tea shop opens at your compound's gate. The young manager is flustered, and you give a tip on where to put the ingredients. He asks if you've done this before.",
+      "Old Meng phones to say that he has retired too. The two of you meet in Xinzheng for lamb, and neither mentions the deposit.",
+      "Tea shops on the street change crop after crop, their signs brighter and brighter. Sometimes you go in, sit and have one, then set the cup back straight.",
+      "You leave the group chats one by one until one is left, called Xinzheng Area, and you stay. For the first few weeks when your phone rings at night you still look without thinking.",
+      "You learn to sit in the park in the daytime. Now that your blood sugar has settled, you can make one unsweetened drink last an hour.",
+      "A former clerk opens a small neighborhood store and asks you to have a look. You look for a long time and change only one thing: the position of the trash can.",
+      "In your new line of work, when you walk into any shop your eyes still go first to the corners and the fridge door seal.",
+      "A young person comes for advice about opening a milk tea shop. You sit him down, and the first thing you ask is: have you worked out the rent?",
+      "Your child brings a girlfriend home. You pour them tea and, seeing how she passes a cup, think this one could run a store.",
+      "A friend sends a photo of a milk tea and asks if it's any good. You say it's good, then zoom in on the seal.",
+      "Every bottle on your spice rack has a date on it. The kids laugh at you. You don't change."
+    ],
+    "closing": {
+      "retire": "Erqi Square is crowded in the evening, and people pass with cups in their hands. Waiting for the light, you watch those cups go by you, one after another.",
+      "burnout": "Afternoon sun falls on the coffee table, and the tea in the white cup has gone cold. You don't look at your phone. There's no store to go to.",
+      "end": "You sweep the ground outside the store once more and look up to see clouds at the edge of the sky. Along this street the shutters come down, one by one."
+    }
+  }
+}

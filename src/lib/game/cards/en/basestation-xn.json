@@ -1,0 +1,185 @@
+{
+ "id": "basestation-xn",
+ "occupation": "Wireless Communications Technician",
+ "role": "Base Station Maintenance Technician, Plateau Lines",
+ "headline": "A communications technology graduate sent by a Xining maintenance contractor out to the Qinghai plateau lines, driving a pickup from one base station to the next",
+ "unit": "A telecom maintenance contractor in Xining",
+ "unit_type": "Telecom maintenance contractor",
+ "city": "Xining, Qinghai (stationed on plateau lines)",
+ "city_tier": "Tier-3 city",
+ "education": "Associate degree in Communications Technology",
+ "level": "You've used a fusion splicer in the training lab and memorized a good number of base station commands. What it feels like to turn a screw at over four thousand meters, you don't know yet.",
+ "intro": "Driving west out of Xining, the trees slowly vanish from the mountains and your phone loses signal bar by bar, then fills up again at the next tower. The veteran training you tosses you a bottle of oxygen and a ring of keys and says these few dozen sites belong to the two of us from today. From now on, those few bars on someone else's phone are your work order.",
+ "salary_note": "Estimate: contractors pay a low base, and with plateau and travel allowances it comes to around eighty-five percent of the national figure. Deductions and work-order penalties make a real difference.",
+ "facts": [
+  { "label": "Maintenance Technician (current level)", "value": "0–3 years, ¥5,500–8,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Area Team Leader (3–8 years)", "source": "Common in the trade" },
+  { "label": "Pay after 5–10 years", "value": "¥17,500 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Going to the site to make repairs and splice fiber", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Sorting alarms and dispatching work orders automatically", "source": "AI exposure" },
+  { "label": "Open positions", "value": "18 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The one-story house at your outpost is as cold as a refrigerator. You set your frozen bottle of water beside the stove. Noodles take over ten minutes in a pressure cooker, and without one they come out half raw.",
+  "A work order comes through on your phone: a site more than a hundred kilometers away has gone down, four hours to restore it. The old hand looks at the sky and throws the snow chains into the pickup too.",
+  "At the site the mountain wind is so strong you can hardly stand. You climb to the tower platform, your fingers too cold to work the latch, and the air up there is thinner still.",
+  "You open the cabinet in the equipment room. The rectifier has no output and the battery voltage has sagged. You test bank after bank with a multimeter and find one cell has swollen.",
+  "Lunch by the site is steamed bread and pickles from the truck, and a cup of tea that never quite comes to a boil. A herder rides over on a motorbike and asks if he could charge his phone.",
+  "The fiber is out again. You walk the route for two kilometers and find the break beside a rodent burrow. You kneel to set up the fusion splicer, and the wind is so strong you can only block it with your body.",
+  "The site is back and the alarm clears. You upload your photos to the work-order system with fifteen minutes to spare. The old hand holds his hands to the heater and says we got lucky.",
+  "Back at the outpost, your head aches dully. You take two breaths of oxygen and send home a picture of a tower, and wait a long while as the message goes round and round."
+ ],
+ "ladder": [
+  { "title": "Maintenance Technician", "stage": "Running sites", "focus": "Running sites with your mentor, changing batteries, repairing fiber, clearing alarms; you move up by restoring service on time and knowing the routes" },
+  { "title": "Area Team Leader", "stage": "Leading a crew", "focus": "Leading a few people across a patch of sites, handling rosters, dispatch and major failures, and dealing with the carrier's people" },
+  { "title": "City Project Supervisor", "stage": "Running a contract", "focus": "Running one prefecture's maintenance contract: performance metrics, costs and staffing, and able to do the numbers when bidding" },
+  { "title": "Provincial Operations Manager", "stage": "The whole province", "focus": "Running maintenance across the province, negotiating with the carriers, and setting the province's repair and safety rules" }
+ ],
+ "ai_tasks": [
+  { "name": "Going to the site to make repairs and splice fiber", "how": "AI can give directions and take notes, but climbing a tower, changing batteries and splicing fiber in a blizzard hundreds of kilometers away all take someone going there." },
+  { "name": "Sorting alarms and dispatching work orders automatically", "how": "The system can merge hundreds of alarms into one work order and work out who's nearest. People only handle what it isn't sure about." },
+  { "name": "Writing inspection reports and work-order records", "how": "Once photos are uploaded, AI can identify them and generate the report. People only confirm it." },
+  { "name": "Diagnosing base station faults remotely", "how": "AI can analyze alarms and equipment data to judge whether it's power or transmission. Whether to run those hundreds of kilometers is for someone who knows the road to decide." },
+  { "name": "Planning inspection routes and spare parts", "how": "AI can work out routes and spare-parts inventory. Whether a stretch of road can be driven today, you have to ask someone who has driven it." }
+ ],
+ "events": {
+  "e_altitude": "The first time you went up to 4,700 meters, you carried a storage battery a dozen steps and your vision began to go dark. The old hand pushed the oxygen bottle at you and took the battery himself.",
+  "e_first_fusion": "At twenty below by the side of the road, you spliced a fiber on your own for the first time, and the test set showed very low loss. The old hand took a look and said: not bad. Next time don't kneel.",
+  "e_snow_trap": "In a heavy snowstorm the pickup got stuck at a mountain pass, with no phone signal. You sat in the truck all night, taking turns starting the engine for heat, and at daybreak a passing cargo truck pulled you out.",
+  "e_late_fine": "One work order ran ten minutes over because that washboard stretch of road can't be driven fast. The system doesn't care. Three hundred yuan came off that month's performance pay, and you saved a screenshot.",
+  "e_herder_thanks": "You repaired a remote base station. A herder standing on the slope got through on a video call to his child, then walked over and pressed a bag of wind-dried meat into your hand.",
+  "e_rats": "This month the same stretch of fiber was bitten through three times by rodents. You sleeved the buried route in steel pipe section by section, and even you felt you were playing chess with something.",
+  "e_spring_festival": "Spring Festival coverage duty, and you saw in the New Year at the outpost. The dumplings were frozen ones. The greetings went out from your phone one after another, fastest from the site you repaired last week.",
+  "e_contract_change": "The maintenance contract went to another bidder, and a whole batch of you changed companies, badges and all. The work stayed the same work. Your years of service started again from zero.",
+  "e_marriage": "Home on leave in Xining, a friend introduced you to someone who does the books at a supermarket. They asked how many days a month you'd be home. You answered honestly. They thought it over for a week and said yes anyway.",
+  "e_house": "You bought a small apartment in Chengbei District. You live in it fewer than a hundred days a year, and the property fees don't drop by a cent. Each time you come back, you open the windows to air it out first.",
+  "e_child": "When your child was born you were repairing a site hundreds of kilometers away. When the signal came back, your phone jumped with twenty-odd messages and a picture of one small wrinkled face.",
+  "e_ai_dispatch": "The system began dispatching orders on its own, with decent accuracy, only one time it sent you to the site closest in a straight line. Between the two lay a mountain, and you drove around it for three hours.",
+  "e_drone": "The company issued drones, so before climbing you can fly up and have a look around, and some jobs no longer need a climb. You stood below with the controller and felt, for the first time, that your legs were a bit superfluous.",
+  "e_ai_report": "Upload the inspection photos and the report writes itself. You used to spend your evenings hunched on the kang typing. Now you take a breath of oxygen and go to sleep.",
+  "e_battery_theft": "The batteries at an unattended site were stolen. You spent two days going between alarm logs and surveillance footage, then brought a new bank from two hundred kilometers away.",
+  "e_heart_check": "At the company physical, several numbers on your ECG and hemoglobin looked bad. The doctor asked how many years you'd been on the plateau. You counted, and it was longer than you had been married.",
+  "e_old_master": "The old hand who trained you came down from the plateau, going home to nurse his health. Before leaving he gave you his route book: where you could get a meal near each site, which bends iced up in winter.",
+  "e_apprentice": "A new technician squatted down the first time he reached altitude. You handed him the oxygen bottle and took the battery from him, and thought of how someone once did that for you.",
+  "e_satellite": "New phones can send messages straight to satellites. You tried it, and one went out from a valley with no signal. Looking at that tiny icon, you felt something you couldn't quite put into words."
+ },
+ "choices": {
+  "c_lead": {
+   "title": "Standing for Area Team Leader: the farthest patch",
+   "situation": "The company is promoting a few Area Team Leaders. Nobody wants the farthest patch, four hours from the outpost to the nearest county town, and at high altitude. Take it and you lead people. Otherwise you can run your current patch another two years.",
+   "options": [
+    { "label": "Take the farthest patch", "result": "With two young technicians you covered every one of those dozens of sites. Half a year later, even the roadside dogs knew your pickup." },
+    { "label": "Run sites two more years", "result": "You kept following the old hand down familiar roads, learning each site's temper better, only the words on your badge never changed." }
+   ]
+  },
+  "c_cert": {
+   "title": "The intermediate telecom certificate",
+   "situation": "The company says an intermediate certificate as a telecom professional counts toward headcount points when bidding, and adds a pay grade. But internet access on the plateau comes and goes, and with days spent on the road you can only study by the outpost stove.",
+   "options": [
+    { "label": "Study at the outpost", "result": "You memorized by the stove for a whole winter and passed the next year. The certificate was mailed to Xining and you didn't see it for two months." },
+    { "label": "Skip it, running sites is enough", "result": "You kept your free time for sleep and calling home. At the year-end pay adjustment, you were again one grade short." }
+   ]
+  },
+  "c_ai": {
+   "title": "Taking on the smart troubleshooting work",
+   "situation": "The company is building a fault knowledge base and needs someone who has run the routes to write in the plateau experience: which roads close when, which alarms are false. There's no bonus, and once it's written the new hires may not need to ask you.",
+   "options": [
+    { "label": "Take it on and write it", "result": "You dug out years of route books and fault records and typed them in. Afterward your dispatches took far fewer detours, and other patches came to copy it." },
+    { "label": "Decline, too much trouble", "result": "You went on remembering the roads in your head. The system got built anyway. When dispatches go the long way you curse a bit and drive it." }
+   ]
+  },
+  "c_home": {
+   "title": "Your spouse asks when you're coming down",
+   "situation": "Your child has started primary school, and your spouse asks if you can transfer to a patch in the city of Xining. City work pays less, there's no plateau allowance, and you would be competing with young people for orders. But you'd be home several times a week.",
+   "options": [
+    { "label": "Transfer to the city", "result": "You started running sites around Xining, climbing the roofs of apartment blocks. Every evening you can watch your child do homework, and your head doesn't hurt anymore." },
+    { "label": "A few more years out there", "result": "You said wait two more years, until the mortgage is a little lower. Your spouse said nothing more, and that video call ended rather quickly." }
+   ]
+  },
+  "c_operator": {
+   "title": "The field job at an equipment maker",
+   "situation": "An equipment manufacturer is hiring technical support for the northwest and likes how many sites you've run. The pay is a notch higher and the work is between offices and customer sites, with no more emergency repairs. Only there would be years of travel, and no more patch of your own.",
+   "options": [
+    { "label": "Go to the equipment maker", "result": "You put on clean overalls and took a laptop around explaining configurations. At every site you go to, out of habit you glance at the battery cabinet.", "end": "You became a technical support engineer at an equipment maker. You have been to sites all over several northwestern provinces, but there was never again a tower that was yours." },
+    { "label": "Stay in maintenance", "result": "You turned it down, saying this patch still couldn't do without someone. That afternoon you climbed a tower once more. The wind on the mountain was strong." }
+   ]
+  },
+  "c_manager": {
+   "title": "Standing for City Project Supervisor",
+   "situation": "The City Project Supervisor post has opened up. It requires knowing costs, working out bids, and monthly assessment meetings with the carrier. More pay, an office in Xining or the prefecture seat, and the safety and livelihoods of dozens of people to answer for.",
+   "options": [
+    { "label": "Stand for supervisor", "result": "You laid out the prefecture's labor, fuel and spare parts on one sheet for the first time, and found the monthly profit was cheaper than a set of batteries." },
+    { "label": "Keep leading a crew", "result": "You said you couldn't write reports and would stick to leading a crew on the road. Your crew was delighted. The company also remembered this on your pay slip." }
+   ]
+  },
+  "c_comeback": {
+   "title": "Coming down and opening a shop back home",
+   "situation": "The doctor says it would be best not to go up on the plateau again. You've done the numbers: your savings are enough to open a small shop back in your home county, installing low-voltage wiring and security cameras. But then twenty-odd years of routes and connections would be no use to you.",
+   "options": [
+    { "label": "Open a shop back home", "result": "You took your spouse and a truckful of tools back home. Your first job of the first month was installing cameras in a supermarket, on a ladder only two meters tall.", "end": "You went home and opened a small wiring shop, installing internet and cameras for people in the county town. On clear days you sometimes look up at that tower in the distance." },
+    { "label": "A few more years", "result": "You folded the test results and put them in a drawer. The next day the work orders came as usual." }
+   ]
+  },
+  "c_province": {
+   "title": "Standing for Provincial Operations Manager",
+   "situation": "The Provincial Operations Manager is leaving, and the company asks if you'll take over. You'd be negotiating contracts with carriers at the provincial level, answerable for safety incidents across the province, sleepless at each year's bidding. And no one under you would have route books like yours.",
+   "options": [
+    { "label": "Stand for manager", "result": "You hung a map of every site in the province in your Xining office. In the days before a bid you read the proposal seven times, more tiring than climbing towers ever was." },
+    { "label": "Stay on the project", "result": "You recommended a younger colleague and went on running the prefecture, and a few times a year you still run a route with the new hires." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your final trip you didn't drive. Your apprentice did. You reached the site you have run the most, and the tower looked the same, only with solar panels beside it now. You passed him your route book. He said it's all on the phone now, and he took it anyway. On the way back, the signal on your phone filled up bar by bar.",
+  "burnout": "The cardiologist spoke plainly: going back up on the plateau was not something he could vouch for. You filed the papers and moved to the warehouse in Xining to manage spare parts, spending your days counting batteries and fiber connectors. On snowy days you look out the window and think that stretch of road must be closed again."
+ },
+ "stages": [
+  "You follow your mentor in the pickup from site to site, changing storage batteries, tightening antenna connectors, splicing fiber, then uploading photos to the work-order system. When an order comes you have a few hours to get there and restore it. The carrier's duty officer is very polite on the phone, and what follows the politeness is an assessment. Your mentor reads the road, and you carry things.",
+  "A patch of sites and three or four people are yours now. You make the roster, watch the orders, and during major outages you stand on site coordinating generators, fiber and carrier staff. The spare parts headquarters sends are never enough, and you shuffle them among several outposts. If someone's pay slip is wrong, they come to you.",
+  "You run one prefecture's maintenance contract, taking KPI reports to monthly assessment meetings with the carrier and explaining last month's overruns item by item. When bidding you work out labor, fuel, spares and vehicle depreciation to the last cent. You go to the sites less now, and when you do, you mostly carry a safety checklist.",
+  "You run maintenance for the whole province, negotiating contracts with the carrier's provincial office and going over budgets with several prefectures' supervisors. The province's repair and safety rules are yours to set, and if someone gets hurt you have to be the first one there. Your truck still goes far, only now the seat beside you holds a leader you are accompanying."
+ ],
+ "work": [
+  "The old hand has you measure the internal resistance of a battery bank and you write down each cell. He takes one look at the notebook and points at number seven. This one won't last the winter.",
+  "A child out with the sheep stands outside the base station fence watching you climb. When you come down they ask if you can see Xining from up there. You say you can see the next tower.",
+  "You run a generator for a dead site alone for the first time. The pull cord takes seven tries. By the time the indicator turns green your hands are too frozen to hold a pen for the log.",
+  "Xiao Zhao on your crew was docked for an overdue order. You dig out photos of the road being closed that day and spend half an hour with the carrier's duty officer, getting half the money back.",
+  "Three orders in a row went to the same person. You rework the dispatch sheet and take next week's high-altitude route yourself so that he can go home for a visit.",
+  "A large-scale power outage. In the group chat you dispatch four trucks and three generators by distance, and take the farthest site yourself, running the generator with one hand and making calls with the other.",
+  "At the assessment meeting the carrier points to an overdue record. You put the road-closure notice and the dashcam log on the table together. They say rules are rules and agree not to count this one.",
+  "Pricing a bid, you find last year's fuel cost was understated by ten percent. You rearrange the prefecture's routes from scratch and save the mileage of three trucks.",
+  "A new young technician goes up a tower without clipping in. You order him down on the spot, suspend him for a week, and then sit through the training again with him.",
+  "Negotiating renewal with the carrier's provincial office, they want another five points off. You lay out actual high-altitude site costs and years of repair records and talk until nine at night.",
+  "At the year-end safety conference you skip the slides and read out one old work order that nearly ended badly. Then you ask the room what you'd each do today if it landed on you.",
+  "You take a leader to see a high-altitude site. A few steps in, he is gasping. You hand him the oxygen bottle and silently count this site's spare parts again."
+ ],
+ "past": [
+  "You grew up in a small county in eastern Qinghai on a family plot that wasn't large. After the high school entrance exam your family felt high school cost too much, and you picked a vocational school, thinking to learn a trade.",
+  "At the vocational school you studied computer applications. Then a teacher said communications students found jobs easily, and you went on to an associate program in communications technology.",
+  "In the junior college training lab you used a fusion splicer for the first time. Two fibers thinner than a hair came together with a brief flash, and you found that rather marvelous.",
+  "Over the summer you helped fix the network at an internet cafe in Xining. The owner said you were good with your hands and paid very little. You thought this kind of work ought to be done somewhere bigger.",
+  "Before graduation a company came to the school recruiting for plateau lines, with pay and allowances over a thousand yuan higher than other jobs. A dozen or so classmates signed up, and in the end only you and two others went."
+ ],
+ "late": {
+  "pension_note": "Estimate: a basic pension for company employees, on a contractor's contribution base, comes to a little over forty percent of pre-retirement pay, not counting allowances.",
+  "scenes": [
+   "For the first month of retirement you keep waking in the middle of the night to check your phone for work orders. There is nothing on the screen but one full set of signal bars.",
+   "You drive your spouse along the old route, for the first time in no hurry. They say so this is what the places you've been all these years look like.",
+   "Your hemoglobin slowly comes back down, and the doctor in Xining says that's good. You climb the hill behind the compound every day and can reach halfway up in one go.",
+   "At the warehouse you spend your days counting things you've used thousands of times. The first week, whenever you have a moment you go and press the new batteries to see if any have swollen.",
+   "The doctor says you can slowly start moving again. You walk the path along the Huangshui River, a few steps and a pause, and when you see a tower on the hill you count its antennas out of habit.",
+   "An old apprentice comes for spare parts and holds out a cigarette, and you wave it off. He says the road's been fixed now, and that old pass can be crossed in an hour.",
+   "The day you come down from the plateau, as the truck passes Riyue Mountain you open the window. The air suddenly thickens. You take a few extra breaths and say nothing to the person beside you.",
+   "Your new job involves no climbing. On rainy days you open your phone and the signal is full, and you still look up out of habit, sometimes not knowing what for.",
+   "An old workmate posts a photo in the group of that little outpost diner where you all used to eat, soon to be torn down. You look at it for a good while and reply to every person.",
+   "Merging alarms, dispatching orders and writing reports are all done by the system now. Only one thing hasn't changed. The truck still has to carry snow chains, and someone still has to go over that mountain.",
+   "Your grandchild asks how high the highest place you climbed was. You give the altitude, and they say that's lower than lots of planes fly. You laugh for a long while.",
+   "You're old now and can't go up high anymore. A scenic film about Qinghai comes on TV, a tower slips by in an aerial shot, and you sit up straight and call your spouse over to see."
+  ],
+  "closing": {
+   "retire": "Many years later you sit at the window repairing an old radio for your grandchild. It's very clear out. On a far-off summit stands a tower, its light blinking on and off. You watch it and finish your tea.",
+   "burnout": "Many years later you walk slowly to the gate of your compound and phone home. The voice is very clear, not a stutter in it. You listen for a moment and say: nothing's the matter, I just thought I'd try it.",
+   "end": "Many years later, at the very bottom of your toolbox, you turn up that rusted fiber cleaver. You wipe it clean and set it on the windowsill. The light there is rather good, and you can see the mountains."
+  }
+ }
+}

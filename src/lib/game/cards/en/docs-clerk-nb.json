@@ -1,0 +1,160 @@
+{
+ "id": "docs-clerk-nb",
+ "occupation": "Shipping Documentation Clerk",
+ "role": "Documentation Clerk at a Freight Forwarder",
+ "headline": "A business English graduate at a Ningbo freight forwarder, correcting bills of lading and checking manifests against the documentation cutoff",
+ "unit": "A mid-sized freight forwarding company in Ningbo",
+ "unit_type": "Freight forwarder",
+ "city": "Ningbo",
+ "city_tier": "New first-tier city",
+ "education": "Junior college (business English)",
+ "level": "You can read a draft bill of lading and have written a dozen telex release letters, but you still have to look up letter-of-credit terms in UCP 600",
+ "intro": "The company is on the sixteenth floor of an office tower in Ningbo's southern business district, forty kilometers from Beilun port, but every screen here keeps port time. You spent a year as a documentation assistant, and this month you began handling a few US and Southeast Asia customers by yourself. From today the documentation cutoff is your working day, and every letter on a bill of lading has your name behind it.",
+ "salary_note": "Estimate: documentation jobs at Ningbo forwarders pay about the national figure, with a little more from peak-season overtime and commission, and less in slow periods when freight rates are low.",
+ "facts": [
+  { "label": "Documentation Clerk (current level)", "value": "1–3 years, ¥6,205–9,125 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Senior Documentation Clerk (3–6 years)", "source": "Common in the trade" },
+  { "label": "Pay after 3–5 years", "value": "¥9,200 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Negotiating discrepancies and refusals with customers and banks", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Preparing bills of lading and full shipping document sets", "source": "AI exposure" },
+  { "label": "Open positions", "value": "6 related listings nationwide, 1 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You open your mailbox first thing. Sixty-three new messages overnight. You pick out the shipments that close today and flag them red.",
+  "A merchandiser at a small appliance factory in Cixi sends the shipping order with the goods described as kitchen appliance. You phone to find out whether it is really a rice cooker or an air fryer.",
+  "Checking draft bills of lading. The consignee's address is missing a building number. You circle it on the PDF and write back asking if it is a typo.",
+  "A bowl of pickled greens and shredded pork noodles downstairs. A coworker says the typhoon forecasts are out again this year. You eat and look at the sailing schedule on your phone.",
+  "This US shipment has to file its AMS. With an hour to go you check the HS code and cargo description in the system one more time and click submit.",
+  "The carrier announces your container has been rolled. You write to the customer and at the same time phone to ask if it can be squeezed on the next vessel, your pen spinning fast in your fingers.",
+  "A customer wants to amend a bill of lading, and it is past the amendment deadline. You ask the carrier what the fee is, and go to work out with the salesperson who is going to pay it.",
+  "The last manifest goes out, and only a few lights are left on in the office. Your badge is still around your neck, and Metro Line 1 has only a few trains left before the last."
+ ],
+ "ladder": [
+  { "title": "Documentation Assistant", "stage": "Entry", "focus": "Enters data, files and runs errands, learning bill of lading and manifest formats from senior clerks; moves up by not making mistakes." },
+  { "title": "Documentation Clerk", "stage": "Independent", "focus": "Handles bills of lading, manifests and customs paperwork alone for a few trade lanes or customers; moves up by never dropping the ball before a cutoff." },
+  { "title": "Senior Documentation Clerk", "stage": "Hard cases", "focus": "Takes on letter-of-credit shipments, US AMS filings and amendments, and trains new staff; moves up on customers asking for them by name and a low error rate." },
+  { "title": "Documentation Supervisor", "stage": "Leads a team", "focus": "Leads a documentation team, assigns people, sets templates and handles problem cases with carriers and customs; moves up on team error rate and customer retention." },
+  { "title": "Operations Department Manager", "stage": "Runs the department", "focus": "Manages documentation, booking and customs teams, sets process and systems, negotiates with sales and carriers, and answers for the department's timeliness and claims." }
+ ],
+ "ai_tasks": [
+  { "name": "Negotiating discrepancies and refusals with customers and banks", "how": "AI can translate and draft emails, but whether to amend the credit, whether to present with discrepancies and what to say to a furious customer depends on a person weighing the relationship and the risk." },
+  { "name": "Preparing bills of lading and full shipping document sets", "how": "AI can pull data from shipping orders and generate draft bills, invoices and packing lists and cross-check them. Special terms and the final confirmation are read by a person and on a person's responsibility." },
+  { "name": "Tracking sailings and chasing cargo", "how": "AI can watch schedules, container status and milestones and draft booking and chasing emails. When a factory runs late, a container is rolled or space is tight, someone still has to get on the phone and make the tradeoffs." },
+  { "name": "Checking and classifying customs paperwork", "how": "AI can compare descriptions, weights and values and suggest HS codes. Disputed classification or a last-minute cutoff is for a person to decide, and to carry the responsibility for the declaration." },
+  { "name": "Reviewing letter-of-credit terms", "how": "AI can read the credit clause by clause and list suspected discrepancies. Which ones to amend and which to accept depends on knowing the habits of the customer and the bank." },
+  { "name": "Filing and retrieving shipping documents", "how": "AI names and files by customer, sailing and batch, and can retrieve anything on demand. People set the rules, spot-check and do the explaining at audit time." }
+ ],
+ "events": {
+  "e_typhoon": "A typhoon shut the port and the ships piled up outside. Within a week you changed the sailings on more than thirty shipments again and again, and every customer believed theirs was the most urgent.",
+  "e_typo": "One letter was wrong in a consignee's name on a bill of lading, and the goods could not clear on arrival. Amendment fees and port demurrage came to more than $2,000. The company had you write a self-criticism.",
+  "e_peak": "Peak season ran up to the National Day holiday, and space could not be had at any price. You worked overtime more than ten days straight, and were too tired to order takeout when you got home.",
+  "e_thanks": "A customer's letter of credit was nearly refused for a date that did not match. You caught it early and got it amended. He sent a box of Cixi waxberries with a handwritten note.",
+  "e_rate_fall": "Freight rates kept dropping, the company's margins thinned, and the year-end bonus was paid at half. The coworker at the next desk was already looking elsewhere.",
+  "e_customs_q": "A shipment was flagged by customs for inspection, its description not quite matching the actual goods. You dug out the shipping order and packing list, and went twice to Beilun with someone from the customs broker.",
+  "e_factory_late": "A factory in Yuyao shipped a day late, the truck driver waited six hours outside the yard, and you spent the afternoon working out the gate-in time with him by phone.",
+  "e_ai_draft": "The company brought in AI document preparation. A shipping order comes in and a draft bill of lading appears in seconds. Your work changed from typing to catching errors, and the errors are better hidden now.",
+  "e_ai_wrong_hs": "AI gave an HS code off by two digits. It looked very similar, with a different duty rate. You went through the classification notes by hand and posted the example to the department group chat.",
+  "e_ai_archive": "Filing is all done by the system now, and a bill of lading from three years ago comes up in one search. The intern who was always being sent to go through the cabinets doesn't have to fetch the stool anymore.",
+  "e_ai_layoff": "Once AI document preparation had bedded in, the company merged two teams, and a few colleagues who did data entry were called in for a talk. Cleaning up around the printer you saw the sticky notes she left in her drawer.",
+  "e_love": "At an industry training you met a customer service agent from a shipping line, someone you had always been chasing by email. This time, in person, you introduced yourselves by your staff numbers.",
+  "e_house": "You bought a small flat at the edge of Yinzhou, with the down payment pooled from both families. From now on there is a monthly payment that can be even less wrong than a bill of lading.",
+  "e_child": "Your child was born. In those days you kept the laptop open even in the hospital corridor, and answered a customer's email chasing an amendment.",
+  "e_eye": "More than ten years of checking letters has left your eyes painfully dry. The doctor told you to close them for a rest every hour. You set an alarm, and when it rang you shut it off.",
+  "e_neck": "Your cervical spine has started to go, and you have to tilt your head back a little to see the screen. You raised the sit-stand desk the company provided, used it for two days, and cranked it back down.",
+  "e_parent_ill": "Your mother went into the hospital back home in Zhoushan. You rode back and forth on the Ningbo-Zhoushan line, opening your laptop on the train to send out a few shipments close to cutoff.",
+  "e_apprentice": "The new girl filled in the notify party and consignee the wrong way round. You had her write the two words on a sticky note and put it in the top left corner of her screen.",
+  "e_client_loyal": "A customer of ten years changed forwarders three times, and each time passed your email on to the new sales rep. He said: you need someone like this doing your documents.",
+  "e_new_rule": "Another destination port issued new rules, and cargo descriptions could no longer be vague. You revised the template overnight and sent it to all the salespeople first thing next morning."
+ },
+ "choices": {
+  "c_lc": { "title": "Learn letters of credit or not", "situation": "Only one senior clerk in the team can do letter-of-credit shipments, and the boss wants you to learn from her. If you can do it you can take on more shipments, but on these one wrong punctuation mark can mean refusal. Can you carry that?", "options": [
+   { "label": "Learn from her", "result": "You turned the pages of UCP 600 until they fuzzed at the edges. On your first one she circled nine places in red. On your second, three." },
+   { "label": "Get good at the US lanes first", "result": "You could schedule the AMS and US deadlines with your eyes closed. Letter-of-credit shipments stayed someone else's." }
+  ] },
+  "c_cert": { "title": "Take the customs proficiency test", "situation": "A friend at a customs broker says to take the customs proficiency test, so you can talk with more confidence about customs paperwork. A few hundred yuan to enroll, several weekends, and the company will not reimburse it.", "options": [
+   { "label": "Sign up", "result": "For the first time you read the HS classification rules from start to finish. After you passed, the people at the customs broker began answering your messages faster." },
+   { "label": "Rest on the weekends", "result": "You took a walk around Dongqian Lake and came home and slept. On Monday there was as much email as ever." }
+  ] },
+  "c_senior": { "title": "Go for Senior Documentation Clerk", "situation": "The company is naming a batch of Senior Documentation Clerks, who will get the hardest customers and the most difficult ports. The pay is a bit higher, and the calls in the middle of the night will be yours.", "options": [
+   { "label": "Go for Senior Clerk", "result": "You took on the US customer who was always amending. Three months later his emails began to include a thank you." },
+   { "label": "Look after your own customers", "result": "You took good care of the customers you had and left on time. When the list came out your name was not on it. You looked once, and closed it." }
+  ] },
+  "c_ai_rules": { "title": "Who writes the rules for AI document prep", "situation": "The company's AI document preparation keeps making mistakes, and someone needs to compile each carrier's and each port's requirements into a rule base and feed them in one by one. No allowance, on your own time. Done well, it may mean two fewer hires.", "options": [
+   { "label": "I will write the rules", "result": "You wrote in every pitfall of the past ten-odd years, and the system's error rate fell by half. The boss began mentioning your name at meetings, and a few colleagues stopped talking to you." },
+   { "label": "Stay out of it", "result": "You go on doing your documents. Now and then the system is wrong, now and then you fix it, and no one knows you did." }
+  ] },
+  "c_factory": { "title": "A factory export department comes hiring", "situation": "A Yuyao factory you often work with wants you in its export department doing merchandising and sales. About the same base with commission, no more living by the sailing schedule, but you would go to overseas trade shows and find your own customers.", "options": [
+   { "label": "Go to the factory", "result": "For the first time you stood at a trade show booth and said out loud the product names you had typed countless times.", "end": "You became a sales rep in the export department of a Yuyao factory, with customers in dozens of countries in your phone, and now someone else does the bills of lading." },
+   { "label": "Stay at the forwarder", "result": "You smiled and said no. This trade has hardship enough, but you have grown used to port time." }
+  ] },
+  "c_zhuguan": { "title": "Compete for Documentation Supervisor", "situation": "The documentation team needs a lead. The Documentation Supervisor assigns people, sets templates, and handles problem cases with carriers and customs, and if the team makes a mistake you are the first called in by the boss.", "options": [
+   { "label": "Compete for Supervisor", "result": "You began spot-checking other people's documents, circling the errors, saying nothing, and setting them back on her desk. On her next one she did not make that mistake." },
+   { "label": "Keep doing documents yourself", "result": "You said your hands did not want to stop. The new supervisor is four years younger than you, and at meetings she always asks: how did you do this before?" }
+  ] },
+  "c_shanghai": { "title": "Shanghai headquarters wants people", "situation": "The company is moving several big customers to Shanghai headquarters and wants to transfer you, with a 20 percent raise. You would rent in Shanghai and come back to Ningbo on weekends, and leave your child with the grandparents.", "options": [
+   { "label": "Go to Shanghai", "result": "You rented a partitioned room by Waigaoqiao, learned how big accounts are done, and stood all the way home on the high-speed train every Friday." },
+   { "label": "Stay in Ningbo", "result": "You stayed, picked up your child from kindergarten after work, and bought a roast sweet potato on the way. Promotion can wait." }
+  ] },
+  "c_own_shop": { "title": "Open a small forwarder of your own", "situation": "A friend in sales has more than twenty small customers and wants you as a partner in a little forwarding company, you on operations and him out finding business. You would have to front the carriers' credit, and any shipment gone wrong would come out of your own pocket.", "options": [
+   { "label": "Go in as a partner", "result": "You rented a ten-odd-square-meter office on Zhongshan East Road. The first export was a container of Christmas lights, and you read its bill of lading seven times.", "end": "You and your friend opened a small forwarding company with four desks, and every letter on a bill of lading is now your own money." },
+   { "label": "Stay an employee", "result": "You pushed the contract back. Your friend found someone else, you still often eat together, and he always says you are too careful." }
+  ] },
+  "c_manager": { "title": "Compete for Operations Department Manager", "situation": "The old manager is retiring and the company wants you to compete for Operations Department Manager. You would run documentation, booking and customs, fight with sales over customer priority, negotiate with the carriers, and sign every claim.", "options": [
+   { "label": "Compete for Manager", "result": "Your desk moved to the window, from where you can see a sliver of the river. You always read the monthly claims report first." },
+   { "label": "Lead this team well", "result": "You gave the position to a colleague. Your team's error rate has always been the lowest in the company, and you feel that is enough." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last day you wrote notes on more than three hundred customers into the system. One of them says: with this customer, always ask again about the notify party. In the afternoon the company cut you a piece of cake. You ate two bites and went back to look at one more shipment closing tonight. Going downstairs, the wind by the river had a little salt in it, and you did not look at your watch.",
+  "burnout": "That spring your eyes and neck gave out together, and the doctor told you to take six months off. You handed over your customers one by one, with a page of notes on each. You never went back to that desk. Sometimes you wake in the night and still wonder: did that shipment close today?"
+ },
+ "stages": [
+  "You have a dozen or so customers, and each day means checking shipping orders, sending draft bills of lading, filing manifests and AMS. The mailbox and the carriers' websites are your two legs, telex release letters and amendment requests the documents you write most. Sales chases you, factories chase you, the carriers' cutoffs wait for no one, and you are learning to see which one of fifty emails is going to cause trouble.",
+  "The hardest shipments begin coming to you: full letter-of-credit sets, the US customer who keeps amending, Middle East ports with their lists of requirements. You read credits clause by clause against UCP 600 and tell the bank and the salesperson about discrepancies in advance. A new documentation assistant sits next to you, and as you fix a document you explain why.",
+  "You lead five or six clerks. In the morning you divide the big shipments and the hard ones and write new rules into the templates. Problem cases from customs and hold notices from carriers come to you first. Your time goes to spot-checking other people's documents, explaining turnaround to sales and apologizing to customers, and you do fewer documents yourself.",
+  "Documentation, booking and customs are all yours, and in your hands are the monthly error rates, the claims list and the carriers' annual contracts. You fight with the sales director over customer priority, spec systems with IT, and decide how process changes when new rules arrive. You no longer type bills of lading, but when a shipment goes wrong, the final signature is still yours."
+ ],
+ "work": [
+  "Xiao Lin from the next team asked whether the shipper should be the factory or the trading company. You opened the shipping order and customs declaration side by side and had her look at the header that did not match.",
+  "A shipment was about to close and the Cixi factory's packing list and the actual count were two cases apart. You called the warehouse and waited until the truck driver sent a photo of the sealed container.",
+  "A telex release letter had the wrong stamp on it. You took that sheet of paper on your e-bike to the carrier's agent, still reading the next shipment's cutoff in the elevator.",
+  "The cargo description on a letter of credit differed from the contract by one word. You highlighted it and sent it to Lao Fang in sales, and told him to talk to the customer before tonight.",
+  "That US customer wanted to change the consignee again. You put the fee, timing and risk in three lines, and for the first time he replied: OK, go ahead.",
+  "You showed the new documentation assistant how to compare a packing list and a bill of lading in Excel. Three columns, one formula dragged down, and the wrong line turned red by itself.",
+  "A customs problem case came in. You arranged the description, value and classification basis by date, and wrote a page of explanation with Lao Wang from the broker.",
+  "On Friday afternoon you spot-checked twenty shipments and found three with out-of-date port codes. You updated the template and wrote it into the weekly report.",
+  "On the last day before Xiao Song resigned you went through the whole customer handover sheet with her, and took her downstairs for a coffee.",
+  "At the annual contract talks the carrier's salesman wanted a rate increase. You printed last year's rollovers and delays on one sheet and set it in front of him.",
+  "IT asked whether the system should automatically release low-risk documents. You circled three kinds that must not be released, and had them hard-code those three into the rules.",
+  "One shipment cost a customer ¥30,000 in compensation. You read the incident report, did not pursue the new hire, and merged two review steps into one."
+ ],
+ "past": [
+  "You grew up in Zhoushan, where your father worked the fishing boats and you learned early what it meant to live by the weather. After the high school entrance exam you chose the school that would get you off the island.",
+  "Your gaokao (college entrance exam) score was enough for business English at a vocational college in Ningbo. You thought that with some English you would never have to go on a boat. Your mother agreed.",
+  "In your second year, a foreign trade practice class had you fill in a bill of lading, and the teacher said not to reverse the consignee and notify party. You thought that was easy enough. You only understood later.",
+  "Before graduation you interned at a trading company, phoning factories all day, and learned how to ask when this shipment would be ready. The pay was very low, but you learned how to chase.",
+  "You joined this forwarder as a documentation assistant. In the first month you filed more than two thousand old bills of lading, and began to get a feel for the trade."
+ ],
+ "late": {
+  "pension_note": "Estimate: private forwarders mostly pay social insurance on a low base, so the pension comes to about 40 percent of your final monthly pay. Ningbo's cost of living is high, and you will need some savings.",
+  "scenes": [
+   "Your first month of retirement you still open the computer at the usual time. The inbox has a few ads in it. You read them all before you shut it.",
+   "An old customer phones to ask how AMS is filed nowadays. You say you are retired, and then ask: which destination port?",
+   "You and your spouse take a cruise out of Beilun, and when the ship docks you see the containers on the quay, and count the shipping lines by their colors.",
+   "You rest at home, eye drops by the bed, phone notifications off. For the first month, at four every afternoon, your heart gave a little lurch.",
+   "You help people fill in forms at the neighborhood center: social insurance, health insurance, seniors' cards, one character at a time. Everyone says you are so careful. It is a habit, you say.",
+   "A young woman you once trained, now a supervisor, comes to see you and says the sticky note is still in the top left corner of her screen. You smile a little and say nothing.",
+   "On the day you left you tidied the templates on your computer and handed them over. Your auto-reply carried one last sentence: from now on please contact someone else.",
+   "One new thing follows another. Now and then you hear from an old coworker that some shipping line has changed its rules again. You read it, smile, and turn your phone face down.",
+   "Going to Beilun on an errand, you pass the port area. The containers are stacked higher than before and nobody sits up in the quay cranes anymore. Your car goes by, and you look a little longer.",
+   "AI can now do a full set of documents from start to finish. But whenever there is a refusal or a held shipment, someone in the office still picks up the phone and slowly explains.",
+   "Your eyes are not what they were, and you need reading glasses for a recipe. When your child sends you a long message, you always check it once more from beginning to end.",
+   "Your grandchild brings you a courier label and asks what the letters mean. You take it, put on your glasses, and point out the recipient and the sender."
+  ],
+  "closing": {
+   "retire": "One evening many years later you are walking along the Yong River, and a small boat slowly passes. You look at your watch. You don't know when it closes, and you don't have to.",
+   "burnout": "Many years later you are sorting old photos at home, writing the date and names on the back of each. When you get a character wrong, you always cross it out and write it again.",
+   "end": "Many years later you find a yellowed copy of a bill of lading in a drawer, with the proofreading marks of your younger self. You look at it a while and slip it into an envelope."
+  }
+ }
+}

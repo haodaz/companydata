@@ -1,0 +1,191 @@
+{
+  "id": "denture-fz",
+  "occupation": "Dental Laboratory Technician",
+  "role": "Dental Technician",
+  "headline": "A dental technician at a denture factory in Cangshan, Fuzhou, paid by the piece, a loupe on and a shade guide in hand, building up porcelain one tooth at a time for people you never see",
+  "unit": "A denture factory in Cangshan, Fuzhou",
+  "unit_type": "Private dental lab serving clinics across the province, about 100 staff",
+  "city": "Fuzhou",
+  "city_tier": "Tier-2 city",
+  "education": "Associate degree (Dental Technology)",
+  "level": "Your wax-ups and milling pass muster, but the color on a front tooth still needs an old hand's eye",
+  "intro": "You spent two years pouring plaster in this factory's model room, and this year your mentor slid a loupe and a set of porcelain brushes across to you. A hundred people sit in rows with their heads down, the air purifiers hum, and in every little box on every bench are some stranger's teeth. From today, you make with your own hands the tooth in someone's mouth that shows the most.",
+  "salary_note": "Estimate: Fuzhou dental labs pay base plus piece rate, generally below Tier-1 cities, at about 90% of the national average.",
+  "facts": [
+    { "label": "Dental Technician (current level)", "value": "2-6 years, ¥6,000–9,000 a month (national average, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Senior Dental Technician (6-12 years)", "source": "Common in the trade" },
+    { "label": "Pay after 10+ years", "value": "¥18,600 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Making complete and removable partial dentures", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Receiving and checking dentists' prescriptions, design orders and impressions", "source": "AI exposure" },
+    { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "In Jinshan you eat a bowl of guobian rice-batter soup, walk through the factory gate and change into a white coat and shoe covers. On your bench is the stack of work orders you lined up before leaving yesterday.",
+    "The first order: a clinic dentist's writing looks like a prescription. Upper right one, A3 on the warm side, slightly translucent at the incisal edge. You hold the shade guide to the window and look for a long time.",
+    "You put on the loupe and build up porcelain, the brush tip carrying the powder a little at a time. Xiao Zheng next to you says something, and you shush him. You can't break your breath on this layer.",
+    "Fish ball soup in the canteen. Your whole table's talking about this month's piece counts, who has more orders, who's been sent back by a clinic again.",
+    "The porcelain furnace door opens on a row of crowns, gleaming. You pick one up with tweezers, hold it next to the shade guide and press your lips together.",
+    "Quality sends back a bridge, the articulating paper showing a heavy mark in one area. You sit down and grind it away little by little with a diamond bur, the dust extractor on full.",
+    "A salesman carries in another carton of orders, due tomorrow afternoon. You glance at the carton and turn your phone face down.",
+    "You work overtime until half past eight. When you take off the loupe it leaves a ring around your eyes. Your mentor passes, pats you on the shoulder and says nothing."
+  ],
+  "ladder": [
+    { "title": "Model Room Apprentice", "stage": "Plaster and dies", "focus": "Pouring plaster, trimming models, making dies; you move up on a steady hand and no remakes" },
+    { "title": "Dental Technician", "stage": "Piecework", "focus": "Wax-ups, milling, porcelain build-up and CAD design; you move up on output and remake rate" },
+    { "title": "Senior Dental Technician", "stage": "Hard cases", "focus": "Anterior esthetics, implant superstructures and full-arch setups; you can test for the senior dental prosthesis maker grades" },
+    { "title": "Technical Supervisor", "stage": "Leading and checking", "focus": "Running a team's quality checks, remakes and apprentices; dealing with dentists on difficult designs" },
+    { "title": "Technical Director", "stage": "All of the technical side", "focus": "Managing the factory's processes, material choices and digital production; responsible for the technical part of the medical device quality system" }
+  ],
+  "ai_tasks": [
+    { "name": "Receiving and checking dentists' prescriptions, design orders and impressions", "how": "AI can read digital prescriptions and scan files and automatically check for missing information and mismatched tooth positions; paper orders, verbal instructions and whether an impression is good still need a person, who checks with the dentist if in doubt." },
+    { "name": "Pouring and trimming plaster models", "how": "Intraoral scanning plus 3D printing or milling can already make digital models with no plaster; people only spot-check accuracy. Traditional impressions still need pouring by hand, but they are slowly declining." },
+    { "name": "Designing and making crowns, bridges and other fixed restorations", "how": "AI-assisted design software can generate initial crown and bridge shapes and occlusion, with milling or printing doing the fabrication; people adjust occlusion, margins and esthetics and make the call on difficult cases." },
+    { "name": "Making complete and removable partial dentures", "how": "Complete and removable partial dentures involve tooth setup, occlusal relations and soft-tissue support, and every patient differs. AI can assist digital setups, but try-ins, adjustments and overall judgment mostly rest on human experience and handwork." },
+    { "name": "Making inlays, veneers and implant restoration parts", "how": "AI design software and CNC equipment can design and fabricate the shapes; people choose the materials, verify that implant connections match, and take care of individual details." },
+    { "name": "Making orthodontic appliances and mouthguards", "how": "Digital planning can generate aligner models for batch printing, and AI can help plan tooth movement; people inspect finished products, do the handwork such as shaping and trimming mouthguards, and handle special requests." },
+    { "name": "Grinding, polishing and coloring restorations", "how": "Grinding, polishing, coloring and individual color and texture take eye and touch. Machines can do rough work, but the final natural match with neighboring teeth is mostly done by people." },
+    { "name": "Checking fit and adjusting restorations on feedback", "how": "AI can find deviations through scan comparison, but actually checking fit, judging how to adjust, and making changes on the dentist's and patient's feedback take human experience, and a person answers for the result." }
+  ],
+  "events": {
+    "e1": "The first front tooth you make is sent back whole by the clinic, with a note: looks fake. Your mentor says nothing, takes out a false tooth of his own and puts it on your bench for you to look at.",
+    "e2": "In the remarks column of a work order a clinic dentist has written: the patient was very happy with the last one, and she says she finally dares to smile. You tuck this order into your coat pocket.",
+    "e3": "Before the Spring Festival, clinic orders pile up like a mountain, and for three weeks you work until ten at night. The teeth keep lining up in your dreams.",
+    "e4": "The factory brings in AI design software, and a first draft of a crown appears in seconds. Half your CAD work turns into fine-tuning, and the piece rate gets adjusted along with it.",
+    "e5": "At a checkup the doctor listens to your lungs and has you get a scan, and luckily it's nothing big. He tells you to get a better mask and not to skimp on the extractor when you grind.",
+    "e6": "A clinic is two months behind on payment, and sales tells technicians to stop work on its orders. You look at the row of half-finished teeth and don't know where to put them.",
+    "e7": "You pass the grade certificate for dental prosthesis makers. The theory isn't hard, but at the practical exam an old examiner holds your crown up to the light for a long time.",
+    "e8": "Intraoral scan orders keep growing and the plaster smell in the model room fades year by year. Two old masters from there are moved to packing, and when you pass by, they're folding little boxes.",
+    "e9": "You put a down payment on a small place in Jin'an District. You've converted the monthly mortgage figure into a number of teeth.",
+    "e10": "When you take off the loupe, faint floaters have begun to appear. The eye doctor says you've used your eyes too long, and asks what you look at. You say teeth.",
+    "e11": "Your parents come to Fuzhou. You take them to a clinic and make a set for your father with your own hands. He bites into an apple and says nothing. That afternoon, he eats another.",
+    "e12": "Volume-based procurement pushes implant prices down, and clinics are all pressing lab fees. The boss's voice in the meeting is lighter than usual, and it works out to several yuan less per tooth.",
+    "e13": "Printers and milling centers can run around the clock, and now the workshop has machine lights at night. What AI can't do well is a front tooth that has to look like a relative of the real tooth next to it.",
+    "e14": "A dentist who's heard of you asks for you by name on a hard case. When the model arrives by mail there's a handwritten note with it, in a much better hand than any prescription.",
+    "e15": "Xiao Su, whom you trained, goes to a high-end lab in Shanghai, and sends back a photo of a tooth she built. You zoom in and text back two words: incisal edge.",
+    "e16": "At school a teacher asks your child what the parents do. The child says we make teeth. Back home, the child asks why, after a lifetime of it, you've never changed your own.",
+    "e17": "Checking AI design drafts has become part of your day. Sometimes it makes a molar so perfect it doesn't look human, and you have to add a little wear. People's teeth have people's looks.",
+    "e18": "The factory merges several lines, and a batch of middle-aged technicians don't know if they're staying or going. The boss is smoking downstairs. You go stand beside him, and neither of you says a word.",
+    "e19": "Age-related farsightedness starts working against you, and your loupe goes from 2.5x to 3.5x. Your hand is still fairly steady for build-up, only the writing on your work orders keeps getting bigger."
+  },
+  "choices": {
+    "c1": {
+      "title": "Speed or care",
+      "situation": "This month the factory changes the piece rate. Xiao Zheng next to you can turn out twenty-odd teeth a day, quick but often sent back. You do twelve, with few remakes, and your pay slip is a good deal shorter than his.",
+      "options": [
+        { "label": "Pick up the pace", "result": "Your pay slip thickens, but your fingers begin to go numb. A few more orders come back." },
+        { "label": "Better to go slowly", "result": "Again you're low in your group this month, but clinics are starting to ask for this technician by name." }
+      ]
+    },
+    "c2": {
+      "title": "Testing for Senior Dental Technician",
+      "situation": "To rise to Senior Dental Technician, the factory looks at your grade certificate and case work, and you must submit a complete anterior esthetic case. You'd stay two extra hours after work, when your hands have already had a full day.",
+      "options": [
+        { "label": "Stay and do the case", "result": "You remake one central incisor seven times for the color. The day you hand it in, your hand is still trembling." },
+        { "label": "Earn more by the piece first", "result": "This year your count is in the top three of your group. The case sits in your toolbox for a year." }
+      ]
+    },
+    "c3": {
+      "title": "Learn digital or keep to handwork",
+      "situation": "The boss wants a few people to specialize in CAD and AI-assisted design. While learning you'd get base pay only, no piece rate. The old masters say the hand is your life, and even when machines come they can't take that.",
+      "options": [
+        { "label": "Go learn digital", "result": "You begin working with scan files, at first harder on the eyes than porcelain. This step opens up another road for you." },
+        { "label": "Stick to handwork and focus on esthetics", "result": "Your layering of porcelain grows ever finer. When the young digital people get stuck, they often come to you." }
+      ]
+    },
+    "c4": {
+      "title": "Becoming an in-house technician at a clinic",
+      "situation": "A dental clinic chain is hiring an in-house technician. You'd meet patients, match shades and adjust on the spot, for about the same pay. But in-house you'd only do that clinic's work, and there's a ceiling on what you'd learn.",
+      "options": [
+        { "label": "Go; see the people who wear them", "result": "For the first time you see an old person look in the mirror and run a tongue over a tooth you made. In that moment you stand beside them, not moving.", "end": "You left the long benches of the factory and got a small lab of your own in a clinic. People with new teeth come in the door and go out smiling, and you always get to see it." },
+        { "label": "Stay at the factory for the harder cases", "result": "You thank them, and go on making teeth for faces you never see." }
+      ]
+    },
+    "c5": {
+      "title": "Competing for Technical Supervisor",
+      "situation": "The Technical Supervisor has gone to another factory, and the boss needs to promote someone. A supervisor gets no piece rate, has to watch the group's remake rate and has to find fault with technicians older than you.",
+      "options": [
+        { "label": "Compete, and take on the apprentices too", "result": "You use every rejected order as a lesson. Some in the group begin privately calling you teacher, and some stop eating with you." },
+        { "label": "No; just do the hardest work", "result": "Your hands never stop, requests by name from clinics keep growing, and you lose nothing in pay." }
+      ]
+    },
+    "c6": {
+      "title": "Opening your own lab",
+      "situation": "Dentists you've known for years urge you to open a small lab, promising all their work. You'd have to buy a scanner, furnace and milling machine, sink in several hundred thousand yuan, and get a medical device production license.",
+      "options": [
+        { "label": "Quit and open your own small lab", "result": "You rent a room with a window in Taijiang and hang the shade guide in the most visible spot.", "end": "You opened a lab of five or six people, every work order with your own name on it. The quality system documents stack higher than the teeth, and you accept that too." },
+        { "label": "Never mind; no factory headaches for you", "result": "You set the idea aside, and go on picking up your child on time after work." }
+      ]
+    },
+    "c7": {
+      "title": "A materials rep comes hunting",
+      "situation": "A zirconia materials company wants you for technical support, traveling to clinics and dental labs across the country for thirty percent more, and no more wearing a loupe every day. Only, once your hands stop, it's hard to start them again.",
+      "options": [
+        { "label": "Put down the brush and go on the road", "result": "You pack up your porcelain brushes and keep just one in your bag.", "end": "You walked into factory after factory with a sample case. When you see a young technician's hand doing it wrong, you can't help going to stand behind them." },
+        { "label": "Keep making teeth", "result": "You politely decline. The next morning, you polish your loupe." },
+        { "label": "No, but have the boss raise your pay", "result": "You take the offer to the boss. He sighs and adjusts your post salary." }
+      ]
+    },
+    "c8": {
+      "title": "Going for Technical Director",
+      "situation": "An investment firm has bought into the factory and wants a full digital production line, needing a Technical Director who knows both hand and digital. You'd have to read unfamiliar standards, speak to regulators and investors, and decide how many people stay in the workshop.",
+      "options": [
+        { "label": "Take it on", "result": "You move into the office with a window and set a shade guide by your monitor. In meetings your hand always wants to hold something." },
+        { "label": "Stay at your old bench", "result": "You recommend a technician ten years younger. Every afternoon the sun reaches your bench, just enough to see a tooth clearly." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On the last day you pack your loupe and that worn-down porcelain brush into a box. Over the decades, the teeth you've made have gone into tens of thousands of mouths that don't know you. They eat, talk, have their pictures taken, and never hear about you. Stepping out of the workshop, the sun is on the street below. Someone walks by smiling. You look a moment longer.",
+    "burnout": "Your eyes, your neck, the numbness in your fingers. The doctor is clear: you can't keep your head down like this. You finish your orders one tooth at a time, and hand your shade guide to your apprentice. From then on when you look at people you always look at their mouths first, and only then remember it has nothing to do with you anymore."
+  },
+  "stages": [
+    "You sit eight or nine hours a day working down the orders: wax-ups, milling, porcelain build-up, and for digital jobs, moving over to CAD to adjust margin lines. At your elbow are a shade guide, porcelain brushes, a high-speed handpiece and an articulator. Your customers are dentists you can't see, known only by a work order and a box with a model, and how fast you deliver and how much comes back is written on your piece-rate pay.",
+    "Hard jobs flow to your bench: anterior esthetics, implant superstructures, complete dentures. You often phone a clinic dentist to find out why a tooth should be done this way. Compared with the level below, you don't have to race for volume, but your badge number now appears in the remarks column on orders: please have No. 17 do this.",
+    "You run a group of a dozen-odd people, assigning orders in the morning and going over remakes at the inspection bench in the afternoon, telling apprentices where each one went wrong. You argue about deadlines with sales and discuss cases with senior clinic dentists. Now you make only the hardest few yourself. More time goes into other people's hands.",
+    "You own the factory's process routes and material choices, and 3D printing, milling centers and design software purchases all need your signature. You go through GMP documents with drug-regulator inspectors and argue zirconia batches with suppliers. Now and then the workshop has a color it can't solve, and the young people still bring it to your office."
+  ],
+  "work": [
+    "Your mentor Old Lin sets a front tooth you've built beside the shade guide and has you look from two meters off. Only then do you see the incisal edge is just slightly brighter than its neighbor. You add another layer.",
+    "A work order says atrophic ridge in an older patient. You adjust the CAD margin line and try it repeatedly on the articulator, grinding away a thin layer before it sits stable.",
+    "Xiao Zheng's handpiece breaks and he borrows yours. Half an hour later you find he's turned up the speed, so you recalibrate it before continuing with the bridge.",
+    "A dentist at a Gulou clinic phones to say the patient finds the tooth too white. You have him send a comparison photo, then write on the order: B1 down to A2, incisal edge a bit more translucent.",
+    "The abutment connection on an implant superstructure is off by a hair. You remeasure with calipers, compare the scan file with the piece, and find that the model poured slightly out of shape.",
+    "Apprentice Xiao Su has spent the day setting up a complete denture. You go and look at the occlusal surface and turn the second molar on the left very slightly, and the whole row falls into place.",
+    "Your group's remake rate is high this month. You sort the returned orders by clinic and find that 70 percent come from one scanner. You have sales go ask about it.",
+    "New apprentice Xiao Yang keeps making teeth too round. You bring out a few magnified photos of real teeth and have her build another one, looking at the pictures.",
+    "A senior dentist wants a complex occlusal rehabilitation. You take your group's senior technicians to the clinic and spend an afternoon working through it with him on the model.",
+    "A drug-regulation inspector comes to the receiving record for a batch of zirconia and asks how far back it traces. You pull the batch record and the supplier's certificate, and follow it all the way to that sintering sheet.",
+    "You have three design software packages tested on the same old cases for margin accuracy, put the results in a table and tell the boss the cheap one won't do.",
+    "The workshop sends over a front tooth that nobody can match. You sit by the window looking at it for five minutes, add the slightest bit of yellow to the inner layer, and put the shade guide back in the young person's hand."
+  ],
+  "past": [
+    "Your family lives in the mountains of Minqing and your high school entrance exam score is ordinary. Your grandfather has lost most of his teeth and wears a set made in town, which keeps slipping when he talks. You've always remembered that.",
+    "In high school you're decent at art and have steady hands, but your academic scores don't rise. Your teacher says that with these hands, you could find a major that uses them.",
+    "After the gaokao (college entrance exam) you leaf through the application guide and find dental technology in the junior college listings. You explain it to your parents for a long time. They hear it as becoming a dentist and are happy all summer.",
+    "In your first practical class, you carve a tooth from wax. It takes a week, and the teacher says this is a piece of candy. You take it back to the dorm and carve a dozen more.",
+    "After graduating you join this factory and start in the model room. In summer the plaster dust sticks to your arms. You pour dozens of models a day, until a twitch of your hand tells you if the mix is thin or thick.",
+    "Your mentor Old Lin looks at a die you've trimmed and says the margin's okay. It's the longest compliment he gives that year, and you remember it to this day."
+  ],
+  "late": {
+    "pension_note": "Estimate: dental labs mostly pay social insurance on a low base; retiring from a Fuzhou company brings about 40% of final monthly pay.",
+    "scenes": [
+      "You don't need to rise early anymore. In your first week you buy a box of watercolors, and find your hand still remembers how to mix a color.",
+      "An actor on television is smiling, and you tell your spouse that this one's porcelain, that one isn't. Your spouse hands you the remote.",
+      "You need work on your own teeth now. When it's fitted at the clinic, you ask for a mirror and look at it for a long while, and say nothing to the dentist.",
+      "Xiao Su comes back to Fuzhou and opens a lab, and invites you to sit a while. On the wall is the worn-down brush. She says you forgot to take it. In fact, you gave it to her.",
+      "After you take off the loupe, for quite a while, everything you see seems too far away.",
+      "You start walking along the Min River every day, and your neck gets better. Passing the dental clinic at the compound's gate, you glance at its sign.",
+      "A cousin needs new teeth and asks which kind to choose. You look at the model for a long time and say this place's work is all right, the margins are pretty clean.",
+      "In your new place, you still look at people's teeth first. Sometimes it embarrasses them, and you hastily look elsewhere.",
+      "Xiao Zheng from the old factory phones and says that machines can do half the work now. You ask how his hands are. Fine, he says, just idle sometimes.",
+      "Your child brings friends home for dinner, and when one of them smiles you look a moment longer. Your child kicks you under the table.",
+      "You peel a lychee, hold it up to the light and look at the white layer, and think: that's a hard color to build.",
+      "In an old box you find the wax tooth you carved back then, gone soft and slumped on one side. It really does look like candy."
+    ],
+    "closing": {
+      "retire": "On the Min River in the evening, people stroll and eat and laugh out loud. You sit on a bench and listen to them talk, watching their mouths open and close.",
+      "burnout": "Afternoon light lands on the table, and makes the shade guide look soft. You pick it up, look at it, and set it down.",
+      "end": "A child on the street opens wide and smiles at her mother, one front tooth missing. Walking past, you smile a little too."
+    }
+  }
+}

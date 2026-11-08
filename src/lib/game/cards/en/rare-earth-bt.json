@@ -1,0 +1,184 @@
+{
+ "id": "rare-earth-bt",
+ "occupation": "Metallurgical Engineer",
+ "role": "Process Technician, Rare-Earth Smelter",
+ "headline": "A metallurgy graduate at a rare-earth separation plant in Baotou, learning to read the \"balance\" along hundreds of stages of solvent-extraction tanks",
+ "unit": "A rare-earth smelting and separation plant in Baotou",
+ "unit_type": "Rare-earth smelting company",
+ "city": "Baotou, Inner Mongolia",
+ "city_tier": "Tier-3 city",
+ "education": "BEng in Metallurgical Engineering",
+ "level": "You did fine in metallurgical physical chemistry and could lecture for an hour on solvent extraction. Standing in the actual workshop, you can't tell what you are supposed to be looking at in which tank.",
+ "intro": "The workshop director walks you past a row of extraction tanks that seems to have no end. In each compartment two layers of liquid turn slowly, and the air smells faintly sour. He points to one and says it took four months to get this line balanced, so don't touch anything. Just look. From today on, your job is to stand beside these hundreds of compartments and learn to see which one is wrong.",
+ "salary_note": "Estimate: smelter pay in Baotou runs slightly below the national figure, with shift allowances on the floor. The year-end bonus follows the price of praseodymium-neodymium oxide.",
+ "facts": [
+  { "label": "Assistant Engineer (current level)", "value": "0–3 years, ¥6,000–9,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Engineer (3–9 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Judging and handling process upsets on the floor", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Compiling material balances and production reports", "source": "AI exposure" },
+  { "label": "Open positions", "value": "33 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You ride your e-bike down Rare Earth Avenue toward the plant. In winter the wind pours in through the mountain gap to the north, your scarf grows a layer of frost, and the bamboo steamers of the shaomai sellers breathe at the roadside.",
+  "Shift handover in the workshop. The night-shift leader pushes the log across and says the aqueous phase looks a little cloudy somewhere past stage ninety, so the day shift should keep an eye on it.",
+  "You go along with the analyst to take samples, scooping stage after stage and labeling bottle after bottle. By the time you reach the back section, the acid fumes have stiffened the cuffs of your work clothes.",
+  "The lab numbers come back. In Excel you link the rare-earth distribution across the stages into a curve. There's a bulge in the middle. You send a screenshot to your mentor.",
+  "Oat noodles and stewed mutton in the canteen. A colleague from the electrolysis workshop sits across from you, his face baked red by the furnaces, and says one cell had an anode effect last night and they were up until three.",
+  "Your mentor has you calculate this week's ammonia for saponification. It comes out slightly higher than last week. He asks why. You can't say. He sends you to go look at the flowmeter.",
+  "Process meeting. Production wants more output, environmental says the ammonia nitrogen in the wastewater must stay down, and the workshop director looks at you: you, new one, read out this week's numbers.",
+  "You change out of your work clothes and wash your hands twice with sulfur soap, and they still smell of kerosene. On the ride home the sky toward the steelworks is red, and you can't tell if it's sunset or furnace."
+ ],
+ "ladder": [
+  { "title": "Assistant Engineer", "stage": "Shadowing", "focus": "Shadowing shifts to learn the process, taking samples, working material balances, reading curves, getting to know one line's temper" },
+  { "title": "Engineer", "stage": "Your own line", "focus": "Running a separation line or workshop section on your own; you move up on recovery, purity and no accidents" },
+  { "title": "Senior Engineer", "stage": "Setting the process", "focus": "Leading plant-wide process upgrades, new products and technical problem-solving, reviewing other people's plans" },
+  { "title": "Deputy Plant Director for Technology", "stage": "The whole plant", "focus": "Making the calls on the plant's process direction, environmental compliance and upgrade investment, and answering both up and down" }
+ ],
+ "ai_tasks": [
+  { "name": "Judging and handling process upsets on the floor", "how": "Liquid level, color, smell, what the entrainment looks like: you have to stand at the tank. Whether to stop the line and who goes in has to be decided on the spot by someone who will answer for it." },
+  { "name": "Compiling material balances and production reports", "how": "Stage distributions and feed data flow into the system, and AI can turn out dailies and balance sheets. People only check what doesn't reconcile." },
+  { "name": "Predicting where the extraction line is heading", "how": "A model can use online analysis to warn early which section will drift. Whether to adjust, and by how much, is for someone who knows this line." },
+  { "name": "Optimizing reagents and energy use", "how": "AI can suggest changes to acid, alkali and power use. Whether the environmental limits and the state of the tanks can bear it is for a person to weigh." },
+  { "name": "Drafting upgrade plans and environmental filings", "how": "AI can pull together historical data and draft text. Whether the plan works and the numbers are right is for an engineer to sign." }
+ ],
+ "events": {
+  "e_see_color": "For the first time, before the lab sheet was back, you looked at the color of the organic phase in one compartment and said the Pr-Nd in this section had drifted. Your mentor didn't say if you were right. From the next day on, he had you read out the numbers for him.",
+  "e_balance_lost": "One time the feed composition changed and you didn't adjust in time, and a whole line lost its balance. The workshop spent more than twenty days getting it back, and everything produced in those twenty days was downgraded.",
+  "e_acid_cough": "The roasting section was under maintenance and you spent a few days watching over it. You came back and coughed for two weeks. An extra line appeared on your staff physical: recommend follow-up.",
+  "e_night_call": "The phone rang at midnight: the night shift said a third phase had formed in the saponification section. You put on your padded coat and cycled to the plant. By daybreak the tank had settled, and you had stiffened from standing.",
+  "e_price_boom": "Electric cars were selling like mad and Pr-Nd oxide kept climbing. Three lines ran flat out, your year-end bonus was several times your monthly pay, and classmates in the group chat asked if you had struck gold.",
+  "e_price_bust": "Rare-earth prices fell, losing half their value in a year, and the warehouse filled with oxide nobody would buy. The workshop went on rotating furloughs and your performance pay shrank by a third.",
+  "e_marriage": "A friend introduced you to a teacher in Qingshan District. At your first meeting they sniffed and said, did you just come off overtime? You smell of kerosene. Later you got married.",
+  "e_house": "You bought a secondhand apartment in Kundulun District. Old compound, good heating, warm enough in winter for short sleeves indoors. After the down payment you had just enough left for a new washing machine.",
+  "e_child": "The month your child was born, the plant was rushing an upgrade inspection. You revised a plan outside the delivery room. When the nurse called for family, you slapped the laptop shut and ran.",
+  "e_env_check": "Environmental inspectors came into the plant and went through the wastewater and residue ledgers page by page. You accompanied them for three days, matching years of ammonia nitrogen data and hazardous-waste transfer manifests one by one.",
+  "e_online_analysis": "The workshop got online analysis, and no one has to scoop bottle after bottle anymore. Old Chang, the sampler, said he would finally stop having to smell it, and then asked what he was going to do from now on.",
+  "e_ai_drift": "The model said all was well, but the phase boundary in the tank looked wrong to you. Hand samples showed the online probe had been drifting for nearly a week. You had the workshop flag that whole section's data.",
+  "e_ai_report": "The system now produces the material balance by itself. You lost half a day of Excel a week, and the workshop director promptly gave you a new energy-saving assignment.",
+  "e_patent": "A way of saponifying with less ammonia that you and a colleague had been working on finally ran through. Ammonia nitrogen in the wastewater dropped sharply, an invention patent came through, and the bonus covered a barbecue for the whole team.",
+  "e_master_retire": "Your mentor retired. Before leaving he gave you a notebook with frayed edges: thirty years of tank-tuning experience, some of it readable only by people from your workshop.",
+  "e_parent": "Your mother broke her leg back home and you took a week off to be there for the surgery. When you came back, the log showed your shifts had been split among four people.",
+  "e_nose": "The young ones say they can't smell anything odd. You can't either, and you know that doesn't mean the air got better. On your physical your lung function was down a few more points from last year.",
+  "e_apprentice": "A new master's graduate shows you extraction results from his simulation software. You nod, take him to the tanks, and ask him: this compartment here, does it look like that to you?",
+  "e_magnet": "You bought your child an electric bike, and the repairman said the motor had rare-earth magnets in it. You nodded and thought of those hundreds of compartments, and didn't explain."
+ },
+ "choices": {
+  "c_workshop": {
+   "title": "Going for Engineer: the electrolysis workshop",
+   "situation": "Before you apply for Engineer, the plant wants you to spend two years in electrolysis. It's hot at the furnace, tapping metal beside a cell at a thousand degrees, but without knowing the metal end you won't make it. The separation workshop is comfortable, only the road there is narrow.",
+   "options": [
+    { "label": "Go to electrolysis", "result": "Your face went dark all over and your sleeves filled with tiny burn holes from sparks. Two years later you were one of the few at the plant who had worked both separation and electrolysis." },
+    { "label": "Stay in separation", "result": "You came to understand your line more deeply. The year you applied for Engineer, your experience section was one line shorter than everyone else's." }
+   ]
+  },
+  "c_exam": {
+   "title": "The licensed metallurgical engineer exam",
+   "situation": "A classmate at a design institute urges you to take the licensed metallurgical engineer exam: with a stamp, the road gets wider. But the books are thicker than bricks, the workshop is rushing a new line into production, and by the time you get home you can't read a word.",
+   "options": [
+    { "label": "Grit your teeth and take it", "result": "You sat it three years in a row and passed on the third. When the certificate came the plant added a little to your monthly pay, and for the first time you felt those nights had not been wasted." },
+    { "label": "Skip it, do the workshop well", "result": "You gave your evenings to your child and those few curves. When people ask if you are licensed you say no, but you could come have a look at their tanks." }
+   ]
+  },
+  "c_ai": {
+   "title": "Leading the workshop's smart upgrade",
+   "situation": "The plant is building a smart factory and wants you to lead a prediction model for the extraction line. The outside tech company only knows algorithms, so you will have to translate the old hands' judgment for them line by line. If it works, it's your achievement. If it stops a line, that's yours too.",
+   "options": [
+    { "label": "Lead it", "result": "You stood the algorithm engineers beside the tanks for a whole winter, and their notebooks reeked of acid. On the day the model went live, it called a drift in one section a day ahead." },
+    { "label": "Let someone else lead", "result": "You went on minding your line and used the system as given once it was up. When something goes wrong, you still walk out to the tanks first." }
+   ]
+  },
+  "c_jiangxi": {
+   "title": "An ion-adsorption plant in the south comes calling",
+   "situation": "A separation plant in Jiangxi offers forty percent more than you make now to run its process, with better conditions and a warmer climate than Baotou. Your spouse's job and your child's school are here. If you go, you live apart.",
+   "options": [
+    { "label": "Go to Jiangxi alone", "result": "You spent a few damp winters in a dormitory in southern Jiangxi, and the raise was real. On video your child's voice calling you stuttered every single time." },
+    { "label": "Stay in Baotou", "result": "You turned it down and kept riding to work in the north wind. The heating was especially good that winter, and your child crawled back and forth across the floor." }
+   ]
+  },
+  "c_material": {
+   "title": "The offer from a magnet maker downstream",
+   "situation": "A company that makes NdFeB magnets is hiring someone to head quality and raw materials, and they like that you know the upstream. You would wear clean clothes, never smell acid, and earn more, but you would never again touch those extraction tanks.",
+   "options": [
+    { "label": "Go to the magnet company", "result": "You read metallography photos of magnets in a clean workshop. At lunch you sometimes smell your sleeve. It no longer smells of anything.", "end": "You became head of raw-material quality at a magnet company. Every batch of metal passed under your eye, though you never again had to stand beside the tanks." },
+    { "label": "Stay at the smelter", "result": "You messaged them your thanks. The next day you left at seven-thirty as usual, down Rare Earth Avenue." }
+   ]
+  },
+  "c_senior": {
+   "title": "Applying for Senior Engineer",
+   "situation": "The plant is recommending you for Senior Engineer, which takes papers, patents and having led an upgrade. You do have two upgrades, but the reports are scattered across workshop computers, and this half-year is the big turnaround.",
+   "options": [
+    { "label": "Rush the paperwork and apply", "result": "You stacked turnaround days on top of paper-writing days for half a year and lost four kilos. On review day your voice was hoarse, and you passed." },
+    { "label": "Sit this round out", "result": "You saw the turnaround through and the line came back up steady. The day the list of names was posted, you didn't go look." }
+   ]
+  },
+  "c_university": {
+   "title": "Pilot work at the research institute",
+   "situation": "A rare-earth research institute wants you to run its pilot plant. No output targets or shifts, and the work is next-generation process. The pay would be somewhat lower, and it would no longer be your call on the floor.",
+   "options": [
+    { "label": "Go to the institute", "result": "A pile of papers appeared on your desk, and bench-scale beakers replaced hundreds of compartments. Young PhDs call you Teacher and listen to you describe what real tanks are like.", "end": "You became head of the institute's pilot base. One new process after another went from your hands to the factories, and your name stayed on the last page of those technical reports." },
+    { "label": "Stay in production", "result": "You said you wanted a few more years running a line that actually ships. They understood. The calls at night still come to you." }
+   ]
+  },
+  "c_deputy": {
+   "title": "Standing for Deputy Plant Director for Technology",
+   "situation": "The old director is being transferred, and the group wants you to apply for Deputy Plant Director for Technology. You would sign for the plant's environmental compliance and upgrade investment and deal with the government and headquarters. The tanks in the workshop you would only see in passing on inspections.",
+   "options": [
+    { "label": "Stand for the post", "result": "You moved into an office on the third floor with a window facing the workshop stack. Before signing anything, you always pull up the data one more time." },
+    { "label": "Stay on the technical side", "result": "You recommended a younger colleague and went on leading the upgrade team. At big meetings you sit in the second row from the back, that frayed notebook at your elbow." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you walk the extraction workshop once more, hundreds of compartments still turning slowly as ever. The data lives on screens now, and the young people in the control room nod to you through the glass. You turn in your work clothes at the supply office, the cuffs still stiff. Outside the gate, the wind still comes from the north.",
+  "burnout": "Your lung function dropped a little further and the doctor advised you to leave the workshop. You applied to the plant's technical archive, and now you spend your days entering old process specifications into the system. Out the window you can't hear the pumps anymore. At lunch you sometimes smell your hands. There is nothing left on them to smell."
+ },
+ "stages": [
+  "You shadow your mentor in the separation workshop. Every day you take samples, deliver samples, wait for lab sheets, and string each stage's distribution into a curve to see where it bulges and where it sags. You write the material sheets and the shift log. The tanks aren't yours to touch, and you ask before so much as brushing a flowmeter dial. The analysts, the shift leaders and the fitters are all your teachers.",
+  "One separation line is yours now. You set the feed rate, the saponification degree and the reflux ratio, and your name is on the process card. Every morning you look first at the night shift's curves and then walk the tanks. In the afternoons you haggle with production over output. You begin bringing along an assistant or two, teaching them when to move and, more often, when not to.",
+  "You have the plant's process upgrades and new-product trials, and you take turns in meetings with equipment, environmental and sales. An upgrade runs from bench test to investment return, and the report must be plain enough for a boss who doesn't know the process. Whatever the workshops can't solve ends up on your desk, and your stamp starts landing on other people's plans.",
+  "Half of your week goes to meetings: the group's business reviews, the environmental agencies, the plant-wide safety sessions. Whether a new line gets built and which upgrade goes first both end with you stating a position. You still take one day a month to go down to the workshop. No meetings, no reports. You just go look at the tanks."
+ ],
+ "work": [
+  "Sister Chang the analyst pushes a lab sheet across and asks if you believe this number. You take another bottle, she titrates again, and it differs in the last decimal place. She laughs and says your bottle wasn't clean.",
+  "You build an Excel sheet that draws the distribution curve by itself. The shift leader says very nice and then tells you that everyone has been converting the units in column three in their heads for years.",
+  "Old Sun the fitter teaches you to read the agitator motor's current. He presses a palm against the tank wall and says you feel too: this compartment's turning slower than the one next to it.",
+  "The feed operator says this batch of concentrate isn't the same as the last. You read the incoming sheet, turn the aqueous flow down a little, write the reason on the process card, and wait two days before daring to step out for a cigarette.",
+  "You call Xiao Bai, the new assistant, over to a compartment with heavy entrainment and have him give the causes himself. He names five. You have him pick one and change only that, and see the result tomorrow.",
+  "The head of production comes pressing for output and wants the flow up by ten percent. You print the curve from the last time they raised it. He looks at it for a while and says then raise it five.",
+  "At the upgrade review, finance asks how many years to pay it back. You bring out the payback calculated at three rare-earth prices, point to the worst column and say this one is acceptable too.",
+  "Environmental brings the new wastewater requirements. You spend a day sampling at the treatment station with them and list every source of ammonia nitrogen in the plant in a table. The biggest item is the saponification section.",
+  "Sales returns with a complaint from a downstream customer: some impurity in the metal runs high and low. You pull half a year of batch records and follow the data all the way to a pump that had its gasket changed.",
+  "At the group's investment review you present a new line in five pages. A senior leader asks where the risks are. You turn the fifth page over, and it is all risks.",
+  "The night-shift leader calls, in the same tone as when someone called you twenty years ago. You listen, ask two questions and say: you decide, you know it better than I do. I'll come look tomorrow.",
+  "Reviewing young people's applications for senior titles, you pick out one with data that is a little too pretty, call the applicant in, and ask which night this curve was measured."
+ ],
+ "past": [
+  "You grew up in Baotou's Donghe District. Your father was a fitter at a factory, and the dinner table was always about the workshop. Back then you thought you'd do anything at all except go into a factory.",
+  "You did so-so on the gaokao (college entrance exam) and were reassigned to metallurgical engineering. Your father was rather pleased when the letter came and said it was a good major, and that Baotou had plenty of places that would want you.",
+  "Sophomore year in metallurgical physical chemistry, you finally understood why that string along the bottom of the periodic table is so alike. Things that alike, and there was still a way to pull them apart.",
+  "Junior year you interned at a rare-earth plant, and the smell of the workshop had you streaming tears. But the rows of tanks kept turning, and thousands of tons of ore ended up as a few small bags of differently colored powder. You stared for a long time.",
+  "In autumn recruiting an electronics factory in the south wanted you too, with higher pay, minding machines on a production line. Your father said don't go. You thought it over and sent your resume to the smelter on your doorstep."
+ ],
+ "late": {
+  "pension_note": "Estimate: a basic pension plus a small enterprise annuity comes to about fifty to sixty percent of base pay before retirement, not counting bonuses.",
+  "scenes": [
+   "For the first few months of retirement you still wake on schedule. The phone doesn't ring at night, and you aren't used to that, so you turn the ringer up to its loudest.",
+   "The plant brings you back as a consultant to look over an old line. The young people switch on the big screen. You take a few looks and say let's go for a walk along the tanks first.",
+   "You and your spouse spend two winter months in Hainan. A neighbor asks what you did for work and you say you refined earth. They assume you fired ceramics, and you don't explain.",
+   "After leaving the workshop you go home for lunch every day, and your spouse says it's the first time in your life you have been punctual. You sit at the table and still don't know what to say.",
+   "On doctor's orders you begin walking slowly on the trails at Saihantala, a stretch at a time with rests between. In winter you stay in. On the first day of spring you are out.",
+   "An old workshop friend visits and says that line is fully automatic now, three people per shift. You ask who watches when there's entrainment. He isn't really sure.",
+   "The day you finish resigning, you stand at the workshop door for a while and put your badge in an envelope. The gatekeeper knows you and asks if you're being transferred again. You say more or less.",
+   "When the news says rare-earth prices have moved again, you still run the numbers without meaning to: at this price, about how big a bonus that line could pay this year.",
+   "You go back to Baotou for an old coworker's retirement dinner. By the second round everyone is arguing again over whose fault it was the time the balance got lost.",
+   "Part of the plant has moved, new slogans are painted on the old workshop wall, and no one hires samplers anymore. But someone is still washing burettes in the lab.",
+   "Your finger joints ache in winter. There's a tiny magnet in your grandchild's toy that sticks to the fridge and won't come off. You work at it with a fingernail and say: this came from our place.",
+   "In Baotou the Yellow River breaks up every spring, and old as you are, you still go look. The ice moves off piece by piece, slowly, like hundreds of compartments."
+  ],
+  "closing": {
+   "retire": "One winter morning many years later the radiator ticks softly. You sit at the window watching the snow. The tea beside you has gone cold. You pick it up, smell it, set it back down, and look out a little longer.",
+   "burnout": "Many years later you go down every afternoon to sit in the sun, your breathing slower than it once was. Someone in the courtyard is wiping down a car, and a faint whiff of kerosene drifts past. You lift your head a little.",
+   "end": "Many years later, sorting old things, you find a small glass vial holding a pinch of pale red powder: the first batch that ever passed under your own hands. You set it on the windowsill, where the sun finds it. It looks rather nice."
+  }
+ }
+}

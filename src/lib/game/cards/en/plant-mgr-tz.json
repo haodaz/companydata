@@ -1,0 +1,189 @@
+{
+  "id": "plant-mgr-tz",
+  "occupation": "Production Manager",
+  "role": "Auto Parts Plant Production Manager",
+  "headline": "Up from team leader at an auto parts plant in Yuhuan, now a production manager over three workshops and two hundred-odd people, with the carmaker's annual price cuts on one side and the owner's phone calls on the other",
+  "unit": "An auto parts plant in Yuhuan, Taizhou",
+  "unit_type": "Private tier-two auto supplier, about 300 staff",
+  "city": "Taizhou",
+  "city_tier": "Tier-3 city",
+  "education": "Associate degree (Mechanical Manufacturing and Automation)",
+  "level": "You can hear which machine is about to go wrong, but you are still learning to run a roomful of people",
+  "intro": "Twelve years ago you were carrying dies in this plant's die-casting shop, and you ground your way up through team leader and workshop head. Now your office window looks out on the workshop roofs, and the owner has handed you the keys to three workshops and a capacity ledger. From today, every part bound for the carmaker that runs an hour late is on you.",
+  "salary_note": "Estimate: private Taizhou auto parts firms pay production managers decently, but on a slightly lower base than Tier-1 cities, about 95% of the national average.",
+  "facts": [
+    { "label": "Production Manager (current level)", "value": "10-16 years, ¥16,000–25,000 a month (national average, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Production Director (16-24 years)", "source": "Common in the trade" },
+    { "label": "Pay after 10+ years", "value": "¥19,500 a month (national average)", "source": "Pay by experience" },
+    { "label": "Where AI is moving in", "value": "Planning the department's annual work and setting quality and environmental targets", "source": "AI exposure" },
+    { "label": "Open positions", "value": "137 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "Before it is fully light you drive in along Xuanmen Bay. The sea wind tastes of salt, and the night-shift leader's message about last night's output is on your phone. Line two is four hundred pieces short.",
+    "At the workshop door you hold the morning meeting, day-shift team leaders in a half circle. You go through last night's problems one at a time and name no one. They know who.",
+    "At line two, the machine sounds wrong. You rest your hand on the spindle housing for a few seconds, call over Old Qian from maintenance, and go check the tool-life chart yourself.",
+    "The planner brings the schedule. The carmaker has added three thousand pieces, due to ship the day after tomorrow. You look at the date for die maintenance, and reach for the pencil.",
+    "Lunch in the canteen. The auntie serving gives you an extra ladle of seafood bean noodles. Two workers beside you say the plant next door raised its piece rate by half a yuan. You pretend not to hear.",
+    "Quality holds an 8D meeting. Last week a lot of valve bodies had burrs out of spec and the customer issued a penalty. You have the operator explain it himself, not his section chief.",
+    "The owner calls from out of town, asking why this month's gross margin fell two points. Standing on the steps outside the workshop, you go through it item by item as it slowly gets dark.",
+    "At home your child has finished homework. The night-shift leader calls about an alarm on a machining center. You put him on speaker and eat while listening to him read off the fault code."
+  ],
+  "ladder": [
+    { "title": "Team Leader", "stage": "One line", "focus": "Leading a dozen-odd people on one line, assigning posts, watching first-piece checks, handling problems on shift" },
+    { "title": "Workshop Head", "stage": "One workshop", "focus": "Managing one workshop's output, quality and people; you move up on machine utilization and no batch failures" },
+    { "title": "Production Manager", "stage": "Whole plant", "focus": "Managing several workshops' scheduling, delivery, cost and safety; answering to the carmaker's audits and the owner's P&L" },
+    { "title": "Production Director", "stage": "The system", "focus": "Managing production, equipment and planning, driving automation, turning a workshop-style plant into one with real systems" },
+    { "title": "Vice General Manager, Production", "stage": "The whole picture", "focus": "Managing the whole manufacturing side and new sites, dealing with carmaker executives, government departments and banks" }
+  ],
+  "ai_tasks": [
+    { "name": "Planning the department's annual work and setting quality and environmental targets", "how": "AI can compile past output, cost and quality data and draft the annual plan and targets; people set the goals and make the call in light of company strategy, resources and policy risk, and answer for the result." },
+    { "name": "Supervising and checking production", "how": "AI can follow progress through system data, cameras and sensors, report anomalies and compare process parameters; people have to judge the true cause on the floor, deal with sudden trouble with people and machines, and answer for safety and results." },
+    { "name": "Establishing work standards", "how": "AI can organize existing standards, compare them with industry norms and draft work instructions and checklists; people must test whether they work on the floor, get the teams to agree, and issue and enforce them." },
+    { "name": "Training and evaluating employees", "how": "AI can generate training materials and question banks and track progress and scores; people have to coach on the floor, demonstrate handwork, read how workers are doing, and evaluate and encourage them with a human touch." }
+  ],
+  "events": {
+    "e1": "The first time you speak at an all-hands meeting you've prepared three pages. On page two, the power goes out. People in the workshop raise their phones to light you up, the laughter is louder than the applause, and you all end up on better terms.",
+    "e2": "The carmaker suddenly demands an overnight changeover. The dinner at home goes cold on the table and you spend two nights straight in the workshop. The last truck leaves on time, and the driver gives you a honk.",
+    "e3": "A typhoon makes landfall at Yuhuan, the plant floods and production stops for three days. In rubber boots you and the maintenance crew lift the motors up one by one, and the schedule gets written again from the top.",
+    "e4": "A batch delivered to the carmaker is out of tolerance, bringing a six-figure penalty. You spend three days at the customer's site with the workers, sorting pieces by hand. You don't take the owner's calls.",
+    "e5": "After the New Year break more than thirty skilled workers don't come back, gone to the battery plants. You stand in front of the empty stations, then call the team leaders to your office one by one.",
+    "e6": "The carmaker cuts the annual price by another three percent, and the owner's face stays dark for a month. You re-time every operation on a line and save a few seconds of takt. It counts as an answer.",
+    "e7": "A camera inspection system goes in, and a badly worn hard hat sets your phone buzzing. The workers call it Electronic Old Ying. The real Old Ying laughs when he hears.",
+    "e8": "An older worker hurts his hand at his station, not badly. You go with him to the hospital and that evening bring fruit to his home. His wife pours you tea and says nothing.",
+    "e9": "The plant wins a parts contract with a new-energy carmaker, and everybody has been holding their breath for it. The day the mold is opened the owner sets out several tables in the canteen. You drink one glass and go back to the workshop.",
+    "e10": "The system's schedule beats the planner's by a day, but it doesn't know that the old master on line one has to go home next week. You add a column to the system, called People.",
+    "e11": "A checkup flags your lower back and your blood lipids in red. The doctor asks if you sit too much. You say you stood for over ten years, then started sitting.",
+    "e12": "A young team leader you once trained is now running a plant elsewhere. He sends a box of seafood and a note on which he's written something you scolded him with long ago.",
+    "e13": "New-energy orders rise and fall. One month at full capacity, the next the workers line up for unpaid leave. Standing before the schedule, you feel this piece of paper is growing harder to control.",
+    "e14": "Your child gets into a university in Hangzhou to study automation. On the first day of term, your child asks whether your plant has many robots now. You say it does, but someone has to watch them.",
+    "e15": "First drafts of work instructions, training questions and incident reports take the system minutes. Your job now is to take them into the workshop and see which lines can't actually be done at the station.",
+    "e16": "An old plant in the same trade runs out of money, and cars of workers demanding back pay sit at its gate. For a while your owner comes through the workshop every day, says nothing, and just touches the machines.",
+    "e17": "A provincial review panel for model enterprises visits. After you finish explaining your lean program, an old expert walks to a corner, crouches to look in your scrap bin, and nods to you.",
+    "e18": "The last of the workers who've been here since the founding retire one after another. You take a group photo at the gate, and find that you, too, are standing in the middle of the back row.",
+    "e19": "Fewer calls wake you now, as the system's warnings grow more accurate. One night you wake anyway and check your phone. Everything's normal, and you find it a bit hard to get back to sleep."
+  },
+  "choices": {
+    "c1": {
+      "title": "The lot stuck on the line",
+      "situation": "The carmaker's goods must ship tomorrow morning, but tonight's sample check has two pieces at the edge of tolerance. In spec, but not pretty. The workshop head says ship them. You know he's already been on for three days straight.",
+      "options": [
+        { "label": "Inspect everything, all night", "result": "You and the inspector measure under the lights until dawn and pull seventeen pieces. The carmaker never hears about it. The workshop head knows." },
+        { "label": "In spec means ship; send people home", "result": "The goods leave on time, and nothing comes of this lot. The workshop head goes home for a full night's sleep. Only you think about those two pieces now and then." }
+      ]
+    },
+    "c2": {
+      "title": "The old workshop head",
+      "situation": "A workshop head who has followed the owner for twenty years can't handle the new system and his data's never right, but the workers trust him. The owner tells you to deal with it, meaning it's time for a change.",
+      "options": [
+        { "label": "Replace him; the process has to stand", "result": "He says nothing the day he clears his desk, and leaves his handwritten equipment files on yours. The workshop's data is accurate from then on, and the mood is cold for a while." },
+        { "label": "Keep him and give him a young assistant", "result": "The owner isn't pleased, but the data gradually arrives and the workers stay. When he eventually retires, the old head raises a glass to you." }
+      ]
+    },
+    "c3": {
+      "title": "Getting quality and lean certificates",
+      "situation": "The carmaker has started requiring Six Sigma and internal-auditor qualifications for key posts, and your ten-odd years of experience have no paper to prove them. Weekend classes in Hangzhou, there and back, would cost you the better part of a year.",
+      "options": [
+        { "label": "Take the exams and give up the weekends", "result": "You work through control charts with people ten years younger. At the last class the teacher asks if you came to teach." },
+        { "label": "Skip it; send the younger ones", "result": "Your weekends go to your child. You send two young engineers to get certified, and they come back teaching you new words." }
+      ]
+    },
+    "c4": {
+      "title": "The plant next door makes an offer",
+      "situation": "A bigger auto parts group in Luqiao wants you, at thirty percent more pay. But it runs on professional-manager culture, and you'd leave this plant you know and the people who've followed you for years.",
+      "options": [
+        { "label": "Jump and see how a big firm works", "result": "The new firm's processes are finer than you imagined, and Quality bounces four of your reports in the first month. The money is certainly better." },
+        { "label": "Stay and talk to the owner", "result": "The owner doesn't raise your pay by much, but he pulls strings for your child's school place. You can't say whether that counts as a win." }
+      ]
+    },
+    "c5": {
+      "title": "Competing for Production Director",
+      "situation": "The owner wants a Production Director over equipment and process, and headhunters have sent candidates. You'd have to produce a three-year automation plan and a layoff-and-placement plan, and be compared to people with top-school degrees.",
+      "options": [
+        { "label": "Write the plan and cost every machine", "result": "You and Old Qian from maintenance go through the plant's equipment accounts for two months. By the time you hand in the plan the edges of the paper have curled." },
+        { "label": "Don't compete; hold the floor", "result": "On his first visit to the workshop the new director walks through the wrong door. You lead him back without a word." }
+      ]
+    },
+    "c6": {
+      "title": "Opening your own small machine shop",
+      "situation": "Machine-tool owners you've known for years and a friend at a carmaker urge you to go out and take machining subcontracts. There's cheap factory space in Wenling, and a few used machining centers can start the work. Around here, people begin this way every year.",
+      "options": [
+        { "label": "Go out and put in all your savings", "result": "Holding the keys to the factory space, the first thing you do is check the electric meter.", "end": "You left the plant of three hundred and got a small workshop of your own in Wenling. Now every box on the schedule is your money." },
+        { "label": "Stay and keep drawing a salary", "result": "You politely turn it down. Somebody else buys those used machines, and does reasonably well." }
+      ]
+    },
+    "c7": {
+      "title": "Automate all at once?",
+      "situation": "The owner wants to turn one workshop into an unmanned line, cutting sixty or seventy people at a cost of over ¥10,000,000, and he wants your view. Most of those people are in their forties, with mortgages right here.",
+      "options": [
+        { "label": "Push it through; this can't wait", "result": "The line runs, with better takt and yield. You speak with the people yourself, and some of them leave without shaking your hand." },
+        { "label": "Spread it over three years; retrain first", "result": "You train forty-odd people as equipment patrol inspectors. Your costs run above competitors' and the owner isn't thrilled, but someone in the canteen saves you a seat." }
+      ]
+    },
+    "c8": {
+      "title": "Becoming a lean consultant",
+      "situation": "A consulting firm invites you to be a lean consultant, traveling to plants all over the country and telling people about the pitfalls of your twenty years. No more responsibility for workers' livelihoods. No more phone calls at midnight.",
+      "options": [
+        { "label": "Leave the plant and go teach", "result": "You hand in your badge and walk from the workshop to the gate, a little slower than usual.", "end": "You became a lean consultant who flies all over China. In other people's workshops you still like to rest a hand on the machine for a while first." },
+        { "label": "Stay; there's still work here", "result": "You tuck the business card into your schedule book and go on with tomorrow's plan." }
+      ]
+    },
+    "c9": {
+      "title": "Becoming Vice General Manager, Production, at the new site",
+      "situation": "The company is building a new base in Anhui, and the owner asks if you'll go as Vice General Manager, Production. You'd get home only a few times a year. A grandchild has just been born, and your spouse says it's up to you.",
+      "options": [
+        { "label": "Go; one last time breaking new ground", "result": "You stamp on the soil of an empty lot and point into the distance: the first workshop goes there." },
+        { "label": "Don't go; stay in Yuhuan", "result": "You recommend a younger person. On the weekend you take your grandchild to the beach and put a shell in the small hand." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last shift you walk from one end to the other. You could tell the sound of each of the three workshops with your eyes closed. For twenty-odd years the parts sent from here have gone into tens of millions of cars, on roads you'll never know. Handing in your badge, the gatekeeper asks if you'll be in tomorrow. You say no, and stand at the gate listening a little longer.",
+    "burnout": "Your spine, your blood pressure and the habit of waking by yourself in the night: the doctor puts them all together for one talk. You hand the schedule and equipment files to your successor, and leave several workshop group chats, keeping one. Later, when trucks pass your door, you still look to see what's written on them."
+  },
+  "stages": [
+    "Your day revolves around the production schedule: yesterday's output and OEE in the MES first thing, the shop floor in the morning, arguing with planning, purchasing and quality in the conference room in the afternoon. Above you are the owner and the carmaker's quality engineers; below, workshop heads older than you. Compared with running one workshop, you decide more now, and can do less with your own hands.",
+    "You now manage more than production. Equipment, planning and process engineering all report to you. In your hands are the annual capacity plan, the automation investment sheet and the IATF 16949 audit checklist. Most of the day is meetings and data, and you go to the floor not to fix problems but to see whether anyone is truly using the rules you set.",
+    "You begin dining with the carmaker's head of purchasing, negotiating equipment loans with banks, going to the development zone to talk land and environmental review for a new base. There are only a few reports you still read, but each one bears on hundreds of families. People at the plant call you boss. Now and then you still wander to the die-casting shop to look at the kind of die you once carried."
+  ],
+  "work": [
+    "Workshop head Old Ying says the die temperature on press three is unstable. You pull the MES curve and have him try a different batch of release agent, and the next day the reject rate halves.",
+    "A carmaker's quality engineer comes for a process audit and turns up an unsigned first-piece record. You call the team leader over on the spot and have him write out what happened that day.",
+    "A new college graduate wants to rearrange the stations. You stand by the line with him for a whole shift, time the motions with a stopwatch, change three things in his plan and approve it.",
+    "Equipment proposes a ¥6,000,000 automatic loading project. You open the payback sheet and ask where the twelve workers displaced will go. The sheet needs to say.",
+    "A week before the system audit Old Ke digs a three-year-old work instruction out of a file cabinet. You have him compare the version in use on the floor with the one in the system, line by line.",
+    "Five people quit the night shift in two months. You pull attendance and piece-rate data and find that the new rota wiped out one shift's overtime. You change the rota back.",
+    "Over dinner the carmaker's head of purchasing raises a three percent annual price cut. You bring out a page of material costs and labor hours, and at the end of it, the figure's 1.8 percent.",
+    "The environmental assessment for the new base is returned. You bring together the consultant and the facilities manager to walk through the exhaust collection plan again on the drawings.",
+    "You take your successor as Production Director to the old workshop. Pointing at a machine that's run for twenty years, you say don't rush to replace this one. First go and ask Old Zhou why it's still so accurate."
+  ],
+  "past": [
+    "Your family lives by the sea in Yuhuan and your father fishes. After the high school entrance exam you don't want to go on the boats. A little workshop by your door is hiring, and to you the machines inside sound more dependable than the waves.",
+    "You finish vocational school, then study machine manufacturing at a junior college. Taizhou is full of factories, your teacher says, and you'll never lack work. The first time you measure a 0.01 mm difference with a micrometer, you're happy all afternoon.",
+    "You join this plant's die-casting shop, starting by carrying dies. In summer the workshop tops forty degrees. An old master teaches you to read the color of molten aluminum, saying that thermometers sometimes lie.",
+    "You become a team leader over a dozen-odd people, several older than your father. Your first rota is wrong and the next day nobody speaks to you. You buy a carton of cigarettes and stand for half a day in the bike shed.",
+    "You become workshop head, and your child is born. That year the plant installs its first machining centers. You memorize the manual and crouch by the machine at midnight beside the commissioning engineer.",
+    "The carmaker comes for its first process audit. You spend two months tidying the floor and the auditor still finds twenty-three problems. The owner puts the report in front of you and says: you lead this."
+  ],
+  "late": {
+    "pension_note": "Estimate: social insurance for private-firm executives is capped at a ceiling; retiring from a Taizhou company brings about 40% of final monthly pay.",
+    "scenes": [
+      "On your first morning with no morning meeting, you wake at six and take a walk by the sea. The fishing boats are back and someone calls to you to buy fish. You buy two.",
+      "A youngster from the old plant phones to say an old machine doesn't sound right, and could you listen. You listen over the phone for half a minute and name a part.",
+      "Riding in your child's new car, you hear a noise from the chassis halfway there. It's nothing, your child says. You say have them look at that bushing at the next service.",
+      "The old workers form a fishing team and make you captain. You say no rota this time, and everyone laughs so hard the fish get away.",
+      "In the first few months of rest you keep waking at midnight, reaching for your phone by habit. There's nothing on the screen.",
+      "When your back is better, you start collecting shells by the sea. Your spouse says that even collecting, you line them up in rows.",
+      "An old colleague comes to see you, bringing the plant's New Year calendar. The workshop on it is as bright as a hospital. You look at it a long time.",
+      "After changing your way of life, you still want to go into any factory you pass. You can hear a workshop through a wall.",
+      "An old team leader comes to find you, also done with it all. The two of you sit by the road eating seafood noodles, and add up those years' output once again.",
+      "Your child brings your grandchild over. The little one takes apart a toy car and hands you a wheel. You look at the axle and nod.",
+      "Riding in someone's car you still like to listen. A friend asks what's wrong. You say nothing, nice car.",
+      "In a drawer you find an old micrometer, wipe it clean and gently close it on your own fingernail. Still accurate."
+    ],
+    "closing": {
+      "retire": "The sea wind passes through Yuhuan's industrial zone, and far off the factory lights come on as the night shift begins. Sitting on the sea wall, you can just about hear something.",
+      "burnout": "You sit in the sun in the yard, your phone charging indoors. The weather's very good. On the road a truck goes by, and slowly its sound is gone.",
+      "end": "You put your badge in the drawer, next to that first micrometer. Out the window are other factories, with other people changing shifts."
+    }
+  }
+}

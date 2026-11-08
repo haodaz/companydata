@@ -1,0 +1,211 @@
+{
+  "id": "compliance-sz",
+  "occupation": "Corporate Compliance Officer",
+  "role": "Compliance officer for overseas business",
+  "headline": "Twenty-five, with a master's in law and the bar exam behind you, working in Nanshan at a company that sells smart hardware into more than forty countries, your job being to tell sales: you can't sign it like this",
+  "unit": "A technology company in Shenzhen with overseas ambitions (smart hardware and cloud services, seventy percent of sales abroad, nine people in compliance)",
+  "unit_type": "Private technology company",
+  "city": "Shenzhen",
+  "city_tier": "First-tier",
+  "education": "Master's (International Economic Law)",
+  "level": "You read statutes fast; you don't yet know how to take a call from the sales director",
+  "intro": "The company is in Nanshan's science park, on the twenty-third floor, with a corner of Shenzhen Bay out the window. Compliance sits next to Legal and one floor away from Sales, an arrangement everyone finds satisfactory. On your computer are the sanctions screening system, the contract ledger and a fifty-seven-page Global Anti-Corruption Policy. At three this afternoon, a Middle East salesperson needs a deal cleared and is waiting for your nod. From today, you are the person in this company who says \"hold on\" the most.",
+  "salary_note": "Estimate: compliance posts at Shenzhen technology companies pay thirty to forty percent above the national average, with a little more for overseas business.",
+  "facts": [
+    { "label": "Compliance Officer (current level)", "value": "0-2 years, ¥7,000–12,000 a month (national average, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Senior Compliance Officer (2-5 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Following up on compliance incidents and leads", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Tracking applicable laws and regulatory requirements", "source": "AI exposure" },
+    { "label": "Open positions", "value": "11 related listings nationwide, 2 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "On subway Line 1, changing to Line 2, your phone holds an email a European colleague sent last night. Hanging on to the rail with one hand, you save the attachment with your thumb.",
+    "You open the screening system. Two hundred new customers and distributors to run today. Three get flagged in red: two are just similar names, and one you'll have to look into.",
+    "A meeting with the data team on the German translation of the new privacy policy. An engineer asks: can we leave this sentence out? You open the statute and point.",
+    "Roast goose rice downstairs. Xiao Yan from Sales sits down with his tray and says about this afternoon's deal, you guys hurry it up, the client's in the last week before Ramadan.",
+    "You read the Middle East contract and the end-user field is vague. You comment: please provide an end-use certificate. As soon as it's sent, Xiao Yan is on the phone.",
+    "You give the compliance induction to new hires, thirty people, seven on their phones. You advance to a slide with a real fine amount on it, and the room goes quiet for a moment.",
+    "A video call with your outside counsel in Southeast Asia. It has just rained in Jakarta and the signal drops twice. You write the three points they make into a memo.",
+    "Back at your rented room in Xili you finish today's review log and add the last line to the ledger. Outside, the urban village is still lit, and someone downstairs is stir-frying noodles."
+  ],
+  "ladder": [
+    { "title": "Compliance Officer", "stage": "Execution", "focus": "Run name screenings, keep contract ledgers, write training materials; move up by missing nothing and being able to talk to the business side" },
+    { "title": "Senior Compliance Officer", "stage": "Own region", "focus": "Own reviews and distributor due diligence for a region; move up by being able both to stop deals and to help them" },
+    { "title": "Compliance Manager", "stage": "Leading a team", "focus": "Lead a team, run internal investigations, deal with outside counsel and regulators; move up on real cases handled" },
+    { "title": "Compliance Director", "stage": "Setting the rules", "focus": "Run the global compliance program, report risks to management, decide what business not to do" },
+    { "title": "Chief Compliance Officer", "stage": "Carrying responsibility", "focus": "Answer to the board, sign off on major decisions, and be the one who steps forward when something goes wrong" }
+  ],
+  "ai_tasks": [
+    { "name": "Tracking applicable laws and regulatory requirements", "how": "AI can search, gather and summarize laws and regulatory news, and do a first pass on what applies to each business line. People only spot-check whether key provisions are current and whether local rules were missed." },
+    { "name": "Drafting and revising compliance policies", "how": "AI can draft a policy and find clauses that need changing against new rules. People weigh the actual business, management's attitude and the cost of carrying it out, and answer for the policy." },
+    { "name": "Reviewing contracts and business decisions", "how": "AI can review contracts in bulk against a checklist, marking risky clauses and suggesting changes. People judge the commercial context and the appetite for risk, and sign on the disputed points." },
+    { "name": "Investigating risks in business processes", "how": "AI can analyze process documents, transactions and approvals and find anomalies. People go down to the business to see what's really done, and judge which risks are real and which are normal practice." },
+    { "name": "Running company-wide compliance training", "how": "AI can generate slides, cases and quizzes and push them to individuals. People teach and answer questions using real events at the company, so that employees actually take it seriously." },
+    { "name": "Following up on compliance incidents and leads", "how": "AI can help sort leads and lay out a timeline. Interviewing those involved, confidential inquiries, determining responsibility and deciding the outcome involve human relationships and accountability." },
+    { "name": "Working with regulators during inspections", "how": "AI can help prepare document lists and talking points. Face-to-face communication with regulators, explaining, judging how far to go and bearing responsibility for the company can only be done by a person." },
+    { "name": "Writing compliance reports and tracking remediation", "how": "AI can pull together data, draft reports and remediation ledgers, and send reminders. People judge how serious a problem is, push the business to really fix it, and answer for the report." }
+  ],
+  "events": {
+    "e_first_stop": "The first time you stop a deal, the sales director walks to your desk and says: young lady, do you know how much this deal is worth? You say yes, that's why I want to look at it some more.",
+    "e_timezone": "Four nights this week of meetings with Europe and the Americas, the latest ending at two in the morning. The Asia-Pacific meeting is still on your calendar for nine.",
+    "e_new_list": "A new export control list comes out. You and the product team go line by line through the part numbers until late at night, working out which models need new licenses.",
+    "e_saved_deal": "Rather than reject that deal, you find a structure that works: change the signing entity, add an audit clause. Xiao Yan posts a red envelope in the group chat with the note: thanks, Compliance.",
+    "e_ai_contract": "The company buys an AI contract review tool. On a fifty-page distributor agreement it marks seventeen risks in two minutes. You spend the afternoon on it, keep eleven of them and add one it hadn't thought of.",
+    "e_ai_law": "Regulatory tracking goes to a system, with daily summaries of updates from more than forty countries. You no longer have to scour official sites at midnight. But you do spot checks, and it has cited a repealed provision as current.",
+    "e_ai_policy": "A developer pasted customer data into an AI tool for debugging, and the logs catch it. Overnight you draft the company's internal AI use rules. The second version is half the length of the first.",
+    "e_budget": "The company wants savings this year. Compliance loses an outside counsel budget and has a hiring freeze. The boss says at a meeting: couldn't we do a bit less compliance?",
+    "e_warehouse": "You fly to Dubai to look at a distributor's warehouse and find it's a street away from the address on the forms. The owner pours you some very sweet tea, and you take a picture of the door number while you drink it.",
+    "e_house": "You buy a seventy-square-meter apartment in Longhua, emptying six years of savings and borrowing ¥100,000 from your brother. From then on, before you stop a deal, you do a little math about the mortgage.",
+    "e_hotline": "The anonymous reporting mailbox gets a letter: two sentences and a screenshot of an expense claim. You move it to the confidential folder, close the door and call your director.",
+    "e_sales_friend": "You've had a lot of roast goose rice with Xiao Yan by now. One day he asks: what exactly does your department do? You say it's so you can go on selling things. He pauses, then laughs.",
+    "e_audit": "An overseas client sends in an audit team, staying at a hotel in Nanshan and asking for twenty documents a day. You eat takeout in the conference room for two weeks. At the end, one of them says: good.",
+    "e_insomnia": "You begin waking at night thinking about some contract clause. The doctor says it's anxiety. You leave your phone in the living room and three days later bring it back to your bedside.",
+    "e_junior": "A new officer has passed through a suspected match, reasoning that the system showed only eighty percent similarity. You sit down and go through public records with her for an afternoon.",
+    "e_jd": "You check the job sites. Shenzhen has two postings for compliance officers, both asking for five-plus years of overseas experience. Across the country there are about ten or so. This is a very small circle.",
+    "e_parents": "Your mother comes from Hunan for a month and sees you on the phone every night until late. Before she leaves she asks: this job of yours, is it just telling people no all day?",
+    "e_saved_firm": "A review record you insisted on keeping years ago proves useful in a regulator's inquiry. The lawyer reads it and calls it key. You remember someone at the time saying you were overdoing it.",
+    "e_layoff": "The company scales back overseas and lays off half of a neighboring region. You help HR review the severance agreements and see several familiar names.",
+    "e_meditation": "On weekends you begin cycling along Shenzhen Bay out to the mangroves, and only then read your email. You set yourself a rule: no phone on the bike. Mostly you keep to it."
+  },
+  "choices": {
+    "c_cert": {
+      "title": "Get an overseas privacy certification?",
+      "situation": "More and more EU customers want to see privacy credentials, and the department suggests you get an international privacy certification. The exam and training cost over twenty thousand yuan, not reimbursed, which is more than a month's salary.",
+      "options": [
+        { "label": "Pay for it yourself", "result": "You spend your weekends reading statutes in English and for the first time understand what \"legitimate interest\" means. Half a year later, European deals start coming to you." },
+        { "label": "Do your present job well first", "result": "Your screenings and ledgers are watertight and your supervisor feels secure. The European project goes to the colleague next to you." }
+      ]
+    },
+    "c_order": {
+      "title": "A big deal that hits a name on the list",
+      "situation": "A thirty-million-yuan order, and one of the buyer's shareholders has a name very like one on the sanctions list. The sales VP says not to get too fussy, this quarter is riding on it, and doesn't the system give false positives all the time?",
+      "options": [
+        { "label": "Insist on checking before clearing it", "result": "You spend three weeks tracing the ownership and the deal slips a quarter. The VP mentions you at two weekly meetings. Later, someone else finds problems with this buyer." },
+        { "label": "Set out the risk; have the business head sign", "result": "You write up a risk notice and the VP signs. The deal goes through. You save three copies of that page, and it comes back to you at night." }
+      ]
+    },
+    "c_abroad": {
+      "title": "Two years in the Middle East",
+      "situation": "The company is setting up a regional compliance post in Dubai, double the pay, a two-year posting. Your partner is in Shenzhen and says fine, in a somewhat small voice.",
+      "options": [
+        { "label": "Go", "result": "In the Dubai office you learn to work Sundays and to have dinner with distributors of every nationality. Two years later you come back with something real on your record that your colleagues don't have." },
+        { "label": "Don't. Stay in Shenzhen", "result": "Someone who joined a year after you goes to Dubai. You go on reading contracts in Nanshan and get home for dinner." }
+      ]
+    },
+    "c_ai": {
+      "title": "Build the AI compliance workflow?",
+      "situation": "The company wants to connect contract first-pass, regulatory tracking and training to AI and asks you to lead it. If it works, the department will have fewer junior roles. If you don't do it, some other department will.",
+      "options": [
+        { "label": "Lead it", "result": "You decide which conclusions must carry a human signature and move a few officers to verification. Later, headhunters call about that line on your resume." },
+        { "label": "Hold off; by hand is safer", "result": "Your reviews remain the most careful. It's just that others clear ten a day and you clear three, and the business starts to go around you." }
+      ]
+    },
+    "c_manager": {
+      "title": "Compete for Compliance Manager",
+      "situation": "The Compliance Manager position is open to internal candidates: four people to lead, regional investigations to run, reporting to the director. You have little experience leading people, and your rival is a senior colleague who has always been kind to you.",
+      "options": [
+        { "label": "Compete", "result": "You talk about how to get Sales to come to Compliance of their own accord. When you finish, your senior colleague is the first to clap." },
+        { "label": "Let your senior go first", "result": "Your senior becomes manager and later gives you the best projects." }
+      ]
+    },
+    "c_investigation": {
+      "title": "The investigation finds an old friend",
+      "situation": "A whistleblower's letter names Xiao Yan, alleging dealings with a distributor. By procedure you should conduct the interview. You've shared hundreds of plates of roast goose rice, and his kid calls you Auntie.",
+      "options": [
+        { "label": "Conduct the interview by the book", "result": "You sit on this side of the conference table and he sits on that side, with the recorder in the middle. Later he leaves the company and never has a meal with you again." },
+        { "label": "Recuse yourself, have someone else do it", "result": "You recuse yourself as the rules provide and a colleague takes over. The director says that was right, only the next time promotions come up, he mentions you've never handled a big case." }
+      ]
+    },
+    "c_lawfirm": {
+      "title": "A law firm comes hunting",
+      "situation": "A partner at a law firm in Futian takes you to dinner. He wants to build an overseas compliance group and wants you there, at about the same pay, but with a shot at partnership. You've heard about law firm hours too.",
+      "options": [
+        { "label": "Go to the firm", "result": "You put your badge and access card on the desk and look back once at the sea out the window.", "end": "You become a compliance attorney at a Futian law firm, and your clients are your former peers. The sentence you now say most often is: on this one, we'd suggest you take another look internally." },
+        { "label": "Stay at the company", "result": "You turn the partner down. In-house work is a bit slower than law firm work and a bit harder, since when something goes wrong you still have to go on eating with these people." },
+        { "label": "Negotiate a part-time advisory role", "result": "You try helping the firm. After a quarter, the company's conflict-of-interest review stops it. You wrote that policy yourself." }
+      ]
+    },
+    "c_director": {
+      "title": "Take over as Compliance Director",
+      "situation": "The old director is leaving and the CEO asks if you'll take over as Compliance Director. You'd report straight to management and decide which countries not to enter and which business not to do. You'd also become the least popular person in the room.",
+      "options": [
+        { "label": "Take it", "result": "The first time you say \"we won't enter this market this year\" at a management meeting, the room is silent for half a minute. The CEO asks you to put your reasons on one page." },
+        { "label": "Don't. Keep leading your team", "result": "The director is hired from outside and likes to use English acronyms at meetings. You translate what he says into things that can be done." }
+      ]
+    },
+    "c_regulator": {
+      "title": "The document they want changed",
+      "situation": "A foreign regulator sends an inquiry and the CEO asks you to adjust the wording of an old internal review record before it's submitted. He says it's just to make it look better. You know that line is exactly what matters.",
+      "options": [
+        { "label": "Submit it unchanged, with an explanation", "result": "You hand in the original with a statement of the circumstances. The company gets a small fine. The CEO barely speaks to you for six months, and then puts you in charge of reviewing a new market." },
+        { "label": "Let outside counsel decide", "result": "The lawyers provide a less ugly approach and a written opinion. It passes, and you've learned when to share responsibility with people outside." },
+        { "label": "Quit", "result": "You finish your resignation letter and put the record's archive path in it too.", "end": "You leave the company, rest for six months and go to a smaller medical device company to build a compliance program from nothing. Your office is modest, and in the drawer is an unused resignation letter template." }
+      ]
+    },
+    "c_consulting": {
+      "title": "Open your own compliance consultancy",
+      "situation": "More small and midsize firms are going overseas these days and many owners privately ask if you could help build their programs. You've saved some money, and your child is nearly off to college. You could open a small consultancy, only there'd be no big company behind you anymore.",
+      "options": [
+        { "label": "Open the company", "result": "You rent two desks in a co-working space in Nanshan. Your first hire is an officer you trained.", "end": "Your consultancy serves small companies, and the owners often print their contracts and carry them in plastic bags. You tell them what they can do, and which money not to earn. Some months there isn't much in the account. You sleep better than you used to." },
+        { "label": "Stay at the company", "result": "You add notes to those owners' WeChat contacts and sometimes take a free look at their contracts." },
+        { "label": "Be a volunteer lecturer for a trade association", "result": "You give a few talks each year on the basics of export compliance for small businesses. Some people in the audience record it. Some fall asleep." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you flip through that fifty-seven-page policy once more, now in its nineteenth edition. You hand over your screening system account and leave a new colleague a note with three distributors you've never stopped worrying about. Going downstairs you pass Sales celebrating a deal. Someone looks up, sees you, and raises a glass.",
+    "burnout": "After another night across the time zones, you suddenly can't speak on a conference call, and hear only your own breathing. The doctor writes you a sick note and it stays under your keyboard for a week. Later you ask for a transfer to a subsidiary that does only domestic business, home every day at six. When you wake in the night, you still think of some clause."
+  },
+  "stages": [
+    "Each day you run screening lists, update the contract ledger and digest new regulations into two pages for the business side. When Sales looks for you it's mostly to chase you, with three \"urgents\" in a single sentence. Your tools are the screening system, Excel and English due-diligence questionnaires, and your memos are always covered in your supervisor's yellow highlights.",
+    "Southeast Asia and the Middle East are yours now: distributor due diligence, overseas contract reviews, training local teams. You start to have your own judgment, and to say on the phone to a sales director, \"You can't sign it this way, but you can that way.\" Outside counsel's bills cross your desk, you know what an hour is worth, and you know how to ask questions that cut it in half.",
+    "You lead four or five people and run internal investigations, meeting whistleblowers in cafes away from the office and going through interview notes one line at a time. When a regulator writes, you draft the first reply and sit beside outside counsel. You begin having to decide what level a doubt gets reported to and when, which is much harder than reading statutes.",
+    "The global compliance framework, the budget and the annual risk report have come to your hands. At management meetings you present one page: this market's risk exposure, next quarter's business not to do. You deal with lawyers in several countries, fly around, and push new AI use rules into every department.",
+    "You report to the board four times a year, twenty minutes each, and every sentence carries weight. You sign off on documents for major acquisitions and new market decisions, and you are the person regulators and the media want to find. Directors take care of the everyday, and your job has become more and more thinking ahead: what, three years out, will become a problem."
+  ],
+  "work": [
+    "The screening system flags an Indonesian distributor as suspect. You check the passport number and registered address and find it's only a shared name. You write up the basis clearly, and your supervisor makes it a template.",
+    "Your supervisor asks you to boil a fifty-page regulation down to a page. You write three. She crosses out two and says the business has only one question: what does this mean for us?",
+    "In new hire training an engineer asks whether giving a client a box of mooncakes is bribery. You check the policy and say it depends on the amount. He says so how many mooncakes is too many? Everyone laughs, and you note down the question.",
+    "A Jakarta distributor's due-diligence questionnaire is too perfect, so you ask a local colleague to drop by the shop. In the photo that comes back, the sign is missing two words from the company's name.",
+    "One of Xiao Yan's contracts has a ridiculously high agent's commission. You don't reject it outright. You take him to the stairwell and ask where the money ends up.",
+    "Outside counsel sends a forty-page opinion with twelve hours on the bill. You list the six questions that really need answering, and the next time you pay for four hours.",
+    "You meet a whistleblower in a cafe in Houhai. She places her phone face down and speaks softly. You bring no laptop, only paper and a pen, and tell her who will be able to see this record.",
+    "You rewrite the reply to a regulator's inquiry for the ninth time, changing \"none found\" to \"none found as of the date of this letter.\" The lawyer reads it and sends back a thumbs-up.",
+    "Officer Xiao Lin's due-diligence report is missing a page of the ownership chart. You send it back with a note: take another look at who the third-layer shareholder is. She comes to see you the next morning, her face changed.",
+    "On one page you rank three new markets by risk, and against the second you write \"do not enter for now.\" The CEO taps that line with a pen and asks: how much money a year? You push the number you've worked out across the table.",
+    "Three meetings with HR and IT, and you settle on ten rules for employee use of AI tools. Number seven: no client data in public models.",
+    "A Frankfurt lawyer suggests you voluntarily disclose an issue. In your hotel you write the possible consequences on a sticky note, stick it on the window and look at it all night.",
+    "The board's audit committee asks the same question for the third time, and you answer with a different comparison. The chair nods and the secretary puts your sentence in the minutes.",
+    "The pre-acquisition due-diligence report is thick enough to prop up a table. You turn only to the risk chapter, circle the name of one small subsidiary and tell your team to look for another three weeks."
+  ],
+  "past": [
+    "In high school in a county town in Hunan, your father runs a small hardware shop and tax officials often come to check his books. You help him sort the receipts and paste them, one by one, in a notebook.",
+    "On your college application for the gaokao (college entrance exam) you put law. Your father says being a lawyer is good, you can fight lawsuits. You don't know yet that most legal work never sees a courtroom.",
+    "Junior year you pass the national bar exam. That summer you intern at a law firm in Changsha, copying case files for a partner. The copier is more tired than the people.",
+    "Doing a master's in international economic law, you write your thesis on cross-border data transfer. Your advisor says the topic is too new and few people will understand it. You think that's perfect.",
+    "At campus recruiting both a law firm and this Shenzhen company offer you jobs. The company's interviewer asks: what would you do if the sales director told you to drop it? You think it over and say: first I'd ask him why."
+  ],
+  "late": {
+    "pension_note": "Estimate: Shenzhen caps social insurance contributions, so high-paid positions have a low replacement rate, about forty percent of final monthly pay, plus personal savings and any company annuity.",
+    "scenes": [
+      "In your first month of retirement you still read the news every morning, and when you see a new rule from some country your finger wants to hit forward. You put the phone down and go water the plants on the balcony.",
+      "A trade association asks you to advise twice a month. The first thing you talk about isn't statutes. It's which of the deals you stopped, you shouldn't have.",
+      "The building's owners' committee asks you to look over a contract. You print the property management agreement and mark up three pages in red, and your neighbors say you're more professional than the property company.",
+      "You cycle along Shenzhen Bay more slowly now and often stop at the mangroves to watch birds. They come from very far away, and they don't have to clear customs.",
+      "Your first month at the subsidiary you pause blankly at six o'clock when it's time to leave. Your calendar is empty, without time zones. You don't know what to do with the evening.",
+      "You start learning to swim. Under water you can't hear the phone. At the end of the lane you catch your breath, and remember a certain Ramadan and a deal that didn't go through.",
+      "A former officer, now a director, comes to see you with a box of mooncakes and asks, laughing, if this counts as bribery. You say: depends on the amount.",
+      "In your first week away, your email still has a few auto-forwarded reminders that a certain review record is about to expire. You archive them, and reply a thank-you as you go.",
+      "At an industry conference you run into that old sales director, retired now and gone white. He says, you were really a pain back then. You say, thank you.",
+      "A cousin back home is opening a factory in Southeast Asia and asks what to watch out for. You send him a list, and the first line says: don't give red envelopes to anybody.",
+      "New AI tools can read every contract now, and they say \"hold on\" too. You think about it. When it says that, nobody is likely to come and stand at its desk.",
+      "On an old computer you find a first-edition compliance manual, its filename ending in Final, then Final2. You smile and close the laptop."
+    ],
+    "closing": {
+      "retire": "The tide is out in Shenzhen Bay at dusk, and birds walk back and forth over the mud. You cycle slowly. Your phone is at home.",
+      "burnout": "Half the lights over the pool have gone out. You sit at the edge waiting for your hair to dry, listening to the water go slowly flat.",
+      "end": "That note is still in the drawer, with the names of three distributors. You glance at it, put it back, and close the drawer."
+    }
+  }
+}

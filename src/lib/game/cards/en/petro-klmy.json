@@ -1,0 +1,185 @@
+{
+ "id": "petro-klmy",
+ "occupation": "Petroleum Engineer",
+ "role": "Production Engineer, Oilfield Operations Area",
+ "headline": "A petroleum engineering graduate posted to a heavy-oil field in the Karamay desert, spending your days with dynamometer cards and row upon row of pumpjacks",
+ "unit": "An oil production plant at a field in Karamay",
+ "unit_type": "State-owned oil production plant",
+ "city": "Karamay, Xinjiang",
+ "city_tier": "Tier-3 city",
+ "education": "BEng in Petroleum Engineering",
+ "level": "You did well in reservoir flow and production engineering, and you can name every dynamometer card in the textbook. What a real pumpjack sounds like when it starts up, you still have to learn from scratch.",
+ "intro": "The shuttle bus heads north out of the city. The buildings thin out, the pumpjacks multiply, and in the end there is nothing out the window but gravel desert and long rows of iron things nodding up and down. The technical lead at the operations area hands you a set of red coveralls and a stack of well files and says these few dozen wells are yours now. From today on, you will have to learn the temper of each one, well by well.",
+ "salary_note": "Estimate: state oilfield pay plus field and shift allowances counts as high income in Karamay, slightly above the national figure for similar work. Bonuses follow the oil price.",
+ "facts": [
+  { "label": "Assistant Engineer (current level)", "value": "0–3 years, ¥7,000–12,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Engineer (3–9 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Diagnosing downhole trouble at the wellsite", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Compiling single-well daily and production reports", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "It is still dark when you board the company shuttle at the gate of your compound. Everyone on it is catching up on sleep, the heater dries out your face, and you lean on the window counting pumpjacks.",
+  "Morning meeting at the operations area. The lead reads out yesterday's output: which wells lost fluid, which ones are watering out. When he gets to yours, you scramble through your notebook.",
+  "You open the dynamometer cards. Closed curve after closed curve, and one has a bite missing from its lower right corner. You screenshot it and send it to your mentor with a question mark.",
+  "Out to the wells by pickup. The wind throws sand at your red coveralls. You crouch at a wellhead listening to the polished rod, and Old Yu, the pump operator, says: stop listening, it already told you. It's stuck down there.",
+  "The field canteen, where the big-plate chicken has more potato than chicken. The workover crew's foreman brings his bowl over and asks whether that well is getting pulled tomorrow or not. You say you have to ask the lead.",
+  "You write a hot-wash plan for a waxed-up well, adjusting the volume, temperature and time from the last one. Then you notice the last one was also somebody adjusting the one before it.",
+  "Before quitting time, the single-well daily report. The fluid rate in the system is well off the gauge reading in the field, so you call the metering station. The voice on the other end says that gauge has been broken for days.",
+  "Back at the dorm in town, and at nine o'clock it is still light. You make instant noodles, open the production app on your phone, and take one more look at the well with the bite out of its curve."
+ ],
+ "ladder": [
+  { "title": "Assistant Engineer", "stage": "Walking the wells", "focus": "Following your mentor from well to well, reading dynamometer cards, writing job tickets, getting to know one patch of the field down to its bones" },
+  { "title": "Engineer", "stage": "Your own block", "focus": "Running lift and steam plans for a whole block on your own; you move up when your jobs pay off and the workover crews will talk to you" },
+  { "title": "Senior Engineer", "stage": "Setting the plans", "focus": "Owning one line of process across the plant and its new-technology trials, training the young, reviewing other people's jobs" },
+  { "title": "Deputy Chief Engineer of the Plant", "stage": "The final word", "focus": "Signing off on the plant's process direction and annual output plan, answering upward, carrying the blame downward" }
+ ],
+ "ai_tasks": [
+  { "name": "Diagnosing downhole trouble at the wellsite", "how": "AI only sees the numbers that get transmitted. The sound at the wellhead, the color of the crude, what the rods look like when they come up: someone has to go and look, and someone has to decide and answer for pulling the well." },
+  { "name": "Compiling single-well daily and production reports", "how": "IoT data flows straight in and AI turns out the daily and monthly reports and output comparisons. People only check the few wells with odd metering." },
+  { "name": "Reading dynamometer cards", "how": "A model can sort the cards of thousands of wells one by one, flagging poor fluid supply, wax and stuck pumps. People spot-check the ones it isn't sure about." },
+  { "name": "Tuning steam injection and stroke rate", "how": "AI can suggest settings for each well from its history. Whether the formation and the equipment can take it is for someone who knows these wells to decide." },
+  { "name": "Drafting workover and treatment plans", "how": "AI can dig up past jobs and draft the text. Whether this well is worth the money is for an engineer to calculate and sign." }
+ ],
+ "events": {
+  "e_first_diag": "You decided a well was short on fluid supply, not suffering a bad pump, and recommended slowing the strokes instead of pulling it. Two weeks later the rate held steady. The lead mentioned you at the morning meeting: one workover trip saved.",
+  "e_wrong_call": "You were sure it was a stuck pump. The workover crew pulled the string and the pump was fine; the trouble was something else. A whole trip for nothing. The foreman set his pipe wrench on the ground and gave you a look.",
+  "e_sandstorm": "A big wind came through the old wind gap and the commuter road was closed. You and the crew spent three days in the prefab huts at the operations area. When the instant noodles ran out you ate naan, and everyone's hair was full of sand.",
+  "e_winter_line": "Thirty below, and a stretch of flowline froze solid. You took turns thawing it with the steam truck. A glove froze to a valve, and when you tore it off, a piece of your palm came with it.",
+  "e_old_yu": "Before he retired, Old Yu gave you a notebook he had kept for twenty years: which well had what trouble in which year, in crooked handwriting, more complete than the system.",
+  "e_marriage": "At a plant mixer you met someone who works at the city hospital. Both of you grew up in oilfield families. The first thing your parents said to each other was: which drilling crew were you on back then?",
+  "e_oil_price_down": "The oil price kept sliding and the plant cut costs. The treatment budget lost thirty percent, half the plans you had written came back, and the year-end bonus was thin.",
+  "e_oil_price_up": "The oil price climbed back and the word from above was more output. Every old well got looked at again. You worked overtime daily for months, and the year-end bonus was the biggest you had ever seen.",
+  "e_house": "You bought an apartment in Karamay for not much more than what your classmates in the east paid for a parking space. From the balcony you can see the dark pumpjacks outside town.",
+  "e_child": "Your child was born in May, the busiest stretch for steam injection. You spent three days at the hospital while the output group chat on your phone never stopped.",
+  "e_iot": "The operations area went on IoT. Wellhead data now appears straight on a screen, and the pump operators no longer read gauges every day. The old hands all said it was easier, and all seemed unsure what to do with their hands.",
+  "e_ai_miss": "The diagnostic model called a well normal while its rate kept dropping. You drove out and crouched at the wellhead for five minutes, then went back, changed the result, and filed a note for the model while you were at it.",
+  "e_ai_report": "Daily and monthly reports generate themselves now, so you no longer spend the first two hours of the morning checking tables. With the time saved, the lead gave you another block.",
+  "e_new_process": "The steam-drive trial you worked on in an old block took three winters, and then the output curve finally lifted. Your name is third on the technical summary.",
+  "e_parent": "Your father was hospitalized back home, two connecting flights from Karamay. By the time you got there the surgery was over. Your brother, at the bedside, did not say a word.",
+  "e_apprentice": "The new graduate calls you Master, and on his first trip to the wells had his red coveralls on inside out. You thought of yourself back then and did not laugh. You just told him to listen to the wellhead first.",
+  "e_back": "Over a dozen years your spine rattled in pickups on desert tracks. The doctor looked at the X-ray and asked if you drove long haul.",
+  "e_old_well": "The well you looked after in your twenties is being plugged. You made a special trip. The pumpjack had already stopped, its horsehead lowered, the wind passing over it.",
+  "e_son_oil": "Filling in college choices, your child asked if they should apply for petroleum. You thought about it all night and said: decide for yourself. I've already stood in the wind here on your behalf."
+ },
+ "choices": {
+  "c_remote": {
+   "title": "Going for Engineer: the farthest operations area",
+   "situation": "Making Engineer requires having run a block on your own. The lead asks whether you'll go to the new area in the far north, two hours from town, prefab huts, home a few days a month. The old block is steady, but you'll never get to lead anything there.",
+   "options": [
+    { "label": "Go to the new area", "result": "You lived in a prefab hut for three years and saw a block from first oil to steady production, and every kind of trouble with your own eyes. On the bus back to town you were always the soundest sleeper." },
+    { "label": "Stay in the old block", "result": "You got home for dinner on time and came to know the old wells deeper still. But the year you applied for Engineer, your file was one page thinner than the others'." }
+   ]
+  },
+  "c_heavy": {
+   "title": "Heavy oil or light oil",
+   "situation": "The process institute is dividing up specialties. Heavy oil means steam: energy-hungry, heavy going, and the technology here is among the best in the country. Light oil in the old blocks is fine detail work, slow to show results, but less punishing.",
+   "options": [
+    { "label": "Specialize in thermal recovery", "result": "You spent half of each year running between steam stations and wellsites, and became someone who can do the math between steam quality and cost." },
+    { "label": "Stick with the old light-oil block", "result": "You got the accounts of hundreds of old wells perfectly straight. The gains are never eye-catching, but they come every year." }
+   ]
+  },
+  "c_ai": {
+   "title": "Taking on the smart-field work",
+   "situation": "The plant is rolling out a well-diagnosis model, and the IT center needs someone who knows wells to fix the labels and set the alarm rules. It means endless meetings with young people from the algorithm vendor, and not one well less on your plate.",
+   "options": [
+    { "label": "Take it on", "result": "You took the vendor's people out to the wells to listen. They went back and changed the model. Half a year later the false alarms were down by more than half, and the whole plant's alarm rules followed your version." },
+    { "label": "Decline and watch your wells", "result": "You still prefer to drive out and see for yourself. When the system went live you used it as given, and now and then felt some of its rules weren't written by anyone who had walked a well." }
+   ]
+  },
+  "c_overseas": {
+   "title": "The project in Central Asia",
+   "situation": "The company's project in Central Asia needs a production engineer: two years away, double pay, home twice a year. The child is small. Your partner says it's up to you and goes back to chopping vegetables, eyes down.",
+   "options": [
+    { "label": "Go for two years", "result": "You drew dynamometer cards for local workers at a wellsite abroad and came back with a down payment and passable Russian. On your return, your child hid behind the door and studied you for a long time." },
+    { "label": "Stay in Karamay", "result": "You didn't go, and rode the shuttle every day as before. When your child took those first steps, it was your hands holding on." }
+   ]
+  },
+  "c_service": {
+   "title": "The oilfield services offer",
+   "situation": "A private oilfield services company with projects in southern Xinjiang and Sichuan wants you to run its technical side, at more than double your pay. No iron rice bowl, and when a project ends you move on, but this time your craft is directly worth money.",
+   "options": [
+    { "label": "Quit and go to services", "result": "You turned in your red coveralls, put on another company's blue ones, and started changing planes between basins.", "end": "You became technical head of a services company and left footprints on wellsites in several basins, though there was never again a well you got to watch grow old." },
+    { "label": "Stay at the plant", "result": "You thanked them and went back to your wells. You mentioned the number to your partner once, and after that neither of you brought it up." }
+   ]
+  },
+  "c_senior": {
+   "title": "Applying for Senior Engineer",
+   "situation": "You have the years. Senior Engineer calls for technical results and papers. You have field experience by the armful and very little of it written down. Give up your weekends for two years and you might make it. If not, you go on being the toughest engineer on the front line.",
+   "options": [
+    { "label": "Turn the field into papers", "result": "You worked back through years of treatment data, writing until two in the morning. The review panel stumped you on one question and passed you anyway." },
+    { "label": "Skip it, keep walking the wells", "result": "You are still the most-phoned person in the operations area. The figure on your pay slip stayed put, and the young ones still come to you with their hard wells." }
+   ]
+  },
+  "c_school": {
+   "title": "Teaching at the vocational college",
+   "situation": "A vocational college in Karamay wants someone with field experience to teach production engineering. Winter and summer breaks, no more shuttle out to the desert. The pay is a bit less, and you will probably never work a wellsite again.",
+   "options": [
+    { "label": "Become a teacher", "result": "You carried that well-history notebook to the lectern. Your first class was about how to listen to a wellhead.", "end": "You became a teacher at the vocational college. Your students scattered to oilfields everywhere, and in the photos they send at New Year, there is always a pumpjack in the background." },
+    { "label": "Stay at the plant", "result": "You politely declined. The next day the shuttle left a little after seven as usual, and you took your seat by the window." }
+   ]
+  },
+  "c_deputy": {
+   "title": "Standing for Deputy Chief Engineer",
+   "situation": "The old deputy is retiring, and the plant wants you to apply for Deputy Chief Engineer. It would mean the annual plan for the whole plant, countless meetings, getting shouted at about both output and cost. Crouching at a wellhead to listen would have to be squeezed in.",
+   "options": [
+    { "label": "Stand for the post", "result": "A stack of plans awaiting signature appeared on your desk. You set one rule: for any job over a certain cost, you have to go and see the well yourself." },
+    { "label": "Leave it to someone younger", "result": "You recommended a colleague from the next process group and went on training apprentices and looking at hard wells. On the shuttle home, you still get a seat." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you hand the well-history notebook, passed through two generations, to your apprentice, with your own handwriting added. The shuttle heads back to town, the pumpjacks by the road nodding one after another, a few of them new now. You don't count them. It is still light when you get home. Evenings in Karamay are always long.",
+  "burnout": "That year's physical flagged your blood pressure, your spine and your stomach in red, and the doctor asked if you meant to keep working in the field. You applied for a transfer to the plant's records room to look after the well archives, with regular hours. You will never have to stand in that desert wind again. Now and then a young engineer comes to dig through old files, and you can always pull the right one straight off the shelf."
+ },
+ "stages": [
+  "You have a few dozen wells to watch. Each day starts with dynamometer cards and output curves, and then a pickup ride out to check them in person. When a well loses fluid you write a job ticket: hot wash, stroke change, pump swap. The lead marks it up and you copy it out again. The pump operators are your teachers, and the workover foreman is the person you fear most. He asks only one thing: are you sure?",
+  "You run a block on your own now, and the year's lift plan and steam schedule are yours to write. The name on the job ticket is yours instead of the lead's, and what each workover trip costs goes on your account. You start bringing the new assistant engineers along to the wells, teaching them to read the production curve three times before opening their mouths.",
+  "You own one line of process for the whole plant. Other people's plans come to you for review, and yours is the red pen that marks them most. You argue for half a day with the geology institute over which block gets a new-technology trial, and the hard wells nobody can solve end up as phone calls to you. More of your time now goes to working out a plan's return than to reading cards.",
+  "Your week begins with the production dispatch meeting, the whole plant's annual output and treatment budget resting on these few spreadsheets of yours. You explain to headquarters why output is short by this much, and to each operations area why the money is only this much. When you sign, you still think of that old workover foreman: are you sure?"
+ ],
+ "work": [
+  "Old Yu takes you to a well that keeps losing fluid and has you feel how hot the pumpjack's belt is. You snatch your hand back. He jots something down and says change the belt tomorrow and we'll see.",
+  "You print out a dynamometer card with its lower right corner missing and tape it above your desk for two days. The lead walks by and says gas lock, try bleeding the casing gas. The next day the curve is round again.",
+  "The metering station's fluid rate doesn't add up. With a bucket and a watch you crouch at the well all afternoon and measure it the crudest possible way. It's off by nearly twenty percent.",
+  "Xiao Zhou from the next block asks how you decide steam volume. You spread out three years of cycle tables and circle in pencil the round where output turned. From this one on, you say, you can't keep adding the same.",
+  "The workover foreman lays the pulled sucker rods out on the pad. You follow the wear marks rod by rod and change one line on the ticket, the position of the centralizers. He nods and asks nothing more.",
+  "You walk a new assistant through a well's economics: how many tons gained, how much spent. He calculates a profit. You tell him to knock ten dollars off the oil price and do it again.",
+  "At a process review an operations area submits twenty wells for pump changes. You go through their histories one at a time and strike out seven. The area chief's expression matches the weather outside.",
+  "An old classmate at the geology institute insists that patch is rich in remaining oil. You bring out the steam-injection profiles. The two of you stand at a whiteboard all afternoon and agree to try three wells first.",
+  "The algorithm vendor sends a new round of results. You pick the fifty hardest wells and read each card, marking nine misdiagnoses in a spreadsheet and writing the reason next to every one.",
+  "The night before the annual plan presentation you revise the treatment budget to its sixth version. The line you cut is the trial block you built with your own hands all those years ago.",
+  "The safety and environmental inspection team arrives and you walk three operations areas with them. By an old well you crouch and show them the plugging record plate and the surface monitoring points.",
+  "You gather the young engineers from every operations area and skip the reports. Each one describes the well that gives them the most headache, and afterward you ask just one question: did you go out there?"
+ ],
+ "past": [
+  "You were born in a small county in the east. The year of your high school entrance exam was the first you heard of Karamay, from a geography-textbook photo of Black Oil Mountain. The teacher said the oil there seeps up out of the ground on its own.",
+  "Your gaokao (college entrance exam) score was good enough for a petroleum university. Your father asked around and reported that the major was hard but the jobs were good and the pay high. You put petroleum engineering down as your first choice.",
+  "On a sophomore summer field trip you stood under a pumpjack for the first time, and the ground trembled faintly underfoot. The instructor said once you get used to that, you're in the trade.",
+  "Your classmates were going for graduate school, or heading for offshore platforms and design institutes in the east. You started studying for the graduate exam too, and halfway through realized you liked that troubled well from the internship better.",
+  "During the autumn recruiting season an oilfield in Xinjiang came to campus. The recruiter said Karamay had cheap housing and high pay, only lots of wind. Your mother asked how far Xinjiang was, and you measured it for her on your phone.",
+  "Before graduation you went to Karamay alone for the interview, four hours by road from Urumqi with nothing out the window. When you stepped off the bus you smelled oil, decided it was all right, and signed the contract."
+ ],
+ "late": {
+  "pension_note": "Estimate: a state oilfield worker's pension plus enterprise annuity comes to about fifty to sixty percent of base pay before retirement, not counting bonuses or field allowances.",
+  "scenes": [
+   "Your first month of retirement you still wake at seven, and only at the compound gate remember you don't need the shuttle. It goes by, and the driver taps the horn.",
+   "The plant asks you back for half a year to teach the young ones and consult on a batch of hard wells. You can't crouch at a wellsite for long anymore. Someone has to help you up.",
+   "You and your spouse consider moving east to be near your child, stay two months, and come back. The damp there you can't stand. The wind here you can no longer do without.",
+   "The first winter after leaving the operations area, you go home on time every day and your phone never rings at night. You keep suspecting it is broken and check it again and again.",
+   "A scanner arrives in the records room and the handwritten well histories become data, volume by volume. Your job is to decipher the handwriting. One of the volumes is your own, and it takes you the longest.",
+   "Your back improves enough for walks over by Jiulong Pond. You run into Old Yu's son, who also works at the plant, and he says they do well checks by drone now.",
+   "The day you leave the plant, you fold your red coveralls and hand them in. At the door you look back once. The gatekeeper asks if you forgot something, and you say no.",
+   "In your new life there is no commute across the desert. Now and then you catch a familiar block number on some chart and look a little longer, wondering what its water cut is now.",
+   "An old coworker's child gets married and you go back to Karamay. At the banquet someone brings up the well you fixed seven times. Everyone laughs for a long while and says it is still pumping.",
+   "The news says the old fields have fully automated wellsites now, one person minding a thousand wells. However automated it gets, you think, someone still has to know whether the sound is right.",
+   "You take visiting relatives to see the Ghost City badlands. They take pictures. You watch the few pumpjacks still nodding in the distance and, without meaning to, count their strokes.",
+   "Your grandchildren ask what you used to do, and you say you treated the oil underground when it got sick. They don't believe it, so you take out your phone and find a dynamometer card you saved long ago."
+  ],
+  "closing": {
+   "retire": "One evening many years later you sit on the balcony and the sky takes its time going dark. In the distance a pumpjack is still nodding, up and down. You watch for a while, then close the window. The wind is rising.",
+   "burnout": "Many years later you are sunning yourself at the gate of your compound when somebody's car goes by and kicks up a little dust. You squint. A bit of sand like that is nothing. You go on sitting in the sun.",
+   "end": "Many years later, in a drawer, you find a brittle well-data sheet in your own twenty-three-year-old handwriting. You look at the fluid rate on it, put it back, and push the drawer shut."
+  }
+ }
+}

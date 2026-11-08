@@ -1,0 +1,202 @@
+{
+  "id": "study-planner-hs",
+  "occupation": "Academic Planner",
+  "role": "Assistant academic planner at an exam-prep center",
+  "headline": "Twenty-three, you ground through high school in this city, graduated from teachers' college, missed the cut for a permanent post, and came back to Hengshui's South Ring Road to draw up study schedules for repeat students and adult test-takers",
+  "unit": "An exam-prep and study-supervision company in Hengshui (the third floor of a mixed-use building, about ten planners)",
+  "unit_type": "Private tutoring company",
+  "city": "Hengshui, Hebei",
+  "city_tier": "Fourth-tier",
+  "education": "Bachelor's (Applied Psychology)",
+  "level": "You can hand out assessments and build a schedule; you can't yet quite say no to a parent",
+  "intro": "The company is on the third floor of a mixed-use building on Hengshui's South Ring Road. The sign at the door was changed a few years back and now reads Advancement Planning Center. Your supervisor assigns you thirty-one students: gaokao (college entrance exam) repeaters, junior-college students trying for a bachelor's degree, working adults studying for grad school, and a few kids whose mothers came with them from the county to rent a room nearby. There's a stack of assessment forms under your elbow and an unopened box of red pens in the drawer. From today, every hour of their week passes through your spreadsheet first.",
+  "salary_note": "Estimate: Hengshui is a fourth-tier city and a small company pays base plus renewal commission, about sixty percent of the national average.",
+  "facts": [
+    { "label": "Assistant Academic Planner (current level)", "value": "0-1 years, ¥5,525–8,125 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Academic Planner (1-3 years)", "source": "Common in the trade" },
+    { "label": "Pay after 3–5 years", "value": "¥12,000 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Hearing, face to face, what a student isn't saying", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "First drafts of study plans and subject balance", "source": "AI exposure" },
+    { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "A breakfast stall on South Ring Road, a fried dough stick in one hand and your phone in the other. A mother who moved here to be near her son sent a fifty-nine-second voice message at eleven last night, asking if he might have a girlfriend.",
+    "Morning meeting. Your supervisor puts last week's course-completion rates on the wall. Four of yours are red. She taps them with the laser pointer and says nothing.",
+    "You give a new repeat student his intake assessment. Around question forty he starts answering C to everything. You watch, say nothing, and make a note on the form.",
+    "Follow-up calls. A peach grower from Shenzhou doesn't quite follow what a subject balance is. He asks only one thing: Teacher, do you think he can get in?",
+    "You enter this week's mock-exam scores into the supervision system and adjust next week's schedule one student at a time: two more hours of math, one less of English, and twenty minutes after dinner with nothing in them.",
+    "Weekly meeting. A girl says she dropped another twenty points on the mock exam. You turn to the last page of her error notebook and first ask what time she's been going to bed.",
+    "Before evening study hall you walk the floor collecting phones, matching names to the forty slots in the phone cabinet. One kid hands in a dummy. You take it, and now you know.",
+    "You ride your e-bike home past Hengshui Lake with the wind on you the whole way. At the apartment you finish today's meeting notes. In the study groups, people are still posting their check-ins."
+  ],
+  "ladder": [
+    { "title": "Assistant Academic Planner", "stage": "Entry", "focus": "Hand out assessments, record scores, sit in on a senior planner's meetings; earn your place by keeping a first group steady" },
+    { "title": "Academic Planner", "stage": "Own caseload", "focus": "Take thirty or forty students on your own: plans, weekly meetings, renewals; move up on completion rates and parents' trust" },
+    { "title": "Senior Academic Planner", "stage": "Mainstay", "focus": "Take the difficult students and the college applications, train new hires; move up on results and reputation" },
+    { "title": "Planning Supervisor", "stage": "Team lead", "focus": "Lead a team of planners, watch completion and renewals, set service standards; move up on results and keeping people" },
+    { "title": "Campus Director", "stage": "Running a campus", "focus": "Run a campus's enrollment, staff, books and rent, answerable to both the owner and the parents" }
+  ],
+  "ai_tasks": [
+    { "name": "Hearing, face to face, what a student isn't saying", "how": "AI can turn tests and grades into a profile. When a student sits across from you with their head down and won't talk, someone has to ask, and someone has to wait." },
+    { "name": "First drafts of study plans and subject balance", "how": "In seconds AI lays out stages and mock-exam rhythm from a target score and the days remaining. People look at sleep and stress, change what won't work, and explain it to the student." },
+    { "name": "Check-in reminders and routine questions", "how": "AI handles reminders and answers in the study groups, and can notice who hasn't turned anything in for three days. People take over when a student wants to quit." },
+    { "name": "Compiling colleges, majors and cutoff scores", "how": "AI gathers years of cutoffs and enrollment plans and compares strategies. People judge what suits this child and this family, and don't overpromise." },
+    { "name": "Talking to parents about renewals and results", "how": "The system can flag when a renewal is due and organize the call history. Sitting down, speaking plainly and answering for the result is still a person's job." }
+  ],
+  "events": {
+    "e_first_cry": "The first time a student cries in your meeting room you hand her tissues, flustered, and say \"it's okay\" three times. A senior planner tells you later: don't say it's okay. Wait until she's done.",
+    "e_mom_rent": "A mother who came from the county to live near her son finds a job at the supermarket downstairs. Every day after her shift she comes up to ask how he did. You start sending her a separate message, outside the spreadsheet.",
+    "e_renew_red": "This month your renewal rate is the lowest on the team and your commission is down over a thousand yuan. The same day, your landlord writes to say the rent goes up two hundred next quarter.",
+    "e_jump_score": "A repeater you coached scores eighty-seven points higher than last year. His father climbs to the third floor with a crate of Shenzhou peaches, sets it down and leaves, saying only that they're off his own trees.",
+    "e_six_days": "One hundred days before the gaokao, the whole company goes from one day off to none. Seven weeks without a weekend. Your voice is gone and you run your meetings with a throat lozenge in your cheek.",
+    "e_refund": "A student withdraws and the parent writes a long review on a ratings app, with your name in it. Your supervisor tells you not to respond. You read it several times.",
+    "e_plan_ai": "The supervision system is upgraded. A student uploads their scores and a complete schedule appears in seconds. You spend half an hour changing it, and everything you change is something it couldn't know: this kid looks after the family shop at night.",
+    "e_bot_group": "The study groups get an answer bot, and it replies instantly to questions at midnight. You answer far fewer messages and also learn far less, so you make the weekly meetings a little longer.",
+    "e_cut_seats": "The company halves the assistant positions, because the system can now record scores and send reminders. A new kid calls you Teacher, and you realize you're the second-oldest person on this floor.",
+    "e_wedding": "You put a down payment on a small two-bedroom in Hengshui, twenty minutes by bike from work. Your parents come from Zaoqiang with two sacks of peanuts.",
+    "e_old_student": "A former student who made it into a bachelor's program is now a nurse in Shijiazhuang. She brings her cousin in and says, the moment she's through the door: I only trust this teacher's schedules.",
+    "e_june": "The days at the end of June when scores come out, you can't eat for watching your phone. Twenty-some calls in an evening: half ask if there's a bargain to be had, and the other half don't say anything.",
+    "e_rent_up": "Fewer students each year; there simply are fewer children in the counties now. The art class downstairs moves out, and this floor starts to echo.",
+    "e_new_trainee": "A new assistant repeats a parent's words to a student verbatim, and the family has a fight. You take her to apologize, and on the way back you teach her which sentences stop with you.",
+    "e_back_pain": "Your lower back flares up again and you switch to a hard chair for meetings. A student asks why you keep holding your back. You say it's an occupational marker.",
+    "e_kid_exam": "Now it's your own child's last year of high school. You've made schedules for thousands of kids. You make three versions for this one, and all are returned with the words: don't get involved.",
+    "e_data_report": "You make a table laying out five years of students by hours of sleep and points gained. For the first time the owner reads something without mentioning renewals, and says next term's rules on hours will follow yours.",
+    "e_teacher_day": "On Teachers' Day you get a text quoting a sentence you wrote in the corner of someone's schedule ten years ago. You had long forgotten it.",
+    "e_jd_few": "You scroll through a job site. Most academic planner positions are really titled course consultant. The base pay is low, and the commission section is longer than the job description.",
+    "e_fee_notice": "Fees are now collected a month at a time and the money sits in a supervised account. Accounting has a new stack of forms. You explain it to parents a dozen times, and one old man says: now that's good."
+  },
+  "choices": {
+    "c_script": {
+      "title": "Read the renewal script?",
+      "situation": "Your supervisor sends a script: tell parents that if they don't renew now, the child won't be able to keep up. This particular student really needs only one more month, and the family borrowed money to come.",
+      "options": [
+        { "label": "Read it. Protect the numbers", "result": "The parents transfer the money on the spot and your commission looks good. At New Year they send a photo of the kid, and you don't look at it for long." },
+        { "label": "Tell the truth: one more month is enough", "result": "The parents hold your hand and thank you at length. Your supervisor reads your name out at the morning meeting, not warmly. The next year, a relative of theirs comes to enroll with you." }
+      ]
+    },
+    "c_cert": {
+      "title": "Pay for a career-counselor certificate?",
+      "situation": "A coworker got a career-planning certificate. The course and exam cost over eight thousand yuan, about two months of your pay. Your supervisor says that with a certificate your rate can go up.",
+      "options": [
+        { "label": "Grit your teeth and enroll", "result": "Three months of weekends in Shijiazhuang, and you learn the Holland codes and informational interviewing. Back at work, you ask a student for the first time: have you thought about what you want to do every day after this?" },
+        { "label": "Save the money, learn from the veterans", "result": "You borrow a senior planner's meeting notes, one notebook at a time, and learn what isn't in any book. On the enrollment brochure, though, your name never gets that small extra line." }
+      ]
+    },
+    "c_private": {
+      "title": "Take side jobs in application season?",
+      "situation": "In June's college application season, a one-on-one session can bring in two or three thousand yuan. A parent has bypassed the company and added your personal WeChat. Your contract forbids outside work.",
+      "options": [
+        { "label": "Take it; you're helping people", "result": "You make an extra thirty thousand over one summer and lose a summer of sleep. You buy a second phone just for these calls, and in meetings you worry it will ring." },
+        { "label": "Refuse, and bring them to the company", "result": "The owner gives you half the commission on those jobs, which is his way of approving. The parent is a little let down and says your company is expensive." }
+      ]
+    },
+    "c_ai_plan": {
+      "title": "Learn the AI scheduling system?",
+      "situation": "Headquarters is pushing an AI scheduling and follow-up tool and needs someone to try it first, step on the rakes, and teach the school. There's no extra pay, and everyone else on the team is dodging it.",
+      "options": [
+        { "label": "I'll try it", "result": "After three months you list when it can be trusted and when it talks nonsense. Later that list is pinned at every desk." },
+        { "label": "Don't touch it. Hand-built schedules are safer", "result": "Your schedules stay good, but each takes forty minutes and others take four. When productivity is tallied at year's end, you're at the very bottom." }
+      ]
+    },
+    "c_supervisor": {
+      "title": "Compete for Planning Supervisor",
+      "situation": "The Planning Supervisor position has opened up. It means leading eight people and answering for other people's renewal rates, not just your own students. Ten minutes on stage, scored by the owner and two principals.",
+      "options": [
+        { "label": "Get up on stage", "result": "You talk about why the students who withdrew over the past five years left. Nobody in the room looks at their phone." },
+        { "label": "Don't compete. Keep coaching students", "result": "You still meet more than thirty people a week. The new supervisor is two years younger than you and comes in her first week to ask how to talk to the mothers." }
+      ]
+    },
+    "c_city": {
+      "title": "Go to the new Shijiazhuang campus?",
+      "situation": "The company is opening a campus in Shijiazhuang and wants you there with a thirty percent raise. Your partner's job in Hengshui has only just settled, and your parents are in Zaoqiang.",
+      "options": [
+        { "label": "Go to Shijiazhuang", "result": "You come home by high-speed rail on weekends, an hour each way. Enrollment is harder than expected, but you learn to deal with parents who've never heard of you." },
+        { "label": "Stay in Hengshui", "result": "You become a familiar face in this town; the man who sells dough sticks on South Ring Road knows what time you come by. Your pay is about as high as it's going to get." }
+      ]
+    },
+    "c_teacher": {
+      "title": "The county high school is hiring a counselor",
+      "situation": "The high school in your home county wants a full-time psychology teacher, with a written exam, an interview, and a permanent state post. The pay is a third less than now, and you'd never discuss renewals again.",
+      "options": [
+        { "label": "Take the exam; if you get in, go", "result": "You pass. The day you clear your desk, you hand the phone-cabinet key to an assistant.", "end": "You go back to the county high school as its psychology teacher, in a small room at the end of the corridor. A sign hangs on the door. Not many kids come, and those who come stay a long time. Nobody asks you about renewal rates anymore." },
+        { "label": "Don't. Your students are waiting", "result": "On the registration deadline you're in a meeting. Your phone buzzes with the reminder, and you dismiss it." },
+        { "label": "Register, see how the exam goes", "result": "You come seventh on the written exam, and they're hiring one. You go to work the next day as usual, and there's a cup of soy milk on your desk from a coworker." }
+      ]
+    },
+    "c_studio": {
+      "title": "Open your own studio",
+      "situation": "A few parents of former students urge you to strike out alone: rent a small office, do only applications and one-on-one planning, answer to nobody's targets. You run the numbers: forty clients a year just to cover rent and social insurance.",
+      "options": [
+        { "label": "Quit and go solo", "result": "You rent twenty square meters on the ground floor of a housing complex and paint the walls yourself.", "end": "Your studio sits at the bottom of a housing complex, busy two months a year and idle for ten. The sign is small and clients come by word of mouth. You don't talk renewals anymore. You talk cutoff scores." },
+        { "label": "Stay, and negotiate a share", "result": "The owner gives you twenty percent of the application business. You make more money and carry a share of the enrollment pressure." },
+        { "label": "Forget it, you're not young anymore", "result": "You tuck the page with your calculations into a book. Moving house years later, you find it and do the math again." }
+      ]
+    },
+    "c_campus": {
+      "title": "The Campus Director's job",
+      "situation": "The old director is retiring and the owner asks if you want to be Campus Director. Enrollment has been falling for two years and the rent hasn't. The first thing the new director may have to do is lay off people you trained.",
+      "options": [
+        { "label": "Take it", "result": "You learn to read cash flow, and you learn to sit in an office and discuss severance with a colleague who's been with you for seven years." },
+        { "label": "Decline; run your team well", "result": "An outsider gets the job. You stay in your meeting room, and the tissue box on the table is replaced many times over." },
+        { "label": "Become supervision director at an online platform", "result": "An online study-supervision platform offers you half again your current pay. You pack up your things.", "end": "At the online platform you sit in front of dashboards all day, and students become strings of numbers that change color. Now and then you click on one and call. The person is stunned for a moment and says: so you guys are real." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "In your last term you coach only six students. The key to the phone cabinet has been replaced several times, and the sign at the door has changed once more. You hand in your last schedule, with a sentence written in its corner that nobody sees you write. It's still light when you go downstairs. There are fewer cars on South Ring Road than there used to be.",
+    "burnout": "A hundred days before the gaokao that year, you sit in the meeting room listening to a student and not one word goes in. Your supervisor tells you to go home for two weeks. Two weeks later you find you don't want to open the supervision system again. You resign and turn your phone off for three days. When you turn it back on, someone is still asking if you could take one more look."
+  },
+  "stages": [
+    "Your job is to hand out assessments, record scores, build a file for each student, and then sit beside a senior planner with a notebook during meetings, forbidden to speak. When parents call they ask who this is, you say you're the assistant, and they ask for someone else. You know the supervision system and the giant Excel sheet best, because nothing else has come your way yet.",
+    "Thirty-some students are now entirely yours: one meeting a week, one schedule change a week, renewal and completion rates at month's end. You say \"let's leave math alone this month\" and parents actually listen, which scares you a little. Compared with being an assistant, you've gained one thing: when you make a mistake, nobody makes the phone call for you.",
+    "The difficult students begin coming to you: the third-year repeater, the kid whose parents have divorced, the one who looks at his phone the moment he walks in. In June you sit at the application system and put cutoff scores, majors, and a family's calculations side by side. The new assistant takes the small stool where you once sat. You tell her not to rush to write it down, and to look at the person first.",
+    "You lead a team of planners, and each day begins at the dashboard: whose completion rate has gone red, whose student is about to withdraw. Most of your time goes to listening to recordings of your staff's meetings, revising service standards, and going over the budget with the owner. You keep five or six students of your own so as not to lose the feel. When someone on the team wants to leave, you buy them a bowl of noodles first, and talk after.",
+    "Enrollment figures, the rent, the payroll and the refund slips have all landed on your desk. You deal with the neighborhood office, the landlord and the bank holding the supervised account, and you explain to veteran planners why classes must merge this term. You rarely go into the meeting room anymore. Passing it sometimes, you hear no sound from inside, and you know someone is waiting for a kid to say something."
+  ],
+  "work": [
+    "You enter over a hundred mock-exam scores, and at number sixty-two the total doesn't add up. You pull the original paper: the marker missed a whole question, and this kid cried all night for nothing.",
+    "In a meeting the senior planner asks, \"How old is your brother this year?\" You write in your notebook: Why ask that? Half an hour later you cross out the question mark.",
+    "Auntie Wang, who lives nearby for her son's sake, comes to pay next term's fee and counts the cash twice. You write the wrong date on the receipt, she brings it back for you to redo, and she slips you a boiled egg.",
+    "A junior-college student works in a milk tea shop all day, so you schedule her English vocabulary for the bus: ten words a stop. Three months later she says she spells out the stop announcements now.",
+    "Xiao Gao, a repeater, has three straight weeks of one hundred percent plan completion, so you keep him behind. His error notebook is empty. He'd checked off the whole sheet in one go, in a bathroom stall.",
+    "Sister Zhang, studying for grad school while working, has a child just starting primary school. You move her politics course to five-thirty every morning. She replies with one word: Fine. Half a year later she sends a photo of her admission letter.",
+    "The application system's top suggestion is a public second-tier university in another province, but the father asks how far it is from home. You turn the plan over and draw on the back a map of travel times from Zaoqiang to each school.",
+    "A new assistant writes up her meeting notes as a three-page psychological analysis. You circle one sentence in red to keep: he said he doesn't want to go home on Friday. She rewrites the rest.",
+    "You do the math with a kid back from art school exams to make up the academic subjects: ninety-one days left, six solid hours a day, English starting from thirty. You don't tell him what tier he can reach. You just say to turn the thirty into a fifty first.",
+    "Xiao Zheng on your team gets two complaints in a month. You pull the recordings and listen for forty minutes. Nothing she says is wrong; she's just too fast. You tell her to hold a cup of water in meetings next week and speak only when she's thirsty.",
+    "You cut the eighth edition of the service manual to two pages. Rule one: don't repeat parents' words to the child or the child's to the parents, unless safety is at stake. The owner asks, just these two pages? You say just these two pages.",
+    "The AI has pushed extra drills on one student for three weeks straight, and on the dashboard you watch his sleep log sink. You switch that rule off and write headquarters a note saying someone needs to be watching it.",
+    "The landlord comes up with a new contract, twenty fen more per square meter. You lay out five years of student numbers in a table in front of him and say little. You end up with no increase and one extra month's deposit.",
+    "The bank holding the supervised account wants to reconcile a refund. You lay out the student's contract, the refund slip and the parent's messages page by page. When it's done, you realize this kid is the younger brother of someone you coached over ten years ago.",
+    "Two classes must merge this term. You call the teacher in, slide the schedule across first, and then give the reason. She reads it, says I thought so, and picks up her cup to take a sip."
+  ],
+  "past": [
+    "You test into a high school in the city. Your father takes you to the gate, presses a bag of peanuts on you and says there's nothing else he can do for you. For three years you never leave the classroom before ten at night.",
+    "Your gaokao score comes in thirty points below your mock exams. You sit in an internet cafe paging through the applications book and land on a major you don't recognize: Applied Psychology. Nobody tells you what it's for.",
+    "Home in Hengshui the summer after sophomore year, you assist at a cram school, handing out tests and watching study hall. A ninth grader quietly asks you, Big sister, why do people have to study? You can't answer and you remember it for a long time.",
+    "You get a teaching certificate and sit the county's exam for a permanent teaching post, missing the written cut by four points. Your father says try another year. You look at the family's old three-wheeler and don't agree.",
+    "On a job site you see the words \"academic planner\" and click. The duties sound lovely and the commission structure is very detailed. You ask the interviewing supervisor: isn't this just selling courses? She says: half and half. You stay."
+  ],
+  "late": {
+    "pension_note": "Estimate: a private company pays local enterprise social insurance on a modest base, so the pension is about forty percent of your final monthly pay, with commission not counted.",
+    "scenes": [
+      "Your first week of retirement you still wake at seven-twenty. You walk to the breakfast stall on South Ring Road and buy a dough stick. Your phone is quiet. The vendor asks: not busy today? You say: not busy today.",
+      "The neighborhood asks you to speak to parents of kids facing the high school entrance exam. You talk for forty minutes, thirty of them about how not to talk to your child. Afterward a mother follows you all the way to the bicycle shed.",
+      "You take a look at your grandson's schedule and say nothing, just draw a small box after dinner. The box is still empty the next day. You nod, satisfied.",
+      "Your pension covers daily life but not travel. Once a year you and your spouse go to Hengshui Lake to watch the birds, with two steamed buns and a flask of water, and stay the whole afternoon.",
+      "For three months after you quit, you sleep until you wake and then look at the ceiling. You leave those study groups on WeChat one at a time. At the last one, your finger pauses a while.",
+      "You become a manager at a community library, with not much pay. A student sits in the corner doing homework until closing. You don't ask his scores, only remind him to take an umbrella.",
+      "A young woman with a baby calls out \"Teacher\" in the mall. You don't recognize her and she doesn't mind. She tells the child to greet Grandma, and says that back then you told her to go to bed first.",
+      "For the first month after leaving, you keep opening that Excel sheet by reflex. Later you drag the file into a folder called Before. You don't delete it.",
+      "The new job doesn't involve calculating renewals. One day you pass South Ring Road, where the third-floor lights are on and the sign has another new name. You wait out one red light and go.",
+      "Former coworkers have dinner, someone brings up the scripts of those years, and everyone laughs loudly. You laugh too. On the way home you think of that kid whose family borrowed money, and wonder how it turned out.",
+      "Kids now grow up with AI schedules, and they look better than yours ever did. Still, a relative's child comes to see you, sits a long while without speaking. This, you still know how to do.",
+      "On an old phone you find a photo: a wall covered in schedules, with a countdown in red. You think a long time about what number it was that year."
+    ],
+    "closing": {
+      "retire": "In the evening there are a few egrets over Hengshui Lake, flying low. You stand a while and put your hands back in your pockets.",
+      "burnout": "Before the library closes, you push the chairs under the tables one by one. Outside the streetlights come on and someone cycles past.",
+      "end": "Half a box of red pens is still in the drawer, the caps all dried out. You take them out, look at them, and put them back."
+    }
+  }
+}

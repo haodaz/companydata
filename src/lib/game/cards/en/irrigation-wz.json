@@ -1,0 +1,185 @@
+{
+ "id": "irrigation-wz",
+ "occupation": "Agricultural Water Engineer",
+ "role": "Assistant Engineer, Irrigation District Office",
+ "headline": "A water-engineering graduate who tested into the Yellow River irrigation district office in Wuzhong, Ningxia, sleeping by the canal in spring and watching the dredgers all winter",
+ "unit": "A Yellow River irrigation district office in Wuzhong, Ningxia",
+ "unit_type": "Public water-management institution",
+ "city": "Wuzhong, Ningxia",
+ "city_tier": "Tier-4 city",
+ "education": "BEng in Agricultural Water Engineering",
+ "level": "You've studied hydraulics and irrigation and drainage, and you can use a current meter. How many turnouts are on one main canal, and which turnout's village has the worst temper, you don't know yet.",
+ "intro": "The Yellow River water is split off at the dam in Qingtongxia and runs through the canals into the fields of Wuzhong, tens of kilometers along. The office director gives you a pair of rubber boots and a canal map and says that when spring irrigation opens, every turnout on this map will be calling you. From today on, you're in charge of where the water goes, when it arrives, and whose land it reaches.",
+ "salary_note": "Estimate: at a city-level public water agency, pay follows title and post and runs below the national figure for similar work, but it is stable, with small duty allowances during spring irrigation.",
+ "facts": [
+  { "label": "Assistant Engineer (current level)", "value": "0–4 years, ¥4,500–7,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Engineer (4–10 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Settling water disputes", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Operating instruments to observe water quality and silt content", "source": "AI exposure" },
+  { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "First week of spring irrigation, and you reach your section before dawn. The canal is up a few centimeters from yesterday. You read the gauge by flashlight and write it in your notebook, your hand too cold to write straight.",
+  "You ride your motorbike along the canal bank looking for seepage and slumps. An old man herding sheep shouts at you that the downstream gate opened early and his land still has no water.",
+  "You revise today's flows on the office's distribution sheet and make a dozen calls, telling each turnout's gatekeeper when to raise the gate and by how many notches.",
+  "You go to a turnout to gauge the flow with a current meter. The old gatekeeper squats on the gate plank smoking and says what's there to measure, he can tell how much from the ripples.",
+  "A bowl of mutton noodles at a place by the canal. The owner is in the water users' association, and while setting down the bowl he asks if the water fee is going up again this year.",
+  "Two villages have brought their fight over water to the office. One says the gate was secretly opened; the other says it was never their turn. You pull the distribution records and read them out page by page.",
+  "You enter today's levels and flows into the irrigation information system and write up a brief. The level in the system is two centimeters off your handwritten figure, so you mark a question mark.",
+  "It's your turn for the night patrol. There are no lights on the canal, and the sound of the water moves through the dark. You shine a flashlight on a gate and crouch to listen for a leak."
+ ],
+ "ladder": [
+  { "title": "Assistant Engineer", "stage": "Walking the canal", "focus": "Walking the canal and minding gates, measuring flow, recording water levels, calculating fees, getting to know one section and the people along it" },
+  { "title": "Engineer", "stage": "Your own section", "focus": "Running water distribution and the winter maintenance plan for a section of main canal, able to speak smoothly to both water users and superiors" },
+  { "title": "Senior Engineer", "stage": "Setting the plans", "focus": "Responsible for the whole district's water-saving upgrades and distribution plans, reviewing projects, training the young" },
+  { "title": "Office Director", "stage": "All of it", "focus": "Answering for the office's irrigation supply, engineering safety, water fees and staff; fighting for projects above and handling disputes below" }
+ ],
+ "ai_tasks": [
+  { "name": "Operating instruments to observe water quality and silt content", "how": "Online water-quality and silt sensors plus AI can collect data automatically and flag anomalies. People go out to calibrate, take confirming samples, and work out the cause when a sensor fails or the data looks suspect." },
+  { "name": "Observing, recording and compiling water levels and flows", "how": "Automatic monitoring, recording, statistics and reports can mostly be taken over by AI and automation. People only spot-check the data, verifying outliers and equipment status." },
+  { "name": "Distributing water according to the plan", "how": "AI can propose distribution plans and simulate comparisons from inflow, crop demand and the water plan. People must weigh the actual canals, the gates and everyone's demands, make the call, and answer for the result." },
+  { "name": "Settling accounts and collecting water fees", "how": "AI can largely calculate fees from metering data, issue bills and send reminders. People only spot-check disputed bills and special reductions." },
+  { "name": "Surveying supply results and gathering water users' views", "how": "AI can design questionnaires, sort feedback and summarize common problems. People have to go out to the fields, talk face to face, and hear what isn't being said." },
+  { "name": "Settling water disputes", "how": "AI can look up policy clauses and sort out past water records as evidence. Conflicts between upstream and downstream, between farmers, take someone on the spot to mediate, reason, build trust and bear responsibility." }
+ ],
+ "events": {
+  "e_first_gate": "You worked out a turnout's distribution times on your own for the first time, and the water reached the last plot right on schedule. The old gatekeeper offered no praise. He just held out a cigarette.",
+  "e_miscount": "You copied down one gate's opening time wrong, and dozens of acres downstream got their water half a day late. Villagers blocked the office door. The director went out and apologized for hours and said nothing when he came back in.",
+  "e_spring_rush": "During the twenty-odd days of peak spring irrigation you practically slept on your section and ate on your motorbike. When it was over a layer of skin had peeled from your face, and not one plot had been missed.",
+  "e_breach": "A stretch of canal bank started seeping at night. You and a few others hauled sandbags until morning. By daylight it was plugged, and everyone sat on the slope with no strength left to talk.",
+  "e_winter_desilt": "The water is shut off in winter for dredging. The sand carried down by the Yellow River had built up on the canal floor. You went section by section with laborers and an excavator, measuring, your cotton shoes sinking into frozen mud you could barely pull them out of.",
+  "e_dispute_settled": "Two villages had been at odds over water for three years. You brought a small stool and sat at the edge of the fields listening for two days, and in the end you set a rotation order. Neither side was happy, and both accepted it.",
+  "e_fee_dispute": "At fee collection a goji farmer slapped the bill on the table and said the water had never reached him. You checked, and the reading at the measuring weir really was wrong. All you could do was go back and fix it.",
+  "e_marriage": "The director's spouse introduced you to someone who teaches at a primary school in the city. On your first date you were so sunburned you were nearly unrecognizable from your photo. Later you got married.",
+  "e_house": "You bought a small three-room place in Litong District, fifteen minutes from the office. The wind off the Yellow River rattles the window frames. The mortgage isn't much, enough to live on steadily.",
+  "e_child": "Your child was born in April, just as the gates were opening. You had half a day in the ward. The phone rang once. You looked at the sleeping baby, hung up, and called back.",
+  "e_sensors": "The district installed automatic level gauges and electric gates, and at many turnouts nobody reads a staff gauge anymore. The old gatekeepers said it saved trouble, then asked if they would still get their bit of allowance.",
+  "e_ai_plan": "The distribution model produced a beautiful plan, not knowing that one stretch of canal was under repair these days. You rewrote half of it and left a note in the system.",
+  "e_ai_bill": "Water bills calculate themselves now, and there is no more year-end overtime reconciling accounts. By your count that saves twenty-odd days, and you can get home earlier.",
+  "e_lining": "The stretch of main canal you were lining was finished, the seepage cut by a good amount, and the villages downstream got their first water on time. At inspection you walked an extra two kilometers and looked it all over again.",
+  "e_drought": "The Yellow River ran low and the district's allocation was cut. The distribution sheet went through five versions. You answered the phone until you were hoarse, and everything you heard you had already explained.",
+  "e_parent": "Your father was hospitalized back home. You rushed back for five days and rushed again to return before the gates opened. Standing by the canal you remembered that the water here is yellower than the water back home.",
+  "e_apprentice": "A newly assigned young man put the current meter in backward on his first gauging. You said nothing and waited for him to notice. He looked up at you, and you handed him a new pair of rubber boots.",
+  "e_knee": "Years of wading in ice water and frozen mud, and your knees ache whenever it's overcast. The doctor told you to stay out of the water. You said all right, and the next day you pulled on your boots again.",
+  "e_old_gate": "The old gate you once hand-cranked hundreds of times has been replaced by an electric one. The iron wheel they took off was dumped in the yard, and you had someone save it. It now leans against the office wall."
+ },
+ "choices": {
+  "c_duty": {
+   "title": "Going for Engineer: the station at the canal's tail",
+   "situation": "To become an Engineer you need grassroots management experience, and the director says the station at the far end of the canal is short of people. Water reaches it last, disputes there are the worst, and it's over an hour from home. Staying at the office writing reports is easy, but leaves less to put on the application.",
+   "options": [
+    { "label": "Go to the tail station", "result": "In three years you got to know the edge of every household's land. The day water reached the tail of the canal, someone brought you a bag of their own goji berries." },
+    { "label": "Stay at the office", "result": "You put the district's records in beautiful order and the director was quite satisfied. On the application, your grassroots-experience section came out a bit short." }
+   ]
+  },
+  "c_exam": {
+   "title": "The licensed water engineer exam",
+   "situation": "A classmate at a design institute says that with a registered license you'd have more standing on projects. But spring and summer irrigation run straight into autumn, you can only study in winter, and in winter there's the dredging.",
+   "options": [
+    { "label": "Study through the winters", "result": "You studied through two winters, hunched over practice questions by the office radiator. When the certificate came, the office had someone who could put a stamp on project applications." },
+    { "label": "Don't take it", "result": "You kept your winters for your child and those few stretches of canal. Your design-institute classmate later phoned to borrow the district's records." }
+   ]
+  },
+  "c_ai": {
+   "title": "Taking on the smart irrigation district",
+   "situation": "Money has come down for a smart irrigation district, and someone has to turn decades of distribution experience into rules a model can use. It means many more meetings and the gatekeepers may curse you behind your back. Turn it down, and someone else will do it anyway.",
+   "options": [
+    { "label": "Take it on", "result": "You wrote down what the old gatekeepers said line by line and translated it into rules. The spring the system went live, the distribution sheet needed three fewer revisions." },
+    { "label": "Decline", "result": "The system went in anyway, with rules that feel slightly off in use. You keep getting things done by phone and by mouth." }
+   ]
+  },
+  "c_dispute": {
+   "title": "The one who opened the gate",
+   "situation": "On patrol you find a turnout has been secretly opened at night. The traces lead to one household, whose crops really are about to die of thirst. The rules say report it and fine them. You also know how things stand with that family.",
+   "options": [
+    { "label": "Report it by the rules", "result": "The fine was paid and that family goes out of its way to avoid you. On the other hand, nobody has opened a gate on that stretch since." },
+    { "label": "Talk it out, let it go this once", "result": "You sat in their courtyard over a cup of tea and wrote the rotation times on paper for them to put on the wall. The next year, that family didn't owe a cent in water fees." }
+   ]
+  },
+  "c_design": {
+   "title": "A water design firm wants you",
+   "situation": "A water design company in Yinchuan wants someone who knows irrigation districts, at quite a bit more money. But it's contract work with no permanent state post, and your father went silent on the phone for a good while when he heard.",
+   "options": [
+    { "label": "Quit and join the firm", "result": "You said goodbye to your rubber boots and took up CAD and hydraulic models. The canals on the drawings are all straighter than the ones you walked.", "end": "You became a project lead at a water design company. The canals you have drawn could circle the irrigation district several times, though you seldom stand beside them anymore." },
+    { "label": "Stay at the office", "result": "You turned it down and went to your section as usual that afternoon. As for those two words, permanent post, your father can rest easy." }
+   ]
+  },
+  "c_senior": {
+   "title": "Applying for Senior Engineer",
+   "situation": "You have two water-saving upgrades you could submit for Senior Engineer, only the summary reports and papers have never been written. Miss this year and it's years until the next round, and this year the inflow is low, so spring irrigation is sure to be hard.",
+   "options": [
+    { "label": "Squeeze in the paperwork", "result": "Days on the canal and nights at the computer. A spring of that and you were noticeably thinner. The day your application passed review, water was just arriving in the canal." },
+    { "label": "Protect the spring irrigation first", "result": "You carried this year's spring irrigation through smoothly and pushed the application to the next round. The director patted you on the shoulder." }
+   ]
+  },
+  "c_bureau": {
+   "title": "Transferring to the city water bureau",
+   "situation": "The city water bureau wants to borrow you for planning and water-saving assessments. It would be office work and paperwork from then on, and no more night patrols. But you would know what's happening on the canals only from reports.",
+   "options": [
+    { "label": "Transfer to the bureau", "result": "You switched to leather shoes, and files piled up on your desk. Only on inspection trips to the district do you catch a bit of that earthy smell from the canal bank.", "end": "You moved into the city water bureau and spent your life dealing with the irrigation district on paper. During spring irrigation you still sometimes drive out to the canal, stand a while, and go." },
+    { "label": "Stay at the office", "result": "You politely declined the secondment, and people at the bureau said you were a bit stubborn. The next spring you were still the first one on the section." }
+   ]
+  },
+  "c_head": {
+   "title": "Standing for Office Director",
+   "situation": "The old director has reached retirement, and those above want you to stand for Office Director. You would fight the bureau for projects, smooth over village conflicts, work out staff bonuses, and any trouble with the works would have your name on it. You wouldn't be gauging flows anymore.",
+   "options": [
+    { "label": "Stand for director", "result": "You moved into the old director's office. The corners of the canal map on the desk had curled, and you didn't let anyone replace it." },
+    { "label": "Keep doing technical work", "result": "You recommended a younger colleague and went on handling plans and training the young, still able to go out to the section at spring irrigation." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "For your last spring irrigation you're not on duty. You just go and stand by the canal for a while in the morning. The water is still yellow, the gate is electric now, and the staff gauge still stands there. You leave your old rubber boots behind the office door. Someone on the road shouts to you that the water has arrived, and you wave back.",
+  "burnout": "Your knees and back have reached the point of no more wading, and the doctor is blunt about it. You transfer to the office archive to look after the old records, scanning decades of distribution sheets one book at a time. The canal isn't visible from your window. But in the days of spring irrigation you can smell it."
+ },
+ "stages": [
+  "Your job is walking the canal: reading gauges, recording levels, measuring flow with a current meter, copying the data into the district system, and sending water briefs to the office. The gatekeepers are your teachers, and the head of the water users' association is the person you see most. You also have a stack of water bills to reconcile turnout by turnout. Get one wrong and it costs you an afternoon of apologetic smiles.",
+  "A stretch of main canal is yours now. Before spring irrigation you draw up this section's distribution plan, and in winter you produce the maintenance plan, working out which reaches need dredging and which need lining. You meet with village water associations and coordinate water arrival with the section chiefs upstream and down, and the red pen on the canal map starts to be yours. You also begin training gatekeepers on the new level gauges.",
+  "You're responsible for the district's water-saving upgrades and annual distribution, doing the water accounts for the whole district: how the allocation from the Yellow River gets divided among the canals. You write project applications, review construction plans, accompany experts on acceptance visits, and in low-water years you are the one who tells people the bad news. Contractors on site hand you the drawings before anything else.",
+  "The pay, bonuses, irrigation supply and works safety of several dozen people all count against you. More than half your time goes to meetings: the bureau's project meetings, flood-prevention meetings, water-fee sessions. On the day the gates open for spring, you still go stand in front of the first gate. Everything here, in the end, needs a word from you."
+ ],
+ "work": [
+  "Old Yang the gatekeeper teaches you to judge flow by the ripples on the surface and has you check him with the current meter. Across five measurements his guesses are off by far less than you expected.",
+  "The water association's bookkeeper brings a handwritten fee ledger. You compare it to the system all afternoon and discover one household has been billed for a third of an acre too much for three years running. You fix it right away.",
+  "When the winter irrigation ends you walk ten-odd kilometers of canal alone, photographing every seepage point with your phone and marking each on the canal map as groundwork for the maintenance plan.",
+  "At the spring coordination meeting a downstream section chief complains that the water is always late. You bring out the opening records for three upstream gates, and together you draw a new rotation on the map.",
+  "The contractor's boss says the concrete grade on this stretch of lining is fine. You still have test blocks taken and sent for crushing. He smokes two cigarettes beside you and says nothing more.",
+  "You train the gatekeepers on the electric gates' remote controls. An old hand presses the wrong button and the gate jerks. You say no matter, you remember the ones you get wrong, and have him press it again.",
+  "At a water-saving project review the experts ask how the per-acre savings were calculated. You spread out three years of flow data and canal efficiency figures and go through them sheet by sheet.",
+  "The year the inflow runs low, you present the reduction plan to the district's coordination meeting, writing each canal's cut on a whiteboard. A hum rises from the room. You wait for it to stop and go on.",
+  "Xiao Jiang, a young engineer, shows you the distribution model's results. You point to one lateral and say this one is under repair, does your model know that? He flushes.",
+  "After the flood-prevention meeting you take the flood-season duty roster and write your own name on the hardest days to fill before passing the sheet to the office.",
+  "The day before the bureau's project deadline you go over the budget with two young staff until the small hours and get one lateral's upgrade onto the second batch.",
+  "Two old employees bring their bonus quarrel to your office. You pull up both their patrol records, brew three cups of tea, and first let each one talk for half an hour."
+ ],
+ "past": [
+  "You grew up in a small county in northern Shaanxi. The family land depended on the sky, and in drought years your father spent more time looking at the sky than at you.",
+  "Your gaokao (college entrance exam) score wasn't high. A teacher said water engineering placed well and was something the country needed. You didn't think hard and put down agricultural water engineering, which at least sounded like managing water.",
+  "Sophomore hydraulics flattened half your class. You rather liked the formulas. The way water moves seemed more reasonable than people.",
+  "On a summer internship on the Ningxia plain you saw the Yellow River split into canal after canal and spread into the fields, rice planted right up to the foot of the mountains. You thought of the cracked land back home and stood there for a long time.",
+  "Before graduation you sat several public-institution exams. The hiring notice for this Wuzhong district office said it came with a permanent state post. After the written test you went to see it, and the director showed you the canal and asked if you minded the sun."
+ ],
+ "late": {
+  "pension_note": "Estimate: for permanent staff at a public institution, a pension plus occupational annuity comes to roughly sixty to seventy percent of pay before retirement.",
+  "scenes": [
+   "The first spring with no work to go to, you still get up early on the day the gates open and cycle to the canal to see whether the head of the water has arrived.",
+   "The office invites you back to give a talk on the history of this canal. The young people photograph your canal map with their phones. You tell them half the handwriting on it belongs to three different people.",
+   "You plant a few grapevines on the open patch below your building and run your own hose. No one times the watering more exactly.",
+   "Your first year at the archive, you still keep your rubber boots in the trunk of the car. One rainy day you open it to look. The mud on the soles has dried right through.",
+   "After your knee surgery you begin walking the Yellow River path on a cane. You can't get far at a time. As far as where you can see the water is enough.",
+   "The young person you trained has become a section chief and makes a special trip to ask about an old stretch of canal. With your eyes shut, you name where its gates are.",
+   "The day you leave the irrigation district, you wash your rubber boots and return them to the storeroom. Old Yang says those boots have life in them yet. You say keep them for the next one.",
+   "In your new office you hear rain outside the window and find yourself wanting to check this year's inflow. You open your phone. You've never left the district's group chat.",
+   "You return to the district on an errand and stop by your old section. The canal has all been lined and looks nothing like it did. A gatekeeper studies you a long while and says aren't you that young fellow from back then.",
+   "Now the water can be distributed from a phone, the level jumping up and down on a screen. But who has stopped speaking to whom doesn't show on any screen. Someone still has to go and sit with them.",
+   "Your grandchild asks why the Yellow River is so yellow. You say it comes from very far away and carries sand the whole way. The two of you stand on the bridge watching for a while.",
+   "You can't ride a motorbike anymore, and your child drives you along a stretch of the old canal. The wheat is just turning. The water moves along neither fast nor slow, and you ask to stop the car a moment."
+  ],
+  "closing": {
+   "retire": "One early morning many years later you hear water running outside the window, the property staff watering the plantings. You lie in bed and listen. A bit low on flow. You turn over and go back to sleep.",
+   "burnout": "Many years later you sit on a bench in the compound watching a child use a little stick to scratch a ditch in the mud after rain, and water runs along it. You watch and say nothing, and only nod your head a little.",
+   "end": "Many years later, among old things, you turn up a canal map with curling edges, the red circles from your younger days still on it. You smooth it flat and, with one finger, follow that line from start to finish."
+  }
+ }
+}

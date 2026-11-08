@@ -1,0 +1,204 @@
+{
+  "id": "tv-director-nj",
+  "occupation": "Radio and Television Director",
+  "role": "Assistant director on a city channel",
+  "headline": "Twenty-three, a broadcast directing graduate on a contract post at a Nanjing radio and TV station, hauling the tripod to location shoots and fixing subtitles in the edit bay past midnight",
+  "unit": "A radio and television station in Nanjing (a community-affairs show on the city channel, with contract and permanent staff sharing one office)",
+  "unit_type": "Radio and TV station",
+  "city": "Nanjing",
+  "city_tier": "New first-tier",
+  "education": "Bachelor's (Broadcast Directing)",
+  "level": "You can write a rundown and subtitles; on your first shoot you forgot the tripod's quick-release plate",
+  "intro": "The station's tower is in Hexi. You need a card for the elevator, and the temporary one you've been given sometimes fails to light up. The show has eleven people, your desk is beside the printer, and on it sits a hard drive someone left behind with a label reading DO NOT TOUCH. The producer drops a rundown in front of you and says you're going with Old Fang's crew to Jiangbei at two, to carry the tripod. From today, in the line of names that scrolls past fastest at the end of the show, one is yours.",
+  "salary_note": "Estimate: Nanjing's living costs and broadcast pay are both close to the national average; contract staff have low base pay plus performance money, which has shrunk as advertising has fallen.",
+  "facts": [
+    { "label": "Assistant Director (current level)", "value": "0-2 years, ¥5,000–8,000 a month (national average, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Director (2-6 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Blocking and directing the shoot on location", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Developing program topics and writing proposals", "source": "AI exposure" },
+    { "label": "Open positions", "value": "2 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "Story meeting. Eleven people around a long table, the producer rapping a pen on the wood. You've prepared three ideas, and when you get to the second he says: next.",
+    "You phone the cobbler you're profiling, who changes the time for the third time because he has to pick up medicine at the hospital this afternoon. You tell him it's fine, we'll wait for you.",
+    "The news van crosses the Yangtze bridge with the tripod clanking in the back. Old Fang the cameraman sleeps against the window and wakes up the moment you arrive.",
+    "Shooting on the old street. The minute the cobbler sees the lens he forgets how to talk. You squat beside him, tell him to keep mending, and ask only whose shoe this is.",
+    "The shadows of the plane trees start to lengthen and Old Fang says two more cutaways. You block the passing e-bikes for him and back up the phone recording while you're at it.",
+    "Back at the station you import the footage, listen through the sync sound, and log time codes line by line. You run downstairs for a bowl of duck blood noodle soup before the shop closes.",
+    "In the edit bay with Xiao Du from post, going over the rough cut. His editing software freezes twice. You say cut this sentence. He says if we cut it, it won't join.",
+    "You check the subtitles for the third time, upload the piece to the review system and message the producer. The subway has stopped, so you take a cab to your rented room."
+  ],
+  "ladder": [
+    { "title": "Assistant Director", "stage": "Dogsbody", "focus": "Contact interviewees, go on shoots, log footage and write subtitles; move up by finishing a piece on your own" },
+    { "title": "Director", "stage": "Making pieces alone", "focus": "Carry a piece from idea to finished cut, directing on location and working with editors; move up on quality and a mid-level title" },
+    { "title": "Senior Editor", "stage": "Gatekeeping", "focus": "A deputy-senior title: guide younger directors' pieces, take on big live broadcasts and special features; move up on portfolio and review" },
+    { "title": "Show Producer", "stage": "Running a show", "focus": "Manage a show's people, money and broadcast safety, answering for ratings and sign-off" },
+    { "title": "Deputy Channel Director", "stage": "Running a channel", "focus": "Oversee several shows and new media: meetings, coordination, sign-offs, and worrying over revenue" }
+  ],
+  "ai_tasks": [
+    { "name": "Developing program topics and writing proposals", "how": "AI can quickly gather trends, review past shows, and produce topic lists and first drafts. People judge which topics matter, fit the channel and its audience, and settle the angle." },
+    { "name": "Writing scripts, shot lists and interview outlines", "how": "AI can draft scripts, shot lists and interview outlines directly from a topic and adjust style and length. People only need to check facts and add what can be found only on location." },
+    { "name": "Contacting interviewees and arranging times and locations", "how": "AI can draft invitations, schedule and compare location information. Persuading interviewees, earning their trust and dealing with last-minute changes still requires a person." },
+    { "name": "Coordinating shooting schedules and crews", "how": "AI can draft shooting schedules, assignments and budget reminders. People adjust according to the crew's state, the weather, the equipment and whatever comes up, and answer for the schedule." },
+    { "name": "Blocking and directing the shoot on location", "how": "Directing on location means reading the light, the movement, the mood and the moment, deciding on the spot and carrying the crew along. AI can suggest a shot list at most." },
+    { "name": "Guiding hosts and guests during recording", "how": "Helping hosts and guests relax and say something true takes watching and talking. AI can prepare teleprompter copy and questions, but the guiding on the day comes from a person." },
+    { "name": "Reviewing footage and talking through the edit", "how": "AI can transcribe, tag and search footage and even produce a rough cut. People judge which shots carry feeling or weight and tell the editor what rhythm and style they want." },
+    { "name": "Overseeing content and revising the final cut", "how": "Editorial judgment and responsibility for what airs must rest with a person. AI can help catch typos and flag factual doubts, but the final review and signature are human." }
+  ],
+  "events": {
+    "e_tripod": "Your first time leading a shoot, you arrive to find only one battery charged. You and the cameraman share one bottle of water and count the minutes through the interview.",
+    "e_name_scroll": "Your mother sits by the TV waiting for the credits and takes a blurry picture, circling your name, and sends it with the caption: Saw it.",
+    "e_night_cut": "The night before air you find a noise on a piece of sync sound. You and the editor work in the bay from ten at night until dawn. When you step outside, street-sweeping trucks are washing Xinjiekou.",
+    "e_bonus_cut": "Station ad revenue has dropped again and year-end performance pay is cut by thirty percent. Nobody in the office says anything. Everyone is looking at their mortgage dates.",
+    "e_old_man": "The old tailor you profiled calls the show to say that after it aired, an apprentice he hadn't heard from in forty years came to the door.",
+    "e_cervical": "Years of looking down at footage, and your neck starts to numb half your arm. The doctor says to stop looking down. You go back to the bay and prop your monitor on two books.",
+    "e_ai_subtitle": "The bay gets a new system that transcribes and tags interviews automatically. What once took an afternoon of listening can now be searched in ten minutes. It still can't mark where someone pauses.",
+    "e_ai_script": "An intern uses AI to write a script in one minute, and the structure is tidier than yours. You read it and ask only: which way does this craftsman's door open?",
+    "e_ai_anchor": "The early-morning slot goes over to a virtual anchor, weather then traffic, the voice steadier than a person's. A host from the next team stands in the corridor watching the monitor for a while.",
+    "e_merge": "Channels merge. Two show teams become one and the office moves to the sixth floor. Some people's desks are gone, some go to the new media center, and someone leaves you their pothos on the way out.",
+    "e_new_media": "The station wants every piece broken into three vertical short videos. Cutting them, you see people in the comments asking for that cobbler's address.",
+    "e_live": "In a big citywide live broadcast you sit in the production truck watching eight feeds when a field reporter's earpiece goes dead. You say into the talkback: go to two, hold steady.",
+    "e_rent": "You make a down payment on a small apartment in Jiangbei and cross the river by subway every day, forty-five minutes. A friend says, what kind of Nanjing person has to cross the river to work?",
+    "e_colleague": "Xiao Ge, who joined the station with you, goes to an internet company and starts posting afternoon tea. He sends you a message: still grinding?",
+    "e_jd": "You open a job site and search. Positions labeled radio and TV director come to two, nationwide. Everything else has been renamed content operations.",
+    "e_mentor_retire": "Old Fang retires. On his last day he gives you that old light meter. Cameras haven't needed one in years. You keep it in a drawer and take it out now and then.",
+    "e_kid": "Your child asks what you do. You say you make TV. The child asks: what's TV? It's true the set at home hasn't been on in a long time.",
+    "e_late_doc": "A film you followed for six years finally airs, in a bad slot past midnight. The next morning you get a message from an old classmate, just three words: I watched it.",
+    "e_fund": "The station begins counting money by project and shows must find their own sponsors. You take your proposal to a water purifier company. The boss flips through it and asks: can this have a QR code on it?",
+    "e_young": "A new director digs up one of your old pieces and asks why you held that empty shot for seven seconds. You think about it and say: nobody was hurrying us then."
+  },
+  "choices": {
+    "c_radio": {
+      "title": "On loan to the morning radio show",
+      "situation": "The radio side needs a program producer and wants to borrow you for six months: in at five a.m., handling the mixing board, listener calls and traffic sheets. You'd have to drop your TV work. The producer says it's up to you.",
+      "options": [
+        { "label": "Go and learn radio", "result": "In six months you learn to make a program with sound alone, and how long three seconds of silence really is. Back in the edit bay, you start listening to sync sound with your eyes closed." },
+        { "label": "Stay and take on TV pieces", "result": "You go on a few more shoots and your credit moves up a little. Those six months on radio go to Xiao Sun from the next team." }
+      ]
+    },
+    "c_bianzhi": {
+      "title": "Test for a permanent post",
+      "situation": "Every few years the station releases a handful of permanent state posts, by exam, competing with your own colleagues. The pay may be no better, but you wouldn't have to worry about your contract. To study these months, you'd have to cut shoots and night shifts.",
+      "options": [
+        { "label": "Cut your work and study", "result": "You pass, and your temporary card is replaced by a permanent one. Xiao Sun in your group doesn't get in. While packing up, Xiao Sun says congratulations without looking up." },
+        { "label": "Don't test. Let your work speak", "result": "You make two very good pieces in that time and your credit moves up. When your contract comes due, HR calls to renew, and only then do you let out your breath." }
+      ]
+    },
+    "c_music": {
+      "title": "Make the piece more moving?",
+      "situation": "The ratings team says your piece about an old person living alone is too flat. The producer suggests piano, a slow-motion passage, and moving the shot of the old man wiping his eyes to the end. He told you at the time: don't use this.",
+      "options": [
+        { "label": "Change it as asked", "result": "It rockets to number one for the week. The old man's son calls and doesn't say it was good or bad." },
+        { "label": "Take that shot out", "result": "You end on the old man feeding his cat instead, and the ratings are ordinary. The producer watches it and says nothing, then gives your next piece an extra minute." }
+      ]
+    },
+    "c_ai": {
+      "title": "Learn AI rough-cutting?",
+      "situation": "The station is trying AI rough-cut and script tools and wants a few directors to try them first and write up a division of labor between people and machines. Xiao Du from post asks you privately: if this works, will you still need us?",
+      "options": [
+        { "label": "Learn it and write the process", "result": "You write a process that leaves reviewing footage, setting the point of a piece and the final listen to people. Xiao Du is moved to graphics, and is busier than before." },
+        { "label": "Don't. Your own hand is more precise", "result": "You go on looking frame by frame. The pieces are good, only others make two a day and you make one in two days." }
+      ]
+    },
+    "c_mcn": {
+      "title": "A short-video company comes hunting",
+      "situation": "A company running city food-and-shop accounts offers you double your pay to be content director. Its people talk fast and never put down their phones, and they tell you the whole TV station way of doing things is on its way out.",
+      "options": [
+        { "label": "Quit and go", "result": "You hand in your station card. The hard drive stays on the old desk.", "end": "You go to the short-video company: forty-five seconds a piece, five pieces a day, more time reading data than watching footage. Now and then you save a piece that ran too long, in a folder nobody looks at." },
+        { "label": "Stay at the station", "result": "You politely decline. That account grows quickly afterward, and you see it a few times scrolling on the subway. The music is always the same." },
+        { "label": "Try some freelance first", "result": "You cut a few pieces for them on weekends and earn some spare cash. Your body gives out before the money adds up, and you quit after a month." }
+      ]
+    },
+    "c_title": {
+      "title": "Apply for Senior Editor",
+      "situation": "Applying for Senior Editor takes representative work, a paper and award certificates. You have plenty of pieces but have never written a paper. A coworker says you can buy journal space for a few thousand yuan. Slots are tight.",
+      "options": [
+        { "label": "Write the paper yourself, slowly", "result": "You turn your years of location notes into an article on documentary interviewing, revise it for six months, and publish it in an inconspicuous journal." },
+        { "label": "Buy the space, clear the bar first", "result": "You spend a weekend piecing together an article and six thousand yuan. Once the title comes through, you never open that journal again." },
+        { "label": "Not this year", "result": "The slot goes to someone else. You go on with location shoots, and Old Fang says: that's fine too, the pieces are yours." }
+      ]
+    },
+    "c_producer": {
+      "title": "Compete for Show Producer",
+      "situation": "The old producer is being transferred and the station opens the Show Producer job. Get it and you'll manage the performance pay of a dozen-odd people, chase sponsors and answer for every broadcast. You may never have time to go out on a shoot again.",
+      "options": [
+        { "label": "Compete", "result": "On the day, you talk about how the show can survive. When you reach the money, the leaders look up." },
+        { "label": "Don't. Keep making pieces", "result": "The new producer is someone good at landing sponsors. You stay out on location, still carrying your own tripod." }
+      ]
+    },
+    "c_teach": {
+      "title": "Go teach at a university",
+      "situation": "A university's media school in Xianlin wants a teacher with field experience to teach documentary making. The pay is slightly lower, you'd need a part-time PhD to get a title, and you'd have summers and winters off.",
+      "options": [
+        { "label": "Go teach", "result": "You pick one hard drive from the edit bay to take with you, full of years of footage.", "end": "You teach documentary at the university, and in your first class you show your piece about the cobbler. A student asks which app it was on. You say: it was on TV. They think that's pretty cool." },
+        { "label": "No, there's work unfinished here", "result": "The film you've been following is only in its third year, and you don't want to walk away from it." },
+        { "label": "Lecture part-time", "result": "You teach one class a week, two hours round trip. The students' work is better than you expected, and you bring their ideas back to the show." }
+      ]
+    },
+    "c_company": {
+      "title": "Start your own production company",
+      "situation": "Many colleagues have left in recent years to start companies shooting corporate promos and short government videos. An old colleague asks you to join him. Business is okay, he says, but you're in your forties and your child is about to start high school.",
+      "options": [
+        { "label": "Quit and go in together", "result": "You rent a small office in Jianye District. The first job is a promo for a cement plant.", "end": "Your small company makes twenty-some promos a year, and clients revising to a seventh draft is nothing unusual. Sometimes during a shoot you ask the cameraman to wait and hold an empty shot for seven seconds, and then you delete it before delivery." },
+        { "label": "Stay", "result": "You pat your old colleague on the shoulder and take him out for salted duck. He later buys a car, and later sells it." },
+        { "label": "Do revenue projects for the station", "result": "You put your years of contacts to use for station projects. Your results improve and your own pieces dwindle." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On the final episode you stay until the credits end. Your name rolls up and is gone in under a second. The drives in the edit bay have gone through many generations, and the one labeled DO NOT TOUCH is still in the cabinet. When you walk out of the building, the plane trees in Hexi are just coming into leaf and a news van is heading out.",
+    "burnout": "After yet another all-nighter you sit in the bay staring at the timeline, not knowing where to cut. Your neck scan and your checkup results lie together. You tell the producer you'd like a break. During that break you don't turn on the TV once. Later you put in for a transfer, to the archive."
+  },
+  "stages": [
+    "You make the phone calls, go on shoots, carry the tripod, then come back and transcribe hours of footage line by line, write subtitles, and check names and places. You call the cameramen and editors \"teacher,\" and often. Whatever the director asks for, you run to find. Your first draft of a rundown always gets marked up until only the time codes survive.",
+    "From topic to finished cut, it's now all yours: writing the shooting outline, saying \"once more\" on location, then working frame by frame with the editor at the editing system. You begin to answer to your interviewees, and to every line on the review sheet. Your credit moves from the back row to the word Director, and when a piece needs changing, the phone calls come straight to you.",
+    "Big live broadcasts and special features begin to fall to you. You sit at the switcher counting feeds, and you sit beside young directors watching their cuts and saying, \"That's too full here.\" Title dossiers, review comments and the last pass before air all want your signature. You go on fewer shoots and revise more scripts.",
+    "A dozen-odd people, a year's budget and the sponsors are all yours to manage. Each day you read ratings and backend data first, then hold the story meeting, then go explain to the station's leaders why this one needs changing. You eat with the ad department and talk to the young people who are leaving. If there's a mistake on air, the first call comes to you.",
+    "You oversee several shows and the new media accounts, and there are more documents on your desk than films. In meetings you listen to people talk of traffic, convergence and next year's revenue targets, and you talk about them too. Sometimes you slip into the edit bay and stand silently behind a young director, which only makes them nervous."
+  ],
+  "work": [
+    "Old Fang tells you to take a light meter reading by the window and you read the wrong range. He says nothing, takes the reading himself, puts the meter back in your hand and says: again.",
+    "You transcribe four hours of sync sound into seventeen pages. The director uses three sentences. On page eleven you find a circle he drew.",
+    "The subtitle has an old woman's name wrong by one character. You notice at midnight, call Xiao Du from post, and you fix it just before upload.",
+    "Before the old street is demolished, you and Old Fang film the last hot-water shop. The old man who boils the water doesn't want to talk, so you set the camera down and spend half a day helping him fill thermoses.",
+    "The review sheet says \"pacing drags in section four.\" You and Xiao Du cut twelve seconds at the editing system, then put three of them back.",
+    "The host stumbles on the same word for the seventh take. You take off your headphones, walk into the studio, chat with her for two minutes about lunch, and the eighth take is good.",
+    "Before the live broadcast you and the technical team run all eight feeds three times, with the backup link on an old fiber line. You set a cup of water by the switcher and don't drink it until it's over.",
+    "New director Xiao Gu's piece is too crowded. You drag a stretch of black into his timeline and say nobody needs to talk here. He asks what the audience is supposed to watch. You say: themselves.",
+    "The title dossier needs a note on your representative work. You dig out a shot log from over a decade ago, which still has the small burn holes from Old Fang's cigarette ash.",
+    "A sponsor wants the host to say the product name three times. You argue the account manager down to two and a half on the contract. The third becomes a credit at the end. Neither side is happy, and the contract is signed.",
+    "You work on the performance sheet until the small hours, moving up three young people's scores and leaving your own box alone. Accounting comes by the next day to ask whether this is right. You say it is.",
+    "Xiao Gu brings a resignation letter, off to a content company. You take him downstairs for duck blood noodle soup, and instead of arguing, you ask when he'll finish filming that piece.",
+    "The media-convergence assessment has twenty-three indicators. You go through them one by one with the chief editor's office and cross out the four nobody could possibly meet. It uses up a whole pen that afternoon.",
+    "A young producer brings you the annual budget. You turn to the equipment depreciation page and ask if the old machine in the edit bay should be repaired. He says, that's the one you used to use. You say, repair it."
+  ],
+  "past": [
+    "In your hometown of Yancheng, your father gets cable TV. Every day after school you watch a program about old crafts, and you stay to the end of the credits.",
+    "Your last year of high school you go to Nanjing for the media-arts entrance exam, queuing until midnight, and write a film review draft in an internet cafe. Back home you tell your father this is what you want to study. He asks if there's money in it.",
+    "Sophomore year your school arranges a tour of the station. An old director standing at the switcher tells you: most of the work you're imagining is waiting.",
+    "Senior year you intern for two months with a documentary crew, carrying the camera bag until your shoulder is raw. In the credits, your name is misspelled by one character.",
+    "You send out over ten resumes at graduation. An internet company offers you a content operations job with better pay. You choose the contract post at the station, and your mother says on the phone: on TV, good."
+  ],
+  "late": {
+    "pension_note": "Estimate: Nanjing's social insurance base is middling; staff who moved from contract to permanent posts draw a mixed pension of about half their final monthly pay.",
+    "scenes": [
+      "The first Monday of your retirement you catch yourself about to go to the story meeting. You go to Laomendong and have a cup of tea. Nobody across the table raps a pen.",
+      "The neighborhood's senior college asks you to teach phone video editing, and the older folks study hard. One man makes a photo album for his wife, and you help him take out the music.",
+      "You dig out an old hard drive and connect it, and it spins a long time before it can be read. The cobbler is still talking, his awl going down and up.",
+      "You go for a walk around Xuanwu Lake. A young man is holding up his phone to film two old men playing chess. You watch a while, go over and say: stand over there, the light's better.",
+      "For your first six months in the archive you number videotapes every day. One of them is from your first shoot. You don't play it. You just set it straight.",
+      "The doctor says your neck is much better. You begin walking along the Qinhuai River in the evenings, and when you reach someone recording a video by the water, you go around them a little.",
+      "A young man writes to the archive asking for footage from twenty years ago, and you find it quickly. He says thank you. You say you know the man in that piece.",
+      "The first Spring Festival after leaving the station, you turn on the TV at home and see a familiar title sequence in a new font. You watch for five minutes, and change the channel.",
+      "You don't really use the word director anymore. When new friends ask what you used to do, you say, I shot some things.",
+      "Old Fang walks slowly now. You meet at a teahouse in Hexi. He asks if the stuff you make now is any good. You say there's one that's all right. He nods and doesn't ask which.",
+      "Now a whole piece can be made with one click, and the voice is synthetic. You watch a video about old crafts and everything's right, except the craftsman's hands never once stop.",
+      "A flyer on the neighborhood notice board says a certain station is moving to a new site. You think about the elevator in the old building, and whether you ever gave that temporary card back."
+    ],
+    "closing": {
+      "retire": "An evening breeze comes up on Xuanwu Lake and someone folds a tripod. You watch him put the quick-release plate in his pocket and walk off.",
+      "burnout": "The lights come on along the river and a stretch of wavering light lies on the water. You stand for seven seconds, and you don't film it.",
+      "end": "In the drawer there's an old light meter whose needle no longer moves. You pick it up and hold it to the window."
+    }
+  }
+}

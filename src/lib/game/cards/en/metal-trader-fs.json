@@ -1,0 +1,203 @@
+{
+  "id": "metal-trader-fs",
+  "occupation": "Non-Ferrous Metals Spot Trader",
+  "role": "Junior Aluminum Spot Trader",
+  "headline": "A junior spot trader at an aluminum merchant in Dali, Nanhai, learning to quote at a veteran's elbow, three hundred extrusion-plant bosses in the phone, the day's premiums and discounts memorized by ten a.m.",
+  "unit": "An aluminum spot trading firm in Dali, Nanhai, Foshan",
+  "unit_type": "Private merchant in aluminum ingot and billet",
+  "city": "Foshan",
+  "city_tier": "Tier-2 city",
+  "education": "Bachelor's degree (International Economics and Trade)",
+  "level": "You can read the market software, but you can't yet hear the half-sentence the boss on the phone leaves unsaid",
+  "intro": "You studied international trade, and at the campus job fair you assumed you would end up in exports. Instead you landed on a street in Dali, Nanhai, lined with nothing but aluminum shops. A dozen people, one office, eight screens, and a boss who talks faster than the phone rings. From today, you learn to work out the price of a ton of aluminum down to a difference of a few dozen yuan.",
+  "salary_note": "Estimate: Nanhai is China's hub for aluminum extrusion and spot trading. Base pay at the merchants is ordinary and income follows commission and year-end bonus, about 1.05 times the national average.",
+  "facts": [
+    { "label": "Junior Spot Trader (current level)", "value": "0-2 years, ¥5,000–9,000 a month (national average, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Spot Trader (2-6 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Keeping client relationships, collecting payment and managing credit risk", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Tracking futures and spot prices for non-ferrous metals", "source": "AI exposure" },
+    { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "You ride your e-bike through Dali's extrusion street as the roller shutters go up one by one. The air smells of aluminum filings and cutting fluid. Your mentor says the first step in this trade is to learn this street by nose.",
+    "You open the market software and a dozen quote groups, and copy last night's overseas close, this morning's inventories and the regional premiums onto one sheet. Ugly handwriting is fine. Wrong numbers are not.",
+    "The day's spot price comes out. The office goes silent for a second, then every phone rings. You send your mentor's quote to thirty-odd clients and wait for each one to answer.",
+    "An extrusion plant in Lishui wants twenty tons of billet, and the boss asks for thirty yuan off. You cover the receiver and ask your mentor. Without looking up, he says let him try somewhere else.",
+    "A plate of roast goose rice downstairs. The next table is all competitors, eating and asking each other who's selling today. Nobody tells the truth.",
+    "You go to the warehouse to watch a pickup. The driver rolls onto the weighbridge, you check the bill of lading, heat numbers and bundle count, and send the weigh ticket to accounting. One bundle short is money.",
+    "Collections. You message each client whose credit term is up. The tone should sound like a greeting, the content like an invoice.",
+    "The night session opens. Your mentor tells you to watch it and call him if it moves more than a hundred points, even if he's already asleep."
+  ],
+  "ladder": [
+    { "title": "Junior Spot Trader", "stage": "Learning prices", "focus": "Sending quotes, checking bills of lading and weigh tickets, chasing payment at a mentor's side; you move up by making no errors and asking questions" },
+    { "title": "Spot Trader", "stage": "Own accounts", "focus": "Running your own book of extrusion plants, quoting, negotiating credit terms, signing contracts; you move up on tons sold and cash collected" },
+    { "title": "Senior Spot Trader", "stage": "Managing exposure", "focus": "Running a block of inventory and a futures hedge, reading the basis; you move up by going years without a major loss" },
+    { "title": "Trading Desk Manager", "stage": "Leading the desk", "focus": "Leading the traders, setting credit and position limits, answering for the year's profit per ton and bad debts" },
+    { "title": "Business Partner", "stage": "Carrying the risk", "focus": "Putting in your own money, deciding which way the firm leans, dealing with banks, smelters and warehouses" }
+  ],
+  "ai_tasks": [
+    { "name": "Tracking futures and spot prices for non-ferrous metals", "how": "AI can pull futures, spot premiums and price data automatically, summarize them live and push alerts; people only need to spot-check whether the sources are reliable and nothing important is missing." },
+    { "name": "Analyzing how supply, inventories and macro policy affect prices", "how": "AI can quickly digest inventory reports, policy documents and industry news and offer a first read; people bring their knowledge of the supply chain and market mood to decide which factors are actually at work." },
+    { "name": "Setting spot buying, selling and inventory strategy", "how": "AI can model many buying and selling scenarios from prices, stock and funding cost; people make the call on how much exposure to carry and which way to lean, and answer for the result." },
+    { "name": "Quoting clients and negotiating price and terms", "how": "AI can generate quotes by formula and draft terms and talking points; people have to read the client and the moment, bargaining over price and credit, conceding or holding on the spot." },
+    { "name": "Signing contracts and following order fulfillment", "how": "AI can draft contracts, check terms and flag order milestones; people review the key clauses and handle changes and disputes during delivery." },
+    { "name": "Coordinating warehousing, logistics and delivery", "how": "AI can plan shipments, track goods in transit and match documents and warehouse receipts; people have to coordinate warehouses and carriers, and handle inspection, quality disputes and last-minute trouble on site." },
+    { "name": "Hedging with futures and other instruments", "how": "AI can calculate hedge ratios, track the basis and position profit and loss, and flag risk; people decide the hedge plan and when to open and close, and answer for the account." },
+    { "name": "Keeping client relationships, collecting payment and managing credit risk", "how": "AI can organize client records and flag overdue risks; but keeping trust, judging a counterparty's real standing, collecting debts and granting credit depend mainly on human relationships and accountability." }
+  ],
+  "events": {
+    "e1": "You swap the tax-inclusive and tax-exclusive prices, and a client books fifty tons on the spot. Your mentor spends half an hour on the phone patching it up. All he says afterward is: the tea for that half hour is on you.",
+    "e2": "Your mentor takes you to dinner with a boss in Lishui. The whole table talks about children and card games, and at the end the order is done. You spend the night going over it, trying to work out which sentence closed the deal.",
+    "e3": "A typhoon holds ships off the Pearl River mouth and several Nanhai warehouses run tight overnight. Your phone rings from morning to night, and the same lot of billet gets repriced four times in one day.",
+    "e4": "Aluminum drops nearly a thousand yuan in three days and clients stop picking up. The stock you bought early in the year sits in the warehouse. Nobody in the office is making jokes.",
+    "e5": "Aluminum climbs and climbs, and the plants scramble to fix prices. This half year's commission beats the last three years put together. You put a down payment on a small two-bedroom in Guicheng. The numbers on the deed are more sobering than the price of aluminum.",
+    "e6": "The little plant that owes you ¥400,000 has its shutter down and a for-lease notice on the gate. You stand outside calling the boss. The line stays busy.",
+    "e7": "The firm brings in a market assistant that compiles overseas prices, inventories and premiums onto one page at seven every morning. The sheet you copied by hand for years is simply no longer needed.",
+    "e8": "The night session plunges in the small hours. You lie in bed working out your exposure on your phone for two hours. In the morning mirror, your eyes are redder than the aluminum chart.",
+    "e9": "You take your parents to Mount Xiqiao for two days. Your father asks what exactly you sell, and you point at the aluminum window frames in the valley below and say: those.",
+    "e10": "An extrusion plant boss is moving his factory to Zhaoqing. Before he goes, he has his son come to meet you and says: when you buy aluminum, go to this person. It takes you a moment to get used to being called uncle.",
+    "e11": "Orders for solar panel frames and new-energy car parts are growing, and you begin reading unfamiliar alloy grades and specs. In the yards of old clients there are materials you've never seen.",
+    "e12": "Word goes around that someone pledged the same warehouse receipts twice, and several merchants get dragged in. Your boss has you go look at the goods in every warehouse personally. Four days of it, and blisters on your feet.",
+    "e13": "The system now drafts quotes and contracts from past deals, and on most orders the trader only clicks confirm. Clients still phone anyway, saying: I want to talk to you.",
+    "e14": "At a parent-teacher meeting the teacher says your child's essay about Mom and Dad reads: their phones are more important than me. On the way home you mute the work group for an hour.",
+    "e15": "A checkup finds high blood pressure, and the doctor asks if you often stay up late. You say it isn't really staying up, the night session is just long.",
+    "e16": "On one lot, the model says go long. You can smell the downstream plants cutting output, so you do the opposite. Two weeks later you're right. You tell no one, but you save that page of the model's advice.",
+    "e17": "The mentor who trained you retires and hosts a dinner. He gives you the calculator he used for twenty years. Several of the digits on its keys are worn away.",
+    "e18": "On this street in Dali, three small merchants with more than ten years behind them close in one year. The storefronts turn into livestream rooms, and someone stands at a door selling aluminum windows to a phone.",
+    "e19": "A young hire runs inventory cycles through AI and has a chart in seconds. You read it and point to one spot: it rained hard that week, that data doesn't count. He pauses, then deletes the week.",
+    "e20": "You can't do without reading glasses now. You set the market software to the largest font, and young people passing your screen look at it the way they'd look at a road sign."
+  },
+  "choices": {
+    "c1": {
+      "title": "The day your mentor was out",
+      "situation": "Your mentor is at a meeting when a big client calls wanting thirty tons, opening twenty yuan below the floor price. Junior staff aren't allowed to set prices, but you know he can give the order to someone else in a minute.",
+      "options": [
+        { "label": "Follow the rules and ask him to wait", "result": "The client says no problem, then buys elsewhere. When your mentor returns, he only asks whether you wrote down what material the man wanted." },
+        { "label": "Grit your teeth and take it", "result": "A loss of twenty yuan buys you a thirty-ton client. The boss has you write a self-criticism, and once you've written it he assigns that client to you." }
+      ]
+    },
+    "c2": {
+      "title": "Moving up to Spot Trader",
+      "situation": "The boss says next year one person can become a Spot Trader with accounts of their own. To get there you'd drive your old car from plant to plant, knocking on strange doors. Or you could stay with your mentor and keep drawing a safe order-handling fee.",
+      "options": [
+        { "label": "Knock on every door", "result": "You put forty thousand kilometers on the car in a year, the trunk full of samples and tea. At some plants the guards know your car by now." },
+        { "label": "Two more years with your mentor", "result": "You come to understand more of what he doesn't say. The names in your phone, though, are still labeled as his clients." }
+      ]
+    },
+    "c3": {
+      "title": "An old client's credit terms",
+      "situation": "An extrusion plant boss you've dealt with for four years says cash is slow and wants his terms moved from thirty days to sixty. Help him out now and he'll remember it all his life, he says. Your commission is calculated net of bad debts.",
+      "options": [
+        { "label": "Yes, with his personal guarantee", "result": "He doesn't look pleased, but he signs. He later pays every yuan. He just doesn't call you brother at dinner anymore." },
+        { "label": "For old times' sake, let it go", "result": "That year he gives you another five hundred tons of business. Before bed you look at that line in the receivables for a while longer." },
+        { "label": "No, cash on delivery", "result": "Your business with him shrinks by more than half. After New Year he sends a polite greeting by text." }
+      ]
+    },
+    "c4": {
+      "title": "Learning to hedge, on the way to Senior Spot Trader",
+      "situation": "The firm wants someone to run its hedging, and there's no way to Senior Spot Trader around it. You'd need the futures practitioner's license and the whole craft of basis trading, and your evenings would be gone.",
+      "options": [
+        { "label": "Sign up and study at night", "result": "You redraw years of basis charts by hand. The day you finish your first hedge on your own, you print the record and put it in a drawer." },
+        { "label": "Keep calling on clients; that's your strength", "result": "Your client base gets deeper and exposure stays someone else's job. The firm raises your commission rate a little." }
+      ]
+    },
+    "c5": {
+      "title": "Starting a trading firm with a partner",
+      "situation": "A friend you've known for years from the warehouses wants you to go out on your own. He has the supply, you have the clients, and you'd put up two million yuan between you. Every year on this street, people start out this way, and people finish this way too.",
+      "options": [
+        { "label": "Quit and go for it", "result": "You mortgage your apartment and rent an office with a window.", "end": "You left that office of a dozen people and hung your own sign on the same street. From then on, before quoting a price, you had to work out the mortgage." },
+        { "label": "Stay, for a better commission", "result": "You raise it with your boss once. After a long silence, he raises your commission by two points." }
+      ]
+    },
+    "c6": {
+      "title": "Reviewing AI quote suggestions",
+      "situation": "The boss wants a model to produce first-pass quotes and inventory advice, and needs someone who knows the spot market to check it, set the rules and write down, line by line, why it's wrong. This job closes no deals and earns no commission.",
+      "options": [
+        { "label": "Take it and turn experience into rules", "result": "For the first time you find that your instincts can be written as forty-odd rules, and that a few of them don't actually hold up." },
+        { "label": "No, deals are what feed you", "result": "You sell a few thousand more tons this year. In the model's rules, later, not one line is yours." }
+      ]
+    },
+    "c7": {
+      "title": "Competing for Trading Desk Manager",
+      "situation": "The Trading Desk Manager is leaving, and the boss asks the veteran traders to each write a plan. As manager you can no longer trade for yourself, your income drops at first, and you'll be running people who used to be your equals.",
+      "options": [
+        { "label": "Write the plan and rebuild credit control", "result": "You pull up every bad debt of the last ten years. After you hand it in, half the office looks at you differently." },
+        { "label": "Don't compete; keep trading", "result": "The new manager is five years younger than you and always asks your opinion first. Your book stays the steadiest in the firm." }
+      ]
+    },
+    "c8": {
+      "title": "A downstream plant comes hunting",
+      "situation": "A factory making aluminum parts for new-energy cars wants a head of procurement, and they like that you know the aluminum price. Nine to six, no night session, not much less pay. Only, from now on you'd be the person on the other end of the phone.",
+      "options": [
+        { "label": "Go to the factory and drop the night session", "result": "You finish the handover and turn off the night-session alarm on your phone.", "end": "You went to the factory to run procurement. The first time a trader phoned to press you on price, the voice on the line sounded a little familiar." },
+        { "label": "Stay on this street", "result": "You still like to breathe in the aluminum filings in the morning and glance at the screen at night." }
+      ]
+    },
+    "c9": {
+      "title": "Buying in as Business Partner",
+      "situation": "The boss is nearly seventy and wants you to put in ¥1,500,000 and become a Business Partner. Once in, you carry the firm's bank credit alongside it. You've heard more than one story on this street of money like that disappearing.",
+      "options": [
+        { "label": "Buy in with your savings", "result": "You sign the shareholder agreement. When you tell your spouse at home, the first question is: are we touching the apartment?" },
+        { "label": "Keep drawing a salary", "result": "The boss nods, and later gives the shares to an outsider. Your paycheck keeps arriving on time." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you hand your contacts to your apprentice and leave the calculator with the worn-out keys in the drawer. In thirty-odd years, you sold enough aluminum to pave half of Nanhai. Windows, car frames, battery cases, none of them with your name on them. Going downstairs you take a breath of this street. The smell is still here. Behind the shutters it's a new set of people.",
+    "burnout": "Your blood pressure and your sleep present the bill together, and the doctor tells you to stop looking at your phone at midnight. You close your positions one by one and hand your clients to colleagues, explaining the temperament of each. After that, however the price jumps, it has nothing to do with you. Still, at nine in the evening, you glance at the clock."
+  },
+  "stages": [
+    "You have no clients, only your mentor's clients. Each day you build the quote sheet, fill in contract templates, go to the warehouse to check bills of lading and weigh tickets, and match the payments received against an Excel file. You deal mostly with accounting, the warehouse keeper and truck drivers. None of them care about your degree, only whether the heat number on the paper is right.",
+    "Now dozens of extrusion and billet plants' buyers are yours. You quote, bargain and write contracts all day, and in the afternoon drive to plants for tea, taking the chance to look at how many lines are running and how much stock is in the yard. Unlike before, a wrong quote comes out of this month's commission.",
+    "You begin to hold a block of inventory and a futures account. Each day you read the basis sheet and decide how much to price, how much to hedge, when to close. Besides clients, you talk to futures brokers and warehouse supervisors. When people ask how you see today, you've learned to first ask how much they're holding.",
+    "You no longer quote every day. You read eight traders' position reports and the client credit list. Monday's meeting sets the exposure limits and whoever crosses the line explains why; at month's end you sit beside accounting going over bad debts. You have to hit the brakes when a trader wants to grab an order, and ask, when everyone is scared: is that so?",
+    "Your own money is in now, and you read the firm's accounts the way you'd read your own bankbook. You talk credit lines with the bank's account manager, annual contracts with the upstream smelter, and behind a closed office door argue with the boss about which way to lean this year. The trading goes to the young people. You look after the few numbers that decide whether the firm gets to New Year."
+  ],
+  "work": [
+    "Old Tan at the warehouse has you count the bundles on a truckload of billet. You count twice against the bill of lading and find one bundle with the wrong heat number. Old Tan nods and hands the paper back.",
+    "The accountant has you reconcile last month's receipts against contracts. Excel is off by ¥600. You spend the afternoon going through bank slips, and it turns out to be a transfer fee.",
+    "A new client wants a quotation letter. You write it from the template and your mentor changes one thing: he moves the words tax-inclusive to in front of the price.",
+    "The buyer at a window-frame extrusion plant in Shishan asks how pricing against a fixing date works. You draw a line on a napkin and write out the basis and the fixing day for him. He takes a photo.",
+    "A driver calls from the expressway to say the tarp on the ingots has come loose. You change the delivery time with the client while finding the nearest service area in the logistics group chat.",
+    "An old client's contract is up. You turn three years of tonnage and days-to-pay into one table and take it along to negotiate next year's terms. The boss reads it and has one more cup of tea.",
+    "The basis strengthens suddenly at month's end. You look at the stock sheet and close half of a three-hundred-ton short. The broker asks twice on the phone if you're sure.",
+    "New hire Xiao Chen asks why making money on spot and losing on futures still counts as doing it right. You pull out that day's hedge record and add it up for him, line by line.",
+    "The warehouse sends the assay for a lot of ingots, and the impurity figure is right at the limit. You phone the client to tell them first, then ask if they'll take it at that grade.",
+    "Xiao He wants to give a new plant ¥3,000,000 of credit. You go through their tax records and factory lease, change the limit to ¥800,000 and let him explain it himself.",
+    "In the weekly position report you circle an account that's run long for three straight weeks. You call the trader in, and start by asking whether anything's going on at home.",
+    "At interviews you have fresh graduates work one problem on the spot: convert tax-inclusive to tax-exclusive, then add freight. Two of five get it right. You keep the one who got it wrong but asked a question.",
+    "The bank's account manager brings a new credit agreement. You check the collateral list item by item and ask one question on page seven. They go back and produce another version.",
+    "An upstream smelter's head of sales comes to dinner, and the annual contract volume is settled by the third pot of tea. You press the premium down ten yuan, and promise him something that isn't written into the contract.",
+    "A young trader comes to say he wants to leave. You look over his profit-per-ton sheet for these last years, and say: first, collect on the lot you're holding."
+  ],
+  "past": [
+    "Your family lives in the countryside near Zhaoqing. Your father runs an extrusion press at an aluminum plant in Foshan and comes home smelling of hot metal. He tells you not to do this.",
+    "Your score on the gaokao (college entrance exam) is good enough for an ordinary university in the province. You pick international trade because it sounds furthest from a workshop.",
+    "A summer internship at an export firm has you correcting customs forms all day. For the first time you learn that the profit on a shipment can be thinner than the price of a meal.",
+    "An old workmate of your father's says that everyone with connections has gone into aluminum trading. On your first visit to Dali you look at the street full of aluminum and barely recognize what your father has spent half his life making.",
+    "The export business is slack the year you graduate, and you send out dozens of resumes. At a trading firm, the boss asks only one question: on a ton of aluminum, how much does the tax change the price?",
+    "You get it right. He says come tomorrow, the pay isn't high but you'll get to see how money moves. You think it over for a week and sign a lease in Dali."
+  ],
+  "late": {
+    "pension_note": "Estimate: private trading firms mostly pay social insurance on a low base, so the pension is about 40% of final monthly pay; most of what you live on is what you saved.",
+    "scenes": [
+      "On the first night with no night session, you're sleepy by nine. You wake at three, reach for your phone, and remember there's nothing left to look at.",
+      "Your housing complex is replacing its aluminum windows. You glance at the management office's quote and work out that the contractor is charging ¥200 too much per square meter. He asks what line of work you were in.",
+      "Your apprentice still brings tea at the holidays. These days the machine quotes, he says, and they only look for a person when a client turns nasty. You tell him that sounds right.",
+      "At the foot of Mount Xiqiao you keep a few pots of flowers on an old aluminum rack. A visiting child asks what it's made of, and you tell him for quite a while.",
+      "You change your phone number and give it only to family. For the first few months, it's so quiet you keep feeling you've left something behind.",
+      "Once your blood pressure settles, you start walking around Qiandeng Lake in the mornings. The office towers have their lights on, and you know someone in there is copying down premiums.",
+      "An old client recognizes you at a teahouse and insists on paying. You talk about your children for a long time. Nobody mentions the money from that year.",
+      "In your new place you keep one habit: when somebody names a price, you take twenty yuan off in your head.",
+      "Passing through Dali, you take a detour to your old office. The sign has changed. The trucks at the door are the same make, and a driver is eating a boxed lunch in the cab.",
+      "Your child asks what you actually used to do. You think for a moment, point at the window frame, and say: the step before that.",
+      "The news says aluminum has hit another high, and your family asks if that matters. You say it does, and go on helping yourself to vegetables.",
+      "Clearing out old things you find a stack of weigh tickets, the paper gone yellow, a few still in your young handwriting. You look at them for a while and put them back in the box."
+    ],
+    "closing": {
+      "retire": "The evening wind comes in from the Dongping waterway, and someone downstairs is having new windows put in. You watch the workers carry the frames up, one at a time, silver-white and holding the color of the sky.",
+      "burnout": "The phone is on the table with its screen dark. Outside the sky slowly goes black. The numbers are jumping somewhere else, and your tea is still warm.",
+      "end": "You pass a row of newly refitted shops, the aluminum frames on their glass doors polished bright. You look at yourself in one, and walk on."
+    }
+  }
+}

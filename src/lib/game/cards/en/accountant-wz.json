@@ -1,0 +1,185 @@
+{
+ "id": "accountant-wz",
+ "occupation": "Accountant",
+ "role": "Assistant Accountant, Shoe Factory",
+ "headline": "A finance graduate at a shoe factory in Wenzhou, running to the bank while working out piece-rate pay for hundreds of workers",
+ "unit": "An export shoe factory in Wenzhou",
+ "unit_type": "Private shoe manufacturer",
+ "city": "Wenzhou, Zhejiang",
+ "city_tier": "Tier-2 city",
+ "education": "BA in Financial Management (independent college)",
+ "level": "You've just passed the junior accounting title exam and can write journal entries in your sleep. How much sole, glue and piece-rate labor gets allocated to one pair of shoes, you have no idea.",
+ "intro": "The factory is at the end of a small road in Ouhai. The ground floor is punch presses and the smell of glue, the second floor is the rattle of sewing machines, and the finance office sits at the top of the stairs on the third floor, with the boss's wife's desk facing the door. She sets a ring of safe keys in front of you, then takes it back and removes one, saying you don't need this one yet. From today on, every cent that comes into or goes out of this factory has to pass through your hands.",
+ "salary_note": "Estimate: finance jobs at private companies in Wenzhou pay slightly above the national figure, and the boss's temper and the year-end red envelope make a real difference.",
+ "facts": [
+  { "label": "Assistant Accountant (current level)", "value": "0–3 years, ¥4,000–6,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Accountant (3–8 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥12,500 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Explaining the books to the boss and carrying the responsibility", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Reading invoices and generating vouchers", "source": "AI exposure" },
+  { "label": "Open positions", "value": "524 related listings nationwide, 2 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You ride your e-bike through the shoe-materials market, the street full of rolled leather and bales of shoe boxes. At the sticky-rice stall by the road you buy a bowl with fried dough and a spoonful of meat broth.",
+  "A run to the bank. A stack of receipts printed, the USB security key in your bag, and that payment the boss's wife mentioned has to go to the sole factory first thing today.",
+  "The statistician brings last month's piece-rate sheets: hundreds of workers, a few mao per operation, for uppers, stitching and lasting. You go through them in Excel person by person.",
+  "An auntie from the stitching line climbs the stairs to say her pay is forty yuan short. You pull up her operation records. She leans on the desk going over them with you line by line, in a mix of Wenzhou dialect and Mandarin.",
+  "Entering vouchers. The Kingdee screen swims before your eyes. One invoice for shoe materials is vague about what it's for, so you pick up the phone and have the supplier reissue it.",
+  "The boss calls you up to ask how much money can still be moved this month, since the next Middle East order needs a deposit. You report the bank balance and the list of payables. He listens with his brows knit.",
+  "Filing on the e-tax system, which spins and hangs. Old Chen, the chief bookkeeper, stands beside you holding his tea mug and says don't write this account that way, the tax bureau will ask.",
+  "Month-end, and the office light is still on. The trial balance is off by eight yuan fifty. You and Old Chen go through half the book of vouchers, and downstairs the sewing machines haven't stopped."
+ ],
+ "ladder": [
+  { "title": "Assistant Accountant", "stage": "Odd jobs", "focus": "Running to the bank, issuing invoices, working out pay, entering vouchers; you move up by making no mistakes and passing the intermediate title exam" },
+  { "title": "Accountant", "stage": "Keeping the books", "focus": "Independently handling receivables and payables, cost accounting and tax filings, and working out what one pair of shoes really costs" },
+  { "title": "Chief Bookkeeper", "stage": "Gatekeeper", "focus": "Reviewing vouchers, issuing statements, dealing with tax officers and auditors, and starting to explain to the boss what is behind the numbers" },
+  { "title": "Finance Manager", "stage": "The whole picture", "focus": "Running the factory's funds, budgets and bank relations, shielding the boss from trouble, and daring to tell the boss no" }
+ ],
+ "ai_tasks": [
+  { "name": "Explaining the books to the boss and carrying the responsibility", "how": "AI can work out the numbers. When to speak up, how to put it and whether this money can move this way takes someone facing the boss in person, and signing the statements." },
+  { "name": "Reading invoices and generating vouchers", "how": "AI can read tickets, classify them and generate entries automatically. People spot-check the few with vague descriptions or odd amounts." },
+  { "name": "Posting and reconciling accounts", "how": "The system can post automatically, match bank statements and find errors. People only handle what doesn't match." },
+  { "name": "Working out pay and per-style costs", "how": "AI can sum operations and materials and calculate unit cost. How far the sample's cost sits from the production run, and why this batch ate more material, is for someone who knows the floor to go ask." },
+  { "name": "Tax filing and dealing with the tax bureau", "how": "AI can prefill returns and flag risks. How to apply the rules and what to say when the bureau asks is up to the accountant." }
+ ],
+ "events": {
+  "e_first_month": "Your first month-end close, you reconciled until ten at night. Old Chen looked it over and said balanced is good, though the description on this voucher of yours reads a bit too much like an essay.",
+  "e_wage_error": "You keyed in the wrong rate for one stitching operation, and dozens of workers were underpaid. On payday a line of them stood at the finance office door. The boss's wife didn't scold you. She just made up the difference out of her own pocket first.",
+  "e_auntie": "At Dragon Boat Festival the aunties on the stitching line brought you zongzi, saying you had recovered tens of yuan in pay for them that month. Eating one, you thought this might be your biggest performance award all month.",
+  "e_month_end": "The annual report, tax settlement and audit all collided, and you left after nine for two weeks straight. When you left, only the finance office and the gatehouse were lit in the whole factory.",
+  "e_export_rebate": "A batch of export-rebate documents was missing one customs declaration. You went back and forth for a week of calls with the forwarder and the sales staff, and the seventy thousand yuan refund finally arrived.",
+  "e_bad_debt": "An old customer had been dragging out payment for most of a year, and then could no longer be reached. The boss slapped the statement on your desk as if you were the one who had lost the money.",
+  "e_order_slump": "Export orders fell by half and the factory went to three days on, one off. The boss's wife had you split wages into two payments, and you sat at your computer laying out one way after another of doing it.",
+  "e_marriage": "A relative introduced you to someone who works as a bank teller. At your first dinner you talked for hours about receipts and statements, and each of you found the other rather easy to understand.",
+  "e_house": "You bought an apartment in an older compound in Ouhai. You had worked the mortgage out many times. What you'd pay each month and how long you could hold out, you know better than the bank's account manager does.",
+  "e_child": "Your child was born in December, right in the year-end close. You came back before your leave was up and opened the e-tax system with the baby in your arms. The boss's wife said this counts as a work injury.",
+  "e_ai_invoice": "The factory started using invoice recognition: photograph a receipt and the voucher exists. You enter eighty percent fewer vouchers a month, and the boss's wife has begun to calculate whether the finance office needs this many people.",
+  "e_ai_wrong": "AI booked a batch of mold fees as raw materials, and the statements looked completely fine. Only when the gross margin turned suddenly pretty did you become suspicious. It took three days of digging to find.",
+  "e_ai_early": "Reconciliations are all run by the system now. At month-end, for the first time, you got home before seven. Your child saw you and asked if you were sick.",
+  "e_tax_visit": "A risk notice came from the tax bureau saying input and output VAT didn't match. You carried three years of ledgers to the tax officer's desk and explained them line by line, and your legs felt weak on the way out.",
+  "e_parent": "Your father was hospitalized for surgery. You sorted all the insurance reimbursement forms yourself, and the department staff said they had never seen a family member categorize a bill so clearly.",
+  "e_apprentice": "A new assistant wrote a voucher description like a little essay. You didn't laugh, and repeated to her what Old Chen had once said to you.",
+  "e_boss_son": "The boss's son came back to take over, and the first thing he wanted was a new system for the finance office. He came in calling you Teacher, and then asked: why can't this number be seen in real time?",
+  "e_eyes": "The small print on the vouchers has begun to blur. You turned up the font on your screen, and a young colleague walking by assumed your computer was broken.",
+  "e_factory_move": "The factory moved part of its capacity to Southeast Asia, and for the first time you worked with foreign-currency statements and local taxes. The boss said only you can make sense of this."
+ },
+ "choices": {
+  "c_exam": {
+   "title": "Taking the intermediate exam to become Accountant",
+   "situation": "To move up to Accountant, the boss's wife says you need at least the intermediate title. Three subjects, days full of paperwork, and some evenings you still help with reconciling. But without it, this desk will always be the desk for odd jobs.",
+   "options": [
+    { "label": "Get up early to study", "result": "You got up at five-thirty every day and passed all three in two years. The day the results came, the boss's wife put that removed safe key back on your desk." },
+    { "label": "Do your work well first", "result": "Your hands grew surer and Old Chen trusted you with everything. On payday the figure was still the odd-jobs figure." }
+   ]
+  },
+  "c_two_books": {
+   "title": "That other set of books",
+   "situation": "The boss wants you to keep, besides the books for outsiders, another set for the boss's wife, with some cash income kept off the company accounts. Old Chen says nothing. The look he gives you says: think it through yourself.",
+   "options": [
+    { "label": "Say plainly you won't", "result": "You said you don't know how to do that, and it would all have to go through the books. The boss was cold to you for months. Then one time the tax people came asking, and the first thing he remembered was what you had said." },
+    { "label": "Do it, but keep a record", "result": "You did it quietly, with one more thing to lock up each month. Your pay went up a bit. Some nights you sleep less soundly." }
+   ]
+  },
+  "c_cost": {
+   "title": "Going down to the floor to work out costs",
+   "situation": "The boss always says this style makes money, and by year-end there's no money. You want to spend time on the floor working out each style's materials and labor, which is the work of a management accountant. The floor manager won't welcome it, and your office work won't shrink.",
+   "options": [
+    { "label": "Go down to the floor", "result": "You crouched by the sewing machines with a stopwatch and took material lists to the warehouse to weigh things. When the first per-style cost sheet came out, the boss stared for a long time at the margin on the best-selling shoe." },
+    { "label": "Work it out on paper", "result": "You allocated by the totals, and it all looked tidy on the books. When quoting, the boss still adds thirty percent by the old rule." }
+   ]
+  },
+  "c_ai": {
+   "title": "Learning the AI finance tools",
+   "situation": "Vouchers and reconciliation are about to be done by machine. The boss's son wants to bring in a business analytics system and asks if you will get the data in order. Learning this is hard on the brain. Not learning it, and the finance office may not need so many people.",
+   "options": [
+    { "label": "Take it on and learn", "result": "You learned from videos at night and hooked finance and production data together. The first time the boss saw each style's margin on his phone, he called you." },
+    { "label": "Don't bother, keep good books", "result": "You kept the books as steady as ever. Later the finance office lost a desk, fortunately not yours." }
+   ]
+  },
+  "c_agency": {
+   "title": "Opening your own bookkeeping firm",
+   "situation": "A classmate wants to partner with you on a bookkeeping firm, since Wenzhou has no shortage of small factories. You'd be your own boss, with no ceiling on income and the chance of losing enough to go back to working for someone. And AI is already coming for bookkeeping too.",
+   "options": [
+    { "label": "Open the firm together", "result": "You put in half your savings and rented two desks in an office building. Your first client was that same sole factory.", "end": "You and your classmate ran a bookkeeping firm with the accounts of dozens of small factories in hand. The bosses all call you Teacher, and at month-end you still stay up late." },
+    { "label": "Stay at the factory", "result": "You said you would think about it, and your classmate later found someone else. At New Year they sent a photo of a new office and you gave it a like." }
+   ]
+  },
+  "c_senior": {
+   "title": "Standing for Chief Bookkeeper: should you take the CPA?",
+   "situation": "Old Chen is about to retire and the Chief Bookkeeper post is opening up, and the boss wants to see harder credentials. The CPA exam takes years and means more or less giving up weekends. If you could make Chief Bookkeeper, the road ahead would widen a lot.",
+   "options": [
+    { "label": "Take the CPA, go for the post", "result": "You put every weekend into studying and passed four papers. The boss decided you would take over from Old Chen, and Old Chen left you his tea mug." },
+    { "label": "Don't take it, rely on experience", "result": "You said this certificate wouldn't do much for this factory, and kept your weekends for your child. The company later hired someone from outside, and you called him Chief." }
+   ]
+  },
+  "c_listed": {
+   "title": "A listed company comes calling",
+   "situation": "A listed electrical company in Wenzhou is hiring a finance supervisor: proper procedures, full social insurance, internal controls and audits, far more regular than a shoe factory. It's just that you're the only one who, after all these years, can read the books here.",
+   "options": [
+    { "label": "Go to the listed company", "result": "You handed in your resignation. The boss's wife took back the ring of keys, then called you back and pressed a red envelope into your hand.", "end": "You became a finance supervisor at a listed company. The statements went up level by level, all procedures in order, and no one ever again brought a pay slip to your desk to argue it out." },
+    { "label": "Stay at the shoe factory", "result": "You stayed. The boss said nothing, and the year-end red envelope was a bit thicker. You know too that nobody can say how many more years this factory will last." }
+   ]
+  },
+  "c_manager": {
+   "title": "Standing for Finance Manager",
+   "situation": "The boss's son is taking over and wants to create a Finance Manager to run funds, budgets and bank relations, and also take back several accounts held by relatives. It means going head to head with the boss's family, and done badly you offend everyone.",
+   "options": [
+    { "label": "Stand for manager", "result": "You took back the accounts one by one, and the boss's brother-in-law didn't speak to you for half a year. The next year the bank credit line was approved, and the boss said: good work." },
+    { "label": "Stay Chief Bookkeeper", "result": "You said this job needs someone from the family, and you would just keep the books clear. At closing time you shut down your computer on the dot." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "You close the last month's books with the young staff, and the trial balance comes out even the first time. You leave the safe key on the desk, and this time nobody takes it back to remove anything. Going downstairs past the second floor, there are half as many sewing machines as before, and the sound is the same sound. The sticky-rice stall is still at the gate. You buy a bowl with fried dough.",
+  "burnout": "Several year-ends in a row and you've begun to feel tightness in your chest and lie awake, numbers behind your eyelids. The doctor tells you to rest, and you tell the boss you need something easier. Later you do part-time bookkeeping at a small company, three days a week. At month-end you still sometimes wake, and then remember that tonight you don't have to reconcile."
+ },
+ "stages": [
+  "You run to the bank, fetch receipts, issue invoices, enter vouchers. At the start of each month you work out piece-rate pay for hundreds of workers, and at the end you help Old Chen reconcile. You can get into the Kingdee account set, but that one safe key still isn't yours. The boss's wife checks the bank balance every day, and you hand it to her on a slip of paper, in writing that can be read at a glance.",
+  "You handle receivables and costs on your own now: the upper, sole, glue and labor of a pair of shoes all get allocated by you. You file the monthly VAT and individual income tax, reconcile with suppliers and chase sales staff for payment. An assistant arrives, and you start teaching her which invoices not to accept and which phone calls to write down first.",
+  "You review vouchers and issue statements, and the tax officer and the audit firm's project manager both know you. When the boss wants a loan, what he needs from you is statements a bank can read. When he wants a quote, what he needs is whether this order really makes money. Your signature starts falling on tables other people made, and you start having things to say to the boss face to face.",
+  "You run the factory's funds and budget, and the week's top priority is where next week's money will come from. You negotiate credit lines with banks, go over accounts with the boss's family, and decide which payments go out and which wait. Workers' pay never waits. That is a rule you set. Whatever young accountants aren't sure about ends up on your desk."
+ ],
+ "work": [
+  "On the way back from the bank you tuck a bank acceptance bill inside your notebook and hug it to your chest crossing the street, afraid a gust might take it. Old Chen laughs about it for ages.",
+  "Xiao Wang from the lasting line says this month's piece count is wrong. You pull his operation record and he counts it step by step, and at the end finds he counted one day too many. You both laugh.",
+  "The first time you issue a special VAT invoice you pick the wrong tax rate and have to void it and reissue. Old Chen points to the handbook on red-letter invoices in the drawer and tells you to read it tonight.",
+  "The sole factory's bookkeeper brings a statement more than twenty thousand above your books. Each with a pen, you go back to the first delivery note three months ago, ticking your way through, and find it after lunch.",
+  "Xiao Zheng in export is rushing a quote. You bring out the materials and labor from the last batch of the same style, factor in the exchange rate, and give him a floor below which you'd lose money.",
+  "The floor manager says this batch of leather used ten percent extra because the leather was bad. You go weigh the offcuts at the warehouse and find the cutting die was changed. The excess can't go on the supplier's account.",
+  "The audit firm's project manager wants a stocktake sheet from three years ago. You pull it straight from the file cabinet. He pauses and says the books at your factory are real, then.",
+  "The boss wants to run a family expense through the company. You take the claim form upstairs and work out the tax and the risk for him. He's quiet a moment, then takes the form back.",
+  "A bank's account manager asks why the current ratio is so low. You open the receivables aging table and show which customers are truly slow and which are no longer worth waiting for.",
+  "Next week's payables pile up on your desk. You rank them in red pen: wages first, taxes second, shoe materials third, that friend of the boss's further down. Then you go upstairs and tell him.",
+  "At credit negotiations the bank president's assistant wants more collateral. You put years of on-time repayment and new order contracts on the table and bring the rate down by a fraction of a point.",
+  "Xiao Ye, a young accountant, comes to resign, wanting to sit the civil service exam. You sign it and tell her those few sets of books she kept these years would hold up anywhere."
+ ],
+ "past": [
+  "You grew up in a township outside Wenzhou. Your family once ran a small shoe-box workshop that eventually folded. That year you saw your parents for the first time with a stack of IOUs in front of them and nothing to say.",
+  "Your gaokao (college entrance exam) score couldn't get you into a good university. Your mother said study accounting, everywhere needs someone to mind the money, girl or boy alike. You put down financial management at an independent college in the province.",
+  "In sophomore accounting practice you made a balance sheet balance for the first time, and felt an unspeakable delight, as if your family's old debts could also be worked out like this.",
+  "Over the summer you helped with paperwork at your cousin's trading company and learned for the first time how many sheets of paper one order passes through. Your cousin said a boss will always keep someone who can do the sums.",
+  "Senior year you interned while passing the junior accounting title exam. Classmates went to accounting firms and worked until midnight, or sat the civil service exam. You planned to go into a factory first and see how money really moves."
+ ],
+ "late": {
+  "pension_note": "Estimate: a basic pension paid on the lower contribution base typical at private companies comes to a little over forty percent of pay before retirement.",
+  "scenes": [
+   "In your first month of retirement you sort three years of household utility bills, find that the gas fee was overcharged one month, and call to ask about it.",
+   "The boss's son asks you to come in two days a week to have a look. You leaf through the young staff's statements and lightly circle two places in pencil.",
+   "In the compound's pension chat group people compare who gets the most. You post a calculation laying out the differences between contribution periods, and after that they all come to you.",
+   "Once you are no longer minding those books, you still lie awake at month-end for the first month. Slowly the thirtieth on the calendar comes to look like any other day.",
+   "You start walking on Jiangxin Island. The \"team-building expense\" you once saw only in the ledger has turned into a ferry ticket you bought yourself.",
+   "An auntie from the stitching line runs into you at the market and insists on pressing two yellow croakers on you, saying she still remembers those forty yuan.",
+   "The day you leave the shoe factory you hand back the keys and take your own tea mug. The boss's wife walks you to the stairs and says you can do the sums, and you leave with them square too.",
+   "Passing a shoe store now and then, you still turn a shoe over to look at the sole, work out roughly what the pair costs, shake your head, and walk on.",
+   "The factory moves away after all, and the boss's wife treats everyone to one last meal. At the table she holds up a photocopy of the ledger and says the descriptions you wrote back then can still be understood.",
+   "Machines do all the bookkeeping now, and the tax bureau's system talks directly to the company's. Only that face of the boss's is something the machines still haven't learned to read.",
+   "You teach your grandchild to save New Year money with a small notebook, income on the left and spending on the right. The child asks why write it down. You say so your heart doesn't panic.",
+   "That shoe-materials market has been torn down and rebuilt as apartment blocks. Passing it, you sniff the air. No trace of glue, only fresh paint."
+  ],
+  "closing": {
+   "retire": "One evening many years later you are at home checking your little grocery account, and it's off by fifty fen. You think for a moment, smile, close the notebook, and go to the balcony to bring in the laundry.",
+   "burnout": "Many years later you sit on a bench beside the Ou River, the water moving slowly. A child runs up counting the steps, miscounts, and starts over. You count along once, beside them.",
+   "end": "Many years later, at the bottom of a drawer, you turn up an old pay slip, the printing faded. You hold it to the light to read the numbers and add them up in your head one more time. They come out right."
+  }
+ }
+}

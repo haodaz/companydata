@@ -1,0 +1,212 @@
+{
+  "id": "fire-inspector-xz",
+  "occupation": "Fire Inspector",
+  "role": "Probationary fire inspector at a county fire brigade",
+  "headline": "Twenty-four, a fire engineering graduate posted back to a county under Xuzhou, riding your e-bike from storefront to plywood mill to check them one at a time",
+  "unit": "A county fire and rescue brigade under Xuzhou (five people in fire prevention, responsible for more than ten thousand businesses and shops)",
+  "unit_type": "County fire and rescue brigade",
+  "city": "A county under Xuzhou, Jiangsu",
+  "city_tier": "County town",
+  "education": "Bachelor's (Fire Engineering)",
+  "level": "You can recite the codes; you don't yet know how to talk to an old man who's been selling flatbread for thirty years",
+  "intro": "The brigade is on the east side of the county town, in a gray-white building with fire engines on the first floor and the fire prevention team's office on the second. Your mentor, Old Kong, hands you a handheld terminal, a flashlight and a stack of Orders for Correction Within a Time Limit, and says: today, Nanguan Street. More than ten thousand businesses and shops in the county, and five people on your team. From today, at every door you go through, someone will first put out their cigarette and then ask what they can do for you.",
+  "salary_note": "Estimate: fire and rescue pay follows a national scale, with county allowances somewhat lower than in the provincial capital, about eighty-five percent of the national average.",
+  "facts": [
+    { "label": "Probationary Fire Inspector (current level)", "value": "0-2 years, ¥5,525–8,125 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Fire Inspector (2-6 years)", "source": "Common in the trade" },
+    { "label": "Pay after 10+ years", "value": "¥11,200 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Carrying out fire safety inspections of workplaces and premises", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Finding fire hazards and pushing for correction", "source": "AI exposure" },
+    { "label": "Open positions", "value": "44 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "A bowl of mutton soup with rolled flatbread in the brigade canteen. In the yard the duty firefighters are wiping down an engine and laying out hose nozzles in sections. You nod to each other.",
+    "Team check-in. Old Kong opens the inspection plan: three storefronts, a small guesthouse and a plywood mill today. He says the mill first, before the afternoon sun gets going.",
+    "Inside the plywood mill, sawdust is piled by the electrical box. You take photos on the handheld. Old Kong chats with the factory manager about his kid, and in the course of it, points to the box.",
+    "You press the smoke detector's test button and nothing happens. The guesthouse owner says it was fine yesterday. You smile and ask her to bring a ladder.",
+    "The back door of a barbecue place is blocked by three LPG cylinders. The owner brings two bottles of water and says have a seat. You say no thanks, and ask him to move those cylinders.",
+    "Back at the office to write up the paperwork. Inspection records, correction orders, each clause number checked, printed and stamped. Old Kong changes two characters in pencil.",
+    "At a residents' community you give building managers and floor captains a talk on charging e-bikes, forty people, half of them cracking sunflower seeds. You bring out a charger burned black, and the cracking gets quieter.",
+    "At night you and Old Kong ride along the snack street. Of three shops you served notice on last time, two have moved their clutter. On the way home, Old Kong buys a flatbread."
+  ],
+  "ladder": [
+    { "title": "Probationary Fire Inspector", "stage": "Shadowing", "focus": "Go along on inspections, take photos, keep records, write paperwork; move up by passing the fire inspection qualification" },
+    { "title": "Fire Inspector", "stage": "Inspecting alone", "focus": "Take sole responsibility for several townships' premises and corrections; move up by keeping things safe and writing paperwork that stands up" },
+    { "title": "Fire Prevention Team Leader", "stage": "Leading a team", "focus": "Lead the team's planning, review its paperwork and coordinate with county departments; move up on coordination and professional seniority" },
+    { "title": "Deputy Brigade Commander", "stage": "In charge of prevention", "focus": "In charge of county-wide fire prevention, speaking for the brigade at joint meetings, and accountable when things go wrong" },
+    { "title": "Brigade Commander", "stage": "Commanding officer", "focus": "Run the entire brigade's firefighting, rescue and prevention, accountable to both the county government and the detachment" }
+  ],
+  "ai_tasks": [
+    { "name": "Carrying out fire safety inspections of workplaces and premises", "how": "AI can help arrange inspection plans and generate checklists. Going in, seeing the site, speaking to the person responsible and answering for the findings have to be done by a person." },
+    { "name": "Checking that fire equipment works", "how": "AI can remind you of test cycles from the equipment ledger and check records. Whether sprinklers, alarms and hydrants work has to be tested by hand and seen with one's own eyes." },
+    { "name": "Finding fire hazards and pushing for correction", "how": "AI can help identify and classify common hazards from photos and records and track correction. People judge how serious a hazard is, set the requirements, and see that a business really does it." },
+    { "name": "Reviewing building fire protection drawings", "how": "AI can run a first check of drawings against code provisions, such as obvious problems with evacuation distances or fire compartments. People do the final review and handle special designs and contested readings of the code." },
+    { "name": "Taking part in building fire acceptance and spot checks", "how": "AI can organize the acceptance documents and check whether the filing is complete. On-site measurement, spot checks and signing for it have to be done by a person." },
+    { "name": "Investigating the causes of fires and determining responsibility", "how": "AI can help sort through surveillance, electrical data and past cases. Examining the site, collecting evidence, questioning those involved and determining cause and responsibility require a person's own judgment and legal accountability." },
+    { "name": "Writing inspection records, correction orders and investigation reports", "how": "AI can draft records, orders and reports from on-site notes, photos and voice. People only need to verify facts and citations, and sign." },
+    { "name": "Publicizing fire law and training workplaces in drills", "how": "AI can generate publicity materials, training slides and drill scripts tailored to the type of workplace. People need to be on site explaining, leading drills and answering questions for it to stick." }
+  ],
+  "events": {
+    "e_first_paper": "You issue your first order on your own and stamp it crooked. The woman who runs the restaurant looks at it and says: young man, the stamp's crooked. Does it still count?",
+    "e_new_year": "The county-wide inspection before Spring Festival has you running around nursing homes and supermarkets on the twenty-ninth of the last lunar month. On New Year's Eve you eat dumplings at the brigade with the duty crew, the phone on the whole time.",
+    "e_scolded": "The owner of a little supermarket, tired of you coming so often, says in front of a store full of customers that you've got nothing better to do. You wait until he's finished, and then point out the pressure gauge on his extinguisher.",
+    "e_fixed": "An old guesthouse you've been watching for six months finally tears out its wooden partitions and installs sprinklers. The owner grieves over the money for a long time. At New Year he brings a bag of homemade sausages. You don't accept them, so he leaves them with the gatekeeper.",
+    "e_doc_ai": "The handheld terminal is upgraded. You photograph and speak on site, and a draft of the paperwork is generated with the clauses already cited. You save half your writing time, and you still have to check every line.",
+    "e_ai_photo": "The system begins to recognize hazards automatically from photos, and marks a red trash can as a fire extinguisher. Old Kong laughs for ages and says: you young people will have to teach it that one.",
+    "e_ai_plan": "All the county's premises data goes into a system that schedules inspections each week, highest risk first. The system doesn't know which owner has been in the hospital these past few days. You still have to remember that.",
+    "e_old_town": "Fire engines can't get into the old town's alleyways. You and the neighborhood officials spend an afternoon measuring. Your tape runs out to forty meters and you're still one bend short.",
+    "e_summer": "In the dog days you spend a whole day running around straw-baling plants, and at noon you wring out your uniform in the shade of a tree. Back at the office that evening, your handheld has more charge left than you do.",
+    "e_school": "At a village primary school you give a fire safety lesson, and a second grader asks: Uncle, are you a firefighter? You say yes. So where's your water cannon? You don't have an answer.",
+    "e_accountability": "Something happens in the next county over and the whole city starts going back over its inspection records. You pull out three years of paperwork and go through it page by page until your fingers are cracked.",
+    "e_investigate": "An investigation of a small fire falls to you: just old wiring in a warehouse. You write up the site examination four times. Old Kong says: this thing has to be able to stand up in the open.",
+    "e_family": "Your child comes home from school and asks: my classmate says you fined his family's shop. Is that true? You pat your child's head and say: his family's door was blocked. The next day you go by that shop early.",
+    "e_house": "You buy a three-bedroom apartment in the county town, with some of the down payment coming from what your father saved selling wheat. On moving day the first thing you do is check the hydrant in the stairwell, with all your neighbors watching.",
+    "e_old_shifu": "Old Kong retires and leaves you his old flashlight, saying it works better than your terminal. It doesn't need charging.",
+    "e_new_guy": "The new kid writes next year's date on his first paperwork. Instead of saying anything, you circle it, set it on his desk, and put an apple on top.",
+    "e_knee": "After more than a decade of climbing stairs to check fire passages, your knee stops listening. In factory dormitories without elevators, you go up one floor at a time, holding the railing.",
+    "e_thanks": "The director of a nursing home calls. One night an old resident's electric blanket began to smoke, the detector sounded, and everyone got out. You hang up and sit at your desk for a while.",
+    "e_jd": "A classmate sends you a job link: a fire technical services company in Xuzhou is hiring. There are forty-some such positions nationwide, and most ask for a Registered Fire Engineer certificate.",
+    "e_rain": "In flood season the brigade is sent to help move people to safety. You spend two days hauling sandbags, and the team's paperwork piles up on the desk. When the water recedes, the paperwork is still there."
+  },
+  "choices": {
+    "c_exam": {
+      "title": "Which certificate first?",
+      "situation": "To become a Fire Inspector you first have to pass the fire inspection qualification exam. Old Kong also suggests you study for Registered Fire Engineer, which is hard, but will be useful. With townships to cover and two exams, you've got two hours left at night.",
+      "options": [
+        { "label": "Take both", "result": "You work problems under the duty-room lamp and lose eight jin in six months. You get the qualification, and pass one section of the registered exam." },
+        { "label": "Just pass the one you need", "result": "You pass the inspection qualification and see several movies with your girlfriend. As for the registration, you tell yourself: next year." }
+      ]
+    },
+    "c_small_shop": {
+      "title": "The old couple's noodle shop",
+      "situation": "An old noodle shop has blocked its back door and turned it into storage. The rules call for an order to correct, and a fine if they don't. The couple are in their seventies, live off this shop, and try to make you noodles the moment they see you.",
+      "options": [
+        { "label": "Issue the order as required", "result": "You read out the order and help carry the rice sacks to the front. The old woman doesn't offer you noodles again. The back door is clear." },
+        { "label": "Help them first, do the paper later", "result": "You get the neighborhood people to help clear the door and fill in the record afterward. Old Kong looks at the date and says don't do that again; remember where this line is." }
+      ]
+    },
+    "c_favor": {
+      "title": "The plywood mill with a friend",
+      "situation": "A plywood mill that pays good taxes has been dragging out its corrections for three months, and someone in the county calls the brigade, saying business is tough, couldn't it have more time? The commander tells you to use your judgment. You know what the wiring in that shed looks like.",
+      "options": [
+        { "label": "Enforce the deadline, no slack", "result": "The manager's face goes dark. Later, that phone call reaches a classmate of your father's. The wiring in the shed is entirely replaced within three weeks." },
+        { "label": "One more month, watch it closely", "result": "You go by every week and keep the photos of each visit. The company says you're a good guy. When you think about it at night, you always go through the photos again." }
+      ]
+    },
+    "c_ai": {
+      "title": "Learn the new system?",
+      "situation": "The detachment wants to pilot AI hazard recognition and automatic scheduling in a few counties and is looking for a young person to lead it. You'd have to clean up all the county's premises data, six more months of work, with no extra pay.",
+      "options": [
+        { "label": "I'll lead it", "result": "You clean more than ten thousand records and find that over three hundred shops ceased to exist long ago. After the pilot, the detachment sends your method to every county." },
+        { "label": "Stay out; learn the premises first", "result": "You go on visiting every one, and every owner's temperament in the county is in your head. When the system goes live, you're a little faster than it is." }
+      ]
+    },
+    "c_group": {
+      "title": "Compete for Fire Prevention Team Leader",
+      "situation": "The Fire Prevention Team Leader is being transferred and the brigade will pick someone from the team. As leader, all the team's paperwork goes through you, you go to the county's coordination meetings, and when something goes wrong, it's your signature.",
+      "options": [
+        { "label": "Go for it", "result": "At the meeting you lay out how the townships' premises ledgers ought to be divided up. When you finish, the commander asks only one thing: when can you start?" },
+        { "label": "Don't. Keep covering the townships", "result": "Someone else becomes team leader. You still go out on your e-bike, and the new leader's paperwork often comes to you first." }
+      ]
+    },
+    "c_engineer": {
+      "title": "A technical services firm comes hunting",
+      "situation": "You've passed the Registered Fire Engineer exam, and a fire technical services company in Xuzhou offers you double pay to be technical director. If you go, you take off this uniform. Your father says he doesn't understand these things, and you should decide for yourself.",
+      "options": [
+        { "label": "Take off the uniform, join the firm", "result": "You go through the formalities, fold up your uniform and put it in the wardrobe.", "end": "At the technical services company in Xuzhou you do maintenance and assessments for malls and factories, and your pay doubles. People call you Old Kong's apprentice. On trips to the county you always detour down Nanguan Street to look at the back doors of those few shops." },
+        { "label": "Don't. Stay", "result": "You save the headhunter's number with the note: never mind. That month you cover four more townships." },
+        { "label": "Use the certificate here, leading training", "result": "You start giving classes for those responsible for the county's businesses. The certificate gets used; the money doesn't change." }
+      ]
+    },
+    "c_investigator": {
+      "title": "Go study fire investigation?",
+      "situation": "The detachment is sending someone to learn fire investigation, three months, after which you'd be the brigade's investigator. Wherever there's a fire you'd have to go, and late-night calls would be routine. But it's the hardest skill in this trade.",
+      "options": [
+        { "label": "Go", "result": "You learn to read a site and write up a site examination, and to slow down when speaking to those involved. Back home, you never dare to silence your phone again." },
+        { "label": "Don't. Stay on the prevention side", "result": "You say that if prevention is done right, there'll be less investigation work. Old Kong laughs and says: yes, that's how it's said." }
+      ]
+    },
+    "c_deputy": {
+      "title": "The Deputy Brigade Commander's post",
+      "situation": "The detachment is looking at candidates for Deputy Brigade Commander in charge of fire prevention. It means the county's joint meetings, its hazard lists, and every future look back at who was responsible. You might also be moved to another county.",
+      "options": [
+        { "label": "Accept the assessment", "result": "You go to the next county as deputy commander for a few years, home once a week. Its factories and alleys you have to walk all over again from the start." },
+        { "label": "Don't. Stay in this county", "result": "You stay in this county as team leader, bringing up the new people one by one. You know all those shops." }
+      ]
+    },
+    "c_transfer": {
+      "title": "Move to a local government post",
+      "situation": "You've served long enough to apply to leave the service and move into the local emergency management department, regular hours, no more being on call twenty-four hours a day. Your wife says that this time it's your decision.",
+      "options": [
+        { "label": "Make the move", "result": "You write the application and take the old flashlight out of the cabinet.", "end": "You move to the county emergency management bureau, four or five people to an office, reports of every kind on the desk. Your phone can go on silent now. At meetings, when a township's factories come up, you often know more detail than the reports." },
+        { "label": "Don't. Work until you can't", "result": "You put the application form in the drawer. Tomorrow, Nanguan Street again." },
+        { "label": "Ask to move to detachment headquarters", "result": "You go to detachment headquarters and write documents for two years, and discover you still want to be down in the townships." }
+      ]
+    },
+    "c_corp": {
+      "title": "A company wants you as safety director",
+      "situation": "The owner of a large company in the county wants you as safety director at more than double your pay. He says you've been checking on us for over ten years, and you know everything wrong with us. You're nearly fifty, and your child is about to get married.",
+      "options": [
+        { "label": "Go", "result": "You finish the paperwork and, for the first time, walk into this plant without a handheld terminal.", "end": "You become the company's safety director, walking the workshops once a day. You used to serve them notices. Now you pour tea for the new inspectors and watch them photograph the sawdust piled beside the electrical box, and you nod." },
+        { "label": "Don't. Retire in this uniform", "result": "You thank the owner. He says when you come to check us, go easy. You say you won't." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "In your last month you hand the county's premises ledger over to the young people, ten thousand-some lines, half of which you've visited. The last time you go down Nanguan Street, the flatbread shop's son has taken over, and the back door is clear. He brings out a bowl of water and says, have a seat. This time you sit, for quite a while.",
+    "burnout": "After that year's look back at who was responsible, you often get up in the night to think about whether the date on some order was right. The doctor tells you to rest. You apply to move to logistics, in charge of equipment and archives, and you never have to go through anybody's door again. Passing a street barbecue stall, you still can't help glancing at the back door."
+  },
+  "stages": [
+    "You go into premises with Old Kong, taking photos, keeping records, carrying the handheld terminal, and watching how he talks to owners. Back at the office you write paperwork, each inspection record revised three times, and one wrong character in a clause number means reprinting. Your mentor says little and you remember much, writing in a small notebook which owner responds to which approach.",
+    "Four or five townships are yours. You go alone into factories, knock on guesthouse doors, press smoke detectors, turn hydrants, count extinguishers, fill out the form on the spot and say clearly on the spot what has to change. You begin having to make decisions yourself: does this count as a major hazard, does this need a temporary shutdown. For the first time, an order carries only your name.",
+    "The inspection plans and paperwork of all five on the team pass through you, signed one by one. You begin attending the county's coordination meetings, sitting at the same table as housing, market regulation and township officials, and arguing for three months over one alley's renovation. Young inspectors come back asking what to say in this situation, and you tell them to go look once more.",
+    "You're in charge of county-wide fire prevention. You read the hazard list every week, attend the county's joint meeting every month, and need to speak clearly in front of county leaders without giving offense. You lead the inspections around major holidays and deal with the detachment's audits and look-backs. You rarely go into premises alone now. When you do, the owners still put out their cigarettes first.",
+    "The whole brigade is in your hands: firefighting and rescue rosters, the fire engines' annual inspections, prevention's progress and the morale of the whole team. You report to the county leaders, and watch new recruits train in the yard. Late-night phone calls all come to you in the end. Your phone has sat by your bed with the volume up for many years now."
+  ],
+  "work": [
+    "Old Kong tells you to press the hydrant button and no water comes. You open the cabinet and find a length of hose has been cut away and sold for scrap. You take a photo, and he makes a note.",
+    "Old Kong marks your first correction order in pencil in eleven places, and at the end circles the words \"within a time limit\" and asks: how many days? Write it clearly.",
+    "The owner of a small guesthouse asks you how old you are and whether you have a girlfriend. Red-faced, you read the extinguisher's pressure to Old Kong, a little louder than usual.",
+    "A furniture factory in the township has added a floor of color-steel sheets. You climb up to measure, and the manager shouts from below: come down and have some water. You say: when I've finished this form.",
+    "You enter the thirtieth small restaurant on the handheld, and one owner turns out to be a junior high classmate. He says how'd you end up doing this? You ask him to move the gas cylinder outside.",
+    "The nursing home director walks you through the wiring in every room. One old resident has wrapped the electric blanket's switch in tape. You crouch down, chat with the resident a while, and unwrap the tape.",
+    "Xiao Xu's paperwork writes \"fire passage\" for \"fire engine access.\" You send it back. He asks, aren't they the same? You show him the clause and go through it with him again.",
+    "At a county coordination meeting Old Zhou from housing says the alley can't be changed. You put the forty-meter tape record and three aerial photos on the table and say nothing, waiting for him to finish looking.",
+    "You rearrange the county's plywood mills by township and risk and put them up on the office wall with red and blue pins. The young people call that wall The Map.",
+    "At the joint meeting before Spring Festival a county leader asks if this year's hazard list could be shorter. You turn to the last page and say every line on this has people living in it.",
+    "The detachment's audit team comes to spot-check paperwork. You've arranged three years of files by township beforehand. They go through it all afternoon and ask just one question, and you pull that document from the second cabinet.",
+    "Xiao Xu is being transferred and hands you his township ledger before he goes. Turning to a certain page, you see he's noted owners' temperaments in the corner too, and you smile a little.",
+    "A call wakes you in the middle of the night. It's only a small fire, already out. You still get dressed and go to the brigade, sitting in the duty room until dawn, watching the duty officer finish the record.",
+    "A new recruit pulling hose for the first time scrapes up his hands. You walk across the yard and say nothing, go back to your office, open this year's equipment budget and add a batch of gloves.",
+    "When the county head comes to see the brigade, you give no slideshow. You take him to the yard and have him lay his own hand on the tanker that's been in service for twelve years. The budget comes back with an answer the following month."
+  ],
+  "past": [
+    "A straw pile catches fire in your village and everyone runs with basins. You remember a red truck bouncing along the dirt road and someone in gray jumping down, shouting for everybody to stay back.",
+    "Applying to college your last year of high school, your father says soldiers and people in uniform do well. Paging through the application book you find a major called Fire Engineering, and it sounds solid to you.",
+    "In a sophomore training course you put on protective gear for the first time and crawl through a smoke room. You throw up after. The teacher says: this is only a simulation.",
+    "Your graduation internship is at a testing company in Nanjing, measuring sprinkler pressure day after day. You discover that once a building's up, people slowly forget the codes.",
+    "You test into the fire and rescue service, train for a year, and at assignment time you put down Xuzhou. Your father comes from the county on his three-wheeler to get you and doesn't say a word the whole way. There's half a sack of flatbread on the cart."
+  ],
+  "late": {
+    "pension_note": "Estimate: fire and rescue personnel draw the pension for government and public institutions, about seventy percent of their final monthly pay.",
+    "scenes": [
+      "Your first week of retirement you take a walk around your housing complex and see two e-bikes parked in the stairwell. You say nothing, go home, write a note, and stick it on the property office door.",
+      "The neighborhood asks you to talk about electrical safety at the senior center. You speak for twenty minutes and the old men ask questions for forty, and in the end, they're all asking about their kids' jobs.",
+      "You're eating flatbread at the corner of Nanguan Street when a young inspector rides past on an e-bike, holding up a little screen. He doesn't recognize you and you don't call out.",
+      "You press the smoke detector at home every six months. Your wife says it's a frightening noise. You say that's the point.",
+      "For your first few months in logistics you keep checking the work group chats on your phone, and none of it is yours now. You mute a chat, open it, and mute it again.",
+      "You're in charge of the equipment storeroom, every coil of hose stacked just so. When young people come to collect things, you have them sign, and tell them to slow down.",
+      "Old Kong's eightieth birthday. You bring two bottles of liquor. He doesn't really recognize people now, but he's holding a flashlight and shining it around under the table.",
+      "In your first month out, you walk into a supermarket and your eyes go first to the fire extinguisher. Your wife says you came to buy groceries, so buy groceries. You say: okay.",
+      "A shop owner toasts you at a banquet, saying you once fined him. You say: that wasn't a fine, that was a notice. He says: same thing. You both laugh.",
+      "Your child has bought an apartment and wants you to see it. You go in and look first at the hydrant in the stairwell, then out the window. Your child says: Dad, sit down first.",
+      "Now the system generates orders automatically and the clauses are letter-perfect. As for who goes to talk about that noodle shop's back door, somebody still has to ride over.",
+      "The brigade in the county town has a new building and the old one has been torn down. You pass the empty lot and try to work out where the second-floor window must have been."
+    ],
+    "closing": {
+      "retire": "On the evening street, a shop is moving the clutter from its doorway back inside. You look at it, nod, and ride on.",
+      "burnout": "The equipment room door is shut and the key is in your pocket. In the yard a set of headlights comes on and goes off.",
+      "end": "In the cabinet there's an old flashlight. You press the switch and it still works. You shine it into the corner, then turn it off."
+    }
+  }
+}

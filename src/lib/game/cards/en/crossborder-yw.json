@@ -1,0 +1,193 @@
+{
+  "id": "crossborder-yw",
+  "occupation": "Cross-Border E-Commerce Operations Manager",
+  "role": "Cross-Border E-Commerce Operations Specialist",
+  "headline": "An operations specialist at a Yiwu seller of Christmas ornaments and party goods, one person running three marketplaces and two hundred listings on American hours",
+  "unit": "A small-goods cross-border e-commerce company in Yiwu",
+  "unit_type": "Small cross-border seller run by a married couple, about twenty staff",
+  "city": "Yiwu",
+  "city_tier": "Tier-3 city",
+  "education": "Associate degree (E-Commerce)",
+  "level": "You can list a product and fix a photo, but you don't yet know why a listing suddenly stops selling",
+  "intro": "The company is on the fourth floor of an office building in Jiangdong, Yiwu. The three floors below are stacked with goods, and on the way up you turn sideways to get past the cartons. The boss's wife hands you a computer and a list of seller logins, and says the Christmas stock has to be listed by July. From today, you write this city's small goods into English and sell them to places you've never been.",
+  "salary_note": "Estimate: base pay at small Yiwu sellers isn't high and income follows store-profit commission, starting at about 90% of the national average.",
+  "facts": [
+    { "label": "Operations Specialist (current level)", "value": "0-2 years, ¥5,525–8,125 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Senior Operations Specialist (2-5 years)", "source": "Common in the trade" },
+    { "label": "Pay after 10+ years", "value": "¥32,000 a month (national average)", "source": "Pay by experience" },
+    { "label": "Where AI is moving in", "value": "Setting up and running the storefront", "source": "AI exposure" },
+    { "label": "Open positions", "value": "14 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "You get in and open the seller dashboard. America's night has just ended, and last night's orders, refunds and bad reviews are all queued up. Someone says a Christmas ornament doesn't match the color in the photo.",
+    "The boss's wife comes down with a new sample, a light-up reindeer-antler headband. You take a few phone shots, measure it, and begin writing the title, moving five English keywords around.",
+    "You open the ad report. One listing spent $300 and brought in four orders. You turn off a few expensive keywords without much confidence, and note them down to look at tomorrow.",
+    "Takeout by the stacks of cartons. The auntie who packs orders downstairs calls up: the barcodes on one batch are on upside down, come take a look.",
+    "You bike to the wholesale market to find a balloon stall. The owner is doing his accounts and doesn't look up. You ask the minimum order, and he holds up one finger, meaning one carton.",
+    "You go over this week's first-leg shipping with the freight forwarder. Ocean space is tight and he wants more. You work out the extra fraction of a cent per ornament and send the sheet to the boss's wife.",
+    "Back from a bowl of noodles at the night market, America's morning is starting. You watch the dashboard, change a main image, and see the visitor count tick up one by one.",
+    "A marketplace notice arrives about new category rules, a long string of English. You translate it and leave a note for the boss's wife: tomorrow we need to see how many listings have to come down."
+  ],
+  "ladder": [
+    { "title": "Operations Specialist", "stage": "Listing", "focus": "Listing products, fixing images, answering reviews, reading ad reports; you move up by growing one or two listings" },
+    { "title": "Senior Operations Specialist", "stage": "Growing hits", "focus": "Running a marketplace alone, choosing products, pricing, controlling ad cost; you move up on profit, not sales" },
+    { "title": "Operations Supervisor", "stage": "Leading a team", "focus": "Leading three to five specialists, managing restock timing and IP risk, dealing with factories, forwarders and overseas warehouses" },
+    { "title": "Operations Manager", "stage": "Running the store", "focus": "Running the combined numbers and cash flow of several marketplaces, setting the year's product direction, building new markets" },
+    { "title": "Operations Director", "stage": "Running the business", "focus": "Answering for company-wide profit and compliance, deciding which countries to enter and which to leave" }
+  ],
+  "ai_tasks": [
+    { "name": "Setting up and running the storefront", "how": "AI can generate product titles, descriptions and translations in bulk, and monitor store data for anomalies; people handle platform rules, overall store strategy and account security, and sign off on key changes." },
+    { "name": "Overseas market research, product selection and pricing", "how": "AI can quickly gather market data, break down competitors and suggest products and prices; people weigh target-market culture, real supply-chain limits and the profit floor to make the final call and judge the real demand behind the data." },
+    { "name": "Short video and livestream marketing", "how": "AI can write scripts, storyboard, generate images and video and add subtitles in many languages; people handle local context and platform style, appear on camera, interact live and set the creative direction." },
+    { "name": "Running and reviewing paid ads", "how": "AI can bid automatically, generate ad creative, compile reports and point out anomalies; people set budgets and goals, judge whether the attribution can be trusted, and decide after review whether to scale up or cut." },
+    { "name": "Coordinating logistics, payments and customer service", "how": "AI can handle routine customer questions, track shipments and warn of delays; people negotiate with carriers, suppliers and payment channels, and handle abnormal orders and sudden problems." },
+    { "name": "Tracking platform policies and national compliance rules", "how": "AI can search and summarize policy updates and flag risks against a checklist; people must judge the real effect on their products and markets, answer for compliance conclusions, and consult specialists when needed." }
+  ],
+  "events": {
+    "e1": "You misplace a decimal point, and overnight an ornament sells sixty units at a tenth of its price. In the morning the boss's wife looks at the dashboard and silently makes tea, then has you write to the buyers one by one.",
+    "e2": "A listing you've been growing suddenly breaks into the top of its category, the numbers on the dashboard jumping. You send a screenshot to your mother. She replies with a thumbs-up and asks what this thing is.",
+    "e3": "For the weeks of the November sales you live on American time, restocking by day and watching the dashboard by night, takeout boxes filling half the trash can. By the third week you start forgetting what day it is.",
+    "e4": "The store receives a lawyer's letter in English saying one product infringes someone's design. The money in the account is frozen for weeks, and the whole company keeps checking their phones.",
+    "e5": "AI can now write titles and images in eight languages in one go, and an afternoon's work is done in an hour. You spend the time you save checking whether the translations are funny.",
+    "e6": "The tariff rules for small parcels change overnight, and a batch already at sea costs more when it lands. You stay up recalculating the prices of hundreds of listings.",
+    "e7": "A kindergarten teacher in America leaves a review saying the children wore your hats at a party, with a photo attached. You save it and don't reply.",
+    "e8": "You put a down payment on a small apartment off Chouzhou Road, where the breakfast place downstairs still sells wontons the way you know them. On mortgage day, you look one more time at the store's payouts.",
+    "e9": "A friend who started the same year goes out on his own, earns a down payment in six months, and loses it in the next six. Over barbecue, he says next time he won't choose that product.",
+    "e10": "Years of upside-down hours, and your stomach is the first to object. The doctor asks what you do and you say you sell Christmas ornaments. He looks at the test results, and at the June outside the window.",
+    "e11": "Ad bidding goes fully automatic, and the keywords you tuned for years no longer need you. All that's left is to tell it where the money comes from and what counts as a loss.",
+    "e12": "Xiao Ding, whom you trained, jumps to the company next door and takes a product-selection method with her. Six months later she messages you, saying only now does she see why you were always saying check it again.",
+    "e13": "The marketplace tightens its rules and a wave of stores gets shut down. Several people you know in Yiwu lose all income overnight. Your account survives, and you go through its paperwork again.",
+    "e14": "The foreign traders in Yiwu change, wave after wave, and the restaurant signs downstairs start showing scripts you can't read. You get to know the man selling grilled meat, and he teaches you to say thanks in his language.",
+    "e15": "The images the system makes get better and better, and buyers start asking in reviews: is this the real product? You decide that from now on each item gets one real photo, in a colleague's hand.",
+    "e16": "Your child starts primary school, and the school wants a card about the parents' jobs. You write cross-border e-commerce. Your child asks if it could say the person who sells Christmas instead. You say yes.",
+    "e17": "Payment cycles lengthen and the owners mortgage their home. Reading the bank statements, you find yourself losing sleep over someone else's house.",
+    "e18": "The auntie who packed orders downstairs retires. Before she goes she shows the new hire how to stick on barcodes, with the same words: never mind the English, just keep the arrow pointing up.",
+    "e19": "A young hire runs three marketplaces alone with a few AI tools, faster than your whole team used to. You don't say much. You just ask him to explain how he decides which goods can't be touched.",
+    "e20": "You can't read the small print on the dashboard anymore, so you zoom the browser to 150 percent. The Christmas ornaments are the same Christmas ornaments. The people ordering them are a generation on."
+  },
+  "choices": {
+    "c1": {
+      "title": "The piggyback listing",
+      "situation": "You notice the hit product of the company next door has no registered brand, and everyone's selling on its listing. The boss's wife asks if you should hang one on it too. Everybody does it.",
+      "options": [
+        { "label": "Hang one on; get through this month", "result": "That listing does bring in orders, but afterward whenever you open the dashboard, you check your messages first." },
+        { "label": "Persuade her to launch your own", "result": "She says nothing, and the next day brings in a few new samples. It takes four months to build, but it's yours alone." }
+      ]
+    },
+    "c2": {
+      "title": "Going for Senior Operations Specialist",
+      "situation": "The boss wants one person to run the European marketplaces on their own, which counts as a senior post. Europe means VAT, certifications and writing in German. Your English is barely enough, and this would take every evening.",
+      "options": [
+        { "label": "Take it and learn the tax and certification", "result": "You walk through the European tax registration, handling German with tools and a friend studying abroad. The night the first German order pays out, you don't sleep." },
+        { "label": "Make the US store solid first", "result": "Your listings grow steadier and Europe goes to a colleague. The peak-season bonus, at least, is real." }
+      ]
+    },
+    "c3": {
+      "title": "Getting in front of the camera",
+      "situation": "Short video has become the new source of traffic, and the boss wants his specialists to learn to shoot and stream. You'd have to talk to a lens on Southeast Asian and American hours. Since childhood you've hated being on camera.",
+      "options": [
+        { "label": "Go on camera anyway", "result": "You set up in a corner of the warehouse. Three people watch your first stream, and one is the boss's wife. Later you talk about ornaments more and more easily." },
+        { "label": "Hire creators and do the math yourself", "result": "You learn to find small influencers overseas, send samples and work out the return. You remain the person nobody sees." }
+      ]
+    },
+    "c4": {
+      "title": "Competing for Operations Supervisor",
+      "situation": "The company is splitting into teams and the boss is torn between you and a colleague, so each of you has to write a plan for running the Operations Supervisor job. The two of you have shared late-night snacks for years.",
+      "options": [
+        { "label": "Write it properly, with IP risk control built in", "result": "You list every time the store nearly got shut down. The plan is approved, and your friend buys you a meal, saying less than usual." },
+        { "label": "Let your friend have it; keep your listings", "result": "He becomes supervisor and you still go for late-night snacks. Your products remain the most profitable in the company." }
+      ]
+    },
+    "c5": {
+      "title": "Opening your own store",
+      "situation": "Over the years you've come to know a dozen factories and have your own way of choosing products, and Yiwu's streets are full of people gone solo. One factory boss offers to front you a batch of goods on six months' credit.",
+      "options": [
+        { "label": "Quit and open your own", "result": "You rent half a floor in Beiyuan and carry your computer in.", "end": "You went from a hired specialist to the boss and only employee of your own company. How much Christmas stock to send this July is now yours to decide." },
+        { "label": "Stay, and ask for a small share", "result": "The couple discuss it for a few days and give you a small slice of the profit. Your name appears for the first time on the dividend sheet." }
+      ]
+    },
+    "c6": {
+      "title": "Handing the workflow to AI",
+      "situation": "The boss wants AI tools to take over listing, image editing and review replies, and needs someone to redesign the workflow, check the output and decide what can go out. If it works, the team might lose three people.",
+      "options": [
+        { "label": "Build the workflow yourself", "result": "Work goes twice as fast. One of the three who leave is someone you hired. You walk him down to the street." },
+        { "label": "Pilot it small, keep the people for now", "result": "The boss finds you too slow, and rivals' costs drop below yours. The people who stayed remember what you did." }
+      ]
+    },
+    "c7": {
+      "title": "Joining a marketplace in Hangzhou",
+      "situation": "A cross-border marketplace in Hangzhou is hiring seller-recruitment managers who understand sellers. Nine to seven, no more fighting American hours. But from now on you'd be on the side that writes the rules, and you'd leave Yiwu.",
+      "options": [
+        { "label": "Go to Hangzhou", "result": "You pack your computer and the product-selection notebook you've kept for ten years, and board the high-speed train.", "end": "You joined the marketplace and sat on the other side of the rules. When seller complaints come in you look twice, and sometimes the store's address is in Jiangdong, Yiwu." },
+        { "label": "Stay; you still want to sell things yourself", "result": "You write back to say thank you, and open today's inventory sheet." },
+        { "label": "Stay, but ask for a bigger patch", "result": "You use the offer to have it out with the boss. He looks at you for a while, and says, then you do next year's budget." }
+      ]
+    },
+    "c8": {
+      "title": "Entering a new market",
+      "situation": "Margins on the old business keep thinning, and the boss asks you to decide between the Middle East and Latin America. It's a ¥2,000,000 commitment, with certification and local warehousing. Whether you'll make Operations Director may come down to this.",
+      "options": [
+        { "label": "Bet on it and fly out to see for yourself", "result": "You stand in a local wholesale market for three days, then come back, cut the plan in half and bet on two products." },
+        { "label": "Hold what you have and squeeze costs further", "result": "The accounts look good for a few years. Only the young specialists start asking what we have that's new." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "You hand over the seller accounts one by one and explain which marketplace has the worst temper. In all those decades you sold Yiwu's little things to dozens of countries, and went to hardly any of them. Going downstairs you pass the warehouse. This year's ornaments are already stacked to the ceiling, and outside it's only July.",
+    "burnout": "Your stomach and your sleep deliver their final notice together, and the doctor is brief: hours like these can't go on. You write up each marketplace's stock and payment terms as handover sheets and explain them one at a time. From then on you can lie down by eleven, except that once in a while you still work out what time it is in America."
+  },
+  "stages": [
+    "Your job is turning goods into listings: shooting, editing, writing English titles and five bullet points, then checking click-through rates, answering bad reviews and tuning ads every day. You deal most with the auntie packing orders downstairs and the older specialist who trains you. You take care with the seller account, since even logging in from another IP address can cause trouble.",
+    "Now a marketplace is yours. Each week you do the product sheet, work out what's left after first-leg freight, marketplace fees and ad share, and decide how much to send to the overseas warehouse. Before, you made listings look good. Now you look at money, and if stock gets stuck, the boss's wife comes to you first.",
+    "You lead three to five specialists, going over everyone's reports in the morning and negotiating lead times with factories and shipping space with forwarders in the afternoon. Before a new product goes up you check patents and children's product certifications, because trouble shuts the whole store. You've learned to tell young people: hold that one back, check it again.",
+    "You no longer watch single listings. You look at the combined numbers of several marketplaces: the cash-flow sheet, stock turnover, payout cycles. You sit with the owners to set next year's product range, negotiate loans with the bank and return fees with overseas warehouses. Half your time goes to naming the risks others think don't matter.",
+    "In your hands now are the whole company's P&L and its compliance checklist. Entering a new country means working out tax, certifications and local return habits, and having a lawyer read the terms. You fly to trade fairs to meet buyers, and you also go down to the warehouse, stand a while, and ask the auntie what's been coming back lately."
+  ],
+  "work": [
+    "Xiao Fang, the older specialist, has you change an ornament photo's background to pure white. You spend half an hour cutting it out. He zooms in on the edge and says: fuzzy, do it again.",
+    "A buyer writes that two balloons are missing. You check the shipping weight on the dashboard and find it's almost exactly two balloons light, send a letter of apology and reship a pack.",
+    "The auntie who packs orders asks what this English word means. You tell her it says Merry Christmas. She says she's been sticking it on for twenty years, and only today does she know.",
+    "You take the profit sheet for a party hat to two decimal places and find a five-fen rise in the bag has eaten half the margin. You turn around and go find another bag factory.",
+    "Xiao Hu, the forwarder, says this batch might be a week late. You work out the days of stock left and scale back the ad budget on a big keyword so you won't sell out.",
+    "A bad review says the ornament's hook breaks easily. You take ten of them to the stairwell and drop them. The seventh snaps, and you go back and ask the factory boss to change the mold.",
+    "New hire Xiao Ding lists a mug with a cartoon design. It looks familiar to you, so you have her check the trademark database. When she's finished, she quietly takes the listing down.",
+    "The factory boss says peak-season lead time is thirty-five days at best. You pull last year's restock sheet and tell him that you paid your deposit last month, so you go first in line.",
+    "A team member's ad share has run over for three weeks. You don't ask about numbers. You ask who chose the product first, and learn he's been taking the blame for someone else's pick.",
+    "The bank's account manager comes to look at the inventory. You lay out the turnover table and the overseas warehouse statement, and explain why November's goods have to be paid for in July.",
+    "The overseas warehouse sends a returns bill. You have it sorted by reason, find that 40 percent say wrong size, and have the entire size chart measured again.",
+    "The boss wants fifty thousand more of a strong-selling string light. On the cash-flow sheet you mark that month's shortfall and change the number to twenty thousand.",
+    "A lawyer sends a compliance memo on a new market, more than twenty pages. You mark the certification and tax sections and have someone list what each will cost and how long each will take.",
+    "At a trade fair a European buyer handles a sample and asks about recyclable packaging. You don't promise on the spot, and from the hotel you call the factory to work out the cost.",
+    "You go to the ground-floor warehouse and ask the auntie what's coming back most lately. She points at a heap of cartons in the corner. It's a problem that hasn't yet appeared in your reports."
+  ],
+  "past": [
+    "Your family lives in the countryside near Jinhua. Your mother strings beaded flowers at home for Yiwu factories, bringing them back by the sack and earning a few jiao a pack. After school, you sit down and string them too.",
+    "Your high school grades are middling. On your first trip to the Yiwu wholesale market you walk all day without finishing one floor, and think that a place that sells everything might need all kinds of people.",
+    "After the gaokao (college entrance exam) you apply to a junior college in the province to study e-commerce. Your mother says it's a good major. You aren't sure why, only that a relative's kid did this and bought a car.",
+    "In the campus training lab you register a store for the first time. With a title written through translation software you sell one phone case to a buyer in Canada, and take a screenshot of the order.",
+    "A summer internship in a factory's e-commerce department has you writing product descriptions every day until you've used up every word you know. The boss says it doesn't need to be that good, just get the dimensions right.",
+    "After graduating you apply to several companies. At the interview the boss's wife puts a Christmas ornament in your hand and asks how you'd sell it to someone who's never seen it. You think for a long time and say: first, tell them where to hang it."
+  ],
+  "late": {
+    "pension_note": "Estimate: small sellers mostly pay social insurance on a low base; retiring from a Yiwu company brings about 40% of final monthly pay, and you live mostly on what you've saved.",
+    "scenes": [
+      "It's the first November you don't have to watch the dashboard, and you still can't sleep at night. You get up and look out the window. A light is on in the building opposite.",
+      "You buy something online and read the reviews, and can tell at a glance how those pictures were edited. You smile a little and order it anyway.",
+      "You finally join a tour to Europe. At a Christmas market a familiar little reindeer is hanging, and you turn it over. The label on the bottom hasn't changed.",
+      "Your grandchild asks what you used to do. You say you sold China's little things to the whole world. What little things? You find an old ornament in the drawer.",
+      "You return the computer and keep deleting and reinstalling the seller app on your phone. For the first few weeks you keep feeling some order hasn't been dealt with.",
+      "You start buying groceries in the morning and meet a stallholder you know. He asks how you've got the time. You say you've got it now.",
+      "An old colleague brings you along to help look over a store, half a day a week, as long as nothing goes wrong. You glance at the report and say don't bid on that word. They write it down.",
+      "In your new seat you keep one habit: whatever you see, you think first of how you'd write its English title.",
+      "You go back once to that building in Jiangdong. Another company has the fourth floor. Downstairs you still have to turn sideways to get past the cartons.",
+      "Your old colleagues start a group chat, the Mutual Aid Society for People Who Don't Check Dashboards. Now and then somebody posts a photo of their old goods in a supermarket in some country.",
+      "When July comes you still remember that it's time to send the Christmas stock. The street is white with heat.",
+      "Clearing up, you find the old product notebook, a few pages warped by spilled tea. The hits and the losses look about the same now."
+    ],
+    "closing": {
+      "retire": "On a Yiwu evening, trucks are still heading toward Jiangdong. You stand downstairs watching them load carton after carton, with no idea where this load is going.",
+      "burnout": "You go to bed early on a December night. Somewhere in the world, children are unwrapping presents. Your phone doesn't ring.",
+      "end": "You hang the old reindeer-antler headband behind the door. It stopped lighting up long ago. Out on the street people come and go, all carrying bags."
+    }
+  }
+}
