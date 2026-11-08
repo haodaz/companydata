@@ -95,11 +95,11 @@ function Home({ busy, err, onEnter, resume, onResume, archive }: { busy: boolean
   );
 }
 
-/** 打赏作者：public/game/tip/ 下放了收款码（wechat.png / alipay.png）或设了 NEXT_PUBLIC_GAME_TIP_URL 才出现 */
+/** 打赏作者：Ko-fi（海外，信用卡 / PayPal）；public/game/tip/ 下放了收款码（wechat.png / alipay.png）就一起显示 */
 function Tip() {
   const [codes, setCodes] = useState<{ k: string; t: string; src: string }[]>([]);
   const [open, setOpen] = useState(false);
-  const url = process.env.NEXT_PUBLIC_GAME_TIP_URL || '';
+  const url = process.env.NEXT_PUBLIC_GAME_TIP_URL || 'https://ko-fi.com/cocososo';
   useEffect(() => {
     const all = [{ k: 'wechat', t: '微信', src: '/game/tip/wechat.png' }, { k: 'alipay', t: '支付宝', src: '/game/tip/alipay.png' }];
     Promise.all(all.map(c => fetch(c.src, { method: 'HEAD' }).then(r => (r.ok && /image/.test(r.headers.get('content-type') || '') ? c : null)).catch(() => null))).then(x => setCodes(x.filter(Boolean) as any));
@@ -112,7 +112,7 @@ function Tip() {
         <h3>请作者喝杯咖啡</h3>
         <p>这个小游戏不收费，也不打广告。觉得有意思，可以随手打赏一点。</p>
         <div className="g-codes">{codes.map(c => <figure key={c.k}><img src={c.src} alt={`${c.t}收款码`} /><figcaption>{c.t}扫一扫</figcaption></figure>)}</div>
-        {url && <a className="g-btn" href={url} target="_blank" rel="noreferrer">海外用户点这里</a>}
+        {url && <a className="g-btn" href={url} target="_blank" rel="noreferrer">用 Ko-fi 打赏（信用卡 / PayPal）</a>}
         <button className="g-link" onClick={() => setOpen(false)}>关闭</button>
       </div></div>}
     </>
