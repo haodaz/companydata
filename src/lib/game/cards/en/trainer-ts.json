@@ -1,0 +1,319 @@
+{
+  "id": "trainer-ts",
+  "occupation": "Vocational Trainer",
+  "role": "Steel Company Vocational School Trainer",
+  "headline": "Eleven years on the continuous casting platform, pulled off the line at thirty, and now at the front of a classroom in Tangshan teaching new hires where to stand",
+  "unit": "A steel group's technical school in Tangshan (also the group's training center)",
+  "unit_type": "Company vocational school and training center",
+  "city": "Tangshan",
+  "city_tier": "Tier 2",
+  "education": "Technical school (metallurgy) + adult-education college diploma",
+  "level": "You could run the caster with your eyes shut. You've never written a lesson plan. A forty-five-minute class runs out of words at minute twenty.",
+  "intro": "Eleven years on the continuous casting platform taught your hands the temper of molten steel. The group's training center needed someone who knew the floor, and the workshop director put your name in. Now you're standing in a second-floor classroom at the technical school, in front of forty new hires just issued their hard hats, and a stick of chalk is harder to hold than a tundish stopper.",
+  "salary_note": "Estimate: a company school in Tangshan. Without shift and high-temperature allowances, you earn below the national average for trainers.",
+  "facts": [
+    {
+      "label": "Assistant Lecturer (current level)",
+      "value": "0–3 years, ¥3,300–4,300 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Lecturer (3–8 years)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "Pay after 10+ years",
+      "value": "¥8,200 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Drilling new hires on stance and hand signals at the training rig",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Writing lesson plans, slides and question banks",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "2 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+      "source": "Job listings"
+    }
+  ],
+  "day": [
+    "On the plant commuter bus you go over today's lesson plan on your phone. The window has a film of dust on it, and further on the white steam of the blast furnaces stands in columns on the horizon.",
+    "First period, the three-level safety induction for new hires. You set a burned-through work boot on the lectern and say nothing yet, and have them pass it around and feel the sole.",
+    "At the break a new hire asks whether you can really smell the temperature of molten steel. You say no, it's something else you smell, and that's not for this lesson. Wait till the rig.",
+    "The training rig: a full-scale mock-up of the casting platform, with no steel. You stand them in position and adjust them one by one, shoulders, toes. When the ladle turret swings around, which way is your back facing?",
+    "You go to No. 2 Steelmaking to ask for people. The workshop director says they're chasing output next week and he can't spare one. You offer a cigarette and change the question: what about the annual overhaul next month?",
+    "Back at your desk writing a lesson plan. The head of the teaching group returns it with a note: \"No 'roughly' or 'about' in a lesson plan.\" You fix eleven of them.",
+    "Scoring practical sheets for senior worker certification. A forty-six-year-old veteran got 52 on the theory paper and first place on the practical. You run the numbers. He's eight points short.",
+    "Going home with the window open, you smell the coke on the wind. You don't need to smell it anymore, but your nose still tells you it's blowing from the southeast."
+  ],
+  "ladder": [
+    {
+      "title": "Assistant Lecturer",
+      "stage": "At the podium",
+      "focus": "Observes classes, teaches safety and process basics, runs new-hire practice. Moves up by turning floor talk into something teachable."
+    },
+    {
+      "title": "Lecturer",
+      "stage": "Own course",
+      "focus": "Runs a trade course alone, writes exams, sits on certification panels, negotiates needs with workshops."
+    },
+    {
+      "title": "Senior Lecturer",
+      "stage": "Curriculum",
+      "focus": "Owns a trade's full curriculum and its in-house trainers. Promotion needs a textbook and contest results."
+    },
+    {
+      "title": "Deputy Director, Training Center",
+      "stage": "The plan",
+      "focus": "Sets the group's annual training plan, fights mills for people and time, manages budget and evaluation."
+    },
+    {
+      "title": "Director, Training Center",
+      "stage": "The whole",
+      "focus": "Runs the school and center; answers to group HR and the mill managers."
+    }
+  ],
+  "ai_tasks": [
+    {
+      "name": "Drilling new hires on stance and hand signals at the training rig",
+      "how": "Where to stand, where the hands go, what sound means step back: someone has to be beside them, correcting. AI can at most play a demo."
+    },
+    {
+      "name": "Writing lesson plans, slides and question banks",
+      "how": "Feed in the procedures and you have plans, slides and a hundred multiple-choice questions in an afternoon. People check that the steps are right and the numbers belong to this line."
+    },
+    {
+      "name": "Finding out what each workshop really needs",
+      "how": "Surveys summarize themselves, but why a director won't release anyone is something you ask on the floor."
+    },
+    {
+      "name": "Tracking outcomes and writing evaluation reports",
+      "how": "Scores and surveys chart themselves. Whether the trainee's hands have changed back on the job is something you go and look at."
+    },
+    {
+      "name": "Building simulation training content",
+      "how": "AI can generate scenarios and scripts. Which conditions truly make people panic has to be decided by someone who has been there."
+    }
+  ],
+  "events": {
+    "e_blank": "At your first open lesson you run out of words at minute twenty. You pick up the chalk and draw a cross-section of the tundish, and the next twenty-five minutes come to life on that one drawing.",
+    "e_refresher": "Special-operations certificate renewals bunch up: twelve sessions in a month, crane operators, gas workers, in rotation. Your voice goes. You get through on a microphone and sterculia tea.",
+    "e_overhaul": "No. 2 Steelmaking's annual overhaul: a ten-day window, and the workshop finally lets people go. You compress a course into three days, day shift and night shift back to back, so those coming off nights can still attend.",
+    "e_july": "July brings another intake, three hundred graduates and not enough dorm rooms. Your class includes materials science majors who, after the safety lesson, ask: teacher, is there a formula for this?",
+    "e_old": "A worker in his forties takes a computer exam for the first time and doesn't dare let go of the mouse. You bring a stool and read him each question. The exam rules allow reading aloud.",
+    "e_ear": "The company physical shows high-frequency hearing loss in your right ear, left over from those years on the platform. Trainees say the teacher's voice is really loud. You thought that was a compliment.",
+    "e_new_line": "The old caster is replaced by a new smart line. The textbook you've taught for six years is obsolete overnight. The control room's screens and the platform you stood on don't look like the same trade.",
+    "e_contest": "A contestant you trained wins a prize at the provincial skills competition. The group sends out a notice of honor. The workshop director says: my man, and you never stopped cursing me for not releasing him.",
+    "e_callback": "Training outcomes need a level-three evaluation, so you go down to see trainees back at work. The one who scored ninety in class still has his foot where it shouldn't be. You go back and rewrite that section.",
+    "e_hours": "At year's end HR wants the training hours, forty per head. Your sign-in sheets and the system don't agree. More than a hundred names were signed for by the workshop in one go.",
+    "e_heating": "Autumn and winter production curbs: blast furnaces held back, workshop people suddenly idle. Word comes down that the whole workforce must finish rotation training in a month, and your classroom fills with the unwilling.",
+    "e_ai_bank": "The question bank moves to AI: two hundred questions for one course in five minutes. One correct answer gives the temperature for a different grade of steel. You fix it and think, what if that had gone out?",
+    "e_vr": "The school gets VR furnace training. A veteran puts on the headset, turns around and steps straight back, knocking over a chair. You say no points off; that reaction is correct.",
+    "e_ai_camera": "Workshop cameras can now detect unsafe stances, and the alarm data reaches you every month. For the first time you have a picture of whose lessons didn't stick.",
+    "e_move": "The group's old plant is moving to a new coastal base, and thousands of people have to be reassigned. A reassignment course appears on your timetable. Most of the trainees are forty-five and up. The classroom is very quiet.",
+    "e_inspector": "The province comes to check the certification exam room, pulls your scoring sheets and compares them against the video. Your sheets are neat, down to the timestamp for \"gloves not worn before operation, minus five.\"",
+    "e_back": "Standing at the podium has made your old back trouble worse than it was on the platform. You put a tall stool at the back of the classroom and sit on it for case studies.",
+    "e_fail": "Your senior worker class has a sixty percent pass rate. The workshop director comes to say other training outfits get ninety. You lay the two exam papers side by side and ask him to look.",
+    "e_thesis": "Promotion to Senior Lecturer needs two papers. You, a caster by trade, revise against the format rules until one in the morning. The references are harder than the text.",
+    "e_furnace": "Your old caster is shut down, and before it's dismantled the veteran workers are taken to see it. Some take photos. You find the spot you used to stand on and step half a pace back."
+  },
+  "choices": {
+    "c_private": {
+      "title": "A private training outfit makes an offer",
+      "situation": "A company in the city that trains welders and electricians for certificates wants you. Pay by the lesson, a monthly income that could double. But the trainees come only for the certificate, and you'd have to guarantee a ninety percent pass rate.",
+      "options": [
+        {
+          "label": "Go",
+          "result": "You resign and take the burned-through boot with you.",
+          "end": "You went to the training company and taught more than two hundred days a year; the city's welders and electricians have all heard you. You still teach the section on stance the slowest. The boss has told you twice to hurry it up."
+        },
+        {
+          "label": "Stay at the school",
+          "result": "You stay. No more money, but every workshop door still opens for you."
+        }
+      ]
+    },
+    "c_back": {
+      "title": "Back to the platform as shift foreman",
+      "situation": "The new line needs people who know it, and the mill manager asks if you'd come back as foreman. Position pay plus shift and heat allowances, a good deal more than now. Your ear and back aren't in favor.",
+      "options": [
+        {
+          "label": "Go back",
+          "result": "You put down the chalk and by the next week you're in heat-proof overalls again. Most of the new people in the crew have heard you teach.",
+          "end": "You went back to steelmaking as foreman and later raised another crew. At plant meetings people read out safety clauses you wrote at the school. Nobody knows they were yours."
+        },
+        {
+          "label": "Keep teaching",
+          "result": "You tell the manager that one of you on the platform doesn't match forty you could teach. Even as you say it, it sounds a little big."
+        }
+      ]
+    },
+    "c_coast": {
+      "title": "Follow the new base",
+      "situation": "The new coastal base is setting up a training branch and needs someone in charge, with good housing allowance and a good post. Your spouse works at a school in Tangshan and your kid is in eighth grade. You'd be home one day a week.",
+      "options": [
+        {
+          "label": "Go to the new base",
+          "result": "Early bus out on Monday, back on Friday night. The classrooms at the new base smell of sea wind, not the coke smell you know.",
+          "end": "You stayed at the coastal base and built the training branch from two prefab rooms into a whole building. Later the old plant's land became a park. You went back once and couldn't find the old roads."
+        },
+        {
+          "label": "Stay in Tangshan",
+          "result": "You stay at the old campus. Fewer trainees every year, and classes harder to schedule. Picking the kid up from school is now your job."
+        },
+        {
+          "label": "Just help out for six months",
+          "result": "You spend six months at the base training new hires, and get home after the kid's midterms are over. Neither side was neglected. Neither got your all."
+        }
+      ]
+    },
+    "c_lang": {
+      "title": "Read the procedures word for word?",
+      "situation": "The head of the teaching group wants procedures taught verbatim, with exams drawn from them. You know that where the procedure says \"observe carefully,\" on the floor it's \"watch the color of the tundish pool; if it goes white, shout.\"",
+      "options": [
+        {
+          "label": "Procedures, plus your own",
+          "result": "The first half you read the procedure; the second half you translate the floor talk. After class, every question is about the second half."
+        },
+        {
+          "label": "Word for word",
+          "result": "The inspection team sits in and praises your rigor. To you this is a class anyone could teach."
+        }
+      ]
+    },
+    "c_lecturer": {
+      "title": "Apply for Lecturer",
+      "situation": "Promotion to Lecturer needs a course of your own and a set of self-written notes. You could write the casting course, but eleven years of feel have to become written words, at the cost of evenings and weekends. You've already missed two parent meetings.",
+      "options": [
+        {
+          "label": "Write the notes",
+          "result": "Eighty thousand characters, illustrated throughout with cross-sections you drew by hand."
+        },
+        {
+          "label": "Family first",
+          "result": "You go to the parent meeting. The teacher says your child likes to give classmates safety advice."
+        }
+      ]
+    },
+    "c_signin": {
+      "title": "Do the signed-for hours count?",
+      "situation": "HR's evaluation lands at year's end. One workshop has reported training hours for two hundred people, fewer than half of whom came. The director says production really has been too tight, please bend a little, they'll make it up next year. It's not entirely an excuse.",
+      "options": [
+        {
+          "label": "Record the real number",
+          "result": "The workshop misses its training target and the director is cold to you for six months. His next batch does arrive on time."
+        },
+        {
+          "label": "Record it now, truly make it up",
+          "result": "Next year you chase those people one by one until they've all come. It takes far more out of you than a shouting match would have."
+        }
+      ]
+    },
+    "c_contest": {
+      "title": "Coach contestants, or keep the regular classes",
+      "situation": "The provincial skills contest needs three months of intensive coaching. Results would all but guarantee Senior Lecturer. But someone else would have to cover your regular classes, and you wouldn't finish with the new hires going down to the floor.",
+      "options": [
+        {
+          "label": "Coach",
+          "result": "Three months without a whole weekend. The contestant works; you stand behind with a camera and a stopwatch."
+        },
+        {
+          "label": "Keep the regular classes",
+          "result": "When that batch finishes, you correct each of their stances one more time. None of this will go on any application."
+        }
+      ]
+    },
+    "c_ai": {
+      "title": "How AI comes into the classroom",
+      "situation": "The group wants a smart training platform: AI lesson prep, AI Q and A, automatic evaluation reports. The director asks you to lead the pilot, which means recording the veterans' classes and feeding them in. Some say this is sawing off their own branch.",
+      "options": [
+        {
+          "label": "Lead it",
+          "result": "You record your own class first. On playback you discover you say \"this\" forty-seven times in a lesson."
+        },
+        {
+          "label": "Use it only for test questions",
+          "result": "It's a tool: questions come fast, and you teach your own class. Your name is low on the platform's progress reports."
+        }
+      ]
+    },
+    "c_vice": {
+      "title": "Compete for Deputy Director of the Training Center",
+      "situation": "Someone has to take the Deputy Director post at the training center, a job of fighting mill managers for people every day. A worker by origin, you'd be up against a college graduate from personnel. If you take it, you'll hardly ever stand at the training rig again.",
+      "options": [
+        {
+          "label": "Compete",
+          "result": "Your speech covers one thing only: which workshop can release people in which month, which you can recite with your eyes shut."
+        },
+        {
+          "label": "Keep teaching",
+          "result": "You say you want to teach a few more batches. A colleague in personnel says it's a waste. You're not so sure."
+        }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "In your last semester nobody enrolls in your casting course, and the school turns the training rig into a smart line simulation room. The hands and feet of everyone you ever taught stand where you told them. No ledger records this.",
+    "burnout": "Your voice and your back gave out together, and the hospital wrote you two months of sick leave. The school moved you to a textbook job in a north-facing office. You no longer have to shout. After a while you find there's nothing that needs shouting."
+  },
+  "stages": [
+    "Half your time is in the classroom, half at the training rig. Three-level safety induction, trade basics, lesson plans under the red pen of the head of the teaching group. In front of forty new hires you learn for the first time that the word \"roughly\" is not allowed. To the workshop you're one of their own who came back; in the office, you're the worker who can't write.",
+    "You have your own course: casting, junior through senior, the notes, the question bank, the practical scoring sheets all yours. At certification you sit on the panel with a tablet that decides who gets a raise. You go out to the workshops to discuss needs yourself, and your talks with the directors have moved from cigarettes to production schedules.",
+    "A trade's full curriculum is yours, and the part-time trainers under you are workshop technicians and old crew leaders you have to teach to speak up. You write textbooks, audit question banks, coach contestants. You used to teach workers. Now you teach the people who teach workers, and you also have to explain to the school why the textbook must be rewritten again.",
+    "On your desk: the entire group's training plan for the year. Which month, which mills, how many hours, how much money. Half your calls are to ask managers for people. You reach the training rig less than once a month, while HR's reports arrive every week. You've started saying words like \"training conversion rate,\" and they feel strange in your mouth.",
+    "The school, the training center, dozens of teachers and outside experts are yours. The most important days of the year are the group's budget meeting and talent planning meeting, where you have to say what the money bought. And there is recruitment: fewer and fewer kids will study metallurgy, so you've started visiting county middle schools yourself."
+  ],
+  "work": [
+    "After your trial lesson, the head of the teaching group photographs the blackboard and sends it to you, saying: this one works. The other twenty slides, she has you delete.",
+    "At the rig you turn a new hire's shoulders ninety degrees. He asks why. You take him to the workshop's safety walkway and measure the route he would have backed into.",
+    "Personnel sends a roster of three hundred new hires to be split into eight classes. Two share the same name, one in ironmaking, one in rolling. You mark them differently on the attendance sheet.",
+    "You design a practical test for senior certification: wire one signal light on the tundish wrong and see who notices. In the first batch of ten, only one old crew leader looks up at the light.",
+    "The director of No. 2 Steelmaking finally sits down with you. You bring a production schedule and circle in red four shifts that could spare people. He changes one and signs.",
+    "On the end-of-course exam you change the question-bank item on steel temperature to one where they judge from a photo. The average falls twenty points. You show the head of the teaching group the results and say, these are the real ones.",
+    "You teach a young technician to lecture. His first class is forty minutes reading slides. You have him turn off the projector, hold a single piece of sinter, and try again.",
+    "Before the textbook goes to print, an editor asks if the word \"dross-raking\" can be replaced. You talk on the phone for half an hour and settle it: the standard term in the text, the floor term in parentheses.",
+    "Three months of contest training: the contestant works at the simulator, and you score with a stopwatch and a camera. In the fourth week you break his motion into seventeen steps and tell him not to practice fast, just practice step nine.",
+    "At the annual planning meeting, three mills all want the overhaul window for training, and the dates collide. You split the hours into online and on-site. The rolling mill manager nods. The ironmaking one doesn't.",
+    "At year's end you owe the group a training return-on-investment report. You put one crew's violation count and training hours on the same chart. The HR section chief asks if it proves causation. You say no.",
+    "You inspect the new-hire dorms and classrooms at the coastal base and notice that the prevailing wind carries dust straight into the training building. Your report gives it a page of its own, and the door is moved on the drawings.",
+    "At the budget meeting finance wants to cut practice materials. You bring an object: a scrapped copper mold tube turned teaching aid, and tell them one will teach for eight years, and what a new set costs.",
+    "You take the admissions staff to a county middle school. A parent asks if the mill is hot. You don't say it isn't. You open your phone and show them the control room, and a first-year worker's pay slip."
+  ],
+  "past": [
+    "Your father spent his whole life in this steel company's rolling mill. When you finished middle school he filled out the form for the company's technical school, on the grounds that it guaranteed a job.",
+    "Out of technical school, you were assigned to the casting platform at the steelworks. That first summer your clothes under the heat suit could be wrung out, and you learned to know where the overhead crane was without looking up.",
+    "At a cast start you shouted a new man out of the wrong place. The crew leader remembered, and after that new hires were sent to you first.",
+    "You studied metallurgy for an adult-education diploma, going to class after night shifts. You found that the formulas in the book explained much of what your hands had been doing for ten years.",
+    "You became a part-time in-house trainer for the workshop. The first time you stood before another crew with slides, your palms were wetter than at a cast start.",
+    "The training center wanted people from the front line. The director fought for you and also hesitated. You'd lose a chunk of pay, all the heat and night allowances. But your spouse said, at least you'll sleep at home."
+  ],
+  "late": {
+    "pension_note": "Estimate: a state enterprise with continuous contributions and a company annuity; the eleven years on the line count too.",
+    "scenes": [
+      "After retirement the property management asks you to teach fire safety to the security guards, ¥200 a class. Your first words are still to have them stand and see what's behind them.",
+      "You join a calligraphy class for seniors. Your strokes come out square and upright, and the teacher says they look like procedures. So you take up wild cursive. Nobody can read it, which suits you.",
+      "They say the new coastal lines hardly need anyone on the platform. The technical school has been folded into the city vocational college, and metallurgy is now called intelligent manufacturing. Your textbook sells secondhand for ¥8.",
+      "Your right ear is nearly deaf now, and a hearing aid costs thousands. You can't set the TV volume properly, so your family has moved the remote out of your reach.",
+      "On a weekday morning you go to the park for the first time and see a man trimming branches with a ladder set wrong. You go over and shift it, without telling him why.",
+      "Your voice comes back somewhat, though it will never again go high. At home your family keeps asking what you said, so you type things on your phone and show them.",
+      "The plant's chimneys are torn down, and the news says the air is much better. You open a window and sniff. No coke smell. You can't say what's wrong.",
+      "In your new line you still go for hearing tests every year. The doctor asks what you used to do. You tell him about the eleven years on the platform, not the teaching.",
+      "New workers are scarce in Tangshan now and recruitment posters are everywhere. Reading one at the bus stop, you feel the pay line isn't written honestly enough.",
+      "These days you walk into a factory and first check whether the yellow floor lines have been worn away. A friend shows you the small plant he's opened. The first thing you say after walking through it cuts his appetite for treating you to dinner by half.",
+      "When a factory comes on TV you watch the workers' feet. Your family asks what this episode is about. You say, he's standing wrong.",
+      "You've lost count of how many people you taught. It's about twenty thousand. No one ever added this up for you, or asked. That's all right."
+    ],
+    "closing": {
+      "retire": "The southeast wind is up again and today carries nothing to smell. You tip tea dust, fine as chalk, into a flowerpot and wash the cup.",
+      "burnout": "The radiator is hot and the room a little dry. You set a glass of water within reach. No class today. None tomorrow either.",
+      "end": "On your morning run you reach the corner and stop behind the yellow line, waiting for the cars to pass."
+    }
+  }
+}

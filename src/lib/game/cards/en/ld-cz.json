@@ -1,0 +1,157 @@
+{
+ "id": "ld-cz",
+ "occupation": "Training and Development Specialist",
+ "role": "Training and Development Specialist, Manufacturing Group",
+ "headline": "At a seven-thousand-person solar manufacturer in Wujin, Changzhou, you watch production lines get scrapped each year, teach thousands of workers all over again, and try to prove to the boss that the money was well spent",
+ "unit": "A manufacturing group in Wujin, Changzhou, making solar modules and energy storage equipment; training and development team of six in HR",
+ "unit_type": "Private manufacturing group",
+ "city": "Changzhou, Jiangsu",
+ "city_tier": "Second-tier",
+ "education": "Bachelor's (Human Resource Management)",
+ "level": "You can schedule classes, send notices and collect sign-in sheets, and can deliver a talk on factory rules. You have yet to stand on the line for a whole shift",
+ "intro": "Your office is on the third floor of headquarters. The training room is on the second floor of the plant across the way, on the far side of a logistics lane for silicon wafers. You are issued a laser pointer, a stack of sign-in sheets and a pair of anti-static shoes. In your second week the team lead has you deliver fifteen minutes of safety instructions between shifts. Forty people have just come off nights, holding soy milk.",
+ "salary_note": "Estimate: support roles at a Changzhou manufacturing group pay near the better end for southern Jiangsu. Good years bring a bonus; in a downturn, raises stop.",
+ "facts": [
+  { "label": "Training Specialist (current level)", "value": "0–3 years, ¥4,500–7,000 a month (national, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Senior Training Specialist (3–6 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Negotiating training hours with workshop directors", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "First drafts of courseware and exam questions", "source": "AI exposure" },
+  { "label": "Open positions", "value": "59 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Before the morning shift you post today's training list on the team board. The shift leader looks it over and pulls two names. These two can't be spared today.",
+  "You set up the projector. This class is on visual defects at the stringing station, and the teaching aid is a scrapped module, its edges taped over since someone cut a hand last time.",
+  "You sit in on an internal trainer. The old hand stumbles through his slides. He sets down the pointer and picks up the scrap module and suddenly everything is clear. You make a note: next time, no slides for him.",
+  "In the canteen you intercept a workshop director to ask whether he can release thirty people next month. He walks fast with his tray. You walk fast too.",
+  "Entering records in the training system. Some signatures look like a ball of thread. You match them against the employee list and find two were signed by someone else.",
+  "An icebreaker for the campus hires: build a tower out of paper. A materials graduate calculates his tower precisely and then informs you this game has no meaning.",
+  "Writing up the day. Management wants coverage and satisfaction figures. What you want to write is that when the old hand picked up that scrap module, the whole class looked up."
+ ],
+ "ladder": [
+  { "title": "Training Specialist", "stage": "Operations", "focus": "Schedule classes, book rooms, collect forms, follow the workshops, learn to teach a course of your own" },
+  { "title": "Senior Training Specialist", "stage": "Projects", "focus": "Run a training project alone, from needs interviews through course design to evaluation" },
+  { "title": "Training Supervisor", "stage": "Trainers", "focus": "Manage the internal trainers and one site's training system; negotiate time with workshop directors" },
+  { "title": "Training Manager", "stage": "Budget", "focus": "Run the group's training plan and budget and prove to top management the money is worth it" },
+  { "title": "Director of Talent Development", "stage": "Direction", "focus": "Manage the leadership pipeline and succession; decide where the group develops its people" }
+ ],
+ "ai_tasks": [
+  { "name": "Negotiating training hours with workshop directors", "how": "Pulling people off a production quota for two hours rests on the face you've built up in the workshops over the years." },
+  { "name": "Handling on-the-spot problems in training", "how": "A trainer who doesn't turn up, workers asleep after nights, equipment not ready: a person has to solve these then and there." },
+  { "name": "First drafts of courseware and exam questions", "how": "AI turns an SOP into slides and a question bank. The one step people really get wrong on the floor has to be added by someone who knows." },
+  { "name": "Training notices and progress tracking", "how": "Connect the shift schedule to the learning platform and notices, reminders and tallies run themselves." },
+  { "name": "Summarizing training feedback forms", "how": "AI sorts thousands of forms in minutes and writes a passable summary." },
+  { "name": "Analyzing training needs", "how": "AI finds leads in defect rates and appraisal data. Someone must ask the team leader what that number really means." }
+ ],
+ "events": {
+  "e_first_class": "Your first safety talk for workers just off nights. Halfway through, four in the second row are asleep. The shift leader goes over to slap the desk, and you tell him not to. Next time you move the class to before their shift and cut it to eight minutes.",
+  "e_budget": "When solar turns down, training is the first budget to go. All outside trainers stopped; your ¥800,000 becomes ¥260,000. The team lead says the good thing about a department like ours is that when it's cut, you can't tell for a while.",
+  "e_line_change": "A generation of cell lines is being replaced with a new process, and more than two thousand operators must be recertified within six weeks. You move your classroom to the edge of the workshop and teach four shifts a day. By week three your voice has gone.",
+  "e_voice": "Your throat finally develops vocal nodules. The ENT doctor prescribes a nebulizer and less talking. You begin using a clip-on amplifier, and at home you notice your speech keeps to its cadence.",
+  "e_school": "Each September more than four hundred new graduates fill the auditorium in new uniforms. You run three days of orientation. By day three a dozen are asking about the penalty for breaking their contracts, and you note that down as course research too.",
+  "e_old_master": "You film the twenty years of feel in a veteran welder's hands as seven short videos. Seeing his hands enlarged on a screen for the first time, he says what ugly hands. Those seven videos end up with more views than all your slide decks combined.",
+  "e_foreman": "At the third team-leader boot camp, a woman who heard the session on giving feedback goes back and actually has that talk with the hardest veteran on her team. They have a blazing row afterward. The team's defect rate drops a little. She's still furious when she comes to tell you.",
+  "e_kpi": "At the business review the boss asks: we've spent all this on training, how much has line yield improved? You bring out the Kirkpatrick four-level evaluation table. Level four is blank. You've answered this question many times, and differently each time.",
+  "e_vendor": "An outside consultancy is selling a leadership simulation at thirty-eight thousand yuan a day. You sit in. The trainer tells a story you heard ten years ago, with a different company's name in it.",
+  "e_cert": "The enterprise skill-level assessment opens, and the group becomes a certifying body. Two thousand people's theory exams, practical scoring, assessor training, all yours to schedule. One breach of exam rules voids a whole batch.",
+  "e_dorm": "You start a night school in the dormitory zone, teaching workers Excel. You planned for twenty; more than a hundred come, and some stand at the back. A woman studies three months and goes on to be a team statistician.",
+  "e_ai_course": "An AI courseware tool arrives and an hour yields what two weeks used to. Half the team feel relieved and the other half wonder what they're for. You send a generated process course to the workshop for checking. A process engineer replies: these are last year's parameters.",
+  "e_ai_tutor": "Tablets and AI coaching reach the workshops. New workers practice in front of screens and pass rates go up. An older worker who trains them says the thing is fine, only it can't teach them when to stop the line. You put that in the annual report.",
+  "e_thai": "The group builds a plant in Thailand and you take a small team to train local staff. Slides are translated into English and then Thai. When you reach \"you must stop the line,\" the interpreter goes quiet for two seconds and asks how serious that word really is.",
+  "e_layoff_train": "The company is shrinking and a group must transfer or leave. You run the transition course. A team leader of twelve years, in the front row, asks whether anyone outside will recognize its certificate. You tell the truth.",
+  "e_pickup": "During the six weeks of new-process certification you are at the plant by seven every day, and your child's primary school in Hutang lets out at half past four. You and your spouse take turns asking for leave. The after-school teacher knows every relative you have.",
+  "e_merge": "The group announces organizational optimization. Training and development is folded into the HR shared service center, the classrooms go to Admin, and your team of six is split three ways. Your job description gains a line: also responsible for employee experience.",
+  "e_fade": "One of your second cohort of internal trainers is now a workshop director. In a production meeting he turns to a new hire and says go ask the training department, in exactly the tone you once taught him."
+ },
+ "choices": {
+  "c_school": { "title": "Teach at a vocational college", "situation": "A vocational college in Changzhou wants industry-experienced lecturers for its school-enterprise program. Thirty percent less pay, winter and summer breaks, and no one to explain training ROI to. You've taught for years. What would it be like to stand at a lectern and only teach?", "options": [
+   { "label": "Go to the college", "result": "You hand in your notice on the very day a training project closes out.", "end": "In a new classroom you still teach how a person gets steady at a workstation. Students ask why, and you have the time to answer it all the way through." },
+   { "label": "Stay at the plant", "result": "You forward the recruitment notice to a colleague who wants out more than you do." }
+  ] },
+  "c_consult": { "title": "Go independent as a consultant-trainer", "situation": "A training agency offers you work as an independent trainer on manufacturing team-leader skills, at twelve thousand yuan a day. The money is real, so are the months without any, and you'd be delivering the kind of thing you've rolled your eyes at during sit-ins.", "options": [
+   { "label": "Go it alone", "result": "You bundle up six years of cases. The day you leave, Admin takes back your laser pointer.", "end": "You teach team leadership in hotel conference rooms across the country. Your course is more honest than most, which is your selling point, and occasionally what keeps you awake." },
+   { "label": "Stay at the plant", "result": "The agency keeps messaging you. You mute it." }
+  ] },
+  "c_course": { "title": "Apply for Senior Training Specialist", "situation": "The team will promote a Senior Training Specialist on the strength of an independent project. You could take the safe \"new hire onboarding optimization,\" or the one nobody wants, on-the-job coaching for night-shift team leaders, which means three straight months of nights.", "options": [
+   { "label": "Take the nights", "result": "You record the team leaders' problems on your phone and three months later turn them into a set of one-card-one-step guides. At the review a vice president asks if this can be rolled out." },
+   { "label": "Take onboarding", "result": "You cut new-hire onboarding from seven days to five. The forms are lovely. Everyone says it's good. No one remembers who did it." }
+  ] },
+  "c_fake": { "title": "Should this evaluation look better", "situation": "The team-leader boot camp is over and the honest data show defect rates barely moved. Your manager, reporting to the boss next week, hints that you might adjust how the figures are calculated, so next year's budget has a chance.", "options": [
+   { "label": "Report it straight", "result": "You write: no significant effect on yield; recommend longer tracking. Next year's budget falls by ¥150,000 and your name goes missing from several project teams for a while." },
+   { "label": "Adjust the measure", "result": "You take only the three best-performing teams. The report looks fine and next year's money is approved. All three team leaders are promoted that year." }
+  ] },
+  "c_supervisor": { "title": "Compete for Training Supervisor", "situation": "The Training Supervisor post is vacant: more than forty internal trainers to manage and hours to fight for from every workshop. The competition requires a public lecture on the topic you least want to speak about: does training actually work.", "options": [
+   { "label": "Get up and speak", "result": "Your first line: I've answered this question seventeen times, and never the same way twice. The judges laugh, and their questions after that are very detailed." },
+   { "label": "Don't apply", "result": "You keep doing your projects carefully. The new supervisor asks you to introduce him to every workshop director. By the third, you've begun to regret it." }
+  ] },
+  "c_ai": { "title": "Lead the AI coaching project", "situation": "The group wants AI coaching, loading veterans' experience into it so new workers can learn from a tablet. The veterans won't cooperate; teach the machine, they say, and we're done. You'd have to talk to them one at a time, and someone must answer for what happens when it's wrong.", "options": [
+   { "label": "Lead it", "result": "You learn to write prompts and to do acceptance tests, and also to win them an \"experience contribution\" fee. It launches. Some of it is indeed inaccurate." },
+   { "label": "Leave it to IT", "result": "You go on walking between classroom and workshop. The tablets reach the workshop anyway, and what's on them looks a little unfamiliar." }
+  ] },
+  "c_manager": { "title": "Compete for Training Manager", "situation": "The Training Manager runs plans and budgets for four sites and speaks to senior management four times a year. Be unclear and the budget gets cut. Be too clear and other departments come after your people.", "options": [
+   { "label": "Compete", "result": "You begin talking training in language the boss understands: what losing one welder costs, what one batch of rework costs. You work these figures out in detail, and correctly." },
+   { "label": "Stay with your trainers", "result": "You'd rather be in the classroom. The young people who don't understand are easier to read than senior managers." }
+  ] },
+  "c_director": { "title": "Compete for Director of Talent Development", "situation": "The Director of Talent Development manages the leadership pipeline. Whose names go on the list, and whose don't, will be studied by everyone. The job is no teaching and all meetings. You haven't stood at a lectern in ten years. Do you still want this?", "options": [
+   { "label": "Compete", "result": "You revise the first draft of the list nine times. After it goes up, several vice presidents separately invite you for tea." },
+   { "label": "Don't compete", "result": "You say you'd like to spend more time in the workshops. The head of HR says you really have thought it through, saying that now." }
+  ] },
+  "c_hrbp": { "title": "Move to the workshop as production assistant manager", "situation": "A plant manager says you know the workshops so well you should stop teaching and come help him manage people. The job is line management: higher pay, phone calls at midnight, and everything you've taught others for ten years to be practiced yourself.", "options": [
+   { "label": "Go to the workshop", "result": "You give up your training system access.", "end": "At your first morning meeting as a manager you set targets for a team, and look up to see faces you once trained. Someone mutters: Teacher, that's not how you taught it." },
+   { "label": "Stay in training", "result": "The plant manager says you've got no nerve, and invites you to dinner again anyway." }
+  ] }
+ },
+ "endings": {
+  "retire": "The year before you retire, the first line you ever worked on has long been dismantled. The plant now holds energy storage cabinets, and you can't teach their processes. The training system generates your cumulative record: more than nine thousand teaching hours. You think about that number, and then about the taped-up scrap module.",
+  "burnout": "Your vocal cords reach the point where you can't teach, and the group moves you to a job reading reports. Your clip-on amplifier stays at the old desk. The first time you attend a meeting and don't have to speak, you find you aren't sure what to do with your hands."
+ },
+ "stages": [
+  "You schedule classes, send notices, collect sign-in sheets, enter names in the learning platform, and forty minutes before class set up projectors and teaching aids. The trainers are team leaders drafted from the workshops; you fix their slides and teach them not to talk with their backs to the room. You deal most with shift leaders, who hold the one cell in the schedule that decides whether anyone can be released.",
+  "You have projects of your own. You spend days in a workshop to find exactly where a station goes wrong, then design the course, choose the trainer, build the assessment, and three months later go back to see whether the number moved. The evaluation goes to the head of HR and also to the workshop director who doesn't quite believe in training. The difference from the last level is that people have started asking: and so?",
+  "You manage more than forty internal trainers, grading them, scheduling them, paying stipends, running a yearly course in teaching skills. Half your time goes on talks with workshop directors: how many people this month, for how long, in exchange for what. You no longer teach new hires the rules. You teach team leaders how to lead, and people stop you to ask whether you can get them moved to another shift.",
+  "You run the group's training budget and plans, standing before top management four times a year to say where the money went. Vendor comparisons, annual plans, talent review data all come from you. Teaching grows rarer and bookkeeping more frequent, and you've begun to speak in labor hours and rework rates.",
+  "You manage the leadership pipeline and succession plan, sending the list to the boss each year and watching which names his pen pauses at. How management trainees rotate, whom to send to the overseas plant, who needs seasoning elsewhere: it's all settled in your meeting room. What you say often decides where someone goes for the next five years."
+ ],
+ "work": [
+  "On the new-hire rules exam you misprinted one true-or-false item, and all four hundred got it right. The team lead has you redo it. You stand at the copier until eight, and it jams twice.",
+  "A shift leader returns a sheet with eight forged signatures. You take the IDs to the workshop. One man says his wife signed for him; the couple work on the same shift.",
+  "You stand by a stringer for the first time to hear the equipment trainer. With earplugs you can't hear a thing. He makes a motion with his hand, and you understand that this course can't be taught in a classroom.",
+  "The lamination station has too many defects. You record on site for three days and discover day and night shifts load differently. You skip making a deck and bring in the young man on nights who does it right.",
+  "You cut a four-hour quality course into eight station cards fixed to the side of the equipment. The quality manager says you call this training? A month later he orders a hundred.",
+  "Campus hire retention is low. You phone everyone who left within three months. One young man says the dorm has no private bathroom. You put this in the training research report and pass it to Facilities.",
+  "In the trainer grading, an old welder's slides get a failing mark and his students' scores are the highest. You add a line to the form: can people understand you.",
+  "The storage workshop's director says he can't release one person next month. You spread the production schedule on his desk and point to a two-hour changeover window on Wednesday afternoon: just those two hours.",
+  "Negotiating the annual contract with a consultancy, you chart three years of average cost per training hour. Their director smiles, cuts the price twelve percent, and adds two free days.",
+  "When training's turn comes at the quarterly business review, you show one slide: welders retained this year, multiplied by what it costs to recruit and train one. The CFO looks down and presses a few buttons on his calculator.",
+  "A plant manager on the succession list is a year short of overseas experience. You talk to the president for forty minutes and send him to Thailand. His spouse phones you to ask what about their child's schooling.",
+  "On the seventh draft of the management trainee rotation, a vice president wants his relative in the first batch. You print the selection rules and leave them beside his teacup."
+ ],
+ "past": [
+  "You grow up in Jintan, where your father is a shift leader at a textile mill. When a new machine arrives, he spends ages learning it and at night mimes the motions for your mother.",
+  "You choose HR management because you won't have to do advanced math. Only later do you find you'll have to do statistics.",
+  "In your third year you do logistics for the debate team and find you are better than those on stage at explaining what someone just said.",
+  "After graduation you join the admin department of a trading company, booking meeting rooms and sending notices. After a year you feel you could try something else.",
+  "A Changzhou solar plant is expanding and its training team is hiring. In the interview they ask whether you can teach. You say you can try, and they hand you a scrap module."
+ ],
+ "late": {
+  "pension_note": "Estimate: southern Jiangsu manufacturers pay social insurance on time, with a modest enterprise annuity. The pension is enough to live on in Changzhou.",
+  "scenes": [
+   "You now mentally divide what anyone says into three points. A neighbor talks about his renovation. You ask what his first step is. He pauses and says he just wanted to know where tile is cheap.",
+   "The neighborhood seniors' college asks you to teach smartphones, and you break \"how to avoid scams\" into five cards. After one lesson an old man says it's the shortest class he's ever attended. You take this as praise.",
+   "Those coaching videos you made were later used, reportedly, as training data. New hires now learn the motions from a tablet. The hands are still there. The name isn't.",
+   "The plant has become a logistics park. Driving past, you see the two-story building that held the training room still standing, parcels piled on the ground floor, the old anti-static sign still taped to an upstairs window.",
+   "Days of not talking have done your throat a lot of good. You begin reading at home, quietly, to yourself, and stop at the third paragraph.",
+   "You still read reports. Sometimes a spike in turnover tells you which line has changed processes again. No one asks you for that now.",
+   "You sign up for calligraphy. The teacher lectures with his back to the students. You raise a hand, think about it, and put it down.",
+   "After changing fields, you still feel you owe someone an explanation every quarter. The urge slowly fades, faster than your voice recovered.",
+   "You hear the group's training and development department is gone, replaced by a two-person \"learning experience\" group and a system. You ask who goes down to the workshops now. They say the system has videos.",
+   "Solar has been through two more cycles. People who once took your course are plant managers elsewhere, or home running supermarkets. You find one online, teaching people how to livestream.",
+   "At hospitals, banks, any counter with a procedure, you want to rewrite the notice posted beside the window. Too many words, and in the wrong order.",
+   "Young people at dinner talk about work, how the company's doing training again, how annoying. You put a piece of fish in one's bowl and ask who teaches the class, and whether they've ever been down to a workshop."
+  ],
+  "closing": {
+   "retire": "You take the batteries out of the laser pointer so they won't leak. The third point on the page is still undecided.",
+   "burnout": "The lamp is on and the book is open to the third paragraph. The room is quiet. This lesson needs no evaluation.",
+   "end": "Evening. Downstairs someone is teaching a child to ride a bicycle, and won't stop talking. You listen from above and think the child has heard enough."
+  }
+ }
+}

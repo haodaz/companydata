@@ -1,0 +1,167 @@
+{
+ "id": "network-yc",
+ "occupation": "Network Engineer",
+ "role": "Systems Integration Network Engineer",
+ "headline": "Doing networks at a twenty-odd-person systems integrator in Yinchuan: cabling and configuring for hospitals, schools, wineries and industrial parks, waiting for acceptance, waiting for payment, and watching someone else take over when the three-year warranty ends",
+ "unit": "A systems integration company in Yinchuan",
+ "unit_type": "Local private integrator",
+ "city": "Yinchuan, Ningxia",
+ "city_tier": "Provincial capital",
+ "education": "Bachelor's degree (Network Engineering)",
+ "level": "Subnetting is no problem. Labeling switches by feel in a pitch-dark telecom closet will be new.",
+ "intro": "The company is on the twelfth floor of an office building in Jinfeng District, twenty-odd people, with a warehouse bigger than the office. The boss puts a bag of RJ45 connectors and a crimping tool on your desk and tells you not to look down on those. Next week there's a county hospital's outpatient building to refit, three hundred points. At college you configured virtual routers. This time you'll be standing in a real telecom closet, with the wind off the Helan Mountains banging the door.",
+ "salary_note": "Estimate: a local Yinchuan integrator pays below the national figure for network engineers. Project bonuses depend on payment arriving, which can take a year.",
+ "facts": [
+  {
+   "label": "Network Implementation Engineer (current level)",
+   "value": "0–2 years, ¥3,600–5,300 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Network Engineer (2–6 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "On-site troubleshooting and cabling in equipment rooms and telecom closets",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Designing network architectures and configurations",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "14 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "At the warehouse you count the goods, switches, patch panels and a label maker, checking the shipping note against the contract list. Two optical modules short.",
+  "At the hospital's IT section, the section head opens the telecom closet and warns you to keep away from outpatient peak hours and not to tread on the ceiling.",
+  "On a ladder punching down cables one by one by color code. A nurse below asks when the printer will be fixed. That's not your job.",
+  "Lunch downstairs is a bowl of lamb pinched noodles. The project manager sends a message: the customer wants two more points, at no extra charge.",
+  "You plug in a console cable and configure the switch, carving up VLANs one at a time. When you finish you save, and saving is something you say three times.",
+  "You do the as-built documents, photograph each patch panel and compare the topology to reality, and find a line on the diagram that doesn't exist.",
+  "At the office you work on the point list for the next bid. The deadline is ten o'clock the day after tomorrow, and the print shop closes at six-thirty.",
+  "A call from the section head: the outpatient system goes live first thing tomorrow, and you'll have to go there again tonight."
+ ],
+ "ladder": [
+  { "title": "Network Implementation Engineer", "stage": "Racking and cabling", "focus": "Following projects to rack equipment, punch cables, do basic configuration and put together as-built documents" },
+  { "title": "Network Engineer", "stage": "Delivering alone", "focus": "Solely responsible for small and medium project design and delivery, fault handling and working with compliance assessors" },
+  { "title": "Senior Network Engineer", "stage": "Pre-sales and sign-off", "focus": "Pre-sales proposals and bids, design review, and hard problems across vendors" },
+  { "title": "Technical Director", "stage": "Whole-company tech", "focus": "Deciding technical direction and vendor partnerships; answerable for project quality and payment risk" }
+ ],
+ "ai_tasks": [
+  { "name": "On-site troubleshooting and cabling in equipment rooms and telecom closets", "how": "AI can only suggest what to check. Which wire isn't seated or which unit is overheating takes someone squeezing in to look." },
+  { "name": "Designing network architectures and configurations", "how": "AI can draft designs and configurations. Fitting them to this organization's budget, old equipment and temperament takes a person." },
+  { "name": "Network security checks and remediation", "how": "AI can sift logs and list risks. Which rules can be touched and which would bring the business down, a person must judge." },
+  { "name": "Drawing topology and compiling as-built documents", "how": "Topology and documents can mostly be generated automatically, with a person checking actual cabling once on site." }
+ ],
+ "events": {
+  "e_label": "On your first project you put three hundred labels on perfectly straight. The boss comes for acceptance and checks ten. One is wrong. He has you verify all three hundred again.",
+  "e_loop": "You configure a loop by mistake and the whole building's network goes round in circles. The IT section head stands behind you and says seven things in one minute. It takes you fifteen to find it.",
+  "e_tender": "The night before a bid deadline you find the manufacturer's authorization letter has expired. You drive off to find someone at the vendor's local office and get the bid into the public resources center with forty minutes to spare.",
+  "e_winery": "A winery at the foot of the Helan Mountains wants wireless across its whole estate, with no power and no poles among the vines. You spend a day putting up antennas in the wind. The owner brings out a bottle of his own wine and says it's better than your quote.",
+  "e_payment": "Eight months after acceptance, the customer's final payment is still in process. The boss begins paying bonuses late, and you begin phoning the finance section head on the company's behalf, more politely each time.",
+  "e_djcp": "The security compliance assessors arrive with forty-seven items to remediate. You spend your weekend going through firewall policies and find three rules written by someone five years ago that nobody now dares touch.",
+  "e_ai_config": "With AI generating configurations, a proposal is done in half a day. You spend another half day reading it line by line, and on line forty you find it has opened the management subnet to the Internet.",
+  "e_ai_topo": "Tools can discover devices and draw topology automatically. A new hire is thrilled on his first run. On site he finds that the switch on the diagram has been stuffed into the ceiling.",
+  "e_warranty_out": "The three-year warranty ends and the county hospital gives maintenance to another integrator. Your labels are still there, and the new people use them. One of them phones to ask what that annotation on the patch panel means.",
+  "e_eol": "The vendor announces end of support for a long-used batch of switches. The customer won't pay for new ones. When one fails, they call you, and you buy a used card at the secondhand market, not feeling very sure.",
+  "e_child": "Summer vacation is peak season for school refits, and while you're cabling classrooms, there is no one at home to mind your child. That summer you bring her to the site, and she does her homework in the office, listening to you call port numbers over the walkie-talkie.",
+  "e_goji": "A goji berry processor in Zhongning is putting in surveillance and networking, and the owner wants production data on his phone. You take the measurements of his warehouse while you're there and tell him why the Wi-Fi keeps dropping.",
+  "e_ccna": "You pass the mid-level network engineer exam, and the boss posts a red envelope in the group chat, twenty yuan. Your pay won't change until the next raise, and the next raise hasn't been decided.",
+  "e_ladder": "After so many years on ladders you've begun to fear raising your arms up there. Your spine X-ray comes back and the doctor asks if you've been lifting heavy things. Switches aren't heavy, you say.",
+  "e_ruler": "A project in a county to the west sits at the foot of the mountains, four hundred kilometers round trip, and you go three times in a week. Driving, you can't stop thinking about the as-built documents. When you get home you find your car's service is overdue too.",
+  "e_company_shrink": "The big orders are all going to large integrators from out of province. The company shrinks from twenty-odd people to eleven, the boss gives up half the warehouse and your office moves to a cheaper building.",
+  "e_young": "A new engineer is fluent in scripts and quick with configurations, but has never been in a telecom closet. You take him in once and let him find by feel the one wire that wasn't seated.",
+  "e_contract": "An old customer's contract comes up, and this time the new person in charge only cares about price. You bring five years of maintenance records. He reads two pages and asks if you can go ten percent lower."
+ },
+ "choices": {
+  "c_cloud": { "title": "The cloud base in Zhongwei", "situation": "A cloud base in Zhongwei is hiring network operations engineers. Forty percent higher pay, full social insurance, three shifts. Projects keep coming one after another where you are, and your boss says a raise is on its way.", "options": [
+   { "label": "Go to Zhongwei", "result": "You sort out the documents on your three projects and send the boss a long message.", "end": "You become a duty engineer at the cloud base, with no more ladders. Only now, those ports you watch on screen are never going to be touched by your hands again." },
+   { "label": "Stay at the company", "result": "You choose to stay. Three months later, the raise the boss promised does arrive, a little of it." }
+  ] },
+  "c_engineer": { "title": "The hurdle to become Network Engineer", "situation": "The boss says that to become a Network Engineer you'll have to deliver a project on your own and pass the mid-level exam. There's a primary school campus network just now, not much money, all on you, and nobody to catch your mistakes.", "options": [
+   { "label": "Take the primary school", "result": "It takes three weeks by yourself. On acceptance day the principal has the children applaud you, and your face goes hot." },
+   { "label": "Follow along for another year", "result": "You stay with the project manager and learn how not to say that's not my job on site." }
+  ] },
+  "c_extra": { "title": "The points outside the contract", "situation": "A middle school's facilities head has suddenly added eight points, saying the word etc. in the contract covers them. Do them and you lose money. Refuse, and he holds the final payment.", "options": [
+   { "label": "Do them, and put it in a work memo", "result": "You do them and have him sign the memo. Later that piece of paper helps you collect the final payment." },
+   { "label": "Argue it out", "result": "You bring out the contract and circle the word etc. The eight points are billed separately, and you get the cold shoulder in exchange." }
+  ] },
+  "c_ai_ops": { "title": "Turning AI operations into new business", "situation": "You want to offer a few old customers an AI-assisted operations service: alarms, configuration checks, automatic inspections. The boss says you can't bid for that and nobody will pay for it, but you could try it with one.", "options": [
+   { "label": "Try it with one", "result": "After hours you build one for a school and write up a permissions table of who can touch what." },
+   { "label": "Keep your energy on projects", "result": "You carry on running projects. Later this becomes a scoring item on tenders, and the proposal is written by an out-of-town company." }
+  ] },
+  "c_gov": { "title": "A contract post in the customer's IT section", "situation": "The county hospital's IT section wants you. It's a contract post at slightly lower pay, with regular hours and nobody's final payment to chase. The boss says he'll give you shares, and what those shares are worth can't quite be seen at present.", "options": [
+   { "label": "Go to the customer side", "result": "You clear your desk and leave half a bag of connectors on the corner of it.", "end": "You join the hospital's IT section. When integrators come in to bid you recognize every line of their pitch. This patch panel you label yourself." },
+   { "label": "Take the shares and stay", "result": "You sign the agreement and get three percent and a certain expectation of the future." }
+  ] },
+  "c_senior": { "title": "Applying for Senior Network Engineer", "situation": "The company needs qualifications for bidding and wants you to sit the systems planning and management exam, then go up as Senior Network Engineer. The exam will take half a year of weekends, and your three projects are all nearing acceptance milestones.", "options": [
+   { "label": "Sit it", "result": "Saturdays in a classroom, you and a roomful of equally tired people work through case questions. Once you pass, the bid's qualification table gains a line." },
+   { "label": "Deliver the projects first", "result": "All three are accepted. The certificate will wait for the next round." }
+  ] },
+  "c_vendor": { "title": "The kickback in equipment selection", "situation": "A distributor's salesman hints that if your design picks his equipment, a technical service fee will follow later. The company's books have been tight for six months, and this design is for a school.", "options": [
+   { "label": "Select on need, ignore the hint", "result": "You attach a comparison table of both vendors' specs. The company's books stay tight." },
+   { "label": "Report to the boss, let him decide", "result": "You pass it on word for word. After a silence he says he'll deal with it. In the end that vendor's equipment is still in the design." }
+  ] },
+  "c_cto": { "title": "Taking over as Technical Director", "situation": "The boss wants to step back a bit and asks you to be Technical Director. It isn't only technical: it means qualifications, bids, a dozen people's wages and going with him to collect debts.", "options": [
+   { "label": "Take it", "result": "Your first act is to post each project's payment milestones on the wall." },
+   { "label": "Stay an engineer", "result": "You say you'd rather stay in the equipment room. The boss hires someone from outside, and you have to introduce him to the customers here." }
+  ] }
+ },
+ "endings": {
+  "retire": "The company still exists, renamed once, and its business has become managing customers' accounts in the cloud. On the day you retire you put your crimping tool and tone tracer in a bag. No one at the company wants these things. Some of the equipment rooms you ran through are gone, and some carry other people's labels. Driving home you pass a school, where the camera at the gate is one you installed. It's still lit.",
+  "burnout": "Your back and neck won't let you stand on a ladder anymore, and the payment cycles have worn down most of your resolve. You ask for the documentation post, and when the company downsizes you go to a property management firm looking after a compound's cameras. It's light work. Each day you write the broken cameras on a sheet, and the next day you call someone to change them."
+ },
+ "stages": [
+  "You run between equipment rooms and telecom closets, racking equipment, punching cable, labeling, and doing basic configuration with a console cable. In the afternoon you go back to the office and turn site photos into as-built documents. You do what the project manager says, and if the customer asks you to pass them something, you pass it. Lesson one is not to leave handprints on the ceiling.",
+  "Small and medium projects are yours alone now. You survey the site, draw the topology, list the equipment, and do everything from racking to acceptance, working with the compliance assessors on remediation. When an IT section head has a network problem, he calls your phone directly. You're no longer the one passing things, and if there's a mistake, you have to explain it yourself.",
+  "You begin doing pre-sales, talking requirements with customers, writing bids and reviewing younger people's configurations. The point list and technical deviations in each bid get your final look, and hard problems across vendors come to you too. You spend more time in customers' meeting rooms, and learn before saying yes to ask which budget line the money is in.",
+  "You run the company's qualifications, technical direction and a dozen people's project schedules, negotiate partner levels with vendors and calculate payment risk. Going with the boss to collect debts, you understand the other side's finance people better than you used to. You rarely enter an equipment room now, but when someone can't find a wire, your phone still rings."
+ ],
+ "work": [
+  "The project manager has you sort the warehouse's optical modules by speed. You post a chart. Next day he comes looking for something, finds it in ten seconds and says, this one's useful.",
+  "With a tone tracer you follow a cable through the ceiling into the next department. A doctor stares at you for a long while, then tells you to move the films off the desk before you step on it.",
+  "A primary school loses its network at two in the afternoon, in the middle of a demonstration lesson. On site you pull out one cable and the switch lights come back into rhythm. A student wired that loop.",
+  "For the firewall policy table the assessor wants, you export from three devices and merge them on one sheet. One rule is marked temporary, and dated four years ago.",
+  "A county meeting room suddenly needs video conferencing. You make do with a phone hotspot and a small router. The information center director says the bureau chief had better not hear of it.",
+  "The tender documents sales brings back specify three technical parameters, and you can see right away which vendor they point to. In your proposal you write down clearly where this one is stronger and where that one is cheaper.",
+  "A young engineer's configuration has a line reading any any permit. You mark it in red and ask him to say who actually needs this line.",
+  "A vendor's regional manager comes to discuss partner levels and wants three million yuan from you this year. You take out a few years of payment records and tell him what you can do is two million, and that those two million will get paid.",
+  "The boss wants to take a project that requires fronting the money. You lay out the cash flow, and by month fourteen the wages can't be paid. In the end the job isn't taken."
+ ],
+ "past": [
+  "Your family lived in Xixia District, Yinchuan, and your computer was your cousin's hand-me-down. To play games with classmates over a network you taught yourself to make cables, and you crushed half a bag of connectors doing it.",
+  "You wrote Network Engineering on your college form, thinking it the closest thing to playing games. The first class covered the seven OSI layers, and only then did you realize this was more trouble than you'd supposed.",
+  "You worked part-time in the college's computer lab, fixing the network for the teachers at three hundred yuan a month. The air conditioning there was broken, and you got to know every cable on the floor.",
+  "Classmates all went to Beijing and Xi'an. You also interviewed at an Internet company in Xi'an, and they asked nothing but algorithms. On the train back you thought perhaps you'd rather deal in wires.",
+  "The boss of this Yinchuan company came to the college looking for interns and opened by asking who dared climb a ladder. You raised your hand. Later you found that climbing the ladder was the easiest part of the job."
+ ],
+ "late": {
+  "pension_note": "Estimate: a local private company contributing on a low base that rises in later years; the pension covers basic expenses.",
+  "scenes": [
+   "In your first year retired you install Wi-Fi at the seniors' activity center for free, with labels neater than the hospital's. The old fellow in charge of the keys asks if you'd like to stay for a game of chess.",
+   "You find seasonal work at a winery at the foot of the Helan Mountains, picking grapes in autumn and fixing the network on the side. The owner doesn't know you once ran the first cable across this land, and you don't say so.",
+   "These days every home in the compound has fiber to the door, and your crimping skills have nowhere to go. A child in a community hobby class asks what a network cable is, and you take one out of your bag to show him.",
+   "The hospital's CT room has new machines. There for your spine, you look up and see the ceiling access hatch. The cover isn't quite shut, and you wonder whether to mention it to the nurse.",
+   "At the property firm a resident says the compound's network is bad. You say that's up to the carrier, and then you go and look at where his router is.",
+   "Your back has steel pins, and before rain it feels a bit swollen. You've stopped thinking about bids and payments. After dinner you walk slowly to the Yellow River, then slowly back.",
+   "The trade group chat has dissolved, with most people long since in other lines. In the messages you saved, more than half of the companies have been deregistered.",
+   "At the new place, your first paycheck comes without delay. You stare at the deposit message and check it twice.",
+   "Your old customers now give all their money to cloud services. In your new position you've begun signing contracts like that too, whose response times are quicker than you ever ran.",
+   "The old boss takes you out for a meal one day and says those shares long ago stopped being worth anything. You talk about that telecom closet. He can no longer remember which building it was in. You still can.",
+   "Over dinner at a friend's home your eye strays to his distribution box. Lid open, the wires inside are like a plate of fried noodles. You say I could tidy that for you. He says let's eat first.",
+   "At hospitals you always look to see whether the access points on the ceiling are straight. They make them small now and install them neatly, which puts you at ease and also feels a bit dull."
+  ],
+  "closing": {
+   "retire": "The router's lights blink in the living room. The network is fine. You drink the goji from your cup and go to bed.",
+   "burnout": "On your sheet you write the camera on the fourth floor of Building 1, and then the date. Someone will come tomorrow to change it.",
+   "end": "The wind by the Yellow River is strong, and your phone has full bars. Each of those bars is someone else's to look after now."
+  }
+ }
+}

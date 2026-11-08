@@ -1,0 +1,149 @@
+{
+ "id": "hr-mgr-jn",
+ "occupation": "Human Resources Manager",
+ "role": "Human Resources Manager, Power Distribution Equipment Maker",
+ "headline": "At a nine-hundred-person switchgear maker in Jinan, with an office in the high-tech zone and the plant out in Zhangqiu, you hold the payroll and the exit-interview records; the boss thinks you side with the workers, and the workers think you are the boss's person",
+ "unit": "A Jinan maker of high- and low-voltage switchgear and power distribution equipment, nine hundred staff, headquarters in the high-tech zone, plant in Zhangqiu",
+ "unit_type": "Private mid-sized manufacturer",
+ "city": "Jinan, Shandong",
+ "city_tier": "Second-tier",
+ "education": "Bachelor's (Business Administration)",
+ "level": "You've handled all six HR functions, hold a Level 2 HR manager certificate and have been through five or six labor arbitrations. You have never yet pounded the table at the boss",
+ "intro": "HR is on the fourth floor at headquarters in the high-tech zone: one long table, four computers, one whiteboard covered in social insurance rules. Your predecessor left three arbitration case files in the cabinet, none yet heard. Workers at the Zhangqiu plant call you \"the one from Personnel.\" The boss calls you \"you there, come here a minute.\" The hottest thing in your hands is next month's pay adjustment table.",
+ "salary_note": "Estimate: private manufacturing in Jinan pays managers well below first-tier cities, and the year-end bonus depends on how the power grid tenders went; this figure is an average.",
+ "facts": [
+  { "label": "Human Resources Manager (current level)", "value": "8–14 years, ¥10,000–17,000 a month (national, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Director of Human Resources (14–20 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Handling labor contracts and labor disputes", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Workforce planning and annual headcount plans", "source": "AI exposure" },
+  { "label": "Open positions", "value": "8 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Driving to Zhangqiu. A workshop director calls on the way: he needs seven welders. You say four were hired this month and three left. That makes one, he says.",
+  "In the plant meeting room, talking with the family of an employee injured at work. What they say is true. What the company reported is true too. You have to put these two facts on one sheet of paper.",
+  "You go over this month's payroll. The system has calculated one team's night-shift allowance as zero. You get it fixed before lunch, since workers' phone calls are faster than the system.",
+  "You interview a production manager. As he goes through his achievements, you study the nine-month gap on his résumé and ask about it, very lightly.",
+  "Back at headquarters, the boss asks whether this year's raise can be held to three points instead of five. You put the turnover and recruitment cost tables in front of him.",
+  "An exit interview. An electrician of six years says he wants to go home to Liaocheng. You put \"family\" as the reason. What he actually means is pay.",
+  "In a small restaurant in the high-tech zone, you read a notice from the labor arbitration commission. The hearing is next Tuesday. You cross that day off your calendar."
+ ],
+ "ladder": [
+  { "title": "HR Specialist", "stage": "Paperwork", "focus": "Hiring and exit formalities, social insurance and housing fund, attendance and payroll" },
+  { "title": "HR Supervisor", "stage": "One function", "focus": "Lead a few specialists, run recruiting or pay and performance, handle employee disputes" },
+  { "title": "Human Resources Manager", "stage": "The whole job", "focus": "Run personnel for the whole company, give the boss proposals, deal with workshop directors, the union and arbitration" },
+  { "title": "Director of Human Resources", "stage": "Leadership team", "focus": "Join management; set structure, pay system and appointments; answer for labor cost" },
+  { "title": "Vice President, Human Resources", "stage": "Decisions", "focus": "Run personnel and admin, and do the hardest conversations on the boss's behalf" }
+ ],
+ "ai_tasks": [
+  { "name": "Workforce planning and annual headcount plans", "how": "AI compiles historical staffing data, estimates headcount and labor cost, and drafts plans. People set the direction against strategy and budget, and answer for the final plan." },
+  { "name": "Organizing recruiting and screening candidates", "how": "AI writes job descriptions, screens résumés, schedules interviews and takes notes. People make the interview judgment, assess cultural fit, negotiate pay and make the final hire." },
+  { "name": "New-hire orientation and on-the-job training", "how": "AI creates training materials, runs online courses and answers questions. People judge real training needs, help new hires join a team, and check whether training worked." },
+  { "name": "Designing and running performance appraisal", "how": "AI drafts indicators, compiles data and flags rating deviations. People agree with departments on what good means, resolve rating disputes, and answer for fairness." },
+  { "name": "Calculating pay and benefits", "how": "AI and payroll systems calculate wages, social insurance and income tax by rule and benchmark the market; people just spot-check anomalies. Pay strategy and special cases remain with people." },
+  { "name": "Handling labor contracts and labor disputes", "how": "AI looks up regulations, drafts contracts and letters and sorts evidence. Negotiation, arbitration hearings, weighing risks and bearing legal responsibility have to be done by a person." },
+  { "name": "Regular employee talks and coordinating staff relations", "how": "AI can remind you when talks are due and compile past notes. The talk itself takes a person to build trust, hear what isn't said, handle conflict and answer it." },
+  { "name": "Building company culture and analyzing HR data", "how": "AI quickly analyzes turnover and satisfaction and writes reports and event plans. People interpret the causes behind the data and bring culture into daily management and conduct." }
+ ],
+ "events": {
+  "e_social": "In July the social insurance base is adjusted and nine hundred lines must be checked. Finance wants this year's extra cost worked out. Workers want to know why their take-home is less. You have to give each side a number, and both numbers are correct.",
+  "e_spring": "For three weeks after Spring Festival, the Zhangqiu workshops are two-tenths short at every station. You post in recruitment chat groups and drive to vocational schools in Liaocheng and Dezhou. The fuel for this trip is easier to reckon than the people it brings in.",
+  "e_tender": "The power grid's centralized tender results come out. The company missed this batch and orders fall by thirty percent. The next day the boss has you work out how many months you could last without layoffs. You work all night. The figures are not good. You hand in only the method, with no recommendation.",
+  "e_arbit": "A long-serving employee files for arbitration over three years of overtime pay. Part of the company's attendance record is handwritten, and he has brought his workmates' chat logs. After the hearing, you nod to each other in the corridor.",
+  "e_grievance": "A woman at the Zhangqiu plant complains her team leader schedules unfairly, and the leader files a complaint that she's stirring up trouble. You pull both sets of schedules. Neither one is lying. You sit a long while that day in the workshop rest room.",
+  "e_neck": "Every year at raise and performance calibration time, the migraine arrives on schedule and your neck stiffens so you can't turn your head. The physiotherapist asks if you spend long periods looking down at numbers. You say yes, and looking up at people.",
+  "e_payroll": "Payroll is handed to the system and AI. Work that took three people a week now takes half a day. The payroll specialist asks what she'll do next. You say review the anomalies first. Even to you, this sounds a bit short.",
+  "e_ai_screen": "The recruiting system screens résumés with AI. A month in, you spot-check those it rejected and find a forty-seven-year-old veteran welder eliminated on \"age-to-position fit.\" You fix the rule, wondering how many more you won't catch.",
+  "e_cut": "The company decides to let forty people go. The compensation is lawful. The boss feels it's already generous. The people in the plant wonder whether a dozen-odd years come to no more than this. You speak to each person, and after each one you need a moment in the restroom.",
+  "e_union": "The union chair is Han, a fitter of thirty years. Before the employees' congress he calls you to his office and says this clause has to change. You talk from three until nearly six. In the end he pushes his teacup your way and says all right, it's not easy for you either.",
+  "e_keep": "A young commissioning technician wants to leave. You check three years of his raises and find the system skipped him. You make it up and go to the boss, who says nothing, and signs. That young man later becomes a team leader.",
+  "e_family": "A married couple has joined the Zhangqiu dormitory, with a child who needs a school. You make three trips to the education bureau to finish the enrollment forms. The parents bring you a bundle of Zhangqiu scallions. You think about it, and accept.",
+  "e_friends": "An old colleague takes you to dinner and halfway through asks: I hear there are going to be changes this year? You say you've heard nothing. On the way home you realize it's been many years since you had a proper meal with a colleague.",
+  "e_merge": "A listed company buys the firm. The group wants payroll, social insurance and recruiting moved to its shared service center. Your department goes from eleven people to four, and it takes three weeks to tell them, one by one.",
+  "e_labor": "You use a labor dispatch company, and the work injury insurance on one of its workers goes wrong. Its owner can't be found and the injured man is still waiting for news. You have the company advance the money first and chase liability up the chain. The boss asks whether you can get it back.",
+  "e_teen": "Three straight days of year-end performance calibration, and you miss your child's parent-teacher meeting. The teacher posts report cards to the group. You read it as you would a performance sheet, realize what you're doing, and put your phone down.",
+  "e_recruit_old": "Hiring gets harder and the average age in the workshop passes forty-five. You give a talk at a vocational school. Students ask if there's air conditioning in the workshop and whether they can look at their phones. The teacher at the back shakes his head at you: don't answer.",
+  "e_thanks": "An old hand you once walked through his departure later opens a power-equipment repair shop. Word comes through someone else: the severance covered his rent, and what you said that day he took in. By the time this reaches you, two years have passed."
+ },
+ "choices": {
+  "c_lawyer": { "title": "Labor law adviser at a firm", "situation": "After all those arbitrations, a partner at the law firm across the table says come to us as a non-litigation labor adviser; you understand factories better than anyone from law school. Income depends on clients and year one won't be easy. This time, you would no longer be caught in the middle.", "options": [
+   { "label": "Go to the law firm", "result": "When you tell the boss he's silent for a moment, then asks who'll look after these people once you've gone.", "end": "You sit in companies' meeting rooms in a new capacity. The bosses still ask the same question: can we pay a bit less. This time you charge by the hour." },
+   { "label": "Don't go", "result": "You tuck the partner's card into your copy of the Labor Contract Law and go on using it as a bookmark." }
+  ] },
+  "c_shop": { "title": "Head a region for an outsourcer", "situation": "The company has outsourced recruiting to an HR services firm, whose general manager has taken a liking to you and wants you to run central Shandong. What you used to buy, you would now sell. Pay up fifteen percent, year-end depends on results.", "options": [
+   { "label": "Join the outsourcer", "result": "You leave the file cabinet key on the desk.", "end": "You go from client to vendor and for the first time stand and report in front of a chair you once sat in. Their HR manager asks about your arrival rate. You know how that number gets made better than he does." },
+   { "label": "Stay at the company", "result": "You go on using this outsourcer, more strictly than before." }
+  ] },
+  "c_raise": { "title": "Three points or five", "situation": "For this year's raise the boss wants three points. You've calculated that it takes five to keep the welders. Among the workers, team leaders have been round several times to ask. The plan is due tomorrow. You understand both sides.", "options": [
+   { "label": "Hold out for five", "result": "You spend an afternoon with the boss on recruitment costs and attrition. It settles at four. He says that one point is something you owe him." },
+   { "label": "Go with three", "result": "The plan passes quickly. Later that year eleven welders leave. The workshop director comes to your office and doesn't sit down." }
+  ] },
+  "c_cut": { "title": "How to draw up this list", "situation": "The company has to shed forty people. The boss wants to go by performance, the workshops by age, the union by date of hire. Each method has its reasons. Each will hurt someone, and all are lawful. The first draft of the list is yours.", "options": [
+   { "label": "Performance, with better terms", "result": "You win an extra half-month of severance. Some people on the list were rated by their team leaders, and you know those ratings aren't always fair. You can't think of a better way." },
+   { "label": "Follow the union's view", "result": "Last hired go first. Some are those you worked hard to bring from vocational school two years ago. The workshop's average age goes up a little more." }
+  ] },
+  "c_ai": { "title": "Learn HR analytics and AI tools yourself", "situation": "The group wants HR digitized and needs someone who knows the business and can read a model. You're around forty, your hands are full, and the young staff say they can do it for you.", "options": [
+   { "label": "Learn it yourself", "result": "You study HR analytics at night for three months. Your first finding: teams with high turnover had all changed leaders the year before. That table later changes several of the boss's decisions." },
+   { "label": "Leave it to the young", "result": "You listen to reports and make decisions. The charts are lovely. Sometimes you aren't sure what to ask." }
+  ] },
+  "c_director": { "title": "Join the leadership team as Director of Human Resources", "situation": "The boss wants you as Director of Human Resources, sitting in management meetings. The first job in that seat is to cut one layer from the organization and move several of your long-time colleagues. The boss says draw up the plan yourself.", "options": [
+   { "label": "Accept", "result": "On the sixth draft, three veteran middle managers change posts. Later you pass them in the corridor. Some still speak to you." },
+   { "label": "Wait a while", "result": "The boss hires a director from outside at a salary higher than you'd guessed. For his first meeting, you get him the staff roster." }
+  ] },
+  "c_vp": { "title": "Compete for Vice President, Human Resources", "situation": "The acquirer wants a local Vice President for Human Resources, who must speak cost upward and retention downward, and also take apart half of decades of old rules. You know the state of those nine hundred people. It is your capital and your burden.", "options": [
+   { "label": "Compete", "result": "The acquirer asks what you think of long-serving staff. You say they are this company's most expensive asset and its most expensive cost, and that both statements need to go in the sums." },
+   { "label": "Stop competing", "result": "You leave the seat to someone sent by the group and go on running Zhangqiu. About Zhangqiu, he'll still have to ask you." }
+  ] },
+  "c_school": { "title": "Career guidance at a vocational college", "situation": "The school-enterprise office of a vocational college in Zhangqiu wants someone who knows companies, to handle student internships and job placement. Over thirty percent less pay, winter and summer breaks, and you wouldn't have to talk anyone through a layoff again.", "options": [
+   { "label": "Go to the college", "result": "The boss approves it and says just finish that arbitration before you leave.", "end": "You begin helping students with their résumés and telling them how to explain the gaps. One asks what the interviewer is actually thinking. You say, let me tell you." },
+   { "label": "Don't go", "result": "The college people are still around, and you exchange pleasantries at job fairs." },
+   { "label": "Teach one course on the side", "result": "You agree to teach labor relations one afternoon a week, using as your notes the arbitrations you've been through. The students listen more closely than the boss ever did." }
+  ] }
+ },
+ "endings": {
+  "retire": "The last set of papers you process is your own retirement. The social insurance system shows your years of service two months different from your memory, and you go to the window to clear it up. The company's personnel files have all gone online and the paper ones are in a third-party warehouse. How many people you've talked out the door in your life you've never counted, and couldn't if you tried.",
+  "burnout": "Migraine and blood pressure together force you to the second line, as an adviser two days a week. Someone else does the pay table now. Passing his desk sometimes, you see the way his neck tilts and find it familiar."
+ },
+ "stages": [
+  "You run all of personnel: check recruiting, review payroll, draft the raise plan, go to arbitration, hold the employees' congress with the union, and spend half your time in the workshops and rest rooms at Zhangqiu. The boss wants costs worked out, workers want an answer, and workshop directors want people. The contracts in the cabinet and the group chats on your phone both remind you who's next to talk to.",
+  "You've joined management, attending business reviews, setting structure, drafting appointments. Reports leave your system and the boss marks them up. You no longer talk to workers one by one. Now it's plant managers and vice presidents, whose words are prettier and whose sums are bigger. At the last level you handled what happened. At this level, you decide what will happen.",
+  "You run personnel and admin, explaining labor cost numbers to the group while facing the old workers at Zhangqiu who watched you rise. Annual budgets, equity incentive lists, reorganization plans all sit on your desk. The hardest conversations the boss won't go to himself. He sends you. When you come back he asks: well?"
+ ],
+ "work": [
+  "You pull three years of Zhangqiu turnover by team and find one team that loses half each year. You call no meeting and instead spend two night shifts with that team.",
+  "A work injury determination is missing one team record from the day. You find the page in the workshop's handover log, photograph it and send it to the social insurance officer.",
+  "The boss wants a vice president. You bounce the headhunter's third résumé with a note: he stayed fourteen months at each of his last two companies, did you ask about that?",
+  "You spend a week matching the group's new job grade system to Zhangqiu's old job titles, and Grade 7 fitter has no equivalent. You write your own mapping table, with a one-sentence note for the group to read.",
+  "Management meets to cut a layer of middle managers. You put everyone's span of control on one page. The CFO studies it, then points to a name and says, that's my cousin.",
+  "The equity list comes out without a workshop director of nineteen years. You go to the foot of his building, phone him, and ask if it's convenient to come down for a walk.",
+  "A group director comes to Jinan to review productivity. You prepare one page: the average age of frontline workers and their retirement dates, laid out for the next ten years."
+ ],
+ "past": [
+  "You live in old factory housing in Jinan's northern suburbs. The year your father's plant cuts staff, you see him bring home a form and turn it over and over, unable to work it out.",
+  "You study business administration in Shandong and take labor relations as an elective. The teacher uses nothing but cases, and you listen harder than in your major courses.",
+  "After graduation you join a food factory as HR specialist, checking badges at the gate every day. You learn to calculate social insurance, and to remember a person's name and number together.",
+  "You move to this power equipment firm as HR Supervisor. Representing the company at arbitration for the first time, you're so nervous you read the other party's name wrong.",
+  "You earn your Level 2 HR manager certificate. Your predecessor as manager often sends you to the workshops in his place. You spend more time there than in the office."
+ ],
+ "late": {
+  "pension_note": "Estimate: enterprise pension insurance on a fairly high base is enough to live well in Jinan, and you understand better than most how to use your medical coverage.",
+  "scenes": [
+   "In the compound you hear someone say the company won't raise his pay. You stop yourself from asking how long he's been there and how his rating was done. You're a retired person now. Other people's pay has nothing to do with you.",
+   "A neighbor's son has been let go and brings the contract to you. You put on your reading glasses, start at page one, and tell him which clause helps him and which doesn't, and also what the company is probably thinking.",
+   "Hiring has long been done by software. The Zhangqiu plant has put in robot arms and the workshop has a third fewer people. The exit interview records you wrote are on some hard drive or other.",
+   "You work out your whole life's social insurance contributions and your pension, down to the fen. All those years you did it for others; this time it's your own, and when you've finished it's a little dull.",
+   "Your blood pressure has settled. There are fewer days of headache. You have begun to be able to think of nothing at three in the afternoon, a skill that took a long time to learn.",
+   "Han stayed on at the union until seventy. You go to see him. Two old adversaries drinking tea. You get to talking about that year's raise. He says five points, you say four, and neither gives way.",
+   "The neighborhood mediation committee asks for your help. It's all neighbors' quarrels. You sit in the middle, one on each side, a position you know very well.",
+   "After changing fields, the first time you're paid you check the itemization first and find your social insurance base entered too low. You send their HR a very polite message.",
+   "You hear the switchgear plant's HR is now one \"local liaison,\" and that for anything else you ring the group's service line. You picture Han making that call.",
+   "In a restaurant, you notice the staff schedule on the wall. Weekends are clearly understaffed. You finish your meal and leave no suggestion.",
+   "Reading someone's résumé, your eyes still go first to the dates. Hearing someone talk, you still first wonder how long they've been at their company. You have brought this habit to the vegetable market.",
+   "There are more than a thousand contacts in your phone, labeled with notes: welder, commissioning, injury settled. When you change phones, you have the shop assistant bring them all over exactly as they are."
+  ],
+  "closing": {
+   "retire": "You've checked the list, down to the last fen. You fold it and tuck it into your copy of the Labor Contract Law, at Article 7.",
+   "burnout": "Three in the afternoon, and nothing to do. The tea has gone cold. You add a little more water.",
+   "end": "The restaurant is closing and the waiter begins setting out tomorrow's chopsticks. The staff here will get the schedule wrong again tomorrow."
+  }
+ }
+}

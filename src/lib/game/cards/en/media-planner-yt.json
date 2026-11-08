@@ -1,0 +1,309 @@
+{
+  "id": "media-planner-yt",
+  "occupation": "Media Planner",
+  "role": "Media Planner at a Local Agency",
+  "headline": "At a local agency in Yantai's Zhifu District, scheduling ad slots for apple growers, wineries and scenic areas, starting out as the media assistant who runs around photographing billboards",
+  "unit": "A local media company in Zhifu District, Yantai (media buying, outdoor and new-media placement)",
+  "unit_type": "Local media company",
+  "city": "Yantai, Shandong",
+  "city_tier": "Tier 3",
+  "education": "Bachelor's (advertising)",
+  "level": "You can make a schedule and tell list price from net price. You have not yet sat down at a client's banquet table.",
+  "intro": "The company is on the sixth floor of an old office building in Zhifu District. From the window you can see the sea and cargo ships, but your desk is piled with the city's bus route maps and a stack of outdoor billboard rate cards. Your first assignment is to take a camera and check whether a client's lightbox has been changed on time. Every photo you take is evidence for settling accounts at month's end.",
+  "salary_note": "Estimate: base pay plus project commission at a local Yantai agency, well below first-tier 4A levels.",
+  "facts": [
+    {
+      "label": "Media Assistant (current level)",
+      "value": "0–2 years, ¥3,200–4,600 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Media Planner (2–5 years)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Keeping up long-term relationships with media outlets",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Scheduling placements and building media lists",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "15 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+      "source": "Job listings"
+    }
+  ],
+  "day": [
+    "On the bus you scroll through what competitors are running. At the office you open the schedule. Three billboards change creative this week, and property management says one elevator screen will be down for maintenance.",
+    "You call the ad department at the city's traffic radio station to ask if the fifteen-second spot in the morning rush can move to 7:50. They say they'd have to look at the other clients. You say you'll call back this afternoon.",
+    "You ride an e-bike along the seafront road, photographing lightboxes, getting the date and the surroundings in the frame. The wind almost takes your camera bag, and one billboard has its image pasted a corner crooked.",
+    "Your supervisor has you work out a plan for an apple cooperative: ¥80,000, for October's season only. You put buses, local short-video ads and billboards at the wholesale market into one table.",
+    "Finance asks whether last month's rebate has come in. You go through contract, schedule and placement photos, and find that one outlet issued one invoice too few.",
+    "The client's marketing team writes: the boss has seen the sample and thinks the words should be bigger, and the logo bigger too. You pass this on to design, with your own apology attached.",
+    "Heading home past an elevator screen, you stop to count how many ads it runs per cycle and how many seconds each. The elevator comes. You wait for the next one."
+  ],
+  "ladder": [
+    {
+      "title": "Media Assistant",
+      "stage": "Legwork",
+      "focus": "Collects quotes, builds schedules, does monitoring, photographs placements. Moves up on clean accounts and hard walking."
+    },
+    {
+      "title": "Media Planner",
+      "stage": "Proposals",
+      "focus": "Builds media mixes to budget, deals with outlets and clients, tracks placement."
+    },
+    {
+      "title": "Senior Media Planner",
+      "stage": "Big accounts",
+      "focus": "Owns the year's media strategy for annual-contract clients; negotiates annual frameworks and rebates."
+    },
+    {
+      "title": "Media Supervisor",
+      "stage": "Team",
+      "focus": "Leads the media team, manages outlets and payment terms, presents at pitches."
+    },
+    {
+      "title": "Media Director",
+      "stage": "The bets",
+      "focus": "Decides which media the company backs or drops; keeps key outlets and major clients."
+    }
+  ],
+  "ai_tasks": [
+    {
+      "name": "Keeping up long-term relationships with media outlets",
+      "how": "Whose slots can be squeezed, which manager is moving next month: that takes years of contact and meetings. AI can only remember it for you."
+    },
+    {
+      "name": "Scheduling placements and building media lists",
+      "how": "AI can build the table and watch the deadlines. Sudden cancellations and clients changing their minds need a person."
+    },
+    {
+      "name": "Compiling media data and comparing prices",
+      "how": "Quotes and coverage line up automatically; people only spot-check for stale sources."
+    },
+    {
+      "name": "Writing media plans",
+      "how": "A first draft takes minutes. Where the budget really goes takes knowing this boss and this growing season."
+    },
+    {
+      "name": "Producing placement briefs and results reports",
+      "how": "Reposts, impressions and clicks roll into a report by themselves; people only look for odd key numbers."
+    }
+  ],
+  "events": {
+    "e_photo": "Your placement photos are missing the date. The client's finance department sends them back, and an ¥80,000 payment stalls. You ride the seafront road again in the rain.",
+    "e_apple": "October apple season, and every cooperative in Qixia wants to launch the same week. There are only so many buses to wrap. You color three clients across the schedule until it looks like a chessboard.",
+    "e_cherry": "June's cherries come in a week early, and the client's ad is still in review while the fruit is already ripe. You change the radio slots overnight, and the first spot goes out at ten that morning.",
+    "e_paper": "The local evening paper's ad department is down to three people. The head invites you for tea and says a full page can go at thirty percent. You take that to the client, who says, who reads newspapers now.",
+    "e_drink": "At the year-end media thank-you banquet, half of Yantai's ad world sits around one table. A Shandong table has Shandong rules. The next day your stomach and you request half a day off together.",
+    "e_settle": "Year-end settlement. A scenic-area client's payment drags on to the twenty-eighth of the twelfth lunar month. You've already advanced the money to the outlets. The boss asks who approved that.",
+    "e_summer": "July and August are tourist season, high-speed trains packed from Jinan and Beijing, and the scenic area wants lightboxes all over the south station. On the platform you pace off the route from exit to ticket gates.",
+    "e_tender": "A cultural tourism publicity project goes to tender, with a two-hundred-page bid. The night before the deadline you're waiting at the print shop for binding, and the people ahead of you are from a rival bidder.",
+    "e_fake": "One influencer's numbers look unnaturally good. After you place the ad, every comment is the same sentence. You send the screenshots to the client and strike that account from the list.",
+    "e_neck": "Your neck X-ray comes back and the doctor asks if you look down at your phone all the time. You say no, I look up at billboards all the time and then down at spreadsheets.",
+    "e_ai_buy": "The company brings in an AI placement system that bids and targets automatically. In the first week it spends a seafood client's budget at two in the morning, on people asleep in other provinces.",
+    "e_ai_brief": "AI turns out the monthly brief in five minutes; it used to take you two days. One paragraph writes up a shop opening as a shop closing, and luckily you catch it before it goes out.",
+    "e_ai_team": "The boss does the sums and cuts the media team from nine to five. Those who stay must read the system and be able to talk to people. Those who leave all rode the seafront road with you.",
+    "e_client_in": "A winery you've served for seven years builds its own marketing team and takes placement in-house. Their manager still adds you to their work group and says to ask you if anything comes up.",
+    "e_wind": "The edge of a typhoon brushes past and tears the images off a few billboards by the sea. You go out with an umbrella to take photos, while the insurer, the outlet and the client take turns on your phone.",
+    "e_rebate": "Annual contract renewal is in its third round. The outlet pushes the rebate from twelve points down to nine. You come back with half a year of placement data and two competing quotes, and settle at ten and a half.",
+    "e_ferry": "The ferry terminal lightbox was your first exclusive placement deal, and a dried-seafood client sold through a whole extra summer because of it. He brings two boxes of sea cucumber to the office. You split them with finance.",
+    "e_kid": "The school parents' meeting collides with an annual pitch. You take the teacher's call in the pitch venue's restroom, then return and, in part three of the proposal, call the target audience \"class.\"",
+    "e_dead_screen": "Your proudest outdoor sites are torn down one after another, and the cleaned-up seafront road is spotless. On your site map, red dots turn gray one at a time."
+  },
+  "choices": {
+    "c_qd": {
+      "title": "To the 4A branch in Qingdao",
+      "situation": "A Qingdao branch of an ad group is hiring: forty percent more pay and national budgets for beer and appliances. You'd start again from execution, and it's two and a half hours home to Yantai each weekend.",
+      "options": [
+        {
+          "label": "Go to Qingdao",
+          "result": "You rent a small place in Shinan District with a view of the sea, costing rather more than the same sea in Yantai.",
+          "end": "You went to the ad company in Qingdao, then later to a brand team on the client side. You can still spot Yantai's apple-season ads at a glance, and tell who built the schedule."
+        },
+        {
+          "label": "Stay in Yantai",
+          "result": "You say two more years. Your supervisor hands you the cherry-season client."
+        }
+      ]
+    },
+    "c_inhouse": {
+      "title": "A client invites you over",
+      "situation": "The owner of a Yantai food company, who has been reading your plans for three years, invites you to head his marketing department. Insurance and bonus are steadier. No more running around after outlets, only every budget item from now on goes through the boss himself.",
+      "options": [
+        {
+          "label": "Join the client",
+          "result": "You move to the factory building in the development zone. Your office smells of roasted goods.",
+          "end": "You became head of marketing on the client side. Whenever an agency sends over a schedule, you know better than they do how much water is in that number. You seldom haggle, because you know how you used to do the math."
+        },
+        {
+          "label": "Stay at the agency",
+          "result": "You thank him, and next month his company is still your client."
+        }
+      ]
+    },
+    "c_own": {
+      "title": "Start your own small media firm",
+      "situation": "You've built up a few trustworthy clients and media relationships, and people say you should go it alone. Payment terms and taxes would all be yours to carry. One month without collections and you can't pay wages. But what you earn would be yours.",
+      "options": [
+        {
+          "label": "Go solo",
+          "result": "You rent two small offices in Laishan District. The sign at the door was never advertised; you put it up yourself.",
+          "end": "You ran a small firm of five or six people, doing tourism and farm-product placements for seaside towns. In good years you made a bit more; in bad ones you cut your own pay."
+        },
+        {
+          "label": "Keep working for others",
+          "result": "You work out the payment terms and hang up on those calls."
+        },
+        {
+          "label": "Ask the boss for internal contracting",
+          "result": "You stay under the company's name and run a few clients on separate books, splitting profit and loss. The boss says you want to go solo and are afraid to fall. You don't deny it."
+        }
+      ]
+    },
+    "c_outdoor": {
+      "title": "Outdoor first, or online first",
+      "situation": "The company has two halves: the old media team handles outdoor and radio, on connections and site visits; the new team runs local short-video ads, on dashboards and data. Your supervisor tells you to choose whom to follow first.",
+      "options": [
+        {
+          "label": "Outdoor and radio",
+          "result": "You memorize every billboard in the city and meet half the property managers."
+        },
+        {
+          "label": "Online ads",
+          "result": "You learn to read ROI and audience packs. Lying down at night, you still see the dashboard curves."
+        }
+      ]
+    },
+    "c_plan": {
+      "title": "The hurdle for Media Planner",
+      "situation": "Your supervisor says that to make Media Planner you have to produce a complete proposal alone. A dried-seafood client's budget is only ¥50,000, and it has to look like ¥500,000. You could adapt someone else's plan, or go squat at the dock for three days.",
+      "options": [
+        {
+          "label": "Squat at the dock",
+          "result": "You find that everyone buying dried seafood comes by car, so the plan has only three road signs and one spot at the parking lot."
+        },
+        {
+          "label": "Adapt a plan",
+          "result": "The proposal is complete and the client says it's quite good. You know it would be quite good in any city."
+        }
+      ]
+    },
+    "c_gift": {
+      "title": "That extra point of rebate",
+      "situation": "An outlet's manager says privately he can give one extra point on this deal, paid to you personally off the books. The company wouldn't know, and this outlet's price really is the best. Only from then on, you'd owe them.",
+      "options": [
+        {
+          "label": "Put it on the books",
+          "result": "You say, write that point into the contract. He smiles. On later calls he is more polite than before and more distant."
+        },
+        {
+          "label": "Switch outlets",
+          "result": "You go to an outlet not much cheaper. No one mentions it. Only you know why."
+        }
+      ]
+    },
+    "c_senior": {
+      "title": "For Senior Media Planner, you need an annual account",
+      "situation": "The boss says making Senior Media Planner takes landing one annual-contract client. A scenic area has a decent budget, but its new manager trusts only the numbers from the AI placement system. To talk to him you'd have to master the dashboard, and six months of weekends would be gone.",
+      "options": [
+        {
+          "label": "Master the dashboard",
+          "result": "You work through his own dashboard with him. He goes quiet for a moment, then signs the contract."
+        },
+        {
+          "label": "Share the client with a colleague",
+          "result": "The colleague lands the annual contract. Not one of your small clients leaves."
+        }
+      ]
+    },
+    "c_paper": {
+      "title": "Keep feeding the old media?",
+      "situation": "The boss asks if you'll keep the deals with the evening paper and the radio station. The numbers aren't pretty, and cutting them all would add ¥200,000 to this year's profit. But those old department heads have squeezed slots for you and waited on bills.",
+      "options": [
+        {
+          "label": "Cut most of them",
+          "result": "The profit sheet looks good. When the paper's department head retires you go, and nobody at the table brings it up."
+        },
+        {
+          "label": "Keep a few",
+          "result": "You say keep these, and enter them on the books as goodwill. The boss says you can explain that to the shareholders."
+        }
+      ]
+    },
+    "c_ai": {
+      "title": "Who runs the placement system",
+      "situation": "The company needs someone to run the AI placement system full time: adjusting rules, checking definitions, explaining to clients why money was spent at dawn. There's no glory in it and every mistake is yours, but placement logic will be in this person's hands from now on.",
+      "options": [
+        {
+          "label": "Take it",
+          "result": "You write a one-page manual checklist, pin it next to the dashboard screenshot, and become the person who knows its faults best."
+        },
+        {
+          "label": "Keep talking to outlets",
+          "result": "You stay out on the road and leave the system to the young people. In meetings they use words you have to go look up."
+        }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "When you retire you export your media contact list: more than three hundred numbers, half of them dead. The last placement photo you took is still on your phone: a billboard by the sea, very windy, the image pasted on perfectly straight.",
+    "burnout": "After that year's pitch your stomach and neck settled accounts with you together. The company split your clients among three people, and the handover took one afternoon. For the first time you found there were no numbers on the city's schedule that you needed to remember."
+  },
+  "stages": [
+    "You collect quotes, make schedules, do monitoring, go out with a camera to photograph placements, and hand contract, schedule and photo, matched up, to finance. Outlet staff call you kid, and the client doesn't know you exist. That your spreadsheets have never been wrong is the greatest skill you have. Those who decide where the money goes don't ask you yet.",
+    "Budgets start turning into proposals in your hands: buses, radio, elevator screens, local short video, what share each and why. You explain yourself in client meeting rooms and grind for slots with outlet ad departments. Before signing, your supervisor asks: have you gone and looked at this site yourself? Only when you can answer does it pass.",
+    "One or two annual-contract clients' full-year media are yours: how to divide money among apple season, cherry season and summer tourism, how to negotiate the year's rebates. You start going to outlets' annual sales conferences and sitting near the front. You used to carry out other people's ideas. Now people ask you whether this money should be spent.",
+    "You lead five or six people, review their proposals, and manage payment terms and advances for all the company's outlets. Twice a month you stand up at a pitch for half an hour. When someone below you gets a contract wrong, the phone rings on your desk. You speak to both clients and outlets, and what you say mustn't contradict itself.",
+    "Whether the company bets on online or outdoor next year, which outlets to keep, how much margin to give on annual deals: all yours to decide. You spend half your time outside, meeting tourism officials, big company owners and outlet heads. You hardly build tables yourself anymore. You can see which number in a table was forced to fit, a gift from the years."
+  ],
+  "work": [
+    "The bus company's schedule doesn't match yours: on one line two wrapped buses are missing. You go to the depot, match plate numbers with the dispatcher one at a time, and work out how much should be refunded.",
+    "Your supervisor sends you to the radio station ad head with a contract. You wait all morning. He comes out and says, leave it here, your spots slide back a bit this month.",
+    "You check a broadcast log for the first time and find a fifteen-second spot ran twelve seconds. You take them the recording. They say they'll make up one spot, and you note it on the sheet.",
+    "On an apple cooperative's plan, you put seventy percent of the ¥80,000 into billboards at the wholesale market and the radio truckers listen to. The chairman gets it and says, now that's how you sell apples.",
+    "A young woman in the client's marketing team sends the plan back and asks for something fresher. You call to ask who her boss actually wants to sell to. She says she's never asked either.",
+    "A compound on the elevator-screen map is listed at two thousand households. You ride over and count lit windows. You correct the occupancy on the sheet and renegotiate the site fee.",
+    "At the annual contract table, the outlet produces a three-year price rise schedule. You lay out three years of placement photos month by month and point out four months when the image ran a week short of contract.",
+    "At the summer tourism budget meeting the client's vice president wants everything on short video. You show last year's booking calls from the south station lightboxes. He has you change the split to forty-sixty.",
+    "The night before a pitch, a young colleague miscalculates a competitor's placement data by one digit. You fix three pages in the hotel room and delete every animation in the deck.",
+    "A client's account is ninety days overdue. You go to their finance department with a statement and a box of Yantai apples. The apples aren't accepted. The statement is, and you're told to come back next week.",
+    "At a shareholders' meeting someone wants to sell off the radio business. You lay out the city's drivers' commute times and listening data, and say, two more years. In two years I'll propose it myself.",
+    "Before a new tourism tender you walk the site and come back to strike the three prettiest placements from the plan, for the simple reason that tourists don't go there."
+  ],
+  "past": [
+    "Your father drove a truck at Yantai port, and its doors always carried different stickers, a few dozen yuan apiece. As a child you thought every truck made money that way.",
+    "After the gaokao (college entrance exam), you applied to study advertising at a university in the province. The prospectus had the word \"creativity\" on it.",
+    "Third year, you interned at a company in Jinan. The creative team didn't need anyone; media needed someone to do sums. You spent a summer calculating discounts and for the first time understood that an ad really sells time.",
+    "You didn't make it into grad school. You came back to Yantai with a few résumés, because the family home was rent-free and the sea wind smelled better than Jinan's.",
+    "The agency was hiring a media assistant. The interviewer asked one thing: how many billboards are there along the seafront road from east to west? You said you didn't know. He said, then go and count."
+  ],
+  "late": {
+    "pension_note": "Estimate: a private media company paying social insurance on a low base, so the pension is modest.",
+    "scenes": [
+      "You take up photography at the neighborhood senior college. Others shoot the sea; you shoot the empty lightbox frames along the shore. The teacher asks what this series is called. You say, For Rent.",
+      "An old cherry client's kid asks you how to allot this year's budget. You talk for half an hour. He records it and goes home to feed it to the system. You know that.",
+      "The morning-rush radio is a synthesized voice now. Riding in someone's car you listen to a stretch. The ads run fifteen seconds, not one second off.",
+      "You no longer do anybody's sums, but at the market you still note a week of prices. In cherry season you buy an extra half kilo, as your share for this trade.",
+      "You sleep till noon and set every media group on your phone to silent, more than ninety. Only afterward do you notice that half have long since gone quiet.",
+      "Your stomach slowly heals, but alcohol is finished. At family dinners when they raise a glass, you say this one I've owed for thirty years, and it's paid off.",
+      "You redo the sign above the neighborhood supermarket for free, making the prices and address bigger. The owner changes the letters back the next day, saying it doesn't look good.",
+      "After you leave the trade you stop counting ads on elevator screens. About half a year later you find you're looking at the people in the pictures.",
+      "Your old colleagues have gone off to sell insurance, or home to grow apples. Your group chat is still called Media Team, and nobody has changed it.",
+      "The seafront lightboxes are all gone. The road is wider and the sea looks better. You're seeing what was never counted in the costs.",
+      "In each new city, leaving the high-speed station, you look first at the lightboxes and ask who has bought them and whether there's a promotion on. Your companions want photos. You're estimating.",
+      "You can still make out a billboard's expiry date from across the street. In retirement, this skill is worth about one cup of tea."
+    ],
+    "closing": {
+      "retire": "A haze has come over the water, and a freighter sounds twice. You put your camera in the bag. There's no date to photograph today.",
+      "burnout": "Wind lifts the curtain and lets it fall. The spreadsheet on the table hasn't been updated in a long time. You flip it over and use it as a coaster.",
+      "end": "As the car climbs the overpass, a sign by the road has just been changed, pasted a little crooked. You think about it, and don't make a note."
+    }
+  }
+}

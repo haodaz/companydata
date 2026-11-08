@@ -1,0 +1,194 @@
+{
+  "id": "robot-maint-zq",
+  "occupation": "Industrial Robot Systems Maintenance Technician",
+  "role": "Industrial Robot Systems Maintenance Technician",
+  "headline": "A maintenance technician in the welding shop of an auto parts plant in Dawang, Zhaoqing, with a teach pendant in one hand and a line-stop board overhead, where someone is counting the cost of every minute",
+  "unit": "The welding shop of an auto parts plant in Dawang, Zhaoqing",
+  "unit_type": "Auto parts factory",
+  "city": "Zhaoqing, Guangdong",
+  "city_tier": "Third-tier city",
+  "education": "Vocational college (Industrial Robotics Technology)",
+  "level": "You've changed batteries and edited programs on a training rig, but you have never touched a real robot with a production line waiting on you",
+  "intro": "The door of the welding shop opens and the first thing that reaches you is the smell of burnt spatter. The shift leader gives you earplugs and a padlock. This lock has your name on it, he says. Every time you go inside the fence, you hang it up first.",
+  "salary_note": "Estimate: Zhaoqing factory wages trail the Pearl River Delta's core cities, but shift work and line-down repairs pay allowances.",
+  "facts": [
+    { "label": "Maintenance Technician (Grade 4, Intermediate) (current level)", "value": "0-2 years, ¥4,500–6,500 a month (national average, estimated)", "source": "Industry norm" },
+    { "label": "Next level up", "value": "Maintenance Technician (Grade 3, Senior) (2-5 years)", "source": "Industry norm" },
+    { "label": "What AI can't take", "value": "Scheduled lubrication, cleaning and fastening of robots", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Inspecting robot bodies, cables and surrounding equipment", "source": "AI exposure" },
+    { "label": "Open positions", "value": "22 related listings nationwide, 0 in this city (the listings skew toward campus hires and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "Shift change. The night crew has written Station 3's alarms on the whiteboard. You copy them onto your phone while the night man is already pulling off his gloves.",
+    "You walk the line, checking whether the cable sheaths have rubbed pale, listening for one sound too many from the reducers. Your senior can tell by ear. You start with your eyes.",
+    "You change the electrode caps on the weld gun. The line has a takt, so you work in the few dozen seconds the robot spends going home. Your gloves are covered in copper dust.",
+    "Robot 7 throws a servo overload. The line-stop board starts running the seconds, and the line leader's call comes in. Your senior takes the teach pendant through the log while you run for the spare.",
+    "A twenty-minute nap in the break room at lunch. Your ears are still humming; the canteen sounds as if it's under a layer of water.",
+    "On the schedule today, two encoder batteries. You can't change them with the power down, and if you leave it too late they lose zero. You read the sequence out twice from the manual.",
+    "You enter today's work orders in the ledger. The spare parts count is off by one screw. You go back to the station and find it on the floor.",
+    "You take off your padlock and put it on the tool cart. Three rounds of hand cleaner and the black line under your nails is still there."
+  ],
+  "ladder": [
+    { "title": "Maintenance Technician (Grade 4, Intermediate)", "stage": "Trainee", "focus": "Shadowing inspections, lubrication, electrode caps; learning lockout-tagout and alarm codes" },
+    { "title": "Maintenance Technician (Grade 3, Senior)", "stage": "Own shift", "focus": "Clearing common alarms alone, zero mastering and TCP calibration, leading shift maintenance" },
+    { "title": "Maintenance Technician (Grade 2, Technician)", "stage": "Hard cases", "focus": "Hard servo and communication faults, writing maintenance standards, new-line acceptance" },
+    { "title": "Senior Technician (Grade 1)", "stage": "Sign-off", "focus": "Plant-wide robot spares and maintenance strategy, negotiating with OEMs and integrators, leading the team" }
+  ],
+  "ai_tasks": [
+    { "name": "Inspecting robot bodies, cables and surrounding equipment", "how": "AI watches temperature, vibration and current and flags anomalies. A person goes to see the cable wear, oil leaks and strange noises, and confirms what's real." },
+    { "name": "Scheduled lubrication, cleaning and fastening of robots", "how": "All of it is hands-on work beside the machine. AI can at most plan the schedule and send reminders." },
+    { "name": "Changing reducer oil, batteries and other wear parts", "how": "Stopping the machine, dismantling and disposing of waste oil all happen on site. AI only says when it's due." },
+    { "name": "Diagnosing control and servo system faults", "how": "AI reads alarm codes and logs and suggests causes in order. A person verifies on site, clears the fault and answers for restarting production." },
+    { "name": "Repairing and replacing failed motors and sensors", "how": "It takes hand skill and site experience, with lockout steps. AI can look up part numbers and drawings." },
+    { "name": "Calibrating robot zero and tool coordinates", "how": "Software can calculate the offsets. A person mounts the measuring tools, chooses the reference and judges whether the result meets the process." },
+    { "name": "Backing up and updating robot programs and parameters", "how": "Backups can run automatically and AI can diff versions. A person decides whether to update and confirms the trial run." },
+    { "name": "Recording maintenance data and filling in ledgers", "how": "AI can generate ledgers from work orders, voice notes and system data; a person spot-checks." }
+  ],
+  "events": {
+    "e_huinan": "February and March, the season the walls sweat. Condensation forms inside the cabinets and communication alarms run down a whole line. You drag dehumidifiers into the power room and wipe terminals one by one. The shop floor is too slick to run on.",
+    "e_first_lost_zero": "You got the battery sequence wrong and a robot lost its zero. Your senior doesn't yell. He crouches with you to line up the scribe marks and redo the mastering. The line starts forty minutes late, and the penalty goes on the team's sheet.",
+    "e_stop_money": "The automaker's pull orders are tight, and each minute of line stoppage is charged at hundreds of yuan to the shop. Only after the repair do you notice your palms are soaked, and there's a handprint on the pendant's screen.",
+    "e_high_temp_leave": "The whole plant takes five days of heat leave, which is exactly when maintenance goes in. You drain the oil from twenty reducers, waste drums in a row, and the smell is still on you when you get home for the holiday.",
+    "e_spatter_burn": "Spatter drops down your collar and leaves a small scar on your neck. As you peel off the plaster, the big guy on your crew points out his own. Seven of them.",
+    "e_new_model": "The automaker is launching a new model. Half the fixtures have changed, and you have three weeks to bring the takt up. Night after night you adjust paths and add weld points, and each day's JPH goes on the whiteboard.",
+    "e_hearing": "At the occupational health check, your high-frequency hearing has dropped a little. The report says 'observe.' You start buying the next grade of earplugs up.",
+    "e_back": "You squeeze under a fixture to turn one sensor screw and your back goes as you get up. You lie face down on the break room bench for half a shift, and then go back and close the work order yourself.",
+    "e_vendor_day": "An OEM engineer flies in, billed by the day, five figures on the work order. You stand beside him throughout and write down on your phone the order he unplugs things and which pages he turns to.",
+    "e_ghost_alarm": "One robot stops at two every Wednesday night. Three weeks of searching, and it turns out to be interference from the overhead crane cable in the next shop. You redo the shield grounding, and the night crew can finally stop waiting for Wednesdays.",
+    "e_ai_warn": "The plant has rolled out predictive maintenance, and the system says Robot 6's reducer is abnormal. You open it up: the oil is fine, the teeth are fine. The next week it says so again. You enter this in the system as one more training sample.",
+    "e_ai_catch": "The monitoring software spots a robot's current slowly climbing two weeks before you do. The reducer comes out and the tooth faces really are pitted. At the meeting you give the credit to the system, and request a spare while you're at it.",
+    "e_ai_ledger": "The ledgers now fill themselves. You say a sentence to your phone and the work order is done. With the half hour you've gained, the shift leader sends you to keep an eye on the new contractors.",
+    "e_night_shift_kid": "Two rotating shifts, and kindergarten wants drop-off at 8:30 and pick-up at five. You and your spouse tape a shift chart to the fridge. Your kid colors over the words with suns.",
+    "e_spare_shortage": "Imported servo drives are out of stock with a four-month lead time. You pull one from a scrapped line, repair it and put it in. Purchasing says this breaks the rules. The line leader says get it running first.",
+    "e_contractor_new": "The outsourced maintenance company has sent a few kids who know more software than you did, and are less willing to trust their ears. You run an old robot at low speed, stand them a meter away, and let them hear what gears with half a year left sound like.",
+    "e_line_stop": "That car model is out of production. Line 2 is taken down whole, crated and labeled for another plant. You back up every robot's program to numbered USB drives, and the paperwork takes two weeks.",
+    "e_tear_down_week": "Spring Festival overhaul. Everyone else is on the high-speed train and you are in the shop changing main cables. The canteen has one window open. The owner makes a rare walk through and hands everybody a red envelope."
+  },
+  "choices": {
+    "c_integrator": {
+      "title": "An integrator wants you",
+      "situation": "The integrator who came to commission the line has noticed you. Their field engineers travel twenty-five days a month and earn forty percent more, wherever a new line opens. You've only just started running your own shifts, and the plant is a fifteen-minute ride from home.",
+      "options": [
+        { "label": "Go do field commissioning", "result": "With your laptop and tool bag, your first stop is a new plant in Changchun.", "end": "You left Zhaoqing and followed new lines through hotels in seven or eight cities. Deliver a line and go, and you never had to watch one slowly grow old." },
+        { "label": "Stay in the shop", "result": "You thank the caller, and that week you memorize the reducer oil change procedure." }
+      ]
+    },
+    "c_overseas": {
+      "title": "Line 2 is moving to Vietnam",
+      "situation": "A customer has shifted some orders overseas, so the plant is moving a line and needs someone to go with it for three years, double allowance. Your kid is in primary school and your back is no prize, but the lines that stay behind are getting fewer.",
+      "options": [
+        { "label": "Go with the line", "result": "You sign the container manifest and leave with this batch of robots.", "end": "You stood that line up again overseas and taught local technicians to read the alarm codes. Three years became five, and then you stayed on at the plant there." },
+        { "label": "Stay and keep the remaining lines", "result": "You don't go to see it off at the dock. The next day you wipe Line 2's station map off the whiteboard." }
+      ]
+    },
+    "c_teacher": {
+      "title": "A vocational school wants a training instructor",
+      "situation": "A vocational school in Zhaoqing has built a new robot lab and wants a teacher with site experience: thirty percent less pay, no night shifts, winter and summer breaks. Your hearing and your back are making their case. Your technician's allowance goes up next month.",
+      "options": [
+        { "label": "Go to the school", "result": "In your first class you take the students' hands out of the fence before you open the slides.", "end": "You became a training instructor, teaching kids to hang locks, read alarms and listen. No board counted seconds at you any more, and now you had to write that tension into a lesson plan." },
+        { "label": "Stay in the shop", "result": "You keep the school's card, and take the morning shift as usual." },
+        { "label": "Teach half days at the school", "result": "You swap shifts and go every Thursday afternoon to teach lockout. The students call you Teacher, and so, for a month, does your crew." }
+      ]
+    },
+    "c_bypass": {
+      "title": "The line leader wants it running now",
+      "situation": "A safety gate switch is intermittent. The line leader, on the radio, tells you to bypass it, run out this batch, and fix it after shift. Regulations forbid the bypass, but if this batch doesn't ship the shop takes the customer's penalty.",
+      "options": [
+        { "label": "No bypass, fix it first", "result": "Twenty-two minutes down, and the line leader doesn't speak to you for a week. Later he brings every newcomer over to learn lockout from you." },
+        { "label": "Bypass temporarily and stand watch", "result": "You watch the batch out from beyond the fence with your hand by the e-stop. You repair it after shift and record it in the ledger as it happened." }
+      ]
+    },
+    "c_senior_grade": {
+      "title": "Testing for Maintenance Technician (Grade 3, Senior)",
+      "situation": "The plant holds a skill-grade assessment once a year, and Grade 3 has you changing reducer oil and calibrating a TCP in front of examiners. Practice eats your weekends, and you're still rotating days and nights.",
+      "options": [
+        { "label": "Practice on weekends", "result": "Your hands are steady on the day, and you bring the TCP error to under half of what's required." },
+        { "label": "Maybe next year", "result": "You spend those weekends taking your kid to the Seven Star Crags. Next year won't be too late." }
+      ]
+    },
+    "c_technician": {
+      "title": "Going for Maintenance Technician (Grade 2, Technician)",
+      "situation": "Grade 2 means defending a technical report in front of a panel, with real improvement cases. You have three you could write up, but writing is much harder than taking a motor apart, and the panel is from other plants.",
+      "options": [
+        { "label": "Write it, through the nights", "result": "That Wednesday-night case turns into twelve pages with oscilloscope captures. A panel member asks a very fine question about grounding." },
+        { "label": "No exam, just fix things", "result": "A bit less allowance, a bit more sleep. When something hard comes up, they still come to get you." }
+      ]
+    },
+    "c_predict": {
+      "title": "Learning the data side",
+      "situation": "The plant is setting up an equipment data group and wants people from the floor to learn some Python and time-series analysis. You're past thirty, and code is harder to read than circuits, but lately the plant has spent more on software than on spares.",
+      "options": [
+        { "label": "Learn it", "result": "You learn slower than the young engineers, but you know which curve shook because the oil was changed." },
+        { "label": "Stay with your hands", "result": "You keep making your living by hand and by ear, and go on-site to check whatever the system reports." }
+      ]
+    },
+    "c_rv_open": {
+      "title": "Rebuild the reducer or send it to the OEM",
+      "situation": "An RV reducer has failed. The OEM wants over ¥50,000 and nine weeks. You're confident you can take it apart, though a home repair voids the warranty. If it fails the bill is on you. If it works, every repair from now on is yours too.",
+      "options": [
+        { "label": "Open it yourself", "result": "You spread a white cloth on the bench, photograph each part as it comes off, and have it back together in two nights." },
+        { "label": "Send it, by the book", "result": "The line limps on a temporary takt and everybody complains for nine weeks. The accounts are clean." }
+      ]
+    },
+    "c_master": {
+      "title": "Applying for Senior Technician (Grade 1)",
+      "situation": "The plant wants a Senior Technician (Grade 1) to lead its plan for outsourcing maintenance. Accepting means handing several of your own crew's jobs to a contractor, and being the one who does it.",
+      "options": [
+        { "label": "Apply and lead it", "result": "You write the contract's response times to the minute and keep the hardest half of the work for your own people." },
+        { "label": "Don't lead this one", "result": "Purchasing draws up the plan. You keep fixing machines on the line, only the people around you now wear a different color." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "In your last month, only four robots in the shop are ones you know. You take your name tag off the padlock and leave the lock on the tool cart. Walking out the gate, the hum in your ears follows you, all the way home.",
+    "burnout": "Your lumbar scans come back and the doctor forbids any more crawling under fixtures. The plant moves you to the spares warehouse: issuing parts, counting stock, clicking confirm. In the first week without alarm tones, you sleep badly."
+  },
+  "stages": [
+    "Your job is to follow: you carry the tool bag on inspections and pass the wrench on cap changes. Padlock, power off, test dead: it only counts if you say it aloud. You copy alarm codes from the pendant onto your phone and look them up at night. The line leader doesn't care who you are, only how many minutes it stopped.",
+    "You run your own shift now. On nights you are alone with two lines, and common servo alarms, weld gun pressure faults and cable wear are yours to judge. You start doing zero mastering and TCP calibration. The pendant isn't just for looking at any more; your edits go straight into the program on the line.",
+    "Only the hard problems reach you. You catch communication waveforms on an oscilloscope, write maintenance standards, and walk through new-line acceptance with a checklist. The difference is that now you have to explain why it failed, and write it down, so other crews know what to do next time.",
+    "The plant's spare parts list, maintenance budget and outsourcing contracts all go through you. You meet with OEMs and integrators and argue half an hour about one response time. You still go down to the shop, but mostly you stand aside and watch where someone else's hands go."
+  ],
+  "work": [
+    "Checking the cable sheath on a robot's sixth axis you feel a hard spot and call your senior over. A zip tie is too tight; one more week of turning and the jacket would've split.",
+    "The line leader's nephew, also new, has fitted an electrode cap backwards. You help redress the gun and leave it out of the ledger. After shift he buys you a soda.",
+    "Following the manual, you grease Robot 3, and the old grease that comes out is black. Your senior rubs some between his fingers, has you smell it, and tells you to remember the smell of what's still good.",
+    "Two in the morning, weld gun pressure alarm. You pull the pressure curve on the pendant, call it a cylinder seal, fetch one and swap it. The board has run only eleven minutes.",
+    "A process colleague says the weld points are a millimeter off. You calibrate the TCP and the error stays. Further down it's a worn locating pin in the fixture, and you pass the ticket to the tooling crew.",
+    "You run a lockout drill for a contractor's safety officer, have him hang his own lock, then try the breaker. His face changes a little, then he nods.",
+    "At new-line acceptance the integrator's engineer says the takt meets spec. You walk it with a stopwatch and find one station only makes the number on idle travel. You write 'fail' on the form.",
+    "With the oscilloscope you catch a burr on the encoder line and tell the electrician the shield is landed on the wrong end. That cable has run three years, reporting its quiet errors for three years.",
+    "You revise the maintenance standard, splitting oil-change intervals into three tiers by actual load. The equipment head asks how much that saves. You count out a year of waste oil drums for him.",
+    "Negotiating a service contract with the OEM, the salesperson has written response time as 'as soon as possible.' You strike out those words, write in four hours, and drink two more rounds of tea with him.",
+    "The shop director asks if another maintenance post can go. You chart the past six months of night-shift fault times and put it on his desk. The post stays.",
+    "A young technician wants to change the whole line's backup strategy. You have him run it on one old machine for a month. He's not pleased. A month later there are two more pages of caveats."
+  ],
+  "past": [
+    "At middle school in Gaoyao, your family ran a motorcycle repair shop in town. You could strip a carburetor faster than you could learn English vocabulary.",
+    "After the high school entrance exam you chose technical school. Learn something that buys rice, your dad said. Your teacher said factories don't want bolt-turners any more, they want people who can program.",
+    "Your major was mechatronics. The first time you touched a teach pendant you pressed the e-stop, and the whole lab turned to look.",
+    "You moved up to vocational college, studied industrial robotics and got your intermediate certificate. You didn't win the spot at the skills contest. A classmate did.",
+    "Your placement was at an appliance factory in Foshan, fitting suction cups all day. You wanted a car plant, where you'd heard there were more robots and stoppages cost more."
+  ],
+  "late": {
+    "pension_note": "Estimate: the plant pays social insurance on base pay, not all of the technician allowance, so the pension comes to about half of the final monthly pay.",
+    "scenes": [
+      "By the e-bike charging posts in your neighborhood you diagnose faults for people and take no money. Someone asks what you did. Fixed robots, you say. And don't robots fix themselves now?",
+      "The mall's escalator has a noise. You ride half a floor with your eyes closed, then tell the management the bearing needs changing. They thank you. Nobody comes.",
+      "A milk tea shop has started using a robot arm. While you wait in line you study how the cable is routed. Nicely done, except it turns a little too fast.",
+      "The days in the spare parts room are so steady they seem to stand still. You've memorized where every part is shelved. When the new system goes live, you find that nobody asks you any more.",
+      "The back brace stays on, and half an hour of sitting is all you can take. You buy an expensive chair. Your family says it costs more than the spares you used to fix.",
+      "Your hearing has reached the hearing-aid stage. The settings menu has a noise-reduction option. After a few tries you realize you are tuning a system you understand.",
+      "In this work no one counts how much a stoppage costs. Still, you often feel someone behind you holding a stopwatch.",
+      "In a video of a new lights-out factory, the comments all say amazing. You pause it and zoom in on the oil stains under a robot's base.",
+      "The old workmates' chat says the plant in Dawang has changed owners again; now it makes energy storage cabinets. You think about it. Someone will still have to rework those fixtures.",
+      "The washing machine makes the wrong noise on spin. You sit on the floor and listen, then raise one foot by half a turn.",
+      "Every year when the walls start to sweat, you open your home's meter box in advance to let it breathe. Asked what it's for, you say communication alarms, and everybody laughs."
+    ],
+    "closing": {
+      "retire": "The wind on the West River carries sound a long way. No machine out here is waiting for you, and you walk back slowly.",
+      "burnout": "The storeroom lights run on a sensor and go out a few minutes after anyone leaves. You straighten the shelf numbers to the very last slot, and the lights dim.",
+      "end": "The rain has stopped. A roadside pump is still running. You listen. It sounds even."
+    }
+  }
+}

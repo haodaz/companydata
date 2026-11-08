@@ -1,0 +1,210 @@
+{
+  "id": "copyright-agent-kf",
+  "occupation": "Copyright Agent",
+  "role": "Copyright Agent",
+  "headline": "The new hire at a four-person copyright agency in Kaifeng, representing local authors who write time-travel novels set in the Song dynasty and a few old woodblock print shops, with a chain of title on the desk that is forever one page short",
+  "unit": "A copyright agency in Kaifeng",
+  "unit_type": "Copyright agency",
+  "city": "Kaifeng, Henan",
+  "city_tier": "Third-tier city",
+  "education": "Bachelor's degree (Intellectual Property)",
+  "level": "You can recite the dozen-plus rights in copyright law. You have not yet heard an author go silent on the phone over a ¥30,000 advance",
+  "intro": "The agency is on the fourth floor of an old building near the Drum Tower: four desks and a copier that jams. Your boss sets a stack of license agreements in front of you and tells you to learn to count pages first. Half the lawsuits in this trade began with one page missing.",
+  "salary_note": "Estimate: Kaifeng base pay is low and income depends mostly on commissions, so one year can look very different from the next.",
+  "facts": [
+    {
+      "label": "Assistant Copyright Agent (current level)",
+      "value": "0-2 years, ¥2,600–4,000 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Copyright Agent (2-7 years)",
+      "source": "Industry norm"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Scouting and screening works with copyright value",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "7 related listings nationwide, 0 in this city (the listings skew toward campus hires and internships)",
+      "source": "Job listings"
+    }
+  ],
+  "day": [
+    "You open your email and go first to the platforms' monthly statements. One author's audiobook share is short by two digits. You highlight it in yellow.",
+    "At the market regulator's window you hand in a work registration. The clerk tells you the 'derivative work' box needs the original author's license.",
+    "You phone an editor at a buyer to ask if the short-drama adaptation has cleared its meeting. The boss is out of town, she says. Next week.",
+    "In a small eatery you wait for an author of Song dynasty time-travel novels. By day he works in a tax hall and has an hour for lunch. His first question: when does this month's money come?",
+    "You draw a book's chain of rights on the whiteboard: author, an early website, website acquired, new platform. In the middle box you write a question mark.",
+    "You proof a license. 'Right of communication over information networks,' 'cinematographic right,' 'adaptation right': not one word can slip out of place. Your boss has circled three spots in red.",
+    "You cycle out toward Zhuxian Town to collect a signature at an old woodblock print shop. The people there print slowly. You wait slowly beside them.",
+    "Home. A message from an author on your phone: somebody else asked to film my book today, are they scammers? You look up the company."
+  ],
+  "ladder": [
+    { "title": "Assistant Copyright Agent", "stage": "Support", "focus": "Assembling title documents, filing registrations, tracking royalty statements" },
+    { "title": "Copyright Agent", "stage": "Own signings", "focus": "Signing your own authors, finding buyers, negotiating licenses, living on commission" },
+    { "title": "Senior Copyright Agent", "stage": "Big deals", "focus": "Film and tourism deals, managing top rights-holders, handling disputes" },
+    { "title": "Partner", "stage": "Lead", "focus": "Setting direction, managing the team, negotiating framework deals, standing behind every contract the agency signs" }
+  ],
+  "ai_tasks": [
+    { "name": "Scouting and screening works with copyright value", "how": "AI scans platforms and social media and pre-sorts leads by genre, heat and adaptation potential. A person judges what has lasting value and earns the creator's trust." },
+    { "name": "Verifying ownership and the chain of license", "how": "AI compares registrations, contracts and public records and flags gaps. A person checks with rights-holders, reads the ambiguous clauses and answers for the conclusion." },
+    { "name": "Valuing works and pricing licenses", "how": "AI gathers comparable deals and heat data and offers a range. A person sets the price from what the two sides really want." },
+    { "name": "Matching buyers and sellers", "how": "AI can pair works with buyers by tag. Who really suits whom, and getting them into one room, rests on long relationships." },
+    { "name": "Negotiating deals and drafting licenses", "how": "AI drafts contracts, compares clauses and flags risk. A person negotiates, weighs concessions and signs off." },
+    { "name": "Tracking performance and chasing royalties", "how": "AI can remind you of milestones, reconcile statements and spot anomalies. When the other side stalls, a person goes and collects." },
+    { "name": "Monitoring infringement and supporting enforcement", "how": "AI monitors the web, compares similarity and preserves evidence. A person decides if it infringes and what to do about it." },
+    { "name": "Promoting works and expanding licensing channels", "how": "AI generates copy and channel suggestions. A person sets the positioning, keeps the relationships and watches the brand risk." }
+  ],
+  "events": {
+    "e_settlement_day": "The quarterly settlement date is ten days gone and the platform's statement hasn't come. Three authors take turns asking. You write a politely phrased demand and copy their finance and legal departments.",
+    "e_missing_page": "The buyer's lawyers find that a ten-year-old website agreement is missing from the chain of title. You send a dozen private messages to former staff of a website that no longer exists, and finally someone turns up a scan in an old inbox.",
+    "e_option_expire": "A film company has held a novel on an eighteen-month option. A week before it lapses they ask to renew at half the price, saying the script is still being polished. The author asks if he should. You set out three possible outcomes for him.",
+    "e_fair_booth": "The copyright fair gives you a two-square-meter booth, and for three days you stand in Nanjing with an armful of sample books. You collect over a hundred business cards. Four people answer your email. One of those becomes a deal.",
+    "e_author_vanish": "Your steadiest author has stopped updating and isn't answering WeChat, and the buyer asks about the supplementary agreement every day. Two months later he writes one line: he is in the hospital with his mother, please stop pressing. You hold the buyer off for one more round.",
+    "e_mug": "A scenic-area gift shop is selling mugs printed with a door god from the old print shop, and nobody asked the shop. You buy a mug, photograph it with the receipt, and send a letter. They end up paying a license fee and the print shop gains a customer.",
+    "e_chrysanthemum": "October's chrysanthemum season. All the scenic area's merchandise orders are crammed into the two weeks before the festival, and every license has to be stamped and sent the same day. Six trips between the east and west of town, and your wrist aches from the seam stamps.",
+    "e_short_drama": "A web novel nobody rated gets bought outright by a short-drama company for ¥80,000. The numbers from its first week online are frightening. The author doesn't see another fen. He asks if he could have not sold outright. You say he could have, but nobody dared offer more at the time.",
+    "e_commute": "Kaifeng has too few buyers, so you go to Zhengzhou twice a week and edit contracts on the intercity train. Pulling into the station you discover you've typed 'irrevocable' as 'revocable.' You fix it on the platform and send it again.",
+    "e_translation": "A translation site in Southeast Asia wants a license: a $2,000 advance, royalties quarterly. Reading an English contract for the first time, you reach the 'territory' clause and split language and geography into two separate deals.",
+    "e_buyer_folded": "The buying company has been deregistered, and the ¥230,000 in royalties owed to your author has turned into an arbitration award. The award comes through and the account is empty. You file it and phone the author with the result.",
+    "e_neck_eye": "Page after page of contracts. Floaters have appeared in your left eye and your cervical spine looks straight on the film. The ophthalmologist tells you to look up more often. Your work is looking down at small print.",
+    "e_ai_wash": "Someone has run your author's novel through AI, changed the names and the dynasty, and posted it on another platform. The comparison report shows seventy percent overlap in plot. What that amounts to in law takes you and the lawyer an afternoon.",
+    "e_ai_monitor": "The monitoring tool sweeps up two thousand suspected infringements overnight, ninety percent of them reviews and readers' excerpts. You and the intern filter them, and finally have time to send letters to the ones who deserve them.",
+    "e_ai_draft": "The license AI drafts in ten minutes looks complete, and Article 12 has 'cinematographic right' as 'photographic right.' You change that one word, then read the whole document from the top anyway.",
+    "e_platform_terms": "The platform has changed its author agreement and pre-ticked one more derivative right. A dozen of your authors send you the same screenshot. You spend the evening answering each one, telling them which button not to press.",
+    "e_heirs": "An old author is gone, his martial arts novels are up for adaptation, and his heirs are three siblings who do not speak. You visit three households, so that three powers of attorney can end up in one folder.",
+    "e_junior_miss": "The junior you're training has turned an exclusive license into a 'non-exclusive' one, and the other side has signed. You take him to the buyer's office to explain in person, and give up half a point for a supplementary agreement."
+  },
+  "choices": {
+    "c_buyer_side": {
+      "title": "A Beijing film company wants a rights buyer",
+      "situation": "The rights director of a film company you've faced across the table says, come over to us; a buyer's base salary is twice your commissions. Only from now on you'd be pushing prices down on behalf of the company, and it's people like you whose prices you'd push down.",
+      "options": [
+        { "label": "Go to the buy side", "result": "You turn your authors over to your boss and buy a ticket to Beijing.", "end": "You moved to the other side of the table, bought several hundred books for the company, and saw seven of them filmed. No one knew better than you how option money is worked out." },
+        { "label": "Stay in Kaifeng", "result": "You sign two more authors and fill another whiteboard." },
+        { "label": "Use the offer to negotiate commission", "result": "Your boss raises your rate by two points, and starts avoiding your eye at the weekly meeting." }
+      ]
+    },
+    "c_law_exam": {
+      "title": "Taking the bar and becoming a lawyer",
+      "situation": "You've run so many disputes for authors that lawyers' bills have all passed through your hands. A year of evenings to study for the national bar, and you could be an IP lawyer, billing by the hour, which is steadier than waiting for settlement day.",
+      "options": [
+        { "label": "Take the bar", "result": "You pass, join a firm in Zhengzhou as a trainee, and start again from writing complaints.", "end": "You became an IP lawyer and stopped waiting on settlement days with anyone. Now and then an old author of yours turned up as a client, and this time it was they who paid a fee." },
+        { "label": "No, keep agenting", "result": "You return the books and buy a comfortable chair." }
+      ]
+    },
+    "c_culture_group": {
+      "title": "A job at the municipal tourism group",
+      "situation": "The city's culture and tourism group is starting a merchandise department and wants someone who understands licensing: stable, long-term contract, local content only, thirty percent less pay. Automated licensing on the platforms has squeezed your trade hard these last few years.",
+      "options": [
+        { "label": "Join the group", "result": "The first thing you do is inventory the group's own images, and find that half were never registered.", "end": "You went to the group's merchandise department to look after its own images, with no one left to collect from. Every chrysanthemum season, yours was still the fastest stamp in the building." },
+        { "label": "Keep the agency going", "result": "You move the agency to two smaller rooms, and renew with the print shop for five more years." }
+      ]
+    },
+    "c_lump_sum": {
+      "title": "Buyout or royalties",
+      "situation": "A short-drama company offers an author ¥80,000 for a full buyout. His kid starts school next year and that takes money. How much more if I take a share? he asks. You can calculate it. You also know most shares end up being zero.",
+      "options": [
+        { "label": "Urge a guarantee plus share", "result": "The guarantee is only ¥30,000, and he signs reluctantly. Then the drama never airs, and you have owed him an explanation for those ¥50,000 ever since." },
+        { "label": "Urge him to take the cash", "result": "The ¥80,000 lands in his account, and he treats you to soup dumplings. Whatever happens to this book now has nothing to do with him." }
+      ]
+    },
+    "c_warranty": {
+      "title": "A warranty of clean title",
+      "situation": "A tourism company wants a license on a set of old woodblock prints and needs you to warrant that the title is clean. But the blocks came down from the grandparents' generation and three branches of the family have all printed from them. Sign, and it's worth over ¥100,000. Don't, and they'll go elsewhere.",
+      "options": [
+        { "label": "Find all three branches first", "result": "Two months of running around the town and you have all three consents. The buyer is on the verge of moving on." },
+        { "label": "Disclose the risk and sign", "result": "A disclaimer goes in and the buyer's lawyers grudgingly accept it. For half a year that paragraph keeps you from sleeping soundly." }
+      ]
+    },
+    "c_agent": {
+      "title": "Becoming a Copyright Agent",
+      "situation": "Your boss says you can start signing your own authors and become a Copyright Agent, with base pay cut by thirty percent and the commission yours. On web novel forums you've already had your eye on two authors who write well and whom nobody has noticed.",
+      "options": [
+        { "label": "Take the cut, sign your own", "result": "You ride a bus four hours to Xinyang to meet an author. He thinks you're a scammer, and has brought his cousin along." },
+        { "label": "One more year as assistant", "result": "You go on counting pages on other people's contracts. You see everything your boss does." }
+      ]
+    },
+    "c_senior": {
+      "title": "Going for Senior Copyright Agent",
+      "situation": "A Senior Copyright Agent needs a film or tourism deal worth eight figures. There's one in play: the buyer wants eight novels packaged in three months on harsh terms, and you'd have to lean on the authors and the buyer at once.",
+      "options": [
+        { "label": "Land the package", "result": "You sign all eight contracts in one week. Two of those authors never speak to you again." },
+        { "label": "Only the willing ones", "result": "Only three sell, and your commission drops by more than half. All the authors stay with you." }
+      ]
+    },
+    "c_ai_corpus": {
+      "title": "An AI company wants to buy text",
+      "situation": "A large-model company wants bulk licenses on novels as training text, a few hundred yuan a book, thousands of books at a time. It's good money for the agency and a few meals for each author. Some authors say whatever. Some say sign and I'm leaving.",
+      "options": [
+        { "label": "Ask each one, package only those who agree", "result": "Three months of asking. Under half sign. The company says you're too slow, and you still get two more points than others do." },
+        { "label": "Bundle them under the agency's blanket clause", "result": "It holds up on paper. The day the money arrives, four authors send termination letters." },
+        { "label": "Pass on this deal", "result": "You file the email. Another agency in town takes it on, and the next year they move into new offices." }
+      ]
+    },
+    "c_partner": {
+      "title": "Becoming a Partner",
+      "situation": "Your boss is retiring and asks if you'll buy in as Partner. Accept, and the agency's old contract disputes and two employees' salaries are yours. Refuse, and he may sell the name to a company in the provincial capital.",
+      "options": [
+        { "label": "Buy in", "result": "You renumber every contract the agency holds, and at last replace the copier." },
+        { "label": "No, keep doing deals", "result": "The name is sold, and the new boss has you enter your authors in his system. Your commission rate never changes." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "You sort the contracts in hand by expiry date and make a table: which have seven years left, which return to their authors next year. The term of the rights is much longer than your working life. At the bottom of the table, you sign and date it.",
+    "burnout": "Two rounds of laser surgery on your eyes, and small print soon blurs. You move your authors to colleagues one by one, with a page of notes each. After that you only look over contracts for friends, a few a year."
+  },
+  "stages": [
+    "Your job is counting pages and going to windows: filing chains of title link by link, submitting registrations, reconciling platform statements each month. When your boss negotiates, you take notes. You must answer authors' calls but you can't promise anything. The answer is always 'let me ask my boss.'",
+    "Authors begin to write your name on the contract. You hunt for books on sites and forums, travel to meet people, and go back and forth over clauses with buyers' editors and lawyers. Your commission is fifteen percent. A deal month buys a computer. A dry month, you have to explain to yourself why you're still at it.",
+    "Your deals now include large film and tourism contracts, each through three rounds of lawyers on both sides. Authors with new lawyers still come to ask you, and so do buyers who want the price down. You no longer chase each settlement day; you watch whose contract expires in three years and who can get a better price before then.",
+    "All the agency's contracts end up backed by you. You negotiate frameworks with platforms in the provincial capital, vet newcomers' deals, and decide which authors won't be renewed. Most of what you sign now was negotiated by someone else, but when there's a dispute, yours is the first name called."
+  ],
+  "work": [
+    "In a ten-year-old license you notice the party's seal differs from its name by one character. You go to the business registry's archive window and pull the change record. The photocopy costs six yuan.",
+    "The director of an embroidery factory wants a design registered as the factory's. You ask who drew it. He thinks a while and says a retired woman worker. The application goes on hold.",
+    "You check thirty-seven authors' statements line by line and find that one audiobook share used the wrong rate, a difference of ¥120. The other side's finance team replies quickly and politely.",
+    "You finish a novel of the Bian River by a bus driver and leave him a message before dawn. He answers carefully, asking if you charge a fee. You send the agency contract and explain Article 7 three times.",
+    "An audiobook producer wants a five-year exclusive. You change the term to three and add a clause reclaiming the rights if the play count falls short. Their pen stops at that line.",
+    "The master of the old print shop doesn't use WeChat, so you read him the contract. At 'sublicense' he asks what that is, and you explain it as lending something to a relative's relative.",
+    "A production company's lawyer says this novel's film rights were sold long ago under an old contract. You lay on the table the certificate of an option that lapsed eight years ago. The lawyer nods, and changes the subject.",
+    "A tourism company wants an author's Song dynasty world for a night tour. You price 'theme adaptation' as a separate line, so it won't collide with the film rights.",
+    "You block a 'likeness use' rider for a woman author. It's standard, says the buyer's rep. Then write the standard into the price, you say.",
+    "A platform in the capital wants to buy the agency's list of authors. In the conference room you lay the list face down on the table and ask first about their payment cycle.",
+    "An agent on your team can't decide whether to sign a book. You read his evaluation sheet, cover the 'AI score' column with your hand, and ask what he felt after reading it.",
+    "At the annual review you rewrite the agency's standard contract and add a chapter on training-text licensing. The lawyer changes two words and charges you ¥1,000."
+  ],
+  "past": [
+    "At high school in Kaifeng, you walked past the night market every day and read an entire martial arts series at a book rental stall. The stall owner said the books weren't really his. It was the first time you wondered whose they were.",
+    "You applied for intellectual property. It's a new field, the teacher said. Your dad asked whether that meant fixing computers.",
+    "Sophomore year you posted twenty thousand characters of a novel on a forum and they got reposted to other sites. You started a protest thread. Nobody replied.",
+    "You interned in the rights department of a publisher in Beijing, copying contract lists for half a year. The rent took all of your intern pay.",
+    "Back in Kaifeng. Classmates were all sitting the civil service exam. On a job site you found a three-person copyright agency with an address near the Drum Tower."
+  ],
+  "late": {
+    "pension_note": "Estimate: small agencies pay social insurance on a low base and commissions don't count, so the pension is thin and savings have to fill the gap.",
+    "scenes": [
+      "A tiny royalty or two still arrives each quarter, for a few old books. Seventeen yuan, and you still enter it in the table.",
+      "At the supermarket you pick up a tin of biscuits printed with a door god. You turn it over to look for a license mark while your companion urges you toward the checkout.",
+      "The copyright in the first book you ever signed still has decades to run. The author's descendants may not even know. You print out your lists from all these years, bind them, and put them on top of the cabinet.",
+      "Your eyes slowly get a little better, but reading is still tiring. You start listening to audiobooks, and when the opening credits name the rights-holder you still think about that contract.",
+      "An author comes to see you, wanting his rights back. The contract still exists, and you read it with a magnifying glass. It expires next March, you tell him. Don't rush to sign anything new.",
+      "The neighborhood committee asks you to give a talk on fraud, and you describe how scammers pose as film companies to charge authors reading fees. At the end a retired teacher raises her hand and asks if her poetry collection can be made into a film.",
+      "In your new job, you read contract annexes more than your colleagues do. The annex is where the truth is.",
+      "Automated licensing platforms have turned your old work into a few buttons. You try one: six minutes from upload to signature. The box for title only asks you to tick 'I warrant.'",
+      "The woodblock print shop is run by its fourth generation now, and sells door god stickers on livestreams. You place an order, and look over the copyright notice on the packaging. Not bad.",
+      "When you watch television you stay till the end, waiting for the line that says 'adapted from.' Everyone else in the family has long since left.",
+      "You hear newcomers don't count pages any more; the system compares everything. You still think that, as for the missing page, the system may not know it was supposed to be there."
+    ],
+    "closing": {
+      "retire": "The chrysanthemums are back along the streets in autumn. You walk past them, and not one pot needs your stamp.",
+      "burnout": "Afternoon light falls on the table. You don't open a single file. You just clean your glasses.",
+      "end": "The sound of a copier comes through the wall, one sheet after another. You listen to it finish counting. It doesn't jam."
+    }
+  }
+}

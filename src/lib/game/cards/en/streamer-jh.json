@@ -1,0 +1,326 @@
+{
+  "id": "streamer-jh",
+  "occupation": "Live Streamer",
+  "role": "Live Commerce Host at a Streaming Base",
+  "headline": "From a stall in Yiwu's small-commodities market to a Jinhua streaming base: the assistant host who hands over the cups and shouts the stock count, one cubicle, one ring light, living by the throat",
+  "unit": "A streaming base in a converted knitting mill in Jinhua (selling factory-direct and unbranded small goods on commission)",
+  "unit_type": "Streaming base / commission-selling team",
+  "city": "Jinhua, Zhejiang",
+  "city_tier": "Tier 3",
+  "education": "College diploma (business English)",
+  "level": "Good mouth, not afraid to talk. You still have to glance at the cue card to tell 304 steel from 316.",
+  "intro": "The base is an old knitting mill. One floor has been partitioned into sixteen streaming rooms with sound foam up to the ceiling, and a dozen voices in the corridor are all shouting \"link's up.\" Your job is to stand next to the host, hand her the cup, screw the lid off, and screw it back on. When the camera finds you, it finds only two hands.",
+  "salary_note": "Estimate: base pay plus commission in Jinhua, swinging widely, far below the top agencies in Hangzhou. In the off-season you get just the base.",
+  "facts": [
+    {
+      "label": "Assistant Host (current level)",
+      "value": "0–1 years, ¥3,300–4,600 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Host (1–4 years)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "Pay after 3–5 years",
+      "value": "¥4,300 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Catching what the chat throws at you and keeping people in the room",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Writing scripts and product selling points",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "8 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+      "source": "Job listings"
+    }
+  ],
+  "day": [
+    "The early show goes on at six; older buyers get up early. You gargle salt water in your rented room and read today's cue cards once more on the way out. The corridor lights aren't all on yet.",
+    "Showtime. The host talks up an insulated cup from Yongkang. You turn it upside down and shake it, not a drop, then unscrew the lid at the camera so they can hear that sound.",
+    "You take the mic and fill seven minutes while the host gets some water. Viewers drop from 380 to 320. You look back at the operator, who holds up a finger: keep going, don't stop.",
+    "Off the air, throat burning. You and the host pack up the samples, one by one. Two cups have been opened and closed so often the lids are a bit loose. You make a note.",
+    "A factory owner comes and sits on a little stool to watch you go through the script for a wok. He says the base has seven layers. The cue card says five. You turn the sample over and count.",
+    "Script drill. The floor manager sits across from you with the list of banned words, and each time you say \"most,\" \"number one\" or \"absolutely\" he raps the table. Nineteen raps in half an hour.",
+    "The evening show is hair clips and storage boxes: things at ¥1.99 must be made to bloom. The ring light bakes your face, foundation slides down past your temples, and when you smile you pull with the left side. The right has quit for the day.",
+    "Off the air. At the end of the corridor you get a cup of warm water. Next door they're still shouting the countdown. You close your eyes, and all you see is white circles of light."
+  ],
+  "ladder": [
+    {
+      "title": "Assistant Host",
+      "stage": "Hands",
+      "focus": "Hands over samples, calls stock, chimes in, fills gaps. Moves up on camera sense and knowing the goods."
+    },
+    {
+      "title": "Host",
+      "stage": "Center",
+      "focus": "Carries three or four hours alone, memorizing products, controlling pace, working out conversion."
+    },
+    {
+      "title": "Star Host",
+      "stage": "Known",
+      "focus": "Has loyal followers and sales numbers of your own. Factories ask for you by name; you can negotiate guarantees and commissions."
+    },
+    {
+      "title": "Host Team Lead",
+      "stage": "Leading",
+      "focus": "Leads seven or eight hosts, schedules them, trains their patter, tests goods, and answers for violations and returns."
+    },
+    {
+      "title": "Base Partner",
+      "stage": "Equity",
+      "focus": "Negotiates with factories, does the base's accounts, decides what goods to take and which teams to break up."
+    }
+  ],
+  "ai_tasks": [
+    {
+      "name": "Catching what the chat throws at you and keeping people in the room",
+      "how": "Whether you can catch a complaint as it scrolls by comes down to reflexes and trust. AI can filter the questions; the words still have to come from a person."
+    },
+    {
+      "name": "Writing scripts and product selling points",
+      "how": "Feed in a product sheet and get three versions of the pitch in ten minutes. You have to have tested the cup for leaks to know which sentence you can say."
+    },
+    {
+      "name": "Cutting clips and posting short videos",
+      "how": "AI can cut highlights and add captions automatically. Where the account goes, and what to shoot, are for people to decide."
+    },
+    {
+      "name": "Reading stream data and doing post-show review",
+      "how": "Retention, conversion and returns all generate reports. The host only has to decide which conclusion is wrong."
+    },
+    {
+      "name": "Negotiating guarantees and commissions with factories",
+      "how": "Bargaining and backing your promises takes a face-to-face. AI can do the math but can't read the boss's expression."
+    }
+  ],
+  "events": {
+    "e_hoarse": "Nine straight days of morning and evening shows and your voice is gone. The throat doctor's slip says vocal nodules and tells you to talk less. The base asks who's doing tonight's show, then.",
+    "e_ban": "You let slip \"you won't find this price anywhere online.\" The room is ruled in violation and throttled for three days. The factory's goods sit piled in the base's corridor, and the owner's face looks worse than the numbers do.",
+    "e_hit": "Pitching a cleaver from Yongkang, you slice through a frozen-hard Jinhua ham on air, and your hand doesn't shake. The clip spreads. Over three thousand knives sell that night and the factory runs overtime.",
+    "e_11": "Two weeks before Singles' Day, the corridors at the base are so stacked you have to turn sideways. Twenty-two straight evening shows, then test streams for new goods after you sign off, and your knees go numb.",
+    "e_slow": "February and March are off-season. No one buys, half the base is empty. You draw your base pay and stream two hours a day, to an audience barely larger than your team.",
+    "e_return": "A hair clip's return rate shoots past forty percent. Buyers say the color isn't what you described. You review the footage. The light was too yellow, and on camera that pink really wasn't that pink.",
+    "e_lamp": "Years of ring lights have left your eyes dry. After a show there's a white halo around everything. The eye doctor says dry eye, and you keep artificial tears in your bag next to the throat lozenges.",
+    "e_fans": "One old woman comes to the early show every day. She has bought seven cups from you and given them to relatives. In the chat she writes: dear, you look pale today, have some water. For a few minutes you speak very slowly.",
+    "e_troll": "Someone calls you ugly in the chat for days. The floor manager boots him, and he comes back on a new account. For a while you don't look at your phone after a show. If you look, you don't answer.",
+    "e_factory_rent": "A factory is three months late paying, and the base can't advance the commissions. Your cut is written down on a spreadsheet. The spreadsheet is very nicely laid out.",
+    "e_year_goods": "New Year goods festival in the twelfth lunar month: half a month of Jinhua ham, day after day. The smell of cured meat comes home with you, and the dog follows you around for three days.",
+    "e_rule": "The platform changes how it allots traffic, favoring short video and shop scores. A voice alone can no longer pull numbers. You learn to shoot comedy clips and gain six hundred followers in four months, some of them relatives of factory owners.",
+    "e_ai_script": "The base brings in AI scriptwriting, three versions of the pitch per item. One calls 304 stainless \"medical grade.\" You don't read that out. You circle it for the floor manager, who breaks into a sweat.",
+    "e_ai_avatar": "The base opens several digital-human streaming rooms. The early shows, midnight and off-season goods all go to them. Digital humans don't need water, and your early-show bonus is gone.",
+    "e_ai_face": "You find a shop using your face and voice in a digital human, selling things you never sold. A lawyer's letter goes out. The shop changes its name.",
+    "e_cert": "You pass the Level 4 Internet Marketing Specialist certificate. The base adds ¥300 to your base pay, and also signs you up to teach the new hires a class on patter.",
+    "e_base_close": "The knitting mill lease is up and the base moves to a new building in the development zone. When they tear down the sound foam on the old floor, rows of glue marks stay on the walls.",
+    "e_tax": "The base tells all its hosts to register as sole proprietors and file taxes. You spend a week figuring out what business income means. That week wears you out more than three evening shows.",
+    "e_camera_age": "The base hires young assistant hosts. Followers ask her how old she is and ask you what eye cream you use. You smile, talk eye cream for two minutes, and steer back to the cup.",
+    "e_kid": "The kindergarten's parent-child night is at seven in the evening, your prime slot. You record a voice message for your child before going on air. By the time you sign off, the photos the teacher sends are two hours old."
+  },
+  "choices": {
+    "c_hz": {
+      "title": "A Hangzhou agency comes poaching",
+      "situation": "Someone from a big Hangzhou agency has been hanging around the base for two days. They offer double your base pay on a three-year contract, but your account and income are shared with them, and the penalty for leaving is no small number.",
+      "options": [
+        {
+          "label": "Go to Hangzhou",
+          "result": "You pack the early-show cue cards. In your first month they put you on beauty products.",
+          "end": "You went to the Hangzhou agency and did years of cosmetics and women's clothes, and stood on the side of a few top rooms. The year your contract ran out, your account was still under someone else's brand name."
+        },
+        {
+          "label": "Stay in Jinhua",
+          "result": "You say selling cups is fine. The man says cups won't take you to thirty. You remember that."
+        }
+      ]
+    },
+    "c_brand": {
+      "title": "The Yongkang factory wants you for in-house streaming",
+      "situation": "The insulated cup factory you've worked with for three years wants its own studio, and the owner invites you to run it: a fixed monthly salary, full social insurance. You'd stop chasing traffic, and you'd no longer be the host people recognize at the base.",
+      "options": [
+        {
+          "label": "Go to the factory",
+          "result": "You walk through their workshop and finally learn how a vacuum layer gets drawn.",
+          "end": "You stayed at that Yongkang factory, from head of in-house streaming to head of the brand team. When you later spoke about cups to the camera, you knew which crew's hands had made that weld."
+        },
+        {
+          "label": "No, keep standing",
+          "result": "You thank the owner and take another batch of his new models."
+        }
+      ]
+    },
+    "c_shop": {
+      "title": "Your voice is going. Open a real shop?",
+      "situation": "The doctor says your throat needs a different way of life. You've saved a sum, and there's a shopfront in downtown Jinhua for daily goods, all things you've sold and know the quality of. Friends in the trade say you're mad; a physical shop is harder than streaming.",
+      "options": [
+        {
+          "label": "Open the shop",
+          "result": "You hang a lightbox at the door, the brightness set to what suits your eyes.",
+          "end": "You opened a general store, stocking only what passed the standards you once tested on camera. No streaming here. When someone asks for a discount, you say all right, in a very small voice."
+        },
+        {
+          "label": "Keep streaming, talk less",
+          "result": "You change shifts and give up the slots with the most talking. Your income falls by a third."
+        }
+      ]
+    },
+    "c_truth": {
+      "title": "What the cue card says and what the cup does",
+      "situation": "This cup's cue card says twelve hours of heat. You've tested it, and at eight hours it's lukewarm. The host says everyone writes it that way, and the factory's commission comes through tonight. You're only the one handing over cups.",
+      "options": [
+        {
+          "label": "Tell the host",
+          "result": "The host changes it to \"stays hot a long time.\" When the factory owner hears, he looks at you a good while."
+        },
+        {
+          "label": "Keep handing over cups",
+          "result": "The cup sells well. One of the return reasons reads: not as long as advertised."
+        }
+      ]
+    },
+    "c_main": {
+      "title": "Step up to the Host position",
+      "situation": "The host has gone on maternity leave and the base asks you to cover three months of early shows. For the first time you'd stand at the very center of the light. But commission on the early show is low, and these three months of numbers will follow you.",
+      "options": [
+        {
+          "label": "Step up",
+          "result": "In your first show you blank midway, pick up the cup, unscrew it, screw it back, until the words return. The viewer count doesn't fall."
+        },
+        {
+          "label": "Six more months as assistant",
+          "result": "You stay an assistant, and copy down, sentence by sentence, how others catch a line."
+        }
+      ]
+    },
+    "c_pay": {
+      "title": "Reaching for Star Host: take the cheap order?",
+      "situation": "The base rates Star Host by sales volume, and this quarter you're just short. There's a batch of absurdly cheap goods in front of you that will move fast. You know returns will move fast too. If you make it, your guarantee goes up.",
+      "options": [
+        {
+          "label": "Take it, chase the number",
+          "result": "Sales go up and the comments section gets lively, and not all that liveliness is kind."
+        },
+        {
+          "label": "Don't take it",
+          "result": "You miss this quarter's rating. The old followers go on chatting with you on the early show."
+        }
+      ]
+    },
+    "c_account": {
+      "title": "Build your own account?",
+      "situation": "The account you stream on belongs to the base. People tell you to shoot short videos and build your own, which will take a long time and all your daytime hours. If the base finds out, your guarantee may be gone.",
+      "options": [
+        {
+          "label": "Build your own",
+          "result": "You film how to screw on a lid and which knives shouldn't go in the dishwasher. A year on, thirty thousand followers, all of them people who actually buy."
+        },
+        {
+          "label": "Focus on the base's shows",
+          "result": "All your hours are on the base's schedule. The account is someone else's. The guarantee is yours."
+        }
+      ]
+    },
+    "c_lead": {
+      "title": "Compete for Host Team Lead",
+      "situation": "The base needs a Host Team Lead for eight people. No more nightly shows, but you'd take the blame for the newcomers' violations, talk with them when their numbers drop, and schedule them the next day all the same.",
+      "options": [
+        {
+          "label": "Compete",
+          "result": "You take it. In your first week you carry a twenty-year-old assistant's violation sheet to the platform to appeal."
+        },
+        {
+          "label": "Stay on camera",
+          "result": "You say you want to stream a couple more years. When the light comes on, you still know who you are tonight."
+        }
+      ]
+    },
+    "c_avatar": {
+      "title": "The base asks to record your voice for a digital human",
+      "situation": "The base wants to train a digital human on your voice and patter, for a one-time fee. Once it's trained, the off-season early shows won't need anyone standing there. Your colleagues watch you. Some would like you to refuse.",
+      "options": [
+        {
+          "label": "Record, and learn to tune it",
+          "result": "You record four hundred sentences, and learn to adjust its pace so it pauses half a second before saying the price."
+        },
+        {
+          "label": "Don't record",
+          "result": "The base finds the voice next door. Your early show is gone anyway. It's just not your voice."
+        }
+      ]
+    },
+    "c_partner": {
+      "title": "Buy in as a Base Partner",
+      "situation": "The boss is scaling back and asks if you'll put in your savings as a Base Partner. The factories' payment terms, the rent, the team's wages would all be on you too. How many good years this trade has left, nobody can say.",
+      "options": [
+        {
+          "label": "Buy in",
+          "result": "You sign the contract with a steadier hand than at your first show. At home you take a screenshot of your account balance."
+        },
+        {
+          "label": "Salary is fine",
+          "result": "You say you'll stick with a salary. The boss laughs that you're no fool. You can't tell if that was praise."
+        }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "By the year you step away from the base, the streaming rooms have been through three generations of lights, and half the hosts don't have to breathe. The last thing you hand over is a spreadsheet full of factory owners' moods. On the way home you save your voice. You don't have to say one more word.",
+    "burnout": "After vocal cord surgery the doctor orders a month of silence, and for that month your name disappears from the base's schedule. Your throat heals but your voice has changed, and the old followers can't tell who you are. When the lights go on again, someone else is standing in them."
+  },
+  "stages": [
+    "You stand at the host's right hand and pass things over three hundred times a day. You set samples at the center of the frame, shout \"two hundred left,\" fill thirty seconds while the host drinks. Cue cards, sample rack and timer are yours. One look from the host means hand it over, and another means shut up. It takes six months to tell them apart.",
+    "You are the center of the light. A show runs three or four hours and eight to ten products: when to drop a giveaway, when to talk about fabric or welds, all rides on your mouth. The assistant hands you things, the operator posts links, the floor manager is in your earpiece. It used to be you watching others make mistakes. Now one wrong sentence costs three days of traffic.",
+    "Factories start asking for you by name. Before a show you test the goods, drop the cup once, use the knife for a week, and then negotiate guarantees and slot fees with the owner. You have thousands of loyal followers, and you remember quite a few of their names and what they bought. You can turn down goods now. The price is the owner's face and this month's numbers, and both are yours to bear.",
+    "You stream only twice a week. The rest of the time you watch eight hosts' recordings, marking pauses, and sit down with them, and schedule morning, noon and evening. Violation appeals and return analyses all go through you. You used to be afraid of forgetting your lines. Now you're afraid someone's voice will go tonight and no one can cover the slot.",
+    "You sit in the base's office doing accounts: rent, wages, commissions, payment terms, which factory's money is held up this month. Negotiations mean the factory floor and the owner's dinner table. Which room to shut down is yours to say. You seldom go on camera now, and when something goes wrong, you're the one who answers to the platform and the factories."
+  ],
+  "work": [
+    "While the host was talking you handed the cup over an inch crooked, covering the price sticker. Afterward the operator freezes the replay for you. You measure the placement with a ruler and stick down a strip of tape.",
+    "A towel from Lanxi needs a live absorbency demo. It takes seven tries to find the amount of water: too much spills, too little shows nothing. You use the glass measuring cup the factory owner brought.",
+    "A storage box has gone three minutes with no sales. You throw it on the floor and stand on it, and a hundred more viewers arrive. That box sold only that one night.",
+    "The floor manager says in your earpiece that just forty are left. You don't shout it, and go over the price once more. The operator says later that it converted better than when you shout.",
+    "You memorize an insulated lunchbox from Wuyi. The factory gave you nine selling points. You cross out six on the cue card and leave the one you can show on camera.",
+    "A Yongkang factory head offers you an electric kettle with a ¥5,000 slot fee. You take it home and boil water for seven days. On the fifth day the handle comes loose. You send the kettle back, and don't take the ¥5,000.",
+    "Someone in your followers' group asks about invoices, and you answer one by one. At the fortieth, you notice an account that buys two towels every month, on the dot, shipped to a nursing home.",
+    "The new host doesn't pause. You clip three minutes of her recording, time her breaths with a stopwatch, and have her leave a gap before the price.",
+    "A weekly report shows an odd return rate for one evening show. You take out the sample dress, photograph it under the same light, put it side by side with the buyer's picture, and show the team the color shift.",
+    "A host is leaving for another outfit, and even her last shows are done with care. You keep her slot on the schedule to the very end and give her replacement two extra days of shadowing.",
+    "You bring the payment schedule to a factory office in the development zone. The owner makes tea. On the third cup you lay the sheet next to the tray and say next month's show won't be scheduled for now.",
+    "A new base is recruiting, and the agency next door is bidding higher. You show the factory owner across from you the return rates for the past two years. Yours are six points lower."
+  ],
+  "past": [
+    "Your family rented a stall in Yiwu's small-commodities market, and after school you helped shout about hair clips. Foreign buyers haggled with their fingers. You learned young that prices are spoken things.",
+    "You studied business English at college, thinking of foreign trade. A teacher said when foreign trade goes bad, English can still be used to read instructions.",
+    "Your family's stall grew quieter as the goods moved online. You helped your family try streaming. First show: seven viewers, four of them relatives.",
+    "After graduation you did order tracking at a foreign trade company, sending emails all day. The boss's wife started selling on her phone in the office, and you helped by handing her things.",
+    "A streaming base in Jinhua was hiring assistant hosts at ¥4,000 plus commission. At the job fair they had you talk to a phone for thirty seconds about the bottle of water in front of you. You talked for a minute and a half."
+  ],
+  "late": {
+    "pension_note": "Estimate: flexible employment, low contribution base, several gaps when young; the pension is limited.",
+    "scenes": [
+      "You go back to Yiwu, sweep out the small storeroom your parents used for the stall, put nothing in it, and rent it to a young man in foreign trade.",
+      "The neighborhood senior choir is recruiting. The conductor says your voice has rough edges and puts you in the back row. For the first time you sing inside a crowd, with no numbers to read.",
+      "Digital humans now speak better than you did, even that half-second pause. You watch one show and buy a cup. When it arrives you unscrew the lid. The sound is wrong.",
+      "You speak slowly now, finishing a sentence and then waiting. When a stallholder at the market shouts his price, you go over it again for him in your head.",
+      "In the month of silence you talk to your family by typing on your phone. On the thirtieth day you open your notes and find thousands of characters there, and not one sentence about a price.",
+      "You help stock shelves at the neighborhood mini-mart, facing every item forward. The owner says it needn't be so tidy. You nod. By afternoon they're tidy again.",
+      "You don't get on well with lights anymore, and at home it's all warm little lamps. Someone says you're being stingy with electricity. You don't explain.",
+      "After you change your life, for months you don't want to open your mouth. When a supermarket promoter shouts into a mic, you walk around him.",
+      "Your account is long gone but your followers' names remain in your head. A vendor outside the supermarket is selling insulated cups. You pick one up, flip it, shake it, and put it down.",
+      "The buildings of the old knitting mill are gone. Passing by, you do the arithmetic: sixteen rooms a floor, three shows a room a day. The words shouted out of here in those years would circle Jinhua several times.",
+      "When anyone speaks for more than three seconds without landing, you start to get restless, feeling that viewers must be leaving. Your family says we're eating. You say, mm.",
+      "Your throat will never recover, and on rainy days your voice has some sand in it. The lozenges you always took have been discontinued, which you suppose is another kind of market exit."
+    ],
+    "closing": {
+      "retire": "Evening, no lamp on, the room dimming little by little. You unscrew the cup and take a sip. Still warm, seven hours or so.",
+      "burnout": "The TV is on mute, subtitles walking by, line after line. You like it this way. No one tells you to answer.",
+      "end": "You turn off the shop light and pull the shutter down. It hits bottom. Today's accounts are right."
+    }
+  }
+}

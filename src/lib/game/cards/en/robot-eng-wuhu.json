@@ -1,0 +1,151 @@
+{
+ "id": "robot-eng-wuhu",
+ "occupation": "Robotics Engineer",
+ "role": "Industrial Robot Commissioning Engineer",
+ "headline": "Commissioning and applying robots for an industrial robot maker in Wuhu: half the year in customers' workshops, racing car plants' line shutdowns and waiting on the retention money that only clears after final acceptance",
+ "unit": "An industrial robot manufacturer in Wuhu",
+ "unit_type": "Private manufacturer",
+ "city": "Wuhu, Anhui",
+ "city_tier": "Industrial city below second tier",
+ "education": "Bachelor's degree (Mechatronic Engineering)",
+ "level": "You have solved forward and inverse kinematics for six axes. Whether a shaking robot is a gearbox problem or a gain problem, you can't yet tell.",
+ "intro": "The plant is in Jiujiang District, two streets from the Yangtze levee. At four in the afternoon thirty robots in the burn-in shop raise their arms together and the floor trembles very slightly. On your desk are a heavy teach pendant and a travel request form. The department manager says your first stop this month is an auto parts factory. They are giving you forty hours of downtime, and you have to get the robot hitting its weld points before Monday's early shift.",
+ "salary_note": "Estimate: Wuhu pays below the core Yangtze Delta cities. With site commissioning allowances it comes to about ninety percent of the national engineering figure.",
+ "facts": [
+  { "label": "Assistant Commissioning Engineer (current level)", "value": "0–2 years, ¥7,000–11,000 a month (national figure, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Robotics Engineer (2–6 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Building robot systems and completing integration and commissioning", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Designing the robot's mechanical structure and transmission", "source": "AI exposure" },
+  { "label": "Open positions", "value": "183 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "At the customer's gate you change into safety boots, hand over your ID and get a temporary pass. You won't be allowed to touch this line until noon.",
+  "Crouched outside the fence you go through the previous shift's alarms. The external seventh axis threw a following error eleven times last night.",
+  "You jog the welding torch point by point on the teach pendant. This is your third go at TCP calibration, and across four poses the tip is always half a millimeter off.",
+  "Canteen boxed lunch at the fence. The customer's process engineer asks how much longer, and you say nearly done, a thing you say five times a day.",
+  "The cycle sheet says fifty-eight seconds and you're running sixty-three. You open up the blend radius on a few transition points and run it again.",
+  "An encoder cable has worked loose behind the terminal cabinet. Climbing in to tighten it, you get your hard hat wedged under the cable tray.",
+  "On a voice call to the controls group at head office you send the logs. They say this firmware has a known problem, not yet in the release notes.",
+  "Back at the guesthouse you write the commissioning report. Tomorrow morning's program you've backed up twice."
+ ],
+ "ladder": [
+  { "title": "Assistant Commissioning Engineer", "stage": "On the line", "focus": "Learning calibration, teaching and wiring on site until you can bring a robot up by yourself" },
+  { "title": "Robotics Engineer", "stage": "Owns a project", "focus": "Responsible for commissioning and acceptance of a line, fault-finding and cycle-time optimization" },
+  { "title": "Senior Engineer", "stage": "Signs off on plans", "focus": "Setting control and application schemes, reviewing drawings and algorithms, handling hard problems" },
+  { "title": "Product Line Technical Director", "stage": "Owns a generation", "focus": "Deciding what the next platform does and how long the old one lives; answerable for product and team" }
+ ],
+ "ai_tasks": [
+  { "name": "Designing the robot's mechanical structure and transmission", "how": "AI can draft structures, run topology optimization and work out initial gear ratios. A person has to settle the design against load, cost, machining and assembly, and answer for strength and safety." },
+  { "name": "Developing robot control hardware and software", "how": "AI can write frameworks for drivers, communication and control modules and suggest standard circuits. A person designs the architecture, real-time behavior and safety logic, and signs off on testing on the machine." },
+  { "name": "Optimizing motion planning and control algorithms", "how": "AI can prototype path planning and trajectory optimization and help tune in simulation. A person has to judge whether an algorithm survives real mechanical error, friction and disturbance, and decide what to trade off." },
+  { "name": "Selecting and buying sensors, motors and core parts", "how": "AI can filter by specification, compare prices and draw up lists. A person makes the final decision and negotiates, weighing lead times, reputation for reliability and the project budget." },
+  { "name": "Building robot systems and completing integration and commissioning", "how": "AI can only offer reference steps for wiring and commissioning. Assembly, wiring, joint testing on site and dealing with mechanical play and communication faults take a person's hands and experience." },
+  { "name": "Performance testing and fault-finding", "how": "AI can analyze test logs, sum up patterns and suggest causes. A person designs the test plan, reproduces the fault at the machine, finds the root cause and confirms the fix." },
+  { "name": "Writing technical documents and design proposals", "how": "AI can draft technical documents, design proposals and test reports from design data and code. A person only needs to check that key parameters and conclusions match the real thing." },
+  { "name": "Following technology upgrades and new applications", "how": "AI can search and summarize papers, patents and industry news. A person has to judge what can really be put to use, what it means for the product and customers, and where to invest." }
+ ],
+ "events": {
+  "e_tcp": "On your first solo calibration you get the tool frame backward and the robot swings toward the fixture as soon as it moves. You hit the e-stop in time and it only scrapes a little paint. The engineer training you doesn't shout. He tells you to do it again.",
+  "e_window": "The two weeks of Spring Festival shutdown are exactly when car plants rebuild their lines. On New Year's Eve you are in a customer's workshop running cycle times, and the only heater in the building is next to the control cabinet.",
+  "e_sat": "Final acceptance day: eighty straight hours with no alarm, and the customer's equipment head signs. The company can finally invoice the retention money, and the salesman is happier than you are.",
+  "e_scope": "The technical agreement said three workpieces, and on site it's seven. The customer calls that a small change, sales says to go ahead, and you are the one left on site.",
+  "e_hotel": "You spent 190 nights away this year, and the best guesthouse in every county town is much the same. Your cervical spine has started to follow the height of the pillows.",
+  "e_reducer": "A batch of domestic gearboxes passes its backlash spec but shudders in one particular pose. You spend two weeks catching it with a vibration sensor and trace it to a difference in the grease. The supplier's man drives through the night from Suzhou.",
+  "e_price_war": "Rivals cut the price of their six-axis arms by another twenty percent. Sales starts offering all-inclusive commissioning, the commissioning fee is folded into the equipment price, and half of your project bonus goes with it.",
+  "e_ai_code": "The company gives you a coding assistant, and a communication module's framework now takes half an hour. You spend the saved time back on site retesting those poses. The bit of singularity handling it wrote doesn't work on the machine.",
+  "e_sim": "Offline simulation begins laying out most of the trajectories, and less than a tenth need correction on site. A customer asks how many people you'll send and you say two. Your department manager stares at you for some time.",
+  "e_pickup": "Fortnight-long trips one after another, and you can't get a word into your child's parent group chat. That summer you ask for a nearer project. It's in Hefei, and you can't get home at weekends anyway.",
+  "e_furniture": "With fewer car orders, the company takes on sanding lines at furniture factories. The dust is thick and the workers distrust the machines. You finish commissioning one line and the owner's first question is whether it could cost less.",
+  "e_controller_eol": "The generation of controller you know best is discontinued, with spares guaranteed for five years. The hundred-odd program templates you've written have to be ported one by one to the new platform, and some of them don't feel right afterward.",
+  "e_patent": "The weave compensation you worked out for thin-sheet welding gets a company patent. You are third on the inventors' list, and the bonus is enough to take the whole group out for dinner.",
+  "e_ear": "You can pick out a singing servo from two lines away. On your medical report one box in the hearing test is low, in the high frequencies. You think about the weld shops.",
+  "e_returned": "A customer calls for service on a line you commissioned eight years ago, which has run for tens of thousands of hours. You go and look. One cable needs replacing. Everything else is still your program.",
+  "e_overseas": "The company starts selling in Southeast Asia and you lead a team to a plant in Thailand. A local technician uses a phone app to ask why this alarm code differs from the manual.",
+  "e_merge": "The company is folded into a large group and commissioning merges with service. Your team loses seven people, two of whom you taught one machine at a time.",
+  "e_waist": "Your back won't let you climb into terminal cabinets anymore. You sit outside the service van and direct the younger ones by walkie-talkie to find wire numbers. They snigger now and then that you remember wire numbers better than the drawings do."
+ },
+ "choices": {
+  "c_shenzhen": { "title": "The humanoid robot company in Shenzhen", "situation": "A classmate at a humanoid robot company in Shenzhen says they need people who know the shop floor. Double the salary, stock options on top. You've only just got comfortable with industrial lines, and funding news in that business changes daily.", "options": [
+   { "label": "Go to Shenzhen", "result": "You give notice and archive your commissioning programs one by one.", "end": "You go to Shenzhen and move from getting robots to hit their points to getting robots to stay upright. The demos here are lovely. You often want to ask: what's the cycle time?" },
+   { "label": "Keep running lines", "result": "You say you'll think about it. This year you run eleven more lines and wear the labels off two teach pendants." }
+  ] },
+  "c_engineer": { "title": "The review to become Robotics Engineer", "situation": "To move up to Robotics Engineer you have to lead the next project yourself and defend it in front of the department. It's a tough battery tray welding line. Pull it off and you'll qualify. Fail and the customer will name you personally.", "options": [
+   { "label": "Take it", "result": "You spend more than seventy days on site and get the tray distortion inside tolerance. Your defense is four slides long." },
+   { "label": "Follow projects another year", "result": "A further year behind a project manager teaches you how to read a contract's acceptance terms." }
+  ] },
+  "c_fieldrole": { "title": "Field or R&D", "situation": "R&D needs someone with field experience to work on motion control applications. A desk, dinner at home, and no travel allowance. Your friends in the field say that if you go, there will be nobody to hold the fort on the next job.", "options": [
+   { "label": "Move to R&D", "result": "You start tuning parameters against simulated curves. For the first time, your phone doesn't ring at the weekend." },
+   { "label": "Stay in the field", "result": "You stay, the allowance stays, and the guesthouse pillows keep changing." }
+  ] },
+  "c_ai_loop": { "title": "Putting AI in the commissioning loop", "situation": "The company wants to feed logs and simulations to a model so that it proposes tuning first. Someone has to clean years of fault data and define which suggestions may go on the machine. It's slow work, and if it succeeds, many projects won't need you.", "options": [
+   { "label": "Do it", "result": "You sort eight years of alarm logs and write one page: which parameters the model may never touch by itself." },
+   { "label": "Finish the lines in hand first", "result": "Two years later the system goes live with rules written by someone else. You don't entirely agree with a few of them." }
+  ] },
+  "c_supplier": { "title": "Going out on your own as an integrator", "situation": "An equipment head at an old customer says if you start your own integration shop, his retrofit work comes to you first. Plenty of small integrators have opened in Wuhu in recent years, and plenty have folded. The working capital would mean staking a good part of your family's savings.", "options": [
+   { "label": "Go out on your own", "result": "You register the company. The advance on your first contract is only thirty percent.", "end": "You become the boss of a seven-person integrator. Mondays you run workshops, and at month's end you chase payments. Nobody on earth now looks forward to a final acceptance form more than you do." },
+   { "label": "Keep drawing a salary", "result": "You thank the equipment head, go over his plan for him and take no money for it." }
+  ] },
+  "c_senior": { "title": "Applying for Senior Engineer", "situation": "To qualify as Senior Engineer you present a complete scheme to the company's technical committee, with patents and projects counted. You want to talk about controller migration. A colleague says that's a thankless topic and suggests the line that won the big order.", "options": [
+   { "label": "Talk about controller migration", "result": "A committee member asks on the spot how many years of spares are left. You have the answer." },
+   { "label": "Talk about the big order", "result": "It goes smoothly and there's applause. The result still has to wait for another round." }
+  ] },
+  "c_warranty": { "title": "The part just out of warranty", "situation": "A small factory's robot has just gone three months past warranty when its gearbox starts to whine. Under the contract it's chargeable, and the amount won't be small for them. The owner says he only bought from you because of you.", "options": [
+   { "label": "Follow the contract", "result": "You write a quotation and also cut the replacement time as far as you can. The owner never buys again." },
+   { "label": "Ask the company to extend the warranty", "result": "You write two pages putting it down as a batch problem. The sales director asks what kind of after-sales you call that." }
+  ] },
+  "c_director": { "title": "Taking Product Line Technical Director", "situation": "A new platform is being launched and the company needs a Product Line Technical Director. That person decides what comes next and when the old platform stops selling. On the day it stops, every line you've commissioned will phone.", "options": [
+   { "label": "Take it", "result": "The first spec you put on the list isn't payload. It's writing alarm codes in language people can read." },
+   { "label": "Stay on the expert track", "result": "You keep working on hard problems and travel once a month, which is just enough to keep your hand in." }
+  ] }
+ },
+ "endings": {
+  "retire": "The week you retire, the burn-in shop gets a batch of new models. Thirty machines raise their arms together, a good deal more quietly than they used to. The last line you commissioned is still running at a customer, and its spares are nearly gone. You leave a wire number list for the service department on the shared drive. Probably no one will open it.",
+  "burnout": "Your back and your hearing have got to the point where you can't do site work. You ask for a transfer to the training center, teaching customers' operators, and no more racing line shutdowns. After two months without a trip, you can't find a proper place at home for your toiletry bag."
+ },
+ "stages": [
+  "You follow the project engineer, wiring, calibrating and editing programs with the teach pendant always in your hand. Each day's output is a commissioning report and a few dozen corrected points. The customer's team leaders look at how young you are and put their questions to your senior. Your job is to write down what they say and look it up in the manual at night.",
+  "A line is yours now. You draw up the commissioning plan from the technical agreement, calculate cycle times, chase alarms, and follow it from preliminary to final acceptance. The customer's process engineer, the fixture maker and the controls group at head office all need coordinating. When the line stops, everyone turns to look at you, which is nothing like following along behind.",
+  "Schemes get settled in your hands. When sales brings a requirement you judge whether that cycle time can be done, and spell out the traps before there's a price. There are more review meetings. Engineers below you only call when they can't resolve vibration or communication trouble, and with the logs and spectrum in front of you, a sentence or two is often enough to send them another way.",
+  "You own the roadmap for a generation of product: compute on the next controller, the end-of-sale date for the old platform, long-term agreements with gearbox suppliers. Your weeks go to project approvals and customer conferences, and to explaining to the owner why money is going into reliability nobody can see. You seldom touch a teach pendant now, but you still read how the alarm codes are written."
+ ],
+ "work": [
+  "Your trainer has you back up the zero points of twelve robots. On the ninth you notice a low battery voltage warning and save the data just before power-off.",
+  "Foundry workers say the robot is gripping wrong. You crouch by the bin measuring for a long time and find that each batch of castings has its gate turned slightly differently. That has to go into the vision rules.",
+  "The customer's process engineer says the weld is off. You overlay seam-tracking data for three hundred workpieces and find it drifts only on Monday mornings. After a weekend, the fixtures are at a different temperature.",
+  "The preliminary acceptance checklist has 140 items. You cross them off with a marker. Item 139 is the Chinese operating manual, which sales still hasn't given you.",
+  "The battery tray line ran beautifully in the morning and keeps timing out on communications in the afternoon. You disconnect the bus segment by segment. In the end it's interference from a variable-frequency drive on the next line.",
+  "The technical agreement sales brings back includes the words repeat accuracy of 0.02 mm, all conditions. You put a red line through the last two words. He asks if you could be a bit more polite.",
+  "You help a junior investigate a shaking robot and stop him touching the gains first. The spectrum shows a fixed spike, which turns out to be the foundation. Next day the customer agrees to two anchor bolts.",
+  "Before the old platform's end-of-sale notice goes out, you pull the national installation list, sort it by industry and spare-parts use, and push the date in the notice back nine months.",
+  "The head of the gearbox supplier comes to talk about a three-year agreement, and his opening subject is a discount. Your first question is whether the grease formula changed this year."
+ ],
+ "past": [
+  "Your family was in Wuwei County. Your father stamped parts at a small hardware plant and had a finger half gone. He hoped you'd never stand in front of a machine. You took the old electric fan apart and put it back together again and again.",
+  "When you filled in your college choices you picked Mechatronic Engineering at a college in Hefei. A teacher said the subject teaches a little of everything. Later on you thought that was both true and the trouble with it.",
+  "You joined the school's robot competition team and slept a term on a folding bed in the lab. On contest day a servo burned out, and you learned for the first time that the field and the lab are different places.",
+  "You interned at an appliance factory in Hefei and saw a row of stamping stations replaced by robots. The workshop head told you not to stand so close, and you thought of your father's finger.",
+  "At campus recruitment the foreign firm in Shanghai only wanted master's graduates, while this Wuhu factory said you'd go straight onto projects. You thought about it for a week and concluded nothing mattered more than getting your hands on the machines first."
+ ],
+ "late": {
+  "pension_note": "Estimate: a private manufacturer with mid-range contributions that rise later on; enough for everyday life, not comfortable.",
+  "scenes": [
+   "You join a calligraphy class at the seniors' college and the teacher corrects your grip three times. Looking at your own horizontal strokes, you keep wanting to widen the blend radius at the start.",
+   "A small shop that repairs old equipment asks you in two days a week to rewire old controllers. These machines have no spares left and live on parts from each other. You find it more interesting than commissioning new lines.",
+   "The elevator gives a little jolt as it starts, and you curse its acceleration curve under your breath. The new delivery robot at the supermarket goes around you. Its obstacle avoidance is better than you expected, and that annoys you slightly.",
+   "The time has come for hearing aids. The audiologist asks whether to add some treble. You say add plenty. You want to hear what clear things sound like.",
+   "At the training center you teach how to change batteries and how to home an axis. Batch after batch of operators pass through and some call you teacher. The title makes you uneasy for a while, and then it doesn't.",
+   "You have worn a back brace for years and the doctor says not to lift things. You put the household tools away in the toolbox and keep out one hex key, for fixing the bicycles.",
+   "A colleague forwards a video of a new model, double the payload, smoother through the turns than anything before. You don't reply. You'd rather not know how they did it.",
+   "The first medical report after changing jobs shows your hearing hasn't dropped any further. Your neck hasn't improved, though you no longer have to change pillows.",
+   "Your days have nothing to do with guesthouses or boxed lunches anymore, but your suitcase still holds a spare encoder cable, and you couldn't say why.",
+   "Over the years you've made money and lost money, and it adds up to about what you'd have had on a salary. You can't say whether it was worth it. You only know that for those years as boss, nobody dared keep you waiting.",
+   "You take the family to an open day at an electric car plant. They look at the cars, and you press against the glass counting the cycle time of the body shop.",
+   "Evening strollers fill the Yangtze levee. Walking behind them you watch an old man's arm swing in front of you and decide his left shoulder has some backlash."
+  ],
+  "closing": {
+   "retire": "Seven-thirty on a Monday morning and you don't have to change into safety boots. The water boils and you pour yourself a cup. The cycle time is whatever it is.",
+   "burnout": "The teaching robot at the training center goes on slowly swinging its arm, dozens of times a day, as accurate as the first. You turn off the light on it.",
+   "end": "The new project's contract lies open on the desk. You turn to the page with the acceptance terms and draw a line in pencil."
+  }
+ }
+}

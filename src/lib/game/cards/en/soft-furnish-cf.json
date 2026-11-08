@@ -1,0 +1,203 @@
+{
+  "id": "soft-furnish-cf",
+  "occupation": "Interior Decorator",
+  "role": "Soft Furnishing Designer",
+  "headline": "A soft furnishing assistant at a home-goods mall in Chifeng, where curtains are priced by the pleat, solid wood shipped from the south splits when the heating comes on, and the client's budget is always a little smaller than the rendering",
+  "unit": "A soft furnishing shop in a home-goods mall, Hongshan District, Chifeng",
+  "unit_type": "Soft furnishing retailer",
+  "city": "Chifeng, Inner Mongolia",
+  "city_tier": "Third-tier city",
+  "education": "Associate degree (Environmental Art Design)",
+  "level": "You can pull up a room in SketchUp, but you don't yet know what one centimeter of fabric width will cost you",
+  "intro": "Third floor of the home-goods mall, the display sofas still in their plastic. The shop's owner, a woman everyone calls the boss lady, slaps a five-meter steel tape and a book of fabric swatches into your hands. Windows to measure this afternoon in the Songshan new town, she says. The heating isn't on out there yet. Dress warm.",
+  "salary_note": "Estimate: base pay at a Chifeng shop is low and most of it comes from commission, so peak and slack months can differ by half.",
+  "facts": [
+    {
+      "label": "Soft Furnishing Assistant (current level)",
+      "value": "0-2 years, ¥2,800–3,900 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Soft Furnishing Designer (2-6 years)",
+      "source": "Industry norm"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Measuring windows, staging rooms and signing off on site",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Renderings and color schemes",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "0 related listings nationwide, 0 in this city (the listings skew toward campus hires and internships)",
+      "source": "Job listings"
+    }
+  ],
+  "day": [
+    "You roll up the shutter and run a duster over the samples. One night of Chifeng wind and you could write your name on a sofa arm.",
+    "You go along with the designer to measure windows: track on the ceiling or the wall, net width of the pelmet, how many centimeters clear of the floor. You call them out, she writes them down, and the laser dot trembles on the plaster.",
+    "Back at the shop you copy the measurements onto the order sheet. Is 2.8-meter fabric wide enough, with pleats at double fullness? Get it wrong by a meter and your commission on this job is gone.",
+    "The sideboard shipped from Foshan is on its eighth day on the freight line. Three phone calls later you learn it is sitting in a transit warehouse in Shenyang.",
+    "A client comes in with a picture on her phone. She wants the 'cream style.' You hold swatch after swatch beside the photo of her sofa. She says she'll think about it.",
+    "You go along to a staging. The furniture has just come into the new flat. You kneel to square the rug, and pencil the center of the painting on the wall at 1.5 meters.",
+    "Back at the shop you line up tomorrow's installs, two curtain fitters, three homes. The household with old people in it goes first so nobody has to wait all day.",
+    "Washing your hands, you see the groove the sheer's thread cut into your index finger. It will still be there tomorrow."
+  ],
+  "ladder": [
+    { "title": "Soft Furnishing Assistant", "stage": "Order follow-up", "focus": "Measuring windows, copying dimensions, chasing freight, assisting designers" },
+    { "title": "Soft Furnishing Designer", "stage": "Own clients", "focus": "Taking home jobs alone: schemes, budgets, leading installers through staging" },
+    { "title": "Lead Soft Furnishing Designer", "stage": "Lead", "focus": "Villas and show flats, setting the overall scheme, answering for margins and collections" },
+    { "title": "Soft Furnishing Design Director", "stage": "Team lead", "focus": "Leading designers and install crews, managing supplier credit terms, negotiating with developers" }
+  ],
+  "ai_tasks": [
+    { "name": "Measuring windows, staging rooms and signing off on site", "how": "Track on the ceiling or wall, how high the painting goes, whether the rug clears the door: a person has to stand in the room and decide." },
+    { "name": "Talking through budget and trade-offs with clients", "how": "When a family's tastes and its wallet disagree, someone has to sit down and sort it out." },
+    { "name": "Renderings and color schemes", "how": "AI makes ten images in minutes. Which of them can be bought and carried through the door is for a person to pick." },
+    { "name": "Compiling procurement lists and quotes", "how": "Lists, price comparisons and quotes mostly generate themselves; a person checks the dimensions." }
+  ],
+  "events": {
+    "e_sand": "Staging in April, and the client insists on opening a window to air the place. One gust and the freshly made white bedding wears a film of fine sand. You strip it all, iron it again. After that your staging sheet carries one more line: no open windows in sandstorm season.",
+    "e_heating_crack": "October 15, the heating comes on, and the solid wood dining table delivered last month opens a crack down the middle. The factory says the north is too dry, which isn't a quality issue. Two weeks of wheedling gets you a new tabletop. You buy the client a humidifier out of your own pocket.",
+    "e_mismeasure": "You wrote down the pelmet's outer width as its inner width. Six centimeters off. The fabric is already cut and can't go back, and this month's commission goes with it. The boss lady says everybody pays once, and once you've paid, you remember.",
+    "e_frozen_leather": "Unloading in the last month of the lunar year at minus twenty-something, the leather sofa is stiff as a board. You tell the crew not to unwrap it, leave it indoors a full day to warm. The client grumbles about the delay. When it's unwrapped the next day, the hide doesn't have a single crease.",
+    "e_wedding_rush": "Wedding flats pile up before the October holiday. Elders from both families each weigh in, and the color of the headboard changes four times. You shuttle between them with the color cards, and the last curtain goes up the night before the holiday.",
+    "e_sixth_floor": "An old walk-up with no elevator, and the three-meter rug, rolled, can't make the turn in the stairwell. You and the installer drop a rope from the sixth-floor window and haul it up inch by inch while people below shout the count.",
+    "e_old_sideboard": "A retired teaching couple moving house refuse to part with one chipped chest of drawers. You pull the whole home's palette toward it and save them over ¥10,000. Later they send you all their relatives.",
+    "e_south_window": "The sun beyond the Great Wall is merciless. In one year a south-facing linen-cotton curtain fades a stripe down its edge. The client comes back and you own it. The remake is a polyester blend, and ever since, you ask which way a window faces before you open the swatch book.",
+    "e_shoulder": "Who knows how many meters of track you've installed from the top of a stepladder with your arms up. This time your right shoulder catches halfway. You plaster it, and turning over at night still hurts.",
+    "e_tail_payment": "The client has been living there two months and the final ten percent still hasn't come, on the grounds that the cushions don't quite match the picture. The boss lady sends you. You turn up with two new cushions and collect half.",
+    "e_foshan_fair": "March, the furniture fair in Foshan: thirty thousand steps a day and a thousand photos of what you might stock this year. On the way home you delete half from the spreadsheet: door too narrow, freight too high, or simply won't stand up to the dry.",
+    "e_county_run": "A fruit trader in Ningcheng County wants his whole self-built house furnished. Three hundred-odd kilometers round trip, two meals eaten in the car, and you replace the chandelier in the front hall with the one his wife actually wanted.",
+    "e_show_flat": "The developer's show flat opens Saturday. Hard finishing doesn't clear out until Thursday night, and the rooms reek of glue. Two straight nights of hauling, hanging and steaming, and you collect the last shoe covers two hours before the doors open.",
+    "e_parking_lot": "The developer's money has dried up. For the ¥800,000-plus you're owed for furnishings, they can only offer three parking spaces. The boss lady does the math all night and signs. Half your bonus becomes a sheet of paper.",
+    "e_ai_client": "A client brings an AI-generated living room and wants it built. The sofa in the picture leans against a floor-to-ceiling window that doesn't exist, and the coffee table has four legs, five of them visible. You smile, take out the tape, and start with the true width of this actual room.",
+    "e_ai_render": "One image used to cost you two nights; now you get ten directions in an afternoon. Clients decide faster, and believe you less when you say that thing doesn't exist anywhere.",
+    "e_floor_empty": "The lighting shop on the ground floor of the mall has pulled out, and the door-and-window place on the second floor has its shutter half down. One weekend you count fewer than twenty people on a whole floor. The boss lady starts posting curtain-cleaning offers in neighborhood group chats.",
+    "e_returnee": "A family who spent half a lifetime in Beijing comes back to Chifeng to retire and wants the old flat made wheelchair-friendly. For the first time you properly measure door openings and turning circles. The rugs all go, replaced by non-slip mats and sturdy rails.",
+    "e_assistant_error": "The new assistant has ordered left-hand doors the wrong way around. You catch it half an hour before the factory cuts, and phone to stop it. The kid stands by your desk red in the face. All you ask is one more line on the confirmation sheet: door swing."
+  },
+  "choices": {
+    "c_beijing": {
+      "title": "A soft furnishing firm in Beijing is hiring",
+      "situation": "A classmate at a high-end show-flat company in Beijing says they're short of people, at more than twice your pay. Chifeng clients have only just started to know your name. A month's rent here would cover three days there.",
+      "options": [
+        { "label": "Go to Beijing", "result": "You leave the steel tape and swatch book at the shop and buy a night train ticket.", "end": "You went to Beijing and spent some years arranging things in show flats that you couldn't afford, then followed the firm to other cities. Chifeng's sand only came to mind when you went home for the new year." },
+        { "label": "Stay in Chifeng", "result": "You finish the three jobs you took on that month, and the boss lady raises your commission by a point." }
+      ]
+    },
+    "c_curtain_shop": {
+      "title": "Taking over the curtain workshop",
+      "situation": "The woman who sews your curtains is going home to look after family. Four sewing machines and a group of old customers, asking price ¥80,000. Take it and you'll never draw up another scheme: you'll work the machines, count meters, and the books will be clean.",
+      "options": [
+        { "label": "Buy it", "result": "You hand your jobs to a colleague and in the first month replace the pressing table.", "end": "You became a curtain maker, working for other designers and charging for the sewing. Nobody asked your opinion on style any more, and you never again kept anyone company while they chose a shade of cream." },
+        { "label": "Keep designing", "result": "You help her find a buyer and go on placing orders there." }
+      ]
+    },
+    "c_mall_exit": {
+      "title": "The home-goods mall is clearing out",
+      "situation": "The building is to become a training and livestreaming hub, and tenants have three months to leave. A real estate agency comes to see you: ¥20,000 of staging before a resale listing can add ¥50,000 or ¥60,000 to the price, and they want you to run it.",
+      "options": [
+        { "label": "Join the agency's staging team", "result": "By the second week you are carrying rented sofas in and out of other people's empty rooms.", "end": "You left soft furnishing behind and dressed houses for sale, three a week, photographed and gone. Everything was rented, so you never again had to care whether it cracked." },
+        { "label": "Move with the boss lady to a shopfront", "result": "The new shop is half the size, with room for one sofa set. You reorganize the swatch book." },
+        { "label": "Do curtain cleaning and refits on your own", "result": "You carry the pressing table home, put your name in the neighborhood chats, and start repleating old clients' curtains." }
+      ]
+    },
+    "c_rebate": {
+      "title": "An eight-point kickback",
+      "situation": "A sofa dealer says that if your jobs go through him you get eight points, and the client needn't know. Nobody in the shop talks about it, but everybody has their supplier. This month you are short.",
+      "options": [
+        { "label": "Take it", "result": "It comes by WeChat, marked 'sample fee.' Without quite deciding to, you start putting his sofas on page one of the scheme." },
+        { "label": "Pass the points to the client", "result": "You take the eight points off the quote. The client remembers you. So does the dealer." }
+      ]
+    },
+    "c_designer": {
+      "title": "Becoming a Soft Furnishing Designer",
+      "situation": "The shop needs a Soft Furnishing Designer who can take jobs alone. The boss lady says you can try three, but from now on the compensation is yours and so are the clients' midnight phone calls.",
+      "options": [
+        { "label": "Try three jobs", "result": "The first is a young couple's two-bedroom. You do seven versions, and swap the imported lamp for one somebody local can repair." },
+        { "label": "One more year following", "result": "You measure windows for one more year. What's on the drawings gets clearer and clearer to you." }
+      ]
+    },
+    "c_ai_design": {
+      "title": "Learning AI imaging",
+      "situation": "Factory group chats start circulating boot camps: full-home schemes with AI in three days. The younger designers already use it, and your hand drawings and SketchUp suddenly look slow. Then again, once you learn it, clients will expect more of the images.",
+      "options": [
+        { "label": "Learn it, build your own product library", "result": "You enter the size of every sofa the shop can actually get, and the images finally show things you can buy." },
+        { "label": "Hold on to the on-site end", "result": "You don't compete with them on images. You compete on whether a room still works in its second year." }
+      ]
+    },
+    "c_advance": {
+      "title": "Lead Soft Furnishing Designer, and fronting the money",
+      "situation": "A show flat tender has come out requiring forty percent of the cost fronted before entry. The boss lady says whoever lands this one becomes Lead Soft Furnishing Designer, but the advance comes out of six months of your own commission.",
+      "options": [
+        { "label": "Stake the commission and take it", "result": "Three trips to Foshan to beat down prices, and the flats hit every deadline. The money comes back seven months past the contract date." },
+        { "label": "Stick to homes", "result": "Home jobs are small with short credit. One family recommends the next, and the days stay even." }
+      ]
+    },
+    "c_director": {
+      "title": "Taking the Design Director job",
+      "situation": "The boss lady is stepping back and asks if you'll be Soft Furnishing Design Director: three designers, two install crews, every supplier's credit terms. You will seldom stage a room again, and your evenings will go to other people's sums.",
+      "options": [
+        { "label": "Take it", "result": "The first thing you do is put all the suppliers' terms in one table and tape it to the wall over your head." },
+        { "label": "Keep going out on site", "result": "You turn the post down, and go on heading out every Tuesday with your steel tape." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "You glue down the receipt for the last final payment. The swatch books have changed many times; you don't take the chipped seasonal sample with you. A wind comes up on the way home, and you pull your collar closed.",
+    "burnout": "After the operation on your right shoulder, the hospital tells you not to lift your arm over your head again. The stepladder stays behind the shop, for the new installer. You move to the front desk to take orders. You count pleats faster than ever, and you don't go to anyone's home."
+  },
+  "stages": [
+    "Your job is to measure, copy and chase: going into bare flats with the designer, transferring sizes to the order sheet, phoning the freight line every day. You move in SketchUp whatever the designer says to move. Clients don't speak to you. Installers do, mostly to say which number you got wrong.",
+    "Jobs carry your name now. You talk budgets with clients, subtract among swatches and catalogs, schedule installers, and find the hanging line with a laser level. The difference from being an assistant: when a centimeter goes wrong, you're the one who pays, and the one who picks up at midnight.",
+    "You start to take villas and show flats, with bills of materials two hundred lines long. Mornings go to fixing milestones with the developer's engineering office, afternoons to haggling with suppliers, nights to the margin sheet. You rarely steam curtains yourself. You walk through before opening and point out the three things that are wrong.",
+    "Your desk holds contracts, a credit-terms table and three designers' schemes. You negotiate payment milestones with the developer's cost department and credit with factories in Foshan, and you steer the designers' direction. You actually walk into an empty room two or three times a month, and someone follows you writing down what you say."
+  ],
+  "work": [
+    "Da Liu the installer complains that your orders are messy. You add a 'track type' column the way he says, and the next day he doesn't have to call back.",
+    "Measuring in an old flat, you find three windows of three different heights. You take left, center and right on each one, and fill half a page.",
+    "Foshan customer service wants five photos of the damaged coffee table. You squat in the freight depot to take them before the manager will write 'outer packaging damaged' on the receipt.",
+    "For a couple who work shifts at a hospital, you choose double blackout curtains and have the fitter add hook-and-loop strips at the sides. In daytime not a thread of light gets in.",
+    "A client wants an imported chandelier and has half the budget. You pair the same glass shades with a locally made frame, and the installer says nobody could tell.",
+    "With a magnifier you study the weave of a swatch and tell the client this linen has too much synthetic in it. It's cheap, and won't last two years on a south window.",
+    "On the show flat's bill of materials, the developer's cost clerk has struck out every rug. You show him the numbers on photographs and sales conversions, and he leaves the one in the living room.",
+    "An hour before opening you walk into the children's room and turn the fake books around. The trick of shelving them spine-in doesn't sit well with people who come to look at flats in Chifeng.",
+    "The wool rug for the villa arrives a shade paler than the sample. You video-call the factory with the color card and send the return letter to their inbox.",
+    "The site supervisor has flagged three rectifications on the acceptance form. You go through them with the designer, agree to two, and spend twenty minutes with him and the contract annex on the third.",
+    "A supplier's credit has slid from sixty days to ninety. You arrange to see his boss, away from any banquet, and trade the second half's order volume for forty-five.",
+    "A designer's first villa scheme is too full. With a red pen you strike out a third of what's on the drawing and tell him to work out why."
+  ],
+  "past": [
+    "At middle school in Yuanbaoshan the art teacher set you a still life, and you kept drawing the tablecloth's folds better than the apple.",
+    "On your college application your father wanted you in mechatronics and off to the mines. You wrote down environmental art design, on the grounds that it doesn't go underground.",
+    "At a vocational college in Hohhot you learned SketchUp and ergonomics. The teacher said interior design pays, and the entire class believed it.",
+    "Your internship at a renovation firm was drawing construction plans and shifting electrical points all day. You found you cared more about what got placed in the rooms after they were done.",
+    "Back in Chifeng after graduating, half a year at a design firm, wages two months late. A soft furnishing shop in the mall had put up a notice for an assistant. You took a picture of it."
+  ],
+  "late": {
+    "pension_note": "Estimate: shops pay social insurance on a low local base, so the pension falls well short of working income.",
+    "scenes": [
+      "Your first pension payment comes in. You work it out in curtain fabric: forty-two meters of mid-grade poly-cotton.",
+      "You alter curtains for your neighbors, charging by the pleat, two yuan each. The roller blind at the clinic downstairs hangs too short. You take your steel tape down and measure it for free.",
+      "The third floor of the old mall now teaches children to dance. Bringing a relative's kid to class, you reach the spot where the shop stood. The flooring is still that gray you never liked.",
+      "You find work at a supermarket's home-textile counter selling bed sets, a little over ¥3,000 a month. Someone asks if a sheet will fade and you tell her not to hang it in a south window. The supervisor asks you to say less.",
+      "Your right hand still doesn't get past your ear, so the laundry goes up left-handed. At a checkup the doctor asks what work you did, and you mime hanging a track.",
+      "The curtains in your daughter's rental are too short. From a chair you direct her up onto a stool with the tape. She says you're fussy. On the third measurement, the number is right.",
+      "Nobody asks about style any more. It's easy on you. When a cream-style living room comes up on a video site, your finger flicks it away.",
+      "Someone in the old trade chat says the parking spaces from that development still haven't sold. You read it, are glad you're out, and work out the boss lady's interest for her anyway.",
+      "You've reckoned up what these years paid. A bit more than staying in soft furnishing would have, maybe a bit less. The sofa at home is fourteen years old and you have never replaced it.",
+      "Sitting down at a restaurant, you check the height of the painting first, then the spacing of the curtain pleats. Everyone else has already ordered.",
+      "On October 15, the day the heating arrives, you set a basin of water by the wooden table at home. Thirty years of this, and you can no longer tell whether it's care or fear."
+    ],
+    "closing": {
+      "retire": "The evening wind comes up. At home only the hem of the curtain moves; it still hangs well. You close the window to a crack.",
+      "burnout": "The counter closes for the day. You fold the sample pillowcase, line up the creases, put it back, and turn off the light.",
+      "end": "The day after the sandstorm passes, the sky is very clean. You wipe the table, and there is only a little dust on the cloth."
+    }
+  }
+}

@@ -1,0 +1,148 @@
+{
+ "id": "avionics-xm",
+ "occupation": "Avionics Technician",
+ "role": "Line Maintenance Avionics Technician",
+ "headline": "Repairing avionics for an aircraft maintenance company in Xiamen: meeting flights on the apron at night, waiting on heavy checks in the hangar by day, every task card signed in your own name, and that name going up with the aircraft",
+ "unit": "A civil aircraft maintenance company in Xiamen",
+ "unit_type": "Licensed aviation maintenance organization",
+ "city": "Xiamen, Fujian",
+ "city_tier": "Rising coastal city",
+ "education": "Associate degree (Aircraft Electronic Equipment Maintenance)",
+ "level": "You have passed the book part of your basic license. How thin a real connector pin is and which chapter of the manual to open, you start learning now.",
+ "intro": "In your first week you are issued a toolbox in which every tool is engraved with a number. Before you go off shift you count them back one by one, and if one is missing the aircraft can't leave. The crew chief lays a stack of task cards in front of you and says you'll read these more closely than your own payslip. At nine tonight the first aircraft staying over will land, and you'll go out to the apron and learn to hear one sentence from the flight crew and then find the chapter in the manual.",
+ "salary_note": "Estimate: Xiamen maintenance organizations pay well for night shifts, and pay jumps a step after licensing and release authority, above the national figure for technicians.",
+ "facts": [
+  { "label": "Trainee Avionics Mechanic (current level)", "value": "0–3 years, ¥6,000–9,000 a month (national figure, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Licensed Avionics Mechanic (3–8 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Signing an aircraft's release to service", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Troubleshooting avionics systems", "source": "AI exposure" },
+  { "label": "Open positions", "value": "6 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Night shift handover. You sign out your tools, count them and test your wrist strap. The crew chief reads out tonight's overnight aircraft and their deferred defects.",
+  "As soon as the aircraft stops you climb to the cockpit. The captain has made one entry in the tech log, in simple words, and you have to translate it into a chapter number in the manual.",
+  "In the electronics bay you remove a unit and snap on its antistatic cap. There's room for half your body, and you hold the flashlight in your teeth.",
+  "Ground test passed. You tick off the task card step by step, write the time and your staff number by each step, and write clearly enough for someone else to read it.",
+  "The sea wind blows hard across the apron, though a Xiamen night isn't really cold. The next arrival is late and everyone eats instant noodles in the duty room. Phones aren't allowed on board, so this is the only time you can look at yours.",
+  "One spare is still short at the stores. Before the first morning departure someone must decide: defer under the minimum equipment list, or wait for a part to be sent. That's not your decision to make. Your job is to hand the data up.",
+  "The sky lightens at the edge. Before the crew boards, your senior with release authority takes one final walk around the aircraft and signs the tech log.",
+  "You return your tools and count them, none missing. Back in the dormitory you draw the blackout curtain, and that's the day done."
+ ],
+ "ladder": [
+  { "title": "Trainee Avionics Mechanic", "stage": "Following task cards", "focus": "Working task cards under an authorized person's supervision; practicing wiring, pins and test equipment; building your experience log" },
+  { "title": "Licensed Avionics Mechanic", "stage": "Working independently", "focus": "With an aircraft maintenance license and type rating, troubleshooting and replacing components on your own" },
+  { "title": "Avionics Certifying Staff", "stage": "Signing the release", "focus": "Holding the authorization to sign aircraft back to service after line work and checks, and answering for airworthiness" },
+  { "title": "Maintenance Technical Supervisor", "stage": "Running people and paper", "focus": "Managing the avionics crews and technical documents; dealing with regulator audits, customer representatives and reliability data" }
+ ],
+ "ai_tasks": [
+  { "name": "Signing an aircraft's release to service", "how": "AI can check that the paperwork is complete. Whether this aircraft can fly can only be signed for, and answered for, by an authorized person who has looked at it." },
+  { "name": "Troubleshooting avionics systems", "how": "Systems can propose troubleshooting steps from fault history. The real condition of connectors and harnesses needs someone to feel and measure them." },
+  { "name": "Deciding whether a component must be replaced", "how": "Models can offer advice from life limits and records. Checking it against the minimum equipment list and tonight's sector takes a person making the call." },
+  { "name": "Compiling task cards and maintenance records", "how": "Records can be generated and checked for gaps automatically, with a person spot-checking and signing." }
+ ],
+ "events": {
+  "e_pin": "You try three times to extract one pin and end up with several small holes in your fingers. The engineer training you takes the extraction tool, does nothing at all except change the angle, and it slides out.",
+  "e_tool": "At the end of the shift a small wrench is missing. The whole crew stops and searches for forty minutes, and finally it's in your own pocket. The aircraft leaves half an hour late, and the incident goes into the crew's safety meeting.",
+  "e_night": "Seventeen nights on the roster this month. Daytime sounds have all become loud. You start keeping your phone on silent, and you begin to lose track of what day of the week it is.",
+  "e_license": "Your experience log finally has the hours. Your supervisor verifies it page by page, stamps it and sends off the license application. All those signatures on its pages are responsibility others took on for you.",
+  "e_typhoon": "Before typhoon season, overnight aircraft need extra mooring and protection, and everything on the apron has to be stowed. You take turns on watch that week with rain running in at your collar, and only on the third day do your sleeves dry out.",
+  "e_foreign": "The hangar takes on a heavy check for a foreign airline, and the customer's representative follows you around with the task cards. One sentence of the English manual can take half an hour to discuss. He never comes to like your tea, but he leaves with two packets of Tieguanyin.",
+  "e_ccheck": "Over three weeks in the hangar, every avionics panel comes off and goes back on. You have over a hundred job cards, the hangar lights never go off, and time divides only into taking apart and putting together.",
+  "e_ai_trouble": "The troubleshooting system goes live: enter a fault code and it recommends steps. Your apprentice follows it, and step three doesn't match the new revision of the manual. You tell him to check the revision first and look at the system second.",
+  "e_audit": "A regulator's auditor pulls records for checking and lands on a task card with one time entered wrong. That night the whole crew goes over the rules about corrections leaving a trace.",
+  "e_recurrent": "Before your type rating lapses you have recurrent training, three days of classroom and an exam. You pour years of experience into the questions and get two wrong. The manual has changed again.",
+  "e_night_child": "One of you on days and the other on nights, and getting your child to kindergarten takes a relay of three. You go off nights to do the pickup and fall asleep on the bench outside the classroom.",
+  "e_good_call": "An intermittent warning that the crew says only comes on now and then. You don't rush to swap a part. You run your fingers along the whole harness and find, under a bracket, a spot that has been chafing. One return to base saved.",
+  "e_predict": "Predictive maintenance alerts begin connecting to work orders, and parts are ready before the aircraft lands. You gain two hours and also a pile of records explaining why something wasn't replaced.",
+  "e_fleet_out": "A customer's older aircraft begin to retire, and the type rating you worked for won't be used much in the coming years. In the manual room, that row of shelves is carried away.",
+  "e_ear": "Your hearing recheck shows the high end dropping a bit further. Twenty years of earplugs, and engine run-ups have still got through.",
+  "e_nephew_ask": "A relative's child comes to ask if this is a good line of work. You think for a long time and say only: in this trade your writing has to be careful, and yours won't do.",
+  "e_new_airport": "The maintenance base is moving east with the new airport. The commute grows forty minutes, the company bus winds all around the island, and you begin working out whether to move house as well.",
+  "e_eyes": "Presbyopia has caught up with the wire numbers on the harness. You add a magnifying glass to your toolbox, which means a new line on the tool inventory."
+ },
+ "choices": {
+  "c_airline": { "title": "An airline comes recruiting mechanics", "situation": "An airline's maintenance department is hiring, offering a better pay base and benefits. The catch is five years at a new inland base. You've only just got to know this place, and your friends in the hangar are all in Xiamen.", "options": [
+   { "label": "Go to the inland base", "result": "You sign the service agreement, do your handover and leave with a photocopy of your tool inventory.", "end": "You go inland. No typhoons there, and no foreign airlines overnight. The aircraft are still aircraft, and the manual is the same book." },
+   { "label": "Stay in Xiamen", "result": "You stay. The night sea wind and the task cards are the same, except that now you're counting tools with an apprentice." }
+  ] },
+  "c_license": { "title": "Sitting the license for Licensed Avionics Mechanic", "situation": "To become a Licensed Avionics Mechanic you need the license and the type rating together, which means three months of full-time study. The company pays only half the fee. You'd cover the rest and sign to repay it over three years.", "options": [
+   { "label": "Pay half and study full-time", "result": "In the training room you learn system principles all over again. When you get back, the crew chief gives you one more key, to the parts store." },
+   { "label": "Wait for a fully funded place", "result": "You wait a year, and no place comes up. Your hands get better, at least." }
+  ] },
+  "c_mel": { "title": "A fault with twenty minutes to go", "situation": "Before the morning departure, a system warning keeps coming back. Under the minimum equipment list it can be deferred and the aircraft released, but you suspect it's connected to another entry from yesterday. Checking would delay this flight. Your senior with release authority asks what you think.", "options": [
+   { "label": "Say it should be checked", "result": "Fifty minutes late. It turns out to be a loose connector, and Ops doesn't sound pleased on the phone." },
+   { "label": "Defer under the list, write it up clearly", "result": "The aircraft leaves on time. You write more in the log than usual, so that the next person can follow it." }
+  ] },
+  "c_auto_write": { "title": "The digitization job", "situation": "The company is switching paper task cards to electronic ones and linking them to a troubleshooting assistant. It needs someone who knows the floor to work through the process and sit in meetings with the software company. Do it well and it's a feather in your cap. Do it badly and the night shift curses you for a year.", "options": [
+   { "label": "Take it on", "result": "It takes a year to pull apart and rewrite the logic of more than two hundred task cards, and to enlarge every button that can't be pressed in gloves." },
+   { "label": "Stay on the aircraft", "result": "You stay on nights. When the system goes live the buttons are, it's true, a little small for you." }
+  ] },
+  "c_dayjob": { "title": "A move into aviation parts trading", "situation": "The sales director at an aviation parts company gets in touch. People who understand airworthiness paperwork are hard to find. Twice the pay, no night shifts, trips to Southeast Asia to see customers. All these nights have started to tell on your stomach.", "options": [
+   { "label": "Change careers", "result": "You hand in your notice and return your authorization to the quality department.", "end": "You've become someone who sells aircraft parts. Your days are airworthiness tags and quotations, and you sleep whole nights. When a plane goes over, you still look up." },
+   { "label": "Stay on nights", "result": "You put the business card away and go off to meet flights as usual." }
+  ] },
+  "c_release": { "title": "Applying to be Avionics Certifying Staff", "situation": "Becoming Avionics Certifying Staff means passing the company's authorization assessment, and then the name on the log is yours. An older colleague has failed it twice. You're younger than he is, and your supervisor asks if you're ready.", "options": [
+   { "label": "Ready", "result": "You sign the release block for the first time and your hand is steady. Back in the dormitory it takes you a long time to get to sleep." },
+   { "label": "Two more years as a mechanic", "result": "You say there's no hurry. For two years you follow each certifying senior on more than one walk-around." }
+  ] },
+  "c_customer": { "title": "A customer rep wants to change a work order", "situation": "A foreign airline's representative wants to push a non-routine item to the next check, saving money and ground time. The manual permits it, but you think its condition argues for doing it now. This customer accounts for forty percent of next year's hangar work.", "options": [
+   { "label": "Put your opinion in the report", "result": "You write it clearly, sign it and leave the decision to the customer. He chooses to defer, and he puts your report in his folder." },
+   { "label": "Talk it through with data", "result": "You pull records from three similar aircraft. He agrees to defer only half, and pats your shoulder at the end of the day." }
+  ] },
+  "c_manager": { "title": "Becoming Maintenance Technical Supervisor", "situation": "The company is appointing a Maintenance Technical Supervisor to run the avionics crews, the technical documents and regulator audit preparation. In that job you'd move from the apron into an office and stop being the last person to walk around at night.", "options": [
+   { "label": "Move into the office", "result": "Audit finding closure forms begin appearing on your computer. For the first week you still bring your flashlight to work." },
+   { "label": "Keep signing releases", "result": "You tell your supervisor that certifying staff need old hands too, and ask for fewer night shifts. He agrees to half of it." }
+  ] }
+ },
+ "endings": {
+  "retire": "The day your authorization expires, you don't renew it. You count your toolbox, each number present, and sign the inventory, which for once isn't a release. The old aircraft you worked on retired long ago, its parts perhaps still flying somewhere. At midnight, for the first time, you hear the planes from home. They are all flying fine.",
+  "burnout": "Thirty-odd years of shift work have used up your stomach and your sleep. Your medical report goes to the aviation doctor and your line qualification isn't renewed. You are moved to the parts store on day shift, checking certificates and tags. Planes rise and land on the runway next door. You can hear how each is doing, and it's no longer your job."
+ },
+ "stages": [
+  "Everything you do happens under someone's eye. You read a task card one step at a time, then do that step: tying harnesses, replacing pins, removing and fitting units. The signature is your trainer's. In the duty room you boil water and log the work cards. The hardest bay to squeeze into goes to you, because you're thinnest, and because you aren't yet in a position to choose.",
+  "With a license, your staff number can finally go on the job card. With a multimeter, test box and built-in test you trace warnings one by one to wiring and units, and you talk to Ops, parts and the flight crew. There used to be someone checking for you. Now you must decide for yourself that a unit is really faulty, and write down why you took it off.",
+  "At night you take the final walk around the aircraft, review the deferred defects and sign the release block. Only then can the door close. You deal with captains, argue a few minutes with Ops, decide whether a warning can fly. Your signature stays with you afterward, and you are slower now than you once were, and more willing to write longer entries.",
+  "On your office wall are the audit calendar and the reliability curves. You arrange the crews, manage technical bulletins, receive regulators and customer reps, and look at a month's repeat defect rate. Your phone still rings in the night, but mostly it's somebody needing a decision. You no longer have to squeeze into an electronics bay."
+ ],
+ "work": [
+  "Your trainer has you trace one signal from the electronics bay to the panel with the wiring diagram. It takes three hours. You come out with the diagram covered in pencil, and he corrects a single connector number.",
+  "You fill out your first unserviceable tag with the writing too big. The storekeeper tells you to do it over, because this tag is going to travel a long way with the part.",
+  "Dozens of panels come off during the check. You number each with tape and marker and put them on racks, and when they go back on, not one is wrong.",
+  "The captain has written occasional interference. You go through half a year of this aircraft's records, find it always happens on the same descent segment, and replace an antenna connector.",
+  "The tag on a part sent from the store has mismatched dates, and you refuse it. The duty manager is quiet on the phone for five seconds and then says, then you can tell Ops.",
+  "A junior's harness tie isn't acceptable and you make him do it over. On the third try it's fine. You don't praise him, you only snip off a stray end.",
+  "At four in the morning the crew asks for a warning reset with no basis in the manual. You show them the page. The flight still goes a little late, and the pilot gives you a nod when he signs.",
+  "You count the dates on a deferred defect three times, and it has one day left. The part happens to be on its way, so you leave a note for the next person signing a release.",
+  "A regulator's auditor wants three years of personnel authorization records. Your department ran an internal audit a week ahead, but what he picks is exactly the one person who transferred away. You get the archives to find that file overnight.",
+  "On the repeat defect curve, one system's line has turned upward. You bring in reliability, parts and the crews, and you change this batch's repair vendor."
+ ],
+ "past": [
+  "Your family lived in Xiang'an, and walking home from school you often saw planes come in low. Your father drove a forklift at the port and said those things were a long way from people like you. You could tell the aircraft apart by sound.",
+  "You wanted to study aircraft, and your family wanted you earning soon. As a compromise, you chose Aircraft Electronic Equipment Maintenance at a vocational college for civil aviation. In the first class the teacher said: anyone with poor handwriting can change majors right now.",
+  "In the foundation courses you practiced pins and harness ties on a little board until your hands shook at the end of class. Mechanical majors next door called you embroiderers. Later you thought that was accurate.",
+  "You interned in a maintenance company's hangar, passing tools and cleaning electronics bays every day. A senior with release authority told you to stop just standing there and come read what he was writing on the task card.",
+  "A classmate went to an electronics factory in the south at noticeably higher pay. You went and looked, and the production line was bright. You went back to the hangar anyway. You wanted to know where every wire in an aircraft goes."
+ ],
+ "late": {
+  "pension_note": "Estimate: aviation maintenance companies contribute on a high base and have an enterprise annuity. Night-shift allowances don't count toward the pension base.",
+  "scenes": [
+   "On a holiday flight you look at the static wicks on the wing before fastening your seat belt. Hearing a certain sound before takeoff, you find yourself working out this aircraft's age.",
+   "You start fixing radios and hearing aids for the older people in your compound, with an antistatic mat on the workbench. A neighbor says your solder joints are prettier than the factory's. You say that's only because you have no deadline.",
+   "A flight school asks you to give a class on harness tying, and you see students reading electronic task cards on tablets. You remind them that handwriting still needs to be legible, and they laugh and say staff numbers fill themselves in now.",
+   "What you dread most now is being asked if you slept well. After decades of shifts, not even the doctor can say what kind of sleep yours is.",
+   "At the parts store, your greatest skill is spotting a flaw in a tag at a glance. When young people bring you a bad certificate you press it to the counter and let them find the problem themselves.",
+   "Your stomach now needs regular checks. You begin to eat at set hours, and find three meals last much longer than you thought, with several stretches in between when there's nothing at all to do.",
+   "At a reunion, colleagues turn each aircraft's quirks into comic stories and laugh loudly. You laugh too, and it comes to you that all those years they were someone else's aircraft, and you can't even remember where most of them went.",
+   "Long after leaving the trade you keep the little license booklet at the bottom of your document pouch. It expired long ago. You can't say why you move it every time you change pouches.",
+   "On a business flight the attendant asks everyone to fasten their belts. A child in front of you is scared. You'd like to say it's fine: someone walked around this aircraft last night. Only that person isn't you anymore.",
+   "You add it up: all that extra sleep, and how much more or less you earned, can be counted. The weight in your hand when you signed in the middle of the night, no other work has given you again.",
+   "When the desk lamp breaks you measure three points with a multimeter and write a note saying what you replaced. Your family thinks that's unnecessary. You tape the note under the lamp base.",
+   "Evening on the seaside path, plenty of people, and plane after plane heading east to the new airport. Others are photographing the sunset. You are working out whether this one's nav light is all right."
+  ],
+  "closing": {
+   "retire": "Nine at night, and nothing for you to count. The tools aren't yours anymore. The window is open a crack and the sea wind comes in. You close it a little.",
+   "burnout": "Under the desk lamp you go through this month's utility bills, ticking each item. All correct.",
+   "end": "Beyond the glass at arrivals, an aircraft is being pushed back. Someone down there is walking around it. You can't quite make out who."
+  }
+ }
+}

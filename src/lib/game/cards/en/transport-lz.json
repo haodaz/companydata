@@ -1,0 +1,176 @@
+{
+ "id": "transport-lz",
+ "occupation": "Communications Transmission and Access Engineer",
+ "role": "Carrier Transmission and Access Engineer",
+ "headline": "Going back and forth between a carrier's transmission room in Liuzhou and fiber cabinets in the mountain counties: repairing cut cables in flood season, doing cutovers before dawn, watching copper retired stretch by stretch, and watching your own work pass to network management systems and contractors",
+ "unit": "The network department of a telecom carrier's Liuzhou branch",
+ "unit_type": "Prefecture-level branch of a telecom carrier",
+ "city": "Liuzhou, Guangxi",
+ "city_tier": "Third-tier industrial city",
+ "education": "Bachelor's degree (Communication Engineering)",
+ "level": "You have passed exams on the principles of optical fiber communication. Finding for yourself where a cable by a mountain road has broken, you have yet to do.",
+ "intro": "The Liu River makes a big loop through the city. Your equipment room is on the fifth floor of an old building south of the river, above a cable entry room left over from the last century. The director walks you around the racks and hands you a roll of labels. Some of these cables are older than you, he says, and what's on the drawings and what's in the ground aren't always the same. Flood season comes when it comes, and you'd better learn the Rong'an line first.",
+ "salary_note": "Estimate: a prefecture-level carrier branch pays below the national figure for telecom engineers, with steady benefits and housing fund and a small on-call allowance.",
+ "facts": [
+  {
+   "label": "Transmission Maintenance Assistant (current level)",
+   "value": "0–2 years, ¥4,300–6,000 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Transmission and Access Engineer (2–7 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 3–5 years",
+   "value": "¥5,600 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Day-to-day maintenance of peripheral and centralized monitoring equipment",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Monitoring and promptly handling network management alarms",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "43 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "You open the network management system to last night's alarms, over a hundred of them, a dozen or so after merging. You pick out the circuit whose optical power fell fastest.",
+  "On the phone with the maintenance contractor's area foreman to go through work orders. He says a truck scraped a cabinet door over at Luzhai and nobody has gone yet.",
+  "In the equipment room you run a power meter over a newly opened circuit. The pigtails are so thin you hold your breath plugging them in, and every label has to be written by hand.",
+  "The river-snail noodle shop owner downstairs sees you coming, adds an extra spoon of pickled bamboo and asks when his compound is getting new optical modems.",
+  "You write tonight's cutover plan. The rollback steps are longer than the operating ones, and each states who does it in which room.",
+  "You drive out to look at a fiber cabinet in Liucheng. Open the door and the patch cords are a tangle of hair. You take a photo for the group chat.",
+  "The cutover window opens. You wait in the equipment room, and only when the far end says go ahead do you press enter.",
+  "All services back. You write the time on the work order. There's thick mist on the river outside, and you have to drive slowly."
+ ],
+ "ladder": [
+  { "title": "Transmission Maintenance Assistant", "stage": "Repair crews", "focus": "Handling alarms, optical power tests and splicing alongside the crews; learning the local network and cable routes" },
+  { "title": "Transmission and Access Engineer", "stage": "Fault-finding alone", "focus": "In charge of transmission and access for an area, cutover plans and fault handling" },
+  { "title": "Senior Transmission Engineer", "stage": "Signs off on plans", "focus": "In charge of network planning changes and major cutovers, reviewing plans and managing contractor quality" },
+  { "title": "Network Department Technical Head", "stage": "One network, whole city", "focus": "Answerable for the quality and investment of the city's transmission and access network; dealing with the province, the tower company, government and contractors" }
+ ],
+ "ai_tasks": [
+  { "name": "Day-to-day maintenance of peripheral and centralized monitoring equipment", "how": "Daily checks, cleaning, swapping cards and looking over the equipment room's environment all take a person on site. AI at most can help schedule the rounds and send reminders." },
+  { "name": "Monitoring and promptly handling network management alarms", "how": "AI can merge alarms, remove duplicates, set priorities and dispatch work orders or run routine scripts. People only spot-check misjudgments and handle alarms it is unsure of." },
+  { "name": "Finding and fixing transmission and access faults", "how": "AI offers suspected fault points and troubleshooting suggestions from alarms, logs and topology. A person goes on site to swap fibers and cards and test lines, makes the final call on complicated faults and answers for it." },
+  { "name": "Provisioning and testing SDH and optical circuits", "how": "AI can generate circuit configuration templates, check parameters and look for path conflicts. A person handles the actual provisioning, joint testing with the far end, and confirms on site that service is up." },
+  { "name": "Testing optical signals, amplification and conversion performance", "how": "Optical power, spectrum and bit error tests need a person with instruments on site to connect fibers, operate and interpret. AI can only help analyze results and compare them with standards." },
+  { "name": "Configuring and testing xDSL and broadband access equipment", "how": "AI can generate configuration scripts, push them in bulk and check compliance. A person racks equipment, connects lines and deals with on-premises problems and anomalies." },
+  { "name": "Planning and rebuilding wired and wireless access networks", "how": "AI can forecast capacity, draft plans and compare topologies and costs. A person sets the plan in light of ducts, sites, budget, approvals and construction conditions, and takes responsibility for the decision." },
+  { "name": "Writing maintenance records and analyzing network data", "how": "AI can generate maintenance records from work orders and alarms, summarize data, draw trends and spot anomalies. A person only needs to check key content and add what happened on site." }
+ ],
+ "events": {
+  "e_otdr": "The first time you use an OTDR to find a break, the distance on the trace falls in a sugarcane field. You walk for two hours and discover that the cable's slack coils have added a few hundred meters. A veteran on the contractor's crew says finding this field at all on your first try isn't bad.",
+  "e_flood": "In flood season the Liu River rises, and a riverside stretch of duct goes under. You stand watch in the equipment room in waders. One side of the transmission ring is cut, the other holds on for two days, and you don't take your eyes off its optical power.",
+  "e_dig": "A road crew's excavator cuts the trunk cable in one scoop. At the site you demand an explanation, and they produce a drawing with no cable marked. The splicing truck works until three in the morning before the green light comes on.",
+  "e_copper": "Old-town copper is being retired, and you go door to door by phone with a meter in hand, persuading people to switch to fiber. An old man who has lived there for fifty years says the phone line can't be touched. It's the number his wife calls.",
+  "e_cutover": "A cutover plan you wrote works the first time, with every service back in forty minutes. A colleague on duty makes you a strong cup of tea, and outside the morning market has already opened.",
+  "e_ai_alarm": "The alarm system learns to merge automatically, and no longer wakes you for two hundred alarms on the same cable. It mismerges now and then, so you begin checking fifty a week.",
+  "e_vendor": "The maintenance contractor changes, and the new people don't know the roads to Rong'an. You drive them around thirty fiber cabinets, the navigation app telling you to turn around the whole way.",
+  "e_factory": "An auto plant in Liuzhou wants a dedicated line for its production floor, and the switchover can only happen when the line stops on a weekend. Their IT head knows networks better than you do, and what he asks you have to go back and ask the vendor.",
+  "e_ai_config": "Configuration scripts generate themselves and push in bulk, opening hundreds of circuits in one night. Next morning one is on the wrong port, and you track it down in the system logs.",
+  "e_child": "When the flood season roster comes out, everything at home has to change with it. You make it to one parents' meeting, and before you've sat down your phone rings.",
+  "e_mountain": "A landslide in a mountain county takes out a pole line and no truck can get in. You carry a fusion splicer six kilometers on foot and reach the site at nightfall, with the mountain's whole signal resting on this stretch of cable in your hands.",
+  "e_ear": "A dozen-plus years of equipment room fans and air conditioning have left your shoulders and eyes more tired than others your age. The splicer's microscope screen now requires taking off your glasses first.",
+  "e_merge": "The province centralizes transmission maintenance for several cities in a center in Nanning, and half the posts on your side are merged. Some of those leaving go to the tower company, and some shift to enterprise support.",
+  "e_sdh": "The last batch of old transmission equipment is retired, leaving a big gap on the racks. You archive years of circuit tables. Printed out, they are half a foot thick, and the new system has no use for them.",
+  "e_ropes": "The pole routes now belong to the tower company, and every new cable means going through a process to rent space. It takes longer than the old way, and it's also clearer.",
+  "e_praise": "In the year of the biggest flood you moved a key service to another route ahead of time, and three days later the original route was underwater. The incident goes into a provincial notice praising the collective.",
+  "e_young": "A campus recruit has turned a cable route into a full 3D model. You take him to walk a section in person, and he corrects it in three places.",
+  "e_eyes": "You've begun assigning overnight cutovers to others, since you now need two days to recover. You have moved from the site to the other end of the phone."
+ },
+ "choices": {
+  "c_shenzhen": { "title": "An equipment vendor recruiting delivery engineers", "situation": "An equipment vendor's delivery department in Shenzhen is looking for people with live network experience. Double pay and constant travel. Three colleagues have already gone. Those with family in Liuzhou tend to stay.", "options": [
+   { "label": "Go into delivery", "result": "You resign, copying the locations of thirty-odd fiber cabinets from your notebook for the colleague who follows you.", "end": "You go to the vendor and fly between equipment rooms around the country. You read other people's networks quickly. The Liuzhou line you can still trace on your phone's map with your eyes shut." },
+   { "label": "Stay in Liuzhou", "result": "You say you haven't yet worked out the Rong'an line. That weekend you really do go and walk it." }
+  ] },
+  "c_engineer": { "title": "The certification for Transmission and Access Engineer", "situation": "Before you can move up to Transmission and Access Engineer, the company requires an internal certification and leading one cutover. You would have to study at night, right in the middle of a wave of new circuits.", "options": [
+   { "label": "Study nights, run all day", "result": "You pass. On the night you lead the cutover, your palms are colder than the air conditioning." },
+   { "label": "Take it next year", "result": "You finish this wave of circuits. Everyone on the contract crews now knows your number." }
+  ] },
+  "c_vendor_fine": { "title": "The contractor's scorecard", "situation": "The contractor's area foreman didn't finish this month's fiber cabinet cleanup, which means a deduction under the contract. He's a hard worker, ten years on this patch, and last month he almost rolled his truck getting to a repair.", "options": [
+   { "label": "Deduct under the contract", "result": "You sign the scorecard, and he signs too. The next time he greets you, he's not smiling." },
+   { "label": "Extend the deadline, write it down", "result": "He finishes by the new date. Your section head asks how many times this makes." }
+  ] },
+  "c_ops_auto": { "title": "Writing the automation scripts", "situation": "The province wants each city to contribute automated handling rules, and someone must turn common local alarm procedures into scripts. Succeed and nobody has to get up at night. Succeed really well, and this department will be down a few people.", "options": [
+   { "label": "Write them", "result": "You turn twelve common alarm procedures into rules, and after the first batch goes live the night calls halve." },
+   { "label": "Keep handling them yourself", "result": "The rules are written by someone else. A few don't look right to you for mountain lines." }
+  ] },
+  "c_factory_it": { "title": "An opening in the automaker's IT department", "situation": "That IT head you often deal with asks if you'd like to join their network group. Thirty percent more pay, no weekend duty, though you'd only ever look after one network. With the province centralizing, there's no telling where your post will end up.", "options": [
+   { "label": "Go to the automaker", "result": "You put in your transfer and return the duty phone to your section head's desk.", "end": "You join the automaker's network group. When flood season comes, you only have to watch the few cables around the plant. You still know what level the river has reached." },
+   { "label": "Stay with the carrier", "result": "You thank him and go on with this flood season's duty." }
+  ] },
+  "c_senior": { "title": "Applying for Senior Transmission Engineer", "situation": "The Senior Transmission Engineer title requires leading a citywide upgrade and publishing a technical summary. Your turn has just come to lead a ring upgrade, but there's only one place this year.", "options": [
+   { "label": "Take the project", "result": "The ring upgrade takes nine months, and your summary is titled Route Protection for Mountain Fiber Cables." },
+   { "label": "Give it to the veteran who trained you", "result": "He has two years left until retirement and has waited a long time for this. After he gets it he treats you to a river fish dinner by the Liu." }
+  ] },
+  "c_rural": { "title": "Money for that mountain branch line", "situation": "The budget has been cut. Should a branch line that serves only a few villages be upgraded? It doesn't pay by revenue, and coverage requirements from above still have to be met. You've been asked to write the plan, and either way somebody will be unhappy.", "options": [
+   { "label": "Protect coverage and save elsewhere", "result": "The branch line gets upgraded. You take a bit from another project, and that project's manager comes and has it out with you." },
+   { "label": "Write the numbers plainly and let them decide", "result": "You hand in clean accounts. The reply is a one-year delay, and the villagers' calls go to customer service." }
+  ] },
+  "c_head": { "title": "Taking over as Network Department Technical Head", "situation": "The technical head is retiring and the department wants you to take over as Network Department Technical Head. It means endless meetings with the province, the tower company and government offices. You'd no longer be at the night cutovers, but when something goes wrong you'd be the first asked.", "options": [
+   { "label": "Take it", "result": "The first list you make is how many single-route stretches the city still has." },
+   { "label": "Keep writing plans", "result": "You turn it down. Next flood season you are still the first in the equipment room." }
+  ] }
+ },
+ "endings": {
+  "retire": "You retire when that year's flood season ends. The old racks in the equipment room are nearly gone, and one small box now holds what used to fill a row. You give back the duty phone's charger too. The Liu River goes down, leaving a layer of new mud on the banks, and grass will be growing there again.",
+  "burnout": "Your shoulders and eyes no longer let you crouch at a fiber cabinet, and you don't sleep well at night. The company moves you to a records post, reconciling pole and duct data in the system. You spend your days editing lines on a map, much shorter than the roads you've walked."
+ },
+ "stages": [
+  "You follow veterans from the contract crews up poles and down manholes, test fiber with a power meter and OTDR, then go back to the equipment room to fill in patch cord labels one by one. You can't yet read the alarms on the management system. The director has you draw the whole city's transmission rings on the wall first. The crews call you little engineer, with the weight on little.",
+  "An area's transmission and access is yours. You write cutover plans, schedule work orders, judge whether it's a card or a cable, and at night one call has you out of bed. The contractor's foreman, the tower company's coordinator and enterprise customers' IT heads all come looking for you. You have to say when this circuit will come back, and you can't say soon.",
+  "Plans must get past you. You review ring upgrades and route protection for the whole city, decide which stretches need dual routes and which should go from aerial to duct, and keep an eye on contractor scorecards and budget. You no longer type the night cutovers yourself, but you stay by the phone, and if anything goes wrong it takes one word from you to roll back.",
+  "The quality and investment of one citywide network is in front of you. Each week you're on the province's video conference, negotiating pole fees with the tower company and explaining to the city why this road can't be dug up. Your work is telling young people what not to try, and keeping one extra line on the budget sheet for those mountain villages."
+ ],
+ "work": [
+  "The contract crew veteran training you has you splice one fiber. On three tries the splicer shows a loss of a tenth-something. Again, he says, call me when it's a hundredth-something.",
+  "You take an old drawing to verify a duct. The drawing says twelve bores. You lift the manhole cover and count six, and half of those are sealed with cement.",
+  "A hospital's dedicated line goes down in the middle of the night, and the management system shows a far-end card has dropped. You rush over, and before leaving you give the IT section head a phone number, your own.",
+  "The UPS in an access room alarms and the contractor says it's false. You open the cabinet and sniff. That smell isn't false.",
+  "Step seven of your cutover plan says confirm far-end receive signal. The director adds a few words in red: verbally confirmed by the far-end duty officer.",
+  "A project manager submits a ring plan with two routes running on the same poles. You overlay the two drawings and ask him what kind of dual route this is.",
+  "At the contractor review meeting you project this quarter's fiber cabinet spot-check photos one after another, all dated, and nobody speaks.",
+  "The city is rebuilding a main road. You take the utility drawings to the coordination meeting and have the contractor sign on the drawing, confirming they've seen those cables.",
+  "The province asks each city to report next year's investment. You rank the single-route stretches along the Liu River by risk, and the first item is that old bridge."
+ ],
+ "past": [
+  "You grew up in the family quarters of a big Liuzhou factory, with a telephone line running past your window. A high wind snapped it once, and you watched the line worker climb the pole and join the broken ends without a gap.",
+  "When you filled in your college choices you picked Communication Engineering. Your father said people will always make phone calls, so that line of work will always feed you. Your college was in Guilin, with even more mountains than Liuzhou.",
+  "In a communications lab you first saw fiber being spliced: two strands not much thicker than a hair, and when they met there was a tiny flash on the screen.",
+  "You interned at an equipment vendor and got around several equipment rooms in Nanning. The most tiring thing was hauling batteries. The most interesting thing was an old hand who recorded the whole city's VLANs on a slip of paper.",
+  "During campus recruitment you thought about Guangzhou, but the older people in your family weren't well. The Liuzhou branch of a carrier was hiring. The interviewer asked if you were afraid of going down manholes. You said no. In fact you had never been down one."
+ ],
+ "late": {
+  "pension_note": "Estimate: a carrier with proper contributions and an enterprise annuity. The prefecture-level base is medium, and it's enough in Liuzhou.",
+  "scenes": [
+   "You take up fishing by the Liu River, and you care more about the water gauge than the fish. An angler asks how the water looks this year. You say the rain upstream hasn't finished falling.",
+   "Older people in your neighborhood can't get their phones onto the home modem, and they all come to you. The new routers are a bit beyond you too, but you can tell whether it's optical loss or just that they changed the password.",
+   "The last stretch of copper comes up and the scrap man buys it by weight. Hearing the figure, you work out what this cable cost when it was buried, and think that number's not bad either.",
+   "As your eyesight fades you can't read small print. You ask the girl in the shop to read your internet bill aloud. When she's done you say that's too much. Those modems paid for themselves years ago.",
+   "At the records post you spend the days adjusting pole coordinates. You've climbed most of these poles, and on the map they're just small dots. You click one, and it's fixed.",
+   "The doctor says your shoulders need more exercise, so you buy a badminton racket and go twice. The old man across the net is very good, and you aren't embarrassed about it.",
+   "A big flood comes one year and the news reports on restoring service. This time you're watching from the sofa, and all you think is that their waders are better than the ones you had.",
+   "After changing jobs you still keep your ringtone very loud. It doesn't go off at night now. It takes you about a year to let that go.",
+   "Your pay now and your old colleagues' are quite different. Some envy you and others say you got out early. In truth, people on both sides are still sitting in meetings over that bit of money.",
+   "You take the family to the mountains, and on a lonely roadside pole there's a fiber joint closure. You point it out. They ask what it is. You say it's someone else's job.",
+   "On a trip away you see a trench dug by the road and look first for colored inner ducts. Ten-odd meters on, you remember this road belongs to someone else.",
+   "The internet at your grown children's home keeps stuttering. With a network cable you test three rooms and tell them the trouble is where the router is. Don't keep it in the shoe cabinet."
+  ],
+  "closing": {
+   "retire": "The wind off the river bends your fishing line. Today the water neither rises nor falls. Your phone is on silent, in your bag.",
+   "burnout": "There's a little red dot in the records system asking you to confirm the status of a pole route. You confirm it, finish work and switch off the light.",
+   "end": "It rains all night. The forecast says heavy rain in Liuzhou. You read it, turn over and go back to sleep."
+  }
+ }
+}

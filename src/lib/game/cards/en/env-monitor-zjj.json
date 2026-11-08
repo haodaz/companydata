@@ -1,0 +1,207 @@
+{
+  "id": "env-monitor-zjj",
+  "occupation": "Environmental Science and Protection Technician",
+  "role": "Environmental Monitoring Technician",
+  "headline": "A contract technician at the environmental monitoring station in Zhangjiajie who goes down to the Li River with a sample case on the first of every month, waits five days for a BOD result, and watches the scenic-area billboards change whenever the negative-ion numbers come in",
+  "unit": "An environmental monitoring station in Zhangjiajie",
+  "unit_type": "Environmental monitoring institution",
+  "city": "Zhangjiajie, Hunan",
+  "city_tier": "Fourth-tier city",
+  "education": "Associate degree (Environmental Monitoring Technology)",
+  "level": "You can use a pipette and make a standard curve. You have not yet steadily taken a bottle of water from a river in flood season",
+  "intro": "The station is in an old building in Yongding District: samples on the ground floor, analysis on the second, a smell of potassium dichromate in the corridor. The chief puts a blue sample case at your feet. Next month, on the first, the Li River sections are yours to follow.",
+  "salary_note": "Estimate: pay at institutions in Zhangjiajie and for contract technicians is low, steadier after you get a permanent state post, with limited overtime pay.",
+  "facts": [
+    {
+      "label": "Technician (current level)",
+      "value": "0-2 years, ¥3,200–4,300 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Assistant Engineer (2-5 years)",
+      "source": "Industry norm"
+    },
+    {
+      "label": "Pay after 10+ years",
+      "value": "¥5,900 (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Sampling on site at river sections and outfalls",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Analyzing monitoring data and judging anomalies",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "35 related listings nationwide, 0 in this city (the listings skew toward campus hires and internships)",
+      "source": "Job listings"
+    }
+  ],
+  "day": [
+    "Before light you load sample cases and ice packs onto the truck. Samples have to come back cold and inside a time limit, and that's why this day always starts so early.",
+    "At the section you stand on the bridge lowering the water sampler. pH and dissolved oxygen are measured on the spot and written on the sampling sheet, the beads of water still on the thermometer.",
+    "The next point means going down onto the river flat, in waders to the calf. A colleague takes the bucket from you, and you check the bottle labels once more.",
+    "Back at the station, the samples are logged in, every number and time matched. The sample clerk slaps a sheet on the table and says this cap wasn't tight.",
+    "You start the COD: two hours of reflux, wait to cool, titrate to that last drop. You'll need a few more runs to reliably recognize the color change.",
+    "You put the BOD samples into the incubator with a date five days on. That number takes five days.",
+    "Writing the original records. No overwriting. A mistake is crossed through, signed and dated. You've crossed out three today already.",
+    "In the shower you notice the skin beside your index fingernail is a bit yellow. It doesn't scrub off."
+  ],
+  "ladder": [
+    { "title": "Technician", "stage": "Sampling", "focus": "Running sections, doing pretreatment, studying for certified test items" },
+    { "title": "Assistant Engineer", "stage": "Certified testing", "focus": "Certified to do water and air analysis alone, quality control, running automatic stations" },
+    { "title": "Engineer", "stage": "Review", "focus": "Reviewing original records and reports, preparing for accreditation, handling data anomalies" },
+    { "title": "Senior Engineer", "stage": "Technical lead", "focus": "Technical director of the station, answering for data quality and outside communication" }
+  ],
+  "ai_tasks": [
+    { "name": "Sampling on site at river sections and outfalls", "how": "Where to draw the water, and whether this bottle counts, is decided by a person standing at the river." },
+    { "name": "Signing for test results", "how": "A three-level review of the data needs people to put their names on it." },
+    { "name": "Analyzing monitoring data and judging anomalies", "how": "AI can flag exceedances and trends. Real pollution or instrument drift is for a person to judge." },
+    { "name": "Compiling monthly and monitoring reports", "how": "Most of a report can write itself; a person spot-checks and fixes the conclusions." }
+  ],
+  "events": {
+    "e_first_month": "You lead your first section sampling alone at the start of the month. You write one point's time down ten minutes off, and it comes back from review. You run back with the records, check the times on your photos, and correct it by the rules.",
+    "e_flood_season": "Flood season, extra sampling, and the Li River has risen brown. The road to the section has collapsed and you detour two hours. The water's too fast when you get there, so as per procedure you switch to the backup point and write a page explaining.",
+    "e_blind_sample": "The province sends a blind quality-control sample and everybody's a little tense. Your ammonia nitrogen result falls right at the edge of the allowed range. The chief reads it without comment, and has you redo the standard curve.",
+    "e_tourist_peak": "May Day holiday, tens of thousands in the scenic area every day. The treatment plant's inflow load is at the limit and you are told to add tests. You push through the holiday crowds with a sample case. A tourist asks if you're selling water.",
+    "e_ion_screen": "The scenic area's negative-ion monitor hangs next to a waterfall, and the number on the big screen is beautiful. Calibrating it, you find it's too close to the water and reads high. You write that down. The next day the scenic area phones, very politely.",
+    "e_knee": "A decade and more of going down to river flats. Now your knees sound off on the stairs, and you take slopes sideways. The sample case is over ten kilos. You change shoulders. It doesn't help.",
+    "e_reagent": "The fume hood's fan has been broken for three days and the part is on order, and testing can't stop. After work those days your throat is tight. When the part comes you log it and make a suggestion to the chief about ventilation.",
+    "e_cma": "Accreditation review, once every three years, and the assessors test on site. A solid month of checking records. One of your calibration certificates lacks a stamp, and you drive to Changsha for it.",
+    "e_auto_station": "A water quality automatic station goes up upstream, one reading an hour. You go weekly to cross-check it and change reagents. Once you find a nest of tiny fish in the intake line.",
+    "e_soil_census": "The soil census points fall deep in the mountains of Sangzhi, and the truck goes only part of the way. You hike an hour and a half with a soil auger, photographing the depth and the phone's coordinates. One point takes the whole day.",
+    "e_tea_invite": "The office director of a discharging company drops off two boxes of tea, a local specialty, he says. You leave them at the reception desk with a note asking him to take them back.",
+    "e_low_pay": "After insurance, contract pay is half of what classmates in Changsha make. Your colleagues do the arithmetic over boxed lunch, and when the arithmetic is done they go on with the COD.",
+    "e_ai_report": "The station tries AI on the monthly report. The sentences are smoother than anyone's, and it has turned Class III water into Class II. You rewrite the conclusion and tell everybody to keep it away from the numbers.",
+    "e_ai_flag": "The anomaly system catches a small jump in ammonia nitrogen at a site before you do. On site, you find the sampling pump's tube has worn through. It isn't pollution, but the warning saves you a week.",
+    "e_ai_lab": "The lab gets autosamplers and fully automatic analyzers, and half the titration benches are taken out. The old analyst who judged end points by eye says, well, now I can retire. You can't tell from his tone if he's pleased or something else.",
+    "e_province_merge": "The station's personnel and budget move up to the provincial level. The seal changes, the ID badges change. A few colleagues are assigned elsewhere and you stay. The desks don't move. The characters on the door do.",
+    "e_outsource_sampling": "Section sampling is contracted out to a third party, separating sampling from testing. Where you once went down to the river each month, you now review someone else's sampling records. From one photo you can tell a bottle was never filled on the stretch of river it says.",
+    "e_clean_river": "The tributary you have followed for a decade and more meets the standard for a full year for the first time. In the monthly report it's one row in a table. You print an extra copy and keep it."
+  },
+  "choices": {
+    "c_third_party": {
+      "title": "A testing company in Changsha is hiring",
+      "situation": "A classmate at a third-party testing company in Changsha says they're hiring samplers and analysts, forty percent more pay, commission by project. You're still on contract at the station, and a permanent post means waiting for the exam. There's a lot of overtime, and reports are wanted fast.",
+      "options": [
+        { "label": "Go to Changsha", "result": "You pack your waders and some manuals and take the bus to Changsha.", "end": "You went to a third-party testing firm, and no day looked like another: factories, construction sites, schools. Report after report went out. What the clients wanted was speed." },
+        { "label": "Stay and wait for a permanent post", "result": "You sign up for this year's institution exam and spend evenings in the dorm memorizing the technical specifications." },
+        { "label": "Ask to certify in another test", "result": "You raise your certified items from four to seven. The chief makes a note of it." }
+      ]
+    },
+    "c_enforcement": {
+      "title": "Sitting the exam for enforcement",
+      "situation": "The ecology and environment bureau's enforcement team is recruiting civil servants, and your training and field experience fit. Pass, and you'll go into companies writing tickets, no more lab work and no more of those curves. A bit steadier pay, a few more people offended.",
+      "options": [
+        { "label": "Sit the exam", "result": "You study while working. The year you pass, you wash your lab coat and hang it back in the cabinet.", "end": "You became an enforcement officer, walking onto factory sites in uniform. At a whiff of something, you knew half a minute before anyone which outfall to check." },
+        { "label": "Keep monitoring", "result": "You still like the fact that numbers don't have to quarrel with anyone, and stay in the lab." }
+      ]
+    },
+    "c_study_guide": {
+      "title": "A nature study camp wants an ecology guide",
+      "situation": "A study camp wants you to take students to streams to learn about water quality, three days a week, for more than the station pays. Most of the work at the station is now staring at systems, and your knees aren't eager for rivers. But go, and your years of service and title stop here.",
+      "options": [
+        { "label": "Go to the study camp", "result": "In your first class you hand out test strips and a Secchi disk, and let the kids put the bottles in the water themselves.", "end": "You became an ecology guide, taking group after group of kids to measure streams. Their data was not rigorous, and this time you did not make them cross it out and sign." },
+        { "label": "Stay at the station", "result": "You set the camp's invitation aside. There's a batch of automatic-station cross-checks to review this week." }
+      ]
+    },
+    "c_exceed": {
+      "title": "An outfall that's over the limit",
+      "situation": "A water sample from a small factory's outfall is slightly over on COD. Their deputy manager comes to the station to say the equipment had just been serviced that day, and could it be resampled? The factory keeps some three hundred people in the township in work. The procedure lets you resample. It also lets you not.",
+      "options": [
+        { "label": "Report the first result", "result": "The data goes through the process. The deputy manager never comes again, and you never go back to that little restaurant." },
+        { "label": "Request a resample per procedure", "result": "You write the reason on the application and the second result meets the standard. You've never worked out which of the two numbers was closer to the river." }
+      ]
+    },
+    "c_assistant": {
+      "title": "Assistant Engineer, and certification",
+      "situation": "To become Assistant Engineer you need to pass water and air certification in one go. Sampling runs go on as usual these few months, practice has to come out of your off hours, and titration by feel only comes from repetition.",
+      "options": [
+        { "label": "Practice after work", "result": "Two extra months in the lab and your standard curve correlation holds at 0.999." },
+        { "label": "Learn as you go", "result": "You'll take the items slowly, and keep your evenings for your family." }
+      ]
+    },
+    "c_engineer": {
+      "title": "Engineer, and the quality lead's job",
+      "situation": "The station lacks a quality manager, which is also a hard requirement for Engineer. Take it and you're in charge of the triennial review, the annual audit and every record. From then on it's your job to speak up about colleagues' mistakes.",
+      "options": [
+        { "label": "Take it", "result": "You stick yellow notes on everybody's records, and they complain as they peel them off. At the review there's not one nonconformity." },
+        { "label": "Concentrate on analysis", "result": "You stay beside the instruments, and quality can be someone else's headache." }
+      ]
+    },
+    "c_auto_learn": {
+      "title": "Learning the data platform",
+      "situation": "The province's monitoring data platform is adding AI anomaly analysis, and the station must send someone to train and then run the platform and its model results. Learn it and you touch fewer bottles and watch more screens. Don't, and there will be fewer manual jobs anyway.",
+      "options": [
+        { "label": "Go to the training", "result": "From Excel you get as far as a little Python, and connect ten years of section data." },
+        { "label": "Keep going to the river", "result": "You take automatic-station cross-checks and the field side. The work in your hands stays fairly real." }
+      ]
+    },
+    "c_senior": {
+      "title": "Senior Engineer and technical lead",
+      "situation": "Senior Engineer needs a paper and service as the station's technical lead, with your name on every report. Your firsthand data would supply a dozen years of writing, but your writing hand has got much slower than your pipetting hand.",
+      "options": [
+        { "label": "Write and take it on", "result": "You write about nitrogen and phosphorus changes on a tributary of the Li, all from your own samples. When the panel asks about a sampling point, you can describe the stones on that bank." },
+        { "label": "Don't apply", "result": "You go on as an Engineer, reading reports on schedule. On summer evenings, you begin to walk along the river." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "Before retiring you go through the station's quality-control sample ledger, so that every number has its place. You make one more visit to the section you ran most often and look at the color of the water, with no bottle in your hand. On the way down, your knees sound a little softer than on the way up.",
+    "burnout": "Your knees and back won't let you go down to the river any more. The station moves you to the sample intake room, where you sit behind a window checking bottles others have brought back. Number, time, preservative, one by one. Whose cap isn't tight, you can tell by touch."
+  },
+  "stages": [
+    "At the start of each month you ride along to the sections, lower the sampler, add preservative and get the samples back on time. The rest of the time you assist in the lab: washing bottles, mixing reagents, logging numbers. You do what the older staff say, and can't yet sign any original record on your own.",
+    "You're certified, and can run water and air items independently. COD, ammonia nitrogen and total phosphorus come around in turn, and the automatic station's cross-checks are yours too. You do your own quality control, and if parallel samples or spike recoveries fail you start again. The difference is that your name goes on reports now. If something's wrong, they can find you.",
+    "You begin reviewing other people's records, the middle step of a three-level review. You organize internal audits, prepare for assessments, and check data with the higher-level station and third parties. You seldom go down to the river. The work is to sit down and find the one line on a page that's wrong.",
+    "Every technical question at the station ends up with you. You sign the reports, explain data to the ecology and environment bureau, and deal with assessors and the provincial station. The young people's plans wait for your yes, and you answer for the conclusions that go up. One number often takes several phone calls."
+  ],
+  "work": [
+    "The sample clerk says a bottle's preservative label has gone, which voids it. You rush back to the section with the driver and redraw it that afternoon, not relaxing until the label's been checked.",
+    "The analyst in the lab has you wash colorimetric tubes and hold each to the light for water marks. You wash thirty, and she picks out two for you to redo.",
+    "Lowering the sampler from the bridge, the rope snags. You undo it, lower it again, and rinse the instrument with the bulb before you continue, the older staff watching your hands.",
+    "The air station's particulate data has jumped. You take a filter out for a manual cross-check, write the difference into the calibration record, and that afternoon ask the maker's service person to come up.",
+    "Total phosphorus blanks are high. You change cuvettes, then the reagent batch, and finally find that the lab's deionized water column has expired.",
+    "A third-party technician changed reagents at the automatic station without logging it. You lay the ledger open in front of him and have him fill it in on the spot, with the time.",
+    "In an internal audit you pull a six-month-old record and find a parallel sample calculation off by one place. You notify the analyst to recalculate. It still falls within limits.",
+    "The assessor asks about the interim check of a spectrophotometer. You turn to that page, and put last month's calibration certificate within his reach.",
+    "The scenic area authority wants water quality data for a brochure. You send the data with the standards attached and ask them to print the monitoring date and location.",
+    "The bureau will use some figures at a meeting, and you notice one day of automatic station data is invalid. You flag it and spend ten minutes explaining on the phone. The chart gets changed.",
+    "A young engineer wants to make several manual items all automatic. You have him do a year of cross-checks first, list the differences, and then talk.",
+    "A provincial expert comes to verify a tributary's data. You walk him down to that stretch of bank and point to the new farm built upstream, and let him see for himself."
+  ],
+  "past": [
+    "At middle school in Cili you walked home along the Loushui River. Every summer the water changed color, and the grown-ups said it was the mine upstream again.",
+    "On your college application a relative said the environmental bureau was steady work, so you ticked environmental monitoring technology.",
+    "In a training lab in Changsha you did your first titration and went half a drop past the end point. The teacher had you pour out the blue and start over.",
+    "You interned at a third-party testing company, sampling soil on construction sites for daily wages. You learned to write data clearly. You also saw people whose data was too tidy.",
+    "You heard the monitoring station back home was hiring contract technicians, and sent your resume with your training certificate."
+  ],
+  "late": {
+    "pension_note": "Estimate: after becoming permanent, contributions follow public-institution rules, and long service makes for a fairly stable pension.",
+    "scenes": [
+      "On the first of each month you still wake at six. You lie there a moment and remember there are no ice packs to load.",
+      "You help the old folks in your community check whether their water filters are due, and tell them that TDS number in the ads doesn't mean much.",
+      "The station's lab is mostly automated now and the reagent smell is much fainter. You go to get a certificate of something. A young person asks if you need help. You say no.",
+      "The chairs in the intake room are low. You no longer stoop for water samples, just sometimes for the bottom shelf of the fridge. Your knees know the difference.",
+      "The young samplers from the third-party company line up their bottles when they see you. They have a private name for the ones you send back: couldn't pass the window.",
+      "The doctor says you could have your knee replaced. You work out what you'd pay yourself, and decide on a better walking stick first.",
+      "In your new job you still write down the time of everything. Colleagues laugh that you seem to be filling out original records.",
+      "On a trip elsewhere for a meeting, you pass a river, take one sniff, and know what's upstream. Nobody asks you. You don't tell them.",
+      "On the news they say sampling now uses drones. You'd like to know how far the tube goes down, and how many times it's been rinsed.",
+      "In a restaurant you first smell the tap water for chlorine, to judge how much the plant added today. The waiter brings lemon water and you smile.",
+      "The yellow beside your fingernail is long gone. You only noticed one day while cutting your nails."
+    ],
+    "closing": {
+      "retire": "After rain the river runs a little cloudy. It will clear in two days. You cross the bridge and don't stop.",
+      "burnout": "The fridge in the intake room hums low. You file today's last handover sheet in the folder, number facing up.",
+      "end": "The water comes down from the mountains, passes through many hands, and goes on downstream. You take a sip from your cup."
+    }
+  }
+}

@@ -1,0 +1,190 @@
+{
+  "id": "buyer-st",
+  "occupation": "Procurement Clerk",
+  "role": "Toy Factory Buyer",
+  "headline": "A new buyer at a toy factory in Chenghai, Shantou, where the price of plastic pellets is quoted daily, the Christmas shipping dates hang over everything, and every price gets settled across a tea table",
+  "unit": "A toy factory in Chenghai, Shantou",
+  "unit_type": "Toy manufacturer",
+  "city": "Shantou, Guangdong",
+  "city_tier": "Third-tier city",
+  "education": "Associate degree (International Trade Practice)",
+  "level": "You can build a quote comparison, but you can't yet smell how much regrind is in a bag of pellets",
+  "intro": "The factory is in a Chenghai industrial zone: injection molding on the first floor, spray painting on the second, assembly on the third, and your desk at the top of the stairs. The boss's wife hands you the pellet suppliers' phone list. The price goes to her phone by nine every morning. If she has to ask herself, she says, you can go.",
+  "salary_note": "Estimate: base pay at Chenghai toy factories is middling, with heavy overtime in peak season, and the real difference lies in the year-end bonus.",
+  "facts": [
+    { "label": "Buyer (current level)", "value": "0-3 years, ¥3,800–5,500 a month (national average, estimated)", "source": "Industry norm" },
+    { "label": "Next level up", "value": "Senior Buyer (3-8 years)", "source": "Industry norm" },
+    { "label": "What AI can't take", "value": "Inspecting goods and negotiating at suppliers' factories", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Finding and vetting suppliers", "source": "AI exposure" },
+    { "label": "Open positions", "value": "261 related listings nationwide, 0 in this city (the listings skew toward campus hires and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "You scroll a few pellet traders' group chats: ABS is up ¥150 today. You send the number to the boss's wife. She replies with a question mark.",
+    "The production planner comes with next week's schedule: four thousand gearbox motors short. Three phone calls. One supplier says 'we'll try,' a phrase you've learned to understand.",
+    "The warehouse calls you down to look at incoming material. A bag of pellets is opened. Your senior grabs a handful, smells it, and has you smell it too. This doesn't smell right, he says. Too much regrind.",
+    "You go to a village outworking point to collect finished goods. A room of grannies dress dolls, paid by the piece. They don't look up as you count boxes.",
+    "The carton factory owner arrives and his first act is to scald the cups. Price comes up only after the third infusion, payment terms after the fifth. Your stomach feels hollow from the tea.",
+    "You pack samples for the third-party lab. Goods for Europe need EN71 testing, and not one part number on the form can be wrong.",
+    "Reconciling accounts. A supplier on sixty-day terms is pressing, and you tell them finance is still working through the queue. It's what the boss's wife told you this afternoon.",
+    "You lie down. A booking notice lights up your phone: next month the first Christmas container goes into port."
+  ],
+  "ladder": [
+    { "title": "Buyer", "stage": "Follow-up", "focus": "Placing orders, chasing delivery, reconciling; learning pellets, packaging and outsourced assembly" },
+    { "title": "Senior Buyer", "stage": "Own category", "focus": "Running a category alone: negotiating, choosing suppliers, dealing with incoming quality" },
+    { "title": "Purchasing Supervisor", "stage": "Team lead", "focus": "Leading a few buyers, managing credit terms and supplier reviews, coordinating with production and R&D" },
+    { "title": "Purchasing Manager", "stage": "Whole plant", "focus": "Answering to the owner for all material costs and cash tied up" }
+  ],
+  "ai_tasks": [
+    { "name": "Inspecting goods and negotiating at suppliers' factories", "how": "Prices, credit terms and goodwill still have to be settled in person over tea." },
+    { "name": "Handling incoming defects and claims", "how": "Who pays and how much takes a person arguing it out at the supplier's." },
+    { "name": "Finding and vetting suppliers", "how": "AI can collect credentials and score them. Whether the factory is real takes someone going to look." },
+    { "name": "Quote comparison and drafting orders", "how": "Sending inquiries, comparing bids and writing orders are almost automatic; a person spot-checks the large ones." }
+  ],
+  "events": {
+    "e_container_rush": "July, racing the Christmas containers, and three thousand blister packs short, with the cutoff the day after tomorrow at noon. You drive to the blister factory in Jieyang, stack the goods on your back seat and bring them yourself, windows open the whole way to let the smell out.",
+    "e_typhoon": "The day before the typhoon lands the port shuts, and the containers already on the road get stuck at the expressway exit. The client's emails get shorter and shorter. You change the arrival date once a day, five times.",
+    "e_smell": "You've begun to be able to smell it. This bag is a touch scorched. You ask for it to be tested, and the regrind is over the limit. The pellet trader looks at you differently after that.",
+    "e_tea_stomach": "Seven or eight infusions of strong tea a day, and by three in the afternoon the acid rises. Gastroscopy says superficial gastritis. Back at the factory, somebody scalds you a cup again. You say water today, and the whole table laughs.",
+    "e_payment_wait": "The boss has stretched supplier terms from sixty days to ninety. The owner of a small screw factory comes and sits at your desk until the end of the day, asking for nothing, just not leaving. You go to finance and work it out. Half gets paid.",
+    "e_mold_gate": "You turn a sample over, look at the gate location and the parting line, and see the supplier has switched to an old mold. Sample and bulk order are two different things. You see that at a glance now.",
+    "e_lab_fail": "The European order's painted parts test over the limit for phthalates at the lab. The whole lot has to be reworked. The paint factory blames your primer, the primer factory blames the paint. Report in hand, you drink an afternoon of tea at each.",
+    "e_chunjie_return": "The first week after Spring Festival, the outworking grannies aren't back and half the workers are still on the road. The planner is frantic and so are you. You go from house to house in the village finding out who has started, a sheaf of job slips in hand.",
+    "e_ic_shortage": "Bonded ICs are short across the whole industry. A chip that cost a few jiao is over a yuan and still can't be had. A month of calling Huaqiangbei traders, and twenty percent of the first batch are refurbished.",
+    "e_trendy_toy": "The factory takes an order for designer toys, and the vinyl figures are fussier about color than the cartons ever were. For the first time you go to the paint shop to sit with the old hands mixing colors. One figure's nose takes six rounds. The unit price is four times a regular toy's.",
+    "e_platform_price": "On a cross-border platform the same little car sells for ¥9.90 with free shipping, and the client brings the link in to beat down your price. You lay out the materials line by line. By the seventh line you're already above their selling price. You can't work out how they stay alive.",
+    "e_ai_compare": "The price assistant lists quotes from thirty pellet traders in a minute. You know the one at the top; last year he changed his signboard after he got caught adulterating. In the remarks column you write two words: don't use.",
+    "e_ai_forecast": "Working from past data, the system sets next quarter's material plan and saves ten percent on inventory over your hand calculations. Then the Christmas order changes style and it's all wrong. You treat it like a new colleague who doesn't know the boss's temper.",
+    "e_ai_inquiry": "Inquiry emails go out on their own and come back on their own. The follow-up clerk who spent ten years making spreadsheets no longer has one to make. HR moves her to the warehouse.",
+    "e_factory_visit": "Vetting a new motor factory, you walk around back to see the scrap pile and the meter box. The business license at the door is real. Twenty of the thirty machines on the floor aren't connected to power.",
+    "e_second_gen": "The owner's son is back from Britain and has put in an SRM system; every supplier must bid online. A printing plant that's worked with the factory for twenty years has an owner who can't use it. He comes to you. You sit at his computer and register an account for him.",
+    "e_inventory_stuck": "A client cuts its order, and twenty tons of custom-color pellets are stuck in the warehouse with no other use. Every month finance puts the sum in red on the first line of your report. You spend half a year dumping it in group chats.",
+    "e_audit": "A European client sends an auditor to inspect the factory and spot-check supplier approvals. You go through more than two hundred folders a week ahead. At the third supplier, the auditor nods, and asks no more."
+  },
+  "choices": {
+    "c_supplier_sales": {
+      "title": "A pellet trader wants to hire you",
+      "situation": "After years of dealing with you, a pellet trader says: come sell for me. You know what factories want, and the commission beats your wages. You know his margins, and you know about his regrind. If you go, you'll be sitting in the guest's seat at other factories' tea tables.",
+      "options": [
+        { "label": "Go into sales", "result": "You pack your desk into a carton, and the next day you're on the other side of the tea table.", "end": "You went from buying to selling, driving around Chenghai's industrial zones every day, and your acquaintances' payment terms became your own." },
+        { "label": "Stay at the factory", "result": "You thank him for the tea. The next year, his quote to you is the same as anybody's." },
+        { "label": "Make him drop two points", "result": "You use this as leverage to bring down this year's pellet cost, and the boss's wife pays half a month's extra bonus." }
+      ]
+    },
+    "c_trading": {
+      "title": "Opening your own trading firm",
+      "situation": "You have a steady line on pellets and packaging, and a friend suggests going in together on a trading firm that lives off the gap between factory credit and spot cash. Factory wages are steady, but the boss's son's new system is making your seat lighter.",
+      "options": [
+        { "label": "Open the trading firm", "result": "You rent a shopfront with a warehouse. A relative writes the characters for the sign.", "end": "You opened a trading firm, fronting credit and carrying the market, and you made and lost money faster than you ever had at the factory. At night you still looked up tomorrow's pellet price first." },
+        { "label": "Stay", "result": "Your friend opens up on his own. Now and then you send him a customer, and neither of you brings up partnering again." }
+      ]
+    },
+    "c_crossborder": {
+      "title": "A cross-border firm wants a head of selection",
+      "situation": "A cross-border e-commerce company wants someone who knows Chenghai's supply chain as head of product selection. The salary doubles, though they swap out their product line every quarter. This year's head was last year's operations person. Last year's head has gone.",
+      "options": [
+        { "label": "Join the cross-border firm", "result": "You quit the factory, and your work becomes watching click-through rates in a dashboard.", "end": "You left factory purchasing and picked what to sell for a cross-border company. You could read a toy's gate at a glance, but the numbers on that screen moved faster than the price of pellets." },
+        { "label": "Stay at the factory", "result": "You still check the pellet price every morning. Companies change. Credit terms stay." }
+      ]
+    },
+    "c_red_packet": {
+      "title": "A red envelope in the tea tin",
+      "situation": "When the carton factory owner leaves there's a tin of tea, and at the bottom a red envelope holding no small sum. In Chenghai this sort of thing is not rare. Send it back, and the next tea will taste different. Keep it, and his price becomes hard to cut.",
+      "options": [
+        { "label": "Return the envelope, keep the tea", "result": "You send the envelope back with a note. He calls the next day to say he has only ever had two such notes." },
+        { "label": "Keep it", "result": "All of this year's carton orders go to him, four li a piece higher than next door. You know that better than anyone." }
+      ]
+    },
+    "c_recycled": {
+      "title": "Twenty percent regrind",
+      "situation": "Domestic orders have margins too thin, so the boss's wife wants domestic ABS parts to take twenty percent regrind. Domestic goods do have to pass CCC certification, though spot checks are few. R&D is not keen. Production says the color comes out dull.",
+      "options": [
+        { "label": "Do as she says, start with a trial lot", "result": "You arrange a small trial molding, and the color is at the edge of the standard. She's satisfied. You make extra trips to the lab." },
+        { "label": "Show her the numbers, don't mix", "result": "You put return rates and certification risk on one page. She reads it and says she'll think. This quarter's margin will have to be found elsewhere." }
+      ]
+    },
+    "c_senior": {
+      "title": "Senior Buyer, with electronics",
+      "situation": "The colleague in charge of electronics has left and the Senior Buyer slot is open. Everybody fears electronics: when ICs and speakers run short, the whole line stops. You don't know circuits. The boss's wife says it's yours if you dare.",
+      "options": [
+        { "label": "Take it", "result": "You spend a week in Huaqiangbei and learn component models and grades from scratch." },
+        { "label": "Get packaging solid first", "result": "You go on managing cartons and blisters, and you know exactly whose cutting dies are good." }
+      ]
+    },
+    "c_srm": {
+      "title": "SRM and the data side",
+      "situation": "The boss's son is putting in a purchasing system with bidding and sourcing online, and he asks who will lead it. Leading means a lot to learn and offending old suppliers. If you don't, you wait till it's built and use it.",
+      "options": [
+        { "label": "Lead it", "result": "You renumber over two thousand part codes. Cleaning up the same part under different names takes four months alone." },
+        { "label": "Use it, don't lead", "result": "You put your energy into a few long-standing suppliers and keep out of the system side." }
+      ]
+    },
+    "c_supervisor": {
+      "title": "Applying for Purchasing Supervisor",
+      "situation": "A Purchasing Supervisor leads four people and runs supplier reviews. To apply, you must present a cost-cutting plan to the owner. The easiest cut would be dropping the printing plant of twenty years for one ten percent cheaper.",
+      "options": [
+        { "label": "Drop the old printer", "result": "The plan is approved. The cheaper plant's first batch has real color deviation. The old printer's owner never comes for tea again." },
+        { "label": "Save elsewhere, keep it", "result": "You find savings through lighter packaging. The figures look less impressive, and the owner frowns as you present." }
+      ]
+    },
+    "c_manager": {
+      "title": "Purchasing Manager, and the stockpile question",
+      "situation": "The owner wants to make you Purchasing Manager, but first you have to call it: pellets are low, and three months of stock could save a good deal, or tie up over ¥10 million in the warehouse. Finance's report is still sitting on your desk.",
+      "options": [
+        { "label": "Stock up, own the risk", "result": "You sign. Pellets go up a bit afterward, enough for you to stand firm before the owner, and enough for finance to stay unhappy." },
+        { "label": "Buy to order, don't bet", "result": "The owner calls you timid but doesn't replace you. Later the post goes to his nephew." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "You update the credit-terms table through the end of the month and annotate every yellow cell. On your last day the carton factory owner comes specially to scald a pot of tea. At the third infusion, nobody brings up price.",
+    "burnout": "Your stomach and your sleep have reached the point of needing real attention. You're moved from purchasing to admin, ordering stationery and running the canteen. Nobody haggles with you now, and you still ask two more places about a case of mineral water."
+  },
+  "stages": [
+    "Your work is placing orders, chasing goods and reconciling accounts. Purchase orders go out of the ERP one by one and come back one by one. You follow your senior around pellet traders and carton plants, learning faces and materials. Suppliers pour you tea, and you can't yet tell which things said at the table are true.",
+    "A category is now yours. You go to suppliers to look at molds and machines, compare three bids, and fight with R&D over whether a speaker can be one two jiao cheaper. When incoming goods fail, you're the one who goes with the 8D report and opens the claim.",
+    "You have four buyers under you and the whole supplier credit table on your desk. Each week you meet with planning and finance to decide whose money goes first. When Christmas orders come you coordinate between schedule and materials, and seldom place an order yourself. You turn up only when there's a problem.",
+    "All the plant's material costs and the cash sitting in the warehouse are on your head. You discuss with the owner whether to stock up this year, deal with bank acceptance bill limits, and walk auditors through the factory. When you make your round of the zone, it's mostly to see which plants are about to go under."
+  ],
+  "work": [
+    "The screw factory's deliveryman has written the wrong spec on the note. You measure three with calipers and have him correct it before signing. He grumbles and fixes it.",
+    "With the warehouse keeper you weigh a new shipment of ABS pellets, twenty-five kilos a bag. This lot comes up 0.3 kilos light across the board, and you write the shortfall on the receiving slip.",
+    "An outworking granny has put a dozen dolls' clothes on backwards. You bring a sample to show them. They laugh and redo the lot, at the original piece rate.",
+    "With calipers you go to the carton plant and find the insert of the set-up box is a millimeter small for the new toy car. You have them change the cutting die, and split the cost.",
+    "R&D wants POM gears, so you ask three plants about mold shrinkage and put the figures in one sheet on the engineer's desk. He chooses the middle one.",
+    "A shipment of motors from Vietnam tests unsteady at speed. You sample to AQL, work out the reject rate and send them an 8D report with a speed curve attached.",
+    "The planner says next month's material needs to come early. You put the cash flow next to the production schedule and tell her which two items can wait a week. The savings cover one supplier's terms.",
+    "One of your buyers is fighting with the printer. You send her off for water and read the dozens of emails yourself. They've been talking about two different color proofs.",
+    "At the supplier review, quality wants to drop a plastic bag maker. You put three years of its delivery data on the screen and make it three months of corrective action instead.",
+    "The bank's account manager comes to talk acceptance-bill limits. You work out the suppliers' discount costs for him and get half a point off. The owner listens to half of it from the doorway.",
+    "A European auditor asks how you manage second-tier compliance. You trace the spray paint's primer back to the chemical plant's batch report and set it in front of him.",
+    "The owner's nephew wants to switch packaging to a friend's factory. You bring three bids and samples, invite him to feel them himself, and let him say which one."
+  ],
+  "past": [
+    "At middle school in Chenghai, after class you helped your family put stickers on toy cars, half a fen each, until your fingers were tacky.",
+    "After the high school entrance exam you went to a commercial school. The teacher said everyone around here wants to be a boss, so learn the accounts first.",
+    "You studied international trade at college. In class you heard FOB and letter of credit for the first time and thought of the family workshop always talking about shipping out.",
+    "Your internship was doing documents at a Shantou trading firm. One wrong letter meant reissuing a bill of lading. It cost over $100, out of your pay.",
+    "You wanted to go to Guangzhou before you graduated and the family held you back. A relative said a toy factory's buyer had left and they needed someone who could use a computer."
+  ],
+  "late": {
+    "pension_note": "Estimate: factories pay social insurance on a low base and bonuses don't count, so the pension isn't generous.",
+    "scenes": [
+      "The first morning you don't have to check the pellet price, you wake at ten to nine, open your phone, and tap into that group anyway.",
+      "You compare three stalls even for vegetables. The woman selling greens says you haggle like someone from a factory. You say you are.",
+      "The factory site makes energy storage housings now. The paint shop smell has faded, and the villages have little outwork left. The grannies have mostly moved to the county town.",
+      "Stomach pills are down from three times a day to once. You can't give up tea, so you've gone to weak tea, and nobody scalds a cup for you now.",
+      "You're still in admin, choosing a batch of filing cabinets. The salesman comes to talk price. You ask where the hinges are from. He's taken aback.",
+      "You go to bed earlier than you used to, but at two or three you still wake and run through whose account hasn't been paid. There are no accounts now.",
+      "The business you do now is half a street away from the old factory. Former workmates call you boss, and it doesn't sit right.",
+      "You earned more in the good years and gave it all back in one bad one. Close the books and it's about even.",
+      "A new set of factory buildings has gone up in Chenghai, with signs saying smart toys. Driving past, you slow down a little to see which way their containers are headed.",
+      "In a mall you pick up a toy and turn it over first, to look at the gate and the parting line. The clerk asks if you'd like it wrapped. You put it back and say the workmanship is all right.",
+      "Open a window and you can smell what kind of plastic somebody downstairs is burning. Your family didn't believe it. Later they did."
+    ],
+    "closing": {
+      "retire": "The third infusion of the afternoon. The bougainvillea at the door is in full bloom. Nobody has to discuss a price today.",
+      "burnout": "The canteen's books are reconciled. You cap your pen and put it in your pocket. A sea breeze comes in from the far end of the corridor.",
+      "end": "A container truck passes the junction, the seal on its doors intact. You note this, and immediately forget."
+    }
+  }
+}

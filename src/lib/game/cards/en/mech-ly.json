@@ -1,0 +1,171 @@
+{
+ "id": "mech-ly",
+ "occupation": "Mechanical Engineer",
+ "role": "Mining Machinery Design Engineer",
+ "headline": "Drawing grinding mills and crushers at an old mining machinery plant in Luoyang's Jianxi District, where one fillet on a drawing has to survive foundry, heat treatment, oversize haulage and a mine's maintenance window, and orders rise and fall with ore prices",
+ "unit": "A long-established mining machinery plant in Jianxi District, Luoyang",
+ "unit_type": "Restructured state-controlled manufacturer",
+ "city": "Luoyang, Henan",
+ "city_tier": "Third-tier industrial city",
+ "education": "Bachelor's degree (Mechanical Design, Manufacturing and Automation)",
+ "level": "You are fluent in 3D modeling software. How a casting of more than ten tons shrinks and cracks in a sand mold, you have only seen in books.",
+ "intro": "The old Jianxi plant is lined with thick plane trees, and the windows of its red-brick workshops are bigger than any you have seen. The design institute is on the third floor, and the corridor smells of blueprints, though nobody has made blueprints for years. The director leads you to a desk and says not to turn on the computer yet. Go spend three months in the foundry first. That fillet you just drew, someone needs to tell you the molten iron doesn't agree.",
+ "salary_note": "Estimate: state-controlled manufacturing in Luoyang pays below the national figure for mechanical engineers, with reliable housing fund contributions and old-plant benefits.",
+ "facts": [
+  {
+   "label": "Assistant Engineer (current level)",
+   "value": "0–2 years, ¥5,400–7,500 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Mechanical Engineer (2–7 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥11,200 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Handling installation and commissioning problems on site at the mine",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Structural design and strength checks for components",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "22 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "Clock in, make tea, read three drawings sent back yesterday on engineering change notices. In pencil on one of them the workshop has written a single word: interference.",
+  "Down in the foundry, looking at the sand mold for a large girth gear blank. The foundry foreman kicks the flask and tells you gas will come out of this spot later.",
+  "Back at the 3D model you change that fillet and add eight millimeters of wall. The weight goes up, and you'll have to explain it to the director.",
+  "The factory canteen still serves beef soup. Veteran workers line up ahead of you with enamel mugs, talking about mills exported thirty years ago.",
+  "You run a finite element analysis on the gear's contact stress. The results look beautiful. The older colleague beside you says not to get excited about that kind of result.",
+  "The outside machine shop calls to say their boring machine can't reach the position of this part's lifting hole, and asks you to think of something.",
+  "The technical deviation table for the bid is six lines short. Sales says it closes at midnight tomorrow, and reminds you again and again not to write further confirmation required.",
+  "Back in the dormitory you look up the height limit of a bridge on the route to the mine. This batch of oversize parts may not get through."
+ ],
+ "ladder": [
+  { "title": "Assistant Engineer", "stage": "Drawing and shop floor", "focus": "Drawing parts, revising drawings, following the workshops, learning the limits of casting and machining" },
+  { "title": "Mechanical Engineer", "stage": "Designing alone", "focus": "Independent design and checks on components, following manufacture and site installation" },
+  { "title": "Senior Engineer", "stage": "Signs off on plans", "focus": "Responsible for machine schemes and technical bid documents, and for dealing with major quality problems" },
+  { "title": "Chief Designer", "stage": "Owns a product", "focus": "Answerable for the design and technical direction of a product series; leading a team and meeting customers" }
+ ],
+ "ai_tasks": [
+  { "name": "Handling installation and commissioning problems on site at the mine", "how": "Foundation settling, gear mesh and how to modify something on site take a person standing at the mine, looking, deciding and answering for it." },
+  { "name": "Structural design and strength checks for components", "how": "AI can draft structures and run simulations. Whether a thing can be cast, or hauled into a mine, someone still has to decide." },
+  { "name": "Analyzing failed parts and writing corrective plans", "how": "Models can summarize failure records. What the fracture surface says takes a person holding the part." },
+  { "name": "Compiling bills of materials and spare parts lists", "how": "Material and spare parts lists can be generated almost automatically, with a person spot-checking the critical parts." }
+ ],
+ "events": {
+  "e_sand": "The first casting you designed comes out with a patch of shrinkage right on the load-bearing face. The foundry foreman hands you the flaw detection sheet and says don't take it too hard. The scrapped piece was only worth half a truck.",
+  "e_ecn": "A drawing's revision number wasn't updated and the workshop cut material to the old version. You learn the engineering change process by heart and stand for ten minutes listening to the director.",
+  "e_tender": "Three all-nighters before the bid deadline, and the technical volume is as thick as a brick. At the opening next day a rival's price is twelve percent lower. The director folds up the bid record, and you all drink your tea cold.",
+  "e_transport": "A part weighing dozens of tons has to be hauled to a mine in the mountains, and a bridge on the route is thirty centimeters too low. You redesign it as a split part with one more flange. The mine curses for a while and then accepts it.",
+  "e_mine_window": "The mine gives you five days of shutdown to change a girth gear. It's windy up on the mountain, so the crane can only lift in the lulls. You work under lights at night, and every two hours the mine manager comes to ask how much longer.",
+  "e_slump": "Ore prices fall, orders drop to thirty percent of what they were and the workshops go on rotating leave. Your payslip is short by a chunk, and the beef soup goes from daily to Wednesdays and Fridays.",
+  "e_africa": "The plant is commissioning a mill at a copper mine in Africa, and you go along for forty days. You come home with a packet of mosquito medicine and a thank-you letter from the mine manager with your name spelled wrong.",
+  "e_ai_bom": "The system starts generating bills of materials automatically and spares you plenty of manual work. In the first batch, the strength grade on one high-strength bolt is wrong. You catch it in checking.",
+  "e_ai_topo": "Topology optimization gives a frame two tons lighter, shaped like a bone. The foundry foreman looks at it and asks who drew this thing. You change it to something that can be molded, and a ton of the weight comes back.",
+  "e_failure": "The mine ships back a broken gear tooth, and your group circles the fracture looking at fatigue lines. Your conclusion is lubrication. The mine says design. The argument fills a stack of correspondence.",
+  "e_ear": "You've stood at the test rig for more than ten years. This year's medical says high-frequency hearing loss, and what comes to mind is the sound of a mill when feed first goes in, loud enough to cover everyone's words.",
+  "e_commute": "Your child starts school, and in bid season you miss weeks of dinners at home. The family puts your bowl and chopsticks away in the cupboard, saying it can come out when needed.",
+  "e_export": "A crushing plant of yours wins a big order in South America, and the split frame you designed is named in the tender. Sales treats the whole institute to a Luoyang water banquet. By the twenty-fourth course no one can eat any more.",
+  "e_retire_foreman": "The old foundry foreman retires. The new crew uses simulation software to set the process. They're fast and hardly ever kick a flask, and the scrap rate on their first batch really hasn't gone up.",
+  "e_line_sold": "The group sells the crusher product line to another company. The drawings go across along with your colleagues, and some of what you designed now carries someone else's trademark.",
+  "e_young": "A new master's graduate has the torque exactly right, but the lifting point can't be reached in practice. You leave his drawing alone and tell him to go down to the workshop and walk the crane's path himself.",
+  "e_neck": "Your neck can't take long stretches at the screen anymore, and you've gone back to printing drawings. The colleague at the copier says you're the only one in the institute still asking for A0.",
+  "e_data": "Vibration data begins coming back from the mines. For the first time you see what the frame you designed twenty years ago bears each day. It's less than what you calculated."
+ },
+ "choices": {
+  "c_auto": { "title": "The EV parts company in Zhengzhou", "situation": "A classmate at an electric vehicle parts factory in Zhengzhou says they need structural engineers, at forty percent more pay. Mining machinery orders have been poor these two years, though your drawing is getting better and better.", "options": [
+   { "label": "Go to Zhengzhou", "result": "You tidy up your drawing revisions, and when you leave the foundry foreman tells you to come back and visit.", "end": "You go to Zhengzhou and draw car parts. The parts are small, and so are the tolerances. When you see a crane now, you still work out its tonnage." },
+   { "label": "Stay in Jianxi", "result": "You put your résumé away and carry on going down to the workshops. The workshop people begin telling you the truth." }
+  ] },
+  "c_engineer": { "title": "Applying for Mechanical Engineer", "situation": "The mid-level Mechanical Engineer title requires a component you were independently responsible for and a technical summary. The director asks if you'll submit the mill's small gear, or a difficult bearing housing that would need another half year of your own validation.", "options": [
+   { "label": "Submit the bearing housing", "result": "You spend another half year at the test rig, and have your first set of data you measured yourself." },
+   { "label": "Submit the small gear, the safe route", "result": "The summary is written by the book. The reviewers ask nothing at all." }
+  ] },
+  "c_deviation": { "title": "That line on the deviation table", "situation": "One service life in the tender calculates slightly short on your current product. Sales says don't declare a deviation, you can fix it over time; if you declare it the bid is void, and the whole plant is counting on this order for the next half year.", "options": [
+   { "label": "Declare it and attach a solution", "result": "You keep the bid but score lower. Sales doesn't speak to you for two weeks." },
+   { "label": "Redesign overnight and close the gap", "result": "Two night shifts later cost is a little higher, the deviation is gone and you win the bid." }
+  ] },
+  "c_ai_design": { "title": "Learning the design tool", "situation": "The institute brings in a structural optimization and simulation tool with AI. Someone has to turn decades of failure cases and casting constraints into rules to feed it. Nobody will assess this work, but from now on the drawing here will listen to it.", "options": [
+   { "label": "Do it", "result": "You write down all those lessons of the foreman's flask-kicking, one constraint at a time." },
+   { "label": "Keep drawing your own", "result": "The tool goes live and you use it sparingly, always feeling your own hand is quicker." }
+  ] },
+  "c_mine_owner": { "title": "A mine wants you as equipment head", "situation": "The owner of a private mine in the west, having seen you repair his mill on site, offers three times your current pay to be his equipment head. The mine is in the mountains, and the production lines here are shrinking.", "options": [
+   { "label": "Go to the mine", "result": "You resign and close out the revision numbers of your projects in the system.", "end": "You go from selling equipment to buying it. When a manufacturer's salesman hands you a deviation table, you first turn to the smallest print." },
+   { "label": "Don't go", "result": "You point him to your plant's after-sales service, and also write out a lubrication plan for his mill." }
+  ] },
+  "c_senior": { "title": "Applying for Senior Engineer", "situation": "The Senior Engineer file needs three years of results and a paper, and your big project has just been delivered. But the review date falls right in a mine's maintenance window, and you have to choose one or the other.", "options": [
+   { "label": "Come back to defend it", "result": "You leave the site to a colleague. During your defense your phone keeps buzzing, and you don't reach for it." },
+   { "label": "Stay at the mine, apply next year", "result": "You stay five more days on site, and from then on the mine manager asks for you by name." }
+  ] },
+  "c_outsource": { "title": "To outsource the castings or not", "situation": "The plant's foundry loses money and half of it is due to close in favor of outside suppliers. Your data shows outside castings aren't much dearer, but their pass rate is unsteady. The workers here have decades of skill and nowhere else to go.", "options": [
+   { "label": "Write it as it is and recommend outsourcing", "result": "You write the technical assessment and the foundry shrinks. On their way out, nobody in the crew speaks to you." },
+   { "label": "Recommend keeping large castings", "result": "You hold to keeping the critical parts in-house. That section's annual loss also carries your name." }
+  ] },
+  "c_chief": { "title": "Taking over as Chief Designer", "situation": "The old head is about to retire and the company wants you to become Chief Designer. That would mean not just a set of drawings but a product's direction, a dozen people's appraisals and a complaint from every mine that phones.", "options": [
+   { "label": "Take it", "result": "Your first act is to recalculate a tolerance in the design standard that hasn't changed in thirty years." },
+   { "label": "Stay a designer", "result": "You say the engineer in the next group is better suited, and go back to revising your drawings." }
+  ] }
+ },
+ "endings": {
+  "retire": "In your retirement spring, the plane trees of Jianxi come into leaf again. Half the mills you designed are still turning at the mines, and the other half have become something else. The design institute has moved to the new plant, and the corridor no longer has that smell. You sign in the system a final time. The revision letter is G.",
+  "burnout": "Your neck and your hearing keep you from going on site anymore. The doctor gives you a month off, and on your return you move to the archives to look after the drawings. Each day you build electronic indexes for old drawings, and you find a mistaken decimal point from long ago. Fortunately someone corrected it later."
+ },
+ "stages": [
+  "You run between foundry, machining and assembly with a caliper, then go back to your desk to revise part drawings, turning other people's penciled comments into engineering change notices. Your name is on the bottom line of the title block, and above it go checker, reviewer and approver. Every drawing comes back from someone, most often for a very short reason.",
+  "A component is yours now. You take it from 3D modeling through strength checks, follow it through manufacture to site installation, and when there's a problem you work out the fix yourself, phone the outside machine shop, and answer the mine's technical letters. The director no longer goes through your drawings. He just makes a small tick next to your signature.",
+  "Whole machine schemes pass through you. You write the technical volumes of bids, review the younger people's drawings, and when there are major quality problems you go to the mine and sit at a table with the customer's equipment department. You spend more and more time with sales, and you begin to see clearly that every deviation is money, and also a future letter.",
+  "A product series' direction and a dozen people are yours. You decide which model stops and which gets upgraded, justify the R&D budget to the general manager and phone the chief engineers of big mines. You rarely touch 3D software now. What you mostly hold are review forms and a very rough sketch."
+ ],
+ "work": [
+  "The workshop head brings your drawing and says this keyway has nowhere for the tool to run out. You stand at the boring machine with the operator for a morning and go back and change one dimension.",
+  "You pull up an old drawing to remodel it, and can't make out the reviewer's signature in the title block. An older colleague next to you takes a look and says that man left thirty years ago, and his handwriting still looks good.",
+  "The bearing housing you designed won't fit on site, three millimeters out. A fitter at the mine has picked up a chisel. You stop him and spend the night drawing an adapter plate.",
+  "The boss of the outside machine shop complains your tolerances are too tight. You show him the load diagram. He copies down that one tolerance and tapes it to his machine, and does the rest his own way.",
+  "Reviewing a young engineer's drawing, you ask who is going to lift this part. He pauses. Next day the drawing has two more lifting lugs.",
+  "A mine's equipment head slams a cracked liner on the table. You look at the fracture and then ask for the ore hardness report, and the liability on this order is split in half.",
+  "The chief engineer talks with you about the next generation of vertical mill. You set out three years of after-sales tickets and site data, and strike out two very advanced-looking proposals.",
+  "You write a list of banned structures for the entire series. Each entry corresponds to a project that lost money, with names removed, and young engineers pass it around."
+ ],
+ "past": [
+  "You lived in the red-brick family quarters of Jianxi, where everyone in the building worked at one of a few big factories. Your father came home smelling of machine oil, and from childhood you knew that people from different factories walked differently.",
+  "When you filled in your college choices you wanted computer science. Your father said Luoyang's factories have fed three generations, and with machinery you'll eat anywhere. You chose machinery, and even then felt a bit put out.",
+  "You welded chassis for the university's formula car team, and found for the first time a big gap between the weight you'd calculated and the weight on the scale. The word actual started to interest you.",
+  "You interned at a mold factory in the south, revising drawings every day for decent pay. The workshop people treated you as an errand runner. You wanted to make something bigger, big enough to need a crane.",
+  "The old plant came to your campus to recruit, and few turned up to the talk. The recruiter said the plant's mill test rig was bigger than a basketball court. That sentence is why you stayed to hear the rest."
+ ],
+ "late": {
+  "pension_note": "Estimate: an old state enterprise with proper contributions; a senior title helps somewhat, and the pension is above average for Luoyang.",
+  "scenes": [
+   "You start watching chess in the park, and your fingers keep wanting to measure the thickness of the board. Someone asks if you want a game, and you say this table isn't level, it needs shimming.",
+   "A small cement equipment plant asks you to review drawings at a hundred yuan apiece. You go over them with a magnifying glass, in more detail than their wages warrant. After a while they're too embarrassed to ask.",
+   "The old factory district is becoming a creative park, keeping a few red-brick buildings and an old mill as scenery. The sign at the gate has one letter of the model wrong. You write a letter to the management committee.",
+   "You use hearing aid batteries sparingly. At home you keep them low, outside a little higher, and only when a big truck goes by do you turn them all the way up, to hear the tires.",
+   "The old drawings in the archive have yellowed, and you clean off the dust with a soft brush. When two thousand are indexed, you find you can tell each draftsman by his lines, who was impatient and who was careful.",
+   "You begin doing the neck exercises the physiotherapist taught you, two sets a day, with a chart on the table. This is probably the most obedient you've been in your life.",
+   "You don't want to look at news about mining machinery anymore. When someone brings up mills, you steer the talk around to your child's job.",
+   "Two years into the new place, you find people here take a hundredth of a millimeter very seriously. Sometimes you miss those big parts where being a centimeter out brought no comment from anyone.",
+   "On your old colleagues' WeChat, mining machinery orders are looking up again. You look at your own path. You happened to be earning elsewhere during that time, and there's nothing much to compare.",
+   "After staying in another trade till you retire, your hands still like to measure things. Taking a cab you check the trunk hinge for cracks, and the driver thinks you're finding fault.",
+   "Crossing any steel bridge, you first look at the welds and then at the bearings. Whoever walks with you learned long ago not to ask.",
+   "Peony season fills the city with visitors. Carrying your water bottle, you steer around the gate of Wangcheng Park and take a look at the newly installed railings. The posts are on the thin side."
+  ],
+  "closing": {
+   "retire": "This morning the plane trees have dropped a layer of fine fluff. You wipe it off the bicycle saddle with your hand and ride off to buy tofu soup.",
+   "burnout": "Under the archive lamp the corner of that old drawing has curled up again. You weigh it down with a ruler and move on to the next one.",
+   "end": "The new workshop is far quieter than the old plant. After lunch you put your cup away and go on to the afternoon's meeting."
+  }
+ }
+}

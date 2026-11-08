@@ -1,0 +1,172 @@
+{
+ "id": "energy-dt",
+ "occupation": "Energy Engineer",
+ "role": "Industrial Park Energy Management Engineer",
+ "headline": "Running the steam network and energy ledgers at an industrial park in Datong: half the year watching temperatures through the heating season, half the year crawling pipe galleries in maintenance windows, and every spring waiting for the carbon verifiers",
+ "unit": "The integrated energy company of an industrial park in Datong",
+ "unit_type": "Industrial park utility company",
+ "city": "Datong, Shanxi",
+ "city_tier": "Third-tier city",
+ "education": "Bachelor's degree (Energy and Power Engineering)",
+ "level": "You can write out a Rankine cycle from memory. What a steam trap looks like on site, and how it sounds when it leaks, you will have to learn from scratch.",
+ "intro": "The steam rack at the east end of the park is longer than you imagined: seven kilometers along the perimeter wall, feeding eleven companies. You report for work in early October. The director hands you an infrared thermometer and says the heat goes on in ten days or so. Coal is dearer this year, and if anyone in the park burns an extra ton of steam, someone will have to explain it on the books at month's end. At school you calculated thermodynamic cycles. Here the first sum is whose steam trap is leaking.",
+ "salary_note": "Estimate: an industrial park utility in Datong pays a little over 70 percent of the national figure. The heating season brings duty allowances, and the dormitory and canteen save a bit more.",
+ "facts": [
+  {
+   "label": "Assistant Energy Engineer (current level)",
+   "value": "0–2 years, ¥5,200–7,300 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Energy Management Engineer (2–7 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥9,600 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Walking pipe galleries and heat exchange stations to find leaks and take temperatures",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Energy audits and efficiency diagnostics for companies",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "176 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "At the energy station you start with the night shift's log: main steam pressure, return water temperature, whose flow suddenly dropped overnight.",
+  "You ride an e-bike along part of the pipe rack, firing the thermometer at the insulation. Where the jacket is too hot to touch, you circle it with a marker.",
+  "The utilities manager from the aluminum extrusion plant comes in to reconcile accounts. He says the meter is off, you say it was calibrated last month, and the two of you work the same sheet to different answers.",
+  "The cook at the sliced-noodle window hears you were in the pipe gallery again and adds an extra ladle of sauce.",
+  "You patch data on the energy monitoring platform. Three companies have stopped uploading. You phone one, and they say a rat chewed through the network cable.",
+  "You write the data page of an efficiency report: this month's energy use converted to standard coal, then divided by tons of product. Someone will question the second decimal place.",
+  "The circulation pump at Heat Exchange Station 2 sounds muffled. You open it up with the maintenance crew and find a skin of scale on the impeller.",
+  "Before leaving you check tomorrow morning's temperature. Below minus fifteen, the supply temperature on the primary loop has to come up ahead of time."
+ ],
+ "ladder": [
+  { "title": "Assistant Energy Engineer", "stage": "Meters and site walks", "focus": "Reading meters, reconciling accounts, walking the network; learning to trace a ton of steam to a specific valve and workshop" },
+  { "title": "Energy Management Engineer", "stage": "Owns a district", "focus": "Audits and diagnostics for several energy users, writing efficiency plans, scheduling maintenance windows" },
+  { "title": "Senior Energy Engineer", "stage": "Signs off on plans", "focus": "Reviewing retrofit proposals and carbon data, negotiating dispatch with companies, the heating utility and the grid" },
+  { "title": "Park Energy Director", "stage": "Owns the whole ledger", "focus": "Answerable for the park's energy costs and quotas, to the park authority above and the companies below" }
+ ],
+ "ai_tasks": [
+  { "name": "Walking pipe galleries and heat exchange stations to find leaks and take temperatures", "how": "The platform can flag a flow anomaly. Which stretch is leaking under its insulation takes a person walking the rack with a thermometer and listening." },
+  { "name": "Energy audits and efficiency diagnostics for companies", "how": "AI can compute unit consumption, spot anomalies and draft the report. Which production line is idling behind the numbers still takes someone walking into the workshop to ask." },
+  { "name": "Forecasting load and scheduling peak and off-peak use", "how": "Models can predict load from weather and production plans. Whether a company will actually move production to off-peak hours has to be negotiated by a person." },
+  { "name": "Compiling monthly energy reports and carbon ledgers", "how": "Meter reading, coal-equivalent conversion and form-filling can be almost fully automated, with a person spot-checking." }
+ ],
+ "events": {
+  "e_trap": "After three days of listening along the rack you track down a steam trap stuck open, worth dozens of tons of steam a year. The maintenance foreman brings the trap back and sets it on your desk as a paperweight.",
+  "e_opening": "A cold wave arrives a week before the heat is due on. The park authority keeps phoning to ask if it can start early. You run the pressure tests at night and don't get back to the dormitory for five days.",
+  "e_meter": "Two companies share one steam meter, split by a ratio set eight years ago, and one has since added a production line. You pull eight years of data. Neither side is happy, but both accept it.",
+  "e_tunnel": "The summer maintenance window is twelve days. You spend a week inside the pipe gallery and come out with eczema across your back that takes half a month of ointment.",
+  "e_carbon_season": "March, verification season. A third-party verifier sits down in the meeting room and asks for source documents. Two months of lab reports on the coal's heating value are missing. You drive to the plant and crouch in front of a filing cabinet until closing time.",
+  "e_valley": "You run the time-of-use tariffs for a foundry and show that moving melting to the night saves over a million yuan a year. The owner buys you dinner. The workshop manager, who has to staff the night shift, stops speaking to you.",
+  "e_rooftop": "The park is putting solar on its rooftops. You go up to measure load capacity and find the purlins on two steel-clad sheds rusted through. The plan changes, and the investor's people look less than pleased.",
+  "e_child_pickup": "Heating-season night duty, and kindergarten lets out at 5:30. Your household draws up a chart and sticks it on the fridge. It is harder to change than the rota at the heat station.",
+  "e_tenant_gone": "The biggest steam customer moves its line to Inner Mongolia. The seven-kilometer rack loses thirty percent of its load, the steam arrives at the far end half gone, and you have to work out whether the pipe still pays for itself.",
+  "e_platform": "The energy platform gets automatic meter reading and monthly reports. What took three days now takes a morning. You spend the time saved explaining why it doesn't match what the companies calculated themselves.",
+  "e_forecast": "On the day of the cold wave the load forecast model comes in ten percent low. Dispatch ordered coal by its numbers. You correct them in the middle of the night, and the next day you add this to the model's list of exceptions.",
+  "e_audit_prize": "Your waste heat recovery scheme runs a full year, with air compressor heat supplying hot water to the office block. The savings appear in the park's annual report, credited to the organization.",
+  "e_rhinitis": "As soon as October comes your nose blocks up. All those years walking between cold wind and hot pipe, and your rhinitis is now more reliable than the forecast.",
+  "e_contract": "An energy performance contract expires and the equipment passes to the client under its terms. A year later they stop maintaining it and half the savings disappear. It is no longer your responsibility, but your name is still on the file.",
+  "e_young": "A new graduate treats the thermometer as the entirety of leak detection. You take him under the rack and tell him to switch it off and stand in the wind and listen.",
+  "e_low_season": "Coal prices fall, and interest in efficiency falls with them. Three finished proposals sit in client finance departments. The answer from each is: next year.",
+  "e_knee": "On the vertical ladders up the pipe rack you now have to stop halfway. The patrols pass gradually to others, and you spend most of your time at the dispatch desk and in meetings.",
+  "e_steam_retire": "The park decides to shut down the far eastern stretch of the rack and move the remaining companies to electric boilers. The demolition crew comes to take measurements, and you hand them a route drawing made twenty years ago."
+ },
+ "choices": {
+  "c_verifier": { "title": "A carbon verifier comes recruiting", "situation": "A third-party verification firm in Taiyuan met you during audit season. They need people who know the shop floor. The pay is thirty percent more, with 150 days a year on the road. You have only just begun to feel you understand your network.", "options": [
+   { "label": "Go into carbon verification", "result": "You give notice and hand over your district's accounts line by line.", "end": "You move to Taiyuan and go from being verified to doing the verifying. When someone hands you a lab report, you read the date first and then the signature." },
+   { "label": "Stay at the park", "result": "You thank them. In next year's audit season, the documents you bring to the meeting room have a table of contents." }
+  ] },
+  "c_cert": { "title": "The certificates for Energy Management Engineer", "situation": "To move up to Energy Management Engineer, the company wants an energy manager's certificate, and ideally the foundation exam for the registered utility engineer (power) as well. The exam is in October, just before the heat goes on.", "options": [
+   { "label": "Study at night", "result": "The heat transfer equations come back one at a time. In the duty room your textbook curls at the edges." },
+   { "label": "Learn the site first", "result": "You don't register, but that winter you go down every valve pit there is." }
+  ] },
+  "c_degree": { "title": "One degree cooler, or not", "situation": "The park also heats the workers' housing next door. With coal this dear, the company wants to lower the supply temperature on the secondary loop, which saves real money over a heating season and leaves rooms exactly at the legal minimum. You are asked to write the plan.", "options": [
+   { "label": "Write it as asked, right on the line", "result": "The books look better. The complaint line rings from December to February. You measure a few homes yourself, and they all pass." },
+   { "label": "Lower it only by day", "result": "It saves half as much, and your boss says your abacus isn't clicking loud enough. Night complaints do fall." }
+  ] },
+  "c_load_model": { "title": "The new job of load forecasting", "situation": "The company has bought a load forecasting model and needs someone to sort out the definitions behind the weather, production and meter data. It doesn't count as performance, and you'd have to teach yourself some data work. If it succeeds, dispatch will take its orders from it.", "options": [
+   { "label": "Take it on", "result": "It takes two heating seasons to rebuild the meter definitions before the model starts making sense." },
+   { "label": "Leave it to someone younger", "result": "You stay with the site. When the model goes live you trust about seventy percent of what it says." }
+  ] },
+  "c_storage": { "title": "The storage company down south", "situation": "A commercial battery storage company is rolling out projects in the Yangtze Delta and wants engineers who understand tariffs and consumption, at one and a half times your pay. The network here is about to shrink, and your child's school is here in Datong.", "options": [
+   { "label": "Go south", "result": "You fill in the last valve list on your handover form and buy a train ticket to Suzhou.", "end": "You move to Suzhou. You still work out peak and off-peak, but winters here don't need turning on. Datong's temperature stays on your phone." },
+   { "label": "Stay in Datong", "result": "You forward the job ad to a classmate and go back to measuring a pipe that gets emptier as it goes." }
+  ] },
+  "c_senior": { "title": "Applying for Senior Energy Engineer", "situation": "The Senior Energy Engineer title needs two complete projects and a paper. Your waste heat project qualifies, but the paper has to be squeezed into heating-season nights. A colleague in the next district is preparing too, and there is only one slot.", "options": [
+   { "label": "Apply", "result": "Your paper is about that seven-kilometer pipe. At the defense, one of the experts asks about steam traps." },
+   { "label": "Give this round to your colleague", "result": "Your colleague gets it and brings you two cartons of cigarettes. You don't smoke, and pass them on to the maintenance foreman." }
+  ] },
+  "c_report": { "title": "That number on the audit report", "situation": "One company's unit consumption just misses the target this year, which will affect next year's power price and quota. The utilities manager asks whether, since they changed batches of raw material, some of the consumption could count as trial production. This argument has a little merit, and only a little.", "options": [
+   { "label": "Count only what has paperwork", "result": "You allow the two tons he can document and record the rest as it stands. They don't speak to you for three months." },
+   { "label": "Help him find the full basis first", "result": "You go through the batch records with him for a week and it just about clears the line. After that, this company comes to you first about everything." }
+  ] },
+  "c_director": { "title": "Standing for Park Energy Director", "situation": "The director is being transferred. Anyone who stands for Park Energy Director has to present a five-year plan to the park authority, and talk about zero carbon and money. You would rather talk about pipes. You also wouldn't trust someone who can't.", "options": [
+   { "label": "Stand up and present", "result": "You make the first slide a chart of network load factor. People in the audience start taking notes." },
+   { "label": "Stay on the technical track", "result": "You don't apply. The new director's first week, you are asked in to explain the route drawing." }
+  ] }
+ },
+ "endings": {
+  "retire": "The month your paperwork is done is the month the heating goes off. You cancel your account and take the batteries out of the thermometer and put it back in the equipment cabinet. There is half as much steam moving through the park as when you came, and twice as many electricity meters. This October, turning on the heat is not your sum to do.",
+  "burnout": "After years of heating-season nights, the trouble on your ECG and your rhinitis have both grown harder to ignore. You apply to move to contract administration in the back office, with no more galleries and no more night duty. For the first time in winter you sleep until well after daybreak, and you don't quite know what to do with it."
+ },
+ "stages": [
+  "You run between the utility rooms of a dozen companies with a meter sheet: steam meters, power meters, water meters, one after another. Back at the desk you reconcile the numbers on the energy platform, and if they don't match you go again. The utilities managers are all twenty years older than you. You learn how to greet people first and how to ask about valves second.",
+  "You now have three or four companies to audit: a year of bills, motor load factors and boiler flue temperatures measured in the workshop, and a diagnostic report at the end. You've stopped being the person who only copies numbers. You have to tell a plant manager what to change, what it costs and how many years it takes to pay back, and be able to answer when asked.",
+  "Plans and carbon data now reach you for signature. You spend more time in meetings than in galleries, negotiating load with companies, dispatch with the heating utility and demand charges with the grid. When an engineer below you brings a proposal, you turn first to the assumptions behind the payback period, then ask how many times they've stood on site.",
+  "You face the park's entire energy ledger: coal, power, steam, solar and the intensity targets handed down each year. You report upward monthly, take complaints weekly, and every new project the investment office brings has to get past you. What you carry now isn't a thermometer. It's a stack of cost models."
+ ],
+ "work": [
+  "The plastics plant's meter reader writes his eights and threes the same. You take the source sheet and check three meters on site, and find this company was billed four hundred tons too much last month.",
+  "The first time you go down a valve pit, the maintenance welder hands you a gas detector and says lower that first. When it stops shrieking, you can go.",
+  "At the pharma plant's compressor station you clamp on a power quality analyzer for three days and find all three machines idling through the night. The equipment manager looks at the curve and phones the night shift to shout at them.",
+  "Four days left in the window and the insulation contractor is two men short. You reorder the work to start at the stretch farthest from the gate, and borrow the park's floodlights for the nights.",
+  "This year's emission factor for purchased electricity has changed. You redo the forms for twenty-two companies and then phone each one to explain why their number went up.",
+  "An engineer's waste heat plan shows a two-and-a-half-year payback. You change the utilization from ninety percent to seventy and it becomes four. You send it back with a note clipped to it.",
+  "You sit down with the grid's account manager over demand charges. By staggering three companies' peaks forty minutes apart, you bring the park's basic charge down for the month.",
+  "The investment office brings in a new materials company that needs a lot of steam and wants an answer within the week. After calculating the end-of-line pressure, you tell them it can only be sited in the west district.",
+  "The park authority wants a five-year zero-carbon roadmap, and the consultancy's draft is beautifully written. You cross out its wind power hours and put in the numbers actually measured here."
+ ],
+ "past": [
+  "Your family lived in a single-story row on the edge of the Datong mining district. In winter you burned honeycomb coal briquettes, and getting up at night to swap one was your job. The school radiators were always failing that year. Your physics teacher called it hydraulic imbalance, the first time you'd heard the phrase.",
+  "When you filled out your college choices your family said Datong makes coal, so you can't go wrong with energy. You chose Energy and Power Engineering at a college in Taiyuan, and only later learned the whole subject was about how to use less coal.",
+  "You did an internship at a thermal power plant, a month in the turbine hall. Your ears rang for two days afterward, but you liked the system diagram crowded with pipes, and could read it from one end to the other.",
+  "An HVAC design institute in the south gave you an interview. You went. The offices were very nice and full of drawings. On the train back you decided you'd rather know what became of the pipes on those drawings.",
+  "The park's energy company was hiring. The pay wasn't high, and it was forty minutes from home. The older people in your family were starting to need looking after, so you sent your résumé. The first question in the interview was whether you were afraid of heights."
+ ],
+ "late": {
+  "pension_note": "Estimate: a park utility with properly paid contributions; the pension is slightly above average for Datong.",
+  "scenes": [
+   "The residents' committee hears what you used to do and asks you to look at the heating bills. You pull two years of heat meter readings and find the allocation factor for Building 3 was entered wrong.",
+   "A relative grows daylilies in Yunzhou District and the electricity bill for the drying shed is frightening. You stay a week, move the drying to off-peak hours and seal the door gaps. Next year two boxes of dried flowers arrive.",
+   "The eastern stretch of pipe rack is finally gone, and solar panels cover the empty ground. Passing by on the bus you count the inverters and estimate the site's orientation. The orientation is all right.",
+   "Your knees can't climb anymore, and your rhinitis still arrives on time in October. Each winter day you take the temperature indoors and write it on the calendar. Twenty-one degrees. That's enough.",
+   "In contract administration you spend your days checking suppliers' payment milestones. Finance praises you for being quick with figures, and you don't know whether to be pleased.",
+   "You have your heart checked once a year, and the doctor says no more night shifts. Nobody has called you for a night shift in years, but around the days the heat goes on you still don't sleep well.",
+   "You delete the energy platform app from your phone. It really was taking up space, and there's nothing else to say about it. These days you have no thoughts at all about steam.",
+   "In your first year at the new job, when October comes you ask out of habit if the heat has been turned on yet. Your colleagues look at you. They don't have that phrase here.",
+   "Adding it up, you've earned a fair amount more over the years than if you had stayed at the park, at the price of handling most family matters by phone. The units don't match. It doesn't convert to standard coal.",
+   "In another trade you too have reached the point of making decisions. When someone hands you a nice set of data you still ask who calibrated this meter, and in what year.",
+   "At a hotel you feel the window frame for drafts first and check the air conditioner's outlet temperature next. Your family has given up remarking on it and just waits until you're done so they can go to dinner.",
+   "The news says wind capacity here has grown again. Datong's sky is as blue as ever, and most of the old chimneys are gone. You can't say if this trade did that, or the times did."
+  ],
+  "closing": {
+   "retire": "One morning in mid-October the radiator gives two clicks and the water comes in. You put your hand on it. A little warmer than yesterday. Just right.",
+   "burnout": "The temperature falls fast toward evening, and the heat exchange station downstairs begins to hum. The sound has nothing to do with you now.",
+   "end": "The nights in the new city are very bright, and behind each light there is a meter. You roll over and let them go uncounted."
+  }
+ }
+}

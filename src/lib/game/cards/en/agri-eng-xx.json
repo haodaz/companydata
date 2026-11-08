@@ -1,0 +1,310 @@
+{
+  "id": "agri-eng-xx",
+  "occupation": "Agricultural Engineer",
+  "role": "Assistant Engineer at a Farm Machinery Institute",
+  "headline": "An assistant engineer on wheat harvesters at a farm machinery institute in Xinxiang, who gets only the ten days of harvest each year to learn whether the drawings were right",
+  "unit": "A farm machinery research institute in Xinxiang (a former state institute turned company, with a pilot workshop and test fields)",
+  "unit_type": "Farm machinery research institute",
+  "city": "Xinxiang, Henan",
+  "city_tier": "Tier 3",
+  "education": "Master's (agricultural mechanization engineering)",
+  "level": "You're fluent in SolidWorks. You have only seen lodged wheat in pictures in journal articles.",
+  "intro": "The institute's pilot workshop is on the east side of Xinxiang, with two hundred mu of test fields behind it. In your first month the design office hands you a reel part for a combine harvester and a drawing change order. The old section chief says no rush, keep drawing, only when the wheat is ripe does anything count. The harvest window is ten-odd days. Miss it, and you wait for next year.",
+  "salary_note": "Estimate: pay plus project bonuses at a former state institute in Xinxiang, below R&D jobs at major equipment makers in first-tier cities.",
+  "facts": [
+    {
+      "label": "Assistant Engineer (current level)",
+      "value": "0–3 years, ¥3,600–5,000 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Engineer (3–8 years)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Judging how a machine really performs in the wheat field",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Drawing parts and optimizing structures",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+      "source": "Job listings"
+    }
+  ],
+  "day": [
+    "End of May, first light, dew still on the test field's edge. You load the measuring rod and sampling frame on the pickup. The wheat's moisture is right for starting today.",
+    "The prototype goes into the field. You walk behind the combine, catching fallen grain in a frame, and pick up every kernel to write on the sheet. Awns scratch your arms red.",
+    "Xue, the machine operator, stops and says the header is shaking badly. You climb up to look. A bolt has come loose, right next to the support plate you drew.",
+    "Steamed buns and pickles at the field's edge. The old section chief grabs a handful of kernels and holds them to the sun to judge breakage. He's within two points of what you measured, without an instrument.",
+    "A wind comes up after noon and the lodged wheat feeds unevenly. You and the test technician log this stretch and photograph the stubble and heads on the ground.",
+    "Back at the workshop to change parts. The fitter drills a new hole in that plate while you stand by holding a ruler. Oil and wheat dust have blended into one color on your cuffs.",
+    "In the dorm you sort the data: tables, photos, field numbers one by one. The forecast says rain the day after tomorrow, and the window has three days left."
+  ],
+  "ladder": [
+    {
+      "title": "Assistant Engineer",
+      "stage": "Drawing and trials",
+      "focus": "Draws parts, follows field trials, logs data. Moves up by matching drawings to the wheat."
+    },
+    {
+      "title": "Engineer",
+      "stage": "A component",
+      "focus": "Owns a header, thresher or cleaning unit from design through test bench to field."
+    },
+    {
+      "title": "Senior Engineer",
+      "stage": "A model",
+      "focus": "Principal on a machine model or project; writes grant applications and takes it through certification."
+    },
+    {
+      "title": "Research Section Head",
+      "stage": "The section",
+      "focus": "Manages a section's direction, people and funds; negotiates technology transfer with companies."
+    },
+    {
+      "title": "Professor-level Senior Engineer",
+      "stage": "Direction",
+      "focus": "Sets the institute's technical course, sits on review panels, leads research teams."
+    }
+  ],
+  "ai_tasks": [
+    {
+      "name": "Judging how a machine really performs in the wheat field",
+      "how": "Standing behind the combine to watch losses, listen, and grab a handful of grain takes a person in the field. Sensors can record, but don't know this year's wheat's temper."
+    },
+    {
+      "name": "Drawing parts and optimizing structures",
+      "how": "AI can generate shapes and run parameter optimization. People settle the design with process and cost in mind, and answer for strength."
+    },
+    {
+      "name": "Writing reports, manuals and budgets",
+      "how": "Drafts and formatting can be automatic. People check quantities, data and code references."
+    },
+    {
+      "name": "Processing field trial data",
+      "how": "Sensor data cleans and charts itself. Whether it's true depends on looking at the field that day."
+    },
+    {
+      "name": "Talking to machine operators and cooperatives",
+      "how": "Why an operator won't buy yours is something you hear at the field edge and in the repair shop."
+    }
+  ],
+  "events": {
+    "e_rain": "Rain falls on the three most critical days of harvest and lodges a stretch of the test field. Half this season's data is gone. You can only wait for next year. The project schedule won't wait.",
+    "e_awn": "Twelve straight days on the harvest, a layer of skin off your face, wheat dust up your nose. The old section chief says you're starting to look like one of us.",
+    "e_bench": "Your cleaning sieve did very well on the test bench and clogs completely with chaff in the field. The bench has no wind. The field does. You write that on the first line of the trial record.",
+    "e_driver": "Custom harvest crews work their way from Zhumadian up into Shandong, and you spend ten days with one. They don't look at your specs. They ask: if this thing breaks, can it be fixed in the village?",
+    "e_tongue": "The farm machinery certification outline changes, and one loss rate test has to be redone. You hurry to get the prototype to the testing station before the application deadline. Seven manufacturers are ahead of you.",
+    "e_saline": "You take a seeder to the saline land near the Yellow River flats. The soil sets in hard clods, and the furrow opener's numbers are much worse than expected. The cooperative's chairman squats down, digs out a clod, and hands it to you.",
+    "e_autumn": "Corn grain-harvest window again: too wet and kernels break, too dry and you wait. You squat in a field for a month. When you come home your family says you look like someone else, many shades darker.",
+    "e_subsidy": "The partner company says this model didn't make this year's purchase subsidy catalog, and it won't sell. You've put in two years. The news takes less than one cigarette to get from the office to the workshop.",
+    "e_engine": "Engine emissions standards switch, and the old model has to rearrange its aftertreatment. Suddenly there's not enough room in the bay. You and the engine plant's engineer spread drawings on the workshop floor and talk for a week.",
+    "e_end_project": "A five-year project closes out. The expert panel signs off, the money is spent, and the team disperses. The prototype sits in a workshop corner, its tires slowly going soft.",
+    "e_paid": "A component patent you worked on is licensed to a factory in Shandong, and the institute pays out a share. The money you get is less than you imagined, and comes sooner than you imagined.",
+    "e_nose": "Every May your nose starts up, sneezing loud enough to drown out the harvester. The hospital says it's wheat dust. The doctor asks if you could spend less time in the field, and you both laugh.",
+    "e_field_shed": "The test field's shed has one fan. You and Xue shelter from the sun there, and he tells you about the thirty-odd kinds of combine he has repaired. You note several of their troubles on your phone.",
+    "e_ai_design": "The design office starts generating structures with AI, and a reel bracket gets fifty shapes in a night. Half can't be made in the workshop. A few of the others are indeed lighter than yours.",
+    "e_ai_report": "AI writes a project closing report draft overnight, citing a paper that doesn't exist. You check the references one by one. It doesn't save much over writing it yourself.",
+    "e_ai_field": "The new prototype has loss sensors and machine vision, with data sent straight back. That day the kernels you pick up in the field come to ten percent more than the system reports. You change the sensor's mounting angle.",
+    "e_auto": "Driverless combines begin running in the big fields on the plain. Operators' sons don't learn to drive, they learn dispatch. Xue's son phones to ask you: if this machine breaks down in the field, whose fault is that?",
+    "e_merge": "The institute is folded into a provincial group and the research sections regrouped. One of your section's directions is cut, and a model you worked on for eight years goes to someone else.",
+    "e_good_crop": "A year of good weather, and your prototype runs flawlessly through three thousand mu of contiguous field. The manufacturer's people stand at the field edge doing sums, beaming. You look at the grain on the ground and pick up a few more kernels."
+  },
+  "choices": {
+    "c_factory": {
+      "title": "To the big farm machinery plant in Shandong",
+      "situation": "A large farm machinery company in Weifang is hiring: half again your pay, a full product line, and a real chance to see a design sold as a machine. There, though, you'd manage one bolt hole, and there would be no old section chief at the field edge.",
+      "options": [
+        {
+          "label": "Go to Shandong",
+          "result": "You go to Weifang, and in your first month draw as many drawings as the institute would in a year.",
+          "end": "You rose to platform lead at the big plant in Shandong, and your models sold into Southeast Asia. Every May you still check the weather in Xinxiang. That city has never left your phone."
+        },
+        {
+          "label": "Stay at the institute",
+          "result": "You stay, waiting for the next harvest. The old section chief writes your name on half of the trial plan."
+        }
+      ]
+    },
+    "c_startup": {
+      "title": "Build crop-spraying drones with a friend",
+      "situation": "A former colleague in Zhengzhou builds spray drones and small hill-country machines. He wants you to invest and be technical lead, on half pay at first, and yours if it works. Your project has just closed and your permanent post is still there. If you leave, you can't come back.",
+      "options": [
+        {
+          "label": "Start up",
+          "result": "You finish the paperwork for your permanent post and carry your box of drawings out of the institute's courtyard.",
+          "end": "You made small farm machines for years, and two models sold well. The company was later bought. Your name is second on the patent list, and operators at the field edge call it \"that little iron shell.\""
+        },
+        {
+          "label": "Stay at the institute",
+          "result": "You say wait a while. The next year you see at a trade show that their first machines have sold to a dozen counties in Henan."
+        }
+      ]
+    },
+    "c_tech": {
+      "title": "The extension station needs someone",
+      "situation": "The city's farm machinery extension station needs a technically minded deputy head. It's a public institution with lighter work and no rushing projects or certification, mainly going to villages for field demonstrations. The institute's reforms these years have scattered people's hearts.",
+      "options": [
+        {
+          "label": "Go to the station",
+          "result": "You clear your office and have someone return your test field gate key to the workshop head.",
+          "end": "You worked at the extension station until retirement, giving dozens of field demos a year and explaining other people's research to cooperatives. What you explained most clearly was why machines break."
+        },
+        {
+          "label": "Stay at the institute",
+          "result": "You stay. This year's wheat is nearly ripe anyway."
+        },
+        {
+          "label": "Be a technical adviser only",
+          "result": "Twice a month you lecture at the station. Harvest you still spend at the institute. Travel allowance ¥200 a trip."
+        }
+      ]
+    },
+    "c_paper_or_field": {
+      "title": "Paper or field",
+      "situation": "You have a result good for a paper, just enough for a promotion. But next month is harvest and the old section chief's trial is short-handed. If you go to the field, this paper won't be done this year.",
+      "options": [
+        {
+          "label": "Go to the field",
+          "result": "You work the whole harvest, and find when you return that your result simply doesn't hold in the field. That's one paper saved."
+        },
+        {
+          "label": "Write the paper",
+          "result": "The paper comes out and your promotion file has one more line. At the next harvest, the old section chief has no particular job for you."
+        }
+      ]
+    },
+    "c_engineer": {
+      "title": "Applying for Engineer: which component",
+      "situation": "To apply for Engineer the section head tells you to choose one component to own. The header gets results easily. The cleaning sieve is hard, and it's what holds back the loss rate across the trade. You have time to do one well.",
+      "options": [
+        {
+          "label": "Take on the sieve",
+          "result": "Two years of adjusting fans and sieve faces. You know better than anyone how chaff flies."
+        },
+        {
+          "label": "Do the header",
+          "result": "Results in the first year, a handsome application, and manufacturers willing to try it."
+        }
+      ]
+    },
+    "c_senior": {
+      "title": "Senior Engineer requires leading a project",
+      "situation": "Senior Engineer requires a project you've led and one commercialized result. A provincial special grant's deadline is next month, needing matching funds and a company signature. Your prototype is still one certification away.",
+      "options": [
+        {
+          "label": "Apply",
+          "result": "Sixty pages, written like a bid, with a cover photo you took in the field."
+        },
+        {
+          "label": "Get certified first",
+          "result": "It passes, and the prototype gets its certificate. The promotion waits two years."
+        }
+      ]
+    },
+    "c_manufacturer": {
+      "title": "The manufacturer's money and the trial data",
+      "situation": "The partner manufacturer is the project's main funder, and they'd like the loss rate in your report to look better. It isn't falsifying, only leaving the ugliest field out of the sample. The contract also decides a few people's bonuses on your team.",
+      "options": [
+        {
+          "label": "Count them all",
+          "result": "The report goes in. Their people say nothing on the spot. Next year's contract is cut in half."
+        },
+        {
+          "label": "Report conditions separately",
+          "result": "You give that field its own section, stating the reasons. Neither side is too pleased, and both can live with it."
+        }
+      ]
+    },
+    "c_ai": {
+      "title": "Move over to intelligent equipment?",
+      "situation": "The institute has set up an intelligent equipment group for AI vision, autonomous driving and data platforms. You're a machinery person. You'd start from zero and might still know less than the young ones, but old-model projects are getting fewer.",
+      "options": [
+        {
+          "label": "Move over and learn",
+          "result": "In your forties you start learning Python, and your first script reverses every field coordinate."
+        },
+        {
+          "label": "Stay with machinery",
+          "result": "You say someone must understand iron. That's not wrong. Funding really is shrinking."
+        }
+      ]
+    },
+    "c_director": {
+      "title": "Compete for Research Section Head",
+      "situation": "The Research Section Head post is open: a dozen people's funds, performance and projects, and you'd have to give up your own field trials. If you don't take it, it might go to someone new who never sets foot in a field.",
+      "options": [
+        {
+          "label": "Compete",
+          "result": "You speak for twenty minutes on your plan, and end with: however many days a year this section spends in the field, that number can't go down."
+        },
+        {
+          "label": "Stay in the field",
+          "result": "You don't apply, and this harvest you eat steamed buns at the field edge for another ten-odd days."
+        }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "By the time you step down, half the combines around here have no one in them. The certification on your last prototype has expired, and the model is out of production. The awn scratches on your arms are long gone. Every May, on schedule, your nose still starts to itch.",
+    "burnout": "That year the project review fell on top of the harvest: body in the field, mind on the report. Afterward your back and sleep both gave out, and the institute moved you to the documentation office to organize files. You never again followed a whole harvest, only watched through the window as the wheat turned yellow year after year."
+  },
+  "stages": [
+    "You revise part drawings in CAD and work through change orders one by one. At harvest you go out to catch fallen grain, measure moisture and log conditions. The section chief reviews the drawings, Xue runs the test machine, and you run in between. What matters most at this level is learning the language of the field, like what \"uneven feeding\" actually looks like.",
+    "One component is yours, a header or a cleaning sieve, from modeling and strength calculation to following samples through the pilot workshop, then to the test bench and the field. You start dealing with fitters, test technicians and suppliers. If this component goes wrong in the field, everyone looks at you first.",
+    "You're principal on a machine model, with grant applications, budget sheets and certification outlines in your hands. Half your time goes to writing and review meetings, half to the field edge with operators and cooperatives. You decide what gets cut from this generation of machines and work out the commercialization terms with manufacturers.",
+    "A research section's ten-odd people, their projects, funds and performance are yours. You go to the provincial capital for projects and to factories for deals, and have to keep several young people's directions in balance. You still go to the field, but now to see whether they're doing it right. You look at financial statements more than drawings.",
+    "You sit on review panels and set the institute's direction: keep making large harvesters, or turn to small hill-country machines and intelligent equipment. Your name comes first on applications, and more and more documents need your signature. You rarely catch fallen grain with your own hands now. Operators at the field edge still call you Engineer, and you like how it sounds."
+  ],
+  "work": [
+    "You get a tolerance wrong, and the part won't fit when it reaches the workshop. The fitter files it on the bench for five minutes and says next time, come watch me file.",
+    "The old section chief has you measure stubble height at a hundred points. At the sixtieth he comes over and tells you the operator used a different throttle on the first half of this field. Record them separately.",
+    "Filling out your first trial record, you write three lines about the morning dew. The old section chief ticks it and tells you to write the wheat variety down as well.",
+    "You change the sieve holes from round to fish-scale. On the bench it's about the same. In the field the loss rate drops half a point. Workshop people ask why you didn't do it sooner.",
+    "A supplier's bearings come from a different batch, and the prototype runs hot the moment it starts. You go over it end to end with an infrared thermometer, and call the supplier to swap the batch.",
+    "Xue sets your reel height outside anything in the manual. You ask why. He says the wheat is short, and otherwise it won't feed. You go and change the manual.",
+    "The engineer at the certification station goes through your outline and asks if the loss rate sample is large enough. You put three years of field numbers and tables in front of him. He pauses on page two.",
+    "The application budget includes a test vehicle. Finance says only secondhand. You find one in Xinyang and drive it seven hours back to Xinxiang, listening to the engine all the way.",
+    "A cooperative chairman comes to see the prototype. First he asks how much more it costs than that one, then whether it can be on credit. You do the sums and show him, and tell him its faults too.",
+    "Two teams want the same field in the same week's window. You split the field in two, stagger them by two days, and then write the explanation for why this doesn't affect the data.",
+    "On the performance sheet, a young man has no results for three years, but every certification relies on him. You give him an item of his own in the scoring. The director asks how that's counted, and you show him.",
+    "At a provincial review, a proposal claims to bring the loss rate down to an unbelievable figure. You ask what day that was, and what variety of wheat. The room goes quiet for a while.",
+    "The institute discusses next year's direction, and someone wants to cut the test fields and rent out the land. You bring up decades of field data and say this land is worth more than any equipment. Here's the math."
+  ],
+  "past": [
+    "Your family grew wheat in Yanjin. At harvest everyone watched the sky. If the hired combine came a day late, the whole family slept a day less.",
+    "On your gaokao (college entrance exam) forms you chose machinery at a university in the province and were assigned to agricultural machinery. Your father said good, that's always useful.",
+    "Your undergraduate thesis was a seed meter for a wheat planter. You spent three months tuning it in a lab and never tried it in real soil.",
+    "In grad school you went with your professor to see large combines in Inner Mongolia. The wheat fields had no end, and the machine on them looked like a small insect.",
+    "At graduation, machinery companies in cities offered more. You thought about it for a long time and came back to Xinxiang. This institute was close to home and had real fields."
+  ],
+  "late": {
+    "pension_note": "Estimate: a transition from public institution to company, with relatively regular contributions, so retirement pay beats private firms.",
+    "scenes": [
+      "You stay a while back home in Yanjin. The village's land has all been leased out and the big growers' combines run through the night. You stand at the field edge till midnight and see no one, only headlights.",
+      "The town repair shop invites you in to help for free, twice a week, reading diagrams and part numbers. The owner calls you Chief Engineer. You say no need, a glass of water will do.",
+      "Driverless combines now have lower loss rates than your best machines did. You read the report and, unconvinced, look for flaws in the data. You find one and tell nobody.",
+      "You can't tell the new wheat varieties apart anymore; they're all the same short height. In your compound you plant some of your own old variety, which grow tall and fall over when the wind blows.",
+      "In the documentation office you've reached the 1980s, and the older generation's hand drawings are still clear. You look at a few pages, take off your glasses, and wipe them.",
+      "Your back isn't so good. You buy a massage chair and take the motor apart before you trust yourself to sit in it.",
+      "Someone asks you to review a project. You decline. You don't want to ask anyone else what day their wheat was from.",
+      "You've moved on to other work, but in May you still check the weather in Xinxiang. On days when rain is coming, you feel a little uneasy.",
+      "Your first prototype sits in a corner of the pilot workshop. Someone posts a picture to the group, tires flat, thick with dust. No one offers to haul it off.",
+      "From the high-speed train window you can tell that this field's stubble is two centimeters high, the operator over there in a hurry. The person next to you is watching a movie.",
+      "Eating steamed buns at a restaurant, you break one open to see the gluten. Your spouse says this is dinner. You nod, and eat the other half.",
+      "When the wheat ripens each year your nose still beats the forecast. You know this can't be cured, and you never meant to cure it."
+    ],
+    "closing": {
+      "retire": "End of May, the wind carries a little sweetness. You take a handful of wheat heads and rub them open in your palm, blow off the husks, and chew the kernels. This year's moisture is just right.",
+      "burnout": "On the windowsill is a small bunch of wheat, dried through. The sun comes in and throws the shadow of the awns across the table.",
+      "end": "You drive past a harvested wheat field. The ground is very clean, hardly a kernel left on it. You ease off the gas a little."
+    }
+  }
+}

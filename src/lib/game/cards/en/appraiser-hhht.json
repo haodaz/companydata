@@ -1,0 +1,178 @@
+{
+ "id": "appraiser-hhht",
+ "occupation": "Property Appraiser",
+ "role": "Junior Appraiser, Real Estate Appraisal Firm",
+ "headline": "At a twenty-person appraisal firm in Hohhot you work a laser rangefinder through winter gloves and put prices on buildings for banks, courts and demolition offices, and every number you sign is too high for someone and too low for someone else",
+ "unit": "A real estate appraisal firm in Hohhot, about twenty staff, on the banks' approved lists",
+ "unit_type": "Private real estate appraisal firm",
+ "city": "Hohhot, Inner Mongolia",
+ "city_tier": "Second-tier",
+ "education": "Bachelor's (Real Estate Development and Management)",
+ "level": "You can pull a tape, take the photos, draw a floor plan and fill in a mortgage report from the template. You are not yet allowed to sign one",
+ "intro": "The firm is on the eleventh floor of an office tower in Xincheng District. A glass case by the door displays its licenses and the banks' letters of approval. You are issued a laser rangefinder, a fifty-meter tape and a work coat with a fur collar, which He, the senior appraiser, calls the company's most important fixed asset. This afternoon's job is a mortgage. The bank has mentioned that this apartment would ideally come in at ¥1.2 million.",
+ "salary_note": "Estimate: appraisal firms in Hohhot pay a low base, with commission on report volume. Banks lend most at year-end and least in early spring; this figure is an average.",
+ "facts": [
+  {
+   "label": "Junior Appraiser (current level)",
+   "value": "0–3 years, ¥2,900–3,800 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Certified Real Estate Appraiser (3–7 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Going on site to verify the real condition of a building",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Bulk valuation queries for residential mortgages",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "You check today's assignments. Four mortgages and one for the court, the addresses strung out from Saihan District to Horinger. In the bank's group chat, a loan officer is already chasing the first.",
+  "On site. The November wind comes pouring up the stairwell and the rangefinder's battery drains faster than your phone's. You warm it inside your coat before you measure.",
+  "The owner follows you from the living room to the bathroom, telling you how much the renovation cost back then. You nod, take photos, and check the bottom of the window frame for water stains.",
+  "Lunch at the shaomai place by the compound gate. You scroll through comparable sales on your phone. Same compound, last three months. You need three that can go in the report.",
+  "At the court's enforcement bureau you collect the commission papers. The clerk slides over a case file with the debtor's name and one line: contact on site is at your own arrangement.",
+  "You ring the bell. No one answers. From below, you count the lit windows in this block and come up short of half. You write the number down.",
+  "Back at the office writing up the report. Three comparables, each adjustment coefficient tuned line by line. He says from the next desk: you've changed this one seven times. Are you pricing the building, or pricing the bank?"
+ ],
+ "ladder": [
+  { "title": "Junior Appraiser", "stage": "Pulling tape", "focus": "Go on site, photograph, measure, check title, write first drafts, study for certification" },
+  { "title": "Certified Real Estate Appraiser", "stage": "Can sign", "focus": "Pass the license, sign your name on reports, and answer for the number" },
+  { "title": "Project Manager", "stage": "Leads projects", "focus": "Lead a small team on expropriation and court appraisals; deal with banks and courts" },
+  { "title": "Technical Director", "stage": "Reviews reports", "focus": "Every report in the firm passes through you last, and you face the inspections and objections" },
+  { "title": "Partner", "stage": "Carries liability", "focus": "Put up money and share the liability; decide which banks' lists to be on and what the firm lives on next" }
+ ],
+ "ai_tasks": [
+  { "name": "Going on site to verify the real condition of a building", "how": "Whether this wall is damp, how many households live in this block, whether this room has been cut into six: someone has to stand inside." },
+  { "name": "Signing the appraisal report and answering for it", "how": "The appraiser's name and license number are printed on it. If it goes wrong, they come looking for that person." },
+  { "name": "Bulk valuation queries for residential mortgages", "how": "For ordinary apartments with enough sales data, a system gives a price in a second. The bank no longer needs a paper report." },
+  { "name": "First drafts of appraisal reports", "how": "AI fills templates, pulls data and checks logic. Whether the comparables were chosen well is a human judgment." },
+  { "name": "Sorting title and registration documents", "how": "AI gathers documents and flags conflicts. Whether a proof of ground fixtures can be used is for a person to decide." },
+  { "name": "Searching comparable transactions", "how": "Listings, sale prices, auction prices: AI pulls them faster than a person, and doesn't get bored." }
+ ],
+ "events": {
+  "e_tape": "Your first site visit alone, you counted the bay window as floor area. He sends you back, the owner already annoyed on the phone. On the way home you have learned two things: how to tell net from gross area, and how to tell when a customer is cursing you.",
+  "e_winter": "In the last month of the lunar year, at twenty-three below, you must measure an unpaved lot outside a farm machinery market. In gloves you can't press the rangefinder; with them off your fingers won't obey. You and He each take an end of the tape and the wind bows it into a curve. You measure three times before you dare write it down.",
+  "e_year_end": "In December the banks rush to lend and ten mortgage reports go out in a day. You sleep a few nights on the office folding bed. This month's commission equals three of March's.",
+  "e_thaw": "At the end of March the snow goes, and you revisit a compound you appraised before winter. A basement parking garage has white alkali all along the foot of its walls, invisible while everything was frozen. You send the bank a supplementary note. The loan officer replies with a period.",
+  "e_highball": "On the phone a loan officer says this client needs ¥800,000, so the collateral should really reach ¥1.15 million. He says nothing else and you ask nothing else. You go through the comparables again until you find three that will get you to ¥1.08 million, and stop there.",
+  "e_door": "The debtor in a court-commissioned appraisal won't open the door and asks through it whose people you are. You say you've only come to look at the apartment. He asks what good looking will do. The report ends up saying: unable to enter; estimated from exterior and comparable properties. You've written that line many times.",
+  "e_heating": "An old compound's heat exchange station is rebuilt and all the pipes replaced. The same two-bedroom used to sell for ¥80,000 more in a well-heated block than a poorly heated one, and that fact lives in no field anywhere. You add a column to the firm's comparables database: how warm it is indoors in winter.",
+  "e_cert_renew": "The license must be renewed every three years and your continuing education hours made up. You sit two days in a small hotel meeting room while a lecturer reads the new standards aloud. When he reaches the income approach, you look down and work out this year's income at the firm.",
+  "e_list": "A bank's annual review cuts its approved appraisers from eight to four. Your firm's name survives, at the cost of a further ten percent fee reduction Mr. Kang agreed to over dinner. The next day's report pays less than one did when you started.",
+  "e_auto": "Several banks adopt online valuation. Ordinary mortgages no longer need a report: the system gives a number and the loan officer clicks to confirm. This line of business shrinks by nearly half in a year, and you go from four assignments a day to four a week.",
+  "e_ai_draft": "AI begins writing report drafts, three minutes each, with neat adjustment coefficients. One of them shortens \"frame structure\" to just \"frame.\" You fix it and log its mistakes one by one in a shared spreadsheet, which soon runs past a hundred rows.",
+  "e_back": "After all those walk-ups and all that bending to peer into pipe shafts, your back and right knee begin taking turns calling in sick. The physiotherapist asks what you do. You say you measure buildings. He says then you should measure yourself more often.",
+  "e_highway": "A mortgage in the chemical park at Togtoh, two hundred kilometers there and back. On the road the wind comes up and all you can see is the taillights of the car ahead. On site the gatekeeper says the boss is out today. Try another day.",
+  "e_old_couple": "An old couple's home is listed for expropriation. The woman brings out a handwritten list of every repair over thirty years and what it cost. Most of it can't count toward the valuation. You enter the two items that can, hand back the list, and promise to ask about the rest.",
+  "e_objection": "A party objects to one of your court appraisals, and the court requires you to appear and explain. You prepare six pages. The judge asks why one coefficient is 0.97. You speak for seven minutes. Opposing counsel asks the same question again.",
+  "e_rotten": "A commercial building, stalled for two years, must be reappraised as collateral. You climb to the eighth floor. Wind passes through the unglazed openings. On the floor lie a few lunch slips left behind by the workers. You know who signed this building's last appraisal.",
+  "e_good_client": "A small factory mortgages its plant. You strike an unregistered outbuilding from the value and the owner is not pleased. A year later the plant is to be disposed of and the court's figure differs from yours by less than ¥20,000. He has his bookkeeper send over a box of fruit. You send it back with a thank-you note.",
+  "e_home": "Your family wants a new place. You see several compounds and rule them all out: no winter sun on this side, exterior insulation about to fall off there, this agent's price ¥70,000 too high. Your spouse asks whether, for once, you might fall in love with an apartment."
+ },
+ "choices": {
+  "c_bank": { "title": "A bank is hiring for collateral management", "situation": "A bank you often deal with wants a collateral specialist to review valuations across its branches. No stairs, no winter tape, steadier income. Only you'd be standing on the other side of the report from now on.", "options": [
+   { "label": "Go to the bank", "result": "Mr. Kang hears you out and says there are only so many people in this trade, and each one who leaves is one less.", "end": "At your desk in the credit department you begin sending back other people's reports. Your notes are short and every one lands on the weak point. They all know what you used to do." },
+   { "label": "Don't go", "result": "You go out as usual the next day, the zipper on your coat half broken." }
+  ] },
+  "c_broker": { "title": "Open your own real estate agency", "situation": "Mortgage work at the firm has halved in two years. An old client wants to partner with you on an agency in the Jinqiao development zone. He says you read buildings better than anyone and both sides will trust you. You know what agencies make money on, and that it is not appraisal.", "options": [
+   { "label": "Open the agency", "result": "You leave the firm and your license transfers out with you.", "end": "Your shopfront opens at the gate of an old compound, listings pasted to the glass. Customers ask if the place is worth it, and each time you want to say a bit more, and then remember who you are now." },
+   { "label": "Keep appraising", "result": "You call him back and say you don't believe what agents say yourself, so why would anyone believe you." }
+  ] },
+  "c_cert": { "title": "Sit the Certified Real Estate Appraiser exam", "situation": "To sign a report you need the certified appraiser's license: four subjects, and few people pass them all at once. The two months around the exam are peak lending, when commissions are best. He says it took him three years, and he studied for the last in a maternity ward corridor.", "options": [
+   { "label": "Grit your teeth and sit it", "result": "You memorize income-approach formulas between tape pulls, pass three subjects and finish the fourth next year. The first time you sign your name and license number, you write them more carefully than on your ID." },
+   { "label": "Earn this year", "result": "December's commission looks very good. You save the exam notice on your phone for next year." }
+  ] },
+  "c_high": { "title": "Should this one come in high", "situation": "A bank officer tips you off that a regular client's mortgage report should lean high: the firm is short of cash and the loan will keep it alive. Your comparables will carry ¥920,000. They want ¥1.05 million. It's your signature.", "options": [
+   { "label": "Report what you can stand behind", "result": "¥920,000 goes out and the bank sends you no work for two months. People at the firm ask if you've quarreled. You say no." },
+   { "label": "Lean a little", "result": "You swap in three pricier comparables and reach ¥990,000. The loan is approved. Your name is on it, and you remember this report a few years longer than the others." }
+  ] },
+  "c_demolish": { "title": "Take the expropriation project?", "situation": "An old factory district is being expropriated: more than six hundred households, a handsome appraisal fee, half a year on site. If you lead it, the displaced will come to the site office every day, and some will sit their children on your desk for you to look at. The firm wants you to go; this work belongs to the Project Manager level.", "options": [
+   { "label": "Take it, go on site", "result": "Six months in a prefab hut without enough heat. You tape floor plans over the walls to block the wind. When it ends the team disbands, and two of them never want to do this work again." },
+   { "label": "Decline", "result": "Another firm takes it. You see the signing rate in the news and feel some relief, and something else you can't name." }
+  ] },
+  "c_ai": { "title": "Help check the automated valuation?", "situation": "A tech company running online valuations wants your firm to check its Hohhot model and say which compounds' data are wrong. The pay is small, and it amounts to teaching the thing to take your work. Mr. Kang leaves it to you.", "options": [
+   { "label": "Take the job", "result": "You add one feature to the model: how warm it is indoors in winter. It gets a little more accurate on old compounds. Your assignments get a little fewer." },
+   { "label": "Don't teach it", "result": "You keep going on site one job at a time. The company finds another firm and the model launches anyway." }
+  ] },
+  "c_chief": { "title": "Become Technical Director", "situation": "He is about to retire and Mr. Kang wants you as Technical Director, the last check on every report. A little more pay, a lot more liability: association spot checks, court objections, bank complaints all call you first.", "options": [
+   { "label": "Accept", "result": "You begin drawing red lines on other people's reports. In your first month you send back forty. They start calling you He the Second." },
+   { "label": "Stay in the field", "result": "You say your legs still manage stairs and report review should go to someone fonder of an office. Mr. Kang nods and hires from outside." }
+  ] },
+  "c_partner": { "title": "Buy in as Partner", "situation": "Mr. Kang wants to step back and asks whether you'd put up several hundred thousand yuan to become a Partner. Mortgage work is mostly gone by now and the firm lives on court and distressed-asset appraisals. A Partner signs on the license and bears unlimited liability if anything goes wrong.", "options": [
+   { "label": "Buy in", "result": "You take the money from savings. The certificates in the glass case now carry your name, and part of your apartment." },
+   { "label": "Don't buy in", "result": "You say you've worked out this trade's accounts too thoroughly. Mr. Kang laughs and sells to another partner." }
+  ] },
+  "c_retrain": { "title": "A contract job at the real estate registry", "situation": "The district's real estate registration center is hiring contract staff who understand title. Insurance paid on time, no travel, pay at seventy percent. The firm's commissions shrink every year, and renewing your license next year means more money and two more days.", "options": [
+   { "label": "Go to the registry", "result": "You put the work coat away in the wardrobe. It has seen you through a good many winters.", "end": "You do not renew your license. From behind the window every mortgage registration looks like an old friend. You know the name of every appraisal firm on them, and several no longer exist." },
+   { "label": "Hold on a while", "result": "You sign up for your continuing education hours. The lecturer's voice is exactly as it was last time." },
+   { "label": "Stay, and take side jobs on weekends", "result": "You stay at the firm and pick up a few court jobs on weekends, waiting in the enforcement bureau's corridor for the clerk. When those few hundred yuan arrive, you feel like someone just starting out." }
+  ] }
+ },
+ "endings": {
+  "retire": "The day your license expires, the firm doesn't renew it. Your entry on the association's website turns gray. Over the years you signed more than ten thousand reports. Some of those buildings are gone, some have changed hands four times, and every number, when you wrote it, had someone cursing you for it.",
+  "burnout": "Your spine will no longer bend down into pipe shafts. You tell the firm you can't do site visits, and shift to proofreading reports at a desk, until there is software for proofreading too. The day you bring the work coat home, your spouse washes it and the zipper finally comes off."
+ },
+ "stages": [
+  "You carry the rangefinder and camera on site, photographing every building's exterior, stairwell, interior and title documents. Back at the office you draw the floor plan, search for sales and put three comparables into the report template. He covers your drafts with red. Your name appears nowhere, so no one comes looking for you.",
+  "Your license number is on the report now. You see a mortgage through from assignment to seal: agree the valuation date with the loan officer, make an appointment with the owner, decide how much to adjust this comparable. The difference from the last level is that now, when someone calls to dispute the number, the call comes to you.",
+  "You lead three or four people on expropriation and court appraisals, moving between the enforcement bureau and the debtors. You plan the inspections, review the working papers, and hold coordination meetings with clients. Beyond the work you have to watch when contract payments arrive, since the tail of a payment often outlasts the project.",
+  "Every report in the firm passes through you last. Each day you open the internal review system, circle the comparables and adjustment coefficients that won't stand, and send them back, sometimes three or four rounds. Association checks, court objections, bank complaints all land on you. You no longer pull tape. The coat hangs behind your office door, and you wear it only to the worst sites.",
+  "Your name is on the license, and so is a share of the liability. You decide which banks' lists to pursue, whether to enter a court's lottery of appraisers, what the firm lives on with mortgages gone. Half the time you're doing accounts, the other half keeping clients company, and sometimes you go to court on behalf of a young appraiser to explain one coefficient."
+ ],
+ "work": [
+  "You hold your phone against the radiator for five minutes before it will turn on to photograph the title deed. The owner asks what you're doing. You say waiting for it to get its memory back.",
+  "He asks you for three comparables from the same compound. You find two on the second floor and one at the top. He asks if the top one leaks. You go back, and put the question to an old man waterproofing the roof.",
+  "In a title check, the parcel area on the land certificate is off from the plan by two square meters. You spend an afternoon in the archives and discover that someone, long ago, handwrote a 7 that looked like a 1.",
+  "Your first signed mortgage report: you do the income approach three times. The young woman who applies the seal says others sign and leave, why are you still standing there.",
+  "An auto repair shop in Jinqiao is mortgaging its premises, and the dates on the lease don't match. On site you ask the tire seller next door, and learn the landlord has changed once in the last two years.",
+  "A loan officer sends over a sale price and says this one will do as a comparable. You ask at the agency and learn it was a transfer between relatives. You reply: this doesn't count.",
+  "At the expropriation site office you print the master list of six hundred households by block and check the day's visit records before going home. An old man comes daily to ask if his kitchen was counted, and each time you find the page and show him.",
+  "You finally get into the court's apartment. It's empty, a payment notice stuck to the meter box. You have your young colleague take down the meter reading too. How long a place has been empty, that number tells you better than anyone will.",
+  "A new hire's report has one wrong character in the address and the internal review system misses it. At the morning meeting you project the page on the wall and ask everyone: if the bank repossesses this house number, where does it go to find it?",
+  "During an association check the expert asks about your technical approach. You print out the comparables screening rules the firm has used for more than ten years. He reads them and asks what \"how warm indoors in winter\" means.",
+  "An out-of-town distressed-asset firm wants to pay per job. You bring out a table of the heating situation in every old compound in Hohhot and explain that this is what the price is for.",
+  "For a bank's list review you distill three years of report error rates and objections into one page, and speak for twelve minutes in their meeting room. On the way back you work out what those twelve minutes were worth."
+ ],
+ "past": [
+  "Your family lives in a factory district in Baotou. Your parents spent their lives at the plant and in housing it assigned. When home is discussed, it is never about price, only which way it faces and whether the radiators get hot.",
+  "You choose real estate development, thinking it's about building things. At the start of term you find you must learn appraisal, regulation and a heap of taxes. You don't change majors.",
+  "One summer you hand out flyers at a sales center for eighty yuan a day. A woman knocks on the wall before looking round. You ask why. She says she used to work in renovation.",
+  "After graduation you go to Beijing and spend three months as an intern at an agency, taking clients to see plenty of apartments while you can only afford a partitioned room. You do the sums and decide to go home.",
+  "There's an assistant's job at an appraisal firm in Hohhot, not much of a base salary. He, who interviews you, asks whether you're afraid of cold. You think it's a metaphor."
+ ],
+ "late": {
+  "pension_note": "Estimate: small firms pay social insurance on a low base. The pension covers daily life in Hohhot and not much else, though you have a skill and pick up occasional side work.",
+  "scenes": [
+   "In anyone's home you now look first at the bottom of the window frame and then at the joints of the radiator riser. When a relative shows off a new place, you say very nice, and ask whether the management company can collect its fees.",
+   "An old compound adding an elevator needs to split the cost, and after the third shouting match the owners ask you to help. You bring your old rangefinder and work out a coefficient by floor, for no money. The arguing carries on as usual.",
+   "Your cohort of appraisers has nearly all gone gray on the association's rolls. A compound's price now arrives on a phone in a second, more accurate than you ever were, and cheaper. You accept that.",
+   "You sell the home you've lived in for years, writing up your own appraisal, ¥30,000 below the agent's figure. It sells in a week. Your spouse says that's the one money-losing report you ever did, and it was on your own house.",
+   "Your back can't carry weight and it takes two rests to climb the stairs. You treat this as an adjustment coefficient: age 0.8, floor 0.9, mood to be determined.",
+   "The neighborhood committee needs someone to check elderly residents' contribution sheets for a new elevator. You sit behind a small table explaining why each floor is different. By the third round someone pours you hot water.",
+   "You've started paying asking prices. You've put enough prices on things for other people. Let a jacket cost what it says.",
+   "After changing jobs, you go through your first winter without pulling tape. Your fingers don't split, and only now do you see that the splitting was never your age.",
+   "You hear the old firm has dropped mortgages entirely and does only court and distressed work. The glass case is still by the door, with half the certificates.",
+   "The factory district you once measured in the north of the city has been torn down and rebuilt as apartments. Listings run six times what you put on it. You work out inflation and location, and decide you weren't wrong at the time.",
+   "On your evening walk you count which block has more lit windows and estimate its occupancy. Your spouse has long since stopped remarking on this.",
+   "The first snow of winter. You judge tonight's low from the depth on the roofs of parked cars. For more than thirty years now, no one has ever paid for this judgment."
+  ],
+  "closing": {
+   "retire": "The heat comes on and the riser knocks twice. You feel the joint: dry. No adjustment needed for this room this year.",
+   "burnout": "Snow settles on the windowsill. You consider its depth, and then work out no coefficient at all, and go to boil water.",
+   "end": "Spring. The snow melts and a ring of white alkali shows at the foot of the wall. This time it needn't go in any report."
+  }
+ }
+}

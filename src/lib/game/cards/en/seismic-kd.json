@@ -1,0 +1,190 @@
+{
+  "id": "seismic-kd",
+  "occupation": "Geophysicist",
+  "role": "Seismic Station Observation Researcher",
+  "headline": "Posted to a seismic station in Kangding straight out of a master's program, tending instruments in a mountainside tunnel that can't abide footsteps, with a phone on around the clock and the next trip home to Chengdu dependent on the road over Zheduo Mountain",
+  "unit": "A seismic station in Kangding, Sichuan",
+  "unit_type": "Seismic monitoring institution",
+  "city": "Kangding, Sichuan",
+  "city_tier": "County-level city",
+  "education": "Master's degree (Solid Earth Geophysics)",
+  "level": "You can write a location program. You have never leveled a seismometer in a tunnel with your own hands",
+  "intro": "Coming out of the far end of the Erlang Mountain tunnel, the rain stops. The station is on the mountainside outside town: a row of low buildings and an iron door leading into the rock. Before going in, the station chief tells you to switch off your phone and walk softly. The most expensive things here, he says, fear nothing as much as people.",
+  "salary_note": "Estimate: public institution pay plus a high-altitude allowance, slightly above the same grade in Chengdu.",
+  "facts": [
+    { "label": "Assistant Engineer (current level)", "value": "0-3 years, ¥5,000–7,500 a month (national average, estimated)", "source": "Industry norm" },
+    { "label": "Next level up", "value": "Engineer (3-8 years)", "source": "Industry norm" },
+    { "label": "What AI can't take", "value": "Maintaining and calibrating instruments on site", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Phase picking and earthquake cataloging", "source": "AI exposure" },
+    { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the listings skew toward campus hires and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "Before your shift you check the automatic bulletins on your phone: two small events in the night, both tiny. The duty log has the times and magnitudes, in the station chief's hand.",
+    "You go back through yesterday's waveforms, phase by phase. Where's the P arrival? You click three times, then move it back to where you had it first.",
+    "Through two doors and into the tunnel to check the tiltmeter. It's about ten degrees in there all year. You've changed into padded shoes and you walk so quietly you can hear yourself breathe.",
+    "Old Yang in the canteen has steamed buns. At 2,500 meters water boils early and rice never quite finishes cooking, so you all use the pressure cooker.",
+    "Measuring radon in water: you draw the sample into the diffuser, time it, read it, enter it in the table. One figure a day, unbroken for forty years.",
+    "The battery bank voltage has dropped a touch. You check the power room. There's still snow on the solar panels.",
+    "On the video call your kid lifts a building block to the screen. The signal stutters, and her hand hangs in midair.",
+    "The duty phone is by your pillow at full volume. You've learned to wake half a second before it rings."
+  ],
+  "ladder": [
+    { "title": "Assistant Engineer", "stage": "Duty", "focus": "Standing duty, maintaining instruments, learning phase analysis and observation standards" },
+    { "title": "Engineer", "stage": "Own instrument", "focus": "Answering for the data quality of one observation series, writing anomaly verification reports" },
+    { "title": "Senior Engineer", "stage": "Sign-off", "focus": "Responsible for station-wide observation and research, reviewing reports, training newcomers" },
+    { "title": "Professor-level Senior Engineer", "stage": "Direction", "focus": "Leading technical plans for the regional network, joining acceptance reviews and revising standards" }
+  ],
+  "ai_tasks": [
+    { "name": "Maintaining and calibrating instruments on site", "how": "Leveling, battery changes and checking lines all take someone going up the mountain." },
+    { "name": "Verifying anomalies on observation curves", "how": "Someone has to go find out on site whether it's interference or signal, and sign for it." },
+    { "name": "Phase picking and earthquake cataloging", "how": "Models pick arrivals automatically; hard events and the final catalog stay with a person." },
+    { "name": "Compiling monthly reports and observation logs", "how": "Data reports and draft logs mostly generate themselves, with spot checks." }
+  ],
+  "events": {
+    "e_level": "Your first time leveling a seismometer by yourself. The bubble drifts around its small circle. You lie in the tunnel, turning a quarter turn and waiting a minute, and when it's done your knees no longer belong to you.",
+    "e_zheduo": "November snow on Zheduo Mountain, and the unmanned station out toward Tagong is due for inspection. Twice the chains go on. At the 4,200-meter pass you stop the truck and change a fuse, and your hands stop obeying you.",
+    "e_marmot": "A field station's data has been out three days. Five hours' drive, and you find a marmot has chewed through the fiber. You splice it and write in the log: add protection to underground lines. This is the fourth time you've written that.",
+    "e_lightning": "After a July thunderstorm, a data logger's surge module has burned out. You carry the spare up from the foot of the hill, bring the blackened one back to the office, tag it and shelve it with the ones from earlier years.",
+    "e_road_block": "The rainy season has cut the road and you're in a small-town guesthouse for four days. Data is still transmitting remotely. You just can't get home, and you miss the parents' meeting at your kid's school.",
+    "e_data_rank": "The province's observation data rankings are out, and your water-tube tiltmeter comes second. The comment is one sentence: 99.8 percent continuity. The station chief reads it twice.",
+    "e_duty_night": "At three in the morning the phone rings. A small event has triggered automatically and has to be confirmed by hand within the time limit. You throw on a padded coat, line up waveforms from several stations, locate it, send it, and don't get back to sleep.",
+    "e_blood_pressure": "The checkup shows high blood pressure and high hemoglobin. The doctor asks how high you've been living and for how long, tells you to smoke less and get down to the plains more. You can only follow the first half.",
+    "e_highway": "When the expressway reaches Kangding, the trip to Chengdu goes from seven or eight hours to a little over three. You begin going back every two weeks. Friday afternoons in the tunnel, you turn your phone all the way up.",
+    "e_blast_noise": "A road crew is blasting nearby and the waveforms fill up with strings of interference. You drive to the contractor for the blasting timetable and stand the foreman a drink. From then on he sends you the times each week.",
+    "e_ai_pick": "A deep learning model goes onto the network and picks more phases in a night than you all do in a month. The colleague who does the catalog goes quiet looking at the results for a while, then starts checking what it missed.",
+    "e_ai_wrong": "A new model takes the vibrations of roadwork for a string of small earthquakes, adding a dozen entries to the automatic catalog. You delete them one by one and save the interference as a sample.",
+    "e_ai_report": "The monthly report starts writing itself. All you check are the anomalous lines. With the half day this saves, for the first time you have time to pull ten years of water temperature curves onto one chart.",
+    "e_warning_net": "The intensity warning network is being rolled out, a dozen stations to a county. You go with the construction crew to scout sites: find bedrock, stay away from roads, see if power reaches. The acceptance dates come one a week.",
+    "e_paper": "Your paper on the local crustal medium is accepted. The reviewers' comments were longer than the paper, and took five months to address. In the yard the station chief asks how much the fee was. You say you paid them.",
+    "e_item_stopped": "Notice comes that the manual radon series is to stop, replaced by automatic measurement. Forty years of records with a line drawn after one piece of paper. Old Yang asks if he still needs to boil water. You say he doesn't.",
+    "e_inspection": "Experts from the provincial bureau come to inspect, and spot-check the calibration records in the tunnel. A fortnight ahead you went through twelve pulse calibrations. One had the wrong time, and you annotate it honestly.",
+    "e_young_arrival": "In his second week in the tunnel the new master's graduate wants to leave. You don't try to talk him out of it. That weekend you take him to a new station under construction. Standing on the bedrock, he asks a specific question for the first time."
+  },
+  "choices": {
+    "c_exploration": {
+      "title": "An offer from an exploration company",
+      "situation": "A labmate at an oil and gas exploration company in the west says geophysics people are in short supply, at twice your pay, project after project. You've only just come to know the instruments in the tunnel, and you have two years left on your posting.",
+      "options": [
+        { "label": "Go to the exploration company", "result": "You write the request. The station chief signs it and says nothing more.", "end": "You joined the exploration company, firing shots and collecting data in the Gobi. The data were still waveforms. Only now somebody paid for them." },
+        { "label": "Stay", "result": "You answer your labmate, then go into the tunnel to do the week's calibration." },
+        { "label": "Apply for a doctorate", "result": "You start a part-time PhD and go back and forth. Your advisor's calls and the duty phone often collide." }
+      ]
+    },
+    "c_vendor": {
+      "title": "An instrument maker needs technical support",
+      "situation": "An instrument maker you have dealt with for ten years asks if you'll go to Beijing to do technical support. Double the income and no more night duty. But the continuous observations in your hands, once you leave, nobody will tend so finely.",
+      "options": [
+        { "label": "Join the maker", "result": "You write up the commissioning lessons of these years and leave the document on the station's server.", "end": "You joined the maker and helped stations all over the country find faults. When a call came about a logger at a Kangding station, you knew where to look with your eyes closed." },
+        { "label": "Stay at the station", "result": "You thank them, and ask them to set aside some surge modules next quarter." }
+      ]
+    },
+    "c_chengdu": {
+      "title": "A transfer to an analysis post in Chengdu",
+      "situation": "The province's analysis and forecasting department has a post for someone with years at a station. Going back means an office, consultations, reports, home every night, and no more touching the instruments. Your kid is about to sit the high school entrance exam.",
+      "options": [
+        { "label": "Transfer to Chengdu", "result": "When you pack up, you take the padded shoes too.", "end": "You went back to Chengdu and attended the weekly consultations, reading data sent in from stations other people tended. You could say better than anyone what a burr on a curve had come from." },
+        { "label": "Stay a few more years", "result": "You go back for just two days for the exam. Neither you nor your spouse mentions that page of the calendar again." }
+      ]
+    },
+    "c_anomaly": {
+      "title": "A slow rise on the water temperature curve",
+      "situation": "Water temperature in an observation well has been edging up for two weeks. Anomalies like this have to be verified and reported, which means ruling out pumping and rain. Write it too cautiously and it could be missed; write it too strongly and a round of consultation begins. Nobody knows the answer.",
+      "options": [
+        { "label": "Report it as it is, advise watching", "result": "You visit three pumping sites and attach what you found. There are two rounds of consultation, the curve slowly settles, and there's no conclusion." },
+        { "label": "Watch two more weeks first", "result": "You keep this stretch of curve in your own file and look at it every day. Two weeks later, the people above ask why you didn't say so sooner." }
+      ]
+    },
+    "c_engineer": {
+      "title": "Applying for Engineer, and taking an instrument",
+      "situation": "Promotion to Engineer needs you to answer alone for one observation series. The hardest here is the water-tube tiltmeter: constant trips into the tunnel, constant interference, and nobody wants it. Take it and the title is surer, and the days are harder.",
+      "options": [
+        { "label": "Take the tiltmeter", "result": "You're in the tunnel more than anyone, and you list every year's interference item by item." },
+        { "label": "Take an easier one", "result": "You get geomagnetism. The days are more comfortable, and at your defense the panel asks fewer questions." }
+      ]
+    },
+    "c_ml": {
+      "title": "Learning the deep learning side",
+      "situation": "The institute is running a course on deep learning phase picking and wants you to bring your own station's data. You're past thirty, and your coding stopped at location programs. But the catalog work is being taken over by the model, inch by inch.",
+      "options": [
+        { "label": "Bring your data and learn", "result": "You label the interference samples of all these years, and the model's false alarms at your station come visibly down." },
+        { "label": "Keep your time for the field", "result": "You leave the model to the younger people and go on with the tunnel, the stations and the reports." }
+      ]
+    },
+    "c_senior": {
+      "title": "Applying for Senior Engineer",
+      "situation": "A Senior Engineer needs papers, grants and projects led. You have enough data, but the past half-year has brought a new round of station acceptance. If you want both, you only have the nights after duty.",
+      "options": [
+        { "label": "Write through the nights", "result": "You turn ten years of tunnel tilt data into a paper. The pre-dawn drafts always have typos, and the reviewers mark each one." },
+        { "label": "Do the acceptance properly first", "result": "Acceptance passes. On the application form you're one paper short, and it'll have to wait until next year." }
+      ]
+    },
+    "c_unmanned": {
+      "title": "The station goes unmanned",
+      "situation": "Orders are to make the station unmanned, with staff consolidated at the prefecture level, and you are to write the technical plan. Write it thoroughly and nobody will live here again. Keep one person on rotation and it costs more, and needs a reason that holds up.",
+      "options": [
+        { "label": "Write it fully unmanned", "result": "The plan is clean and acceptance goes smoothly. The low buildings get a seal on their door, and Old Yang takes the canteen's pressure cooker with him." },
+        { "label": "Argue for keeping a rotation", "result": "You list seven faults remote operation couldn't fix. The plan comes back twice and ends up with a rotation once each quarter." }
+      ]
+    },
+    "c_full_prof": {
+      "title": "Applying for Professor-level Senior Engineer",
+      "situation": "The province has only one or two places for Professor-level Senior Engineer. Getting it means leading the regional network's plans, years of meetings and travel. Not getting it, you can keep on until you retire. Your blood pressure hasn't been good lately.",
+      "options": [
+        { "label": "Apply", "result": "Half a lifetime of data and standards drafts go into that pile of paper. The most detailed questions in the defense come from an expert younger than you." },
+        { "label": "Don't apply", "result": "You put the form back in its envelope. That winter you go back to Chengdu a few more times." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "You finish this shift's entry in the observation log and sign. The data run unbroken; the names change one after another. Going down the mountain in the afternoon you drive very slowly, and the tunnel lights pass one by one.",
+    "burnout": "Your blood pressure and sleep have both flashed red, and you're moved to a support post on the plains. You look after the archive room, scanning forty years of monthly reports on paper. Your fingers go over handwriting you know, a few volumes a day."
+  },
+  "stages": [
+    "Your job is to stand duty and follow along: analyzing waveforms, going through phases, filling in the log, signing in before you enter the tunnel. The chief teaches you to recognize each interference by its shape, what a passing truck looks like, what high wind looks like. He corrects your reports line by line in pencil.",
+    "An observation series is now yours. If the curve shows burrs you look into them; if a section is missing you explain it. You write anomaly verification reports, drive out to investigate pumping and construction, and begin attending monthly consultations, reading out your conclusions on the conference call in a level voice.",
+    "The whole station's data quality and research come to you. You review others' reports, schedule newcomers, go back and forth with the provincial and prefectural offices on funding, and apply for research grants. Unlike when you were an Engineer, you now sign for other people's data and decide whether an instrument should be replaced.",
+    "Your desk holds technical plans for the regional network and drafts of revised standards. You go around accepting new stations, dealing with manufacturers and budget offices, and get into a tunnel only a few times a year. What you say gets written into specifications, and then other stations must all follow it."
+  ],
+  "work": [
+    "You check a broadband seismometer with a pulse calibration and lay the curve over the last one. A slight difference. The chief tells you to check the cable connector first, and not to suspect the instrument first.",
+    "Old Yang in the canteen collects the station's parcels too. From him you get a box of magnetometer spares and see another station's name on the package. You call them.",
+    "Signing the tunnel's log, you notice your own footsteps have left a small bump on the tiltmeter curve. You annotate it.",
+    "A colleague at the county water bureau says a well is to be drilled nearby. You take a map out to see the distance, calculate the effect on the observation well, and write a letter with the numbers.",
+    "A solar controller has aged out. In the field station's hut you connect the new one, test the battery bank with a multimeter, and send the readings to the station.",
+    "A provincial colleague disagrees about the phases of a small event. You put three stations' waveforms together and go through them one by one over the phone. All right, he says at last, have it your way.",
+    "The budget office says this year's instrument replacement will be cut in half. You rank six old instruments by failure rate and keep the replacement slots for the oldest two.",
+    "A new engineer's anomaly report has conclusions and no investigation. You send it back and write one line on the first page: start with where you went.",
+    "With the maker's engineer you check the time service of a new logger. The GPS lock is some dozens of seconds slow. You send the logs to the factory, and three weeks go by before you hear back.",
+    "The acceptance team reaches a new station and the pier is out of level. You have the contractor redo it. It adds ten days, and their project manager smokes two cigarettes beside the truck.",
+    "At the standards revision meeting someone proposes automating all the logs. You agree, but say one column should be kept for a person to write in. That line survives in the text.",
+    "A younger Senior Engineer brings you a grant proposal. You strike out three instances of 'for the first time' and have him go check, then write clearly about what is actually new."
+  ],
+  "past": [
+    "At school in Mianyang, the geography lesson covered plate tectonics and you filled the margins of your textbook with arrows.",
+    "On your college application your father wanted civil engineering. You chose geophysics, and nobody could say what it was good for.",
+    "On your undergraduate field trip in western Sichuan you laid out geophones for the first time, walking from morning till dark and collecting a day of noise.",
+    "As a graduate student you worked on receiver functions, in front of a server every day. Your advisor said the data you use is what someone sits in the mountains to keep.",
+    "Job season. The stations in Garze were short of people and came with an altitude allowance and a permanent state post. Your classmates all went to oil fields and universities. You sent your resume."
+  ],
+  "late": {
+    "pension_note": "Estimate: long service at a public institution, with high-altitude years counted, makes for a fairly stable pension.",
+    "scenes": [
+      "Your first month in Chengdu, the phone doesn't ring at night, and you still leave it at full volume. After a few days you turn it down yourself.",
+      "On the subway platform you can feel the tremor in the ground before the train comes in, and you estimate its frequency. The people beside you are looking at their phones.",
+      "The station is unmanned now and the bedframes in the low buildings have been cleared away. The data header still carries its station code, and hasn't missed a day.",
+      "Now you're down from altitude your hemoglobin slowly returns to normal, but you're always sleepy in the daytime. The chair in the archive room isn't bad. You often nod off over the reading.",
+      "You finish scanning the last few years of reports. One page is in your own hand, carefully written. You can't recall a thing about it.",
+      "The doctor still looks at your heart every six months and says your body remembers the height of those years. You say it's quite conscientious.",
+      "The new office is on the twentieth floor and the building sways slightly in any wind. Your colleagues don't notice. Your hands pause on the keyboard.",
+      "In a paper database you find an article using that station's data. The acknowledgments name no one, only thanking the network for the data. That's right too, in a way.",
+      "Now and then you do the sums; you earned enough extra in these years. As for that feeling of being woken in the night, you can't say whether you miss it.",
+      "A friend's old house is being renovated. You go over, step on the floorboards, and ask if there's a water pump downstairs. They think you are joking.",
+      "One winter you go back to Kangding, and the road over Zheduo is much better. You pull over, for no particular reason, wanting only to stand on bedrock."
+    ],
+    "closing": {
+      "retire": "The water in the cup lies perfectly flat. You pick it up, drink it, set it back, and the ring slowly dries.",
+      "burnout": "The archive room's light goes off and the smell of paper stays in the room. You pull the door to and go downstairs.",
+      "end": "Wind comes from the west, and the high-rises of this city move very slightly. No one feels it."
+    }
+  }
+}

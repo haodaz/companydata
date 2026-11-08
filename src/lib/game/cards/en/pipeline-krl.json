@@ -1,0 +1,147 @@
+{
+ "id": "pipeline-krl",
+ "occupation": "Pipeline and Oil & Gas Storage Technician",
+ "role": "Long-Distance Pipeline Station Technician",
+ "headline": "Posted from inland China to a long-distance pipeline station at Korla: twenty days on and ten off, racing maintenance windows in summer, holding supply in winter, and arguing over the second decimal place with the downstream metering clerk",
+ "unit": "The Korla operating area of a long-distance pipeline company",
+ "unit_type": "State-owned energy enterprise",
+ "city": "Korla, Xinjiang",
+ "city_tier": "Prefecture-level city (posting)",
+ "education": "Bachelor's degree (Oil and Gas Storage and Transportation)",
+ "level": "You have done hydraulic calculations and strength checks. How to listen to a valve, and how far to trust an instrument in blowing sand, you'll be learning again at the station.",
+ "intro": "The shuttle bus runs an hour and a half out of downtown Korla, the trees along the road growing shorter until there's only sand and utility poles. The station chief leads you into the control room. On the big screen a green line runs left to right, longer than any road you've ever traveled. Twenty days on, ten off, he says. Don't expect to work a shift alone for the first six months. Today you'll learn how to open a valve pit lid without the wind ruining your face.",
+ "salary_note": "Estimate: base pay at a state energy company plus remote-area and field allowances, above the national figure for storage and transport technicians, with some of it spent on travel home.",
+ "facts": [
+  { "label": "Trainee Pipeline Operator (current level)", "value": "0–2 years, ¥6,500–10,000 a month (national figure, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Pipeline Technician (2–7 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Walking stations and valve rooms to judge the condition of equipment", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Planning pigging and in-line inspection work", "source": "AI exposure" },
+  { "label": "Open positions", "value": "2 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Shift handover in the control room: inlet and outlet pressures, throughput and three open alarms read aloud, and Dispatch confirming by phone.",
+  "You put on antistatic coveralls and a face shield and go out for the station round. Wind drives sand against your goggles with a ticking sound. Every valve's position has to be written down by hand.",
+  "You log lube oil temperature and vibration on the compressor unit. With ear defenders on, speech means gestures, and you've learned several.",
+  "The canteen has hand-pulled noodles today. The cook says you've gone darker and asks whether you're heading home on this leave.",
+  "You reconcile this month's line balance with the downstream metering clerk. His meter and yours differ by a few tenths, and each of you thinks your own is right.",
+  "You take the pickup to the valve room, forty kilometers of gravel. You measure the cathodic protection test posts one by one and copy the multimeter readings into your book.",
+  "In the evening you study procedures. Your senior holds up a process diagram and has you say with your eyes shut where the gas goes in and comes out.",
+  "The night crew arrives. The station dog lies in the doorway, knowing the shift times better than anybody."
+ ],
+ "ladder": [
+  { "title": "Trainee Pipeline Operator", "stage": "Shadowing rounds", "focus": "Following shifts, reading meters and filling in reports, learning the process flow and station procedures" },
+  { "title": "Pipeline Technician", "stage": "Running a shift", "focus": "Leading a shift alone; in charge of pigging, cathodic protection testing, custody metering and equipment upkeep plans" },
+  { "title": "Pipeline Engineer", "stage": "Owns a section", "focus": "Responsible for one section's integrity and maintenance plans, coordinating in-line inspection, contractors and downstream users" },
+  { "title": "Operating Area Technical Head", "stage": "Several stations", "focus": "Answerable for an area's operation and engineering; between company dispatch above and stations and contractors below" }
+ ],
+ "ai_tasks": [
+  { "name": "Walking stations and valve rooms to judge the condition of equipment", "how": "Monitoring systems report numbers. The sound of an internally leaking valve or a trace of oil on a flange takes someone standing there looking and listening." },
+  { "name": "Planning pigging and in-line inspection work", "how": "AI can calculate pigging intervals and draft schedules. Whether trucks can go out in blowing sand and whether downstream can take less gas, a person decides." },
+  { "name": "Analyzing pipeline operating and cathodic protection data", "how": "Models can mark abnormal chainage. Whether it's a real problem or a fault in the test post takes a trip out to see." },
+  { "name": "Filling in operating reports and metering ledgers", "how": "Reports, line balance and ledgers are mostly generated automatically, with a person spot-checking and signing." }
+ ],
+ "events": {
+  "e_mask": "When your first sandstorm comes you haven't sealed your face shield, and you cough for two days. The station chief hands you a packet of throat-soothing herbs and says everyone's first year is like this. In your second you'll remember to watch the sky.",
+  "e_pig": "The first time you receive a pig, you wait five hours beside the receiver. When it comes out it's covered in black sludge, and everyone gathers round as if something had come out of an oven.",
+  "e_winter": "The winter supply period runs from November to March and all leave is pushed back. Downstream phones several times a day, and the pressure curve carries on through your dreams.",
+  "e_window": "The summer maintenance window is only seventy-two hours and the ground is forty degrees. Under the awning at the valve room you watch the contractors work, drinking water by the case and hardly needing a toilet.",
+  "e_meter": "A month of reconciling the balance with downstream ends with a wrong parameter in their flow computer. The clerk treats you to grilled meat and doesn't bring up whose meter was right.",
+  "e_road": "The county is building a road across the line, and the contractor's boss phones three times a day. You take the pipeline map to site, plant flags and stand watch for eleven days, without one shovelful more than was allowed.",
+  "e_leave": "Ten days of leave, and two of them gone on the road. You get home wanting to do everything and do nothing. Your child asks when you'll be back next. You think about it and say after winter supply.",
+  "e_inline": "The inspection tool finishes a section and a thick stack of data comes back. You plan verification digs anomaly by anomaly. At the first dig the reading is within a millimeter of the report, and you couldn't say if what you feel is happiness or something else.",
+  "e_scada": "A reporting system goes live, with balance and ledgers calculated automatically, and you no longer copy figures till midnight. The station chief sends you out to walk the line with the time saved. The line walk is harder going than the reports.",
+  "e_alarm": "In its first month the warning model raises over two hundred alerts, more than half of them from sand clogging sensors. You go from one to the next in the pickup, wiping as you go and writing notes on the model's rules.",
+  "e_drone": "Drones begin to replace some of the line walking. The pilot, a lad of twenty-three, comes back on his first day to say there's nothing in the dunes. You tell him to take another look at kilometer seven. The sand keeps moving there.",
+  "e_pear": "In April the fragrant pear trees bloom, and you pass an orchard on your patrol. The growers along this stretch all know your pickup. In autumn someone puts a basket of pears in the bed of it. You pay, and he gives half of it back.",
+  "e_merge": "The company moves to regional management. Two stations become one operating area and, with remote control, only a few people stay on site. Half the control room goes dark, and some of those who leave go to other areas.",
+  "e_ear": "The hearing box on your medical report has dropped again. Compressor noise gets through even with ear defenders. You've taken to asking your family to turn up the TV, and they don't say anything about it.",
+  "e_skin": "Each spring your nose bleeds and your hands are all cracks. You go through hand cream faster than anyone, and people still comment on how rough your hands are when they shake them.",
+  "e_compressor": "One compressor's vibration slowly climbs, and you put it on the maintenance list three days before the system does. The foreign manufacturer's service engineer comes to look, and signs the diagnosis as your conclusion.",
+  "e_handover": "A newly assigned graduate asks why you don't just check it on a phone. You take him to the valve room and have him unscrew the test post cap himself. The number he reads differs slightly from the one on the screen.",
+  "e_change": "A new code shortens the inspection interval on an older section. You rearrange its ledgers and find that the person who wrote some of the earliest source documents retired years ago."
+ },
+ "choices": {
+  "c_gas_city": { "title": "A city gas job back home", "situation": "A city gas company in your home provincial capital needs a network engineer. Pay is twenty percent lower, no rotations, home for dinner every day. You've only just learned to run a shift by yourself, and your posting has another year to go.", "options": [
+   { "label": "Go home", "result": "You leave the company, handing your patrol records to the station chief one volume at a time.", "end": "You go back home to look after the medium-pressure main at the gates of housing estates. The lines here are so short they take some getting used to, but you can get home for dinner." },
+   { "label": "Stay at the station", "result": "You renew. Before the next sandstorm you put your face shield by the door half an hour early." }
+  ] },
+  "c_tech": { "title": "The exam for Pipeline Technician", "situation": "To become a Pipeline Technician you must pass the company's qualification exam and a practical assessment. The test falls right in your ten days of leave, and something at home is waiting for you too.", "options": [
+   { "label": "Stay at the station to study", "result": "You go through the process with a senior until you can say it with your eyes shut. As for home, you can only phone." },
+   { "label": "Go home, take it next round", "result": "You go and get things sorted. In next year's test, half the questions are on new codes." }
+  ] },
+  "c_shortcut": { "title": "The contractor's form", "situation": "One contract crew works fast, but this time the coating repair is a step short, and with the schedule tight they'd like you to sign acceptance now and finish it later. They've helped you out a lot over the years.", "options": [
+   { "label": "Sign only when it's done", "result": "The foreman glowers for three days. Later on, the first thing he teaches new hands is the coating repair steps." },
+   { "label": "Sign with the open items listed", "result": "You write down the open item and the deadline. The job gets done, and it stays on your mind until the day it's finished." }
+  ] },
+  "c_model": { "title": "Taking on the warning model", "situation": "The company wants a warning model for this section and needs someone who knows the site to label the data: which alarms were real and which were sand. There's no bonus, it eats into your leave, and nobody will be able to work around that table afterward.", "options": [
+   { "label": "Take it", "result": "You label over three thousand records and make sand-clogged sensors a category of its own." },
+   { "label": "Stick to the field", "result": "The model appears and you use it, but you can't really remember what it recognizes." }
+  ] },
+  "c_overseas": { "title": "The Central Asia pipeline project", "situation": "The company's project in Central Asia is short of people. High allowances, three years away, home every six months. Your child is about to start primary school, and you work out which grade they'd be in when you returned.", "options": [
+   { "label": "Transfer to the overseas project company", "result": "You sign the transfer form and spend two weeks handing over this section's accounts.", "end": "You go to the project company in Central Asia and later stay on there in project management. You talk about stations in another language now, and the logic is the same." },
+   { "label": "Don't go", "result": "You stay in Korla and bring your family out from inland. Your child sees the desert highway for the first time." }
+  ] },
+  "c_engineer": { "title": "Applying for Pipeline Engineer", "situation": "The Pipeline Engineer title requires an integrity assessment report on a section and a defense. You know this section best, but the report has a few old problems, and writing them plainly will embarrass former colleagues.", "options": [
+   { "label": "Write it plainly", "result": "The panel questions you for half an hour. Some take notes, some frown." },
+   { "label": "Round off the edges", "result": "The report gets half of the way, and the problems move on to the next round." }
+  ] },
+  "c_stay_remote": { "title": "Your place after the merger", "situation": "With fewer staff at the stations, the company offers two paths: a desk at the control center in the city, or the field in the operating area. The control center keeps regular hours. You've driven these field roads for twenty years and wouldn't feel easy handing them to someone else.", "options": [
+   { "label": "Go to the control center", "result": "For the first time, in an office, you see the whole line, and it fits on a single screen." },
+   { "label": "Stay in the field", "result": "You're still driving the gravel roads, only with fewer companions along them." }
+  ] },
+  "c_director": { "title": "Standing for Operating Area Technical Head", "situation": "The contest for Operating Area Technical Head requires a defense, an understanding of digitization and the ability to talk to local construction, contractors and company dispatch alike. You can drive a pickup. You're less sure of those few pages of planning.", "options": [
+   { "label": "Go and defend it", "result": "You draw your plan as a map of the line, with a person's name marked next to every station." },
+   { "label": "Stay on as technical expert", "result": "You say a younger person would do better. You go on writing assessments, following each old problem to its end." }
+  ] }
+ },
+ "endings": {
+  "retire": "You finish your paperwork in September, just as the fragrant pears come to market. The operating area's control room is manned by two people now, and the green line on the big screen is still green, a stretch longer than when you came. Getting off the shuttle bus you don't have to count until your next leave. For the first time you don't know where to spend the next ten days.",
+  "burnout": "Blood pressure and hearing both reach their limit, and the company moves you to a back-office post in the city, keeping ledgers of vehicles and supplies. You don't go to valve rooms now and don't watch the sandstorm forecast. The job is quiet. You often open the window to let sound in from outside."
+ },
+ "stages": [
+  "You follow your senior on station rounds, reading meters: inlet and outlet pressure, valve positions, filter differential. You write it by hand and check it again in the system. In the control room you answer the phone and pour the tea while learning to understand what Dispatch is saying. Before a valve moves, you read the operating ticket and someone else reads it back.",
+  "The shift is your responsibility now. With two or three others you schedule pigging, measure cathodic protection potentials, reconcile with downstream and write the monthly upkeep tables. Talking to Dispatch takes prescribed words and talking to contractors takes others, and you learn to move between the two tones. Now your signature is on the line too.",
+  "You look after several hundred kilometers of line. In-line inspection reports, verification digs and coating repair plans all pass through your hands, and you sit down with design institutes, supervisors and road builders. You seldom read a meter these days. What you carry is an integrity assessment and a map full of chainage numbers.",
+  "Several stations and their people are yours. You chair monthly dispatch coordination, set the winter supply plan, sign the technical terms of contractor agreements and explain to the company where the budget went. When engineers below you dispute a risk assessment, the last word has to be yours, and you also start worrying about travel money and dormitories for the whole area."
+ ],
+ "work": [
+  "The senior on shift has you listen to a valve with a stethoscope. For a long time you say there's nothing. He moves you to another spot, and this time you hear a very fine sound.",
+  "You read step seven from the operating ticket and Dispatch corrects one word over the phone. In the rest room you copy that ticket out three times.",
+  "You estimate a pig's arrival time and you're forty minutes off. The next time, you recheck this section's elevation profile and get it within ten.",
+  "The downstream metering clerk demands a re-comparison. You print out both meters' calibration certificates and flow computer parameters, lay them out on their meeting table and go through them one item at a time.",
+  "A test post's reading suddenly shifts. You drive out and find interference from a newly strung power line nearby, and phone the power office three times.",
+  "The inspection report marks twelve anomalies, which you rank by risk, digging number five first. The contract foreman asks why not start with number one. Because number five is by the river, you say.",
+  "A road contractor submits a plan to cross the line. You read it and send it back with one line added in red: casing length must be recalculated from actual trench depth.",
+  "The winter supply plan has to set station leave. You spread out all the rosters together, and give those with an ailing parent their time off before December.",
+  "To cut costs the company wants to do away with contracted line patrols. You bring three years of watch records to the meeting, and something else gets cut instead."
+ ],
+ "past": [
+  "You grew up in Gansu, and a marker post for an oil pipeline stood near your front door. Climbing it as a kid got you scolded. You had no idea then how far that line went.",
+  "You asked an admissions teacher which major would find you a job. He said storage and transportation, the energy sector needs people. You thought it meant driving big trucks, and it wasn't until you registered that you saw textbooks full of pipelines.",
+  "On a practical you went to an oil depot and wore antistatic coveralls for the first time. An old engineer told you not to bring your phone. You locked it in a cabinet outside the gate, and walking around you felt something was missing.",
+  "Classmates were always asking one another where they'd go afterward. A professor said the places this trade sends people are mostly on the emptier half of the map.",
+  "State-owned companies came recruiting and the posting said Xinjiang. You measured the distance from home on the campus map, and signed the letter of intent, because the pay was more than double anywhere else."
+ ],
+ "late": {
+  "pension_note": "Estimate: a state enterprise with a high contribution base and an enterprise annuity. Remote-area allowances don't count, but the pension is a bit above peers inland.",
+  "scenes": [
+   "Back in Lanzhou, you volunteer to go along with the community gas inspections. The inspector holding a hose says it's perished, and you point out the position of the clamp for him.",
+   "You buy an old pickup, put water and a shovel in the bed, and drive two thousand kilometers to see Korla again. That gravel road has become asphalt. You count the marker posts along it one by one, and one is missing.",
+   "The operating area sends a holiday message to its retirees, signed by a department you've never heard of. The line belongs to a new company now. You think about it. The gas in that pipe is still heading east.",
+   "The dry nose hasn't got better inland, and it still bleeds every spring. You keep a humidifier by the bed set at forty-five percent. You don't trust any other number.",
+   "Your back-office ledgers are very thorough, and you reconcile vehicle mileage box by box. Your boss says this kind of work is beneath you. You don't feel that way. These days your ears can only handle this much noise.",
+   "You keep a blood pressure monitor on the dining table, measure every morning and record it on a chart. You used to make a lot of charts like this. This one has only one person on it.",
+   "Old colleagues post pictures of new robots at the stations. You look at them, put the phone down and go to wash vegetables. You turn the tap halfway and think that this pipe's pressure is all right.",
+   "You come home for dinner every day now. Someone at the table mentions pipelines, and you say the days in that trade are very long. They ask how long. You measure a length in the air with your hands, then lower them.",
+   "You've done the arithmetic: a good deal less in allowances, and in return you were there for all your child's school years. There's no grand lesson in it. In those years you simply didn't put off your leave again.",
+   "The road outside your compound has been dug open and a yellow pipe is showing. Standing at the hoarding you ask how deep it's buried. The young worker says, you know about this, uncle? You don't take it any further.",
+   "On a train crossing the Gobi, while others sleep, you lean at the window and count marker posts. One per kilometer. On this stretch the spacing is a bit wide. Maybe it's new.",
+   "You've always bought Korla's fragrant pears, delivered each September. When you cut one, you look at the core first. This grower hasn't got his water and fertilizer quite right this year."
+  ],
+  "closing": {
+   "retire": "The gas ring lights in the kitchen, the blue flame steady. Pressure normal. You turn it down and start today's porridge.",
+   "burnout": "There's a wind outside, not much of one. You can't hear sand against the glass anymore, so you may as well suppose there is no sand.",
+   "end": "At night the manhole covers on the road give back a little light. You go around one and carry on home."
+  }
+ }
+}

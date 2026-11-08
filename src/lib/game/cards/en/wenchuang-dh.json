@@ -1,0 +1,183 @@
+{
+ "id": "wenchuang-dh",
+ "occupation": "Cultural Products Planner and Operator",
+ "role": "Planner and Operator, Small Cultural Products Company in Dunhuang",
+ "headline": "At a twelve-person cultural products company in Dunhuang, run off your feet from April to October while half the town shuts up shop in winter, you shuttle between sample runs in Yiwu, the licensor's reviews and the fridge magnet in a tourist's hand",
+ "unit": "A cultural products company in downtown Dunhuang: twelve staff, one studio, three counters at the scenic area and night market",
+ "unit_type": "Private small cultural products business",
+ "city": "Dunhuang, Gansu",
+ "city_tier": "Fifth-tier",
+ "education": "Bachelor's (Visual Communication Design)",
+ "level": "You can produce designs and copy and work out what one fridge magnet costs. You've yet to win a license or stand over a mold being cut",
+ "intro": "The company is on an old street, and its window faces a shop that repairs camel saddles. Twelve people, never enough of them from April to October; after November the boss has everyone take turns off. In your first week he puts a fridge magnet on the desk, one that sold out at the airport, and says the next batch must arrive before May Day, go and see to it. You turn it over. The adhesive on the magnet has already gone yellow.",
+ "salary_note": "Estimate: small companies in Dunhuang pay a low base with commission in peak season, and in winter often only the base; this figure is a full-year average.",
+ "facts": [
+  {
+   "label": "Cultural Products Specialist (current level)",
+   "value": "0–2 years, ¥3,600–4,300 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Cultural Products Planner and Operator (2–5 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥6,500 (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Checking color and workmanship at sample stage",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Sales reviews and customer profiles",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "2 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "At the studio. First you check last night's takings at the three counters. The one at the gate of Mingsha Mountain sells best. The night-market counter sells only the cheap stuff.",
+  "On a video call with the sample maker at a factory in Yiwu. He holds a fridge magnet up to the camera. You say this ochre runs red. He says you can't judge on a phone. You say then mail it.",
+  "Donkey-meat yellow noodles at the Shazhou market. The woman who runs the stall asks if you still have this year's camel keychains. She'd like two by her till.",
+  "Checking the counter at the scenic area. The sun has made the glass case too hot to touch, and on the top shelf the paper bookmarks have curled. You move them to the shaded side.",
+  "You send designs to the licensor for review. A teacher there replies with one line: please cite the source of this color scheme. You start going through the literature.",
+  "A study-tour group reaches the counter: thirty middle-schoolers with fifty yuan each. You watch them pick things up and put them down, and move the best seller down a shelf.",
+  "The night market closes and the wind and sand come up. Entering the day's sales in the table, you see the skin on the back of your hand has split, and remember you haven't put on hand cream today."
+ ],
+ "ladder": [
+  { "title": "Cultural Products Specialist", "stage": "Samples", "focus": "Write proposals, follow samples, watch the counter, sort data; see one small product from start to finish" },
+  { "title": "Cultural Products Planner and Operator", "stage": "A product line", "focus": "Own the positioning, sampling, production and listing of one line, and answer for its sales" },
+  { "title": "Product Line Supervisor", "stage": "A team", "focus": "Lead a few people and the year's launch plan; deal with licensors and factories" },
+  { "title": "Director of Operations", "stage": "Channels", "focus": "Run scenic-area counters, the online store and co-brands; decide which few products get the year's money" },
+  { "title": "Partner", "stage": "Takes the risk", "focus": "Put up money, carry the inventory, decide where the company goes" }
+ ],
+ "ai_tasks": [
+  { "name": "Checking color and workmanship at sample stage", "how": "Whether a magnet has a burr on its edge, whether this earth-yellow is that earth-yellow: you have to hold it under the factory's fluorescent light." },
+  { "name": "Negotiating with licensors and scenic-area management", "how": "License fees and keeping a counter come down to meeting in person and revising draft after draft." },
+  { "name": "Sales reviews and customer profiles", "how": "Connect every channel's takings and AI tells you what to restock." },
+  { "name": "Product concepts and visual options", "how": "AI produces hundreds overnight. Which isn't absurd, can be made, and will make a tourist pay is a person's call." },
+  { "name": "Campaign copy and short-video scripts", "how": "AI writes smoothly. A person has to read it out under a Dunhuang street sign to know which line is false." },
+  { "name": "Copyright registration and comparing contract terms", "how": "AI drafts and compares. Someone has to answer for whether title is really clear." }
+ ],
+ "events": {
+  "e_first_mold": "The first time you watch a mold cut, you miss that the factory has changed the magnet to one size smaller. When the goods reach Dunhuang they slide down the fridge one after another. Three thousand pieces sit in the storeroom. The boss doesn't shout. He just has you glue an extra magnet on the back of each one, which takes a week.",
+  "e_peak": "In July and August the tourists are so many that the scenic-area counters have lines. You go more than forty days without rest, restocking, counting and changing displays. These two months bring the year's fattest commission.",
+  "e_winter": "After November, visitors fall to a tenth of summer's. The night-market counter is taken down and the company pays base salary. You and the designer cover one wall with next year's launch plan. This is, oddly, when you do the most thinking.",
+  "e_dry": "After one summer your nose bleeds from dryness, your lips and hands split, and each spring your eyes begin to itch. A girl at the counter keeps eye drops by the till and anyone can use them. It has become a company benefit.",
+  "e_yiwu": "A month before Spring Festival the Yiwu factories shut for three weeks, so May Day's stock must be set before the last lunar month. This year you get one figure wrong. Before May Day you sell out and have to buy a few cartons from a competitor in Xi'an at a markup.",
+  "e_copy": "The desert-starscape bookmark you designed turns up on another stall at the night market three months later at half your price, right down to the same typo. You get copyright registered, and from then on you register first and list later.",
+  "e_hit": "A small magnetic camel figure unexpectedly takes off on short video, and six thousand sell in a week. The factory rushes to fill orders. For the first time you hear the boss singing in his office.",
+  "e_fade": "Last year's best-selling blind boxes shift two cartons this month. That number in the stock sheet has been red for a long time, and at last the boss agrees to clear them at a discount. You knock the purchase price down over and over in your head.",
+  "e_license": "The three-year contract with the licensor is up. The new one raises their share by two points and stretches each design's review from two weeks to four. You look over the year's launch plan and cut it from twenty-four products to fifteen.",
+  "e_guide": "A local tour guide proposes bringing his groups to your counter in exchange for twenty percent of the takings. The boss is thinking about it and you work out the margin. Pay this kind of money and it feels wrong; don't, and the next group walks straight past.",
+  "e_ai_image": "With AI images, the designer can produce four hundred concepts in a night. You take one especially handsome pattern to the licensor's teacher, who says this pattern never existed in any dynasty. You print it and pin it to the wall as a reminder.",
+  "e_ai_flood": "Thousands of AI-generated rivals appear in the online store overnight at frightening prices. Your search ranking drops forty places in a month. All you can do is photograph craft and material more closely, and label each piece with the name of the worker who made it.",
+  "e_ai_data": "AI now writes the sales review and generates the restocking list as well. It recommends removing every winter counter. On paper it's right. It just doesn't know the woman who runs that counter is a relative of the company's landlord.",
+  "e_kid": "A primary schoolkid with fifty yuan spends twenty minutes at the counter choosing, picks a fifteen-yuan bookmark and gives the rest back to her mother. You note the design and order more for the next batch.",
+  "e_flight": "Dunhuang's flights are cut back each winter and getting to Yiwu takes two connections and a full day. You finish revising a proposal on an airport bench, and as you board you find the date in the contract is wrong.",
+  "e_mall": "The scenic-area shopping street is being rebuilt, and your counter is on the list for adjustment. Management says it will reopen for bids and rent goes up sixty percent. You go in with three years of takings and average spend, and keep half the floor space.",
+  "e_fair": "At the September culture expo, your booth is in a corner. A buyer from the provincial capital likes the desert-colored coaster set and places a corporate gift order. It gets you through one more winter.",
+  "e_eye": "You now look for color cast in everything. A friend wears a new jacket and you blurt out, that's a cool earth-yellow. She asks if that's a compliment."
+ },
+ "choices": {
+  "c_city": { "title": "Brand work at a big company in Lanzhou", "situation": "A cultural tourism group's brand team in Lanzhou wants someone who has done frontline products. Thirty percent more pay, full insurance, promoting the whole province. The counters and factories here, you would have to hand over one at a time.", "options": [
+   { "label": "Go to Lanzhou", "result": "You write out the Yiwu factory's contacts and your color standards.", "end": "In an air-conditioned meeting room you write brand plans for the province. Dunhuang is in the plans, along with fourteen other cities." },
+   { "label": "Stay in Dunhuang", "result": "You message them back and say the goods here need to ship." }
+  ] },
+  "c_shop": { "title": "Open your own shop", "situation": "You now have factory channels and some good sellers, and a shopfront by the night market is up for transfer. It means leaving the company, and paying winter rent yourself.", "options": [
+   { "label": "Open the shop", "result": "You have a drink with the boss and promise not to take the company's images.", "end": "The door opens onto a very narrow alley and you painted the sign yourself. After one winter you've learned to write each regular a postcard in the off season." },
+   { "label": "Stay with the company", "result": "The shopfront goes within two weeks to someone selling apricot juice." }
+  ] },
+  "c_exam": { "title": "Become a Cultural Products Planner and Operator, take a line", "situation": "The company will promote one Cultural Products Planner and Operator to own a product line. You can take the small-goods line that sells best in season, or the \"desert color\" stationery line that has always lost money. The latter pays no bonus. The boss says if you pull it off, the credit's yours.", "options": [
+   { "label": "Take the money-loser", "result": "You cut the stationery to five items, change the paper and redefine the color card. Next year the line stops losing money. The boss says little, and your name goes on the product sheet." },
+   { "label": "Take the good sellers", "result": "Your bonus looks very good. Everyone knows this line sells whoever has it." }
+  ] },
+  "c_fake": { "title": "To license or not", "situation": "There's a very handsome Tang dynasty pattern. A license would take four months and is not cheap. A designer says change a few strokes and you won't need one; everyone in the trade does it. May Day's stock has to be ordered by the last lunar month.", "options": [
+   { "label": "License it properly", "result": "You miss May Day and catch the October holiday. The licensor's teacher later puts your company on the priority review list." },
+   { "label": "Change a few strokes and go", "result": "It sells well. Six months later a lawyer's letter arrives. You pull the product and pay up." }
+  ] },
+  "c_ai": { "title": "Learn AI images and build a company library", "situation": "The boss wants all the company's product images, patterns and license records organized into an image library, and a company AI image workflow trained on it. Dull work that won't directly sell anything, and someone must spend months on it.", "options": [
+   { "label": "Do it yourself", "result": "You tag every image one by one and note how far each license runs. A year later the launch cycle has shrunk from two months to three weeks." },
+   { "label": "Outsource it", "result": "The outsourcer delivers a very tidy library. The license information is blank." }
+  ] },
+  "c_mgr": { "title": "Compete for Product Line Supervisor", "situation": "The company will promote a Product Line Supervisor to lead four people and run the year's launches and licensors. It means teaching others much of what you do, and when things don't sell, the boss comes to you first.", "options": [
+   { "label": "Compete", "result": "You start tracking every schedule on one sheet, working backward from Yiwu and the licensor to the last lunar month. The young designers say you're like a foreman." },
+   { "label": "Keep your own line", "result": "You'd still rather be under the factory's fluorescent lights checking color. The new supervisor comes to ask you what this color is called." }
+  ] },
+  "c_dir": { "title": "Become Director of Operations", "situation": "The boss wants one Director of Operations over all channels: counters, online store and co-brands, deciding which few products get the year's money. Bet wrong and you won't survive the winter.", "options": [
+   { "label": "Accept", "result": "For the first time you explain the year's inventory turnover at the annual party and everyone listens very quietly. That year you bet on four. Two and a half pay off." },
+   { "label": "Decline", "result": "You tell the boss you'd rather look at things. He nods and hires someone from Lanzhou." }
+  ] },
+  "c_partner": { "title": "Buy in as Partner", "situation": "The boss is getting on and wants you to put in ¥300,000 and become a Partner. The storeroom holds two years of stock, and three licenses are still running. Buying in means winter's wages are your worry too.", "options": [
+   { "label": "Buy in", "result": "You bring the money from home and the company seal passes into your hands. That first winter you count the storeroom through: more than forty thousand pieces." },
+   { "label": "Don't buy in", "result": "The boss transfers the company to a cultural tourism group, and you stay on." }
+  ] },
+  "c_school": { "title": "Teach cultural products at a vocational school", "situation": "A vocational school in Jiuquan has opened a cultural products major and wants a teacher who knows products. Steadier income, winter and summer breaks, and no more worrying about factory holidays and stockouts. Your back and your eyes have been less willing, these last years, to go to Yiwu.", "options": [
+   { "label": "Go and teach", "result": "You leave the color cards on the studio's workbench.", "end": "You teach students to work out the cost of a fridge magnet. They ask how to make a hit. You say, I got mine by accident." },
+   { "label": "Don't go", "result": "You tell them you'll see in a couple of years. Two years later they have another teacher." },
+   { "label": "Run one term of practicum first", "result": "You go to Jiuquan once a week to teach students to read a sample sheet, then come back to watch Yiwu. There isn't enough time for either, and both sides say you come too little." }
+  ] }
+ },
+ "endings": {
+  "retire": "The licenses come to an end one after another and you don't renew them. When the last batch in the storeroom has gone, a tourist asks if this magnet comes in another color. You say no. The things you sold over the years are stuck to refrigerators in many parts of the country, and most have long since lost their paint.",
+  "burnout": "Your dry eyes have reached the point where you can't see color cast, and they stream when the wind blows. You arrange with the company to stop going to factories, stop checking color, and do desk work only. You put the last color card on the windowsill, where the sun slowly fades every shade."
+ },
+ "stages": [
+  "You follow a fridge magnet from design to counter: write the proposal, send the sample order, match color with the Yiwu factory, count the arriving cartons into inventory. In the afternoon you stand for hours at the scenic-area counter watching what tourists pick up and put down, and go back to enter it in a spreadsheet. Others make every decision, but when a sample's sent to the wrong address, you're the one who collects it.",
+  "A product line is yours now, with positioning, price band, sampling and production all to account for. You go round after round with the licensor's teacher, grind down unit prices with the factory boss, and tune main images in the online back end. You no longer just follow a thing along. You have to say why it should exist, and why it still isn't selling.",
+  "You lead four people and own the year's launch plan. May Day, summer and the October holiday are worked backward to the last lunar month, with review cycles and factory holidays on one Gantt chart. You spend more time in the office now, mostly revising others' proposals and telling them why this product can't be made.",
+  "Counters, online store and co-brands all belong to you. You negotiate rent with scenic-area management and terms with outside brands, and at the start of the year decide which products get the cash. Early each month you read inventory turnover and receivables. Those two sheets decide whether the company can pay its people in winter.",
+  "The company's books contain your money and your inventory. You decide whether to enter a new scenic area, whom to partner with, which licenses not to renew. You meet with banks, investors and licensors, and still go to the factory now and then, because you're the only one who can tell apart the three names for that earth-yellow."
+ ],
+ "work": [
+  "The goods arrive. You open a carton to spot-check and find one box of camels with ears printed crooked. You phone the factory. They say it's a handmade feature. You send a photo with the note: ear on nose.",
+  "You spend an afternoon counting tourists at the counter. Three hundred and twenty picked up a fridge magnet. Forty-seven bought one. You write the two numbers on your hand and take them back to the sheet.",
+  "A sample arrives, earth-yellow leaning green. You take it into the sun outside and bring it back under the lamp, then spend half an hour on a note to the factory that uses only three adjectives.",
+  "Pricing the desert-color stationery, you compare the paper weight of three competing lines on one sheet and settle on twenty-eight yuan, two less than your boss said.",
+  "The licensor's teacher rejects your third draft, saying this pattern must not be flipped. You ask why. They send a passage from the literature and you read it until midnight. In draft four it's flipped back.",
+  "For an online store's main image you try five versions and the click rate differs by double. The winner lies on sand, with a not-very-clear footprint in the background.",
+  "The factory proposes changing the coasters to a cheaper cork, saving forty fen each. You take both back to the studio, drip water on them and leave them overnight. The next day you reply.",
+  "A new designer's bookmark is beautiful and costs eleven yuan to make. You call her over, lay the cost sheet next to her draft and let her revise it herself.",
+  "A tea drink chain elsewhere wants your desert color on its cups. You draw out the licensing chain step by step for their legal team, and only then do they see how many layers this has.",
+  "Each month you walk the storeroom with the sheet, moving slow stock toward the door. Two hundred cartons of blind boxes from three years ago. You write on the cartons: don't do this again next year.",
+  "A cultural tourism group comes to discuss an acquisition and wants your rights list. You export fourteen years of license records: more than a thousand entries, only ninety-two still in force.",
+  "The bank looks at the company's accounts and asks why money only flows out from December to March. You hand over a full-year bar chart. Its shape is much like that of a dune."
+ ],
+ "past": [
+  "Your family grows cotton and grapes outside Dunhuang. In summer you help your aunt sell apricot juice at the market. When tourists ask what it is, you always answer faster than the adults.",
+  "You major in visual communication and spend four years in Lanzhou. When an assignment calls for a poster on regional culture, everyone in class draws camels. You do not.",
+  "After graduation you join a Xi'an ad agency and revise posters every day. A client asks if it could be a little more grand, and you think of the empty land back home.",
+  "The first time you go to Yiwu to source goods, you see an entire building of fridge magnets. You buy a few to take home. None of the magnets is strong enough.",
+  "Your aunt falls ill and you return to Dunhuang. The cultural products company on the old street is hiring. The boss asks whether you can work overtime. In summer yes, you say; winter, you don't know yet."
+ ],
+ "late": {
+  "pension_note": "Estimate: small companies paid social insurance intermittently and on a low base. The pension covers daily life in Dunhuang; a serious illness would need other arrangements.",
+  "scenes": [
+   "Everywhere you go now you look first at the fridge magnets. At scenic spots in other provinces you pick one up, turn it over, check the glue, the edges, the magnet, and gently put it back. The clerk asks if you want it. You say just looking.",
+   "The shops on the old street ask you to look at their new packaging, in exchange for a meal. You take it out into the sun and tell them this earth-yellow leans green. The meal is donkey-meat yellow noodles.",
+   "Cultural products now go from AI draft in a minute to shipping from the factory the next day. You've seen a batch. The images are all lovely. You just pick one up and weigh it in your hand.",
+   "People still resell that little camel online at twice the original price. Buyers call it a nostalgia item. You look at the photo. The magnet has gone yellow.",
+   "Eye drops have gone from three times a day to five. You no longer tell colors apart. It's easier than you imagined, and harder.",
+   "You grow a few pots of oleaster at home, on very little water, and they do fine. You've come to feel that things here all make do with less.",
+   "The neighborhood kids want a summer craft project. You teach them to make magnets out of apricot-juice bottle caps. One child's stays on better than any of that old batch of yours.",
+   "Your first summer out of the business, you don't look at the takings. Then one day at the end of July you work out roughly how many fridge magnets the town has sold today.",
+   "When you go back, the company's shopfront on the old street has changed hands and the saddle repair shop is still there. The old craftsman's hands are slower than you remember.",
+   "The night market is all stalls selling the same things now, and tourists compare prices on their phones. The apricot juice seller is still there. The price has gone up and the flavor has thinned. You buy a cup.",
+   "Your refrigerator door is crowded with the work of rivals, brought back from all over the years. The magnets have all fallen off at some point, and you glue them back one by one.",
+   "The autumn wind blows sand under the door again. You sweep it up and look at what you've swept. This earth-yellow is better-looking than the one you settled on all those years ago."
+  ],
+  "closing": {
+   "retire": "You stick the last sample to the refrigerator door, where it holds firmly. That earth-yellow is still that earth-yellow.",
+   "burnout": "The oleaster has put out a few small flowers, very fragrant. You narrow your eyes. No need to tell what color they are.",
+   "end": "The wind picks up, and the signs along the street rattle a little. This year's high season has nothing much to do with you."
+  }
+ }
+}

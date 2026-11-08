@@ -1,0 +1,316 @@
+{
+  "id": "building-inspector-hd",
+  "occupation": "Construction and Building Inspector",
+  "role": "Construction Quality Testing Technician",
+  "headline": "At a third-party testing company in Handan, climbing unfinished towers with a rebound hammer and rebar scanner, a trainee in a world where every number on a report has to have someone's signature behind it",
+  "unit": "A construction quality testing company in Handan (with accredited testing credentials)",
+  "unit_type": "Third-party testing agency",
+  "city": "Handan, Hebei",
+  "city_tier": "Tier 3",
+  "education": "College diploma (building engineering technology)",
+  "level": "You can use a rebound hammer and read the tables in the code. No site manager has yet tried to take you out to dinner.",
+  "intro": "You followed your crew leader into a site in Yongnian District. The tower has twenty-two floors and no elevator yet, and the rebound hammer, the rebar scanner and a bucket of water all go up on someone's back. Your job is to strike a thousand points on concrete someone else has poured and write every reading, without a single error, into the original record. No word on that sheet may be altered.",
+  "salary_note": "Estimate: a third-party testing agency in Handan with piece-rate commissions, well below the national average for the trade. Take-home depends on how many sites are building.",
+  "facts": [
+    {
+      "label": "Trainee Inspector (current level)",
+      "value": "0–2 years, ¥4,000–5,100 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Certified Inspector (2–6 years)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "Pay after 10+ years",
+      "value": "¥9,900 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Coring and rebound testing on site, and choosing test zones",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Organizing original records and drafting reports",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "7 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+      "source": "Job listings"
+    }
+  ],
+  "day": [
+    "Loading up in the company yard. Today's job is structural testing on three floors of a housing estate in Yongnian. You check the rebound hammer on the calibration anvil, the reading should land around eighty.",
+    "At the site. The project's quality officer and the supervising firm's witness are waiting downstairs, and the three of you go up together. The witness logs the time. He has to see you strike with his own eyes.",
+    "Striking points on a shear wall, sixteen numbers per test zone. You call them and the crew leader writes. By the third wall the web of your right hand is going numb.",
+    "You run the rebar scanner across the slab, lines passing one by one on the screen, and chalk marks on the concrete. At one spot the cover is thin, and you measure again.",
+    "The site manager says let's get lunch together. Your crew leader says we brought boxed lunches, then sits on a pile of rebar downstairs to eat. Only then do you learn when the boxes were bought.",
+    "The coring drill is set up on the slab and cooling water runs off. You number each core in marker and box them, and the witness signs the seal.",
+    "Back at the lab, crushing test cubes. The press reading climbs slowly, then a crack and the number freezes. Today's set is slightly short. It goes aside for a recheck.",
+    "At the office you enter original records in the system, and report numbers have to be uploaded to the provincial platform. One commission form is missing a character of the project name, so you phone to ask."
+  ],
+  "ladder": [
+    {
+      "title": "Trainee Inspector",
+      "stage": "Carrying the case",
+      "focus": "Follows along for rebound tests, coring, crushing cubes, keeping original records; earns the inspector's permit."
+    },
+    {
+      "title": "Certified Inspector",
+      "stage": "On your own",
+      "focus": "Leads a crew on site for structure, rebar and waterproofing; signs original records in your own name."
+    },
+    {
+      "title": "Report Reviewer",
+      "stage": "Reviewing",
+      "focus": "Reviews others' records and reports, checking data, code editions and commission forms for each one."
+    },
+    {
+      "title": "Authorized Signatory",
+      "stage": "Signing",
+      "focus": "Signs the reports. Individual qualification is assessed, and signing wrong has consequences."
+    },
+    {
+      "title": "Technical Director",
+      "stage": "The whole lab",
+      "focus": "Oversees accreditation, proficiency tests, code revisions; deals with assessors and regulators."
+    }
+  ],
+  "ai_tasks": [
+    {
+      "name": "Coring and rebound testing on site, and choosing test zones",
+      "how": "Where you can strike and where you can't, whether a surface has been tampered with: that takes a person standing at that wall."
+    },
+    {
+      "name": "Reviewing reports and signing responsibility",
+      "how": "AI can compare data, but the signature on the report must be a person's, and that person answers for the conclusion."
+    },
+    {
+      "name": "Organizing original records and drafting reports",
+      "how": "Once instrument data uploads, strength is calculated and a draft report appears. People spot-check for entry errors."
+    },
+    {
+      "name": "Checking results against the code",
+      "how": "AI looks up clauses and editions automatically. People judge whether the clause was applied correctly."
+    },
+    {
+      "name": "Drones and image recognition on exterior walls",
+      "how": "Photos and crack-finding are automatic. Whether something is a problem takes a person to judge and to go and tap on it."
+    }
+  ],
+  "events": {
+    "e_bid": "Reading rebound values alone for the first time, you forget the angle correction on one test zone. The reviewer circles it and sends you back to that wall to strike those sixteen points again.",
+    "e_exam": "The permit exam, theory then practical. You've memorized the common clauses of thirty code books. The structural section turns out to be just the kind of wall you struck in Yongnian. You score 87.",
+    "e_stairs": "Four towers in one day, twenty-some floors each, and your knees begin to protest. There are no elevators and the case weighs twenty kilos. At the seventeenth floor you rest at the landing and shift it to the other hand.",
+    "e_thumb": "The callus on the web of your right hand has split a few times, and it aches now on cloudy days. All those strikes of the hammer have saved up here.",
+    "e_winter": "After winter sets in, test cubes must cure alongside the actual structure, and every few days you go check the temperature logs for the matched-curing cubes. Your frozen hand can barely hold the pen, and your writing presses harder than usual.",
+    "e_stop": "A winter heavy-pollution alert stops work on all sites, and the company's orders vanish overnight. You calibrate the press three times in the lab. This month's commission is a third of normal.",
+    "e_acceptance": "In the week before final acceptance, several projects are pressing for reports. One site manager calls seven times in a day. Your answer is the same each time: when the data is out, we'll issue it.",
+    "e_dinner": "Someone from a contractor pushes two cartons of cigarettes on you, says it's just a token. You put them back on his car seat. The next day his job is still with your firm, and you still nod at each other.",
+    "e_proof": "The province holds a proficiency test, blind samples sent to every lab to test at the same time, with results compared to reference values. Your lab's data falls in the satisfactory range, and everyone in the lab breathes out.",
+    "e_new_code": "A new edition of the code changes the sampling numbers and pass rules for one test. The whole lab stops for three days of training. You put the old books on the top shelf.",
+    "e_mudroom": "An old housing block wants to add an elevator and the residents' committee asks you to look. You spend half a day on the walls and basement, a man in his seventies at your heels asking how long this building has left. You tell him only what you measured.",
+    "e_dust": "The company physical turns up one small line about your lungs. All those years of coring dust and lab grit. You think it over, and switch to a thicker mask.",
+    "e_ai_report": "The reporting system adds AI, and instrument data becomes a draft report directly. A week later you find it has mixed up the data for two buildings, on just one page. You start checking page by page.",
+    "e_ai_drone": "The company buys drones to photograph exterior walls, and image recognition circles hundreds of cracks. You go up to look. Most are plaster lines. Two, it got right.",
+    "e_ai_code": "The AI code-lookup assistant is fast, but now and then it cites a withdrawn edition. You add one step to reviews: every clause cited must be opened and its year checked.",
+    "e_slump": "New construction falls year after year, and the company's commissions drop from a hundred to forty. The boss shifts toward municipal work and old building assessment, and your work changes along with it.",
+    "e_merge": "The company is acquired by a provincial testing group. The letterhead changes, the report template changes, and the old accreditation certificates have to be redone. Your name moves to another place in the system.",
+    "e_thanks": "You catch a wrong set of numbers on review and send it back for retesting: the cube numbers were written reversed. This happens two or three times a year. The client doesn't know. You do.",
+    "e_inspect": "Accreditation review: the assessment team spends three days at the company, comparing twenty sampled reports against original records sheet by sheet. You're up in the small hours numbering record pages and writing explanations by every correction."
+  },
+  "choices": {
+    "c_gov": {
+      "title": "Sit the exam for a post at the quality supervision station",
+      "situation": "The city's construction quality supervision station is hiring for a permanent state post, by exam. If you pass you'll be on the side that inspects testing companies. Not much more pay, but nobody chases you for reports, and no more unfinished stairwells.",
+      "options": [
+        {
+          "label": "Sit it",
+          "result": "You run into two others from the trade in the exam room. Six months later, the offer arrives.",
+          "end": "You went to the supervision station and went on site holding a checklist. Young people from testing companies stood up straight when they saw you. Each time you wanted to tell them you've filled out that form too."
+        },
+        {
+          "label": "Stay put",
+          "result": "You say climbing stairs is fine. Your knees later express a different opinion."
+        }
+      ]
+    },
+    "c_site": {
+      "title": "A contractor offers big money for a quality officer",
+      "situation": "A general contractor wants you as project quality manager at double the salary. You'd be on the other side: you used to test them, now you'd help them pass, and old acquaintances are waiting to see how you do it.",
+      "options": [
+        {
+          "label": "Join the contractor",
+          "result": "Only on the project do you learn how quietly quality speaks in the face of a schedule.",
+          "end": "You stayed with the contractor and rose from project quality manager to the technical department of a branch company. Whenever testing people went upstairs, you had the records for those test zones ready, no more and no less."
+        },
+        {
+          "label": "Don't go",
+          "result": "You say this side is fine. At least I don't have to do sums in front of a schedule."
+        }
+      ]
+    },
+    "c_register": {
+      "title": "Take your credentials to the provincial capital",
+      "situation": "A big testing group in Shijiazhuang is opening a branch and needs someone with signing experience. Pay and prospects beat Handan. Your parents' health is so-so and your child is near the high school entrance exam. Moving at this age, nobody can say what it costs.",
+      "options": [
+        {
+          "label": "Go to Shijiazhuang",
+          "result": "You move your credentials and your bedding to Shijiazhuang, and take the high-speed train home on weekends.",
+          "end": "You stayed at the provincial group's branch until retirement, reviewing reports that covered a good part of Hebei. Going back to Handan, you saw those towers you'd struck, each a little shorter than you remembered."
+        },
+        {
+          "label": "Stay in Handan",
+          "result": "You stay. There's less work in Handan, but you know where every pothole is with your eyes closed."
+        },
+        {
+          "label": "Just give technical support",
+          "result": "You spend a week a month in Shijiazhuang helping the new branch set up its system documents. Train tickets are reimbursed, and you don't move."
+        }
+      ]
+    },
+    "c_number": {
+      "title": "The set that's just short",
+      "situation": "A set of cubes you crushed comes in a few tenths under spec, just barely. The project quality officer finds you and says the sample wasn't compacted right, could you recrush a set. Rechecks have a set procedure in the code, and what he's describing isn't it.",
+      "options": [
+        {
+          "label": "Follow the procedure",
+          "result": "The result is reported as it stands, and it goes through retesting and assessment. The schedule slips a few days. He doesn't greet you when you meet."
+        },
+        {
+          "label": "Pass it up the line",
+          "result": "You report it to your crew leader and the station chief, who follow procedure. You learn what you shouldn't carry alone."
+        }
+      ]
+    },
+    "c_certify": {
+      "title": "How many exams to become a Certified Inspector",
+      "situation": "To be a Certified Inspector you need permits in at least three areas: structure, rebar, waterproofing. Each exam means a trip to Shijiazhuang at your own expense, while the site work these months doesn't let up.",
+      "options": [
+        {
+          "label": "All three at once",
+          "result": "You study the code sitting on a pile of rebar, and the next month you hold your first permit."
+        },
+        {
+          "label": "One at a time",
+          "result": "You only get structure, and for other jobs you go on tagging along behind someone else."
+        }
+      ]
+    },
+    "c_auditor": {
+      "title": "Move to Report Reviewer",
+      "situation": "The station chief asks if you'd like to be a Report Reviewer. No more climbing, dozens of reports a day to pick apart. The pay's about the same, less commission, and if you get something wrong the whole report is void.",
+      "options": [
+        {
+          "label": "Take it",
+          "result": "Your knees are happy first. In your first week you send back seven reports, and the whole lab knows someone difficult has arrived."
+        },
+        {
+          "label": "Stay on site",
+          "result": "You go on climbing with the case on your back, a few hundred yuan more a month, a few years less of knees."
+        }
+      ]
+    },
+    "c_sign": {
+      "title": "Becoming an Authorized Signatory",
+      "situation": "The station needs a new Authorized Signatory; qualifying takes an exam and a defense. Once your name goes up, every report you sign stays with you for life. As many buildings as there are in Handan, there are that many sheets of paper.",
+      "options": [
+        {
+          "label": "Apply",
+          "result": "The panel questions you for forty minutes and you answer down to the clause numbers. Afterward you stand downstairs and smoke one cigarette."
+        },
+        {
+          "label": "No, just help review",
+          "result": "You say you don't want your name up there. The station chief says he understands. You think he doesn't."
+        }
+      ]
+    },
+    "c_old": {
+      "title": "Take the old-building assessments?",
+      "situation": "New housing is down, and safety assessments of old buildings are up. It's slow, badly paid work that goes into old people's homes, and the conclusions may not please them. The station chief lets you decide. Your younger colleagues would rather go to new sites.",
+      "options": [
+        {
+          "label": "Take them",
+          "result": "You learn to tell residents \"this wall has no problem at present\" and not \"how long this building can hold up.\""
+        },
+        {
+          "label": "Pass",
+          "result": "You put your energy into municipal projects. The reports are easy, the schedules clear, and you don't have to go into anyone's home."
+        }
+      ]
+    },
+    "c_ai": {
+      "title": "Who answers for AI-generated reports",
+      "situation": "The group wants automatic report generation, with the reviewer only clicking confirm. Three times the throughput, but whoever clicks still bears the responsibility. Will you lead the way, or insist on someone reading each report from the top?",
+      "options": [
+        {
+          "label": "Use it, with rules",
+          "result": "You write a sampling checklist: which items need human eyes and which can be spot-checked. People at the station say you've written yourself out of work."
+        },
+        {
+          "label": "Keep reading from the top",
+          "result": "You go on reading page by page. This month your lab's report count is last in the group. Its error rate is too."
+        }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "Among your last batch of reports is one for a housing estate you struck thirty years ago, this time assessing it for an added elevator. The data is a touch lower than back then, as expected. You return your seal to the company. The callus on your right hand is still there, and there are no more walls to strike.",
+    "burnout": "After knee surgery the doctor forbids you to climb stairs again, and the small line about your lungs keeps you out of the lab. The company gives you a job organizing the archives, page after page of original records, all in your younger hand. You look at those numbers. Your hand no longer has the strength it had."
+  },
+  "stages": [
+    "You carry the case, calibrate the hammer, call out readings for the technician, and in the evening learn to read cubes at the press. Not one character of an original record may be altered; a mistake gets a line through it and a signature. Contractors look at you about the way they look at tools. Your crew leader tells you to say little, write the numbers down, and discuss results with no one.",
+    "You take an apprentice and go out on your own: arranging times with clients, climbing with the witness, choosing test zones, striking, scanning, coring, entering it all, with your name on the original record. Contractors start being polite. You have to remember what to answer and what to meet with \"you'll know when the report's out.\"",
+    "A dozen or more reports a day: checking commission forms, original records, code editions and calculations, and sending back a single wrong character. Less time on site, more in the lab and at the computer. The technicians privately call you Iron Face, and also bring you the numbers they aren't sure about. Your red pen decides who works late tonight.",
+    "Every report must get past you last, your signature and the company's seal going down together. What you look at now isn't one number but whether this report can survive being pulled out by someone ten years from now. Project teams and regulators phone you. You speak slowly and write slowly. The company's business and your name are tied together now.",
+    "Accreditation renewals, proficiency tests, training for new code editions: the whole lab's technical system is in your hands. Several times a year you face assessment teams and spot checks, and you decide what direction is next, municipal, old buildings or something else. You seldom touch a rebound hammer now, and go look only when someone isn't sure."
+  ],
+  "work": [
+    "The project quality officer asks what this wall came out to. You look over at your crew leader, who is tying his shoe. You say, you'll know when the report's out.",
+    "Your pen slips on an original record. As the rules require, you draw a line through the error, write the right number beside it and sign. Your handwriting on that page looks especially earnest.",
+    "A batch of cubes arrives with its numbers half washed off. You match them one by one against the commission form and the witness's record. One doesn't match, and the station chief tells you to set it aside.",
+    "You teach your apprentice to choose test zones: avoid dense rebar, avoid that patch finished unusually smooth. He asks why avoid the smooth patch. You say, give it two years.",
+    "A slab measures thin at one spot and the site engineer says the drill went in off-true. You core another hole somewhere else, and set both cores in the box in front of him.",
+    "The lap width of the waterproofing membrane in the basement has to be measured. You squat with a steel ruler all afternoon. The client's man shouts from above that it's time to eat. You say, three more spots.",
+    "A report's rebound average is correct, but its estimated strength uses the old calibration curve. You send the page back with the page number of the new edition's clause.",
+    "A technician brings you rebar tensile data with a strangely high yield strength. You pull the sample form. The grade was filled in wrong, and you send him to reconfirm on site.",
+    "A new graduate fixes the report you sent back and brings it in again, asking why you're so strict. You point to the archive cabinets and say someone will go through all of these one day.",
+    "A site manager begs you to sign tonight because acceptance is tomorrow. You read to the end and find one floor's data missing. You tell him, not tonight. Come tomorrow morning with everything.",
+    "On an old-building assessment you change three characters in the conclusion, from \"safe\" to \"no obvious anomalies at present.\" The client isn't pleased. You don't change it again.",
+    "Three months before a new code edition, you list all thirty of the lab's tests in a table and mark each change. Your first words at the training are: all the old forms, hand them in today.",
+    "An assessment expert spot-checks the proficiency test records. You put three years of data and raw curves together. He spends an hour on them and offers one suggestion, about archive labels."
+  ],
+  "past": [
+    "Your father ran a concrete batching station on sites in Wu'an. One summer you went along and saw someone tagging trucks with grades. It was the first you knew that cement had ranks.",
+    "You got into a higher vocational college in the province for building engineering technology, because the admissions teacher said Hebei would keep building.",
+    "On an internship at a site in Shijiazhuang you assisted a site engineer, measuring dimensions every day, and decided this was a job that burned you dark.",
+    "As the internship wound down, the college recommended you to a testing company in Handan. A roomful of presses and air conditioning. You thought you could stay out of the sun.",
+    "On your first day, the station chief handed you a code book and a pen that couldn't be erased, and told you to memorize the terminology first. Going out on jobs could wait until next week."
+  ],
+  "late": {
+    "pension_note": "Estimate: a private testing agency contributing on a low base, improved somewhat in later years by signatory pay.",
+    "scenes": [
+      "You volunteer to look over the exterior walls for your residents' committee. You come back with three points. The committee chair says it's too technical, can you write it simpler. You write it bigger.",
+      "You learn carpentry and build a small stool for the house. When it's done you tap the seat, measure all four legs, and file off the extra millimeter.",
+      "Robots are said to climb sites on their own now and strike points, with data going straight to the cloud. You watch a clip on TV. The machine's touch is lighter than yours ever was.",
+      "The web of your right hand still aches on cloudy days. When you stick on a plaster, you press all four corners flat and even.",
+      "In rehab, there's a crack in the hospital corridor wall. Every day as you pass you check it and keep its direction in mind. Fortunately, it never changes.",
+      "You switch to a ground-floor apartment and never climb stairs again. A neighbor asks why you chose the first floor. You say the ceilings are high enough.",
+      "The lab has nothing to do with you anymore. The group has merged with someone else again and the letterhead has changed for the third time. The reports you made, you hear, have all been scanned into a system.",
+      "After changing jobs, you still look up at the ceiling first in any room. A friend who's moved invites you over. You walk around the living room, and the first thing you say doesn't make the host happy.",
+      "Few new buildings have gone up in Handan these years. In the estates south of the city where you struck points, developers have changed three times, and the buildings still stand.",
+      "At a class reunion someone asks how the trade is doing. You say you don't know anymore, then tell him the wall on the sunny side of his place could use a look.",
+      "In a hotel you check the floor slope in the bathroom first, with a little glass marble. You've never mentioned this to the front desk.",
+      "All your life your handwriting has pressed harder than other people's, and you can't change it. On a shopping list you can feel it from the back of the paper."
+    ],
+    "closing": {
+      "retire": "Walking downstairs at dusk, you run your fingers along the exterior wall, cool, nothing blistering. You put your hand back in your pocket.",
+      "burnout": "On a clear day you pull out that old tape measure and let it snap back with a click, then put it on the table.",
+      "end": "It's raining. You stand under the eaves watching where the water goes. The slope on this gutter isn't bad."
+    }
+  }
+}

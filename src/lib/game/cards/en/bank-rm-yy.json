@@ -1,0 +1,186 @@
+{
+ "id": "bank-rm-yy",
+ "occupation": "Bank Relationship Manager",
+ "role": "Trainee Relationship Manager, Rural Commercial Bank Township Branch",
+ "headline": "In a mustard-farming town in Huarong County, you ride a motorbike out to count pigs and pickling vats, hold the deposit figure steady at quarter-end, and sign your own name to every loan you make",
+ "unit": "A township branch of a rural commercial bank in Huarong County, Yueyang: nine staff, two teller windows",
+ "unit_type": "County-level rural commercial bank, township branch",
+ "city": "Yueyang, Hunan",
+ "city_tier": "Third-tier",
+ "education": "Bachelor's (Finance)",
+ "level": "One year behind the counter: fast at counting cash, good at spotting fakes. You can read a financial statement but have never worked out a farmer's accounts",
+ "intro": "The branch sits at the town's crossroads. By February the concrete out front is covered with mustard greens laid out to dry, and everyone comes in with salt on their shoes. After a year at the counter, the branch president moves you to field work and hands you an old motorbike and a list of villages. Four villages, more than seven hundred households, and every loan among them will one day carry your name.",
+ "salary_note": "Estimate: base pay at a county rural commercial bank is modest. Income is tied to deposit and loan targets, and performance pay is settled only at year-end; this figure is an average.",
+ "facts": [
+  {
+   "label": "Trainee Relationship Manager (current level)",
+   "value": "0–2 years, ¥3,300–4,200 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Relationship Manager (2–6 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Going out to the village to verify what a household really owns",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "First drafts of pre-loan investigation reports",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "3 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "Morning meeting. The branch president writes today's deposit figure on the whiteboard. It is four hundred thousand yuan short of yesterday's. No one explains. Everyone knows whose family took it out.",
+  "You ride out to the villages. The wind on the dike dries your eyes. In the basket: loan applications, an ink pad for thumbprints, a roll of measuring tape.",
+  "At Boss Peng's pickling works. He says he took in four hundred tons this year. You climb the rim of the concrete vat, tape the length and width, and ask how high the brine comes.",
+  "Lunch at a farmer's table. There is cured fish and you eat it, but you note that the chest freezer is new and the stove is old.",
+  "At the village office you ask Party Secretary Zhong what a certain household's son really does out there. He answers politely. Your job is to find the half-sentence of truth inside the politeness.",
+  "Back at the branch you key the morning's figures into the credit system. It wants a number for annual net income. A farmer's accounts have never looked like that.",
+  "You finish the day's report and upload the photos one by one. The risk manager's note is already waiting: How exactly did you calculate the volume of this vat?"
+ ],
+ "ladder": [
+  { "title": "Trainee Relationship Manager", "stage": "Shadowing", "focus": "Follow a senior colleague to the villages, do pre-loan checks, key in data, learn to get a farmer's accounts straight" },
+  { "title": "Relationship Manager", "stage": "Own patch", "focus": "Run the loans and deposits for a stretch of villages; the loans you make carry your signature and are yours to collect" },
+  { "title": "Senior Relationship Manager", "stage": "Big accounts", "focus": "Handle processors and cooperatives, larger single credit lines, complex credit proposals of your own" },
+  { "title": "Deputy Branch President", "stage": "Risk", "focus": "Run post-loan work and bad debts, lead the relationship managers, speak for the branch at the credit committee" },
+  { "title": "Branch President", "stage": "Targets", "focus": "Answer for all the deposits and loans of one town, and for everyone's face in it" }
+ ],
+ "ai_tasks": [
+  { "name": "Going out to the village to verify what a household really owns", "how": "The bank statement may be false or may be true. How much is in the pickling vat takes a person standing on the rim to measure." },
+  { "name": "Collections and negotiating bad loans", "how": "When a family can't pay, what to say and how long to give depends on who they are, and someone has to answer for it." },
+  { "name": "First drafts of pre-loan investigation reports", "how": "AI pulls credit files, statements and history into a draft. Whoever has been to the house fixes the lines that don't match." },
+  { "name": "Product messages to existing customers", "how": "AI sends segmented messages and scripts. Explaining the risks and whether it suits this person is a human job." },
+  { "name": "Post-loan data alerts", "how": "The system watches statements and credit changes and notices trouble before a person does." },
+  { "name": "Checking and filing credit documents", "how": "Scanning, matching, flagging gaps. A machine does not get tired or misread the expiry date on an ID card." }
+ ],
+ "events": {
+  "e_count": "Your first solo farm visit, you counted all three hundred pigs as assets. Yu, the risk manager, sent you back to work out which were his and which he was raising for someone else. This time three hundred became a hundred and ten.",
+  "e_kaimen": "January means the New Year deposit push, and everyone carries a target. You line up the names of villagers working away, and from the twenty-sixth of the last lunar month you wait at the station to tell them their money need not travel far.",
+  "e_quarter": "Five in the afternoon on the last day of the quarter, you are six hundred thousand short. The branch president phones family after family. The books close that night. By next morning the six hundred thousand has left again. The number on the whiteboard behaves like a tide.",
+  "e_mustard": "February is mustard-buying season, and the processors need cash fast. Your report spent eleven days at the credit center. By the time the loan came through, the purchase price had risen three fen a jin. Boss Peng did not blame you. He only did the sum out loud.",
+  "e_audit": "Head office audits staff accounts. Even the five thousand yuan your father sent you needs an explanation: purpose, source, relationship. You write three lines, and the last word is father. It is a strange form. You also know why it exists.",
+  "e_guarantee": "Three households guarantee one another, and when one man's luck turned on a far-off construction site, the payments stopped. You go to the other two. One family kills a chicken for you; the other opens the door a crack. You know every thumbprint on that contract. You wish you did not.",
+  "e_flood": "In July the level of Dongting Lake rises, and everyone in the polder goes up to keep watch on the dikes. Repayments slip across the board. You send the names one by one to post-loan and write beside them: when the water goes down. The risk system has no such option, so you put it in the remarks.",
+  "e_knee": "After years of riding the dike road, your right knee stiffens when it rains, and half your medical account goes on physiotherapy. The branch president suggests an electric bike. You try one. It cannot get over the bad stretch.",
+  "e_stomach": "Meals at the farm can't be refused. Not drinking when you lend looks like contempt; not drinking when you collect looks like counting. The endoscopy report runs to three lines. You show your spouse, who asks only whether this year's bonus has been paid.",
+  "e_fish": "Xiong spent half his life fishing on the lake. Ashore now, he asks you for thirty thousand yuan to open a farm machinery repair shop. You have no idea how to rate a fisherman's credit, so he shows you the receipt for the first pump he fixed. He goes on to repay more punctually than anyone, on the third of every month.",
+  "e_fish_gift": "An old customer brings two cured fish. You return them and he says you look down on him. You keep them, transfer the market price to him with the note \"fish purchase\", and send a screenshot to compliance. He does not speak to you for several days.",
+  "e_fraud": "An old woman insists on wiring one hundred and twenty thousand yuan to a \"case officer\" who is still on her phone. You pull up a chair and sit with her for fifty minutes until her son arrives, and only then will she put the card away. She is still cursing your meddling on the way home.",
+  "e_app": "Mobile banking has to reach its numbers, and every relationship manager has a quota. On market days you set up a table and help old people tap, download, and verify their faces. They learn to check their balance on it, then walk twenty minutes to the counter to make sure it's right.",
+  "e_ai_report": "Head office rolls out an AI pre-loan assistant. Reports in five minutes, smoother than yours. It gives Boss Peng a low score for thin cash flow. It has no way of knowing that mustard money arrives in sacks of cash. You write three hundred characters in the correction box.",
+  "e_ai_msg": "The system now sends holiday greetings and product messages in your name. An old man replies at length: his wife's legs are a little better, and thank you for remembering. You read it through at your desk, then type him an answer yourself.",
+  "e_merge": "The branch in the next town closes and two more villages' passbooks and loans come to you. Your list gains a page. The old people have to ride four more stops, and their first words at your desk are not about banking. They want to know where young Yang went.",
+  "e_blame": "A loan you made ten years ago has gone bad. The accountability notice reaches you with your name in the finding and a fine of eight thousand yuan. Responsibility for a loan lasts a lifetime. You remember that household and that year's approval perfectly. None of it fits on the appeal form.",
+  "e_year_end": "December thirty-first is final accounts, and no one at the bank goes home. At one-thirty in the morning the books balance. You share a cold boxed dinner on the folding table. The branch president says next year's target has already arrived: up nine percent.",
+  "e_parents": "There's a parent-teacher meeting at your child's school. You spend Saturday in a village checking a credit line. Your spouse says you can recall the income of seven hundred households and can't recall your child's class. You start to argue, then realize you really don't know whether it's Three or Four."
+ },
+ "choices": {
+  "c_gov": { "title": "The county housing fund is hiring", "situation": "The county's housing provident fund center is recruiting people who know finance. Nine to five, no deposit targets, no villages. You qualify, the written exam falls in the middle of the New Year push, and the branch president will not look pleased.", "options": [
+   { "label": "Sit the exam", "result": "You place second on the written test and take sick leave for the interview.", "end": "You switch to a white shirt and spend your days reviewing paperwork at a window. You still deal in loans; only now, when something goes wrong, the official seal stands in front of you." },
+   { "label": "Keep riding out", "result": "The notice is posted at the county government gate. You ride over, stop for a moment, and go on up the dike." }
+  ] },
+  "c_factory": { "title": "Boss Peng wants you on his books", "situation": "Boss Peng's factory has grown and he wants someone who knows banks to run his finances, at half again your current pay. You have done his credit for eight years and know his accounts better than he does. By the rules you would have to resign and wait out a cooling-off period. He says he will wait.", "options": [
+   { "label": "Resign and go to the factory", "result": "You write your resignation. When the branch president signs it he asks whether the money was too little.", "end": "You now stand on the other side of the pickling vat, learning to make the statements please a bank. The young relationship manager who comes to check climbs the rim with a tape measure. You tell him where the brine comes to." },
+   { "label": "Stay at the bank", "result": "You thank him and say you will still be the one checking his books. He lifts his teacup and says then check them closely." }
+  ] },
+  "c_fin": { "title": "The consumer finance company in Changsha", "situation": "A classmate leads a team at a Changsha consumer finance company and needs someone who understands risk. Double the pay, small loans made on phones. You don't really grasp this business. You only know you would never have to meet its customers.", "options": [
+   { "label": "Go to Changsha", "result": "You finish handing over the four villages and push the motorbike into the branch's shed.", "end": "From the twenty-second floor you watch the approval curves of risk models. Every point is a person. You don't need to know whether their stove is new or old." },
+   { "label": "Don't go", "result": "You watch his company's annual party on your classmate's feed. Yours is held at a food stall in town." }
+  ] },
+  "c_rm": { "title": "Sit the banking qualification, become a Relationship Manager", "situation": "To go from trainee to full Relationship Manager you must pass the banking professional qualification and head office's fitness test. The exam is at the end of October, right when you are following a batch of autumn harvest loans. Yu says he can cover for you two weekends.", "options": [
+   { "label": "Prepare properly", "result": "You keep a workbook clipped to the back of the motorbike and read two pages whenever you wait in a village. With the certificate in hand, your name is printed alone on a loan contract for the first time." },
+   { "label": "See the investigation through first", "result": "You follow that batch of harvest loans with great care. As for the exam, you tell yourself next year." }
+  ] },
+  "c_time": { "title": "That quarter-end money", "situation": "The quarter is eight hundred thousand short. A gravel trader offers to deposit it for three days, on condition that you look after his loan renewal next month. The branch president doesn't say it outright. He only asks how that trader has been lately.", "options": [
+   { "label": "Take the deposit", "result": "The quarter-end figure holds. Next month the renewal lands in front of you. You look at it far longer than usual, and sign." },
+   { "label": "Turn it down", "result": "You don't make up the eight hundred thousand and the whole branch loses its quarterly bonus. No one blames you. They just stop talking as they pass your desk." }
+  ] },
+  "c_paper": { "title": "An honest man short one document", "situation": "A household that has grown mustard for twenty years wants a loan of fifty thousand yuan. Not one piece of paper proves the old couple's income, and the system rejects it. You know they can repay. The rules allow a certificate from the village committee, and what it says depends on how you talk to Secretary Zhong.", "options": [
+   { "label": "Help get the certificate", "result": "The money comes through and they repay on time for five years. The certificate stays in the file. Sometimes you think of it and feel less than easy." },
+   { "label": "Send it back as it stands", "result": "The old man nods and says he won't make things hard for you. They borrow from relatives afterwards. You don't ask at what interest." }
+  ] },
+  "c_kin": { "title": "Your uncle wants a loan", "situation": "Your mother's cousin wants two hundred thousand yuan to expand his chicken farm. Rules say you must recuse yourself and pass it to a colleague. He doesn't understand this, and tells the family group chat you've forgotten your own people since becoming an official. Your mother phones and asks you to think of something.", "options": [
+   { "label": "Recuse and pass it on", "result": "A colleague makes the visit and lends him one hundred and twenty thousand. At New Year dinner he carries the chicken soup to everyone but you." },
+   { "label": "Quietly help prepare the papers", "result": "You don't sign, but the statements are your work. The loan goes through and he sings your praises. Only you know about it, which is exactly the trouble." }
+  ] },
+  "c_senior": { "title": "Apply for Senior Relationship Manager", "situation": "The county is selecting Senior Relationship Managers, judged on accounts managed, bad-loan rate, and a defended credit proposal. You have two processors you could write up, but that means three weeks of evenings, and those three weeks fall at quarter-end.", "options": [
+   { "label": "Apply", "result": "A panelist asks how to value pickled inventory. You say check the salt: under-salted stock is waste water by June. The room laughs, then writes it down." },
+   { "label": "Don't apply", "result": "You go on looking after your villages, every name on the list known to you." }
+  ] },
+  "c_ai": { "title": "Learn head office's new credit model", "situation": "Head office wants one person from each branch as a \"business calibrator\", feeding what's found in the field back to the data team. It means months of study in Yueyang and one more job on your return. Everyone else says the first person cut will be the one who taught the model.", "options": [
+   { "label": "Go and learn it", "result": "You learn to read feature weights and start adding one to the model: has a drying yard. A young data analyst asks what a drying yard is, and you send him a photo." },
+   { "label": "Pass", "result": "When the model's result comes down, you go to the village and check as usual. Sometimes it's right, and you can't say why." }
+  ] },
+  "c_vice": { "title": "Compete for Deputy Branch President", "situation": "The Deputy Branch President post is open, in charge of post-loan work and bad debts. What you'd have to collect is everything you and your colleagues lent over the years. You must submit a plan to the county leadership.", "options": [
+   { "label": "Write the plan", "result": "You propose dividing bad loans into those who won't pay and those who can't, and talking to them differently. The panel neither laughs nor approves. Three days later they call you in." },
+   { "label": "Keep your patch", "result": "You go on riding to the villages. The new deputy, transferred from the county, asks on his first trip what the white stuff is. Mustard, you say." }
+  ] },
+  "c_head": { "title": "Compete for Branch President", "situation": "The old president is retiring and the town's next Branch President must be chosen. Whoever sits there faces two kinds of people every day: those who want loans and those who want targets met. The same year, the province is pushing to merge the rural credit system, and no one can say how things will fall.", "options": [
+   { "label": "Compete", "result": "You move into the office with a view of the crossroads. The number on the whiteboard is now yours to write." },
+   { "label": "Don't compete", "result": "You say your legs are bad: fine for villages, no good for meetings. Everyone knows that this is the opposite of what you mean." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your sixtieth birthday Personnel hands you a list of nine loans you handled that are not yet settled. Responsibility does not retire with you; the list is very clear on that. You fold the paper and ask whether you still need to sign. You do. You sign, and turn in the registration for the motorbike, which was scrapped long ago.",
+  "burnout": "Your knee and your stomach submit their resignations together. You ask head office to move you off field work and end up in the back office keying in other people's reports, with no more dikes. You find you rather miss the wind up there, though this is not something you tell anyone."
+ },
+ "stages": [
+  "You follow Yu to the villages. He asks the questions, you hold the ink pad and tape and write the numbers. Back at the branch you enter income, debts and family members into the credit system and match the names on photocopied ID cards and household registers. You don't sign, so your mistakes are his to answer for, as he reminds you every few days.",
+  "Four villages' loans are now yours alone. Lend in spring, collect in autumn, visit every other quarter to see whether the money really went on fertilizer and mustard. Guarantors, village secretaries, the risk manager: you set what these three kinds of people say side by side. The difference from the last level is the signature on the final page of the contract.",
+  "You start on pickling works, rice mills and farm machinery cooperatives, credit lines of millions, with statements, inventory and supply contracts to take apart. You sit on video calls with head office's corporate team, explaining why a business's cash flow looks so ugly. The small farmers go to colleagues who came after you, and you only follow along when they're unsure.",
+  "You run post-loan and bad debts, going through the overdue list in the risk system each Monday and deciding whom to see first. At credit committee you speak for the branch and sometimes stop your own colleagues' reports. On collection trips a young relationship manager sits in the car. You let him do the talking and listen for what came out too hard; you tell him after.",
+  "You answer for all the town's deposits and loans. Most of each day goes on meetings, head office calls and complaints, and then saying things at seventy percent over some boss's dinner table. You decide whose credit gets squeezed this quarter and who gets working capital before New Year. These decisions travel through town faster than any announcement."
+ ],
+ "work": [
+  "Yu has you count a family's pickling jars. You get eighty-two. He shakes his head and lifts the lid in the third row: water. From then on you lift every lid.",
+  "You upload seventeen ID cards to the imaging platform. One has expired. The risk manager sends it back with a two-word note: check dates. You ride back to the village and wait all morning for the woman to come in from the field.",
+  "On market day the branch sets up a stall at the corner and you read interest rates through a loudhailer. An old man asks how much better it is to keep money with you than under the bed. You work it out on a calculator: sixty-four yuan.",
+  "For a fifty-thousand-yuan credit line for a mustard-growing family, you copy out three years of their sales records from each buying station. The factory bookkeeper asks what you want them for. This is their cash flow, you say.",
+  "On a post-loan visit a household says the loan bought fertilizer. You find half a sack in the storeroom. Behind the yard stands a new three-wheeler. You write this up in the post-loan report, weighing each word.",
+  "Secretary Zhong takes you to collect from a family. A dog barks at the gate. He says don't speak yet, let me ask after his mother's leg. The two of them talk about the leg for half an hour. As you leave, the family offers to pay two thousand next month.",
+  "A pickling works wants a three-million-yuan credit line. You measure the salt in the vat with a refractometer and value the stock at sixty percent. Boss Peng says you are harsher than the tax bureau, takes the instrument and measures it again himself.",
+  "The corporate team bounces your credit report, asking why receivables turn over so slowly. You send three years of statements between the factory and its out-of-town pickle dealers, annotated with each one's payment habits.",
+  "A rice mill is three months overdue. You and the legal officer go to look at the mortgaged building. The owner lays out his books and together you draw up a repayment schedule on blank paper, twenty-four lines, each with his thumbprint at the end.",
+  "At credit committee you vote against a young relationship manager's proposal. Afterward he won't speak to you. You circle the warehouse photo in his report and send it to him: this is last year's snow.",
+  "Head office's target arrives: deposits up nine percent. You sort everyone in town working elsewhere by village, draw up a station-pickup rota for the last lunar month, pin it to the wall of the small meeting room, and let each person claim their share.",
+  "A boss who has banked with you for thirty years comes in to complain that a new hire was rude. You brew tea and listen for an hour, and discover the complaint is about the mobile banking login screen."
+ ],
+ "past": [
+  "Your family in Huarong grows mustard. Every spring your parents haul salt to the vats sack by sack. The buyers owe money, so your mother takes her IOUs to the village office, and you follow, watching her make it sound as if she isn't asking for money.",
+  "You choose finance, thinking a bank means sitting in air conditioning behind glass. Your family thinks so too. This judgment later proves correct for exactly one year.",
+  "The summer of your third year you intern at a joint-stock bank in Changsha, handing out flyers. The man supervising you says the business comes down to how many people you know.",
+  "The year you graduate, your father has a bad fall. You go back to Yueyang and sit the rural commercial bank's recruitment exam in the city: aptitude and finance, one hundred and twenty people for five places.",
+  "You are posted to the counter of a township branch and count tens of millions of yuan in a year. A woman deposits three hundred every month. You remember her passbook; she remembers you skipped breakfast."
+ ],
+ "late": {
+  "pension_note": "Estimate: rural commercial banks pay social insurance and an enterprise annuity on time, a decent pension for the county, but the performance pay disappears at retirement.",
+  "scenes": [
+   "Your knee no longer has to climb the dike, but it still lets you know half a day before rain. You use the gift to remind your spouse to bring in the washing. Its accuracy beats the forecast.",
+   "In your second year of retirement, the compliance department sends a letter about a loan from the 2020s, requesting a reply within ten working days. The pension arrives each month, and so does the responsibility. You put on your reading glasses and reply in the proper format.",
+   "Your branch has been folded into the county office. The shopfront at the crossroads is let to a phone seller. Mustard still dries on the concrete out front, put there by the family next door.",
+   "Xiong's son, who has expanded the repair shop, comes by for a record of the old repayments, for some application. You write him a note with the dates, and find you remember every third of the month through all those years.",
+   "In the archive room you enter reports page by page, sometimes ones you wrote when young, in handwriting more careful than today's. Your stomach is a little better. You talk a lot less.",
+   "You work out your own medical reimbursements, more finely than the insurance window does, and check each item with them. The young woman behind the glass asks what you used to do. You say you sat behind a counter too.",
+   "You begin growing mustard in the yard, a small patch of thirty or so plants. They don't do well, and what you pickle is on the salty side, though you measure the salt with a refractometer.",
+   "After changing jobs, on the last working day of each quarter you still come alert at five in the afternoon and work out how much short you are. Nothing is short. It takes you years to get used to the feeling.",
+   "At another bank you watch a young relationship manager fill in an application. The fields are much as they were in your day. She enters a farmer's occupation as \"self-employed.\" You keep quiet and hold on to your queue number.",
+   "Word arrives from the county: the rural commercial banks have merged again. The way you address your former colleagues in your phone changes one by one, from President to Manager, and from Manager to plain old So-and-so.",
+   "At a relative's house for dinner, you check the stove, then the freezer, then the vehicle parked in the yard. Within a cigarette's time you have a figure for this family's debt ratio. Your spouse tells you to stop calculating. You say you weren't.",
+   "Loans are applied for on a phone now, money in three minutes. The young people in the village have never seen a tape-measure farm visit. The bad stretch of dike road has been paved, and few ride motorbikes along it."
+  ],
+  "closing": {
+   "retire": "Half a day before the rain, the knee stiffens on schedule. You get up and cover the mustard in the yard with a thin sheet of plastic. How much salt this year, you haven't decided.",
+   "burnout": "The light in the archive room goes off. Those pages recording brine lines and salt levels are all numbered, and all can be found.",
+   "end": "An afternoon at quarter's end, the sun lies on someone else's drying yard. You pass by and take a breath. The greens came in well this year."
+  }
+ }
+}

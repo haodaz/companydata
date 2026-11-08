@@ -1,0 +1,339 @@
+{
+  "id": "community-health-es",
+  "occupation": "Community Health Assistant",
+  "role": "Village Health Assistant",
+  "headline": "Back home after nursing school, a trainee health assistant on a motorbike in the mountains of Enshi, covering seven hamlets with a list of forty chronically ill elders",
+  "unit": "A village clinic in the Enshi mountains (under the township health center's public health department)",
+  "unit_type": "Village clinic",
+  "city": "Enshi, Hubei",
+  "city_tier": "Rural",
+  "education": "Vocational secondary school (nursing)",
+  "level": "Your blood pressure readings are accurate and you have just learned the public health system. You can't yet tell which old man means it when he says he took his pills.",
+  "intro": "You finished nursing school in Enshi city and didn't stay at a hospital there. You came back to this village, 1,200 meters up. The township health center gave you a list, a blood pressure cuff and a system login, and Du, the old village doctor, threaded one more clinic key onto your ring. The forty names on the list are people you called uncle and auntie as a child. Now you have to go and ask each of them whether they've taken their medicine.",
+  "salary_note": "Estimate: a mountain village post funded by public health programs and village subsidies, below the national average. The full amount often arrives only at year's end.",
+  "facts": [
+    {
+      "label": "Trainee Health Assistant (current level)",
+      "value": "0–2 years, ¥2,200–3,000 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Village Health Assistant (2–6 years)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Taking blood pressure, blood sugar and other basic readings",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Giving talks on healthy living and disease prevention",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "4 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+      "source": "Job listings"
+    }
+  ],
+  "day": [
+    "Fog sits on the pass. You pack the cuff, the glucose meter and a tube of test strips into a waterproof bag. You've gone over the expiry date on the box in marker. Things spoil faster up here, in the damp.",
+    "The clinic opens. Du sees the first cough of the day while you pull up this quarter's follow-up list: thirty-one with hypertension, nine with diabetes, the farthest of them up in Hamlet Seven.",
+    "You ride up to Hamlet Seven. The concrete road stops halfway and you push the bike the rest. One house has a cold stove. A neighbor shouts across the slope: gone up to pick tea.",
+    "You find him at the edge of the tea rows. You have him rest ten minutes, push up his sleeve, take the reading, say it out loud, then write it on his own paper card. He doesn't trust phones. He trusts paper.",
+    "Lunch at an old woman's table. You don't lecture her about salt. You ask how many pills she has left and take the box over to count. Thirty prescribed last month, nineteen still here. You don't call her on it. You only ask whether she's been forgetting these two weeks.",
+    "Back at the clinic, entering records. Two bars of signal; one follow-up takes three tries to save. The system says \"smoking amount\" is missing, and you try to remember whether that old man smokes a pipe or rolls his own.",
+    "A call from the township: next week's elder checkup bus is confirmed, twenty seats a trip. You sort everyone over sixty-five by hamlet and write down, one by one, whose family will have to carry them to the road.",
+    "You post the checkup notice in the village group as a voice message, once in the local dialect, and once more typed out. The old people can't read it but can hear it. They answer with voice messages of their own, about their legs."
+  ],
+  "ladder": [
+    {
+      "title": "Trainee Health Assistant",
+      "stage": "Following along",
+      "focus": "Goes on follow-ups with the village doctor, takes readings, enters records. Moves up by learning every person and path."
+    },
+    {
+      "title": "Village Health Assistant",
+      "stage": "One village",
+      "focus": "Alone in charge of the village's chronic disease list, elder checkups and referrals."
+    },
+    {
+      "title": "Area Health Liaison",
+      "stage": "Several villages",
+      "focus": "Leads assistants in four or five villages, audits follow-ups, coordinates clinic rounds and checkup buses."
+    },
+    {
+      "title": "Township Public Health Officer",
+      "stage": "Into the health center",
+      "focus": "Runs the township's public health programs, data and inspections, and deals with the county."
+    },
+    {
+      "title": "Deputy Chief, Public Health Department",
+      "stage": "The whole township",
+      "focus": "Plans the township's year of public health work; manages people, funding and county evaluations."
+    }
+  ],
+  "ai_tasks": [
+    {
+      "name": "Giving talks on healthy living and disease prevention",
+      "how": "AI can draft the talk, build slides and script short health videos. People have to adjust it to the age, schooling and common illnesses of the room, then explain it in person and get everyone involved."
+    },
+    {
+      "name": "Helping organize community health checkups",
+      "how": "AI can set schedules, send notices and reminders, and tally sign-ups. People have to go door to door for elders who can't get around, keep order and calm the nervous."
+    },
+    {
+      "name": "Taking blood pressure, blood sugar and other basic readings",
+      "how": "These take hands and judgment on the spot. People measure properly and notice what's wrong; AI at most records and prompts."
+    },
+    {
+      "name": "Keeping community health records up to date",
+      "how": "AI can file readings and interviews, update records and flag gaps. People spot-check the key facts and watch over privacy."
+    },
+    {
+      "name": "Gathering people's health needs and feedback",
+      "how": "AI can transcribe, sort and find common concerns. People have to sit and talk, hear the worry nobody said out loud, and decide what comes first."
+    },
+    {
+      "name": "Linking people to clinics and helping with referrals",
+      "how": "AI can find departments and hours and draft referral papers. People decide whether a referral is needed, go along or make the call, and deal with the actual person on the other end."
+    },
+    {
+      "name": "Giving basic health advice and neighborly services",
+      "how": "AI can answer common questions and draft lifestyle tips. People judge what goes beyond basic advice, take responsibility for the answer and offer comfort."
+    },
+    {
+      "name": "Compiling health statistics and sending out health news",
+      "how": "AI can tally data, make charts and schedule health messages by group. People only review whether the content is accurate and suits the audience."
+    }
+  ],
+  "events": {
+    "e_fog": "Ten days of thick September fog; on the pass you can't see a person three meters off. You push the bike two hours up to Hamlet Seven and only then find you forgot to change the glucose meter's batteries.",
+    "e_strip": "A batch of test strips from the health center got damp, and several elders' sugar readings come out absurdly high. You go round every house a second time and flag that lot number in the system for retesting.",
+    "e_tea": "Around Qingming it's tea-picking season, and in daytime there isn't one person in the village who will sit down for a blood pressure check. This quarter's follow-ups all move to after dark, knocking on one door after another.",
+    "e_quarter": "Quarterly follow-ups have to be closed out in the system, and the health center's evaluation is next week. You spend two nights catching up and find three phone numbers have gone dead. To learn where those people went, you'll have to ask next door.",
+    "e_son": "A son working in Guangdong adds you on WeChat and asks every few days what his father's blood pressure is. Each time you send the numbers, and add \"he says he isn't dizzy.\" Nothing more.",
+    "e_refer": "An old man's reading is plainly wrong. You tell him not to go home and arrange a referral on the spot. He says you're making a fuss. Three days later his daughter calls from the county hospital and says it was lucky he went when he did.",
+    "e_knee": "Your knees have started to click on the downhill. All these years of motorbike and mountain path. A colleague at the health center looks at your X-ray and says your knees are ten years older than your ID card.",
+    "e_slip": "The bike skids out on moss. You're fine, but the cuff has a split in it. You tape it up and use it for two more weeks while waiting on a new one from the health center.",
+    "e_ice": "A freeze in the twelfth lunar month: an inch of ice on the power lines and the road closed for nine days. In the village group you call out to everyone in turn, asking whose medicine is running low, and have the clinic's remaining blood pressure pills carried up on someone's back.",
+    "e_salesman": "A van selling therapy machines drives into the village, handing out eggs and taking blood pressures, and the elders are dazzled. You don't argue with the salesmen. The next day you count pills in those households. Two have stopped theirs.",
+    "e_late_pay": "Program funding arrives only at year's end, three months of your subsidy in one lump. Until then, the gas for your bike came on loan from Du.",
+    "e_car": "The checkup bus reaches the village at seven, and by half past five you've carried two old people with bad legs to the roadside. The young woman drawing blood asks if you're family. You say, more or less.",
+    "e_school": "The village primary school has closed, and families with children have moved to the township. Your list gets older every year. The column for expectant mothers has been empty for two years.",
+    "e_names": "Four names leave the list this year. The system wants you to click \"Deregister\" and choose a reason. You click slowly, and when you're done you put those households' paper cards in a bag.",
+    "e_ai_voice": "The system gets voice entry: you speak, and the record fills itself in. It often mishears the local dialect, once logging \"dizzy head\" as \"warming by the fire,\" but you get home an hour earlier every night.",
+    "e_ai_push": "The county platform starts sending elders automatic health reminders. An old woman receives \"Walk briskly thirty minutes a day\" and comes to ask you whether the steep slope outside her door counts.",
+    "e_ai_teach": "You start teaching elders to use online consultations on their phones. In one afternoon you teach two. The third hands the phone back and says: couldn't you just tell me?",
+    "e_merge": "Two neighboring villages' clinics are combined into one, and Du's room no longer opens. People in Hamlet Seven now walk four kilometers more to see a doctor, and your follow-up routes are all redrawn.",
+    "e_inspection": "The county audits records and phones people at random. One old man on the line says: when that kid takes my blood pressure, his hands are colder than mine. The auditor laughs, and the item passes.",
+    "e_train": "Three days of training in Enshi city, your first formal lessons in hearing what elders don't say. You come home to find that the \"open-ended questions\" in the book are what your aunt has been doing all her life."
+  },
+  "choices": {
+    "c_city": {
+      "title": "The checkup center in the city",
+      "situation": "A private health checkup center in Enshi city wants nurses: ¥1,500 more a month, weekends off, no slopes. Osmanthus in the courtyard, and no one on the list you've ever met.",
+      "options": [
+        {
+          "label": "Go to the city",
+          "result": "You give the bike key back to Du and leave the cuff at the clinic.",
+          "end": "You went to the checkup center in Enshi city and took two hundred blood pressures a day, not one name to remember. Within a few years you could work the line and think about dinner."
+        },
+        {
+          "label": "Stay in the village",
+          "result": "You say two more years. Du doesn't answer that. The next day he tells you the shortcut to Hamlet Seven."
+        }
+      ]
+    },
+    "c_nurse": {
+      "title": "Take the nursing license exam for the county hospital",
+      "situation": "Your schooling is enough to sit for the nurse's license, and the county hospital is short of people. It's a steady road. But if you go, your hamlets fall on someone else, and that person's motorbike is only so big.",
+      "options": [
+        {
+          "label": "Take it and go",
+          "result": "You study under the clinic lamp at night and pass the following year.",
+          "end": "You joined the endocrine ward at the county hospital, three shifts in rotation, and now and then someone from your list ended up in a bed. They called you by your childhood name. You checked the bedside card again."
+        },
+        {
+          "label": "Get the license, stay put",
+          "result": "The license goes on the clinic wall. People in the village think you look more official now."
+        },
+        {
+          "label": "Don't take it",
+          "result": "You spend the study hours on one more trip up to Hamlet Seven."
+        }
+      ]
+    },
+    "c_care": {
+      "title": "The township nursing home needs someone to run things",
+      "situation": "The new nursing home in the township wants you as head of care: thirty beds, better pay, no more mountain roads. Your knees have already said yes for you. The list is still in your hands.",
+      "options": [
+        {
+          "label": "Go to the nursing home",
+          "result": "You move to the township. Three of the first residents are people from your list.",
+          "end": "You worked at the township nursing home until you retired. The list became bedside cards, and no slope stood between you and a reading. Only nobody there needed their pills counted twice anymore."
+        },
+        {
+          "label": "Keep riding",
+          "result": "You buy a new pair of knee braces and change Hamlet Seven's follow-ups to every two months."
+        }
+      ]
+    },
+    "c_far": {
+      "title": "Who takes Hamlet Seven",
+      "situation": "Du says his legs are finished and Hamlet Seven is yours from now on. The houses are scattered, it's half a day each way, and those elders need someone most. The assistant in the next village suggests giving Hamlet Seven to her while you take a few roadside households. Your numbers would look better.",
+      "options": [
+        {
+          "label": "I'll take it",
+          "result": "Your feet come to know every fork on the way to Hamlet Seven, and you wear through three pairs of trouser cuffs."
+        },
+        {
+          "label": "Trade for roadside homes",
+          "result": "Your follow-up completion rate climbs into the township's top three. You phone Hamlet Seven now and again."
+        }
+      ]
+    },
+    "c_cert": {
+      "title": "Health manager certificate, or save up to fix the bike",
+      "situation": "The county is running a health manager course. Fees and travel are on you, seven weekends in all. Certificate holders get priority for Area Health Liaison later on, and the bike really does need replacing.",
+      "options": [
+        {
+          "label": "Sign up",
+          "result": "You ride that falling-apart bike to seven weekends of class and go on doing follow-ups when you get home."
+        },
+        {
+          "label": "New bike first",
+          "result": "The new bike doesn't stall on the climbs, and each trip to Hamlet Seven saves half an hour."
+        }
+      ]
+    },
+    "c_liaison": {
+      "title": "Compete for Area Health Liaison",
+      "situation": "The health center is picking an Area Health Liaison for this stretch: five villages' assistants, ¥300 more a month, frequent meetings in the township, and auditing other people's follow-ups. Everyone you'd audit lives in the same valley as you.",
+      "options": [
+        {
+          "label": "Compete for it",
+          "result": "You speak for eight minutes in the health center's small meeting room, all of it about roads. Chief He of the public health department takes down a few lines."
+        },
+        {
+          "label": "No, one village is enough",
+          "result": "You say you can't manage other people. It goes around that you don't want responsibility. You don't bother to explain."
+        }
+      ]
+    },
+    "c_audit": {
+      "title": "The next village's follow-ups were back-filled",
+      "situation": "Checking data, you find two months of follow-ups from the next village, all logged the same night. That assistant has two children and a husband working far away, and you know she couldn't get free then. The public health department wants your quality report.",
+      "options": [
+        {
+          "label": "Report it, then talk to her",
+          "result": "You write it truthfully and go with her to see those two months of elders again. She doesn't speak to you for half a year. Then she does."
+        },
+        {
+          "label": "Have her redo it, leave it off the form",
+          "result": "She redoes the visits and the form stays clean. You remind yourself this can happen only once."
+        }
+      ]
+    },
+    "c_ai": {
+      "title": "Learn the new follow-up assistant or not",
+      "situation": "The county is piloting a follow-up assistant that reads the history and tells you whose house to go to first. You'd have to learn it, bring the whole area along, and check every suggestion it makes.",
+      "options": [
+        {
+          "label": "Be the pilot",
+          "result": "The first month it sends you to a household that moved away a month ago. By the third month it warns you early about someone whose blood sugar has been climbing."
+        },
+        {
+          "label": "Stick with the old way",
+          "result": "The list is still handwritten. You could sort who comes first with your eyes shut."
+        }
+      ]
+    },
+    "c_zhuanggan": {
+      "title": "Sit the exam for Township Public Health Officer",
+      "situation": "A Township Public Health Officer post has opened at the health center: every day with the township's data and the county's forms, and no more Hamlet Seven. If you pass, you become the one who phones other people for numbers.",
+      "options": [
+        {
+          "label": "Take it",
+          "result": "You come second on the written test. At the interview they ask what adherence means, and you tell them about that box of thirty pills."
+        },
+        {
+          "label": "Stay with the area work",
+          "result": "You say anyone can fill out forms. In truth you're afraid that once you sit down in an office you'll forget how the roads go."
+        }
+      ]
+    },
+    "c_vice": {
+      "title": "Compete for Deputy Chief of Public Health",
+      "situation": "The department chief is about to retire and someone has to step up as Deputy Chief. You aren't young, and your schooling is your weak point. The job means the township's funding and inspections, and speaking politely to young county clerks.",
+      "options": [
+        {
+          "label": "Give it a try",
+          "result": "You put your vocational diploma and twenty years of follow-up forms on the table together. The director reads for a long while."
+        },
+        {
+          "label": "Leave it to someone younger",
+          "result": "You walk the young college graduate through every road in the township, and he fills a whole page of notes on the map."
+        }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On the day of your retirement paperwork, the system closes your account and thousands of follow-up records are moved under \"former handler.\" The road to Hamlet Seven is paved all the way now, and fewer people walk it than there are stretches of road. On cloudy days your knees beat the forecast.",
+    "burnout": "After that winter your legs could no longer make it up to Hamlet Seven. The health center looked at your X-rays again and again, and divided your list among three people. You rest at home. The fog comes up the mountain and goes again, and nobody asks you to take a blood pressure."
+  },
+  "stages": [
+    "You go on follow-ups with Du: how many fingers' width for the cuff, how long to wait before a reading, how to say the number, one thing at a time. You enter the data, and he tells you whose words to discount. You can't decide on referrals alone yet, so the call goes to him first. This year all you hold is a key and half a list.",
+    "The whole village's chronic disease list is in your hands: quarterly follow-ups, the annual elder checkups, the phone call to the township when someone needs a referral. The village doctor treats people; you make sure they come back. Paper cards, glucose meter and the public health system must all agree, and when they don't, you go and ask the person.",
+    "Five villages' assistants report to you. Each month you audit ten follow-ups per village, check calls and timestamps, and hand in a quality report. The rounds and checkup buses run on your routes. It used to be you others questioned on the road; now you ask them, did you really go to that house? Getting that out of your mouth is harder than the climb to Hamlet Seven.",
+    "You sit in the health center's office, with the township's public health data, the county's evaluation rules and a dozen program ledgers. Most of your calls are to ask for data. Village assistants have started calling you teacher. When you see a completion rate on a sheet, what you think of is how far that road is.",
+    "How the township's public health money is split, who goes to which village, how inspection files are laid out: it all goes through you. You attend county meetings, and you give new assistants their first lesson. You used to speak to the township on behalf of the elders; now you speak to the county on behalf of the township, and sometimes the two sides are saying different things, and you're the translator."
+  ],
+  "work": [
+    "Old Mr. Yang in Hamlet Five flatly won't lift his arm, says he had it checked yesterday. Du has you help him chop pig fodder first. Half a basket later, the cuff goes on.",
+    "Your first solo record in the system. An old aunt's ID card has expired, and its birthday is two months off from the one she tells you. You enter the one on the card and write hers in the notes.",
+    "Du has you close your eyes and listen to the mercury sphygmomanometer. You compare it against the electronic cuff on ten people, and seven match. He says that will feed you for two years.",
+    "A diabetic old woman's son sends home a box of sugar-free pastries. You read her the ingredients; the third is maltose syrup. She says, you eat them then. You say, I don't eat them either.",
+    "Halfway through a referral slip, the doctor on duty at the health center asks when exactly the dizziness began. You call back to ask his wife, who says, right after we finished threshing. You convert that to four in the afternoon.",
+    "The list for over-sixty-fives comes up twelve short. You ask house by house. Four have gone away to mind children for family in other provinces. You mark them \"change of residence\" and keep the phone numbers.",
+    "The new assistant's follow-ups all read 120 over 80. You take the sheet to her village, casually ask two elders for a fresh reading, and then walk one hamlet's round again with her.",
+    "The checkup bus has only three days and five villages are fighting for them. On the schedule you put the village with the worst road on the first day, when good weather is surest. The other four village heads call you, and you explain to each.",
+    "The county's evaluation rules change by one line: the denominator goes from registered population to resident population. You recalculate the whole township, and one village's completion rate falls from seventy percent to just over fifty, though not one fewer person was visited.",
+    "The new young man asks why the abnormal blood sugar rate is so high. You open the sheet and point: this batch was tested during tea season, and these people had eaten breakfast before coming down.",
+    "A week before the inspection you stack the township's paper backups box by box, labels at the same height. The inspection team stays forty minutes, takes three files, and compliments the labels on the way out.",
+    "You work through this year's public health budget with the director: how much the checkup bus takes, whether assistant subsidies can be paid monthly. You insist on monthly, and cut the brochure budget in half.",
+    "A young county clerk calls demanding data, in a sharp tone. You let him finish, then ask: have you ever been to our township? Next month I'll take you up to Hamlet Seven. The data you'll have tonight.",
+    "Giving new assistants their first lesson, you skip the slides and sit them at the health center's door taking blood pressures. When they're done, you tell them the old man they just measured only came in to ask directions."
+  ],
+  "past": [
+    "Your grandmother had high blood pressure and took her pills on and off. Du, the village doctor, came by each month. Home from school, you'd find him sitting in the front room, counting tablets.",
+    "After middle school you skipped the county high school and chose nursing at the prefecture's health school. Your family did the sums: three years to earning, and tuition cheaper than high school.",
+    "Three-shift internships at a hospital in Enshi city. Your supervisor praised your steady injections, but beside the dressing cart you kept wondering whether people, once discharged, took their pills at home.",
+    "After graduation you spent two years at a pharmacy in the city, where supplements sold best. You worked it out: what one old woman spent on them in a month would have covered six months of blood pressure medicine.",
+    "After your grandmother passed, Du sent word that his legs were failing and the health center was hiring a health assistant, a local who could ride a motorbike."
+  ],
+  "late": {
+    "pension_note": "Estimate: early village subsidies carried no formal contributions; steady social insurance began only after you moved to the health center, so the pension is low.",
+    "scenes": [
+      "Your first year off the job, you plant tea on the overgrown slope by your door. Crouching to pick, your knees don't click. This is the best they've behaved in decades.",
+      "A township pharmacy has you in two days a week to help elders with the package inserts. You read through a magnifying glass, and when you reach \"take after meals\" you ask what time they eat.",
+      "Follow-ups are long since the job of wristbands and platforms, and Hamlet Seven is down to three households. The day a wristband sends an alarm, a young man from the health center drives up in a driverless car. The road is much better than it was. You work out the gas money for him anyway.",
+      "You're on the chronic disease list yourself now. The new assistant reads your numbers out loud; you tell her the cuff is one finger too loose. She smiles and takes it again. The reading is the same as before.",
+      "Once your legs can't do slopes, you sell the motorbike to a neighbor for ¥800. He rides it for years hauling mountain goods. It still starts.",
+      "You spend a winter at your daughter's in the city. The heated rooms make your head ache. The pharmacy downstairs is giving away eggs; you walk over, look at the prices, and hand the eggs back.",
+      "You applied for the back pay on your subsidies for three years and got half. You keep the text message confirming it, though not for the money.",
+      "In your new place you still look first at a person's hands and ankles. Coworkers say you chat like you're taking a history. You try to stop for a while and can't.",
+      "Around Qingming you remember that this is when nobody can be found on the mountain. But in these days there is no one you need to find.",
+      "You leave the village group and someone pulls you back in. It's all tea and cured meat for sale now. You open it every few months and never again hear anyone answer with a voice message about their legs.",
+      "In anyone's home, you look first for pill boxes on the table, then at the salt jar by the stove. Their owners have never known about this inspection.",
+      "The tea is still on the mountain; several houses in Hamlet Seven have lost their roofs. You still know half the birthdays on that list by heart. They're just no use anymore."
+    ],
+    "closing": {
+      "retire": "The fog comes down from the pass and soon covers the tea rows. You roll your sleeve back down. Blood pressure just taken: 132, better than last week.",
+      "burnout": "Winter now, a thin frost on the path. You walk to the edge of the slope on your stick, look up a while, turn back and light the stove.",
+      "end": "There's a pothos on the sill at your new workplace. Every other day you touch the soil to see if it needs water. None of this goes in any system."
+    }
+  }
+}

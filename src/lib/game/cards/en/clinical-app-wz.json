@@ -1,0 +1,183 @@
+{
+ "id": "clinical-app-wz",
+ "occupation": "Clinical Applications Specialist",
+ "role": "Clinical Applications Specialist, Imaging Equipment Company",
+ "headline": "At a mid-sized imaging equipment company in Wenzhou, you haul a lead apron and a phantom to county hospitals across southern Zhejiang and northern Fujian, teaching radiographers one machine at a time and telling the truth, with tact, between the sales rep and the department head",
+ "unit": "A Wenzhou maker of DR systems and mobile C-arms, three hundred staff, clinical applications team of nine",
+ "unit_type": "Private medical device company",
+ "city": "Wenzhou, Zhejiang",
+ "city_tier": "Second-tier",
+ "education": "Bachelor's (Medical Imaging Technology)",
+ "level": "You've interned in a radiology department, can position patients and read exposure settings, and can explain a device manual. You have never yet run a demo alone in front of a department head",
+ "intro": "The company is in an industrial park in Ouhai: assembly on the first floor, R&D on the second. Your desk is on the second floor, by the storeroom, beside an anthropomorphic phantom everyone calls Old Wang. You are issued a lead apron, a laptop full of demo software and a personal dosimeter to be sent for reading each quarter. Next week you go with a sales rep to a county hospital in Taishun for a DR acceptance test. One radiographer there has twenty-seven years in.",
+ "salary_note": "Estimate: base plus travel allowance and project bonus at a smaller Wenzhou device company, twenty to thirty percent below a foreign brand in Shanghai.",
+ "facts": [
+  {
+   "label": "Clinical Applications Specialist (current level)",
+   "value": "0–2 years, ¥9,000–13,000 a month (national, estimated)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Clinical Applications Specialist (2–5 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 3–5 years",
+   "value": "¥10,200 (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "On-site training and case support in the OR and radiology department",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "First drafts of training decks and operating manuals",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "52 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "Catching the high-speed train. In your backpack are a laptop, the dosimeter and half a phantom's chest. On the train the sales rep tells you the department head today doesn't like hearing about specs.",
+  "In the county hospital's radiology department. First you measure the width of the door and how level the floor is. Whether a mobile unit can get through decides this day more than any specification.",
+  "You teach three radiographers how to operate the unit. The woman with twenty-seven years stands in the back row with one hand in the pocket of her white coat.",
+  "Lunch in the hospital canteen. The head of medical engineering asks what third-year maintenance will cost. You say you'd have to ask sales. He says I'm asking you.",
+  "On site you adjust exposure settings, shoot a dozen images on the phantom and compare them one by one. The veteran radiographer walks over, points at the screen, and says your positioning is off by two degrees.",
+  "You write up the acceptance record for signature by the department head, the radiographer and medical engineering. The department head can't sign until his clinic ends, so you revise a training deck on a plastic chair in the corridor.",
+  "On the train back you write your work log and enter today's three issues in the system. Your note to R&D reads: it isn't that she can't use it. The button is on the left."
+ ],
+ "ladder": [
+  { "title": "Clinical Applications Specialist", "stage": "On site", "focus": "Assist with installation and acceptance, train radiographers, demo equipment, record clinical feedback" },
+  { "title": "Senior Clinical Applications Specialist", "stage": "Solo", "focus": "Own pre-sales demos and training for a region and handle difficult positioning and settings" },
+  { "title": "Clinical Applications Supervisor", "stage": "A team", "focus": "Lead a small team, review training materials, handle adverse events and key hospital complaints" },
+  { "title": "Clinical Applications Manager", "stage": "Nationwide", "focus": "Manage all clinical support and competitor analysis; contend for priorities with R&D, regulatory and marketing" },
+  { "title": "Director of Clinical and Product", "stage": "Direction", "focus": "Decide which clinical problems the next generation solves, and answer for registration and launch timing" }
+ ],
+ "ai_tasks": [
+  { "name": "On-site training and case support in the OR and radiology department", "how": "Where to wheel the unit, when to change settings: it takes a person on site working with the radiographer." },
+  { "name": "Judging and reporting adverse events", "how": "Systems can flag leads, but whether it counts and how serious it is takes someone to judge and sign." },
+  { "name": "First drafts of training decks and operating manuals", "how": "AI drafts from the manual and handles Q&A. Which step county radiographers get wrong, someone has to add." },
+  { "name": "Pre-annotating image data", "how": "AI labels first, and someone who can read images does quality control." },
+  { "name": "Compiling competitor specs and tender documents", "how": "Public specifications and tender notices are gathered quickly and completely by AI." },
+  { "name": "Basic Q&A on medical imaging", "how": "For new hires learning anatomy and imaging principles, AI is a more patient tutor than a senior colleague." }
+ ],
+ "events": {
+  "e_first_demo": "Your first solo demo, and the display cable won't connect. The department head waits seven minutes, looks at his watch and leaves. The sales rep doesn't shout at you in the stairwell. He just says bring another cable next time. From then on your backpack holds four kinds of adapter.",
+  "e_dose": "Your personal dosimeter goes in for reading each quarter and the reports come back within limits. You keep it inside your lead apron, and after each set of exposures you reckon how many steps you stood from the tube that day.",
+  "e_lead": "Supporting a C-arm in the OR means wearing the apron all day, seven or eight kilos all on your shoulders and back. The massage therapist reaches your third lumbar and asks if you've been carrying something. You say yes, for quite a few years.",
+  "e_tech": "The veteran county radiographer explains that with this button on the left she reaches an extra three hundred times a day. You work it out and put it on a feedback form. The next model has it on the right. R&D never mentions who suggested it.",
+  "e_sales": "In front of the department head the sales rep says this machine's dose is thirty percent lower than the imported one. You know that's a result under particular conditions. The department head turns and asks if that's right. You say: under certain conditions, yes. I'll send you the test conditions.",
+  "e_tender": "At year-end county hospitals have to spend their budgets, and tenders pile up. You and the sales rep cover five hospitals' pre-sales in two weeks, and at night in hotels you revise compliance tables, discovering how far \"better than\" lies from \"no less than.\"",
+  "e_cert": "Your radiation worker's permit comes up for review, training and medical checkup both mandatory, and the company goes in batches. You go through your blood work line by line. The numbers haven't changed. You still take some notice.",
+  "e_adverse": "A hospital reports an occasional thin line artifact on the detector. A sales rep says don't report it, it'll affect the tender. You read the logs and fill in the preliminary adverse event assessment according to procedure. It's later traced to a software version, and the company issues a recall notice.",
+  "e_bigbrand": "Imported brands and big domestic makers have moved down into the counties, and a hospital you've supported for six years switches to someone else. The department head rings to explain. You say I understand. The next day you still go and help export the data from the old machine.",
+  "e_collect": "An older DR model's registration certificate is about to expire and the boss decides not to renew, moving everything to the new platform. More than forty county hospitals are still using it. You go to each in turn to explain spare parts and maintenance from here on.",
+  "e_ai_module": "The company integrates an AI fracture-assist module and you take it to county hospitals. A young radiographer asks if it ever misses one. You walk through the validation report's sensitivity and false negatives, while the sales rep beside you squeezes his phone.",
+  "e_ai_doc": "AI now writes the first draft of the training manual, more fluently than you do at midnight. It writes the old model's button positions into the new manual. You catch it, but it turns up again in the next version, and you add button positions to the standing checklist.",
+  "e_train": "A training session one winter at a mountain hospital in northern Fujian, the heating in the machine room broken, five people in coats around the console. Halfway through an emergency exam comes in. You all step aside, and when it's done you pick up where you left off.",
+  "e_family": "More than two hundred days a year on the road. Your child's school gives notice of a parents' meeting; you enter the date and find you'll be doing an acceptance in Lishui. Your spouse says nothing and sticks the schedule to the refrigerator. Your name doesn't appear on it much.",
+  "e_engineer": "An R&D engineer comes to a county hospital with you for the first time. Watching the veteran radiographer press a button while calming a child on the phone, he writes a few lines in his notebook and goes back and removes a pop-up.",
+  "e_data": "The company wants a batch of de-identified images for algorithm work. You talk several times with the hospital's data lead, spelling out the use of every field. She says you are more long-winded than our ethics committee.",
+  "e_train_seat": "After all these years on the train you know how close each station's restrooms are to which carriage, and which county hospital's nearest hotel has the hardest bed. None of this counts as experience. You use it most of all.",
+  "e_old_tech": "The radiographer with twenty-seven years has retired. She sends someone with the faults she's found in your machines over the years, four handwritten pages. A young man in R&D asks who this is. You say a customer."
+ },
+ "choices": {
+  "c_reg": { "title": "Move to regulatory affairs", "situation": "The company's regulatory team is short of people who understand clinical work and don't mind reading regulations. It would mean no more travel, no lead apron, and days spent on technical requirements and registration test reports. Similar pay. Your back would be happy.", "options": [
+   { "label": "Go to regulatory", "result": "You finish all your open acceptance forms before moving.", "end": "You begin to deal with the review officers. On the ninth draft of a clinical evaluation report, all that county-hospital business has become a few lines of proper language. Your lead apron hangs in the storeroom." },
+   { "label": "Keep traveling", "result": "Your suitcase gets another set of wheels." }
+  ] },
+  "c_hospital": { "title": "Work in a hospital as a radiographer", "situation": "A top-tier (Grade 3A) hospital in Wenzhou needs experienced radiographers on contract, off the permanent state payroll. Twenty percent less pay, no travel. This is what you trained for, and if you go back, the machines will be someone else's, and you'll no longer have to explain whether someone else's is good.", "options": [
+   { "label": "Go to the hospital", "result": "The sales rep sees you off and asks you to look after them from now on.", "end": "You're back in a white coat, a hundred-odd exams a day. You understand the error prompts at a glance. When the maker's new hire comes to train you, you stand in the back row with a hand in your pocket." },
+   { "label": "Stay at the company", "result": "The notice expires and you go on traveling." }
+  ] },
+  "c_senior": { "title": "Apply for Senior Clinical Applications Specialist", "situation": "To become a Senior Clinical Applications Specialist you submit a representative case and pass a site assessment. You could write about your smoothest Grade 3A hospital, or about the county hospital that broke the machine and then got it working, which doesn't look so good.", "options": [
+   { "label": "Write up the county hospital", "result": "You put down the problems one by one. The R&D director on the panel asks whether that thing about the button is true. You say it is." },
+   { "label": "Write up the Grade 3A", "result": "The materials look good and you pass your defense easily. You weren't all that interested yourself while speaking." }
+  ] },
+  "c_lie": { "title": "Say this for the sales rep or not", "situation": "Before a tender, the sales rep wants you to tell a departmental meeting our detector has no rival at this price. You know another brand's specs are about the same. This order matters to the company, and year-end bonuses depend on it.", "options": [
+   { "label": "Just the facts", "result": "You give the test data and the limits. You lose the order and the sales rep doesn't talk to you for two months. The department head does keep your number." },
+   { "label": "Say it", "result": "You win the order and the bonus is paid. On acceptance day, you don't meet the department head's eyes." }
+  ] },
+  "c_ai": { "title": "Teach yourself AI module validation", "situation": "The company needs someone who knows clinical validation of AI modules: how to design datasets, how to read sensitivity, how to tell radiographers plainly where it goes wrong. You'd have to teach yourself, on weekends, and it isn't in your KPIs.", "options": [
+   { "label": "Learn it", "result": "You learn to read ROC curves and to tell radiographers: don't believe this prompt entirely. Later R&D invites you to its requirements meetings." },
+   { "label": "Leave it for now", "result": "You deliver the AI module's training from the slides, reasonably well. When someone asks more deeply, you say I'll ask R&D." }
+  ] },
+  "c_lead": { "title": "Compete for Clinical Applications Supervisor", "situation": "The team will promote a Clinical Applications Supervisor to lead five young staff and handle complaints and adverse events. It means less time on site and more on the phone solving others' site problems, and when something goes wrong, the first call comes to you.", "options": [
+   { "label": "Compete", "result": "You begin grading new hires' first demos. The comment you write most often: bring another cable." },
+   { "label": "Stay on site", "result": "You go on wearing the apron. The new supervisor phones to ask what that hospital's department head likes to hear." }
+  ] },
+  "c_mgr": { "title": "Become Clinical Applications Manager", "situation": "The company is expanding nationally and needs a Clinical Applications Manager to run all clinical support and fight for priorities with R&D, regulatory and marketing. You'd move to a desk at the company, and learn to write what R&D can understand.", "options": [
+   { "label": "Accept", "result": "You sort radiographers' complaints by frequency. The head of R&D says the priorities are wrong. You argue all afternoon and move item three up to first." },
+   { "label": "Decline", "result": "You tell your boss you've got a few more years on the road in you." }
+  ] },
+  "c_dir": { "title": "Compete for Director of Clinical and Product", "situation": "The company will name a Director of Clinical and Product to decide what the next generation solves and answer for registration timing. You've seen more county hospitals than the whole R&D team combined. But every judgment made in that seat is worth tens of millions.", "options": [
+   { "label": "Compete", "result": "Your first roadmap says: solve county hospitals' positioning problem first. The boss asks if that'll sell for more. You say it'll sell more." },
+   { "label": "Don't compete", "result": "You say that seat belongs to someone who can tell a story. You go on training people." }
+  ] },
+  "c_dealer": { "title": "Start a company with a distributor", "situation": "A distributor of more than ten years wants you as a partner in county hospital imaging maintenance and third-party training. You know every radiology head in southern Zhejiang, and that's your capital. Income depends on contracts, and you'd have to front money.", "options": [
+   { "label": "Go in with him", "result": "You sign a one-year non-compete on leaving, and the two of you stagger your business around it.", "end": "Your card has changed. You still go to county hospitals, but now the maintenance contract is in your company's name, and the travel money is your own." },
+   { "label": "Don't go", "result": "He partners with someone else later and still offers you a cigarette when you meet." },
+   { "label": "Just teach a couple of classes", "result": "After declaring it to your company, you use time off in lieu to teach two classes for him. He says you have too many rules, and the fee arrives anyway." }
+  ] }
+ },
+ "endings": {
+  "retire": "Your radiation worker's permit expires and this time you don't go for training. Your dosimeter's final report comes back with figures close to the first one. The earliest models you ever supported have long since lost their registration certificates and their spare parts, though a few county hospitals still have one standing in a corner of a storeroom.",
+  "burnout": "You read the film of your own spine, at a hospital you once trained. The radiographer doesn't recognize you and, following procedure, tells you to stand just so. The positioning is textbook. The next year you tell the company no more lead apron, no more travel, and move to a post in the documentation office."
+ },
+ "stages": [
+  "You follow senior colleagues on installation and acceptance, shoot test images on the phantom, tune exposure, teach radiographers, and have them sign the training record. You keep the device's error codes in your phone and at night check them against the manual in your hotel. Radiographers know images better than you. What you need to know is this machine, a balance that takes you a year to find.",
+  "A whole region's pre-sales and training are yours now. In the OR you stand in your lead apron beside the mobile C-arm, speaking only of the device, never of the surgery. In the clinic area you discuss maintenance with medical engineering and explain this unit's dose and image to the department head. The sales rep wants to overstate. Your job is to state it plainly.",
+  "You lead five young staff, scheduling their travel, reviewing their training materials and listening to recordings of their first demos. Complaints and adverse events come to you first, and you decide whether to start the reporting procedure. You go on site less. Half the time you're on the phone helping others think; the other half you're writing explanations, to hospitals and to the company.",
+  "All clinical support is yours. You compile field feedback into a requirements list and fight it out at weekly meetings with R&D, regulatory and marketing, explaining why each item is clinically worth changing. Competitor specs, training budgets, certifying overseas agents are all on your sheet. You haven't worn a lead apron in a long time.",
+  "You decide what problems the next product solves, and answer for registration timing. The roadmap, clinical trial partnerships, certificate expiry plans all await your nod. You meet hospital presidents, investors and the boss, and now and then still go off to a county hospital to stand behind the console and watch a radiographer press buttons."
+ ],
+ "work": [
+  "A senior colleague has you shoot twenty phantom images to compare. You insert a filter backward once and the numbers run high. He puts a question mark on your record and tells you to find it yourself.",
+  "The county hospital's voltage is unstable and the machine throws errors every so often. You fetch a multimeter from the car, take a reading and send a photo to the head of medical engineering. Only then does he call an electrician.",
+  "The first training sign-in sheet you collect has all three radiographers on one line. You find out at the photocopier and make the trip again to have them sign it properly.",
+  "The OR rebooks your slot for the afternoon and you wait two hours in the corridor in your lead apron. The mobile C-arm goes in. You say just two things: three degrees off, and lower exposure one step.",
+  "Before a pre-sales demo you arrive half a day early and shoot comparison images in the style of the department head's images from last month. During the demo he frowns and pulls his chair closer.",
+  "Community-level radiographers keep using chest settings for extremities. You turn this into a laminated card and fix it to the side of the console with a cable tie.",
+  "You listen to a new hire's demo recording three times and find he has said \"no radiation\" for \"lowers dose.\" You take the recording and explain to the sales team and the hospital, each in turn.",
+  "An adverse event report has two days left. You line up the site logs, version numbers and repair records in a timeline and check them with Quality until ten at night.",
+  "R&D says this request won't fit in the next release. You sort work orders from forty county hospitals by button presses and put that table on page one of the requirements review.",
+  "A Southeast Asian agent wants its trainers certified. You split the course into twelve modules and record a subtitled demonstration for each.",
+  "An older model's registration expires next year. You put the renewal cost and the number of existing customers in one table, work through it with the boss for an afternoon, and decide to keep only one model.",
+  "A Grade 3A hospital wants a clinical research partnership and its president asks about the detector's long-term stability. You bring out ten years of repair records, much thicker than the manual."
+ ],
+ "past": [
+  "Your family in Rui'an runs a small hardware factory. You once hurt your wrist and had an X-ray at the township clinic, and you looked for a long time at that translucent black-and-white film.",
+  "You choose medical imaging technology and your family assumes you'll be a doctor. In fact you study physics and anatomy, and you fail freshman X-ray physics.",
+  "Interning in a Hangzhou hospital's radiology department, you position patients more than a hundred times a day, and at night can't lift your wrists.",
+  "After graduation you become a radiographer at a private hospital in Wenzhou, at ordinary pay. When the maker's people come to train you, you see they know one thing more: why the machine is the way it is.",
+  "You send your résumé to this company's clinical applications post. The interviewer asks if you'd be willing to travel two hundred days a year. You say I don't yet know what that means."
+ ],
+ "late": {
+  "pension_note": "Estimate: Wenzhou company employees pay social insurance on time, but travel allowances don't count toward the base, so the pension is well below your working income, though enough to live in Wenzhou.",
+  "scenes": [
+   "In any hospital you still measure the corridor doors and read the elevator's load limit first. Going with your spouse to a follow-up, you stand at the machine room door and read the lead equivalent marked on the shielding.",
+   "You look over the maintenance contract for an old unit at the neighborhood clinic, strike two clauses and jot a few lines for them to use when they next talk to the maker.",
+   "New machines now position automatically, AI reads first, and the radiographer's work has mostly gone. The last young person you trained has moved on to selling surgical robots.",
+   "At every checkup with a chest film, you ask what the kilovoltage is. The radiographer never knows. You say never mind, just tell me if I'm standing in the right place.",
+   "No more lead apron, yet your shoulders still seem to wait for those seven or eight kilos to settle on them. It takes half a year to stand up straight.",
+   "Your back lets you walk but not carry anything. You walk in the park an hour a week, more slowly than the other old people, with nothing in your hands.",
+   "In the documentation office you go through the old training manuals one by one, some for models only you can still recognize. They are later scanned into the system.",
+   "Your first year without travel, you still get up by the train timetable. Your spouse says you're more punctual at home than you were on the road.",
+   "You hear the Ouhai company has been absorbed by a large maker and spares for the old models have stopped. The phantom called Old Wang, they say, is still standing in the storeroom.",
+   "You see an article on AI in community imaging, and one of the pictures shows a laminated card fixed with a cable tie to the side of a console. Not yours. About the same.",
+   "A friend asks whether to get a CT at his checkup. You give him ten minutes on dose and indication and finish: ask your doctor. This is what the trade taught you.",
+   "Your backpack still holds the four kinds of adapter. There's nothing left to plug them into. You haven't taken them out."
+  ],
+  "closing": {
+   "retire": "You put the dosimeter back in its box. This quarter there's nothing to send in.",
+   "burnout": "Your shoulders have finally let go. Today you walked two hundred meters further than yesterday.",
+   "end": "An evening train passes over the viaduct, its windows lit one by one. You consider where this one goes, and go back to your dinner."
+  }
+ }
+}
