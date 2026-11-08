@@ -1,0 +1,160 @@
+{
+ "id": "fashion-hz",
+ "occupation": "Fashion Designer",
+ "role": "Assistant Designer at an Online Womenswear Brand",
+ "headline": "A fashion-design graduate from a small county town in Anhui, hunting trends, picking colorways, chasing samples and reading return rates at an online womenswear brand in Jiubao, Hangzhou, that launches new styles every week",
+ "unit": "An online womenswear brand in Jiubao, Hangzhou",
+ "unit_type": "Online womenswear brand",
+ "city": "Hangzhou",
+ "city_tier": "New Tier 1",
+ "education": "Bachelor's degree (fashion and apparel design)",
+ "level": "You draw good flats by hand and in Illustrator, you've studied pattern cutting and draping, and you made a graduation collection. You've never followed a single style yourself from sketch to bulk production to the shop page.",
+ "intro": "Around Jiubao, by day it's people pushing clothing racks across the road; by night it's the ring lights of livestream studios, window after window. You're an assistant designer at an online womenswear brand that launches new styles every week; the fastest a style goes from sketch to a live listing is fifteen days. From today, the \"Design\" line on the sample tags starts carrying your name.",
+ "salary_note": "Estimate: Hangzhou is the capital of online womenswear, with more brands and faster launches than anywhere, so design jobs pay a little over twenty percent above the national figure. Sale seasons bring commission and bonuses, and a runaway hit earns a bestseller bonus; in a season when nothing sells, it's base pay only.",
+ "facts": [
+  { "label": "Assistant Designer (current level)", "value": "0–2 years, ¥5,000–7,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Fashion Designer (2–5 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Fitting samples and correcting them", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Drawing flats and prints", "source": "AI exposure" },
+  { "label": "Open positions", "value": "4 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Metro Line 1 to Jiubao. Outside the station is the wholesale clothing market, and tricycles hauling sacks of garments rattle past you.",
+  "Morning meeting. Operations puts yesterday's numbers on the wall: which styles got added to carts, which got sent back. The top reason for returns is \"makes me look heavy.\"",
+  "You browse trending styles across several platforms, save over a hundred images, and file them by neckline: square, Peter Pan, V-neck.",
+  "The lead designer hands you a hand-drawn sketch and asks for three colorways. You leaf through the color book for half an hour and pick haze blue, oatmeal, black.",
+  "In the sample room the sample maker hangs the first sample on a dress form. You run the tape down from the center back neck: a centimeter longer than you wrote.",
+  "The fit model puts the sample on. The lead designer has her sit down and raise her arms, and says the armhole is too tight. You write it in your notebook: enlarge armhole.",
+  "Upstairs the livestream has started, and the host is wearing the shirt you launched last month. You stand in the doorway and listen to how she describes the fabric.",
+  "You send today's corrections to the pattern room and turn off the lights. A dozen garments without names still hang in the sample room."
+ ],
+ "ladder": [
+  { "title": "Assistant Designer", "stage": "Entry", "focus": "Hunt trends, sort reference images, draw flats, write tech packs, chase samples. You move up when your styles get through review and sell once they launch." },
+  { "title": "Fashion Designer", "stage": "Own styles", "focus": "Design a collection each season on your own, choose fabrics, follow sampling through to launch. Sales, sell-through and return rates are your report card." },
+  { "title": "Senior Designer", "stage": "Core", "focus": "Own a product category, train assistants, sit in buying meetings to set orders and reorders, and grind every style with the pattern room and the factory until it can be mass-produced." },
+  { "title": "Design Manager", "stage": "Team lead", "focus": "Lead a design team, set the seasonal plan, themes and price bands, work with operations, buyers and factories, and answer for the sell-through of the whole range." },
+  { "title": "Design Director", "stage": "Director", "focus": "Set the brand's style and yearly plan, run the design, pattern and fabric teams, and sign off to the owner on where the brand is going." }
+ ],
+ "ai_tasks": [
+  { "name": "Drawing flats and prints", "how": "Given a few keywords, AI can turn out hundreds of flats, colorways and prints overnight. The designer sets the direction, picks, and reworks them into drawings that can be sampled and still look like the brand." },
+  { "name": "Trend research and style hunting", "how": "AI scrapes e-commerce and social platforms for the heat on styles and colors and drafts a trend report. Which trends are worth following and which are noise, the designer judges against the brand's own customers." },
+  { "name": "Scheduling development and chasing deadlines", "how": "AI lays out sampling, shoots and listing dates from the launch calendar and flags what's slipping. People only confirm the few days that matter." },
+  { "name": "Writing tech packs, virtual fitting", "how": "AI can draft size charts and tech packs and run 3D virtual fittings. How a neckline is finished, whether this fabric can be made up this way, still has to be worked out face to face with the pattern maker and the sample maker." },
+  { "name": "Fitting samples and correcting them", "how": "With the sample on a fit model, the proportions, the ease, whether the fabric hangs right: a person has to look, touch, have the model sit, raise her arms, walk a few steps, then fix it point by point." },
+  { "name": "Ordering and reorders", "how": "AI suggests order quantities and color splits from past sales. How many to order first and which style to reorder, people decide from channel feedback and inventory risk, and answer for the result." }
+ ],
+ "events": {
+  "e_first_hit": "A knit cardigan you reworked launches and sells three thousand pieces in its first week. Operations drops a red envelope of cash in the group chat with your name in the note.",
+  "e_return": "A dress hits a forty percent return rate; the reviews say \"not like the photos.\" You hold the sample up to the window light. The fabric pilled after one wash.",
+  "e_copy": "Three days after your jacket launches, you see an identical one in another shop, forty yuan cheaper. The owner says you get used to it.",
+  "e_keqiao": "Your first trip with the lead designer to the fabric market in Keqiao, Shaoxing. Twenty thousand steps in a day, your bag stuffed with color cards and palm-sized swatches.",
+  "e_qiaosi": "Something goes wrong in bulk: the factory has sewn the buttons on a batch of shirts the wrong way round. You spend two days in a workshop in Qiaosi, Linping, unpicking buttons alongside the workers.",
+  "e_singles": "For the month before Singles' Day you leave after ten every night and spend weekends in the sample room. At midnight on the big sale night, the whole floor crowds around a screen watching the numbers climb.",
+  "e_ai_draw": "The company buys an AI image tool and it produces four hundred flats in one night. You spend a weekend sorting them; fewer than twenty could actually be made. Pockets sit on seams, collars have nowhere to open.",
+  "e_ai_model": "Product photos start using AI-generated virtual models, and the shoot team shrinks from six people to two. On his last day the photographer leaves you his reflector.",
+  "e_inventory": "A season of winter wear leaves twenty thousand pieces unsold, and the owner sends the design team to the warehouse to count stock. You stand among the down jackets all afternoon, recognizing them one by one.",
+  "e_neck": "From bending over drawings too long, your neck aches and your arms go numb. You put a laptop stand on your desk and walk by the Qiantang River at lunch. A month later you've forgotten again.",
+  "e_love": "You get together with someone from operations upstairs. Every launch, they're the first to tell you how many carts your styles have landed in.",
+  "e_marry": "You get married. You drew the outfit you wear at the wedding yourself, and the veteran seamstress in the sample room made it for you over a month.",
+  "e_house": "You buy a flat in Linping, forty minutes from Jiubao by metro. The down payment empties both families' savings. On the new wall you put up a row of hooks for clothes.",
+  "e_child": "Your child is born. The first garment you make for the baby is cut from a leftover piece of cotton from a sample.",
+  "e_feature": "A collection of yours is picked for the platform's original-design showcase and goes on the front page. The owner prints out the screenshot and pins it by the design team's door.",
+  "e_live": "The host calls in sick and operations sends you into the livestream to talk about the trench coat you designed. You talk fabric for twenty minutes, and that session sells better than usual.",
+  "e_owner": "The company changes hands, and the new owner wants cheap and high-volume. He cuts the line you run. At your desk you zip three years of flats into a single file.",
+  "e_mentee": "A style your assistant designed on her own makes the launch list for the first time. She sends you a photo of the tag: her name on the \"Design\" line.",
+  "e_ai_3d": "The company brings in 3D virtual samples, and for many styles the first sample is never sewn; it's corrected on screen. You still insist on a real one for the key styles. It doesn't count until you've touched it.",
+  "e_parent": "Your mother back home in Anhui is in hospital. Every weekend you take the high-speed train back and redraw flats on a tablet in the ward corridor.",
+  "e_old_cardigan": "On the metro a girl is wearing the cardigan you designed eight years ago; the cuffs have gone fuzzy. You watch her for two stops and don't tell her."
+ },
+ "choices": {
+  "c_copy": { "title": "Rework a bestseller, or draw your own", "situation": "Operations sends you a screenshot of another shop's bestseller and says next week they want something \"along those lines.\" The lead designer leaves it to you: change the collar and it can go live, but it isn't something you drew.", "options": [
+   { "label": "Rework it and launch", "result": "You change the neckline and the buttons, and it sells well. Operations praises how fast you work. You don't put it in your portfolio." },
+   { "label": "Draw a new one", "result": "You stay up two nights on something completely different. It's scheduled for the week after next and sells so-so. In the reviews someone writes: finally, something different." }
+  ] },
+  "c_ai": { "title": "Lead the AI image push, or not", "situation": "The company is setting up an AI image group: trends, flats, prints and model shots all go through AI first, and they need a designer to set the rules, pick the images and teach everyone. Take it, and your own drawing time halves.", "options": [
+   { "label": "Lead it", "result": "You write a list of what AI images can and can't do and tape it beside every computer. Three months later a season's development cycle is a week shorter." },
+   { "label": "Stick to drawing", "result": "You still sketch on paper first, then go to the computer. A bit slower, but your styles pass at first sample more often than anyone's." }
+  ] },
+  "c_shanghai": { "title": "Move to a Shanghai mall brand", "situation": "A Shanghai womenswear brand that sells through department stores tries to poach you: thirty percent more pay, only two collections a season, a month to perfect a single style. But rent in Shanghai is double, and you've only just got to know the fabric dealers and factories in Hangzhou.", "options": [
+   { "label": "Go to Shanghai", "result": "You move to Shanghai, and for the first time you have time to choose a coat lining over three rounds. Weekends you take the train back to Hangzhou and wander the old Jiubao market." },
+   { "label": "Stay in Hangzhou", "result": "You stay, and the owner hands you a new outerwear line to try." }
+  ] },
+  "c_senior": { "title": "Go for Senior Designer", "situation": "At year end the company grades its designers. Senior Designer means two or more seasons with a bestseller and the ability to run a category on your own. There's one slot in the department this year, and both you and the designer from the next team have applied.", "options": [
+   { "label": "Make the case with sales data", "result": "You lay two years of flats and sell-through rates out in a report and talk for twenty minutes. The owner asks one question: how many times did this one reorder?" },
+   { "label": "Just do this season well", "result": "Your colleague gets it and buys you dinner. The styles you have this season sell steadily. There's next year." }
+  ] },
+  "c_shop": { "title": "Open your own label", "situation": "A few factory owners you've worked with say: you design, we supply, and you open your own original womenswear shop on the big platforms. No base pay, and the money tied up in stock is yours.", "options": [
+   { "label": "Go out and open a shop", "result": "You rent a small office in Jiubao and hang two rails of samples. The shop is named after your grandmother's village.", "end": "Your shop runs for many years; in its best year a hundred-odd thousand people follow it. You still sample and fit every style yourself, and the \"Design\" line on the tag still carries your name." },
+   { "label": "Stay at the company", "result": "You thank them and say that from now on the company's orders go to them first." }
+  ] },
+  "c_fabric": { "title": "Develop fabric in Keqiao", "situation": "A fabric company in Keqiao asks you to do development: creating new fabrics for brand designers and putting together seasonal fabric plans. No more chasing weekly launches, but you'd no longer design clothes.", "options": [
+   { "label": "Go to Keqiao", "result": "You move to Shaoxing. Outside your office window are rows of fabric warehouses; on your desk, hundreds of swatches.", "end": "You develop fabric in Keqiao for many years, and an acetate satin you created is used by dozens of brands. Whenever you spot it on the street you take a second look, to see what it became." },
+   { "label": "Stay and design clothes", "result": "You say you still want to design clothes. The owner says if you ever need fabric, come straight to him." }
+  ] },
+  "c_manager": { "title": "Apply for Design Manager", "situation": "The design manager has moved to a new brand, and the owner has you and another senior designer compete for the job. A manager sets the plan, manages budgets, argues with operations and factories, and draws less and less.", "options": [
+   { "label": "Apply", "result": "You present next season's plan: theme, price bands, launch rhythm. Afterward the owner says you'll chair Monday's review meeting." },
+   { "label": "Keep designing", "result": "You say you still want to design your own styles. The new manager, poached from another brand, singles out your styles for praise at the first review meeting." }
+  ] },
+  "c_director": { "title": "Become Design Director", "situation": "The owner wants a second brand and asks you to be its design director; what it's called and what it looks like are up to you. But you'd manage thirty people and meet investors, and every word you say in a review meeting would mean someone working late.", "options": [
+   { "label": "Take it", "result": "On the whiteboard you write three words for the new brand, erase one, and write another." },
+   { "label": "Keep your current team", "result": "You say you want to lead the team you have well. The owner hires from outside, and your team's styles that season sell better than the new brand's." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last day you copy all your years of flats onto a hard drive and leave the tape measure you used for over twenty years in the sample room. As you leave the building, the livestream studios of Jiubao are lighting up one window at a time, and you hear someone talking about a shirt's fabric.",
+  "burnout": "After yet another Singles' Day you faint in the sample room. The doctor tells you to rest, and you never go back. You stay in your hometown in Anhui for a while, altering one of your mother's old garments each day, very slowly."
+ },
+ "stages": [
+  "You assist a designer: redrawing her sketches as flats in Illustrator, marking seam allowances, topstitching and button placements; writing tech packs and making a fabric card for every material, with a swatch, the composition and the weight. In review meetings you sit in the back row and write down every \"this doesn't work\" the owner says.",
+  "You design a collection each season on your own: set the theme and colors, choose cloth at the fabric market, hand sketches to the pattern room, fit and correct the samples yourself. After launch, the first thing you check each morning is carts, conversion and returns. An assistant now draws for you, and you've started telling people which collar is wrong.",
+  "You run a category: every dress the brand sells, all four seasons, comes through you. In buying meetings you decide with operations and buyers which style opens at five hundred and which reorders at three thousand; the veteran pattern maker goes over the ease of every style with you. You train two assistants, teaching them to look at a sample's back and lining first.",
+  "You lead a design team of eight. At seasonal planning you set themes, price bands and the launch rhythm, work out margins with operations and lead times with factories; at the weekly review you've moved to the front row. Your drawing time has become correcting time, with a stack of other people's flats on your desk waiting for your signature.",
+  "You decide what this brand looks like: next year's style, which line to cut, whether to open a physical shop. You run the design, pattern and fabric teams, meet the owner and pitch the brand to investors. At reviews you say the least, and a single \"this isn't us\" sends a whole collection back to the start."
+ ],
+ "work": [
+  "A fabric dealer sends twenty color cards. You cut each swatch by color number, stick it to a fabric card and note the composition and weight. The lead designer flips through and points at one: keep this chiffon.",
+  "Sister Li, the sample maker, hands you the first dress sample. You turn it inside out and find the zipper pull catches at the waistline. You sketch a little diagram. She says: I'll fix it this afternoon.",
+  "Operations wants a summary of this week's launches. You put eighteen styles' images, fabrics and prices into one spreadsheet and post it in the group chat at one in the morning.",
+  "At a stall in Keqiao you feel a washed silk; the minimum order is eight hundred meters. You work out the forecast for that style and order a thousand.",
+  "At the fitting, a blazer's shoulders keep collapsing. You and the pattern maker stand at the dress form all afternoon and finally swap the shoulder pads for a size thinner.",
+  "Day two after launch, every return on a skirt says \"waist too tight.\" You redo the size chart overnight, letting the waist out two centimeters, and on day three returns halve.",
+  "In the buying meeting operations wants to cut the opening order on your trench coat to three hundred. You put last year's reorder data for similar styles on the table, settle on eight hundred, and within a month it reorders twice.",
+  "The new assistant draws beautiful flats, none of which can be made. You take her to the sample room to watch the sample maker set a collar. You watch for a whole morning.",
+  "A batch of dresses shrinks beyond tolerance. You drive to Qiaosi, cut swatches from the batch, bring them back, and argue it out with the fabric dealer over the test report for two hours.",
+  "At seasonal planning you name next season \"Rain in Jiangnan,\" colors running from gray-green to lotus-root pink. Operations asks if you can add a black. You add it.",
+  "Two designers on your team have drawn nearly the same sweater. You call them in together and have one make it cropped and the other a cardigan.",
+  "You make AI images the first step of every season's development, with one rule: before an AI image goes into review, a designer has to write down exactly how it would be made.",
+  "An investor asks what makes your brand different. You skip the slides, bring three garments in from the sample room, and have them turn them inside out and feel the linings.",
+  "You cut a line that sells fine but looks less and less like you. Its designer comes to see you, and the two of you sit downstairs for an hour.",
+  "The night before the first physical shop opens, you straighten the tag on every garment and have someone turn the lights down one notch."
+ ],
+ "past": [
+  "In your last year of middle school, back home in Anhui, you took up the hems of your school uniform trousers and got called to the homeroom teacher's office. Afterward you took in the waist of the jacket too.",
+  "At seventeen you decided to sit the art exams. The county town's drawing studio was in an old building with no heating in winter, and you drew plaster casts until your fingers went stiff.",
+  "Through the provincial art exam and the schools' own exams, you put fashion design on your application. Your parents asked: so that's making clothes? You said: it's drawing clothes.",
+  "Your first time in the pattern-cutting classroom, second year, drawing pattern pieces on kraft paper and pinning them on a dress form, you learned how far apart drawing clothes and making them really are.",
+  "For your graduation collection you made a set of jackets out of old denim. At the show, the design director of a Hangzhou womenswear brand sat in the audience and added you on WeChat afterward."
+ ],
+ "late": {
+  "pension_note": "Estimate: Hangzhou's urban employee pension. E-commerce companies often paid contributions on the minimum base in the early years and only later on actual pay, so in retirement you get about forty-five percent of your final monthly salary.",
+  "scenes": [
+   "After retiring you clear out your wardrobe. What you keep are samples of your own designs, each tag marked with a date.",
+   "The neighborhood seniors' college asks you to teach a class on remaking old clothes. Your students bring garments from when they were young, and you alter them into something they can wear now.",
+   "Every spring you make a trip to Keqiao. You buy nothing; you just walk through the fabric market and touch the new cloth.",
+   "Your first few months back home, you don't draw a single thing. Your mother's sewing machine sits on the balcony, and now and then you sit down at it and work the treadle a few times.",
+   "The county tailor asks for your help altering a dress for a bride-to-be. Sitting in the shop taking in the waist, it feels like your first day in the sample room.",
+   "You open a tiny alterations shop in the county town, with a sign by the door: Alterations. Made to measure. No rush.",
+   "The month you leave the company, your former assistant sends you a photo of a sample and asks if the collar is finished right. You look for a long time and reply: take it in another half centimeter.",
+   "A fashion school invites you to talk about how online womenswear works. A student asks if you have regrets. You say: every single piece, and every single piece sold.",
+   "Sorting through old things, you find the denim jacket from your graduation collection, missing a button. You get out a needle and thread, sew it on, and hang it back in the wardrobe.",
+   "Later AI drew the first flats, hundreds overnight. But which one could be made and was comfortable to wear still took someone putting it on and walking a few steps.",
+   "By West Lake you see a few girls in hanfu, traditional Han-style dress, having their photos taken. The pleats on the skirts are perfectly even, and you can't help leaning in to look at the stitching.",
+   "Your grandchild leafs through your old sketchbooks and asks where all these clothes went. You say: they're on other people, gone a long way off."
+  ],
+  "closing": {
+   "retire": "Many years later, one afternoon, you sit by the window sewing a skirt for your grandchild's rag doll. After the last cut you fold the leftover scrap and put it in the sewing box.",
+   "burnout": "Many years later, one evening, before closing the alterations shop, you put the iron away and hang a finished jacket by the door for its owner to collect tomorrow.",
+   "end": "Many years later, on an old phone, you come across a photo: the windowless sample room in Jiubao, a garment on the dress form. You zoom in on the cuff. Not bad work at all."
+  }
+ }
+}

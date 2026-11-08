@@ -1,0 +1,160 @@
+{
+ "id": "graphic-cd",
+ "occupation": "Graphic Designer",
+ "role": "Junior Graphic Designer at a Design Studio",
+ "headline": "A visual-communication graduate from Nanchong, at a ten-person design studio on the second floor of an old apartment block in Yulin, Chengdu, turning out adaptations for hotpot restaurants, tea shops and music festivals and running to the print shop to check press proofs",
+ "unit": "A brand and packaging design studio in Yulin, Chengdu",
+ "unit_type": "Design studio (branding, packaging, posters)",
+ "city": "Chengdu",
+ "city_tier": "New Tier 1",
+ "education": "Bachelor's degree (visual communication design)",
+ "level": "You're fluent in Illustrator, Photoshop and InDesign, with some grounding in hand drawing and type design, and as an intern you traced vectors and produced adaptations. You've never followed a brand yourself from pitch to the day its shop sign lights up.",
+ "intro": "The studio is on the second floor of an old apartment block in Yulin. Outside the window are laundry poles and a banyan tree; the walls are pinned with misprinted proofs. You're a junior graphic designer here, working on hotpot menus, bubble-tea cups and music-festival posters that lots of people in this city see every day without knowing who made them. From today, the source files carry your initials at the end of their names.",
+ "salary_note": "Estimate: Chengdu has plenty of design studios and a low cost of living, and graphic designers earn a little over ten percent below the national figure. Winning a pitch brings a project bonus, freelance work on the side is extra, and in the slow season it's base pay only.",
+ "facts": [
+  { "label": "Junior Designer (current level)", "value": "0–2 years, ¥4,000–6,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Graphic Designer (2–4 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Understanding the client, presenting the pitch", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Posters and multiple visual options", "source": "AI exposure" },
+  { "label": "Open positions", "value": "69 related listings nationwide, 1 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You ride a share bike through Yulin's lanes and stop at the corner for a bowl of sweet-water noodles. The owner asks why you're so early today.",
+  "You print last night's hotpot menu and pin it to the wall, then step back two paces to look. The lead designer walks past and circles one of the prices.",
+  "The lead designer has you gather references for a new tea shop: similar brands, colors, typefaces. You put together a twenty-page mood board.",
+  "A bowl of pork-intestine noodle soup at the little place downstairs. While you eat you scroll through other people's music-festival posters on your phone.",
+  "Pitch meeting. The owner of a hotpot restaurant that's been open twenty years looks at three logo options, takes a sip of tea, and asks if it could be a bit redder.",
+  "In Illustrator you adjust the strokes of the character for \"spicy.\" At the fortieth version the lead designer says: leave it, look again tomorrow.",
+  "At the print shop to check the menu proof, the gold foil is half a millimeter off. The printer says it's the machine; you circle it on the proof.",
+  "Working late on revisions. The client posts a sixty-second voice message in the group chat. You put on headphones and listen to it twice."
+ ],
+ "ladder": [
+  { "title": "Junior Designer", "stage": "Entry", "focus": "Produce adaptations and finished artwork in the direction the lead sets, check files, run to the print shop. You move up when your files are clean and nothing goes wrong when they're produced." },
+  { "title": "Graphic Designer", "stage": "Independent", "focus": "Create a brand's full identity on your own, logo, brand colors, type, packaging, shop sign, and pitch it and oversee the printing yourself." },
+  { "title": "Senior Designer", "stage": "Lead designer", "focus": "Lead projects: set direction, guide designers, meet the client's marketing team, and answer for a project from pitch to rollout." },
+  { "title": "Design Director", "stage": "Team lead", "focus": "Run the studio's design team, schedule projects, review everything that goes out, negotiate fees and timelines, decide what to take on and what to turn down." },
+  { "title": "Creative Partner", "stage": "Partner", "focus": "Buy in as a partner, manage money, people and direction, meet clients' owners to agree year-long work, and share the studio's losses too." }
+ ],
+ "ai_tasks": [
+  { "name": "Posters and multiple visual options", "how": "In a few minutes AI can turn out dozens of posters, illustrations and layout directions. Which one to choose, whether the tone is right, how the type sits with the image, the designer decides." },
+  { "name": "Cutouts, retouching, resizing", "how": "Cutting out, removing backgrounds, adapting one key visual into twenty sizes: AI and software do it in a click. People only spot-check that no text is cropped or distorted." },
+  { "name": "Logos and brand marks", "how": "From keywords, AI can produce hundreds of mark options, and clients often generate a few themselves before they come in. Making a mark hold up on a shop sign, a cup and a takeaway bag takes a designer refining it bit by bit." },
+  { "name": "Competitor and trend research", "how": "AI gathers competitors' brands, sorts trends and writes summaries. Which of it is useful for this client and which is already everywhere, the designer judges." },
+  { "name": "Understanding the client, presenting the pitch", "how": "What a hotpot owner means by \"Chengdu flavor, but classy\" takes sitting down over tea, talking, visiting the restaurant, and at the pitch, explaining the why." },
+  { "name": "Print runs, color matching, rollout", "how": "What a spot color, gold foil or debossing looks like on paper means going to the print shop to check press proofs, match swatches and fix die lines. AI can't see the paper, or touch it." }
+ ],
+ "events": {
+  "e_first_print": "The first poster you designed is printed and put up outside a live-music bar at the Yulin crossroads. You take the long way home twice to look at it.",
+  "e_revisions": "A hotpot restaurant's logo goes through twenty-three revisions, and in the end the owner picks the first one: this one's better after all.",
+  "e_print_error": "A run of tea gift boxes comes out with one color wrong, and three thousand boxes have to be reprinted. The studio pays for it, the owner doesn't dock your pay, and you barely speak for days.",
+  "e_unpaid": "A client drags out the final payment for half a year, then says the shop has closed. You put the identity you made for it in your portfolio anyway.",
+  "e_ai_logo": "Clients start generating logos with AI themselves and bringing them in to \"just tweak.\" You spend longer fixing AI images than you would drawing from scratch.",
+  "e_ai_extend": "AI adapts a key visual into twenty sizes in a minute. It used to take a whole day; now you spend the time on an extra trip to the print shop.",
+  "e_ai_price": "AI pushes poster prices lower and lower, and the studio drops some of that work to focus on branding and packaging. Several friends who did e-commerce posters change careers.",
+  "e_award": "A tea packaging set you designed wins a design award, and the organizers post a certificate. The owner hangs it by the studio toilet door so that, he says, everyone will see it.",
+  "e_street": "The sign you made for a noodle shop gets photographed and posted online by lots of people, and some come just to take pictures. The owner brings you a card: free noodles for life.",
+  "e_nights": "The week before a pitch you stay up until three every night and sleep on the studio's old sofa. When you wake, the banyan outside the window is dripping.",
+  "e_neck": "Your neck and wrist both start to ache. You switch to a vertical mouse and in the afternoons walk once round the park and sit by the lake for a while.",
+  "e_tea": "On weekends you spend an afternoon in a park teahouse: a lidded bowl of tea, a sketchbook, drawing the old man in the bamboo chair beside you having his ears cleaned.",
+  "e_love": "You get together with the owner of the café you're always in. You redo the shop's cup sleeves and don't charge for it.",
+  "e_marry": "You get married. You design the invitations yourself, and the veteran printer insists on not charging: call it his wedding gift.",
+  "e_house": "You buy a flat on the east side of Chengdu, forty minutes from Yulin by metro. You make a little house sign for the new place in your own handwriting.",
+  "e_child": "Your child is born. You draw them a little picture book, one character a page, and the first page is \"home.\"",
+  "e_mentee": "A brand designed by a designer you trained, his first on his own, goes live. The day the shop sign lights up he sends you a photo and says nothing.",
+  "e_studio_down": "Business is bad, the studio moves into an even older building, and four people leave. You help each of them rework their portfolios.",
+  "e_parent": "Your father back home in Nanchong is in hospital. Every week you take the bullet train back and revise designs on a laptop in the hospital corridor.",
+  "e_old_sign": "You walk past a skewer-hotpot place whose sign you made ten years ago. It's sun-faded now, the corners curling, and the restaurant is still full."
+ },
+ "choices": {
+  "c_side": { "title": "Take freelance work, or not", "situation": "Someone online wants e-commerce posters from you, three hundred yuan each, two in a night. The studio doesn't pay much, but stay up doing freelance work and your daytime designs will get sloppy.", "options": [
+   { "label": "Take it", "result": "You make three thousand more a month and stop worrying about rent. Once the lead designer looks at your work and asks if you slept last night." },
+   { "label": "Practice lettering at night", "result": "Every night you draw one character on paper. After a year you have over three hundred. Later one set of them goes into a tea-shop brand." }
+  ] },
+  "c_ai": { "title": "Lead the AI image push, or not", "situation": "The owner wants to try AI images at the studio: dozens of directions before each pitch, adaptations and cutouts handed over too. Someone has to set up the workflow and teach everyone how to use it and what not to use it for.", "options": [
+   { "label": "Lead it", "result": "You write the studio's AI rules, and rule one is that every typeface must be chosen by a person. Three months later, prep time before pitches has halved." },
+   { "label": "Keep sketching by hand", "result": "You still draw dozens of thumbnails on paper before going to the computer. Clients say they can tell your designs were thought up by a person." }
+  ] },
+  "c_shanghai": { "title": "Join a big Shanghai ad agency", "situation": "A big Shanghai ad agency is hiring designers at nearly twice Chengdu pay, with big-brand clients. But rent is double too, working past midnight is normal, and there are no teahouses at the weekend.", "options": [
+   { "label": "Go to Shanghai", "result": "You work on several big-brand projects in Shanghai, and your portfolio doubles in thickness. Some nights, leaving late, you badly want a bowl of pork-intestine noodles." },
+   { "label": "Stay in Chengdu", "result": "You stay and keep sketching in the teahouse at weekends. The owner hands you a new cultural-tourism project." }
+  ] },
+  "c_senior": { "title": "Go for Senior Designer", "situation": "The owner says this year he'll promote someone to senior designer, leading projects on their own. Next month there's a pitch for a tea-shop chain, and whoever wins it gets the job.", "options": [
+   { "label": "Go all out", "result": "You visit a dozen of the chain's shops and fill a whole sketchbook with the people in the queues. At the pitch, the client stops at page three." },
+   { "label": "Let your colleague lead", "result": "Your colleague presents while you click through the slides. When you win it, he takes the whole studio out for hotpot." }
+  ] },
+  "c_inhouse": { "title": "Go in-house at a hotpot chain", "situation": "A hotpot chain you've worked with for years asks you to head its brand design: full social insurance, no pitching, no late nights. Only, from then on, you'd design for just this one brand.", "options": [
+   { "label": "Go in-house", "result": "You get an office with a window, and on the desk are a dozen of their soup-base packets.", "end": "You stay with that hotpot chain for many years, and it grows from twenty restaurants to several hundred. Every new opening, the red character above the door is the stroke you traced back then." },
+   { "label": "Stay at the studio", "result": "You say you still want to make different things. The chain's owner says they'll keep bringing you work." }
+  ] },
+  "c_own": { "title": "Open your own studio", "situation": "Several long-time clients say if you go out on your own, they'll come with you. Be your own boss: no base pay, and rent, social insurance and late payers are all yours to carry.", "options": [
+   { "label": "Go it alone", "result": "You rent a room in another Yulin lane and hang a sign by the door in your own lettering.", "end": "Your studio is on the second floor of an old building in Yulin, eight people at its busiest. You still look over every design yourself, and on the wall hangs a row of misprinted proofs you can't bring yourself to throw away." },
+   { "label": "Stay", "result": "You thank the clients and tell them that when the studio takes their work, you'll be the one doing it." }
+  ] },
+  "c_director": { "title": "Become Design Director", "situation": "The design director has left for Beijing, and the owner wants you to take over. A director schedules everyone's projects, negotiates fees, speaks first at every pitch, and does less and less design work.", "options": [
+   { "label": "Take it", "result": "You redraw the studio whiteboard with an owner and a date after every project. In the first month you don't design a single thing." },
+   { "label": "Keep leading projects", "result": "You say you still want to design. The owner hires from outside, and the hardest few brands still come to you." }
+  ] },
+  "c_partner": { "title": "Buy in as Creative Partner", "situation": "The owner wants you to buy in as the studio's creative partner. You'd put up some money; profits shared, losses shared, and a vote on where the studio goes.", "options": [
+   { "label": "Buy in", "result": "After signing, you and the owner sit all afternoon in the teahouse downstairs, talking only about the signs you made ten years ago." },
+   { "label": "Don't buy in", "result": "You say you'd still rather just handle the designs. The owner says the seat's yours whenever you want it." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last day you copy the source files onto a hard drive and leave your well-thumbed swatch book with the apprentice you trained. Out of the old building, people in the Yulin lane are queuing for skewer hotpot, and you know the lettering on that sign.",
+  "burnout": "After yet another pitch you wake on the studio sofa unable to read the text on the screen. The doctor tells you to stop for a while. You go home to Nanchong, walk by the Jialing River every day, and don't design a thing."
+ },
+ "stages": [
+  "You're the youngest designer in the studio. Once the lead sets the direction, you produce adaptations and finished artwork, spreading one key visual across menus, posters, takeaway bags and shop signs; before output you check bleed, outlines and color values, then send it to the printer. At pitches you run the projector, and when the client asks you something, you glance at the lead first.",
+  "You create a brand's full identity on your own now: starting with tea and talk with the owner about the restaurant, then the logo, brand colors and type, then menus, cups, the shop sign. You write the \"why\" pages of the pitch yourself and check the press proofs yourself. You listen to the client's voice messages one by one, then tell him which requests can't be done.",
+  "You're lead designer now; a project from pitch to rollout is yours. You set the direction, have two designers produce work, write notes on every image, and in meetings with the client's marketing team turn a hotpot brand's twenty years into three images. The old hands at the print shop know you, and the press proof comes to you first.",
+  "You run the studio's design team: scheduling projects every week, reviewing everything that goes out, speaking first at pitches. You negotiate fees and timelines with clients and decide which jobs to turn down. You design less yourself; on your desk are other people's designs, each with a sticky note of your comments.",
+  "You're one of the studio's partners, in charge of money, people and direction: how much cultural-tourism work to take next year, whether to open in another city, how many new people to hire. You mostly meet clients' owners and negotiate a year's work at a time, and you choose what goes on the first page of the studio's portfolio."
+ ],
+ "work": [
+  "The lead has you put a hotpot brand's logo on a kraft-paper takeaway bag. You notice the red prints dull, switch to a spot color, and the proof comes back just right.",
+  "Checking the files for a music-festival poster, you find a line of small text that hasn't been converted to outlines; on another computer it would switch to a different font. You fix it before it goes out.",
+  "A client sends a phone photo of an old shop sign and wants to \"keep this feeling.\" You trace it stroke by stroke, keeping the lopsided character for \"pot\" too.",
+  "A skewer-hotpot place twenty years old needs a new sign. You sit in the restaurant all evening listening to what the regulars call the owner, and end up putting his nickname into the mark.",
+  "The gold foil on a tea gift box keeps blurring on the press. You and the printer try four pressures in the workshop and finally thicken the lines by a tenth of a millimeter.",
+  "A client brings in an AI-generated image and says that's what he wants. You zoom in to show him that every character in it is garbled, and agree to redo it with the same feeling.",
+  "For a museum's cultural products, you take two designers to the galleries three times, trace the patterns off the bronzes line by line, and turn them into a set of bookmarks and canvas bags.",
+  "The new designer's type choices are all over the place. You don't touch his work; you list the studio's ten most-used typefaces for him, with notes on when to use each.",
+  "At the pitch the client says he doesn't like any of the three options. You don't rush back to revise; you ask what his best-selling dish is, and the next day hand in a fourth.",
+  "A tea-shop chain wants twelve posters a year for the solar terms. You draw up a rota for four designers, and you look over every one last.",
+  "You turn down a well-paid job: the client wants you to copy a big brand's packaging. When the team asks why, you say: do that kind of work and you can never put it in the portfolio.",
+  "You write AI images into the studio's process: use it to find directions, have a person draw the final design, and every typeface must be chosen by a person.",
+  "A company from another city wants to buy the studio. You and the other two partners sit in a teahouse all afternoon, and in the end you don't sell.",
+  "Choosing this year's portfolio, you put on the first page the sign for a noodle shop with only three tables.",
+  "At year end you write each person a card naming the best image they made that year, and why."
+ ],
+ "past": [
+  "In middle school, back home in Nanchong, you drew the headers for your class blackboard newspaper, eighteen issues in a term. Your homeroom teacher said your lettering was better than print.",
+  "At seventeen you decided to sit the art exams and took the bus to Chengdu every weekend for a drawing studio, painting color studies all winter in a rented room.",
+  "You got into the visual communication design program at a Chengdu university, and learned for the first time that characters are designed stroke by stroke.",
+  "In your second year you made a set of cup stickers for the bubble-tea shop by the campus gate. The owner paid you five hundred yuan and a month of free tea.",
+  "Final year, you interned at a design studio in Yulin, and for the whole first month did one thing: retracing clients' old logos as vectors.",
+  "Your graduation project was a brand for a cold-jelly-noodle shop back home that had been open thirty years. On the day of the exhibition, your parents rode more than two hours to see it."
+ ],
+ "late": {
+  "pension_note": "Estimate: Chengdu's urban employee pension. Design studios often paid contributions on the minimum base in the early years, with gaps between jobs, so in retirement you get about forty percent of your final monthly salary.",
+  "scenes": [
+   "After retiring you sort your years of proofs into a dozen-odd albums and line them up by year on the bookshelf.",
+   "The neighborhood asks you to make an enrollment poster for the seniors' college. You use only three colors and spend an afternoon on the layout.",
+   "Every morning you go to the park teahouse with a sketchbook and draw the people drinking tea, until you've filled a whole drawer.",
+   "Your first few months away from the studio, you lock the computer in a cupboard and go fishing by the river every day. You don't catch a single fish.",
+   "A tofu-pudding shop in town that's been open for decades asks you to letter its sign. You write it three times with a brush and choose the last.",
+   "You teach art at a middle school in the county town, and every year you paint a poster for the sports day. The students fight over it.",
+   "The month you leave, a former colleague posts you a misprinted proof. On the back it says: something to remember us by.",
+   "A design school asks you to talk about branding. You spend the afternoon on hotpot restaurant signs, and the students get hungry listening.",
+   "Online, you see that someone has included a mark you made years ago in a collection of \"old Chengdu signs.\"",
+   "Later AI made the first posters, dozens a minute. But where a character goes and how much space is left beside it still took someone looking at it, thinking for a long time.",
+   "Walking down the street, you always read the lettering on the signs first. When it's well done, you stop and look for a while.",
+   "Your grandchild is learning to write. You hold the small hand and write \"fire\" together, and say: leave a little space in this stroke."
+  ],
+  "closing": {
+   "retire": "Many years later, one afternoon in the park teahouse, you finish the last page of a sketchbook and close it. The tea in the lidded bowl has gone cold, and you have it topped up once more.",
+   "burnout": "Many years later, one evening, you stand in front of the school noticeboard looking at the pictures the students have put up. One has beautiful lettering, and you make a note of the name.",
+   "end": "Many years later, you walk past that old building in Yulin. The second-floor windows are new, and pinned by one is a faded poster. It's one of yours."
+  }
+ }
+}

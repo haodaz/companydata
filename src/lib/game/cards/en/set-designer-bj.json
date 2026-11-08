@@ -1,0 +1,158 @@
+{
+ "id": "set-designer-bj",
+ "occupation": "Set Designer",
+ "role": "Assistant Set Designer at a Drama Theater",
+ "headline": "A stage-design graduate of a drama academy, from Shanxi, in the design department of a Beijing drama theater, reading scripts with the lead designer, building white card models, drawing construction plans, and living in the scene shop and the theater during load-in",
+ "unit": "The stage design department of a drama theater in Beijing",
+ "unit_type": "Drama theater (stage design)",
+ "city": "Beijing",
+ "city_tier": "Tier 1",
+ "education": "Bachelor's degree (stage design)",
+ "level": "You can draw by hand, build models, and work in CAD and 3D software, and you designed sets for a few student productions. You've never followed a major production from first reading to opening night.",
+ "intro": "Through the theater's stage door, down a corridor stacked with flats, is the design department: one big room, its walls pinned with dozens of production photos, its shelves holding models built by generation after generation of designers. You're an assistant set designer here. Every wall, door and step on that stage has to be drawn and built in this room first. From today, the \"Drawn by\" box in the title block of the construction plans carries your name.",
+ "salary_note": "Estimate: Beijing has a concentration of drama theaters and stage-design companies, and set designers earn a little over ten percent above the national figure. On a theater contract you get base pay plus performance allowances; outside productions and commercial work are extra.",
+ "facts": [
+  { "label": "Stage Designer, Grade 4 (current level)", "value": "0–3 years, ¥5,270–7,750 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Stage Designer, Grade 3 (3–8 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥16,800 (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Directing the carpenters, painters and scenic artists in the build", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Reading the script and working out the director's needs for each scene", "source": "AI exposure" },
+  { "label": "Open positions", "value": "6 related listings nationwide, 4 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The subway to the theater's stage door. The old doorman knows you now and waves through the window.",
+  "You read the new play's script once more and list the scenes in your notebook: how many scenes, how many places, which one needs rain.",
+  "You go to a secondhand market for weathered planks. The lead designer wants \"the kind people have been touching for decades.\" You run your hands over twenty-odd boards and buy three samples.",
+  "The theater canteen. At the next table the actors are running lines and one of them corpses halfway through.",
+  "Out to the scene shop in Tongzhou. The head carpenter points at the drawing and asks: this revolve's diameter, where did you get it from?",
+  "Back at the theater you lay spike tape on the empty stage: the proscenium line, the curtain line, the wings, measuring each with a tape.",
+  "There's a performance tonight. You stand in the wings watching the scene change, eight people moving a wall offstage in twenty seconds, and write down the order they push in.",
+  "After the show you check the scenery on the fly bars with the stage manager. By the time you leave, the last train home has gone."
+ ],
+ "ladder": [
+  { "title": "Stage Designer, Grade 4", "stage": "Junior", "focus": "Assist the lead designer: draw construction plans, build white card models, go to the shop, follow load-ins. You move up by drawing accurately and being someone the crew can count on." },
+  { "title": "Stage Designer, Grade 3", "stage": "Intermediate", "focus": "Design sets on your own, starting with studio and mid-sized productions, responsible from first reading through load-in and technical rehearsal. This grade requires work credited under your own name." },
+  { "title": "Stage Designer, Grade 2", "stage": "Associate senior", "focus": "Design for the theater's main stage, lead assistants and a build team, manage budgets and tours. Promotion depends on several signature productions and your standing in the profession." },
+  { "title": "Stage Designer, Grade 1", "stage": "Senior", "focus": "One of the theater's principal designers, on the artistic committee, setting the theater's stage style and training young designers, with work that is a benchmark for the profession." }
+ ],
+ "ai_tasks": [
+  { "name": "Reading the script and working out the director's needs for each scene", "how": "AI can help list the scenes in a script, the period and the key props. Truly hearing what the director hasn't quite said, and settling the idea together, still takes a person." },
+  { "name": "Drawing design sketches and construction plans", "how": "AI can quickly produce concept sketches, several options and basic ground plans. Making sure a structure can be built, the dimensions are right and the drawings suit how the shop works takes a person drawing and checking the finals." },
+  { "name": "Building scale models and setting the overall look", "how": "AI can generate 3D renderings, style references and lighting previews. The handmade feel of a physical model, and choosing and deciding the overall look, is a person's call." },
+  { "name": "Budgeting the set from drawings and costs", "how": "From the drawings, AI can estimate quantities, list materials and apply prices to draft a budget. People only check local prices and special techniques and look for anything missed." },
+  { "name": "Buying and checking materials and props", "how": "AI can compare prices, compile purchase orders and check deliveries against the list. Choosing real materials, haggling and finding a substitute at the last minute take experience and contacts." },
+  { "name": "Directing the carpenters, painters and scenic artists in the build", "how": "At most AI can draw up a schedule. Actually getting carpenters, painters and scenic artists to work together, explaining the drawings and settling disagreements rests on trust between people and managing the floor." },
+  { "name": "Building the set on site and overseeing progress and quality", "how": "On a build you watch structural safety, details and progress and deal with surprises as they come. AI can only help keep records; the responsibility and the judgment are a person's." },
+  { "name": "Adjusting, maintaining and striking the set", "how": "Changing, repairing and striking scenery on the fly as the director and the shoot or show require takes hands and quick thinking. AI can only help keep records and list what to strike." }
+ ],
+ "events": {
+  "e_first_premiere": "The first production you worked on opens. At the curtain call the lead designer is invited on stage. She glances back toward the wings and beckons to you.",
+  "e_load_in": "Load-in runs three days and nights, and you sleep two of them in the theater. On day three, during technical rehearsal, the scenery jams once and the whole house waits twenty minutes.",
+  "e_budget_cut": "A production's design budget is cut in half. Your design goes through five versions, and in the end the stage holds only a table, two chairs and a gray wall.",
+  "e_ai_render": "The theater buys AI rendering software, and the director generates a few images himself at the meeting. You take a look and point out which one has columns that could never stand up on a stage.",
+  "e_ai_budget": "AI can now work out materials and budgets straight from the construction drawings. A list that took a week takes an afternoon. You spend the time saved on another trip to the scene shop.",
+  "e_ai_vr": "You start using 3D software and a VR headset to walk the director \"into\" the set. He takes a turn around the virtual stage and says the door in scene two needs to move left.",
+  "e_injury": "During load-in a length of framing slides off a ladder and lands on your shoulder. You're off for two weeks, and by the time you're back the show has opened.",
+  "e_review": "A veteran critic writes about your set, calling the moving wall the play's other actor. You cut the article out and keep it in your notebook.",
+  "e_tour": "You tour with the production to twenty cities. In each theater you first measure the proscenium and check the fly bars, then rework the set's layout in your hotel at night.",
+  "e_festival": "A production you designed goes to an international theater festival. Foreign colleagues stand backstage studying your revolve for a long time and ask how you thought of it.",
+  "e_back": "Scene shops, theaters, ladders, fly galleries: after all these years your back finally gives out. The doctor tells you to stop climbing, and you hand the ladder work to your assistant.",
+  "e_flop": "A production closes after five performances, the scenery still new, and it's struck and piled into the warehouse. You go to look at it once and never again.",
+  "e_love": "You get together with an actor at the theater. After shows the two of you eat late-night snacks at the little restaurant by the stage door and sit until they close.",
+  "e_marry": "You get married in a small ceremony in the theater's rehearsal hall. You painted the backdrop, on cloth left over from an old production.",
+  "e_child": "Your child is born. The first toy you make for the baby is a palm-sized stage, with a curtain and a single light.",
+  "e_house": "You buy a flat in Yanjiao, east of Beijing, two hours' commute each day. On the bus you sketch on a tablet.",
+  "e_mentee": "The first production designed on his own by an assistant you trained opens. At the curtain call he stands on stage, searching the audience for you.",
+  "e_old_set": "The theater clears out its warehouse and is disposing of old scenery. Among it you recognize a painted drop you made in your twenties, and cut off a corner to take home.",
+  "e_parent": "Your mother back home in Shanxi falls ill. Every weekend you take the high-speed train back and revise drawings on a tablet in the ward.",
+  "e_student": "A drama-academy student interning at the theater brings you a production photo from more than ten years ago and asks how that wall turned."
+ },
+ "choices": {
+  "c_concert": { "title": "Take on concert work on the side", "situation": "A classmate's stage-design company wants you to draw for concerts part time. One project pays three months of your salary, but it eats every weekend. It's giant screens and lifts, and nobody asks about a script.", "options": [
+   { "label": "Take it", "result": "Three months without a weekend off, and you put away your first savings. Once, backstage at an arena, you suddenly miss the wooden stage floor at the theater." },
+   { "label": "No, spend weekends at the theater", "result": "You spend every weekend in small theaters, eighty-odd shows a year, your notebook filling with other people's scene changes." }
+  ] },
+  "c_small": { "title": "Design a studio show for a young director", "situation": "A young director asks you to design his studio-theater production: a budget of just eighty thousand yuan and a four-meter-high black box. The theater's own schedule is already full, so taking it means late nights.", "options": [
+   { "label": "Take it", "result": "You salvage a load of old doors and windows from a demolition site, clean them, varnish them, and build the whole set from them. On opening night the director crouches backstage in tears." },
+   { "label": "Turn it down", "result": "You recommend a classmate and put your effort into the theater's productions." }
+  ] },
+  "c_third": { "title": "Apply for Stage Designer, Grade 3", "situation": "The theater is filing professional title applications this year, and Grade 3 requires work credited under your own name. All you have are shows where you assisted. If that studio production can open before year end, it'll be enough.", "options": [
+   { "label": "Rush it", "result": "Two months on five hours' sleep a night. The show opens in the last week of December, and on the poster, after \"Set Design,\" is your name." },
+   { "label": "Apply next year", "result": "You don't rush it and let the show rehearse at its own pace. Next year's application will have a better production in it." }
+  ] },
+  "c_ai": { "title": "Lead 3D and AI design, or not", "situation": "The theater wants a 3D and AI design workflow: models, renderings and budgets produced on the computer, and VR walk-throughs for directors. Someone has to lead it: learn the software, set the rules, teach everyone.", "options": [
+   { "label": "Lead it", "result": "You build the main stage's fly bars, proscenium and revolve into a 3D model. Now when a director wants to see a scene, he puts on the headset and stands on the stage." },
+   { "label": "Keep building models by hand", "result": "You still build models with card and a craft knife. The director says he still prefers leaning over the model box to look; there he can see the light." }
+  ] },
+  "c_second": { "title": "Apply for Stage Designer, Grade 2", "situation": "Grade 2 depends on signature work on major productions and your standing in the profession. The theater has a big production next year, and the director of the theater asks if you dare take on the whole set design.", "options": [
+   { "label": "Take the big production", "result": "You make a revolve that turns through four scenes, and after opening night a critic writes a whole paragraph about you. On the review panel, a veteran expert pauses at the photos of this show." },
+   { "label": "Do mid-sized shows first", "result": "You say you'd like to make your mid-sized work more solid first. The big production goes to another designer, and you go to the opening." }
+  ] },
+  "c_company": { "title": "Design spectacles for tourism", "situation": "A company making immersive theater and tourist-site spectaculars asks you to be its design director at twice the theater's pay. It's big shows performed daily at scenic sites, one set built to last ten years.", "options": [
+   { "label": "Go", "result": "For the first time you stand in an outdoor theater that seats three thousand, where the stage is a whole expanse of water.", "end": "You stay with that company for many years, and your spectacles play at several scenic sites, three shows a day. Once, sitting in the audience, you hear a child beside you say: that wall can fly." },
+   { "label": "Stay at the theater", "result": "You say you still want to do drama. The company says: call us whenever you've made up your mind." }
+  ] },
+  "c_teach": { "title": "Go back to teach at the drama academy", "situation": "Your old department asks you to come back and teach, supervising students' graduation productions. Less pay than the theater, but winter and summer breaks, and no more touring all over the place.", "options": [
+   { "label": "Go back to the academy", "result": "You hang one of your old production photos in the department's model workshop, and your first lecture is: read the script first.", "end": "You teach at the drama academy for many years, and your students design for theaters all over the country. Every year at the graduation productions you sit in row seven and call up to the stage: that wall on the left, one more foot upstage." },
+   { "label": "Stay at the theater", "result": "You recommend a veteran designer who has just retired and keep designing shows yourself." }
+  ] },
+  "c_first": { "title": "Apply for Stage Designer, Grade 1", "situation": "Grade 1 is the profession's full senior title, and only a handful are awarded each year. It means assembling twenty years of work, defending it before a panel, and having people willing to speak for you.", "options": [
+   { "label": "Apply", "result": "You pack twenty years of photos, models and drawings into three big boxes. At the defense you talk about one production only: the cheapest one you ever did." },
+   { "label": "Leave the chance to someone else", "result": "You say this year should go to an old colleague who came up through it all with you. The day he gets it, he buys you drinks by the stage door." }
+  ] }
+ },
+ "endings": {
+  "retire": "On the day of your last load-in you stand on the empty stage a long time, looking along the proscenium line, the curtain line, the wings, one after another. After the show you hand your notebook full of measurements to your apprentice and walk out through the stage door.",
+  "burnout": "After yet another load-in your back hurts too much to straighten, and the doctor says if you climb again you'll need surgery. You leave the theater and go home to Shanxi. The box of model-making tools sits under the bed and is never opened again."
+ },
+ "stages": [
+  "You assist the lead designer: turning her sketches into construction plans, ground plans, elevations and details, with every frame member and every rigging point marked; building 1:25 white card models with card and a craft knife to set on the table at design meetings. During load-in you live in the theater, drawings in hand, standing between the carpenters and the fly bars, and when something doesn't line up, you're the first to run and measure it.",
+  "You design sets on your own now, starting in the studio theater. You read the script and sit through round after round of design meetings with the director, lighting and costumes, bringing sketches, models and renderings one after another. The construction plans you sign go to the shop, and during load-in you sit in row seven calling up to the stage: that wall on the left, one more foot upstage.",
+  "You design for the theater's main stage: dozens of flats, a revolve and a dozen fly bars per show. You lead two assistants and a build team, squeeze the budget with the producer and work out loads with the technical director; when a show tours, you have to make sure the set comes apart, fits on a truck and squeezes into other theaters. Your title application includes photos from three of your productions.",
+  "You're one of the theater's principal designers, at the artistic committee's table deciding what kind of stage next year's productions will have. You review young designers' drawings, and one sentence from you often sends a design back to the start. You design only one or two shows a year yourself, and when you do, you still begin by reading the script and sitting alone at the model box until midnight."
+ ],
+ "work": [
+  "The lead designer has you work out the rigging points for a tilting wall. It takes you two evenings. A veteran from the technical department glances at it and adds a safety line to the drawing.",
+  "In the white card model you cut an opening for the window in Act Two. The director leans over the model box a long while and says: light coming in through there, that's right.",
+  "During load-in a flat turns out five centimeters wider than the drawing and won't fit through the wings. With a tape measure you find the shop misread the plan, and have the carpenter saw it down on the spot.",
+  "The studio theater is only four meters high, so you make a whole wall of bookshelves that flips over; in scene three it turns and becomes another room.",
+  "The lighting designer says your walls are too white, the light has no depth on them. You test in the theater until dawn, and in the end you give the walls a layer of aging.",
+  "Just before rehearsals the director adds a rain scene. You design a narrow trough above the proscenium so the rain falls only in the meter behind the actors.",
+  "A major production's revolve has to turn through four scenes. You and the technical director push a 1:10 model round step by step in the shop and settle the order of the changes.",
+  "On tour, the other city's theater has a proscenium two meters narrower than Beijing's. You rework the set's layout backstage overnight, and the show opens as usual the next day.",
+  "Your assistant's construction plans miss a rigging point. You don't mention it in the meeting; afterward you stay in the office with her fixing it until ten.",
+  "At the artistic committee, several senior designers reject a young designer's proposal. You ask him just one thing: why is this wall here? He has an answer, and the design stays.",
+  "The theater is renovating its old stage, and on the plans you insist on keeping the wooden floor that has been used for decades.",
+  "Alone at the model box working on a new play late into the night, you set a tiny paper figure at the proscenium and look at it for a long time."
+ ],
+ "past": [
+  "In middle school, back home in Shanxi, you went into a theater for the first time to see Jin opera. You didn't remember what was sung, only the great curtain painted with mountains and rivers.",
+  "At seventeen you began learning to draw. Your sketching teacher said the perspective of your buildings was always right, but your people never looked like anyone.",
+  "For the arts entrance exams you chose stage design. The exam asked for a scene called \"Waiting,\" and you drew an empty platform and a single lamp.",
+  "In your second year you went with your teacher to a theater load-in, and for the first time climbed onto the fly gallery and looked down at the whole stage. Your knees went weak for a moment, and you didn't tell anyone.",
+  "For your graduation project you designed a set for an old play, and the model stood in the department's exhibition hall for half a year.",
+  "The year you graduated, the drama theater was hiring assistant stage designers on contract. You carried a box of model-making tools from the dorm to a shared flat near the theater."
+ ],
+ "late": {
+  "pension_note": "Estimate: Beijing's urban employee pension. On a theater contract, contributions were paid on actual pay for a long career, so in retirement you get about half your final monthly salary.",
+  "scenes": [
+   "The day you retire, you sort the dozens of models you've built and donate them to the theater's archive.",
+   "The neighborhood seniors' choir has a performance and asks you to help put up a stage. With a few old flats and a string of bulbs, you build a little stage.",
+   "You still go to the theater a few times a year, sit in row seven, and before the show begins look up at the fly bars.",
+   "Your first months back home, you sit in the courtyard in the sun every day, watching the shadows move from one end of the wall to the other.",
+   "The county's Jin opera troupe asks you to help rework their old scenery. You only draw; no climbing. You draw all winter.",
+   "At the county cultural center you teach children crafts, showing them how to make a little stage out of a cardboard box.",
+   "The day you leave the theater, the stage manager presses a used roll of spike tape into your hand: something to remember us by.",
+   "An old production you designed is being revived, and the theater calls asking for the original drawings. You spend an afternoon searching through your cupboards.",
+   "At an exhibition you see a model you built when you were young. Under the glass case, on the tiny stage, that lamp is still lit.",
+   "Later renderings were all handed to AI, one in a few seconds. But whether a wall would stand, where an actor would enter, still took someone standing on an empty stage, thinking.",
+   "Walking into any room, without meaning to you think: where's the proscenium, which way is the light coming from.",
+   "For your grandchild's birthday you make a little theater out of a cardboard box. Draw back the curtain, and inside is the teddy bear he loves best."
+  ],
+  "closing": {
+   "retire": "Many years later, one evening, you sit in row seven. Before the curtain rises the lights go down one by one, and in the dark you close your eyes a moment and listen to the footsteps of the scene change behind the curtain.",
+   "burnout": "Many years later, one evening, you sit in the courtyard back home watching the sunset withdraw little by little down the wall, like a show letting out, the lights slowly fading.",
+   "end": "Many years later, in an old box, you find a palm-sized white card model, the card gone yellow. You set it on the windowsill; the sun comes in, and the shadow falls exactly at the proscenium."
+  }
+ }
+}

@@ -1,0 +1,160 @@
+{
+ "id": "animator-hz",
+ "occupation": "Multimedia Artist and Animator",
+ "role": "Junior Animator at a 3D Animation Studio",
+ "headline": "An animation graduate from Henan at a Binjiang, Hangzhou, studio making 3D fantasy series, adjusting passers-by's walks, the hero's blinks and motion-capture data frame by frame in Maya",
+ "unit": "A 3D animation studio in Binjiang, Hangzhou",
+ "unit_type": "3D animation studio (series and feature films)",
+ "city": "Hangzhou",
+ "city_tier": "New Tier 1",
+ "education": "Bachelor's degree (animation)",
+ "level": "You know Maya well and have done bouncing balls, walk and run cycles, and a ninety-second graduation short. Not one shot in a single episode of a series has your name on it yet.",
+ "intro": "The studio is on the twelfth floor of a tech-park building in Binjiang. In reception stands a life-size figure of the series' hero; in the review room, a big screen and a row of chairs. You're a junior 3D animator here. A twenty-minute episode has over a hundred shots, every shot runs twenty-four frames a second, and every frame has been adjusted by someone. From today, a few boxes in the \"Animation\" column of the shot list carry your name.",
+ "salary_note": "Estimate: Hangzhou has a cluster of animation studios, and 3D animators earn slightly above the national figure, a notch below the city's game companies. A series launch brings a bonus and crunch months bring overtime; in a year a project is canceled, there's neither.",
+ "facts": [
+  { "label": "Junior Animator (current level)", "value": "0–2 years, ¥6,000–9,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Animator (2–4 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Character performance", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Cleaning up motion-capture data", "source": "AI exposure" },
+  { "label": "Open positions", "value": "5 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The subway to Binjiang. Every building in the tech park has its lights on, and downstairs people with lanyards are queuing at the coffee cart.",
+  "Morning meeting. The lead reviews yesterday's shots on the big screen. Yours stops at frame forty-seven: the wrist breaks.",
+  "In Maya you open the Graph Editor and smooth out the wrist's rotation curves one by one, until it stops snapping.",
+  "In the canteen downstairs your team is talking about the comment stream on last night's episode. Someone wrote that the fight scene's frame rate was \"moving,\" and not in a good way.",
+  "New shot: the hero draws a sword and turns, seventy-two frames. You find an empty meeting room and film a dozen takes of reference on your phone, using an umbrella.",
+  "The mocap stage has shot a crowd scene, and you get three passers-by's data. Their feet slide across the ground, and frame by frame you pin them back down.",
+  "Before handing in the shot you watch the playblast three times through and move one blink two frames later.",
+  "The render farm queue is long, and your shot is number three hundred and something. You shut down your computer and catch the last train home."
+ ],
+ "ladder": [
+  { "title": "Junior Animator", "stage": "Entry", "focus": "Animate bodies and lip sync on simple shots, clean mocap data, revise shots with the lead. You move up by delivering every week and being able to take notes." },
+  { "title": "Animator", "stage": "Mid-level", "focus": "Complete fight and performance shots on your own, shooting your own reference, building key poses and curves, and getting them through reviews with the director and lead." },
+  { "title": "Senior Animator", "stage": "Senior", "focus": "Take the hardest shots of each episode and the hero's big scenes, set the characters' movement guidelines, train new hires, and brief the rigging and mocap teams." },
+  { "title": "Animation Lead", "stage": "Lead", "focus": "Lead an animation team of a dozen or more: assign shots, schedule, review and send back work every day, and coordinate with the director, effects, and lighting and rendering." },
+  { "title": "Animation Director", "stage": "Director", "focus": "Own the animation quality and style of a whole production, set standards and workflow and which AI tools to use, and take the credit in the titles." }
+ ],
+ "ai_tasks": [
+  { "name": "Cleaning up motion-capture data", "how": "On data from mocap or video-to-motion, AI removes jitter, fills gaps and fixes intersections automatically. Whether a movement has weight and feels like this character still takes an animator adjusting frame by frame." },
+  { "name": "Inbetweens and transitions", "how": "AI can generate the transitions between key poses automatically. The timing, the pauses, the moment of force, the animator decides and corrects." },
+  { "name": "Lip sync and walk and run cycles", "how": "Lip sync matched to dialogue, walk and run cycles: AI and the tools produce them in a click. People only spot-check the odd syllable and sliding feet." },
+  { "name": "Animatics and previs", "how": "AI video can quickly produce an animatic so the director can see the rhythm first. Once a shot goes into production, it still has to be built bit by bit for the character and the scene." },
+  { "name": "Character performance", "how": "The second a character hesitates, the eyes arriving half a beat late as she turns: the animator has to understand the character, act it out in front of a mirror, then put it into the curves." },
+  { "name": "Reviews and shot revisions", "how": "When the director says \"that hit isn't vicious enough,\" what exactly to change takes sitting in the review room together, watching, gesturing, then watching again after the fix." }
+ ],
+ "events": {
+  "e_first_shot": "The first shot you animated goes out: three seconds, a passer-by turning around. You search the comment stream for ages, and someone has written: this passer-by is so natural.",
+  "e_crunch": "For the month before launch the whole team works until eleven every night, and you stash a folding bed under your desk.",
+  "e_retake": "A shot gets sent back nine times. In the end the lead fixes it himself, using the idea from your third version.",
+  "e_mocap": "For the first time you go into the mocap stage to direct a performer. In a mocap suit, the actor takes a fall the way you asked, and that take barely needs cleaning afterward.",
+  "e_ai_inbetween": "The studio brings in an AI inbetweening tool, and transitions sprout between the key poses on their own. You animate twice as fast, but you have to watch every shot through and undo the places where it smoothed things too much.",
+  "e_ai_video": "AI video generation keeps getting better, and some promotional shorts are made with it outright. The studio cuts its short-video animation line, and several people you know leave.",
+  "e_ai_mocap": "Video-to-motion tools arrive: a performer acts once in front of a phone and you have usable motion data. The mocap stage runs half as many days.",
+  "e_hit": "Season two of the fantasy series you worked on is a hit, passing a billion views. The studio gives everyone a figure of the hero, and you stand yours beside your monitor.",
+  "e_cut": "The platform cancels a project, and a year of shots goes onto a hard drive. You quietly keep a copy of the ones you made.",
+  "e_layoff": "The industry cools, and the studio lays off a third of its people. You stay. The desks beside you sit empty for two months.",
+  "e_wrist": "After years on a mouse your right wrist aches and your neck is stiff. You switch to a drawing tablet and keep a small dumbbell on your desk, lifting it now and then.",
+  "e_festival": "A two-minute short you made in your spare time is selected for an international animation festival. You take annual leave and go at your own expense, and sitting in the cinema watching it, your palms are soaked.",
+  "e_westlake": "At weekends you cycle to West Lake to watch the rowing boats and the willows and do gesture drawings in your sketchbook, a page full of people walking.",
+  "e_love": "You get together with someone from the lighting and rendering team. In reviews you sit at opposite ends; after the meeting you go for late-night snacks together.",
+  "e_marry": "You get married. The animation played at the wedding is yours: two little figures walking from the day they met to today, ninety seconds in all.",
+  "e_house": "You buy a flat in western Hangzhou, the down payment pooled by both families. The commute means two subway changes, and in the carriage you watch how people stand and sway.",
+  "e_child": "Your child is born. Watching the baby roll over for the first time, your head counts automatically: how many frames did that take.",
+  "e_mentee": "A shot by a new hire you trained is praised by the director at an all-hands meeting. He glances back at you.",
+  "e_parent": "Your father back home in Henan is in hospital. You take leave to go back, and at night review shots remotely on a laptop in the corridor outside the ward.",
+  "e_rerun": "Your child is watching an old animated series, and you recognize a shot you did more than ten years ago. That passer-by turning around: still pretty natural."
+ },
+ "choices": {
+  "c_game": { "title": "Move to a game company to do combat animation", "situation": "A game company is hiring motion designers for over thirty percent more: characters' skills and combat moves, no waiting episode by episode for a launch, no worrying about projects getting canceled.", "options": [
+   { "label": "Go to the game company", "result": "You move to a taller building. Your first task is an idle animation for a character, and you have her lightly flick her hair every few seconds.", "end": "You rise to animation director at the game company. An idle animation you made for one character was cut into memes by players and passed around online for years." },
+   { "label": "Stay in animation", "result": "You say you still want to make shots that tell a story. The lead gives you a dialogue scene in the next episode." }
+  ] },
+  "c_ai": { "title": "Learn the AI animation workflow, or not", "situation": "The studio wants the animation team to try AI: video-to-motion, automatic inbetweens, AI animatics. Someone has to learn it first, plug it into the current pipeline, and teach the team.", "options": [
+   { "label": "Learn it first", "result": "You write a guide on fixing AI-blocked shots, with ten before-and-after comparisons. Three months later, an episode takes a week less." },
+   { "label": "Master hand keying first", "result": "You keep working key by key. The lead says the steadiest shots on the team are still the slow, handmade ones like yours." }
+  ] },
+  "c_short": { "title": "Make a short film of your own", "situation": "You've always wanted to make a short of your own about the river outside your grandmother's house. After work, it would take a year and every weekend, and when it's done maybe no one will watch it.", "options": [
+   { "label": "Make it", "result": "A year of work in your rented flat. The last shot is your grandmother washing vegetables by the river and glancing up. You post it online, and a few thousand people watch it to the end." },
+   { "label": "Not yet", "result": "You draw the river on the first page of your sketchbook and spend your weekends sitting by West Lake." }
+  ] },
+  "c_senior": { "title": "Go for Senior Animator", "situation": "At year end the studio grades its animators, and a senior has to carry the hero's big scenes alone. The lead says the hero's thirty-second unbroken shot in the next episode decides it: whoever pulls it off gets the slot.", "options": [
+   { "label": "Go for it", "result": "A month of work. In those thirty seconds the hero takes seven steps, stops twice, looks back once. At the review the director says nothing, then asks to see it again." },
+   { "label": "Let a colleague take it", "result": "You say your colleague is better at fights. The day he pulls it off, he buys the whole team bubble tea." }
+  ] },
+  "c_film": { "title": "Make animated features in Shanghai", "situation": "A Shanghai animated-feature studio wants you: three years per film, a month to polish a single shot. About the same pay, but you'd leave Hangzhou and the team you've only just come to know.", "options": [
+   { "label": "Go to Shanghai", "result": "You work on one film in Shanghai, revising a single shot more than twenty times, and the director says that's what film should look like." },
+   { "label": "Stay in Hangzhou", "result": "You stay, and the lead starts having you mentor a new hire." }
+  ] },
+  "c_lead": { "title": "Become Animation Lead", "situation": "The old lead is moving to a new project, and the director asks if you'll take over his team of a dozen-plus. A lead assigns shots, schedules, reviews every day and argues with effects and rendering, and animates less and less.", "options": [
+   { "label": "Take it", "result": "You draw this episode's shot list on the whiteboard in red, yellow and green. In the first week you don't animate a single shot." },
+   { "label": "Keep animating", "result": "You say you still want to do performance shots. The new lead's first move is to assign you all the hero's scenes." }
+  ] },
+  "c_own": { "title": "Start a studio with old colleagues", "situation": "A few old colleagues want to start an animation studio together, doing outsourced commercials and game trailers and saving up to make something of their own. No base pay, and machines, rent and render costs come out of your own pockets.", "options": [
+   { "label": "Go in with them", "result": "You rent a small office in western Hangzhou: four workstations, and on the wall the shot list for your first project.", "end": "Your studio lasts many years, making commercials and game trailers, and once a short film of your own. On the wall there's always an early photo of a whiteboard with your first project's shot list." },
+   { "label": "Stay at the studio", "result": "You wish them luck and say that if they ever have more shots than they can handle, call you." }
+  ] },
+  "c_director": { "title": "Become Animation Director", "situation": "The studio has greenlit an animated feature, and the owner wants you as animation director: the whole film's movement style, the standards, what goes to AI and what must be done by hand, all yours to decide.", "options": [
+   { "label": "Take it", "result": "The first page of the animation guidelines you write for the film has one sentence: every character must breathe." },
+   { "label": "Stay with your team", "result": "You say you want to finish the series in hand. The owner hires from outside, and you keep leading the series team." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last day you pack the figures on your desk into a cardboard box one by one, peel off the sticky notes of key poses and tuck them into your notebook. Out of the tech park, people stream along the Binjiang streets, and you stand a while watching how they walk.",
+  "burnout": "After yet another all-nighter before a launch, your wrist hurts too much to hold a pen and your vision keeps blurring. You quit and go home to Henan, and the laptop stays in a cupboard, unopened, for a long time."
+ },
+ "stages": [
+  "Your shots are mostly small: a passer-by walking past, the hero sipping tea, lip sync and blinks in dialogue. The lead circles problems on your shots in red, which frame intersects, where it floats, and you fix them and hand them back. Mocap data comes to you first to clean, and when a rig breaks, you're the first to go and find the rigger.",
+  "You've started on fight and performance shots, and a dozen shots an episode carry your name. Starting from the storyboards and animatic, you design the movement yourself, show the lead key poses first, then refine once they're approved. At the review every afternoon the director watches your shots while you take notes, go back, fix, and show again the next day.",
+  "The hero's hardest shots all come to you: a crying scene without dialogue, a thirty-second fight without a cut. You set the characters' movement guidelines, writing down how her shoulders move when she walks and what moves first when she's angry. You fix new hires' shots, ask the rigger for new controls, and go into the mocap stage to direct performers.",
+  "You lead an animation team of a dozen-plus. When each episode arrives, you first sort its hundred-odd shots by difficulty, assign them and draw up the schedule; every day you review, send back, approve, send back again, and hold coordination meetings with the director, effects, and lighting and rendering. You animate less yourself; mostly you sit behind someone and point at the screen: two frames slower here.",
+  "You own the animation on a whole production: setting standards, style and workflow, deciding which shots AI blocks out and which must be done by hand. You meet the director and producer, and when budgets and schedules are squeezed, you have to say clearly where it can be saved and where it can't. In the credits, the first name under Animation is yours."
+ ],
+ "work": [
+  "The lead says passer-by A seems to float when he walks. You walk the corridor a dozen times yourself and find the foot is missing a frame of cushion when it lands.",
+  "In a dialogue shot you match the lip sync syllable by syllable. The director watches once and says: the eyes aren't listening. You add two small eye darts.",
+  "In the mocap data the hero's hand goes through the table. In the curves you pull it out frame by frame, all afternoon.",
+  "For a fight, you first draw twelve key poses and stick them beside your monitor. The lead cuts three, and you spend a week on the rest.",
+  "Shooting reference, you throw yourself onto the studio's yoga mat more than twenty times, and the weight of that last landing goes into the shot.",
+  "The director says the hero's sword draw \"isn't vicious enough.\" You stretch the pause before the blade clears from six frames to ten, and at the next review he says: that's it.",
+  "The hero's crying scene, thirty seconds without a line. You can't cry in front of the mirror, so you think about your grandmother, record a take of reference, and spend a month on it.",
+  "A new hire's shots are always too busy, everything moving every frame. You have him delete half his keys and watch again, and he laughs at himself.",
+  "You ask the rigger for a new eyebrow control. Once it's built, the whole team's facial shots go noticeably faster.",
+  "An episode with a hundred and forty shots: you color them red, yellow and green by difficulty on the whiteboard and give the red ones to your three steadiest people.",
+  "Effects says your movement is too fast for the particles to keep up. You and the effects lead go frame by frame in the review room and slow the moment before the strike by two frames.",
+  "At the weekly meeting you set a rule: any shot AI blocked out must be handed in with the original AI version attached, so you can see what a person changed.",
+  "The producer wants a month off the schedule. You spread out the whole film's shot list and mark which forty shots AI can block out and which ten can't lose a single frame.",
+  "Casting mocap performers, you have three people each play the hero pushing open a door. You choose the one who hesitates before pushing.",
+  "On opening night you sit in the back row, and the shot of the hero turning to look back is exactly the kind you dreamed of making when you started as a junior."
+ ],
+ "past": [
+  "In middle school, back home in Henan, you drew little figures in the corners of your textbook pages, one movement per page, so they ran when you flipped them. You filled an entire math book.",
+  "At seventeen you decided to sit the art exams and took the bus to a drawing studio in Zhengzhou at weekends. You did a year of quick sketches, most of them people waiting at the station.",
+  "You got into an animation program at university. The first time you opened Maya, it took you a whole night to make a ball bounce.",
+  "In your second year you practiced the bouncing ball through forty versions. Your teacher looked at the last one and said: now it has weight.",
+  "The summer after third year you interned at an animation studio in Hangzhou and spent two months animating passers-by walking.",
+  "For your graduation project you made a ninety-second 3D short about an old man feeding a cat, shooting hundreds of clips of yourself in the mirror for reference."
+ ],
+ "late": {
+  "pension_note": "Estimate: Hangzhou's urban employee pension. Animation studios often paid contributions on the minimum base in the early years, with gaps between jobs, and later on actual pay, so in retirement you get about forty-five percent of your final monthly salary.",
+  "scenes": [
+   "After retiring you gather all your years of reference footage onto one hard drive: nothing but you, acting out other people in front of a mirror.",
+   "The neighborhood seniors' college asks you to teach a phone animation class. Your students' first project is making someone in an old photograph blink.",
+   "Every day you go to the park to watch people doing tai chi, and after a while you draw the moment they raise their hands.",
+   "Your first few months away from the studio, you sleep until noon every day, then go downstairs and sit on a bench watching people walk.",
+   "You make your nephew a ten-second animation of a dog chasing its tail. He watches it a hundred times.",
+   "You teach animation at a vocational school in the county town. The first lesson is still the bouncing ball.",
+   "The month you leave, the team makes you a little animation: a figure of you at your desk, turning round to wave.",
+   "A new hire you trained becomes an animation director and, at an industry talk, plays one of your old shots: this is how I learned.",
+   "On an old drive you find your graduation short about the old man feeding the cat and watch it again. When he reaches out, it's still two frames late.",
+   "Later a lot of movement was handed to AI, a sequence generated in seconds. But the eyes arriving half a beat late when someone turns still took a person to think of it first.",
+   "When you watch people walk, you always look at the shoulders and heels first. Your family says you look at everyone as if you're reviewing dailies.",
+   "Your grandchild shows you an animation on a phone, a ball bouncing up and coming down. You say: squash it a bit when it lands."
+  ],
+  "closing": {
+   "retire": "Many years later, one afternoon, you sit by the window watching the children downstairs skipping rope, up, down, and you count the frames in your head until you fall asleep.",
+   "burnout": "Many years later, one evening, you turn off the lights in the vocational school classroom. On a screen a student's ball is still paused, at the very top frame.",
+   "end": "Many years later, in a new animated series, you see a passer-by turn around, very naturally. You can't think who animated it, and you find that doesn't matter."
+  }
+ }
+}

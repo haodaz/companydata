@@ -1,0 +1,154 @@
+{
+ "id": "post-prod-bj",
+ "occupation": "Film and TV Post-Production Professional",
+ "role": "Assistant Colorist at a Post-Production House",
+ "headline": "A digital-media graduate from Harbin in the grading suite of a post-production house in Shuangjing, Beijing, conforming edits, calibrating monitors, watching the scopes and assisting the colorist",
+ "unit": "A film and TV post-production house in Shuangjing, Chaoyang, Beijing",
+ "unit_type": "Post-production house (color grading, conform, delivery)",
+ "city": "Beijing",
+ "city_tier": "Tier 1",
+ "education": "Bachelor's degree (digital media technology)",
+ "level": "You know DaVinci Resolve well, understand a little about color spaces and log footage, and you've graded classmates' shorts. You've never sat at the grading panel yourself and taken a commercial or a series through the whole grading process.",
+ "intro": "The grading suite has no window. The walls are painted neutral gray, and the only light comes from a calibrated monitor and a few small lamps on the grading panel. You're an assistant colorist at a post house in Shuangjing. Footage comes back from commercials, series and films flat and gray, in log, and only in this room does it get its warmth and coolness, its day and night. From today, the \"Assistant Colorist\" line on the delivery sheet carries your signature.",
+ "salary_note": "Estimate: Beijing has a concentration of post-production houses, and color work pays about thirty percent above the national figure. Colorists earn commission by project and booking, senior ones quote a day rate, and assistants get base pay plus overtime.",
+ "facts": [
+  { "label": "Assistant Colorist (current level)", "value": "0–2 years, ¥5,000–8,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Colorist (2–5 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Setting the look with the director and cinematographer", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Conforming, finding source media and technical conversions", "source": "AI exposure" },
+  { "label": "Open positions", "value": "60 related listings nationwide, 15 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Subway Line 10 to Shuangjing. The company is in an old factory converted into offices, and on the grading suite door is a sheet of paper: Grading in progress, please knock.",
+  "In the machine room you copy yesterday's shoot drives onto the storage array and verify them, checking file counts shot by shot.",
+  "You calibrate the suite's monitor, the probe stuck to the screen. When the progress bar finishes, you note this week's readings in your notebook.",
+  "At the fast-food place downstairs, colleagues are talking about which director sat in a grading suite until four in the morning yesterday.",
+  "The colorist grades a car commercial while you sit in the back row, watching him roll the trackballs as the waveform on the scopes climbs bit by bit.",
+  "The client reviews online and says the model's skin looks \"a bit dirty.\" The colorist has you write down the timecodes.",
+  "You export a preview for the client, who watches on a phone and says it's too yellow. The colorist says it's his phone. You export a slightly cooler version anyway.",
+  "The render is still running, and you sit waiting in the dark suite. On the screen is a piece of ungraded footage, flat and gray, as if it hasn't woken up."
+ ],
+ "ladder": [
+  { "title": "Assistant Colorist", "stage": "Entry", "focus": "Conform, find media, do technical conversions and exports, build nodes and track masks for the colorist, watch the scopes. You move up by keeping projects error-free and delivering on time." },
+  { "title": "Colorist", "stage": "Grading", "focus": "Grade commercials and web series on your own, setting the look with directors and cinematographers in the suite and revising round after round from client notes." },
+  { "title": "Senior Colorist", "stage": "Lead grade", "focus": "Lead the grade on series and films, set the whole show's look and the LUTs used on set, train assistants. Clients ask for you by name." },
+  { "title": "Head of Color", "stage": "Head", "focus": "Run the company's color department and its suites, set workflow, calibration standards and equipment, negotiate fees and bookings with producers, and grade the big films yourself." }
+ ],
+ "ai_tasks": [
+  { "name": "Conforming, finding source media and technical conversions", "how": "Conforming from the edit, relinking to original media, converting formats and color spaces: software and AI do nearly all of it. People only spot-check dropped frames and offsets." },
+  { "name": "Matching cameras and first-pass grades", "how": "AI can align several cameras' color temperature and exposure in a click and produce a first grade from a reference image. Where the whole piece's look and mood land, the colorist and director decide." },
+  { "name": "Keying, mask tracking and local fixes", "how": "Person segmentation, mask tracking, skin smoothing, sky replacement: AI does them fast and clean. Where to touch and how far before it looks fake, a person judges." },
+  { "name": "Noise reduction, restoration and upscaling", "how": "Restoring old footage, denoising, super-resolution: AI tools are astonishing. Overdone, it looks plastic, and someone has to watch it and rein it in." },
+  { "name": "Setting the look with the director and cinematographer", "how": "When the director says \"that four-in-the-afternoon feeling,\" it takes sitting in the dark together, watching and searching. That's between people." },
+  { "name": "Final checks and sign-off before delivery", "how": "Cinemas, broadcasters and streaming platforms each have different technical specs. Whether the final version's color is right takes the colorist watching it through on a calibrated monitor and signing off." }
+ ],
+ "events": {
+  "e_first_grade": "The colorist lets you try grading three shots in a commercial, and one of yours makes the delivered version. You come across it online and watch it again and again.",
+  "e_allnight": "A series is rushing to air, and you pull five all-nighters in a row in the suite. When you come out it's daylight, and you stand squinting at the sun for a long time.",
+  "e_revisions": "A thirty-second commercial goes through seventeen rounds of color notes, and in the end the client picks version two.",
+  "e_raid": "A drive in the storage array fails, and a film's grading project is nearly lost. You sit up all night in the machine room watching the data rebuild bit by bit.",
+  "e_ai_match": "The company brings in AI grading tools: one click matches cameras and makes a first pass, and a day's work takes an hour. You spend all the time saved on the actors' faces.",
+  "e_ai_generated": "AI-generated shots start appearing in the footage: skies, wide vistas, crowds. Their color never quite matches the live action, and you have to grade each one until it cuts in.",
+  "e_ai_price": "Grading work on short videos and small commercials dries up; clients say AI's one click is enough. The company lays off the team that did only short videos.",
+  "e_cinema": "The first film you helped grade opens in cinemas. You buy a ticket and sit in row seven, and when the opening comes up, the first thing you check is whether the black is truly black.",
+  "e_festival": "An art-house film you graded wins at a festival, and the director reads your name from the stage. You watch the livestream in the suite without a sound.",
+  "e_eyes": "Your eyes get dry, and your sense of color seems a little less sharp. The doctor says you spend too long in the dark and tells you to go outside every day and look at green leaves.",
+  "e_dark": "You work it out: three hundred-odd days a year spent in a windowless suite. At the weekend you make a point of going out to the countryside and watching the sky all day.",
+  "e_love": "You get together with a camera assistant. On your first date you see a film, and afterward you can't stop talking about the cinematographer's light.",
+  "e_marry": "You get married. You grade the wedding video yourself over two all-nighters, with more care than any commercial.",
+  "e_house": "You buy a flat beyond the East Fifth Ring Road, an hour and a half's commute each way. On the subway you look at the sky out the window and guess its color temperature.",
+  "e_child": "Your child is born. The first video you shoot of the baby, you don't grade at all. You keep it exactly as it is.",
+  "e_mentee": "The first piece graded on his own by an assistant you trained goes out, with his name in the credits. He sends you a screenshot followed by three exclamation marks.",
+  "e_unpaid": "A production owes its post-production fees, the series you spent two months grading never gets settled, and that quarter's bonus goes with it.",
+  "e_parent": "Your mother back home in Harbin is in hospital. You fly back and review client notes remotely on a laptop in the ward.",
+  "e_old_show": "TV is rerunning a series you graded more than ten years ago. The color looks dated now, but you still love the blue of that snowy night scene."
+ },
+ "choices": {
+  "c_dit": { "title": "Go on set as a DIT, or stay in the suite", "situation": "The company is short of on-set data technicians, the ones who go with a crew to back up footage and do on-set color. It pays a bit more, and you'd be on location all the time. Stay at the company, and you keep sitting in the back row of the suite, watching.", "options": [
+   { "label": "Go with the crew", "result": "You spend four months with a series shooting in Zhejiang, a laptop and a monitor in a tent, and learn for the first time what footage looks like the moment it's shot." },
+   { "label": "Stay in the suite", "result": "Another six months in the back row, copying the node trees of every film your teacher grades into your notebook." }
+  ] },
+  "c_ai": { "title": "Lead the AI grading workflow, or not", "situation": "The company wants AI first passes, AI restoration and AI masks built into the workflow. Someone has to lead it, decide which steps can go to AI, and teach the team.", "options": [
+   { "label": "Lead it", "result": "You write one rule: an AI first pass is only a starting point, never a delivery. Three months later, grading an episode takes two days less." },
+   { "label": "Train your eye", "result": "You still grade every shot from zero yourself. Your teacher says the eye is trained; tools change, the eye doesn't." }
+  ] },
+  "c_platform": { "title": "Do in-house post at a streaming platform", "situation": "A video platform's content team is hiring post staff: over twenty percent more pay, full social insurance, home by seven. But it's mostly the platform's own shows and promos, one template used for a year.", "options": [
+   { "label": "Go to the platform", "result": "For the first time you leave work while it's still light. By the fiftieth episode of the same show, you've started grading friends' shorts at weekends." },
+   { "label": "Stay at the post house", "result": "You stay and take on the whole grade of a web series, twenty-four episodes." }
+  ] },
+  "c_senior": { "title": "Make Senior Colorist", "situation": "The company needs a lead colorist for a theatrical film, and the owner says if you pull it off, you'll be promoted to senior colorist. But it means two months in the suite, and the director is famously hard to please.", "options": [
+   { "label": "Take it", "result": "Fifty-odd days in the suite with the director, until in the last scene he finally says: that's it. When you walk out, it's already winter in Beijing." },
+   { "label": "Turn it down", "result": "You say you're not ready, and the owner gives the film to someone else. You see it in the cinema, and by the third scene you think you'd have graded it differently." }
+  ] },
+  "c_hdr": { "title": "Pay your own way to learn HDR and cinema specs", "situation": "Cinemas and streaming services have started asking for HDR versions, and the company will only send one person to train. You could pay for a certification course yourself and take two weeks' leave.", "options": [
+   { "label": "Pay and go", "result": "On the course you see, for the first time, a sun on a thousand-nit screen that's genuinely too bright to look at. When you get back, the company's HDR work all comes to you." },
+   { "label": "Wait for the company", "result": "You don't go, and keep grading the films in hand." }
+  ] },
+  "c_own": { "title": "Open your own grading studio", "situation": "Several directors you've worked with say that if you go out on your own, their films are yours. One suite, one grading panel, one monitor: together they cost as much as a down payment on a flat.", "options": [
+   { "label": "Open the studio", "result": "You rent a room in an old factory building, paint the walls neutral gray, and tape a sheet of paper to the door: Grading in progress, please knock.", "end": "Your grading studio runs for many years with one suite and one panel. The directors who come to you get younger and younger, and you still watch every film's footage through from the start before you turn the first knob." },
+   { "label": "Stay at the company", "result": "You thank the directors and say that when their films come to the company, you'll take them." }
+  ] },
+  "c_home": { "title": "Go home to Harbin", "situation": "A Harbin TV station's technical department is hiring a colorist: a permanent state post, half your current pay, twenty minutes from your parents, and real snow in winter.", "options": [
+   { "label": "Go back", "result": "You pack your grading notebook, your calibration probe and a box of drives, and take the high-speed train home to Harbin.", "end": "You grade at the Harbin TV station for many years: news, documentaries, the Spring Festival gala. Every winter you grade a snow-scene promo for the station, and that blue is one only you can make." },
+   { "label": "Stay in Beijing", "result": "You buy your parents a better TV and set its color for them, and on every video call you ask if they can see clearly." }
+  ] },
+  "c_director": { "title": "Become Head of Color", "situation": "The owner wants you to run the whole color department: five suites, seven or eight people, bookings, quotes, equipment, calibration standards. You'll grade less and less yourself.", "options": [
+   { "label": "Take it", "result": "You move into the office with a window at the end of the corridor. In the first week you sit through nine meetings and don't grade a single shot." },
+   { "label": "Keep grading", "result": "You say you can't leave the panel. The owner hires from outside, and the hardest-to-please directors still ask for you by name." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last day you calibrate the suite's monitor one final time and leave the notebook of twenty-odd years of readings on the desk. Pushing open the suite door, you see an evening sky in the window at the end of the corridor, and you stand there a long time looking at its color.",
+  "burnout": "One year you find you can no longer tell apart two very close grays. The doctor says it's eye strain and tells you to stay out of the suite for a while. You go home to Harbin and walk by the river every day, looking at what color snow really is."
+ },
+ "stages": [
+  "You sit in the back row of the suite. When an edit comes in you conform it, check frames and relink the original media from the array one clip at a time; while the colorist grades, you build nodes, track masks and watch the scopes for clipping. Before delivery you check the format, color space and bitrate of every version, and when a film has a technical problem, you're the first one called in.",
+  "You sit at the grading panel on your own now, trackballs under your left hand, knobs under your right. Commercials and web series come to you; you watch the footage, listen to the director, and do a look test. The client and the cinematographer sit on the sofa behind you, and at \"a bit warmer\" you turn a knob and look back at their faces. Notes arrive by WeChat, email and voice message, and you work through them one by one against timecode.",
+  "You lead the grade on series and films, a month or two in the suite per project. You set the whole show's look with the cinematographer and build LUTs for the set, visiting the shoot before cameras roll to see the light. The first passes on each episode go to others and you do the final pass. The cinema version goes through again to theatrical spec, and the delivery sheet carries your signature.",
+  "You run the company's color department: five suites, seven or eight people grading. You manage bookings, negotiate fees with producers, decide which monitors to buy and which AI tools to bring in, and set the company's calibration standards; you still grade the big directors' films yourself. When young colorists finish a piece they ask you in to look, and afterward you often say only one thing: the blacks here, a bit deeper."
+ ],
+ "work": [
+  "The colorist needs the original media for a shot, but the edit team renamed the files. You search the array by timecode for two hours and find it.",
+  "A delivered piece is bounced back by the platform for exceeding the bitrate. You re-encode it and upload it again at three in the morning.",
+  "After the colorist leaves you practice on the quiet, grading a flat gray clip into colors you like. The next day he looks and says: too green, but interesting.",
+  "A drinks commercial; the client wants \"the feeling of summer.\" You push the highlights a little toward cyan and leave the shadows warm, and behind you the director says: that's it.",
+  "A web series' three cameras all have different color temperatures. You let AI match them first, then pull the female lead's skin tones back by hand, shot by shot.",
+  "The cinematographer says the night scenes are too bright. You crush the shadows and he still says bright. In the end you turn off every light in the suite and look again, and he says: that'll do.",
+  "For a film's flashback, the director doesn't want the filtered kind of old. You only lower the saturation a touch and lift the shadows a touch, like old photo paper.",
+  "Before the shoot you go on set and spend a day by the monitor with the cinematographer studying the light, then build three LUTs for the crew to use.",
+  "Your assistant grades an episode on his own for the first time. After watching it you change only one shot: the glint in the female lead's eyes when she cries.",
+  "The company is buying new HDR monitors. You put demo units from three makers in the same suite and have everyone who grades vote.",
+  "A young colorist and a director have a shouting match in the suite. You go in, play the piece from the top, ask the director which shot he likes best, and grade the whole film to match it.",
+  "You set a company rule: before any AI first pass goes to a client, someone must watch it through from start to finish, not just sample frames."
+ ],
+ "past": [
+  "In middle school in Harbin you photographed the frozen Songhua River in winter with the family's old digital camera. The pictures always came out blue, and you thought the camera was broken.",
+  "For the gaokao (college entrance exam) you applied for digital media technology, because someone said that studying it could get you into film.",
+  "In your second year, in the university photography club, you used grading software for the first time to pull back the sky in a photo, and stared at it all night.",
+  "In your third year you graded a classmate's graduation short, a week on a laptop in your dorm. At the screening the projector ran red, and in the back row you could hardly keep from rushing up.",
+  "Before graduating you interned at a Beijing post house and sat in the back row of the suite for three months. Your teacher didn't teach you a thing; he just had you watch.",
+  "You stayed and signed a contract. That day your teacher spoke to you for the first time: learn to read the scopes first, then trust your eyes."
+ ],
+ "late": {
+  "pension_note": "Estimate: Beijing's urban employee pension. Post houses often paid contributions on the minimum base in the early years and later on actual pay, so in retirement you get about forty-five percent of your final monthly salary.",
+  "scenes": [
+   "After retiring you bring an old grading panel home and set it up in the study, now and then grading friends' old home videos.",
+   "The seniors' college asks you to teach a phone photography class. Your first lesson is: don't put a filter on everything.",
+   "Every evening you walk downstairs and watch the sky go from blue to orange, silently calling out its color temperature.",
+   "Your first few months out of the suite, you go out in the sun every day. Your eyes slowly recover, and green leaves are green again.",
+   "You spend a winter in Harbin, going down to the river to look at the snow every day. You take one photo, don't grade it, and keep it as it is.",
+   "You teach color grading part time in a university film program, and in the first class you have the students look at the sky all afternoon.",
+   "The month you leave, your former assistant sends you some footage and asks how to grade the skin tone. You look, and reply with two numbers.",
+   "An old film you graded is restored and re-released, and the restorer calls to ask for your original LUTs. You spend an evening searching old drives.",
+   "At the cinema, watching a new film, the credits roll past \"Colorist\" and it's a young person you don't know. You sit until the lights come up.",
+   "Later first passes were all handed to AI, a whole film made beautiful in minutes. But whether a scene should be cold or warm still took someone sitting in the dark, thinking.",
+   "You look at the color of everything first: tomatoes at the market, a child's face, buildings at dusk. Your family says you're grading everything you see.",
+   "Your grandchild shows you a photo of a sunset on a phone, under a heavy filter. You say: lovely. But the way it really was is lovely too."
+  ],
+  "closing": {
+   "retire": "Many years later, one evening, you sit on the balcony watching the sun go down, the sky turning from orange to purple to deep blue. You don't reach for your phone. You just watch until it's fully dark.",
+   "burnout": "Many years later, one afternoon, you sit in the park as sunlight comes through the leaves onto the ground, a patch of light, a patch of shade. You look for a long time and think it's lovelier than any shot.",
+   "end": "Many years later, on an old drive, you find a clip of ungraded footage, flat and gray: the one you first practiced on alone. You don't open the grading software. You just watch it through to the end."
+  }
+ }
+}

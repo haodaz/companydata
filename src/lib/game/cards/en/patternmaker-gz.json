@@ -1,0 +1,161 @@
+{
+ "id": "patternmaker-gz",
+ "occupation": "Patternmaker",
+ "role": "Pattern Assistant in a Garment Factory Pattern Room",
+ "headline": "A garment-trade vocational graduate from Hunan who sewed on the line and made sample garments at an export clothing factory in Nancun, Panyu, and now grades patterns, lays markers and learns pattern cutting under an old master in the third-floor pattern room",
+ "unit": "An export garment factory in Nancun, Panyu, Guangzhou",
+ "unit_type": "Garment factory (export and brand contract work)",
+ "city": "Panyu, Guangzhou",
+ "city_tier": "Tier 1",
+ "education": "Vocational secondary school (garment design and production)",
+ "level": "You're at home on an industrial sewing machine, spent two years sewing sample garments, and can read a pattern. You can grade and lay markers in CAD, but you've never cut a pattern from scratch on your own.",
+ "intro": "In the urban village of Nancun, almost every building has one floor where sewing machines hum. You're a pattern assistant in the third-floor pattern room of a factory making womenswear for export: on your desk, a roll of kraft paper, a grading ruler, a sharpened pencil. Every garment the hundreds of people here sew starts in this room as pieces of paper. From today, the box in the corner of a pattern piece where the style number goes is sometimes in your handwriting.",
+ "salary_note": "Estimate: garment factories and pattern rooms are packed into Panyu and Haizhu, and patternmakers earn about ten percent above the national figure. In peak season, export orders bring overtime pay; in the slow season it's base pay only. The factory covers lunch.",
+ "facts": [
+  { "label": "Pattern Assistant (current level)", "value": "0–2 years, ¥4,500–6,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Patternmaker (2–5 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥16,800 (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Fittings and pattern corrections", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Grading and marker making", "source": "AI exposure" },
+  { "label": "Open positions", "value": "2 related listings nationwide, 1 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You buy a plate of rice-noodle rolls downstairs and ride your e-bike through the urban village to the factory. In the alley the fabric trucks are already unloading.",
+  "You check yesterday's graded patterns piece by piece: front, back, sleeve, collar, five sizes from S to XXL. Stacked up, the edges have to line up exactly.",
+  "The master tosses you an English tech pack from a foreign client. You read it line by line with a translation app and copy the measurement chart into the grading sheet.",
+  "Lunch in the canteen. The woman serving is from your home county and gives you an extra spoonful of chili pork.",
+  "On the computer you lay a marker for a hundred and twenty dresses, turning the pieces this way and that, and squeeze fabric efficiency from eighty-two percent to eighty-six.",
+  "The cutting-room supervisor brings a cut piece upstairs: the sleeve doesn't match the armhole, three millimeters out. The master glances at it and has you redo the notches.",
+  "The sample sewer has finished the first sample, and you help get it onto the dress form. The master draws a line across the waist in tailor's chalk and says nothing.",
+  "Overtime. The machines in the workshop below are still running. On kraft paper you trace an armhole curve with a French curve, three times over."
+ ],
+ "ladder": [
+  { "title": "Pattern Assistant", "stage": "Entry", "focus": "Cut out patterns, grade, lay markers, check notches, revise patterns alongside the master. You move up by grading without mistakes and cutting simple styles on your own." },
+  { "title": "Patternmaker", "stage": "Pattern cutting", "focus": "Cut patterns on your own from design sketches or a client's sample, make first samples, revise through fittings until the client approves, then send them for grading and production." },
+  { "title": "Senior Patternmaker", "stage": "Lead patterns", "focus": "Cut the hard styles, suits, coats, bias-cut evening dresses; solve fabric shrinkage, matching checks and stripes, and construction problems; train an apprentice." },
+  { "title": "Pattern Room Supervisor", "stage": "Runs the room", "focus": "Manage the room's patternmakers and sample sewers, schedule pattern work, review patterns with merchandisers and clients' technicians, and sign off before any pattern leaves the room." },
+  { "title": "Technical Director", "stage": "Factory technical lead", "focus": "Run the whole factory's pattern room, construction and quality control, set sizing and construction standards, host client factory audits, and be the first call when bulk production goes wrong." }
+ ],
+ "ai_tasks": [
+  { "name": "Grading and marker making", "how": "Once the size rules are set, CAD and AI grade every size automatically and lay the most fabric-efficient marker. People only spot-check key points and the matching of checks and stripes." },
+  { "name": "First patterns from a flat sketch", "how": "From a flat and a measurement chart, AI can generate a basic pattern and save the time of drafting the framework. Ease, curves and fabric shrinkage still need a patternmaker to correct until it fits a body." },
+  { "name": "Checking size charts against standards", "how": "AI checks measurement charts against national standards and the client's sizing and finds the numbers that don't agree. People only look at the client's special requirements." },
+  { "name": "3D virtual fitting", "how": "Put a pattern into 3D software and you see it on a virtual body, saving a round or two of samples. How the fabric feels, and how it looks when a real person moves, the screen can't fully show." },
+  { "name": "Fittings and pattern corrections", "how": "With the sample on a real body, where it pulls and where it gapes, the patternmaker has to stand beside it, look, pinch, pin, then go back to the table and make that one cut right." },
+  { "name": "Working out construction with sample sewers and the workshop", "how": "How the collar goes on, whether the placket is sewn first or last, whether this fabric can be pieced like that: the patternmaker has to talk it through in person with the sample sewer and the line leader." }
+ ],
+ "events": {
+  "e_first_pattern": "The master has you cut your first style on your own, the simplest T-shirt. The sample passes first time, and the sample sewer says: nice smooth shoulder slope.",
+  "e_scissors": "The master gives you a pair of shears he's used for over ten years, the blades polished bright. Paper shears and fabric shears are two different tools, he says. Never mix them up.",
+  "e_marker_error": "Your marker leaves out a facing piece, and nobody notices until three hundred garments are cut. The recut takes forty extra meters of fabric. The factory manager doesn't shout at you; the master takes the blame for you.",
+  "e_shrink": "A batch of denim goes into production without a shrinkage test, and after washing the trousers are two centimeters short. You and the master lengthen the patterns and redo three sizes overnight.",
+  "e_season": "Peak season, export orders one after another. For a month you work until ten every night, and the pattern room's air conditioner breaks down twice.",
+  "e_digitizer": "You learn to use the digitizer to read the master's hand-cut patterns into the computer. Grading a style used to take a day; now it takes an hour.",
+  "e_ai_grade": "The factory's CAD gets an upgrade: AI grades and lays markers automatically, at one point better efficiency than yours. You start spending your time correcting first patterns instead.",
+  "e_ai_3d": "Clients now want to see a 3D virtual sample before any real one is made. You learn to set fabric parameters for patterns in the software, but on screen the silk always looks a little stiffer than the real thing.",
+  "e_ai_pattern": "AI can now generate patterns straight from a flat sketch, and this year the factory hires two fewer pattern assistants. When you correct its patterns, the curves are never smooth, and you retrace them section by section.",
+  "e_order_gone": "Export orders dry up, and a long-time client moves its business to a factory in Southeast Asia. The pattern room is half idle that month, and you go downstairs to trim loose threads for the workshop for a week.",
+  "e_client_praise": "A European client's technician comes to check patterns. All twenty-odd measurements on a coat are within tolerance. She signs your pattern and says the next order is coming to you too.",
+  "e_finger": "The shears slip while you're cutting a pattern and your hand needs three stitches. With it wrapped in gauze, you hold the ruler down with the other hand and draw that way for a week.",
+  "e_back": "After all these years bent over the pattern table, your back starts to ache. You raise the table ten centimeters, and the master says that's exactly what he did too.",
+  "e_love": "You get together with a merchandiser at the factory, someone from your home province. After work you eat fried rice noodles at the Nancun night market, talking in your home dialect.",
+  "e_marry": "You hold the wedding back home in Hunan. You make your own outfit, from pattern to finished garment, in one weekend.",
+  "e_child": "Your child is born and stays back home with the grandparents. Every month you send money; every night you video call. When the little one calls out to you on the screen, you're often still in the pattern room.",
+  "e_house": "You buy a small flat in Shiqiao, Panyu, the down payment made of years of savings plus what you borrowed. On the new balcony you put an old dress form.",
+  "e_mentee": "The suit your apprentice cut on her own passes client approval for the first time. She rolls up the pattern and hands it to you, and on every piece you recognize your own way of marking.",
+  "e_master": "The master who brought you into the trade retires to his hometown. Before he goes, he leaves you his set of curves, their edges covered in his pencil marks.",
+  "e_parent": "Your father back in Hunan falls ill, and you take half a month off to look after him. When you get back there are a dozen styles piled on your pattern table, waiting.",
+  "e_old_coat": "In a mall you turn back a coat's collar and look at the line of the lapel, and recognize a pattern you cut ten years ago. That client has kept reordering it."
+ },
+ "choices": {
+  "c_cad": { "title": "Learn CAD first, or hand patterns", "situation": "The factory has bought garment CAD and a digitizer and wants a young person to learn it; once you know it, grading and markers are all done on the computer. The master says hand-cut patterns are the root, and your hands aren't good enough yet.", "options": [
+   { "label": "Learn CAD first", "result": "You train for a month with the software company's technician, and the factory's first computer-laid marker is yours." },
+   { "label": "Practice by hand with the master", "result": "Another half year of drawing on kraft paper. One day the master picks up your pattern, looks at it and says: that collar curve will do." }
+  ] },
+  "c_dongguan": { "title": "Go to a big factory in Humen", "situation": "A big garment factory in Humen, Dongguan, is hiring patternmakers: twenty percent more pay, room and board included. But it's fast-fashion work, three or four styles a day, with no time to perfect a single line.", "options": [
+   { "label": "Go to Humen", "result": "You cut over eighty styles in a month and your hands get much faster. Sometimes you wake in the night remembering a curve you didn't get smooth that day." },
+   { "label": "Stay in Panyu", "result": "You stay, and the master starts passing you some of the export clients' difficult styles." }
+  ] },
+  "c_brand": { "title": "Become a patternmaker for a brand", "situation": "A designer label in Guangzhou wants you as its patternmaker: an office job, a few dozen styles a season, working slowly through fits with the designers. About the same pay, but no peak-season overtime, and you never see bulk production.", "options": [
+   { "label": "Join the brand", "result": "In an office tower you have a pattern table of your own. Every time a designer says \"a bit looser,\" you have to ask exactly where." },
+   { "label": "Stay at the factory", "result": "You say you still like watching your pattern turn into thousands of garments. After peak season the manager pays you an extra month's bonus." }
+  ] },
+  "c_senior": { "title": "Make Senior Patternmaker", "situation": "The factory is grading its staff. A senior patternmaker has to cut hard styles like suits and coats alone and be able to train an apprentice. The manager says: next month, cut me a double-breasted coat.", "options": [
+   { "label": "Stay up perfecting the coat", "result": "Five revisions, and on the last the lapel rolls down and lies flat on its own. The manager turns the sample over in his hands for a long time." },
+   { "label": "Keep to your regular orders", "result": "You don't lose sleep over the coat and hand in a clean version. The manager says it's good; next year, maybe." }
+  ] },
+  "c_ai": { "title": "Take on the AI pattern system", "situation": "The factory has bought an AI pattern system, and someone has to load over ten years of old patterns into it and set the shrinkage and ease rules for each fabric. Take it, and you'll sit at a computer every day and rarely stand at a pattern table.", "options": [
+   { "label": "Take it on", "result": "It takes you half a year to put over two thousand old styles into the system. Now a new assistant types a style number and pulls up the master's pattern from years ago." },
+   { "label": "Stay at the pattern table", "result": "You say your hands can't do without kraft paper. The system goes to a new university graduate, and the hard styles still land on your desk." }
+  ] },
+  "c_custom": { "title": "Open a bespoke suit shop", "situation": "A long-time client says: hands like yours, why not open your own bespoke suit shop? Measure, cut the pattern, have it made up, a few thousand yuan a suit. No base pay, and the rent and equipment are on you.", "options": [
+   { "label": "Open the shop", "result": "You rent a small shopfront in Shiqiao, hang a row of sample lapels on the wall, and put a dress form by the door.", "end": "Your bespoke shop runs for many years. Every customer's pattern is rolled up on a shelf, labeled with a name and a date. When a customer gains or loses weight, you take that roll down and make a couple of cuts." },
+   { "label": "Stay at the factory", "result": "You thank the client and say that if he ever wants a suit, you'll cut the pattern for free." }
+  ] },
+  "c_teach": { "title": "Teach pattern cutting back in Hunan", "situation": "The vocational school back home asks you to come and teach pattern cutting. Half your current pay, but close to home, and your child could grow up beside you.", "options": [
+   { "label": "Go home and teach", "result": "You pack the set of curves into your suitcase and take the high-speed train back to Hunan.", "end": "You teach pattern cutting at the vocational school for many years, and most of your students end up in factories in Guangdong. Every year someone sends a photo of a pattern from Panyu and asks: teacher, is this curve right?" },
+   { "label": "Stay in Panyu", "result": "You recommend an old colleague who wants to go home, and stay yourself." }
+  ] },
+  "c_head": { "title": "Apply for Pattern Room Supervisor", "situation": "The old supervisor is retiring, and the manager has you and another senior patternmaker compete for the job. A supervisor schedules, deals with clients and manages ten people, and cuts fewer and fewer patterns.", "options": [
+   { "label": "Apply", "result": "You redraw the pattern room's schedule and hand it to the manager. The next week, the person standing at the whiteboard is you." },
+   { "label": "Keep cutting patterns", "result": "You say you still want to cut patterns. The new supervisor's first move is to give you all the hardest styles." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last day you hand the pattern room key to your apprentice and wipe your table clean. Out the factory gate, the alleys of Nancun still hum with sewing machines. You stand there a while and can tell that one of them needs a new needle.",
+  "burnout": "Your back can no longer take a full day on your feet. You quit and go home to Hunan, taking the last half roll of kraft paper with you. You push it under the bed, and for a long time you don't unroll it."
+ },
+ "stages": [
+  "You work at the table at the very back of the pattern room. Each pattern the master cuts, you cut out piece by piece, punch, and mark with style number, size and grain line; you read it into the computer with the digitizer, grade it, and check every size from S to XXL. When the cutting room has a problem they come to you first, and you take the cut piece to the master.",
+  "You cut patterns on your own now. With a design sketch or a client's sample on the table, you measure, unpick, calculate, draw front and back on kraft paper, and hand it to the sample sewer for the first sample. At fittings you stand by the model, pinch up a spare fold of cloth and pin it. Only when the client approves does the pattern go off for grading.",
+  "The factory's hard styles all come to you: double-breasted coats, suit lapels, bias-cut silk dresses. You work out fabric shrinkage and the matching of checks, tell the line leader which operation goes first, and when a foreign client's technician comes to check patterns, you go through the measurements with her one by one. You have an apprentice and teach her collar curves hand over hand.",
+  "You run the pattern room: four patternmakers and six sample sewers. Every morning you put the schedule on the whiteboard, which client's styles go first; you hold video calls with merchandisers and clients' technicians to review patterns, and you sign before any pattern leaves the room. You cut less yourself. Mostly you stand by someone else's table, take a look and say: take this in two more millimeters.",
+  "You run the factory's technical side: pattern room, construction, quality control. You set its sizing and construction standards, walk visiting auditors from the cutting room to packing, and when bulk production goes wrong, yours is the first number the manager calls. You've kept one pattern table, and you only sit down at it when a hard style comes in."
+ ],
+ "work": [
+  "The sample sewer says a shirt's placket pattern is missing a notch. You dig out the pattern, punch one in with an awl, and write beside it: match here.",
+  "The master has you grade a style from M up to XXL. You check it twice against the grading sheet, and the biceps width on one size is still a millimeter off.",
+  "The English tech pack from the merchandiser specifies four centimeters of chest ease. You spend ages with the dictionary, then copy it out in Chinese along the edge of the pattern.",
+  "A designer sends a sample bought abroad and wants \"this feeling.\" You take it apart, lay each piece flat, trace it onto paper, and find exactly where the waist darts sit.",
+  "At the fitting, when the model raises her arm the whole back rides up. You add a little under the back armhole, and in the second sample she raises her arm and the garment stays put.",
+  "The client's QC finds the trouser length eight millimeters short of the chart. You trace it to shrinkage left out of the calculation, add it around the pattern, and remake the pre-production sample.",
+  "A checked coat: the checks on front, back, sleeves and pockets all have to line up. You cover the pattern in check lines, and the cutting-room supervisor says it's the easiest checked pattern he's ever cut.",
+  "Your apprentice's suit collar curves are never smooth. You have her put down the French curve and let her wrist carry the pencil. After an afternoon of it, she has it.",
+  "A European client's technician reviews patterns by video and wants to see the roll line on a coat's collar. You take the sample to the window so she can see how smooth that line is in the light.",
+  "Peak season brings nine styles at once. You wipe the whiteboard and sort them by delivery date into three columns: hard styles to the veteran patternmakers, simple ones to the new hands for practice.",
+  "A client has sent back three versions in a row. Instead of having the patternmaker revise again, you go to the client's office yourself and work out that what they actually want is \"more slimming.\"",
+  "You archive more than ten years of the factory's old patterns, labeling every roll with style number, fabric and client. That weekend you're the only one in the pattern room.",
+  "When a client audits the factory, you walk them from the cutting room to finishing, pick a garment up at the inspection table and turn it inside out to show them the overlock stitch density.",
+  "A batch of bulk garments comes out with lopsided collars. You spend a day on the workshop floor and find the presser foot loose on one machine.",
+  "You write a pattern standard for the factory and post it by the pattern room door. Rule one: every pattern must be marked with its shrinkage."
+ ],
+ "past": [
+  "The year you finished middle school, you didn't get into the county high school. Your older cousin, working at a garment factory in Guangzhou, called and said: go to a garment vocational school, and you'll never go hungry.",
+  "The vocational school was in a county town in Hunan. The first time you worked an industrial sewing machine your seams wandered all over, and the teacher had you sew straight lines for a whole term.",
+  "The school sent you to a factory in Panyu for an internship. On the production line you set sleeves, four hundred a day, and at night lying in bed your fingers were still trembling.",
+  "You moved to sample sewing, making first samples under a sample maker. Every time one didn't fit, you wanted to know if it was the sewing or the pattern.",
+  "The old master in the pattern room saw you always hanging around his table and asked if you wanted to learn pattern cutting. You said yes. He tossed you a roll of kraft paper: first, learn to cut a straight line."
+ ],
+ "late": {
+  "pension_note": "Estimate: Guangzhou's urban employee pension. Garment factories often paid contributions on the minimum base in the early years, with gaps when you changed factories, and only later on actual pay, so in retirement you get about forty percent of your final monthly salary.",
+  "scenes": [
+   "The day you retire, you wipe the set of curves clean, wrap them in a cloth, and take them home.",
+   "The neighbors' daughter is getting married and asks you to alter a wedding dress. You spread newspaper on the living-room floor and draw a pattern.",
+   "You visit the vocational school in Hunan. The sewing machines in the classroom are all computerized now, and the students ask what kraft paper is for.",
+   "Your first few months back home, your back hurts too much to sit for long. You lie in bed all day listening to the roosters outside.",
+   "The owner of the tailor's shop in town asks you to help out. You take only alterations, work sitting down, a few hours a day.",
+   "You open a little tailor's shop in town, taking up hems and making school uniforms. Anyone who wants a garment that fits comes to you.",
+   "The day you leave Panyu, your colleagues from the pattern room walk you to the end of the alley and say they'll still be calling you about the hard styles.",
+   "You post a video online of drawing a collar curve, and hundreds of thousands watch it. Many of the comments are from garment factory workers asking what ruler you use.",
+   "You find the first T-shirt pattern you ever cut. The kraft paper has yellowed, but the notches are still crisp.",
+   "Later grading and markers were all handed to AI; a style laid out in minutes. But whether a garment sits right on a person still took someone standing beside them, looking.",
+   "On the street you always look at people's shoulder seams and armholes first. Your family laughs and says you look at clothes, not faces.",
+   "Your grandchild's school trousers are too long. You chalk a line across the hem, cut, and sew it up again, and they fit better than when they were bought."
+  ],
+  "closing": {
+   "retire": "Many years later, one afternoon, you cut a kite pattern for your grandchild on the balcony. The shears move steadily, one cut all the way through.",
+   "burnout": "Many years later, one evening, before closing the tailor's shop, you put the chalk and tape measure in the drawer and fold an altered shirt on the counter.",
+   "end": "Many years later, in an old trunk, you find a roll of kraft paper. Unrolled, it's the pattern for a coat, and every piece is in your handwriting. You roll it up again and put it back."
+  }
+ }
+}

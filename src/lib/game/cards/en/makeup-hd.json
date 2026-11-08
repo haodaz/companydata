@@ -1,0 +1,155 @@
+{
+ "id": "makeup-hd",
+ "occupation": "Makeup Artist (Film and TV)",
+ "role": "Makeup Assistant on Film and TV Crews",
+ "headline": "A beauty-and-hairdressing vocational graduate from Jiangxi who took a three-month screen makeup course and now works with period-drama crews in Hengdian, in the makeup room by four in the morning, laying base on extras and fixing hairpieces on the leads",
+ "unit": "Hengdian World Studios, Dongyang, Zhejiang (working in crews' makeup departments)",
+ "unit_type": "Film and TV crew makeup department",
+ "city": "Hengdian, Dongyang, Jinhua",
+ "city_tier": "County town",
+ "education": "Vocational secondary school (beauty and hairdressing) plus a screen makeup course",
+ "level": "You're practiced at everyday and bridal makeup, and in your course you worked on period hairpieces and simple aging makeup. You've never yet followed a production from the first day of shooting to wrap.",
+ "intro": "In Hengdian the makeup room is always the first place with its lights on: a row of mirror bulbs, a row of plastic stools, a table of brushes, sponges, spirit gum and box after box of hairpieces. You're a makeup assistant with a period-drama crew; actors sit down as themselves and stand up as someone from centuries ago. From today, the continuity book that records every scene's makeup is yours to photograph and keep.",
+ "salary_note": "Estimate: Hengdian crews mostly pay by the day, two or three hundred yuan for an assistant, with crew makeup artists and department heads negotiating a fee per production. Big productions and micro-drama crews pay very differently, and months with work and months without differ even more; this is converted to a monthly figure at the national average.",
+ "facts": [
+  { "label": "Makeup Assistant (current level)", "value": "0–2 years, ¥4,000–6,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Crew Makeup Artist (2–5 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Applying makeup, laying hairpieces, fixing wigs and beards", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Makeup concept sketches and reference images", "source": "AI exposure" },
+  { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The alarm goes at 3:40. You leave your rented room in Hengdian town and ride your e-bike through streets still dark; the breakfast stall by the road is just lighting its stove.",
+  "In the makeup room the mirror lights come on in a row. You open your kit: brushes, sponges, spirit gum, hairnets, all lined up box by box.",
+  "The first batch of extras files in. You lay their base and draw their brows, twenty people an hour, and your wrist is already aching.",
+  "You help your teacher fit the second female lead's hairpieces: first the gauze band around the head, then the pieces laid one by one, while you hold the hair dryer and wait for the glue to set.",
+  "On set you stand behind the monitor with the touch-up bag on your back. The moment the director calls cut, you hurry in and blot the sweat off the actor's forehead.",
+  "Crew boxed lunch. You squat by the props truck to eat, a powder puff still in your other hand.",
+  "Forty degrees. The actors are in three layers of costume, their wigs soaked with sweat. You touch up a dozen times in an afternoon, and your own clothes are wet through.",
+  "Wrap. You help the actors take the glue off, working the remover in bit by bit, and back home there are still twenty brushes to wash and hang up."
+ ],
+ "ladder": [
+  { "title": "Makeup Assistant", "stage": "Entry", "focus": "Wash tools, lay base on extras, prepare hairpieces and glue, touch up on set, photograph makeup for continuity. You move up by being quick and steady and remembering every scene's look." },
+  { "title": "Crew Makeup Artist", "stage": "On the crew", "focus": "Handle the makeup for several principal actors on your own, keep continuity, touch up on set, and work with camera and lighting so the makeup holds up on screen." },
+  { "title": "Key Makeup Artist", "stage": "Department head", "focus": "Lead the makeup department, put the design for every character into practice, set the makeup schedule, manage supplies and budget, and work with the director and actors." },
+  { "title": "Makeup and Character Designer", "stage": "Design lead", "focus": "Read the script and design every character's look, produce the final makeup tests, align the whole production's look with art and costume, and get a credit in the titles." }
+ ],
+ "ai_tasks": [
+  { "name": "Makeup concept sketches and reference images", "how": "From the script and actors' photos, AI quickly turns out several makeup concepts and references, saving the early hunt for images. Understanding the character, choosing a direction and adjusting details for the actor's real face shape and skin still falls to the makeup artist." },
+  { "name": "Virtual makeup tests", "how": "Directors and actors can see a rough version on screen first and do fewer rounds of tests. Real makeup tests still happen on a real face under lights and camera, with a person adjusting and deciding." },
+  { "name": "Sorting makeup photos and continuity notes", "how": "AI files each day's makeup photos by scene and actor and flags which look a scene needs to match. People only check the few special scenes." },
+  { "name": "Simple makeup for crowd scenes and micro-dramas", "how": "AI face-swapping and digital beauty filters make makeup for micro-dramas and crowd scenes simpler and simpler, and some is left to post-production. But once the camera moves in close, the base and the hairline still have to be done by hand." },
+  { "name": "Applying makeup, laying hairpieces, fixing wigs and beards", "how": "Period hairpieces, wigs, beards, aging makeup: all of it is built up bit by bit on a real face, reading the skin, the sweat, the camera angle. It's all touch and quick thinking on set." },
+  { "name": "Touch-ups on set", "how": "A scene runs to a dozen takes, and actors sweat, cry, eat. In the few dozen seconds between takes you have to put the makeup back, and remember exactly how it looked in the last one." }
+ ],
+ "events": {
+  "e_first_star": "The first time you touch up a lead actor, your hand shakes. He smiles and says: no rush, I'll wait. That night after wrap, you sit in your rented room thinking about it for a long time.",
+  "e_heat": "July in Hengdian, forty degrees, period scenes all day. Sweat runs from the actors' wigs down their necks, and you touch up until you get heatstroke yourself.",
+  "e_no_work": "The production stops shooting; the money hasn't come through, they say. You wait in Hengdian a month without work, checking the crew hiring group chats every day.",
+  "e_unpaid": "A production wraps and the last month's pay never arrives. The makeup team asks in the group chat for half a year, and then nobody posts in it anymore.",
+  "e_short_drama": "Hengdian fills with micro-drama crews, vertical-screen series shot in ten days, dozens of scenes a day. The makeup is simple, and the pace is so fast you eat standing up.",
+  "e_ai_faceswap": "Some micro-dramas start using AI face-swapping and digital beauty filters, and the extras don't get made up at all. On the micro-drama crew you work with most, the makeup team goes from five people to two.",
+  "e_ai_tryon": "Before makeup tests, the producer has AI generate twenty concept images for the director to choose from. The one the director picks takes you three tries on a real face before you find a color that holds up on camera.",
+  "e_desert": "You go with a big production to shoot on location in the northwest. The wind and sand are fierce, and foundation dries the moment it touches skin. You squat behind a dune under an umbrella doing touch-ups, and by the end of that shoot you've learned a great deal.",
+  "e_wrist": "You get tendonitis in your wrist, and even holding a brush hurts. You keep working in a wrist brace and soak it in hot water at night.",
+  "e_award": "A drama you did makeup on wins an award, and it's your department head's name they read out. Holding the trophy, she says one thing: and everyone on our team.",
+  "e_cry": "A crying scene runs to twenty takes, and the actor cries her makeup off twenty times. When the last take is good, she leans on your shoulder to rest for a moment.",
+  "e_love": "You get together with someone from the lighting crew. When wrap runs late, they wait on an e-bike outside the makeup room.",
+  "e_marry": "You get married. You insist on doing your own makeup for the wedding, and looking in the mirror afterward, you think it's the slowest you've ever worked.",
+  "e_child": "Your child is born. For a year you don't join any crew, looking after the baby in Dongyang and now and then taking a wedding makeup job.",
+  "e_house": "You buy a flat in Dongyang city, a twenty-minute drive from Hengdian. The first piece of furniture in the living room is a lighted makeup mirror.",
+  "e_mentee": "An assistant you trained is now a crew makeup artist on another production. She posts a lead actor's makeup test photo with the caption: my teacher taught me.",
+  "e_allergy": "A new glue brings an actor's face out in a rash, and the shoot stops for half a day. You go to apologize; she says it isn't your fault, but you don't sleep well for days.",
+  "e_star_artist": "A big star arrives with his own makeup artist, and you only do his body double. You stand by watching how that artist works and quietly note a few things down.",
+  "e_eyes": "After more than ten years under mirror lights, your eyes start to go, and you have to lean in close to draw a fine eyeliner. You get reading glasses and keep them on the top tray of your kit.",
+  "e_parent": "Your mother back home in Jiangxi is in hospital, and you take leave to go back. The crew calls to ask when you'll return. Looking at the hospital bed, you say: a little longer.",
+  "e_rerun": "TV is rerunning a period drama you worked on more than ten years ago. You recognize the hairpieces you laid, and one that wasn't quite flat. Nobody noticed at the time."
+ },
+ "choices": {
+  "c_crew": { "title": "A big production, or micro-dramas", "situation": "A big production is hiring makeup assistants: five months on one show, under a good teacher, but an assistant gets only two hundred a day. A micro-drama crew pays three hundred and fifty, one series every ten days, straight into the next, and nobody has time to teach you.", "options": [
+   { "label": "Join the big production", "result": "Over five months your teacher has you lay hairpieces hundreds of times. On wrap day she gives you an old brow razor of hers." },
+   { "label": "Go to the micro-dramas", "result": "You work on more than a dozen micro-dramas in a year and put away your first savings. Sometimes you can't remember what last week's series was called." }
+  ] },
+  "c_sfx": { "title": "Learn special-effects makeup, or not", "situation": "The crew's special-effects makeup artist is willing to take you on: silicone prosthetics, aging makeup, scars. It's a hard craft, two more years as his assistant on low pay, but once you've learned it, every crew will need you.", "options": [
+   { "label": "Learn from him", "result": "For two years you practice on a plaster face cast in your rented room. The first aging makeup you do on your own, the actor's daughter visits the set and stops short." },
+   { "label": "Focus on beauty makeup", "result": "You keep to clean beauty makeup, and the leads all say your base is the most natural." }
+  ] },
+  "c_ai": { "title": "Take on AI makeup design, or not", "situation": "The producer wants the makeup team to use AI for concepts and virtual tests, and someone has to learn the software and run every character's look on screen first. Your department head asks if you'll take it.", "options": [
+   { "label": "Take it", "result": "You learn to feed in actors' photos and the script, then pick out the images that would actually work on a face. The rounds of makeup tests are cut in half." },
+   { "label": "Stick to applying makeup", "result": "You say your hands are faster than a screen. The head gives it to the new assistant, and the problem images still come to you." }
+  ] },
+  "c_beijing": { "title": "Follow a film crew to Beijing", "situation": "A film's makeup and character designer is taking people to Beijing and says that if you come you'll work on big productions for thirty percent more. But Beijing rent is expensive, and there isn't work every month.", "options": [
+   { "label": "Go to Beijing", "result": "You work on two films in Beijing, and for the first time you see the camera push in to a foot from an actor's face, where every bit of fuzz on the makeup shows." },
+   { "label": "Stay in Hengdian", "result": "You stay, and several Hengdian producers start asking for you by name." }
+  ] },
+  "c_lead": { "title": "Become Key Makeup Artist", "situation": "A producer on a new production asks if you can be key makeup artist, leading seven people and running the makeup for the whole show. You've never led that many.", "options": [
+   { "label": "Take it", "result": "On the first day of shooting you're in the makeup room by three, the seven people's work laid out on one sheet of paper taped beside the mirror." },
+   { "label": "One more show first", "result": "You say you'd like one more big show first, to see how other department heads plan. The producer says he'll come to you for the next one." }
+  ] },
+  "c_wedding": { "title": "Open a wedding makeup studio", "situation": "Plenty of people get married in Dongyang and Yiwu, and a day of wedding makeup pays one or two thousand. A friend says with hands like yours you should open a studio and never walk into a makeup room at four in the morning again.", "options": [
+   { "label": "Open the studio", "result": "You rent a small room in Dongyang city. Brides' photos go up on the wall, and on the table is the same kit you used on set.", "end": "Your studio runs for many years, and you make up thousands of brides. The night before every wedding, you still wash your brushes one by one and lay them out by size." },
+   { "label": "Stay with the crews", "result": "You say you still love the set. On free weekends, you take a wedding or two." }
+  ] },
+  "c_designer": { "title": "Design a production's makeup and characters", "situation": "A director who's seen shows your team made up asks you to be makeup and character designer on his new film: starting from the script, every character's look is yours to decide. You've never designed a whole production from scratch.", "options": [
+   { "label": "Take it", "result": "You read the script three times and draw a page for each character. By page forty, it's light outside." },
+   { "label": "Keep leading the team", "result": "You recommend a designer you've worked with and go on leading your team. The makeup on that film is still done by your people." }
+  ] },
+  "c_teach": { "title": "Teach at a makeup school", "situation": "A makeup school in Hangzhou asks you to teach screen makeup: nine to five, weekends off, about the same money as crew work. Only, from then on, you'd never go on set again.", "options": [
+   { "label": "Go and teach", "result": "Your first class is on laying hairpieces. On the lectern sits a mannequin head, and you say: first, the gauze band.", "end": "You teach at the makeup school for many years, and most of your students go to Hengdian. Sometimes when a period drama is on TV, you can tell which hairpiece was laid by which student." },
+   { "label": "Stay with the crews", "result": "You say you still can't leave that row of lights in the makeup room." }
+  ] }
+ },
+ "endings": {
+  "retire": "On the day your last production wraps, the team gives you a bunch of flowers. You pack your kit tray by tray, and in the bottom one is still the first tub of hairpiece glue you ever bought. Leaving the studio lot, it's just getting dark, and the lights have come on along the city-gate set.",
+  "burnout": "Another four in the morning, and as you stand up in the makeup room everything goes black. The doctor says you haven't had a full night's sleep in too long. You stop joining crews, go home to Jiangxi, and put your kit on top of the wardrobe."
+ },
+ "stages": [
+  "You're the most junior on the makeup team: in first, setting out hairpieces, hairnets and glue for each actor, laying base on the extras as they come in batch by batch. On set you carry the touch-up bag and after every take photograph the actor's makeup for the continuity book. Which scene, which actor, which look: when your teacher asks, you have to know.",
+  "You handle three or four principal actors' makeup on your own. Before shooting you go over the looks with the department head, then in the makeup trailer before dawn you make up a lead by yourself. On set you stand by the camera, watching for what will go wrong on a face when a light changes or the lens pushes in. Before a crying scene, you ask the actor if she wants waterproof mascara.",
+  "You lead a makeup department of seven or eight. Each day you take the call sheet and first set the makeup order: who's in the chair at four, who at six, how many people on the extras. You manage supplies and budget and go over each scene's look with costume and hair. When the director says a character looks the wrong color, it's you he comes to. Yourself, you only put the few strokes that matter most on the leads.",
+  "You read the script and design the look for dozens of characters: how a face changes from eighteen to sixty, drawn up in a character book. You meet the art director and costume designer to match colors and take the makeup test photos to the director and producer. Once shooting starts you're not on set every day, and your name is in the credits."
+ ],
+ "work": [
+  "Your teacher has you fit a beard on an extra. You trim the beard strip three times, stick it on crooked once, and on the third try she glances in the mirror and doesn't make you redo it.",
+  "In a rain scene the female lead's hairpiece comes loose. Under the rain shelter you hold the hair dryer in one hand and press with the other, twenty seconds, and the director calls: again.",
+  "In yesterday's scene the actor had a mole at the corner of her mouth, and today it's been forgotten. You find the photo in the continuity book and add it, and the assistant director says you saved a scene.",
+  "A veteran actor has to play seventy. You build up wrinkles in latex layer by layer, three hours of it. He looks in the mirror a long while and says: that's my father.",
+  "Lighting swaps in a hard light, and the powder on the lead's face suddenly sits on the surface. You switch to a sheerer foundation and press another layer over the cheekbones, and on the monitor you can't see it anymore.",
+  "The micro-drama crew shoots sixty scenes a day, and you handle five actors on your own, changing their makeup in the back of a minivan with the window glass as your mirror.",
+  "The week before shooting, you cover the makeup room wall with the looks for more than forty characters, each with the shade numbers and which glue to use written beside it.",
+  "A lead turns out to be allergic to spirit gum and her face goes red. You switch to a medical adhesive overnight and work it out with the producer to push that close-up back two days.",
+  "The new assistant is too scared to touch up a big star and stands beside him trembling. You press the powder puff into her hand and say: pretend he's an extra.",
+  "The director wants the heroine to go from girl to middle age. You add no wrinkles; you just bring her brow line down, little by little. When the test photos come back, the director says: that's it.",
+  "You and the costume designer argue all afternoon over the villain's color, and finally settle on not black but a very deep green.",
+  "The producer cuts the character budget by thirty percent. You switch the extras' wigs from made-to-order to rentals and keep the savings for the leads' few."
+ ],
+ "past": [
+  "In middle school, back home in Jiangxi, you did your older cousin's makeup once, with her eyebrow pencil and your mother's lipstick. You kept the photos from that day for years.",
+  "You did badly in the high school entrance exam and went to a vocational school in the county town for beauty and hairdressing. The whole first year you practiced updos on mannequin heads.",
+  "You interned at a portrait studio in the county town, doing makeup for brides having their wedding photos taken. An hour a face, and the owner said you were too slow.",
+  "On your phone you came across a video of makeup on a Hengdian set, an actor turning from a young girl into an old woman in one turn. You saved three months' wages and took a screen makeup course in Hangzhou.",
+  "On the last day of the course, your teacher recommended you to a crew in Hengdian as a makeup assistant. You dragged a makeup case onto a long-distance bus and arrived in Hengdian."
+ ],
+ "late": {
+  "pension_note": "Estimate: crew work is mostly day-rate contract labor, so for the first years there was no proper social insurance; later you paid in yourself in Dongyang as a flexible worker, on a low base and for fewer years, so in retirement you get a little over thirty percent of your final monthly pay.",
+  "scenes": [
+   "For the last time you switch off the mirror lights in the makeup room, wash that row of brushes, and leave them to dry on the windowsill.",
+   "The town's seniors' choir has a performance and asks you to do their makeup. You keep it very light, and they say they look better than when they were young.",
+   "Now and then you wander near the studio lot, and when you see a makeup room lit before dawn, you stand outside the door for a while.",
+   "Your first few months away from the crews, you sleep until it's light every day, and realize you haven't seen the sun after seven in the morning in years.",
+   "A family in the village is holding a wedding and asks you to do the bride's makeup. You bring your small kit, and afterward you're given a bowl of sweet egg soup.",
+   "You open a tiny cosmetics shop in the county town. When a girl asks how to do her brows, you sit her down and show her once.",
+   "The day you leave the crews, the team takes your photo in the makeup room, a row of lit mirror bulbs behind you.",
+   "An assistant you trained becomes a makeup and character designer, and in the thank-you list in the credits writes: my teacher.",
+   "You find your old continuity books, full of the makeup photos you took. Some of those actors became famous; some you never saw again.",
+   "Later a lot of makeup was left for AI to fix in post. But once the camera pushed in close, someone still had to smooth the corners of an actor's eyes and the hairline by hand before the take.",
+   "Watching TV dramas, you always look at the actors' hairlines and beards first. Your family says you watch the makeup, not the story.",
+   "Your grandchild's school is putting on a show, and you make the children up with two round red cheeks each. They dissolve into giggles in front of the mirror."
+  ],
+  "closing": {
+   "retire": "Many years later, one morning, you wake very early, before it's light. You don't get up. You lie listening to the birds outside and remember the makeup room's mirror lights coming on one by one.",
+   "burnout": "Many years later, one afternoon, sitting outside your shop, you draw soft brows on a girl heading to a job interview. She looks in the little mirror, smiles, and goes.",
+   "end": "Many years later, in a drawer, you find a worn-down brow brush with your initials carved in the handle. You put it back. You don't throw it away."
+  }
+ }
+}

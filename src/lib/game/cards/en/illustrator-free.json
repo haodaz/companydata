@@ -1,0 +1,151 @@
+{
+ "id": "illustrator-free",
+ "occupation": "Illustrator",
+ "role": "Freelance Illustrator",
+ "headline": "A freelance illustrator who drew game characters for four years at a Shanghai studio, quit, and moved into an old courtyard house outside Dali's old town, living on picture books and book covers for publishers and packaging art for brands",
+ "unit": "Self-employed (a rented courtyard house outside Dali's old town)",
+ "unit_type": "Freelance illustrator (commissions from publishers and brands)",
+ "city": "Dali",
+ "city_tier": "Tier 3–4",
+ "education": "Bachelor's degree (animation)",
+ "level": "You're at home with a pen display and with watercolor, you've drawn hundreds of game characters, and your portfolio has two book covers and a packaging set. You have three or four repeat clients, and no idea yet what a year will bring in.",
+ "intro": "In the courtyard there's a bougainvillea, an old water vat, and under the eaves a long table with a pen display, a box of watercolors and a pile of printed contracts. You're a freelance illustrator in Dali. Your clients are in Beijing, Shanghai and Hangzhou; you're at the foot of the Cang Mountains, with an internet cable and a pen, turning other people's stories into pictures. From today, nobody clocks you in, and nobody pays you a salary.",
+ "salary_note": "Estimate: freelance illustrators are paid by the job, a few thousand for a book cover, tens of thousands for a picture book, packaging art negotiated by the set. A good month tops twenty thousand; an empty one brings nothing. Most clients are in the big coastal cities, while rent and food in Dali are cheaper. This is converted to a monthly figure at the national average.",
+ "facts": [
+  { "label": "Illustrator (current level)", "value": "2–5 years, ¥7,000–12,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Senior Illustrator (5–10 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Original characters and a style of your own", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Routine spot illustrations and small assets", "source": "AI exposure" },
+  { "label": "Open positions", "value": "9 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The bougainvillea in the courtyard has bloomed. You brew a pot of coffee under the eaves and watch the clouds creep down the Cang Mountains.",
+  "You open your inbox: the publisher's editor has sent notes on page six of the picture book, and the brand wants to know how the packaging art is coming along.",
+  "On the pen display you draw page seven: a little girl standing by Erhai Lake. You change the color of her scarf four times.",
+  "You ride your e-bike into the old town for a bowl of ersi rice noodles, run into a friend who also paints here, and agree to go sketching in Xizhou at the weekend.",
+  "Video call with the brand in Shanghai. The marketing manager says the illustrations should be \"a bit younger.\" While you listen you draw five little figures in your sketchbook.",
+  "A rainy-season shower in the evening. You bring the watercolor paper in from the courtyard; two sheets have already buckled.",
+  "Dinner next door at your landlady's. The old woman points at a drawing on your phone and asks: one of these, how much would it sell for?",
+  "You post today's sketch online, and someone comments asking if you take commissions. You reply with a price and turn off the light."
+ ],
+ "ladder": [
+  { "title": "Junior Illustrator", "stage": "Entry", "focus": "Take scattered spot illustrations and small commissions while the portfolio is thin. You move up by delivering on time, taking revisions, and building repeat clients." },
+  { "title": "Illustrator", "stage": "Working freelance", "focus": "Have steady editors at publishers and brand clients, take book covers, picture books and packaging art, and quote, sign contracts and schedule your own work." },
+  { "title": "Senior Illustrator", "stage": "Asked for by name", "focus": "Your style is recognizable and clients ask for you by name; publishers pay royalties instead of buying outright, and you take whole picture books and year-long brand work." },
+  { "title": "Independent Illustration Artist", "stage": "A name of your own", "focus": "Publish your own art books, hold exhibitions, license your characters and style, work with an assistant or two, and turn down more work than you chase." }
+ ],
+ "ai_tasks": [
+  { "name": "Routine spot illustrations and small assets", "how": "Social-media spot art, sticker packs, little icons: AI can churn them out in bulk. More and more clients generate them themselves and only come to a person when they need a consistent style." },
+  { "name": "Rough sketches and composition options", "how": "From a text, AI can quickly produce several compositions and color roughs, saving the early hunt for reference. What the picture says and where the main character stands, the illustrator decides." },
+  { "name": "Brand packaging and poster art", "how": "AI can produce base drafts and several colorways. Reworking it until it prints, carries the brand's tone and holds up when you zoom in takes a person drawing stroke by stroke." },
+  { "name": "Cleaning line art, coloring, resizing", "how": "Cleaning up line art, flat coloring, adapting an image to different sizes: AI tools help enormously. The last layer of brushwork and texture is still finished by hand." },
+  { "name": "Original characters and a style of your own", "how": "Why a character makes people want to look twice, which page of a picture book makes them stop: that takes understanding readers and having your own eye. That part is human." },
+  { "name": "Working through ideas with editors and brands", "how": "When the editor says \"a bit warmer\" and the brand says \"younger,\" what they actually want takes back-and-forth: holding firm in some places, giving way in others." }
+ ],
+ "events": {
+  "e_book_out": "The first picture book you illustrated is published, and the editor sends ten copies. You leave one on the bench by the courtyard gate, and the next day someone has taken it.",
+  "e_unpaid": "A brand drags out its final payment for five months, then its whole marketing department changes and nobody will own the debt.",
+  "e_rainy": "The rainy season goes on for half a month. Mold creeps up the courtyard walls and all your watercolor paper gets damp. You buy a dehumidifier and run it all summer.",
+  "e_uv": "The plateau sun is fierce. After a month of sketching by Erhai Lake your face is blotched with sun spots and your eyes are painfully dry.",
+  "e_ai_style": "Someone has trained an AI model on your drawings and is selling \"your style\" online at 9.9 yuan a picture. You take screenshots and ask a lawyer friend, who says: first, keep the evidence.",
+  "e_ai_price": "Commissions for spot art and small illustrations dwindle; clients say AI can make one in a minute. Your work drops by a third, and what's left is the jobs that need a consistent style and a story.",
+  "e_ai_tool": "You start letting AI draft compositions and clean up line art, saving half a day per picture. The final layer of brushwork you still draw yourself, stroke by stroke.",
+  "e_viral": "A drawing of sunrise over Erhai Lake gets shared tens of thousands of times, and a dozen commission requests land in your messages. You pick three and send quotes.",
+  "e_friends": "In Dali you fall in with a crowd who do design, write code and make films. On Friday nights you eat together in someone's courtyard and talk about the jobs you're working on.",
+  "e_rights": "A foreign publisher sees your picture book at a book fair and buys the translation rights. When the copies arrive you can't read a word, and you leaf through them all evening.",
+  "e_tendon": "The tendonitis in your right wrist gets worse, and after an hour of drawing you have to stop. You learn to hold your cup in your left hand and switch to a thicker stylus.",
+  "e_lonely": "Two weeks drawing alone in the courtyard, barely a word to anyone. One night you call an old colleague in Shanghai and talk for an hour.",
+  "e_love": "You get together with someone who runs a bookshop in the old town. You draw a hand-illustrated map for the shop and put it up by the door.",
+  "e_marry": "You get married in a courtyard at the foot of the Cang Mountains, with twenty-odd friends. You draw the invitations, and every one is different.",
+  "e_child": "Your child is born. You paint a whole wall by the cot: birds, fish, a mountain. The first word your child says is \"mountain.\"",
+  "e_rent": "The rent goes up and the landlord wants to let the courtyard to a guesthouse. In three weeks you look at a dozen places and move to a village farther out.",
+  "e_weekend_class": "You start a weekend illustration class in the courtyard, mostly attended by tourists. One retired woman comes every week for a whole year.",
+  "e_mentee": "A young person who came to Dali to learn from you publishes a first picture book, with your name on the dedication page.",
+  "e_parent": "Your father back home in Hubei is in hospital. You take the pen display with you and finish the last ten pages of a book on the ward's little bed table.",
+  "e_old_book": "At a secondhand bookstall you find a picture book you illustrated more than ten years ago. The cover is worn white, and inside some child has colored in your pictures in pencil."
+ },
+ "choices": {
+  "c_back": { "title": "Go back to a Shanghai job", "situation": "Your old game studio asks if you'll come back as lead artist, at twice what you make now, with social insurance and a year-end bonus. But it means clocking in every day and revising things other people have already decided.", "options": [
+   { "label": "Go back to Shanghai", "result": "You give up the courtyard, leave the old water vat to your landlady, and fly back to Shanghai.", "end": "You go back to Shanghai and later become art director, leading forty people. On your desk there's always a sketch from Dali: the gate of that courtyard." },
+   { "label": "Stay in Dali", "result": "You thank your old colleague, hang up, and sit under the eaves a long time. Then you go on with page eight of the picture book." }
+  ] },
+  "c_royalty": { "title": "Flat fee or royalties", "situation": "The publisher offers two options: a flat fee, thirty thousand yuan in your account right away; or royalties, much more if it sells well and maybe a few thousand a year if it doesn't.", "options": [
+   { "label": "Take the flat fee", "result": "The money arrives the next day and pays six months' rent. Later the book is reprinted three times. You see it in a bookshop and say nothing." },
+   { "label": "Take royalties", "result": "The first year brings only four thousand yuan. In the third, the book makes reading lists at lots of schools, and when the royalty statement comes you read it twice." }
+  ] },
+  "c_ai": { "title": "Let AI help you draw, or not", "situation": "The illustrators around you have all started letting AI draft, clean lines and lay base colors; they take twice as much work, and prices have dropped. Will you use it too and take on more?", "options": [
+   { "label": "Use it", "result": "You can deliver two months' work in one. An old client says the recent pictures are lovely, but they don't quite look like you." },
+   { "label": "Keep drawing by hand", "result": "You take fewer jobs, but your price doesn't fall. An editor says finding someone who truly draws by hand is harder than it used to be." }
+  ] },
+  "c_agent": { "title": "Sign with an agency, or not", "situation": "An illustration agency wants to sign you, negotiating brand deals and licensing for a thirty percent cut. There'll be more work, and some of it you won't want to draw.", "options": [
+   { "label": "Sign", "result": "Your agent lands a year of holiday packaging for a big brand. In the contract's appendix you see a number you'd never imagined." },
+   { "label": "Stay independent", "result": "You still answer every email and negotiate every fee yourself. Slower, but you want to draw every picture." }
+  ] },
+  "c_series": { "title": "Illustrate a whole picture-book series", "situation": "An editor wants to do a five-book series with you: three years of drawing, little money up front. Done well, it could be your signature work, and people will start calling you a senior illustrator without being asked.", "options": [
+   { "label": "Take it", "result": "You pin five big sheets to the wall, one per book, and for three years add a little to them every day." },
+   { "label": "Stick to one-off jobs", "result": "You recommend the series to a friend and keep drawing packaging and covers. Your savings grow a little." }
+  ] },
+  "c_kunming": { "title": "Move to Kunming", "situation": "Rent in Dali rises every year, the tourists keep multiplying, and a good courtyard is harder and harder to find. A friend in Kunming says housing there is cheap, it's close to the airport, and it's easier for meeting clients.", "options": [
+   { "label": "Move to Kunming", "result": "You rent a flat with a balcony in Kunming and put a small water vat from Dali out there." },
+   { "label": "Stay in Dali", "result": "You move to a village even farther out. The courtyard is smaller, and from the window you can see the fields." }
+  ] },
+  "c_gallery": { "title": "Open a small gallery in the old town", "situation": "A friend is giving up a shopfront at the edge of the old town, and you could open a small gallery and studio there, selling originals and merchandise. Open it, and you'll mind the shop every day and draw half as much.", "options": [
+   { "label": "Open the gallery", "result": "You paint one wall white, hang twelve originals, and stand a wooden sign by the door in your own handwriting.", "end": "Your little gallery stays open for many years, its walls hung with your paintings and your friends', the wooden sign by the door weathered dark by rain. Every evening you sit at the door and draw someone passing by." },
+   { "label": "Don't open it", "result": "You say you'd rather keep your time for drawing. Your friend lets the shop to someone selling silver jewelry." }
+  ] },
+  "c_show": { "title": "Hold a solo show, publish an art book", "situation": "A gallery wants to give you a solo show, and a publisher will bring out your own art book; from then on you'd be an independent illustration artist. But it would take a year to sort and add new work, and that year you could take almost nothing else.", "options": [
+   { "label": "Do it", "result": "That year you paint forty new pieces. On opening day you stand in a corner of the gallery and watch a child crouch in front of one of your pictures for a long time." },
+   { "label": "Wait a while", "result": "You say the book you're on isn't finished yet. The gallery says: next year, then." }
+  ] }
+ },
+ "endings": {
+  "retire": "The day you deliver your last picture book, you write the editor a letter saying you won't take any more. You put your stylus in a drawer. The next morning, as always, you open your sketchbook under the eaves and draw a bougainvillea flower that has just opened.",
+  "burnout": "One year you take on five jobs at once, and your wrist and your eyes give out together. The doctor says no drawing for at least six months. You put the pen display away in a cupboard and sit by Erhai Lake every day, watching the water birds."
+ },
+ "stages": [
+  "You're a little company all by yourself: taking jobs, quoting, signing contracts, scheduling, with three or four projects open in your inbox at once. By day you draw on the pen display, sending roughs, color drafts and finals to editors and brands round after round; at night you reconcile accounts, chase payments and answer messages. Clients come through friends, and through the drawings you post online.",
+  "Editors and brands start asking for you by name. You take whole picture books and negotiate royalties instead of flat fees; one brand gives you a whole year of holiday packaging. You've started choosing, turning down jobs that don't suit your style, and your contracts carry a few clauses you added yourself: credit, number of revisions, whether the work can be used to train AI. At book fairs, publishers invite you to sign copies.",
+  "You've published your own art book and held small shows in Dali and Shanghai; a character you drew has been made into plush toys and stationery, with the licensing contracts negotiated by an agent. An assistant does coloring and adaptations, and you draw only the few strokes that matter most. Young illustrators who come to Dali find their way to your courtyard and sit for an afternoon."
+ ],
+ "work": [
+  "The editor says the dog in the picture book looks too fierce. You change its eyes from triangles to circles and give it a crooked tail, and she replies: that's the one.",
+  "A tea brand wants six packaging illustrations for the solar terms. You sit all morning in a tea garden outside the village and draw the pickers' bamboo baskets into the Grain Rain one.",
+  "A brand sends an AI-generated image as reference and wants you to \"draw it like this.\" You circle the extra finger in the picture and ask if they'd like to keep it.",
+  "A picture book gets royalty terms, and you and the editor go back and forth over the contract for a month, finally adding one clause: your name on the cover as large as the author's.",
+  "You turn down a well-paid job; they want you to imitate another illustrator's style. You email back: she draws better than I do. Go straight to her.",
+  "At a book-fair signing, a child holding your picture book asks you to draw a kitten on every page. You draw twenty-four.",
+  "Before your art book goes to press, you spend two days at the printer matching colors sheet by sheet with the press operator. On the third adjustment, the blue is finally Erhai in the morning.",
+  "The licensing company wants to make your character rounder and cuter, to sell better. In the meeting you change just one thing: you keep its eyes the way they were.",
+  "Your assistant colors a whole book alone for the first time. You turn to the last page and change only one patch of sky."
+ ],
+ "past": [
+  "In middle school, back home in Hubei, you filled the margins of your textbooks with little figures. Your math teacher confiscated the book, and when he gave it back he said: this one looks rather like me.",
+  "You took the arts route in the gaokao (college entrance exam), got into an animation program at a university in Wuhan, and in the first year bought a secondhand drawing tablet.",
+  "In your third year you serialized a short comic online. A few thousand people followed it, and you stayed up two nights a week updating.",
+  "After graduating you joined a game studio in Shanghai as a concept artist and spent four years drawing character art and skins, often twenty-odd revisions per character.",
+  "At twenty-six you came down with a bad flu and lay in your rented room for a week. Scrolling on your phone, you saw a photo of a courtyard at the foot of the Cang Mountains.",
+  "You quit your job, came to Dali with a pen display and two boxes of paints, and rented an old house with a courtyard outside the old town."
+ ],
+ "late": {
+  "pension_note": "Estimate: you paid into the urban employee pension during your game-studio years, and as a freelancer paid in yourself as a flexible worker, mostly at the lowest tier, so in retirement you get about thirty percent of your final monthly income.",
+  "scenes": [
+   "You don't take commissions anymore, but every morning you still draw one picture under the eaves: the flowers in the courtyard, the clouds.",
+   "The village primary school asks you to teach the children art. You bring a box of crayons and have them draw their families' dogs.",
+   "You box up your originals from all these years and give one box to the bookshop in the old town. The owner hangs them across a whole wall.",
+   "Your wrist hurts too much to hold a pen. You put the pen display away and walk by Erhai Lake every day.",
+   "You start drawing with your left hand. The lines come out crooked, but you feel freer than before.",
+   "You paint walls for people in the village, a wall for a meal. The fish on the wall at the village entrance are yours.",
+   "The day you leave, your landlady gives you a jar of pickles she made. You take down the little painting by the courtyard gate and give it to her.",
+   "The publisher is reprinting your old picture book, and the editor asks if you want to change anything. You say no, leave it as it was.",
+   "At an exhibition you see work by a young illustrator whose brushwork looks a lot like yours. You stand in front of it for a long time.",
+   "Later more and more drawing was handed to AI, a picture a minute. But for a child to stop at a certain page, someone still had to stop at that page first.",
+   "You always carry a small sketchbook, and in waiting rooms, at the hospital, at the market, you draw people who are waiting for something.",
+   "Your grandchild scribbles in crayon all over your old sketchbook. You don't stop it; you look and say: those colors go well together."
+  ],
+  "closing": {
+   "retire": "Many years later, one afternoon, you doze under the eaves, and when you wake the clouds on the Cang Mountains have changed shape. You pick up your pen and draw them again.",
+   "burnout": "Many years later, one evening, you sit beneath the wall at the village entrance, and some children point at the fish and ask who painted them. You say: someone who lives here.",
+   "end": "Many years later, on an old hard drive, you find a folder called \"Dali\": hundreds of sketches, and the last one only half finished. It's the gate of that courtyard."
+  }
+ }
+}
