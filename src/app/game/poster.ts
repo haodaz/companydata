@@ -71,8 +71,12 @@ export async function drawPoster(d: PosterData): Promise<string> {
 
   // 大标题
   y += 70;
-  ctx.fillStyle = C.ink; ctx.font = `900 ${d.lang === 'en' ? 52 : 58}px ${serif}`;
-  for (const l of wrap(ctx, d.headline, W - 2 * M, 2)) { ctx.fillText(l, M, y); y += d.lang === 'en' ? 64 : 72; }
+  // 标题两行放不下就缩字号、放到三行
+  let hs = d.lang === 'en' ? 52 : 58;
+  ctx.fillStyle = C.ink; ctx.font = `900 ${hs}px ${serif}`;
+  let hl = wrap(ctx, d.headline, W - 2 * M, 9);
+  if (hl.length > 2) { hs = d.lang === 'en' ? 44 : 48; ctx.font = `900 ${hs}px ${serif}`; hl = wrap(ctx, d.headline, W - 2 * M, 3); }
+  for (const l of hl) { ctx.fillText(l, M, y); y += Math.round(hs * 1.24); }
   ctx.fillStyle = C.ink2; ctx.font = `400 28px ${sans}`; ctx.fillText(d.sub, M, y + 2); y += 40;
 
   // 三格数字
@@ -94,7 +98,7 @@ export async function drawPoster(d: PosterData): Promise<string> {
   if (d.hard) {
     ctx.fillStyle = C.acc; ctx.font = `700 24px ${sans}`; ctx.fillText(d.hard.label, M, y); y += 44;
     ctx.fillStyle = C.ink; ctx.font = `400 29px ${sans}`;
-    for (const l of wrap(ctx, d.hard.text, W - 2 * M, 3)) { ctx.fillText(l, M, y); y += 44; }
+    for (const l of wrap(ctx, d.hard.text, W - 2 * M, 2)) { ctx.fillText(l, M, y); y += 44; }
     y += 24;
   }
   // 结局：只用到底部分隔线上面剩下的地方，放不下就少几行

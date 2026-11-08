@@ -474,13 +474,13 @@ function ShareBtn({ s }: { s: Save }) {
     setOpen(true); if (img) return;
     const a = life.age - life.y, peak = Math.max(...life.rows.map(r => r.salary));
     const strip = (t: string) => t.replace(/[（(][^）)]*[）)]/g, '').trim();
-    const job = LANG === 'en' ? (strip(card.role).length <= 30 ? strip(card.role) : card.occupation.name) : (strip(card.role).length <= 10 ? strip(card.role) : card.occupation.name);
+    const job = LANG === 'en' ? (strip(card.role).length <= 24 ? strip(card.role) : card.occupation.name) : (strip(card.role).length <= 10 ? strip(card.role) : card.occupation.name);
     const how = life.done === 'burnout' ? tr('离开一线', 'left the front line') : life.done === 'end' ? tr('转身去了别处', 'walked away') : tr('退休', 'retired');
     const bad = life.log.filter(e => e.kind === 'event' && e.mood === 'bad').map(e => ({ e, k: Object.entries(e.effect || {}).reduce((t, [key, v]) => t + (key !== 'savings' && (v as number) < 0 ? (v as number) : 0), 0) })).sort((x, y) => x.k - y.k)[0]?.e;
     const enMoney = (n: number) => ({ value: `RMB ${Math.round(n).toLocaleString('en-US')}`, small: usd(n) });
     const data = {
       lang: LANG,
-      headline: tr(`我在游戏里当了 ${life.y} 年${strip(card.city)}${job}`, `I spent ${life.y} years as ${/^[aeiou]/i.test(job) ? 'an' : 'a'} ${job} in ${strip(card.city)}`),
+      headline: tr(`我在游戏里当了 ${life.y} 年${strip(card.city)}${job}`, `I spent ${life.y} years as ${/^[aeiou]/i.test(job) ? 'an' : 'a'} ${job} in ${strip(card.city).replace(/^(A|An|The) /, m => m.toLowerCase())}`),
       sub: tr(`${life.name} · ${a}–${life.age} 岁 · ${how}`, `${fullName(s)} · age ${a}–${life.age} · ${how}`),
       stats: [
         { label: tr('最后做到', 'Rose to'), value: card.ladder[life.stage]?.title || card.role },
