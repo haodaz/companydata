@@ -1,0 +1,205 @@
+{
+ "id": "chem-eng-huizhou",
+ "occupation": "Chemical Engineer",
+ "role": "Trainee Process Engineer, Refinery Unit (shift board operator)",
+ "headline": "One year out of a master's in chemical engineering, posted to a hydrocracker in Huizhou's Daya Bay and working the four-crew, two-shift rotation: a trainee process engineer who spends whole nights in the control room watching the curves on the DCS",
+ "unit": "The hydrocracking unit of an integrated refining and petrochemical company in the Daya Bay petrochemical zone, Huizhou",
+ "unit_type": "Large integrated refinery and petrochemical complex",
+ "city": "Huizhou",
+ "city_tier": "Second-tier city",
+ "education": "Master's degree in chemical engineering",
+ "level": "Unit operations and Aspen simulation are second nature from school, and you have half the operating card memorized. You still can't match the hundreds of tag numbers on the unit to the pipes they belong to. At the board you sit in the second chair, and every valve you move needs the shift captain's nod.",
+ "intro": "You finished your master's in chemical engineering in Guangzhou and signed with this refinery in Daya Bay. It took you three tries to pass the safety exam at induction. The plant put you on the hydrocracker and told you to work shifts for the first three years: day, night, off, off. As of today you sit in the control room, in front of dozens of screens, learning to read every line on them.",
+ "salary_note": "Estimate: shift posts at an integrated refinery in Daya Bay carry a shift allowance, night pay and a year-end bonus tied to profits, so a new master's graduate starts thirty to forty percent above the national average. In years when refining margins are poor, the bonus shrinks.",
+ "facts": [
+  { "label": "Assistant Chemical Engineer (current level)", "value": "0-2 years, ¥6,000–11,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Process Engineer (2-5 years)", "source": "Career map" },
+  { "label": "Pay after 10+ years", "value": "¥28,600 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Aligning and preheating the shell mold, then the precise vacuum tilt pour", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Knocking the shell off the blades, cutting the gates, and the first-article visual inspection", "source": "AI exposure" },
+  { "label": "Open positions", "value": "535 related listings nationwide, 15 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The alarm goes off in the shift dormitory. You pull on your anti-static coveralls and take the zone shuttle bus to the process area. The sea fog hasn't lifted yet, and far off, on top of the flare stack, there is a small flame.",
+  "Before you enter the control building you lock your phone in a locker and touch the static-discharge ball by the door. At the handover meeting the night captain reads out: reactor bed temperatures steady, recycle hydrogen compressor vibration on the high side, keep watching.",
+  "You sit in the second chair. On the screen are the temperature trends for each bed of the reactor. The captain says don't watch the number, watch the slope of the line: the number is now, the slope is half an hour from now.",
+  "The discharge pressure on a feed pump jumps, and the alarm sounds. The captain gets on the radio and sends a field operator to go and listen to the pump. Beside him, you screenshot the curve and save it. Your palms are a little damp.",
+  "You go out on rounds with a field operator, hard hat on, a four-gas detector clipped to your belt. Under the pipe rack the heat comes up thick with the smell of oil vapor. You shoot each flange with an infrared thermometer and write the readings in the rounds log.",
+  "Back in the control room the process engineer hands you a work permit to check: tomorrow the maintenance crew will be doing hot work beside a heat exchanger. You go down the isolation list blind by blind and sign your own name.",
+  "Handover; the night crew comes in. In the canteen you eat a bowl of beef brisket rice noodles, then go back to the dorm with the operating procedures and sketch the hydrocracking flow in the margins.",
+  "Two days later, a night shift. Three in the morning is the hardest hour. The lines on the screens are all flat. You stand up and drink some strong tea. Outside, the flare has turned half the sky orange."
+ ],
+ "ladder": [
+  { "title": "Assistant Chemical Engineer", "stage": "Entry", "focus": "Based in the plant or at a pilot facility on rotating shifts. Walk the unit, learn the piping, get your hands on the valves, and help senior engineers keep the process records and control-room data in order. Promotion comes from how well and how carefully you know the equipment and the flow." },
+  { "title": "Process Engineer", "stage": "Independent", "focus": "Own the steady running of a specific reaction or distillation section, handle day-to-day production upsets and drifting indicators, lead HAZOP node analysis and push small process modifications through. Promotion comes from troubleshooting on your own, raising yield and delivering small improvements." },
+  { "title": "Senior Process Engineer", "stage": "Core engineer", "focus": "Lead major process revamps in the plant and scale new products up from the lab to a 100-ton pilot, break unit bottlenecks, write the operating procedures and the startup and shutdown plans. Promotion comes from big modifications that directly cut costs and raise efficiency." },
+  { "title": "Principal Process Engineer", "stage": "Technical leader", "focus": "Own the process balance of the whole site or lead the writing of a complete process package, sign off on process designs and design-institute drawings for large new units, and solve problems that stump the industry. Promotion comes from breaking core process barriers and from guiding the technical team." },
+  { "title": "Chief Engineer", "stage": "Top management", "focus": "Make the company's decisions on technology direction, plan major new construction projects, hold the bottom line on inherent safety and the environment for the whole site, and lead industrialization strategy and high-value patents." }
+ ],
+ "ai_tasks": [
+  { "name": "Knocking the shell off the blades, cutting the gates, and the first-article visual inspection", "how": "AI can use machine vision to screen and log the blades' appearance, dimensions and surface defects. Removing the shell and cleaning up is hands-on work, and whether a defect is acceptable, and how it lines up with the melt chemistry, still takes a person to judge." },
+  { "name": "Archiving the full data chain of a trial run and writing the process review", "how": "AI can pull together the physical curves, composition deviations and inspection results automatically, draft the review and flag the anomalies. A person only needs to spot-check the key conclusions and add what was learned on the floor." },
+  { "name": "Checking furnace condition before the shift and confirming it is ready to fire at handover", "how": "AI can read the equipment sensors and inspection records, point out abnormal trends and generate a pre-firing checklist. A person has to confirm the equipment's condition on site and sign for it at handover." },
+  { "name": "Verifying alloy charge batches and setting the pre-melt baseline", "how": "AI can check the charge sheet, the batches and the share of revert, work out the ratios and warn when something is out of tolerance. A person has to check the actual material and its labels and is answerable for releasing it." },
+  { "name": "Controlling vacuum pump-down and heating, and refining and degassing the melt", "how": "AI can recommend stepped curves for vacuum level and heating power based on past heats, and watch for drift in the data. A person watches the furnace on site and makes the call to adjust or shut down when something goes wrong." },
+  { "name": "Spectrometer sampling and correcting melt composition on the fly", "how": "AI can read the spectrometer results and quickly work out how much of a volatilized or burned-off element to add back, and suggest it. Adding under vacuum is risky, so a person has to recheck the numbers, decide whether to add and do it." },
+  { "name": "Aligning and preheating the shell mold, then the precise vacuum tilt pour", "how": "AI can help simulate mold filling and suggest preheat temperatures, but aligning the shell and tilting under vacuum has to work the first time. It comes down to feel and quick reactions on the spot, and a person does it and answers for it." }
+ ],
+ "events": {
+  "e_slope": "One night shift you notice, twenty minutes before any alarm, that the slope on one bed temperature is wrong, and you wake the captain. He opens the quench hydrogen, then turns and says: you read that one right.",
+  "e_doze": "At four in the morning you lean back in the chair and close your eyes for a moment. A level alarm jolts you awake. The captain, standing behind you, has already fixed it. He doesn't shout. He just tells you to bring a whole pot of tea next night shift.",
+  "e_spring_shift": "Your night shift falls on Lunar New Year's Eve. The canteen sends over a plate of dumplings, and the crew take turns eating. At midnight there are fireworks outside the zone. Everyone glances at them, then back at the screens.",
+  "e_typhoon": "A typhoon makes landfall head-on. The zone goes into emergency mode and everyone stays on site. You sleep three nights on a folding cot in the control building. Outside, the sheet-metal cladding on the pipe rack lifts in the wind and bangs.",
+  "e_flare_complaint": "During an upset the flare puffs black smoke for a while, and someone in a nearby housing estate films it and posts it online. You spend the night helping the plant manager write an incident statement. The next day the environmental inspectors come to check the records.",
+  "e_turnaround": "The big turnaround comes once every four years. For forty-odd days you live inside the plant, pulling blinds, inspecting tower internals, writing the startup plan. On startup day the feed goes in right the first time, and the plant manager takes everyone out for a seafood dinner.",
+  "e_suggestion": "A small improvement you proposed, adjusting the fractionator reflux and one exchanger bypass, lifts diesel yield by a few tenths of a percent. The suggestion award is only ¥2,000. You photograph the certificate and send it to your mother.",
+  "e_apc": "The unit gets advanced process control and an optimization model. It moves a lot of valves on its own, more often and more finely than a person would. Your job changes from tuning the parameters to understanding why it tunes them the way it does, and deciding when it's wrong and you should switch back to manual.",
+  "e_ai_log": "The shift log and upset reviews now come with an auto-generated first draft, the curves, alarms and responses all laid out. You only have to add the one line it can't write: that day the field operator heard on site that the pump didn't sound right.",
+  "e_sleep": "After a few years of shifts your sleep comes in pieces. Your checkup shows arrows beside uric acid and triglycerides. The doctor asks if you often stay up late. You say: it's my job.",
+  "e_neighbor_accident": "A chemical plant in another province has an accident. When the news reaches the zone, every unit stops for a full safety inspection. Your crew pulls out every interlock bypass and checks them all again. Nobody complains.",
+  "e_love": "A friend introduces you to someone who works in downtown Huizhou. Your days off always land on weekdays, so the two of you walk by West Lake on weekday evenings, and somewhere along those walks it becomes settled.",
+  "e_house": "You buy a flat in Aotou, in Daya Bay, with a view of the sea. It costs a fraction of what it would in Shenzhen, and your employer pays the housing fund in full, so the mortgage isn't hard. From the balcony you can see the zone's flare stack.",
+  "e_baby": "The day your child is born you are on nights. The captain pushes you away from the board and says he's got it. You drive to the hospital as it gets light, and the nurse brings the baby out for you to look at.",
+  "e_ethylene": "A new ethylene project starts up in the zone, and people are pulled from every unit to form the commissioning team. Your name is on the list. You go all the way through purging, pressure testing and single-equipment trials to feed-in. The night the first drum of on-spec product comes out, you stand under the unit for a long time.",
+  "e_margin": "Refining margins fall two years running. The unit runs at reduced load, and the year-end bonus is half what it was the year before last. At plant meetings they talk about \"less fuel, more chemicals\": make less oil, make more petrochemicals.",
+  "e_carbon": "The plant starts accounting for the carbon emitted per ton of product, and energy targets are pushed down onto every unit. You and the equipment people go through the unit's heat exchanger network again and find a few more places to recover heat.",
+  "e_poach": "An HR person at a new-materials plant in the zone adds you on WeChat. They need a process engineer who knows hydrotreating, day shifts, and the salary is open. You reply thanks, and don't delete the contact.",
+  "e_master_retire": "The old shift captain who trained you retires. On his last shift he leaves behind, in the drawer, the operating notebook he kept for twenty years. On the first page he has written down the temperaments of a few pumps.",
+  "e_mentor_new": "This year's two new master's graduates are assigned to you. At two in the morning one of them asks why you look at another screen before moving this valve. You hear yourself say: don't watch the number, watch the slope.",
+  "e_parents": "A call from home: your father is in hospital for a heart stent. You trade two rounds of shifts with colleagues and rush back to Meizhou, and spend a week at his bedside. When you get back you work four nights in a row to pay the shifts back.",
+  "e_ai_shift_cut": "Inspection robots and online analyzers fill the unit, and the field operators lose one crew's worth of posts. The control room has fewer and fewer screens. On one big display, only the things it thinks you should look at are lit.",
+  "e_knee_stairs": "During a turnaround you climb towers all day, and your knee hurts for a week afterward. The young ones take the structure stairs two at a time. You stop on a half-landing and pretend to read a gauge for a while."
+ },
+ "choices": {
+  "c_outside": {
+   "title": "Spend a year as a field operator first",
+   "situation": "The plant lets trainee process engineers choose: stay in the second chair at the board, or ask to spend a year as a field operator first, walking ten-plus kilometers a day around the unit, opening and closing valves, draining condensate, switching pumps. Field work is tiring, hot and dirty. But the captain once said that a valve you've never touched in the field, you'll never tune right from a screen.",
+   "options": [
+    { "label": "Go out to the field and learn the lines", "result": "You lose five kilos that year, and the back of your coveralls has a ring of salt every day. Back at the board, when you see a tag number, what you see in your head is which deck of the structure it's on and which pipe runs beside it." },
+    { "label": "Stay at the board and master the screens", "result": "You copy out the interlock logic for every DCS screen. When the captain is away on business, you can already cover as lead operator. Only once, when a field operator on the radio says the valve is on the east side, you hesitate." }
+   ]
+  },
+  "c_hazop": {
+   "title": "Lead a HAZOP node and push for Process Engineer",
+   "situation": "The unit is modifying a section of the heat exchange flow, and the HAZOP study is short one person to work through the reactor section nodes. The manager says whoever does it will get priority when the Process Engineer post is filled. But for those weeks you'd be in meetings by day and still on rotation at night, your days off gone too.",
+   "options": [
+    { "label": "Take it on: meetings by day, shifts by night", "result": "For three weeks you sleep five hours a night, writing deviations, causes, consequences and safeguards for twelve nodes into the worksheet line by line. At the review the design institute's engineer asks about item seven, and you have the answer." },
+    { "label": "Turn it down and keep the shifts steady", "result": "The node goes to a colleague on the next unit, and he gets the post first. You go the whole year without a single operating error and are named the crew's safety model of the year." }
+   ]
+  },
+  "c_shenzhen": {
+   "title": "Go to Shenzhen and make electronic chemicals",
+   "situation": "A classmate from your master's works at a Shenzhen company making wet electronic chemicals for chips, and wants you there for pilot scale-up: day shifts, thirty percent more pay, close to Guangzhou where you studied. But it's a startup that hasn't made a profit, and its equipment is a rounding error next to your unit.",
+   "options": [
+    { "label": "Go to Shenzhen and bet on a new industry", "result": "You trade reactors of hundreds of cubic meters for kettles of a few hundred liters, and you watch every batch yourself. The company raises its next round. Your stock options are still a piece of paper." },
+    { "label": "Stay in Daya Bay", "result": "You stay. Social insurance, the pension annuity, the shift allowance, all intact. Later your classmate posts that the company made the news, and you give it a like." }
+   ]
+  },
+  "c_model": {
+   "title": "Join the optimization model team or not",
+   "situation": "The company is building a unit-wide optimization model with a software firm and needs one person from the plant who knows the process to sit with the project team and teach the model this unit's temperament. It means leaving shift work, but also leaving the front line, and when you come back your seat may be taken.",
+   "options": [
+    { "label": "Join the team and teach the model the unit", "result": "You spend six months labeling ten years of operating data segment by segment: this stretch is startup, this is end-of-run catalyst, this is the year of the typhoon. When the model goes live, you are the person in the plant who knows best where it will go wrong." },
+    { "label": "Stay on the unit", "result": "You stay on shifts with as much work as ever. After the model goes live you often switch back to manual in the night, and the next day you write the project team an email explaining why." }
+   ]
+  },
+  "c_dayshift": {
+   "title": "Move to day work in the technical department",
+   "situation": "Your child will start kindergarten soon, and your family wants you home at regular hours. The technical department has an opening for a day-shift process engineer. No rotation, but no shift allowance or night pay either, so you take home twenty percent less, and you'd be one step further from the unit.",
+   "options": [
+    { "label": "Take the day job", "result": "For the first time you fall asleep before ten at night, and when you wake up it's light. Writing proposals, calculating material balances, reviewing drawings, you are further from the curves and closer to the drawings." },
+    { "label": "Work shifts a few more years", "result": "You tell your family a few more years. You make it to one parent-teacher meeting, straight off a night shift, and nearly fall asleep in the little chair." }
+   ]
+  },
+  "c_registered": {
+   "title": "Sit the registered chemical engineer exams and push for Senior Process Engineer",
+   "situation": "The registered chemical engineer qualification takes two or three years, the fundamentals exam and then the professional exam, and you need it to move up toward Senior Process Engineer and to sign at design reviews. But every day off goes into it, and your desk is the little table in the dorm.",
+   "options": [
+    { "label": "Sign up and get through these two years", "result": "Between shifts you work through ten years of past papers, and pass the professional exam on the second try. The results come out on a night shift, and you read your score three times in the control room." },
+    { "label": "Skip it and rely on what you can do on the unit", "result": "You give those years to the unit and your family. On the modification projects, where a signature is needed, you write the plan and someone else signs." }
+   ]
+  },
+  "c_safety": {
+   "title": "Qualify as a registered safety engineer and move to safety",
+   "situation": "The safety and environment department is short of people, and registered safety engineers who understand the process are in demand across the zone. Pass the exam and you can transfer: day shifts, in charge of the whole site's work permits, hazard checks and emergency plans. From then on you would no longer be someone who runs a unit, but someone who watches others run them.",
+   "options": [
+    { "label": "Get qualified and move to safety", "result": "You pass the registered safety engineer exam and put on a hard hat of a different color.", "end": "Every day you walk between the units with a checklist, and when you see the blind positions on a permit you ask one more why. The young process engineers find it unnerving at first, and then they all learn to check it themselves before you arrive." },
+    { "label": "Stay in process", "result": "You say you'd still rather run the unit itself. People from safety come to you often afterward to ask about the risks in some stretch of the flow, and you know them better than they do." }
+   ]
+  },
+  "c_chief": {
+   "title": "Apply for Principal Process Engineer",
+   "situation": "The old principal engineer has moved to group headquarters, leaving the site-wide process balance and the design reviews for new units unclaimed. Applying for Principal Process Engineer means defending a site-wide energy-saving plan before a panel that includes people from the group. You already have two modification projects on your desk.",
+   "options": [
+    { "label": "Apply and write that plan", "result": "You spend two months recalculating the whole site's steam, hydrogen and fuel gas balance. At the defense, one chart holds the group people's attention a little longer. For the next year your phone rings three times as often." },
+    { "label": "Don't apply; keep watch over this unit", "result": "You recommend a colleague from the next plant. You are still the first to look at this unit's curves every morning, and when a line bends, you know before anyone." }
+   ]
+  },
+  "c_catalyst": {
+   "title": "Go into catalyst technical sales",
+   "situation": "The regional manager of a hydroprocessing catalyst maker wants you for technical service and sales, covering several refineries in South China: helping clients load catalyst, start up and diagnose problems. The pay is high and the travel constant. You would go from the one buying to the one selling.",
+   "options": [
+    { "label": "Go into technical sales", "result": "You resign and wheel your suitcase onto the first client's unit.", "end": "You fly back and forth between refineries across the south. When a client's unit has a problem, one look at the trends gives you the rough answer. They call you teacher, and you say: I came up on shifts too." },
+    { "label": "Stay at the plant", "result": "You say you still like keeping watch over one unit, following it from startup to the end of a catalyst run. The regional manager says let's keep in touch, and from then on you meet every time the catalyst is changed." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "Your last shift is a day shift. You don't take the lead chair; you sit in the back and watch the young ones hand over. Walking out of the control building you press the static-discharge ball by the door, as you have for over thirty years, without having to think. The zone shuttle runs along the shore, and the flare is still burning, a small, single flame.",
+  "burnout": "The year your checkup came back, the doctor told you to stop working nights. The plant moved you to the records room, sorting decades of operating procedures and startup and shutdown logs. You leave on time every day. Passing the process area, you still look up at the flare to see whether it's burning steady."
+ },
+ "past": [
+  "You were in middle school in Meizhou when your chemistry teacher dropped copper into nitric acid. Reddish-brown gas boiled up and the whole class leaned back. You leaned in. You passed the high school entrance exam into the best high school in the city.",
+  "Your gaokao (college entrance exam) score was good enough for a few engineering universities out of province. Your mother asked which major found work easily, and a relative said chemical plants paid well. You wrote chemical engineering and technology on the form and went to Changsha.",
+  "The summer after second year you went on a plant visit to a chemical works and saw, for the first time, a distillation column dozens of meters high. The teacher in charge said the column drawn in your textbook was real inside, tray after tray. You went back and read your unit operations book again from the start.",
+  "When you graduated, half your class went to drug makers and battery plants and half sat the graduate entrance exam. You got into a science and engineering university back in Guangzhou for a master's in chemical engineering, with an advisor who worked on hydroprocessing catalysts.",
+  "You pulled many all-nighters on the lab's small fixed-bed reactor rig and got very fast at Aspen simulation. A leak on the high-pressure autoclave scared you once, and after that you ran your hand around the seal every time before opening it.",
+  "In autumn hiring you had three offers: a design institute, a lithium battery materials maker, and this refinery in Daya Bay. Your advisor said a few years on shifts at a big unit when you're young will serve you for life. You signed with Daya Bay."
+ ],
+ "stages": [
+  "Twelve hours a shift in the second chair, you watch whichever DCS screen the lead operator points you to and copy the key parameters into the shift log every hour. When a field operator calls in on the radio you have to match the tag number at once; when a result comes through the LIMS you look at sulfur and nitrogen first. You don't move valves yet, and you don't sign anything yet.",
+  "You're off rotation now: day hours, phone on twenty-four hours. Mornings start with the night's trends and the lab sheets, then a meeting with the plant manager, the equipment engineer and the instrument engineer. Afternoons you check material balances in Aspen, write modification proposals and sit in HAZOP studies. When the unit wobbles at night, the shift captain's first call is to you.",
+  "You carry two or three modification projects at once: reviewing P&IDs with the design institute, going back and forth with the equipment and instrument people, writing startup and shutdown plans, running the site for the forty days of a turnaround. Young process engineers come to you, and so does the plant manager when he isn't sure. Your name starts appearing in the reviewer's box.",
+  "What you manage now isn't one unit but the site's hydrogen, steam and fuel gas balance, and how process packages for new units get reviewed. You spend more of the day in meetings than looking at curves, dealing with production, planning, the group's technology department and the design institute. There are more and more approval forms that carry your name.",
+  "The last page of every startup plan, major modification and safety assessment carries your signature. Your days are full of the technical committee, group planning meetings, government safety inspections and patent reviews. Now and then the phone rings late at night, and the duty manager needs one word from you: shut it down, or not."
+ ],
+ "work": [
+  "Old Chen, a field operator, radios in that the high-pressure separator level reading doesn't match the sight glass. You pull up three days of trend, go out with the instrument tech to blow down the impulse line, and the two numbers agree.",
+  "The captain asks you to work out this month's compliance with the operating card. You spend an afternoon in Excel and find that most of the excursions fall around four in the morning.",
+  "The maintenance foreman brings you a hot work permit. You and the safety officer go out and match the blind numbers one by one, and only then do you sign the permit.",
+  "Three lab samples in a row show diesel sulfur running high. You trace the feed batches to a cargo of high-sulfur crude and agree with dispatch to raise reactor temperature by two degrees.",
+  "The equipment engineer says an exchanger is fouling and its outlet temperature has dropped ten degrees in a month. The two of you spend an afternoon on the numbers and write a plan to switch it out for cleaning without shutting down.",
+  "The catalyst vendor's service engineer looks at three years of data and says the catalyst has a year left. You say eight months. Both numbers go into the report.",
+  "The design institute sends the P&ID for the revamp section. You circle a control valve: no bypass, so if it fails you have to shut down. They send a third revision.",
+  "On a trial run of a new grade, you and the lab supervisor stay up two days and nights matching each spec to the numbers in the LIMS, and you only go to eat when the first tank passes.",
+  "The night before startup after a turnaround, you read the startup plan aloud to the four shift captains, who opens which valve and watches which number at each step, until every one of them can answer.",
+  "The group sends a process package for a new unit, over a thousand pages. You and three others review it for a month and raise ninety-odd comments; one of them changes the selection of a large compressor.",
+  "The site is short of hydrogen, and the unit managers fight over it at the dispatch meeting. You put every unit's hydrogen use and margin in one table, and that settles who gives way first.",
+  "A sister plant in another province has an upset, and the group sends you to lead a team. You spend a night going through trends in their control room and come back with a three-page report.",
+  "At the review for a new-materials project in the zone, you speak to a room of experts for forty minutes. Your last slide has one line: get inherent safety right first.",
+  "At two in the morning a unit trips on an interlock and the duty manager calls. You hear him out and say shut it down. Fifteen minutes later you call back to ask whether everyone is in the safe area.",
+  "Young engineers' patent applications pile up on your desk. You read them one by one, and on one you write: good idea, take it to the unit and try it."
+ ],
+ "late": {
+  "pension_note": "Estimate: large refining companies pay into the basic pension for enterprise employees on the full actual salary, plus an enterprise annuity. Together that comes to a little over half of your final monthly salary.",
+  "scenes": [
+   "The first month after retiring you still wake on your own at three in the morning, lying there listening to the sea outside, and it takes a while before you remember there's no handover today.",
+   "A design institute asks you to consult, reviewing the process packages for a few new units a year. You circle a spot on a flow diagram in red and write: this will pressure up during startup.",
+   "You learn to fish off the shore at Aotou and can sit there a whole afternoon, the rod wedged between rocks, watching the float in the same posture you once watched the curves.",
+   "The plant invites its old hands back for its thirtieth anniversary. On a display board you find an old photograph of yourself at the very edge of the crowd from the first big turnaround, hard hat crooked.",
+   "The records room is quiet. You scan stack after stack of startup and shutdown logs into the system, and in one you find your own signature from when you were young, written harder than you write now.",
+   "You finally sleep through the night for a few years, and two of the arrows on your checkup disappear. After dinner you walk along the shore with your family, and turn back when you reach the point where you can see the flare.",
+   "The day you file for retirement, the HR clerk asks if you want to go and look at the unit one more time. You say no need, stand at the gate a while, and hand in your badge.",
+   "In your first year away from the unit you keep waking before dawn and reaching for the radio by the bed. What your hand finds is your phone. You turn it over and put it down.",
+   "Back in Daya Bay on an errand, an old colleague takes you round the control building. Every screen has been replaced. You still find the reactor temperatures at a glance.",
+   "A young engineer you once trained becomes plant manager and sends you a photo: the old captain's operating notebook. He made a copy and keeps it in the control room.",
+   "Later the zone adds more new units, and at night, seen from the sea, the lights run together into one field. A taxi driver tells you they make plastics and new materials over there. You say, I know.",
+   "A grandchild asks what you used to do. You say you turned oil into other things. Into what, the child asks, and you point to the plastic toy in their hand, the clothes they are wearing, the cars outside the window."
+  ],
+  "closing": {
+   "retire": "Many years later, one evening, you sit on the seawall at Aotou as the flare over the zone lights up in the distance. You watch it a long time. It burns steady and even, like a line with no slope at all.",
+   "burnout": "Many years later, you are watering plants on the balcony when your phone rings. It's a young engineer from the old plant with an old question. You tell him not to rush, look at the slope first, and then you walk him through it slowly.",
+   "end": "Many years later, in an old box, you find the certificate from your induction safety training, with a photo of you at twenty-four, hair cut very short. You look at it a while, then tuck it back under a pile of old notebooks."
+  }
+ }
+}

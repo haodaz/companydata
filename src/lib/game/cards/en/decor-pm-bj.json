@@ -1,0 +1,197 @@
+{
+ "id": "decor-pm-bj",
+ "occupation": "Interior Construction Project Manager",
+ "role": "Project Manager at a Home Renovation Company",
+ "headline": "Apprenticed as a carpenter to his uncle at sixteen, seventeen years in Beijing renovation: a home renovation company's project manager with eight client group chats that ping even at midnight, driving an old car between the Third and Fourth Ring Roads to eight job sites a day",
+ "unit": "The site operations department of a mid-sized home renovation company in Beijing",
+ "unit_type": "Mid-sized home renovation company",
+ "city": "Beijing",
+ "city_tier": "First-tier city",
+ "education": "Self-study junior college diploma (Construction Management)",
+ "level": "You hold the Class 2 Constructor license and could do carpentry with your eyes closed; one look tells you what's wrong with plumbing, wiring, waterproofing or tiling. You run eight sites at once, and what you dread most is a video from a client at midnight.",
+ "intro": "You've done renovation in Beijing for seventeen years: the first ten with a plane and a power saw, the rest with drawings and a phone. Right now you have eight sites, from cramped old walk-ups in Chaoyang to a villa in Shunyi, and eight client group chats that can scroll through hundreds of messages a day. As of today, you have to hand them over one by one on schedule, collect the money one payment at a time, and not miss a single call at night.",
+ "salary_note": "Estimate: a Beijing home renovation project manager earns a base plus commission on each site. Running eight sites with payments coming in smoothly, take-home pay is about thirty percent above the national average. In years when the housing market is cold and fewer jobs start, the commission shrinks with it.",
+ "facts": [
+  { "label": "Interior Construction Project Manager (current level)", "value": "3-5 years, ¥12,000–18,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Senior Interior Fit-out Project Manager (5-8 years)", "source": "Career map" },
+  { "label": "Pay after 5–10 years", "value": "¥21,529 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Running the pre-inspection of concealed plumbing and wiring, and handling a crisis right before handover", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Pre-sorting self-checks before the concealed plumbing and wiring inspection, and handling the crisis", "source": "AI exposure" },
+  { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You wake at home in Yanjiao and check your phone first: new messages in two client groups. One asks when the tiles will arrive; another has sent a photo of a wall corner followed by three question marks.",
+  "Driving into Beijing, you wait twenty minutes at the checkpoint on the city line. From the car you phone the plumber-electrician and tell him to go to the Wangjing job first, in the door at eight the moment property management opens.",
+  "An old compound in Chaoyang, sixth floor, no elevator. You carry a bag of switch plates up and inspect the wall chases for the wiring: straight and level? Bends in the conduit wide enough? You photograph each one and post it to the client group.",
+  "A school-district flat in Haidian is mid flood test: day two of standing water in the bathroom. You go downstairs and knock on the neighbor's door to ask if the ceiling is damp. No, says the old woman, then asks when you'll stop knocking down walls.",
+  "Building rules forbid work from noon to two. You eat a jianbing pancake in the car and go through the materials list. One client's sintered-stone countertop got a corner chipped in transit, and the supplier says they'll deal with it tomorrow.",
+  "The villa in Shunyi, with both the client and the designer on site. The client says the ceiling is lower than in the rendering, and the designer looks at you. You take out your tape measure and show them, then the drawing, and point at the beam.",
+  "Back at the office for the site operations meeting. The manager reads out the payment sheet. Two of your midpoint payments haven't come in. He glances at you: sort it out this week.",
+  "You've just lain down when a client sends a video: a hairline crack in a wall. You zoom in three times, then reply that it's the skim coat shrinking, and you'll come and look tomorrow morning. She replies: OK."
+ ],
+ "ladder": [
+  { "title": "Assistant Site Foreman", "stage": "Assistant / trainee", "focus": "Stationed at a single site to assist the lead project manager: safety walks, photographing and filing the site log, checking the wall chases for plumbing and wiring, and getting cleanups done. You move up by running the site tirelessly, understanding drawings and specs, and getting things done without complaint." },
+  { "title": "Site Foreman", "stage": "Junior", "focus": "Run two or three entry-level flats or small shopfronts on your own: briefing each trade, inspecting concealed works, scheduling materials and handling small add-ons. You move up with zero major rework, on-time handovers and a Class 2 Constructor license." },
+  { "title": "Interior Construction Project Manager", "stage": "Mid-level / core", "focus": "Run many projects in parallel (five to eight high-end large flats or villas, or office spaces of around 1,000 square meters), coordinating material suppliers and crews and controlling payment collection and change settlements. You move up on hitting profit targets and keeping complaints well in hand." },
+  { "title": "Senior Interior Fit-out Project Manager", "stage": "Senior", "focus": "Take on complex commercial fit-outs worth tens of millions of yuan, such as retail complexes, star-rated hotels and Grade A offices, coordinating fire protection, low-voltage systems, HVAC and other specialist subcontractors. You move up on net project margin and first-time completion acceptance." },
+  { "title": "Fit-out Delivery Director", "stage": "Expert / management", "focus": "Oversee delivery quality and payment collection across dozens of projects in a region, lead the writing of the company's construction methods and SOPs, build a reserve pool of crews, and lead centralized procurement of main materials. You are judged on schedule performance across the board and on gross margin." }
+ ],
+ "ai_tasks": [
+  { "name": "Running the pre-inspection of concealed plumbing and wiring, and handling a crisis right before handover", "how": "AI can pull up the acceptance standards and list the hazards to check. But looking at the pipes and walls on site, stopping a problem on the spot, talking to all four parties and taking the responsibility can only be done by a person." },
+  { "name": "Pre-sorting self-checks before the concealed plumbing and wiring inspection, and handling the crisis", "how": "AI generates a self-check route and checklist from the drawings and standards, and turns corrective orders into clearly organized notices. A person goes to the site to verify, judges how serious each problem is, orders the fixes and coordinates everyone involved." },
+  { "name": "Confirming that the day's inspection issues are closed out before the midday stop", "how": "AI gathers the day's inspection photos and records, lists the issues still open and reminds whoever is responsible. A person goes to the site to confirm the fixes were really made." },
+  { "name": "Running the four-party inspection of concealed ceiling works before the boards go up", "how": "AI generates a pre-boarding checklist from the drawings and does a first pass over photos for missed conduit, ductwork, sprinklers and access hatches. A person gathers the four parties, inspects the concealed spaces with their own eyes, and signs and answers for it." },
+  { "name": "Handling an urgent delivery crisis after a sintered-stone countertop cracks in transit", "how": "AI drafts the claim letter, lays out remedy options and reschedules the following trades and timeline. A person judges whether the crack can be repaired or the piece must be reordered, negotiates with the supplier and coordinates the cabinet installation date." },
+  { "name": "Running a mock client walkthrough of a show unit before handover", "how": "AI generates an acceptance checklist from the client's point of view, with the usual reasons for refusing handover. A person walks the show unit personally, spots small flaws from experience and pushes the repairs through." },
+  { "name": "Final compliance review of fire safety filing documents", "how": "AI checks whether the filing form and attachments are complete and properly formatted and whether the details agree throughout, and flags anything missing. A person answers for the truth of the materials, deals with the fire authority and submits." }
+ ],
+ "events": {
+  "e_leak": "The waterproofing in one bathroom wasn't done right, and a big stain spreads across the downstairs neighbor's ceiling. You take the workers down to apologize, tear up the floor tiles and redo the waterproofing. That job's commission goes into it, all of it.",
+  "e_camera": "The company installs a camera on every site so clients can watch a live feed on their phones. One client posts a screenshot to the group every noon: why is there only one person here today? You start telling workers at every briefing: when you walk in, look up first.",
+  "e_good_owner": "At handover, an old woman runs her hand over the bookcase wall you built and says her late husband always wanted a wall like this. She insists you stay to eat and makes a batch of chive and egg dumplings.",
+  "e_referral": "A client from last year refers three colleagues to you. At the company meeting you're singled out for praise: that's word of mouth. You say nothing, thinking that family's cabinet doors were the ones you crouched over for a whole afternoon to get the gaps even.",
+  "e_neighbor": "The man upstairs works from home and calls property management three times to complain about the hammer drill. They suspend your renovation permit for two days, and the schedule slips again.",
+  "e_slab": "The sintered-stone countertop cracks halfway through delivery, and the cabinet installer is due the day after tomorrow. While arguing with the supplier over a reorder, you rearrange the next few trades. The client never notices a thing.",
+  "e_worker_hurt": "A tiler cuts his hand on the saw and needs stitches. You drive him to the hospital and cover the bill, and the next day you go to the sites and check every cutting machine, guard by guard.",
+  "e_ai_schedule": "The company's delivery system can schedule the work automatically, generate acceptance checklists and flag problems in inspection photos. You make half as many phone calls. But the system keeps putting the tilers and the painters in on the same day.",
+  "e_ai_owner": "A client feeds the contract and the building codes to an AI and comes up with twenty questions, which she asks you one by one in the group chat. Half are right, and you own up to them. For the other half you take a tape measure to the site and show her.",
+  "e_market_cold": "The housing market cools and new-home renovation orders drop by half. The company starts taking old-home refits and partial makeovers: one bathroom, one kitchen. Your eight sites become five, and your commission shrinks with them.",
+  "e_unpaid": "After handover, a client holds back the final payment, saying the wall color is uneven. You go five times and end up repainting one wall. You get the money, and that day you drive without the radio on.",
+  "e_kid_school": "Your child is in primary school in Yanjiao. The afternoon of the parents' meeting you are knocking down a wall in Fengtai, so your wife goes alone. The teacher says your child wrote in an essay: my dad builds houses for other people.",
+  "e_back": "Years of bending to look at floors and climbing ladders to look at ceilings, and you herniate a disc. The doctor tells you to drive less and climb fewer stairs. You nod, leave the hospital and drive to the next site.",
+  "e_old_master": "The uncle who taught you carpentry goes home for good, and before he leaves he gives you the plane he used for thirty years. You hang it on the garage wall, beside your Class 2 Constructor certificate.",
+  "e_formaldehyde": "A client's child is about to move in. She tests for formaldehyde, says it's over the limit, and wants every cabinet ripped out. You bring in a third-party tester, and by the standard it passes. She doesn't believe it. In the end the company pays for remediation, and you spend the whole time smiling apologetically at both sides.",
+  "e_crew": "The Sichuanese plumbing and electrical foreman you've worked with for years is going home to build a house. Before he goes he recommends his apprentice: good hands, just bad with words. Bad with words is good, you say. The ones bad with words don't cut corners.",
+  "e_company_late": "Money is tight at the company, and workers' wages come half a month late. Several foremen come to you, and you pay part of it out of your own pocket. At the end of the month the company makes it up.",
+  "e_award": "One old-home renovation you delivered becomes the company's show unit, filmed and posted online. You aren't in the video, but you recognize at a glance the ceiling trim detail you reworked with the carpenter, both of you crouched on a ladder.",
+  "e_young_pm": "This year's assistant foremen are all college graduates. They can make spreadsheets and videos; they can't tell whether a wall is true. You take them to the sites and teach them to check plumb with a plumb bob.",
+  "e_parents": "A call from home: your father fell working in the fields. You drive back to Hebei through the night and sit with him three days in the county hospital, answering eight client groups the whole time.",
+  "e_own_home": "At last you renovate your own place, the Yanjiao flat you've lived in for eight years. You draw the plans and watch over it yourself, and it still finishes three months late. Your wife says you care more about other people's homes than your own.",
+  "e_knee": "Climbing six floors in the old compounds, your knees start to hurt, and three trips a day means you need a rest. You keep a box of pain patches in the car and stick one on your knee before getting out."
+ },
+ "choices": {
+  "c_more_sites": {
+   "title": "Go from eight sites to twelve",
+   "situation": "The company is pushing for its numbers this year, and the operations manager wants you to take four more sites. Each one carries a commission, enough to add up to real money over a year. But you're running eight now, and two clients already say they don't see you once a week.",
+   "options": [
+    { "label": "Take them, earn more", "result": "You run five sites a day and the odometer climbs four thousand kilometers in a month. Your year-end commission is the biggest since you started in the trade. So is the number of complaints." },
+    { "label": "Turn them down, run eight well", "result": "You tell the manager eight is the number you can run well. He isn't pleased, but that year not one of your eight sites needs rework." }
+   ]
+  },
+  "c_ai_tool": {
+   "title": "Use AI for scheduling and inspections?",
+   "situation": "The company's new delivery system can schedule the work automatically, pick out problems in inspection photos and generate acceptance forms, and it needs project managers to upload photos in a set format every day. Use it well and you can run more sites. The old hands say the system can see a crooked wall, but not what's inside it.",
+   "options": [
+    { "label": "Learn it properly and use it", "result": "You learn to let the system pick through first, then pick out what it can't. What it flags you clear in half a day; what it doesn't, you still have to feel for yourself." },
+    { "label": "Snap the photos, run the sites yourself", "result": "You keep driving site to site and upload just enough photos to meet the count. Your data is always the last in the system, according to the manager, but your sites have the fewest problems." }
+   ]
+  },
+  "c_school": {
+   "title": "Send your child home to school, or keep them in Yanjiao",
+   "situation": "Your child is about to start middle school. You don't have a Beijing household registration, so the gaokao (college entrance exam) will have to be taken back in Hebei. People at home say middle school is the time to go back and live with the grandparents, or the child won't adjust later. Your wife doesn't want to be apart and wants to keep the child in school in Yanjiao.",
+   "options": [
+    { "label": "Send them home", "result": "Your child goes back to Hebei with the grandparents, and you video call on weekends. On the phone they say less and less. Once you ask if they miss you. You're at a site again, aren't you, they say." },
+    { "label": "Keep them in Yanjiao", "result": "Your wife quits her job to look after the child, and the household loses an income. However late you get home, you go and look in at your child's door." }
+   ]
+  },
+  "c_senior": {
+   "title": "Compete for Senior Interior Fit-out Project Manager in commercial work",
+   "situation": "The company has opened a commercial fit-out division for office buildings, chain stores and hotels, and is picking project managers from the residential side to become Senior Interior Fit-out Project Managers. Bigger jobs, more money, several subcontractors to manage for fire protection, low-voltage systems and HVAC, and much longer waits for payment.",
+   "options": [
+    { "label": "Compete and go commercial", "result": "At your first coordination meeting in the client's conference room, you can't put a title to half the people at the table. You listen for half an hour, and the first thing you say is: there's a fire main behind this wall." },
+    { "label": "Stay in residential", "result": "You say you still like dealing with families. Fine, says the manager, residential can't do without you, and hands you two more sites." }
+   ]
+  },
+  "c_studio": {
+   "title": "Strike out on your own",
+   "situation": "A former client wants to invest and have you and a designer open a full-service design-and-build studio. You have steady crews, supply channels and client referrals. But on your own you'll front the money and carry the after-sales yourself, and one site going wrong could sink you.",
+   "options": [
+    { "label": "Go it alone", "result": "You rent a small office in Wangjing and hang a sign at the door. On opening day your uncle calls from home: do it well, he says, and don't cheat anyone.", "end": "You and the designer take on twenty-odd jobs a year, no more, no less. You still go to the sites every day, only now every wall carries your own name." },
+    { "label": "Stay with the company", "result": "You turn it down. The client finds someone else, and two years later that studio closes. He takes you to dinner and says he should have waited for you." }
+   ]
+  },
+  "c_jump": {
+   "title": "Money's tight at the company: jump ship?",
+   "situation": "One renovation company after another has gone under with clients' money, and yours has started paying workers late. A big national chain is courting you: a noticeably higher base and tidier management, but you'd have to learn its whole process from scratch, and the crews you bring may not fit.",
+   "options": [
+    { "label": "Join the big chain", "result": "You bring your two most trusted foremen. The new company's process manual runs to twenty-odd pages, and it takes you a month to learn it. Your first site there goes smoothly." },
+    { "label": "Stay and help the company through", "result": "You stay and go door to door with the owner explaining delays to clients. By year's end the company has recovered, and at the annual party the owner raises a glass to you." }
+   ]
+  },
+  "c_supervisor": {
+   "title": "Become an independent renovation inspector",
+   "situation": "A third-party inspection agency wants you to inspect plumbing, wiring, waterproofing and ceilings on behalf of homeowners, finding fault with renovation companies. Paid by the visit: no sites to run, no payments to chase, no midnight videos. Only now you'd be on the other side.",
+   "options": [
+    { "label": "Become an inspector", "result": "You hand over your eight client groups one by one. In the last, someone writes: thank you for all your hard work. You reply with a fist-and-palm salute and leave the group.", "end": "With a tool bag on your back, you inspect three homes a day: pressure tests, flood tests, insulation tests, ceilings. One look tells you which project manager is cutting corners and which is working himself to the bone, and for the second kind, you put in a few extra good words." },
+    { "label": "Stay a project manager", "result": "You say a few more years. That night at eleven a client sends a photo. You zoom in, then reply: I'll come by tomorrow morning." }
+   ]
+  },
+  "c_director": {
+   "title": "Compete for Fit-out Delivery Director",
+   "situation": "The company is creating a Fit-out Delivery Director to oversee quality and payment collection across dozens of live sites in Beijing, write the construction standards, and manage the crews and central materials buying. More time in the office than on site; you'll have to learn to read reports instead of walls.",
+   "options": [
+    { "label": "Compete", "result": "You turn years of rework records into a construction manual. The first page is about the forty-eight hours of the flood test, not one hour less." },
+    { "label": "Stay on the sites", "result": "You say you can't do without the dust of a site. The post goes to someone poached from a big chain, and on his first inspection he asks for you by name to come along." }
+   ]
+  },
+  "c_slow": {
+   "title": "Run fewer sites and train apprentices",
+   "situation": "You're past fifty and your back and knees are both sounding the alarm. The company offers to have you run only three or four sites, mainly training the new assistant foremen, with a much smaller commission. The young ones can make spreadsheets but can't read a wall, and the company wants you to teach them.",
+   "options": [
+    { "label": "Fewer sites, more teaching", "result": "You take three young people around the sites. At each home you let them look first, then tell them what's wrong. What they fear most is when you take out the plumb bob." },
+    { "label": "Keep running eight", "result": "You say your child isn't married yet; a few more years. You go through three boxes of pain patches that year, and not one site is delayed." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "The day your last site is handed over, the client asks you into a photo. You stand in the middle of the living room, in front of a cabinet whose door gaps you adjusted with your own hands. You leave the eight client groups one by one and hand your keys in at the office. Driving out of Beijing, there's no line at the checkpoint, and you drive all the way home to Yanjiao.",
+  "burnout": "That year your back finally gives out, and the doctor won't let you climb stairs anymore. The company moves you to after-sales: answering calls, dispatching repairmen, going out to look at leaks, a few homes a week. On the phone you often tell young project managers: don't rush. Go and look at the downstairs neighbor's place first."
+ },
+ "past": [
+  "You grew up in a village outside Baoding in Hebei, and the year you finished middle school you didn't get into high school. Books aren't your road, your father said, and sent you to learn carpentry from your uncle, who did renovation.",
+  "You followed your uncle around the county town making furniture, doors and windows for people. He made you work the saw for a month first. Until you could cut straight, you weren't allowed to touch the plane.",
+  "Your uncle brought you to Beijing, where you slept in the bare concrete flats you were working on, a board on the floor for a bed. Your first time on the subway, the security check stopped you with your tool bag and looked it over for ages.",
+  "You could build suspended ceilings, case doors and make cabinets on your own, and earned a skilled worker's pay on the crew. A client praised how tight your cabinet door gaps were, and you were quietly happy for days.",
+  "A project manager at a home renovation company saw that you could read drawings and asked whether you'd come on as an assistant foreman. You put down the power saw and started running sites with a notebook, taking photos and writing logs.",
+  "While working as a site foreman you studied for a junior college diploma through the self-study exams, memorizing building materials and construction planning at night in a rented room. It took three years to get the diploma.",
+  "You passed the Class 2 Constructor exam and became a project manager. That year you bought a flat in Yanjiao, the down payment fifteen years of savings. The day you got the keys, you stood in the empty flat for a while."
+ ],
+ "late": {
+  "pension_note": "Estimate: the renovation company pays into basic enterprise pension insurance, but the first ten years on renovation crews carried no social insurance, and commission often isn't counted in the contribution base. The pension comes to roughly forty percent of your final monthly salary.",
+  "scenes": [
+   "Your first month of retirement, your phone is so quiet it unsettles you. You take your uncle's plane down from the garage wall and make your grandson a little stool.",
+   "Old clients still call: who to call about a leaking pipe, how to fix a crooked cabinet door. You tell each of them, and sometimes you drive over and give a screw a couple of turns.",
+   "You go back to the village outside Baoding and renovate the old family house. You build the ceiling and set the door gaps yourself, and the whole village comes to look. That's what you get from Beijing, they say.",
+   "On a bus you pass an old compound where you once did a job, its outside walls freshly painted. You count the windows and find that flat. Children's clothes hang drying on the balcony.",
+   "You work in after-sales now, home on time every day, and your back slowly hurts less. Only when the phone rings, your first thought is still: has someone's place sprung a leak again?",
+   "You go to look at a leak, and the project manager is a young man younger than your own child, standing to one side saying nothing. You pat him on the back. It's fine, you say. I had leaks too.",
+   "At the age, you retire. The pension isn't much, and the first ten years have no contributions. You and your wife do the sums. Enough to live on, but nothing to splash out.",
+   "Your first year on a different path, when you walk into someone's home you still look at the corners, the ceiling and the door gaps first, and only then remember to say hello.",
+   "You've found your footing on the new path and stay in touch with the old foremen. When someone needs a renovation, they call you first, and whoever you name gets the job.",
+   "An assistant foreman you trained is now a project manager. At his handover he sends you a photo: a cabinet with door gaps perfectly even. Underneath he writes: Master, I checked it with a plumb bob.",
+   "Later, renovation hands its scheduling, acceptance checks and inspections to systems, and clients can watch every day on their phones. But the pipes inside the walls and the waterproofing under the floor still need someone to crouch down and feel with their hands.",
+   "There are a few old scars on your hands from sawing and planing when you were young. Your grandson asks if they hurt. Not anymore, you say. Back then all I thought about was getting the job right."
+  ],
+  "closing": {
+   "retire": "One winter many years later, you sit by the window at home in Yanjiao and watch a family in the building opposite having their place done, workers coming and going. After a while you reach out and feel your own window frame, to see if it's tight. It is.",
+   "burnout": "Many years later, in a cabinet, you find an old site log. The earliest page is from the year you learned carpentry: Sawed thirty battens today. Uncle says they're straight. You smile and put it back where it was.",
+   "end": "Many years later, a young man comes to fix a cabinet door in your home. He fiddles with it for ages without getting it right. Let me, you say, crouch down, and two turns later it's level. He asks what you used to do. I built houses for other people, you say."
+  }
+ },
+ "stages": [
+  "You run five to eight sites at once: scheduling and briefing the plumbers and electricians, tilers, carpenters and painters, going to each site for concealed-works inspections with pressure tests, flood tests and insulation meters; scheduling deliveries of materials and custom pieces; dealing with clients, designers, property management and the neighbors above and below; processing change orders and collecting midpoint and final payments. There are eight client groups on your phone, and every one needs an answer.",
+  "Now you do commercial fit-outs: office buildings, chain stores, hotels. You coordinate subcontractors for fire protection, low-voltage systems and HVAC, chair weekly meetings with the client's engineering team and the supervising engineers, and race toward opening dates. Cost, variation orders and settlement are yours too, and the project's margin goes under your name. You deal less with homeowners and more with contracts.",
+  "You oversee delivery quality and payment collection for dozens of live sites across Beijing: setting construction standards and acceptance procedures, managing the inspection and supervision teams, building a reserve pool of crews and negotiating central buying with main material suppliers. A few days a week you spot-check sites; the rest goes to reports, meetings and the most stubborn complaints."
+ ],
+ "work": [
+  "Before the plumbing inspection you pump the water lines up to 0.8 MPa and watch the gauge for half an hour. It drops 0.03. You run your hand along every joint once more before you sign the inspection form.",
+  "A client wants to knock out the kitchen wall for an open plan. You pull the building drawings from property management and find it's load-bearing. You post a screenshot to the group: this wall can't go, but you could open a pass-through.",
+  "The tiler says he's three tiles short. You go through the delivery slips and recalculate the wastage, and find a box came in broken last week. You photograph it, send it to the supplier, and tell them to have replacements there first thing tomorrow.",
+  "A chain coffee shop opens in two weeks and hasn't passed fire inspection. You call the fire protection, low-voltage and joinery subcontractors to the site, check sprinkler head positions ceiling by ceiling, and that night draw up a backward-scheduled program.",
+  "The office client wants the partitions in two meeting rooms changed. You price the extra work and the time, write it up as a variation order and ask them to sign. Their engineering team says start first. Sign first, you say, then I'll send people.",
+  "At the four-party inspection before the ceiling boards go up, you stand on a ladder with a flashlight on the ducts, conduit and access hatches above, checking each against the drawings while the supervising engineer takes notes below.",
+  "In a company meeting room you revise the acceptance standards, changing the flood test back from twenty-four hours to forty-eight. Someone says it will hurt the schedule. One leak, you say, costs far more than one day.",
+  "A client complains to the consumer association that the job ran two months late. You pull that site's inspection records and schedule, and find the project manager had taken on twelve sites at once. The next day you go and see the operations manager.",
+  "In Foshan you negotiate next year's central buying with a tile factory, and they quote first. You take out a tile that cracked in a client's home after handover last year. Let's sort this out first, you say, then talk price."
+ ]
+}

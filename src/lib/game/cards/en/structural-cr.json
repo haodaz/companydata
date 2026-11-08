@@ -1,0 +1,203 @@
+{
+ "id": "structural-cr",
+ "occupation": "Concrete Structural Engineer",
+ "role": "Assistant Structural Engineer, tunnel project office",
+ "headline": "In the second year after a civil engineering degree, following a state-owned infrastructure bureau deep into the mountains of northwest Guizhou: an assistant structural engineer who lives in the prefab huts of a hillside project office, calculates tunnel supports and lining reinforcement, and goes home twice a year",
+ "unit": "The expressway tunnel project office of a central state-owned infrastructure engineering bureau, in the mountains of northwest Guizhou",
+ "unit_type": "Central state-owned infrastructure engineering bureau",
+ "city": "The mountains of Bijie, Guizhou",
+ "city_tier": "Mountain construction site",
+ "education": "Bachelor's degree in civil engineering",
+ "level": "Your structural mechanics and concrete theory are solid, you can model in YJK and midas, and you know your way around the rebar detailing atlas. You still can't read the rock in the tunnel reliably, and when you brief the labor crew, one question from the crew boss in dialect stops you cold.",
+ "intro": "You signed with the bureau after graduating. Your first year was building a bridge on the plains; in your second you were sent into these mountains in Guizhou, to a six-kilometer expressway tunnel. The project office's prefab huts sit halfway up the slope, and at night you can see the string of lights at the tunnel portal. As of today, in the chief engineer's office, you calculate supports, check reinforcement and write technical briefings, and you go home only at Lunar New Year and National Day.",
+ "salary_note": "Estimate: front-line projects at a central state-owned engineering bureau pay a field allowance, a tunneling subsidy and project bonuses, so a new graduate takes home over twenty percent more than the national average. In years when a project is winding down or halted, the bonus drops.",
+ "facts": [
+  { "label": "Assistant Structural Engineer (current level)", "value": "0-2 years, ¥6,000–10,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Structural Engineer (2-5 years)", "source": "Career map" },
+  { "label": "Pay after 10+ years", "value": "¥22,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Locating, measuring and making a first call on the cause of diagonal cracks under the beams of a school building, on site", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Coordinating headroom over a basement car park's main aisle and checking the strength of openings through beam webs", "source": "AI exposure" },
+  { "label": "Open positions", "value": "6 related listings nationwide (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The tin roofs of the huts are wet with dew. You brush your teeth at the sink at the end of the walkway; down the valley the fog hasn't lifted. In the canteen the cook is boiling potatoes, and the smell of sour soup fills the yard.",
+  "Pre-shift meeting at the portal. The safety officer reads out today's blasting times and checks everyone's location tag and self-rescuer. You put on your hard hat and ride into the tunnel in the surveyor's pickup.",
+  "At the face, two kilometers in, the lights hit the rock and water seeps from the joints. The advance geological forecast says there's a cavity twenty meters ahead. You open your sketchbook and draw the strata and fractures of this stretch.",
+  "Behind the lining formwork carriage, you and the site supervisor measure rebar spacing and cover with a tape. The labor crew boss stands smoking and says at this rate nothing gets poured today. You say then it gets poured tomorrow.",
+  "Back at the office for lunch. There's one bar of signal on the hill. You stand at the edge of the yard holding your phone up and send home a message: eaten, all fine.",
+  "The chief engineer's office. You enter the week's monitoring data into a spreadsheet, plot crown settlement and convergence as curves, then run the spacing for steel arches on a section of reinforced support in midas and hand it to the chief engineer to sign.",
+  "Blasting time, and everyone comes out of the tunnel. A dull boom rolls through the mountain, the hut windows rattle, and a few birds lift out of the trees.",
+  "In the hut your roommate is gaming. You put on headphones and work through past papers for the registered structural engineer exam. On a video call with your partner the picture freezes frame by frame, and you miss the last thing they say."
+ ],
+ "ladder": [
+  { "title": "Assistant Structural Engineer", "stage": "Junior trainee", "focus": "Under a senior mentor, learn the institute's drawing standards and design habits; help model floor systems, calculate pile caps and draw beam and slab reinforcement in the standard detailing format. Promotion comes from drawing speed, care, and knowing the code clauses." },
+  { "title": "Structural Engineer", "stage": "Mid-level mainstay", "focus": "Take on the full structural design of ordinary multi-story and high-rise civil or industrial buildings on your own, tune the global structural indicators and produce the complete construction drawings. Promotion comes from delivering mid-sized projects independently and earning the Class 2 or Class 1 registered structural engineer qualification." },
+  { "title": "Structural Discipline Lead", "stage": "Senior lead", "focus": "Lead the structural discipline on a single project: early system selection, economical column grids and spans, seismic checks, quality control of the whole team's drawings and the defense at drawing review. Promotion comes from overall coordination and the Class 1 registered structural engineer qualification." },
+  { "title": "Principal Structural Engineer", "stage": "Technical management", "focus": "Direct the structural approach on several major, complex projects in the division, tackle long-span or complex code-exceeding structures, build a library of standard details. Promotion comes from solving hard technical problems and managing the team's output." },
+  { "title": "Chief Structural Engineer", "stage": "Institute-wide leader", "focus": "Sign every major drawing the institute issues and carry lifelong responsibility for its quality, approve the company's top technical rules, and represent it on provincial and municipal seismic review panels and in writing industry codes." }
+ ],
+ "ai_tasks": [
+  { "name": "Coordinating headroom over a basement car park's main aisle and checking the strength of openings through beam webs", "how": "AI can read the services and structural models, find the clashes automatically and propose several positions and sizes for openings. A person has to judge which beams can take an opening, how to strengthen around it and whether it meets the code, coordinate with the mechanical and architectural teams, and sign for the result." },
+  { "name": "Modeling the soil load on a residential basement roof slab and checking crack control", "how": "AI can update the loads for the new soil depth, rerun the calculations in batches and compile the crack-width tables, saving a lot of mechanical work. A person has to check that the boundary conditions and load values make sense, judge whether sections or reinforcement need to change, and answer for the conclusion." },
+  { "name": "Locating, measuring and making a first call on the cause of diagonal cracks under the beams of a school building, on site", "how": "A person has to be there, finding and measuring the cracks with a crack gauge and the naked eye, reading their direction, judging the cause from the loads and use, and advising whether people need to be moved out. AI can only help look up similar cases, prepare the report template and keep the photo record." },
+  { "name": "Calibrating wind tunnel test data against YJK wind load parameters on a code-exceeding high-rise", "how": "AI can compare the wind tunnel report with the software parameters, run batches of results under different values and compile the comparison tables. A person has to judge sensible shape coefficients and dynamic amplification factors, explain the basis to the review experts, and carry responsibility for the safety of the structure." },
+  { "name": "Detailing the connection nodes for precast composite slabs and generating a fabrication-ready BIM model", "how": "Turning 2D details into parametric families and embedding rebar clash checks is rule-bound modeling and scripting that can be checked again and again, so AI working with BIM tools can largely take it over. A person only needs to spot-check that the key details meet the code and the factory's fabrication needs." },
+  { "name": "Leading on-site acceptance of the first trial underpinning on a brick-and-concrete building in a historic district", "how": "First-article acceptance means gathering the client, contractor and monitoring team on site, checking pile positions, verticality, wall deformation during the transfer and the monitoring data, and deciding there and then whether work can go on. AI can at most help with the checklist and the monitoring data; the judgment and the responsibility are the person's." }
+ ],
+ "events": {
+  "e_settlement": "Entering the monitoring data, you notice the crown settlement jumped two centimeters in a day and report it to the chief engineer at once. The tunnel is cleared, and the next day a small piece of that section comes down, hurting no one. At the project meeting the chief engineer says: look at the data every day.",
+  "e_inrush": "The face breaks into a karst cavity, mud and water surge out, and half the tunnel floods. You keep watch at the portal for three days and nights as pumps are added one after another, and redo the support design for that section.",
+  "e_gas": "Through the coal seam stretch, the methane detector alarms and the whole tunnel stops for ventilation. You spend the afternoon on a bench at the portal checking the ventilation plan again; at dusk the readings fall and work resumes.",
+  "e_rebar": "To make up time, the labor crew leaves out a row of ties in the lining rebar. You catch it at inspection and make them take it apart and redo it. The crew boss doesn't speak to you for three days, then buys you a drinking dinner and says you're a stubborn kid.",
+  "e_breakthrough": "Breakthrough. When the two faces meet, the surveyor reports a misalignment of just three centimeters. Firecrackers go off in the tunnel, the project manager shakes everyone's hand, and you take a picture through the smoke.",
+  "e_change": "The rock turns out two classes worse than designed. You pull together three months of geological sketches, monitoring data and calculations into a design change request. The day it's approved, the commercial manager slaps you on the shoulder and says that file is worth money.",
+  "e_paperwork": "The client is inspecting next week, and two hundred-odd documents are missing from the site records. You and the document clerk stay up four nights straight, signing, stamping and adding photos, and on the last night you fall asleep at the desk.",
+  "e_ai_monitor": "Automated monitoring points go into the tunnel, feeding data straight to a platform, and your phone buzzes when a threshold is crossed. You no longer carry the total station in every day, but for every alarm you have to judge whether it's real deformation or an instrument jolted by blasting.",
+  "e_ai_face": "Take a photo of the face and the system gives a rock class. Most of the time it's right. Once it rated a stretch of broken limestone one class too high, and it was you who crouched, tapped it with a hammer and heard it ring hollow.",
+  "e_ai_drawings": "Reinforcement drawings and calculation reports now come with an auto-generated first draft, and you've gone from the one who draws to the one who catches mistakes. On one drawing you circle the portal strengthening bars: it detailed them to code, but that's exactly where the seepage is worst.",
+  "e_landslide": "One rainy-season downpour and a stretch of the road into the mountains collapses. The project office goes three days without fresh vegetables; every meal in the canteen is potatoes and cured pork. You play cards in the huts and listen to the rain drumming on the tin.",
+  "e_village": "A villager from the hamlet below comes to the project office saying the blasting cracked the wall of his house. You go down with a crack gauge, measure the width, look at the direction, take photos, and judge it to be old settlement in the wall itself. He doesn't believe you, so you go with him to look at his neighbor's too.",
+  "e_love": "The person you've been with since university works in Zhengzhou. You see each other four times a year: twice when you go home, and twice when they ride more than ten hours into the mountains to visit, staying in a hotel in the county town.",
+  "e_wedding": "At Lunar New Year you go home to Nanyang and get married. Of your fifteen days of marriage leave you use twelve, and on the thirteenth you board the high-speed train back to Guizhou. On the platform your spouse doesn't cry, and only after the train pulls out sends a message: let me know when you get there.",
+  "e_baby": "The day your child is born you're in the tunnel, and when you come out your phone is full of missed calls. You drive out of the mountains through the night and change trains twice; by the time you reach the hospital it's noon the next day, and the baby is asleep outside the incubator.",
+  "e_stranger": "Home for National Day, your child hides behind grandma and won't call out to you, until the day you leave, when they grab the hem of your jacket and won't let go. On the high-speed train you stare out the window the whole way and see nothing.",
+  "e_next_project": "The road opens to traffic, the project office takes down its huts, and you're transferred to a railway tunnel in another mountain in Yunnan. The day you drive into the new site, you see a row of identical blue huts going up halfway up the slope.",
+  "e_opening": "The expressway you built opens. You miss the opening ceremony, but later you drive it with your family, and slow down as you enter the tunnel: I calculated this section.",
+  "e_joints": "Years of climbing formwork carriages and squeezing through rebar cages in damp tunnels wear out your knees and back first. On rainy days you have to sit on the edge of your hut bed a while before you can get up.",
+  "e_mentee": "A new graduate's first geological sketch at the face looks like a landscape painting. You don't laugh. You take the notebook and draw one fracture to show him: draw which way it runs, not whether it looks nice.",
+  "e_jobs": "You idly search a job app. There aren't many structural engineer openings, mostly at design institutes and developers, all wanting a registration certificate, all in cities. You take a screenshot and save it to an album called Someday."
+ },
+ "choices": {
+  "c_cert": {
+   "title": "The Class 2 registered structural engineer exam, or the Class 1 constructor exam",
+   "situation": "The chief engineer says if you want to move up to Structural Engineer, the Class 2 registered structural engineer qualification is a hard requirement, and you'll need thirty-plus codes at your fingertips. But everyone on the project is sitting the Class 1 constructor exam: with it you can become a project manager, and lending out the certificate and project bonuses all depend on it. Evenings in the mountains are only enough to study for one.",
+   "options": [
+    { "label": "Sit the Class 2 structural exam", "result": "You stick tabs all through the codes, grind past papers in the hut for two years, and pass in the second. The chief engineer hands you the calculations for a complicated portal section." },
+    { "label": "Sit the constructor exam and head for project management", "result": "You pass the constructor exam and start following the project manager around on quantity measurement, subcontract talks and cost control, doing less and less structural calculation." },
+    { "label": "Sit neither for now", "result": "You give your evenings to video calls and sleep. That National Day at home, your partner says you look much better." }
+   ]
+  },
+  "c_design": {
+   "title": "Go draw at a design institute in the provincial capital",
+   "situation": "A university classmate does structural design at a design institute in Zhengzhou and says they're short of people with site experience. You could sit in an office and go home every day, for a good deal less pay and plenty of late nights before deadlines. These years in the mountains could become your capital, or end here.",
+   "options": [
+    { "label": "Go to the design institute", "result": "You trade the tunnel for an office tower. The first time you draw the shear walls of an apartment block, you keep thinking how it would behave in the mountains. You're home for dinner every night now, and you learn to cook one dish." },
+    { "label": "Stay with the bureau", "result": "You tell your classmate a few more years. That night you stand outside the huts a long time while someone in the hamlet below sets off fireworks." }
+   ]
+  },
+  "c_overseas": {
+   "title": "Go to an overseas project in Southeast Asia",
+   "situation": "The bureau has won a railway contract in Southeast Asia and is sending a group of technical staff: a three-year contract, more than double the pay, one trip home a year. The rainy season there is longer and the geological data thinner, and in that chief engineer's office you'd be half the team.",
+   "options": [
+    { "label": "Go overseas", "result": "You build tunnels in tropical rainforest, talking to local workers with gestures and a handful of words. Three years' savings cover a down payment. You never once make it to a parent-teacher meeting." },
+    { "label": "Stay in China", "result": "You don't sign up. The name on the list is a colleague who arrived a year after you. Before he leaves he buys you a barbecue dinner." }
+   ]
+  },
+  "c_bim": {
+   "title": "Learn BIM-first design and automated checking or not",
+   "situation": "The bureau's technology center wants to roll out BIM-first design on tunnel projects, paired with automated drawing production and automated checking, and needs one structural engineer from a project to train for six months. Learn it and it's a new path, but for half a year you'd be off site, and others would cover your work.",
+   "options": [
+    { "label": "Go and build the workflow", "result": "You model all the rebar in a whole stretch of tunnel, and the clash check turns up more than three hundred conflicts. Back on the project, the first thing you do is teach the chief engineer's office how to read the errors it reports." },
+    { "label": "Don't; stay on site", "result": "You stay in the tunnel; you know the rock and the monitoring data best. Later, when drawings from the model reach the project, a few problems at the portals are ones you spot at a glance on site." }
+   ]
+  },
+  "c_lead": {
+   "title": "Apply for Structural Discipline Lead",
+   "situation": "The bureau's design branch needs a Structural Discipline Lead for a newly won mountain railway, to lead structural selection, seismic checks and the drawing review defense for its tunnels and bridges. Applicants must present a scheme they led, in front of designers who have been drawing in the city for over a decade.",
+   "options": [
+    { "label": "Apply, and present the portal scheme", "result": "You present the strengthened support for the karst cavity section, page by page: photos, monitoring curves, calculations. An old designer asks a question about seismic action, and you answer for three minutes." },
+    { "label": "Don't apply; stay on the project", "result": "You say you can't leave the site yet. The new discipline lead often calls you when he isn't sure about something on site." }
+   ]
+  },
+  "c_home": {
+   "title": "Ask for a transfer back to bureau headquarters",
+   "situation": "Your child is about to start primary school, and your family says if this goes on the child will grow up not knowing you. The bureau's technology center in Zhengzhou has a post with no site work, but no field allowance or project bonus either: thirty percent less pay, and slower promotion.",
+   "options": [
+    { "label": "Transfer to headquarters", "result": "For the first time you take your child to school every day, waving at the gate with the other parents. In the office you review schemes sent up by the projects, and when you see photos from inside a tunnel you zoom in and look for a long time." },
+    { "label": "Stay in the mountains", "result": "You tell your family one more project. That Lunar New Year you take all your saved leave at once and take your child to the zoo. On the way back the child falls asleep holding your finger." }
+   ]
+  },
+  "c_yizhu": {
+   "title": "Sit the Class 1 registered structural engineer exam and push for Principal Structural Engineer",
+   "situation": "A Principal Structural Engineer has to be able to sign drawings for complex structures, and the Class 1 registered structural engineer qualification is the threshold. The fundamentals exam plus the professional exam: masonry, steel, foundations, high-rise, the whole set of codes. You're forty, and you get sleepy the moment you open a book at night.",
+   "options": [
+    { "label": "Sign up and grind two more years", "result": "You put a bigger desk in the hut, with half a meter of codes stacked on it. You pass the professional exam on the third try and post the screenshot of your score in the family group chat." },
+    { "label": "Give up on it", "result": "You give the stack of codes to the newly arrived graduate. You're still in the tunnel, able to give a clear answer to any question, only the signature on the drawings isn't yours." }
+   ]
+  },
+  "c_owner": {
+   "title": "Go to a city investment company in design management",
+   "situation": "The city investment company in your hometown is hiring a civil works design manager to review outside institutes' drawings, control the investment and manage design changes. Nine to five, on your doorstep. You'd go from the one doing the work to the client.",
+   "options": [
+    { "label": "Go to the investment company", "result": "You hand in your resignation, and the bureau's old chief engineer takes you to dinner and says if we ever have a project in your area, look after us.", "end": "At the head of the client's meeting table you review the drawings the institutes send in and see at a glance which portal support can't be built on site. When a young designer is stumped by your question, you tell him not to worry, I came out of a tunnel too." },
+    { "label": "Stay with the bureau", "result": "You don't go. That year the bureau wins an even longer tunnel, and you're named its technical lead." }
+   ]
+  },
+  "c_inspect": {
+   "title": "Switch to inspection and assessment",
+   "situation": "The inspection and assessment center at the provincial building research institute wants you for damage assessment and strengthening plans on old buildings, bridges and tunnels. No living on site, a lot of travel, and the work is like a doctor's: reading cracks, finding how deep the rebar has rusted.",
+   "options": [
+    { "label": "Go into inspection and assessment", "result": "You leave the bureau. Your first job is a crack survey on an old bridge.", "end": "With a crack gauge and a rebound hammer you look at cracks and tap concrete under old bridges and in the basements of old buildings, writing down what needs strengthening and what can hold for many years yet." },
+    { "label": "Stay in tunnels", "result": "You say you still want to get through the next mountain. People from the center often come to your projects to take cores, and you lead them to the places most worth looking at." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On the day your last project broke through, you didn't go in. You stood at the portal and watched the young ones set off firecrackers. You left the hard hat you'd worn for over thirty years at the project office, a string of location tag numbers stuck on its brim. On the way down the mountain the fog came up again, and in the rearview mirror the lights of the hillside huts came on one by one.",
+  "burnout": "At that year's checkup the doctor told you not to go into tunnels any more; your knees and back couldn't take the damp. The bureau moved you to the technology center to review documents. Every day you sit in the office looking at photos sent in from the projects, and when one shows a tunnel face you zoom in and look a long time, to see which way the fracture runs."
+ },
+ "past": [
+  "You were in middle school in a county town near Nanyang, Henan. Your father worked away as a rebar fixer on building sites, and at Lunar New Year he told you how tall buildings go up one floor at a time. You passed the high school entrance exam into the county's best high school.",
+  "Your gaokao (college entrance exam) score just cleared the first-tier line. Your father said study civil engineering and you'll eat anywhere. You went to an engineering university in Xi'an to study it, riding a train for more than ten hours for the first time.",
+  "In second-year structural mechanics you spent a whole night on one statically indeterminate frame, and the next day the teacher said the method was right and the numbers wrong. You copied that problem onto the first page of your notebook.",
+  "The summer after third year you interned on a bureau's bridge project, tying rebar with the technicians, taking levels, writing site diaries. For the first time you lived two months in site huts, and came back a shade darker.",
+  "In autumn hiring both a design institute and the engineering bureau made offers. The institute was in the city and paid less to start; the bureau was in the mountains, paid more and did real work. You remembered your father's words and signed with the bureau.",
+  "Your first year was a viaduct on the plains. You checked the falsework and formwork calculations with the chief engineer and watched the piers rise one by one. At year's end a transfer order sent you into the mountains of Guizhou."
+ ],
+ "stages": [
+  "In the chief engineer's office you're the junior: running steel arch spacing and rock bolt lengths in midas, checking lining reinforcement against the detailing atlas, plotting the week's monitoring data as curves, writing technical briefings for the labor crews. The last box on a calculation report isn't yours; your name goes under Calculated by, and Checked by is still empty.",
+  "You can take a tunnel section's structural design and site support on your own now: you draw up the strengthened supports for the portal and karst sections yourself, build the YJK and midas models yourself, and face the design institute and the supervisor directly at drawing reviews. The Checked by box on calculation reports starts to carry your name.",
+  "You're a project's structural discipline lead, in charge of system selection, seismic checks and the review defense for its tunnels and bridges, and every drawing from your four or five engineers passes your eyes. You spend more time in meetings with the client, the design institute and the review experts than in the tunnel, and you sign the full drawing set as discipline lead.",
+  "You direct the structural approach on several of the bureau's major projects, taking on the hard problems of extra-long tunnels, high-seismic zones and karst ground, building the standard details library, and leading a group of discipline leads. You visit three or four sites a month, and at each you look at the face first, then the drawings, and decide in the meeting room last.",
+  "The final signature on the bureau's major drawings, and the lifelong responsibility, are yours. You approve the company's technical rules and sit on provincial seismic review panels and code-writing committees. The calls you get most are from project chief engineers asking: can we do this section this way. Yes or no, you have to say why."
+ ],
+ "work": [
+  "Luo the surveyor sends you a week of convergence readings. You plot them in Excel, find one section that still isn't converging, and take it to the chief engineer.",
+  "The labor crew's rebar foreman can't follow the reinforcement drawing for the portal section. You crouch by the formwork carriage and draw it out in chalk on the concrete floor, and he nods: got it.",
+  "The supervising engineer wants a pull-out test record for the rock bolts. You can't find it anywhere in the records room, so you take the pull-out tester into the tunnel, redo ten, and note each reading.",
+  "You build a beam-arch model of the karst cavity section in midas and run five backfill options. At the design review, the institute's structural engineer adopts the third.",
+  "Three days after a lining pour a circumferential crack appears. You and the head of the site lab measure all round it with a crack width gauge, judge it to be thermal shrinkage, and write it into the remediation note.",
+  "The construction foreman wants to pour the invert in two stages. You check the forces at the construction joint in the calculation report and agree, but require a waterstop.",
+  "The review experts raise seven comments on the ductility check for a tall bridge pier. You and two engineers revise for a week, go through them one by one at the defense, and the experts sign.",
+  "A young engineer's YJK run comes out with thirty percent more reinforcement than the last version. You see at once he picked the wrong load combination factors, and have him rerun it.",
+  "The client's project manager wants to replace a small bridge with a culvert to save money. You work out the flood level and flow section, say no at the meeting, and lay the calculations on the table.",
+  "An extra-long tunnel more than ten kilometers in has to cross a fault. You bring three projects' chief engineers together over the geological profile for a whole day and settle the advance support scheme.",
+  "You lead the bureau's standard tunnel details library, choosing eighty-odd portal and transition details, and have each project's discipline lead check and sign them one by one.",
+  "The chief engineer on a Yunnan project sends you photos of the face and the monitoring curves. You read them on the high-speed train and reply: get everyone out tonight, I'll be there in the morning.",
+  "At a provincial seismic review, a design institute's chief presents the scheme for a code-exceeding high-rise. You ask two questions, and send them back to add a nonlinear time-history analysis.",
+  "The bureau is revising its tunnel construction rules. You review them clause by clause late into the night, and beside the karst chapter you write: this clause was paid for with an inrush; don't cut it.",
+  "A young project chief engineer calls to ask if the changed support can be built first and the drawings done after. You say no, then go through the calculations with him."
+ ],
+ "late": {
+  "pension_note": "Estimate: central state-owned engineering bureaus pay into the basic pension for enterprise employees in full, plus an enterprise annuity, which together come to a little over half of your final monthly salary. The field allowance doesn't count toward the pension.",
+  "scenes": [
+   "In the first month after you retire you wake before six, lying there waiting for the dull boom of the blast, and it takes a while to remember this is your home in Zhengzhou.",
+   "The bureau rehires you as an expert, visiting a few projects a few times a year. You crouch at the face of a new tunnel, tap it with a hammer and tell the young chief engineer: this stretch needs strengthening.",
+   "At last you drive all the roads you built, Guizhou, Yunnan, Sichuan, slowing down at every tunnel. Your family falls asleep in the back seat, and you count the lights at the portals alone.",
+   "Your grandson writes an essay called My Grandpa, saying grandpa built roads inside the bellies of mountains. The teacher writes beside it: very vivid. You tuck that page into the old photo album.",
+   "Reviewing documents at the technology center, you work regular hours and have dinner with your family every evening. Your child is in middle school now, and still a little polite when talking to you.",
+   "After physiotherapy your knees are a bit better, and on weekends you can walk a couple of laps of the park with your spouse. Passing a subway construction site, you stand outside the hoarding a long time.",
+   "On the day you file for retirement, the young clerk in HR looks at your record and says you moved more than a dozen times in your life. You say they were all mountains, and they all look much the same.",
+   "In your first year away from the bureau you sleep badly in the city; it's too quiet. One night pile driving starts on a site downstairs, and you sleep soundly.",
+   "An old colleague posts a picture in the group chat: a geological sketch you drew at the face, now in the bureau's training materials, with your name under it.",
+   "The graduate who drew his geological sketch like a landscape painting becomes a project chief engineer. He calls to say he's started making new hires draw which way the fractures run.",
+   "Later tunnels use more machines and sensors; one photo of the face is enough to class the rock, and the prefab huts have been replaced by air-conditioned containers. But the water in the tunnel and the fog in the mountains are just as they were.",
+   "On television you see a newly opened expressway, and as the camera sweeps past a tunnel portal you recognize the mountain. Your family asks what's wrong. Nothing, you say. I used to live there."
+  ],
+  "closing": {
+   "retire": "Many years later, one evening, you sit in the car while your child drives you along an expressway in Guizhou. The car enters a tunnel and the lights slip backward one after another. You say nothing, counting them in your head, and when you reach the portal the sky is still light.",
+   "burnout": "Many years later, on the balcony, you leaf through the old geological sketchbook, page after page of fractures and strata. In the corner of one page you find the words broke through today, in crooked handwriting. You smile and close the book.",
+   "end": "Many years later, in a drawer, you find your old location tag, its plastic case gone yellow, the number still legible. You weigh it in your palm. It's very light. You put it back."
+  }
+ }
+}

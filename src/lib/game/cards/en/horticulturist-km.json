@@ -1,0 +1,193 @@
+{
+ "id": "horticulturist-km",
+ "occupation": "Horticulturist",
+ "role": "Horticultural Technician at a cut-flower farm",
+ "headline": "A horticulture graduate who failed the graduate entrance exam twice, now in charge of twenty rose greenhouses at a cut-flower farm in Chenggong, Kunming, run ragged between breeding trials and export orders",
+ "unit": "A cut-flower growing and export farm in Chenggong, Kunming",
+ "unit_type": "Flower-growing company",
+ "city": "Kunming",
+ "city_tier": "Second-tier city",
+ "education": "Bachelor's degree in horticulture",
+ "level": "You can name dozens of rose varieties from the leaves alone and tune the drip line's EC and pH yourself. In the breeding trials you only help record the data, and export orders still come back to you for rework over quarantine and grading.",
+ "intro": "Two years at this farm in Chenggong, and you've gone from cutting flowers alongside the workers to running twenty rose greenhouses. This year the owner has taken an export order for Japan and brought in a few new varieties from the Netherlands to trial. As of today, it's on you to have these flowers open to exactly the right point, every stem of them, one week before Valentine's Day.",
+ "salary_note": "Estimate: technicians at Kunming flower farms earn a modest base with housing and meals included, plus a yield bonus before Valentine's Day and Mother's Day. Overall it's about the national average, a little below.",
+ "facts": [
+  { "label": "Horticultural Technician / Landscape Maintenance Worker (current level)", "value": "0-2 years, ¥4,000–6,500 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Horticulturist / Landscape Maintenance Supervisor (2-5 years)", "source": "Career map" },
+  { "label": "Pay after 10+ years", "value": "¥10,200 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Emergency rescue of a specimen red maple on a shopping street, its roots suffocating in standing water", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Diagnosing and reviving yellowing, root-rotted foliage plants in pots", "source": "AI exposure" },
+  { "label": "Open positions", "value": "4 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Before dawn you go into the greenhouse with a headlamp. The women from the village are already cutting, shears clicking, stems bundled and stacked into buckets. The greenhouse is damp and full of the cool scent of roses.",
+  "The post-harvest shed. You spot-check every bundle for head size and stem length and pull out a few with blackened petal edges, turning them under the lamp to look for thrips. On an export order, there can't be a single insect.",
+  "The flowers go into the cold room to pre-cool. At the control panel you go through the temperature and humidity curves for all twenty greenhouses. Number three went up to ninety-five percent humidity overnight; you circle it in your notebook: watch for gray mold.",
+  "To the breeding greenhouse. Hundreds of crossbred seedlings hang numbered tags. You go plant by plant, looking at flower form, noting color, measuring stems, and enter the scores on a tablet. In three years only a few may be kept.",
+  "Rice noodles in the farm canteen. At the table the owner says the Japanese client complained the last shipment's heads were two millimeters small. You keep your head down and eat, working out how many days early to start temperature control on the next batch.",
+  "The highland sun is fierce. You duck into the greenhouses to pinch side buds, string the support netting and check the drippers for blockages. It's forty degrees inside; when you come out you look like you've just showered.",
+  "The export batch goes onto the refrigerated truck for the night flight out of the airport. You sign the phytosanitary paperwork and stand by the greenhouses watching the taillights go. Over the Western Hills the sky has turned red.",
+  "In the dorm you check the auction prices at Dounan, the flower market down the road; red roses dropped again today. You post tomorrow's spraying plan in the workers' group chat and turn off the light."
+ ],
+ "ladder": [
+  { "title": "Horticultural Technician / Landscape Maintenance Worker", "stage": "Assistant / junior", "focus": "Carry out daily care (watering, pruning, spraying) skillfully and manage a small area (up to 5,000 square meters) on your own. Promotion to mid-level comes from a clean record and a habit of learning." },
+  { "title": "Horticulturist / Landscape Maintenance Supervisor", "stage": "Mid-level", "focus": "Run a mid-sized project (such as a commercial complex, a school or a section of a scenic area) on your own: write the care plan, lead a team of three to five and deal with the client. Promotion to senior comes from delivery quality plus certification (Grade 3 horticulturist)." },
+  { "title": "Senior Horticulturist / Maintenance Project Manager", "stage": "Senior", "focus": "Coordinate several projects (annual contracts of ¥2 million or more), lead technical plans, cost control and emergency response (such as rescue after a typhoon). Promotion to technical director, or a career change, comes from combined skills: design, data and policy." },
+  { "title": "Horticulture Technical Director / Heritage Tree Conservation Specialist", "stage": "Senior expert", "focus": "Set the company's technical standards, take on government research projects (such as propagating endangered native tree species) and teach industry training courses. Technical authority and the ability to bring resources together make you irreplaceable." }
+ ],
+ "ai_tasks": [
+  { "name": "Emergency rescue of a specimen red maple on a shopping street, its roots suffocating in standing water", "how": "AI can flag waterlogging risk from weather and soil data and list the usual steps. But stopping the crew leader, judging on the spot that the tree pit is compacted and the roots are starved of oxygen, and doing the minimally invasive drainage by hand all need a person there who answers for it." },
+  { "name": "Diagnosing and reviving yellowing, root-rotted foliage plants in pots", "how": "AI can make a first guess at the cause of yellowing from a photo and list the usual root-rot treatment. Knocking the plant out of the pot, looking at the roots, smelling them, deciding which roots to cut and what to repot into takes experience in a person's hands." },
+  { "name": "Reviewing the planting and irrigation repair plan for a green roof", "how": "AI can look up drought-tolerant plant lists, rough out the mix and check the irrigation zones for obvious gaps. Whether the roof's wind, sun, load and the actual valve controls make the plan workable has to be checked on site by a person who makes the call." },
+  { "name": "Accepting delivered trees and shrubs and assessing the planting soil", "how": "AI can prepare the acceptance checklist, verify the quarantine papers, compile quick soil test results and draft improvement suggestions. Checking whether the root balls are loose or the trunks damaged, and deciding whether to accept the stock, is for a person on the spot." },
+  { "name": "Writing and reviewing the maintenance log and leading the pre-dispatch briefing", "how": "AI can turn spoken notes into a maintenance log, sum up problems and generate reminders for the next day's checks. Running the morning meeting, explaining why you check roots and soil before deciding water and fertilizer, and getting the crew to actually do it takes a person leading." },
+  { "name": "Minimally invasive survey and emergency rescue of a waterlogged red maple on a shopping street", "how": "At most AI offers background knowledge on waterlogging and oxygen starvation. Stopping the heavy watering and feeding on the spot, venting the soil, organizing the rescue and answering for whether the tree lives is mainly down to people." },
+  { "name": "Diagnosing and saving a potted plant with yellow leaves and rotting roots", "how": "AI can make a first diagnosis from photos and the client's description and generate a staged recovery plan and care notes for the client. Taking it out of the pot to check the roots, trimming them and repotting, and judging whether it's worth saving are done by a person." },
+  { "name": "Accepting incoming trees and shrubs and assessing planting soil", "how": "AI can generate an inspection form against the standards, read soil test results and draft plans for imported topsoil and drainage. Going out to look at root balls and trunks, checking credentials and deciding whether to send stock back is a person's call." },
+  { "name": "Running the crew's morning walk-round briefing and the handover and assessment of maintenance records", "how": "AI can total the records automatically, flag unusual water and fertilizer draws, and produce review summaries and a draft roster for the next day. Correcting the crew's habits face to face, assessing handovers and holding people accountable takes a person." }
+ ],
+ "events": {
+  "e_valentine_hit": "You get the temperature control exactly right, and five days before Valentine's Day all twenty greenhouses of roses open to seventy percent together. The auction price is four times normal. The owner treats everyone to hotpot in the canteen and slips you an extra red envelope.",
+  "e_valentine_miss": "That January brings cold snap after cold snap, you start heating too late, and the flowers only open in volume three days after Valentine's Day. Prices have already fallen back. Truck after truck goes to the auction, and you're doing the sums past midnight.",
+  "e_hail": "A hailstorm shreds the plastic on five greenhouses, and flowers almost ready to cut are flattened. You and the workers patch the film through the night. The next day the sun comes out on a floor covered in petals.",
+  "e_thrips_reject": "An export shipment is found to have thrips at the destination port, and the whole lot is sent back. You spend an afternoon in the post-harvest shed opening bundle after bundle, and in the end rewrite the pest control and quarantine procedure from scratch.",
+  "e_master_auntie": "A Yi woman who has cut flowers for more than ten years shows you how to read a bud: squeeze it, and if it's soft with a firm center, it's ready to cut tomorrow. You squeeze buds all morning, until at last one feels the way she said.",
+  "e_botrytis": "The rainy season comes early and gray mold takes hold in greenhouse three overnight. You run ventilation and dehumidifiers flat out and have the crew cut away the infected blooms stem by stem. That greenhouse's yield drops by thirty percent.",
+  "e_ai_scout": "The farm puts cameras and a recognition system in every greenhouse, and it flags spider mites and mold spots on the leaves two days before a person would. Your job changes from hunting pests greenhouse by greenhouse to checking whether the spots it reports are real.",
+  "e_grader": "The post-harvest shed gets an automatic grading line that sorts stems by length and head size in one pass. Half the women who graded are gone. The few who remain are there to pick out the disease spots and bruises the machine can't see.",
+  "e_breed_pick": "One crossbred rose you've watched for three years has a faint ring of pink around the edge of its petals. The owner says it's time to apply for plant variety protection, and on the application form, in the box for breeder, goes your name.",
+  "e_royalty": "People from a foreign breeding company come to check variety rights, and the farm can't account for where the plants in several greenhouses came from. It's told to pay back royalties. The owner's face is thunder, and you spend the night digging out the receipts for every batch of plants.",
+  "e_price_crash": "Every grower in the province has planted more roses, and that spring the auction price falls to a few jiao, a few cents, a stem. Some growers dump their flowers by the roadside. The farm cuts two greenhouses and switches them to hydrangeas.",
+  "e_mothers_day": "Carnations sell like mad before Mother's Day, and for a week you're in the greenhouses before five. The day the last truck leaves you video-call your mother, with a whole wall of pink behind you.",
+  "e_love": "Someone who runs an online floral shop at Dounan often comes to the farm to pick flowers and always asks which variety photographs best. One day you give them a bunch of a new trial variety, and the next day you get a message: the flowers are still open.",
+  "e_house": "You buy a small two-bedroom near the Chenggong university town, cheaper than a few years ago. The down payment comes from your parents selling a plot of land back home. You plant a row of roses on the balcony.",
+  "e_back": "Years of bending over roots and leaves in the greenhouses wear out your lower back first. On rainy mornings you lie in bed a while before you can slowly sit up.",
+  "e_drone": "The farm buys a crop-spraying drone, and you get the operator's license. The hydrangea fields outside used to take four people with backpack sprayers a full day; now you do them alone in an hour.",
+  "e_heat_drought": "Two springs of drought in a row, the reservoir runs dry, and the farm's irrigation water is rationed. You reschedule the drip for every greenhouse, and now you know by heart which variety can go a few days with less.",
+  "e_trainee": "A trainee from the agricultural school follows you into the greenhouses. You have her squeeze the buds and tell her soft with a firm center means ready tomorrow. She squeezes all morning, and when one finally feels the way you said, she cries out in delight.",
+  "e_father_farm": "Your father grows flue-cured tobacco back home in Qujing. That year he takes a fall and the fields go untended. You take a week off to go back and bring in the leaf, and before you leave you teach him to grow a few pots of flowers in the yard.",
+  "e_ai_order": "The order system can predict next month's prices from weather and market data and suggests a harvest rhythm for each greenhouse. You follow it for a month, overriding it on two greenhouses on your own judgment. Those two sell best.",
+  "e_jobs": "You take a look on a job app. There aren't many horticultural technician jobs, mostly at nurseries and landscaping firms in other provinces, board and lodging included, pay about the same as here. You close the page and go into the greenhouse."
+ },
+ "choices": {
+  "c_cert": {
+   "title": "Sit the Grade 3 horticulturist exam and push for Horticulturist / Landscape Maintenance Supervisor",
+   "situation": "The farm is promoting a production supervisor to run ten greenhouses and a crew, and the owner says the rules require a Grade 3 horticulturist certificate. The theory and practical exams are run by the province, and you can only study at night, yet you're in the greenhouses before five every morning.",
+   "options": [
+    { "label": "Sign up and study at night", "result": "You go through the floriculture textbook again. The practical is grafting and disease diagnosis, and in the exam room you identify powdery mildew on a leaf. The examiner nods." },
+    { "label": "Skip it and let the greenhouses speak", "result": "You spend those months on bloom timing, and your Valentine's batch opens the most evenly of all. The supervisor post goes to a colleague with the certificate. The owner says, next time." }
+   ]
+  },
+  "c_breed": {
+   "title": "Breeding, or production",
+   "situation": "The farm wants to set up a small breeding group, with one person doing nothing but crosses and selection. It might take ten years to produce one variety that sells, and there's no bonus in sight. In production, a greenhouse run well pays out right after Valentine's Day.",
+   "options": [
+    { "label": "Join the breeding group", "result": "Every day you walk among hundreds of numbered tags, photographing petals and measuring blooms. The day the production staff get their bonuses, you are in the greenhouse bagging a newly opened seedling." },
+    { "label": "Stay in production", "result": "You run more and more greenhouses, scheduling labor, controlling temperature, forecasting yield, a little more fluent each year. When the breeding group produces a new flower you go over to look and note its name." }
+   ]
+  },
+  "c_shanghai": {
+   "title": "Go to Shanghai to do landscape maintenance",
+   "situation": "A university classmate is a project manager at a Shanghai landscaping company and says the greenery contracts for commercial complexes are short of people who understand plants. The pay is forty percent higher than in Kunming, with work all year round. But there you'd be looking after trees someone else planted, not growing flowers.",
+   "options": [
+    { "label": "Go to Shanghai", "result": "You swap greenhouses for rooftop gardens on office towers and the atriums of malls. In your first summer, in the plum-rain season, you're on a rooftop rescuing a row of waterlogged red maples while the property manager stands watching." },
+    { "label": "Stay in Kunming", "result": "You don't go. Kunming has sun even in winter, and you pinch side buds in the greenhouse listening to the women chat in Yi." }
+   ]
+  },
+  "c_env": {
+   "title": "Learn the smart greenhouse climate system or not",
+   "situation": "The owner is about to invest in a multi-span glass greenhouse where temperature, humidity, light, water and fertilizer are all automatic, and the software learns to tune its own settings. He needs someone to train for a month with the equipment supplier in the Netherlands and then run the system.",
+   "options": [
+    { "label": "Go, and take on the system", "result": "It's your first trip abroad, and in their greenhouses you watch robot arms picking tomatoes. Back home you watch over the system, and when it gets something wrong, you smell it in the air before it notices." },
+    { "label": "Don't go; stay with the plastic greenhouses", "result": "You recommend a younger colleague. The flowers from the glass greenhouse are straight and uniform; the ones from your plastic greenhouses have slightly better color, and clients can't say why." }
+   ]
+  },
+  "c_own_farm": {
+   "title": "Lease greenhouses and grow on your own",
+   "situation": "A grower next to the farm is quitting and wants to sublet his ten greenhouses with the land, for over ¥100,000 a year. You know how to grow and how to sell. Grow for yourself and the profit is all yours; lose, and so is the loss.",
+   "options": [
+    { "label": "Lease them and go it alone", "result": "In your first year you catch a good market and earn back the rent and the cost of the plants. The second year rose prices fall, and overnight you switch two greenhouses to hydrangeas." },
+    { "label": "Keep drawing a salary", "result": "You pass. The man who takes it loses money for two years and sublets it again. You're still in the greenhouses before five every day and paid on time at the end of the month." }
+   ]
+  },
+  "c_manager": {
+   "title": "Apply for Senior Horticulturist / Maintenance Project Manager",
+   "situation": "The farm has grown to three areas and needs a Senior Horticulturist / Maintenance Project Manager to oversee technical plans, costs and emergencies across them. Applicants must write a full-year production and disaster plan and present it to the owner and the shareholders.",
+   "options": [
+    { "label": "Apply and write the annual plan", "result": "You put three years of yield, disease and price data into one table. When you reach the section on hail, a shareholder asks whether you can buy insurance, and you have the answer." },
+    { "label": "Don't apply; look after your own greenhouses", "result": "You say you'd still rather be in the greenhouses. The new manager is hired from outside and keeps coming to ask you things, and you always tell him." }
+   ]
+  },
+  "c_agri_ai": {
+   "title": "Go and sell smart farming systems",
+   "situation": "The company that sells the climate control system wants you as a technical consultant, traveling to flower farms in Yunnan and Guizhou to install systems, tune settings and train people. Good pay, lots of travel. You'd stop growing flowers and start teaching others to grow them with machines.",
+   "options": [
+    { "label": "Become a systems consultant", "result": "You take your laptop and sensors to your first client's farm.", "end": "Greenhouse after greenhouse you install sensors and tune the curves. When a client asks if the system can grow the flowers for him, you say it can see the leaves, but it can't see you." },
+    { "label": "Stay at the farm", "result": "You say you want to keep watch over these greenhouses. After that, every time the company upgrades its system, it tests it in yours first." }
+   ]
+  },
+  "c_institute": {
+   "title": "Do a part-time master's and move into extension work at the academy",
+   "situation": "The flower institute of the provincial academy of agricultural sciences is hiring for agricultural extension, and it requires a master's. You could do one part-time: three years of weekend classes, after which you'd have a chance at a post demonstrating varieties and teaching growers. The pay isn't high, but it's steady.",
+   "options": [
+    { "label": "Do the part-time master's", "result": "On weekends you sit in a classroom among young people. Your thesis is on rooting rates for cuttings of your pink-edged rose.", "end": "At the edges of fields across the prefectures you teach growers, holding up a flower: squeeze it, soft with a firm center means it's ready tomorrow. Some in the audience laugh, and some take out their phones and film." },
+    { "label": "Don't", "result": "You add up three years of weekends and the fees, and don't apply. That year your greenhouses top the farm for yield." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you still go into the greenhouse before five. You don't take the shears; you just walk from one end to the other, touching the buds in every row. When you come out it's light and the refrigerated truck is loading at the gate. You take off your headlamp and hang it on the nail behind the dorm door.",
+  "burnout": "After that rainy season your back wouldn't bend any more. The owner moved you to the post-harvest shed to look after the cold room and the paperwork, no more greenhouses. Every day at the cold room door you watch the bundles come in, and now and then you pick up a stem and turn a leaf over to look underneath."
+ },
+ "past": [
+  "You grew up in the countryside of Qujing, where your family grew tobacco and corn. The year of your high school entrance exam your father said study your way out, don't farm. You got into the county's top high school.",
+  "Your gaokao (college entrance exam) score wasn't high, and you were reassigned into the horticulture major at an agricultural university in Kunming. On the phone your mother asked whether horticulture was still farming.",
+  "In a plant tissue culture class in second year you cut a tiny piece of shoot tip at the sterile bench for the first time, and a few weeks later a small plant was growing in the flask. You kept that flask in your dorm for a semester.",
+  "The summer after third year you interned at the Dounan flower market. At night the auction hall blazed with light, prices ticking down screen after screen. For the first time you understood how far a flower travels from the greenhouse to someone's hands.",
+  "After graduating you wanted to do a master's in plant breeding. You studied for a year and missed by a few points. You went back to Qujing, did temporary landscape maintenance work for a landscaping company, and studied at night.",
+  "You failed the graduate entrance exam a second time. You packed the books into a box and applied to this farm in Chenggong. At the interview the owner had you identify twenty varieties. You got eighteen.",
+  "You joined the farm and started out cutting, packing and recording yields alongside the women. Your first Valentine's season, you didn't go back to the dorm for a week, and slept a few times on cardboard boxes by the cold room."
+ ],
+ "stages": [
+  "You have twenty rose greenhouses: scheduling the workers to cut, disbud and spray, testing the drippers with an EC pen and a pH pen, turning leaves over to look for pests, and in the afternoons entering seedling data on a tablet in the breeding greenhouse. The women who cut know buds better than you, the owner knows the market better than you; you're in between, and your job is to get the numbers right and pass the word on.",
+  "You're production supervisor now, with ten greenhouses and a crew of a dozen-plus. Every day you set the cutting and spraying plans, adjust the fertigation recipe and time the blooms, agree each week's shipments with post-harvest and sales, and when hail or a cold snap comes you're the first one into the greenhouses. You used to work from the schedule; now you write it.",
+  "You oversee technical plans, costs and emergencies across three areas: what to grow where, when to change varieties, how to insure against hail, how to set the glass greenhouse's climate parameters. You take turns meeting the owner, shareholders, the breeding group and equipment suppliers. You're in the greenhouses less, but in the end every greenhouse's problems come to you.",
+  "You set the farm's technical standards, its variety strategy and breeding direction, take on provincial projects, and teach at grower cooperatives and agricultural schools. Your days move between trial greenhouses, meeting rooms and field edges, and what you sign are project proposals and standards. Now and then someone comes hundreds of kilometers clutching a diseased flower to find you."
+ ],
+ "work": [
+  "Liu, one of the women in greenhouse seven, says a few plants have curled leaves. You turn one over under a magnifier and find a fine web underneath: spider mites. The next morning you release predatory mites.",
+  "A batch of new-variety plants arrives from out of province. You check every label against the quarantine certificate, pick out thirty-odd with blackened roots, and call the supplier to take them back.",
+  "You mix a batch of nutrient solution to 1.8, and the next day your EC pen reads only 1.6 at the drippers. Following the line, you find a stretch of feeder tube clogged with algae.",
+  "Forty-five days before Valentine's Day you count the buds in every greenhouse, project the opening dates from accumulated temperature, and pin a heating and shading schedule to each greenhouse door.",
+  "Yang, a new worker, is spraying without a respirator. You call her out, show her how to put on the respirator and gloves yourself, and go over the spraying rules again at the next morning meeting.",
+  "Zhou from sales says the Japanese order needs another thousand bunches next week. You work through three greenhouses in your yield book and say you can give seven hundred; the rest you won't promise.",
+  "You lay three years of auction price curves next to the yield tables and persuade the owner to switch two areas from red roses to hydrangeas and lisianthus.",
+  "The climate software suggests dropping night temperature by two degrees to save power, and the supplier's engineer agrees. You look at which variety it is, change it to one degree, and write a paragraph explaining why.",
+  "After the hail you take the insurance adjuster area by area to assess the damage, photographing, measuring and estimating yield, and file the complete claim the next day.",
+  "A provincial project on propagating native flowers comes to you. You take two technicians into the mountains, log elevations on a GPS, photograph wild species and bring a few back to root as cuttings.",
+  "You write the farm a post-harvest standard, from cutting to pre-cooling to packing, how many degrees and minutes at each step, and have the post-harvest team leader sign off on every line.",
+  "The head of a cooperative in one of the prefectures asks you to teach. You talk in a greenhouse for two hours, and afterward people crowd around with photos of sick leaves on their phones, and you answer them one by one."
+ ],
+ "late": {
+  "pension_note": "Estimate: flower companies pay into the basic pension for enterprise employees, mostly on a low base, with no enterprise annuity. Your pension comes to about forty percent of your final income.",
+  "scenes": [
+   "The first Valentine's Day after you retire, you still wake before five. You don't turn on the light. You lie there thinking how far open this year's flowers should be, and then fall asleep again.",
+   "The management of your housing estate asks you to look at a few yellowing osmanthus trees out front. You crouch, push back the soil and look at the roots, and say they've been overwatered; stop watering.",
+   "You go back to Qujing for a while and put up a small greenhouse in the yard with a few dozen roses. The neighbors' children come by after school every day to see if they've opened.",
+   "Wandering the Dounan flower market you see a pink-edged rose whose variety name on the label you recognize. The seller says a local farm bred it many years ago. You buy a bunch.",
+   "Doing paperwork at the cold room is quiet. Every day you check quarantine certificates and loading sheets, and now and then a young technician brings you a diseased leaf, and you tell them what it is at a glance.",
+   "After two years of physiotherapy your back is a little better, and on weekends you can walk by Dianchi Lake. When you see a flowerbed by the water you stop to look at who planted it and how well.",
+   "When you reach retirement age, the owner gives you a pot of a new variety bred on the farm. You put it on the balcony, and it flowers the first year.",
+   "In your first year away from the farm you drive past Chenggong and see in the distance a field of bright white greenhouses. You stop by the road a while, and don't get out.",
+   "Back at the farm on an errand, you find that the trainee from years ago runs a block of greenhouses now. She takes you in, squeezes a bud and says: soft with a firm center, ready tomorrow.",
+   "In your new work you rarely touch flowers, but the row of roses on your balcony grows longer every year, and the neighbors say yours is the best balcony in the building.",
+   "Chenggong grows more and more flowers. Some go to Japan, some to the Middle East, some are sold on livestreams. You scroll past a streamer holding up a rose and know at a glance which variety it is.",
+   "A grandchild asks what you did your whole life. You say grew flowers. How many, she asks. You think about it and say: enough for everyone in China to give one each, one Valentine's Day."
+  ],
+  "closing": {
+   "retire": "Many years later, one early morning, you sit on the balcony watching the dew on your row of roses. The sun comes up over the eastern hills and lights that faint ring of pink at the petals' edge. You reach out and squeeze a bud: soft, with a firm center. It will be ready tomorrow.",
+   "burnout": "Many years later, you are sitting on a bench by Dianchi Lake beside a little girl holding a bunch of roses. You look at the leaves, turn one over, look underneath: perfectly clean. You smile, and don't tell her what you were looking for.",
+   "end": "Many years later, in an old box, you find the tissue culture flask. The little plant inside has long since dried to a fine thread. You hold it up to the window a while, then carefully put it back in the box."
+  }
+ }
+}

@@ -1,0 +1,199 @@
+{
+ "id": "dba-bank",
+ "occupation": "Database Administrator",
+ "role": "Database Administrator at a Bank Data Center",
+ "headline": "Five years a DBA after switching over from contract operations work: a database administrator at a bank data center in Shanghai, guarding the change window in the small hours of Saturday, on call in the server hall over Spring Festival, just as the core systems are being moved off Oracle onto a Chinese-made distributed database",
+ "unit": "The Pudong data center of a joint-stock bank in Shanghai",
+ "unit_type": "Bank data center",
+ "city": "Shanghai",
+ "city_tier": "First-tier city",
+ "education": "Bachelor's degree (Software Engineering)",
+ "level": "You've handled Oracle primary-standby switchovers, slow SQL and end-of-day batch runs, and done over a hundred production changes without an incident. You've only just started on the domestic distributed database; reading its execution plans, you still reach for the documentation.",
+ "intro": "You spent two years as an outsourced contractor doing operations on site at a bank, switched to DBA work, and have now been three years at this bank's data center. The server halls run hundreds of databases, and the one that matters most is a twenty-year-old core accounting database, which is being moved, piece by piece, onto a Chinese-made distributed database. As of today, your name is on the Saturday-morning change window and the New Year's Eve duty roster.",
+ "salary_note": "Estimate: a bank data center in Shanghai employs you as regular bank staff, with base pay plus a year-end bonus, and allowances for night changes and holiday duty on top. Take-home pay is twenty to thirty percent above the national DBA average. In years when the bank does badly, the year-end bonus is cut.",
+ "facts": [
+  { "label": "Database Administrator (current level)", "value": "2-4 years, ¥13,000–22,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Senior Database Administrator (4-7 years)", "source": "Career map" },
+  { "label": "Pay after 10+ years", "value": "¥22,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Running the annual live failover drill to the remote disaster recovery site", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Running the full health check at 06:00 every day", "source": "AI exposure" },
+  { "label": "Open positions", "value": "30 related listings nationwide, 6 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Out of the metro at Zhangjiang, you ride a shared bike to the data center. At the door you swipe your badge, scan your fingerprint and lock your phone in a locker. Phones aren't allowed in the production area.",
+  "You read the six a.m. health check report. The system has already sorted the metrics and flagged three in red: one database's archive logs are growing fast, one tablespace is at eighty-five percent, one standby is lagging forty seconds.",
+  "Someone from a development team asks you to review a SQL statement going live: a dozen tables joined, no index used. You put the execution plan on the screen, point to the line with the full table scan and send him back to fix it.",
+  "In the afternoon you write the plan for Saturday's change: every command, estimated time, checkpoint and rollback condition, written up as an operation ticket. Your reviewer, a veteran DBA from the next team, draws a question mark beside step seventeen.",
+  "The weekly meeting on the domestic-database migration. Vendor engineers, application developers and testers fill the room, arguing over a stored procedure that runs three times slower since it moved, and whose fault that is.",
+  "Overtime on migration data comparison. You sample ten million rows from each side and compute checksums. The progress bar crawls across the screen. You order takeout and eat while you watch.",
+  "Saturday night. The change window opens at midnight. You sit side by side with your reviewer: you read a step, he checks it, you press Enter and wait for the line on the screen to come back.",
+  "The last step verifies. The business side replies: transactions normal. You sign the operation ticket and walk out of the server hall. It isn't light yet, and the streetlights across the campus go out one row at a time."
+ ],
+ "ladder": [
+  { "title": "Junior Database Administrator", "stage": "Junior", "focus": "Approve and execute tickets, build test environments, run routine checks, back up databases and tables, and troubleshoot basic faults. You move up with zero operator errors, fluency in finding common slow queries, and scripts that automate the routine work." },
+  { "title": "Database Administrator", "stage": "Mid-level", "focus": "Guard production stability: high-availability failover between primary and replicas, fixing difficult slow SQL, releasing application version changes and building out monitoring. You move up on SLA performance, quickly pinpointing complex faults, and leading smooth database version upgrades." },
+  { "title": "Senior Database Administrator", "stage": "Senior", "focus": "Lead capacity planning, sharding and distributed architecture choices, complex deadlock investigations, cloud database migrations and data security compliance. You move up by delivering architectures that handle a million queries per second, driving major disaster recovery drills, and guiding other teams technically." },
+  { "title": "Principal Database Engineer", "stage": "Senior expert", "focus": "Own the enterprise's data infrastructure standards across their whole life cycle, solve OS, hardware and engine-kernel-level bugs, build an AIOps self-operating system and cut cloud costs substantially. You break through on the payoff of forward-looking technology choices and the resilience of the core data platform." },
+  { "title": "Head of Database Architecture", "stage": "Architecture and management", "focus": "Steer the strategy for the enterprise data platform, drive replacement with domestic databases, balance availability, compliance and IT cost, build the technical team, and work with engineering leadership on cross-system architecture." }
+ ],
+ "ai_tasks": [
+  { "name": "Running the full health check at 06:00 every day", "how": "Check scripts, metric collection, anomaly sorting and the daily report can essentially be done by AI and automation tools on their own. A person only needs to audit the thresholds now and then and make the final call on red-flagged items." },
+  { "name": "Upgrading a production Oracle 19c RAC cluster to 21c", "how": "AI can help map version differences, generate the upgrade plan and checklist, rewrite compatibility scripts and analyze pre-upgrade risks. A person has to set the window, run the rehearsal, decide the rollback conditions, and stand watch and take responsibility when the core accounting system goes live." },
+  { "name": "Handling a production MySQL primary pinned at 100% CPU", "how": "AI can quickly read slow queries, lock waits and execution plans and suggest likely root causes and remedies (killing sessions, adding an index, throttling). A person has to judge, while transactions are still failing, which action carries the least risk, and answer for the production operation." },
+  { "name": "Setting up multi-tenant PostgreSQL logical replication for a new microservice", "how": "AI can generate the publication and subscription configuration scripts, permission templates and validation SQL, and check that the setup is consistent across six provincial warehouses. A person has to confirm tenant isolation, data scope and the impact on the existing cluster's performance, and take responsibility for going live." },
+  { "name": "Running the annual live failover drill to the remote disaster recovery site", "how": "AI can help draft the drill plan, organize the step list and write the post-drill review. But a real business takeover means coordinating many teams outside working hours, making decisions on site, handling the unexpected and answering to regulators. That rests mainly on people." },
+  { "name": "Migrating Oracle to TiDB 7.x for a domestic-replacement project", "how": "AI can convert SQL and objects from Oracle to TiDB, compare differences and write data validation scripts. A person has to design the migration and cutover, assess business compatibility and performance for the social insurance core database, coordinate everyone on the government cloud, and answer for the cutover and the accuracy of the data." }
+ ],
+ "events": {
+  "e_batch": "On quarter-end interest day, the end-of-day batch is still running at six a.m., and the branches open at half past eight. You and the application team watch it together, find an update stuck on a lock, kill the session, and the batch finishes at 7:40.",
+  "e_cpu": "One Tuesday morning the primary database's CPU maxes out and mobile banking transfers start timing out. The AI assistant offers three likely root causes. You pick the action with the least risk, and five minutes later the curve comes down.",
+  "e_spring": "This Spring Festival you're on duty for New Year's Eve. The network freeze means no changes, and the server hall is quiet. You eat a box of canteen dumplings in front of the monitoring wall, and at midnight you video call your family.",
+  "e_rollback": "Halfway through a change the validation doesn't match, and you call a stop under the rollback conditions. The rollback takes two hours. At the next morning's meeting the general manager doesn't criticize you. He only says to make the plan more detailed next time.",
+  "e_migration_ok": "The first batch of systems moves onto the domestic database, and you keep watch through the cutover night. When the first real transaction lands, someone in the project group chat posts a firecracker emoji. You screenshot it and save it.",
+  "e_migration_bad": "One migrated system's month-end reports run twenty times slower than before, and the business department's complaints go all the way up to bank leadership. You and the vendor's engineers spend three all-nighters in the server hall before finding a missing statistics collection.",
+  "e_dr": "The annual disaster recovery drill: the whole primary center fails over to the same-city site and back, with regulators watching on site. Not one of your dozen-odd databases drops. In the drill report your section is a single line: normal.",
+  "e_ai_sql": "The operations assistant goes live, and developers' SQL is reviewed by the machine first. It catches all the common mistakes. You review half as many tickets as before, and the ones left are all the kind it won't commit to a verdict on.",
+  "e_ai_wrong": "For one alert, the AI assistant recommends rebuilding an index. You look again: the table is under a bulk write, and a rebuild would lock it for half an hour. You reject the suggestion and record the reason in the system.",
+  "e_hukou": "You've paid into Shanghai's social insurance for the required years, and your application to convert your residence permit to a Shanghai household registration goes in. The day it's approved, you buy a soda at the convenience store downstairs and drink it standing by the door.",
+  "e_love": "At a friend's dinner you meet someone who works in audit in Lujiazui. Halfway through your first date your phone goes off: an alert. You apologize. No problem, they say, we're the same in annual report season.",
+  "e_wedding": "You hold the wedding banquet back home in Hubei. The night before, you remote in from the hotel to watch over a change. During the toasts your phone is on vibrate, tucked in your suit's inside pocket.",
+  "e_house": "The two of you buy a small two-bedroom outside the Outer Ring Road in Pudong. The down payment empties both families' savings, and the mortgage takes half your salary. You do the math: every yuan of every future year-end bonus already has somewhere to go.",
+  "e_baby": "The week your child is born, you're scheduled for an important cutover. Your manager takes you off it, but in the hospital corridor you still can't help opening your phone to check how the change is going.",
+  "e_sleep": "Months of all-night weekend changes, and you start nodding off on Monday afternoons and lying awake at night. Your checkup reports an irregular heartbeat. The doctor asks if you often stay up late. Work, you say.",
+  "e_35": "You turn thirty-five, and hear that two classmates at internet companies have been let go, both DBAs. You open a job app, look around, close it again, and go back to writing next week's migration plan.",
+  "e_audit": "Regulators come for an IT inspection and want every privileged operation on production databases for the past six months. You export more than thirty thousand entries from the bastion host and match each one to an operation ticket. Not one is out of place.",
+  "e_mentor": "The veteran DBA who reviews your tickets draws a question mark beside step seventeen. You ask why. This step doesn't say what to do if it fails, he says. From now on, every step should. Every plan you write afterward follows that rule.",
+  "e_core_done": "The core accounting system moves wholly onto the domestic database, five years from start to finish. In the small hours of cutover day, you watch the twenty-year-old database set to read-only, and type a note on the last line of the operation log: thank you.",
+  "e_parents": "Your mother is in the hospital back home. You catch a high-speed train home that same night and, outside the ward, connect to the VPN on your laptop to deal with an alert. A nurse comes over to say no phone calls here. I'm typing, you whisper.",
+  "e_junior": "A new graduate hire does his first production change on his own, with you beside him as reviewer. Before he presses Enter he looks back at you. You nod, and your hand never leaves the desk.",
+  "e_eyes": "Years of staring at white text on black terminals, and your eyes go first. Driving at night, the streetlights have halos. You bump the terminal font up two sizes, and the young ones walking past say it looks like senior mode."
+ },
+ "choices": {
+  "c_xinchuang": {
+   "title": "Join the domestic-database migration team, or guard Oracle production",
+   "situation": "The bank is pulling people into a dedicated team for the move to domestic technology: days spent with vendors and developers, SQL conversion, data comparison, cutover rehearsals, and hardly any weekends. Meanwhile someone still has to guard the Oracle production databases, the thing you know best and the thing there will be less and less of.",
+   "options": [
+    { "label": "Join the migration team", "result": "You start reading the distributed database's source documentation with the vendor's engineers, and for the first time understand how a two-phase commit gets stuck. That year your weekends add up to fewer than ten." },
+    { "label": "Guard production", "result": "You become one of the people at the bank who knows the old core database best, the first one called when something breaks. Only the new terms at the weekly meetings get harder and harder to follow." }
+   ]
+  },
+  "c_cert": {
+   "title": "Oracle's advanced certification, or a domestic database's",
+   "situation": "You want to move up to Senior Database Administrator, and the bank looks at technical certifications. You've spent a year preparing for Oracle's advanced certification, which is recognized anywhere. The domestic database's certification is brand new and the bank badly needs it, but another employer might not recognize it. You front the exam fees yourself.",
+   "options": [
+    { "label": "Take Oracle's", "result": "You pass. The certificate hangs on your cubicle partition, and a young colleague asks whether it'll still be any use. For now it is, you say." },
+    { "label": "Take the domestic one", "result": "You're among the bank's first to hold the domestic database certification. When the vendor holds a meeting, they ask for you by name to talk about the bank's migration." }
+   ]
+  },
+  "c_senior": {
+   "title": "Go up for Senior Database Administrator",
+   "situation": "This year the data center is promoting to Senior Database Administrator. You need to show capacity planning, architecture selection or a major disaster recovery drill you led, and defend it in front of a panel. Your migration project is at its hardest point, and preparing the materials will mean giving up sleep.",
+   "options": [
+    { "label": "Go up for it", "result": "You put the sharding plan, load test data and one incident review into thirty pages. At the defense a reviewer asks about rollback. You smile. We wrote seventeen steps for that, you say." },
+    { "label": "Not this year", "result": "You say you'll wait until the migration is done. That year your project goes live on schedule, and the promotion goes to someone from the next team, who buys you dinner." }
+   ]
+  },
+  "c_bigtech": {
+   "title": "Jump to an internet company",
+   "situation": "An internet company wants you to run its distributed databases: forty percent more pay, stock on top, a newer tech stack, in Hangzhou. But who knows what happens there after thirty-five. The bank is stable, and your household registration and your home are in Shanghai.",
+   "options": [
+    { "label": "Make the jump", "result": "On a campus in Hangzhou you look after thousands of instances, with more changes in a day than the bank sees in a month. You learn fast, and start counting how many years you have until thirty-five." },
+    { "label": "Stay at the bank", "result": "You turn it down. That winter the company lays people off. You say nothing much, and go back to revising Saturday's operation ticket." }
+   ]
+  },
+  "c_ai_boundary": {
+   "title": "Set the permission boundaries for the AI operations assistant",
+   "situation": "The bank wants the AI assistant to carry out some low-risk operations on its own. Someone has to design what it may and may not do and who is responsible when something goes wrong, then audit its operation logs every week. It doesn't count toward your main performance goals. If it goes wrong, it counts against you.",
+   "options": [
+    { "label": "Take it on", "result": "You write a twenty-page permission list. Rule one: on any production database, the machine may only suggest deletes and truncates, never execute them. When regulators inspect, it's the document they spend longest on." },
+    { "label": "Pass, focus on the databases", "result": "You push the job onto the operations platform team. Later a few of the assistant's rules look wrong to you. You raise it, and they tell you it's already been through review." }
+   ]
+  },
+  "c_kernel": {
+   "title": "Go write kernel code at a domestic database vendor",
+   "situation": "The domestic database vendor you work with has noticed all the pitfalls you found during migration and invites you to do kernel development, starting with fixing production bugs, working on the database itself. About the same pay, but you'd have to pick C++ back up after years away from it.",
+   "options": [
+    { "label": "Go write the kernel", "result": "You hand in your resignation. The last time you scan your fingerprint to leave the data center, the guard says goodbye.", "end": "At the vendor's office you read the optimizer code line by line, and with your own hands fix, in the source, the slow query that once cost you three all-nighters. The day you commit it, you message your old colleagues at the bank: that pit's filled in." },
+    { "label": "Stay at the bank", "result": "You say you want to see the core database through the migration. The door stays open, says the vendor, and they'll still come to you with problems." }
+   ]
+  },
+  "c_expert": {
+   "title": "Go up for Principal Database Engineer",
+   "situation": "The data center is creating a Principal Database Engineer post to set the bank-wide data infrastructure standards, solve the deepest problems and build a self-operating platform. Get it, and your name goes at the end of every major incident report, and you start managing budgets and vendors.",
+   "options": [
+    { "label": "Go up for it", "result": "You present a bank-wide database standard and an analysis of a kernel-level failure, the one you spent a night capturing live. After the review the director says one thing: with this foundation, we can rest easy." },
+    { "label": "Stay on the front line", "result": "You say you still prefer typing the commands yourself. The post goes to someone else, and for the hardest few incidents, he still calls you over to take a look." }
+   ]
+  },
+  "c_cloud": {
+   "title": "Join a cloud provider as a database consultant",
+   "situation": "A public cloud provider's financial services division wants you as a cloud database technical consultant, presenting migration and tuning plans to banks and brokerages: thirty percent more pay and travel all over the country. Everything you'd be teaching, you learned in this server hall, one night at a time.",
+   "options": [
+    { "label": "Join the cloud provider", "result": "You hand over every operation ticket and incident review to your apprentice. The last line of the last handover sheet reads: every step should say what to do if it fails.", "end": "In bank meeting rooms around the country you present migration plans, and when you reach the rollback slide you always stop to tell them about the question mark drawn beside step seventeen. Someone in the audience is always writing it down." },
+    { "label": "Stay at the data center", "result": "You turn it down. That New Year's Eve you're on duty again. The server hall is just as quiet; the dumplings are three-delicacy filling this time." }
+   ]
+  },
+  "c_night": {
+   "title": "Step away from night changes and on-call duty",
+   "situation": "You're past fifty, and one all-nighter takes three days to recover from. The center offers to take you off night changes and holiday duty to focus on reviewing plans, training new staff and handling regulatory inspections, without the duty allowance. The row of operation tickets at night would be signed by the young ones.",
+   "options": [
+    { "label": "Step off nights", "result": "You start reviewing the young ones' change plans during the day, one after another, drawing a question mark beside any step you don't trust." },
+    { "label": "Keep the nights a few more years", "result": "A few more years, you say. Saturday midnight you're still side by side with your reviewer, only now your reviewer is someone you brought in yourself." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you don't go into the production area. In a meeting room you review your last change plan and draw a question mark beside step nine. You hand in your badge, and your fingerprint is deleted from the access system. It's evening when you walk out of the campus. Behind the glass the server lights blink, and the data running in there will accrue its interest as usual tomorrow morning.",
+  "burnout": "After that year's physical, the doctor says no more all-nighters. The center moves you to operations management and document review, nine to five, no more night shifts. Sometimes you wake in the small hours of Saturday and reach for your phone without thinking. There's nothing on the screen. You lie back down, and it's a long time before you sleep."
+ },
+ "past": [
+  "You grew up in a prefecture-level city in Hubei and started haunting internet cafés in middle school, not to game but to install operating systems and take computers apart. You tested into the city's No. 1 High School. Study computers, your father said, and you'll never go hungry.",
+  "You got into a university in Wuhan for software engineering on the gaokao (college entrance exam). Over four years you built websites and did course projects, and came second in your class in database principles, not yet knowing it would stay with you for life.",
+  "At graduation you didn't get through the big tech companies' campus hiring, and joined an outsourcing firm that sent you to work on site at a bank's data center in Shanghai, doing Linux operations and monitoring on rotating shifts.",
+  "On night shifts most of the alerts came from the databases. You started learning from the bank's DBAs, set up replication and practiced backup and recovery on your own virtual machines, and passed a MySQL certification.",
+  "The on-site team lead recommended you for a move into database operations, starting with ticket execution and routine checks. The first time you typed a command on a production database, you said the statement over in your head three times.",
+  "This bank's data center advertised a DBA opening. You applied, and the interviewer was the man who had once trained you. You went from contractor to bank staff, and your badge changed color."
+ ],
+ "late": {
+  "pension_note": "Estimate: the bank pays out through basic enterprise pension insurance plus an enterprise annuity. Shanghai's contribution base is high and your years are unbroken, so the pension comes to roughly half of your final monthly salary. The year-end bonus isn't counted in the base.",
+  "scenes": [
+   "Your first Saturday in retirement, you wake at exactly midnight and lie listening to the wind, thinking that right now someone in the server hall is reading out step one. You turn over and go back to sleep.",
+   "The center invites you back to give new staff a lesson on writing change plans. You say the same thing as always: every step should say what to do if it fails. Afterward a young engineer asks, what about plans written by AI? Same thing, you say.",
+   "For the first time, you and your partner take a long trip over Spring Festival, to Hainan. On New Year's Eve you set off fireworks on the beach without looking at your phone, and only afterward find it clenched in your hand.",
+   "The bank's mobile app has a new version again. You transfer money with it and it arrives in seconds. You know how many databases sit behind those seconds, and how many people signed off on them in the small hours.",
+   "You work days now, reviewing documents and managing processes, and in the evenings you can help your child with homework. Only, every time your phone vibrates, your hand still twitches first.",
+   "Once there's a major production outage, and the young ones stay up all night in the group chat. At home you watch the messages scroll up, and several times you type something, then delete it.",
+   "At the age, you retire. The pension is enough for the two of you to live in Shanghai. You start walking in the park every morning, making up, bit by bit, for the sleep you lost.",
+   "Your first year away from the data center, you keep the habit of checking operation tickets on Friday afternoons. You open the laptop before you remember there's no Saturday window waiting for you anymore.",
+   "You've found your footing in the new place. Once at an industry conference you run into your old reviewer, his hair gone white. That question mark at step seventeen, he says, I've kept using it since you left.",
+   "The graduate hire you trained is now head of architecture at the data center. He sends you a photo: the old server hall being torn down, a row of empty racks. To remember it by, he says.",
+   "Later, checks, SQL reviews and alert triage mostly go to machines. But on every production change ticket, the last line still has to carry a person's name.",
+   "Your grandson asks what you used to do. I looked after the bank's ledgers, you say. Where are the ledgers kept, he asks. You think about it. In a very cold, very loud room, you say, where the lights are always on."
+  ],
+  "closing": {
+   "retire": "Very early one morning many years later, you wake and glance at the bedside clock: 4:20. Outside, the streetlights go out one row at a time, just as they did when you walked out of the server hall. You lie there and listen to the city slowly waking.",
+   "burnout": "Many years later, on an old laptop, you find an operation ticket. Step one reads: confirm backup complete. You look at it a long time, and seem to smell the cold air of the server hall again. Then you close the screen.",
+   "end": "Many years later, in a drawer, you find the badge from your contractor days. The person in the photo is twenty-two, no dark circles under the eyes yet. You set it beside the bank staff badge that came after, and look at them a while."
+  }
+ },
+ "stages": [
+  "You keep dozens of production databases stable. Every week you review SQL tickets from the developers, hunt for slow queries in AWR reports, and schedule primary-standby switchovers and version upgrades into the weekend change window. You write the operation ticket, the reviewer signs it, and every command you run on the bastion host is logged. Developers call you teacher, and the thing they fear most is seeing the word rejected on their ticket in your hand.",
+  "Now you manage architecture: capacity planning, sharding, load-testing the candidate domestic distributed databases, and the plan for how a whole system migrates, cuts over and rolls back. You lead two or three young DBAs and review their operation tickets. In the annual disaster recovery drill, yours is the name on the master switchover sheet, facing regulators, vendors and bank leadership.",
+  "You set the bank's database standards: versions, parameters, backup, permissions, monitoring. Only problems nobody else can solve reach you, often meaning core dumps, kernel logs and going through source code with the vendor's developers. You start managing the budget for cloud resources and licenses, negotiating prices with vendors, and signing at the end of every major incident report.",
+  "You answer for how the bank's whole data platform evolves: the pace of domestic replacement, the balance of availability and cost, what kind of people the team needs. You sit in a dozen meetings a week, dealing in turn with engineering heads, risk, audit and regulators. You hardly go into the server hall anymore, but on the night of every major change, your phone stays on."
+ ],
+ "work": [
+  "A young developer phones at two in the morning: he deleted a table in the test database by mistake. You pull it from backup, replay the archive logs to the second before the delete, and hand it back to him as day is breaking.",
+  "In Grafana you watch a standby's replication lag climb from forty seconds to ten minutes. Tracing it, you find a batch job on the primary updating twenty million rows in one go. You message the application team to break it into smaller batches.",
+  "The vendor's engineer says the migrated stored procedure is fine; it's your data that's the problem. You print the two execution plans side by side and circle the wrong join order in red. He studies it a long time and says he'll look into it.",
+  "You do capacity planning for the credit card system, pulling three years of transaction curves to work out the peaks for Singles' Day and Spring Festival. Your plan says six more nodes next year. Someone from finance, sitting beside you, asks whether four would do for now.",
+  "Step twenty-three on your apprentice's operation ticket reads: if anything is abnormal, roll back. You draw a question mark beside it and make him spell out what abnormal means, how to roll back, and back to which step.",
+  "A week before the disaster recovery drill, you go through the master switchover sheet with the network and application teams in a meeting room, reading it line by line until past midnight, and find one database whose replication link was left out.",
+  "A database keeps crashing every few days for no reason anyone can find. You capture a core dump and spend three days reading source code with the vendor's developers, and find a locking bug that only appears under one specific kind of concurrency.",
+  "At the year-end license renewal, the legacy vendor quotes a price increase. You spread the domestic-migration timeline across the table and tell them the cores you'll renew next year are half of this year's.",
+  "You set the bank-wide permission matrix for database accounts, and a developer asks why even read-only accounts need approval. You pull up last year's audit finding: a read-only account was exactly how data got exported that never should have been.",
+  "A bank executive asks how many more years and how much more money the domestic replacement will take. You don't give a number. You give three tables: which systems are done, which carry the most risk, and which can wait for the next release.",
+  "You interview a new graduate whose résumé says he is skilled at writing SQL with AI. You hand him an execution plan and ask why it's slow here. He studies it for a long time, then says the word you were hoping to hear.",
+  "During an on-site inspection, a regulator asks who is responsible when your AI operations assistant makes a mistake. You slide over the permission list and the weekly audit records. I am, you say. Every operation it has run was reviewed and signed by a person."
+ ]
+}

@@ -1,0 +1,167 @@
+{
+ "id": "script-host-cs",
+ "occupation": "Murder-Mystery Game Master",
+ "role": "Full-time game master (DM) at a murder-mystery parlor",
+ "headline": "A drama-and-film-writing graduate from a three-year college who ran more than a hundred tables part-time as a student, then stayed on full-time at a murder-mystery parlor near Wuyi Square in Changsha, running two games a night and changing costumes three times",
+ "unit": "A murder-mystery parlor with six themed rooms on the twelfth floor of an old office block near Wuyi Square, Changsha",
+ "unit_type": "Murder-mystery parlor (jubensha)",
+ "city": "Changsha",
+ "city_tier": "New Tier 1",
+ "education": "Associate degree, three-year vocational college (Drama and Film Writing)",
+ "level": "You can run thirty-odd boxed scripts and two city-exclusive ones without notes. You can make an emotional script land, but your NPC scenes in the horror scripts are still raw, and in the big hardcore deduction scripts you sometimes sneak a look at your cue card during the reveal",
+ "intro": "Over three years of college you ran more than a hundred tables part-time at parlors in Changsha, working up from party scripts to the ones that make people cry, and on graduation day the manager asked if you wanted to stay. Now three costumes of yours hang in the storeroom: a Republican-era scholar's gown, a flowing robe from a costume drama, and a white lab coat spattered with fake blood. As of today, the Host column on the schedule has your name in it twice a night.",
+ "salary_note": "Estimate: in Changsha a game master's base pay is low and the rest comes from per-game commission and request fees, about ¥5,000 a month take-home, close to the national figure. Summer and winter breaks and public holidays are busy; the off-season is thin.",
+ "facts": [
+  { "label": "Full-time Game Master (current level)", "value": "0.5-2 years, ¥5,000–8,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Star Game Master (2-3 years)", "source": "Career map" },
+  { "label": "Pay after 1–3 years", "value": "¥5,600 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Moving through the rooms to nudge stuck players and rescue a game that has stalled", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Breaking a script's logic tree down three levels and checking the trick holds before a game", "source": "AI exposure" },
+  { "label": "Open positions", "value": "3 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You wake at 1:20 p.m. in a shared flat in an old housing block in Tianxin District, curtains drawn tight. Downstairs, a bowl of shredded-pork rice noodles with a fried egg: breakfast and lunch at once.",
+  "At the parlor you check the schedule first: an emotional Republican-era script for six this afternoon, a horror script for seven tonight. You sort the clue cards by act into envelopes, the one for Act Three face down.",
+  "The afternoon table is six college students on summer break. You get through the rules in three minutes, then have each of them introduce their character in a single sentence. One boy cracks up three times.",
+  "Act Four. You go to the storeroom, change into the scholar's gown, and push open the door as the accountant who never made it home. At the line about the train ticket, two girls across the table start wiping their eyes.",
+  "The reveal. Without notes you weave five people's timelines into one, and at the last hidden twist someone gasps out loud. You post the group photo in the parlor's chat group and answer three private messages booking next week's tables.",
+  "Fifteen minutes to reset: gather the props, count the clue cards, spray alcohol over the table and the door handles. Your takeout stir-fried pork has gone cold; you eat a few mouthfuls standing up.",
+  "Lights out for the evening game. You sit at the control desk switching the background music while watching the players through the crack in the door. When the lights go off in Act Two, a girl says she needs some air, and you open the door and walk her out to the corridor.",
+  "Game over at 1:40 a.m. Jiefang West Road is still lit up. You and another game master share a plate of spicy crayfish, and on the way home you touch up tonight's photos and post them to the group."
+ ],
+ "ladder": [
+  { "title": "Trainee Game Master", "stage": "Trainee", "focus": "Learn the parlor's workflow and the common boxed scripts; handle prep, props and basic icebreaking; pass the in-house test and run your first deduction script without notes." },
+  { "title": "Full-time Game Master", "stage": "Running your own tables", "focus": "Take on city-exclusive scripts and harder mechanic and horror scripts on your own, handle the light and sound rig, keep the game moving with invisible nudges, and run the whole reveal without notes. You move up on the number of games you run and a clean review record." },
+  { "title": "Star Game Master", "stage": "Headliner", "focus": "Specialize in exclusive scripts, immersive emotional scripts or big hardcore ones, with a recognizable performing style and a steady following. Debut and test new scripts for the parlor and rework them. Your income rests on request fees and repeat customers." },
+  { "title": "Parlor Manager", "stage": "Running the business", "focus": "Oversee buying scripts, assessing and training game masters, scheduling, and building the parlor's private player groups. You answer for table turnover, online review ratings and profit." },
+  { "title": "Immersive Experience Producer", "stage": "Project lead", "focus": "Develop immersive theater or live-action tourism shows from scratch: commission scripts, mechanical props and set traps, NPC routes, and the light and sound systems. Take on large custom events for government and corporate clients." }
+ ],
+ "ai_tasks": [
+  { "name": "Moving through the rooms to nudge stuck players and rescue a game that has stalled", "how": "AI can sort out the clue list beforehand and suggest lines for the usual sticking points. But seeing who is stuck, when to walk into the room, and what gesture will hint at a clue all depend on the game master reading people on the spot." },
+  { "name": "Performing live in a mansion-set game while nudging players invisibly", "how": "At most AI can prepare a few sets of lines for the butler and ideas for bridging scenes. Actually walking in and playing the part, reading a room gone cold, calming a jittery player who holds the murderer's card: all of that is done by a person, in the moment." },
+  { "name": "Breaking a script's logic tree down three levels and checking the trick holds before a game", "how": "AI can help take apart the logic tree, list the chains of clues and find contradictions and missing clues in the timeline. A person has to walk it through from the players' side and make the final call on whether the trick really holds up." },
+  { "name": "Carrying out age warnings for minors and confirming a guardian's consent", "how": "AI or the booking system can keep a digital record, send reminders and generate confirmations. Looking at the person in front of you, checking the guardian situation, deciding whether to let them in, and taking responsibility for it: that has to be a person." },
+  { "name": "Starting a three-level de-escalation when players clash", "how": "AI can offer a step-by-step protocol and suggested wording. But cooling things down face to face within ninety seconds, judging whether it will escalate and pulling people apart if needed can only be done by the game master, who also carries the responsibility." },
+  { "name": "Running the full reveal without notes and triggering the chain of hidden twists", "how": "AI can summarize the key points beforehand, set up the conditions for the hidden twists, and afterwards help organize the players' reasoning. On the night, the reveal has to be done without notes and built around the path the players actually took. That part is the person's." },
+  { "name": "Rehearsing several NPCs together and keeping the characters consistent", "how": "AI can help draw up route sheets, check the pacing of lines and look for clashes between character settings. The real blocking, lining up the emotional peaks and the knack of never breaking character come from people rehearsing with their partners face to face." }
+ ],
+ "events": {
+  "e_first_hardcore": "For the first time you ran the reveal of an eight-player hardcore script alone and without notes: forty minutes, not one glance at a cue card. When you finished the table applauded. The manager had been listening outside the door for half of it.",
+  "e_spoiler": "A table got stuck in Act Two and could not move. You nudged too obviously, and the player holding the murderer's card said out loud: isn't that just a spoiler? The next day a two-star review appeared online.",
+  "e_cry_car": "You had a whole table in tears over an emotional script. Afterwards a girl waited for you in the stairwell and said her grandfather had left home in exactly that year. Thank you for playing that part, she said.",
+  "e_minor_check": "A girl who looked like a high-schooler wanted to join a horror script. By the rules you asked for a guardian's number, and her mother nodded on a video call. You still moved the two of them to a party script. The girl pouted all the way through.",
+  "e_voice": "After three games a day through the National Day holiday week your voice gave out completely. The parlor passed your requested tables to someone else, and you spent a week at home sucking herbal throat lozenges, answering messages by text.",
+  "e_fight": "In a faction script two players argued until one slammed the table and stood up to leave. You went in, turned the lights all the way up, put the two of them in separate rooms and handed each a glass of water. That table got a half refund in the end.",
+  "e_fans": "The group of players who book you by name passed two hundred. A girl from the west bank rides the metro an hour from the university town every week and only plays at your tables. She says when other people play the accountant he doesn't seem like he really wants to go home.",
+  "e_night": "After two years of living by night you began lying awake for whole nights, your stomach unsettled when you woke. You bought a blackout eye mask and a bottle of melatonin and kept them by your pillow.",
+  "e_flop_book": "The owner paid more than ¥30,000 for an exclusive script. On the testing night you found a timeline in Act Five that didn't add up: the murderer could never have had time. You stayed up two nights rewriting clue cards, and on launch night nobody noticed.",
+  "e_parents": "Home in the county for New Year, relatives asked what you did in Changsha. You said immersive game host. Your mother added, the kind who plays murder games with people, and the whole table laughed, and so did you.",
+  "e_closures": "That year four of the six murder-mystery parlors in the building closed. The owner next door came to ask whether your owner wanted his costumes and props. A whole trunk for ¥500.",
+  "e_ai_manual": "A new script from the publisher came with a game master's manual written by AI, the logic tree and sticking points laid out neatly. Half its suggested nudges, read aloud, would simply give the game away. You struck out half of it in red pen; the rest worked well enough.",
+  "e_love": "You got together with another game master at the parlor. He plays the villains and you play the witnesses; you had argued in character more than a hundred times, and after work you went to the same noodle shop.",
+  "e_wedding": "At your wedding your colleagues staged an opening scene for you, and every guest's invitation was a clue card. Your father studied his for a long time, then asked who the murderer was.",
+  "e_ai_npc": "The parlor tried out an AI voice NPC that could answer players' follow-up questions, and the young ones found it a novelty. But whenever a room went cold, or someone was about to cry, everyone still turned to look at you by the door.",
+  "e_knees": "One costume-drama script had a scene played on your knees, and you knelt for it twice a night for years. Your knees began to click on the stairs, and you strapped a pair of knee pads on under the robe.",
+  "e_student": "A trainee you brought up ran an emotional script on her own for the first time. Afterwards she sent you a voice message, half crying: I finally understand why you pause three seconds before that line.",
+  "e_tourism_call": "A tourism company from an old town in western Hunan came in to play a table. Afterwards they asked for your WeChat. They wanted to build a live-action game inside the old town that people could play on foot.",
+  "e_child": "Your child was born. Your hours ran exactly opposite to the baby's: you came home just as the baby woke. Your mother-in-law came up from the countryside to help, and for the first time there was life in the flat during the day.",
+  "e_project_open": "The live-action project you produced opened: thirty NPCs, two streets, one lighting rig. On opening night you sat in the control room watching the monitors and saw an old man follow an NPC all the way to the end.",
+  "e_parent_ill": "Your father went into hospital and you went back to the county to sit with him for two weeks. On the ward he asked if you still acted. You said less now, mostly you teach others. He said that's good too.",
+  "e_old_player": "The girl who used to ride the metro an hour every week to play your tables came back with her primary-school child for a family script. She said her child loves stories too.",
+  "e_young_dm": "A new game master fifteen years younger than you had AI sort out the logic tree and timeline in five minutes before a game. You told him to close the laptop first and walk you through the murderer's thread himself.",
+  "e_voice_low": "Your voice has grown low and husky; you can't play young men anymore. You handed those parts to the young ones and kept the old butler and the storyteller for yourself."
+ },
+ "choices": {
+  "c_cert": { "title": "Pay for certificates, or run more tables", "situation": "The manager says a Grade 2A in the national Mandarin proficiency test and the training certificate for immersive game hosts will count if you ever want to move to a bigger parlor or a tourism project. The course would cost a month of weekend tables and nearly ¥2,000.", "options": [
+   { "label": "Take the course", "result": "Every day you recorded tongue-twisters on your phone, and on test day your palms were sweating through the passage full of retroflex endings. You posted photos of both certificates online. That month your request fees were cut in half." },
+   { "label": "Skip it, run more tables", "result": "You filled every one of those weekends and ran more than sixty tables in a month. No certificate, but your reveals got smoother and smoother. You no longer know where your cue cards went." }
+  ] },
+  "c_style": { "title": "Which scripts will make you a Star Game Master", "situation": "The parlor has only one Star Game Master slot it promotes publicly. The manager says you need a signature: either you specialize in immersive emotional scripts and win on acting, or you take on the big hardcore scripts and win on the reveal.", "options": [
+   { "label": "Emotional scripts, work on acting", "result": "You signed up for a weekend acting workshop: mime, crying on cue within three seconds. More and more tables asked for you, and on the way home you often needed a long while to come out of character." },
+   { "label": "Hardcore scripts, work on logic", "result": "You drew the timelines of a dozen hardcore scripts by hand as big charts and pinned them to the wall. Players said your reveals were like a crime documentary, though fewer of them asked for you by name." }
+  ] },
+  "c_bigcity": { "title": "A Shanghai immersive theater comes recruiting", "situation": "A big immersive theater in Shanghai is hiring performing game masters. You'd play only one character a night, base pay more than double what you earn now, housing provided in an eight-bed dorm. Here in Changsha, your tables are booked through next month.", "options": [
+   { "label": "Go to Shanghai", "result": "Every day you played the same maid in the same old garden villa, more than three hundred shows a year. The pay went up, so did the rent, and on weekends you missed Changsha's rice noodles." },
+   { "label": "Stay in Changsha", "result": "You sent the theater a polite thank-you. That month thirty more people joined your group of regulars, two of them coming in specially from Zhuzhou." }
+  ] },
+  "c_theatre": { "title": "A small theater asks you to act", "situation": "A regular player who directs at a small local theater saw you play the accountant and asks if you'd join his company. A few hundred yuan a show, and not many shows a month.", "options": [
+   { "label": "Join the company", "result": "For the first time you stood on a real stage with two hundred people below you, too dark to see their faces. At the curtain call you almost said: please keep hold of your clue cards.", "end": "You became an actor at a small theater and played nannies, teachers and once a tree. Backstage, doing your makeup, you still sort the props by act out of habit." },
+   { "label": "Stay at the parlor", "result": "You said you still liked being this close to the audience, close enough to hand someone a clue card. The director said then he'd book your table next week." }
+  ] },
+  "c_manager": { "title": "Apply for Parlor Manager", "situation": "The owner has opened a second parlor in Meixi Lake and wants one of the current game masters as Parlor Manager: buying scripts, scheduling, training new hosts, answering for the review scores and the takings. As manager you'd rarely run a table yourself.", "options": [
+   { "label": "Apply", "result": "You wrote a three-page plan for which scripts to buy, and halfway through your pitch the owner was already nodding. From then on your days were schedules and takings, and your phone filled up with recordings of new hosts' games." },
+   { "label": "Stay out front", "result": "You turned it down and told the owner your requested tables were booked through next month. Another host went to the new branch, and sometimes calls to ask you where to nudge in some script." }
+  ] },
+  "c_ai_flow": { "title": "Who fixes the AI manuals", "situation": "Every script from the publishers now comes with AI-generated logic trees and suggested nudges. The owner wants you to set the parlor's routine for AI sorts it first, people run it live: what can be trusted, what gives the game away the moment it is spoken, how new hosts should use it. It would eat into your days off.", "options": [
+   { "label": "Take it on, script by script", "result": "You wrote up the twenty spots where tables got stuck most often over the years, one rule each, and taught new hosts to walk the murderer's thread themselves before looking at the AI's hints. Within six months the parlor's spoiler complaints fell by more than half." },
+   { "label": "Leave it, just run tables", "result": "You said let the new people handle it. You still read every script twice from start to finish before a game, and you rarely open the chart the AI drew up." }
+  ] },
+  "c_game": { "title": "A game studio needs a narrative designer", "situation": "A former player is now lead designer at a game company in Shenzhen. He says their interactive story project needs someone who understands how players feel, and asks if you'd come and write branching storylines. Office hours, nine to nine, and much better pay.", "options": [
+   { "label": "Go write for games", "result": "For the first time you worked in daylight. Your first branch was cut three times; the lead said players wouldn't cry at that point. You said they would. You'd seen it.", "end": "You moved to Shenzhen as a game narrative designer and wrote hundreds of thousands of words of branching story. Every time a test build goes live, you quietly check which line players linger on longest." },
+   { "label": "Stay in Changsha", "result": "You said you couldn't write a play nobody was watching. He said call him if you change your mind. You hung up and went to the storeroom to iron the scholar's gown." }
+  ] },
+  "c_own_store": { "title": "Open a parlor of your own", "situation": "The owner is moving back to his hometown and asks if you want to take over the parlor: six rooms, two hundred-odd scripts, a roomful of costumes. Business isn't what it was, and there are two years left on the lease.", "options": [
+   { "label": "Take it over", "result": "You became the owner and were still the host who ran the most tables. The first winter break the takings were good; in the first off-season you paid the wages out of your own pocket." },
+   { "label": "Bring in partners, take half", "result": "You and two veteran hosts each put in a share and split scheduling, buying and accounts. The three of you argued over the books a few times, never at the table." },
+   { "label": "Don't take it", "result": "A man who runs escape rooms took the place over and changed the sign. You stayed on as a host, and in the first week ran a brand-new escape-room theme." }
+  ] },
+  "c_town": { "title": "Become Immersive Experience Producer in the old town", "situation": "The tourism company from the old town in western Hunan is back, this time with a formal offer: Immersive Experience Producer for two old streets, thirty NPCs and three hundred shows a year, everything from script to lighting yours. You would live in the old town and get back to Changsha twice a month.", "options": [
+   { "label": "Go to the old town", "result": "You spent three months rehearsing in a house on stilts, teaching local women to play the teahouse landlady. Opening day it drizzled, and tourists under umbrellas followed the NPCs along the flagstone streets." },
+   { "label": "Stay at the Changsha parlor", "result": "You recommended an apprentice you'd trained. Every month he sends you a video of a show, and every time you send back a long list of notes." }
+  ] }
+ },
+ "endings": {
+  "retire": "You chose the last game yourself: the Republican-era emotional script you had run hundreds of times. You didn't put on the gown. You sat behind the control desk and listened to a young host inside play the accountant who never made it home. In the reveal he missed a hidden twist. You didn't go in to add it; you just smiled outside the door. Afterwards you folded the gown and put it in his locker.",
+  "burnout": "That winter, three nights running, you lost your lines in the reveal, standing under the light with your mind blank. You told the owner you wanted a break, and he asked you to finish the tables booked through next month first. When the last one ended you skipped the late-night food and walked home alone. Jiefang West Road was as bright as ever. For the first time it seemed a little loud."
+ },
+ "past": [
+  "You went to high school in a county town outside Hengyang, where the drama club had seven members. You played Sifeng in Thunderstorm, and at the curtain call your classmates whistled. You cried backstage and couldn't have said why.",
+  "In your second year of high school you wanted to take the arts entrance exams. Your father asked where you'd ever work with that. You chose the directing and writing track, because people said it was a little easier to find a job with than acting.",
+  "Your arts exam score was only good enough for drama and film writing at a vocational college in Changsha. You came to the city dragging one suitcase; outside your dorm window stood a row of buildings under construction.",
+  "In the second half of your first year a roommate took you to your first murder-mystery game near Wuyi Square. The game master played an old butler, and in the last act you cried harder than anyone. On the way out you asked him: do you hire part-timers?",
+  "You worked there part-time for more than a year, three tables a day at weekends, from party scripts to emotional ones. At a hundred tables the manager gave you a time slot of your own for players who booked you by name.",
+  "For your graduation internship the college placed you at a TV station as a production assistant, ¥1,500 a month. You lasted two months, hauling equipment every day. On the last day you messaged the parlor manager to ask if the job was still open."
+ ],
+ "late": {
+  "pension_note": "Estimate: Changsha's urban employee pension scheme. Parlors mostly pay in at the minimum base, and there were gaps when you changed parlors or ran your own. Only after the tourism company did you pay in on your real salary. In retirement you get roughly 40% of your last monthly salary.",
+  "scenes": [
+   "For the first few days of retirement you still woke only in the afternoon. After dark you reached for your phone to check tonight's schedule before remembering there were no tables with your name on them.",
+   "The community senior college asked you to teach a reading class, a dozen old people reading Teahouse. You taught them to pause three seconds before the key line. One old man paused for a full ten.",
+   "The old parlor turned into some other business long ago. Walking past the office block you stood below it for a while; in the row of twelfth-floor windows, someone else's lights were on.",
+   "After you stopped running tables you took a job at a bookshop, and slowly your hours came back to daytime. The first time you woke at seven in the morning, you stood on the balcony a long while looking at the sun.",
+   "The old players' group never broke up. At holidays someone posts old group photos, and there you are in the scholar's gown, a circle of red-eyed people around you.",
+   "Now and then the old parlor calls you in to cover a game. The moment you stand behind the door and hear the people inside arguing over who the murderer is, your voice finds its old pitch on its own.",
+   "The first weekend after leaving the parlor you had nowhere to go, so you bought a ticket and joined a table of strangers, on the players' side. When the game master nudged the table you nearly finished his line for him.",
+   "In your new line of work you're still the one who livens up any dinner. Your colleagues don't know you're using the three-minute icebreaker.",
+   "Changsha has far fewer murder-mystery parlors now; the ones left have become big live-action theaters. You took your child to one, and coming out the child asked: Mom, how did you know who the murderer was?",
+   "These days the logic trees, clue sheets and suggested nudges are all sorted by machines before a game. The news says what people will still pay for is the person sitting across from them, looking them in the eye while the story is told to the end.",
+   "Among old things you find a laminated clue card. On the back, in your handwriting from back then: Act Three, pause three seconds. You can no longer remember which script it was.",
+   "For your grandchildren's birthday you make up a little treasure-hunt game, clues hidden in the sofa cushions and behind the fridge magnets. The children run all over the flat; you sit to one side as game master, your voice as bright as ever."
+  ],
+  "closing": {
+   "retire": "One evening many years later you sit on the steps by the Xiang River while some young people behind you argue about how a script ends. You listen for a while and know they have missed the card from Act Five. You don't turn around; you just pull your coat a little tighter.",
+   "burnout": "Many years later, sorting out your wardrobe, you find the Republican-era gown hanging at the very back, its collar worn pale. You take it down, hold it up against yourself in the mirror, and hang it back.",
+   "end": "Many years later, on an old street in a city you don't know, an NPC in a scholar's gown stops a tourist: sir, you've dropped your train ticket. You stop, take the slip of paper he holds out, and say: thank you."
+  }
+ },
+ "stages": [
+  "You run two tables a day. Before each game you walk the murderer's thread through the parlor's game-master manual and preset every act's lights and music in the control software. At the table you explain the rules, nudge, change costume and go in as the NPC; afterwards you run the reveal without notes and take the photos. The manager schedules you, the front desk finds you players, regulars book you by private message, and you have to remember which character each of them played last time.",
+  "Yours is now the face on the poster by the door. When a new script arrives you test it first, clue cards and timeline in hand, hunting for flaws and rewriting NPC lines. Your requested tables are booked a month out and you answer each request in the group chat, juggling slots. New hosts sit in on your tables, and after the reveal you take them into the storeroom to point out which nudge was too obvious.",
+  "You rarely run a table now. Your days are the schedule, the takings and the review scores: haggling with publishers over new scripts, making the call at test nights on whether to buy, scheduling eight hosts, listening to recordings of their games and grading them. Player complaints come to you first, and so does the landlord chasing rent. You've grown the private player groups to five, and every group's events go past you.",
+  "What you hold now is an entire project: script, mechanical props, NPC routes, lights and sound, a master cue sheet hundreds of lines long. You revise drafts with the writer, plot positions with the lighting designer, talk budget with the client, and rehearse thirty NPCs on their blocking. You no longer play any part. On opening night you sit in front of the monitors calling cues one by one over the radio."
+ ],
+ "work": [
+  "Six women were stuck on a combination lock for half an hour. You went in with a teapot to top up their cups and, in passing, slid the key clue card two centimeters toward the middle of the table.",
+  "The control software crashed in Act Three. With one hand you played the backup music from your phone; with the other you felt your way in the dark to the fuse box and switched on the red lamp.",
+  "The front desk put together a table of strangers who'd booked separately. With a three-minute icebreaker game you got the quietest man to speak first.",
+  "A publisher sent the test version of a new script. You spent three evenings drawing the relationship chart and mailed it back with twelve sticky notes on the Act Six clue cards.",
+  "On a regular's birthday you added, after the reveal, a monologue only her character had. You'd written the lines yourself the night before.",
+  "A trainee shadowed five of your tables. On the sixth you had him run it alone while you sat behind the control desk, and tapped the table only once, when he missed a hidden twist.",
+  "A publisher's sales rep came to quote you a new script. You leafed through it for twenty minutes, knocked thirty percent off the price, and added a clause for launch-period exclusivity.",
+  "Doing the month-end accounts you noticed in the spreadsheet that one host ran twice as many games as anyone else and got twice the bad reviews. The next day you sat with him at the noodle shop downstairs for an hour.",
+  "Before the summer break you posted a student-special poster in the groups. In three days forty tables filled up, and you rewrote every host's schedule overnight.",
+  "The lighting designer said the follow spot couldn't swing round in time for the second scene. On the cue sheet you moved that line back eight seconds and gave the NPC two extra steps to walk.",
+  "At the rehearsal the client's boss said the ending was too sad. You walked him through the visitors' route from the start, and when he reached the final courtyard he said no more about changing it.",
+  "In your first class for the thirty local NPCs you didn't teach lines. You practiced one thing only: when a visitor looks at you, where do you look."
+ ]
+}

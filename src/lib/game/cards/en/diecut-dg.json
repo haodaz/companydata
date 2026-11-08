@@ -1,0 +1,185 @@
+{
+ "id": "diecut-dg",
+ "occupation": "Die-Cutting Process Engineer",
+ "role": "Die-Cutting Process Engineer at an electronic components converter",
+ "headline": "Came up from quality inspection after a vocational college degree, now minding three rotary die cutters at an electronic converting plant in Chang'an, Dongguan, reworking cutting dies through the night whenever a phone maker's new model comes through for samples",
+ "unit": "A die-cut electronic components plant in Chang'an Town, Dongguan",
+ "unit_type": "Electronic components converter",
+ "city": "Dongguan",
+ "city_tier": "New first-tier city",
+ "education": "Associate degree in materials forming and control technology",
+ "level": "You can set pressure, clearance and tension on a rotary die cutter to get a passing first article on your own, and when the old faults show up, burrs, matrix waste breaking, registration drift, you know where to look. Your DFM reports and 8Ds are still slow, and when a customer's SQE presses you, you have to go back and dig through the files.",
+ "intro": "Four years at this converting plant, and you've gone from picking out burrs under a magnifier at the inspection bench to owning a part number from sample to mass production on your own. The phone maker's autumn models are about to freeze their designs. Inside one phone are forty-odd pieces of tape, foam and graphite sheet, and a dozen of them are yours. As of today, when the customer's engineer calls, the samples have to be on his desk by the next morning.",
+ "salary_note": "Estimate: engineers at Dongguan electronic converting plants earn a middling base, but overtime and project bonuses in peak season add up, putting pay about ten percent above the national average. In years when phone shipments are poor there's no overtime, and it falls back to the national average.",
+ "facts": [
+  { "label": "Die-Cutting Process Engineer (current level)", "value": "2-5 years, ¥9,000–15,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Senior Die-Cutting Process Engineer (5-8 years)", "source": "Career map" },
+  { "label": "Pay after 10+ years", "value": "¥19,500 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Handling a die-cut burr defect on the line and closing it out with a release decision", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Writing the DFM report for a new project and getting the die design signed off", "source": "AI exposure" },
+  { "label": "Open positions", "value": "6 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You come out of a tightly packed block of urban-village housing, where the steamer at the rice-roll stall downstairs is breathing white. The road through the industrial park is full of people on e-bikes, pouring toward the factory gates like a tide.",
+  "Morning meeting. The production supervisor reads yesterday's defect rates: on machine three, the battery back-adhesive for a phone, the waste matrix snapped four times and registration was off by 0.15 mm. Everyone looks at you.",
+  "You crouch by machine three, take the die out and hold its edge up to the light, then feel the release liner. You run a different roll of material, and the waste still snaps. In your notebook you write: not the die, the liner.",
+  "The customer's SQE calls to say two pieces from yesterday's samples left strings of adhesive when peeled. Standing in the canteen queue, you pull up the temperature and humidity records for that batch.",
+  "The drawings for the new model's samples come down. One thermal graphite sheet has a rib just 0.3 mm wide. You rework the die drawing on screen bit by bit and argue with the die shop's master for half an hour on the phone.",
+  "Die trials in the clean room. In a full coverall, mask and cap, only your eyes show. When the first article comes off, you measure it dimension by dimension on the vision measuring machine.",
+  "Overtime. The samples have to reach the customer by nine tomorrow. You stay at the machine through a run of five hundred pieces, pick out the best forty and seal them in anti-static bags.",
+  "You ride home to your rented room past barbecue stalls still lit. You buy a few skewers, sit on the edge of the bed and start today's 8D report. The phone by your pillow lights up. The customer again."
+ ],
+ "ladder": [
+  { "title": "Assistant Die-Cutting Process Engineer", "stage": "Assistant / junior", "focus": "Under a mentor, check die drawings, record trial-run parameters and draft SOPs; handle routine burr and waste-stripping faults on your own. Key to promotion: complete basic IATF 16949 training and lead one product into mass production." },
+  { "title": "Die-Cutting Process Engineer", "stage": "Mid-level", "focus": "Own new products for new-energy or automotive customers end to end (DFM to trial run to PPAP); lead yield projects (such as raising a tape's registration pass rate from 89% to 96%). Key to promotion: hands-on APQP/PPAP experience plus CPK data analysis." },
+  { "title": "Senior Die-Cutting Process Engineer", "stage": "Senior", "focus": "Lead process standardization across plants (such as a single parameter library for rotary die cutters); crack the hardest processes (nested die cutting of multilayer dissimilar materials); train junior engineers. Key to promotion: a successful new-material introduction (such as putting a graphene thermal film into mass production)." },
+  { "title": "Die-Cutting Process Specialist", "stage": "Senior expert", "focus": "Define the company's die-cutting technology roadmap (such as closed-loop AI vision correction within three years); represent the company in writing industry standards (such as the drafting group for a national standard on die-cut parts for automotive battery packs). Key to promotion: patents, technical white papers, or provincial-level certified construction methods." }
+ ],
+ "ai_tasks": [
+  { "name": "Handling a die-cut burr defect on the line and closing it out with a release decision", "how": "AI can help pull batch traceability records, organize the defect data and draft the retest report. But getting to the line within 45 minutes to hold the batch, examining the burrs and collecting evidence, judging the die clearance and making the release call take an engineer's floor experience and accountability." },
+  { "name": "Writing the DFM report for a new project and getting the die design signed off", "how": "AI can read drawings, flag manufacturing risks such as small hole spacing, narrow ribs and overly tight tolerances, and draft the DFM report and suggestions. A person has to judge feasibility against machine capability and material properties, and bring R&D, the die shop and purchasing to agreement and signatures." },
+  { "name": "Leading first-article parameter setup on the rotary die cutter and issuing the trial-run SOP", "how": "AI can suggest a starting range of parameters from past settings and material data, and turn the setup notes into a draft SOP. But pressure, clearance and tension on a rotary die cutter are set by hand, eye and ear, and a person answers for the first-article pass rate." },
+  { "name": "Handling a sudden batch-wide release failure on the line and closing out the 8D", "how": "AI can compare materials, environment and machine parameters across recent batches, list possible causes of the release failure and draft each section of the 8D. A person has to verify on the line, find the real cause, agree interim measures with the supplier and production, and sign off the report." },
+  { "name": "Completing the annual die life validation and updating the electronic tracking sheet", "how": "AI can total each die's hit count and wear records, organize accelerated test data, calculate life trends, update the electronic life sheet and suggest MES alarm thresholds. A person only needs to spot-check the abnormal dies and confirm the thresholds are sensible." },
+  { "name": "Validating die-cutting feasibility for a new material (such as a graphene thermal pad) and producing the PFMEA", "how": "AI can search experience with similar materials, generate a draft PFMEA and test plan, and analyze trial data. But doing the physical trial cuts, watching for brittleness or sticking to the die, verifying the maker's claimed thermal conductivity and deciding whether to take it into mass production have to be done and answered for by a person." }
+ ],
+ "events": {
+  "e_burr_solved": "The burr that plagued you for a month turns out to be a mismatch between the die's edge angle and the foam's compression rebound. A new die drops the defect rate from six percent to half a percent, and the supervisor names you at the morning meeting.",
+  "e_overnight_sample": "The customer changes the drawing at five in the afternoon and wants samples tomorrow morning. You talk the die shop into cutting a die overnight, sit by the machine till dawn yourself, and ride along in the courier van to deliver the samples to the customer's door.",
+  "e_complaint": "A batch of back-adhesive goes on crooked on the customer's line, and the whole line stops for two hours. The customer sends a claim letter. You and quality write the 8D in a meeting room, and it only passes on the fifth version.",
+  "e_peak_season": "In the three months before a new model launches the customer pulls volume hard, the plant runs three shifts, and you go sixty days without a day off. Your pay slip is twice as thick as usual, and on the phone your mother asks why you've lost weight.",
+  "e_price_down": "The customer wants five percent off the price every year. The owner tells you to find a way to save material. You redo the nesting layout, get a few hundred more pieces from each roll of tape, and it covers the cut almost exactly.",
+  "e_slump": "Phones don't sell, and orders halve. No more overtime, a few machines under dust covers, pay down to the base. Your roommate leaves for a new-energy plant in the next town.",
+  "e_aoi": "The plant installs vision inspection machines that pass or fail every piece automatically. Most of the people at the inspection benches are gone, and you have to teach the ones who remain to look at the pieces the machine gets wrong.",
+  "e_ai_dfm": "Once a drawing is in the system, it marks every small hole spacing, narrow rib and too-tight tolerance in red, and the DFM draft is out in ten minutes. Your job is to judge which reds can actually be made, and which you'll have to fight the customer over.",
+  "e_cut_finger": "Changing a die, the edge cuts through your glove and your finger needs three stitches. After that you always lock out and tag the machine before changing a die, and you make sure your people do too.",
+  "e_love": "Someone in the quality department next door always helps check your data when you write an 8D. One night, working late, the two of you go for a bowl of pork-knuckle rice, and after that you often eat together.",
+  "e_wedding": "You go home to Hunan for the wedding banquet. Betrothal gifts, the dinner, the gold jewelry, and most of your savings are gone. The day after the wedding a customer calls, and you talk for twenty minutes at the edge of the rice paddies by the village gate.",
+  "e_house": "You buy a three-bedroom on the edge of Chang'an. Dongguan house prices have come down a little these years, and the down payment is what the two of you saved plus help from family. From the balcony you can see your plant's roof.",
+  "e_kid_home": "When your child is born, after the first month the baby goes back to the grandparents in your home village. Every evening at nine you video-call, and the child on the screen barely knows you; the loudest word is for grandma.",
+  "e_graphite": "A customer wants a new multilayer thermal sheet, graphite, copper foil and adhesive stacked together, and several suppliers can't make it. You spend two months trialing it on the machine, the first batch yields over ninety percent, and the customer gives your plant the whole part number.",
+  "e_audit": "An automotive customer comes for a quality system audit and goes through hundreds of records in three days. When the auditor asks for a die's life record, you pull it up from the system on the spot, and he makes a tick in his notebook.",
+  "e_eyes": "Years of staring through magnifiers and the vision machine wear your eyes out first. In your early thirties you get your first reading glasses, and to measure a tenth of a millimeter you have to push them up first.",
+  "e_mentee": "The young man from technical school you've been training traces the snapping waste matrix to the release liner on his own for the first time. When he runs to tell you, he looks exactly like you did back then.",
+  "e_factory_move": "The owner says costs in Dongguan are too high and opens a branch plant in Vietnam, moving two lines there first. You're sent for three months to teach local workers to set up the machines, explaining with gestures what a burr is.",
+  "e_ai_param": "The new rotary die cutter comes with parameter recommendations, suggesting pressure and clearance after a material change. Most of the time it's right. Once it set the die half a hundredth of a millimeter too deep, and it was you who heard the machine sound wrong and stopped it.",
+  "e_parent_ill": "A call from home: your mother has diabetic complications and needs looking after. You take a week off to go back, and when you return machine three's yield has dropped two points and nobody knows why.",
+  "e_jobs_dg": "On a job app you see the die-cutting engineer openings in Dongguan; most want experience with insulation sheets and cushioning pads for EV batteries, and an automotive quality certificate is a hard requirement. You save the sign-up link for IATF internal auditor training."
+ },
+ "choices": {
+  "c_iatf": {
+   "title": "Qualify as an IATF internal auditor and push for Senior Die-Cutting Process Engineer",
+   "situation": "The plant wants automotive and EV battery business, and those customers require suppliers to hold quality system certificates and have people who know APQP and PPAP. The owner says whoever qualifies as an IATF 16949 internal auditor and brings in the next automotive part number will be in the next round for Senior Die-Cutting Process Engineer. Training costs a few thousand yuan, with classes on weekends, just as samples for the new phone models are due.",
+   "options": [
+    { "label": "Sign up and take weekend classes", "result": "In class you finally match all eighteen PPAP documents to their names, and when you're back you take on an EV battery cushion part, from DFM all the way to mass production." },
+    { "label": "Skip it and stay close to the phone customer", "result": "You spend those weekends at the machine, and not one sample for the new models is late. The automotive part goes to another engineer who has the certificate." }
+   ]
+  },
+  "c_ningde": {
+   "title": "Go to a battery plant in Fujian",
+   "situation": "A big maker of EV battery components in Fujian is hiring die-cutting process engineers for cell insulation sheets and cushioning pads: thirty percent more pay, housing included, proper systems. But it's far from everything you have in Dongguan, and you'd have to learn a whole new set of materials.",
+   "options": [
+    { "label": "Go to Fujian", "result": "You go from tiny phone parts to whole sheets of insulation film for battery packs. The tolerances are actually looser, but every piece has to be traceable to its batch. You learn to turn record pages one by one in front of auditors." },
+    { "label": "Stay in Dongguan", "result": "You stay, and everyone at the phone customer knows you. That autumn's new models, your plant wins the most part numbers." }
+   ]
+  },
+  "c_spc": {
+   "title": "Learn data analysis and vision systems or not",
+   "situation": "The company wants to feed machine data into a system that uses vision and algorithms to correct registration automatically and predict die life. IT needs someone who knows the process to build it with them, which means learning SPC and some scripting, with your evenings going into it.",
+   "options": [
+    { "label": "Learn it and help build the system", "result": "You learn to read CPK and control charts, and also, when the system alarms, to ask first: is it the data that's wrong, or is the machine really sick?" },
+    { "label": "Don't; go by feel", "result": "You still listen to the machines and feel the materials. Once the system is live you can spot most of its alarms one step ahead of it, only fewer and fewer people ask you." }
+   ]
+  },
+  "c_customer": {
+   "title": "Jump to the phone maker as an SQE",
+   "situation": "The phone maker's SQE manager likes how clearly you write 8Ds and asks if you'd come over to manage a dozen-plus component suppliers. An office job, on the customer's side, finding fault with other people's work, for noticeably more pay. But you'd never set up a machine yourself again.",
+   "options": [
+    { "label": "Jump over and become an SQE", "result": "For the first time you sit on the other side of the meeting table, watching a supplier's engineer hold a sample with shaking hands, and you think of yourself." },
+    { "label": "Stay at the plant", "result": "You say you still like being beside the machines. Afterward, whenever the manager has a hard part, he calls you first to ask if you can make it." }
+   ]
+  },
+  "c_kid": {
+   "title": "Bring your child to Dongguan",
+   "situation": "Your child is old enough for school, and the village primary school back home is down to one class per grade. Bringing the child to Dongguan means points-based school admission and paying someone for pickups, and less overtime for you. Leaving the child there means you see them twice a year.",
+   "options": [
+    { "label": "Bring the child here", "result": "You leave at six sharp every day to pick your child up, and hand the evening sample runs to your apprentice. In a school essay your child writes: my dad makes the things inside phones that nobody sees." },
+    { "label": "Leave the child at home", "result": "Your child stays in the village. At Lunar New Year they stand behind their grandmother watching you, and it's two days before they'll let you pick them up." }
+   ]
+  },
+  "c_own_shop": {
+   "title": "Open a small die-cutting shop with a fellow villager",
+   "situation": "A fellow villager who does sales has a few customers and wants to go into business with you on a small die-cutting shop: he brings the orders, you run the technical side. Rent a few hundred square meters, buy two second-hand rotary die cutters, and you put in ¥200,000. Dongguan has opened plenty of little shops like that, and closed plenty too.",
+   "options": [
+    { "label": "Go into business together", "result": "You resign, and in the rented space you install the machines, set them up and train the workers yourself. In the first year the orders barely cover wages.", "end": "In your own little shop you set up the machines: the machines are second-hand, the customers come through your fellow villager, the orders rise and fall. At night, alone on the floor, you listen to the machines, and can tell which one needs a new die soon." },
+    { "label": "Don't go in", "result": "You keep the ¥200,000. Your fellow villager finds someone else; the shop runs three years and is then sold on." }
+   ]
+  },
+  "c_expert": {
+   "title": "Go for Die-Cutting Process Specialist",
+   "situation": "The company is applying to the province for specialized-and-innovative enterprise status and needs a Die-Cutting Process Specialist to lead the technology roadmap, write up certified methods, file patents and attend industry standard drafting meetings. All of it means writing documents, and not one of your part numbers goes away.",
+   "options": [
+    { "label": "Lead it and write the documents", "result": "You turn years of reworked layouts, dies and parameters into three patents and a certified method. At a drafting meeting someone cites a figure you wrote." },
+    { "label": "Don't lead it; stay with the machines", "result": "The slot goes to someone from R&D, who often comes to the floor to ask you for data. You're still the first one at machine three every day." }
+   ]
+  },
+  "c_material_pm": {
+   "title": "Go to a materials maker as a product manager",
+   "situation": "A maker of functional tapes wants you as a product manager, defining materials backward from the die-cutting end: what kind of foam cuts cleanly, what kind of adhesive doesn't string. High pay, travel to customers, and you'd go from setting machines to writing requirements.",
+   "options": [
+    { "label": "Become a product manager", "result": "You resign. Your first requirements document is for an adhesive that doesn't string.", "end": "You run between the lab and customers' plants, bringing new materials to converters for die trials. When a young engineer says this material is hard to cut, you say I know, I cut it for more than ten years." },
+    { "label": "Stay in die cutting", "result": "You say you still like watching material turn into pieces. After that, the materials maker sends every new tape to you to trial first." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you stand a while beside machine three. The machine has been replaced twice; the spot is the same. You hand the keys to the magnifier cabinet and the vision machine to your apprentice, and on the way out of the clean room you hang your coverall by the door, cap stuffed in your pocket. On the road through the industrial park, the people leaving work pour out like a tide.",
+  "burnout": "After that peak season, your eyes and your back gave out. The plant moved you to the warehouse to manage materials and dies, issuing stock by the order and checking dies in against the ledger. You leave on time every day, and when you pass the floor you still pause to listen to the rotary die cutters."
+ },
+ "past": [
+  "You were in middle school in the countryside of Shaoyang, Hunan, and your parents worked in electronics factories in Dongguan, home only at Lunar New Year. You fell well short of the cutoff for an academic high school. Your father said go to college for a skill, so you won't stand on an assembly line all your life like us.",
+  "You went to a secondary vocational school, then through the vocational track into a Dongguan vocational college's program in materials forming and control technology. Your mother said now you're close to us, you can come eat at the factory on weekends.",
+  "The college ran a work-placement class with a converting plant, and the first time you saw a rotary die cutter, a roll of tape went in and came out as pieces smaller than a fingernail. You stood beside it for a whole lesson.",
+  "After graduating you joined this plant and were put on the inspection bench, picking out burrs and measuring parts under a magnifier, thousands a day, until your eyes watered.",
+  "You noticed most burrs were a machine problem and kept going to the machines to ask the setters. The process supervisor saw how much you asked and made you a process assistant, revising die drawings and recording trial parameters.",
+  "For the first time you owned a part number on your own, from sample to mass production, with three die reworks along the way. In the first week of mass production yield passed 95 percent, and you bought two beers downstairs from the dorm."
+ ],
+ "stages": [
+  "You have seven or eight part numbers on the go: samples for new models, yield on running parts, customer complaints. You revise die drawings in AutoCAD, set pressure and clearance on the rotary die cutter, write SOPs and 8Ds, and deal back and forth with the die shop, material suppliers, quality and the customer's SQE. The hardest calls are always from the customer; the hardest to persuade is the die shop.",
+  "You take the hardest parts and anything that spans plants: nested die cutting of multilayer dissimilar materials, new material introductions, aligning rotary die cutter parameters across several sites. You lead two or three young engineers, review drawings with the customer's R&D, and use Minitab to walk the owner through yield and cost. You've gone from setting the machine yourself to watching others set it.",
+  "You set the company's die-cutting technology direction: which parts get vision-guided correction, which machines should be replaced, how new materials come in. You write patents and certified methods, sit on industry standard drafting groups, and give technical talks to customers. Problems the floor can't solve end up on your desk. What you sign off is direction, not parameters."
+ ],
+ "work": [
+  "A foam part comes off the die with fuzzy edges. Old Tan, the machine lead, helps you try three different edges, and only a cushion layer under the die stops it. The settings go into line seven of the SOP.",
+  "The customer's SQE sends a photo of adhesive transferring onto the release liner. You pull the batch record for that roll and call the tape maker, and their engineer is there first thing the next morning.",
+  "A new flatbed die cutter needs acceptance. With the supplier's technician watching, you run a thousand pieces on a standard die, measure fifty, calculate the CPK, and only then sign the acceptance form.",
+  "At a drawing review you point out a 0.2 mm rib on a thermal sheet and propose 0.3 mm. The customer's mechanical engineer thinks about it a long time, and agrees.",
+  "The same part yields three points apart at two sites. You and your apprentice spend a week at the other site and finally find the unwind tension is set differently on each.",
+  "You collect years of defects into a case library, burrs, waste breaks, adhesive ooze, stringing, each with photos and causes, and have Huang, the new engineer, read it all before he touches a machine.",
+  "The standard drafting group debates tolerances for battery cushion pads. You bring out years of your own SPC measurements and get one proposed tolerance relaxed by 0.05 mm.",
+  "The owner asks whether to spend millions on a fully automated line. You pull three months of MES data and say put in one machine to test first, and if it works, then the line.",
+  "A materials maker's sales manager brings a new foam to trial. You stop the machine after fifty pieces: it rebounds too fast to cut accurately, take it back and rework the formula."
+ ],
+ "late": {
+  "pension_note": "Estimate: private factories in Dongguan mostly pay pension contributions on the local minimum or a low base, and overtime isn't counted. Your pension comes to about forty percent of your final monthly salary.",
+  "scenes": [
+   "In the first month after you retire you still wake at half past seven, and the rice-roll stall downstairs is steaming as always. You go down and eat a plate, watching e-bikes head one after another into the industrial park.",
+   "A small die-cutting shop in the next town asks you to consult two days a week, looking at their burrs and waste stripping. You listen to the machine a while and say: change the die first.",
+   "You move back to your home village in Hunan and grow vegetables in the yard. Your phone still has a few old customers on WeChat, and at festivals you send each other red envelopes.",
+   "Your grandson takes his phone apart to show you and asks what the little black and white pieces inside are. You put on your reading glasses, look a long while, and say this one's the kind we made back then.",
+   "Running the die store, you check dies in and out against the ledger every day. When you see a worn one, you hold it up to the light to look at the edge, then put it back.",
+   "At last you have weekends, and you take your child cycling around Songshan Lake. The wind off the water is strong. You ride behind and watch them pull further and further ahead.",
+   "On the day you retire, your old colleagues fill a table. Someone brings up the part whose waste kept snapping for a month, and everyone laughs, and you laugh too.",
+   "In your first year out of die cutting, when you get a new phone your first impulse is to open it and see whose tape is inside. In the end you resist.",
+   "Back at the old plant on an errand, you find a new machine where machine three stood, with a screen twice as big. Your apprentice is setting it up, and looks up and calls you master.",
+   "The young man from technical school becomes a process manager and sends you a photo of the slides from his training for new hires. The first page says: check the liner first, then the die.",
+   "Some of Dongguan's factories have moved to Vietnam, and some have become fully automated, a line with only two or three people watching screens. The rice-roll stall at the industrial park crossroads is still open.",
+   "Your child, grown up, asks what you did with your life. You say you made hundreds of millions of little things inside phones that no one sees, and every one of them was measured by someone."
+  ],
+  "closing": {
+   "retire": "Many years later, one evening, you sit in the yard at home with your phone's screen lit. You think of the small piece of foam inside it, pressing on the battery, unseen by anyone. You turn the phone face down on the table and look at the sky a while.",
+   "burnout": "Many years later, you are mending your grandson's broken toy at home, and when you open it you see a piece of foam stuck inside with a little burr at the edge. You scrape it with your fingernail, smile, and put it back together.",
+   "end": "Many years later, in a drawer, you find the magnifier you used in your first year, its lens gone cloudy. You hold it up to the window, then put it back in the drawer under a pile of old die drawings."
+  }
+ }
+}

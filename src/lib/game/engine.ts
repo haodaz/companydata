@@ -175,7 +175,7 @@ export function choose(card: GameCard, l: Life, i: number): Life {
   if (o.salary) l.salaryMul = clamp(l.salaryMul * (Number(o.salary) || 1), 0.5, 1.6);
   if (o.growth) l.growthMul = clamp(l.growthMul * (Number(o.growth) || 1), 0.6, 1.6);
   l.picks.push({ y: l.y, age: l.age, title: c.title, label: o.label, result: o.result });
-  l.log.push({ y: l.y, age: l.age, kind: 'choice', mood: 'plain', source: c.source, text: l.lang === 'en' ? `${c.title}: you chose "${o.label}". ${o.result}` : `${c.title}：你选了「${o.label}」。${o.result}`, effect: o.effect });
+  l.log.push({ y: l.y, age: l.age, kind: 'choice', mood: 'plain', source: c.source, text: l.lang === 'en' ? `${c.title.replace(/[?.!]$/, '')}: you chose "${o.label}". ${o.result}` : `${c.title.replace(/[？?。！]$/, '')}：你选了「${o.label}」。${o.result}`, effect: o.effect });
   if (o.end) finish(card, l, 'end', o.end);
   return l;
 }

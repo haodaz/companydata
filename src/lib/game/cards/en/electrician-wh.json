@@ -1,0 +1,200 @@
+{
+ "id": "electrician-wh",
+ "occupation": "Electrical Equipment Installer and Maintenance Electrician",
+ "role": "Maintenance electrician at an auto parts plant",
+ "headline": "A maintenance electrician eight years into an auto parts plant in Zhuankou, Wuhan, his low- and high-voltage licenses tucked in the inner pocket of his tool bag, who has to get on his e-bike and ride to the plant whenever the phone rings at night",
+ "unit": "The maintenance crew of the equipment department at an auto parts plant supplying carmakers in Wuhan’s Economic and Technological Development Zone (Zhuankou)",
+ "unit_type": "Auto parts plant",
+ "city": "Wuhan",
+ "city_tier": "New Tier 1",
+ "education": "Technician college (electrical automation, secondary vocational level)",
+ "level": "You hold both the low- and high-voltage licenses and an intermediate electrician’s grade; you can trace relay circuits, inverters and sensors with your eyes closed, and you can go online to a PLC and watch its ladder logic switch on and off, but you don’t yet dare touch the program",
+ "intro": "You’ve worked at this plant for eight years, the low-voltage license and the high-voltage license both tucked in the inner pocket of your tool bag. This month the equipment department redid the rota, and you are now lead on the maintenance crew’s night shift: whichever line stops in the middle of the night, the call comes to you first. As of today, your phone is never on silent.",
+ "salary_note": "Estimate: at an auto parts plant in Wuhan’s development zone, a maintenance electrician’s base pay plus night-shift and call-out allowances comes to a little over ¥7,000 a month, close to the national figure; in good order years there’s plenty of overtime, and in slow seasons the plant stops a few days a week and pay drops with it.",
+ "facts": [
+  { "label": "Electrical Maintenance Technician (current level)", "value": "2-4 years, ¥6,000–9,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Senior Electrical Maintenance Engineer (4-7 years)", "source": "Career map" },
+  { "label": "Monthly pay, 3–5 years in the field", "value": "¥8,000 (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Checking and signing out safety gear before the shift", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Live inspections and temperature checks of the production line’s electrical cabinets", "source": "AI exposure" },
+  { "label": "Open positions", "value": "493 related job listings nationwide, 11 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "A bowl of hot dry noodles from the breakfast stall downstairs, extra sesame paste. As you eat you scroll last night’s shift chat: the case sealer on Line 2 tripped twice.",
+  "Shift handover. Your junior on the night shift has red, worn-out eyes. He points at the log: “I swapped a contactor, keep an eye on it.”",
+  "To the tool room. You inflate the insulating gloves to check for leaks, test the voltage tester on a socket you know is live, and look at the calibration date on the multimeter. You have never skipped this step.",
+  "Cabinet rounds. The infrared monitoring system has marked three hot spots, and you check each with your thermometer gun: two false alarms, one terminal oxidized black. You note it down to replace when the line stops.",
+  "The case sealer stops again, and boxes back up along the conveyor. You cut the power, hang the tag, apply the lock, find the contactor’s contacts welded together, swap the part, test-run. Fourteen minutes.",
+  "In the afternoon the welding line has a two-hour stop. You tighten terminals, blow out dust and megger the motors, calling the readings to the apprentice taking notes beside you.",
+  "You tell your phone in a few sentences what you fixed today, and the system turns it into the maintenance log. You check two key figures and mark the terminal still open in red.",
+  "The phone rings: a robot on the welding line has a servo fault and the whole line is waiting. You pull on your overalls and ride your e-bike down the empty Zhuankou Avenue, the plant’s lights on row after row."
+ ],
+ "stages": [
+  "You take your turn as duty electrician, and whichever line stops, the call comes to you first. What you fix most in a day is motor overloads, failed limit switches and sticking solenoid valves, with a clamp meter, an insulation tester, a dog-eared book of wiring diagrams and a string of lockout padlocks. You deal with line leaders, operators and the department’s engineers, and the line leader’s favorite question is “How long?” You are measured in minutes of downtime.",
+  "You start taking on what others can’t fix: PLC communication dropouts, servo alarms, robot interlocks. You run preventive maintenance with two apprentices, and each year you owe a few small improvements, the downtime they save written into your review. You now carry a laptop with programming software and a fieldbus analyzer, and deal with equipment vendors’ service techs and automation engineers.",
+  "You run a maintenance crew of a dozen or so: day and night rotas, the annual maintenance plan, safety stock in the spare-parts store. Each day you read yesterday’s downtime report, walk the floor, and argue with the production manager over whether the line should stop for maintenance. What you hold has changed from wrenches to rotas, spare-parts ledgers and monthly scorecards.",
+  "You are in charge of all the plant’s equipment: what gets replaced, whose machines the new line buys, whether every electrical requirement in the specification is written right. Every day you meet headquarters, vendors and finance, work out returns on equipment investment, and watch the new line ramp up. Your desk has moved from the shop floor to the office block, but every week you still take a walk through the switch room."
+ ],
+ "work": [
+  "The welding line leader calls: the safety light curtain keeps tripping and stopping the line for minutes at a time. You crouch beside it for a whole shift and see that a forklift’s headlight sweeps it every time it passes. You move it ten centimeters and add a shield.",
+  "An old stamping press motor trips on overload. You measure the three phases with a clamp meter, one is clearly low, and you follow the wire to a terminal half burned through.",
+  "You and an engineer verify the PLC interlocks together: he watches the IO points on his laptop, you block the sensors on the floor one by one, and all afternoon you shout “on” and “off” to each other over the radios.",
+  "The new line’s robot loses its network node at three every afternoon, exactly. You capture three days of data with the analyzer and finally find a network cable bundled together with an inverter power cable.",
+  "Doing a maintenance stop with your apprentice, you teach him to crank the megger up to rated speed and wait for the needle to settle before calling the reading, or that page of the log is worthless.",
+  "A vendor’s service tech comes to tune an imported machine and says this fault will have to wait for an engineer from abroad. You watch for a while, suggest swapping an IO module, and it works.",
+  "The production manager doesn’t want to stop for the annual maintenance; orders are behind. You show him last year’s three unplanned stoppages and work through the cost, and in the end you meet halfway: one weekend.",
+  "An imported contactor is out of stock in the parts store, three months’ lead time. Your crew tests two domestic substitutes, and before you sign off you cycle each of them a thousand times on the test bench.",
+  "Drawing up the crew’s Spring Festival duty rota, nobody wants New Year’s Eve. You write your own name in that box.",
+  "Headquarters asks you to review the electrical specification for a new line, a hundred and twenty pages. On page forty-three you circle one item: the switchgear sits right next to the stamping shop, with no vibration protection specified.",
+  "Finance asks you for the payback period on an energy-saving retrofit. You work out three versions; the most conservative says four and a half years, and that’s the only one you submit.",
+  "You take a vendor’s engineer to see where the new line will go, point to a drainage channel on the floor, and say this will flood the first time it storms. The cabinets need to go up thirty centimeters."
+ ],
+ "ladder": [
+  { "title": "Junior Maintenance Electrician", "stage": "Junior / apprentice", "focus": "Follows electrical safety rules strictly and, under a mentor, wires control cabinets, lays cable trays, assembles components and does routine lubrication checks; promoted on compliant wiring work and speed reading diagrams." },
+  { "title": "Electrical Maintenance Technician", "stage": "Independent / mid-level", "focus": "Takes duty shifts independently and owns emergency repair of electrical faults on the line, quickly fixing motor, sensor and relay circuit problems; promoted by cutting mean time to repair (MTTR)." },
+  { "title": "Senior Electrical Maintenance Engineer", "stage": "Senior", "focus": "Solves hard problems in PLC communication and motion control, drives preventive maintenance (TPM) and small electrical improvements to automation, and is promoted by raising overall equipment effectiveness (OEE) and training newcomers." },
+  { "title": "Electrical Maintenance Supervisor", "stage": "Technical management / crew lead", "focus": "Oversees high- and low-voltage power distribution and electrical safety on automated lines, sets the annual maintenance plan, spare-parts safety stock and the crew’s KPIs; promoted through metric control and cross-department coordination." },
+  { "title": "Equipment Engineering Manager", "stage": "Expert / director", "focus": "Responsible for lifecycle asset management of all plant equipment, review of electrical specifications for new lines, and digital and low-carbon retrofits; promoted on return on equipment investment (ROI) and hitting production ramp-up." }
+ ],
+ "ai_tasks": [
+  { "name": "Checking and signing out safety gear before the shift", "how": "Insulated tools, meters and lockout devices have to be checked by hand for condition, test date and feel; AI can’t help. At most it reminds you when a test is due; a person confirms the gear is fit and answers for safety." },
+  { "name": "Live inspections and temperature checks of the production line’s electrical cabinets", "how": "AI can analyze infrared temperature data and historical trends and flag hot spots; a person walks the running cabinets, judges smells, sounds and contact condition, and decides whether to report or stop the line." },
+  { "name": "Tracing and fixing a sudden stoppage in the case sealer’s control circuit", "how": "A sudden stop means working step by step between live and dead circuits on the spot, measuring with meters, swapping damaged parts and test-running, all by hand and all on a person’s responsibility; AI can only look up the manual or the fault codes on the side." },
+  { "name": "Planned-stop electrical maintenance and motor insulation testing", "how": "Dusting, tightening terminals and megger testing are hands-on work that needs on-site judgment; AI can at most generate the maintenance checklist and compare against past insulation readings, while a person takes the measurements and decides whether they pass." },
+  { "name": "Calibrating field sensors and re-checking PLC interlock circuits", "how": "AI can help compare the IO list against the interlock logic documents and flag conditions that may be missing; a person and the automation engineer check each sensor’s actual switching on site, run the interlock tests and confirm the safety interlocks work." },
+  { "name": "Compiling the electrical maintenance log and the crew handover review", "how": "AI can turn voice notes or brief records into the maintenance log, fill in the format, total up test data and flag open items; a person only checks the key figures and does the handover in person." },
+  { "name": "Checking and signing out electrical safety tools and instruments before the shift", "how": "Insulating gloves, voltage testers and multimeters have to be checked by hand in the tool room; this is the safety baseline and a person must confirm it. AI can only help log sign-outs and send due-date reminders." },
+  { "name": "Planning the morning round and infrared checks of line control cabinets", "how": "AI can pull together alarm records and downtime clues and recommend a route and priority points; a person carries the infrared thermometer to the running equipment and judges anomalies from experience." },
+  { "name": "Tracing the case sealer’s motor control circuit and making an emergency repair", "how": "An emergency repair means checking the main and control circuits with meters on site, replacing burned-out components and test-running, and it carries safety and responsibility; AI can only offer possible causes and manual lookups for reference." },
+  { "name": "Planned-stop electrical maintenance and insulation resistance testing", "how": "Using the stop window to tighten terminals, clean and megger-test is hands-on, safety-critical work; AI can help with scheduling, remind you of the window and compare against past data, while a person does the work and makes the call." },
+  { "name": "Calibrating line sensors and controlled PLC interlock test runs", "how": "AI can help check the IO list, addresses and logic descriptions and generate a test checklist; a person and the engineer trigger the sensors one by one on site, watch the linked actions and confirm everything is right." },
+  { "name": "Reviewing the maintenance log and doing the end-of-shift handover", "how": "AI can turn the day’s records into a maintenance history and the next day’s re-check list and file them automatically; a person only checks the key content, then hands over in person to the senior electrician." }
+ ],
+ "events": {
+  "e_dog_days": "The dog days of summer: the underground switch room is over forty degrees, and you stand in front of the cabinets for an hour at a time. When you come out, your overalls are stuck to your back and you could wring them out.",
+  "e_arc": "One time you close a breaker and an arc flashes inside the cabinet, leaving a black spot on your safety glasses. You stand where you are for half a minute before taking your hand off the lever. Afterward you keep those glasses at the very bottom of your tool bag.",
+  "e_ev_line": "The plant wins orders for electric vehicles and installs a new welding line, with servos, fieldbus and safety light curtains from brands you’ve never seen. You spend a month crouched by the line with the manuals.",
+  "e_price_war": "Carmakers start a price war and the squeeze reaches your tier; orders fall. The plant stops three days a week, the night-shift allowance disappears, and your take-home falls by ¥2,000.",
+  "e_flood": "During the flood season a rainstorm starts filling the plant’s underground switch room. You cut the power, stack sandbags and pump all night, and by dawn the water has dropped to the second step. Not one cabinet got soaked.",
+  "e_lockout": "A new operator is about to reach into a machine for a jammed part without hanging a tag, and you grab him by the shirt. The next day the workshop director hangs the “one person, one lock, one tag” sign at the most visible spot at the head of the line.",
+  "e_ai_predict": "The plant installs a predictive maintenance system, and at the first sign of trouble in a motor’s vibration or temperature it warns days ahead. That year, the calls that wake you at night are cut in half.",
+  "e_ai_false": "The system reports a motor’s “bearing about to fail.” You stop the line and open it up: it’s fine; the vibration sensor’s screw had worked loose. You tighten it and write one line in the log: check the sensor first.",
+  "e_ai_ledger": "The maintenance log is handed to AI. You just talk into your phone and check a few numbers. No more copying tables in the duty room after work, and you make it in time to pick up your son.",
+  "e_apprentice": "A trainee from a technical school joins the crew. The first thing you teach him isn’t wiring, it’s testing for voltage: try the tester on a good socket first, then on the one you’re fixing.",
+  "e_shift_wife": "Your wife works shifts at a supermarket too. When you’re on nights she’s on mornings, and three or four days a week you only cross paths at the door. On your son’s homework, the signature keeps changing handwriting.",
+  "e_school": "Your son is starting primary school, and the school assigned to your flat in Caidian is so-so. You ask around everywhere, and in the end he goes to the one by your door. On the first day you’re on nights and can’t take him.",
+  "e_parents": "Back in Huangpi, your father wrenches his back bringing in the rice. For several weekends you drive back to help get the grain into the house.",
+  "e_contest": "The district holds an electricians’ skills contest and you enter. The practical is a timed fault-finding test; in the seventh minute you find the wire someone loosened on purpose, and come away with third place and a red certificate.",
+  "e_plc_class": "You pay out of pocket for an industrial controls course in Optics Valley, an hour and a half on the metro every Sunday to learn ladder logic. Back at work, the first time you change the program on an old machine, your palms are sweating.",
+  "e_outsource": "The plant outsources switch-room maintenance to a contractor, and your crew loses two people. Those who remain divide up their lines, and your night shifts go from two a week to three.",
+  "e_robot_patrol": "An inspection robot arrives in the switch room and twice a day follows the yellow line on the floor, photographing gauges and taking temperatures. The apprentices nickname it “Little Night Shift.”",
+  "e_honor": "At year’s end you’re named the plant’s skills model worker: a ¥1,500 bonus and your photo by the canteen door. On the plant open day, your son stands under the photo and won’t leave.",
+  "e_back": "Years of squeezing into cabinets and crouching in cable trenches, and your back has stopped doing what it’s told. The scan shows a herniated disc. You buy a back brace and strap it on before going into a cabinet.",
+  "e_ears": "After more than a decade of noise from the stamping shop, there’s an arrow by the hearing line on your checkup. At home your wife says you have the TV up too loud.",
+  "e_old_drawing": "The hand-drawn wiring diagram you made for an old line retrofit more than ten years ago is still taped inside the door of Cabinet 3. A new graduate photographs it and says it’s more accurate than the one in the system.",
+  "e_presbyopia": "To read the wire numbers on a terminal you have to take a photo and zoom in. Now there’s a pair of reading glasses in your pocket, clipped next to the voltage tester."
+ },
+ "choices": {
+  "c_plc": {
+   "title": "Learn PLCs and predictive maintenance?",
+   "situation": "The equipment department is bringing in a predictive maintenance system and will rework the programs on old machines, and it needs someone who knows the floor to work alongside the engineers. Going means chewing through programs and data, and fewer call-out allowances.",
+   "options": [
+    { "label": "Go, learn the programs and the data", "result": "After work you stare at ladder logic until your eyes ache. Six months later, when the system flags an anomaly, you can tell at a glance which ones are real." },
+    { "label": "Stay on the emergency front line", "result": "You remain the one who shows up the moment the phone rings at night. Once the system goes live you follow its prompts, and sometimes feel it’s half a step slower than you." }
+   ]
+  },
+  "c_senior": {
+   "title": "Up for Senior Electrical Maintenance Engineer",
+   "situation": "The plant’s technical track is promoting a batch of Senior Electrical Maintenance Engineers, and the requirement says a bachelor’s degree, or a technician grade. All you hold is the intermediate certificate.",
+   "options": [
+    { "label": "Take the advanced grade, then go for technician", "result": "Over two years you sit two assessments. The practical you could do with your eyes shut; for the paper defense you wear the only shirt you own." },
+    { "label": "Do a correspondence bachelor’s", "result": "You go to class every weekend and copy half the homework, but three years later the education line on your file finally reads differently." },
+    { "label": "Don’t bother, the skill is in your hands", "result": "You won’t cram for a title. Everyone on the floor knows to come to you with the hard ones; it’s just that the engineers’ desks carry other people’s names." }
+   ]
+  },
+  "c_move": {
+   "title": "Optics Valley, or Suzhou",
+   "situation": "A display-panel plant in Optics Valley is hiring equipment electricians: cleanrooms, four crews on three shifts, thirty percent more pay. A friend from home who supervises at a lithium battery plant in Suzhou calls to say they pay even more there, but you’d have to go alone.",
+   "options": [
+    { "label": "Go to the panel plant in Optics Valley", "result": "You put on a full-body cleanroom suit and learn not to say a word more than needed. The pay goes up, and the shifts leave you unable to tell day from night for a month at a time." },
+    { "label": "Go to Suzhou alone", "result": "You move into the factory dorm and video-call your son for ten minutes every evening. Home at New Year, he asks when you’re leaving again." },
+    { "label": "Stay in Zhuankou", "result": "You say the boy is still small, you’re not going. The workshop director hears about it and gives you next month’s retrofit project." }
+   ]
+  },
+  "c_side_job": {
+   "title": "Weekend side jobs",
+   "situation": "People in your housing estate know you’re an electrician, and some ask you over on weekends to redo their wiring, ¥400 or ¥500 for a morning. A renovation company boss asks if you want to work with him regularly.",
+   "options": [
+    { "label": "Take them, every weekend", "result": "You do three homes a weekend, and the money pays for your son’s swimming lessons. At Monday’s handover you yawn your way through." },
+    { "label": "Only help people you know, for free", "result": "You replace the residual-current breaker for the old woman downstairs, and every time she sees you she presses tangerines into your hands." }
+   ]
+  },
+  "c_fae": {
+   "title": "Field support for the manufacturer?",
+   "situation": "An inverter manufacturer whose service people often come to the plant has noticed you fix their equipment faster than their own staff, and wants you as a field application engineer, traveling all over central China for forty percent more pay.",
+   "options": [
+    { "label": "Join the manufacturer, work in the field", "result": "You switch to branded work clothes and spend two or three nights a week in budget hotels in different cities, fixing the same brand of equipment every time.", "end": "You became a field application engineer for an industrial controls manufacturer, driving the company car to factories across central China to fix the machine nobody else could fix in the night." },
+    { "label": "Stay at the plant", "result": "You say you still like having your own shop floor and your own cabinets. The salesman smiles and leaves a business card." }
+   ]
+  },
+  "c_supervisor": {
+   "title": "Running for Electrical Maintenance Supervisor",
+   "situation": "The old supervisor has been transferred to a new plant, and the equipment department is filling the Electrical Maintenance Supervisor post: managing the crew, planning maintenance, running the spare-parts store, carrying the KPIs. Or you can stay on the technical track and be the last person the plant calls to fix things.",
+   "options": [
+    { "label": "Run for supervisor", "result": "Your phone now holds twenty people’s shift schedules; you use the wrench less and read reports more. At the year-end review, for the first time, you fight for your people’s bonuses." },
+    { "label": "Take the technical track, be the fault-finding expert", "result": "You don’t manage anyone, just the hardest machine to fix. Whenever the plant has a stoppage nobody can solve, it ends up in your hands." }
+   ]
+  },
+  "c_safety": {
+   "title": "The registered safety engineer exam",
+   "situation": "The plant’s safety department is short of people, and its head says you understand electricity and lockout-tagout; if you pass the registered safety engineer exam, you can transfer over and stop working nights. The books are thick, and they test regulations and management, not wiring.",
+   "options": [
+    { "label": "Take the exam, move to safety", "result": "You spend a year memorizing regulations in a corner of the canteen and pass on the second try. The day the transfer comes through, you leave your wrenches to your apprentice.", "end": "You became the plant’s safety engineer, walking the shop floor every day with a checklist, still unable to stop yourself from shutting a cabinet door left open without a tag." },
+    { "label": "Don’t take it, stay on the crew", "result": "You read two pages and put the book down, saying cabinets make more sense than regulations." }
+   ]
+  },
+  "c_manager": {
+   "title": "Running for Equipment Engineering Manager",
+   "situation": "The plant is building a brand-new automated line and is also looking for an Equipment Engineering Manager to handle investment and upgrades for all its equipment and negotiate specifications with headquarters and vendors. Two people with master’s degrees are also applying.",
+   "options": [
+    { "label": "Apply", "result": "At the interview you talk only about the faults you’ve fixed, and where in the new line’s specification things will go wrong later. One of the panel, from headquarters, fills a whole page with what you say." },
+    { "label": "Don’t, keep your crew in shape", "result": "You say the manager’s job is for people who write reports. On the day the new line starts production, you’re still the first one called to the floor." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "Your last shift is a day shift. You take the things out of your tool bag one by one: the voltage tester, the multimeter, those old safety glasses. You keep the glasses and give the rest to your apprentice. In the handover log you write one last line: Cabinet 3 terminal, re-check next week. As you go out the gate, the guard tells you he won’t have to open it for you in the middle of the night anymore.",
+  "burnout": "One night shift that winter, you crouch down in front of a cabinet and can’t get up for a long while. Your back and your knees have presented their bill together. You go to the director and transfer to the warehouse to manage spare parts, no more nights. You still don’t dare put your phone on silent; it just rarely rings."
+ },
+ "past": [
+  "You are in your last year of middle school in the countryside of Huangpi, and you miss the cut-off for academic high school by twenty points. Your father squats on the ridge between the fields and smokes half a pack, then says go learn a trade. An electrician never goes hungry.",
+  "You enroll at a technician college in Wuhan to study electrical automation. The first time you close a self-latching circuit on the training bench and the indicator lights up, you stare at it for a long time.",
+  "At school you get your low-voltage license. Your placement sends you to an electronics factory in Dongguan, where you spend six months inserting components on an assembly line and never touch an electrical cabinet once.",
+  "Back in Wuhan after graduating, you join an injection-molding plant as an apprentice electrician. The first thing your mentor teaches you is to test for voltage; the second is lockout-tagout; the third is: when you’re not sure, don’t reach in yet.",
+  "You move to this auto parts plant in Zhuankou for a simple reason: it pays the full five insurances and the housing fund, gives a night-shift allowance, and it’s close to your rented room in the development zone.",
+  "You pass the high-voltage license, and the same year you marry her, a stock clerk at a supermarket, with the banquet laid out in the courtyard of the family home in Huangpi.",
+  "Your son is born and you put down a deposit on a flat in Caidian. That day, outside the delivery room, you take an emergency call, and in the end you send your junior instead."
+ ],
+ "late": {
+  "pension_note": "Estimate: the basic pension for enterprise employees, with thirty-odd years of contributions on Wuhan’s contribution base, comes to a little over half your final monthly salary; night-shift and call-out allowances are not counted.",
+  "scenes": [
+   "In the first month of retirement you still wake once at two in the morning and reach for the phone by the bed. No call. You fall back asleep.",
+   "The estate management asks you to look at the switch room, and at a glance you spot several things not up to code. You write them a list and take no money, and the property manager sends over a box of oranges.",
+   "You go back to Huangpi for a while and rewire the whole old house, a residual-current breaker on every circuit. Your father says it isn’t necessary. You say it is.",
+   "In the warehouse you send out parts against the requisitions every day. When someone comes for a contactor, you ask which machine it’s for, then say, for that one, check the coil first.",
+   "After physiotherapy your back is a little better. In the park by your home you learn tai chi; the movements are slow, and you say it beats crawling into cabinets.",
+   "Old colleagues from the plant come to see you and say that these days, half the night call-outs get a robot sent to look first, then a person to fix it. You ask whether people still test for voltage, and they say yes.",
+   "In your first year in the new job, you keep wanting to go back and look at the old shop floor. Once, passing through Zhuankou, you stop at the plant gate for a while and don’t go in.",
+   "Your old apprentice calls to say the old machine at the plant has the same fault you fixed years ago. You talk him through it step by step, and only after hanging up do you notice you’ve been standing the whole time.",
+   "You take on apprentices at the new place too. The first thing you teach them is still the same: try the tester on a good socket first.",
+   "You hear that production lines now have digital twins, and when a wire is about to go, it lights up red on a screen first. But terminals still need a person to tighten them, and insulation still needs a person to test it.",
+   "Your son applies to study electrical engineering. He asks why you became an electrician, and you say because you were twenty points short. Then you both laugh.",
+   "You fish on the bank of the Yangtze, and at night the factories on the far side light up in a sheet. From the look of the lights you can tell which section is on the night shift."
+  ],
+  "closing": {
+   "retire": "Many years later, on a summer night, the power goes out in your estate and everyone comes downstairs to sit in the cool. You take a flashlight to look in the switch room, come back and tell everyone, don’t worry, it’s the transformer side, it’ll be back soon.",
+   "burnout": "Many years later, on the balcony, you fix your grandson’s toy car: open it up, find the wire, solder it, flick the switch, and the little light comes on. Your grandson claps, and you watch that light for a long time.",
+   "end": "Many years later, you find the two operator licenses in a drawer, low voltage and high voltage, the photos of you still young. You lay them side by side and put them under that pair of old safety glasses."
+  }
+ }
+}

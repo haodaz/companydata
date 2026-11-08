@@ -1,0 +1,169 @@
+{
+ "id": "translator-bj",
+ "occupation": "Translator",
+ "role": "English translator at a translation agency (junior translator)",
+ "headline": "A Master of Translation and Interpreting graduate working as an English translator at a forty-person agency in Wangjing, Beijing: base pay plus a rate per thousand characters, and every day a fight with the machine translation's first draft",
+ "unit": "A translation agency of forty people in an office tower in Wangjing, Beijing, half of them project managers and reviewers",
+ "unit_type": "Translation agency",
+ "city": "Beijing",
+ "city_tier": "Tier 1",
+ "education": "Master's degree (Master of Translation and Interpreting, English written translation)",
+ "level": "You can reliably turn out six or seven thousand characters a day from English into Chinese, and you know your way around the translation software and the translation memory. Engineering and contract terms you look up; medical abbreviations make your head spin. You hold the CATTI Level 3 (the national translation qualification); Level 2 you haven't sat yet",
+ "intro": "In two years of graduate school you translated novels and papers, and every sentence you handed your supervisor had been revised three times. Today the project manager gave you your first job: a forty-thousand-character engineering tender document, already run through the machine once, due in three days, paid by the thousand characters. As of today, the Translator field in the translation software has your name in it.",
+ "salary_note": "Estimate: a junior translator at a Beijing agency gets ¥5,000–6,000 base, plus a few dozen yuan per thousand characters over quota, a little over ¥7,000 a month take-home, more than 20% above the national figure. Since machine translation took hold, the human rate per thousand characters has fallen year after year.",
+ "facts": [
+  { "label": "Junior Translator / Translation Assistant (current level)", "value": "0-1 years, ¥5,270–7,750 a month (national average, estimated from pay by experience)", "source": "Pay by experience" },
+  { "label": "Next level up", "value": "Translator (1-3 years)", "source": "Career map" },
+  { "label": "Pay after 10+ years", "value": "¥15,800 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Finding and keeping your own direct freelance clients", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Translating a technical document", "source": "AI exposure" },
+  { "label": "Open positions", "value": "58 related job listings nationwide, 9 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "At 7:30 you leave your shared flat in Tiantongyuan and buy a jianbing, the folded street crepe, without the crispy cracker. On Line 5 you listen to a podcast of English speakers and shadow two sentences aloud; the man beside you gives you a look.",
+  "You open the translation software. Sentences matched from the translation memory show green and earn nothing; machine-translated ones show yellow and pay the post-editing rate; only the white ones left over are yours.",
+  "A carmaker's maintenance manual. The machine got torque right and turned a part name into a kind of fruit. You check two forums and a national standard, fix it, and add it to the termbase.",
+  "At 12:20, noodles with soybean paste downstairs with two translators from your team, talking about which client pays slowest and which reviewer is harshest.",
+  "The reviewer has returned yesterday's job: more than thirty red comments, and on the top line, fluent is not the same as accurate. You go through them one by one. Six you disagree with, and you write up why.",
+  "The project manager asks in the group who can rush a two-thousand-character legal letter tonight; the client needs it in the morning. You glance at today's word count and reply: I'll take it.",
+  "The rush letter is in. You enter today's count in the spreadsheet: 4,300 characters, 1,800 of them at the full rate, the rest post-editing machine output.",
+  "Back at the flat at ten, your flatmate is watching a drama. You open a book of past CATTI Level 2 papers, translate one passage against the clock, check it against the reference, and find you have dropped a not again."
+ ],
+ "ladder": [
+  { "title": "Junior Translator / Translation Assistant", "stage": "Entry", "focus": "Translate under a reviewer's guidance and learn the CAT tools." },
+  { "title": "Translator", "stage": "Junior", "focus": "Translate on your own and pass review; sit the CATTI Level 2." },
+  { "title": "Reviewer / Senior Translator", "stage": "Mid-level", "focus": "Review others' translations; own terminology and quality." },
+  { "title": "Language Specialist / Translation Project Manager", "stage": "Senior", "focus": "On the language track, do final review; on the management track, lead projects and teams." },
+  { "title": "Senior Reviser / Localization Operations Manager", "stage": "Principal", "focus": "Senior translation, or the operations and solutions track." }
+ ],
+ "ai_tasks": [
+  { "name": "Translating a technical document", "how": "AI produces a complete first draft and helps keep terminology consistent. A person checks the technical details and terms, resolves the ambiguous passages in the manual, and in the end answers for the quality of what is delivered." },
+  { "name": "Managing a multilingual localization project", "how": "AI handles bulk translation, term extraction and automatic checks for formatting and omissions. A person schedules the work, coordinates the translators for each language, deals with the client and judges cultural fit in each market." },
+  { "name": "Finding and keeping your own direct freelance clients", "how": "Finding clients, earning their trust, negotiating rates and keeping relationships going over years rests mostly on a person. At most AI helps polish a self-introduction or a pitch email." },
+  { "name": "Post-editing machine translation", "how": "AI produces the machine draft. A person goes through it sentence by sentence against the source, fixing mistranslations, omissions and stiff phrasing, and decides where a passage needs retranslating rather than patching." },
+  { "name": "Consecutive interpreting at meetings", "how": "Business talks have to be heard and rendered live, with tone, position and cultural detail intact, and when something goes wrong someone has to repair it on the spot and own it. At most AI helps prepare a glossary beforehand." },
+  { "name": "Reviewing others' translations and giving feedback", "how": "AI makes a first pass for mistranslations, omissions, inconsistencies and punctuation or formatting problems. A person judges whether the style is right and the meaning truly comes across, and writes the translator feedback that helps." },
+  { "name": "Preparing for the CATTI Level 2 translation exam", "how": "AI can be a sparring partner: setting practice texts, marking translations, explaining why one rendering works better. The skill itself has to be built by you, and in the exam hall you are on your own." }
+ ],
+ "events": {
+  "e_red_ink": "Your first big job came back from the reviewer covered in red. The project manager called you into a meeting room: the client had nearly rejected the job over one missing not. You went back to your desk, printed the comments and taped them beside your monitor.",
+  "e_good_client": "A medical device client praised your translation by name in their feedback: not a single term wrong, and they want you next time too. The project manager forwarded the email to the whole team.",
+  "e_rate_cut": "The agency revised its price list: any job that had been through machine translation would be paid as post-editing, at forty percent of the old rate per thousand characters. You worked it out: for the same work, more than ¥1,000 less this month.",
+  "e_dust": "Spring brought the poplar fluff and the sandstorms together, and you spent a week working late in the flat with the air purifier running. When you went out at the weekend, the whole street was yellow.",
+  "e_neck": "Ten hours a day staring at a screen of side-by-side columns, and your neck and eyes both rebelled. You began getting up after every thousand characters to look out of the window at the distant buildings.",
+  "e_ai_catch": "In a drug package insert, the machine had turned no more than twice a day into more than twice a day. You caught it the night before delivery and marked the line in bold red in the review log.",
+  "e_rush_week": "A big tender required two hundred thousand characters translated in five days, and the whole team worked round the clock. On the last night you slept three hours on the office sofa. The morning you delivered, you drank coffee for the first time.",
+  "e_term_base": "You built a termbase and style guide of more than three thousand entries for a long-standing client. After that, whenever another translator took one of their jobs, the first thing they opened was your file.",
+  "e_love": "You met an interpreter at an industry event. Over your first dinner the two of you argued for half an hour about how to translate one word, and were both laughing by the time you paid.",
+  "e_move": "Your landlord raised the rent, and you moved out to Tongzhou: ¥500 a month cheaper, forty minutes more commuting. You spend that hour-plus on the subway memorizing medical abbreviations.",
+  "e_overseas_client": "A game company going overseas asked you to translate the story text of a game, two hundred thousand characters with poems, dialect and puns. You translated it slowly. The client said it was the least machine-sounding translation they had ever seen.",
+  "e_unpaid": "A client held back payment for six months; in the end the agency sued and recovered half. It was your job, and your commission was halved along with it.",
+  "e_peers_leave": "Of the five translators who joined the agency the same year as you, three have gone: one passed the civil service exam, one became an administrator at a foreign company, one went home to teach high school English. At the farewell dinner everyone raised a glass and said the same thing: this line is getting hard.",
+  "e_wedding": "The wedding was back home. You and your partner each wrote vows, one in Chinese and one in English, and translated them for each other's relatives. Your grandmother said she didn't understand a word, but she cried.",
+  "e_ai_risk": "The agency's workflow now is machine first, then you decide the risk level: which jobs can go out after light edits, which must be retranslated by hand. You rated a contract high risk; the client thought it too expensive and ignored you, and later that very clause ended in a dispute.",
+  "e_child": "Your child was born. Back from leave, you took only jobs you could do from home, and in the small hours, once the baby slept, you checked sentence after sentence at the folding table in the living room.",
+  "e_mentor": "A new translator whose work you review came back after the first month as covered in red as yours once was. You didn't write fluent is not the same as accurate. You wrote out specific examples, one by one, each with its source.",
+  "e_book": "A publisher asked you to translate a history of Beijing's hutong alleys written by a foreigner, for only ¥80 per thousand characters. You took it and translated it chapter by chapter in the evenings. The day it came out you found it in a bookshop and turned to the title page to see your name.",
+  "e_parent": "Your mother was in hospital back home. You took your laptop and finished translating an annual report on the windowsill of her ward. A nurse asked what you typed all day. You said you turn what people say into another way of saying it.",
+  "e_volume_drop": "More and more clients run things through machine translation themselves and send only the small part that matters most for a person to check. The agency's volume halved, and the work that's left keeps getting harder.",
+  "e_old_term": "A young project manager came to you with the termbase you built ten years ago and asked why a certain term had been settled that way. You dug out your research notes from back then, with three alternatives written underneath.",
+  "e_eyes_late": "You've grown farsighted and set the software's font to size twenty. The young ones post-edit twenty thousand characters of machine output a day; you still only get through seven or eight thousand, but what reaches you is what nobody else dares to sign off."
+ },
+ "choices": {
+  "c_catti": { "title": "Sit the CATTI Level 2", "situation": "With a translation master's you are exempt from the general paper for CATTI Level 2 and only sit the practical one. Pass, and the agency will promote you from junior translator to Translator, with a higher quota and commission. Preparing will take three months of weekends, and there'll be no time for rush jobs.", "options": [
+   { "label": "Sit it this time", "result": "Every weekend you translated two past papers against the clock, checked the answers and translated them again. In the exam hall you were still writing the economics passage in the last minute, and came out with your hands shaking. The results came: passed." },
+   { "label": "Take more jobs first", "result": "You filled your weekends with jobs, and for those three months your commission was the highest on the team. As for the exam, you told yourself next year." }
+  ] },
+  "c_domain": { "title": "Which field to specialize in", "situation": "The reviewer who trains you says translators who take anything end up having everything taken by the machine. He urges you to dig into one field: pharmaceutical regulatory documents pay well and are hard to break into; legal contracts demand that not a single word is wrong; or keep taking anything, for the most volume.", "options": [
+   { "label": "Pharmaceuticals", "result": "You spent six months on pharmacology and clinical trial documents and memorized over a thousand abbreviations. When you handed in your first clinical study report, the reviewer changed only nine things." },
+   { "label": "Law", "result": "You bought a set of textbooks on English and American contract law and began quibbling over every word. You explained the difference between shall and may to new translators more times than you can count." },
+   { "label": "Take anything", "result": "Phone manuals today, a hotel menu tomorrow, a fund prospectus the day after. Your volume was always in the team's top three, but you couldn't say what you were best at." }
+  ] },
+  "c_mtpe": { "title": "The agency switches everything to post-editing", "situation": "The agency announces that from now on every job goes through the machine first and translators only post-edit: half the rate, double the quota. Or you can apply to the new human-machine workflow team, building termbases, tuning the engines and assigning risk levels to machine output.", "options": [
+   { "label": "Join the workflow team", "result": "You went from translating sentences to managing the process: which jobs the machine can handle, which need a person, how to feed the termbase to the engine. For the first time you felt you weren't racing the machine but showing it the way." },
+   { "label": "Stay on post-editing", "result": "You post-edit twenty thousand characters of machine output a day, your hands faster than your mind. The money at month's end isn't much less, but you realize it's been a long time since you spent half an hour on a single word." }
+  ] },
+  "c_reviewer": { "title": "Apply for Reviewer / Senior Translator", "situation": "The team's reviewer has gone to another agency, and the project manager asks if you'll apply for Reviewer / Senior Translator: no more commission by volume, a fixed salary instead, responsibility for the quality of the whole team's work, and the first call when a client complains.", "options": [
+   { "label": "Apply", "result": "You submitted a review log of a hundred thousand characters, with the errors sorted into twelve types. At the interview your topic was why machines go wrong most often in negative sentences. The project manager nodded on the spot." },
+   { "label": "Keep translating", "result": "You said you still wanted to translate yourself. Your volume and commission stayed the same. The new reviewer joined half a year after you, and was very polite when correcting your work." }
+  ] },
+  "c_interp": { "title": "Switch to interpreting", "situation": "Your partner interprets and says your listening and reflexes are good enough: take a consecutive interpreting course, get an interpreting certificate, and one day of conference work pays as much as half a month of written translation. But it's a different job: hear it live, say it live, and there is no undo key.", "options": [
+   { "label": "Switch to interpreting", "result": "Your first real consecutive job was an industry forum. The speaker raced along and your notepad filled with symbols only you could read. Afterwards the organizer said they'd book you again.", "end": "You moved from written translation to interpreting and spent many years in meeting rooms, trade fairs and factory floors; before every job you still verify the glossary entry by entry, the way you did as a translator." },
+   { "label": "Stay in written translation", "result": "You said you prefer work that gives you time to think. You help your partner prepare glossaries for meetings, the two of you going through them item by item at the dinner table." }
+  ] },
+  "c_freelance": { "title": "Go freelance", "situation": "Three of your regular clients are willing to come to you directly, cutting out the agency. A freelancer has no base pay and no social insurance, but the rate per thousand characters is double what the agency pays you, and you can work from anywhere.", "options": [
+   { "label": "Quit and go solo", "result": "You registered as self-employed and pay your own social insurance, issue your own invoices, chase your own payments. In the first year, at the busiest times you slept five hours a night; at the slowest you got one job a month." },
+   { "label": "Stay at the agency", "result": "You introduced all three clients to the agency. The project manager took you out for Beijing-style hotpot with sliced lamb and said your year-end bonus would reflect it." }
+  ] },
+  "c_hometown": { "title": "Leave Beijing", "situation": "Your child will soon start school, and in Beijing neither a school place nor a home is anywhere in sight. Your work can be done remotely; back in your home province's capital the same pay would go much further. But the clients, the industry circles and the opportunities are all in Beijing.", "options": [
+   { "label": "Move to the provincial capital", "result": "You bought a small three-bedroom flat there, the study window facing an old pagoda tree. On video calls clients say what a lovely tree you have behind you." },
+   { "label": "Stay in Beijing", "result": "You rented an old flat in Tongzhou near the school, and the way to school passes a breakfast stall. Every morning after dropping your child off you eat a red-bean bun at the stall before starting work." }
+  ] },
+  "c_pm_or_expert": { "title": "Translation Project Manager, or Language Specialist", "situation": "The agency wants to promote one person: as Translation Project Manager, leading a dozen translators, scheduling and dealing with clients, and later moving into localization operations; or staying on the language track as Language Specialist, looking only at the hardest texts and signing the final sign-off.", "options": [
+   { "label": "Project manager", "result": "Your days changed from word counts to schedules, five meetings a day, sometimes without writing a sentence of English. The first multilingual project you led delivered nine languages on time." },
+   { "label": "Language specialist", "result": "What reaches you are the texts nobody else will sign: listed companies' prospectuses, contracts for cross-border acquisitions. You read only a few thousand characters a day, and for every word you can give a reason." }
+  ] },
+  "c_teach": { "title": "Teach translation at a university", "situation": "Your old university's translation master's program is looking for teachers with industry experience and invites you to be a full-time practice supervisor. Less pay, but winter and summer breaks, and what the students want to hear is exactly what is left of this work after machine translation.", "options": [
+   { "label": "Go and teach", "result": "In your first class you put that old red-covered review on the screen. Machines won't make most of these mistakes, you said, but they will make one far deadlier, and you have to learn to find it.", "end": "You went back to university to teach translation and supervised many years of graduate students; in every first class you show them a text the machine got right for ninety-nine sentences and wrong in the one that mattered." },
+   { "label": "Stay in the industry", "result": "You said you couldn't leave real texts behind yet. You promised to give two lectures a term and take students through one real project." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last day you finished reviewing your last job and wrote the last comment in the review log. You tidied twenty-odd years of termbases on your computer and handed them to your successor: tens of thousands of entries, every one with its source. Coming out of the tower, it was snowing lightly on the streets of Wangjing. You pulled your scarf tight and thought of that first tender document.",
+  "burnout": "That winter you post-edited thirty thousand characters of machine output every day for three months, and one morning when you opened a job the two columns on the screen simply wouldn't line up. You told the agency you needed a break and handed back your projects. On the subway home, for the first time, you didn't put in your earphones to shadow anything. You just watched the lights outside the window slip backward one by one."
+ },
+ "past": [
+  "You went to high school in a prefecture-level city in Shandong. Your English teacher had the class copy out an English poem every week. You translated them into Chinese one by one in a green notebook and never showed anyone.",
+  "You got 142 in English on the gaokao (college entrance exam) and applied to the English department of a university in another province. Your father asked what you'd do after. You said be a translator. He asked if that meant the kind at the foreign ministry.",
+  "In your third year you passed the CATTI Level 3 in written translation. That summer you translated part-time for a small company at ¥60 per thousand characters, and with your first fee you bought your mother a scarf.",
+  "In your final year you got into a Master of Translation and Interpreting program at a university in Beijing. In the first class the teacher said your year might be the last that lives by translating sentences. Everyone laughed. You didn't.",
+  "In your second year of the master's you interned at a localization company and used translation memory and machine translation engines for the first time. A thirty-thousand-character job: the machine translated it in ten minutes, and you spent three days fixing it.",
+  "Your thesis was on the types of error machine translation makes in drug package inserts. After the defense you sent out twenty resumes. At the interview, this Wangjing agency's project manager had you post-edit a page of machine output on the spot, and when you'd finished said: start next week."
+ ],
+ "late": {
+  "pension_note": "Estimate: Beijing's urban employee pension scheme. The agency paid in on your base salary, and in your freelance years you paid in yourself at a low tier, with gaps in between. In retirement you get a little over 40% of your last monthly salary.",
+  "scenes": [
+   "For your first month of retirement you still sat down at your desk at nine every day, and only on turning on the computer remembered there was nothing to check. You took out the green notebook from high school and read a poem you had translated at fifteen.",
+   "An old man in your housing estate has children abroad, and the medicines they send him come with instructions all in English. You translated them one by one, copied them out in large characters, and stuck them on his fridge.",
+   "At last you had time to retranslate a novel you'd loved since you were young, not for publication, just for yourself. Five hundred characters a day, thinking over every sentence.",
+   "After leaving translation you took a job at the community library shelving foreign books by category. No word counts, no deadlines. At first you didn't know what to do with yourself.",
+   "Slowly your eyes recovered. You took up tai chi in the park at weekends; you remembered the instructor's commands after hearing them once, and silently ran them through in English.",
+   "Someone in your old colleagues' group asked how to translate a word, and everyone chimed in. You watched a long while, typed a line, deleted it, and in the end sent it anyway. Someone replied: you still know best.",
+   "In your first week in the new job you listened to people speaking English in meetings and still found yourself turning it into Chinese sentence by sentence, before realizing nobody needed you to.",
+   "Now and then you still take a written job or two from old clients, only the kind machines handle badly and you truly love. When you deliver you write a long note, the way you used to write to reviewers.",
+   "You passed the office tower in Wangjing. The translation agency moved out long ago; an AI company has taken its place. You looked up a while, wondering which language the people inside were teaching the machines.",
+   "Most words now are translated by machines, as quick as breathing. The news says that a contract, a drug package insert, a line of dialogue meant to make people cry, still needs one person in the end to sign and say: this is right.",
+   "On an old computer you find an assignment from graduate school: seven translations of one poem, your supervisor's one-line comment after each. After the last one: this will do.",
+   "Your grandchild is learning English and asks you what a word means. You don't answer straight away. You ask who said this sentence, to whom, and when, and only then tell them."
+  ],
+  "closing": {
+   "retire": "One afternoon many years later you sit by the window, the unfinished novel open on your knees, sunlight on the page. You turn a sentence three ways in your head, choose one, and write it lightly in pencil in the margin.",
+   "burnout": "Many years later, on a park bench, you hear two foreign tourists asking the way while everyone around them reaches for phones to translate. You wait a moment, let their phones finish, then add one thing: that hutong is actually a dead end.",
+   "end": "Many years later, sorting the bookshelf, you find your CATTI Level 3 certificate. On the back, in ballpoint, is a word followed by three alternative renderings. You can no longer remember which job it was from, only that it was a cold day."
+  }
+ },
+ "stages": [
+  "You translate in Trados sentence by sentence: confirm the translation memory matches, fix the machine output, translate the rest yourself, and save every term you research to the termbase. The project manager assigns jobs and sets deadlines; the reviewer corrects and grades your work, and everything you produce passes through his hands. Who the client is and what the text is for, you mostly don't know.",
+  "Now you take jobs on your own, and the reviewer only spot-checks. The project manager has handed you one client for the long term; you build them a termbase and style guide, and when the source is ambiguous you send the client a query sheet. Your daily quota is eight thousand characters, and you decide the order yourself: which jobs can start from machine output, which must be translated from scratch.",
+  "You've gone from translating to revising: all day in review mode on other people's translations, scanning for omissions and numbers with QA tools, then reading sentence by sentence to see whether the meaning arrived. You grade each translator and write feedback, and client complaints come to you first. The team's termbase and style guide are yours to maintain; change one term and a dozen people's work changes with it.",
+  "On your desk is no longer a text but a whole project: hundreds of thousands of characters, nine languages, one schedule. You run kickoff meetings with clients to settle terminology and workflow, pick translators and reviewers for each language, track progress in the project management system, and replace anyone who drops the ball, fast. The hardest few texts still end with your signature.",
+  "You run an entire localization business: negotiating annual framework contracts with major clients, setting the human-machine workflow and pricing, deciding which engines may be used and which texts must be done by people. A dozen project managers and language specialists report to you. You speak at industry conferences about quality standards after machine translation, and come back to handle a major client complaint."
+ ],
+ "work": [
+  "An engineering tender used three different renderings for notice of award. You unified them in the termbase and emailed the reviewer to ask which to use.",
+  "The project manager sent a scanned contract. You converted it to text with recognition software and fixed more than twenty misread numbers against the original before you began translating.",
+  "The reviewer wrote on your job: unclear subject. Rereading the source, you found an it that referred to the equipment in the previous paragraph, not the company.",
+  "In a carmaker's recall notice a part number in the source didn't match the drawing. You sent the client a query sheet and the next day received a corrected version.",
+  "A client's marketing team found your translation too stiff. Using their brand book, you rewrote the slogan, turning outstanding quality into a verb.",
+  "A pharmaceutical client sent a fifty-page clinical protocol. You ran it through the machine first, marked every dose and time unit, and then checked each one by hand.",
+  "You ran a QA tool over a hundred-thousand-character translation and got more than three hundred warnings. You went through them one by one; forty-one were real problems.",
+  "A new translator had rendered warranty period five different ways. You didn't correct his text; you sent him the termbase and let him find them himself.",
+  "A client complained that a manual had been mistranslated. You pulled the review log and compared it line by line, and found the client had changed the source without telling anyone.",
+  "A game company's project had to launch in nine languages within two weeks. On the schedule you split each language into three parts and gave each part a reviewer.",
+  "The German translator fell ill just before delivery. In the middle of the night you phoned down your list of translators and at one in the morning found a freelancer in Berlin.",
+  "At a project kickoff you showed the client a risk matrix: which content gets machine translation plus spot checks, which must be translated fully by people, and what each costs.",
+  "A carmaker came to negotiate its annual contract wanting everything machine-translated. You produced last year's three mistranslated recall notices and won the clause for human review.",
+  "Choosing between two machine translation engines, you had three language specialists blind-rate the same batch of texts for a week. The one you chose wasn't the cheaper one.",
+  "A long-standing client sent a sharply worded complaint. You didn't let the project manager reply; you arranged to meet them in person yourself and brought the complete review logs."
+ ]
+}

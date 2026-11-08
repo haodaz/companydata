@@ -1,0 +1,202 @@
+{
+ "id": "escort-bj",
+ "occupation": "Medical Escort",
+ "role": "Medical escort (former nurse)",
+ "headline": "A medical escort in Beijing who was a nurse in Baoding for seventeen years, followed her family to the capital after a back injury, and now spends every day walking elderly patients from the provinces through the big hospitals: registering, queuing, collecting their medicine",
+ "unit": "A small medical escort studio in Xicheng, Beijing, taking jobs from platforms and referrals from regular clients",
+ "unit_type": "Medical escort studio",
+ "city": "Beijing",
+ "city_tier": "Tier 1",
+ "education": "Secondary vocational nursing diploma + adult-education associate degree (Nursing)",
+ "level": "Seventeen years as a nurse: you can read a lab report, understand a doctor’s orders and spot low blood sugar at a glance; you know the buildings and lifts of most of Beijing’s big hospitals, and you are still working out the patterns of when specialist appointments are released",
+ "intro": "You were a nurse at a hospital in Baoding for seventeen years, and your back gave out on the night shifts. In your second year in Beijing you no longer give injections; you go with people to see the doctor. You wait at a hospital gate for an old man who came in on the overnight train, take him to have blood drawn, to his scans, to the doctor, to the pharmacy, and write down everything the doctor says in those six minutes. As of today you have your own column on the studio’s rota, and the first page of regular clients in your phone.",
+ "salary_note": "Estimate: medical escorts in Beijing charge ¥300–400 for a half day and ¥500–600 for a full day; after the platform’s cut, take-home is around ¥9,000 a month, about 1.3 times the national figure. Volume depends on the season and on word of mouth, there is no base pay, and you pay your own social insurance as a flexible worker.",
+ "facts": [
+  { "label": "Medical Escort (current level)", "value": "1-3 years, ¥6,000–10,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Senior Care Navigator (3-5 years)", "source": "Career map" },
+  { "label": "Monthly pay, 3–5 years in the field", "value": "¥10,500 (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Stepping in on the spot during a sudden hypoglycemic episode and coordinating the report with hospital staff", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Sequencing several tests in the morning rush and moving patients by wheelchair", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You leave your rented room outside the South Fourth Ring Road to catch the first metro. In your bag: sweets, a bottle of warm water, a blood pressure monitor, a roll of tissues, and a notebook full of hospital floor plans.",
+  "At the hospital gate you meet your clients: an old man from Chifeng and his daughter, after a night on the train, carrying a woven plastic bag stuffed with scans. First you ask whether he’s eaten; he says he knew he had to fast and didn’t even dare drink water.",
+  "The line at the blood-draw windows is already long. You sit the old man in a chair and queue standing yourself, helping him over when it’s his turn. Afterward you hand him a sweet.",
+  "Outpatients. You had already boiled his ten years of history down to one page, and the doctor reads it and asks only three questions. Outside the consulting room, you tell him again what the doctor said, in words he understands.",
+  "The CT and the ultrasound are in two different buildings. You push the wheelchair through the underground passage, avoiding the lift that is always under maintenance. Behind you the daughter says, on our own we’d never have found the way.",
+  "In the noodle shop across from the hospital the old man says it’s too expensive and won’t order. You ask for two bowls of zhajiang noodles and say this one’s on you.",
+  "At the pharmacy window they say his out-of-province medical insurance registration hasn’t taken effect. In the corridor you call the insurance center back home; the fourth number finally gets through. You pay out of pocket for now and show the daughter how to claim it back at home.",
+  "At home you write up the day’s visit summary and send it to the daughter, and to the son back home: results, medication, the date of the next check-up, which tests need fasting. Then you soak your feet."
+ ],
+ "stages": [
+  "You take whole-journey jobs on your own: before the visit, helping families work out which department and which doctor, watching for appointment releases, lining up the tests; during it, pushing the wheelchair, noting the doctor’s orders, waiting alongside; afterward, sending the family the summary and medication list. Your tools are the registration mini-app, a folding wheelchair and a map of each hospital’s routes you drew yourself. Most clients are elderly people from out of town, and their children on the other end of the phone.",
+  "The jobs you take are mostly the hard ones: cancer, rare diseases, people who need consultations across two or three hospitals. You plan the visits for families: which hospital first, which specialty, which tests can be done back home first. You now deal with specialists’ assistants, hospital social workers and the admins of patient groups, and your tools include a timetable of specialist clinics you compiled yourself. You also have two newcomers whose summaries you correct.",
+  "You manage a team of a dozen or so escorts: every evening you schedule the next day, who goes to which hospital and when; training, service quality checks and complaints are all yours. You spend more time on the phone than pushing wheelchairs, and the people you deal with are the platform’s operations staff, the hardest member of any family, and the escort who runs into trouble at a hospital in the middle of the night.",
+  "You run an entire escort business line: negotiating fast-track medical service contracts with insurers, on-site placements with retirement communities, and referral arrangements with internet hospitals. What you read every day is service volume, ratings and compensation records, and the people across the table have changed from families to procurement and legal. You seldom queue in a hospital anymore; when you do, it’s to go with an old client."
+ ],
+ "work": [
+  "A son from Tangshan says his father is hard of hearing, so in the consulting room you write every sentence the doctor says in large letters on a sheet of A4 and hold it up in front of the old man’s eyes.",
+  "An old man has a contrast CT and a gastroscopy booked on the same day. One look at the test slips and you run to the booking desk and move the gastroscopy to the next day, so he won’t be fasting until afternoon.",
+  "A woman from Inner Mongolia has a dozen years of medical records in a plastic bag. In the waiting area you sort them by date, sheet by sheet, and clip them into three bundles.",
+  "A client with a lung nodule got three different opinions at three hospitals. You turn the three reports and the scans into one comparison table and help the family get a multidisciplinary consultation.",
+  "A newcomer you’re training goes out on her own for the first time, and in her summary “twice a day” has become “once every two days.” You call her and have her correct it immediately and resend it to the family.",
+  "A patient group admin asks you privately whether you can “find a way” to get a certain specialist’s appointment. You say all you can tell her is what time slots are released, and on which channel.",
+  "At ten at night one of your escorts calls to say her client can’t stay on his feet at the hospital gate. You tell her to get him to emergency while you phone the family, noting the time of every call.",
+  "The platform’s operations team wants twenty minutes cut from every job. You pull a month of job sheets, mark in red pen which time was spent waiting for tests, and say that part can’t be cut.",
+  "A family complains that an escort was cold to them. You go through the day’s service record, then arrange to meet the family and the escort together, and each gets twenty minutes to talk.",
+  "Someone from an insurer’s procurement team comes to negotiate and wants the unit price cut by thirty percent. You turn to the service standards page and say fine, but a few of these items will have to go, and he can choose which.",
+  "You go to a retirement community to discuss an on-site placement, and the director shows you the clinic. You count the wheelchairs along the wall and say, before I come back, get the brakes on these two fixed.",
+  "Legal sends you an indemnity clause for accompanied hospital visits to review. You rewrite the line “escort staff are not responsible for medical outcomes” in words an old person can understand."
+ ],
+ "ladder": [
+  { "title": "Trainee Medical Escort", "stage": "Entry level", "focus": "Learns the physical routes and self-service machines of the leading hospitals in the area and, under a mentor, handles simple medicine pick-ups, report collection and shadowed escort jobs; promoted on error-free service." },
+  { "title": "Medical Escort", "stage": "Core staff", "focus": "Independently handles whole-journey escort for elderly patients, pregnant women and patients from out of town, coordinating multiple test bookings and organizing doctors’ orders; promoted on high ratings and repeat bookings." },
+  { "title": "Senior Care Navigator", "stage": "Advanced", "focus": "Leads tailored visit plans and cross-hospital referral planning for patients with serious or complex illnesses, trains newcomers, and handles complicated complaints and VIP clients; promoted on expertise in planning across departments." },
+  { "title": "Escort Services Supervisor", "stage": "Team management", "focus": "Runs daily scheduling for a regional escort team, quality checks against service SOPs, the training system for newcomers and mediation of patient-hospital disputes; promoted on team productivity and compliance rates." },
+  { "title": "Director of Health Services", "stage": "Business leadership", "focus": "Runs a regional escort business line and its P&L, manages business clients such as insurers’ fast-track medical services and premium retirement communities, and sets industry standards and the product range." }
+ ],
+ "ai_tasks": [
+  { "name": "Sequencing several tests in the morning rush and moving patients by wheelchair", "how": "AI sets the order of tests from the types on the slips and the fasting requirements and estimates the route; a person pushes the wheelchair through the morning rush, watches the patient, adjusts as things change and keeps the family informed." },
+  { "name": "Planning and carrying out patient transfers between several outpatient tests", "how": "AI can draft the order of fasting and post-meal tests with notes; a person handles the transfers safely, watches for signs of low blood sugar, and tells the family what happened in the proper way." },
+  { "name": "Test-walking the fasting test route for an elderly diabetic patient before the midday rush and fitting the wheelchair", "how": "AI can rehearse the route and waiting points from where the three tests are located; a person has to walk it in person to check it, and adjust the wheelchair by hand so the old person sits steady and comfortable." },
+  { "name": "Stepping in on the spot during a sudden hypoglycemic episode and coordinating the report with hospital staff", "how": "AI can at most remind you of the steps; recognizing the symptoms, acting on the spot, reaching the hospital’s emergency channel and answering for the outcome can only be done by the person who is there." },
+  { "name": "Escorting a patient through a cross-hospital multidisciplinary cancer consultation (MDT) and pinning down the treatment path", "how": "AI can organize the records, summarize the three departments’ opinions and draft a 30-day treatment calendar; a person coordinates with each department, explains the consensus to the patient and family, and checks whether the calendar can actually be followed." },
+  { "name": "Pulling together quarterly follow-up data for chronically ill residents of a care home and issuing risk alerts", "how": "AI can merge data from three sources, chart health trends and trigger high-risk alerts by rule; a person only spot-checks whether the alerts make sense and follows up with the high-risk cases." },
+  { "name": "Switching over when an electronic medical insurance card fails, and reactivating an out-of-province registration", "how": "AI can provide reference on the registration and verification procedures, but the offline verification against the clock, falling back to the paper certificate, and talking the window into repairing the registration all need a person on the spot." }
+ ],
+ "events": {
+  "e_hypo": "An elderly diabetic patient starts trembling and sweating while waiting for a test. You recognize low blood sugar at once, have him hold a sweet in his mouth, and call a nurse over at the same time. Later his daughter says on the phone, thank goodness it was you.",
+  "e_scalper": "At the gate someone stops your client and says for ¥500 extra he can get a specialist appointment. Your client is tempted; you talk him out of it, and the next morning before dawn you watch the mini-app for the release yourself and get one.",
+  "e_bad_review": "A son is unhappy you didn’t get his father to the front of the queue and leaves a bad review on the platform. The platform cuts your job allocation for a week, and you stare at the empty jobs page and don’t leave the house all day.",
+  "e_insurance": "An old man’s electronic medical insurance card won’t scan at the window, and his out-of-province registration shows as lapsed. You stand at the window making a dozen calls, settle the bill with the paper certificate in the end, and then help him get the registration restored.",
+  "e_classmate": "At one hospital you run into a classmate from nursing school who is now a head nurse there. She buys you a coffee and asks if you’ll ever go back to nursing. You say your back won’t let you.",
+  "e_rain": "In a downpour you push a wheelchair from the outpatient building to the inpatient building, put your raincoat over the old man and get soaked from head to toe yourself. All the way he keeps saying sorry.",
+  "e_millet": "An old man you’ve escorted seven times gets a very good check-up result. His daughter sends a bag of new millet from back home, your name written on it in marker.",
+  "e_standard": "Beijing issues standards for medical escort services, and the platform requires certification to work. You sit the special skills certificate for escort services; the practical tests pushing a wheelchair up a ramp and writing a visit summary.",
+  "e_ai_route": "The platform launches AI scheduling: photograph the test slips and it orders them and works out fasting and routes. You only change one or two things on site, and no longer sit up drawing in your notebook until midnight.",
+  "e_ai_lift": "The route the AI planned didn’t know that building’s lift was under maintenance, and you push the wheelchair the long way round for twenty minutes. Back home you file feedback in the system: this lift is serviced every Tuesday morning.",
+  "e_ai_alert": "The follow-up system flags one of your regulars red. You call him and learn he stopped his blood pressure pills three days ago because they made him dizzy. You stay on the phone with him while he takes them.",
+  "e_husband": "Your husband drives for a ride-hailing app and works nights, and you’re out before dawn. The only meal you share in a week is Sunday lunch; afterward he goes to sleep and you go to write summaries.",
+  "e_son_exam": "Your son is in middle school in Beijing, but without a Beijing household registration he has to go back to Baoding for the high school entrance exam. You talk it over for several nights and finally send him back in his second year, to live with his grandmother.",
+  "e_back": "The back injury from your nursing years flares up again. Pushing a wheelchair up a ramp, you suddenly can’t straighten, and stand at the handrail for a long moment before pushing on.",
+  "e_heels": "Twenty thousand steps a day, and you’ve grown heel spurs. You switch to thick-soled shoes, and the young woman at the studio says they’re just like her grandmother’s.",
+  "e_hard_news": "An old man’s results are bad. His daughter says on the phone not to tell him yet. You hang up, go back to the corridor and sit with him, waiting for him to ask in his own time.",
+  "e_fee": "The platform’s cut rises from twenty percent to thirty, and each job brings in a few dozen yuan less. Two of the women at the studio go off to do cleaning work instead.",
+  "e_tv": "A media outlet comes to film medical escorts and follows you for a whole day. You stumble over your words in front of the camera, but after it airs, a lot of grown children in other provinces add you on WeChat.",
+  "e_rent": "The landlord raises the rent, and you move from the South Fourth Ring to beyond the Sixth Ring. You get up forty minutes earlier every morning, and on the first metro you get to know a few care workers also heading to hospitals.",
+  "e_mother": "Your mother is in hospital in Baoding. After all these years of taking other people to the doctor, this time you can only direct your younger brother by phone: which appointment to book first, which scans to bring, which three questions to ask the doctor.",
+  "e_trainee": "A nursing graduate joins the studio, and you teach her to write her first visit summary: families only want to know three things. The results, how to take the medicine, and when to come back.",
+  "e_regular": "One regular client comes to Beijing every autumn for a check-up, and messages you three months ahead: it’s still you, right? Don’t send anyone else.",
+  "e_glasses": "You need reading glasses to make out the small print on lab reports. You keep them in the same pocket of your bag as the sweets."
+ },
+ "choices": {
+  "c_solo": {
+   "title": "Go solo, or stay with the studio",
+   "situation": "You have more and more regulars, and people tell you to go solo and stop sharing your fees with the studio and the platform. But on your own, nobody has your back when something goes wrong, and nobody sends you work in the slow season.",
+   "options": [
+    { "label": "Go solo, regulars only", "result": "You print a business card with only your name and number. For the first three months work comes and goes; in the fourth, your week is fully booked for the first time." },
+    { "label": "Stay with the studio", "result": "You keep taking the studio’s jobs and paying its cut. Once when a client complained, it was the studio that stepped in and took it for you." }
+   ]
+  },
+  "c_nurse": {
+   "title": "Go back to nursing?",
+   "situation": "A private hospital in Beijing is hiring experienced nurses, with full social insurance and a base salary, as long as you transfer your nursing registration. But it’s three rotating shifts, and you know your back.",
+   "options": [
+    { "label": "Back to the ward", "result": "You transfer your registration and put on the nurse’s uniform again. On your first night shift, as you sit down at the nurses’ station, you let out a long breath.", "end": "You went back to the ward as a nurse at a private hospital in Beijing, and when you see an escort pushing an old person from out of town down the corridor, you look a little longer." },
+    { "label": "Keep escorting", "result": "You turn it down. At half past six the next morning you are at the hospital gate as usual, waiting for an old woman coming in from Zhangjiakou." }
+   ]
+  },
+  "c_ai": {
+   "title": "Help AI redesign the work?",
+   "situation": "The platform is building AI scheduling and templates for talking to families, and wants a few frontline escorts to decide together what goes to the system and what needs a person there. It means a lot of meetings and no money.",
+   "options": [
+    { "label": "Go, put your experience into the system", "result": "You break more than a decade of nursing and escorting into rules: blood draws first while fasting, full-bladder ultrasound last, sit an old person down after twenty minutes on their feet. Once it’s live, the whole platform schedules by your rules." },
+    { "label": "Don’t, just do your own jobs well", "result": "You give your time to your clients. Once the system is live you use it, and where it seems wrong, you fix it yourself on the spot." }
+   ]
+  },
+  "c_price": {
+   "title": "Raise your prices?",
+   "situation": "Your regulars now have to book two weeks ahead. The women at the studio say you should have raised your rates long ago; people would still book a half day at ¥500 instead of ¥300. But your earliest clients all came from small county towns.",
+   "options": [
+    { "label": "Raise prices, tier by difficulty", "result": "New clients pay the new rate, and hard jobs are billed as full days. Your income rises a good step, and two old clients stop coming." },
+    { "label": "Keep old clients at the old price", "result": "You hold the old price for old clients and charge the new one only to new clients. The ledger shows a little less every month, and at New Year the millet and red dates that arrive are a little more." }
+   ]
+  },
+  "c_planner": {
+   "title": "Moving up to Senior Care Navigator",
+   "situation": "The studio wants one person to specialize in visit planning for serious and complex illnesses, as a Senior Care Navigator: you need to know each hospital’s leading specialties, handle cross-hospital referrals and train newcomers. To get there you’d first have to pass the health manager certificate and build your own database of specialists.",
+   "options": [
+    { "label": "Get the certificate, build the database", "result": "You study whenever you’re off a job and pass in six months. Your specialist database becomes a thick spreadsheet: the first column is the illness, the last is which hospital has appointments on which afternoon." },
+    { "label": "Do ordinary jobs well first", "result": "You say you’ll build up another year of experience. The hard cases go to someone else, and when you run into her at a hospital, you sometimes show her the way." }
+   ]
+  },
+  "c_baoding": {
+   "title": "Go back to Baoding with your son?",
+   "situation": "Your son is preparing for exams in Baoding, his grandmother can’t keep him in line, and his grades are slipping. You could go back to Baoding and take jobs from there, bringing elderly people from home to Beijing by high-speed train to see doctors. Fewer jobs, a lot less money.",
+   "options": [
+    { "label": "Go back to Baoding, work both ends", "result": "Two or three times a week you take the high-speed train: pick up an old person in Baoding in the morning, sit down in a Beijing consulting room by noon. In the evening you’re home and can watch your son do his homework." },
+    { "label": "Stay in Beijing", "result": "You video-call your son for half an hour every evening and go back on weekends. On the day of his exam, you are in Beijing taking an old man for a gastroscopy." }
+   ]
+  },
+  "c_supervisor": {
+   "title": "Running for Escort Services Supervisor",
+   "situation": "The studio has grown into a team of a dozen or more, and the owner wants an Escort Services Supervisor: scheduling, quality checks, training, complaints. You would take fewer jobs and spend more time in front of the phone.",
+   "options": [
+    { "label": "Take the supervisor job", "result": "You write a twenty-page service handbook whose first page says: first, ask the old person if they’ve had breakfast. From then on your phone rings after ten at night too." },
+    { "label": "Keep taking jobs", "result": "You say you still like pushing a wheelchair through a hospital. The owner brings in an outsider as supervisor, and your name is still the fullest row on the rota." }
+   ]
+  },
+  "c_insurer": {
+   "title": "Fast-track coordinator at an insurer",
+   "situation": "An insurance company’s health management department is hiring a fast-track medical services coordinator, booking specialists and arranging admissions for critical illness policyholders. An office job, with base pay and social insurance, and no more twenty thousand steps a day.",
+   "options": [
+    { "label": "Join the insurer", "result": "Every day you book appointments and arrange beds for clients over the phone, seventy or eighty calls a day. By the end of the day your back doesn’t hurt; your voice is gone.", "end": "You became a fast-track medical services coordinator at an insurance company, booking appointments from your desk for people a thousand kilometers away, sometimes adding one more reminder on the phone: remember to fast." },
+    { "label": "Keep walking the hospitals", "result": "You say you need to see an old person’s face to know how they really are. They say call anytime if you change your mind." }
+   ]
+  },
+  "c_director": {
+   "title": "Becoming Director of Health Services",
+   "situation": "A chain of medical escort companies wants you as its Director of Health Services, running the whole North China business and dealing with insurers and retirement communities. Or you could open your own studio and take only a few people you trust.",
+   "options": [
+    { "label": "Become the director", "result": "You have so many meetings you need two calendars. The day you sign the first retirement community contract, you take a sweet out in the meeting room, and nobody knows why." },
+    { "label": "Open your own studio", "result": "You rent a small room near a hospital and hang each hospital’s floor plans on the wall. Every one of the five people you train can recognize low blood sugar." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "Your last job is with the regular who comes every autumn. His results haven’t changed, and at the hospital gate he holds your hand for a long time. You give the sweets, the blood pressure monitor and the notebook full of floor plans to the young woman at the studio, and take the metro home. The carriage is nearly empty, and for the first time you sit down at seven in the morning with nobody waiting for you.",
+  "burnout": "That winter, pushing a wheelchair up a ramp, your back gives way and you nearly roll backward with the old man. You steady yourself, get him to the consulting room door, then call the studio and say this is your last job. On the metro home you stand the whole way, because if you sit down you won’t get up."
+ },
+ "past": [
+  "You finish middle school in the countryside outside Baoding. Your family says a girl should start earning early, so you test into the nursing program at the city’s health school; your mother sold two pigs to pay the fees.",
+  "You do your placement at a hospital in Baoding. The first time you put a line into an old man’s vein it takes three tries. He doesn’t make a sound. You cry in the dorm that night, and the next day take tangerines to the ward to find him.",
+  "You pass the nursing license exam and stay on at the county hospital, where you work the medical ward for more than ten years, two or three night shifts a week.",
+  "Through an introduction you marry him, a truck driver. In the third year your son is born, and while raising him you complete a correspondence associate degree in nursing.",
+  "One night shift, turning a large patient on your own, something clicks in your lower back. The scan shows a herniated disc, and from then on you strap on a back brace before every night shift.",
+  "Your husband goes to Beijing to drive for a ride-hailing app, and your son transfers to a primary school in Beijing. You hold on alone in Baoding for two more years, taking the high-speed train there every Friday night and back every Sunday night.",
+  "You quit and move to Beijing. Nursing posts have age limits and your registration would have to be redone, so you take your first escort job on a platform: an old woman from Handan at the eye clinic. You earn ¥200, and fall asleep on the metro home."
+ ],
+ "late": {
+  "pension_note": "Estimate: a dozen-plus years of social insurance at the Baoding hospital, then self-paid contributions as a flexible worker in Beijing, give a pension of about 40% of your final monthly salary; the extra you earned in busy years is not counted.",
+  "scenes": [
+   "The first morning of retirement you wake at 5:40. You lie listening to the sweeping downstairs for a while, then close your eyes again.",
+   "Old clients still call to ask if you’ll go with them one more time. You say you’re not running around anymore, and pass them to the most careful young woman at the studio.",
+   "You and your husband go back to Baoding and move into the flat your son put the deposit on. The old folks in the estate know you understand these things and often bring you their lab reports; you put on your reading glasses and go through them line by line.",
+   "For the first month after stopping you lie down every day to rest your back. Your phone still holds dozens of families on WeChat, and you message them one by one to say they won’t be able to find you anymore.",
+   "Once your back is a bit better, you find part-time work at the community health station, taking blood pressures and registering the elderly, half a day at a time, no walking.",
+   "You see on the news that medical escort services can now be covered by long-term care insurance. You call one of the women from the studio, and she says there are more jobs than they can take.",
+   "In the first month of your new job you pass that hospital and stand at the gate for a while. There’s still a long queue, and an old man with a woven bag is looking for the way; you walk over and point him in the right direction.",
+   "An old client tracks down your new number to say his grandson has got into university, and he wanted to thank you for helping him finally understand his illness that year.",
+   "The women from the studio get together. One has opened her own shop, another has gone home. You talk about which hospital lift was the slowest back then and laugh for a long time.",
+   "You hear AI can now plan a patient’s whole route from registration to pharmacy and send reminders to the family. But pushing a wheelchair, recognizing low blood sugar, sitting with someone in a corridor: those still need a person to go.",
+   "Your son becomes a father. The night the baby has a fever he calls you, and you tell him step by step on the phone: take the temperature first, then look at how alert the baby is, don’t rush to the hospital.",
+   "You go to the hospital for your own check-up, sit on a chair in the waiting area, and watch a young escort push an old man past, the corner of a sweet wrapper poking out of her bag."
+  ],
+  "closing": {
+   "retire": "Many years later, one autumn, a bag of millet arrives from back home with your name on it. You think for a long time about who sent it, then stop thinking, and cook a pot of porridge.",
+   "burnout": "Many years later, you are sunning yourself on a bench in the estate when the old woman beside you says she has to go to Beijing next week to see a doctor and doesn’t know how to book. You take a piece of paper from your pocket and draw her a map.",
+   "end": "Many years later, in a drawer, you find the old notebook full of hospital floor plans, several pages wrinkled from water. You turn to the first page, and it says: east gate, second lift on the left is the fastest."
+  }
+ }
+}

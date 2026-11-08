@@ -1,0 +1,162 @@
+{
+ "id": "cleaner-sh",
+ "occupation": "Cleaner",
+ "role": "Office tower cleaner",
+ "headline": "A woman who spent ten years on an electronics assembly line in Suzhou, went home to Fuyang in Anhui to raise her grandson, and at fifty-two came out again to clean the common areas of floors 28 to 30 in a forty-story office tower in Shanghai's Lujiazui financial district, employed by an outsourced cleaning company",
+ "unit": "A forty-story Grade A office tower in Lujiazui, Shanghai, whose property manager outsources cleaning to a contract company",
+ "unit_type": "Office tower (outsourced cleaning)",
+ "city": "Shanghai",
+ "city_tier": "Tier 1",
+ "education": "Junior high school",
+ "level": "Sweeping, mopping, wiping and emptying bins you've done all your life, at home and in the factory. You've only just learned to drive the floor scrubber, you still read the disinfectant ratios off the chart on the wall, and the clock-in QR codes often refuse to scan",
+ "intro": "You spent ten years in an electronics factory in Suzhou, then went back to Fuyang and raised your grandson. Now he's in primary school, your husband has found work on a building site in Shanghai, and you've followed him; a woman from your home village got you into this tower in Lujiazui. The team leader handed you a gray uniform and an access card and said floors 28 to 30 are yours. As of today, at five every morning, the first person to swipe open those floors is you.",
+ "salary_note": "Estimate: outsourced cleaning in a Lujiazui office tower pays about ¥4,500 a month take-home, with overtime and holidays extra, 30% above the national figure. Past retirement age, you are on a labor service agreement, and the company pays no social insurance.",
+ "facts": [
+  { "label": "Cleaner (current level)", "value": "0-1 years, ¥3,000–4,500 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Cleaning Team Leader (1-3 years)", "source": "Career map" },
+  { "label": "Pay in the first year", "value": "¥3,600 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Dealing with an unidentified spill in a restroom and handing over", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Mist-dusting the low section of the atrium's glass curtain wall before the lunch rush", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "At 4:05 you get up in the single-story room you rent in Zhoupu; your husband is still snoring. You warm up last night's steamed bun and ride your e-bike toward Lujiazui along roads that aren't light yet. An hour.",
+  "At five you enter by the staff passage on basement level two, change into your uniform in the tool room and collect a bucket of mixed disinfectant. In the freight elevator there's only you and a young man delivering water jugs, yawning.",
+  "Restrooms first. Three floors, six restrooms: toilets, sinks, mirrors, floors, one thing after another, and when each is done you scan the QR code on the back of the door.",
+  "At seven, the pantries: coffee grounds, takeout boxes, half-drunk bubble tea, sorted into dry and wet waste. One company's bin has a stack of unshredded documents in it; by the rules you take it to their reception.",
+  "At 8:30 the office workers start pouring in, and you stand against the wall with your cart to let them pass. Shoe soles streak the marble floor of the elevator lobby, and you follow behind with the dust mop, again and again.",
+  "At 11:30 you eat in the tool room on basement level two: greens your husband stir-fried last night and half a box of rice. Five or six women queue for the microwave, all talking in Anhui or Henan dialect.",
+  "The lunch rush fills the restrooms again. You do a round every half hour, restocking paper and hand soap. A young woman is crying on the phone in a stall; you wait outside until she comes out before going in to mop.",
+  "At 2:10 you hand over and ride back to Zhoupu, stopping at the market for a bunch of greens and two blocks of tofu. At home you video-call your grandson in Fuyang first. He's doing homework and has no time for you."
+ ],
+ "ladder": [
+  { "title": "Cleaner", "stage": "Entry / trainee", "focus": "Daily floor cleaning in your assigned area, moving waste and disinfecting restrooms. You become team leader by following procedures to the letter, zero complaints and perfect attendance." },
+  { "title": "Cleaning Team Leader", "stage": "Frontline backbone / technical", "focus": "Handle the team's attendance and shift rota, morning briefings and supplies in and out; lead on technical jobs like marble restoration and carpet cleaning. You are promoted on team performance and technical problem-solving." },
+  { "title": "Property Environmental Supervisor", "stage": "On-site management", "focus": "Oversee cleaning, landscaping and pest control for the commercial buildings or residential estate in your charge, monitor contractors, and handle tenants' urgent repair requests and odor complaints in common areas. You are promoted on quality targets and cost savings." },
+  { "title": "Cleaning Project Manager", "stage": "Project lead / full operations", "focus": "Run the profit and loss of environmental services for a large mall or industrial park, lead contract renewals, bid costing and upgrades to smart equipment. You move up on project margins and renewal rates." },
+  { "title": "Property Environmental Manager", "stage": "Senior management / regional expert", "focus": "Oversee the environmental services of several projects, write the region's standard operating playbook, and lead on major crises and green building certification. You hold your senior place on systems and regional results." }
+ ],
+ "ai_tasks": [
+  { "name": "Dealing with an unidentified spill in a restroom and handing over", "how": "AI can't help with the hands-on part: an unknown liquid has to be smelled, looked at and judged safe to touch by a person, who then cordons it off, absorbs it and cleans. At most AI helps write up what happened as a work order afterwards." },
+  { "name": "Mist-dusting the low section of the atrium's glass curtain wall before the lunch rush", "how": "AI can draw up the daily cleaning schedule and use cameras or sensors to flag which panes are dirty. The actual mist-dusting, the corners, and dealing with customers who are around are still done by a person." },
+  { "name": "Dealing with a blood spill in a hospital ward's clean corridor and reporting it through", "how": "Blood in a hospital has to be assessed, isolated, disinfected with protection and sampled by a person on the spot, and a person is responsible if anything goes wrong. AI can only bring up procedure prompts and help keep records; it can't replace handling it on site or coordinating across departments." },
+  { "name": "Quarterly crystallization restoration of the elevator lobby's marble floor, with a maintenance report", "how": "AI can generate a compliant electronic maintenance record and reminders from photos and notes. The skill of grinding and crystallizing stone, and judging the scratches and the condition of the stone, belong to a person." },
+  { "name": "Winter de-icing and anti-slip work on a metro station entrance ramp", "how": "AI can combine weather forecasts to give early warning and estimate when to spread and how much. A person does the spreading, runs the sweeping equipment, and checks on site that the ramp really isn't slippery." },
+  { "name": "Special cleaning of the anti-static floor outside a data center's UPS room", "how": "AI can turn the four-step procedure into a checklist and log the retest readings automatically. Cleaning the anti-static floor, using the special tools and retesting the resistance are done by a person, who answers for the result." }
+ ],
+ "events": {
+  "e_scan": "For your first month your clock-ins kept failing to scan, and the system showed three missed inspection rounds. ¥150 docked. A woman from your home village taught you to turn up the screen brightness and hold the phone further from the code, and you practiced all evening at home on a printed code.",
+  "e_spill": "At seven in the morning there was a puddle of something you couldn't identify on the floor of the 29th-floor restroom. You put out the yellow sign first, put on gloves and sniffed. You didn't dare mop it straight away; you soaked it up bit by bit with absorbent pads, then disinfected twice.",
+  "e_thanks": "The receptionist at a law firm left you a small pastry every morning, saying the company had ordered too much breakfast. Once she stuck a note on it: Auntie, the restrooms on 30 are the cleanest in the building.",
+  "e_complaint": "A company's office manager complained that the pantry smelled, and the property office called you in. You searched for ages and found a takeout box that had sat on the bottom shelf of the fridge for two weeks. ¥200 was docked from your pay. It wasn't your takeout.",
+  "e_found": "You found a gold watch beside a washbasin and handed it in to the property office. That afternoon the owner came to collect it, a middle-aged man in a suit. He said thank you and pressed ¥200 on you; you pushed it back three times and still couldn't refuse it.",
+  "e_waist": "After a winter of bending to mop, you couldn't straighten your back. You bought a medicated plaster at the pharmacy and put one on every morning before work. When people asked why you smelled of medicine, you said it was the disinfectant.",
+  "e_typhoon": "On a typhoon day everyone in the building worked from home, but cleaning couldn't stop. You set off at three in the morning, your e-bike swaying in the wind along Pudong Avenue, and by the time you arrived water had already come in at the door of the ground-floor lobby.",
+  "e_robot": "The property office bought two floor-scrubbing robots that roam the lobby on their own at night. When you came in one morning, one was stuck by the revolving door, bumping into the glass again and again. You pushed it back to its charging dock.",
+  "e_spring_festival": "You didn't go home to Fuyang for Spring Festival; holiday duty pays triple. On New Year's Eve there was only you and one security guard in the whole building. He'd brought two dumplings from home for you, and the two of you watched half an hour of the New Year's Eve gala in the security office on the ground floor.",
+  "e_husband": "Your husband hurt his back on the building site and was laid up for a month. Every day after work you cooked and rubbed ointment on his back, and in the evenings did the sums: this month the household had only your wage.",
+  "e_grandson": "Over the summer your son brought your grandson to stay in Shanghai for two weeks. You took him on the metro to the Bund and, by the river, pointed to the tower across the water: Grandma works in there. He asked which floor. You said 28 to 30, all of them.",
+  "e_alarm_ai": "The building installed a smart system: sensors in the restrooms report odor too high or paper towels low, and the alerts go straight to your phone. Sometimes it goes off eight times in half an hour; sometimes it's really filthy and the thing says nothing.",
+  "e_overtime_office": "At five in the morning you pushed open the door of an investment firm on 30 and found three young people still at their computers, the desk piled with takeout boxes. You collected the rubbish quietly. One of the boys stood up and said: sorry, Auntie, we're just leaving.",
+  "e_new_hand": "A new cleaner from Henan, fifty-five, couldn't clock in on her phone. You crouched in the tool room and taught her the way someone once taught you: turn up the screen brightness, hold the phone a little further from the code.",
+  "e_marble": "The company sent a technician to crystallize the marble in the elevator lobby and had you help. He ran the grinder and you carried the bucket, watching all afternoon. That night you told your husband: turns out stone needs waxing too.",
+  "e_rent": "The room in Zhoupu was due for demolition, and you moved further out to Hangtou: ¥200 more in rent and twenty more minutes on the bike. The new place has a south-facing window, and you planted two pots of spring onions on the sill.",
+  "e_son_house": "Your son was buying a flat in Fuyang city and was ¥50,000 short for the down payment. You and your husband sent him everything you'd saved in Shanghai these few years. On the phone your son said he'd pay it back. You said no need.",
+  "e_knee": "Your knees began to disobey you, and you had to hold the handrail going downstairs. In the tool room the women passed round a kind of knee brace, said to be made from a home remedy.",
+  "e_contract": "The property company switched to a new outsourcing firm and everyone had to sign new agreements. The new firm's man looked at your ID card and said anyone over fifty-five gets one-year contracts only. You signed and pressed your thumbprint.",
+  "e_tenant_leave": "The law firm moved out. On its last day the receptionist gave you a pot of pothos, saying it would look nice in the tool room too. You put it beside the microwave, and the women took turns watering it."
+ },
+ "choices": {
+  "c_second_job": { "title": "Take an afternoon housekeeping job too", "situation": "A woman from your village says that after you hand over at two, families in nearby estates want hourly help: ¥40 an hour, three hours a day, over ¥2,000 more a month. You've been up since four in the morning.", "options": [
+   { "label": "Take it", "result": "In the afternoons you rode to a family's flat to mop, clean windows and wash up, and got home at seven. ¥2,400 more a month, and less time talking with your husband." },
+   { "label": "Don't take it", "result": "In the afternoons you go home and sleep, and in the evening make your husband a bowl of Anhui-style flat noodles. You tell yourself: your body is your own, and there's no end to money." }
+  ] },
+  "c_leader": { "title": "Become Cleaning Team Leader?", "situation": "The team leader is going home, and the property office asks if you'll be Cleaning Team Leader: rota and morning briefings for twelve people, supplies in and out, a daily report and photos on your phone. ¥800 more a month, but you can't read much and you type slowly.", "options": [
+   { "label": "Take it", "result": "You had your grandson teach you voice input over video, and your daily report came out a line per sentence. At your first morning briefing you stood before twelve people with sweating palms, spoke for three minutes and let them go." },
+   { "label": "Don't", "result": "You said you only know how to work, not how to manage people. The new team leader, a woman from Jiangxi in her early forties, always calls on you in meetings and says everyone should learn from you." }
+  ] },
+  "c_cert": { "title": "Learn a skilled trade", "situation": "The company is recruiting people to learn marble crystallization and carpet extraction: a week's training first, then the vocational skill certificate for cleaners. Pass, and you do specialist work for ¥700 more a month. You're in your fifties and farsighted, and the training manual's print is tiny.", "options": [
+   { "label": "Go and learn", "result": "You read the manual for a week through reading glasses, and on the practical exam day you polished a marble slab until you could see your face in it. When the certificate came you posted a photo in the family group chat." },
+   { "label": "Don't go", "result": "You said you couldn't manage those machines; sweeping floors is fine. That week you covered the floors of the woman who went to the training." }
+  ] },
+  "c_machine": { "title": "Learn to drive the ride-on scrubber", "situation": "The property office has added a ride-on floor scrubber, plus the two self-driving robots, and someone has to map routes, set tasks and deal with faults. The young ones won't work the early shift, and the team leader asks if you'll learn.", "options": [
+   { "label": "Learn", "result": "The first time you got on the machine you bumped a pillar, like a dodgem car. A month later you could wash the lobby's two thousand square meters in half an hour, and your back hurt less." },
+   { "label": "Don't", "result": "You said you were afraid of breaking it and not being able to pay. The machine went to a man in his thirties, and you still follow behind with a mop; the corners it can't reach are yours." }
+  ] },
+  "c_home": { "title": "Your daughter-in-law is having a second child", "situation": "Your son calls to say his wife is expecting a second child, and asks if you can come back to Fuyang to help. Your husband's work in Shanghai isn't finished, and your job is just getting comfortable.", "options": [
+   { "label": "Go back to Fuyang", "result": "You quit and took a six-hour bus home. Your husband stayed alone in Shanghai and video-called you every night, the bare bulb of that rented room behind him.", "end": "You went back to Fuyang and raised your second grandchild at your son's home; every morning after the school run you still pick up the rubbish in the stairwell on your way down." },
+   { "label": "Stay in Shanghai", "result": "You told your son two more years, to save a bit more for the children. Your daughter-in-law hired a postnatal nanny; you paid half." }
+  ] },
+  "c_maid": { "title": "A family wants you as a live-in housekeeper", "situation": "The boss's wife at a company on 30 has seen how careful you are and asks if you'd be a live-in housekeeper at her home: room and board, ¥7,000 a month. But only one day off a week, living at her house, seeing your husband once a week.", "options": [
+   { "label": "Go live in", "result": "You moved into a maid's room with a window, bigger than the room in Zhoupu. Every Sunday you take the metro back to see your husband, carrying a bag of fruit the family couldn't finish.", "end": "You became a live-in housekeeper for a family and stayed several years; their child calls you grandma, and on their fridge you put up a chart of the waste-sorting rules." },
+   { "label": "Stay at the tower", "result": "You said you'd rather go home every day and have dinner with your husband. She said never mind, come and clean once when you have time, paid by the hour." }
+  ] },
+  "c_supervisor": { "title": "Apply for Property Environmental Supervisor", "situation": "The environmental supervisor has moved to another project, and the property manager says one of the team leaders could try for Property Environmental Supervisor: in charge of the whole building's cleaning and landscaping, dealing with the outsourcing firm, handling tenants' complaints, and doing spreadsheets on a computer. You're in your fifties and never had so much as a primary-school computer class.", "options": [
+   { "label": "Give it a try", "result": "Your son taught you spreadsheets step by step over the phone, and you spent a month at weekend computer classes in the community. At the interview, everything you talked about was which corner of which floor in this building gets dirty fastest." },
+   { "label": "Don't", "result": "You said the job should go to someone young. The new supervisor, thirty years old, came to you on his first day to ask why the pantry on 30 always smells." }
+  ] },
+  "c_stay": { "title": "The outsourcing firm wants older workers out", "situation": "The contract has changed hands again, and the new firm says nobody over fifty-eight will be renewed unless the project manager vouches for them. He says you work well and is willing to speak up for you, but he can't promise anything a year from now.", "options": [
+   { "label": "Get him to keep you on", "result": "You signed an agreement renewed every six months, same pay, still no social insurance. You arrive a little earlier and leave a little later, afraid someone will find fault." },
+   { "label": "Clean in a residential estate", "result": "You went to clean an old housing estate near Hangtou: ¥1,000 less, but close to home, ten minutes by bike. The old people in the estate soon all knew you." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last day you still arrived at five. Three floors, six restrooms, you finished them one by one and scanned the code on the back of the door for the last time. At handover you picked up the pothos from beside the microwave, then put it down again and told the women to keep it. You rode home, stopped for a moment by the Huangpu River and looked back at the tower. The sun had just reached the 28th floor.",
+  "burnout": "That winter your back and knees gave out together; once you bent down you couldn't get up. The team leader told you to rest a few days. You lay at home for a week, and when you went back your floors had someone else on them. You washed your uniform, folded it and handed it back to the company. On the way home you rode slowly, and for the first time really saw the trees along Pudong Avenue."
+ },
+ "past": [
+  "You left school after junior high. There were five children at home and you were the eldest; the land in the Fuyang countryside needed working and your brothers and sisters needed minding. You cut wheat for three years.",
+  "Girls from your village went to electronics factories in Suzhou and came home at New Year in new clothes. You rode an overnight bus with them and went into a factory making phone parts, twelve hours at a stretch on the assembly line.",
+  "Home for New Year, you were introduced to a man from the next village who did bricklaying away from home, and married him. After the wedding you both went back to Suzhou, him on building sites, you in the factory, seeing each other only a few times a year.",
+  "When your son was born you went back to Fuyang to raise him, for years. Your husband earned money away on his own and sent home ¥1,000 a month, and you recorded every fen in an account book.",
+  "When your son started junior high you went back to the Suzhou factory. Machines had replaced the line, and you were moved to packing. You paid into social insurance there for a few years, until the factory relocated and the payments stopped.",
+  "Your son married and had a child, and you went back to Fuyang to raise your grandson. Every morning you took him to kindergarten and every afternoon brought him home, and in the evenings taught him Tang poems you couldn't fully recite yourself.",
+  "Your grandson started primary school, and your husband found work on a building site in Shanghai. A woman from your village cleaning in Lujiazui said they were short of people there and would take women in their fifties. You packed a woven plastic bag and got on the bus to Shanghai."
+ ],
+ "late": {
+  "pension_note": "Estimate: your years in Shanghai were on a labor service agreement with no social insurance. Add the few years of urban employee pension you paid into in Suzhou long ago to the rural residents' pension back in Fuyang, and what you receive each month in retirement is under 30% of your last monthly wage; 30% is the generous estimate.",
+  "scenes": [
+   "The first morning after leaving the tower you woke at four. You lay in bed until it was light, listening to your husband snore, not knowing what you would get up to do.",
+   "You and your husband gave up the room in Shanghai and went back to Fuyang. Every morning you go to the market, choose the cheapest greens, and come home to cook them for your grandson.",
+   "The few hundred yuan that arrive on your card each month you don't touch; you're saving them for your grandson's university. That, you say, is what all those years in Shanghai were for.",
+   "After you stopped working you lay at home for a month, and your back got a little better. Every afternoon you sit at the door in the sun watching the neighbors' children play hopscotch.",
+   "You went back to Fuyang and minded a little village shop for someone, ¥50 a day. When people come in for cigarettes you give change quickly and exactly.",
+   "Your grandson got into the county high school. On parents' evening you put on your best clothes, sat in the back row, and listened to the teacher read out his name.",
+   "In the new place you still can't break the habit of waking at four. You get up quietly and mop the floors of the house first.",
+   "You video-called the women in the old tool room. They were having lunch, and the pothos beside the microwave was still there, grown almost to the floor.",
+   "Your grandson went to university in Shanghai. He sent a photo of himself on the Bund with the tower behind him. He said: Grandma, I found the floor where you worked.",
+   "They say robots wash the floors in that tower all night now, and the restrooms report on their own when the paper runs out. But at five in the morning, a few women still push their carts in through the staff passage on basement level two.",
+   "In a cupboard back home you find that access card, its plastic gone yellow. You don't know why you never threw it away. You put it back.",
+   "At the New Year family dinner your grandson says he's found a job in an office tower in Shanghai. You ask which floor. He says the 29th. You laugh and say you used to clean the restrooms on that floor."
+  ],
+  "closing": {
+   "retire": "One morning many years later you sit at the door of the old house in Fuyang before it's fully light. You take a broom and sweep the small patch of ground in front of the door, then sweep it again, then sit down and wait for the sun.",
+   "burnout": "Many years later you sit under the tree at the edge of the village and hear someone mopping in the distance, a bucket knocking on the floor. You close your eyes and listen a while, as if you were back on the 28th floor at five in the morning.",
+   "end": "One evening many years later you wipe the stove until it shines. The television is showing Shanghai at night; across the river one tower still has its lights on. You don't know if it's that one. You watch a while, then bend your head and go on wiping."
+  }
+ },
+ "stages": [
+  "You look after the common areas of three floors: a round of the restrooms every half hour, sorting and clearing pantry waste, dust-mopping the elevator lobby's marble and washing it with the scrubber. In your hands are a mop, a dust mop, a spray bottle and a bucket of disinfectant mixed to ratio; on your phone, the mini-app for scanning in. The team leader sets your shifts and checks your rounds, and tenants' receptionists call out Auntie whenever they need something.",
+  "Every day you arrive half an hour before everyone else to run the morning briefing, take the roll and assign floors, and you schedule shifts and days off for twelve people on your phone. The supply room key is yours, and mop heads, bin bags and disinfectant get counted once a week. The women bring you their sick days, their quarrels and their grievances. You still work too: the toughest stains and the marble restoration, you lead.",
+  "You've moved into the property office, a computer and a walkie-talkie on your desk. You oversee cleaning and landscaping for the whole building: daily inspection rounds, photos, quality checklists, and a monthly score with deductions for the outsourcing firm. Tenants' repair requests and complaints reach you through the work order system, and you have two hours to respond. You've started attending meetings with the property manager.",
+  "What you manage now are a whole project's accounts: wages for dozens of cleaners, depreciation on the machines, how much chemical gets used, and what the year comes to in profit or loss. You negotiate renewals with the building owner, cost out bids, and decide whether to buy two more scrubbing robots. Each building's supervisor reports to you, and once a month you present quality and profit at a meeting.",
+  "You oversee environmental services across several projects in a region: setting common work standards and checklists, approving each project's equipment purchases, and going on site when something big happens. You meet head office and negotiate annual contracts with major clients, and you teach the newly promoted supervisors. What you teach is still how to tell whether a restroom is really clean."
+ ],
+ "work": [
+  "The pantry coffee machine leaked and pooled across the floor. You put out the yellow wet-floor sign first, dried it with the wet vacuum, then phoned the property office to report it.",
+  "The office manager of a company on 29 pulled you over to a coffee stain on the carpet. You fetched a bottle of carpet cleaner and dabbed at it with a white towel for ten minutes.",
+  "The new disinfectant had a different strength. Following the ratio chart on the wall you measured it out spoon by spoon with a measuring cup, then dipped a test strip to check the color.",
+  "At the morning briefing a woman said her back hurt and asked to change floors. On the rota you swapped her with a younger one and took the hardest floor's restrooms yourself.",
+  "At the month-end stocktake two boxes of bin bags were missing against the issue log. You went through a month of issue slips and found an office move had drawn extra and never logged it.",
+  "The elevator lobby's marble had scratches. You and two of the women ran the crystallizing machine all night, and the first person in to work in the morning saw his reflection in the floor.",
+  "A tenant complained through the work order system about a smell in the restroom. You went with the checklist three times; in the end the floor drain's trap had dried out, and you called engineering to fix it.",
+  "Scoring the outsourcing firm for the month, you deducted ¥800. Their project manager came to argue, and you showed him thirty inspection photos one by one.",
+  "A new cleaner tipped hazardous waste in with the dry waste and the city inspectors issued a fine. At the morning briefing you brought out the four bins and went through them one at a time.",
+  "The building owner wanted to cut the cleaning fee by ten percent. In your cost model you listed labor, chemicals and machines item by item, and talked them down to five.",
+  "You did the sums: two floor-scrubbing robots would save three night-shift workers and pay for themselves in two years. You signed the purchase request.",
+  "A cleaner slipped in a stairwell. You spent three days running the paperwork for her work injury claim, and put an anti-slip mat at the top of every flight of stairs.",
+  "For the region's five projects you made one restroom checklist, cutting it from twelve items to eight, each one something a single photo can settle.",
+  "A major client's office tower was applying for green building certification. You and the supervisors dug out the safety data sheet for every cleaning chemical and checked them all again.",
+  "Teaching the newly promoted supervisors, you used no slides. You took them into a restroom and had each of them find three places that hadn't been wiped clean."
+ ]
+}

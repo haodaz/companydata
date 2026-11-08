@@ -1,0 +1,205 @@
+{
+ "id": "aerospace-xa",
+ "occupation": "Spacecraft Assembly Engineer",
+ "role": "Trainee satellite integration engineer",
+ "headline": "A trainee integration engineer fresh from a master’s, now in the satellite assembly hall of an aerospace institute in southern Xi’an, where one satellite takes a year to build and not a word of what it is can be said at home",
+ "unit": "The satellite final-assembly hall of an aerospace research institute in the Aerospace Base, south Xi’an",
+ "unit_type": "Aerospace research institute",
+ "city": "Xi’an",
+ "city_tier": "New Tier 1",
+ "education": "Master’s in Aerospace Manufacturing Engineering",
+ "level": "You can read the drawings, find your way around the 3D models, and you understand torque and tolerances in principle; your hands are still green, your mentor has to watch you drive a screw, and in the cleanroom you think every move through before you make it",
+ "intro": "Three months after defending your master’s thesis, you put on the white cleanroom coverall for the first time, pass through the air shower, and walk into the satellite assembly hall. The satellite stands on its support cart, smaller than you imagined, and quieter. Your mentor says this one will take a year. As of today its assembly record carries your name, on the line below his.",
+ "salary_note": "Estimate: a master’s graduate joining an aerospace institute in Xi’an earns around ¥8,000 a month in base pay plus performance pay, with extra rewards at program milestones and year-end, a little over 10% above the national figure; not a lot of money, but housing is cheap and the benefits are steady.",
+ "facts": [
+  { "label": "Spacecraft Assembly Technician, Junior (current level)", "value": "0-2 years, ¥6,000–9,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Spacecraft Assembly Engineer (2-5 years)", "source": "Career map" },
+  { "label": "Monthly pay, 10+ years in the field", "value": "¥22,000 (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Assembling and torquing a module’s plumbing to the process route card", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "First-fit of a remote-sensing satellite’s solar array substrate and torque calibration", "source": "AI exposure" },
+  { "label": "Open positions", "value": "20 related job listings nationwide, 1 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The institute shuttle bus takes you from staff apartments in Chang’an District into the base, past a roujiamo stall. You finish one on the bus, fold the paper bag and tuck it into your pocket.",
+  "Phone locked in the cabinet by the door. Coverall, gloves, overshoes, the air shower, and last the antistatic wrist strap, clipped on and pressed against the tester. Green light.",
+  "The pre-shift briefing. Today’s work card is installing an electronics unit: screw specs, torque values, the adhesive grade, what time the inspector will be on the floor, read out item by item.",
+  "Installing the unit. Your mentor torques, you call out the values, the inspector watches, and the three of you sign the record in turn. Every screw has a number; not one more, not one less.",
+  "A bowl of youpo noodles in the canteen. People at your table talk football and house prices, and when it comes to the work, everyone just says “that thing.”",
+  "In the afternoon you route harness with the cable team, checking hundreds of wires against the wire list one by one, kneeling at the edge of the bench on an antistatic mat.",
+  "Writing up the day’s multimedia record: photos, data, problem reports. The system compares your work card against the drawing revision and flags one item to confirm, and you go and find the process planner.",
+  "Your mother calls and asks what you’ve been busy with. You say putting things together at the factory. She asks what things; you say equipment. She says wear more layers then, it’s turned cold in Xi’an."
+ ],
+ "stages": [
+  "You work the standard operations behind your mentor: installing units to the work card, tying harness, applying adhesive, driving screws, self-checking each step and then calling the inspector for a cross-check. Your tools are a digital torque wrench, antistatic tweezers, an adhesive gun and a thick assembly logbook; the people you deal with most are the veteran who trains you and the inspector beside you. Your signature always goes one line below your mentor’s.",
+  "You own a module on your own: you write simple work cards, sequence the operations, and follow it through vibration and thermal testing. When something goes wrong you file the problem report, check the drawings with the designers and write the root-cause closure report. You deal most with the structures, thermal and harness designers, and your tools now include the 3D model viewer and the problem-report system. For the first time, the signature box holds only your name.",
+  "You plan the final-assembly process for the whole satellite: which module mates first, which cable is routed first, which unit goes on last. You lead the fixes where several disciplines block each other at an interface, bring new methods such as automated tightening and vision-guided assembly into the hall, and have three or four young engineers under you. You attend more meetings than you drive screws, and what you hand over is the master process plan and a stack of review comments.",
+  "You carry overall responsibility for one program’s integration status: whether milestones hold, whether every risk has a contingency, who goes if something happens at the launch site. You speak for the assembly unit in the program’s joint meetings of chief designer and chief commander, and in the technical area at the launch site you are the last to sign the release. You rarely climb inside the spacecraft anymore, and stand beside it only for the steps that matter most."
+ ],
+ "work": [
+  "Your mentor has you torque a unit. The digital wrench clicks and you call the value. The inspector glances at you and says your wrist was crooked. Back it off and do it again.",
+  "You tie harness with a veteran from the cable team, and the tie spacing has to be identical. He measures every gap with a steel rule, and in one afternoon he cuts your work off three times.",
+  "The inspector finds a missing photo of an adhesive layer in your assembly record. Your mentor says nothing, takes you back to open the cover plate, take the photo, and refit it to torque.",
+  "A thermal designer says one piece of insulation on your module was laid too tight. You go over the 3D model with him all afternoon and end up moving two attachment points.",
+  "In the post-vibration inspection you feed a borescope into a gap in the module and see a loose cable tie. You file a problem report stating exactly which cable and exactly where.",
+  "You write your first module work card yourself and give it to the old head of the process office for review. He marks seventeen places in red pen, and beside the last one writes: good sequence.",
+  "The structures and harness teams have argued over a bracket position for three weeks. You bring both sides into the hall, take one measurement beside the real satellite, and settle it on the spot.",
+  "You bring vision-guided tightening into the hall and the veterans don’t trust it. You have the machine and the people drive a hundred screws each, print the two sets of torque curves and lay them side by side for them.",
+  "A young engineer you supervise hands in a closure report whose logic doesn’t hold. You don’t fix it for him; you take him to the satellite and have him reproduce the problem from the beginning.",
+  "At the last review before shipping to the launch site, a deputy chief designer asks whether assembly has any open issues. You turn up a one-page list, read out three items, and say all three are closed, with evidence in the appendix.",
+  "The technical area receives a hold order. On the radio you tell everyone to stop and hold configuration, and confirm post by post that every person has stepped back behind the yellow line.",
+  "The institute wants to cut the next program’s assembly cycle by a third. In the meeting you work through people, equipment and test windows and say a quarter is possible; beyond that is gambling."
+ ],
+ "ladder": [
+  { "title": "Spacecraft Assembly Technician (Junior)", "stage": "Assistant technician", "focus": "Performs standardized operations under a mentor, learns basic tools, self- and cross-inspection and shop-floor 5S; moves up on a zero-defect record and passing the skills assessment." },
+  { "title": "Spacecraft Assembly Engineer", "stage": "Independent engineer", "focus": "Independently handles unit or module assembly, writes simple work cards, follows basic tests and deals with common assembly anomalies; promoted on process improvement proposals and the number and quality of root-cause closure reports." },
+  { "title": "Lead Process Engineer (Final Assembly)", "stage": "Core process lead", "focus": "Plans the final-assembly process for the whole spacecraft, leads solutions to complex interface matching and the introduction of new processes (automated tightening, vision-guided assembly), and trains newcomers; promoted on process breakthroughs for major programs and patents or standards." },
+  { "title": "Program Chief of Final Assembly", "stage": "Program technical lead", "focus": "Oversees a program’s final-assembly technical status, resource coordination and risk plans, and represents the assembly unit in the program’s joint meetings of chief designer and chief commander; promoted on successful major missions (a first satellite, a maiden rocket flight) and cross-system technical decision-making." }
+ ],
+ "ai_tasks": [
+  { "name": "First-fit of a remote-sensing satellite’s solar array substrate and torque calibration", "how": "AI can check the BOP card, log torque data automatically and flag deviations; joining the substrate to its hinges in the cleanroom, the staged torquing and judging the calibration results still have to be done by hand and signed for by a person." },
+  { "name": "Helium mass-spectrometer leak testing of a launch vehicle’s first-stage engine bay", "how": "AI can generate the leak-check point list, compare leak rates against the limits and compile the report; operating the sniffer probe, judging the helium spray on site and deciding whether to release for fueling are done and owned by a person." },
+  { "name": "Leading AR-assisted precision mating of a new deep-space probe’s antenna module", "how": "Digital twins and AR can overlay virtual guidance on the real hardware, and AI can help with tolerance stack-ups and simulation comparisons; the millimeter-level mating on the floor, the calls on anomalies and closing the loop on interfaces are led by people." },
+  { "name": "Handling a particle-count excursion after laying multilayer insulation (MLI) on a communications satellite", "how": "AI can analyze particle-count trends, link them to workstations and work records, help narrow the root cause and draft the closure report; isolating, cleaning, re-measuring and signing the conclusion are done by people." },
+  { "name": "Harness continuity and insulation testing in the launch-site technical area for a crewed spacecraft mission", "how": "Automated test equipment plus AI can collect, interpret and flag the data; the wiring at the launch site, fault-finding, on-the-spot decisions and the responsibility for those 48 hours still rest on people." },
+  { "name": "Assembling and torquing a module’s plumbing to the process route card", "how": "AI can at most prompt the work card steps and torque values; actually fitting the pipes and brackets inside the module, the feel of the tightening and the coordination on the floor depend on human hands." },
+  { "name": "Writing the final-assembly work instructions for a new program", "how": "AI can draft work instructions from existing program documents, standardize the format and check terms and parameter references; the operation logic, risk points and practicality specific to the new program must be signed off by experienced process engineers." },
+  { "name": "Following a thermal vacuum test and dealing with particle shedding", "how": "AI can monitor alarm data in real time, compare against past shedding records and suggest possible causes; what to do on the spot, whether to interrupt the test and how to judge the hardware are decided by people." },
+  { "name": "Locating the source when helium leak testing shows an excessive leak rate", "how": "AI can rank suspected leak points from the leak data and the plumbing topology; actually re-checking point by point, disassembling to repair and judging whether a leak is real must be done by people on site." },
+  { "name": "A multidisciplinary interface coordination meeting", "how": "AI can use the 3D model to detect spatial clashes automatically and organize each discipline’s demands and options; balancing the parties, making trade-offs and the final call are up to people." },
+  { "name": "Operating pyrotechnic safety pins at the launch site", "how": "Arming pyrotechnics is a high-risk, tightly scripted operation with a named responsible person, and can only be carried out by certified staff by hand; AI can at most help check the procedure list." },
+  { "name": "Emergency response on receiving a three-stop order", "how": "A three-stop order means stopping immediately, holding configuration and judging on the spot, with safety and responsibility at stake; AI can help pull up status data, but the actions and decisions must come from people." }
+ ],
+ "events": {
+  "e_first_shake": "The first satellite you worked on goes onto the shaker table. You watch the curves from the control room, and a few minutes of testing feel like hours. When it’s over your mentor pats you on the shoulder and says nothing.",
+  "e_fod": "Counting tools at the end of the shift, a washer is missing. The whole team stops and searches for two hours, and finally finds it in a fold of your own overshoe. You don’t say a word in the after-shift meeting.",
+  "e_launch_site": "For the first time you go with a satellite to the launch site and spend more than two months in the technical area. You spend Spring Festival there; New Year’s Eve dinner is canteen dumplings, and outside the window there is nothing at all.",
+  "e_launch_success": "At ignition you are standing on open ground outside the control hall, head tipped back. When word comes of spacecraft separation, a few people who have worked a year for this slap each other on the back, and nobody speaks.",
+  "e_zeroing": "A unit on a satellite in orbit has an anomaly, and the trace-back reaches final assembly. You spend three months on the quality closure, going page by page through the assembly records from back then. In the end it isn’t an assembly problem, but nobody slept well for those three months.",
+  "e_mli": "After the multilayer insulation goes on, the cleanliness re-test shows particles over the limit. You isolate, clean and re-measure three times, and the system matches the particle curve against the work records and points to the half hour around the afternoon shift change.",
+  "e_blind_date": "On a blind date the other person asks what you do. You say mechanical work. They say that’s nice, stable. You never hear from them again.",
+  "e_passport": "Your passport is held by the institute along with everyone else’s. A university roommate invites you to Japan to see the cherry blossoms, and you say you can’t. He asks why. You say work is busy.",
+  "e_ar": "The hall gets AR assembly guidance: put on the glasses and the position and torque value of the next screw float right in front of you. Newcomers pick it up much faster; the veterans say they still prefer the drawings.",
+  "e_ai_bop": "Checking work cards against drawings, the AI flags a torque value that wasn’t updated when the drawing was revised. That screw hasn’t been driven yet, and you go and get the designer to sign a change notice.",
+  "e_batch": "The institute begins building small satellites in batches, several a month. The rhythm of one satellite a year is gone, and for the first time the hall looks like a production line.",
+  "e_crunch": "A month before the factory shipping milestone, the schedule is planned backward from the deadline, and you spend twelve hours a day in the hall. When you come out through the air shower it is already pitch dark.",
+  "e_marriage": "You get married. A week before the wedding you were still on the floor of a thermal vacuum test, and the wedding photos were shot in a rush on a half day off.",
+  "e_house": "You buy a flat in Chang’an District, twenty minutes from the base. The deposit is a few years of saved salary plus a little from your parents.",
+  "e_child": "When your child is born you are at the launch site, watching the video on your phone outside the canteen door. By the time you get back the baby is a month old.",
+  "e_patent": "A solar array mating fixture you designed cuts one operation from two days to half a day, and the institute helps you apply for a patent.",
+  "e_classmate_pay": "A classmate who joined a commercial space company posts his new office on social media. Someone asks in the comments what he earns, and he replies with a smiley. You do the sums: probably double yours.",
+  "e_mentor": "The mentor who trained you retires and leaves you the torque wrench he used for twenty years, a ring worn shiny on the handle where his hand held it.",
+  "e_news": "The evening news reports the launch. You call your mother and say, that one has me in it. She asks which one; you say, that one. She is quiet on the line for a moment, then says, then you’re really something.",
+  "e_parents": "Your father in Hanzhong goes into hospital just as you’re tied up with a launch campaign and can’t go back. By the time you get there he’s been discharged and is sitting in the courtyard in the sun, saying it’s nothing, don’t hold up your work.",
+  "e_back": "Years of bending to climb inside spacecraft, and your lower back starts to hurt. You keep an extra back brace on the tool cart and strap it on before you go in.",
+  "e_young": "A new master’s graduate enters the hall for the first time and is so nervous he clips his wrist strap on backward. You fix it for him and remember your own first day.",
+  "e_old_star": "The first satellite you worked on has outlived its design life by more than ten years and is still circling up there. The day the institute sends out the notice, you save it on your phone."
+ },
+ "choices": {
+  "c_launch_trip": {
+   "title": "Half a year at the launch site?",
+   "situation": "This satellite is shipping to the launch site, and assembly has to send people with it for the better part of half a year. You’ve just started seeing someone, and she says go, in a tone you can’t read.",
+   "options": [
+    { "label": "Go with the satellite", "result": "In the technical area you learn every check before fueling, and you come back two shades darker. Your girlfriend says you seem like a different person." },
+    { "label": "Stay, build the next one", "result": "You stay in the hall with the new technicians building the next satellite, and can go to the cinema on weekends. On launch day, you watch it on the canteen TV." }
+   ]
+  },
+  "c_engineer": {
+   "title": "Placement as Spacecraft Assembly Engineer",
+   "situation": "Your trainee period is over and the institute is assigning posts. To be placed as a Spacecraft Assembly Engineer who can own a module, you have to pass the skills assessment and submit a process improvement proposal; if you don’t make it, you follow your mentor for another year.",
+   "options": [
+    { "label": "Write the proposal at night, go for the independent post", "result": "You change an adhesive step to use a metered dispensing gun and write a twenty-page proposal. At the defense, the old head of the process office asks only one question: what’s the rework rate?" },
+    { "label": "One more year with your mentor", "result": "You’re in no hurry and spend another year at your mentor’s side. Half of what you learn that year isn’t on any work card." }
+   ]
+  },
+  "c_digital": {
+   "title": "Work on the digital twin?",
+   "situation": "The institute is building digital-twin assembly and AR guidance and needs a few young people who know the floor to maintain the models and processes and review the process documents AI generates. Going means six months away from the satellite.",
+   "options": [
+    { "label": "Go, learn to run the models", "result": "You move the entire assembly of a satellite into the computer and virtually drive thousands of screws. Back in the hall, for the first time, you know where things will clash before you lay a hand on them." },
+    { "label": "Stay with the real satellite", "result": "You say your hands can’t stop working. Once the digital twin is live you follow its guidance, and when you sometimes find the model and the real satellite don’t match, you file a problem report." }
+   ]
+  },
+  "c_commercial": {
+   "title": "Commercial space comes calling",
+   "situation": "A commercial satellite company in Beijing offers twice your current pay to build a batch-assembly line. You’d have to serve out a declassification period first, and leave Xi’an.",
+   "options": [
+    { "label": "Serve the declassification period, go to Beijing", "result": "For that year of declassification you read at home and look after your child. In Beijing you find everything is fast, so fast that sometimes you miss the institute’s slowness." },
+    { "label": "Stay at the institute", "result": "You stay. At the year-end meeting the director mentions you by name and says the program needs people. You tell your spouse at home, who says, and the mortgage?" }
+   ]
+  },
+  "c_deviation": {
+   "title": "A small deviation",
+   "situation": "Before shipping, you find a bracket mounting hole a few tenths of a millimeter off the drawing, right at the edge of tolerance. Filing a problem report means the milestone slips a week; your mentor says cases like this have always been handled as a concession, with records to back it.",
+   "options": [
+    { "label": "File the problem report, follow procedure", "result": "The milestone slips a week, and the program office isn’t happy. The review concludes it is fit for use, and that problem report becomes a case study in new-hire training." },
+    { "label": "Handle it as a concession, document the basis", "result": "You and the designer sign the concession together, with the basis written out clearly. The satellite ships on time, and it weighs on you for months, until it’s working normally in orbit." }
+   ]
+  },
+  "c_lead": {
+   "title": "Running for Lead Process Engineer (Final Assembly)",
+   "situation": "The process office is choosing a Lead Process Engineer to plan the final-assembly process for whole satellites and train newcomers. The requirement is process breakthroughs on a major program; you have one patent and a standard you haven’t finished writing.",
+   "options": [
+    { "label": "Finish the standard and apply", "result": "You spend three months of evenings finishing the standard and getting it registered. At the interview, the panel leafs through it and questions you for half an hour." },
+    { "label": "Let someone else have it, keep your module", "result": "You recommend a colleague who arrived two years before you. You keep your module, so familiar you could say with your eyes shut where every screw is." }
+   ]
+  },
+  "c_evtol": {
+   "title": "Build flying cars?",
+   "situation": "A company in Shenzhen building electric vertical take-off aircraft is hiring airworthiness engineers and likes that you know assembly and quality systems. You’d have to pass the civil aviation airworthiness qualification first, and the job is getting something entirely new allowed into the sky.",
+   "options": [
+    { "label": "Go to Shenzhen for airworthiness", "result": "You move from Xi’an to Shenzhen and, for the first time, work somewhere without a cleanroom. In certification meetings you are as exacting about every clause as you were about every screw.", "end": "You became an aircraft airworthiness engineer, watching those flying cars take off one after another for test flights from the rooftops of Shenzhen’s urban villages." },
+    { "label": "Stay in space", "result": "You say you still want to build things that go up into space, not things that fly. They laugh and ask what the difference is. You say there is one." }
+   ]
+  },
+  "c_chief": {
+   "title": "Taking on Program Chief of Final Assembly",
+   "situation": "A new program is starting, and the institute asks whether you will be its Program Chief of Final Assembly. You’d sit in the joint meetings of chief designer and chief commander, and whatever happens at the launch site, the first call is to you.",
+   "options": [
+    { "label": "Take it", "result": "Your phone is on twenty-four hours a day from then on. That year you go to the launch site four times, and everything at home falls to your spouse." },
+    { "label": "Recommend someone younger, be the deputy", "result": "You recommend an apprentice you trained and serve as his deputy. For the critical steps, you still stand beside him and watch." }
+   ]
+  },
+  "c_college": {
+   "title": "Teaching at a vocational university",
+   "situation": "An aviation vocational university in Xi’an wants you as a training instructor, teaching students assembly in its training workshop. No more launch campaigns, and the summer and winter breaks are your own.",
+   "options": [
+    { "label": "Go and teach", "result": "You stand in the training workshop watching a row of twenty-year-olds pick up torque wrenches, every wrist crooked. You go and straighten them one by one.", "end": "You became a training instructor at an aviation vocational university, sending off a class every year, a few of whom later walked into the assembly hall where you once worked." },
+    { "label": "Stay in the hall", "result": "You say a few more years, until the next satellite goes up. It’s always the next one." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On the last day you don’t go into the hall. You stand outside the air shower for a while, watching the young ones clip on their wrist straps and press the tester one by one. You hand your mentor’s old torque wrench to your apprentice, the worn ring on its handle a little shinier. When you leave the base it’s nearly dark, and you look up, not knowing which one is yours.",
+  "burnout": "That year at the launch site you went several nights without sleep, and back in Xi’an you lie awake night after night. Your checkup has more arrows than a problem report. You transfer to the archives to manage program documents, and no longer go into the hall. Whenever there’s a launch, you still watch the news to the last second."
+ },
+ "past": [
+  "You are in your last year of middle school in Hanzhong, Shaanxi. One break between classes, the head teacher puts a rocket launch on the classroom TV, and the whole class shouts the countdown. You don’t shout; you keep your eyes on the string of numbers in the bottom right corner of the screen.",
+  "Your gaokao (college entrance exam) score is enough for an engineering university in Xi’an. On the application form you find “Aircraft Manufacturing Engineering.” Nobody at home knows what it is; your father says fine, as long as it isn’t fixing planes.",
+  "In your second-year metalwork practicum you spend a week filing a hexagonal nut. The instructor measures it with calipers and says it’s two hundredths of a millimeter out, but usable. You find those two hundredths fascinating.",
+  "You are recommended straight into the master’s program at your own university, in aerospace manufacturing engineering, with a supervisor who works on precision assembly of large structures. For two years in the lab you tighten bolts and record tens of thousands of measurements.",
+  "In the summer of your first master’s year you intern at an aerospace institute in Xi’an, and step into the assembly hall for the first time, allowed only to stand behind the yellow line on the floor and watch. You stand there for a month and fill half a notebook.",
+  "In autumn recruiting, an internet company offers twice what the institute pays. You go to the institute’s interview, are taken on a tour of the hall afterward, and when you come out you know which offer you’ll sign. The political background form takes a whole afternoon to fill in."
+ ],
+ "late": {
+  "pension_note": "Estimate: institute staff are paid under the pension scheme for government and public institutions plus an occupational annuity, so after retirement you receive a little over 60% of your final monthly salary; program rewards and performance pay are not counted.",
+  "scenes": [
+   "The first launch after you retire, you watch the live broadcast from the sofa at home with the remote in your fist, and at ignition you stand up without meaning to.",
+   "The institute rehires you as a technical adviser two days a week, to tell the young ones the things that aren’t on any work card. What you say most is: once it’s tightened, look one more time.",
+   "With your declassification period over, you finally get a passport and take your spouse to see the cherry blossoms. Going through airport security, you still pat your pockets out of habit, checking you haven’t left anything behind.",
+   "In the archives you sort program documents every day. Coming across assembly records you wrote years ago, the handwriting neat and careful, you spend an afternoon reading them.",
+   "You start jogging around the estate every morning, and you sleep a little better. On nights with a launch you still wake, and when you do you go and stand on the balcony for a while.",
+   "Your old apprentice has become a Program Chief of Final Assembly and comes to visit with two boxes of kiwifruit. He says many steps are machine-tightened now. You ask who takes the last look; he says it’s still a person.",
+   "In the first month after leaving aerospace, what you’re least used to is being allowed to bring your phone into the office. Sometimes you catch yourself staring at an empty locker.",
+   "Once, teaching quality systems at your new job, you reach the words “root-cause closure” and the young people look blank. You talk for an hour without naming a single program.",
+   "At a reunion of old colleagues, everyone talks about which satellite spent New Year at which launch site. You have nothing new to add, so you listen, now and then supplying what the weather was like.",
+   "You see on the news that some satellites now go from start of build to shipping in a few months, several assembled on one line at once. You think of that one, which took a whole year.",
+   "Your child asks what exactly you used to build. You think about it and say, a satellite. Your child says, well, obviously. You laugh and say nothing more.",
+   "You go back to Hanzhong and lie in a bamboo chair in the courtyard of the old house looking at the stars. Which are stars and which are satellites, you can tell at a glance."
+  ],
+  "closing": {
+   "retire": "Many years later, on a clear night, you take your grandchild up to the roof to look at the stars. A point of light drifts slowly across the sky, and your grandchild asks what it is. You say someone built that.",
+   "burnout": "Many years later, on the balcony, you are tightening a wobbly chair. Halfway through you stop, dig the old torque wrench out of the toolbox, and tighten it right to the mark.",
+   "end": "Many years later, in an old box, you find your access card for the assembly hall. The person in the photo is twenty-six, in a cleanroom hood, only the eyes showing. You put it back and push it to the very bottom of the box."
+  }
+ }
+}

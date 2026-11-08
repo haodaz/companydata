@@ -1,0 +1,204 @@
+{
+ "id": "analyst-hz",
+ "occupation": "Data Analyst",
+ "role": "Junior data analyst at an e-commerce company",
+ "headline": "A first-year junior data analyst with a master’s in statistics at a Hangzhou e-commerce company, chased all day by the operations team asking “why did this number drop?” while AI quietly takes over the data pulls",
+ "unit": "The analytics team under the data platform of an apparel-and-homeware e-commerce company in Binjiang, Hangzhou",
+ "unit_type": "E-commerce company",
+ "city": "Hangzhou",
+ "city_tier": "New Tier 1",
+ "education": "Master’s in Statistics",
+ "level": "You write SQL window functions in your sleep, can clean and chart anything in Python, and can recite the formulas for a hypothesis test; you have never survived a big sales festival, and half the business definitions you still have to ask about",
+ "intro": "Your desk is by the window in the data platform row, and on the edge of the monitor is a sticky note left by the person before you: “GMV: use Finance’s definition.” In your first week, seventeen data requests piled up in the ticket system. The top one, flagged red, came from the livestream team: “Why did conversion drop yesterday? Urgent.” As of today, that question is yours to answer.",
+ "salary_note": "Estimate: a master’s-level graduate analyst at a Hangzhou e-commerce company makes around ¥15,000 a month, roughly 1.3–1.4 times the national figure; the year-end bonus is tied to how the sales festivals go, and a good year and a bad year can differ by several months’ pay.",
+ "facts": [
+  { "label": "Junior Data Analyst (current level)", "value": "0-2 years, ¥8,000–15,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Data Analyst (2-4 years)", "source": "Career map" },
+  { "label": "Monthly pay, 10+ years in the field", "value": "¥23,000 (national average)", "source": "Pay by experience" },
+  { "label": "Where AI is moving in", "value": "The morning check of core business metrics and chasing down sudden swings", "source": "AI exposure" },
+  { "label": "Open positions", "value": "302 related job listings nationwide, 12 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You ride your e-bike from a shared flat in an old Binjiang housing estate to the office park, buy two scallion-pancake rolls at the breakfast stall, and check your phone at a red light: someone in the overnight metrics chat has already tagged you.",
+  "The morning check. The AI monitor has laid out last night’s anomalies in a table: livestream conversion is down 1.8 points. You check first whether the tracking broke, then the schedule, and find that a big streamer’s session last night was moved to another slot.",
+  "Stand-up. The operations lead asks if she can have the number by noon; the product manager asks if you could “also” split it by new and returning customers. You write today’s third “also” in your notebook.",
+  "The queue at the canteen. Your teammates are discussing whose dashboard the boss screenshotted into the company-wide chat again, and the number in the screenshot was wrong.",
+  "A/B test review. The homepage changed the color of one button, and the product manager says conversion is up 3%. You run the sample size and tell him it isn’t significant yet; run it another week. He is quiet for a moment, then says don’t report it upward just yet.",
+  "Reconciling with Finance. Your GMV is ¥400,000 higher than theirs. You go through it line by line: the refund definitions are different. You add it to line 112 of the definitions doc.",
+  "Writing the weekly report. The AI assistant drafts it; you delete its “significant improvement in user mindshare” and put in three specific numbers and the words “cause under investigation.”",
+  "Back at the flat, just out of the shower, a message appears in the group chat: “We need this number for tomorrow’s morning meeting.” You open your laptop with a towel still on your head."
+ ],
+ "stages": [
+  "Most of your day goes into the ticket system: Operations wants a number, Product wants a table, Finance wants to reconcile a line. You work in a SQL editor, BI dashboards and a definitions doc that keeps growing; the people you deal with most are the livestream and category leads, and the numbers they ask for were usually needed yesterday. Once a week your team lead checks your accuracy and turnaround time.",
+  "You are no longer the person anyone can hand a job to. You have a business line of your own: livestreaming. Each morning you check its metrics for swings, then watch the A/B tests in flight. You sit closest to the livestream lead and argue most with the product managers; your tools now include Python and the experimentation platform, and every month you owe a deep-dive that changes something.",
+  "You start leading the work that needs several departments pulled together: pricing, customer lifecycle, cost attribution. Half your calendar is meetings and half is models, and you now deal with the head of purchasing and the finance business partner. Your causal analyses get taken into the business review and challenged to your face; you also have one or two junior analysts whose code you read and whose conclusions you fix.",
+  "You sit in on the senior quarterly business review, and the question is no longer which number dropped but where to put next year’s money. The company’s metrics dictionary and definitions knowledge base are yours, and the rules the AI follows to pull data are signed off by you. You see vice presidents more than operations staff, write less SQL, and read more industry research and competitive intelligence."
+ ],
+ "work": [
+  "A category lead in the group chat asks for last week’s return rate. You pull it and send it, and he replies: “That can’t be right, it’s higher than our back end.” You check: he counts by shipment, you count by order.",
+  "Your first post-mortem on a big streamer’s session. With the minute-by-minute sales curve, you and the livestream team match it against the listing times one by one, and find the highest peak came from a base-layer top added at the last minute.",
+  "A colleague from Finance stands by your desk with a printed reconciliation sheet, pointing at the figures one by one. You check them row by row with XLOOKUP; the missing ¥30,000 is a batch of refunds that crossed the month-end.",
+  "A product manager wants to launch a new spend-and-save threshold, and you design the experiment with him: how to split traffic, the minimum sample size, which metric to watch. He wants GMV; you insist the primary metric be gross profit per user.",
+  "The livestream lead suspects one channel’s traffic is fake. In Python you chart how long those users stayed: a neat row of three seconds each. She takes the chart to her meeting with the channel.",
+  "You set up the livestream line’s weekly report to refresh automatically in the BI platform, cutting four hours a week down to twenty minutes. You spend the time saved on the churn deep-dive.",
+  "The head of purchasing comes over with a cost sheet and asks why the same down jacket earns so differently out of two warehouses. You pull in warehousing and logistics data and peel it back layer by layer until you reach return shipping.",
+  "A junior analyst you supervise hands in a very neat attribution finding. You read his code and find shoppers from the big sales festival mixed into the control group, and tell him to run it again.",
+  "To measure the real effect of a membership price increase, you use propensity score matching to find a “twin” for every member who stayed. In the business review, the finance business partner questions you for half an hour.",
+  "A vice president has to decide at next week’s strategy meeting whether to enter a new product category. You spend two weekends on market sizing and three business scenarios, and the first page carries one sentence: not now.",
+  "The head of the AI data-pull system sends you a request to change the definition of “active user.” You check the blast radius: more than forty reports. On the request form you write one word: meeting.",
+  "The boss of a subsidiary wants to build a brand-new data team. You talk with him for an afternoon and end up advising him to hire one person, not five."
+ ],
+ "ladder": [
+  { "title": "Junior Data Analyst", "stage": "Junior", "focus": "Takes on day-to-day ad hoc data requests, routine data cleaning, and building and maintaining daily reports and BI dashboards; promoted on very high data accuracy, fast turnaround and a clear grip on basic business definitions." },
+  { "title": "Data Analyst", "stage": "Mid-level", "focus": "Independently owns the metric monitoring, anomaly investigation and A/B test evaluation for a single business line (such as traffic, operations or merchandise); promoted by producing deep-dive analyses on their own that genuinely solve business pain points." },
+  { "title": "Senior Data Analyst", "stage": "Senior", "focus": "Leads complex cross-department analyses (customer lifecycle management, pricing strategy, cost attribution) and pushes causal modeling and business strategy into practice; promoted by driving clear improvement in core business KPIs and building lasting methodology." },
+  { "title": "Principal Data Analytics Expert", "stage": "Principal / Expert", "focus": "Acts as a business partner supporting senior leadership decisions, oversees top-level strategic scenario planning, the standardization of data assets and the business direction of the analytics team; rises by leading breakthroughs in major business strategy and embedding a data-driven culture across the organization." }
+ ],
+ "ai_tasks": [
+  { "name": "Morning check of core business metrics and chasing sudden swings", "how": "AI can patrol the metrics automatically, flag anomalies and break out likely causes by dimension; a person has to judge whether a swing is a real decline or a data problem, and decide whether to halt a business action. That responsibility stays with a person." },
+  { "name": "Issuing a definition-correction bulletin and handing over the daily report", "how": "AI can draft the definition note, a half-page bulletin, the full daily report and the next day’s data-pull template; a person only needs to confirm the definitions are labeled correctly and nothing important is missing." },
+  { "name": "Signing off on tracking-quality fixes and closing the backfill loop", "how": "AI can write validation scripts and compare old and new tracking, and data before and after the backfill; a person sets the acceptance criteria and clears the alert once sure nothing is left behind." },
+  { "name": "Drilling into channel ROI and modeling a budget reallocation", "how": "AI can quickly break down first-order cost and long-term payback by campaign and model several budget plans; a person weighs the sales-festival calendar, business goals and payback assumptions and decides where the money moves." },
+  { "name": "Reviewing an A/B test plan and locking the evaluation definitions", "how": "AI can check the plan against a checklist for holes, compute sample sizes and list cleaning rules for dirty data; a person has to judge whether the metrics match the business goal and settle the evaluation definitions with Product and Operations." },
+  { "name": "Diagnosing an out-of-control SPC signal on a production line and attributing it by layer", "how": "AI can build SPC control charts, stratify across dimensions and compare outliers; a person has to understand the process, go to the floor to arrange blind tests, and make the final call on whether to stop the line." },
+  { "name": "Investigating a swing in top-line metrics and separating real losses from false ones", "how": "AI can drill down dimensions automatically, check the underlying data pipeline and propose attribution hypotheses; a person has to verify what is real, judge whether the loss is genuine, and give a clear conclusion before the business panics." },
+  { "name": "Signing off on a tracking patch and maintaining pipeline standards", "how": "AI can compare data before and after the fix item by item and draft standard entries; a person confirms the fix really holds, clears the dashboard’s anomaly flag, and decides which cases deserve to go into the standard." }
+ ],
+ "events": {
+  "e_first_promo": "Your first big sales festival. You watch the live dashboard until two in the morning. The peak in the first minute after midnight was computed by your SQL, and your manager posts a thumbs-up in the group chat.",
+  "e_wrong_caliber": "In your weekly report to management you used the wrong definition for repeat-purchase rate, and Finance points it out in the meeting. You rerun everything overnight and send a correction the next morning.",
+  "e_tracking_break": "A new version of the app ships and the checkout-page tracking is broken for three days. You write validation scripts to compare old and new data and spend a weekend backfilling; on Monday the dashboard turns green again.",
+  "e_dashboard_home": "The boss sets your category dashboard as his browser home page, the first thing he opens every morning. Category leads start lining up to ask you to add metrics.",
+  "e_ai_query": "The company rolls out conversational data pulls, and Operations can now get numbers by typing a sentence. Your ad hoc tickets drop by more than half in a month, and for the first time you spend the free hours looking at the data itself.",
+  "e_ai_wrong": "An operations colleague pulls a repeat-purchase rate with AI that is absurdly high, and it is already in the quarterly report. You check: the AI counted refunded-and-reordered orders twice. You fix the number and add the rule to the definitions knowledge base while you’re at it.",
+  "e_live_curve": "The company shifts its weight to livestreaming. You learn to read data by the minute, and on a session’s sales curve you can point to which garment went live at every bend.",
+  "e_double11": "For a month before Singles’ Day you forecast sales every day, and the warehouse orders stock off your numbers. After the festival two styles are left sitting in inventory, and someone from purchasing asks in the group chat who built the forecast model.",
+  "e_did": "With difference-in-differences you work out the real lift from a spend-and-save campaign: one third of what Operations reported. The boss cuts the next tier of budget on that basis, and the operations colleague doesn’t speak to you for a month.",
+  "e_pretty_number": "Before the annual meeting, a vice president asks you for a growth rate that “looks a bit better.” You give him the real one, with a page of explanation. After that presentation he never comes to you directly again.",
+  "e_layoff": "The company “cuts costs and boosts efficiency,” and half the user research team next door is gone. You inherit their six dashboards and a pile of reports whose definitions nobody knows.",
+  "e_ai_patrol": "The morning check is handed entirely to the AI monitor, which reports overnight swings first. Once it reports a “crash” in the top line; you look at the regional breakdown and see a warehouse system was down for two hours. You reply: “Data issue, no need to halt.”",
+  "e_factory": "The company buys a garment factory in Jiaxing, and you are seconded to do quality analysis. Standing on the shop floor for the first time, you trace an out-of-control point on the SPC chart to one particular sewing machine.",
+  "e_marriage": "You marry someone you met in grad school. The banquet is in your hometown, and relatives on both sides ask what a data analyst does. You say it’s basically keeping accounts.",
+  "e_house": "You put down a deposit on a flat in Yuhang, a kilometer from the metro and a good deal cheaper than Binjiang. The price is forty more minutes of commuting every day.",
+  "e_child": "The week your child is born, you finish the monthly report on a laptop in the hospital corridor. A nurse walking past glances at the line chart on the screen.",
+  "e_neck": "Your neck starts to complain; half an hour bent over SQL and your hands go numb. You buy a standing desk and take meetings on your feet, and colleagues say you look like you’re being punished.",
+  "e_35": "Past thirty-five, the headhunters call less, and several jobs you’d like on the recruiting apps say “under 35.”",
+  "e_intern": "Two interns join the team. The first thing you teach them isn’t SQL. It’s to ask first: if this number dropped, who will make what decision because of it.",
+  "e_parents": "Your father’s checkup back home turns something up. For two months you take the high-speed train back every Friday night and return Sunday night, reading the daily report on your phone in the carriage.",
+  "e_dictionary": "The metric definitions you set go into the company’s metrics dictionary. From then on, whenever departments argue in meetings, the page they quote is the one you wrote.",
+  "e_old_sql": "A piece of SQL you wrote ten years ago still runs every night. A new colleague points at a comment and asks what “there’s a trap here, don’t touch” actually refers to. You can’t remember either.",
+  "e_eyes": "You set the screen font to 150%, and you still have to lean in to read the second decimal place on the dashboard."
+ },
+ "choices": {
+  "c_ticket_or_topic": {
+   "title": "Tickets or a deep-dive",
+   "situation": "Your team lead says you can keep making the ad hoc pulls faster and more accurate, or you can take on a customer churn deep-dive with the livestream business. The tickets won’t shrink because you’re doing a deep-dive.",
+   "options": [
+    { "label": "Take the deep-dive, clear tickets at night", "result": "By day you live inside the livestream data; after ten at night you clear tickets. Three months later, one finding from the deep-dive changes the streaming schedule." },
+    { "label": "Make the tickets as fast as possible", "result": "Your average turnaround becomes the fastest on the team, and Operations loves working with you. It’s just that when they think of you, what they think is “fast with data pulls.”" }
+   ]
+  },
+  "c_mid_defense": {
+   "title": "Defending for Data Analyst",
+   "situation": "The mid-year promotion window opens. Going from junior to Data Analyst means presenting a deep-dive to the business heads and the data director, and they will ask you one thing: did the conclusion land?",
+   "options": [
+    { "label": "Present the churn study that changed the schedule", "result": "The panel grills you on causality for twenty minutes and you answer most of it. When you leave the room your palms are soaked." },
+    { "label": "Present the safe dashboard framework", "result": "It goes smoothly. No one asks a hard question, and no one remembers it." },
+    { "label": "Skip this year, build up another year", "result": "You keep the time for a harder problem. Someone from your intake gets promoted first, and you send him a red envelope in the group chat." }
+   ]
+  },
+  "c_ai_kb": {
+   "title": "Teach the AI?",
+   "situation": "The company wants AI to take over data pulls entirely and needs a few analysts to maintain the definitions knowledge base, review the code the AI writes, and design the monitoring and alert rules. It doesn’t count toward performance, but every number anyone pulls afterward goes through your hands.",
+   "options": [
+    { "label": "Go, learn to manage the AI", "result": "You check the AI’s mistakes one by one and turn hundreds of definitions into rules it can read. Six months later, the whole company’s data accuracy has your name behind it." },
+    { "label": "Stay, focus on analysis", "result": "You spend your time on deep-dives. Once the AI takes over the pulls, you use it by rules someone else set, and when you occasionally catch it miscounting, you file a ticket with that team." }
+   ]
+  },
+  "c_city": {
+   "title": "An offer from Shanghai",
+   "situation": "A headhunter calls twice: a foreign consumer-goods brand in Shanghai wants a consumer insights analyst, better paid and calmer, with a lot of English; a top platform in Hangzhou offers even more, but its overtime is famous. Your lease runs out next month.",
+   "options": [
+    { "label": "Go to the consumer-goods brand in Shanghai", "result": "Every Wednesday you present in English in a meeting room and leave at six-thirty sharp. Their data only refreshes once a week, though, and sometimes you miss the live dashboard." },
+    { "label": "Go to the top platform in Hangzhou", "result": "Your tables grow by billions of rows a day. You get the best tools you’ve ever seen, and start receiving requests at one in the morning." },
+    { "label": "Renew the lease, stay", "result": "You sign a new lease. Your manager knows you turned down two offers and gives you half a grade more at the year-end review." }
+   ]
+  },
+  "c_dpm": {
+   "title": "Move into data products?",
+   "situation": "The data product team is short-handed. Your lead says the dashboards and definitions you’ve built could become an analysis tool Operations can use on their own. If you go, you stop writing analyses and start writing requirements docs.",
+   "options": [
+    { "label": "Become a data product manager", "result": "You write your first PRD and draw seven versions of the prototype. Every question the engineers ask, you want to answer with data.", "end": "You became a data product manager, building a tool that means the business no longer has to come looking for an analyst." },
+    { "label": "Stay on the analytics team", "result": "You say you still prefer finding the reason. Your lead nods and puts you forward for a harder pricing project." }
+   ]
+  },
+  "c_senior": {
+   "title": "Going for Senior Data Analyst",
+   "situation": "Making Senior Data Analyst depends on the big cross-department work you have led. Right now there is a pricing and cost-attribution project that needs purchasing, operations and finance pulled in together, and if it fails, everyone will see.",
+   "options": [
+    { "label": "Lead the pricing project", "result": "You run more than forty meetings and tear the model down twice. In the end gross margin rises a point, and your name appears in the quarterly business review deck." },
+    { "label": "Do your own line well", "result": "Your business line’s metrics hold steady and you never make a mistake. It’s just that in your promotion packet, the “led” section looks a little empty." }
+   ]
+  },
+  "c_after35": {
+   "title": "Where to go after thirty-five",
+   "situation": "The department is reorganized. The data director asks if you want to lead a team of six; at the same time an old-line appliance manufacturer is hiring a head of digital analytics, paying twenty percent less, but nobody there will ask your age.",
+   "options": [
+    { "label": "Lead a team, go into management", "result": "Your calendar fills with one-on-ones and alignment meetings, and writing SQL becomes something you do late at night for fun." },
+    { "label": "Do digital work at the manufacturer", "result": "Half the factory’s data is still on paper, and you start by helping the workshop director make his first weekly report. The first time he understands the yield curve, he buys you a bowl of pian’er chuan noodles." },
+    { "label": "Stay on as an expert", "result": "You don’t manage anyone; you only chew on the hardest problems. When younger colleagues hit a number they can’t explain, it ends up with you." }
+   ]
+  },
+  "c_expert": {
+   "title": "Up for Principal Data Analytics Expert",
+   "situation": "The company opens a review for Principal Data Analytics Expert, which requires being able to shape senior leadership’s strategic planning and to have codified methodology. You have an attribution framework built up over the years that you’ve never organized.",
+   "options": [
+    { "label": "Turn it into a system and go for review", "result": "You spend three months turning scattered docs into a framework. At the review, a vice president says he will be using it." },
+    { "label": "Skip it, give the time to family", "result": "Your child starts primary school that year, and you pick them up on time every day. The framework stays in its folder." }
+   ]
+  },
+  "c_optimized": {
+   "title": "Your name is on the list",
+   "situation": "The business is shrinking. HR invites you for coffee and says they can offer the standard severance plus one month. The alternative is a transfer to the customer-service data team, one pay grade down. You are in your forties.",
+   "options": [
+    { "label": "Take the payout, go independent", "result": "You work as a data consultant for a few small merchants around Hangzhou, billing monthly, and issue an invoice in your own name for the first time.", "end": "You took the severance and left, becoming an independent data consultant for a few small merchants, helping them see where each month’s money comes from and where it goes." },
+    { "label": "Take the transfer and the pay cut", "result": "The customer-service data team sits one floor down. You rebuild the categories for complaint tickets and discover for the first time how many people are just waiting for a call back." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On the last day you hand over the thirty-odd scheduled jobs under your name one by one, each with a note. One ticket in the system is still open, titled “Why did this number drop?” You look at it and route it to the AI monitor. As you go downstairs the lights in the office park come on floor by floor, the same as the year you arrived.",
+  "burnout": "One morning you open the dashboard, look at the line bending downward, and your mind goes blank; you can’t think of a single reason. The figures on your checkup are redder than any dashboard you have ever read. You hand in your resignation and give your laptop back to IT. Walking out of the office park, for the first time you don’t look at the group chats on your phone."
+ },
+ "past": [
+  "You are in your last year of middle school in Anqing, Anhui, and math is the only subject you can ace without studying. Your father runs a hardware shop in town, and you have always been the one who checks his books.",
+  "Your gaokao (college entrance exam) score gets you into a good university in Hefei. On the application form you see the word “Statistics” and think it’s much like checking the books, so you put it down.",
+  "In your second year, studying regression, the lecturer uses supermarket receipts to explain the story of beer and diapers. For the first time you feel that behind the numbers there are people.",
+  "The summer of your third year, you intern at an internet company in Hangzhou, pulling data for Operations every day. You learn window functions, and you learn how often the word “urgent” appears in work chats.",
+  "Half your classmates sit the civil service exam; the other half go straight to work. You compare the starting pay of an analyst with a bachelor’s and one with a master’s, decide to take the graduate entrance exam, and get into a statistics master’s at a university in Hangzhou.",
+  "In your first year of the master’s you work on e-commerce customer retention with your supervisor, and on weekends you enter a data mining competition. What you come away with isn’t a ranking but a project you can talk about for twenty minutes in an interview.",
+  "In autumn recruiting you interview at more than twenty companies. In the final round, the interviewer asks, “GMV dropped 10%, how would you break it down?” You go from traffic to conversion to basket size to the refund definition. Two weeks later, this company sends you an offer."
+ ],
+ "late": {
+  "pension_note": "Estimate: the basic pension for enterprise employees is paid according to years of contributions and the contribution base. Internet companies pay well but the base is capped, so the pension comes to about 40% of your final monthly salary; year-end bonuses and stock options are not counted.",
+  "scenes": [
+   "In the first month of retirement you still wake at 9:15 and reach for your phone to check the top line. That group chat is long gone from it.",
+   "The neighborhood committee asks you to help count diners at the seniors’ canteen. You make a very simple table by day of the week and find Wednesday is the busiest, because that’s the day they serve braised pork.",
+   "You start keeping the household accounts, every item categorized. Your spouse says you spent your whole life keeping other people’s books, and at last it’s your own family’s turn.",
+   "For the first three months after leaving you do nothing at all, just walk a stretch along the Qiantang River every day. Your phone is on silent, and nothing “urgent” arrives anymore.",
+   "You find part-time teaching at a vocational college, a course on business data analysis. A student asks why learn this when AI can write SQL. You say what you’re learning is how to ask.",
+   "A few of the arrows on your checkup have gone. Sometimes you still dream of the curve on the big screen falling, and when you wake you go and stand on the balcony for a while.",
+   "In the first month of your new role, what you’re least used to is that nobody comes to ask you why anymore. Now you’re the one asking.",
+   "People are using what you built, and some of them are cursing it. Looking at the usage data in the back end, you can’t help starting to break it down again: why do the most people use it on Mondays?",
+   "At a reunion of old colleagues, the people from the analytics team are scattered everywhere. Someone says AI can do the whole attribution in one sentence now. Everyone laughs a little, and no one picks it up.",
+   "You read in an article that the data-pull job at e-commerce companies has all but vanished, and that an analyst’s work has become reviewing AI’s conclusions. You think of the seventeen requests in your ticket system.",
+   "Your child gets into university and calls to ask whether to choose statistics. You don’t give advice, only one line: choose something that makes you willing to ask a few more whys.",
+   "You go back to Binjiang to look at the old office park. The buildings are still there, and the company sign at the gate has changed three times. The breakfast stall still sells scallion-pancake rolls; you buy two and eat them at the roadside."
+  ],
+  "closing": {
+   "retire": "Many years later, one evening, you watch some old men playing chess in the courtyard, and one says vegetables cost more this year than last. You say nothing, but in your head you’re already breaking it down: is it the meat, or the greens?",
+   "burnout": "Many years later, you grow a few pots of mint on the balcony and write down how much they’ve grown once a day. Nobody needs the number. You write it down anyway.",
+   "end": "Many years later, on an old computer, you find a screenshot of a ticket from your first week: “Why did conversion drop yesterday? Urgent.” You look at it for a while, then save it to a folder called “Keep.”"
+  }
+ }
+}

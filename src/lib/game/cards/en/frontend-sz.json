@@ -1,0 +1,169 @@
+{
+ "id": "frontend-sz",
+ "occupation": "Front-End Web Developer",
+ "role": "Junior front-end developer at a startup",
+ "headline": "A history graduate who spent a year in a rented room learning to code from documentation, now in the second year as a junior front-end developer at a twenty-person cross-border e-commerce software startup in Nanshan, Shenzhen, which is waiting on its next funding round",
+ "unit": "A twenty-person startup making software for cross-border online sellers, in a co-working space in an old converted factory in Shenzhen's Nanshan Science Park",
+ "unit_type": "Internet startup",
+ "city": "Shenzhen",
+ "city_tier": "Tier 1",
+ "education": "Bachelor's degree (History)",
+ "level": "You can build business pages in React and TypeScript and hook up APIs without anyone holding your hand. Build configuration and performance tuning you half understand. Algorithm puzzles still frighten you every time",
+ "intro": "Last year you were still in a rented room typing code line by line from the documentation. You sent out more than two hundred resumes and only this company called back. Now you are responsible for every page of the sellers' admin dashboard; of twenty people, three write front-end. Every Monday meeting the CEO says the next round is close. As of today, half the commits in the code repository are yours.",
+ "salary_note": "Estimate: a Shenzhen startup pays a self-taught front-end developer in their second year ¥11,000–13,000 a month, over 30% above the national figure. There are stock options, but until the funding lands your pay can be docked at any time.",
+ "facts": [
+  { "label": "Junior Front-End Developer (current level)", "value": "0-2 years, ¥7,000–13,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Mid-level Front-End Developer (2-4 years)", "source": "Career map" },
+  { "label": "Pay after 10+ years", "value": "¥24,500 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Leading the rollout of a micro-frontend architecture and setting the onboarding procedure for sub-apps", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Running regression checks on homepage first-screen performance before the lunchtime peak", "source": "AI exposure" },
+  { "label": "Open positions", "value": "119 related job listings nationwide, 14 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "At 8:20 you leave a handshake building in an urban village in Xili, the blocks so close their windows almost touch, and get steamed rice rolls with egg downstairs. On the metro you scroll through last night's error monitoring: two sellers' pages went blank.",
+  "Stand-up. The product manager says cross-border sellers want a new order export page, with times shown in the US, European and Middle Eastern time zones. The back-end developer says the API won't be ready until Wednesday.",
+  "You open the editor and have the AI assistant scaffold the table component and type definitions first. It writes fast; you read every line and fix two places where it got the time zones wrong.",
+  "Lunch is braised pork trotter rice downstairs. The CTO sits down with his lunchbox and asks whether last night's blank screen came from the hook you changed last week. You say yes, it's already rolled back.",
+  "Design review with the designer. She says a button's corner radius is two pixels off. You zoom a screenshot to four hundred percent, stare at it a long time, and admit she's right.",
+  "Integration testing. The back end's field names don't match the docs, and the two of you trade messages in the group chat until you agree the code is the source of truth.",
+  "At 7:30 p.m. everyone orders takeout while someone in the meeting room demos the product to investors. You sit at the desk next door, ready to fix any small glitch in the demo environment.",
+  "Back in your room at 10:40, a family in the building opposite is hanging out laundry, close enough that you can see the colors of the hangers. You open an open-source project to see how other people write their code."
+ ],
+ "ladder": [
+  { "title": "Junior Front-End Developer", "stage": "Assistant / junior", "focus": "Under a senior mentor, take on specific modules: turning designs into UI, form validation and routine API integration. You move up on accurate delivery and on hunting down bugs yourself." },
+  { "title": "Mid-level Front-End Developer", "stage": "Mid-level", "focus": "Lead the front end of a complete business system on your own, handle mini-programs and mobile adaptation, and push modules toward standards and refactoring. You are promoted on fast delivery and a low failure rate." },
+  { "title": "Senior Front-End Developer", "stage": "Senior", "focus": "Lead technical design for core, complex business lines, solve high-concurrency and slow-first-screen bottlenecks, and mentor junior and mid-level engineers. You are promoted on performance gains and business results." },
+  { "title": "Staff Front-End Developer", "stage": "Staff", "focus": "Lead front-end infrastructure, the evolution of micro-frontend architecture and a full-stack BFF layer, and unify development standards across platforms. You are promoted on hard infrastructure wins and team productivity." },
+  { "title": "Front-End Technical Expert", "stage": "Expert / management", "focus": "Plan front-end technology across teams, represent the company's engineering publicly and build the talent pipeline; take a deep part in product and technology strategy and business decisions." }
+ ],
+ "ai_tasks": [
+  { "name": "Running regression checks on homepage first-screen performance before the lunchtime peak", "how": "AI can run Lighthouse automatically, compare against history, flag regressions and suggest fixes. A person only needs to spot-check the results and decide which regressions are worth fixing before a big sale." },
+  { "name": "Emergency fix for a blank screen in production and shipping a hotfix", "how": "AI can read the Sentry stack trace, find the failing hook and generate a patch and tests. A person has to confirm the root cause, decide whether to roll back or ship, and answer for what goes live." },
+  { "name": "Hooking a new product detail page up to an aggregation BFF service with graceful degradation", "how": "AI can generate the call layer, type definitions and timeout-and-retry code from the API docs. A person decides which data can fall back, how far, and what the user sees. Those are business trade-offs." },
+  { "name": "Refactoring old jQuery forms into React and TypeScript components with Storybook", "how": "AI is good at rewriting jQuery forms piece by piece into React and TypeScript components and generating Storybook docs. A person has to check that eight years of unwritten business rules haven't been lost, and sign off on how the forms behave." },
+  { "name": "Cross-platform rendering for the mini-program and adapting it for both WeChat and Alipay", "how": "AI can draft the Taro cross-platform code and convert most pages. The differences in Canvas animation and QR scanning between the two platforms, and how it behaves on real phones, still need a person to debug and confirm it looks the same." },
+  { "name": "Leading the rollout of a micro-frontend architecture and setting the onboarding procedure for sub-apps", "how": "AI can help draft the standards document and migration scripts. But where to draw the boundaries, coordinating across business units, getting the standards adopted and owning the architecture decisions mostly fall to people." },
+  { "name": "Validating a RAG-powered search component in the AI front-end lab and launching an A/B test", "how": "AI can quickly build the search component and wire up Chroma and the LLM summaries. A person has to design the A/B test, judge whether the answers are reliable, keep hallucination in check and read the conversion data." }
+ ],
+ "events": {
+  "e_whitescreen": "A change you shipped turned the dashboards of more than three hundred sellers blank for forty minutes. You sat next to the CTO going through the errors line by line until you found it: a null nobody checked for. At the post-mortem you wrote the incident report yourself.",
+  "e_salary_cut": "The funding was delayed again. At an all-hands the CEO said that from next month salaries would be paid at seventy percent, the rest converted into options. By the end of the meeting two people were already updating their resumes.",
+  "e_funding": "The next round finally landed. That night the company took two tables at the Chaoshan beef hotpot place downstairs. The CEO got drunk and went round toasting everyone: thank you for not leaving.",
+  "e_first_pr": "You submitted a fix to a widely used open-source component library and it was merged. The maintainer left one line, thanks. You took a screenshot and sent it to the classmate who once said, what's a history major doing writing code.",
+  "e_ai_code": "The AI assistant can now write an entire page in one go. You can ship twice as much in a day, and you've also noticed you can explain less and less of why some of the code is written the way it is.",
+  "e_typhoon": "On a typhoon day the whole city shut down, and you shipped a release remotely from your room. The window rattled in the wind, and downstairs the floodwater crept over the corner shop's step.",
+  "e_jquery": "The company bought a small team whose seller dashboard was still eight-year-old code. You used AI to rewrite more than forty forms as new components, then spent two weeks recovering the rules buried in the old code that nobody remembered.",
+  "e_layoff_wave": "The company cut a product line and laid off seven people, leaving you the only front-end developer. You took on the pages for three projects alone; that month you were in the office past midnight nearly every day.",
+  "e_love": "You met a designer at a tech meetup. On your first date you walked along Shenzhen Bay, and the two of you spent ages picking holes in the interaction design of a mall's navigation screen.",
+  "e_move": "Your building in the urban village was ordered to be brought up to code, and you moved to a new long-let apartment in Bao'an: ¥800 more a month in rent, twenty minutes more commuting. At last, a window you could see the sky from.",
+  "e_perf": "Before a big sale the sellers' storefront homepage was too slow to open. You cut first-screen load time from six seconds to just over one. A big customer in the Middle East emailed to say thank you, and the CEO forwarded it to the whole company.",
+  "e_company_dies": "The company burned through its money and the last round never came. On the last day people divided up the desk plants. You took home the monitor you'd used for three years, in lieu of part of your unpaid wages.",
+  "e_eyes": "Twelve hours a day at the screen, and your eyes got so dry you could barely open them; your neck started to ache too. You bought a standing desk, coded on your feet for a month, then sat back down.",
+  "e_mentor": "The new intern studied computer science and solves algorithm problems faster than you. But the first time he faced a seller who couldn't explain what they wanted, you were the one who taught him to write down the seller's exact words first, sentence by sentence.",
+  "e_wedding": "The wedding was back home. You made a small web page for the invitation; scan the code and it showed your photos together from the day you met. Your parents couldn't scan codes, so your cousin flicked through them one by one for them.",
+  "e_house": "You bought a flat in Dongguan right by the Shenzhen border and commute more than an hour each way, almost like crossing a checkpoint. After signing the contract you deleted your stock-trading app.",
+  "e_child": "Your child was born. Through those weeks of leave you paced the flat with the baby in one arm and watched alerts on the phone in the other hand. Once the baby swatted the screen off, and you didn't turn it back on.",
+  "e_35": "You turned thirty-five. More and more of the jobs headhunters sent you said under 35 only. You deleted your birth year from your resume, then put it back.",
+  "e_ai_review": "Half the team's code is written by AI. Your job has become setting rules, reviewing, and spotting which code will cause trouble once it's live. Once you stopped a confidently written piece of AI code that would have sent user data to the wrong endpoint.",
+  "e_talk": "At a front-end conference you gave a talk on how a history graduate reads legacy code: treat it like an archive. People laughed. Afterwards three of them came to add you on WeChat, saying they'd switched careers too.",
+  "e_parents": "Your mother was in hospital back home. You took two weeks off to look after her by day, and in the evenings joined meetings from the ward corridor on your phone's hotspot. The woman at the nurses' station asked what you did. You said you make web pages. She said then look at this appointment app for me, it keeps freezing.",
+  "e_old_code": "A component you wrote ten years ago is still running somewhere. A new engineer found your name in the comments and came to ask why you wrote it that way. You stared at it a long time and couldn't remember.",
+  "e_slow": "You learn new frameworks more and more slowly. The young ones have AI build a whole project from one sentence; you still like to sketch first how the data flows."
+ },
+ "choices": {
+  "c_pay_cut": { "title": "Seventy percent pay: stay or go", "situation": "The funding is delayed and salaries are being paid at seventy percent, the rest in options. An outsourcing team working for a big tech company has invited you to interview: full pay, but you'd be building pages other people have specified, with no real prospect of becoming staff.", "options": [
+   { "label": "Stay and take the options", "result": "You stayed. Rent got tight, and lunch changed from pork trotter rice to a packed lunchbox. The CTO began giving you the harder work." },
+   { "label": "Go to the outsourcing team", "result": "You clocked in and out, sliced pages from designs, and the pay arrived on time. A year later you realized the thing you knew best was that big company's approval process." }
+  ] },
+  "c_mid": { "title": "Build a whole system, go for Mid-level Front-End Developer", "situation": "The company is building a brand-new seller dashboard for a European customer. The CTO asks if you can build it from scratch alone: tech choices, standards, integration, all yours. Pull it off and he'll put you up for Mid-level Front-End Developer.", "options": [
+   { "label": "Carry it alone", "result": "In three months you threw out your own architecture twice, and on launch day you slept a night at the office. The system ran, and the CTO named you in the weekly report." },
+   { "label": "Ask for a back-end partner", "result": "You brought in a back-end developer and split the work. A month slower, but nobody pulled all-nighters and the code was clean." }
+  ] },
+  "c_bigco": { "title": "A big tech company wants to interview you", "situation": "A business team at a big tech company saw your open-source project and invited you to interview. Forty percent more pay, a full promotion ladder, and layer after layer of approvals and performance rankings. Nobody knows yet what the options here are worth.", "options": [
+   { "label": "Go to the big company", "result": "You got your badge, your name followed by a string of grade codes. In your first performance review you landed in the middle band; your team lead said that's normal for newcomers." },
+   { "label": "Stay at the startup", "result": "You thanked the interviewer. At the next day's stand-up you volunteered for the payment page nobody wanted to touch." }
+  ] },
+  "c_fullstack": { "title": "Learn back end, or go deep on front end", "situation": "The company is small and the back end is often swamped. The CTO says if you could write server code you could build whole features end to end by yourself. An older colleague tells you instead to master front-end performance and tooling: that is your moat.", "options": [
+   { "label": "Learn back end, go full-stack", "result": "You spent six months learning databases and server code, and the first API you wrote fell over under load testing. The second version held, and you began shipping whole features on your own." },
+   { "label": "Go deep on front end", "result": "You took apart every step of how the browser renders, and got the team's build time down to a third of what it was." }
+  ] },
+  "c_ai_rules": { "title": "Who reviews the AI's code", "situation": "Everyone on the team writes code with AI, and production problems are piling up. The CTO wants rules: which code must be read line by line by a person, how prompts should be written, how tests get added. Nobody wants the job, and it doesn't count as output.", "options": [
+   { "label": "Take it on and write the rules", "result": "You dug out every incident caused by AI code in the past six months and turned them into a twenty-point review checklist. Over the next three months production incidents halved." },
+   { "label": "Look after your own code only", "result": "You said the CTO should decide. You still read every line of your own code before committing; other people's you leave alone." }
+  ] },
+  "c_pm": { "title": "Move into product management", "situation": "The product manager has quit, and the CEO has noticed that you know better than anyone where sellers get stuck in the dashboard. He asks if you'd like to move into product. No more code: your days would be sellers and requirement documents.", "options": [
+   { "label": "Move to product", "result": "Your first requirements document ran to twenty pages. The CEO said too long, sellers only read page one. You cut it to three, and for the first time thought writing code was easier than writing prose.", "end": "You moved from front-end into product management and later ran a whole line of products for overseas markets; when engineers in a review say it can't be done, you can often point to the part that can." },
+   { "label": "Keep writing code", "result": "You said you still love the moment something goes from nothing to running on the screen. The CEO hired another product manager, and the two of you worked well together." }
+  ] },
+  "c_hometown": { "title": "Go home and work remotely", "situation": "Your child will soon start school, and Shenzhen's school places and house prices leave you breathless. The company will let you work remotely at seventy percent pay; a mortgage back home would be just over ¥1,000 a month.", "options": [
+   { "label": "Go home and work remotely", "result": "You write code in a study in your home county town, a rice field outside the window. In meetings you can sometimes hear chickens downstairs, and you've learned to keep yourself on mute." },
+   { "label": "Stay in Shenzhen", "result": "You spent six months chasing paperwork for a school place and moved into a smaller rental. At weekends you take your child to Shenzhen Bay to watch the birds, by way of making up for it." }
+  ] },
+  "c_stable": { "title": "Join a state-owned tech company", "situation": "Around thirty-five, the technology subsidiary of a bank is hiring front-end developers: twenty percent less than you earn now, but stable, not too fussy about age, little overtime. Your current company is waiting on another funding round.", "options": [
+   { "label": "Join the bank's tech subsidiary", "result": "Your badge turned blue. The systems are old and the processes long; changing a button's color takes three approvals. You began leaving at six every day and building Lego with your child in the evenings." },
+   { "label": "Stay in startups", "result": "You said one more gamble. The new company makes an AI storefront assistant for sellers in the Middle East. You're the oldest on the team, and the only one who has seen three companies go under." }
+  ] },
+  "c_indie": { "title": "Go out on your own with a product", "situation": "You built a small tool that automatically generates multilingual product pages for cross-border sellers, and it has a few hundred paying users online. Some people urge you to quit and do it full-time. Others remind you that a big company could copy a tool like that in a month.", "options": [
+   { "label": "Quit and go full-time", "result": "You wrote the code, answered support tickets and kept the books yourself. The first year you earned half what you used to. By the second year you had three thousand paying users and hired your first employee.", "end": "You quit to build your own small product, generating product pages for thousands of cross-border sellers; later the company grew to seven people, and you still answer users' tickets yourself once a week." },
+   { "label": "Keep it as a side project", "result": "You worked on it slowly at weekends. Users grew slowly too; each month it covered half the mortgage." }
+  ] }
+ },
+ "endings": {
+  "retire": "In your last week you handed the modules you'd maintained for years to younger engineers one by one, each with a long write-up, like the archive notes you used to make as a history student. On the last day you shut down the computer. Your final commit in the repository read: add missing comments. You sat at your desk a while, and left them the pothos you'd kept alive for years.",
+  "burnout": "That winter production alerts woke you in the middle of the night for three months running. One morning you sat at the computer looking at code you had written yourself and could not understand it. You took a long leave, and when you came back told the company you wanted work without on-call duty. You deleted the alerting app from your phone, and that night slept ten hours."
+ },
+ "past": [
+  "You went to high school in a county town in Jiangxi, in the humanities stream. Your history teacher never looked at the book; whatever dynasty she taught sounded like news from next door. Back then you wanted to be a history teacher.",
+  "The gaokao (college entrance exam) got you into the history department of a university in Wuhan. Your family asked what you'd do with that. You said teach, or go on to a master's.",
+  "In your third year you helped your professor sort a batch of local gazetteers: thousands of entries to turn into a searchable table. You learned a little web coding online and built a small search page. Your professor used it for years.",
+  "In your graduation year you missed the master's entrance exam by six points and failed the exam for a permanent teaching post. You taught for half a year at a private tutoring company. It went bust, and you never got your last month's pay.",
+  "Back in your rented room you dug out that search page and rewrote it from scratch. For the next year you got up at eight every day and worked through HTML, CSS and JavaScript from the documentation while your savings ran down.",
+  "You sent out more than two hundred resumes; most vanished without a trace. The CTO of this Shenzhen company looked at your gazetteer search site and asked on the phone: you studied history, why do you want to write code? You said: because I want things to be findable."
+ ],
+ "late": {
+  "pension_note": "Estimate: Shenzhen's urban employee pension scheme. Startups mostly pay in on a low base, and there were gaps when a company folded or you changed jobs; later you paid in on your real salary and made up some of it. In retirement you get a little over 40% of your last monthly salary.",
+  "scenes": [
+   "For your first month of retirement you still woke in the night and reached for your phone to check for alerts. There were none. You turned over and heard rain outside.",
+   "The community senior college asked you to teach a class on using smartphones. You showed old people how to spot scam texts. One woman asked why a button was made so small. You said you'd like to know too.",
+   "At last you had time to rebuild that old gazetteer search site and donate it to the archive in your home county. On launch day it had seventeen visits.",
+   "After leaving coding you took a job coordinating a digitization project at a library, scanning old newspapers and sorting catalogs. Off at five every afternoon; you weren't used to it.",
+   "You started reading history again, book after book, pencil notes in the margins. One day you noticed you'd written a note beside a passage in the format of a code comment, and laughed.",
+   "A former colleague posted in the group the photo from the day your startup closed: everyone at the door holding a desk plant. You liked it and said nothing.",
+   "In your first week in the new role you sat in the meeting room listening to an engineer explain his design, and more than once stopped yourself from grabbing his keyboard.",
+   "Now and then, late at night, you still open the editor and write some small thing just for yourself. No review, no one chasing a release. You write slowly.",
+   "You passed the old factory building in Nanshan; the co-working space had long since changed its sign. At the rice-roll shop by the door you had rice rolls with egg. They tasted the same as back then.",
+   "Most web pages now are written, tested and shipped by machines themselves. The news says someone still has to decide where a button goes, and who answers when it breaks.",
+   "On an old hard drive you find the first page you wrote the year you taught yourself: one button that pops up hello when clicked. You click it. It still works.",
+   "Your grandchild is learning to code at school and brings you homework. You don't give the answer. You have them draw it on paper first: where the data comes from and where it goes."
+  ],
+  "closing": {
+   "retire": "One evening many years later you walk slowly along the Shenzhen Bay promenade as the towers across the water light up one by one, a page probably loading behind every window. You stand a while, as if waiting for them all to finish loading.",
+   "burnout": "Many years later, in a study back home, you leaf through an old local gazetteer, its paper gone brittle. You carefully turn to a certain page and remember the little website you once made so these words could be found.",
+   "end": "Many years later, cleaning up an old computer, you see a folder on the desktop called study notes: a daily record from the year you taught yourself. The last entry says: got a call for an interview today."
+  }
+ },
+ "stages": [
+  "You take on pages and components one at a time: rebuilding Figma designs in React, asking the back end in the group chat when the API docs don't match, pushing to GitLab and waiting for the CTO's review. Most of your Jira tickets are bugs and small changes, and after each fix you click through it on staging. Whether your code gets merged into main is still someone else's call.",
+  "Now a whole business module is yours: breaking down features and estimating in requirement reviews, writing the technical design doc, fixing the API fields, and watching Sentry's errors after launch. Product, design and back end come straight to you, and QA's tickets are triaged by you first. You review the intern's merge requests, and for the first time write please change under someone else's code.",
+  "You own the front end of an entire business line: first-screen performance, bundle size, production incidents. Before big sales you load-test with ops and watch every metric in Lighthouse and the performance monitoring; when there's an incident you chair the post-mortem and write the report for the CEO. Two or three junior and mid-level engineers work under you. Their designs go past you first, and in weekly meetings you fight product for their schedules.",
+  "You rarely write business pages now; you write things other people use: the component library, scaffolding, the release pipeline, and the team's rules for coding with AI. You meet the heads of each product line to settle a common stack and code standards, and weigh whether to go micro-frontend. Hiring is yours too: three or four interviews a week, the final round always you.",
+  "Half your calendar is meetings: settling next year's technology roadmap with the CTO, working out cloud and AI tooling budgets with finance, discussing integrations with customers' technical leads. The dozen-plus front-end engineers are in three teams whose leads report to you. You present the company's approach at tech conferences, and come back to spend an evening talking with a key engineer who wants to quit."
+ ],
+ "work": [
+  "The designer changed a product card in Figma without telling you. You compared the two designs spacing by spacing and fixed fourteen styles.",
+  "QA filed a Jira ticket: the Arabic page for Middle Eastern customers had its text running the wrong way. You read up for ages, then added a single dir attribute.",
+  "Your first merge request got nine comments from the CTO. The last said: please name variables in English. You renamed a dozen variables you'd spelled in pinyin.",
+  "In a requirements review the product manager wanted a live-refreshing order dashboard. On the whiteboard you drew polling and a persistent connection side by side and worked out the load on the servers.",
+  "In the small hours Sentry logged hundreds of the same error. On your phone over VPN you read the stack: a third-party payment component had upgraded. You pinned it back to the old version first.",
+  "The new intern wrote a three-hundred-line component. In code review you didn't change his code, just asked three questions. The next day he split it into four.",
+  "A week before a big sale you found in the performance panel that the homepage loaded an eight-megabyte background image uploaded by someone in marketing. You added automatic compression to image uploads.",
+  "After a production incident on the payment page you chaired a two-hour post-mortem. The root cause in the report: nobody knew who owned this code.",
+  "The product manager wanted a new feature in two weeks. You talked him through your team's three schedules, and in the end cut three nice-to-have requirements.",
+  "You wrote an upgrade guide for the company's component library. Five product lines' front-end teams migrated over a month; you went and helped with the last one yourself.",
+  "You interviewed a candidate who used AI to finish the written test in ten minutes. In the second round you had him close the tools and explain why that code was written the way it was.",
+  "Each team's AI-generated code came in every style imaginable. You wrote a prompting and review standard and put it in the root of every repository.",
+  "Finance brought you the bill for AI coding tools, three times last year's. You went through usage with each team lead and cancelled two subscriptions nobody used.",
+  "A major customer's technical director came to discuss integration. You drew a data-flow diagram on the meeting room whiteboard; he photographed it and said they'd start the project as soon as he got back.",
+  "A team lead you'd worked with for five years handed in his notice. You talked with him at the Chaoshan beef hotpot place downstairs until eleven, then wrote him a reference."
+ ]
+}

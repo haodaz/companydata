@@ -1,0 +1,205 @@
+{
+ "id": "surveyor-qh",
+ "occupation": "Surveying and Mapping Technician",
+ "role": "Field Surveyor (Assistant Aerial Survey Technician)",
+ "headline": "Two years out of a vocational college course in engineering surveying: a field surveyor with a provincial mapping institute in Xining, who spends eight months a year on the high plateau of southern Qinghai, hauling an RTK receiver and a total station up one mountain after another",
+ "unit": "Field Team Two, a provincial surveying and mapping institute in Xining",
+ "unit_type": "Provincial surveying and mapping institute (a former state institution, now run as an enterprise)",
+ "city": "Xining",
+ "city_tier": "Third-tier city (provincial capital)",
+ "education": "Vocational college diploma (Engineering Surveying Technology)",
+ "level": "Two field seasons behind you. You can run RTK ground control and a total-station traverse on your own, though your mentor still glances over your adjustments. You have no drone license yet; so far you have only carried the aircraft.",
+ "intro": "Two field seasons with this institute have taught you to walk slowly and breathe slowly on a ridge four thousand meters up. This year the institute has won the base mapping and grassland-rights surveys for several counties in southern Qinghai: into the mountains in April, back down in November. As of today, the RTK base station and the tripod in the back of the pickup are yours to carry. If you can't find the point, your mentor says, don't come down.",
+ "salary_note": "Estimate: base pay in Xining runs below the national average, but field work earns a daily allowance on top of a hardship-region subsidy, so in the field months take-home pay ends up slightly above the national average. In winter, back in town doing office work, you get base pay only.",
+ "facts": [
+  { "label": "Assistant Aerial Survey Technician (current level)", "value": "0-1 years, ¥4,000–6,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Aerial Survey Technician (1-2 years)", "source": "Career map" },
+  { "label": "Pay after 10+ years", "value": "¥15,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Forced-centering control surveys for a mountain highway upgrade", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Low-altitude aerial data capture and first-pass checks over a logistics park", "source": "AI exposure" },
+  { "label": "Open positions", "value": "14 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You wake in a county guesthouse in Golog. The radiator is cold. The kettle boils at a little over eighty degrees up here, and after ten minutes your instant noodles are still hard.",
+  "The pickup heads out. In the back: the RTK base station, two tripods, the total-station case, a spare drum of gasoline and a canister of oxygen, lashed down with three turns of rope.",
+  "Where the road runs out, you shoulder the tripod and climb toward the ridge. At 4,600 meters you stop to breathe every twenty steps. Your mentor walks ahead without turning around. Don't talk, he says. Save your breath.",
+  "Hunting for a control point. The map says a concrete marker was buried here decades ago. You crouch in the grass and dig with your hands for half an hour before you uncover an iron cap stamped with a cross.",
+  "Lunch in the truck: a round of flatbread, a sausage, hot water from the thermos. A few black yak-hair tents stand in the distance. A herder rides over on a motorbike, watches you for a long while, then rides away.",
+  "Down in the gully the RTK can't get a fixed solution, so you run a traverse with the total station. You hold the prism pole while your mentor calls over the radio: left a bit, more, good, don't move.",
+  "The weather turns in minutes. Hail comes down and you run for the truck clutching the instrument cases. When it stops, you go back out and finish the last two points.",
+  "Back at the guesthouse you load the data logger onto the laptop and check it point by point. The phone shows one bar. You send your family a photo of the sunset; it takes ages to go through."
+ ],
+ "ladder": [
+  { "title": "Assistant Aerial Survey Technician", "stage": "Entry / assistant", "focus": "Follow a veteran into the field: check and haul the equipment, mark and measure ground control points, file airspace notices for survey flights, and run first checks and backups on raw data. You move up once you can do RTK stakeout fluently and fly a multirotor safely on your own." },
+  { "title": "Aerial Survey Technician", "stage": "Junior", "focus": "Lead orthophoto and oblique photography missions on your own, and run the office software (DJI Terra, ContextCapture) through aerotriangulation to basic models and orthoimages. You move up by raising your first-pass adjustment rate and your ability to adapt in the field." },
+  { "title": "Aerial Survey Engineer", "stage": "Mid-level", "focus": "Connect field and office work end to end: capture and process airborne LiDAR point clouds, build detailed oblique 3D models, and deliver the full set of standard map products to client specifications. You move up by repairing hard, deformed datasets and integrating data from many sources." },
+  { "title": "Senior Aerial Survey Engineer", "stage": "Senior", "focus": "Design the technical plan for city-scale 3D reality models or major linear projects (highways, power grids, water works), schedule cluster processing, crack the hard technical problems, train new hires and sign off on delivery accuracy. You move up on the rigor of your technical designs and quality control on major projects." },
+  { "title": "Aerial Survey Project Manager", "stage": "Expert / management", "focus": "Run large and mid-sized surveying projects end to end: overall planning, defending technical proposals, deploying people and aircraft, safety and risk control, and collecting payment. You answer for the project's profit and its final quality." }
+ ],
+ "ai_tasks": [
+  { "name": "Low-altitude aerial data capture and first-pass checks over a logistics park", "how": "AI and flight-control software can help generate flight lines, check no-fly zones and weather, and avoid obstacles on their own. Judging on-site hazards like tower cranes and crowds, making the call at takeoff and landing, and carrying the safety responsibility still fall to the technician." },
+  { "name": "First-flight quick check of 1:2000 orthoimagery along a high-speed rail corridor", "how": "AI can check automatically for missed frames, insufficient overlap, bad exposure or blur, and produce a quick-check report. A person only glances at the flagged anomalies and decides whether to re-fly and how to renew the airspace filing." },
+  { "name": "Forced-centering control surveys for a mountain highway upgrade", "how": "At most, AI helps plan point locations and run the adjustment. Actually finding a way through mountain scrub, setting up the total station, picking sight lines and doing the forced-centering ties takes hands-on craft and experience. For now it is essentially human work." },
+  { "name": "Fixing LiDAR flight-strip misalignment caused by strong magnetic interference", "how": "AI can compare adjacent strips automatically, locate where and how far the elevations jump, and help correct the adjustment. Deciding whether a power line's field is to blame, going out to find the source, and deciding whether to re-fly takes a person who knows the site and the equipment." },
+  { "name": "Pre-delivery QC of LOD2.2 building models for a county-wide 3D reality model", "how": "AI can batch-check building models against the standard for roof structure, window frames, awnings, topology and texture, and output a QC list. People spot-check only the hard cases and sign, and answer for, the final acceptance." },
+  { "name": "Running a cross-agency consultation to merge 3D reality data", "how": "AI can help convert, compare and list differences between coordinate systems and height datums. But getting housing, water and industrial-park officials around one table, persuading each side and locking in a single shared datum takes communication, coordination and buy-in." }
+ ],
+ "events": {
+  "e_altitude": "Your first week in, you spend a night in Madoi. Your head pounds until dawn and your lips turn purple. Your mentor shoves the oxygen canister at you, and the next day he makes you watch the instruments from the truck. No climbing.",
+  "e_old_mark": "On a summit you find a triangulation point from the 1970s, the lettering on the stone half worn away by wind. You record its coordinates, ring it with stones, and post a photo to the team chat.",
+  "e_master": "Your traverse closures keep failing tolerance. Your mentor doesn't yell. That night at the guesthouse he draws on the back of a cigarette pack: check the sight lines first, then your footing. Leveling the instrument matters more than computing fast.",
+  "e_june_snow": "A heavy June snow closes the pass and strands your truck halfway up the mountain for two days. You keep the engine running for heat and split the dry rations. On the third day a bulldozer finally grinds up to you.",
+  "e_bog": "The permafrost has thawed and the meadow is mud underneath. The pickup sinks to its axles. You dig all afternoon, and in the end a herder drives his yaks over to pull you out.",
+  "e_milk_tea": "The days you survey grazing boundaries, a herding family's mother brings you butter tea and tsampa every noon. When you leave you try to pay. She waves the money away and asks you to get her boundary stakes right.",
+  "e_drone_fall": "On a below-freezing morning the drone battery drains twice as fast as usual, and on the way home the aircraft noses into a riverbed. It isn't a total loss, but the institute makes you write a self-criticism and docks that month's bonus.",
+  "e_allowance": "At year's end the field allowance is paid out in one sum, by the day: this year you spent more than 240 days in the field. When it lands you send half to your mother. On the phone, she is quiet for a long time.",
+  "e_redface": "Home in Haidong for Spring Festival, you have two red plateau patches on your cheeks and split lips. A relative says you look like a shepherd. Your mother turns away and puts two extra pieces of meat in your bowl.",
+  "e_love": "Doing office work in Xining over the winter, a colleague introduces you to a primary school teacher. You share yogurt and sweet fermented barley near the old city center. She asks how many months a year you are home, and you tell her the truth.",
+  "e_wedding": "You hold the wedding banquet in Xining. You only make it back from Golmud the day before, your face still peeling, and the emcee announces that the groom has just come down from the Kunlun Mountains. Every table laughs.",
+  "e_baby": "The day your child is born you are surveying near the Tanggula Pass. Over the satellite phone you catch one sentence, mother and baby both well, and the wind takes the rest. You sit in the truck a long time before starting the engine.",
+  "e_house": "You buy a ninety-square-meter flat on the west side of town, the down payment pooled by both sets of parents. You won't sleep there four months a year, but the key hangs from your belt, on the same ring as the instrument-case keys.",
+  "e_ai_qc": "The institute brings in an imagery quick-check system. Photos flown by day have a report by night: which strip lacks overlap, which patch is blurred. The next morning you are back on the mountain, re-flying that one small block.",
+  "e_ai_model": "Before a county's 3D building models are delivered, the QC software flags several thousand problems overnight. The office team says this used to take two months; now they only spot-check the hard ones. Listening, you think about who walked out to every one of those ground control points.",
+  "e_dispute": "During a land-rights survey, two herding families start arguing over who owns a gully, each pulling you over to look at the map. You stop the instrument and wait for the village officials and the township people. You wait until dark.",
+  "e_accept": "The county survey you led passes provincial inspection on the first try: of fifty points checked, not one is out of tolerance. At the year-end meeting the team leader reads out your name.",
+  "e_peers_leave": "Of the five who joined the institute the same year as you, three are gone: one to a mapping company in Chengdu, one home to take the civil service exam, one delivering parcels. At the farewell dinner nobody says the words field work.",
+  "e_payment": "Payment for several county projects keeps slipping, so the institute can't pay bonuses and sends out base salary only. You fold this year's allowance slips and tuck them into your field book.",
+  "e_apprentice": "The new apprentice's first climb to 4,500 meters: halfway up he squats down, gasping. You take his tripod onto your own shoulder and tell him, don't talk, save your breath. Then you pause. Those were your mentor's exact words.",
+  "e_blood": "At the work physical your hemoglobin is high. The doctor says it comes from years on the plateau and tells you to spend a few fewer months up there each year. You fold the report away, and the next April you head into the mountains as usual.",
+  "e_knee": "Years of hauling a tripod up slopes, and your knees give out first. Going down hurts more than going up. You start using a trekking pole, and the young ones tease you for looking like an old herder.",
+  "e_child_call": "On a video call your child shows you a drawing: a mountain, a little figure on top, three sticks beside him. That's Dad, he says, measuring how tall the mountain is.",
+  "e_cors": "The province keeps adding CORS reference stations. In more and more places you no longer need your own base station; switch on and you get a fixed solution. The base station in your truck bed hardly comes out anymore."
+ },
+ "choices": {
+  "c_caac": {
+   "title": "Pay your own way to a drone license this winter",
+   "situation": "More and more of the institute's work is aerial survey, and to move up to Aerial Survey Technician you need to lead orthophoto and oblique missions yourself. Winter office work is slow, and Xining has a training school certified by the aviation authority. The license costs a bit over ¥10,000, and the institute won't pay. But you promised your parents you'd be home early for New Year.",
+   "options": [
+    { "label": "Sign up and train in Xining", "result": "You spend the winter flying figure eights on a field outside town, hands too cold to grip the controller. You get home on New Year's Day itself with the license in your bag. Your mother says you've lost weight." },
+    { "label": "Go home for New Year first", "result": "You sleep a month on the heated brick bed at home and help your father rebuild the courtyard wall. When you go back up in spring, the two new kids on the team both have licenses. They fly the aircraft." }
+   ]
+  },
+  "c_sanjiangyuan": {
+   "title": "Four months deep in the Sanjiangyuan, without coming down",
+   "situation": "The institute has won base mapping across an uninhabited stretch deep in Sanjiangyuan, the headwaters of the Yangtze, Yellow and Mekong. A team must camp in there for four months, on the top allowance rate, and the points it fixes will be used for decades. The alternative is a cadastral job on the edge of Xining, home to your own bed every night.",
+   "options": [
+    { "label": "Go in and camp four months", "result": "You spend a summer in a tent. You see wolves, herds of wild asses, and wind that does not stop all night. The day you come out, you soak for two hours in a county bathhouse." },
+    { "label": "Stay near Xining doing cadastral work", "result": "Every day you measure parcel corners between urban villages and factory yards, explaining to owners why their wall has to move back twenty centimeters. You are home for dinner." }
+   ]
+  },
+  "c_inside": {
+   "title": "Your partner wants you in the office",
+   "situation": "Marriage is on the table, and her family is blunt: gone eight months a year is no way to live. The office team is short-handed. Moving there means aerotriangulation and modeling at a screen, no field allowance, and noticeably less pay.",
+   "options": [
+    { "label": "Move indoors, home every night", "result": "You start keeping office hours. The mountains on your screen are ones you once climbed. Your pay slip gets thinner, but there is someone else at the dinner table every night." },
+    { "label": "A few more years in the field", "result": "You say three more years, enough for a down payment, then you'll come in. She neither agrees nor refuses. That year when you head out, she sees you off at the station." }
+   ]
+  },
+  "c_ai_inner": {
+   "title": "Learn AI quality checking and automated modeling?",
+   "situation": "The institute's aerotriangulation, modeling and QC have all moved to automated pipelines, and it wants people from the field to learn to review the machines' output and maintain the workflow. That year means less field time and a much smaller allowance. The team leader says that before long, people who can read the machines will be worth more than people who can climb.",
+   "options": [
+    { "label": "Go and learn to read the machines", "result": "You learn to spot what the machine misses on screen: a field buried in snow, a cattle shed taken for a house. You've seen all of these on the mountain, you tell them." },
+    { "label": "Stay on the mountain", "result": "You stay in the field and become the team's best at finding old markers. The problem lists the machines produce still need someone to go and look at each one on site." }
+   ]
+  },
+  "c_gis": {
+   "title": "Go to Chengdu to build digital-twin data",
+   "situation": "A classmate from your internship days works at a Chengdu company building digital-twin platforms. They need someone who knows field coordinates and point clouds, and ask whether you'll come as a GIS data engineer, at one and a half times your pay and never on the plateau again.",
+   "options": [
+    { "label": "Go to Chengdu", "result": "You leave your tripod to your apprentice and buy a train ticket to Chengdu.", "end": "In a Chengdu office tower you build cities in 3D, spending whole afternoons adjusting coordinate systems and height datums. Outside, a light rain falls, and now and then you remember the dry, cold wind of the southern Qinghai plateau." },
+    { "label": "Stay in Qinghai", "result": "You tell your classmate maybe later. That autumn, at the foot of a snow mountain, you survey your last point of the year." }
+   ]
+  },
+  "c_cert": {
+   "title": "Sit the Registered Surveyor exam, aim for Senior Aerial Survey Engineer",
+   "situation": "The institute is promoting to Senior Aerial Survey Engineer. You need to be able to write technical design documents and audit accuracy, and a Registered Surveyor license counts in your favor. The exam is four papers, mostly standards and regulations, and field people say it is hard. The winter office months are the only time you can sit down with a book.",
+   "options": [
+    { "label": "Sit it, shut the door each winter", "result": "It takes you two years. The day the second results come out you are in Golmud, checking your phone in a gas station shop. When you're done, you buy a Coke." },
+    { "label": "Skip it, lead your team well", "result": "You give your winters to your family. In spring you lead the team into the mountains, and the new ones all want to be with you. You never get lost, they say." }
+   ]
+  },
+  "c_pm": {
+   "title": "Compete for Aerial Survey Project Manager",
+   "situation": "The institute is creating an Aerial Survey Project Manager post to run planning, technical defenses, equipment deployment and collections across several counties. Take it and half your year goes to banquet tables and meeting rooms, with the project's profit and its final quality resting on you.",
+   "options": [
+    { "label": "Compete for it", "result": "You start writing bids, visiting counties, chasing payments. At your first defense in a client's meeting room, you keep your hand pressed flat on the table so it won't shake." },
+    { "label": "Stay technical", "result": "You turn it down, saying you read survey points better than spreadsheets. The first thing the new manager does is hand you the hardest survey area." }
+   ]
+  },
+  "c_drone_vendor": {
+   "title": "Join a drone maker as a solutions engineer",
+   "situation": "A drone manufacturer's northwest office wants a surveying solutions engineer who knows what goes wrong in the field: pitching and demonstrating to mapping institutes and natural resources bureaus. Thirty percent more pay, flights all over the country, and never again a tripod up a mountain.",
+   "options": [
+    { "label": "Join the manufacturer", "result": "You hand in your resignation. The team leader tells you to take the half-used oxygen canister, as a keepsake.", "end": "You fly between trade shows and survey sites, teaching young surveyors how to keep batteries warm at altitude. When you get to how trucks sink when the permafrost thaws, someone in the audience always laughs, and so do you." },
+    { "label": "Stay with the institute", "result": "You stay. Later the manufacturer's people come to give a demo at the institute, and half of what they say is what you told them." }
+   ]
+  },
+  "c_downhill": {
+   "title": "Leave the field for a desk in quality control",
+   "situation": "You are nearly fifty, and your knees and your checkup reports are both telling you so. The institute can move you back to town to do QC on survey results and train new staff. No more mountains, and no more field allowance. But when you close your eyes, it's still the mountains.",
+   "options": [
+    { "label": "Go back to town, QC and training", "result": "Every day you spot-check the points the young ones bring back. When one is off, you phone and ask what kind of ground they were standing on." },
+    { "label": "Two more years in the mountains", "result": "You tell the team leader: two last seasons. That year you walk at the back of the line, twenty steps and a pause, not talking, saving your breath." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "Your last field season ends. You wipe the tripod clean and turn it in to the equipment store, and the keeper draws a line through it in the ledger. After work you walk down to the Huangshui River and watch the water run east for a while. Those points on the mountains are still where you left them. Someone will go looking for them.",
+  "burnout": "After that year's physical, the doctor won't let you go above three thousand meters. The institute moves you to the archives, keeper of decades of survey results and old maps. You file them away sheet by sheet, and now and then you recognize your own handwriting."
+ },
+ "past": [
+  "You grew up in a river valley in Haidong, where your family farmed a few mu of potatoes and rapeseed. Your zhongkao (high school entrance exam) results were middling. Finish high school and get into a college, your father said, learn a trade that puts food on the table.",
+  "Your gaokao (college entrance exam) score fell short of the bachelor's line. On the application form you saw Engineering Surveying Technology. Your homeroom teacher said it was easy to find work in, just hard. You wondered how hard it could be.",
+  "At the vocational college in the provincial capital, you carried a level around the sports field for the first time to run a closed loop. Three tries and still out of tolerance. In surveying, the teacher said, one millimeter off means you start again.",
+  "You earned an Engineering Surveyor skills certificate and spent a summer staking out on a highway site for a contractor, where you learned that a total station in full sun will burn your hand.",
+  "At graduation the mapping institute came recruiting field staff: eight months a year outdoors, anyone still willing? Half the room looked down at their desks. You raised your hand.",
+  "Your first field season was in Yushu. You followed your mentor up the first mountain with the base station on your back, and coming down your legs shook so much you could barely stand. You'll get used to it, he said. Later you found he was right."
+ ],
+ "late": {
+  "pension_note": "Estimate: the institute pays out through basic enterprise pension insurance plus an occupational annuity. Years of field work meant unbroken contributions, so the pension comes to roughly half of your final monthly salary.",
+  "scenes": [
+   "Your first April in retirement, you can't sit still at home in Xining. You keep feeling you should be packing. You dig out your trekking pole and take a walk up South Mountain.",
+   "The institute hires you back as a QC consultant two days a week. Young staff bring you the problems the machine has flagged in red. One look at the terrain and you know which meadow has thawed again.",
+   "You and your wife drive to Yushu along a road you once surveyed, paved now. At a pass you stop and look for that old marker. You don't find it.",
+   "Your grandson's homework is to measure the length of his classroom. You borrow a tape measure and help him measure it three times. In surveying, you tell him, a little off means you start again.",
+   "You work in the archives now and leave on time. No more smell of gasoline and cigarettes. You sleep at night, though you often dream you are looking for a point and can't dig it out.",
+   "The day the field teams leave, you go out to the yard to see them off. The pickups pull out one by one, and on one of the lashed-down instrument cases is a number you wrote years ago.",
+   "At the age, you retire on schedule. The pension is enough for the two of you. You plant a small patch of rapeseed in the compound, and when it flowers it looks like home.",
+   "Your first year off the plateau, you keep watching your feet on the stairs, as if looking for a stone that will hold you.",
+   "You've found your footing in the new place, with better pay and nothing to carry. Once you pull up satellite imagery of southern Qinghai, zoom in on a ridge, and recognize the gully.",
+   "Your old apprentice is a team leader now. He sends a photo: him on a snowy summit, at his feet the point you once buried together, ringed with stones.",
+   "Later, field work runs more and more on drones and reference stations, and people climb less. But there are always gullies with no signal, and someone still has to carry the instruments in.",
+   "You still have a trace of plateau red in your cheeks, and people in the city ask if you travel a lot. No, you tell them. That's from work."
+  ],
+  "closing": {
+   "retire": "One autumn many years later, you sit on a bench by the Huangshui River. The mountains to the west are already white. You squint at the ridgeline and estimate its height in your head. About right. Should be about right.",
+   "burnout": "Many years later, in an archive cabinet, you find a yellowed field book. The first page is in your hand from the year you were twenty-three, line after line of coordinates, and at the bottom: clear, windy, done. You close it and put it back.",
+   "end": "Many years later, in a drawer, you find your Engineering Surveyor certificate. The face in the photo hasn't been burned dark by the plateau yet. You look at it a while, then set it beside the little oxygen canister, long since empty."
+  }
+ },
+ "stages": [
+  "You are the one on the team carrying the most. Before setting out you tick the instruments off a list, charge the batteries, load the truck. In the survey area you lay ground control, pegging white cross targets onto the grass; before a survey flight you help file the airspace notice; at day's end you copy the raw data three times and hand it to the office team. Whatever your mentor says, you write down. When the guide says a gully is off limits, you stay out of it.",
+  "Now you lead a three-person crew into a survey area on your own. You plan the flight lines, set terrain following, choose takeoff spots, read the wind and the sky. You fly by day, run quick mosaics at night in the guesthouse, and re-fly any gaps the next morning; back in town you run aerotriangulation and produce orthoimages. You start dealing with county natural resources bureaus and airspace authorities, and explaining to herders and village officials why an aircraft is circling over their heads.",
+  "You've joined field and office work into one. You hang LiDAR on a drone to scan power lines and roadbeds across permafrost, then solve the trajectories, filter and classify the points; you build 3D models of county towns from oblique photography; you deliver orthoimages, elevation models and topographic maps, and run QC yourself before the client ever sees them. You shuttle between the inspection station, the client's technical office and the office team.",
+  "You write the technical design documents: how a whole prefecture's 3D reality model will be flown and processed, how many servers, for how long. You review the accuracy of what the young staff turn in, and sign. When something is hard, misaligned flight strips, elevations jumping over permafrost, you go out and look yourself. Every new hire on the team is yours to train, and the Registered Surveyor standards sit on your desk.",
+  "You run projects across several counties: defending bids, negotiating technical plans with clients, moving people, aircraft and trucks, managing safety, chasing payment. Half the year is meeting rooms and roads, and the project's profit and final quality rest on you. The other half, you still drive out to the survey areas to check on the young ones."
+ ],
+ "work": [
+  "Someone from the office team calls: one of the three ground control points you captured yesterday doesn't match. You check the field book and find you picked the target's center half a square off. Early next morning you drive back up that mountain.",
+  "The airspace filing hasn't been approved, so nothing flies today. Your mentor sends you to the township office to borrow last year's grazing boundary map from the official in charge. You drink three cups of tea in his office before he hands it over.",
+  "You peg a white target onto a hilltop and the wind keeps lifting it. You weigh down the four corners with four stones and put a fifth in the middle, and take the RTK reading three times before you leave.",
+  "You plan flight lines for a township's land-rights survey. The ground rises and falls two hundred meters, so you turn on terrain following and raise overlap from seventy to eighty percent. After the first sortie you crouch by the truck and flip through the thumbnails one by one.",
+  "A herding family's dog barks at the drone as it lifts off, and the yaks crowd toward your landing spot. You move it up the slope and gesture with the owner for a while. He drives the herd off, then asks if you'll take a photo of his tent.",
+  "Back in town, a patch of residuals in the aerotriangulation adjustment is out of tolerance. You check control points one by one and find one marked in shadow. You fix it, rerun, and it passes.",
+  "You fly a multirotor with a LiDAR unit over a transmission line crossing permafrost. Back at base you solve the trajectory, filter out ground points, extract the conductors one by one and compute the sag in each span.",
+  "The first draft of a county town's oblique model goes out, and the client says the tip of a tower on the east side is crooked. You pull the original photos: it was windy that day and the aircraft rocked. You schedule one more sortie.",
+  "The inspection station spot-checks your elevation model and flags a wetland where the height jumps by a meter. You go and look: the ice under the meadow has melted and the ground really has sunk. You write it up plainly in the report.",
+  "You write the technical design for a prefecture's 3D reality model: coordinate system, blocks, flight parameters, server schedule. Forty pages. A young engineer asks why one block is split off on its own. There's a pass there, you say, and the wind always blows one way.",
+  "Two adjacent strips in a point cloud are off by twenty centimeters. The machine has marked the extent; you go through the line records, conclude it's interference from a high-voltage line, and schedule a re-fly at a different altitude.",
+  "Reviewing your apprentice's deliverables, you find two of fifty checkpoints out of tolerance. You don't fix them. You make him find the cause. He spends an afternoon on it and comes back: the tripod wasn't set firm.",
+  "In a meeting room at the prefecture, you defend your technical proposal to the natural resources bureau, and someone asks why you've bid higher than everyone else. Every one of our points was walked to on foot, you say, and pull up a photo of a crew member on a snowy summit.",
+  "Three crews are working three counties at once, with only five aircraft. You spend a night at the whiteboard, and the next day you call one crew leader: survey the ground first, the drones arrive next week.",
+  "Chasing year-end payment, you wait half a day at a county finance bureau and are told next month. Back in the truck you message your crew: allowances will be paid on a loan from the institute, every yuan."
+ ]
+}

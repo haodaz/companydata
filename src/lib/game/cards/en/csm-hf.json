@@ -1,0 +1,199 @@
+{
+ "id": "csm-hf",
+ "occupation": "Client Services Manager",
+ "role": "Customer Service Supervisor at a Bank's Remote Service Center",
+ "headline": "Six years in, having started on the phones: a customer service supervisor at a bank's remote service center in Hefei, leading thirty young agents with half an eye always on the answer rate scrolling across the wallboard",
+ "unit": "The Hefei remote banking center of a national joint-stock bank",
+ "unit_type": "Bank remote customer service center",
+ "city": "Hefei",
+ "city_tier": "New first-tier city",
+ "education": "Bachelor's degree (Marketing)",
+ "level": "A little over a year as supervisor. Scheduling, quality checks and escalated complaints are in hand, and when the wallboard turns red you can hold the room together. In cross-department meetings you still don't quite dare to bang the table.",
+ "intro": "You spent four years on the phones at this service center and two as a team leader, and last year you won the supervisor post: thirty people under you, the youngest twenty years old. The big screen on the wall never stops refreshing incoming volume, answer rate and queue length. As of today, when that row of numbers turns red, you are the first one on your feet.",
+ "salary_note": "Estimate: the bank's service center in Hefei employs agents as regular bank staff, and base pay is higher than at ordinary local companies. Bonuses ride on answer rate, satisfaction and complaints, and a supervisor's take-home pay is about the national average. In years when the whole bank misses its targets, the bonus is cut.",
+ "facts": [
+  { "label": "Customer Service Supervisor (current level)", "value": "2-4 years, ¥8,000–15,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Customer Service Manager (4-6 years)", "source": "Career map" },
+  { "label": "Pay after 10+ years", "value": "¥18,500 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Handling a sudden peak-hour call surge and diverting traffic up front", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Watching the call dashboard at shift start and deploying contingency staffing", "source": "AI exposure" },
+  { "label": "Open positions", "value": "502 related listings nationwide, 8 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Metro Line 1 to Binhu, then a ten-minute walk to the center. In the elevator you check last night's backlog on your phone: twenty-seven tickets, three of them escalated complaints.",
+  "Pre-shift huddle. Thirty people in headsets stand in two rows while you read out today's script updates and risk alerts: it's a credit card statement day, so expect about forty percent more calls than usual.",
+  "The wallboard goes red; the queue jumps past a hundred. You walk the rows, pat two new agents on the shoulder, call people back from their breaks, and phone the next team over to borrow five agents.",
+  "A customer calls in for the third time and demands a manager. You take the call, let him shout for eight minutes, then say: I've written down everything you said, and I'll see it through myself.",
+  "Lunch in the canteen, fifteen minutes. There's a packet of throat-soothing herbal tea on your tray. Across the table a new agent is quietly crying after a customer tore into her. You push a tissue over and say nothing.",
+  "Recording QA. The system has transcribed and scored every call today. You listen to the flagged ones one by one, and when an agent says something she shouldn't have, you note it down.",
+  "One-on-one coaching. You sit with a new agent and that recording in a small meeting room, first ask her what she was thinking, then tell her how to say it next time.",
+  "Evening handover. You check the day's answer rate and satisfaction scores and write the handover sheet. It's dark when you get downstairs. People are jogging by Swan Lake, and your throat is too raw to talk."
+ ],
+ "ladder": [
+  { "title": "Customer Service Representative / Team Leader", "stage": "Entry", "focus": "Run standard scripts fluently, log tickets accurately and hit the basic KPIs (answer rate 95% or above, CSAT 85% or above). Rotate through pre-sales, after-sales and complaints to develop a feel for service. Key to moving up: handling 20+ escalated complaints a day on your own with no second escalation." },
+  { "title": "Customer Service Supervisor", "stage": "Growth", "focus": "Manage a team of 10-20 agents, design scheduling and QA plans, and lead the monthly service review. Spot process bottlenecks and land at least one small improvement. Key to moving up: your team's CSAT in the region's top 20% for two straight quarters, with monthly attrition at 8% or below." },
+  { "title": "Customer Service Manager", "stage": "Core", "focus": "Run multichannel service operations (phone, online, social, branch), lead the build-out of a service quality system, and work with product and technology teams to improve the experience. Key to moving up: lead one cross-department improvement project that lifts NPS by 5 points or more, or achieve ISO 10002 certification." },
+  { "title": "Customer Experience Director / Service Operations Director", "stage": "Expert", "focus": "Define enterprise-wide customer experience strategy, build a voice-of-the-customer program, and align product, marketing and service, reporting to the CMO or CXO. Key to moving up: a quantified CX ROI model showing service returns of at least 1:3 (every yuan spent on service improvement bringing three yuan of added revenue)." }
+ ],
+ "ai_tasks": [
+  { "name": "Watching the call dashboard at shift start and deploying contingency staffing", "how": "AI automatically summarizes attendance and the overnight ticket backlog and forecasts call volume from app release schedules. A person decides how much flexible staffing to deploy and how." },
+  { "name": "Handling a sudden peak-hour call surge and diverting traffic up front", "how": "AI can warn of surging inbound volume and help route and divert calls. Calming agents who are falling apart on the floor, making trade-offs on the spot and owning the consequences rest mainly on people." },
+  { "name": "Negotiating major second-level complaints and settling compensation", "how": "AI can quickly assemble the case history and lay out the chain of responsibility. Negotiating face to face with an upset customer, deciding the settlement and making sure it is lawful and compliant are done by a person." },
+  { "name": "Cross-department troubleshooting and setting a unified public line", "how": "AI gathers complaint data, does a first pass at root causes and drafts the unified message. A person works with the technology team, settles the rollback conditions and signs off on the final wording." },
+  { "name": "Spot-checking call recordings and coaching and assessing new agents with scenarios", "how": "AI transcribes recordings, scores them against the standard and pulls out problem clips. A person reviews the spot checks, holds the coaching conversations and runs the scenario assessments." },
+  { "name": "Calculating daily operating metrics and running the evening handover", "how": "AI computes the daily metrics and drafts the review and handover checklist. A person judges the real reasons a KPI is under pressure and recognizes the team's contributions." },
+  { "name": "Verifying morning attendance and drafting a staffing plan", "how": "Scheduling and attendance systems plus AI can verify who has shown up and draft a staffing plan. A person only spot-checks and makes ad hoc adjustments." },
+  { "name": "Mediating major escalated second-level complaints", "how": "AI can supply the customer's history and similar cases for reference. Calming an angry customer, negotiating compensation and closing the loop still require a person to step in and take responsibility." },
+  { "name": "Spot-checking recordings and tickets and running scenario coaching", "how": "AI picks out the recordings and tickets with errors from the surge period and marks the problems. A person does the one-on-one coaching, helping new agents correct their technique and rebuild their confidence." },
+  { "name": "Calculating operating metrics and closing out the handover", "how": "AI computes the metrics, assesses the impact of the surge and generates the handover sheet. A person only confirms the open issues and how the reserve staff will be used." }
+ ],
+ "events": {
+  "e_fraud": "One of your agents hears that the elderly man on the line is being talked into transferring money out. She follows procedure, keeps him on the phone and alerts risk control, and well over ¥100,000 stays put. Later the man's daughter brings in a silk honor banner.",
+  "e_outage": "A mobile banking update goes wrong and call volume triples in a morning. You stand under the wallboard for five hours until your voice is gone. Only in the afternoon does the technology team settle on a unified public line.",
+  "e_regulator": "A customer takes his complaint to the financial regulator's hotline, which requires a reply within ten working days. You go through a year of his call records and write a six-page account, rewritten four times.",
+  "e_quit": "Three people leave your team this month: one to study for a master's, one to sell cars for an electric vehicle maker, one without a word. Your attrition metric lights up red, and HR asks you to write an analysis.",
+  "e_newbie_grow": "The new agent who kept being reduced to tears last year makes the center's top ten for satisfaction this quarter. She brings you a cup of milk tea, says nothing, sets it down and leaves.",
+  "e_bot": "The AI voice assistant goes live. Calls about balances, password resets and branch hours, the machine takes more than half of them. What's left for people is what the machine can't understand or can't solve, from customers who are already angry.",
+  "e_ai_qc": "Recording QA switches entirely to system transcription and scoring: from a three percent sample to a hundred percent. The agents say every word they say is being heard now. It always was, you tell them. Just not to the end.",
+  "e_ai_assist": "A live prompt box appears on agents' screens, suggesting a reply after every sentence the customer says. New agents get up to speed faster, but one who reads it word for word gets caught by a customer: are you reading from a script?",
+  "e_throat": "Your throat stays inflamed for more than a month. The doctor says vocal nodules and tells you to talk less. You keep lozenges in your bag and switch the morning huddle to writing the key points on the whiteboard.",
+  "e_night": "The center schedules a month of night shifts, with supervisors taking turns. At three in the morning the wallboard is quiet. Now and then someone calls to report a lost card, and you listen to their voices and guess which city they're in.",
+  "e_love": "A friend introduces you to a battery engineer in the high-tech zone. You are half an hour late for your first date because the wallboard went red again just before you left. He waits outside the restaurant and doesn't hurry you.",
+  "e_wedding": "You hold the wedding banquet back home in Anqing. Your team chips in for a Bluetooth speaker, and the card says: Boss, this time you get to hang up.",
+  "e_baby": "You come back from maternity leave to find half the team replaced. Several names on the schedule are strangers. It takes you a month to learn each person's voice again.",
+  "e_house": "You buy a flat in Baohe District, eight hundred meters from a metro station. The down payment empties both families' savings, and you start scheduling yourself one more weekend shift.",
+  "e_top_team": "Your team ranks near the top of the region for satisfaction two quarters running, and attrition is down. At the monthly meeting the center's general manager asks you to speak for five minutes. You finish in three.",
+  "e_mid_angry": "A customer loses money on a wealth product and turns up outside the Hefei center demanding to see whoever is in charge. You go down and sit with him in the lobby for two hours. In the end he says, it's not easy for you either, and leaves.",
+  "e_outsource": "Head office outsources part of the simple work to an outsourcing firm, headcount at the center tightens, and no new regular agents will be hired this year. You go to look at the firm's floor. The people there are even younger than yours.",
+  "e_kid_school": "Your child starts primary school. School lets out at half past four; you finish at seven. Your mother-in-law comes from her hometown to help with pickups and moves into the spare room, and dinners at home start to taste like Anqing.",
+  "e_parent": "Your father needs surgery back home, and you take a week off to be there. Sitting outside the ward at night, you check the center's wallboard on your phone without thinking. The answer rate is green.",
+  "e_voc": "You compile the year's five most common complaint types into a report and push it to the product department. One thing changes: credit card payment reminders now go out three days earlier. Related calls drop ten percent that month.",
+  "e_digital_human": "The mobile banking app adds a digital-human agent, its voice trained on the center's best agents. One of them listens and says, that tone, it's me.",
+  "e_old_staff": "An agent you once trained is now a center manager at another bank. In Hefei for a meeting, she takes you to dinner. These days, she tells you, she pats new agents on the shoulder before the morning huddle too.",
+  "e_eyes": "Years of staring at monitors and the wallboard, and distant text has gone blurry. You get glasses. Sitting at the back of the meeting room reading reports, you start holding your phone farther away."
+ },
+ "choices": {
+  "c_bot_trainer": {
+   "title": "Become a business expert for the AI assistant",
+   "situation": "Head office is pulling people from each center to write the AI assistant's knowledge base, set the rules for handing calls to humans and review the machine's answers. Go, and you leave your team for daily meetings with product and tech. Stay, and you keep leading people, half of whom you hired yourself.",
+   "options": [
+    { "label": "Go and teach the machine to talk", "result": "In a meeting room you revise the machine's answers line by line, changing please hold to let me check that for you now. You realize you're teaching the machine what others once taught you." },
+    { "label": "Stay with your team", "result": "You stay and lead your people. The machine takes the easy calls, and your team becomes the one that handles the difficult ones, with more complaints than anyone every month." }
+   ]
+  },
+  "c_baby_time": {
+   "title": "Have a baby this year, or go for the promotion first",
+   "situation": "Your family is pushing for a baby, but next year the center will hold its competition for Customer Service Manager, judged on two years of team data and a cross-department project. A year of maternity leave means missing this round. You are twenty-nine.",
+   "options": [
+    { "label": "Baby first", "result": "You tell your manager, who says she understands. The next year you come into the center with the baby to do your paperwork. The wallboard is still scrolling. You glance at it. It's green." },
+    { "label": "Push hard for two years first", "result": "You lead a project on complaint root causes and pour your evenings and weekends into it. When your mother calls, you put the phone on silent." }
+   ]
+  },
+  "c_manager": {
+   "title": "Compete for Customer Service Manager",
+   "situation": "The center's Customer Service Manager oversees phone, online and video channels, leads the service quality system, and negotiates improvements with head office product and technology. To compete, you present an improvement project you led, ideally with a satisfaction gain to show for it.",
+   "options": [
+    { "label": "Compete", "result": "You present a project you spent six months on: a type of problem that kept generating repeat calls, fixed at the source. When you finish, the general manager in the audience asks one question: could this go national?" },
+    { "label": "Skip this round", "result": "You leave the opening to the longest-serving supervisor on the floor. Once she's in, the first thing she rolls out is your project." }
+   ]
+  },
+  "c_shanghai": {
+   "title": "Transfer to the credit card center in Shanghai",
+   "situation": "The credit card center in Shanghai is hiring for customer service operations: thirty percent more pay, a bigger platform, somewhat faster promotion. Your husband's job in Hefei has only just settled, the flat is in Hefei, and your child's household registration is in Hefei.",
+   "options": [
+    { "label": "Go to Shanghai", "result": "You take the high-speed train to Shanghai every Monday morning and back every Friday night, two and a half hours each way. At Hongqiao station you learn to finish a bowl of noodles in ten minutes." },
+    { "label": "Stay in Hefei", "result": "You turn it down. The Hefei center keeps growing, and a café opens downstairs. Every morning you buy an Americano there and drink it standing up." }
+   ]
+  },
+  "c_ev": {
+   "title": "Move to an EV maker as a user operations lead",
+   "situation": "Hefei's electric vehicle makers are hiring for user operations and customer success: people who understand complaints and processes and can handle pressure. Forty percent more pay, stock options on top. Trading a bank's stability for an industry still finding its feet makes you uneasy.",
+   "options": [
+    { "label": "Go to the carmaker", "result": "You hand in your resignation, and your team's group chat fills with a row of waving emojis.", "end": "At a carmaker's user center you build a new team that handles owners' calls and messages. At your first morning huddle you pat a new hire on the shoulder and tell her: hear the customer out first." },
+    { "label": "Stay at the bank", "result": "You reply to the headhunter with a thank-you. That year news of layoffs at carmakers trends online. You don't say much, and get on with next month's schedule." }
+   ]
+  },
+  "c_cut": {
+   "title": "Names for the layoff list",
+   "situation": "The AI assistant now takes forty percent of call volume and the center has to shrink. Five people from your team must move out, to the outsourcing firm or into collections. You submit the list, ranked by performance, and among the bottom five are a single mother and the first person you ever hired.",
+   "options": [
+    { "label": "Rank by performance and submit", "result": "You submit the list by the numbers and talk to each of them in turn. The last one tells you on her way out: Boss, I don't blame you. That night you sit in your car for a long time." },
+    { "label": "Fight your manager for the headcount", "result": "You spend an afternoon in your manager's office and save two of them, and your own performance rating drops a grade. He says you protect your people too much. You say they're not bad at the job." }
+   ]
+  },
+  "c_director": {
+   "title": "Compete for Customer Experience Director",
+   "situation": "Head office is creating a Customer Experience Director to build the voice-of-the-customer program, push what's in the complaints over to product and marketing to fix, and report to the executive vice president in charge. It means moving to Shanghai and speaking in return on investment. The gift you have for listening on the phone won't count for much in that meeting room.",
+   "options": [
+    { "label": "Compete", "result": "You build a dashboard that links complaint volume, satisfaction and customer churn. The executive looks it over and asks: that payment reminder change in Hefei, that was you? You say yes." },
+    { "label": "Stay in Hefei and run the center", "result": "You say you'd rather stay close to the customers. That winter, at the Hefei center, you bring along two more supervisors." }
+   ]
+  },
+  "c_ux": {
+   "title": "Switch to user experience research",
+   "situation": "The bank's digital finance department is hiring user experience researchers to interview customers, study behavioral data and help product managers decide. The tens of thousands of calls you've heard are your source material, but you'll have to learn a whole new method from scratch, and your pay stays flat for now.",
+   "options": [
+    { "label": "Switch to research", "result": "You move to another building, and for the first time sit behind a one-way mirror watching a customer use the mobile app. He searches for three minutes and never finds the button to report a lost card.", "end": "You become the researcher on the team who listens best. In interviews you can always tell, before the customer sighs, which step is about to trip them up." },
+    { "label": "Stay at the service center", "result": "You forward the job link to a careful young woman on your team. She goes, and later often comes back to ask you which sentence customers curse most on the phone." }
+   ]
+  },
+  "c_step_back": {
+   "title": "Step back to training and quality assurance",
+   "situation": "You're nearly fifty, and the center offers to take you out of frontline management and move you to the training department to teach new agents and review QA. No more watching the wallboard, no more night shifts, and a smaller bonus. The young supervisors are waiting for a post.",
+   "options": [
+    { "label": "Go to training", "result": "You start giving the first lesson to every new cohort. The first thing you always say: the person on the other end isn't angry at you." },
+    { "label": "Watch the wallboard a few more years", "result": "You say a few more years. When the wallboard turns red you are still the first one up, only now you steady yourself on the desk as you stand." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you don't run the huddle. You sit at the back and listen to a young supervisor run it. Before you leave you hang your headset at your desk and leave an unopened packet of herbal throat tea in the drawer. Outside, you look back. The lights on the twelfth floor are still on, and the wallboard is surely still scrolling.",
+  "burnout": "That year your voice goes completely, and the doctor tells you not to talk much for at least six months. The center moves you to the back office for records and reports, where you don't have to say a word all day. Sometimes you pass the agent floor, hear that low murmur of voices, and pause at the door."
+ },
+ "past": [
+  "You grew up in Anqing, where your parents sold fish and seafood at the market, so haggling and arguments were the sound of childhood. You tested into the city's top high school, and your mother told everyone she met.",
+  "Your gaokao (college entrance exam) score was neither good nor bad, and you studied marketing at a second-tier university in Hefei. You liked Hefei. The city was always building, as if there would always be a chance.",
+  "In your final year you sent out dozens of applications, and the bank service center's campus recruiting made the first offer. A bank is good, your mother said, respectable. You didn't tell her it meant answering phones.",
+  "You put on the headset, and in the first month customers made you cry twice. Your team leader said: cry if you have to, but hit mute first. You learned to use mute. Later you rarely needed it.",
+  "You earned a Level 3 Customer Service Manager certificate, ranked in the top ten percent for performance, won a team leader post, and started reviewing recordings for new agents.",
+  "You won the supervisor post. In your first month your team had the worst answer rate on the floor. You were the last to leave every day, and listened to every one of their recordings."
+ ],
+ "late": {
+  "pension_note": "Estimate: the bank pays out through basic enterprise pension insurance plus an enterprise annuity, with contributions on the full staff salary, so the pension comes to roughly half of your final monthly salary.",
+  "scenes": [
+   "Your first month of retirement, the home phone rings and you answer without thinking: Hello, how may I help you? It's your sister. She laughs for a long time.",
+   "The neighborhood committee asks you to talk to the old folks about phone scams. You tell them a few of the cases your team caught. Afterward an old woman takes your hand and asks which number is really the bank's.",
+   "Every evening you and your husband walk along Swan Lake. Your voice has come back a little, and you sing a few lines of Huangmei opera with the people in the square, and don't mind when you get the words wrong.",
+   "You call the bank about a charge, and a machine answers, smooth and fluent. You press zero three times to reach a person, and the young woman's voice reminds you of yourself at twenty.",
+   "You do reports in the back office now and needn't speak all day. At home you listen to your child talk about school, nodding, and slowly your throat stops hurting.",
+   "The center takes on a new batch of agents. In the corridor you hear one crying on a call. You stand outside the door, want to go in, and walk away.",
+   "At the age, you retire. The pension arrives on time, and you join a calligraphy class at the senior college. The first characters you write are the two for patience, lopsided and crooked.",
+   "Your first year away from the bank, you still glance at your phone every morning, as if there ought to be a wallboard there, and a row of numbers on it.",
+   "You've found your feet in the new place. Once in a meeting someone says customers are just unreasonable. No, you say, customers just haven't been heard out. The room goes quiet for a moment.",
+   "The new agent who used to cry all the time is a manager at the Hefei center now. She posts a photo of her morning huddle with one line: hear the customer out first.",
+   "Later, when you call a bank, a machine almost always answers first. The calls that make it through to a person are the ones the machine can't solve, and there's a weariness in that voice you recognize instantly.",
+   "Your granddaughter asks what you used to do. Answer phones, you say. That's easy, she says. You laugh. It was easy, you say. You just had to take in tens of thousands of people's bad moods every day."
+  ],
+  "closing": {
+   "retire": "One afternoon many years later, you are sitting on the balcony when the phone rings. A sales call. You don't hang up. You let the young man finish his script, and at the end you tell him: You did well, dear. Just don't read it so fast.",
+   "burnout": "Many years later, in a drawer, you find an old headset, the foam ear cushions crumbled. You put it on. You hear nothing. The room is very quiet, only the wind outside.",
+   "end": "Many years later, you see your old team in a photograph: thirty people in headsets standing in two rows, you at the very end. You go along them one by one, and you can still name most of them."
+  }
+ },
+ "stages": [
+  "What you hold is a team of thirty and a schedule. Every week you fill the grid in the workforce management system with breaks, training and night shifts; every month you go over the deduction items with the QA analyst, interview new hires with HR, and borrow and lend agents with the supervisor next door. With agents you speak softly, with customers steadily, and with your bosses in numbers: answer rate, satisfaction, attrition, ready the moment you open your mouth.",
+  "You run the phone, online and video channels, with several team supervisors reporting to you. You build the QA and training system, take the hardest escalations and the complaints forwarded by the regulator, and sit in meetings with head office product, technology and risk, pushing the problems that keep coming back in complaints to be fixed at the source. You spend less time watching the wallboard and more on reports and meetings.",
+  "You set how the whole bank measures and improves customer experience: the voice-of-the-customer program, the satisfaction and churn models, the rules for splitting traffic between the AI assistant and people, the service budget. You report to the executive vice president in charge, showing in numbers what one yuan of service spending buys back. You are further and further from the phones, but every month you still go and stand on the agent floor for a while."
+ ],
+ "work": [
+  "Next month's schedule: six people on annual leave, two with exams, and the credit card statement date falls right in the middle of the month. You spend an evening dragging cells around in the scheduling system, and end up putting yourself on two weekends.",
+  "A customer calls a third time asking to waive his annual fee; the agent has already refused twice, by the rules. You take the call, hear him out, check his card history, and within your authority apply for the waiver, writing down why on the ticket.",
+  "The QA analyst says one of your veteran agents skipped identity verification on three calls this month. You don't raise it in the group chat. You bring her into the small meeting room and play all three recordings. She speaks up first.",
+  "A complaint forwarded by the regulator lands: a customer says he was misled into buying an insurance product years ago. You pull the sales recording, the contract and the follow-up call, set up a three-way call, and in the end refund the policy by the rules.",
+  "You lead the knowledge base for the online channel, rewriting the two hundred questions customers most often ask on the phone into answers the machine can use. The product team says it's too colloquial. That's how customers ask, you tell them.",
+  "At the quarterly meeting you put up a chart: for three days after every mobile banking update, call volume doubles. You ask the tech team whether next time they could send the center the release notes in advance.",
+  "You set the rules for when the AI assistant hands off to a person: the elderly, the visibly upset, anyone who mentions being scammed go to a human after the first sentence. The tech team says the containment rate will drop. Then let it drop, you say.",
+  "The executive asks why next year's service center budget is going up. You lay a table on the desk: customers lost to complaints last year, their deposits, and how much was won back. He looks at it a long time, then signs.",
+  "On an inspection tour of the bank's service centers, you stand on one floor for half an hour listening to the young agents. As you leave, the only thing you say to the local manager is: give them one more break."
+ ]
+}

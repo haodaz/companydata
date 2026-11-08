@@ -1,0 +1,202 @@
+{
+ "id": "art-therapist-sh",
+ "occupation": "Art Therapist",
+ "role": "Junior art therapist at a private counseling practice",
+ "headline": "An art therapist at a private counseling practice in Shanghai, back from a master’s in art therapy in Britain with a British registration, holding a job title that no Chinese certificate yet matches",
+ "unit": "A private counseling practice on the second floor of an old garden villa in Xuhui, Shanghai",
+ "unit_type": "Private counseling practice",
+ "city": "Shanghai",
+ "city_tier": "Tier 1",
+ "education": "Bachelor of Fine Arts + Master’s in Art Therapy (UK)",
+ "level": "Your placements abroad gave you a few hundred clinical hours, and you can run individual sessions for mild-to-moderate emotional distress and routine groups on your own; your supervision, referral network and certification in China all have to be built from scratch",
+ "intro": "You studied art therapy in Britain for two years and came back to Shanghai with your registration from there. The practice is on the second floor of an old garden villa in Xuhui; the therapy room floor is covered with a waterproof sheet, and the cupboards hold clay, gouache and a stack of old magazines. The receptionist asks what title to print on your business card. You think about it and say “Art Therapist,” even though China doesn’t have that certificate yet. As of today, the appointment book has its first name for you.",
+ "salary_note": "Estimate: a Shanghai private practice pays an art therapist a base salary plus a cut per session, around ¥12,000 a month, about 1.4 times the national figure; caseloads are unsteady and can fall by a third in slow months, and supervision and personal therapy come out of your own pocket.",
+ "facts": [
+  { "label": "Junior Art Therapist (current level)", "value": "1-3 years, ¥7,000–12,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Senior Art Therapist (3-6 years)", "source": "Career map" },
+  { "label": "Monthly pay, 5–10 years in the field", "value": "¥26,669 (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Leading a 45-minute community art therapy group and doing the process assessment", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Writing up the clinical notes after a first session and planning the next materials", "source": "AI exposure" },
+  { "label": "Open positions", "value": "3 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The metro to Xuhui, then across two streets lined with plane trees. You buy a bottle of water at the convenience store and go over last night’s session notes once more outside the door.",
+  "Setting up the therapy room. You lay the waterproof sheet, count the scissors and lock them in the drawer, cover the clay with a damp towel, and sort the paper into three stacks by size.",
+  "The first client is a girl in her second year of middle school who has dropped out for now. She spends forty minutes covering an entire sheet in black, and in the last five minutes adds a very small yellow dot in one corner. You don’t ask what it is.",
+  "A bowl of scallion-oil noodles downstairs, answering a parent’s message as you eat. The parent asks: “What did she draw today, and what does it mean?” You type a reply three times and delete it twice.",
+  "The adult group. Six office workers who recently lost their jobs are making collages. One man cuts the photo from his old staff badge into many small pieces, then glues them back one at a time.",
+  "Writing notes. You photograph and number the artwork, put objective description and your own conjecture in separate columns, and save it all to an encrypted drive only you can open.",
+  "The staff meeting. The owner asks about this month’s renewal rate. You say sessions can’t be measured by renewal rate. He says the rent is measured by the month.",
+  "Back at your rented flat, you draw on the balcony for half an hour. Your supervisor insists on it: a therapist needs an outlet of her own too."
+ ],
+ "stages": [
+  "You see around twenty clients a week, mostly mild-to-moderate distress: middle schoolers off school, new mothers, laid-off office workers. Your tools are the waterproof sheet, clay, gouache, old magazines and a camera for photographing the work; the people you deal with most are parents, the front desk, and the supervisor you meet by video once a week. Every note you write has to separate what you saw from what you guess.",
+  "You start taking complex cases: trauma, long-term school refusal, children who need to be seen together with a psychiatrist. Once a week you consult at a special education school or a hospital, and you run a long-term group. You now deal with psychiatrists, social workers and school counselors, and your tools include projective test scoring sheets, referral forms and a list of local referrals you put together yourself.",
+  "Half your time you no longer sit across from clients but across from young therapists, listening to the cases where they’re stuck and their own reactions. You lead group interventions after crises, lecture at universities, and do research with hospitals. Your tools have changed from art materials to supervision records, the ethics code and clips of session recordings.",
+  "You run a department: you schedule the therapists, set the clinical protocols, and negotiate with hospital management, the medical insurance office and schools. What you read most each day is the rota and the quality reports, and the people you deal with are the hospital director, heads of other departments, and the young people you hired. You still keep half a day a week to see a client yourself."
+ ],
+ "work": [
+  "In her third session, a new mother makes a collage called “My Day,” and there isn’t a single person on the page. You slide some cut-out figures toward her hand. She picks one up and glues it in the far corner.",
+  "You give a ten-year-old boy the house-tree-person test, and his tree has no roots. You write down only what you observed, no conclusions, and the last line reads: draw it again next time.",
+  "The front desk puts through a parent who wants the fifty-minute session cut to thirty, at sixty percent of the price. You explain for a long time, and finally agree to do one assessment first.",
+  "In a case conference, a psychiatrist asks whether the change in this child’s drawings shows the medication is working. You say the drawings only show she was willing to draw this week; the medication is his call.",
+  "At the special education school you do finger painting with an autistic child while the class teacher takes notes. In forty minutes the child touches the paint once, and you both draw a star in your notebooks.",
+  "A high schooler whose family went through a crisis does twelve sessions with you. In the last one she lays the twelve drawings on the floor in order and talks through them herself, start to finish.",
+  "In supervision a young therapist says she wants to cry every time she sees a certain client. You don’t analyze the client; you ask her how things are at home lately.",
+  "Something happens at a middle school and you go in with two therapists to run a group intervention for one class. You bring the simplest materials: a box of crayons and a blank sheet for each student.",
+  "You and a hospital psychology department apply for a research grant on group art therapy for adolescent depression. You write the ethics application until dawn; the consent form alone goes through nine drafts.",
+  "The hospital director asks whether art therapy could become a separately billed program. You hand him a costed plan whose last page says: no more than twenty clients per therapist per week.",
+  "You interview a young therapist just back from abroad, holding, like you once did, a certificate with no Chinese equivalent. You hire her and assign her a supervisor.",
+  "People from the medical insurance office come to study non-drug therapies. You show them the therapy room, point at a corkboard covered in drawings, and say that behind every one of them is a record."
+ ],
+ "ladder": [
+  { "title": "Art Therapy Assistant", "stage": "Assistant / trainee", "focus": "Manages purchasing of art materials, sets up a safe therapy space, enters case records, and assists with group workshops under a senior therapist; promoted to an independent junior role on solid knowledge of materials and basic empathy." },
+  { "title": "Junior Art Therapist", "stage": "Junior, independent", "focus": "Begins seeing clients with mild-to-moderate emotional distress independently and runs routine emotion-focused art groups; promoted through accumulated cases, regular clinical supervision and passing professional qualification exams." },
+  { "title": "Senior Art Therapist", "stage": "Core practitioner", "focus": "Has a mature personal style of practice, handles complex relational trauma and adolescent cases, consults in special education or psychiatry, and leads medium- to long-term in-depth workshops; promoted on high client retention, trauma expertise and professional accreditation." },
+  { "title": "Clinical Art Therapy Supervisor", "stage": "Expert / supervisor", "focus": "Provides clinical supervision for younger therapists, leads interventions after major crises, and takes part in clinical teaching and research at universities or hospitals as an expert; establishes a leading position through recognized standing, academic influence and supervisor credentials." },
+  { "title": "Director, Psychological Rehabilitation Center", "stage": "Leadership", "focus": "Oversees building art therapy as a clinical discipline in a hospital psychology department, a special education rehabilitation center or a chain of practices, sets standardized protocols and a talent pipeline for the institution, and connects medical and academic resources." }
+ ],
+ "ai_tasks": [
+  { "name": "Writing up clinical notes after a first session and planning the next materials", "how": "AI can turn spoken or handwritten notes into a structured record, separating “objective description” from “subjective conjecture,” and list possible materials; the therapist and supervisor make the clinical judgment, guard confidentiality, and decide which medium to use next." },
+  { "name": "Administering a first projective test and marking the risk level", "how": "AI can help organize the testing record, prompt the standard scoring points and draft the filing form; the observation in the room, the reading of the drawing, the risk rating and the signature on the ethics filing must come from the therapist herself." },
+  { "name": "Leading a 45-minute community art therapy group and doing the process assessment", "how": "Leading six to eight people through a collage, watching each person’s state and stepping in for safety at any moment depends entirely on a person being there; AI can at most help prepare themed materials and turn the observation notes into an assessment form afterward." },
+  { "name": "Digitally archiving the week’s case files and preparing supervision video material", "how": "AI with scanning and OCR tools can merge handwritten notes, scans of artwork and supervision notes, name them, encrypt and package them, and produce a summary of meeting materials; a person only spot-checks for gaps or misfiling and confirms the encryption and permissions." },
+  { "name": "Responding to a sudden psychological crisis and starting the three-tier referral process", "how": "When a child suddenly harms herself during clay work, the therapist has to judge on the spot, keep everyone physically safe, steady the child’s emotions and start the referral; AI cannot act or take responsibility in the room, and can at most help fill in the incident report and prompt the referral steps afterward." },
+  { "name": "Designing and delivering a quarterly group art therapy program for a compulsory drug rehabilitation center", "how": "AI can draft a 12-week course framework, activity plans for each module, a materials list and the first draft of approval documents; the therapist has to adapt them to the people in rehab and the center’s rules, hold the clinical judgment across the motivation, cognition and family modules, and defend the program before the ethics committee." }
+ ],
+ "events": {
+  "e_mother_reading": "A mother demands to see every one of her child’s drawings and wants you to “interpret” each one. You explain the limits of confidentiality. She isn’t pleased, and the following week cancels the rest of the sessions.",
+  "e_clay_cat": "A boy who has barely spoken in six months makes a clay cat with no mouth, then asks you his first question: “Can it come home with me?”",
+  "e_uk_supervision": "You can’t find a suitable supervisor in China, so every week at seven in the morning you video-call your old supervisor in Britain. With the time difference and the fee, each call costs over ¥600; you work it out, and it’s a tenth of your pay.",
+  "e_no_box": "A hospital wants you for a joint project, and HR asks for your qualification certificate. You hand over your English registration. They look at it for a long time and say the system has no option for this.",
+  "e_low_fee": "A fifty-minute session costs ¥800, and in the sixth one your client says she can’t afford it anymore. You persuade the practice to give you one reduced-fee slot, and take half your usual cut.",
+  "e_market": "You go to the stationery wholesale market, buy gouache, air-dry clay and a bundle of old picture magazines all at once, and carry them back to the practice yourself. The owner looks at the expense claim and asks whether you could use the therapy kits sold online instead.",
+  "e_crisis": "A client shows signals, in her drawing and in her words, that put you on alert. On the spot you assess the risk, contact the family and start the referral, and by the time you sign the last form it’s nine at night. For several nights after, you sleep lightly.",
+  "e_elder_collage": "You run an eight-week collage group for seniors at a neighborhood community center. In the last session, one woman glues a photocopy of her 1970s textile mill work permit into the middle of her picture and says that was when she looked her best.",
+  "e_viral": "The practice has you post short “healing lessons” on social media, and a clip about coloring to relax goes viral. Inquiry calls go up a lot, and half the people who come just want a photo.",
+  "e_own_therapy": "You realize you are far too angry at one client’s father. You find a counselor and spend a year as a client again, once a week.",
+  "e_ai_notes": "The practice brings in an AI note-taking tool that turns your spoken session notes into structured records. You set one rule: photos of the artwork go into no system at all and stay only on your local drive.",
+  "e_ai_app": "A parent brings you a “psychological analysis” of her child’s drawing produced by a phone app. It says “highly anxious tendencies.” You spend an entire session explaining why a drawing can’t be read like that.",
+  "e_special_school": "Every week you teach an art class at a special education school. After three months, an autistic child is finally willing to press a palm into the paint tray, and then onto the paper.",
+  "e_rehab_course": "You design a twelve-week group art program for a compulsory drug rehabilitation center. The ethics committee questions you for more than an hour, and the last question is whether any of the materials have metal parts that could be removed.",
+  "e_marriage": "You marry an interior designer. He rebuilds one shelf of the bookcase at home just for your art supplies, and puts a lock on it.",
+  "e_child": "Your child is born and you stop seeing clients for four months. When you come back, two of them have been passed to other therapists, and you sign the handover forms.",
+  "e_move": "The garden villa’s rent goes up thirty percent, and the practice moves to the twelfth floor of an office block. The windows don’t open, and the smell of gouache and turpentine has nowhere to go, so you switch from oil pastels to watercolor.",
+  "e_insurance": "A commercial insurer adds psychotherapy to its premium medical coverage, but only accepts bills from practitioners licensed in China. Some of your clients move to hospitals because of it.",
+  "e_paper": "You co-write a case study on art therapy for adolescent mood disorders with a hospital psychiatrist, and it is published in a Chinese journal. Next to your name, the affiliation line says the practice.",
+  "e_postcard": "A client from many years ago sends a postcard. On the back is a tree she drew herself, very like the one you once asked her to draw, only now with a few pieces of fruit.",
+  "e_knees": "Years of crouching on the floor drawing with children, and your knees have started to hurt. You add a few low stools to the therapy room. You sit; the children still lie on the floor.",
+  "e_standard": "China begins discussing professional standards for art therapy, and you are invited to an expert seminar. You sit near the back, and when your turn comes you describe three cases from your ten years.",
+  "e_intern": "You begin supervising interns. The first thing you teach them: when a client is drawing, don’t ask “What are you drawing?”"
+ },
+ "choices": {
+  "c_register": {
+   "title": "Getting a Chinese certificate",
+   "situation": "You looked up the requirements for the health system’s psychotherapist exam, and a fine arts degree isn’t on the list. What’s left is the professional psychological society’s registration system, starting as a registered assistant psychologist; the ethics courses and supervision hours have to be built up again from zero in China, all at your own expense.",
+   "options": [
+    { "label": "Register, start the hours again", "result": "You take ethics classes on weekends and supervision in the evenings, and two years swallow a year of savings. The day the certificate arrives, the practice raises your session rate by a grade." },
+    { "label": "Skip it, rely on your work and reputation", "result": "You put everything into your clients. More and more people come to you; it’s just that whenever a hospital or school proposes working together, it stalls on the same page of the same form." }
+   ]
+  },
+  "c_hospital": {
+   "title": "A psychiatric hospital?",
+   "situation": "The psychology department of a psychiatric hospital wants an art therapist, but there is no such post in the staffing plan; you could only join as a contract rehabilitation technician, for thirty percent less pay. It would give you patients and multidisciplinary case conferences you never see at the practice.",
+   "options": [
+    { "label": "Join the hospital as a rehab technician", "result": "For the first time you sit in a multidisciplinary case conference: the psychiatrists talk about medication, you talk about drawings. Your payslip gets thinner and your notebooks get thicker." },
+    { "label": "Stay at the practice", "result": "You keep your own clients, your own hours and a steady income. When you refer someone to a hospital, you can only brief, over the phone, a doctor you have never met." }
+   ]
+  },
+  "c_senior": {
+   "title": "Going for Senior Art Therapist",
+   "situation": "The practice wants to open an adolescent trauma line and needs a Senior Art Therapist who can take complex cases and consult at special schools and hospitals. You qualify; it’s just that these cases empty a person out.",
+   "options": [
+    { "label": "Take on the adolescent trauma line", "result": "Your schedule fills with middle and high schoolers, and two evenings a week go to phone calls with parents. A year later, more and more children are being referred to you, and fewer are being referred away." },
+    { "label": "Stay mostly with mild-to-moderate cases", "result": "You hold to a cap of twenty clients a week and get to the pool on time after work. The practice gives the line to a colleague back from Hong Kong." }
+   ]
+  },
+  "c_ai_consent": {
+   "title": "Let AI into the therapy room?",
+   "situation": "The practice wants to use AI across the board for case notes and draft assessments, and asks whether you will lead writing a consent process for clients: what can be handed to AI and what never can. There’s no extra pay.",
+   "options": [
+    { "label": "Lead the process and learn to use it", "result": "You meet with a lawyer five times and rewrite the consent form so a twelve-year-old can read it. Your note-writing time halves, and you use the hours saved to see one more person." },
+    { "label": "Leave it alone, keep writing by hand", "result": "You go on writing every note by hand, often until ten at night. Your clients know your notebook stays in your own cupboard." }
+   ]
+  },
+  "c_eap": {
+   "title": "Employee wellbeing at a tech giant",
+   "situation": "An internet company wants you full-time as an employee wellbeing consultant, running stress-relief workshops on its campus, for one and a half times your current pay. The people who come aren’t called clients; they’re called employees.",
+   "options": [
+    { "label": "Go, do corporate wellbeing", "result": "You turn art therapy into a forty-five-minute lunchtime workshop. Lots of people come; very few say anything deep.", "end": "You became an employee wellbeing consultant at an internet company, spreading a waterproof sheet across a meeting room and teaching a roomful of people with badges on their chests to model their Mondays in clay." },
+    { "label": "Take only weekend sessions on the side", "result": "You run two sessions a month, the money covers your supervision fees, and on Sunday nights you are often too tired to speak." },
+    { "label": "Don’t go", "result": "You turn it down. That afternoon, the girl who painted the black sheet draws a window for the first time." }
+   ]
+  },
+  "c_studio": {
+   "title": "A studio of your own",
+   "situation": "Several long-term clients say that if you open your own studio, they’ll follow you. On Yongjia Road a small street-front room is up for rent, south-facing, with the afternoon sun.",
+   "options": [
+    { "label": "Rent it, go it alone", "result": "You paint the walls and build the cupboards yourself, and in the first month only nine people come. Six months later, bookings stretch three weeks out, and for the first time rent keeps you awake." },
+    { "label": "Stay at the practice, negotiate the split", "result": "The owner raises your cut. You keep using the practice’s rooms and front desk, and never have to think about utilities or tax." }
+   ]
+  },
+  "c_supervisor": {
+   "title": "Becoming a Clinical Art Therapy Supervisor",
+   "situation": "Your clinical hours are almost there. To become a Clinical Art Therapy Supervisor you still have to do the supervisor training track and then a year of “supervision of supervision,” and in that year you have to cut your caseload in half.",
+   "options": [
+    { "label": "Do the training, move toward supervision", "result": "Every week you sit across from young therapists and listen to where they’re stuck, and sometimes you see yourself ten years ago in them." },
+    { "label": "Stay on the front line with clients", "result": "You would rather stay by the waterproof sheet. Twenty clients a week, not one fewer." }
+   ]
+  },
+  "c_curate": {
+   "title": "An invitation from a museum",
+   "situation": "An art museum wants to stage an immersive exhibition on emotion and trauma, and asks you to be curatorial adviser. The show runs a year, and there may be another after it. If you go, you have to pause all your clients.",
+   "options": [
+    { "label": "Pause your clients and curate", "result": "In the gallery you build a small room with nothing in it but a sheet of paper and a box of crayons. In the first week after opening, the walls are covered in strangers’ drawings.", "end": "You became an art therapy curator, turning the things that can’t be said in a therapy room into rooms in a gallery that anyone can walk into." },
+    { "label": "Advise only, don’t leave the therapy room", "result": "You spend half a day a week at the museum teaching the curatorial team about ethics and boundaries, and see clients as usual the rest of the time." }
+   ]
+  },
+  "c_director": {
+   "title": "Director, Psychological Rehabilitation Center",
+   "situation": "A private rehabilitation hospital invites you to become Director of its Psychological Rehabilitation Center and build an art therapy department: set the protocols, hire, and negotiate with medical insurance and hospital management. From then on you will rarely sit across from a client yourself.",
+   "options": [
+    { "label": "Go and build the department", "result": "Among your first hires are two interns you once trained. The protocols you wrote are bound into a booklet and kept in the cupboard of every therapy room." },
+    { "label": "Recommend someone else, stay", "result": "You recommend a colleague who wants to manage more than you do, and keep supervising and seeing clients. You say your hands can’t do without the clay." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "When the last session ends, the client helps you fold the waterproof sheet. You divide the remaining clay among the young therapists taking over, count the scissors one last time, lock them in the drawer and hand the key to the front desk. Outside, the plane tree leaves have covered the ground. You crouch, pick one up, and press it into your notebook.",
+  "burnout": "For a while, sitting across from clients, you can hear your own heartbeat louder than their words. Your supervisor says you need to stop, and you stop. You refer the names in your appointment book out one by one, and the last referral form is for yourself. The day you get home, you sit on the balcony all afternoon and don’t draw a single line."
+ },
+ "past": [
+  "You are in your last year of middle school in Nantong, Jiangsu, and art is the only class where you get called to the front without raising your hand. Your drawing of your grandmother hangs in the family dining room, pointed at and praised by every relative.",
+  "You take the art school entrance exams and get into an academy of fine arts in Shanghai to study oil painting. Your mother asks whether painting will put food on the table. You say it will; at the very least you can teach.",
+  "After graduating you join an ad agency as a visual designer and redo clients’ eighth drafts every day. You draw faster and faster, and think less and less about what you’re drawing.",
+  "In the months your grandmother is in hospital, you go to the ward after work every day with a box of crayons. She barely recognizes anyone anymore, but she colors along with you, and while she colors she stops asking to go home.",
+  "You come across the words “art therapy” online for the first time. You quit your job, spend a year completing psychology coursework, and apply for a master’s in art therapy in Britain.",
+  "In Britain you do a placement at a community mental health center and, for the first time, watch a forty-year-old man weep over a blank sheet of paper. Your supervisor says you don’t need to do anything; just sit there.",
+  "You get your British registration, and an offer to stay and work. You buy a ticket back to Shanghai anyway. You say China needs it more."
+ ],
+ "late": {
+  "pension_note": "Estimate: the practice paid into Shanghai social insurance, with a few years in between paid as self-employed while you ran your own studio, so the pension comes to about 40% of your final monthly salary; session commissions are not counted.",
+  "scenes": [
+   "The first Wednesday of retirement, you should have had three clients. You go to the art shop you always used, buy nothing, and just touch the new clay that’s come in.",
+   "The neighborhood seniors’ college asks you to teach a drawing class. You don’t call it therapy; you call it “Just Drawing,” and the waiting list runs into next term.",
+   "The interns you once trained now train interns of their own. One invites you to give a talk to the newcomers, and you still say the same thing: don’t ask what he’s drawing.",
+   "You stop all your clients and move back to Nantong for six months. Every day you go to the market with your mother and walk past the lane where your grandmother used to live.",
+   "Back in Shanghai, you teach art at an international school and do no therapy. When a child starts crying in the middle of a drawing, you still put a tissue by his hand and wait quietly.",
+   "China finally has professional standards for art therapy. You read the document; your name isn’t on the list, and you don’t apply.",
+   "In the first month away from the therapy room, you keep feeling your hands are missing something. Later you realize it’s the waterproof sheet.",
+   "Someone leaves a drawing in your project, and on the back it says: this is the first time I’ve ever drawn. You photograph it and keep it in a separate album on your phone.",
+   "Now and then former clients still message to ask whether you see people. You say you don’t anymore, and pass them to the few colleagues you trust most.",
+   "You hear AI can now turn a drawing into a dozen pages of analysis. You don’t try it; you only think of the girl who drew a yellow dot in the corner of a black sheet.",
+   "You start sorting the sketchbooks you’ve filled over the years, more than forty in all. On the flyleaf of every one is the same line: just sit there.",
+   "You still walk the street with the old garden villa; the second floor is a café now. You sit where the therapy room used to be, and the plane trees outside are a ring thicker than they were then."
+  ],
+  "closing": {
+   "retire": "Many years later, your granddaughter lies on the floor drawing, and halfway through asks you what color this is. You say whatever you think it is, that’s what it is.",
+   "burnout": "Many years later, you spread a sheet of paper on the balcony and, not yet knowing what to draw, put down a patch of blue. The wind lifts a corner of the paper, and you weigh it down with a teacup.",
+   "end": "Many years later, deep in a cupboard, you find your British registration certificate, its corners curled. You put it back, throw out the dried-up box of clay beside it, and go and buy a new one."
+  }
+ }
+}

@@ -40,7 +40,7 @@ async function build(id: string) {
   const { data: ex } = await db.from('occupation_ai_exposure').select('tasks, new_tasks').eq('occupation_id', o.id).order('version', { ascending: false }).limit(1);
   const jd = (await db.from('jobs').select('id', { count: 'exact', head: true }).contains('related_career_ids', [o.key])).count || 0;
   const jdc = d.cityCode ? (await db.from('jobs').select('id', { count: 'exact', head: true }).contains('related_career_ids', [o.key]).eq('city', d.cityCode)).count || 0 : null;
-  const ai = ex?.[0] || { tasks: [], new_tasks: [] };
+  const ai = d.ai_override || ex?.[0] || { tasks: [], new_tasks: [] };   // 库里这个职业的 AI 替代性串了别的工种时，草稿里手写 ai_override 顶上（化工工程师 11-07）
   let derived = false;
   // 阶梯没填薪资的（库里是 undefined）：按年限薪资推每一级——取这一级起始年限对应的档，往后几级按 1.3 倍递增
   if (ladder.some(l => !l.salary[1]) && sal?.length) {

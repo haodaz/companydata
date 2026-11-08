@@ -1,0 +1,173 @@
+{
+ "id": "drafter-nb",
+ "occupation": "Mechanical Drafter",
+ "role": "Mechanical drafter at a mold and die factory",
+ "headline": "A mechanical drafting graduate of a secondary vocational school in Quzhou, placed by his school at a die-casting mold factory for auto parts in Beilun, Ningbo, where he sits at the desk nearest the door in the engineering office, taking molds apart on screen, issuing drawings and running down to the shop floor to check dimensions",
+ "unit": "A die-casting mold factory for auto parts in Beilun, Ningbo, a little over a hundred people",
+ "unit_type": "Mold and die factory",
+ "city": "Ningbo",
+ "city_tier": "New Tier 1",
+ "education": "Secondary vocational school (Mechanical Drafting)",
+ "level": "You are fluent in AutoCAD and can recite the national drafting standards. You've only just learned to model parts in 3D. In a mold you can name the core and the cavity; sliders and lifters you still have to puzzle out from old drawings, line by line",
+ "intro": "For three months as an intern you traced hundreds of old drawings at the desk nearest the door in the engineering office. Today your supervisor handed you the 2D drawing package for a die-casting mold for a gearbox housing: the drawings go to the shop floor this afternoon, and the CNC machinists are waiting. As of today, the Drawn by box in the bottom right corner of the title block carries your name.",
+ "salary_note": "Estimate: a drafter with a secondary vocational diploma at a Ningbo mold factory takes home ¥4,500–5,500 after probation, with a dorm bed but no meals, a little over 10% below the national figure. Moving up depends on being able to design a whole mold, and formal education is a hard ceiling.",
+ "facts": [
+  { "label": "Assistant Mechanical Design Engineer (current level)", "value": "0-2 years, ¥5,000–8,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Mechanical Design Engineer (2-5 years)", "source": "Career map" },
+  { "label": "Pay after 10+ years", "value": "¥13,800 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Tracking down an interference on the first part on the shop floor and measuring the root cause in the tolerances", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Taking on a first drawing revision and confirming what the job is based on", "source": "AI exposure" },
+  { "label": "Open positions", "value": "266 related job listings nationwide, 9 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "At 7:10 you come out of the four-bed factory dorm for a bowl of rice-cake soup with pickled greens in the canteen. The shop floor has already started up; through two walls you can hear the die-casting machine on a mold trial.",
+  "You open the computer, pull up the 3D model your supervisor revised last night and check the version number. He moved an ejector pin, and the 2D drawing still shows the old one.",
+  "Issuing drawings: moving platen plate, fixed plate, slider, lifter, one sheet after another, dimensions, tolerances, surface roughness. You circle the critical fit dimensions in red on the printout and check them again.",
+  "An old machinist from the shop comes up with a drawing: on this plate the cooling channel is too close to the ejector pin hole, and if the drill wanders a hair it will break through. You follow him down to the floor and measure it with calipers.",
+  "Back at your desk you revise the drawing and update the bill of materials: a standard part has changed spec and there are four more screws. The part numbers in the system don't match the drawing; you spend half an hour going line by line.",
+  "You deliver drawings to wire EDM and CNC and write the time on the sign-off sheet. The slow-wire EDM operator asks whether a dimension should be cut to the nominal or the lower limit. You go back and ask your supervisor.",
+  "The trial crew calls you over to the die-casting machine to look at the first shot: flash on one corner. You crouch and study the parting line for a long time, then sketch it in your notebook.",
+  "At 9 p.m. your three roommates are gaming. With headphones on you watch a video about slider core-pulling, and fall asleep halfway through."
+ ],
+ "ladder": [
+  { "title": "Assistant Mechanical Design Engineer", "stage": "Assistant / junior", "focus": "Produce 2D drawings, 3D models and bills of materials on your own; understand exactly what the engineer intends and carry out revisions. You move up on error-free delivery and quick turnaround." },
+  { "title": "Mechanical Design Engineer", "stage": "Mid-level", "focus": "Lead the design of a single machine or assembly, such as a bucket elevator or a linear slide module: concept design, strength checks, and closing out problems on the prototype. You are promoted on first-pass approval of your designs and cost savings." },
+  { "title": "Senior Mechanical Design Engineer", "stage": "Senior", "focus": "Own the system architecture of a whole machine, such as the lower limbs of a bipedal robot; coordinate across mechanical, controls and vision; bring designs into mass production. You are promoted on cracking major technical problems, such as excess vibration or short service life, and on patents." },
+  { "title": "Mechanical Design Expert / Design Supervisor", "stage": "Expert / supervisor", "focus": "Set the technology roadmap, train newcomers, lead platform designs such as a general-purpose joint module, and support customization for major customers. You move up on platform reuse, the quality of your team's work and the technical edge you build." },
+  { "title": "Chief Mechanical Architect / Technical Director", "stage": "Leadership", "focus": "Define the next generation of products, such as the full architecture of a humanoid robot; take part in national and industry standards; do technical due diligence on acquisitions. You rise on foresight, commercial scale and how far the core technology is your own." }
+ ],
+ "ai_tasks": [
+  { "name": "Taking on a first drawing revision and confirming what the job is based on", "how": "AI can check the revision status of the drawing and list the documents needed to start. The goal of the job and who the contacts are have to be confirmed in person with your mentor." },
+  { "name": "Filling in missing dimensions on the three views and setting datums and tolerances", "how": "AI can find which dimensions are missing from the three views and suggest how to annotate them. Which datums to choose and how tight the tolerances should be is for a person to judge from assembly and machining." },
+  { "name": "Tracking down an interference on the first part on the shop floor and measuring the root cause in the tolerances", "how": "AI can't replace measuring by hand on the shop floor and looking at where it binds. A person has to measure on site and work out how the dimension chain stacked up into a problem." },
+  { "name": "Updating the model after an interference fix and syncing the BOM", "how": "AI can use scripts or add-ins to check that the 3D model, 2D drawings and BOM agree. A person reproduces the interference in the model and decides how to give it clearance." },
+  { "name": "Confirming key components with process engineering and purchasing", "how": "AI can look up standard part specs and draft checklists and inquiry emails. Whether a custom part can be machined and whether a delivery date is reliable has to be settled back and forth with the process engineer and the buyer." },
+  { "name": "Drawing review, release and ECN filing", "how": "AI can pre-check revisions, signature boxes and whether the file set is complete, and assemble the release package. Release has to be signed, and answered for, by the mentor and the people responsible." },
+  { "name": "Filling in the motor mount's missing dimensions and checking the projections of the three views", "how": "AI can help check that the projections of the three views line up and flag dimensions that may have been left off. Which dimensions to add has to be checked against the intent of the sketch and confirmed by a person." },
+  { "name": "Setting design datums and annotating tolerances and surface roughness", "how": "AI can suggest the usual way to write geometric tolerances and roughness under the national standards and catch annotation format errors. How the part will be machined and inspected, and so the datums and tolerances, is decided by a person." },
+  { "name": "Tracking down an interference at trial assembly and measuring for an on-the-spot fix", "how": "AI can only help record and organize the data. Going into the assembly shop, finding the interference, measuring it and improvising a fix on the spot has to be done by a person." },
+  { "name": "Confirming machining feasibility and standard part selection with process engineering and purchasing", "how": "AI can look up bearing and bolt specs against the drawing and list open questions. Whether it can be machined, and the supplier's delivery promise, have to be agreed by a person with process and purchasing." },
+  { "name": "Checking drawings at review and signing off electronically as a mentor", "how": "AI can run a first consistency check on datums, tolerances and revisions and list doubtful points. The final inspection verdict and the signature releasing the drawing are a person's." },
+  { "name": "Writing engineering change notices and filing controlled technical documents", "how": "AI can draft the ECN from the day's change log and review comments, organize old and new revisions and update the reassembly instructions. A person spot-checks the change for errors or omissions." }
+ ],
+ "events": {
+  "e_scrap": "You dimensioned a hole from the wrong datum, and a plate weighing over a hundred kilos was only found to be wrong after machining. The whole plate was scrap. Your supervisor didn't shout. He just sent you to explain it to the shop floor manager yourself.",
+  "e_old_master": "An old fitter who had worked in the shop for thirty years always offered you a cigarette before pointing out which dimension on your drawing he couldn't machine. You don't smoke, but you learned to stand by the machine and hear him out.",
+  "e_t1_pass": "The first mold you followed from start to finish produced a good part at its first trial, T1. The customer's quality engineer signed the coordinate-measuring report, and your supervisor told you to take a copy back to the dorm.",
+  "e_rush": "The customer pulled the mold delivery date two weeks forward. The whole engineering office worked overtime twenty days straight; you left the factory at eleven every night, after even the barbecue stall below the dorm had packed up.",
+  "e_ai_check": "The factory installed an add-in that checks drawings automatically. Feed it a set and it marks in red every missing dimension, every view that doesn't match, every empty signature box. The first time, it found seven dimensions you'd left off.",
+  "e_ecn": "An engineering change notice went out with the old revision, and the shop machined to the old drawing for two days. You stood alone at the quality meeting explaining for ten minutes, then made the revision number the biggest characters in the top right corner of every drawing.",
+  "e_typhoon": "The day the typhoon made landfall the factory closed, and you and your roommates sat in the dorm watching rain force its way through the window frames. Back at work the next day the ground-floor warehouse had flooded, and you helped carry box after box of standard parts up to the second floor.",
+  "e_rent_out": "You moved out of the dorm into a two-room flat in Xinqi with someone from your hometown. That first weekend you bought a small yellow croaker at the market and phoned your mother to ask how to cook it.",
+  "e_giga": "The factory won its first giga-casting mold for a new-energy car, single-piece die-casting, with a mold base taller than a room. You were moved into the project team to draw the cooling channels: more than a hundred holes on one drawing.",
+  "e_price_war": "The carmakers' price war reached the parts makers, and one notice from the customer cut the mold price by fifteen percent. The year-end bonus was halved, and your supervisor said next year was about cost-cutting, starting with your drawing turnaround.",
+  "e_love": "You started having lunch with a woman from quality inspection. She'd bring coordinate-measuring reports over to check dimensions with you, and somewhere in the checking you arranged to cycle round Dongqian Lake at the weekend.",
+  "e_wedding": "The wedding was back home in Quzhou, twenty-six tables. A busload of colleagues came from the factory, the old fitter among them, drinking yellow rice wine in a corner. He said he still remembered that scrapped plate of yours.",
+  "e_neck": "Ten hours a day turning models on the screen, and your neck and right wrist began to complain. You bought a vertical mouse and propped up the monitor on two old volumes of national standards.",
+  "e_abroad": "The customer built a new plant in Mexico. The mold went by ship, and you flew after it and spent a month crouched in the local workshop commissioning it. You came home with a bag of local chili powder in your suitcase.",
+  "e_house": "You bought an eighty-square-meter secondhand flat in Beilun, half the down payment scraped together by both sets of parents. The day you signed you worked it out: the mortgage was about half your pay.",
+  "e_child": "Your child was born. Waiting outside the delivery room you found yourself drawing three views of a crib in your phone's notes app. Your mother saw.",
+  "e_ai_ecn": "Engineering change notices are now drafted by the system from the day's change log, and it lines up the old and new revisions too. Your job became spot-checking which line it got wrong. Once it wrote thinner where it meant thicker.",
+  "e_apprentice": "A new vocational-school graduate got a dimension wrong. You circled it on his drawing and took him down to find the old fitter. The old man was nearly retired, and still offered a cigarette first.",
+  "e_patent": "A quick-change slider design you worked out was filed as a utility model patent. On the certificate your name is listed as an inventor, after your supervisor's.",
+  "e_father": "Your father fell off his electric scooter back home and spent two weeks in hospital. You took leave to be with him and spent your afternoons on the ward reviewing drawings remotely on a laptop.",
+  "e_master_retire": "The old fitter retired. Before he left he pressed a handwritten notebook on you, full of every case he'd seen over the years that was right on paper and wrong on the shop floor. It was spotted with oil.",
+  "e_orders_move": "Several old customers moved their orders to factories in Southeast Asia, and one of the two die-casting lines stood idle. The canteen dropped a meat dish, and people didn't talk much over lunch.",
+  "e_eyes": "You've become farsighted and have to blow drawings up to double size. The young ones let AI fill in the annotations in one click; you still circle the critical dimensions on the printout in red pen yourself."
+ },
+ "choices": {
+  "c_cert": { "title": "A certificate, or learning to break down molds", "situation": "The labor bureau's Mechanical Drafter (Senior) exam is held once a year: you'd need a course and hand-drawing practice, and the factory would add ¥200 a month. Your supervisor says certificates are certificates; knowing how to break down a mold is the real skill, and he happens to have an old mold that needs redrawing.", "options": [
+   { "label": "Take the senior drafter course", "result": "For two months you went into the city every weekend for classes, and nearly failed the hand-drawing paper. The day the certificate came you tucked it under your pillow in the dorm." },
+   { "label": "Redraw the old mold with your supervisor", "result": "You took that old mold apart one part at a time and redrew it, and understood why the slider has to travel at an angle. No certificate, but the shop floor started calling you little master." }
+  ] },
+  "c_degree": { "title": "Study for a bachelor's degree?", "situation": "Your supervisor tells you straight: with a secondary vocational diploma, assistant engineer is as far as you go; to be rated engineer or move into design you need a bachelor's degree. Ningbo's adult degree program takes three years of weekend classes and costs over ¥10,000.", "options": [
+   { "label": "Enroll", "result": "For three years you took the bus into the city every Saturday morning. You failed advanced math once and passed the resit. The day you got your degree certificate you added a fried egg to your noodles at the shop outside the factory gate." },
+   { "label": "No, rely on skill", "result": "You kept your weekends for the shop floor and mold trials. Your supervisor said then make your drawings so good nobody can fault them, and you said all right." }
+  ] },
+  "c_engineer": { "title": "Take on a whole mold and go for Mechanical Design Engineer", "situation": "Your supervisor wants to bring one person up: the next mold, from parting line and structure to drawings, goes to one person. Pull it off and he'll put you up for Mechanical Design Engineer. Botch it, and the whole factory will know whose drawings they were.", "options": [
+   { "label": "Take it", "result": "You revised that mold eleven times and ran three trials. After the third, the customer measured the part and nodded. Your supervisor signed the review form without a word." },
+   { "label": "Assist someone else first", "result": "You drew half of that mold under another engineer. You learned a lot in a year; your name went in the second box." }
+  ] },
+  "c_robot": { "title": "A robot factory in Suzhou is hiring", "situation": "A classmate from vocational school went to a factory in Suzhou that makes robot joints. He says they're hiring structural design assistants at forty percent more than you earn now, working on the things of the future. Here in Ningbo you've only just got to know the shop floor.", "options": [
+   { "label": "Go to Suzhou", "result": "You went from drawing molds to drawing joints and reducers, with tolerances an order of magnitude tighter. The first month you worked until ten every night, and on the way back to your rented room you missed the sea wind in Beilun." },
+   { "label": "Stay in Ningbo", "result": "You said a few more years. Your classmate said don't regret it. You said molds are the future too; cars will always have to be built." }
+  ] },
+  "c_ai_tool": { "title": "Learn to write scripts?", "situation": "Your supervisor wants someone to write scripts that pull the materials, weights and quantities out of the 3D models straight into the BOM, then hook it up to the drawing checker, so a whole set of drawings is done in half a day. Nobody knows how; you'd have to learn Python after work.", "options": [
+   { "label": "Learn after work", "result": "It took you two months to write your first script that ran, and the first table it exported matched. People in the engineering office started coming to you to change scripts, and the shop floor asked if you could export tool lists too." },
+   { "label": "Don't, check by hand", "result": "You still check the BOM line by line. Slower, but you've seen every line. In the end head office sent someone to write the script, and once it pulled the wrong material; you were the one who spotted it." }
+  ] },
+  "c_supervisor": { "title": "Design supervisor, or the expert route", "situation": "Your supervisor is leaving for the group's new plant and recommends you for his job: six people, scheduling drawings, managing progress, meetings with customers. The other road is to dig into giga-casting molds and become the one the factory hands its hardest structures to.", "options": [
+   { "label": "Take the supervisor job", "result": "Your calendar filled with meetings; you opened the 3D software two or three times a week. The day your first vocational-school hire passed probation you treated the engineering office to seafood noodles." },
+   { "label": "Dig into the big molds", "result": "You worked through years of interference cases one by one and turned them into design rules. Cooling channels nobody else could fix ended up on your desk." }
+  ] },
+  "c_studio": { "title": "Go into partnership on a design studio", "situation": "A former colleague who does design at another factory is going out on his own, taking mold design and custom automation jobs from small factories nearby, and wants you in. You might earn more, or go three months without a single order.", "options": [
+   { "label": "Join him", "result": "You rented two rooms on the second floor of an old factory building: three computers and a printer. The first year you did over forty sets of drawings, and learned to issue invoices and chase payment.", "end": "You and your old colleague ran a small mold design studio, drawing for dozens of factories around; whenever a mold goes on trial you still drive over to see the first part." },
+   { "label": "Don't go", "result": "You said there's the mortgage. He said fair enough, he'd pass you some work if he got too busy." }
+  ] },
+  "c_home": { "title": "Go back to Quzhou?", "situation": "Your child is about to start primary school, and your parents back home are getting old. A few parts factories in Quzhou's development zone are hiring designers these days: thirty percent less pay, twenty minutes from home. The flat in Beilun still has a mortgage on it.", "options": [
+   { "label": "Go back to Quzhou", "result": "You joined an auto parts factory in the development zone back home. The drawings are simpler than in Ningbo, and you can pick your child up after work. At the weekend you built your father a grape trellis in the yard. You drew it first." },
+   { "label": "Stay, bring your parents over", "result": "Five people squeezed into two rooms, and your father found a job minding the bike shed in the estate. Your mother learned to buy vegetables in Ningbo dialect." }
+  ] },
+  "c_teach": { "title": "Go back to teach at your old school", "situation": "Your old vocational school is setting up an industry college with local companies and asks you to teach the specialist courses. You'd have to pass the teaching qualification first. Every day you'd explain tolerances to twenty-year-olds, and weekends would be free.", "options": [
+   { "label": "Go and teach", "result": "In your first class you showed a photo of that scrapped plate and explained why a datum can't be chosen carelessly. A boy at the back put up his hand and asked where the plate ended up.", "end": "You went back to teach at your old school and taught many years of young drafters; every year a few of them are recommended to factories in Ningbo, and start at the desk nearest the door." },
+   { "label": "Stay at the factory", "result": "You said the big mold on your hands hadn't finished its trials. You promised to go back once a term to give a lecture and take students onto a shop floor." }
+  ] }
+ },
+ "endings": {
+  "retire": "In your last month you sorted twenty-odd years of drawings on your computer, set by set, marked the revisions and handed them to the young engineer taking over. On the last day you went down to the shop floor once more. The die-casting machine was still running, and where the old fitter's bench used to be stood an automated machine tool. You stood at the door for a while, and left the red pen you'd used for years on your desk.",
+  "burnout": "That winter you worked until midnight every day for two months. Your neck hurt so much you couldn't turn your head, and the lines on the drawings began to double. You told the factory you wanted a job that didn't mean staring at a screen, and they put you in the warehouse looking after standard parts. You put your calipers away in a drawer and spent your days counting stock on the shelves."
+ },
+ "past": [
+  "You missed the cutoff for academic high school by twenty points. Your father said learn a trade, and at a vocational school in Quzhou you chose mechanical drafting, because the recruiter said it meant sitting in an office, not standing at a machine.",
+  "Your first term was hand drawing: T-square, set squares, compasses, an afternoon for one part drawing. The teacher said your lines were clean and pinned your drawing on the classroom's back wall.",
+  "You passed the AutoCAD certificate and taught yourself 3D software. While the others in the dorm played games, you built a speed reducer on the computer one part at a time.",
+  "The school took you to see mold factories in Ningbo, and for the first time you saw a die-casting machine: one shot, and molten aluminum became a gleaming silver housing. You stood beside it for twenty minutes; the teacher had to call you twice.",
+  "For your graduation internship the school sent you to this factory. For three months you traced old drawings in the engineering office, and in the evenings in the dorm went over the drawings looking for where you'd traced them wrong. On the last day of the internship your supervisor said you could stay."
+ ],
+ "late": {
+  "pension_note": "Estimate: Ningbo's urban employee pension scheme. The mold factory paid in properly, on a low base in the early years and on your real wage later, for over thirty years in all. In retirement you get a little over half of your last monthly salary.",
+  "scenes": [
+   "Your first week of retirement you still woke after seven and reached, out of habit, to open the computer and check revision numbers. Instead you made tea on the balcony and watched the container trucks below heading for the port, one after another.",
+   "An old mold at the factory developed a problem. The drawings were ones you'd made twenty years earlier, and a young engineer phoned you. You talked for forty minutes, and only after hanging up noticed you'd been standing the whole time.",
+   "You drew your grandson a small wooden stool, three views, dimensions, tolerances and all, and took it to the carpenter downstairs. He studied it a long while and said he couldn't make it that accurate.",
+   "In your first year in the warehouse you rearranged thousands of standard parts on the shelves by spec. The shop floor said it was much quicker to find things now.",
+   "Slowly your neck got better. You began walking the greenway by the sea every evening. Your phone stopped holding drawings; now it holds sunsets.",
+   "Once a young engineer came to the warehouse with a drawing, asking about the slider dimensions on an old mold. You told him without looking at the drawing. He stared at you for a second.",
+   "The first morning after leaving the factory you didn't hear the die-casting machine and slept until eight. When you woke something seemed missing. It took you a while to place it: the smell of molten aluminum.",
+   "In your new position you're still the most exacting person in the room. When someone says close enough, you say the difference is exactly that two hundredths of a millimeter.",
+   "You drove past the old factory in Beilun. The sign at the gate had changed; the buildings were still there. You stopped and looked a while. In the window of the engineering office nearest the door, a light was on.",
+   "These days the software does most of the drawings, annotations, error checks and change notices itself. The news says the shop floor still needs someone to crouch down and see why that part is binding.",
+   "Among old things you find the first hand-drawn part drawing from vocational school. The paper has yellowed; the lines are still clean. You slip it into an old volume of national standards.",
+   "Your grandson's school set a craft project, and you helped him make a little mold out of cardboard: close the two halves and there's a star inside. He asked: Grandpa, is this what you used to make?"
+  ],
+  "closing": {
+   "retire": "One afternoon many years later you sit on a bench in the estate with your grandson's ruler, drawing a part on the back of a scrap of paper. When you finish you look it over: dimensions complete, datums right. You fold it and put it in your pocket.",
+   "burnout": "Many years later you walk slowly along the greenway by the sea, and in the distance the port cranes light up one by one. You remember a typhoon one year, and carrying box after box of standard parts up to the second floor.",
+   "end": "Many years later, clearing out a drawer, you find your work notebook from your first month. On the last page, in pencil, is a dimension and a tolerance. You can no longer remember which mold it was; only that the shop floor was hot that day."
+  }
+ },
+ "stages": [
+  "Your job is to turn other people's designs into drawings that can be machined: breaking down molds in NX, issuing 2D in AutoCAD, adding dimensions and tolerances, filling in title blocks, then entering the BOM into the ERP line by line. When your supervisor changes the model you change the drawings; when the shop brings a drawing back you go down and measure. You sign the title block as Drawn by; the Designed and Checked boxes still belong to others.",
+  "Now you own a whole mold yourself: given the customer's product model, you run mold-flow analysis to set gates and venting, then the parting line, sliders, lifters and cooling channels. Once a week you revise the design on a video call with the customer's engineers, and settle standard parts and lead times with process and purchasing. The Designed box is yours, and when something goes wrong the shop floor comes to you first.",
+  "On your desk are the hardest molds in the factory: giga-casting, multi-slider core pulls, a thousand dimensions on one set of drawings. You check stress and deformation in CAE software, negotiate production cycle times with the customer's project manager, and coordinate controls and equipment across departments. Two or three design engineers' drawings come to you for review. You sign, and only then does the shop floor start.",
+  "You draw less and attend more meetings: weekly design reviews, technical sessions with customers, training plans for newcomers. You set the factory's design standards and standard mold-base library, and turn years of interference cases into checklists. Who gets which mold and which project goes first is all on your Gantt chart. When an old customer comes to talk about a new car model, you're the first person they ask to see.",
+  "You think about what the factory will make in three to five years: going with the owner to carmakers to discuss die-casting for the next generation of car bodies, deciding whether to buy a bigger-tonnage machine, sitting in on industry standards meetings. The engineering department's thirty people report to you. You open the 3D software once or twice a week, and when you do it is usually for a structure the young ones can't crack."
+ ],
+ "work": [
+  "The slow-wire EDM operator came to ask about the tolerance band on a line. You spent ten minutes in the national standard and added plus or minus 0.005 to the drawing. He nodded and left.",
+  "Your supervisor moved the ejector pins overnight without telling you. In the morning you compared the two versions of the model in NX and marked seventeen differences in different colors.",
+  "The warehouse said a screw spec in the BOM didn't match the real thing. You took calipers to the warehouse, measured one, and came back to correct the part number in the ERP.",
+  "On a video call the customer's engineer pointed to a sink mark on the part. In the mold-flow analysis you moved the cooling channel at that spot three millimeters inward.",
+  "The trial crew lead put the first T1 shot on your desk. You circled the flash on the part in red pen and that afternoon changed the width of the parting line's sealing face.",
+  "Purchasing said an imported hydraulic cylinder would take twelve weeks. You went through three domestic catalogs, picked one with a stroke five millimeters shorter, and redesigned the slider.",
+  "At the giga mold's first trial the part warped by two millimeters. You and the customer's quality engineer stood over the coordinate-measuring report all afternoon and settled the compensation.",
+  "A new design engineer handed in a set of drawings. You wrote twenty-three comments in the review record. The first: wrong datum, stop here.",
+  "The controls engineer said your core-pull sequence didn't match the die-casting machine's program. The two of you spent an afternoon at the operator panel on the shop floor lining up the timing.",
+  "At the annual design review you turned the causes of every failed mold trial last year into a pie chart. The biggest slice: drawing and model revisions didn't match.",
+  "A carmaker's buyer pushed the price in a meeting. You pulled up the cost breakdowns of three similar molds and explained item by item why this mold base couldn't be any thinner.",
+  "For five new vocational-school hires you drew up a three-month training schedule: no 3D software in the first month, just a day on the shop floor with a fitter every day.",
+  "You went with the owner to present a die-casting plan for a carmaker's next-generation rear underbody. At the chief engineer's third question you took out a hand-drawn sketch.",
+  "An industry association invited you to discuss a standard for die-casting mold specifications. You wrote four pages of comments on the draft, most of them from the shop floor.",
+  "Should the department switch fully to AI-assisted drawing? You had two teams each try it on one mold for a month. What you looked at in the end was how many drawings the shop floor sent back."
+ ]
+}

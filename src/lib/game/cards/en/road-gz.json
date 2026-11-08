@@ -1,0 +1,205 @@
+{
+ "id": "road-gz",
+ "occupation": "Highway Construction Technician",
+ "role": "Trainee Site Engineer on a Highway Project",
+ "headline": "Fresh out of a college diploma in road and bridge engineering: a trainee site engineer on an expressway in the mountains of Guizhou, living in a prefab dormitory halfway up a slope and climbing the formwork section by section as eighty-meter piers rise",
+ "unit": "An expressway project office of a provincial road and bridge group (the section runs through the mountains of southeast Guizhou)",
+ "unit_type": "Project office of a provincial road and bridge group",
+ "city": "Guiyang (project in the mountains of southeast Guizhou)",
+ "city_tier": "Second-tier city (provincial capital)",
+ "education": "Vocational college diploma (Road and Bridge Engineering Technology)",
+ "level": "You understand about half of the drawings and can set up a total station, and this is the first time you have watched over a concrete pour on site. You can read a technical briefing sheet aloud, but when a worker asks you why, you have no answer.",
+ "intro": "The summer you graduated, you were posted to an expressway section in the mountains of southeast Guizhou. The project office is a row of blue-roofed prefabs halfway up a hillside. The section includes a bridge across a gorge, and its dozen-odd tall piers are still nothing more than pile caps. As of today you stand watch at the foot of those piers with an old site engineer, and watch them grow, one section at a time, into the clouds.",
+ "salary_note": "Estimate: a trainee site engineer at a provincial road and bridge group earns about the national average in base pay. Mountain sections add a field allowance and milestone bonuses, so in rush years take-home pay runs slightly higher. Between the end of one project and the start of the next, it is base pay only.",
+ "facts": [
+  { "label": "Site Engineer, Trainee/Assistant (current level)", "value": "0-1 years, ¥5,000–7,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Site Engineer, Lead (1-3 years)", "source": "Career map" },
+  { "label": "Pay after 10+ years", "value": "¥11,500 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Handling a supply break when trucks jam the haul road, and getting rolling back in sync", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Checking pre-shift work conditions and the stringline reference", "source": "AI exposure" },
+  { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Fog outside the prefab. Only half the mountain opposite is visible. In the canteen you have a bowl of rice noodles with fermented chili floating in the broth. The rebar crew's foreman from Sichuan is already at the door on his second cigarette.",
+  "Pre-shift safety briefing. You stand on a patch of mud and read the briefing sheet to twenty-odd men in hard hats, some of them yawning. When you reach the section on work at height, your voice gets louder without your meaning it to.",
+  "You ride the man-cage up Pier 7, more than sixty meters. The wind is strong on the climbing-formwork platform. You check rebar spacing and cover with a tape measure, bay by bay, and write it all down.",
+  "The survey crew comes to recheck the pier's verticality. Their total station is set up on the slope across the gorge, and you call numbers over the radio. Only when the numbers match do you let yourself breathe out.",
+  "Lunch in the tin shed in the work area: a boxed meal with a piece of sour-soup fish. A Miao man leading an ox along the haul road stops to look up at the piers for a long time, then asks how you'll get up onto the bridge once it's built.",
+  "Rain. The haul road turns to yellow mud and the concrete mixers can't make it up. You stand in the mud in rubber boots waving drivers on, soaked to the knees.",
+  "A night pour on the pier shaft. On the platform you watch the vibrators, cast test cubes, log the volume. Under the floodlights the rain falls in single strands, like needles.",
+  "Back in the prefab you fill out the site log and the concealed-works inspection record. The supervising engineer sent back a form he signed this afternoon; you have to redo it. When you finish, you message your girlfriend. She is already asleep."
+ ],
+ "ladder": [
+  { "title": "Site Engineer (Trainee/Assistant)", "stage": "Entry", "focus": "Carry out technical briefings exactly and handle single operations on your own, such as base-course stakeout or asphalt temperature checks. You earn a permanent post with a zero-error record and by stepping in wherever you're needed." },
+  { "title": "Site Engineer (Lead)", "stage": "Core", "focus": "Run one sub-item on your own (say, one kilometer of asphalt surfacing), coordinating several crews and holding the key metrics. You compete for technical lead on your first-time quality pass rate and your control of schedule variance." },
+  { "title": "Technical Lead", "stage": "Technical depth", "focus": "Write the construction organization plan and solve complex technical problems such as cold-weather paving or reflective cracking on overlays. You move up on technical results (construction methods, QC awards) and progress toward the Class 1 Constructor license." },
+  { "title": "Project Manager (Highway/Municipal)", "stage": "Management", "focus": "Answer for delivering the whole project: cost, schedule, safety, quality, environment and keeping the peace locally. You compete for it with a complete project record (contracts of ¥200 million or more), a Class 1 Constructor license, a Safety Manager B certificate and a clean credit history." }
+ ],
+ "ai_tasks": [
+  { "name": "Checking pre-shift work conditions and the stringline reference", "how": "AI can pull the weather forecast, compare design elevations and crossfall automatically and flag anomalies. A person still has to go and look at the moisture, contamination and damage on the layer below, and make the call on whether work starts." },
+  { "name": "Accepting the first truck of mix and controlling paver speed and thickness", "how": "AI can read temperature and load-ticket data, match truck numbers to mix designs, and alarm on speed and thickness deviations. A person on site has to watch the mix for segregation, smoke and clumping, give the order to discharge and send the paver forward." },
+  { "name": "Handling a supply break when trucks jam the haul road, and getting rolling back in sync", "how": "AI can only offer forecasts of traffic and temperature loss. Working out why the trucks are stuck, coordinating with the plant and the traffic police, choosing between stopping and paving slowly, and rearranging the roller train all have to be decided on the spot by a person who carries the responsibility." },
+  { "name": "Controlling joint quality and organizing leveling and compaction spot checks", "how": "AI can gather compaction and smoothness data from the instruments and mark failing spots. How to treat a joint, the handwork of leveling, directing the crew, and choosing where to spot-check depend on people." },
+  { "name": "Compiling data records into the site log and concealed-works paperwork", "how": "AI can pull temperature, thickness, roller tracks and incident records automatically and draft the site log and concealed-works records. A person only checks the key numbers, adds what happened on site, signs and files." },
+  { "name": "Pre-shift safety briefing and confirming the weather window", "how": "AI can generate briefing materials and sort out weather windows and risk alerts. A person has to brief face to face, make sure the workers understood, and make the final judgment on whether the window holds." },
+  { "name": "Setting the stringline before paving and rechecking centerline, edges and crossfall", "how": "AI can recompute elevations, center and edge lines and crossfall automatically and find points that don't match the design. A person has to resurvey on site, physically set the line, confirm the reference and answer for the result." },
+  { "name": "Accepting the first truck of mix with a three-point temperature check", "how": "AI can check the load ticket against the spec automatically and log the temperatures. A person has to take the three readings beside the truck, look at the mix and decide whether it can be dumped." },
+  { "name": "Live paver speed and thickness control with process data monitoring", "how": "AI can suggest speed and thickness adjustments in real time from the stringline and mix temperature, and warn early. A person has to watch the paver, work with the operator and make the final adjustment to fit conditions on the ground." },
+  { "name": "Emergency dispatch when trucks jam the haul road, and restoring supply and rolling", "how": "AI can help estimate arrival times and the drop in temperature. Emergency decisions during a supply break, coordinating everyone, keeping the mix warm and stitching the rolling back together afterward take a person on site who judges and answers for it." },
+  { "name": "Leveling joints and spot-checking compaction", "how": "AI can sort the spot-check data and judge pass or fail. Leveling a joint takes hands and machines working together on site, and where to patch and how is decided by someone looking at it." },
+  { "name": "Compiling end-to-end data and filing concealed-works acceptance records", "how": "AI can string the whole record of conditions, temperatures, thicknesses, tracks and incidents into a timeline and generate the filing documents. A person checks that it is true, adds explanations and signs." }
+ ],
+ "events": {
+  "e_master": "The old site engineer sees how slowly you measure rebar on the platform, and crouches down to show you: first check that the whole row runs true, then pick the few that look wrong and measure those. Don't measure from one end to the other.",
+  "e_fog": "Half a month of fog and rain without a break. In Guizhou they say the sky is never clear three days running. The schedule slips, the project manager's face darkens at every morning meeting, and you walk twenty thousand steps a day in the rain.",
+  "e_landslide": "After a storm, the slope above the haul road slumps and buries a stretch of it. No one is hurt. You and an excavator driver work in the mud past midnight, and the next day the mixers get through again.",
+  "e_test_block": "A set of test cubes you cast comes back under strength, and the supervising engineer orders core samples. The cores pass in the end, but the project's chief engineer still calls you in and you stand there for twenty minutes, listening.",
+  "e_village": "An old man's family graves lie inside the land acquisition line. You go with the project office people three times. The last time you bring two bottles of liquor, and he leads you up the mountain and speaks a long time in Miao in front of the graves.",
+  "e_wage": "At year's end the labor crew says their wages haven't arrived, and dozens of workers block the project office door. You help check attendance against the dedicated wage account, one man at a time, until dawn. The next day the money goes out.",
+  "e_breakup": "Your girlfriend is in Guiyang and you get back once a month. She says dating you is like dating a phone. You stand on the slope outside the prefab on a call for an hour. She is the one who hangs up.",
+  "e_close": "The day the bridge closes at midspan, the project office sets off firecrackers at the abutment. You stand on the closure segment and look down: the river at the bottom of the gorge is a thread. You remember you were the first one measuring rebar on those pile caps.",
+  "e_open": "The expressway opens to traffic. You skip the ceremony; you drive across it on your way to the next project. At a hundred kilometers an hour on the bridge, you have just enough time for one look at Pier 7.",
+  "e_next_project": "The project wraps up and you are moved to a new section in Yunnan. Another row of prefabs, another haul road to cut first. Your luggage is still the same two woven plastic sacks you arrived with.",
+  "e_love": "A new technician joins the lab, in charge of test cubes and compaction testing. You bring her samples every day. Once she asks whether all you construction people are this tanned.",
+  "e_wedding": "You hold the wedding banquet back home in Zunyi. The project gives you five days off, half of them spent on the road. At the banquet your father tells people his son built that expressway, and in two years it will reach their front door.",
+  "e_baby": "When your child is born you are on top of a pier. The phone rings seven times at the bottom of the man-cage. When you come down and call back, someone on the other end is already crying. It's the baby.",
+  "e_house": "You buy a flat in Guiyang near Huaguoyuan. You live there less than two months a year, and the mortgage comes out on time every month. Your wife says she married a salary card.",
+  "e_ai_log": "The project brings in a smart construction-site platform. Paving temperatures, roller tracks and pour volumes flow into the system automatically, and a draft site log is generated overnight. You write two fewer hours a day and spend the time on site.",
+  "e_ai_camera": "Cameras go up in the work areas. Anyone without a harness clipped on or a hard hat gets screenshotted and pushed to your phone, dozens a day. You have to go and check each one on site, and half are false alarms.",
+  "e_paving": "Asphalt paving begins. You stand behind the paver taking temperatures, the mix steaming at over 150 degrees. That night in the prefab your boot soles are coated with asphalt and take ages to scrape clean.",
+  "e_qc_award": "Your project on verticality control for tall-pier climbing formwork wins first prize in the group's QC awards. The bonus is small; the group newsletter runs a photo of you in a hard hat on top of a pier.",
+  "e_mother_sick": "Your mother is in the hospital back home and you can't get away from the site, so your wife takes leave to sit with her. You call every night after the shift, and only on the seventh day does your leave come through.",
+  "e_kid_call": "Your child starts kindergarten, and the teacher asks everyone to draw their father's work. He draws a very, very tall column with a small yellow dot on top. That, he says, is Dad's hat.",
+  "e_stomach": "Years of irregular meals and night pours, and your stomach goes first. Your checkup says chronic gastritis, and the drawer of stomach pills has gone through three brands.",
+  "e_young": "Of this year's trainees, two leave within six months. You go to their dorm room and see civil service exam books on the desk. You don't try to talk them out of it. Just be sure, you say.",
+  "e_fewer": "Guizhou's expressway network is nearly complete, and new projects get fewer every year. The group starts taking work in other provinces and overseas. Word is your next project is two thousand kilometers away.",
+  "e_apprentice": "The trainee you've been bringing along watches over his first pier pour on his own, and messages you from the platform before dawn: all normal, test cubes cast. You reply with one word: sleep."
+ },
+ "choices": {
+  "c_evening": {
+   "title": "Study at night, or drink with the crews",
+   "situation": "To become a Site Engineer (Lead) who runs a sub-item alone, you need the site engineer certificate and your surveying, and you have to know the drawings and specs cold. But in the prefabs at night, the rebar and scaffolding crews are drinking and playing cards and want you along. The old site engineer says the workers' respect is worth more than any certificate.",
+   "options": [
+    { "label": "Shut the door and study", "result": "You spend a winter in the prefab reading specs and pass the site engineer certificate. The crews say you think you're too good for them, and for a while they say your name grudgingly." },
+    { "label": "Get in with the crews", "result": "You pick up some Sichuan dialect and the rules of a card game called Fight the Landlord. Later, when a night pour goes wrong, the rebar foreman takes his men up to the platform without a word." }
+   ]
+  },
+  "c_bridge_road": {
+   "title": "The bridge works area, or roadbed and paving",
+   "situation": "Work on the bridge superstructure is starting and the bridge area is short of people: the hardest work, and the most dangerous. The roadbed and paving area is about to start laying asphalt: plenty of work, all by the book, and the craft behind the paver is one you'll use on every project for the rest of your life. The project manager lets you choose.",
+   "options": [
+    { "label": "Go to the bridge", "result": "You follow the form traveler segment by segment out toward the middle of the gorge, and calculate prestress in your dreams. You remember the number of every segment of that bridge." },
+    { "label": "Go to roadbed and paving", "result": "You spend a year behind the paver and the rollers. Compaction, smoothness, joints: you could tell with your eyes closed which stretch is going to give trouble." }
+   ]
+  },
+  "c_lead": {
+   "title": "Compete for Technical Lead",
+   "situation": "The project's technical lead has been transferred and the post is open. To compete you need a construction organization plan, one specialist technical result, and a clear account of how to manage risk on tall piers in the rainy season. All of it has to be done at night; by day you still run two work areas.",
+   "options": [
+    { "label": "Compete", "result": "You spend a month of nights on the plan. At the defense the chief engineer asks about curing concrete in the rainy season, and you tell the whole story of Pier 7 that year." },
+    { "label": "Run your work areas well first", "result": "You don't apply. The new technical lead comes in from outside, and at his first meeting he asks you how that landslide was handled." }
+   ]
+  },
+  "c_africa": {
+   "title": "Go to the overseas project in Africa",
+   "situation": "The group has won a highway contract in East Africa and is recruiting site engineers from home: more than double the pay, two-year contracts, one trip home a year. Your wife says the baby is still small, your mother says abroad isn't safe, and the project manager says people who go come back and get promoted fast.",
+   "options": [
+    { "label": "Go to Africa", "result": "You build another road on red earth near the equator and learn to swear in a mix of English and Swahili. When you come back two years later, your child hides behind his mother." },
+    { "label": "Stay in China", "result": "You turn it down. That year you are moved to a section only three hours' drive from home, and you can get back on weekends." }
+   ]
+  },
+  "c_digital": {
+   "title": "Learn the smart-site system?",
+   "situation": "The group wants one person on every project who understands data capture and early-warning workflows: reviewing the logs and records the system generates, and maintaining the cameras, temperature probes and roller tracking. It means three months off site for training, then back to the field with one more thing to look after.",
+   "options": [
+    { "label": "Learn it and come back to run the data", "result": "Back on site, you become the one who argues best with the system. When it flags a point as failing, you know which are real problems and which are a probe caked in mud." },
+    { "label": "Skip it, the site runs on eyes", "result": "You still prefer to crouch behind the paver and watch the mix. When young engineers bring you their tablets, you tell them to look at the smoke coming off the pile before they look at the screen." }
+   ]
+  },
+  "c_city": {
+   "title": "Go back to Guiyang to build city roads",
+   "situation": "A municipal works company in Guiyang needs site engineers for urban roads and pipe networks. Pay is twenty percent lower, every project is in the city, and you'd be home every night. Your child is in primary school now, and your wife has been raising him alone for years.",
+   "options": [
+    { "label": "Go back and build city roads", "result": "You start running between night lane-closure jobs in the city: traffic police, city inspectors, residents' complaints, more hassle than in the mountains. But every night you watch your child fall asleep." },
+    { "label": "Keep following the projects", "result": "You tell your wife two more projects. She swaps your woven sacks for a suitcase. At least it'll look nicer, she says." }
+   ]
+  },
+  "c_cost": {
+   "title": "Qualify as a cost engineer and move to the commercial contracts department",
+   "situation": "The company's commercial contracts department needs people who understand the site. Pass the Class 1 Cost Engineer (Transportation Engineering) exam and you can move over: quantities, pricing, variations and claims, at a desk, no more prefabs. Only you will never go up a pier again.",
+   "options": [
+    { "label": "Qualify and move to cost", "result": "It takes you two years, and you pass. The day you leave the site, you hang your hard hat, covered in scrawled notes, on the nail in the prefab.", "end": "In an office, you work out what a bridge costs, line by line from the bill of quantities and variation orders. When you reach the item for pier-shaft concrete you always look a little longer, remembering those nights of rain falling like needles." },
+    { "label": "Stay on site", "result": "You pack the cost-engineering books at the bottom of a box. The next year there's a claim on the project, and the commercial people still come to you to ask how many days that rain lasted." }
+   ]
+  },
+  "c_pm": {
+   "title": "Pass the Class 1 Constructor exam, compete for Project Manager (Highway/Municipal)",
+   "situation": "To become Project Manager (Highway/Municipal), the Class 1 Constructor license is the threshold, plus a Safety Manager B certificate and a complete project record. The exam is four papers with a national pass rate of a few percent. By day you run all the technical work on a whole section, so the only time to drill questions is at night in the prefab.",
+   "options": [
+    { "label": "Sit it, drill at night", "result": "It takes you three years. When the third results come out, you read them several times in the prefab, then go out onto the slope for a cigarette. The fog is so thick you can't see anything." },
+    { "label": "Skip it, stay technical for life", "result": "You tell your boss you're good at solving problems on site, not at the banquet table. He laughs. Fine, he says, the technical side can't do without you anyway." }
+   ]
+  },
+  "c_consult": {
+   "title": "Go to the provincial transportation research institute as a consultant",
+   "situation": "The provincial transportation research institute invites you to do feasibility reviews and maintenance decisions for road construction, looking at what is wrong now with roads built ten-odd years ago. About the same pay, no more following projects, but you won't be the one making the call on site anymore.",
+   "options": [
+    { "label": "Join the institute", "result": "You hand over your last project. Driving out of the work area, you stop for a while where the haul road begins.", "end": "You drive an inspection vehicle up and down the province's expressways, checking cracks, settlement, the tilt of piers. Once you inspect that bridge in southeast Guizhou. Pier 7 hasn't shifted at all. You add a line to the report, then delete it." },
+    { "label": "Stay on the projects", "result": "You say you want to build one more bridge. That winter, at the edge of a new gorge, you watch another row of pile caps break the ground." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "The day your last project is handed over, you box up your site logs and pass them to the archive. You drive the roads you've built over the years, slowing a little on the bridges. The piers stand in the fog, like the mountains you saw when you first came, as if they had always been there.",
+  "burnout": "After that year's physical, your stomach and your back won't let you follow the projects anymore. The company brings you back to headquarters in Guiyang for quality and safety inspections, one site visit a month. You stand at the foot of a new pier and look up at the young ones walking the platform. If you look up too long, your neck aches."
+ },
+ "past": [
+  "You grew up in a town in Zunyi. High school in the county seat was an hour away by bus, winding along mountain roads. Your father worked away from home on construction sites as a formwork carpenter, back only for New Year.",
+  "You missed the bachelor's line on the gaokao (college entrance exam). Your father said road building always needs people, so on the form you put Road and Bridge Engineering Technology at a provincial transportation vocational college.",
+  "Your first time at the training yard, you learned to survey a road's longitudinal profile with a level and a total station. It took all afternoon and the loop still didn't close, and the teacher had you all redo it the next day.",
+  "You joined the college's modern apprenticeship program with the road and bridge group, and spent a summer shadowing on a live project. The first time you stood on a pier cap twenty meters up, your legs went weak for half a day.",
+  "Your work placement kept you on that project, staking out with the survey crew and doing compaction tests with the lab. The project manager said you were a kid who didn't mind running around. Come back when you graduate."
+ ],
+ "late": {
+  "pension_note": "Estimate: the provincial road and bridge group pays out through basic enterprise pension insurance plus an enterprise annuity. Project work moved you around for years, but contributions never stopped, so the pension comes to roughly half of your final monthly salary.",
+  "scenes": [
+   "In retirement you spend a whole year at home in Guiyang, the first time since you started working. Your wife says you walk around the flat as if you were inspecting a site.",
+   "An old colleague pulls you in as a technical adviser on a rural road project in a county, a few days a month. On the haul road at the village entrance you crouch to look at the roadbed and tell the young site engineer this spot will fail in the rainy season.",
+   "You drive your grandson to southeast Guizhou. On the big bridge you slow down and point out the window: Grandpa built this. He looks up from his phone in the back seat. So high, he says.",
+   "Every rainy season you pay a little more attention to news of which road has had a landslide. When it isn't one of yours, you put the phone down and go water the plants on the balcony.",
+   "You do inspections at headquarters now, home on time every day, and your stomach is a bit better. You hang your old project hard hats in the study, seven of them, all faded.",
+   "A new project breaks ground and you go to do the start-up inspection: prefabs, haul road, woven sacks, exactly like the year you were twenty-two. You stand outside a trainee's dorm door for a while, and don't go in.",
+   "At the age, you retire on schedule. The pension isn't large, but it's enough. At the breakfast stall by your compound gate you eat rice noodles, and always ask for an extra spoonful of fermented chili.",
+   "Your first year off the sites, you still wake at six and look out the window without thinking: fog or not, rain or not, can the mixers make it up.",
+   "You've settled into the new job. Now and then a worker from the old days calls to ask which project needs people. You ask around for them, and sometimes you find something.",
+   "The trainee you brought along is a project manager now. On the day his project breaks ground he sends you a photo: a row of fresh pile caps, mountains behind, the fog lifting.",
+   "Later the sites fill with cameras and sensors, and most of the logs and records are written by the system. But on a rainy night when the mixers can't get up and someone has to decide whether to stop work on the slope, a person still has to stand in the mud and make the call.",
+   "There's a scar on the back of your hand from a piece of rebar when you were young. Your grandson asks if it hurt. I've forgotten, you say. All I remember is that the pier had just reached its twentieth section that day."
+  ],
+  "closing": {
+   "retire": "One foggy day many years later, you sit on your balcony and hear the traffic on the distant expressway, coming in waves. You think about the piers. They must be in the fog now too, one after another, standing steady.",
+   "burnout": "Many years later, in an old box, you find your first site log. The first page reads: First section of Pier 7 poured today. Light rain. Test cubes cast. You run a finger over the line, then close the book.",
+   "end": "Many years later, you ride across a gorge bridge. Everyone else in the car is looking at the view; you are counting piers. At the seventh, you say to yourself: good. Plumb."
+  }
+ },
+ "stages": [
+  "You are the youngest one in the work area. Every day you follow the survey crew with the total station to stake out and drive centerline pegs, go with the lab technicians to the batching plant for samples, and walk the site beside the supervising engineer, writing down every correction he asks for. The rebar foreman is twenty years older than you. You call him master; he calls you the little technician. He listens to half of what you say, and for the other half he waits for the old site engineer to nod.",
+  "Now you run a sub-item on your own: a few tall piers on a bridge, or a kilometer of asphalt surfacing. You schedule the crews, deploy the plant, hold the schedule, watch temperature, thickness, compaction and smoothness, and how a joint gets treated is your decision. Every week you chair a coordination meeting: problems go on a list with an owner and a deadline, and the next week you go through them one by one.",
+  "You write the construction organization plan and the specialist method statements: climbing formwork for tall piers, rainy-season work, cold-weather paving. Every hard technical problem on site lands on your desk. You develop construction methods and QC results, review your engineers' paperwork, host inspections by the quality supervision station and the owner, and give the technical briefings. When the chief engineer and the project manager meet, you sit beside them taking notes, and have to be ready to answer at any moment.",
+  "You answer for the whole section: cost, schedule, safety, quality, environment and keeping the peace locally. You deal with the owner, the supervising engineers, county and township officials, villagers, labor contractors and suppliers, and you carry responsibility for everything you sign. You spend less time in the work areas and more in meeting rooms and on the road, but whenever it rains, you are still the first one phoning up the mountain."
+ ],
+ "work": [
+  "Before signing the concealed-works form, the supervising engineer runs a cover meter over the rebar cage and finds one spot with only three centimeters. Your face goes hot. You have the rebar crew add spacers, and he scans again before he signs.",
+  "At the batching plant chute you measure slump and one load comes out dry. You make the driver wait and phone the lab to ask if it can be adjusted. They say no, and you send the load back.",
+  "The survey crew sets up a total station on the slope opposite to recheck the pier's center, and you hold the prism on the platform. The wind is strong; you grip the railing with one hand while the radio keeps shouting, stop swaying.",
+  "You schedule a kilometer of asphalt surfacing: three rollers, one paver, twenty haul trucks. The first truck arrives and you push in the thermometer: 156 degrees. You nod, and the paver moves off.",
+  "Haul trucks jam the access road and the supply stops for half an hour. You slow the paver, keep the rollers moving and phone the plant to reroute. When you look up after the call, the mix ahead has dropped to 130 degrees.",
+  "At the weekly coordination meeting you go through last week's list: grout leaking at formwork joints, who owns it, when it'll be fixed. The foreman says it rained and they couldn't do it. Then write down that it rained, you say, and write a new date.",
+  "You write the method statement for tall-pier climbing formwork, working out wind loads, platform capacity and fall protection item by item, and take it to an expert review. An old expert asks how you'll get people down in a thunderstorm, and you turn to the evacuation route drawing.",
+  "A freezing spell is coming and three kilometers of the final surface course remain. You spend the night working out a temperature window, and at the morning meeting you announce: pave only from eleven to three, stop the rest of the time.",
+  "The quality supervision station inspects and one set of compaction results fails. You take them out to retest, and in the end find that the sand-cone apparatus is past its calibration date. That same day you go through every instrument's calibration certificate.",
+  "In a county government meeting room you mediate a land acquisition: one family's fishpond is inside the line, and no one can agree on a price. You hear out the village head, then the county, and finally say the schedule can slip two weeks. Get the compensation plan done first.",
+  "At the cost meeting the commercial team reports that steel has gone up again and will eat into the section's margin. You open the construction organization plan and ask your technical lead whether the formwork for those small bridges can be reused three times.",
+  "The labor contractor says the owner's payment hasn't come, so wages will be late. Not one yuan in the dedicated wage account gets touched, you tell him, and that night you go to the workers' dorms yourself and tell each man what day he'll be paid."
+ ]
+}

@@ -1,0 +1,196 @@
+{
+ "id": "wedding-planner-cd",
+ "occupation": "Wedding Planner",
+ "role": "Wedding Planner at a wedding company",
+ "headline": "Three years out of a vocational college wedding-services program, just starting to sign clients of her own: a Chengdu wedding planner who, in the National Day peak week, runs a morning bride-fetching, a lunch banquet and an evening banquet in one day, caught between the couple, their parents and the hotel banquet office",
+ "unit": "A mid-sized wedding company in Chengdu",
+ "unit_type": "Wedding company",
+ "city": "Chengdu",
+ "city_tier": "New first-tier city",
+ "education": "Associate degree in wedding services and management",
+ "level": "You've worked the floor at more than a hundred weddings and could write a run sheet with your eyes shut. You've signed your first clients of your own, but couples still haggle your proposals down, and when a mother-in-law rewrites the plan in front of you, you don't yet know what to say.",
+ "intro": "Three years at the wedding company, and you've gone from hauling table flowers and sticking up seating cards to signing clients yourself. The manager has given you six weddings in National Day Golden Week, and on one of those days you'll run from a morning bride-fetching to tearing down a set at midnight. As of today, you answer the couple's calls, the bride's mother's calls, and the hotel banquet manager's calls, all at once.",
+ "salary_note": "Estimate: planners at Chengdu wedding companies earn a low base plus commission on contracts signed. In peak season commission pushes take-home pay above the national average; in the off season it's the base alone. Banquet prices are not high for a new first-tier city, so overall it comes out about level with the national average.",
+ "facts": [
+  { "label": "Wedding Planner (current level)", "value": "2-5 years, ¥6,000–12,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Senior Wedding Planner / Creative Director (studio model) (5-8 years)", "source": "Career map" },
+  { "label": "Pay after 3-5 years", "value": "¥7,200 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Handling a last-minute crisis in the bridal suite and running the countdown", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "The in-depth needs interview with the couple, and drawing out their story, within 48 hours before signing", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "It's still dark. In your rented room you pull on the black work clothes, stuff the earpiece and walkie-talkie into your canvas bag and take a cab to the bride's home in the High-Tech Zone. On the way you go over the run sheets for all three weddings again.",
+  "The bride-fetching. Behind the door the bridesmaids are setting riddles; outside, the groom's friends are shouting. You keep an eye on the countdown on your phone and whisper to the head bridesmaid: five more minutes of this, we have to be out the door at 9:18.",
+  "In the hotel ballroom the florist is building the arch, and one box of white lisianthus flown in for the day has been crushed. You make three calls, get a replacement box sent over from the flower market, and ask the lighting tech to dim that side a little.",
+  "The banquet opens at the auspicious hour. You stand at the very back of the ballroom calling cues to the sound desk through your earpiece. The bride's father runs four minutes over on his speech; you signal from below the stage, and the emcee picks it up smoothly.",
+  "After the toasts you crouch in the fire stairwell wolfing down a boxed lunch. On your phone, the bride's mother has sent a sixty-second voice message: the sign-in table for the next one is too plain, the relatives won't think it festive.",
+  "You rush across town to another hotel for the evening banquet. The banquet manager says the previous event ran late and you have an hour and a half to set up. You roll up your sleeves and carry backdrop panels with the crew.",
+  "The evening ceremony. The couple's love-story video freezes halfway on the projector. You dash to the sound desk and swap in the backup USB stick. Three seconds later the music comes back. Nobody in the room noticed.",
+  "Teardown finished, you sit on the steps at the hotel's back door and can't feel your feet. Your phone has two new inquiries. One asks if it can be cheaper. One asks if they can skip the wedding and just do photos."
+ ],
+ "ladder": [
+  { "title": "Wedding Planning Assistant", "stage": "Assistant / junior", "focus": "Learn the whole execution process on a team: take down requirements, keep the materials list, put together basic slide proposals. Promotion to mid-level comes from accurate execution, no major mistakes and a client satisfaction rate of at least 95%." },
+  { "title": "Wedding Planner", "stage": "Mid-level / runs weddings independently", "focus": "Run small and mid-sized weddings (budgets under ¥200,000) end to end: lead the creative proposal, sign suppliers, run every rehearsal and command the day. Promotion to supervisor comes from signing at least 15 couples a year with a repeat or referral rate of at least 30%." },
+  { "title": "Senior Wedding Planner / Creative Director (studio model)", "stage": "Senior / brand mainstay", "focus": "Lead high-end custom weddings (budgets of ¥300,000 and up), build a personal portfolio brand, train newcomers. Promotion to partner, or going independent, comes from at least two breakout cases a year (100,000+ likes on Xiaohongshu, China's lifestyle sharing app, or media pickup) and a client NPS of at least 45." },
+  { "title": "Wedding Planning Director / Wedding Company Partner", "stage": "Expert / manager", "focus": "Set the company's service standards, grow new planners into names of their own, open new lines such as destination and cultural-tourism weddings or traditional Chinese-style banquets. Promotion rests on raising team productivity by 30% and new lines bringing in at least 25% of revenue." }
+ ],
+ "ai_tasks": [
+  { "name": "Handling a last-minute crisis in the bridal suite and running the countdown", "how": "At most AI helps draw up a contingency checklist beforehand and review afterward. Calming people down, stitching a torn gown, making peace between mother-in-law and daughter-in-law, getting everyone downstairs on time: a person has to be there to do it and answer for it." },
+  { "name": "The in-depth needs interview with the couple, and drawing out their story, within 48 hours before signing", "how": "AI can transcribe the interview, sort the keywords and distill style preferences and a list of questions. Really understanding what the couple cares about but hasn't said, the family dynamics and the budget worries, takes a planner in the room who listens and keeps asking." },
+  { "name": "Producing a 3D layout model and visualization within 24 hours of the venue survey", "how": "AI and modeling tools can turn the survey data and floor plans into 3D layouts and several versions of renderings quickly, saving a lot of repetitive modeling. Whether the dimensions are right, whether it can actually be built on site and whether the guest flow is safe have to be checked by a person and confirmed with suppliers." },
+  { "name": "Signing final service agreements with the core four (emcee, photographer, videographer, makeup artist) and activating KPI clauses 72 hours before the wedding", "how": "AI can draft agreement templates, compare clauses and flag gaps and risks. Where to draw the service red lines, how to negotiate compensation and who finally signs and answers for it is for the planner to settle with each party, with a lawyer's review when needed." },
+  { "name": "Launching the digital countdown board at T-minus 60 minutes on the day and completing the first round of supplier check-ins", "how": "AI can turn the run sheet into a countdown board automatically, send reminders to suppliers and collect check-in status. Whether the people and materials are really in place has to be checked in person one by one, and when someone or something is missing, sorted out on the spot." },
+  { "name": "Running a joint test of stage lighting, sound and video 15 minutes before the ceremony and cutting over when something fails", "how": "AI can help produce checklists and signal prompts for lights and sound. The joint test needs technicians on site, and when something fails, the planner makes the instant call to scale back or switch to the backup, and answers for the result." },
+  { "name": "Completing the project data review and ROI dashboard within 72 hours after the wedding", "how": "AI can pull together the budget, quotes, client feedback and execution records and generate the review report and cost charts automatically. A person only needs to check that the data is defined correctly and pick out the lessons worth keeping." }
+ ],
+ "events": {
+  "e_rain_plan": "On the afternoon of a lawn wedding a rainstorm hits. The rain plan you wrote two months earlier works: in twenty minutes the ceremony moves into the ballroom. Afterward the bride's mother takes your hand and says: thank goodness for you.",
+  "e_mom_vs_bride": "The bride wants minimalist white and green, her mother wants big red Chinese-style, and in front of you they argue until one of them is in tears. You go back and make a new version: white and green for the ceremony, then a change into a red Chinese gown for the tea ceremony. Both of them nod.",
+  "e_hotel_cut": "The hotel tells you at the last minute that the previous event is running over and gives you one hour to set up. You and your execution supervisor run the whole way, finishing with two minutes to spare as guests sign in at the door.",
+  "e_golden_week": "Over the seven days of National Day you run nine weddings. On the last day you fall asleep in a taxi, and the driver wakes you at the hotel entrance. This month's commission is four times an off-season month.",
+  "e_ring": "Just before the ring exchange the best man realizes the rings are still in the car. You have the emcee tell one more chapter of the love story and run to the car park yourself. When you hand them up to the stage your hands are still shaking.",
+  "e_refund_fight": "A couple breaks up a month before their wedding and demands their whole deposit back. The contract is perfectly clear, but they post a long thread online. The company sends you to talk to them, and you sit in a cafe listening for two hours.",
+  "e_xhs_viral": "A small wedding you did in an old town in western Sichuan is posted online by the couple and passes 100,000 likes. For the next month a third of the company's inquiries ask for you by name.",
+  "e_ai_render": "Renderings now come from a generation tool, and in one afternoon you can turn out five proposals in different styles. Couples have learned it too: they bring in their own generated picture and say make it exactly like this, on a third of the budget in the picture.",
+  "e_ai_board": "The company starts using a countdown board for the day: supplier check-in, materials arriving and the next segment all pop up as reminders on your phone. You no longer go round ticking boxes on paper, and the time you save goes into soothing the bride's mother.",
+  "e_fewer_weddings": "Fewer people marry every year, and half the couples who inquire only want a small family dinner or to marry while traveling. The company cuts an execution team, and at the meeting the owner says they have to find a new way forward.",
+  "e_bababan": "For the first time you take an open-air courtyard banquet wedding in the countryside of Pidu, the kind locals call bababan, forty tables set out in the yard and the cooks arriving before dawn to set up their woks. You build the stage in front of a bamboo grove, and when the lights come up every child in the village gathers round to watch.",
+  "e_feet": "After years on your feet all day you develop a heel spur, and the doctor tells you to switch to soft-soled shoes. You trade the black leather shoes for black sneakers. Standing at the back of the ballroom, no one looks at your feet.",
+  "e_love": "At one wedding the videographer always helps you carry the backdrop panels at teardown. Once he plays you a clip from his editing software: you, below the stage, signaling cues. After that you're together.",
+  "e_own_wedding": "When it's your turn to marry, you can't settle on a plan at all. In the end it's ten tables in your family's courtyard back in Shuangliu. Your mother insists on red, and you don't argue. That day, for the first time, you sit in the audience.",
+  "e_baby": "Seven months pregnant, you're still taking inquiries, and before peak season the company has you do proposals only and stay off the floor. The baby is born in the off season, and your colleagues joke that you even scheduled giving birth around the calendar.",
+  "e_vendor_noshow": "On the morning of a wedding the makeup artist calls in with a fever, and the backup is booked elsewhere. You keep phoning while you pick up the brushes yourself and touch up the bridesmaids. The bride's makeup is done by someone who arrives an hour later.",
+  "e_return_couple": "A couple whose wedding you planned five years ago comes back to arrange their baby's first-birthday banquet. They walk in and say: we want you again, only you.",
+  "e_mentee": "The assistant you've been training runs the cues on her own for the first time, and cries when she comes off. You remember your own first time calling a music cue into the earpiece, your voice shaking too. You don't say anything; you hand her a bottle of water.",
+  "e_ai_vows": "More and more grooms write their vows with a tool, and they all sound alike when read aloud. You start asking one more question in the interview: what was your first fight about? After that, the vows contain a few lines only the two of them understand.",
+  "e_mother_ill": "Your mother goes into hospital for an operation right in the May Day holiday. By day you call cues in banquet halls; by night you stay at her bedside, answering couples' messages from a chair in the corridor.",
+  "e_hotel_partner": "The hotel you work with most gets a new banquet manager, who is willing to hold the best dates for you first, on condition that your couples book their banquets there. You do the sums and agree.",
+  "e_jobs_zero": "You idly search a job app: almost no wedding planner openings in Chengdu, but pages of event planning and brand activation jobs. You rewrite your CV and save it. You don't send it."
+ },
+ "choices": {
+  "c_1x": {
+   "title": "Take the 1+X certificate and push for Senior Wedding Planner",
+   "situation": "The company says the next round of promotions to Senior Wedding Planner will look at portfolios and certificates: the advanced 1+X vocational certificate in wedding planning, and the event planner credential. The course costs a few thousand yuan, and the exam falls in peak season, when every weekend is booked.",
+   "options": [
+    { "label": "Sign up and study late at night", "result": "You memorize ritual and contract clauses in taxis after weddings. The practical exam is a rain plan, and yours is more detailed than the examiner's model answer." },
+    { "label": "Skip it for now and sign more clients", "result": "That peak season you sign more couples than anyone on the team, and the commission buys you a better computer. Your name isn't on the next promotion list. The manager says, next year." }
+   ]
+  },
+  "c_ai_tools": {
+   "title": "Learn 3D and generation tools for proposals or not",
+   "situation": "The young assistants on the team use modeling and generation tools to turn out a full set of renderings and lighting simulations in one evening, and couples sign on the spot. You're used to hand sketches and talking them through it, and many of your regulars like you that way.",
+   "options": [
+    { "label": "Learn them and get fluent", "result": "You spend two months learning to model, and now in a pitch you can spin the ballroom round for the couple. Only you notice that what finally makes them decide is still the story you tell." },
+    { "label": "Don't; sign clients on storytelling", "result": "You still bring your sketchbook to meet couples. Some think you old-fashioned, some think you sincere. Your signing rate barely changes; it's just that the young planners' bookings keep growing." }
+   ]
+  },
+  "c_studio": {
+   "title": "Move to a high-end custom wedding studio",
+   "situation": "A studio that does high-end custom weddings saw your breakout old-town wedding and wants you. They do only twenty-odd weddings a year at three times your current budgets, but the owner is famously exacting, and reworking a proposal until the small hours is normal.",
+   "options": [
+    { "label": "Go to the studio", "result": "For the first time you see a wedding where the flowers alone cost hundreds of thousands. You learn to argue color with designers and talk art with couples, and also to have the owner tear up your proposal in front of everyone and start over." },
+    { "label": "Stay at your company", "result": "You stay, and the manager gives you all the best hotel dates. You still run three weddings a day, and you run them better than anyone." }
+   ]
+  },
+  "c_solo": {
+   "title": "Go independent as a wedding manager",
+   "situation": "You've built up a set of emcees, videographers and makeup artists you trust. Plenty of people in the trade have gone solo as freelance wedding managers, charging a few thousand yuan a wedding for coordination with no company cut. But without a company, the off-season rent and social insurance are all on you.",
+   "options": [
+    { "label": "Go solo", "result": "In your first year you do thirty-odd weddings and earn more than at the company. Then three off-season months pass without a single booking, and at home you redo your portfolio again and again." },
+    { "label": "Stay with the company", "result": "You don't leave. One winter the company still pays your base on time, and you think of the planner who went solo, posting that she can't get bookings and is selling off her props." }
+   ]
+  },
+  "c_destination": {
+   "title": "Go to Dali for destination weddings",
+   "situation": "A travel photography company has started a destination wedding line in Dali: lawns by Erhai Lake, courtyards under the Cangshan mountains, couples flying in twenty or thirty family and friends for three days. They want you as head planner, which means moving to Dali.",
+   "options": [
+    { "label": "Move to Dali", "result": "You do your first wedding by Erhai Lake. The wind is strong and the veil lifts into the air, and the photographer says that shot could be a cover. Only your family are all in Chengdu, and you go back once a month." },
+    { "label": "Stay in Chengdu", "result": "You turn it down. On weekends you're still stuck in traffic on the Third Ring Road, hurrying to the next lunch banquet." }
+   ]
+  },
+  "c_partner": {
+   "title": "Buy in as a partner of the wedding company",
+   "situation": "The owner is opening a line of traditional Chinese-style banquets and cultural-tourism weddings and wants you to buy in, as Wedding Planning Director / Wedding Company Partner, leading a team. You'd put up more than ¥100,000 and sign a performance guarantee; miss the targets and you have to sell back your stake.",
+   "options": [
+    { "label": "Buy in and sign the guarantee", "result": "You put in the savings of several years. In its first year the new line does twenty-odd Han-style costume weddings, and you start reading financial statements, and start losing sleep." },
+    { "label": "Don't buy in; keep planning", "result": "You say you're better suited to the floor. The owner finds someone else, the new line does so-so, and your own calendar stays full." }
+   ]
+  },
+  "c_corporate": {
+   "title": "Switch to corporate event planning",
+   "situation": "A carmaker's regional marketing office in Chengdu is hiring a brand events planner for launches and owners' events. Mostly nine to five, not every weekend on the road, full social insurance and a year-end bonus. But no one will ever again cry in front of you and say thank you.",
+   "options": [
+    { "label": "Go into brand events", "result": "You put your weddings together into a case portfolio and send it in. The interviewer says your contingency plans read like military operations.", "end": "Backstage at launches you count down in your earpiece and call the lighting and music cues, as familiar as being back in a banquet hall, except that what stands on stage is a car." },
+    { "label": "Stay in weddings", "result": "You don't send the CV. That Saturday you stand at the back of a ballroom all day again, and at the end the bride runs over and hugs you." }
+   ]
+  },
+  "c_weekends": {
+   "title": "Your child's weekends",
+   "situation": "Your child has started kindergarten, and every weekend you're at someone else's wedding. Your husband asks if you could take fewer, and keep at least one weekend a month at home. But peak-season weekends are your whole year's income.",
+   "options": [
+    { "label": "Keep one weekend a month", "result": "You turn down a few weddings and take your child to the panda base. Your commission that month drops, and at kindergarten your child draws a picture with you in it." },
+    { "label": "Take every peak-season booking", "result": "You tell your child you'll go out together in the off season. The off season comes, you're too tired to do anything but sleep, and you leave the panda base halfway through." }
+   ]
+  },
+  "c_teacher": {
+   "title": "Go back to teach at a vocational college",
+   "situation": "The vocational college you attended wants you to come back and teach on-site wedding execution. You'd need a teaching certificate and an assessor's license, and the pay is lower with no commission. But there are winter and summer breaks, and your weekends would be your own.",
+   "options": [
+    { "label": "Go back and teach", "result": "You get the certificates, and your first lesson is on rain plans.", "end": "You have your students set up a mock wedding in the training room and switch the sound off partway through to see who reacts first and goes for the backup. One girl dashes over, and in your head you give her full marks." },
+    { "label": "Stay on the floor", "result": "You say the floor still needs you. That National Day you run nine weddings again, and one bride is the younger sister of a bride you married off ten years ago." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "At your last wedding you don't wear the earpiece. You stand at the back of the ballroom and watch a young planner call the cues. The banquet opens at the auspicious hour and the music comes in right on time. As the guests leave you hand your walkie-talkie back to the company. In your canvas bag there's only a sketchbook, and on its first page, the first arch you ever designed.",
+  "burnout": "After the last wedding of that National Day you sat on the steps at the hotel's back door for a long time and couldn't stand up. The next day you messaged the manager that you wanted a break. Later you helped out at a flower shop near home, wrapping bouquets every day, never again watching anyone's countdown."
+ },
+ "past": [
+  "You were in middle school in Shuangliu when your cousin married. You helped paste up double-happiness characters and set out plates of sweets in the courtyard. A woman from the wedding company ran the whole thing through an earpiece, and you followed her around all afternoon.",
+  "The year before the gaokao (college entrance exam) you studied art, and your other grades were middling. Your mother said pick a practical major. On the form you saw a major called wedding services and management, paused, and wrote it down.",
+  "You went to a vocational college in another province for the wedding program. First semester was wedding customs and etiquette, floristry and stagecraft. The first mock wedding you did for classmates, the teacher sent your run sheet back three times.",
+  "One summer you worked as an execution assistant at a wedding company and did thirty-odd weddings in peak season, carrying table flowers, putting up seating cards, passing microphones. At one wedding the bride cried her makeup off, and you were the first to hand her a tissue.",
+  "You earned the intermediate 1+X wedding planning certificate and came back to Chengdu for your work placement, at this very company, starting as a planning assistant, writing run sheets and materials lists under a senior planner.",
+  "You stayed on after graduating. In your first year you worked more than a hundred weddings and noted down every hotel ballroom's ceiling height, where the power points are and where the back door is. You still use that notebook.",
+  "The senior planner who trained you went independent and handed two couples over to you, saying you were ready. The first time you signed a client on your own, you called your mother from the lift."
+ ],
+ "stages": [
+  "You are following a dozen-plus couples at once: midweek interviews, proposals, budgets, contracts, measuring hotel venues with a laser rangefinder, meetings with florists and lighting crews; on weekends you're the director on the day. You listen to the parents, but the couple has to make the final call. That balance you're still learning.",
+  "You lead custom weddings of ¥300,000 and up, only twenty or thirty a year, each one ground out over six months. With spatial designers and florists you revise proposals version by version in SketchUp, you have two assistants, and you've begun building your own portfolio. Clients come for your name now; you're no longer anyone's executor.",
+  "You run three planning teams and a new business line: setting service standards, reading monthly bookings and cost reports, negotiating annual deals with hotels, and carrying the numbers you guaranteed the owner. Only now and then do you take the floor yourself, and then only for the hardest weddings. Most days your work is reading other people's run sheets."
+ ],
+ "work": [
+  "A couple wants a flower aisle all the way to the stage, and the banquet manager says the carpet can't be touched. You spend an afternoon measuring and switch to tall floral columns along both sides, three thousand yuan under budget.",
+  "You send out the service confirmations to the core four one by one. One videographer never replies, and three days before the wedding you call him five times.",
+  "At rehearsal the groom can't remember his marks, so you stick a few crosses of masking tape on the carpet and tell him: walk on the crosses, don't look at me.",
+  "A couple wants to marry in an old village in western Sichuan. You drive four hours to see it, measure the ancestral hall's doorway, and work out how a hundred guests will walk in from the car park.",
+  "The florist's first centerpiece for the head table is too tall. You sit in a guest's chair, take one look, and have her cut it down by twenty centimeters.",
+  "Your assistant writes her first contingency plan alone. You make a dozen corrections in red pen and add one last line: if the power goes, who speaks first.",
+  "You negotiate an annual deal with the sales director of a new hotel, from dates and setup times to banquet rebates, and in three rounds secure the best twenty weekends of the year.",
+  "Before the Chinese-style wedding line launches, you and the emcee and stage crew rework the fan-lowering and shared-cup rites and walk them through three times in an empty ballroom.",
+  "One team is over budget on the month-end cost report. You don't name them at the meeting; you take the team leader to the cafe downstairs for an hour and hear him out."
+ ],
+ "late": {
+  "pension_note": "Estimate: wedding companies mostly pay employees' pension contributions on the minimum base, and commission isn't counted; in the years you worked solo you paid in yourself as a flexible worker. Your pension comes to only about thirty to forty percent of your final income.",
+  "scenes": [
+   "The first National Day after you retire, you can't sit still at home. Your phone is silent; no one needs a run sheet from you. You go to the flower market and buy a big bunch of white lisianthus for the living room.",
+   "The neighbors' daughter is getting married and insists you look over the plan. You take no money. You just change two times on the run sheet and add a line: what if it rains.",
+   "You scroll through your phone's photos, thousands of them, all other people's weddings: backdrops, arches, centerpieces. You pick a few dozen, print them and make them into a book for the coffee table.",
+   "Dancing in the park with your friends, someone mentions her son's wedding and asks if you know a reliable wedding company. You say you don't know any of today's, but you can look over the contract for her.",
+   "In your first month at the flower shop you stand all day wrapping bouquets, and your feet stop hurting. A young couple comes to order a bridal bouquet, and you can't help asking which hotel the wedding is at, then swallow the rest.",
+   "At last you have weekends, and you take your child to Qingcheng Mountain for two days. In the middle of the night you wake with no messages to answer, and lie awake a long time, not quite used to it.",
+   "When you reach retirement age you go to the social insurance office, and the clerk says there's a two-year gap in your record. You work it out: your two busiest years.",
+   "In your first year out of weddings you still wake at half past five on Saturday mornings and reach for the walkie-talkie by the bed. The person beside you turns over, and you go back to sleep.",
+   "Sometimes you pass the hotel you used to work in most. There's someone else's welcome sign by the door. You look at the lettering and the flowers, give it a score in your head, and don't go in.",
+   "The assistant whose voice once shook in the earpiece now runs her own studio. She sends you an invitation to her own wedding, and on the run sheet it says: lead planner, my teacher.",
+   "Chengdu weddings get smaller and smaller, and more and more couples hold only a family dinner or nothing at all. Outside your housing estate you see a few tables set out on the open ground, red cloth spread over them, and think that's fine too.",
+   "Your child, grown up, asks why you did weddings. You think about it and say: because on that one day, people bring out the best of themselves."
+  ],
+  "closing": {
+   "retire": "Many years later, one afternoon, you pass a hotel where the ballroom doors are open and a set is going up. Young people on ladders are hanging drapes. You stand at the door a while, see one corner hanging crooked, say nothing, and walk off smiling.",
+   "burnout": "Many years later, you are trimming stems in the back room of the flower shop when an old song comes on the radio, the processional you used most back then. You put down the shears and listen to the end, then go on cutting.",
+   "end": "Many years later, in a drawer, you find the little notebook with every hotel's ceiling heights and back doors, its pages curled at the edges. On the last page it says: what if it rains. You close it and put it back."
+  }
+ }
+}

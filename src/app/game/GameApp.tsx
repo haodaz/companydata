@@ -28,9 +28,12 @@ const SAVE = 'game:life', ARCHIVE = 'game:archive';   // 英文版存在 :en 后
 const SPEEDS = [{ k: 1, ms: 3000, t: '1×' }, { k: 2, ms: 1500, t: '2×' }, { k: 4, ms: 700, t: '4×' }];
 const read = <T,>(k: string): T | null => { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch { return null; } };
 const write = (k: string, v: any) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* 无痕模式记不住，照样能玩 */ } };
-const wan = (n: number) => (LANG === 'en' ? `¥${Math.round(n).toLocaleString('en-US')}` : n >= 10000 ? `${(n / 10000).toFixed(1)} 万` : `${n.toLocaleString()} 元`);
+/** 英文版的钱写人民币 + 大概的美元（用户 11-07；按 1 美元 ≈ 7.2 元估，取个整） */
+const usd = (rmb: number) => { const u = Math.abs(rmb) / 7.2, k = u >= 10000 ? 1000 : u >= 1000 ? 50 : 10; return `≈ ${rmb < 0 ? '-' : ''}$${(Math.round(u / k) * k).toLocaleString('en-US')}`; };
+const rmbEn = (n: number) => `RMB ${Math.round(n).toLocaleString('en-US')} (${usd(n)})`;
+const wan = (n: number) => (LANG === 'en' ? rmbEn(n) : n >= 10000 ? `${(n / 10000).toFixed(1)} 万` : `${n.toLocaleString()} 元`);
 /** 以「万元」存的数（积蓄、一生挣的） */
-const wanW = (x: number) => (LANG === 'en' ? `¥${Math.round(x * 10000).toLocaleString('en-US')}` : `${(Math.round(x * 10) / 10).toFixed(1)} 万`);
+const wanW = (x: number) => (LANG === 'en' ? rmbEn(x * 10000) : `${(Math.round(x * 10) / 10).toFixed(1)} 万`);
 const fx = (e?: Record<string, number | undefined>) => (e ? STATS.filter(s => e[s.k]).map(s => `${statL(s.k, s.label)} ${(e[s.k] as number) > 0 ? '+' : ''}${e[s.k]}`).concat(e.savings ? [`${tr('积蓄', 'Savings')} ${e.savings > 0 ? '+' : '−'}${wanW(Math.abs(e.savings))}`] : []) : []);
 
 export default function GameApp({ lang = 'zh', shared }: { lang?: Lang; shared?: { title: string; sub: string } }) {
@@ -315,11 +318,18 @@ function Play({ s, onChange, onDone }: { s: Save; onChange: () => void; onDone: 
 
   const pick = (i: number) => { choose(card, life, i); onChange(); };
   const title = card.ladder[life.stage]?.title || card.role;
-  const log = [...life.log].reverse();
+  const log = life.log;   // 按时间往下走（用户 11-07）：新的一年接在下面，页面跟着滚到最新一条
+  const endRef = useRef<HTMLDivElement>(null);
+  const follow = useRef(true);   // 人往上翻看旧事时就不跟了，翻回底部再跟
+  useEffect(() => {
+    const on = () => { follow.current = innerHeight + scrollY >= document.documentElement.scrollHeight - 240; };
+    addEventListener('scroll', on, { passive: true }); return () => removeEventListener('scroll', on);
+  }, []);
+  useEffect(() => { if (follow.current) endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' }); }, [log.length]);
   return (
     <main className="g-play">
       <div className="g-bar">
-        <div className="g-bar-l"><b>{tr(`${life.age} 岁`, `Age ${life.age}`)}</b><span>{tr(`${YEAR0 + life.y} 年`, String(YEAR0 + life.y))} · {fullName(s)}</span></div>
+        <div className="g-bar-l"><b>{tr(`${life.age} 岁`, `Age ${life.age}`)}</b><span>{tr(`${YEAR0 + life.y} 年`, String(YEAR0 + life.y))} · {fullName(s)}</span><em className="g-bar-now">{title} · {wan(life.salary)}</em></div>
         <div className="g-bar-r">
           <button className={`g-chip${paused ? ' on' : ''}`} onClick={() => setPaused(p => !p)}>{paused ? tr('▶ 继续', '▶ Play') : tr('❚❚ 暂停', '❚❚ Pause')}</button>
           {SPEEDS.map(x => <button key={x.k} className={`g-chip${speed === x.k && !paused ? ' on' : ''}`} onClick={() => { setSpeed(x.k); setPaused(false); }}>{x.t}</button>)}
@@ -328,6 +338,7 @@ function Play({ s, onChange, onDone }: { s: Save; onChange: () => void; onDone: 
         <div className="g-prog"><i style={{ width: `${Math.min(100, ((life.age - card.start.age) / Math.max(1, card.retire_age - card.start.age)) * 100)}%` }} /></div>
       </div>
       <div className="g-cols">
+        <aside className="g-side">
           <section className="g-panel g-status">
             <div className="g-cap">{card.unit} · {card.city}</div>
             <div className="g-now">{title}</div>
@@ -341,14 +352,16 @@ function Play({ s, onChange, onDone }: { s: Save; onChange: () => void; onDone: 
               <div key={i} className="g-peer"><b>{p.name}</b><span>{p.headline}</span><em>{gone ? (p.done === 'burnout' ? tr('已离开一线', 'Left the front line') : tr('已退休', 'Retired')) : `${p.ladder[r.stage]} · ${wan(r.salary)}`}</em></div>
             ); })}
           </section>
+        </aside>
         <section className="g-log">
           {log.map((e, i) => (
-            <div key={life.log.length - i} className={`g-ev ${e.kind} ${e.mood || ''}${i === 0 ? ' fresh' : ''}`}>
+            <div key={i} className={`g-ev ${e.kind} ${e.mood || ''}${i === log.length - 1 ? ' fresh' : ''}`}>
               <div className="g-ev-h"><span>{ageT(e.age)}</span>{e.source && <i className="g-src">{srcT(e.source)}</i>}</div>
               <p>{e.text}</p>
               {fx(e.effect as any).length > 0 && <div className="g-fx">{fx(e.effect as any).map(t => <span key={t} className={t.includes('+') ? 'up' : 'down'}>{t}</span>)}</div>}
             </div>
           ))}
+          <div ref={endRef} className="g-log-end" />
         </section>
       </div>
       {choice && !auto && <div className="g-sheet-bg"><div className="g-sheet">
@@ -585,7 +598,7 @@ const CSS = `
 /* 过一生 */
 .g-play { max-width: 1080px; margin: 0 auto; padding: 0 0 40px; }
 .g-bar { position: sticky; top: 0; z-index: 10; background: rgba(244,241,234,.94); backdrop-filter: blur(8px); padding: 10px 16px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; border-bottom: 1px solid var(--line); }
-.g-bar-l { display: flex; align-items: baseline; gap: 10px; flex: 1 1 200px; min-width: 0; }
+.g-bar-l { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; flex: 1 1 200px; min-width: 0; }
 .g-bar-l b { font-family: var(--font-serif-sc), serif; font-size: 26px; white-space: nowrap; }
 @media (max-width: 560px) { .g-bar-l { flex-basis: 100%; } .g-bar-r { width: 100%; } .g-bar-r .g-chip { flex: 1; padding: 6px 4px; } .g-status .g-ladder.sm { display: none; } .g-now { font-size: 19px; } .g-money { margin-top: 6px; } }
 .g-bar-l span { color: var(--ink2); font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -594,10 +607,14 @@ const CSS = `
 .g-chip.on { background: var(--blue); color: #fff; border-color: var(--blue); }
 .g-prog { flex-basis: 100%; height: 3px; background: var(--line); margin: 8px -16px 0; }
 .g-prog i { display: block; height: 100%; background: var(--acc); transition: width .6s; }
-.g-cols { display: grid; gap: 12px; padding: 12px 16px; grid-template-areas: "status" "log" "peers"; }
-.g-status { grid-area: status; margin: 0; } .g-peers { grid-area: peers; margin: 0; } .g-log { grid-area: log; }
+.g-cols { display: grid; gap: 12px; padding: 12px 16px; }
+.g-side { display: grid; gap: 12px; align-content: start; }
+.g-log-end { height: 90px; }
+.g-bar-now { display: none; font-style: normal; font-size: 13px; color: var(--acc); flex-basis: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 899px) { .g-bar-now { display: block; } .g-peers { display: none; } }
+.g-status { margin: 0; } .g-peers { margin: 0; }
 .g-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
-@media (min-width: 900px) { .g-cols { grid-template-columns: 320px 1fr; grid-template-areas: "status log" "peers log"; align-items: start; } .g-stats { grid-template-columns: 1fr; } }
+@media (min-width: 900px) { .g-cols { grid-template-columns: 320px 1fr; align-items: start; } .g-side { position: sticky; top: var(--bar-h, 84px); max-height: calc(100vh - var(--bar-h, 84px) - 12px); overflow-y: auto; } .g-stats { grid-template-columns: 1fr; } }
 .g-panel { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; margin-bottom: 14px; }
 .g-now { font-family: var(--font-serif-sc), serif; font-size: 22px; font-weight: 900; }
 .g-money { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
@@ -635,7 +652,7 @@ const CSS = `
 .g-fx span { font-size: 12px; padding: 0 8px; border-radius: 999px; }
 .g-fx .up { color: var(--good); background: #e9f4ec; }
 .g-fx .down { color: var(--bad); background: #f8ebe6; }
-@keyframes g-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+@keyframes g-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 .g-sheet-bg { position: fixed; inset: 0; background: rgba(31,61,107,.22); z-index: 30; display: flex; align-items: flex-end; justify-content: center; }
 .g-sheet { width: min(640px, 100%); max-height: 88vh; overflow: auto; background: var(--paper); border-radius: 20px 20px 0 0; padding: 20px 18px calc(18px + env(safe-area-inset-bottom)); animation: g-up .35s ease-out; }
 @media (min-width: 700px) { .g-sheet-bg { align-items: center; } .g-sheet { border-radius: 20px; } }
