@@ -1,0 +1,198 @@
+{
+ "id": "tutor-kaoyan-bj",
+ "occupation": "Training School Teacher",
+ "role": "Civil service and graduate exam prep instructor (aptitude test)",
+ "headline": "You sat the civil service exam two years running and missed by a fraction of a point at interview, then turned around to teach the quantitative section of the aptitude test at a Haidian prep school: small classes in an office tower by day, livestreams under a ring light by night",
+ "unit": "A graduate-entrance and civil-service exam prep school in Haidian, Beijing (two floors of an office tower, twelve classrooms, six livestream studios, over seventy full-time instructors)",
+ "unit_type": "Private education and training company",
+ "city": "Beijing",
+ "city_tier": "First-tier city",
+ "education": "Bachelor's degree (Mathematics and Applied Mathematics)",
+ "level": "You scored in the eighties yourself on the quantitative section and passed three rounds of trial lessons. You have never taught for two hours in front of three hundred people, or explained a single problem to a scrolling livestream chat",
+ "intro": "The head of teaching sends your timetable to your phone: small classes in person on Tuesday and Thursday evenings, a big class all day Saturday, a livestream at eight on Sunday nights, two and a half hours a session. The bottom line reads: from October, national exam final push, double load. Two years ago you sat in one of the classrooms in this building yourself. From today, you stand on the other side of the lectern.",
+ "salary_note": "Estimate: an instructor at a Beijing civil-service and graduate exam prep school earns a base salary plus per-session fees. In peak season, before the national and provincial civil service exams, a month's pay can double; in the off season it's the base alone. Averaged over the year, a little above the national figure for training-school instructors at the same experience.",
+ "facts": [
+  { "label": "Junior Instructor (current level)", "value": "0-2 years, ¥7,225–10,625 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Intermediate Instructor, Three-Star (2-4 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥32,000 (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Teaching a big class from the lectern or in front of the camera", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Writing problem variants and building question banks", "source": "AI exposure" },
+  { "label": "Open positions", "value": "66 related job listings nationwide, 7 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "In the shared flat in Huilongguan you queue outside the bathroom to brush your teeth. Your flatmate is studying for the graduate entrance exam; the countdown taped to his door says 103 days.",
+  "Line 13 to Line 4. All the way you watch last night's livestream replay on your phone and count the times you said 'right?': seventeen.",
+  "In the teaching research office, your team lead has you rewrite the handout on work-rate problems and add ten real questions from this year's provincial exam. You open the question bank; the AI has already written twenty variants, and you find three with wrong answers.",
+  "The afternoon small class: forty people, half of them preparing while holding down jobs. You teach the 'assign a value' method. A man in a suit in the second row writes everything down, and after class he asks: teacher, I'm thirty-three, is it too late?",
+  "In the fast-food place downstairs you eat rice with toppings and answer the student group chat: someone posts a problem they got wrong, someone asks if there's a discount on renewing, someone says they quit their job today.",
+  "The evening class in person covers mental arithmetic for the data analysis section. You write a row of percentages on the whiteboard and give everyone fifteen seconds, no calculator. Someone gets it right and the room applauds.",
+  "In the livestream studio, the ring light bakes your face. The chat scrolls fast: 'slow down', 'can you do that again', 'no way I finish this in the exam'. You stop and work the problem again from the top.",
+  "On the last metro your throat is dry and you suck a lozenge. The head of teaching sends next week's timetable: two more sessions."
+ ],
+ "ladder": [
+  { "title": "Junior Instructor", "stage": "Entry", "focus": "Small classes in person, Q&A on the livestream at night, marking practice sets; you move up on trial lessons, student satisfaction and renewal rates." },
+  { "title": "Intermediate Instructor (Three-Star)", "stage": "Lead instructor", "focus": "You lead big classes and livestream series, write your own handouts and mock exams. Students' pass rates and your star rating decide your timetable and your fee per session." },
+  { "title": "Senior Instructor (Five-Star)", "stage": "Headliner", "focus": "Your photo is on the school's recruitment posters. You lead a teaching research team, train new instructors, and headline the big classes and boot camps; your fee per session doubles with the stars." },
+  { "title": "Chief Instructor / Director of Teaching Research", "stage": "Leading", "focus": "You run every course in one subject and dozens of instructors, set the handout system, question bank and timetable, and help decide pricing and recruitment strategy. Few get here; more go independent or leave the trade." }
+ ],
+ "ai_tasks": [
+  { "name": "Writing problem variants and building question banks", "how": "Variants of quantitative and data analysis problems, practice sets tiered by difficulty: AI can write hundreds in an evening. The instructor spot-checks answers and explanations and picks out the ones that look right but are miscalculated." },
+  { "name": "Marking practice and producing learning reports", "how": "AI can mark automatically, tally each student's error types and timings, and write a report. Which student doesn't know it and which one panics, the instructor only learns from reading and talking." },
+  { "name": "Writing handouts and slides", "how": "AI can draft handouts to the syllabus, gather past papers and build slides. Where to cut into a problem type, and which method is fastest under exam conditions, the instructor decides." },
+  { "name": "After-class Q&A", "how": "An AI assistant can answer routine problem questions around the clock. When what a student is really asking is 'am I just not cut out for this', the instructor has to take over." },
+  { "name": "Enrolment consultations and renewal follow-up", "how": "AI can draft follow-up scripts, remind people when to renew and make promotional material. What to say, and not say, to someone on their third attempt is the instructor's call, as is holding the line on honest advertising." },
+  { "name": "Teaching a big class from the lectern or in front of the camera", "how": "In a room of three hundred or a stream of two thousand, when to slow down and when to crack a joke to pull people back depends on the instructor's own rhythm and feel for the moment." },
+  { "name": "One-to-one study planning with candidates", "how": "Have they quit their job, is the family pressing, which attempt is this: someone has to sit and listen, give a plan that can actually be followed, and tell the truth." }
+ ],
+ "events": {
+  "e_first_live": "Your first solo livestream. Ten minutes in, a comment drifts across the chat: 'get a different teacher'. Your palms sweat; you throw away your prepared opening and go straight to the first problem. When you sign off, a hundred more people are watching than when you started.",
+  "e_voice": "In the month of the national exam push you teach seven hours a day, until your voice is so hoarse you can only type in the livestream. The doctor says vocal nodules and tells you to rest your voice for a week. You last three days and go back.",
+  "e_banner": "A student who prepared for three years while working passes and joins a district tax bureau. He brings the school an embroidered silk banner reading 'Never give up on the numbers'. You stand beside it for the photo, smiling a little stiffly.",
+  "e_record_apply": "Applications for the national civil service exam hit another record this year. Classrooms are booked from morning to night and reception adds three people to answer the phones. Your sessions double, and so do your fees.",
+  "e_refund": "A student in a guaranteed-results class fails the written exam and comes to demand a refund, shouting at reception all afternoon. The contract says half back; he says the sales talk promised a full refund. You were at that talk.",
+  "e_pay_cut": "In the off season the school cuts per-session fees by a fifth, saying online classes have thin margins. Nobody in the office says a word, and at the end of the day two colleagues go downstairs to smoke together.",
+  "e_ai_bank": "The school rolls out an AI question bank, and every student's practice set is generated from their own mistakes. Your marking time drops by more than half, and with the time left over you start phoning students one by one.",
+  "e_ai_tutor": "An AI assistant now sits beside the livestream and answers chat questions first. Going through the log after class, you find it applied the wrong formula to a 'cows eating grass' problem, and four hundred people clicked 'helpful'.",
+  "e_ai_digital": "The school's beginner course switches to a digital-human teacher on a twenty-four-hour loop: it never gets hoarse and never says 'right?'. Sales say conversion on the beginner course hasn't dropped. Your small classes shrink by two.",
+  "e_viral": "A student clips your 'fifteen-second mental arithmetic' segment into a short video, and overnight it passes two million views. Next day the reception phones never stop, and the head of teaching laughs that you've become the recruitment poster.",
+  "e_bootcamp": "You're sent to teach for a month at a closed boot camp in Changping, seven in the morning to ten at night, eating and sleeping at a training centre. On the way home you sleep past your stop on the metro.",
+  "e_parents": "Home for the New Year, your mother asks again at dinner: you get other people through, so why not try once more yourself? You pick up some food with your chopsticks and say teaching's good too.",
+  "e_love": "You get together with a colleague who runs course operations at the school. Your first date is the night the national exam ends: kebabs in Wudaokou, and neither of you mentions work.",
+  "e_move": "You move from the shared flat in Huilongguan to a one-bedroom closer to the school. Rent doubles; your commute drops by an hour. On moving day you throw out two big boxes of old handouts.",
+  "e_poach_offer": "The head of teaching at another school adds you on WeChat and offers fees thirty percent higher. You don't reply, but at the next team meeting your voice comes out a little louder.",
+  "e_age": "A comment scrolls through the livestream: 'this teacher looks old'. After signing off you look in the mirror, and the next day you get a haircut. You don't change how fast you talk.",
+  "e_layoff": "The company closes branches in several cities, and the Beijing head office lays off a batch of instructors. Three desks in the office stand empty. You stay, and your timetable fills with other people's classes.",
+  "e_sleep": "Years of signing off at eleven and sleeping at two: a health check finds an irregular heartbeat. The doctor asks if you often stay up late. You say: sort of. It comes with the job.",
+  "e_old_student": "A student from five years ago recognizes you in the street; she's a deputy township head now. She says that in the exam that year, the last data analysis question, she did it in fifteen seconds with your method.",
+  "e_child": "Your child is born. That month you drop all your livestreams and, for the first time, take leave during the national exam push. The head of teaching says: just this one month, mind.",
+  "e_mentor_new": "A new instructor gets so nervous at his trial lesson that he works a problem wrong, and someone in the office laughs. You remember your own first livestream, take him aside after class, and tell him about 'get a different teacher'."
+ },
+ "choices": {
+  "c_noncompete": {
+   "title": "Sign the non-compete or not",
+   "situation": "Tucked into the new instructors' contract is a non-compete: no teaching at a rival school for two years after leaving, compensated at a few hundred yuan a month. Sign, and the school will groom you as a lead instructor; refuse, and you only get small classes and Q&A.",
+   "options": [
+    { "label": "Sign", "result": "You sign the last page. The next month a weekend big class appears on your timetable." },
+    { "label": "Don't sign", "result": "HR says then you'll be counted as part-time for now. You teach small classes for a year, with the highest student ratings in the team, and the head of teaching comes back to talk to you again." }
+   ]
+  },
+  "c_retake": {
+   "title": "Sit the exam once more yourself",
+   "situation": "You've taught the aptitude test for over a year and know the problems far better than when you sat it. This year your home province's exam has a post that matches your degree with no experience required. Applications close in three days, and your mother calls every day to ask.",
+   "options": [
+    { "label": "Apply and sit it again", "result": "You teach by day and drill essays by night. You top the post on the aptitude test, and on interview day you go through, one by one, the interview etiquette you teach your students.", "end": "You get a post in your home county and move into a south-facing office. Now and then a young colleague preparing for a transfer exam asks how to learn the quantitative section, and you take a blank sheet of paper and start with 'assign a value'." },
+    { "label": "Don't sit it, keep teaching", "result": "You don't apply. On that night's livestream a student asks why you don't sit it yourself. You say: I did. Now I'm telling you how." }
+   ]
+  },
+  "c_bootcamp_lead": {
+   "title": "Take the guaranteed-results boot camp or not",
+   "situation": "The school wants you to lead a two-month closed boot camp: students pay ¥30,000–40,000, get part of it back if they fail the written exam, and the instructor's commission depends on how many pass. A heavy load and heavy pressure, at three times the commission of an ordinary class.",
+   "options": [
+    { "label": "Go", "result": "For two months you hardly see the sun. That intake's written-exam pass rate is well above average, and your commission covers a year's rent." },
+    { "label": "Stay in Beijing", "result": "You stay on regular classes in Beijing and still get a lie-in at weekends. Another instructor takes the camp, and when he comes back his star rating has gone up a level." }
+   ]
+  },
+  "c_digital_human": {
+   "title": "License a digital human",
+   "situation": "The school wants to build a digital-human instructor from your face and voice: three days of recording, after which it teaches the beginner course and you take a share by views. Some in your team have signed; others say it's handing over your own rice bowl.",
+   "options": [
+    { "label": "Sign the licence", "result": "You read scripts in front of a green screen for three days. Once the digital human goes live you can see its view counts in the back end, and see that when it teaches work-rate problems, it uses your verbal tic." },
+    { "label": "Don't sign", "result": "You say you'd still rather teach yourself. The school finds another instructor for the digital human, your beginner classes shrink, and students in your big classes say a real person is still more reassuring." }
+   ]
+  },
+  "c_five_star": {
+   "title": "Applying for Senior Instructor (Five-Star)",
+   "situation": "At the year-end star review you have the sessions and ratings for Senior Instructor (Five-Star), but you still need an 'original teaching research output'. You could write up the mental arithmetic methods you've built over the years as a handout; or you could fight for the job of writing next year's prediction mock exam. Guess right, and nothing makes a bigger name.",
+   "options": [
+    { "label": "Write the handout", "result": "It takes three months to turn your data analysis shortcuts into a 120-page handout. At the review, the head of teaching leafs through it for ten minutes and says: we can print this." },
+    { "label": "Fight for the mock exam", "result": "You and the team grind through a month to write three mock papers. On the day of the national exam two questions are almost the same as yours, and the sales team makes a poster overnight." }
+   ]
+  },
+  "c_jump": {
+   "title": "Jump to a big chain",
+   "situation": "One of the biggest civil service prep chains in the country comes headhunting: per-session fees forty percent higher and a better-known name, but a three-year contract flying around the country to teach boot camps, half the year spent in hotels.",
+   "options": [
+    { "label": "Make the jump", "result": "In a year you fly to twenty-odd cities and teach hundreds at a time in hotel conference rooms. Your pay goes up; you eat dinner at home fewer than five times a month." },
+    { "label": "Stay in Beijing", "result": "You tell the head of teaching you're not going. He raises your fees by a tenth and says: I knew you couldn't bear to leave this office." }
+   ]
+  },
+  "c_studio": {
+   "title": "Open your own studio",
+   "situation": "Your short-video account has over four hundred thousand followers, and someone offers to go into partnership on a personal studio: you just teach, he handles paid promotion and enrolment, profits split down the middle. You'd leave the school, and for the first two years you might earn less than now, or a great deal more.",
+   "options": [
+    { "label": "Go independent", "result": "You rent a small soundproofed office in Haidian, put up two ring lights, and your first livestream course draws over three thousand people.", "end": "You leave the school and open your own studio, setting the timetable, the handouts and the prices yourself. Only, before every livestream, you still take a sip of warm water and count your 'right?'s." },
+    { "label": "Stay at the school", "result": "You turn down the partnership. He finds another instructor instead, and the studio closes after a little over a year." }
+   ]
+  },
+  "c_ai_curriculum": {
+   "title": "Lead the course redesign or not",
+   "situation": "Practice and Q&A have mostly gone to AI, and students ask: so why am I still paying for your classes? The company wants one person per subject to redesign the courses: what goes to the machine, what stays with people. Doing it would cut your own teaching by half.",
+   "options": [
+    { "label": "Lead it", "result": "You split the aptitude course into three: AI drills, human teaching of how to think, one-to-one planning. In the new course's first season, renewals rise by a tenth." },
+    { "label": "Just teach your own classes well", "result": "You say you'd rather stay at the lectern. Someone else designs the new system and you teach to it. A few places you think are wrong; you raise them twice at team meetings." }
+   ]
+  },
+  "c_director": {
+   "title": "Become Director of Teaching Research or not",
+   "situation": "The company wants to make you Chief Instructor for the aptitude test and Director of Teaching Research, in charge of forty-odd instructors and every handout, question bank and timetable. You wouldn't teach every day; you'd have five meetings a week, work out each course's profit with finance, and decide who gets let go.",
+   "options": [
+    { "label": "Take it", "result": "You move into an office with a window. The hardest thing you do in the first year is cross three names off the off-season timetable." },
+    { "label": "Keep teaching", "result": "You say you still like standing at the lectern. The director's job goes to someone else, and your Saturday big class is full as usual." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "Your last class is a Saturday big class, three hundred people. You finish the last data analysis problem and check the clock: five minutes left. You don't start another. You say: I hope you all make it, and those who don't, I hope you live well anyway. The room goes quiet, then someone starts clapping. You wipe the whiteboard clean and switch off the mic.",
+  "burnout": "That winter, halfway through a livestream, your voice simply stops, and the chat keeps scrolling. The doctor says your vocal cords and your heart both need real rest. You drop all your classes and go home to your family for six months. Later you fill in at a middle school in the county town, teaching junior high maths two lessons a day, packing up your notes when the bell goes."
+ },
+ "stages": [
+  "You teach five or six times a week, small classes in person plus livestreams, and answer the student group chat until midnight. The team lead gives you a chapter of the handout, and you check every past-paper question and AI-written variant in it. Fees are paid per session and satisfaction scores come out weekly; you learn to check your ratings in the back end before bed.",
+  "You lead big classes and livestream series now: three hours on a single problem type, with handouts and mock papers you write yourself. The sales team starts asking you to give open classes, the renewal rates hang on the office whiteboard, and your name is in the middle and climbing. When new instructors give trial lessons, you sit in the audience and score them.",
+  "Your photo is on the recruitment posters. You lead a teaching research team, decide how a problem type is taught, and polish new instructors' lessons; the boot camp opening class and the pre-exam prediction livestream are yours. Course advisers bring you student lists and ask: which class should we push this one toward?",
+  "You rarely teach big classes now; you manage forty-odd instructors and a complete set of handouts and question banks. Every week you meet with sales, finance and product to work out each course's profit and refund rate; when the exam syllabus changes, you call the team in overnight to rewrite the handouts. Your hardest job is the off-season timetable."
+ ],
+ "work": [
+  "A student gets the work-rate problem wrong five times in a row. Instead of posting another explanation in the chat, you ask her to come ten minutes before class tomorrow, and draw a rectangle on the whiteboard.",
+  "Of the twenty variants the AI wrote, one has an answer of 3.7 people. You delete it and leave a note in the team chat: headcounts must be whole numbers.",
+  "In the livestream replay you count seventeen 'right?'s. Before the next stream you stick a note under the ring light: fewer 'right?'s.",
+  "You write a provincial exam mock paper and hand it to your team lead to review. He circles one question as too hard: nobody has time for this in the exam. Swap it.",
+  "After an open class a final-year student stays to ask whether to sign up for the full course. You look at his mock scores and say not yet; finish the foundation course first.",
+  "A new instructor's trial lesson on distance problems is twenty minutes in without a single problem. On the score sheet you write: give them a problem in the first minute. They came to do problems.",
+  "At the boot camp's opening class you don't start with a problem. You have three hundred people drop their phones into a cardboard box at the front, then write a number on the whiteboard: 120 minutes.",
+  "The team needs one method for teaching data analysis, and four instructors have four sets of mnemonics. You have each try theirs with ten students for a week, and in the end you adopt the fastest one, which isn't yours.",
+  "A course adviser has pushed the most expensive guaranteed-results class on a third-time candidate. You look at his score sheet, phone him, talk him back down to a regular class, and have a row with the adviser.",
+  "This year's syllabus changes the question types. On Friday night you call in ten instructors and get the handouts rewritten by Monday; in the small hours of Sunday you are still reviewing the last chapter.",
+  "Finance's numbers show one course with three times the refund rate of the others. You sit in on a session and find that what was promised in the sales talk isn't what's taught in the class.",
+  "Doing the off-season timetable, you shuffle the spreadsheet all evening, and in the end give one of your own big classes to an instructor just back from having a baby."
+ ],
+ "past": [
+  "You went to middle school in a county town in Hebei and won a city prize in a maths competition. Your father, an accountant at the township office, had a favourite saying: pass the civil service exam, and you're set for life.",
+  "Your gaokao (college entrance exam) got you into the maths department of an ordinary university in Beijing. On registration day your father stood outside the dorm for a long time and said you were the first in the family to go to university in Beijing.",
+  "In your final year you applied for the national civil service exam and took two months of aptitude classes at a prep school. The best quantitative teacher there taught only three problems per lesson.",
+  "Your first national exam: you passed the written test to the interview, came third, and the post took one. You rented a basement room in Beijing and went for a second year.",
+  "At the provincial interview in your second year you finished 0.4 points behind first place. The day the results came out you sat up all night in your rented room, and at dawn sent your CV to that same prep school.",
+  "You passed three rounds of trial lessons; the last was on 'cows eating grass'. The head of teaching said: you explain problems like someone who's just sat the exam, and that's what students want. You spent a year there as a teaching assistant, and this year you're made full-time."
+ ],
+ "late": {
+  "pension_note": "Estimate: a private training-school instructor pays social insurance at or near the minimum Beijing contribution base, with most session fees and commissions left outside it, and a few years' gap when changing schools or going independent. The pension comes to about 40% of final monthly pay.",
+  "scenes": [
+   "The first national exam season after you retire, you have no classes. On exam morning you wake early and check the news for this year's applicant numbers: another record.",
+   "A young man in your estate is studying for the exam and, hearing you used to teach the aptitude test, knocks on your door. You make a pot of tea and draw a rectangle on his scratch paper.",
+   "The student whose banner read 'Never give up on the numbers' is a section chief at his bureau now. He comes to see you with two boxes of pastries and talks the whole time about his child sitting the graduate entrance exam.",
+   "Your first year filling in at the county middle school, you teach two lessons a day and go home when they're done. When the bell rings you think of the livestream chat scrolling past.",
+   "Your voice slowly comes back and you can speak up again. You learn tai chi with a group of old people in the county-town square, and the instructor says your punches keep time as if you're counting seconds.",
+   "A junior high student you taught gets into the county's top high school. His mother brings a basket of eggs and says your mental arithmetic lessons were his favourite.",
+   "Your first month away from the school, at eight on Sunday night you still sit down at your desk and open the computer, then remember there's no livestream tonight.",
+   "You go back to the Haidian office tower on an errand. The lift is papered with the school's recruitment posters, and you don't recognize a single instructor on them.",
+   "At a dinner a young man says he learned data analysis from your short videos back then. You ask which year; he names one you can barely remember.",
+   "Drills, Q&A and marking have long been done by AI. Just as many people sit the civil service exam, and the schools' recruitment posters now say: one-to-one planning with a real instructor.",
+   "Your own child graduates from university and says at dinner they want to sit the civil service exam. You don't argue and you don't stop them. The next day you draw them a study timetable.",
+   "You still do sums fast. At the vegetable market the stallholder is still tapping the calculator when you've already handed over the money."
+  ],
+  "closing": {
+   "retire": "One evening many years later you pass an office tower with one window lit upstairs, where someone is working a problem at a whiteboard, their shadow moving back and forth. You stand below and watch a while, and in your head finish the problem for them.",
+   "burnout": "Many years later, on the balcony of your home in the county town, you work a number problem from start to finish in pencil in the margin of an old newspaper. When it's done you fold the paper and tuck it under your teacup.",
+   "end": "Many years later, clearing out old things, you find a whiteboard eraser still stained with blue ink from those days. You tap it against your palm, the dust falls, and you put it in a drawer."
+  }
+ }
+}

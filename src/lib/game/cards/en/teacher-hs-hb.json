@@ -1,0 +1,198 @@
+{
+ "id": "teacher-hs-hb",
+ "occupation": "Secondary School Teacher",
+ "role": "Maths teacher and homeroom teacher at a county high school",
+ "headline": "A state-funded teacher-training graduate, bound by contract to go home and teach at your own old county high school, handed a sixty-two-student first-year class on day one and responsible for them from the 5:40 a.m. run to the 10 p.m. lights-out",
+ "unit": "A county high school under Xingtai, Hebei (the only provincial model high school in the county, boarding, over 3,000 students)",
+ "unit_type": "Public county-town high school",
+ "city": "A county under Xingtai, Hebei",
+ "city_tier": "County town",
+ "education": "Bachelor's degree (Mathematics and Applied Mathematics, provincial state-funded teacher-training program)",
+ "level": "Your university analysis courses were solid and you taught a dozen lessons on your practicum. You have never taught a whole chapter on your own, and never been solely in charge of sixty-two fifteen- and sixteen-year-olds",
+ "intro": "The dean of studies hands you a list: Class 14, Year One, sixty-two students, physics-chemistry-biology track, ninth in the year on entrance scores. The teaching building is the same one you sat in as a student; the countdown board in the corridor is an LED screen now. From today, what time these sixty-two children get up and what time they go to sleep is your business.",
+ "salary_note": "Estimate: a newly appointed teacher with a permanent state post at a public county high school in southern Hebei takes home a little over ¥3,000 during the probation year; once graded, with performance pay, the homeroom allowance and the county's gaokao bonus, it comes to about 60% of the national secondary-teacher figure. County finances are tight, and performance pay arrives at year's end.",
+ "facts": [
+  { "label": "Second-Grade Teacher (current level)", "value": "0-5 years, ¥5,500–8,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "First-Grade Teacher (5-10 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Teaching the subject in the classroom, using multimedia", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Studying the textbook and writing lesson plans to the syllabus", "source": "AI exposure" },
+  { "label": "Open positions", "value": "496 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Ten minutes after the wake-up whistle you are already standing under the floodlights on the sports ground. Your class comes past in formation and you shout the cadence with them while you count heads: sixty-one. One is still in bed in the dorm.",
+  "The first lesson after breakfast is yours: monotonicity of functions. You draw the graph on the board twice, and a boy in the third row is still secretly finishing yesterday's English homework.",
+  "Mid-morning break. Sixteen teachers share eight desks in the year-group office. You finish marking last night's maths quiz question by question and circle question eleven in red, the one the most students got wrong.",
+  "Midday dorm check. A bed on the fourth floor of the boys' building is empty; the dorm captain says he went to the toilet. You wait five minutes at the end of the corridor, and what comes back is a boy hiding a phone.",
+  "Maths department lesson planning. The head of department splits next week's guided worksheets into four parts. You get odd and even functions, first draft due Friday, and he says don't copy all the examples off the internet.",
+  "Supper time. A student's grandfather calls: the boy's parents are on a building site in Beijing, could he come home early this weekend to fetch his winter clothes. You tell him school lets out at three on Saturday, wait by the east side of the gate.",
+  "Evening study hall, and you are on duty. A pile of worksheets on the desk; students come up one by one with questions. You explain in a low voice, then send them back to their seats to work it through again on their own.",
+  "After lights-out you do one last round of the dorms, go back to the staff housing, run through tomorrow's slides once more and set the alarm for 5:20."
+ ],
+ "ladder": [
+  { "title": "Second-Grade Teacher", "stage": "Entry", "focus": "Graded after a one-year probation. You sit in on your mentor's lessons, write worksheets and run a class; you move up on your class's results and one public lesson you can stand behind." },
+  { "title": "First-Grade Teacher", "stage": "Mainstay", "focus": "You can take a final-year class through on your own and set the weekly and monthly exams. Promotion needs five full years at Second Grade, plus years as a homeroom teacher, public lessons and a paper or a research project." },
+  { "title": "Senior Teacher", "stage": "Gatekeeper", "focus": "The department's quality check: you mentor young teachers, set the joint exams, and run maths for a whole year group. Places are few, and you also need time served at a rural or under-resourced school." },
+  { "title": "Professor-Level Senior Teacher", "stage": "Lead", "focus": "One of the city's lead figures in maths: you run research projects and a master-teacher studio. A county sees one or two promoted every few years." }
+ ],
+ "ai_tasks": [
+  { "name": "Studying the textbook and writing lesson plans to the syllabus", "how": "AI can quickly draft lesson plans, outlines of key points and worked examples to the syllabus. The teacher cuts and chooses to fit this class and their own style, and answers for whether the content is right." },
+  { "name": "Pacing the course and designing classroom activities", "how": "AI can lay out a schedule and offer options for activities and group tasks. The teacher adjusts to how much students are really taking in, the school's rhythm and whatever comes up on the day." },
+  { "name": "Teaching the subject in the classroom, using multimedia", "how": "AI can help make slides, animations and explanatory material. Standing in the room, reading faces and adjusting on the spot, keeping order and keeping the room alive still comes down to the teacher." },
+  { "name": "Marking homework and going over common mistakes", "how": "AI can mark objective questions and some written ones, and gather the common errors. The teacher judges why a student went wrong, picks which mistakes to take to the whole class, and writes comments for individual students." },
+  { "name": "Setting papers, running exams and recording marks", "how": "AI can write questions by topic and difficulty, assemble papers and chart the score distribution. The teacher checks the questions, makes sure they test the right things, runs the exam room and signs off the final marks." },
+  { "name": "After-class help and one-to-one guidance", "how": "AI can answer routine questions around the clock and push practice at each student's weak points. The teacher works out where a student is really stuck, encourages them, and deals with how they are coping." },
+  { "name": "Home visits and watching over students' wellbeing", "how": "Visiting families, talking with parents, noticing a change in a student's mood all take trust, judgment in the moment and responsibility. AI can at most help organize talking points and notes." },
+  { "name": "Observing lessons, joining teaching research and improving methods", "how": "AI can organize teaching materials, sum up problems from lesson notes and review the latest research. The teacher, through observing and talking with colleagues, judges which methods fit their own classroom and puts them to work." }
+ ],
+ "events": {
+  "e_first_monthly": "The first monthly exam results come in: your class's average in maths is second from bottom among comparable classes. The head of year says nothing, just puts the rankings up on the projector at the year meeting.",
+  "e_quant_board": "The weekly class scoreboard hangs in the corridor: discipline, cleaning, dorms, the morning run. Your class has come first three weeks running. At Monday's flag-raising you stand beside the ranks with a blank face, laughing inside.",
+  "e_poached_student": "In the second term a private high school from the city comes recruiting transfer students in the county: no fees, plus a scholarship. Your class's best maths student is taken away by his parents. On his last day he leaves you a scratch-paper notebook.",
+  "e_parent_meeting": "Forty-one people come to the parents' meeting, more than half of them grandparents. You write what you have to say on the board in big characters and speak slowly. Afterwards a few old people hold out their phones for you to add them to the class group chat.",
+  "e_throat": "Over one term you lose your voice three times. The doctor at the county hospital says chronic pharyngitis and tells you to talk less. You put a small speaker on the lectern and keep a strip of throat lozenges in your pocket.",
+  "e_first_gaokao": "Results come out for your first class through the gaokao (college entrance exam). Twenty-nine clear the first-tier university line, well up on where they started; one girl gets into a good university in Beijing. Her mother presses a bag of their own hens' eggs on you at the school gate, and you can't refuse.",
+  "e_blind_date": "The head of department's spouse sets you up with someone who works at the county hospital. You first meet at the new bubble-tea shop in town and talk for an hour, half of which you spend answering messages in the class group chat.",
+  "e_house": "You buy a flat in a new estate on the east side of town, ten minutes from school by e-bike. The family pooled the down payment; the mortgage takes a big bite out of your pay.",
+  "e_ai_marking": "The school brings in scan marking and a learning-analytics system, and you no longer mark the multiple-choice and fill-in questions on each weekly quiz by hand. The system builds every student a book of their mistakes, and for the first time you see in a single evening exactly where the whole class's gaps are.",
+  "e_ai_copy": "Maths homework after the holiday: a dozen papers with identical working, steps far too neat for first-year students. You don't name anyone in class. The next day you switch homework to timed work done in the lesson.",
+  "e_teachers_day": "On Teachers' Day you push open the classroom door to find the blackboard covered in function graphs that spell out a line: thanks for everything, teach. You tell the student on duty not to wipe it yet, take a photo, then start the lesson.",
+  "e_student_leave": "A student in your class goes weeks without sleeping and stops coming into the classroom. After the family takes him to a hospital in the city, he goes on medical leave. You sign the forms with his parents at the academic office and pack his textbooks into a cardboard box one by one.",
+  "e_competition": "A student of yours wins a provincial first prize in the national high school maths league, the first from this county in more than a decade. The county's official account posts about it, and you make the photo of the certificate your phone's lock screen.",
+  "e_child": "Your child is born on a Wednesday. You teach your two morning lessons before rushing to the hospital. The head of year covers your evening study halls for a week, and when you come back there is a bag of millet and brown sugar on your desk that your colleagues chipped in for.",
+  "e_backbone": "You are named a city-level key teacher, with a certificate issued by the city education bureau. At the opening ceremony the principal reads out your name, and your class claps loudest of all.",
+  "e_neck": "The neck trouble you got from bending over exam papers flares up; your right hand goes numb and you can barely hold the chalk. You have acupuncture at the county hospital of traditional Chinese medicine for two weeks, and go back to evening study halls after each session.",
+  "e_old_student": "In the last month of the lunar year a student you taught ten years ago brings his partner to your home for the New Year visit. He draws plans at a design institute in Tianjin and says he still remembers a sequence problem you taught.",
+  "e_fewer_classes": "Every year the county has fewer middle-school graduates. This year the school's first-year intake shrinks from twenty classes to sixteen. At the year meeting the principal says that from now on the worry won't be finding good teachers, it will be finding students.",
+  "e_ai_teacher": "Every student has a learning tablet now, and in evening study hall more of them ask the AI than ask you. At first it stings a little. Then you notice that the few who still queue up at your desk are all asking the same thing: why can I never think of this step.",
+  "e_parents_ill": "Your father back in the village goes into hospital. Every night after study hall you ride to the county hospital to sit with him, and at five in the morning you go back to school for the run. You lose seven jin that month, about three and a half kilos.",
+  "e_county_bonus": "The county's first-tier pass rate hits a record that year, and the county pays a bonus to the final-year teachers. On the day it lands in your account nobody in the office mentions it, and everyone leaves a little quicker than usual.",
+  "e_young_colleague": "A newly assigned young teacher uses AI to produce, in one evening, a full weekly quiz with worked solutions and tiered homework. You read it through, strike out two questions beyond the syllabus, and admit the rest is better than what you used to set."
+ },
+ "choices": {
+  "c_class_style": {
+   "title": "How to run this class",
+   "situation": "The veteran homeroom teacher next door passes on his method: phones confiscated, copy the rules out once for every point the dorm loses, no looking up in evening study hall. His class tops the scoreboard every year. You have also seen a few children in his class who barely say a word all year.",
+   "options": [
+    { "label": "Do it his way and set the rules first", "result": "A month later your class is in the year's top three. Evening study hall is so quiet you can hear pens scratching, and nobody comes to the office to talk to you anymore." },
+    { "label": "Ease off and leave a few gaps", "result": "You give them one class meeting a week to run themselves and hand phones back every Sunday evening. You sit mid-table on the scoreboard, but the child who cried in the corridor at midnight comes to knock on your door first the next morning." }
+   ]
+  },
+  "c_open_class": {
+   "title": "The city's model-lesson competition",
+   "situation": "The head of department puts you forward for the city's high school maths model-lesson competition. It means polishing one forty-minute lesson over the summer, rehearsing it a dozen times or more, in front of judges from the city teaching-research office. The lesson will count when you apply for First-Grade Teacher.",
+   "options": [
+    { "label": "Sign up and rehearse all summer", "result": "In an empty classroom you teach the graphs of exponential functions to a camera fourteen times, and win first prize in the city. You go home only once that summer." },
+    { "label": "Not this time", "result": "You keep the summer for yourself and go back to the village to help bring in the maize. The head of department says there's always next year, and the place goes to a colleague down the corridor." }
+   ]
+  },
+  "c_ai_pilot": {
+   "title": "Pilot the AI learning platform or not",
+   "situation": "The county has given the school an AI learning-analytics platform and wants two pilot classes: homework goes on the platform, the AI sets tiered practice, and teachers read a weekly report and adjust. One more job on the pile, and the promised training fee hasn't been approved yet.",
+   "options": [
+    { "label": "Take the pilot", "result": "For the first month you are on the phone to the platform's support line every day. By the end of term you can read a report and say which kind of problem each child gets stuck on, and colleagues start asking you how to use it." },
+    { "label": "Stick to the old way for now", "result": "You go on marking papers by the stack and logging mistakes by hand. Your results hold up, but when the platform rolls out to the whole year you have to learn it from scratch." }
+   ]
+  },
+  "c_first_grade": {
+   "title": "The paperwork for First-Grade Teacher",
+   "situation": "Five full years at Second Grade, so you can apply for First-Grade Teacher. Your file is missing a paper. Someone recommends an education journal that charges a page fee: ¥2,000, in print in three months. Or you could turn your years of work on students' mistakes into a county-level research project, which takes a year to complete.",
+   "options": [
+    { "label": "Pay the fee and get promoted first", "result": "The paper comes out. You turn to the page and the print is tiny. In that year's promotions your name is on the third line of the published list." },
+    { "label": "Do the project, a year later", "result": "With two young teachers you turn three cohorts' worth of mistakes into a small project with a twenty-page final report. Your promotion comes a year late, and the report later becomes training material for every maths department in the county." }
+   ]
+  },
+  "c_private_school": {
+   "title": "A private school in the city comes headhunting",
+   "situation": "The principal of a private high school in the city sends word: come and teach the top class, at more than twice your current pay, with a staff flat thrown in. The conditions: give up your permanent state post, sign a five-year contract, and take half a day off a week.",
+   "options": [
+    { "label": "Give up the post and go to the city", "result": "You sign the resignation letter. The principal doesn't try to keep you, only says, if you've thought it through, fine.", "end": "You leave the county school to teach the top class at the private school in the city. Your pay doubles, and several of the children in your class were poached from the county school you used to teach at." },
+    { "label": "Stay in the county", "result": "You reply, thank you, I won't be coming. That summer the maths department loses two teachers." }
+   ]
+  },
+  "c_rural_term": {
+   "title": "A rural posting before applying for Senior Teacher",
+   "situation": "To apply for Senior Teacher you need a year or more teaching at a rural or under-resourced school. The county is sending someone for a year to a township middle school in the hills to the west, forty kilometres from home, back once a week. Your child has just started primary school.",
+   "options": [
+    { "label": "Go for the year", "result": "The township school has two classes per year group, and you teach maths to both on your own, driving back to town at weekends. By the end of the year its final-year maths average is up eleven points." },
+    { "label": "Wait for the next round", "result": "You say your child is too young, maybe in two years. The colleagues who went that year all applied for Senior the year after." }
+   ]
+  },
+  "c_grade_head": {
+   "title": "Head of the final year, or not",
+   "situation": "The principal calls you in: he wants you as head of next year's final year. Twenty classes, more than eighty teachers, up before the students in the morning and to bed after them at night. Say no, and you can teach your two maths classes in peace.",
+   "options": [
+    { "label": "Take it", "result": "You move into the head of year's office, with three meetings and twenty phone calls a day. That year sixty-odd more students clear the first-tier line than the year before." },
+    { "label": "Just teach", "result": "You recommend an old colleague from down the corridor. You still sit behind the lectern in evening study hall, a pile of worksheets at your elbow." }
+   ]
+  },
+  "c_researcher": {
+   "title": "A move to the county teaching-research office",
+   "situation": "The county education bureau's teaching-research office needs a high school maths specialist, and the bureau names you. No class to run: you oversee maths teaching, exam-setting and lesson observation for the county's few high schools, from an office, with weekends free of students.",
+   "options": [
+    { "label": "Go to the research office", "result": "You see your last class into the exam hall and hand back the homeroom keys.", "end": "You transfer to the county teaching-research office. You no longer stand at the front of a room. Each term you visit every high school in the county to observe lessons, and when you see a young teacher draw the same function graph you used to draw, you make a note and go find them after class." },
+    { "label": "Stay at the front of the classroom", "result": "You tell the bureau you'd like to see a few more classes through. They pick someone else, and next week you are on the sports ground at 5:40 as usual." }
+   ]
+  },
+  "c_senior_top": {
+   "title": "Apply for Professor-Level Senior Teacher or not",
+   "situation": "The city has three Professor-Level Senior Teacher places this year, and the school can put forward only one person. You and a colleague four years older than you in the same department both qualify. He has five years until retirement.",
+   "options": [
+    { "label": "Put your name in", "result": "You gather twenty years of projects, prizes and student results into two archive boxes. The school meets twice and puts you forward." },
+    { "label": "Let him go first", "result": "You tell the principal to let the old hand go first. When he gets it he takes the department out to dinner, and a few rounds in he claps you on the shoulder without a word." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "In your last lesson you teach nothing new. You have the students take out three years of mistake notebooks and each pick one problem to explain to the person beside them. When the bell goes you put the stub of chalk back in its box and leave the box on the lectern. Outside, the lights come on over the sports ground one by one, and the evening study hall line files past you.",
+  "burnout": "That winter the world goes black for a moment at the front of the class, and you hold on to the blackboard for a long time. The county hospital gives you a sheaf of test results and the doctor says you need a rest. You hand over the homeroom, first on long leave, then moved to the academic office to do the timetable. Your office window looks onto the sports ground, and at 5:40 in the morning you still wake."
+ },
+ "stages": [
+  "Your work starts with the guided worksheets: the head of department hands down a chapter, you build the examples and exercises on the computer, then print sixty-two copies. Two lessons and a quiz a day, with the homeroom work squeezed into the gaps: dorm checks, talks, parents' calls, and not one message in the class group chat can be missed. You are the youngest in the office, and you write down everything your mentor says.",
+  "You take a final-year class through on your own now: you write the first-round revision notes yourself, set the mock papers before the city joint exam, three drafts a paper. Young teachers sit in on your lessons and afterwards you tell them which problem to slow down on and where to pause. At parents' meetings you no longer read from notes; you talk about the one hurdle each child faces.",
+  "You are the maths department's gatekeeper: you sit on the city joint-exam panel, you set the final year's revision plan, you polish young teachers' public lessons one at a time. What you hold is no longer two classes but a whole year's maths results, and after every exam the first column you look at is the one after the average: the standard deviation.",
+  "You rarely stand at the front now; more of your time is spent in the back row of other people's classrooms. The city's master-teacher studio runs under your name, and once a month at a cross-county session you and key teachers from seven or eight counties work over a single lesson or argue over a single problem. At the education bureau's gaokao review meeting you get twenty minutes on stage."
+ ],
+ "work": [
+  "Your mentor sits in on your lesson on sets and writes three lines in his observation book. The last one: you talked for forty minutes, the students for less than two.",
+  "Fifty quiz papers in, you notice half of them made the same mistake on question eleven: they forgot the domain. The next day you skip the new material and break that question into three steps on the board.",
+  "A boy hands in blank papers three days running. After evening study hall you call him out into the corridor and, instead of asking about marks, ask where his parents are. Tianjin, he says, home at New Year.",
+  "For the final year's first round of revision you cut ten years of gaokao maths papers apart by topic and re-sort them, filling two big scrapbooks, and end up with an eighty-page set of notes.",
+  "Marking the city joint exam, you get the calculus long question and mark six hundred scripts in an afternoon. That evening you copy the three most common answers onto the board and have your students find where the marks were lost.",
+  "A new teacher, the night before her first public lesson, messages you in a panic. You reply with one line: write slowly on the board, watch the students, not the plan.",
+  "For the city joint exam you and teachers from three other counties are shut in a hotel for four days, phones handed in, to set one paper. You argue over the final hardest problem for an entire evening.",
+  "After the final year's first mock exam you draw each class's maths scores as bands at the year meeting and point at one class's 90-to-110 band: these twenty children matter most this year.",
+  "You watch a young teacher's recorded lesson three times and stop it at the seventeenth minute: let them get this one wrong first. That beats you just showing them the right way.",
+  "The studio meets at a county high school in the hills. You watch a lesson by a teacher in his first term, and afterwards walk two laps of the sports ground with him, talking about the best question he asked.",
+  "The city is compiling a final-year revision book for county high schools and you edit the whole thing. You cut a third of the hard problems and write in the preface: first let the middle half of the children reach.",
+  "At the gaokao review meeting you don't talk about the first-tier pass rate. You talk about the thousand-odd children in the county who scored under forty in maths, and which few problems they all got wrong."
+ ],
+ "past": [
+  "The year of the high school entrance exam you came first in the township. A private high school from the city came to your home offering free tuition. Your father hesitated all night and then sent you to the county high school: close, cheaper, and your mother could bring clean clothes every two weeks.",
+  "Your first-year maths teacher was an old man near retirement who never looked at a lesson plan. He'd toss the chalk and it would land right in the box. In your weekly journal you wrote: one day I want to be a teacher like him.",
+  "Your gaokao (college entrance exam) score was good enough for a first-tier university out of the province. You applied instead to a state-funded teacher-training place at a normal university in the provincial capital: no tuition, but you'd go back to teach in the county for six years. Your mother said: that's an iron rice bowl.",
+  "In your second year you sat the high school maths teaching certificate. At the interview you drew arithmetic sequences, taught for ten minutes with your palms soaked in sweat, and at the end the examiner nodded.",
+  "In your final year you spent six months as a student teacher at a leading high school in Shijiazhuang, sitting in on three lessons a day with your supervising teacher. The students there handed in homework on tablets, and in your practicum log you wrote: will the county school be like this in ten years?"
+ ],
+ "late": {
+  "pension_note": "Estimate: a teacher with a permanent state post at a public county high school pays into the public-institution pension and occupational annuity without a break over thirty-odd years of teaching, and retires on roughly 60% of final monthly pay.",
+  "scenes": [
+   "On the first of September after you retire you wake at 5:20. You don't get up; you lie there listening to the county school's whistle in the distance until it's light.",
+   "A few parents in your estate ask you to tutor their children in maths. You don't take a cent, and you have only one rule: bring your mistake notebook first.",
+   "At the school's seventieth anniversary you sit in the third row of guests. The deputy county head speaking on stage was in your third class, and as he reads his speech he glances your way.",
+   "Your first year doing the timetable in the academic office, you spend every day moving boxes around on a huge spreadsheet. One day you get to Class 14, Year One, and look at it a little longer.",
+   "Slowly you get your health back, and every evening you walk once around the old moat. Now and then a student cycling home from school calls out teacher, and you nod.",
+   "You gather years of your notes into one folder and send it to the young people in the maths department. The head of department replies: we've been using this all along.",
+   "Your first term away from the county school, you always check your phone at ten at night on the dot, as if someone might still post in the class group chat.",
+   "You go back to the county school once. The gatekeeper is still old Zhang. He doesn't recognize you and has you sign in. In the box for the purpose of your visit you write: just looking.",
+   "Your first class sets up a group chat and invites you to their twentieth reunion. You sit at the top table and one by one they come over to toast you, each of them naming a year and a problem.",
+   "The county is down to two high schools. There are fewer children in the classrooms, thirty-odd to a class, room to walk between the desks.",
+   "A grandchild asks the AI on a tablet about a maths problem. The answer comes up and they still don't understand. You take it, and draw a number line on a piece of paper.",
+   "Your handwriting gets slower and slower; at New Year it takes you three days to write the spring couplets. When you're done you wash the brush and hang it back on the wall."
+  ],
+  "closing": {
+   "retire": "One winter morning many years later you pass the county school gate. The lights are on over the sports ground and the cadence of the morning run comes over the wall in bursts. You stop and listen, and only when you have counted the sixty-second shout do you walk on.",
+   "burnout": "Many years later, watering the plants on your balcony, you hear a child downstairs reciting a formula with one sign wrong. You say nothing, and wait until the third time through, when he gets it right on his own.",
+   "end": "Many years later, clearing a bookcase, you find the scratch-paper notebook a student from your first class left you. The paper has yellowed, and on the last page is a problem he never finished. You pick up a pen and finish it."
+  }
+ }
+}

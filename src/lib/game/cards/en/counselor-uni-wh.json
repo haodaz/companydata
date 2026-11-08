@@ -1,0 +1,198 @@
+{
+ "id": "counselor-uni-wh",
+ "occupation": "University Student Counselor",
+ "role": "Full-time student counselor at a university",
+ "headline": "A master's graduate kept on by your own university, moved into the duty room on the ground floor of a men's dormitory, solely responsible for the 310 first-year students of the School of Mechanical Engineering, phone on twenty-four hours a day",
+ "unit": "The School of Mechanical Engineering at a national science and engineering university in Wuhan (over 2,000 undergraduates, five full-time counselors)",
+ "unit_type": "Public university under a national ministry",
+ "city": "Wuhan",
+ "city_tier": "New first-tier city",
+ "education": "Master's degree (Education)",
+ "level": "Three years as a student leader and two years as a part-time counselor during your master's: you can run freshman registration and write a report. You have never stood alone at an emergency room door at three in the morning signing a form",
+ "intro": "The head of the student affairs office hands you an old phone and a bunch of keys. The number is the duty line for first-year mechanical engineering: 310 students and twenty-three parents' group chats are all saved in it. The keys open the duty room on the ground floor of the men's dorm. Wuhan in September is still 37 degrees, and the tents for freshman registration are already up. From today, this phone stays on at night.",
+ "salary_note": "Estimate: a new full-time counselor at a national university in Wuhan takes home five or six thousand a month; with the post allowance and year-end performance pay, the monthly average is about 90% of the national figure for university counselors. The university gives you the duty room to live in, which saves on rent.",
+ "facts": [
+  { "label": "Counselor, Teaching Assistant rank (current level)", "value": "0-3 years, ¥6,000–9,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Counselor, Lecturer rank (3-8 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "One-to-one talks with students", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Answering the high-frequency questions about leave, awards and financial aid procedures", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You buy a bowl of hot dry noodles at the window below the dorm and eat as you walk. Overnight the phone has collected over forty messages. Half ask when scholarship applications open; one, sent at 2 a.m., says: teacher, I can't sleep.",
+  "First period, you check attendance classroom by classroom. Mechanical Design Class 1 is three short. You find two in the dorm; the third answers on your fifth call and says he's at an internet cafe off campus.",
+  "In the office you check national grant applications on the computer. One student wrote almost nothing about her family. Next to her name on the transcript is a figure from the canteen records: ¥300 a month.",
+  "At lunchtime the girl who messaged at 2 a.m. comes to the office. You shut the door, pour her a glass of water, bring out no forms at all, and listen for forty minutes while she talks about her family.",
+  "At the school's student affairs meeting the deputy secretary assigns next month's mental health screening and academic warnings. You write in your notebook: first-years failing two or more courses, all seen by Friday.",
+  "Four boys in one dorm room have fallen out over what temperature to set the air conditioner. You stand at their door for an hour and finally lay down the rule: 26 degrees, off at midnight.",
+  "In the evening you walk the dorm floor by floor and knock on a few doors with lights on. One boy is drafting; you glance at his three-view drawing and tell him his line types are wrong. He laughs.",
+  "The bed in the duty room is narrow. You turn the phone to full volume and leave it by your pillow, look over tomorrow's leave list for the university once more, and switch off the light."
+ ],
+ "ladder": [
+  { "title": "Counselor (Teaching Assistant rank)", "stage": "Entry", "focus": "You look after one year group of two or three hundred students: daily management, awards, financial aid, mental health screening, leave and attendance. You move up by keeping things from going wrong, earning the students' trust and writing clear reports." },
+  { "title": "Counselor (Lecturer rank)", "stage": "Mainstay", "focus": "You take the graduating year, handle jobs and postgraduate entrance exams, deal with difficult student cases, and start research projects on student affairs. Lecturer rank needs years of service, a course and papers." },
+  { "title": "Head of Student Affairs Office", "stage": "Running an office", "focus": "You run the school's student affairs day to day: dividing work among the counselors, liaising with the university's student affairs department, managing grants, loans and employment data. When something happens in the school, you are first on the scene." },
+  { "title": "Deputy Party Secretary of the School (Deputy Division Director rank)", "stage": "In charge", "focus": "You oversee all student affairs and the counselor team in the school and sit on its leadership team, answering to the university. Most counselors never reach this level; some move into administration or full-time teaching." }
+ ],
+ "ai_tasks": [
+  { "name": "Answering the high-frequency questions about leave, awards and financial aid procedures", "how": "How to request leave in the system, when scholarships open, who fixes the dorm: an AI help assistant can answer around the clock and sort the questions automatically. The counselor checks weekly for missed or wrong answers and passes on anything that needs another department." },
+  { "name": "Checking financial aid paperwork and keeping lists and ledgers", "how": "AI can check applications, cross-match grades and family information, and produce the forms and public lists. How hardship is judged, how privacy is protected and how places are shared fairly are the counselor's to check and sign." },
+  { "name": "Compiling mental health screening and academic warning data", "how": "AI can merge screening scores, failed courses and attendance into one table and flag who needs attention. How the people on the list are really doing, the counselor only learns by walking into the dorm and sitting down to talk." },
+  { "name": "Writing reports, notices and activity plans", "how": "AI can draft term reports, notices and class-meeting plans to format. Which words will work for this year's students and which numbers need checking, the counselor revises line by line." },
+  { "name": "Matching students to jobs and tracking where graduates go", "how": "AI can push job listings to students by major and preference and compile the destination records automatically. How to talk to a student with no direction, how to help one whose family is struggling, the counselor does one conversation at a time." },
+  { "name": "One-to-one talks with students", "how": "A real talk rests on trust and seeing someone face to face. AI can't sit across from a student; at most it helps sort the notes afterwards." },
+  { "name": "Being on the scene for emergencies in the night", "how": "A student falls ill, goes missing, or a dorm fight breaks out: someone has to get there at once, judge how serious it is, call the parents and the hospital, and take responsibility. AI can only help look up the protocol and record what happened." },
+  { "name": "Talking with parents about hard things", "how": "Academic dismissal warnings, medical leave, trouble at home: on the phone or in person, what to say, how, and how far, is a person's judgment." }
+ ],
+ "events": {
+  "e_freshman_day": "On registration day you stand under the tent for eleven hours and get all 310 students enrolled. Back in the duty room that night you take off your shoes and only then find your heels rubbed raw.",
+  "e_military": "On the fourth day of military training it is 38 degrees on the field and a girl faints. You go with her to the campus clinic, sit in the drip room until she comes round, and make a slow, careful phone call to her mother.",
+  "e_night_call": "At 3 a.m. the phone rings: a boy is writhing on his bed with stomach pain. You and his roommates get him to the emergency room, where it turns out to be appendicitis. You sign the surgical consent form as 'counselor, on behalf of parents', and his parents arrive only at dawn.",
+  "e_academic_warning": "A boy fails five courses at the end of term, which by the rules means an academic warning. His internet records show him logging off at four every morning. You talk with him three times, and the third time he finally says that before the gaokao (college entrance exam) he studied until four every morning too.",
+  "e_quiet_aid": "A girl hasn't applied for a grant, but you notice she only ever buys one vegetable dish per meal. You don't call her into the office. You find a work-study job instead, tell her the library happens to need someone, and ask if she'd be willing.",
+  "e_missing": "A student doesn't come back to the dorm all night and won't answer his phone. You and campus security search until the small hours and finally find him on a bench by the Yangtze. He says he just wanted to sit alone for a while. You sit beside him until it's light.",
+  "e_ai_bot": "The university launches a student affairs help assistant, and students ask it first about leave procedures, scholarship dates and dorm repairs. More than half the night messages on your duty phone disappear; the ones left are the ones that really need a person.",
+  "e_ai_dashboard": "The university's system starts merging screening scores, failed courses, dorm gate logs and canteen records into one table, and pushes you a weekly 'needs attention' list. The first list has forty names. You visit each dorm one by one, and the person who really needs you is someone not on the list.",
+  "e_ai_writing": "AI can draft the term report and award citations in one evening. You spend the time you save making extra trips to the dorms. Only once it wrote one student's achievements under another student's name, and you corrected it word by word before handing it in.",
+  "e_kaoyan": "A student of yours gets into a master's program at another university. The day the interview results come out he sends you a screenshot, then a line: teacher, I've always remembered that talk in first year.",
+  "e_employment_rate": "In July the school's graduate employment rate is third from bottom in the university. You phone each of the forty-odd students who haven't signed a job. Some are studying for the civil service exam, some are lying flat at home, and one says: teacher, stop pushing, my parents aren't even pushing.",
+  "e_graduation": "Your first class graduates. After the ceremony the class monitor gives you a T-shirt covered in more than three hundred signatures. The biggest one belongs to the boy who failed five courses.",
+  "e_insomnia": "By your third year living in the dorm, your heart races whenever your phone rings, even when it's the alarm. The campus doctor prescribes something to help you sleep and tells you to get off campus at weekends.",
+  "e_love": "At a mixer for young faculty you meet a lecturer from the School of Materials. On your first date you cycle around East Lake. Halfway round your phone rings, and they stop and wait while you take a twenty-minute call.",
+  "e_house": "You buy a flat south of Optics Valley, and the down payment empties both families' savings. The day you move out of the duty room you wipe down the narrow bed and tape a sheet of paper at its head with a few numbers you always needed.",
+  "e_best_counselor": "You are named one of the province's outstanding counselors and must give a five-minute speech at the ceremony. You don't talk about yourself. You talk about that bench by the Yangtze in the small hours.",
+  "e_parent_pressure": "A parent shouts at you down the phone for forty minutes: his son failing is the university's fault, he wants the president. You hear him out, wait until he stops, then say: let's set a time. Come to the university, and the three of us will sit down together.",
+  "e_old_student": "A student from your first class comes back to recruit; he's now a technical lead at a company in Optics Valley. After the recruitment talk he makes a detour to your office to say that if you hadn't chased him into his resits, he'd never have graduated.",
+  "e_child": "Your child is born. For that week the school passes your duty number to a colleague, who posts a photo in the group chat: your old phone, tucked under his pillow.",
+  "e_fewer_kids": "The number of gaokao candidates in the province begins to fall, the university's admissions plan is cut back, and some majors stop recruiting. The school holds a meeting about redeploying counselors. The meeting room is very quiet.",
+  "e_student_counselor": "The school's new counselor is a student you once looked after. On his first day he photocopies the sheet of numbers you once gave him and tapes it to the head of the bed in his own duty room."
+ },
+ "choices": {
+  "c_dorm": {
+   "title": "Live in the dorm or move out",
+   "situation": "The rules say counselors live in the dorm duty room, but in recent years plenty rent outside and only sleep in on duty nights. In Optics Valley a one-bedroom flat is a little over ¥2,000 a month, a sizeable chunk of your pay.",
+   "options": [
+    { "label": "Live in the building", "result": "Every night you walk the building once, and the students come to know your footsteps. Whatever happened in the building that year, you were first there." },
+    { "label": "Rent a place outside", "result": "You rent a small room in Optics Valley, its balcony facing a building site. After work you can sleep through the night; on duty days you cycle twenty minutes back to campus." }
+   ]
+  },
+  "c_crisis_training": {
+   "title": "Train in crisis intervention or not",
+   "situation": "The university counseling center is running a full training course in crisis intervention: one term, two evenings a week, ending with supervised casework. You have over three hundred students, and evenings are already your busiest time.",
+   "options": [
+    { "label": "Sign up", "result": "Every Tuesday and Thursday evening you go to the counseling center for class, then come back and work through your messages. On the last day the supervisor says you ask questions like a counselor with years behind them." },
+    { "label": "Keep to the daily work", "result": "You keep your evenings for the dorm and refer any case you're unsure of to the counseling center. Once you referred one a day too late, and you remembered it for a long time." }
+   ]
+  },
+  "c_ai_assistant": {
+   "title": "Train the help assistant or not",
+   "situation": "The student affairs department is piloting an AI help assistant in a few schools and wants a counselor to build the common questions into a question bank and check every week what it got wrong. One more job, and the department says a successful pilot will count as an innovation in your work record.",
+   "options": [
+    { "label": "Take it on", "result": "You put together over four hundred questions and answers and spend every Monday morning on its wrong answers. Six months later it gets nine in ten right, and when it rolls out across the university it runs on your question bank." },
+    { "label": "Let another school try it", "result": "You say your hands are full already. When the assistant launches you use it as is, and correct its wrong answers one by one in the group chats." }
+   ]
+  },
+  "c_phd": {
+   "title": "Do a part-time PhD or not",
+   "situation": "Beyond Lecturer rank, getting further without a doctorate is harder every year. The university's School of Education takes part-time PhD students: weekend classes, four years at least, fees paid yourself. The class you have now graduates next year, and the job hunt makes it the busiest year of all.",
+   "options": [
+    { "label": "Do it", "result": "Students by day, papers by night. Your proposal is on academic burnout among engineering undergraduates. In your third year you publish in a core journal and read it through twenty times." },
+    { "label": "Not for now", "result": "You put all those years into your students. When promotion comes you are a step behind your cohort, and one of your students says you were the teacher he remembers best from university." }
+   ]
+  },
+  "c_civil_service": {
+   "title": "Sit the civil service exam or not",
+   "situation": "Two counselors who joined the university the same year as you are preparing for provincial government posts. A government job doesn't mean being on call twenty-four hours, and the promotion path is clear. You signed up and passed the written exam; the interview notice is in your inbox.",
+   "options": [
+    { "label": "Go to the interview", "result": "You wear a new suit, and when they ask why you're leaving the university, you pause for three seconds.", "end": "You join a provincial government department and move into a north-facing office, where your phone can go silent at night. One day in September you pass the university gate, see the registration tents, and stand there a while before walking on." },
+    { "label": "Don't go", "result": "You delete the interview notice. That evening someone posts a photo in the student group chat: the dorm at night, the light on in your duty room." }
+   ]
+  },
+  "c_office_head": {
+   "title": "Apply for Head of Student Affairs Office",
+   "situation": "The school's Head of Student Affairs Office has been moved to the university administration, and the post is open. You and two other counselors apply, with a speech and an assessment by the personnel department. If you get it you no longer look after one year group, but five counselors and more than two thousand students.",
+   "options": [
+    { "label": "Apply", "result": "Your speech runs eight minutes, about the hardest cases you've handled over the years, each told more briefly than the last. On the day of the assessment interviews, three student leaders speak up for you." },
+    { "label": "Leave it to your senior colleague", "result": "You don't apply, and a colleague who started three years before you gets it. The first time he divides up the work, he gives you the hardest year group and says: you're the only one they'll listen to." }
+   ]
+  },
+  "c_hr": {
+   "title": "An Optics Valley company comes headhunting",
+   "situation": "A former student, now a middle manager at an optoelectronics company in Optics Valley, recommends you as head of campus recruitment: visiting dozens of universities across the country and running a team of five, for more than twice your current salary. You'd have to resign, and leave the students.",
+   "options": [
+    { "label": "Join the company", "result": "You hand over your twenty-odd students who need watching to colleagues one by one, half a page on each.", "end": "You go to the Optics Valley company to run campus recruitment, visiting thirty-odd universities every autumn. After every talk some students stay behind with questions, and you listen more than you answer." },
+    { "label": "Stay at the university", "result": "You thank him and say you'd like to see this class through. He says: teacher, I knew you'd say that." }
+   ]
+  },
+  "c_support_west": {
+   "title": "A year's posting at a university in the west",
+   "situation": "The university is twinned with a university in western China and will send an experienced student affairs officer there for a year, to help build counselor training and a mental health system. Back home, it counts as hard experience at promotion time. Your child is in primary school.",
+   "options": [
+    { "label": "Go for a year", "result": "The counselors there are twenty-six on average, each responsible for four hundred students. You give them a term of training, and before you leave they give you a duty handbook they wrote themselves." },
+    { "label": "Not this time", "result": "You say your family needs you. The place goes to a colleague from another school, and you take on part of his work." }
+   ]
+  },
+  "c_deputy_secretary": {
+   "title": "Become Deputy Party Secretary of the School or not",
+   "situation": "The school's deputy secretary has reached retirement age, and the university's personnel department comes to assess you to take over as Deputy Party Secretary of the School, overseeing all student affairs and the counselor team. You'd sit on the school's leadership team and answer to the university, and every student matter would end up on your desk.",
+   "options": [
+    { "label": "Take it", "result": "You move into an office on the third floor of the school building. The first thing you do is redo the five counselors' duty rota so each of them gets at least one night a week off." },
+    { "label": "Stay on the front line", "result": "You say you're better suited to working with students. The department assesses someone else, and you keep your year group." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On the day you retire the school holds a small gathering, and dozens of students come, some still studying, some graduated ten-odd years. You hand the old duty phone to a young counselor. It holds all the numbers from those years, and you never deleted one. Leaving the building, you see the light on in the duty room on the ground floor of the dorm, take one look, and head for the gate.",
+  "burnout": "That year you go two months without sleeping, and your palms sweat whenever the phone buzzes. The doctor at the campus hospital says you must stop. You ask to be moved to the university archives to look after student files, sorting, scanning and numbering them box by box every day. The archives are very quiet, and at last your phone can be switched off."
+ },
+ "stages": [
+  "Your day's work happens in three places: in the office, checking financial aid papers, entering leave and filling in award forms; in the dorm, room checks, mediation, knocking on doors; and on the phone, answering three hundred students and twenty-odd parents' group chats. You report numbers to the student affairs department, ask lecturers about attendance, and with students you start by asking whether they've eaten.",
+  "You take the graduating year now: you log each destination, run mock interviews for those sitting postgraduate exams, and call the ones with no direction into the office for a chat. The difficult cases come to you, and you coordinate between the counseling center, the parents and the dorm staff. You start an elective on career development, and the day you first stand at the lectern, a few of your own students are in the room.",
+  "You run five counselors and all the school's student affairs: dividing the work, reviewing aid lists, watching the employment numbers, and meeting the university's student affairs department once a week. When something happens in a year group, the counselor calls you first, and you decide whether to report it up and whether to go yourself. You sign more papers and talk to fewer students yourself.",
+  "At the school's leadership meetings you speak for the students: whether to adjust which majors recruit, how to change the scholarship rules, how to handle counselors' promotions. You teach new counselors their first class, and it isn't about regulations; it's about the emergency room at three in the morning. When something big happens at the university, you sit in the meeting room all night."
+ ],
+ "work": [
+  "For the national grant, you spread thirty-eight applications across the desk and check each against canteen spending and the family survey. In the end you move a student who hadn't written enough into the top band.",
+  "The screening results are out and twelve names are on the 'needs attention' list. You send no group notice; you find an excuse to visit each dorm, saying you've come to check the air conditioning works.",
+  "A first-year girl wants to switch to computer science. You look up the GPA cut-off for changing majors with her; she's 0.1 short. She says she'll try for another term. You write her name in your notebook.",
+  "The week before postgraduate interviews you run three mock sessions for a dozen students in the meeting room, with two young lecturers as examiners, while you sit in the back row noting their verbal tics.",
+  "Twenty graduates are still 'awaiting employment' in the system and you phone each one. One is at home studying for the civil service exam; you change his entry to 'planning further study or exams' and send him past interview questions.",
+  "A student has to take leave because of trouble at home. You help him finish the paperwork and tell him outside the academic office: your place is kept. When you want to come back, call me first.",
+  "The school's scholarship rules are up for revision. You pull three years of award data and find the competition bonus points went almost entirely to the same group of students. You add an award for academic improvement to the plan.",
+  "A new counselor's first dorm dispute leaves both sides unhappy. You don't step in for him; in the evening you go through all four students with him on the whiteboard, one by one.",
+  "The university wants each school's analysis of graduate destinations. Instead of percentages alone, you draw three lines on one chart: those who stayed in Hubei, those who went to the coast, those who went home to county towns.",
+  "The leadership team discusses cutting a major with poor job prospects. You bring out where its graduates went over the last five years and talk for ten minutes; the meeting decides to change the curriculum first and look again in two years.",
+  "Teaching the university's new counselors their first class, you open without slides and ask how many of them have the campus hospital and security numbers saved in their phones. Half shake their heads.",
+  "The school is drafting rules on using student data, as the system can see more and more. You write one line into the draft: what a counselor can see is not the same as what a counselor should look at."
+ ],
+ "past": [
+  "You went to high school in a prefecture-level city in Hubei. Your homeroom teacher was young, and after evening study hall every night he'd still be in the corridor talking to someone. Back then you thought: that looks exhausting.",
+  "Your gaokao (college entrance exam) score just got you into the education program at this university in Wuhan. On registration day your counselor carried your suitcase from under the tent, and remembered your name.",
+  "In your second year you became vice-president of the school's student union, organizing freshman week and evening shows. Once you spent a whole day running between three offices for one venue approval form, and learned to start by saying exactly what you need.",
+  "In your final year you were recommended for a master's in education at the same university, exam-free. Your supervisor studied student development, and you went with her to interview at a dozen universities, writing up two hundred thousand characters of notes.",
+  "In your first year of the master's you started as a part-time counselor, responsible for one class of forty. Before the final exams one student suddenly vanished and you searched all night. Your phone has never been on silent since.",
+  "The year you graduated you applied for HR jobs at three companies and also sat the university's exam for full-time counselors. After passing the written test and interview you called your parents to say you were staying on. Your mother said: good, then you'll have a room to live in."
+ ],
+ "late": {
+  "pension_note": "Estimate: permanent staff at a national university pay into the public-institution pension and occupational annuity without a break over thirty-odd years of service, and retire on about 60% of final monthly pay.",
+  "scenes": [
+   "The first September after you retire you go to the university gate to look at the registration tents. You don't go in. You buy a bowl of hot dry noodles by the road and eat it on the walk home.",
+   "The community seniors' college asks you to teach a course on how to talk with grandchildren. Not many come, and after class someone always stays behind to ask about their own family.",
+   "Before the Spring Festival your phone buzzes all day as students from over twenty years send photos: some holding babies, some abroad, one in a counselor's work jacket.",
+   "Your first year in the archives, you sort, scan and number every day. One day you scan a leave application with your own signature on it, and stop, and look at the date for a long time.",
+   "Slowly you can sleep through the night again. At weekends you walk by East Lake, watching young people cycle past, and no longer reach for the phone in your pocket without thinking.",
+   "The student from the bench by the Yangtze finds you at the archives. He's married now and says he wanted to see you. You sit on the archive steps together and talk all afternoon.",
+   "Your first months away from the university, you still turn your phone to full volume before bed, and only afterwards remember you don't need to.",
+   "You go back for an alumni event. On the wall of the student affairs office are photos of all the school's counselors, and you don't know a single face.",
+   "A student who once failed five courses now owns a company and takes you to dinner. After a few drinks he pulls from his wallet the academic warning letter you wrote him all those years ago.",
+   "The questions students ask in the middle of the night are all answered by the help assistant now. When people talk about counselors, they mean the person who turns up outside the dorm in the middle of the night.",
+   "The men's dorm is torn down and rebuilt. You go back to look: where the ground-floor duty room used to be there's now a study room, with the light on.",
+   "Your memory isn't what it was, but on the first day of every September you still wake an hour early and lie in bed listening for the sound of suitcases being wheeled outside."
+  ],
+  "closing": {
+   "retire": "One summer night many years later, walking by the Yangtze, you see a young man sitting alone on a bench. You sit down on the next bench and say nothing, and for a while you watch the lights of the boats on the river with him.",
+   "burnout": "Many years later you find the T-shirt covered in signatures at home. The ink has faded. You fold it and put it on the highest shelf of the wardrobe.",
+   "end": "Many years later your old phone is still in a drawer, long past switching on. You never threw it away. Now and then, tidying the drawer, you take it out, wipe it, and put it back."
+  }
+ }
+}

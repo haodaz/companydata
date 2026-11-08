@@ -1,0 +1,196 @@
+{
+ "id": "voc-teacher-dg",
+ "occupation": "Vocational Education Teacher",
+ "role": "CNC teacher at a secondary vocational school",
+ "headline": "After three years setting up machines at a Dongguan mould factory, you passed the exam into a public vocational school in the same town: mornings explaining G-code in the computer lab, afternoons in the training workshop with one eye on the emergency stops of fifteen machines",
+ "unit": "A public secondary vocational school in Dongguan (a dozen-plus programs including mechatronics, CNC, mould-making and e-commerce; over 3,000 students, half from western and northern Guangdong or from migrant families from other provinces)",
+ "unit_type": "Public secondary vocational school",
+ "city": "Dongguan",
+ "city_tier": "New first-tier city",
+ "education": "Bachelor's degree (Mechanical Design, Manufacturing and Automation, vocational teacher-training university)",
+ "level": "Three years setting up machines at a mould factory: you could program a three-axis mould core with your eyes shut. You have never taught a lesson to forty sixteen-year-olds, or shown anyone else how to set a tool",
+ "intro": "The head of department walks you into the training workshop: fifteen CNC lathes, eight machining centres, yellow lines on the floor, and a whiteboard on the wall that reads 'Before power-on, check: oil level, air pressure, emergency stop.' He points at an old lathe in the corner: the school's first machine, older than you are. From today, the forty students in this workshop are yours every afternoon.",
+ "salary_note": "Estimate: a new subject teacher at a public vocational school in Dongguan, with base pay, performance pay, Dongguan's teacher allowance and the year-end bonus, averages slightly above the national figure for vocational teachers. The first year is on contract; once you win a permanent post the allowances are complete.",
+ "facts": [
+  { "label": "Assistant Lecturer (current level)", "value": "0-3 years, ¥5,000–7,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Lecturer (3-8 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Taking students hand over hand through the machines in the training workshop", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Generating training task sheets and exercises", "source": "AI exposure" },
+  { "label": "Open positions", "value": "4 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "At the school gate a crowd of students races in on e-bikes, a few with their work overalls half on. You stand at the gate and have them park in the shed and turn their collars down.",
+  "In the computer lab you teach CNC programming, writing G01 and G02 on the big screen. A boy at the back is on his phone. You don't take it; you call him up to trace an arc in the simulation software. He wobbles off course, the class laughs, and so does he.",
+  "Training workshop: forty students across fifteen lathes. You watch each one set the tool. A girl's hand is too close to the chuck; you shout 'stop', she jumps, and hits the emergency stop.",
+  "In the canteen you sit with a mechatronics teacher who says a phone-case factory in town wants fifty interns, and asks if your class will go. You say: let's go and see what the jobs are first.",
+  "The afternoon's exercise is a stepped shaft. On the first trial cut, half of them are 0.05 millimetres over on the outer diameter. You measure each one with a micrometer and write every number on the record sheet.",
+  "A student is waiting at the workshop door. His father wants him to quit and go work in a factory, five thousand a month. You ask: what are you going to do in the factory? He says: don't know.",
+  "You ride your e-bike to Chang'an for dinner with your old employer. Your former master shows you their new five-axis machine and says what the factory lacks now is people who can program, not people who press buttons.",
+  "Back in your rented room near the school you mark training reports. Three have identical process analyses, down to the typos. You put a question mark on the first one."
+ ],
+ "ladder": [
+  { "title": "Assistant Lecturer", "stage": "Entry", "focus": "You teach theory and workshop classes, supervise one class's training, and earn your teaching certificate and CNC lathe and milling skill grades. You move up by teaching steadily and keeping the workshop accident-free." },
+  { "title": "Lecturer", "stage": "Dual-qualified", "focus": "You can run a core course on your own, coach skills-competition teams and set up school-enterprise order classes. Promotion takes years, public lessons, and increasingly, time in industry and certification as a 'dual-qualified' teacher." },
+  { "title": "Senior Lecturer", "stage": "Program lead", "focus": "As program lead or head of department you set the training plan, build training rooms and liaise with companies in town. Promotion needs competition results, research projects and industry work." },
+  { "title": "Professor-Level Senior Lecturer", "stage": "Master teacher", "focus": "You run a master-teacher studio for the city's vocational schools and help write program standards and textbooks; a city sees only a handful in many years." }
+ ],
+ "ai_tasks": [
+  { "name": "Generating training task sheets and exercises", "how": "From a part drawing and a lesson count, AI can produce a full set of task sheets, process card templates and exercises at once. The teacher spot-checks the tolerances and operation steps for mistakes." },
+  { "name": "Writing CNC programs and toolpaths", "how": "AI in CAM software can lay out toolpaths from a 3D model and generate the G-code. Which tool, what speeds and feeds, where it might crash: someone who knows the machine has to run it through simulation before it goes on." },
+  { "name": "Preparing lessons, slides and simulation animations", "how": "AI can draft notes and make animations and slides of the machining process. How far this year's students can follow, and what needs to be taken out to the workshop, the teacher decides." },
+  { "name": "Marking training reports and tracking learning data", "how": "AI can mark reports and tally each student's part pass rate and time. Whether a report was copied, whether a student has unsteady hands or didn't understand the drawing, the teacher only knows from watching in the workshop." },
+  { "name": "Taking students hand over hand through the machines in the training workshop", "how": "Setting tools, clamping, the first trial cut: someone has to stand by the emergency stop, ready to shout. The safety responsibility and the feel in the hands can only be carried by a person." },
+  { "name": "Working with companies and taking students on factory placements", "how": "Going to a workshop to negotiate an order class, checking that a placement actually fits the program, speaking up when a student is wronged at a factory: someone has to be there and take responsibility." },
+  { "name": "Running a class and seeing students through sixteen and seventeen", "how": "First romances, fights, wanting to drop out for factory work, nobody at home: these need a teacher present, talking slowly. AI can only help keep notes and reminders." }
+ ],
+ "events": {
+  "e_first_crash": "A student types one coordinate wrong and the tool slams into the chuck with a bang. Everyone in the workshop freezes. The machine is fine; the tool is broken. You have him read the program to you line by line, and at line seven he stops by himself.",
+  "e_cert_pass": "Your class sits the CNC lathe operator skill grade, and thirty-four of forty pass. A boy who's always late posts a photo of his certificate in the dorm group chat with three exclamation marks.",
+  "e_dropout": "A month into term three students leave your class: two to factories, one to deliver takeaway with a relative. You go to clear one boy's dorm bed and find a dog-eared technical drawing textbook underneath.",
+  "e_ear": "Years in the workshop with machine noise and compressed air pouring into your ears: a health check finds high-frequency hearing loss. The doctor tells you to wear earplugs. When you teach, you hang them round your neck.",
+  "e_competition_win": "A student of yours takes first prize in CNC milling at the provincial vocational skills competition. On the podium he's in his overalls, with traces of cutting fluid still on his hands.",
+  "e_hired_back": "Your first class graduates, and eight of them join precision machining plants in Songshan Lake. Six months later one sends a photo: him in front of a five-axis machine, the badge on his chest reading 'Programmer'.",
+  "e_ai_cam": "The school's new CAM software lays out toolpaths automatically; students import a 3D model and get a program in a minute. On the first run one student's program almost overcuts in a deep slot. You spot it in the simulation beforehand and have him find it himself.",
+  "e_ai_report": "Students start writing their training reports with AI, each tidier than the last. You change the assessment: shorter reports, and before the end of class everyone holds up their own part and explains, in person, the machining sequence and why.",
+  "e_ai_factory": "Visiting graduates at a factory in town, you find eight machines tended by one person, loading done by a robot arm, scheduling done by the system. That person is your student. He says now he looks after the equipment and edits programs; nobody does the button-pressing anymore.",
+  "e_order_class": "A precision mould factory in town signs an order class with the school: the factory provides two machines and a veteran technician, and graduates go straight into the plant. On signing day the factory owner shakes your hand: you used to be in our line.",
+  "e_cut": "Demonstrating clamping, you slice your hand on a burr on the workpiece. You get it dressed at the clinic and come back to make the cut the next day's safety lesson.",
+  "e_love": "You get together with a teacher from the school's e-commerce program. On your first date you cycle around Songshan Lake, and they say whenever you pass a factory building, your eyes go straight inside.",
+  "e_house": "You buy a small three-bedroom flat in town, ten minutes from school by bike. Half the down payment is the overtime pay you saved during those three years at the mould factory.",
+  "e_parents_call": "A student's father says on the phone: what use is vocational school, he'd be better off in a factory now. You don't argue. At the weekend you invite him to the school and show him the stepped shaft his son turned. He holds it and looks at it for a long time.",
+  "e_fight": "During evening study two students get into a fight outside the dorm over a pair of trainers. You take them both to the office, a glass of water each, and talk until eleven. In the end the two of them go off together to find the trainers.",
+  "e_child": "Your child is born. At the one-month celebration, your class chips in to turn the baby a tiny aluminium rattle, its outer surface polished bright, held within 0.01 millimetres.",
+  "e_five_axis": "The school wins funding for its training base and buys two five-axis machining centres. When they arrive you stay beside the manufacturer's engineer for three days of commissioning and write down every step.",
+  "e_fewer_students": "Fewer students apply for CNC these years and more for e-commerce and new-energy vehicles. The school meets to discuss merging the two CNC classes into one, and you speak for twenty minutes about how many people the factories in town still need.",
+  "e_old_student_boss": "A student who always slept in the workshop now runs his own machining shop in town with a dozen machines. He comes back to recruit, calls you master as he walks in, and says: master, that 'stop' you shouted back then, I still remember it.",
+  "e_back": "Afternoons on your feet in the workshop, for more than a decade: your back and knees aren't good anymore. The doctor says don't stand for long, so you put a tall stool in the workshop and watch them set tools from there."
+ },
+ "choices": {
+  "c_bianzhi": {
+   "title": "Sit the exam for a permanent post or not",
+   "situation": "You joined the school on a contract, paid less than teachers with permanent posts and without all the allowances. This year the city's teacher recruitment has one permanent CNC post: written exams in education theory and the subject, months of revision. You teach in the mornings and watch the workshop in the afternoons.",
+   "options": [
+    { "label": "Sit it", "result": "Every night after ten you study education theory for two hours, and drill questions at weekends. The interview is a trial lesson; you teach tool setting, and afterwards the examiner asks how many years you worked in a factory." },
+    { "label": "Not for now", "result": "You spend your evenings in the workshop and with your students. The figure on your payslip doesn't change, and your class has the best skill-certificate pass rate in the program." }
+   ]
+  },
+  "c_competition": {
+   "title": "Coach the skills competition team or not",
+   "situation": "The school wants you to coach this year's CNC milling competition team: pick five students, no summer holiday, ten hours a day in the workshop. A prize counts toward your promotion and the school's review; no prize, and the summer's training is wasted.",
+   "options": [
+    { "label": "Coach them", "result": "That summer the workshop holds only the six of you and the sound of the machines. On competition day you wait outside for four hours; your student hands in his part last and takes second prize." },
+    { "label": "Leave it to another teacher", "result": "You say you want to go home this summer. The training goes to a mechatronics teacher, and you help your parents bring in a season of lychees." }
+   ]
+  },
+  "c_factory_practice": {
+   "title": "Six months in industry",
+   "situation": "Certification as a 'dual-qualified' teacher requires industry experience, and the school can station you for six months at a precision machining company in Songshan Lake, working under their process engineers. Others would cover your classes, and you'd lose touch with your own.",
+   "options": [
+    { "label": "Go to the factory", "result": "In six months you learn their five-axis programming and in-process inspection, and see clearly what kind of people workshops lack now. When you come back you replace half of one course's content." },
+    { "label": "Stay at school", "result": "You say your class can't do without you. That half-year your students never change teachers, and at the end of term one writes in the course review: the teacher was always there." }
+   ]
+  },
+  "c_ai_course": {
+   "title": "Teach the new smart manufacturing course or not",
+   "situation": "The school is adding 'Intelligent Programming and Digital Twins' to the CNC program, using AI programming software and a simulation platform. There's no textbook; you'd have to learn it first and write the materials yourself. The head of department asks if you'll take it.",
+   "options": [
+    { "label": "Take it", "result": "You spend a winter holiday buried in the software and write a forty-page in-house handbook. At the end of the first term, your students' virtual production line wins a prize at the city's teaching competition." },
+    { "label": "Teach the old course well first", "result": "You say hand programming is the root, and the root comes first. The new course goes to a young teacher, and you keep teaching students in the workshop to write G-code line by line." }
+   ]
+  },
+  "c_internship": {
+   "title": "A placement that doesn't fit",
+   "situation": "An electronics factory in town wants fifty interns with a decent stipend, and the school wants its placement quota filled. But you went to look: it's assembly-line work fitting phone cases, nothing to do with CNC. Some students want the money, and their parents are willing.",
+   "options": [
+    { "label": "Hold out for placements that fit", "result": "You visit seven factories and find three that will let students run machines, enough for half the class. You phone the rest one by one, and a few parents curse you down the line." },
+    { "label": "Go with the school's arrangement", "result": "The students go to the electronics factory. When the placement ends one tells you: teacher, in three months I never touched a machine." }
+   ]
+  },
+  "c_old_factory": {
+   "title": "Your old employer wants you back",
+   "situation": "The mould factory in Chang'an has put in a five-axis line, and the owner asks you back as head of the programming team, at one and a half times your current pay, leading six people. If you leave, your students get a new class teacher.",
+   "options": [
+    { "label": "Go back to the factory", "result": "You write a handover on your forty students, one line each, and the last line says: they can all set a tool.", "end": "You go back to the mould factory as head of programming. Every year when the factory takes interns, you go and pick them from your old school yourself, and your first question is always: where's the emergency stop?" },
+    { "label": "Stay at school", "result": "You say you want to see this class out first. The owner says: then whenever you want to come back, the job's yours." }
+   ]
+  },
+  "c_senior_title": {
+   "title": "Applying for Senior Lecturer",
+   "situation": "Senior Lecturer requires a project at city level or above, research or industry. You could take students on a commissioned job improving fixtures for a factory in town, little money and lots of trips to the plant; or apply for a vocational education research project with reports and questionnaires, the safer route.",
+   "options": [
+    { "label": "Do the industry project", "result": "With three students you redesign a set of fixtures for a hardware factory, cutting changeover time from forty minutes to twelve. The factory owner writes a thank-you letter, and you put it in your application file." },
+    { "label": "Apply for the research project", "result": "You spend a year on questionnaires and interviews and write a report on employment among vocational CNC students. The project is signed off, and at review an expert says the materials are very well organized." }
+   ]
+  },
+  "c_dept_head": {
+   "title": "Head of department or not",
+   "situation": "The old head of department is retiring and the school wants you to run the mechanical department: four programs, twenty-odd teachers, two training workshops, the training plans, company partnerships and project bids to the education bureau. Your teaching would drop to four lessons a week.",
+   "options": [
+    { "label": "Take it", "result": "Your office moves from beside the workshop to the admin building. In the first year you get three companies in town to each send a veteran technician to teach at the school." },
+    { "label": "Stay in the workshop", "result": "You recommend a young colleague. You still stand in the workshop every afternoon, a micrometer at hand." }
+   ]
+  },
+  "c_own_shop": {
+   "title": "Go into partnership on a machining shop",
+   "situation": "The student who runs a machining shop asks you to buy in. His orders are getting more precise and more difficult, and he needs someone who knows process to anchor the place. Dongguan's towns have whole streets of shops like his; some grow big, some close within six months.",
+   "options": [
+    { "label": "Resign and buy in", "result": "You give up your permanent post and put in your savings. On the day you sign, your student calls you master, then corrects himself and calls you partner.", "end": "You and your student run the shop together, a dozen machines going day and night. You still start every day with a walk round the workshop, and when you see a hand too close to the chuck, you shout: stop." },
+    { "label": "Stay at school", "result": "You say you'd still rather teach. You introduce him to a few customers you trust, and later his shop adds five more machines." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "In your last term you wipe down the old lathe that's older than you and tape a note to it: the school's first machine, please don't throw it away. In your last workshop class you teach nothing new and let each student turn a small thing they want to make. When the bell goes the machines stop one by one, and you walk to the main switch and pull it down.",
+  "burnout": "Those years your back, knees and ears get worse and worse, and standing in the workshop hurts. The doctor says no more workshop. You ask to move to the academic affairs office to keep the training equipment register, checking serial numbers against spreadsheets every day. When you pass the workshop you still glance in and listen for whichever machine sounds wrong."
+ },
+ "stages": [
+  "Mornings you teach programming and technical drawing in the computer lab; afternoons you take forty students through the machines in the workshop: setting tools, clamping, trial cuts, measuring, one student at a time. The head of teaching research sits in on your lessons and the workshop supervisor checks your equipment inspection sheets. You learn to translate factory talk into words a sixteen-year-old can follow.",
+  "You run a core course on your own, coach competition teams and negotiate order classes with companies. You're certified as a dual-qualified teacher and spend a month in industry every summer. When a new teacher runs his first workshop class, you stand behind him and watch for when he should shout stop.",
+  "You lead the program: you set the CNC training plan, write the proposals for the training base, and sit down with companies in town to talk about where students will go. What you sign now are equipment purchase orders, partnership agreements and teachers' lesson plans; you get to the workshop two or three times a week.",
+  "Your name is on a master-teacher studio for the city's vocational schools. You help write the province's program standards and textbooks, visit vocational schools in every town to observe classes, and advise new training bases. When companies come to the school about a partnership, they often first ask whether the teacher from the mould factory is still there."
+ ],
+ "work": [
+  "At your first workshop class nobody powers on. First every student finds the emergency stop on their machine, presses it three times, and says out loud where it is.",
+  "A student's shaft is 0.03 millimetres different end to end, and he blames the machine. You have him turn another on a different machine: still 0.03. He looks down at his tool-setting record.",
+  "You photocopy the notebook you kept setting up machines at the mould factory, forty copies, and hand them out. A student asks: teacher, why is it all error codes?",
+  "In competition training you have the five students start each day by turning the same part. After a month the fastest is down from forty minutes to eighteen.",
+  "The order class's veteran technician teaches his first lesson and talks for an hour with nobody following. After class you agree with him: next week you'll explain the principle for ten minutes first, then he'll demonstrate on the machine.",
+  "In a new teacher's workshop class, a student's program goes onto the machine without passing simulation. You don't correct him in front of the students; after class you run that section through simulation with him.",
+  "Writing the training base proposal, you swap one very expensive imported measuring instrument on the purchase list for two domestic ones, and use the savings for twenty more sets of tools and fixtures.",
+  "Negotiating an order class, the company wants interns doing nothing but loading and unloading for a year. You add a clause to the contract: every student programs on a machine for at least twenty hours a month.",
+  "Revising the training plan, you cut a course on old-style machines and add equipment maintenance and data collection. An older teacher argues with you about it for a whole afternoon at the department meeting.",
+  "Writing the provincial textbook, you insist on putting one workshop photo in the first chapter: a hand pressing the emergency stop.",
+  "You observe classes at a town vocational school with three old machines and sixty students. Back home you start a donation drive in the studio's group chat and gather five retired but still working machines.",
+  "A young teacher in the studio hands in a competition training plan packed full. In the margin you write: leave one day for them to turn something they want to make."
+ ],
+ "past": [
+  "You went to middle school in a town in Zhanjiang, with high school entrance scores that were neither here nor there. Your father had worked in Dongguan factories for over a decade, and at New Year he said: learn a trade, and you'll never go hungry.",
+  "You went to an academic high school anyway, and the gaokao (college entrance exam) got you into the mechanical program at a vocational teacher-training university in Guangdong. When your father heard you could become a teacher or go into a factory, he said: that's a good one.",
+  "Your third-year placement was at a machine tool plant in Foshan. The first time you programmed and turned a complete part on your own, you took it back to the dorm, put it on your desk, and looked at it all evening.",
+  "After graduating you skipped teaching and joined a mould factory in Chang'an, Dongguan, as a CNC apprentice under a master from Sichuan. Twelve hours a day on your feet, your hands covered in cracks from the cutting fluid.",
+  "By your third year you were the factory's programmer, training two interns fresh from vocational school. The questions they asked, you realized, you had once asked yourself, and nobody had answered.",
+  "The public vocational school in town advertised for subject teachers with industry experience, and you applied. At your trial lesson you brought a part you'd turned yourself, and when you finished, you handed it to the panel."
+ ],
+ "late": {
+  "pension_note": "Estimate: a teacher with a permanent post at a public vocational school pays into the public-institution pension and occupational annuity; with a few years of factory social insurance on top, the pension comes to roughly 50-60% of final monthly pay.",
+  "scenes": [
+   "On the first day of term after you retire you ride past the school on your e-bike. The workshop door is open and you hear the machines starting up. You stop at the roadside for a moment, then ride on.",
+   "A small machining shop in town asks you to consult two half-days a week. Mostly what you do is show new apprentices where the emergency stop is.",
+   "At the school's fortieth anniversary the old lathe, polished to a shine, stands at the door of the school history room. The sign beside it gives its year, and your name.",
+   "Your first year in academic affairs, you check serial numbers against the equipment register every day. One day you reach the old lathe and write in the notes column: sounds a bit muffled, remember to change the bearings.",
+   "Your back slowly stops hurting so much, and at weekends you walk by Songshan Lake. The factory buildings along the shore get newer and newer; you can't see inside, only hear a faint sound of machines.",
+   "Young teachers still come to the academic affairs office to ask you how to fix this or that machine. You take out the old notebook, turn to a page, and hand it over.",
+   "Your first months away from the school, when you hear a tone at the factory that sounds like the school bell, you still look up without meaning to.",
+   "You go back for a skills festival. The workshop has machines you've never seen, and students program them from tablets. Standing at the back, you see a child's hand too close to the chuck and almost shout out loud.",
+   "Of the students you taught, some became workshop supervisors, some opened factories, some went home. At New Year they send red envelopes in the group chat, and someone posts a photo: a stepped shaft, its outer surface still bright.",
+   "Programming, scheduling, loading and unloading: more and more of the work goes to software and robot arms. The factories in town are still hiring, and what they want is people who can read a machine and dare to tell it to stop.",
+   "Your hearing gets worse, and your grandchildren have to raise their voices to you. Only when the fridge compressor at home sounds off, you're always the first to hear it.",
+   "Your hands are still steady. Making dumplings at New Year, you line up your pleats so evenly the family says they look machine-made. You say: better than machine-made."
+  ],
+  "closing": {
+   "retire": "One afternoon many years later you fix a toy car for your grandchild at home, and take out the vernier calliper you've used for decades to measure the axle. The numbers match. You put the wheel back on and watch it run a lap across the floor.",
+   "burnout": "Many years later, walking the old street in town, you pass a small machining shop with its door open and an old lathe turning inside. You stand at the door and listen for a while. It sounds right. You don't go in. You nod, and walk on.",
+   "end": "Many years later, sorting your toolbox, you find a yellowed sheet of paper: 'Before power-on, check: oil level, air pressure, emergency stop.' You flatten it and stick it on the wall above your workbench."
+  }
+ }
+}

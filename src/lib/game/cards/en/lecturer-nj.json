@@ -1,0 +1,199 @@
+{
+ "id": "lecturer-nj",
+ "occupation": "University Teacher",
+ "role": "Young university lecturer (tenure track)",
+ "headline": "A PhD in education from Beijing who signed a six-year 'up or out' contract at a university in Nanjing, teaching trainee teachers by day and rewriting a national research grant application by night",
+ "unit": "The School of Education at a teacher-training university in Nanjing (doctoral program in education, over eighty faculty, half of them tenure-track hires from the last ten years)",
+ "unit_type": "Key provincial university",
+ "city": "Nanjing",
+ "city_tier": "New first-tier city",
+ "education": "PhD (Education)",
+ "level": "Your dissertation was on classroom interaction in county high schools; you have two papers in core Chinese journals and one in English. You have never led a project, and never taught a full semester's course on your own",
+ "intro": "The HR officer slides the contract across to you: a pre-tenure term of three years plus three, and by the end you need one national-level grant and six papers in core journals, then a pass at tenure review, to stay. You sign the last page. Your office is on the fourth floor of the School of Education, three to a room. Your desk is by the window, and outside is a row of plane trees. From today, you have six years.",
+ "salary_note": "Estimate: a tenure-track lecturer at a key provincial university in Nanjing, with base pay, post allowance, research performance pay and year-end bonus, earns a little over ¥100,000 a year, slightly above the national figure for university teachers at the same experience. There is a settling-in allowance but no housing.",
+ "facts": [
+  { "label": "Lecturer, tenure track (current level)", "value": "0-6 years, ¥7,225–10,625 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Associate Professor, tenured (6-12 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥16,500 (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Taking trainee teachers into school classrooms for practicum and fieldwork", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Searching, translating and summarizing research at home and abroad", "source": "AI exposure" },
+  { "label": "Open positions", "value": "78 related job listings nationwide, 1 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "In your rented flat in Xianlin you heat milk and open your inbox: a rejection from a journal, a notice from the school chasing your undergraduate syllabus, a student's question about homework, in that order.",
+  "First and second periods: Educational Research Methods for trainee teachers, in a 120-seat lecture hall. You teach how to ask questions in an interview. Half the back rows are using AI to tidy their notes; one student in the front keeps putting her hand up.",
+  "Back in the office, both your young officemates are revising grant applications. You open yours and change the title for the seventh time: 'The Structure and Change of Classroom Interaction in County High Schools'.",
+  "Upstairs in the canteen, a few tenure-track colleagues share a table and talk about who won a youth grant, which journal reviews fast these days, and whose child got which primary school in the lottery.",
+  "You go to a middle school in Gulou to observe a lesson, with a voice recorder and an observation sheet. From the back row you note how many seconds students stay silent after the teacher asks a question: three, five, eleven.",
+  "The school holds a prep meeting for the undergraduate teaching evaluation. You're assigned three years of graduation theses to sort, over four hundred volumes, to be reboxed to format by Friday.",
+  "At home in the evening you transcribe the afternoon's recording. The AI finishes in ten minutes; you spend two hours checking it line by line, putting the dialect it misheard back the way it was said.",
+  "You go back to the rejection letter, copy the reviewer's three comments onto sticky notes and stick them by your monitor. The third says: the research question is not clear enough."
+ ],
+ "ladder": [
+  { "title": "Lecturer (tenure track)", "stage": "Pre-tenure", "focus": "You teach undergraduate courses, take trainee teachers on practicum, apply for grants and publish. Within the six-year term you need a national grant and enough representative work to pass tenure review and stay; fail, and you have to leave." },
+  { "title": "Associate Professor (tenured)", "stage": "Tenured", "focus": "With tenure you can take master's students and lead national projects, and you start reviewing for journals and judging other people's grants. Going further depends on major projects and your name in the field." },
+  { "title": "Full Professor (doctoral supervisor)", "stage": "Running a team", "focus": "You lead a research team and doctoral students and win major projects. Discipline evaluations, degree programs and faculty recruitment all need you to step up." },
+  { "title": "Grade 2 Professor", "stage": "Discipline lead", "focus": "One of the known names in your field nationally, leading the discipline and sitting on review committees; a university sees one or two in a field over many years." }
+ ],
+ "ai_tasks": [
+  { "name": "Searching, translating and summarizing research at home and abroad", "how": "AI is good at searching, translating and summarizing Chinese and foreign literature and drafting a review. A person only needs to spot-check that the citations are real and the conclusions accurate, then pick out what bears on their own question." },
+  { "name": "Writing grant applications", "how": "AI can structure an application, polish the prose and organize past results. Which direction to take, where the novelty lies, how to build the team and how to spend the money are for a person to decide and answer for." },
+  { "name": "Processing survey data and interview records", "how": "AI can transcribe interviews, do first-pass coding of classroom video and run statistical models. How to set the coding framework and what the data mean, the researcher has to check back in the field." },
+  { "name": "Preparing classes, setting questions and marking", "how": "AI can help with slides, questions and marking. How the discussion goes in the room, and how to catch a student's question, is the teacher's own work." },
+  { "name": "Writing textbooks and lecture notes", "how": "AI can draft notes and generate cases and exercises. The structure of a textbook, whether its content is right and how deep to go need a person to check and sign off." },
+  { "name": "Taking trainee teachers into school classrooms for practicum and fieldwork", "how": "Going into schools to observe, supervising student teachers and talking with classroom teachers takes someone there in person, taking responsibility, with trust built up over years." },
+  { "name": "One-to-one supervision of students' theses and research", "how": "Where a student is stuck, whether a question is worth pursuing, when to give a push: it takes a supervisor sitting down to talk, again and again." }
+ ],
+ "events": {
+  "e_reject": "A paper under review for eight months is rejected with two lines of comments. You change its title, swap its theoretical framework, and send it off again on Sunday night.",
+  "e_first_pub": "One of your papers is accepted by a leading journal after fourteen months of review. The email arrives while you're teaching; after class you read it again in the corridor.",
+  "e_youth_grant": "The National Social Science Fund's youth grant list is published, and your name is on it. The dean sends a digital red envelope to the group chat, and you sit in the office for half an hour doing nothing.",
+  "e_grant_fail": "Your second-year grant application fails again. The reviewers say 'the topic has some significance, but the research design is not solid enough'. Your officemate's succeeds, and she buys you all bubble tea. You take a big gulp and say congratulations.",
+  "e_rent": "Your landlord says the rent goes up by ¥500 next year. You tally your settling-in allowance, your housing fund and Nanjing house prices, write a row of numbers in your notebook, and cross them out.",
+  "e_student_thanks": "A trainee teacher sends you a long email before graduating. She's gone to teach at a county middle school, and in her first lesson she used your 'wait five seconds'. A child who never spoke put up his hand.",
+  "e_admin_load": "The school is preparing for the undergraduate teaching audit, and every young faculty member has a share. In one month you sort four hundred theses and write three self-assessment reports, and not a word of your own research.",
+  "e_ai_lit": "You start using AI to read the literature, getting through fifty English abstracts in an evening. Once it lists a 'classic study' for you. You search the databases for ages: the paper doesn't exist.",
+  "e_ai_essays": "Of the 120 term papers handed in, thirty-odd read as if one person wrote them, and two of the references can't be found. You change next term's assessment: everyone observes one lesson at a school and comes back to present it in person.",
+  "e_ai_coding": "Classroom video that used to take a semester to code, AI now first-pass codes in a weekend. You and your students pick out the tenth it gets wrong, and find the errors are all dialect and silence.",
+  "e_neck": "After three straight weeks on a grant application your neck hurts so much you can't turn your head. The campus physiotherapist calls it classic 'grant-writer's neck' and prescribes a month of treatment.",
+  "e_marriage": "You and the partner you met during your PhD register your marriage in Nanjing; they work at a company in Hexi. The wedding is simple. Your supervisor sends a video from Beijing: papers and life, take them both slowly.",
+  "e_house": "You buy a flat in Jiangning, an hour from campus by metro. Both sets of parents pooled the down payment. After signing you stand outside the sales office for a while, and neither of you says anything.",
+  "e_child": "Your child is born. For six months you answer reviewers in hospital corridors and revise slides beside the cot. One day in class you say 'baby bottle' instead of 'sample', and the room bursts out laughing.",
+  "e_conference": "You give a twenty-minute talk at a national annual conference. Afterwards an elderly scholar you've been reading for years comes over, says your 'seconds of silence' is interesting, and takes your email.",
+  "e_colleague_leaves": "A colleague hired the same year doesn't pass tenure review and leaves next term for a university in another province. You help him pack books the day he clears his office; the box is labelled: education, miscellaneous.",
+  "e_first_phd": "Your first doctoral student passes her defence and goes to teach at a university in the west. Before she leaves she gives you a copy of her thesis. On the flyleaf is the line you once wrote on her proposal.",
+  "e_policy_cite": "The province's education department asks for your team's report on county high school classrooms, and several recommendations go into a plan for improving county high schools. You recognize your own sentences in it.",
+  "e_burnout_review": "That year you review over forty papers, judge twenty-odd grants and sit on six thesis committees, and finish none of your own papers. You circle a date in your calendar: next year, take on half.",
+  "e_ai_tutor_research": "AI teaching assistants have come into school classrooms. Your group follows three schools for two years and finds students ask the machine more and more, and what they ask their teachers grows harder and harder.",
+  "e_old_school": "You go back to the county high school where you did your doctoral fieldwork. The teacher who always waited five seconds is now deputy principal. She takes you to the back row of the classroom and says: your seat."
+ },
+ "choices": {
+  "c_teaching_or_paper": {
+   "title": "Teach well, or papers first",
+   "situation": "The pre-tenure review counts only grants and papers; teaching just has to be 'satisfactory'. Your Educational Research Methods course has the best student ratings in the school, but each lesson takes a whole day to prepare. Your officemate says: let AI do your slides and save the time for papers.",
+   "options": [
+    { "label": "Keep teaching properly", "result": "You still spend a full day a week preparing, and your end-of-term rating is 98. That year you send out only one paper." },
+    { "label": "Teach just well enough", "result": "You use AI to rework your slides and spend the time saved on writing, sending out four papers that year. Your rating drops into the eighties, and one comment says: the teacher seems very busy." }
+   ]
+  },
+  "c_field_or_data": {
+   "title": "Fieldwork, or ready-made data",
+   "situation": "To keep studying county high school classrooms you'd have to visit three counties in northern Jiangsu every term, two weeks at a time, and results come slowly. Others urge you to run regressions on large public survey data; two papers in six months.",
+   "options": [
+    { "label": "Go and sit in county classrooms", "result": "You spend a semester in county-town hotels in northern Jiangsu and record over a hundred lessons. Results come slowly, but what you hold is something nobody else can get." },
+    { "label": "Use ready-made data for now", "result": "You publish two papers in six months, and the models look beautiful. One reviewer asks: have you ever seen the classrooms behind these numbers?" }
+   ]
+  },
+  "c_midterm": {
+   "title": "The pre-tenure midterm review",
+   "situation": "Three years are up and the school runs its midterm review: anyone without a national grant either gets extended or starts preparing to leave. You have two core-journal papers and one provincial project. The dean tells you privately that joining a big project team as a core member would make your review look better, but you'd have to set your own direction aside.",
+   "options": [
+    { "label": "Join the big project", "result": "You run a sub-project in a professor's major grant, sit through dozens of meetings and write three reports. You pass the midterm, and your own county school project sits on your hard drive." },
+    { "label": "Hold to your own direction", "result": "You ask the dean for one more year. That year you have almost no weekends, and the next spring your own youth grant comes through." }
+   ]
+  },
+  "c_tenure": {
+   "title": "Tenure review failed: one step short of Associate Professor",
+   "situation": "Six years are up and you didn't make Associate Professor this round. The school says the contract allows one more year's grace. A provincial university in another province will hire you straight in as Associate Professor, with a permanent post and a staff flat. Or the school can move you to a teaching-track post and keep you, but you would leave the tenure track for good.",
+   "options": [
+    { "label": "Go to the other university", "result": "You pack the books in your office into twelve boxes, and the plane tree leaves cover the ground.", "end": "You go to the university in the other province as Associate Professor: twice the teaching, half the pressure. Your county school project goes on, and every year you take students to observe at local schools, where the teachers call you 'the teacher from Nanjing'." },
+    { "label": "Stay on the teaching track", "result": "You sign a new contract with more teaching and reviews based on teaching alone. That year you rewrite the notes for Educational Research Methods, and students say it's the best course they've taken." },
+    { "label": "Use the grace year to try again", "result": "You rearrange six years of work, add an English paper, and apply for review once more. That year you hardly ever go to bed before one in the morning." }
+   ]
+  },
+  "c_ai_course": {
+   "title": "Teach a new course on AI and teaching or not",
+   "situation": "The university wants every school to offer a course combining AI with its own discipline, and nobody in Education wants it: it has to be built from scratch, you'd have to learn a pile of tools first, and it counts as teaching load, not research. The dean asks if you'll take it.",
+   "options": [
+    { "label": "Take it", "result": "You spend a summer learning the tools and writing notes, and over two hundred students sign up in the first term. You have trainee teachers prepare a lesson with AI, teach it for real at a school, and come back to write a reflection comparing the two." },
+    { "label": "Turn it down", "result": "You say your papers come first. The course goes to a new colleague, and sometimes, passing the classroom, you hear them arguing over whether AI can mark essays in place of a teacher." }
+   ]
+  },
+  "c_hongkong": {
+   "title": "A faculty post at a Hong Kong university",
+   "situation": "A professor you met at an international conference recommends you for an assistant professorship at the School of Education of a Hong Kong university: teaching in English, starting pay more than three times what you earn now, also with a six-year review, judged on English-language journals. Your county high school research would have to move to schools there.",
+   "options": [
+    { "label": "Go to Hong Kong", "result": "You spend three months preparing a teaching statement and research plan in English. At the video interview you still talk about those eleven seconds of silence in a county classroom.", "end": "You move to Hong Kong, into a tiny staff flat halfway up a hillside. Your research moves to the secondary classrooms there, where students speak Cantonese and write in English, and every week you sit at the back of a class and learn to listen all over again." },
+    { "label": "Stay in Nanjing", "result": "You write the professor a thank-you letter saying you want to see those classrooms in northern Jiangsu through. He writes back: then make it something nobody else could do." }
+   ]
+  },
+  "c_industry": {
+   "title": "An edtech company comes headhunting",
+   "situation": "A company making AI learning products asks you to head teaching research at its research institute, at three times your current salary, leading twenty people on classroom data. No grant applications, no promotion reviews; what you'd answer to is the product's numbers.",
+   "options": [
+    { "label": "Join the company", "result": "In your resignation letter you write 'thank you to the school for years of support'. The day you hand it in, you stand under the plane trees for a long time.", "end": "You go to the company to do research, with data you couldn't have got in ten years at the university. Only, at every meeting, the first question is always: how much did this feature lift user retention?" },
+    { "label": "Stay at the university", "result": "You turn it down politely. That evening you go back to the grant application you've revised seven times and change the title once more." }
+   ]
+  },
+  "c_admin_post": {
+   "title": "Become deputy dean or not",
+   "situation": "At the school's leadership change the dean wants you as deputy dean for undergraduate teaching: meetings, timetabling, evaluations, liaison with the academic affairs office, at least three half-days a week in the meeting room. A few years of it would smooth the way up; your own research would slow down.",
+   "options": [
+    { "label": "Take it", "result": "Meetings fill your calendar and your papers get pushed past ten at night. The next year the school's undergraduate programs come out in the top band in the provincial evaluation." },
+    { "label": "Focus on research", "result": "You decline. In those years you and your students turn the county classroom research into a book, and on publication day you send the first copy to that county high school." }
+   ]
+  },
+  "c_major_grant": {
+   "title": "Lead a bid for a major project",
+   "situation": "The National Social Science Fund has opened a major project on the digitalization of education, and the university wants you to lead the bid: five universities, thirty-odd people, an eighty-thousand-character application, five years from approval to completion. Win, and you lead the field; lose, and half a year's effort is wasted.",
+   "options": [
+    { "label": "Lead the bid", "result": "You run twenty-odd video meetings and take the application through eleven drafts. At the defence you speak for fifteen minutes, and your last slide is the child in the county classroom who was silent for eleven seconds." },
+    { "label": "Let someone else lead", "result": "You recommend a senior professor at another university and lead a sub-project yourself. The project wins, and you do the part you're best at." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "In your last term you still teach Educational Research Methods, and your last class is about how to listen. Afterwards you switch off the projector and hand the hard drives of classroom recordings you've gathered over the years to the school's archive. Leaving the building, the plane tree leaves are falling, and you walk slowly over them to the gate.",
+  "burnout": "At that year's health check several results are marked in red, and the doctor says you have to put things down. You resign from every review panel and outside role and cut your teaching to one course, and later ask to move to the university's museum of education to catalogue its old textbooks. Days with no one chasing a manuscript take some getting used to."
+ },
+ "stages": [
+  "Three courses a week, and the rest of your time rotates between three screens: the grant application, the journal submission systems, and the school's endless paperwork. You take twenty trainee teachers into a middle school on placement, arrange observations with classroom teachers, then transcribe, code and write. Three to an office: whoever wins a grant or gets a rejection, everyone knows the next day.",
+  "You have tenure now, and your first master's students. Thursday afternoons are lab meetings where students take turns reporting, and you sketch research designs on paper as you listen. Journal editors start asking you to review, grant panels invite you as an expert, and what you say begins to decide other people's six years.",
+  "You lead a team of a dozen or so: doctoral students, master's students, two young lecturers. Half your year goes to review panels, conferences and discipline-evaluation paperwork, half to working on students' theses with them. Whom to hire, which grants to bid for, where the discipline should head: those calls are starting to be yours.",
+  "You rarely write papers yourself now; your name shows up more in other people's acknowledgements. You chair a committee in a national society, comment on drafts for education authorities, and write prefaces for young scholars' books. A young lecturer comes to you, his pre-tenure term nearly up, and your first question is: what's the question you most want to answer yourself?"
+ ],
+ "work": [
+  "You set trainee teachers an assignment: observe one lesson at a school and record only how many seconds students stay silent after each question. On one returned sheet a student has added a last column: what I was thinking at the time.",
+  "The 'research foundations' section of the application allows three thousand characters. You squeeze your dissertation down again and again, and what's left are three recordings from a county classroom.",
+  "A reviewer says your sample is too small, so you go back to northern Jiangsu and record twenty more lessons at a township middle school. That night you add a column to the coding sheet.",
+  "At your first lab meeting with master's students, one gives a forty-minute literature review. When she finishes you ask her: which sentence in there is what you yourself want to say?",
+  "Reviewing for a journal, you find an obvious error in the author's data handling. You write two pages of comments, and the last line is: a good question, worth doing again.",
+  "You take three graduate students to a county high school for two weeks. At night, in a twin room at the hotel, you watch the day's video together until one in the morning, pausing on a student's hand raised halfway and lowered.",
+  "The discipline evaluation needs five years of representative work. You and two deputy deans spend three all-nighters in the meeting room checking every paper's impact factor and every award.",
+  "A doctoral student in your team wants to switch topics from classroom interaction to AI teaching assistants. You don't say yes straight away; you send her to spend a month at a school that uses one first.",
+  "At a faculty recruitment interview you listen to a PhD back from abroad present his research, and ask one question: which child in your data do you still remember by name?",
+  "The education department asks you to look at a draft plan for improving county high schools. You write a dozen comments in the margin, and the longest is about county teachers' weekly teaching hours.",
+  "You write the preface for a young scholar's first book. Three drafts are all too long, and in the end you keep one paragraph: in this book, someone sat at the back of the classroom and really listened.",
+  "At the committee's annual meeting you don't give the keynote; you chair a panel of young scholars, and after each one speaks, the first thing you say is what they did best."
+ ],
+ "past": [
+  "You went to high school in a county town in northern Jiangsu. Your maths teacher never rushed to call on anyone after asking a question, and the room would go quiet for a good while. It was the first time you felt silence could be part of a lesson.",
+  "For the gaokao (college entrance exam) you applied to study education at a teachers' university in Beijing. Your father asked: if you're studying education and not becoming a teacher, what are you studying? You said: how to be a teacher.",
+  "In your final year you were recommended for a master's at the same university, exam-free. Your supervisor took you to a county in the west for fieldwork, and you sat at the back of a middle school classroom for a month and came back with fifty thousand characters of field notes.",
+  "You went straight on into the PhD, with your dissertation on classroom interaction in county high schools. You went back to the county high school in your hometown in northern Jiangsu and, from the same row you once sat in, recorded your first lesson.",
+  "In your third doctoral year you spent a state-funded year as a visiting student at an American university, where you learned to code classroom video. You came back with two hard drives in your suitcase: one of recordings, one of coding sheets.",
+  "On the job market, a provincial university offered a permanent post with no review pressure; this university in Nanjing offered six years pre-tenure, up or out. You phoned your supervisor from outside your dorm, and your supervisor said: go where you want to do your research."
+ ],
+ "late": {
+  "pension_note": "Estimate: a university teacher with a permanent post pays into the public-institution pension and occupational annuity for about thirty years, and retires on roughly 60% of final monthly pay; the pre-tenure years count toward service.",
+  "scenes": [
+   "On the first day of term after you retire you don't go to campus. At home you leaf through your book on county classrooms once more and add a few lines in the margins.",
+   "You accept an invitation from a county high school to spend a week there each term, sitting at the back of young teachers' lessons and talking with them by the sports ground afterwards.",
+   "The school holds a small symposium for you, attended mostly by your students and their students. The last speaker, a young scholar, talks about seconds of silence.",
+   "Your first year at the museum of education, you sort old textbooks every day and write a card for each one. In a 1970s county high school maths book, a student's name is written on the flyleaf.",
+   "Slowly you recover, and at weekends you go and sit by Xuanwu Lake. You've turned off your email notifications, and find the days don't slow down because of it.",
+   "A young lecturer comes to find you at the museum. She's studying classroom questions in old textbooks and heard you'd catalogued them. The two of you spend an afternoon going through the stacks.",
+   "Your first year away from the university, you still open the submission system on Sunday nights out of habit, see the empty list, and only then remember you don't need to.",
+   "You go back to Nanjing for a conference and in the corridor outside the hall you run into your two old officemates, one of them dean now. You stand and talk for twenty minutes.",
+   "At a school open day you sit in on a lesson from the back row. The teacher asks a question and waits five seconds before calling on anyone. You write the number down in your notebook.",
+   "The tenure-track system has been revised again and again, and young lecturers' contracts have gone from six years to eight. Upstairs in the canteen, they still talk about the same few things.",
+   "AI teaching assistants are ordinary in classrooms now. More and more people study the classroom; the ones willing to sit at the back for a whole semester are still just a handful.",
+   "Your hearing isn't what it was, and when people speak you wait until they've finished and think a moment. Your grandchild says you're slow to react. You smile and say: it's called wait time."
+  ],
+  "closing": {
+   "retire": "One autumn many years later you pass a middle school with its windows open. Inside, a teacher asks a question, and the room goes quiet. Under the plane trees you count: one, two, three, four, five. A child speaks, and you walk on.",
+   "burnout": "Many years later, sorting old hard drives in your study, you plug them into the computer one by one; most can't be read anymore. The last one spins for a long time, and then a classroom appears on screen, someone coughing in the back row. You watch for a while, then close it.",
+   "end": "Many years later, tidying a bookshelf, you find the pre-tenure contract. The paper has yellowed, but the signature is still clear. You don't reread the terms; you slip it back inside your dissertation."
+  }
+ }
+}

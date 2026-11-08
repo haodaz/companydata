@@ -1,0 +1,197 @@
+{
+ "id": "special-ed-js",
+ "occupation": "Special Education Teacher",
+ "role": "Teacher in the intellectual disability department of a special education school",
+ "headline": "Fresh out of a special education degree and into a public special education school in Nantong, a class teacher for eight children with intellectual disabilities and autism, starting from tying shoelaces and learning what a red light means",
+ "unit": "A public special education school in Nantong, Jiangsu (departments for intellectual disability and hearing impairment, from preschool to vocational high school, around three hundred students, half of them boarding)",
+ "unit_type": "Public special education school",
+ "city": "Nantong",
+ "city_tier": "Second-tier city",
+ "education": "Bachelor's degree (Special Education)",
+ "level": "You have read the curriculum standards, the assessment scales and the books on behaviour analysis, and taught small groups for two months on placement. You have never on your own handled a child rolling on the floor who can't stop for twenty minutes",
+ "intro": "The Year Two classroom of the intellectual disability department is on the ground floor. Eight photos are taped by the door, each with a name and a small icon underneath: an apple, a toy car, a sun. A row of plastic cups stands on the windowsill with the same icons on them. Your mentor says: first learn whose cup is whose. From today, every small thing these eight children learn each day is yours to write down, line by line.",
+ "salary_note": "Estimate: a newly appointed teacher at a public school in Nantong, with the special education allowance, performance pay and year-end bonus, averages a little under the national figure for primary and secondary teachers (the big cities pull the national number up), about 90%. Less during the probation year, rising steadily once graded.",
+ "facts": [
+  { "label": "Second-Grade Teacher (current level)", "value": "0-5 years, ¥5,500–8,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "First-Grade Teacher (5-10 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Training students in self-care and practical work skills", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Preparing lessons and writing proper lesson plans", "source": "AI exposure" },
+  { "label": "Open positions", "value": "180 related job listings nationwide, 4 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The school bus arrives and you meet the children at the door one by one. Xiaoyu has to touch the gate railing three times when he gets off. You wait until he has, then take his hand and walk him in.",
+  "Morning check and morning circle. The eight children sit in a ring and you hold up today's picture timetable: wash hands, Chinese, snack, playground. One child takes the playground card off and hugs it to his chest.",
+  "Daily living class: the seven steps of handwashing. You stand behind each child, holding their hands as they rub the backs, counting each step. By step five there is water all over the floor.",
+  "In functional Chinese, Xiaoyu suddenly bursts into tears and starts banging his head on the desk. You hand the others to the care assistant to take aside, crouch down, slide a soft pad over the corner of the desk, and wait for him to slowly stop.",
+  "Lunch. You feed them one at a time and teach them one at a time to hold a spoon. Today a girl gets a whole spoonful of rice into her mouth by herself for the first time, and you draw a star on the record sheet.",
+  "In the sensory integration room you take two children through their session: lying on scooter boards and paddling forward, the balance beam, the tunnel. By the end of the lesson the back of your shirt is soaked.",
+  "Home time. A mother at the door takes your arm: did he talk today? You open the record book and show her. It says: in the afternoon, said 'want' once.",
+  "Back in your rented room you work on this term's individualized education plans on the computer, eight children, eight forms. On the third one you push 'uses the toilet independently' back by another term."
+ ],
+ "ladder": [
+  { "title": "Second-Grade Teacher", "stage": "Entry", "focus": "Graded after a one-year probation. You run a class under a mentor and learn to assess children and write individualized education plans; you move up on real progress in your children and one public lesson that passes muster." },
+  { "title": "First-Grade Teacher", "stage": "Mainstay", "focus": "You can take the hardest class on your own, run rehabilitation assessments, lead home-based teaching and visit mainstream schools as an inclusion advisor. Promotion needs five full years at Second Grade, plus public lessons, a case study or a research project." },
+  { "title": "Senior Teacher", "stage": "Gatekeeper", "focus": "A lead figure in teaching and rehabilitation: you run a department's curriculum and assessments, mentor young teachers, and guide inclusion across the city's mainstream schools. Places are tight." },
+  { "title": "Professor-Level Senior Teacher", "stage": "Lead", "focus": "A known name in special education across the province: you lead research, write the local curriculum and run a master-teacher studio. A prefecture-level city sees one or two in many years." }
+ ],
+ "ai_tasks": [
+  { "name": "Preparing lessons and writing proper lesson plans", "how": "AI can quickly draft lesson plans, tiered materials and slides from the curriculum standards and the students' profiles; the teacher only needs to spot-check and adjust them to the real children." },
+  { "name": "Teaching Chinese, maths and other subjects to students with disabilities", "how": "AI can generate exercises, adapt textbooks, give individual explanations and provide aids such as speech-to-text and picture support. How to teach it in the room, and how to get a student to understand and keep going, rests on the teacher's judgment in the moment." },
+  { "name": "Writing and adjusting each student's individualized education plan", "how": "AI can pull together assessment records and draft goals and suggested adjustments. The teacher sets the goals and priorities from long observation of the child, and answers for the plan." },
+  { "name": "Training students in self-care and practical work skills", "how": "Dressing, eating, using the toilet, doing housework: these have to be shown hand over hand, practised alongside the child and kept safe in the moment. AI can at most supply flowcharts and record-keeping; the training itself takes a person." },
+  { "name": "Guiding social communication and behaviour", "how": "Social and behavioural guidance depends on real interaction, reading small expressions and movements and responding in time. AI can supply social-story material, but the one who practises with the child in real situations is still the teacher." },
+  { "name": "Calming students' emotions and looking after their wellbeing", "how": "When a student's emotions surge, someone has to be there, build trust, soothe and judge the risk. AI can help keep the emotion log, but it cannot replace being there or carrying the responsibility." },
+  { "name": "Working with parents, therapists and social workers to improve a student's situation", "how": "AI can organize contact records, draft home-school updates and meeting minutes, and translate professional jargon. Building trust with parents, reconciling views and making the call are up to the teacher." },
+  { "name": "Running the class day to day and teaching values and safety", "how": "Class management and safety education depend on being there to watch over, dealing with the unexpected on the spot and setting the rules. AI can only help with schedules and material for values activities." }
+ ],
+ "events": {
+  "e_scratch": "When a child's feelings boil over he grabs your wrist and won't let go, and leaves two marks across the back of your hand. You put a plaster on it in the office, teach the afternoon as usual, and write the time and what came before it in the behaviour log.",
+  "e_shoelace": "After three months of practice, the slowest boy in the class ties one shoelace by himself, a lopsided bow. He looks up at you. You hold back the praise for a moment and first have him try the other one.",
+  "e_family_question": "At the New Year dinner table a relative asks: what can you possibly teach those children? You say: to feed themselves, take the bus, buy things at the supermarket. The table goes quiet for a moment, and someone puts a piece of food in your bowl.",
+  "e_mom_hallway": "A child's mother is crying at the end of the corridor. Her husband has moved out, she says; she works at a supermarket by day and looks after the boy alone at night. You sit with her for half an hour and look up how to apply for the district's care subsidy.",
+  "e_back": "Bent over all day guiding hands and lifting children onto scooter boards, one Monday morning you can't straighten your back. The doctor says lumbar muscle strain and tells you to change how you work. You start learning to crouch down when you talk to the children.",
+  "e_aac": "The school gives your class communication tablets with voice output: tap a picture and it speaks. A girl who has never spoken taps three pictures for the first time, 'I', 'want', 'water'. You freeze for a second, then hurry to hand her the cup.",
+  "e_ai_iep": "AI can draft the individualized education plans now: it gathers the assessment scores and the year's records and lines up the goals. You revise all eight drafts from start to finish, and what you cut most are the goals that sound lovely and that the child can't reach.",
+  "e_ai_camera": "The classroom gets a behaviour-logging system that counts each child's outbursts and when they happen. Only when the report comes out do you see that most of Xiaoyu's crying falls at ten on Monday mornings, before the lesson where they change rooms.",
+  "e_allowance": "The province raises the special education allowance, and that line on your payslip grows by a few hundred yuan. An old teacher in the office says: twenty years in this job, and finally someone noticed.",
+  "e_sports_day": "You take three children to the province's sports day for children with special needs, and one comes second in the 50-metre dash. On the coach home he holds the medal up the whole way. Anyone can look at it, but nobody gets to touch.",
+  "e_more_autism": "In recent years more and more of the children enrolling are autistic; in some classes it's half. The school's therapy rooms can't fit them all in, so a few of you take turns pushing your lunch break back to after three.",
+  "e_job_placement": "A boy you taught in the vocational department gets a job stocking shelves at a supermarket near his home, lining up the yoghurt by date every day. The manager calls to say his shelves are the neatest in the store.",
+  "e_after_school": "The parent of a student who graduated two years ago calls. Since leaving school he has stayed at home, in front of the television all day, saying less and less. You go through every day-care and sheltered workshop in the city; every place is full.",
+  "e_partner": "A friend introduces you to someone who works in the development zone. On your third meeting they ask whether your job is tiring. You tell them about the boy and the shoelace, for nearly an hour, and they listen the whole time.",
+  "e_home": "You buy a second-hand flat in Chongchuan, four bus stops from school. The day you sign, you sit for a while in the bare living room and work it out: the mortgage is about half your pay.",
+  "e_own_child": "You have a child of your own. The day he ties his shoelace by himself for the first time, you are watching, and suddenly you think of the boy at school who practised for three months, and your eyes sting.",
+  "e_city_award": "You are named one of the city's outstanding teachers. You wear a new shirt to the ceremony, and just before you go on stage a parent sends a photo: her child holding up a sheet of paper with 'hello teacher' written in wobbly characters.",
+  "e_tired": "That term two children with very heavy emotional needs join your class. Every evening you come home with nothing left to say and sleep until noon at weekends. On your health check report, several numbers have arrows next to them.",
+  "e_inclusion": "Mainstream schools across the city start setting up resource rooms, and more children are placed in ordinary classes. You sit in on a lesson at a primary school and see a child you sent over sitting in the front row with his hand up.",
+  "e_young_teacher_ai": "A new teacher uses AI to make each child a social-story picture book with their own photos in it, eight books in one evening. You leaf through them and pick one for her to redo: that child is afraid of dogs, and the book has a dog in it.",
+  "e_grown_student": "A student you taught more than ten years ago, nearly thirty now, comes to the school with his mother to see you. He still knows you, says teacher, and pushes a bag of biscuits he baked himself into your hands."
+ },
+ "choices": {
+  "c_aba": {
+   "title": "Pay your own way to learn behaviour analysis",
+   "situation": "When a child in your class melts down, all you can do is wait. In Nanjing there's a full training course in autism intervention, covering functional behaviour assessment and positive behaviour support: every weekend for six months, over ¥10,000 in fees, of which the school will reimburse half.",
+   "options": [
+    { "label": "Sign up and go to Nanjing at weekends", "result": "Every Saturday you take the early high-speed train to Nanjing and come back in the evening to turn your notes into charts. Six months later Xiaoyu's head-banging has dropped from five or six times a day to twice a week." },
+    { "label": "Learn from your mentor first", "result": "Every day after class you watch how your mentor handles things and write down whatever she says. It's slow, but everything you learn fits this school and these children." }
+   ]
+  },
+  "c_home_teaching": {
+   "title": "Home-based teaching",
+   "situation": "A dozen or so children in the district are too severely disabled to come to school, and the school must send teachers to them twice a week, two hours a visit. The family assigned to you is out in the countryside in Tongzhou, forty minutes' drive. The child has spent years lying in bed.",
+   "options": [
+    { "label": "Take it on", "result": "Every Tuesday and Thursday afternoon you drive out of town with a bag of coloured blocks and a book of picture cards. By the second term, the child turns his head when he hears your footsteps." },
+    { "label": "Say you can't leave the class", "result": "The head of teaching doesn't push it and sends another teacher. You work the plans for your eight children through in even finer detail." }
+   ]
+  },
+  "c_ai_tools": {
+   "title": "Join the assistive tech pilot or not",
+   "situation": "The city is piloting AI assistive tools in two special schools: communication boards, speech recognition, auto-generated tiered exercises. Teachers try them first and write weekly feedback. The vendor's training is all at weekends.",
+   "options": [
+    { "label": "Sign up for the pilot", "result": "You spend weekend after weekend in training, then come back and set up each child's own picture library. At the end-of-term review the vendor's people photograph your spreadsheet." },
+    { "label": "Watch others use it first", "result": "You stick with the paper picture cards you cut yourself; the children all know them. Two years later, when the whole school switches over, you learn it from scratch alongside the young teachers." }
+   ]
+  },
+  "c_first_grade": {
+   "title": "Applying for First-Grade Teacher",
+   "situation": "Five full years at Second Grade, so you can apply for First-Grade Teacher. The panel looks at a public lesson and a case study. You could write up the girl in your class who never spoke and later learned to use the communication board, but that needs her parents' consent and a full year of tracking.",
+   "options": [
+    { "label": "Write up her case", "result": "Her parents sign the consent form. You track her for a year and write over ten thousand characters, changing every detail that could identify her. At your defence an expert on the panel asks three questions, then says: this is what a special education case study looks like." },
+    { "label": "Get the public lesson right first", "result": "You spend a term polishing a functional maths lesson on recognizing money, and the children run a little shop in the classroom with real coins. Your promotion waits a round." }
+   ]
+  },
+  "c_private_rehab": {
+   "title": "A private rehab centre comes headhunting",
+   "situation": "An autism rehabilitation centre in Suzhou offers half as much again as you earn now: one-to-one intervention, paid by the session, and a supervisor's post if you do well. You'd give up your permanent state post and teach weekends too, and parents there pay ¥300–400 an hour.",
+   "options": [
+    { "label": "Resign and go to Suzhou", "result": "You hand your eight plans over to the teacher taking your class, with an extra page at the back of each: what he's afraid of, what he loves.", "end": "You join the centre in Suzhou, six one-to-one sessions a day, and two years later become a supervisor. Sometimes, explaining the fees to a parent, you think of the mother in Nantong who worked at a supermarket and raised her boy alone." },
+    { "label": "Stay at the school", "result": "You turn it down. That day after work you meet the same mother at the gate picking up her son. Teacher, she says, you'll keep him next term, won't you?" }
+   ]
+  },
+  "c_resource_teacher": {
+   "title": "Visiting mainstream schools as an inclusion advisor",
+   "situation": "The city is pushing inclusive education and wants experienced special school teachers to visit mainstream schools as roving advisors, helping their teachers with children placed in ordinary classes. Four schools a week, no fixed class, and the people you deal with become homeroom teachers and principals.",
+   "options": [
+    { "label": "Go on the rounds", "result": "You ride your e-bike between four schools, explaining to homeroom teachers why an autistic child covers his ears and where his desk should go. A term later, two schools have laid out their resource rooms from your sketch." },
+    { "label": "Stay in your department", "result": "You say you'd rather keep your own class. That year two of your children move up to the vocational department." }
+   ]
+  },
+  "c_employment": {
+   "title": "Supported employment in the vocational department",
+   "situation": "The vocational students are about to graduate, and the school wants to try supported employment: teachers find shops and factories willing to take them, then go to work with the students for a few months, starting from taking the bus. No extra pay, and the people you'd have to chase are store managers and HR staff you've never dealt with.",
+   "options": [
+    { "label": "Lead it yourself", "result": "You visit more than twenty shops and are turned down a dozen times. Finally a bakery and two supermarkets say yes, and you work in the shops beside three students for three months. In the fourth month they take the bus there on their own." },
+    { "label": "Focus on the classroom", "result": "You rewrite the vocational baking course so the students learn at school to weigh flour and read the oven temperature. The road outside you leave to another teacher." }
+   ]
+  },
+  "c_vice_principal": {
+   "title": "Deputy principal for teaching, or not",
+   "situation": "The old deputy principal is retiring and the principal wants you to take over teaching: the whole school's curriculum, assessment, teaching research and new-teacher training, plus liaison with the city education bureau and the disabled persons' federation. You'd leave the classroom and spend your days between meeting room and office.",
+   "options": [
+    { "label": "Take it", "result": "You move into the office on the second floor, and your desk fills with folders instead of teaching aids. Your first year's work is bringing every assessment form in the school into one system." },
+    { "label": "Stay with your class", "result": "You recommend a colleague a few years younger. You're still in that ground-floor classroom, and the cups on the windowsill have a new set of icons." }
+   ]
+  },
+  "c_disability_center": {
+   "title": "A move to the city's rehabilitation centre",
+   "situation": "The rehabilitation centre run by the city's disabled persons' federation needs someone who knows special education to run children's rehabilitation: assessing every disabled child in the city aged nought to six, referring them on and arranging rehabilitation support. An office job, no students, and the people you'd deal with are doctors, parents and district staff.",
+   "options": [
+    { "label": "Go to the centre", "result": "You see your last class to the door of the vocational department, wash that row of plastic cups and leave them for the next teacher.", "end": "You transfer to the federation's rehabilitation centre. Every day you meet parents who have just been handed a diagnosis and don't know what to do. You speak slowly and concretely, and when you're done you write down the school's address for them." },
+    { "label": "Stay at the school", "result": "You tell the federation you'll think about it once this class graduates. Later someone else took the post, and you never brought it up again." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "In your last term you pack years of picture cards, record books and dog-eared education plans into three cardboard boxes and leave them in the school's resource library. On the last day you see the children onto the school bus one by one as usual. One child has to touch the railing three times, and you wait until he has. Only after the bus pulls away do you turn back into the building.",
+  "burnout": "Those years you grow more and more tired, and at home you sit on the sofa for an hour without moving. The doctor says you need a long rest. You step back from the classroom and go to look after teaching aids and records in the school's resource library, laminating and numbering picture cards every day. When you pass the ground-floor classroom, you glance in through the little window in the door."
+ },
+ "stages": [
+  "Your work is teaching one thing at a time: guiding hands through washing, dressing and holding a spoon, breaking one movement into five steps and ticking the record sheet for each step done right. Once a week you meet the care assistant and the therapy teacher to set next week's small goals from the assessment sheet. You learn to read the child's face first, and the lesson plan second.",
+  "You can take the hardest class now: the children with the heaviest emotional needs come to you, and you start with a functional behaviour assessment to find what happens before each time he cries, then change the room and the timetable. Home-based teaching, case studies, parent training all have your name on them. When a young teacher can't cope, they call your name from the door.",
+  "You run the department's curriculum and assessments: you chair the assessment meeting every term and review eight classes' education plans one by one. You train mainstream teachers across the city in inclusion and visit their resource rooms to check the layout. The person in the meetings with the education bureau and the disabled persons' federation is now you.",
+  "Your name is on the province's master-teacher studio for special education. You lead the writing of the local daily-living curriculum, travel to special schools in every county to observe lessons, and help new schools draw up the equipment lists for their therapy rooms. When a young principal calls to ask where a child should be placed, your first question is: what does he love most right now?"
+ ],
+ "work": [
+  "Your mentor has you watch Xiaoyu for a whole day, recording only, not stepping in. You fill four pages and find that every time before he cries, someone has touched his school bag.",
+  "In functional maths you teach 'one' and 'many' with a plate of jelly beans. One girl takes only one each time. You open her small hand and put in two more, and she laughs.",
+  "End-of-term assessment: you test item by item against the scale, and for 'can point to five colours', three children in your class pass for the first time. You write the date beside the chart.",
+  "You do a functional behaviour assessment on a child, film him for a week, and find he cries when the class changes rooms. You fix his timetable to a single room, and by the second week it's halved.",
+  "At the home-teaching family, the child's grandmother always has a kettle boiled before you arrive. You teach her how to help the child with passive exercises, and she writes it down stroke by stroke in an old notebook.",
+  "At the parent training session you skip the slides and have the parents tie a shoelace blindfolded, then explain why their children learn slowly.",
+  "At an assessment meeting a young teacher sets a child's goal as 'shops independently'. You ask her: first tell me whether he can pull open the supermarket door on his own.",
+  "Visiting a child placed in a primary school, you find his desk by the window overlooking the playground. You talk it over with the homeroom teacher and move him to the second row against the wall.",
+  "The education bureau wants an estimate of the shortfall in special education places across the city. You spend a week matching the federation's register against each school's enrolment, and the sheet you hand in is a single page.",
+  "A newly built county special school asks you to look at its therapy room. The list includes a very expensive imported machine. You cross it out and put in twenty scooter boards, balance boards and a mirror.",
+  "At a curriculum meeting someone wants to add a chapter on mobile payment. You say yes, and the first lesson should be how to hold the phone steady in the supermarket.",
+  "A young teacher in the studio hands in a beautifully written case study. At the end you add one line: put in one more thing the child actually said."
+ ],
+ "past": [
+  "In your third year of middle school a family moved in downstairs. Their son was in his teens and still couldn't speak, and every afternoon he walked back and forth in the stairwell. Your mother told you not to stare. You said hello to him every day anyway.",
+  "The summer after your second year of high school you signed up as a community volunteer and spent afternoons drawing with the children at a day-care centre. One child covered a whole sheet in paint and then handed it to you.",
+  "Your gaokao (college entrance exam) score wasn't high, and on the application form you hesitated a long time over 'special education'. Your father said it was easy to get a job and a permanent post. Your mother asked: can you take it? You put down the special education program at a teachers' college in Nanjing.",
+  "In your second year you got your teaching certificate and a sign language qualification. The course covered intellectual disability, hearing impairment and visual impairment, and you chose intellectual disability, because of the children at that day-care centre.",
+  "In your final year you did your placement at a special school in Nanjing. In the first week your supervisor told you to teach nothing, just eat lunch with one child. On the fifth day, the child gave you half of his apple."
+ ],
+ "late": {
+  "pension_note": "Estimate: a teacher with a permanent state post at a public special education school pays into the public-institution pension and occupational annuity without a break over thirty-odd years of teaching, and retires on a little over 60% of final monthly pay.",
+  "scenes": [
+   "The first Monday after you retire you wake at 7:40, wonder for a moment whether the school bus has arrived, then get up and make yourself a cup of tea.",
+   "A child in your neighbourhood has just been diagnosed, and the parents find you through a friend. You go to their home one afternoon a week and teach nothing at first, just play blocks with him.",
+   "The school turns fifty and invites you back. The vocational department's bakery makes a huge cake, and the one cutting it is the boy you once rode the bus with.",
+   "Your first year in the resource library, you laminate and number picture cards every day. One day you come across a 'drink water' card you cut yourself more than ten years ago; the glue along its edge has gone yellow.",
+   "Slowly you recover, and at weekends you walk with your family along the Hao River. Once you meet a parent from back then, pushing her grown son, and she nods to you.",
+   "Every term young teachers still come to the library to borrow the boxes of teaching aids you put together. As they leave they say: teacher, these work better than anything we can buy.",
+   "Your first months away from the school, whenever you see a school bus in the street you still glance in at the windows without meaning to.",
+   "You go back for an open day. The picture timetables in the classrooms have become tablets. A child taps 'playground', and the voice from the screen is a gentle one.",
+   "In a supermarket a shelf stacker calls out to you. You recognize him; he's an old hand at the store now, and the yoghurt is still the neatest in the place.",
+   "Almost every mainstream school in the city has a resource room now, and more and more children go into ordinary classes. The ones who remain at the special school are the few who most need someone watching over them.",
+   "Your finger joints are stiffer now, and tying a shoelace takes time. As you tie it, you count in your head: cross, loop round, pull tight.",
+   "In the evening a child walks back and forth in the stairwell downstairs, his family following behind. You wave to him from the window. He doesn't look at you. You wave anyway."
+  ],
+  "closing": {
+   "retire": "One morning many years later, on a bus, you see a young man with a staff badge and headphones counting off the stops one by one. At his stop he gets off by himself. You watch him walk away and never say a word.",
+   "burnout": "Many years later, on your balcony, you spread out a stack of old picture cards to air in the sun: the apple, the toy car, the sun. The wind picks up, and you weigh them down one by one so none blow away.",
+   "end": "Many years later, clearing a drawer, you find a lopsided paper crane. On one wing, in crayon, is a single word: good. You put it back where it was and close the drawer."
+  }
+ }
+}

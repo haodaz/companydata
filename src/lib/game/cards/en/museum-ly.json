@@ -1,0 +1,197 @@
+{
+ "id": "museum-ly",
+ "occupation": "Museum Technician and Conservator",
+ "role": "Collections and conservation technician at a museum",
+ "headline": "Fresh from a degree in conservation and into a state museum in Luoyang: by day checking ledgers in the stores, by evening helping an old master in the conservation lab piece together a glazed tri-colour horse broken into more than thirty fragments",
+ "unit": "The collections department of a state museum in Luoyang, Henan (over 100,000 objects, mostly ceramics, bronzes and stone carvings; eleven staff in collections, four in the conservation lab)",
+ "unit_type": "State-owned museum",
+ "city": "Luoyang",
+ "city_tier": "Third-tier city",
+ "education": "Bachelor's degree (Conservation Technology for Cultural Relics)",
+ "level": "At university you studied materials analysis and conservation chemistry, and on placement you mended a few broken potsherds. You have never conserved a complete object on your own, or signed a single collection release form",
+ "intro": "The head of collections takes you through three doors to Store One, two floors underground. At the entrance you sign in, change your shoes and hand in your phone. The head and you each hold a key; only with both keys turned together does the door open. Inside are rows of cabinets, and the thermo-hygrometer reads 20 degrees, 50 percent. The head says: from today, the four thousand-odd objects in this store must match in the ledger, on the cards and in the cabinets. If they don't, it's on you.",
+ "salary_note": "Estimate: a newly appointed staff member at a state museum in Luoyang, with base pay, performance pay and the year-end bonus, averages a little over 70% of the national figure for museum workers. The conservation lab gets no extra craft allowance; courier trips with loans earn a travel allowance.",
+ "facts": [
+  { "label": "Assistant Curator, Conservation (current level)", "value": "0-5 years, ¥5,000–7,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Curator, Conservation (5-10 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥12,500 (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Working on objects by hand at the conservation bench", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Entering collection data and producing catalogues and ledger reports", "source": "AI exposure" },
+  { "label": "Open positions", "value": "3 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "First you check the store's temperature and humidity log. Overnight the humidity jumped to 58; you note the time, then check the dehumidifier's drain hose again.",
+  "The galleries want to swap three tri-colour pieces into a display. You and the head open the store and check ledger, card and object together, photograph each piece and fill in the release form. Only with both your signatures do the crates roll out of the door.",
+  "In the conservation lab your master is mending a tri-colour horse broken into thirty-seven fragments. Your job is cleaning them: cotton buds dipped in deionized water, drawing the soil out of the cracks in the glaze a little at a time.",
+  "Lunch is in the museum canteen. Your master eats fast and goes straight back to the lab. At this temperature, he says, the adhesive sets in twenty minutes. It won't wait for anyone.",
+  "In the afternoon you enter collection data for a batch of pottery jars. One is listed as Han dynasty in the system and Northern Wei on its card. You take the card to the cabinet, look at the object, and note it for the head to decide.",
+  "Your master lets you try joining two fragments of the horse's leg. You hold your breath and line them up; your hand shakes and one drop of adhesive too many goes on. He says nothing, wipes the drop off with acetone, and has you start again.",
+  "Before closing, a group of children is still gathered round the tri-colour camel taking photos. Walking past through the staff corridor, you hear the guide explaining the band of foreign musicians riding on the camel's back.",
+  "Back in your rented room in the old city you draw a map of the horse's fragments in your notebook: thirty-seven pieces, each given a number, marking which broken edges fit together."
+ ],
+ "ladder": [
+  { "title": "Assistant Curator (Conservation)", "stage": "Entry", "focus": "You keep one store's ledger, cards and objects in agreement and help your master clean, match and join fragments, writing up the conservation records. You move up on steady hands, sharp eyes and clear records." },
+  { "title": "Curator (Conservation)", "stage": "On your own", "focus": "You can conserve a complete object independently, write the treatment plan and handle emergency protection on excavation sites. Promotion needs years of service, conservation records and a professional paper." },
+  { "title": "Associate Research Curator", "stage": "Leading treatments", "focus": "You lead treatment of major objects, run condition surveys and conservation plans, and train apprentices; the province starts inviting you to review plans. Places are tight, and it takes research projects and conservation work you can stand behind." },
+  { "title": "Research Curator", "stage": "Expert", "focus": "A known conservation expert in the province, helping set conservation standards and reviewing others' plans. A city might see one or two in decades." }
+ ],
+ "ai_tasks": [
+  { "name": "Entering collection data and producing catalogues and ledger reports", "how": "Each object's name, dimensions, provenance, photos and movement records can be entered, checked and reported automatically by the system and AI. People just spot-check that ledger, card and object still agree." },
+  { "name": "Matching fragments and virtual restoration in 3D", "how": "From 3D scans of fragment shapes and decoration, AI can work out the joining order and assemble the object on screen first. When it comes to actually gluing, which piece bears the load and which piece isn't from this object at all is the conservator's call." },
+  { "name": "Identifying damage and writing condition surveys", "how": "AI can mark cracks, powdery corrosion and mould in high-resolution photos and spectral data and draft a damage map. How far the damage has gone, whether to intervene and where to start, a person decides only after seeing the object itself." },
+  { "name": "Writing exhibition labels and gallery texts", "how": "AI can draft labels, guide scripts and tour texts from collection records. If a single character of a date, provenance or name is wrong, someone who knows has to correct them one by one." },
+  { "name": "Working on objects by hand at the conservation bench", "how": "Cleaning, consolidating, joining, filling, toning: how hard to press, and whether each step can be undone, only the conservator can judge, and the conservator answers for it." },
+  { "name": "Releasing, checking and couriering objects in and out of the stores", "how": "An object leaves the store only under two keys and two people, checked face to face, and a loan travels with someone beside it all the way. Whoever signs is the one responsible for that object." },
+  { "name": "Emergency protection on excavation sites", "how": "Lacquer, murals and painted pottery just exposed on a site need someone there to judge and act at once. An hour late, and they may be gone." }
+ ],
+ "events": {
+  "e_first_sign": "The first time you sign your name on a release form, it's for a Northern Wei pottery figure going out on loan to an exhibition. You stand at the store door for a while afterwards before you notice your palms are soaked in sweat.",
+  "e_horse_done": "The tri-colour horse is finished: thirty-seven fragments, of which you cleaned thirty and joined five. On the last page of the conservation record your master writes your name, after his.",
+  "e_solvent": "The lab's fume cupboard is broken for a week, and you spend an afternoon wiping adhesive off with acetone. That night your headache keeps you awake. The museum logs the repair the next day, and you start working in a respirator.",
+  "e_metro_tomb": "Building work on the city's metro turns up an ancient tomb, and the archaeology team moves in overnight. The museum sends you to help with emergency protection of the finds. In a site hut you watch over a painted pottery jar just out of the ground, keeping its colours alive bit by bit with cling film and damp cotton.",
+  "e_bronze_disease": "On a routine round of the store you find a few pale green powdery spots on the back of a Han dynasty bronze mirror: the corrosion bronzes fear most. You isolate it, report it and have it tested at once. Your master says you caught it early; another six months and it would have been eating inward.",
+  "e_low_pay": "At a university reunion, the classmates who went into internet companies talk about year-end bonuses the size of your annual salary. Someone asks what you do at the museum. You say: glue fragments together. Everyone at the table laughs, and so do you.",
+  "e_viral_video": "The museum films a short video of you mending the tri-colour horse, the camera fixed on your hands, and it passes five million views. Weekend visitors get noticeably younger, and someone stands at the glass outside the conservation lab for half an hour.",
+  "e_peony": "In April the peonies bloom, the tourists grow by the day, and thirty thousand people pass through the museum in one day. You're drafted into the galleries to keep order, and the sentence you say most all day is: no flash, please.",
+  "e_ai_puzzle": "The museum brings in 3D scanning and automatic fragment matching, and a batch of over two hundred potsherds is sequenced by computer overnight. The next day you start gluing and find three pieces actually belong to a different jar. The system didn't notice.",
+  "e_ai_disease": "Condition surveys can start with AI reading high-resolution photos now. It marks over a hundred cracks and weathering spots on a stone carving, and the damage map is drawn in a day. You take it to the object and check each one; more than a dozen are in fact the original chisel marks.",
+  "e_ai_label": "The labels and guide script for a new exhibition are drafted by AI. The day before opening you go through them: a Tang dynasty object is described as 'Han to Tang', and another has the wrong county for its findspot. You correct twenty-odd entries overnight.",
+  "e_eyes": "A whole day at a time under magnifier and microscope, and your eyes start to feel dry and blur at a distance. The eye doctor tells you to look out of a window every forty minutes. The lab is underground, so you look at the green exit sign at the end of the corridor.",
+  "e_plan_rejected": "Your treatment plan for a damaged bronze pot goes up to the province and comes back from the expert panel: 'too much infill; does not meet the principle of minimal intervention'. You take the plan apart and redo it, cutting the infills from three to one.",
+  "e_love": "You get together with a young guide from the museum's education department. Your first date is in the galleries after closing. Standing in front of the tri-colour horse, they tell you its history, and you tell them about its fourteenth fragment.",
+  "e_house": "You buy a flat in the new district south of the Luo River. Your family pooled the down payment; the mortgage is a little over ¥2,000 a month. The day you get the keys, you stand in the bare living room thinking, then measure up a cabinet that will take your conservation toolbox.",
+  "e_master_retire": "Your master retires. On his last day he leaves you the set of bamboo picks, scalpels and small brushes he used for thirty years, their handles polished by his hands. As he goes he says: don't use too much adhesive.",
+  "e_child": "Your child is born. On the hundredth day you take a little kaolin left over from the lab and press the baby's handprint into it, let it dry in the shade, and set it by the bed.",
+  "e_national_show": "A Tang tri-colour piece you conserved is chosen for a national touring exhibition, opening in Beijing. The label says 'Collection of the museum', without your name. You stand at the case for a long time, watching its glaze under the lights.",
+  "e_apprentice": "A new graduate at the museum is learning conservation from you. The first time she joins fragments her hand shakes too, and one drop of adhesive too many goes on. You say nothing, wipe it off with acetone, and have her start again.",
+  "e_back": "Years of bending over the conservation bench, and your back and neck are both giving you trouble. You raise the bench by ten centimetres and give yourself a chair with proper lumbar support.",
+  "e_digital_twin": "Every major object in the museum now has a 3D model, and visitors can turn the tri-colour horse around on their phones. A primary school pupil asks in the comments: what are those thin lines on it? You reply: the places where it once broke."
+ },
+ "choices": {
+  "c_tradition_or_lab": {
+   "title": "Stay with your master, or go into the lab",
+   "situation": "The museum has built a new conservation science lab, with microscopes, a spectrometer and a 3D scanner, and needs a young person to learn them from the manufacturer. Your master has a batch of broken pieces waiting, and he says: you can learn machines any time. What's in your hands has to start early.",
+   "options": [
+    { "label": "Stay and mend with your master", "result": "For two years you're at the bench almost every day, and you learn to pick old adhesive out of a broken edge bit by bit with a bamboo pick. Your master says your hands are starting to steady." },
+    { "label": "Go into the lab", "result": "You learn spectral analysis and 3D scanning from the manufacturer's engineers, and the museum's first batch of test reports are yours. Only, you sit less often in the chair at the bench." }
+   ]
+  },
+  "c_excavation": {
+   "title": "Stationed on an excavation site",
+   "situation": "A big construction project on the east side of the city needs a rescue excavation, and the archaeology team wants the museum to station someone who knows conservation there for six months, protecting finds as they come out of the ground. You'd live in a prefab hut, forty degrees in summer, no heating in winter.",
+   "options": [
+    { "label": "Go to the site", "result": "In six months you treat over two hundred objects as they come out of the ground, and sit up all night with one lacquer box. You come back two shades darker, with a new skill in your hands: speed." },
+    { "label": "Stay at the museum", "result": "You say the store's ledgers still aren't reconciled. A colleague goes instead, and you bring the ledger, cards and objects of all four thousand-odd pieces in Store One into line, one by one." }
+   ]
+  },
+  "c_ai_restore": {
+   "title": "Learn virtual restoration or not",
+   "situation": "The province is pushing digitization, and the museum needs someone to learn 3D modelling and AI virtual restoration: assemble and fill the object on screen first, show the experts the result, and only then decide whether to touch it. There's a lot of software to learn, and an old colleague in the lab says that's computer stuff, not conservation.",
+   "options": [
+    { "label": "Learn it", "result": "Over a year you build 3D models and virtual restoration plans for fifty of the museum's key damaged objects. At the next provincial review meeting, for the first time, the experts watch the results on screen before they vote." },
+    { "label": "Get your hands right first", "result": "You say your handwork isn't good enough yet and you won't split your attention. Later virtual restoration becomes a required part of every plan review, and you have to ask young colleagues to build your models." }
+   ]
+  },
+  "c_private_studio": {
+   "title": "A private conservation firm comes headhunting",
+   "situation": "A private conservation company in Zhengzhou sees your video and asks you to lead its conservation team, taking outsourced projects from state museums and work from private collectors, at more than twice your current pay. You'd give up your permanent post and leave the store behind.",
+   "options": [
+    { "label": "Go to Zhengzhou", "result": "You hand the key to Store One back to the head and go through the ledger with him one last time.", "end": "You join the conservation company in Zhengzhou and in a year treat more objects than in three years at the museum. Some things collectors bring in you send straight back: this doesn't need mending. It was never from that period to begin with." },
+    { "label": "Stay at the museum", "result": "You turn it down politely. That evening at the store door you and the head put your keys in together, and he says: two keys. One short, and it doesn't open." }
+   ]
+  },
+  "c_escort": {
+   "title": "Couriering a loan",
+   "situation": "A museum in the south has borrowed forty of your tri-colour pieces for an exhibition and needs someone to courier them all the way: checking, crating, two days and nights in the truck, watching the installation at the other end, and bringing them home at the close. Over a month there and back, and your child is small.",
+   "options": [
+    { "label": "Go as courier", "result": "Two days and two nights in the truck's passenger seat, and at every service station you get out to check the shock indicators on the crates. Forty pieces went, and forty came back." },
+    { "label": "Let a colleague go", "result": "You say your family can't spare you. Another colleague couriers the loan, and you mind the store for him for a month." }
+   ]
+  },
+  "c_study_beijing": {
+   "title": "A year's advanced training in Beijing",
+   "situation": "A national conservation institution in Beijing is running an advanced course in ceramics conservation: one year, two places for the whole province, and the museum has put you forward. It would smooth your way to Associate Research Curator later; everything at home would fall to your partner.",
+   "options": [
+    { "label": "Go", "result": "That year you treat seven objects alongside some of the best conservators in the country and learn several toning methods even your master never taught you. At the end the old master supervising you says: steady hands, these ones from Luoyang." },
+    { "label": "Don't go", "result": "You give the place to a colleague from another museum. That year you treat three damaged pieces at home, each with a conservation record over twenty pages long." }
+   ]
+  },
+  "c_senior_title": {
+   "title": "Applying for Associate Research Curator",
+   "situation": "Associate Research Curator needs research and results. You could turn your years of methods and records on tri-colour ware into a volume of conservation reports, two years' work; or apply first for a provincial research project on deterioration in tri-colour glazes, with lab work and papers to write.",
+   "options": [
+    { "label": "Compile the conservation reports", "result": "You sort, illustrate and annotate the records of the forty-odd tri-colour pieces you've treated over ten years into a volume of three hundred thousand characters. At the review, one expert says he'll keep it in his own lab to work from." },
+    { "label": "Apply for the research project", "result": "Two years of ageing tests on tri-colour glazes in the lab, and two papers. The project is signed off with the comment: solid data." }
+   ]
+  },
+  "c_dept_head": {
+   "title": "Head of collections or not",
+   "situation": "The head of collections reaches retirement age and the director wants you to take over: over 100,000 objects, eleven staff, the annual stocktake and loans, plus project bids and inspections from the city and the province. You'd get to the conservation bench one or two afternoons a week.",
+   "options": [
+    { "label": "Take it", "result": "Your drawer gains the department's official seal. Your first year's work is matching every object's ledger entry, card, physical piece and 3D data to a single number." },
+    { "label": "Keep to the bench", "result": "You recommend a colleague more senior than you. You still check the store's temperature and humidity first thing every morning and sit at the bench in the afternoons." }
+   ]
+  },
+  "c_university": {
+   "title": "Your old university asks you to teach",
+   "situation": "Your old university's conservation program is building a teaching lab and invites you to join as a full-time lecturer, teaching undergraduates and graduate students on the university promotion track, for somewhat better pay. You'd leave the stores and the bench for good, and teach other people to mend.",
+   "options": [
+    { "label": "Go and teach", "result": "You pack the set of bamboo picks and scalpels your master left you into a wooden box, and take it with you.", "end": "You go back to your old university to teach conservation, in a lab with twenty benches. Every new class, the first time they put their hands to work, you give them a single potsherd to clean and tell them: first, learn to be slow." },
+    { "label": "Stay at the museum", "result": "You thank your old university. That year two new graduates join the museum, and you take them into the lab and give each of them a bamboo pick." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last visit to Store One before retiring, you and the young person taking over put your keys in together and check the last page of the ledger together. You leave your master's bamboo picks and scalpels on the bench and don't take them. Coming up from two floors underground, you find the tri-colour horse still under its lights in the gallery. You walk past it and glance at the thin line on its left hind leg.",
+  "burnout": "Those years your eyes and back grow worse and worse, and after half an hour at the microscope everything blurs. The doctor says no more fine work. You move to the museum's archive to look after conservation records and old photographs, scanning negatives and writing captions every day. Now and then a young conservator brings you a fragment they're unsure of, and you put down what you're doing and lean in under the lamp for a while."
+ },
+ "stages": [
+  "Half your work is in the stores, half in the lab: every day you check the temperature and humidity log, reconcile ledger, cards and objects, fill in release forms and open the door with the head, two keys together; afternoons you clean fragments, mix adhesive and write conservation records with your master. Calluses from bamboo picks and cotton buds form on your fingers, and the writing in your record book gets smaller and smaller.",
+  "You can conserve a complete object on your own now: photograph it first and survey the damage, then write the plan for approval and work step by step through cleaning, consolidation, joining and infill. When something comes out of the ground, the archaeology team asks for you by name. On release forms for loans, the signature is often yours.",
+  "You lead the museum's major conservation projects: you write the plans, you sign them, and you present them in front of the provincial panel. You train two apprentices, watching their hands and reading their records. Difficult objects sent from other museums often end up on your bench first.",
+  "You rarely work on objects yourself now. More of your time goes to reviewing other people's plans: is the intervention minimal enough, is the infill distinguishable, is the record complete. You help write the province's ceramics conservation standards, and young conservators in museums everywhere send you photos when they're unsure about an object."
+ ],
+ "work": [
+  "Cleaning a fragment of the tri-colour horse, a little green glaze slowly emerges from under the soil, with one very fine crackle line across it. You stop and draw a small circle in the record.",
+  "At the stocktake, a pottery jar's card says 'piece missing from rim', yet the rim is complete. You dig out conservation records from twenty years ago and find the entry for that infill.",
+  "Your master has you mix the toning colour. Seven tries, and every one is a shade darker than the glaze. On the eighth he holds it up to the light: that's it. A touch lighter than the original is right.",
+  "The first object you conserve on your own is a Tang white porcelain bowl in nineteen pieces. At the seventeenth you find you're a millimetre out, take it apart, rejoin it, and lose another three days.",
+  "The edge of a painted mural shows on a site and the team leader phones you. It's nearly dark when you arrive. You rig a sunshade over the trench and secure the paint layer first with rice paper and peach gum.",
+  "Checking a loan on arrival, the borrowing museum says a pottery figure has a new crack on one finger. You bring out the photo taken at release and zoom to the same spot: the crack was always there.",
+  "Defending your plan for a bronze pot, an expert asks why you won't fill the missing piece. You say: fill it, and nobody after us will know it was ever missing.",
+  "Your apprentice writes a treatment plan on her own for the first time, thirty pages long. You change only one phrase: 'restore to original appearance' becomes 'stabilize current condition'.",
+  "A small museum in another province sends a tri-colour jar glued crooked by someone long ago with epoxy. Over two months you soften the old glue bit by bit, take it apart and join it again.",
+  "A clause in the draft provincial standard requires infill to be 'identical to the original'. At the meeting you propose 'distinguishable' instead, argue for an afternoon, and it's changed.",
+  "A small county museum sends a photo of a porcelain vase it has just acquired and asks whether to restore it. You look and say: don't touch it yet. Test it first, and see whether it's really from that period.",
+  "Teaching young conservators from across the province, you use no slides. You pass your master's bamboo pick round the room and have everyone hold it once."
+ ],
+ "past": [
+  "In a history lesson in your last year of middle school, the teacher took the class to Luoyang's old museum. You stood for a long time in front of a tri-colour horse and saw a few thin lines on its legs. The guide said those were where it had been mended.",
+  "Your gaokao (college entrance exam) score was middling, and on the form you saw 'Conservation Technology for Cultural Relics'. Your father asked: is that mending antiques? You said near enough, and applied to a university in Xi'an.",
+  "Your second-year placement was on an excavation in Xi'an. For a month you crouched in a trench picking at the soil with a bamboo pick, until you uncovered a complete pottery jar, and the supervisor let you lift it out yourself.",
+  "In your final year you spent six months in the conservation lab of a provincial museum. The first time you watched an old conservator mix adhesive, he had you smell it: remember this smell. When it's right, it smells like this.",
+  "The year you graduated you sat the exam for a permanent post at this Luoyang museum; the specialist post took only one person. At the interview the examiner held up a broken potsherd and asked what you'd do first. You said: photograph it, then look at where it broke."
+ ],
+ "late": {
+  "pension_note": "Estimate: permanent staff at a state museum pay into the public-institution pension and occupational annuity without a break over thirty-odd years of service, and retire on about 60% of final monthly pay.",
+  "scenes": [
+   "The first morning after you retire, the first thing you want when you wake is to check the temperature and humidity log. You get up, open the curtains, and check the sky instead.",
+   "The museum asks you back as a conservation adviser, two afternoons a month. You sit in the old chair beside the bench watching young people join fragments, and now and then say: not so much adhesive.",
+   "Your volume of tri-colour conservation reports is reprinted, and the publisher sends copies. You turn to the fourteenth object, the horse; the record still carries two names, your master's first and yours after.",
+   "Your first year in the archive, you scan old negatives every day. One shows your master as a young man at the conservation bench, decades ago. You save it in a folder of its own.",
+   "Your eyes slowly stop feeling so dry, and at weekends you walk along the Luo River. People fly kites on the bank, and you watch the sky for a long time, until what's in your eyes seems a little further away.",
+   "Young conservators still come to the archive with fragments they're unsure of. You hand them the magnifier and don't look yourself. You let them speak first.",
+   "Your first months away from the museum, every time you push open a door in your new workplace you reach without thinking for the store key in your pocket.",
+   "You come back to Luoyang to see an exhibition. The tri-colour horse is still in its old case under new lights, and the thin lines on it are fainter than you remembered.",
+   "A young person you trained is now head of the museum's conservation lab. He sends you a photo: the bamboo pick lying on the bench, beside a fragment just cleaned.",
+   "Matching, modelling, damage detection: more and more of the work goes to machines. The bench is still there, and whoever sits at it still needs steady hands and a slow heart.",
+   "The city builds another metro line and finds a few more ancient tombs; the news says a batch of tri-colour ware has been recovered. You look at the fragments in the photos and count them in your head.",
+   "Your hands begin to tremble a little, and your dumpling pleats aren't as even as they were. You smile, remembering what your master used to say: when it shakes, stop, and wait until it doesn't before you move."
+  ],
+  "closing": {
+   "retire": "One spring many years later you take your grandchild to the museum and stop in front of the tri-colour horse. The child asks what the lines on its legs are. You say: the places where it broke, and someone put it back together piece by piece. The child asks who. You don't answer; you take his hand and walk on to the next case.",
+   "burnout": "Many years later, on your balcony at home, you brush the soil off a flowerpot bit by bit with an old soft brush. When you're done you tap the brush against your palm and put it back in the wooden box in the drawer.",
+   "end": "Many years later, sorting old things, you find a yellowed map of fragments: thirty-seven numbers, every piece's position drawn clearly. You fold it and slip it into the volume of conservation reports."
+  }
+ }
+}

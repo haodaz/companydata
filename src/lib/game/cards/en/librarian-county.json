@@ -1,0 +1,188 @@
+{
+ "id": "librarian-county",
+ "occupation": "Librarian",
+ "role": "Librarian at a county library",
+ "headline": "A Chinese literature graduate who passed the exam for a permanent post back home in a county town in southwestern Anhui, looking after the lending desk, the shelves, the local-history room and the mobile library van that goes out to the villages once a week in a newly built county library",
+ "unit": "The county library of a county under Anqing, Anhui (a new four-storey building, some 300,000 volumes, fourteen permanent staff, linked to a dozen township branches and over a hundred village reading rooms)",
+ "unit_type": "County public library",
+ "city": "A county under Anqing, Anhui",
+ "city_tier": "County town",
+ "education": "Bachelor's degree (Chinese Language and Literature)",
+ "level": "You can recite the main classes of the Chinese Library Classification and spent two years shelving books at your university library on work-study. You have never catalogued a book yourself, or taken the mobile library out to a village",
+ "intro": "The deputy director walks you round the new building: self-service machines and the children's reading room on the ground floor, adult lending on the first floor, the study area on the second already full of young people preparing for exams, and at the far end of the top floor a locked room labelled 'Local History Collection', holding several hundred genealogies of the county's families. She hands you the keys and says: Wednesday, you're on the van to the villages, don't be late. From today, some of the 300,000 books in this building are yours.",
+ "salary_note": "Estimate: a newly appointed public-institution employee in a county town in southwestern Anhui takes home a little over ¥3,000; with performance pay and the year-end bonus it comes to just over 60% of the national figure for public library staff. In years when county finances are tight, performance pay waits until the following spring.",
+ "facts": [
+  { "label": "Assistant Librarian (current level)", "value": "0-4 years, ¥5,500–7,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Librarian (4-10 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Watching the floor, keeping order and settling disputes in the library", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Looking up, tallying and maintaining reader and loan data", "source": "AI exposure" },
+  { "label": "Open positions", "value": "2 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Ten minutes before opening, three old people are already waiting at the door for today's papers. You unlock the glass door; the old man at the front says good morning and heads straight for the table by the window he has sat at for years.",
+  "The returns box has filled overnight. You scan each book, desensitize it and stack it on the trolley. In one picture book there's a dried ginkgo leaf; you tuck it back where it was and put the book on the children's trolley.",
+  "You push the book trolley along the first floor shelving. The fiction section under I247 is a mess again; someone has jammed a cookbook in the middle. You crouch down and check every call number from left to right.",
+  "In the second-floor study area two students preparing for the graduate exam are arguing over a seat: one says his books were holding it, the other says that doesn't count. You read them the library's rules and lead one of them to a row that's still empty.",
+  "In the local-history room an old man back from another province wants his branch of the family's genealogy. You bring out a woodblock edition from the Guangxu reign, more than a century old, put on gloves, and turn the pages of the lineage tables with him one by one.",
+  "In the cataloguing system you enter data for a batch of new books. The system assigns classification numbers automatically, and a collection of local poems printed by the county writers' association lands in 'foreign poetry'. You correct it.",
+  "In the children's reading room a primary school boy's mother hasn't come yet, and he's in a corner with a dinosaur book. You sit with him until a quarter past six, when his mother arrives on her e-bike from the factory.",
+  "Back in your rented room in town you write tomorrow's list for the van: thirty picture books for the village school, twenty large-print books for the elderly, ten on farming and livestock."
+ ],
+ "ladder": [
+  { "title": "Assistant Librarian", "stage": "Entry", "focus": "Lending and returns, shelving, cataloguing, reader enquiries and events, with turns on the mobile library van. You move up by knowing the work, being known to readers and running decent events." },
+  { "title": "Librarian", "stage": "Mainstay", "focus": "You run one section day to day: acquisitions and cataloguing, children's services, local history or the branch network, writing evaluation reports and training newcomers. Promotion needs years of service, continuing-education hours and a professional paper." },
+  { "title": "Associate Research Librarian", "stage": "Professional lead", "focus": "The library's professional lead, heading local-history work, the reading promotion program and digitization, and guiding the township branches. Few at county libraries get here; it takes papers, projects and real results." },
+  { "title": "Research Librarian", "stage": "Expert", "focus": "A known expert in the province on local history or reading promotion, helping set provincial standards and evaluations. A county library may go decades without one." }
+ ],
+ "ai_tasks": [
+  { "name": "Looking up, tallying and maintaining reader and loan data", "how": "Issuing library cards, loan statistics, overdue reminders: automated systems can handle almost all of it. People just spot-check that the data are right and privacy is protected." },
+  { "name": "Cataloguing new books and assigning classification numbers", "how": "AI can generate classification numbers and catalogue records from bibliographic data, and self-service machines and RFID tags can be automated. Locally printed books, old books and genealogies with no existing data need a person to look at each one and fix each record." },
+  { "name": "Choosing books and drawing up purchase lists", "how": "AI can gather loan data, reviews and publishing information and draw up a candidate list. Who this county's readers are, what the township branches lack, how to split the budget and whether content is suitable are for a person to decide." },
+  { "name": "Answering reader enquiries and recommending books", "how": "An AI help desk can answer opening hours, how to renew, where a book is shelved. An old man looking for his grandfather's generation in the genealogies, a child who doesn't know what to read: someone has to search with them." },
+  { "name": "Scanning and digitizing local-history materials", "how": "AI can read text from scans and generate tables of contents automatically. Variant characters in old genealogies, wormholed pages, a branch whose line doesn't join up: a person has to check against the original." },
+  { "name": "Watching the floor, keeping order and settling disputes in the library", "how": "Seat-saving rows, a lost child, an old reader feeling unwell: someone has to be there, act at once and take responsibility. Cameras can alert you, but they can't talk anyone round." },
+  { "name": "Driving the mobile library to the villages and running reading events", "how": "Taking books to village schools and market towns, telling children stories, teaching old people to borrow by phone: it takes someone there in person, and a familiar face built up over many visits." }
+ ],
+ "events": {
+  "e_open_day": "On the day the new library officially opens, the queue for library cards runs from the door out across the square. You issue over two hundred cards in a morning, by afternoon your wrist aches too much to hold a pen, and that night you write in your notebook: so many people in this town want to read.",
+  "e_summer_kids": "In the summer holidays the children's reading room is full from opening to closing; plenty of parents treat it as free childcare. You go looking for lost children three times a day, shout yourself hoarse, and before you leave you still have to put a floor's worth of picture books back on the shelves.",
+  "e_genealogy": "The old man back from another province finds his great-grandfather's name in the genealogy, with a line of small characters beside it: moved away to another place. He stands in front of the lineage table for a long time, and as he leaves he bows to you. You don't know how to respond.",
+  "e_inventory": "At the year-end stocktake, over three hundred books in the system can't be found on the shelves. You and your colleagues search floor by floor for two weeks and recover 120; the rest go on the write-off form.",
+  "e_mould": "In the plum-rain season the top-floor stacks get damp and some old books grow spots of mould. A few of you carry them out to the corridor stack by stack and spread them open, and run dehumidifiers and fans for a week. You hurt your back lifting.",
+  "e_book_truck": "The mobile library reaches a village school in the hills, and thirty-odd children crowd round the van. A boy borrows Fabre's Book of Insects and asks if you're coming next month. You say yes, and he runs off hugging the book to his chest.",
+  "e_ai_catalog": "The library brings in smart cataloguing: classification numbers and records for new books are generated automatically, and the time from arrival to shelf drops from two weeks to three days. All the time you save goes on the old books in the local-history room that the system can't recognize.",
+  "e_ai_robot": "An AI help robot appears in the lobby, and children crowd round asking it what dinosaurs eat. An old man asks it 'where's my grandfather's genealogy'. It can't answer, and he turns round and finds you.",
+  "e_ai_inventory": "The library switches to RFID tags and a stocktaking robot. At night after closing it does a round of the shelves on its own, and in the morning reports which books are in the wrong place. The year-end stocktake goes from two weeks to one night.",
+  "e_fewer_loans": "The annual report comes out: print loans down another tenth on last year. Visits are up, but the extra visitors are exam candidates in the study area. At a bureau meeting someone asks whether the library has turned into a study hall.",
+  "e_video": "You post a short video on the library's account, 'A genealogy in the local-history room', and it passes 100,000 views. Hundreds of people in the comments ask whether their surname is there. That month, people waiting to search the genealogies are booked into the next quarter.",
+  "e_reading_day": "On World Book Day county officials come to the library for an event: photos, speeches, books handed out. After they leave, you and your colleagues carry a hundred folding chairs back to the store room one by one, until eight at night.",
+  "e_rating": "In the national evaluation of public libraries, yours is rated first grade for the first time. In the three months before the inspection you put together more than twenty boxes of records, and the expert panel spends an extra half hour in the local-history room.",
+  "e_blind_date": "Your mother has someone introduce you to a person who works in the county hospital pharmacy. You first meet at an old teahouse in town. They say that as a child they loved the old library for its smell of old books. You say the new one doesn't have that, except in the local-history room.",
+  "e_house": "You buy a flat in town. Your family puts up the down payment, and the mortgage is a little over ¥2,000 a month, about half your pay. In the new living room, the first thing you put in is a wall of bookshelves.",
+  "e_dusty_books": "You go to inspect a village reading room on the first floor of the village committee building. The lock has rusted, half the books on the shelves are still in their plastic wrap, and the top shelf is under a finger's depth of dust. The village official says nobody usually comes.",
+  "e_neck": "Years of crouching to shelve and bending over cataloguing have done your neck in, and turning your head makes you dizzy. The doctor tells you to look down less, so you prop your monitor up on two thick volumes of the county gazetteer.",
+  "e_child": "Your child is born. After the first month you push the pram into the children's reading room, colleagues gather round to look, and a regular young reader stands on tiptoe to put a picture book in the pram.",
+  "e_donation": "Before he dies, a retired teacher asks his family to give the library his more than three thousand books, including many pamphlets printed in the county in the Republican era. You stamp the title page of every one with 'Donated by Mr So-and-so'.",
+  "e_grown_reader": "The boy who borrowed the Book of Insects from the van gets into library science at a university in the provincial capital. He comes to the library for a summer internship, and on the first day asks you: can I hold the key to the local-history room?",
+  "e_audio_room": "The library opens a reading room for the visually impaired, with a screen-reader computer and a few hundred audiobooks. The regular is a masseur from a massage parlour, who comes every Tuesday afternoon for two hours of storytelling recordings and always says on his way out: open tomorrow too, right?"
+ },
+ "choices": {
+  "c_master": {
+   "title": "Do a part-time master's or not",
+   "situation": "The work is getting more specialized, and the deputy director urges you to do a part-time master's in library and information science at a university in Hefei: weekend classes, over ¥30,000 in fees, not reimbursed. It would count for promotion and any future move.",
+   "options": [
+    { "label": "Sign up", "result": "Every weekend you take a two-hour coach to Hefei for classes, and write your thesis on local-history work at county libraries. Three years later your supervisor says the topic is worth pursuing further." },
+    { "label": "Not for now", "result": "You keep your weekends for library events and the van. Readers come to know you, and in those years you tell eight of every ten stories at the children's story hour." }
+   ]
+  },
+  "c_truck": {
+   "title": "Take on the mobile library or not",
+   "situation": "The old colleague who drives the mobile library is retiring, and the director asks if you'll take it over: two days a week on the road to village schools and market towns in seven townships, the back of the van at forty degrees in summer, hands too cold in winter to turn a page.",
+   "options": [
+    { "label": "Take it on", "result": "You get your light-truck licence and drive the old van with the library's name on its side over every hill road in the county. By the second year, three village school heads call you themselves to ask: what day next month?" },
+    { "label": "Stay in the library", "result": "You say you're better suited to work inside, and the van goes to a new colleague. In the cataloguing room you enter the old local-history card catalogue into the system, card by card." }
+   ]
+  },
+  "c_digitize": {
+   "title": "Lead the local-history digitization or not",
+   "situation": "The province has given county libraries a project to digitize local-history materials: scan, recognize and build a database of several hundred genealogies, gazetteers and old newspapers on an AI recognition platform. Someone has to lead it, there's little money, and a great deal to learn.",
+   "options": [
+    { "label": "Lead it", "result": "You spend a month learning from the platform's engineers, then two years with two temporary workers scanning and proofing over three hundred genealogies. The variant characters the AI misread fill a thick notebook of your own concordance." },
+    { "label": "Let someone else lead", "result": "The project goes to a colleague in acquisitions, and you help carry and pass books. When the database goes live, you have to learn from scratch how to search it." }
+   ]
+  },
+  "c_publisher": {
+   "title": "A Hefei publisher wants you",
+   "situation": "After your genealogy video takes off, an editor at a publishing house in Hefei gets in touch. They're doing a book series on the local culture of southwestern Anhui and need an editor who knows the local sources, at half again your current pay. You'd give up your permanent post and move to Hefei.",
+   "options": [
+    { "label": "Go to Hefei", "result": "You hand the key to the local-history room and your concordance of variant characters to the deputy director together, and say: don't lose this one.", "end": "You go to the publishing house in Hefei as an editor. The series comes out volume by volume, and the afterword of every one thanks the local-history room of that county library." },
+    { "label": "Stay in the county", "result": "You thank the editor and agree to advise on the series. The next year the first volume comes out with your name on the flyleaf." }
+   ]
+  },
+  "c_city_library": {
+   "title": "The selection exam for the city library",
+   "situation": "The city library is selecting two experienced staff from the county libraries, by written exam and interview. It means a bigger platform and more chances of promotion, with forty minutes each way on the intercity bus. Stay, and the county's local-history room has had only you who really understands it.",
+   "options": [
+    { "label": "Sit the exam", "result": "You come first in the written exam, and at the interview you talk about the Guangxu-era genealogy in the local-history room. The examiners listen closely.", "end": "You move to the city library's rare books department and spend your days with even older books. Now and then a young person at the county library phones about a variant character in some genealogy, and without looking it up you can tell them which page." },
+    { "label": "Don't sit it", "result": "You don't apply. That year the county's local-history room takes in twenty-odd newly compiled genealogies, and you register every one by hand." }
+   ]
+  },
+  "c_book_space": {
+   "title": "What to do with the city reading room",
+   "situation": "The county is building a 24-hour reading room on the old street and handing it to the library to run. Some want it to be a place people come to photograph: coffee, a photo wall, a weekend market. Others say a library should be quiet. The director asks you for a plan.",
+   "options": [
+    { "label": "Make it lively", "result": "You run weekend book clubs, craft classes and an old-street market, and over thirty thousand people come in the first three months. Only, by evening, a few books are always missing from the shelves." },
+    { "label": "Keep it quiet", "result": "You make it a place with nothing but books and lamps, lit even after ten at night. Not many come. One nurse coming off night shift sits there for an hour in the small hours every Wednesday." }
+   ]
+  },
+  "c_senior_title": {
+   "title": "Applying for Associate Research Librarian",
+   "situation": "Associate Research Librarian requires papers and results, and few at county libraries have got it in recent years. You could turn your years of work on the genealogies into a union catalogue of every genealogy in the county, two or three years' work; or write a few papers on reading promotion, quicker but less solid.",
+   "options": [
+    { "label": "Compile the genealogy catalogue", "result": "Over three years you register, summarize and verify more than four hundred genealogies across the county, into a catalogue of six hundred thousand characters. One expert on the panel phones you specially to ask how you did it." },
+    { "label": "Write papers first", "result": "You write three articles on reading promotion at county libraries, published in the province's professional journal. The panel's comment: solid practice, research could go deeper." }
+   ]
+  },
+  "c_deputy": {
+   "title": "Deputy director or not",
+   "situation": "The old director retires and the new one wants you as deputy director for operations: acquisitions, lending, children's services, local history and a dozen township branches, plus chasing funding from the culture and tourism bureau, preparing for evaluations and managing people. You'd leave the local-history room and spend most of your time in offices and meeting rooms.",
+   "options": [
+    { "label": "Take it", "result": "Your desk moves from the top floor to the first. The thing you get done in the first year is prising money out of the bureau to replace the mobile library van with a new one." },
+    { "label": "Keep the local-history room", "result": "You recommend the head of children's services. You still go up to the top floor every day, open that door, and check the dehumidifier reading first." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you hand the key to the local-history room to the young man who once borrowed the Book of Insects, together with your concordance of variant characters, its pages furred with handling. You log in at the lending desk one last time, look up the catalogue records you've made over the years, and log out. As you leave through the glass doors, a different old man is reading the papers at the table by the window.",
+  "burnout": "Those years your neck and back get worse and worse, and when you bend down in the stacks it takes ages to straighten up. The doctor says no more carrying books. You move to the library's office to handle paperwork, attendance and the library's social media account. Now and then someone comes to search the genealogies, and colleagues still bring them to you; you put down your spreadsheet and take them up to the top floor."
+ },
+ "stages": [
+  "Your day moves between the lending desk, the shelves and the system: scanning, shelving, putting books in call-number order, entering data for new books in the cataloguing system, answering 'where is this book?'. Every Wednesday you ride the van to the villages, and at weekends you run the children's story hour. You do what the deputy director tells you; of everyone in the library, you are the third to be given the key to the local-history room.",
+  "You run one section day to day: the local-history room and the township branches. You train the branch librarians, check the village reading rooms' records, and write several evaluation reports a year. When a new colleague shelves something wrong, you say nothing; you crouch down and check the row with him from left to right.",
+  "You are the library's professional lead: you head the sorting and digitization of local-history materials, set the year's reading promotion plan, and sign off the documents for the evaluation inspectors. When the county gazetteer office, the archives or the writers' association want to work with the library, you're the one they ask for. You start training young staff to read old books.",
+  "You have a name in the province's local-history circles: helping compile the province's union catalogue of genealogies and teaching staff from every county library how to sort, repair and digitize. People coming from elsewhere to trace their roots often find their way to this county town by asking for you."
+ ],
+ "work": [
+  "Your first solo cataloguing job is a memoir by a retired county official, with no data in the system. You spend an hour in the classification tables and finally give it K825.",
+  "The van is parked at a market town. An old man who can't read wants a book on raising chickens. You choose one with lots of pictures, turn to the page on chicken diseases and fold the corner down for him.",
+  "On your last round of the study area before closing, a student preparing for the graduate exam has fallen asleep on the desk, his book open at political economy. You don't wake him; you turn the air conditioning up two degrees.",
+  "You run a shelving workshop for the librarians of twelve township branches, bringing a trolley of scrambled books and having them race in teams. The fastest team takes twenty minutes.",
+  "The evaluation needs a full-year record of reader events. You sort the sign-in sheets, photos and press releases for over a hundred events and fill six archive boxes.",
+  "A Qing-dynasty genealogy has a wormhole through its cover. You don't dare touch it; you phone the conservator at the provincial library, and on her advice put it in an acid-free box first.",
+  "In the digitization project the AI misreads a rare variant character as 'grievance', and suddenly a whole extra branch of the family appears in the lineage table. You spend ages with the original before deleting the branch again.",
+  "The gazetteer office is compiling the culture volume of the new county gazetteer and asks you to write the section on the library. You write three thousand characters, and the last paragraph is about the mobile library van.",
+  "When you take a new graduate into the local-history room, the first thing you teach him isn't reading the books but reading the thermo-hygrometer: above sixty, switch on the dehumidifier.",
+  "For the provincial union catalogue of genealogies you're responsible for seven counties in the southwest. Checking each county's data line by line, you find the same genealogy registered three times by three different counties.",
+  "A family returning from overseas to trace their roots emails you a month ahead. You lay out three genealogies on the top-floor table, and on the morning they're due you wipe the table down once more.",
+  "Teaching young staff from county libraries across the province about local history, you use no slides. You bring an old wormholed genealogy, have them put on gloves, and let each of them turn one page."
+ ],
+ "past": [
+  "In your last year of middle school the old county library was still on the old street, a two-storey wooden building with no heating in winter. You went every weekend and read a whole shelf of martial arts novels, and the librarian never once hurried you out.",
+  "Your gaokao (college entrance exam) got you into Chinese language and literature at a university in Hefei. Your mother said a Chinese teacher would be a good job. You hesitated a long time over the form, then put it down anyway.",
+  "In your first year you did work-study at the university library, ¥12 an hour, shelving books two hours every afternoon. It was the first time you knew that the string of letters and numbers on every spine had been given by someone, book by book.",
+  "The summer after your third year you went home. The old library had been torn down and the new one was still going up. You stood outside the site for a while, then phoned the librarian from those days. She said she had retired.",
+  "After graduating you spent a year at a study-guide publisher in Hefei, proofreading workbooks every day. At year's end the county advertised public-institution posts, one of them at the library. You took three days' leave to come back for the exam and came first."
+ ],
+ "late": {
+  "pension_note": "Estimate: permanent staff at a county public library pay into the public-institution pension and occupational annuity without a break over thirty-odd years of service, and retire on about 60% of final monthly pay.",
+  "scenes": [
+   "The first Wednesday after you retire you wake and remember the van is due out to the villages today. You don't get up. You listen to the rain outside for a while, and go back to sleep.",
+   "You become a regular at the library, sitting every morning at a table by a window on the second floor, reading the books you once shelved and never had time to read.",
+   "A family in the county is compiling a new genealogy and asks you to advise. You sit in their ancestral hall all afternoon and help them join back the branch that had broken off.",
+   "Your first year in the office, you file papers and keep attendance every day. After lunch you go up to the top floor and stand a while outside the local-history room, checking the dehumidifier reading.",
+   "Slowly your neck improves, and at weekends you walk by the lake on the edge of town. A new reading room has opened by the lake; you go in and sit for a while, and on the shelves are a few books you once catalogued.",
+   "The masseur still comes to the room for the visually impaired every Tuesday. Once he hears your voice in the corridor and calls out: haven't heard you talk in ages.",
+   "Your first months away from the county library, in front of the shelves at your new workplace you still crouch down without thinking and turn round a book that's been shelved backwards.",
+   "Home for the New Year, you drop in at the library. The self-service machines are new, there's a robot on the ground floor, and the children's reading room still has picture books all over the floor.",
+   "A parcel arrives: the county library's new catalogue of genealogies. On the flyleaf is a line: dedicated to the one who first opened that door.",
+   "Cataloguing, stocktaking and enquiries have long gone to machines. There are fewer staff at the county library, but no fewer visitors, and most come looking for something a machine can't give them.",
+   "The old street in town is restored, and on the site of the wooden building stands a sign: 'Former site of the old county library'. You stand in front of it for a while, and a child asks you what this used to be.",
+   "Your eyesight is going and you need two pairs of glasses to read. You still look at the call number on the spine first, then open to the first page."
+  ],
+  "closing": {
+   "retire": "One rainy day many years later, at the bookshelf at home, you reshelve a row of books in call-number order. When you're done you step back and look, then reach out and push the last one in, until it sits flush.",
+   "burnout": "Many years later, at a second-hand book stall in town, you see a book bearing the old county library's collection stamp, a stamp you know. You buy it for five yuan, take it home, wipe the cover clean with a soft cloth and put it on your shelf.",
+   "end": "Many years later, clearing a drawer, you find a dried ginkgo leaf pressed very flat. You can't remember which book it fell out of, so you slip it into the book nearest to hand and close it."
+  }
+ }
+}
