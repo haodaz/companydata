@@ -1,0 +1,187 @@
+{
+ "id": "rt-cs",
+ "occupation": "Respiratory Therapist",
+ "role": "ICU respiratory therapist",
+ "headline": "You studied a major with barely thirty students in your whole university and went straight into the ICU of a top-tier (Grade 3A) hospital in Changsha, minding more than twenty ventilators, and explaining at every family visit that you are neither a nurse nor a doctor",
+ "unit": "Department of Critical Care at a top-tier (Grade 3A) hospital in Changsha (respiratory therapy team of five, twenty-eight beds)",
+ "unit_type": "Grade 3A hospital",
+ "city": "Changsha",
+ "city_tier": "Second-tier",
+ "education": "Bachelor's (Respiratory Therapy)",
+ "level": "PEEP and tidal volume come easily. A ventilator alarm still makes your heart jump",
+ "intro": "Your university takes only thirty-odd students a year in this major. In this top-tier hospital's ICU in Changsha, the respiratory therapy team, you included, is five people, taking turns with the ventilators at twenty-eight beds. The head nurse asks who you answer to, and you can't quite say. The team leader hands you a cuff pressure gauge and tells you to learn this first. From today your shift holds more than twenty machines, and behind each one someone is waiting.",
+ "salary_note": "Estimate: pay for medical technical staff at Changsha's top hospitals is slightly below the national average for this kind of post.",
+ "facts": [
+  { "label": "Respiratory Therapy Technologist (current level)", "value": "0-5 years, ¥6,500–11,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Senior Technologist (5-11 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Airway management, such as suctioning and humidification", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Assessing patients' respiratory function and recording results", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Metro Line 2 passes under Orange Isle, the car full of people carrying takeout rice noodles. When you get off it is hardly light. The Changsha winter is so damp your coat feels heavy.",
+  "Morning handover. The night staff read out whose oxygenation is poor and who can try coming off the ventilator today. Doctors, nurses and you stand in a circle, someone holding a cup of soy milk.",
+  "Rounds of the ventilators, bed by bed. Tidal volume, airway pressure, PEEP; the cuff pressure gauge; numbers into the critical care system. You pause at each bed for about the same time.",
+  "A spontaneous breathing trial for Bed 7. You turn the support down and stand beside him, watching the monitor and also his shoulders and face. In half an hour you barely look at your phone.",
+  "The blood gas results are back. You take the sheet to the doctor in charge. He would like to wait. This trend can be tried, you say, and the two of you stand discussing at the computer.",
+  "Pushing a transport ventilator to take a patient to CT, you check the oxygen cylinder's pressure once more at the elevator. The nurse clears the way in front, and you keep your eyes on the tubing behind.",
+  "An old man awake under a noninvasive mask gestures that he's uncomfortable. You adjust the mask and mime breathing in and out, and slowly he follows you.",
+  "A rice bowl with chili-fried pork on the way home. A message from your mother asks if your hospital is short of nurses, you're always at work. You reply: Mom, I'm not a nurse."
+ ],
+ "ladder": [
+  { "title": "Respiratory Therapy Technologist", "stage": "Bedside", "focus": "Manage ventilator settings, do airway care, assist with weaning; move up with steady hands and sharp eyes" },
+  { "title": "Senior Technologist", "stage": "Stand alone", "focus": "Handle difficult weans on your own, teach students, join hospital-wide respiratory consults; move up through your mid-level title and experience" },
+  { "title": "Associate Chief Technologist", "stage": "Lead the team", "focus": "Lead the respiratory therapy team, set procedures, do research and training; move up through papers, skill, and speaking for this job" },
+  { "title": "Chief Technologist", "stage": "Set the rules", "focus": "Promote respiratory therapy standards and training across the province, and write the rules for a still-young profession" }
+ ],
+ "ai_tasks": [
+  { "name": "Assessing patients' respiratory function and recording results", "how": "AI can pull monitor data and chart information together and draft an assessment. Therapists have to look at the work of breathing, color and consciousness themselves, and confirm the record." },
+  { "name": "Operating and adjusting invasive and noninvasive ventilators", "how": "AI can explain alarms, suggest settings and warn of patient-ventilator asynchrony. Connecting the machine, adjusting it, judging tolerance and taking responsibility is still the therapist's." },
+  { "name": "Airway management, such as suctioning and humidification", "how": "Suctioning, humidifying and airway care must be done by hand at the bedside, adjusting to how the patient responds. AI can only remind you when; it cannot replace the hands or the judgment of risk." },
+  { "name": "Performing lung function tests and interpreting basic data", "how": "AI can read the curves, calculate indicators and draft a preliminary report. Therapists have to coach the patient's effort, judge whether the test is good enough, and review conclusions against the clinical picture." },
+  { "name": "Delivering oxygen therapy and nebulized treatments", "how": "AI can prompt flow rates and regimens from orders and patient status and check doses. Therapists give the treatment, teach patients to use it properly, and watch for adverse reactions." },
+  { "name": "Monitoring blood gases and respiratory parameters to assess results", "how": "AI can do nearly all the trend tracking, abnormality alerts and comparison of results. Therapists only spot-check the important abnormalities and step in when needed." },
+  { "name": "Working with doctors on respiratory treatment plans", "how": "AI can suggest plans and adjustments from guidelines and patient data. Therapists and doctors discuss the particular patient, make the trade-offs, and answer for the plan." },
+  { "name": "Coaching patients through respiratory rehabilitation", "how": "AI can make personalized training plans and follow up with video or reminders. Therapists have to demonstrate and correct on the spot, encourage people to keep going, and adjust the intensity." }
+ ],
+ "events": {
+  "e_first_alarm": "A ventilator alarms in the night and you run over alone. It's only water in the tubing. You drain it and the alarm stops, and you stand there with your hands still shaking. A nurse going by hands you a tissue.",
+  "e_who_am_i": "A family member asks what kind of doctor you are. You say respiratory therapist. So are you a doctor or a nurse? You explain for three minutes. All right, he says. Nurse, could you just take a look at this for me.",
+  "e_weaned": "A retired worker who has been on the ventilator nineteen days comes off it today. His first words, hoarse, are to ask whether anyone has been feeding the chickens at home. The whole ward laughs. You laugh too, and turn back to the machines.",
+  "e_night": "After several night shifts in a row you walk home past a rice noodle shop and have no appetite even at the smell. You draw the curtains. The sun is out there just the same, and you lie a long time without sleeping.",
+  "e_summer": "Changsha's summer hits thirty-nine degrees, and suddenly the ward has many more old people. Not one ventilator sits idle. For days you eat standing, and the beds you are responsible for have to be marked on paper in red.",
+  "e_doctor": "You suggest changing this patient's ventilation mode and the young doctor in charge doesn't listen. Hours later, the department head asks the same question on rounds. The doctor glances at you. After that, he starts coming to you to look at the blood gases.",
+  "e_nurse": "The ward is short of nurses and someone asks you to help turn patients and change dressings. You do it, but your ventilator rounds run an hour late. You stand at the nurses' station not knowing who to talk to about this.",
+  "e_ecmo": "The department takes on a patient on ECMO, and several specialties draw up shifts overnight. You're responsible for the lung-protective settings, keeping tidal volumes very low. By the time everyone meets the next morning, their voices are hoarse.",
+  "e_ai_alarm": "The new ventilator system flags patient-ventilator asynchrony by itself, dozens of alerts a day. Mostly it's right. You also find that a few are only because the patient is turning over. You write the pointers for reading them up on the whiteboard.",
+  "e_ai_gas": "AI can now organize blood gas and ventilation trends by itself, changes visible at a glance. You no longer copy tables. With the extra time you stand at the bedside and look at someone's shoulders as they breathe.",
+  "e_grad": "Your intern completes an airway assessment alone for the first time and reports it haltingly at handover, but all of it correct. You say nothing from the back. That evening you send a message: tomorrow say it again, faster.",
+  "e_family_ask": "Through the glass, a relative asks when his father can come off the machine. You can't tell him a time. Today is a little better than yesterday, you say. He nods and phones the whole family to repeat it.",
+  "e_back": "Your back and neck are in poor shape from ten hours a day on your feet, bent over tubing. You start stretching in the duty room. A colleague says it's an occupational disease that will never count as a work injury.",
+  "e_marry": "You marry and buy a place in Xingsha, an hour's commute. Your in-laws ask what sort of post you really have. You think for a moment and say: a contract one. The table falls silent for a moment.",
+  "e_kid": "Your child coughs twice. You get up in the night and press your ear to listen, and it's a while before you remember you aren't at work. Your spouse says: you're at work even at home.",
+  "e_county": "You go to teach at a county hospital in Yiyang, whose ICU has four ventilators and no one who knows how to set them. You stay two weeks and leave a one-page protocol on the nurses' station wall. Back in Changsha, people are still sending you pictures with questions.",
+  "e_parent": "Your father's COPD has worsened. You buy an oxygen concentrator for the house back home. You show him how to use it and show your mother how to read the numbers, and before you go back to Changsha you leave the neighbors a slip with your number.",
+  "e_standard": "The provincial society is writing respiratory therapy operating standards. The airway management part you wrote is the first time your department's way of doing things has turned into a printed page.",
+  "e_newcomer": "This year six new respiratory therapists join the department, and you give them their first lesson. Whose family knows what you do? you ask. Only two raise their hands, and everyone laughs."
+ },
+ "choices": {
+  "c_zhuguan": {
+   "title": "Sit the Senior Technologist exam",
+   "situation": "Respiratory therapy has no title track of its own. You have to sit the Senior Technologist exam under the general technologist track, and half the content has nothing to do with your daily work. Without this certificate, says the team leader, nothing else can even be discussed.",
+   "options": [
+    { "label": "Bite the bullet and sit it", "result": "You spend half a year memorizing imaging and lab material you will never once use at work. You get the certificate, a good deal thinner." },
+    { "label": "Sharpen your skills first", "result": "You spend another year on difficult weans and your hands grow surer. The title can wait another year." }
+   ]
+  },
+  "c_scope": {
+   "title": "Whose call is the setting",
+   "situation": "You think the ventilation mode for Bed 7 should change. The young doctor in charge thinks it's fine. You have a view, but your name isn't on this order. By the rules you can only suggest.",
+   "options": [
+    { "label": "Keep saying it until he hears", "result": "You print the curves and tape them to his desk. He changes it in the end, and afterward doesn't talk to you much." },
+    { "label": "Put it in the record and ask the senior doctor", "result": "You write your observations clearly in the handover book, and the department head sees them the next day. You learn how to let words get said through someone else." }
+   ]
+  },
+  "c_ecmo": {
+   "title": "Join the ECMO team?",
+   "situation": "The department is forming an ECMO team and needs someone who understands lung protection. It means extra nights and training at another hospital, with no extra pay. You have already been on nights for months.",
+   "options": [
+    { "label": "Join", "result": "You train away for a month, and when you return you are the person most often called up at midnight." },
+    { "label": "Hold off for now", "result": "You say you'd like to wait, and your nights ease off a bit. Other people's ECMO shifts fill up, and you watch from the side." }
+   ]
+  },
+  "c_ai": {
+   "title": "The closed-loop ventilator trial",
+   "situation": "A manufacturer wants to trial ventilators that adjust themselves, and someone has to collect data, watch them, and judge when they can't be trusted. The work is fiddly. But done well, you might be the first person in the province to understand this.",
+   "options": [
+    { "label": "Lead the trial", "result": "You record every time it gets something wrong and write them up in a small report. When the manufacturer's engineers come, they come to you first." },
+    { "label": "Leave the machines to the machines", "result": "You go on adjusting by hand, with a good feel for it. Later the machines keep getting better, and you sometimes ask the young ones how to set them." }
+   ]
+  },
+  "c_company": {
+   "title": "A ventilator maker comes hiring",
+   "situation": "A ventilator company is hiring a clinical applications specialist at half again your pay, no night shifts, traveling to hospitals across the province. Classmates who've gone post nothing but high-speed trains and hotels.",
+   "options": [
+    { "label": "Stay in the ICU", "result": "You decline. On that night's shift, you look out of the window once more than usual." },
+    { "label": "Go to the company", "result": "You hand in your resignation, and the team leader gives you a cuff pressure gauge as a keepsake.", "end": "You joined the device company, and spent your days in other ICUs teaching others to use the machines. Whenever you heard an alarm, you always turned first to look at the person in the bed." }
+   ]
+  },
+  "c_rehab": {
+   "title": "Open a pulmonary rehab clinic",
+   "situation": "The department head agrees to let you open a pulmonary rehabilitation window in outpatients, half a day a week. There are plenty of old people with COPD. You'd have to work it out from scratch and find your own staff, and the billing hasn't been sorted out.",
+   "options": [
+    { "label": "Open it", "result": "Two old people come on the first day. Six months later the line reaches the corridor, and they call you the one who teaches blowing." },
+    { "label": "Concentrate on the ICU", "result": "You stay at the bedside. Those discharged old people, you only ever see again when they come back." }
+   ]
+  },
+  "c_fuzhu": {
+   "title": "Going for Associate Chief Technologist",
+   "situation": "Associate Chief Technologist requires papers and research projects. You've got plenty of cases, but no time. There aren't many slots, says the department, and others began writing before you did.",
+   "options": [
+    { "label": "Apply for a grant and work up the data", "result": "You go through the data on mornings after night shifts, and win a small provincial project. It's the first time anyone on your team has done research." },
+    { "label": "Keep your time for the bedside and students", "result": "You teach several classes of students, who mention you wherever they go. None of that fits on the evaluation form." }
+   ]
+  },
+  "c_private": {
+   "title": "A community breathing rehab business",
+   "situation": "An old classmate has opened a home ventilator and pulmonary rehab business in Changsha, and asks you to be a technical partner. Old people need it badly, but the money is hard to earn, and you'd be leaving the ICU after more than ten years.",
+   "options": [
+    { "label": "Stay at the hospital", "result": "You have a meal with your old classmate. I'll help you think it through, you say, but I can't leave." },
+    { "label": "Help out on weekends", "result": "You go half a day a week, teaching families to use the machines. The pay for that half day isn't much. You keep going for many years." },
+    { "label": "Resign and do it", "result": "You leave the hospital and rent a shopfront next to a housing compound. Your first client is an old neighbor.", "end": "You left the ICU and opened a small breathing rehab shop at the gate of a compound. The old people had no need to fight for a bed there. You taught them to breathe in slowly, and out slowly." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last shift you go over the ventilators one by one, hand them to the young ones, and put the cuff pressure gauge back in the drawer. On the way home the wind off the Xiang River is a little cool. You stop at the metro entrance and breathe in deeply and let it out slowly, a little more slowly than before. You've taught this movement to thousands of people.",
+  "burnout": "Your neck and your insomnia come for you together, and you finally apply to get off night shifts and do lung function tests in outpatients. You don't need to run anymore, and the corridors are much quieter. When you hear an alarm from another ward, you still stop and listen for two seconds."
+ },
+ "stages": [
+  "Each day you go bed by bed through the ventilators, measuring cuff pressure, recording settings, and following the team leader through spontaneous breathing trials. The doctors and nurses are all senior to you, and you begin most sentences with I took a look. What's in your hands is a ventilator panel, a blood gas sheet and a cuff pressure gauge. You can suggest. You don't get to decide.",
+  "Difficult weans start to be given to you, and you have to judge whether to try today, for how many hours, and how to back out if it fails. Doctors begin turning from the computer to ask you, and sometimes you're called for hospital-wide consults. Copying settings correctly used to be enough. Now you have to explain the reason for each change, and teach two interns as well.",
+  "You lead the respiratory therapy team: scheduling, setting procedures, teaching airway management to nurses across the hospital. Half your time is at the bedside of the hardest patients, and half on grant applications and training plans. You've begun asking the medical affairs office for posts for this tiny profession, and speaking up for mistakes made below you.",
+  "You write standards in the provincial society and run training classes, and when county ICUs get stuck, their calls come to you. You go less to the bedside, but for the most difficult few, people still wait for you to take a look. What you're doing now is making it so that the ones who come after won't have to explain what they do."
+ ],
+ "work": [
+  "The team leader has you check the cuff pressure on Bed 3. You measure twice and the number is a bit lower than yesterday. You bring it up to level and write it on the first line of the handover book.",
+  "Nurse Xiao Zeng asks why this machine keeps alarming. You squat down, look along the tubing, and find a loose connector. You tighten it, the alarm stops, and she nods at you.",
+  "You accompany an old man through a nebulizer treatment. He keeps spitting out the mouthpiece. You take a paper cup and mime it, showing him over and over how to hold it in his lips, until he nods.",
+  "You print three days of respiratory mechanics curves for Bed 9, and show young Dr. Zhou the changes in driving pressure. He's quiet for a moment, then changes the order.",
+  "Intern Xiao Lin is using a transport ventilator for the first time. You let him check the cylinder and connect the tubing, standing by and saying nothing, until at the elevator you ask whether the cylinder is open.",
+  "Neurosurgery asks for a consult on a long-bedridden patient who is hard to wean. You bring the diaphragm ultrasound, look for ten minutes, and write out a plan for reducing support day by day.",
+  "You're teaching airway humidification at a hospital-wide nurses' session when someone asks how many days a humidifier chamber should go between changes. You put two years of department data up on the screen.",
+  "You take the schedule to the head nurse to make the respiratory therapy night slot fixed. She says there aren't enough people. In her office, the two of you go through it square by square.",
+  "Xiao Su on your team wants to move into sales. You sit talking with her in the duty room till late, and the next day you change her shifts so she has time for interviews.",
+  "On the seventh draft of the standards, an expert from another province disagrees on a weaning criterion. You read him several sets of data over the phone. Let me think about it, he says.",
+  "A young doctor at a county hospital sends you a photo of a ventilator screen at midnight. You look at it, send a slow voice message explaining, and at the end you ask: have you eaten?",
+  "In a training class you have thirty students close their eyes and breathe to your rhythm for a minute. Remember this, you say. The person in your bed is doing this every second."
+ ],
+ "past": [
+  "Your family lives in the countryside near Shaoyang, Hunan. Your grandfather smoked all his life and in winter breathed so hard he slept sitting up. You thumped his back and didn't know what else to do.",
+  "Your gaokao (college entrance exam) score isn't high. Going through the application forms you see a major you've never heard of, respiratory therapy. You think of your grandfather and tick the box.",
+  "Starting university you find only thirty-odd students in your year. You are among the first few classes in this trade, says a teacher. A relative asks: four years of study to blow air?",
+  "Your ICU placement. You hear so many machines at once for the first time that you don't dare move. Your teacher says that after long enough you'll know which sound is real.",
+  "Looking for work, you find that many hospitals don't have this post at all. You apply to more than a dozen, and this top hospital in Changsha gives you a contract."
+ ],
+ "late": {
+  "pension_note": "Estimate: a hospital employee's pension, with occupational or enterprise annuity, comes to a little over half of final pay.",
+  "scenes": [
+   "In your first month of retirement you ride the metro under Orange Isle, and someone in the car is coughing. You listen, take a look at him, and say nothing.",
+   "Old people in the neighborhood hear you know about breathing and ask you to talk. In the activity room you teach pursed-lip breathing, all of them pouting at each other and laughing.",
+   "You go back to the old house in Shaoyang, wipe clean the bamboo chair your grandfather sat in, carry it to the door and sit there all afternoon, your breathing even.",
+   "In your first month in outpatients you always arrive half an hour early. The lung function room has no alarms, and you find that a little strange.",
+   "You teach a small child to blow into the lung function machine. He blows until he's red in the face. You applaud, and he does it again.",
+   "Your neck is somewhat better, and you walk in Martyrs Park. Reaching the lake you notice you're counting a stranger's breaths again. You stop and smile.",
+   "In your first year out of the ICU you can no longer smell disinfectant, and you wake earlier for it. You buy yourself an alarm clock that makes no noise.",
+   "An old man who was once on a ventilator recognizes you in the street. His voice is very clear, and he insists on dragging you off for a bowl of noodles.",
+   "At a class reunion, the thirty-odd from your year fill two tables. Someone says this major now takes in hundreds. You all raise your glasses.",
+   "Your child is filling in a form and asks what to write for parent's occupation. Respiratory therapist, you say. Will people know what that is? Write it, you say.",
+   "You find the old cuff pressure gauge, its needle still moving. You blow on it and it doesn't stir. You laugh and put it back in the box."
+  ],
+  "closing": {
+   "retire": "A slight wind on the Xiang River at dusk. You lean on the railing, breathe in, and let it out slowly. No one is counting for you.",
+   "burnout": "The clinic lights go off and the corridor is very quiet. You walk to the window, open it a crack, and let the air slowly in.",
+   "end": "The shutter of the small shop comes halfway down, and the streetlights are on outside. You stand a while in the doorway and listen to people talking in the street."
+  }
+ }
+}

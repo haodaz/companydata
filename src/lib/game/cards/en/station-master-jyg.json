@@ -1,0 +1,288 @@
+{
+ "id": "station-master-jyg",
+ "occupation": "Railway Dispatcher and Station Master",
+ "role": "Assistant Duty Officer at a Gobi Desert Station",
+ "headline": "A village kid from Zhangye with a railway college diploma, posted to a station of eight people out on the Gobi west of Jiayuguan, holding up a signal lamp for every train that comes through",
+ "unit": "A fourth-class station on the Gobi west of Jiayuguan",
+ "unit_type": "Railway district office",
+ "city": "Jiayuguan",
+ "city_tier": "Prefecture-level city",
+ "education": "Associate degree (Railway Traffic Operations and Management)",
+ "level": "You've memorized the operating rules and your hand signals are textbook. But standing alone on a platform at night waiting for a train, your heart still pounds.",
+ "intro": "You ride the staff shuttle train to the station and you are the only one who gets off. A row of red-brick bungalows, two poplars on drip irrigation, and a railway crossing the Gobi from east to west with no visible end. The station master hands you a signal lamp and a copy of the Train Operating Rules and says there's nothing much out here except trains. From today, every train through this station will have been looked at by you, standing on the platform.",
+ "salary_note": "Estimate: railway post wage plus night pay and a hardship allowance. At a small Gansu station take-home is about the national railway figure, slightly higher.",
+ "facts": [
+  {
+   "label": "Assistant Duty Officer (current level)",
+   "value": "0–4 years, ¥5,000–7,500 a month (national average, estimated)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Station Duty Officer (4–10 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Receiving and sending trains on the platform and checking with your own eyes",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Setting routes and handling block working",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "The wind bangs the door. In the yard you draw half a bucket of water. The water tanker brought it three days ago, so you go easy brushing your teeth.",
+  "Handover. The night duty officer pushes the log across and reads it out: which train ran late, which switch set off an alarm last night, what orders came from the dispatcher. When he's done you both sign.",
+  "A freight train is coming into Track 3. You go out five minutes ahead, walk into the wind to the end of the platform, confirm the route, take up the signal flag and keep your eyes on a point in the distance.",
+  "Revising the rules before a safety test from the district office. The station master spot-checks you: what do you do if the end-of-train device fails? You get stuck on the third sentence. He tells you to copy it out again tonight.",
+  "Your turn to cook. Sand has knocked over the few rows of vegetables you grow. You pinch off a handful of chives and boil a pot of noodles. Eight people; no one talks at the table, everyone's listening to the radio.",
+  "A freight train is held in the loop for forty minutes. The driver leans out and asks for a light. You shake your head and pass him a bottle of water, and you talk about the weather for a while through the window.",
+  "The sun turns the Gobi the color of rust. The snow on top of the Qilian Mountains is still shining. You phone home from the platform; the signal drops twice. Your mother asks if you've eaten.",
+  "Night train. Its light comes from very far off in the dark. You raise the signal lamp, which is heavier in your hand than it is in daytime."
+ ],
+ "ladder": [
+  {
+   "title": "Assistant Duty Officer",
+   "stage": "Platform",
+   "focus": "Receiving and sending trains on the platform, giving hand signals, checking routes and end-of-train lamps, learning the rules from the duty officer and studying for the next exam."
+  },
+  {
+   "title": "Station Duty Officer",
+   "stage": "In the control room",
+   "focus": "Block working, routes, dispatcher's orders and the train log from the control room. A whole shift's safety rests on your voice."
+  },
+  {
+   "title": "Deputy Station Master",
+   "stage": "Running operations",
+   "focus": "Crews, safety inspections, training new staff and emergency drills across several small stations, with the phone ringing day and night."
+  },
+  {
+   "title": "Station Master",
+   "stage": "The whole station",
+   "focus": "Full responsibility for the safety, staff and daily life of these stations: inspections, meetings, signatures. Hardest of all is keeping people out here on the Gobi."
+  }
+ ],
+ "ai_tasks": [
+  {
+   "name": "Receiving and sending trains on the platform and checking with your own eyes",
+   "how": "When sand blurs the signals, when there might be sheep on the line or the end-of-train lamp might be out, someone still has to stand outside, look for themselves and say 'all clear'."
+  },
+  {
+   "name": "Setting routes and handling block working",
+   "how": "Centralized traffic control can set routes automatically, at one click from the dispatcher's desk. When the equipment alarms or you have to fall back on degraded working, the duty officer takes over and goes through the rules step by step."
+  },
+  {
+   "name": "Judging train movements in high wind and sand",
+   "how": "Wind gauges and warning systems along the line can calculate whether to slow or stop trains. How deep the sand is at the station, someone has to go out, look and report."
+  },
+  {
+   "name": "Filling in train logs and reports",
+   "how": "All the running information is in the system. Logs and reports can be generated automatically; a person only checks and signs."
+  },
+  {
+   "name": "Leading the crew, talking, and keeping people at a small station",
+   "how": "Whose family is in trouble, who hasn't been home for three months, which new kid can't sleep at night: no system raises an alarm for these."
+  }
+ ],
+ "events": {
+  "e1": "The first time you take a night train alone, you go out twenty minutes early and walk up and down the platform until you can barely hold the lamp for cold. The train goes through safely. Back inside you find your shirt is soaked through.",
+  "e2": "A safety inspection finds a correction on your log. This month's bonus is gone. The station master writes a self-criticism on your behalf, then makes you write one of your own.",
+  "e3": "A force-eight gale blows for two days and sand gets into every crack in the doors and windows. You take turns going out to clear the switches, in goggles, and your mouth still tastes of dirt.",
+  "e4": "The old station master's yellow dog has adopted you. It walks with you to the end of the platform for every train and sits behind the safety line as if it had passed the rules exam too.",
+  "e5": "You're on duty for Spring Festival. You take eleven trains on New Year's Eve. Two colleagues make a basin of dumplings, and in the middle of the night you hand a lunchbox up to a passing driver.",
+  "e6": "Three blind dates, and each of them asks how many times a month you get back to Jiayuguan. The fourth woman says: then I'll come and see the station. And she does, with a packet of tomato seeds.",
+  "e7": "The station is brought under centralized traffic control and the switches and signals are set directly from the dispatch center. You sit in the control room, watching routes light up by themselves, not knowing what to do with your hands on the desk.",
+  "e8": "Years of alternating night shifts have raised your blood pressure, and your check-up report has grown some up and down arrows. The district doctor tells you to stay up less. You smile.",
+  "e9": "The equipment alarms suddenly and the system falls back to manual. You dig out the method you haven't used in years and work through it step by step, and bring one train through. On the phone the dispatcher says: good.",
+  "e10": "Your child falls ill and you can't leave the station. Your wife carries the child to the hospital in town alone. The next day she sends a photo: the child on a drip, flashing you a V sign.",
+  "e11": "A college graduate comes to the district office and in his third week secretly cries. You take him up the water tower to watch the sunset and don't say anything wise. He ends up staying five years.",
+  "e12": "High wind has buried a stretch of drainage ditch and you and two others dig it out in a day. When you come back your throat is too swollen to speak, so you talk to your colleagues in hand signals.",
+  "e13": "In its twentieth year the poplar at the station finally grows past the roof. You water it from the yard, still with water from the tanker.",
+  "e14": "The train logs are now generated by the system and you only click confirm. The notebooks you filled for ten years are collected by the district office.",
+  "e15": "Before an inspection you sweep the yard three times and the wind on the Gobi blows it all back within minutes. As it leaves, the inspection team compliments your vegetable plot.",
+  "e16": "The small station next door is closed. The building is locked, the staff are sent elsewhere; a row of poplars and a station sign stay behind, and trains go past without stopping.",
+  "e17": "The district office announces that your station has gone 3,000 days without an accident. Nobody sets off firecrackers. Everyone goes out for the next train as usual.",
+  "e18": "Your child gets into college, and not for anything to do with railways. You should have swapped shifts for the first day of term, but you're on the platform for a train. When it's gone you stand facing east for a little while."
+ },
+ "choices": {
+  "c1": {
+   "title": "Back to Jiayuguan Station or stay at the small station",
+   "situation": "The district has an opening for a passenger attendant at Jiayuguan Station: home every night, a few hundred yuan less, and for the foreseeable future you'd be a passenger attendant. The station master says the small stations are hard, but if you want a seat in the control room, this is where you learn.",
+   "options": [
+    {
+     "label": "Stay at the small station",
+     "result": "You hand back the transfer form. It's your night for the train, not a breath of wind on the Gobi, the light very far away."
+    },
+    {
+     "label": "Transfer to town",
+     "result": "You put on the passenger uniform and watch the crowds at the gates every day. You get home for dinner and give fewer hand signals."
+    }
+   ]
+  },
+  "c2": {
+   "title": "Sitting the Station Duty Officer exam",
+   "situation": "The district is examining a new batch of Station Duty Officers and taking only a few. Rules, practical work and a psychological test. The station master says you could try, but you'd have to memorize a whole book this month while working.",
+   "options": [
+    {
+     "label": "Sit it",
+     "result": "You study the regulations after night shifts, fill three notebooks with block-working procedures, and your palms are wet in the exam room."
+    },
+    {
+     "label": "Practice one more year",
+     "result": "You say your hands aren't ready. You sit it with the next batch, and your colleagues all say you're steady."
+    }
+   ]
+  },
+  "c3": {
+   "title": "Jumping to a city metro",
+   "situation": "The metro in the provincial capital is hiring duty officers and prefers railway people. Not nine to five, but at least not on the Gobi, and your child's schooling would be sorted out. Your railway post and years of service would be gone the day you left.",
+   "options": [
+    {
+     "label": "Go to the metro",
+     "result": "You hand in your resignation. While you pack, the yellow dog lies at the door the whole time.",
+     "end": "You've left the Gobi and go on receiving trains under the provincial capital, only there's no wind in the station."
+    },
+    {
+     "label": "Stay",
+     "result": "You fold up the job notice and slip it into the regulations. One more night shift, one more train."
+    }
+   ]
+  },
+  "c4": {
+   "title": "Whether to learn centralized control and the new equipment",
+   "situation": "The district is putting together a team that knows the dispatch system, with three months of training; afterward they'll handle equipment changeovers and fault response. The old hands say you'd just be helping them take away your own job.",
+   "options": [
+    {
+     "label": "Learn it",
+     "result": "In the training room you see the whole line laid out and understand it for the first time. Back at work, other stations call you when something goes wrong."
+    },
+    {
+     "label": "No; look after what's in front of you",
+     "result": "Someone has to know the old methods, you say. That's true, only they're needed less and less."
+    }
+   ]
+  },
+  "c5": {
+   "title": "Standing for Deputy Station Master",
+   "situation": "The district is promoting a Deputy Station Master for this stretch of line, responsible for safety at three small stations. The job means traveling among all three, a phone on 24 hours a day, and writing up every problem anyone has.",
+   "options": [
+    {
+     "label": "Stand for it",
+     "result": "You speak for ten minutes, all about how to get through a night shift. One person on the panel nods."
+    },
+    {
+     "label": "Stay in the control room",
+     "result": "You feel more at home there, you say. The young man taking over from you asks why, and you point at the train log."
+    }
+   ]
+  },
+  "c6": {
+   "title": "Your wife wants you back in town",
+   "situation": "Your child is about to take the high school entrance exam, and your wife, who has held everything up alone for more than ten years, finally says it: put in for town, even a desk job. There's a clerical post in the district safety section.",
+   "options": [
+    {
+     "label": "Go to the district office",
+     "result": "You change into leather shoes and read reports all day. You can sleep through the night now. Sometimes you still wake at eleven-fifty.",
+     "end": "You've left the platform and spend many years writing reports in the district safety section. The window has no view of the tracks."
+    },
+    {
+     "label": "A few more years",
+     "result": "You tell your wife, two more years. You've said that many times, and this time she doesn't answer."
+    },
+    {
+     "label": "Move the family closer",
+     "result": "You rent a place in the nearest town. It adds two hours to your journey home after each shift, and your child changes schools."
+    }
+   ]
+  },
+  "c7": {
+   "title": "Station Master, or wait for early retirement",
+   "situation": "The old Station Master is retiring and the district asks whether you'd be willing to take over. The small stations are being merged, and whoever takes the job has to sit down in person with the veteran staff about being reassigned. If you decline, you can take early retirement when the age comes, in peace.",
+   "options": [
+    {
+     "label": "Take the Station Master's job",
+     "result": "You take the ring of keys and start talking to people one by one. Some hear you out and bang the table; some pour you a cup of tea."
+    },
+    {
+     "label": "No more competing",
+     "result": "You leave the job to someone younger and go on training new staff, and no longer have to write anyone's self-criticism."
+    }
+   ]
+  },
+  "c8": {
+   "title": "The station is closing. Where do you go?",
+   "situation": "With centralized control across the line, this station is to be unstaffed. The district can find you something in logistics at a larger station, or you can do the paperwork and go home early. You've spent most of your life here, and the sign is still up.",
+   "options": [
+    {
+     "label": "Go home early",
+     "result": "You polish the signal lamp, put it on the desk, and wait for someone from the district to collect it.",
+     "end": "The station is unstaffed now. Back in town, when you hear the wind come up outside you still get out of bed to look."
+    },
+    {
+     "label": "A larger station, until retirement",
+     "result": "You become the old hand in a larger station's control room. Young people call you master and ask, while they're at it, what the Gobi was like."
+    }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "At sixty you take your last train and write your name in the log, more slowly than you used to. You hand the signal lamp to the next person and tell him what year the scratch on the lens is from. The shuttle train comes. You sit by the west window and watch a row of poplars slowly get smaller.",
+  "burnout": "Decades of night shifts have finally worn your body down, and after a check-up the district moves you off train operations. At home you still wake on time and lie with your eyes open, listening for a train outside. Eventually you learn you can't hear them from town."
+ },
+ "stages": [
+  "For each train you go out in good time, stand at the end of the platform and confirm the route; a signal lamp at night, a flag by day. When the train has passed you check the end-of-train lamp and report by radio to the duty officer: train passed complete. The rules are your homework. When the duty officer says 'careful', you stop where you are.",
+  "You've moved into the control room: telephone on the left, control panel on the right. Block working, routes and dispatcher's orders all go through you, and in the train log every word comes with a time. Your voice has become other people's eyes. The assistant outside and the driver on the train both wait for your word. Unlike the platform, a wrong word in here can be heard down the whole line.",
+  "You begin traveling among three small stations, checking safety records and spot-checking recordings by day, turning up at someone's control room door at night. New staff can't start without your signature. Those who fail exams get a talk from you. District documents have to become words people understand once they reach you. Your tool has gone from a signal lamp to an inspection notebook.",
+  "The safety, water, vegetables and morale of these few stations have all landed on your desk. You fight the district for more water tanker runs, chair safety analysis meetings, and take calls from family members at night. You no longer take trains, but whenever one goes by you still look up at the clock."
+ ],
+ "work": [
+  "Lao Sun, the duty officer, sends you to look at the switch on Track 2. You crouch by it with a point clamp for ages and report there's sand on it. He says: go get a broom, that's work too.",
+  "At two in the morning a freight train is held in the loop. You walk along it and your flashlight finds a loose tarpaulin rope on one wagon, and you call it in to the duty officer right away.",
+  "You copy a track number wrong on the shunting sheet. Lao Ma, the shunter, looks at it, taps it with a finger and says nothing.",
+  "The dispatcher issues a temporary speed restriction. You write it in the dispatcher's order book and read it to the driver. He reads it back, word for word.",
+  "An indicator on the control panel flickers. You don't touch it. You call Xiao Song from signals to take a look. He spends an hour on his stomach in the relay room and replaces a relay.",
+  "The new assistant takes his first night train. You listen on his radio from inside and his voice is shaking. You answer: if you see it, say you see it. There's no hurry.",
+  "You pull a call recording from three days ago and find that Lao Li on the night shift left out a confirmation. He's five years older than you. You take him out to the yard, hand him a cigarette and talk for ten minutes.",
+  "On the day of the wind warning you go through the emergency supplies at all three stations item by item, find a cracked belt on the hand-cranked generator, and have someone bring a new one from the district that same day.",
+  "Young Xiao Zhao has failed the duty officer exam again. You copy out his wrong answers, sit on the edge of his dorm bed and lay out the block-working procedure with chopsticks.",
+  "The district wants staff cuts. You write the ages and family situations of your eight people on a sheet of paper, and stay a long time on every name.",
+  "The water tanker fails to come two runs in a row. You phone the district chief, send a photo of the mark on the water tank and say one sentence: we have two days left.",
+  "A veteran retires. Following the old custom, you see him off on the platform, and you have the duty officer tell him to look out when the next train sounds its horn."
+ ],
+ "past": [
+  "Your village in Zhangye was two and a half kilometers from the railway. After school you'd lie on the ridge between the fields counting wagons. By a hundred and something it would be dark.",
+  "After the high school entrance exam your family wanted you to learn a trade. Your uncle had thrown switches on the railway and told your father: railway rice is steady.",
+  "Your gaokao (college entrance exam) score wasn't high. You put down a railway vocational college's operations program, and your first time on a train was the ride to enroll.",
+  "Your internship was at a marshaling yard. You watched the old hands direct shunting through winter fog and understood for the first time that hand signals weren't for show.",
+  "The hiring exam covered the rules and a medical. You worried about the color vision test for a week. When the admission letter arrived, the village Party secretary read your name over the loudspeaker."
+ ],
+ "late": {
+  "pension_note": "Estimate: railway workers have long contribution histories on stable pay, so the pension comes to about 60 percent of final pay.",
+  "scenes": [
+   "In your first year of retirement you move into town and take a walk below the fortress every morning. Tourists photograph the gate tower. You listen for a train in the distance.",
+   "The district invites veterans back for a talk. The control room is all screens now, and a young person asks whether you really had to stand outside holding up a lamp.",
+   "You take your grandson by train to Zhangye. As you cross the Gobi you lift him to the window to see a row of poplars. Grandpa, he says, there's nothing out there.",
+   "No more night shifts, and still at eleven-thirty your eyes are open. Your wife says you might as well get up for a glass of water. The two of you sit in the kitchen for a while.",
+   "You take your blood pressure pills on time and walk slowly around the compound. A colleague phones to say the yellow dog's still there, old now, lying on the platform and not moving.",
+   "The old man fixing bicycles in your neighborhood also came off the railway. Over chess you sometimes ask each other: which line did you run?",
+   "In your first month at the new place you still repeat a thing after you've said it, and wait for someone to read it back.",
+   "Your child writes a composition called My Father. It says: my father used to work somewhere you can't find on a map.",
+   "You ride the high-speed train through Jiayuguan. It's going too fast; a row of poplars flashes by and you can't even be sure they were the ones.",
+   "Around Qingming, the spring grave-sweeping festival, the Gobi wind gets up as it always has. When a sand warning comes on the TV you glance at the work group on your phone, the one you never left.",
+   "The old station has become a place railway photographers go. Someone posts pictures online, with the water tower, the poplars and the sign all still there. A comment says: so quiet out here."
+  ],
+  "closing": {
+   "retire": "The balcony faces west at dusk. A long way off a light is moving. You watch it for a while before you realize it's a streetlamp.",
+   "burnout": "You keep the regulations by the bed. When you open them there's still a little sand between the pages.",
+   "end": "At night the sound of a train comes from a long way off, and in the dark you count it. Forty-something wagons."
+  }
+ }
+}

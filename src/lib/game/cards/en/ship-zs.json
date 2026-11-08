@@ -1,0 +1,155 @@
+{
+ "id": "ship-zs",
+ "occupation": "Marine Engineer",
+ "role": "Trainee Ship Engineer, Repair and Construction Yard",
+ "headline": "A naval architecture graduate gone out to the islands, crawling tank bottoms with a thickness report at a Zhoushan ship repair yard",
+ "unit": "A ship repair and construction yard on an island off Zhoushan",
+ "unit_type": "Private shipyard",
+ "city": "Zhoushan, Zhejiang",
+ "city_tier": "Third-tier city",
+ "education": "Bachelor's in naval architecture and ocean engineering",
+ "level": "Top marks in ship structures and stability, and you've modeled in Tribon. How to move through a real ballast tank, or how thick is too thick for rust, you have no idea yet.",
+ "intro": "Past the cross-sea bridge there's still a ferry to take. The yard sits on the lee side of the island, its gantry cranes taller than the hilltops. On the first day the principal engineer hands you a flashlight and a chipping hammer, points to a foreign bulk carrier in the dock and says you'll be inside its ballast tank by afternoon. From today, every ship in and out of this island has a plate or two that has to do with you.",
+ "salary_note": "Estimate: a yard engineer in Zhoushan earns a little above the national average, with overtime and project bonuses in the dry-dock rush. In bad shipping years the bonus shrinks hard.",
+ "facts": [
+  { "label": "Assistant Ship Engineer (current level)", "value": "0-3 years, ¥6,500–10,000 a month (national average, estimated)", "source": "Industry norm" },
+  { "label": "Next level up", "value": "Principal Repair Engineer (3-7 years)", "source": "Industry norm" },
+  { "label": "What AI can't take", "value": "Going into the tanks to verify plate and structural damage", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Working out steel renewal from thickness reports", "source": "AI exposure" },
+  { "label": "Open positions", "value": "3 related listings nationwide, 0 in this city (the database leans toward campus and intern roles)", "source": "Job listings" }
+ ],
+ "day": [
+  "The staff dormitory is halfway up the hill, and from the window you can see the dock gate. The sea fog hasn't cleared. Breakfast in the canteen is salted ribbonfish and rice porridge.",
+  "The works meeting, a ring of people on deck. The principal engineer reads the day's items one by one while the subcontractor foremen look down and smoke.",
+  "You squeeze through the manhole into the ballast tank with your flashlight. It is dark and close. You tap your way along and chalk circles on plates to be gauged.",
+  "The gauging technician calls out numbers and you write them down. One plate reads absurdly low. You climb back and measure it again. It really is wasted.",
+  "A boxed lunch in the container office on the ship. The foreign owner's representative next door asks in English why this plate needs renewing. You stammer, then pull out the rules and show him.",
+  "Back at the office you enter steel quantities in a sheet and revise the CAD drawing. The principal engineer glances at it and says this frame number is wrong.",
+  "High tide. A ship outside the dock gate has to make this tide. The whole island waits for the water. You watch from the dock wall as tomorrow's job sheet lands on your phone.",
+  "The little shop below the dormitory fries you a plate of swimming crab, so cheap you're embarrassed to tell your classmates in Hangzhou."
+ ],
+ "ladder": [
+  { "title": "Assistant Ship Engineer", "stage": "Entry", "focus": "Follows the principal engineer onto ships, verifies repair items, tallies steel renewal, keeps job sheets and drawings; moves up on tank-crawling hours and being able to read a thickness report." },
+  { "title": "Principal Repair Engineer", "stage": "Mainstay", "focus": "Takes sole charge of one discipline on a ship (hull, machinery or electrical), deals with owner's representatives and class surveyors, moves up on dockings that finish on time." },
+  { "title": "Project Manager (Dry-Docking)", "stage": "Runs projects", "focus": "Runs a whole ship's dock period, budget and subcontractors and answers for the owner's bill; moves up on punctuality, no overruns and owners who come back." },
+  { "title": "Head of Technical Department", "stage": "Runs engineering", "focus": "Runs the yard's processes, conversion plans, pricing standards and the training of engineers; big jobs get decided here." },
+  { "title": "Chief Engineer", "stage": "Final sign-off", "focus": "The last technical signature in the yard, decides whether to take the hard jobs and adopt new processes, speaks for the yard outside it." }
+ ],
+ "ai_tasks": [
+  { "name": "Going into the tanks to verify plate and structural damage", "how": "AI can look at drone photos of the tank, but corrosion behind a frame and the sound of a hammer on it need someone in there. So does judging how to move inside and what's dangerous." },
+  { "name": "Working out steel renewal from thickness reports", "how": "AI reads gauging reports against the rules and marks wasted plates and renewal lists. Which plates can be patched and which replaced whole is for a person, weighing the site and the owner's budget." },
+  { "name": "Compiling repair quotations and job sheets", "how": "AI produces quotations and job sheets from the repair list and past prices; the yard only checks unit prices and special items." },
+  { "name": "Modeling scrubber and ballast water system retrofits", "how": "AI generates pipe routing from point clouds and old drawings and checks clashes. How material actually gets into the space, how it's lifted, whether the change goes to class: a person decides." },
+  { "name": "Planning dock periods and subcontractor crews", "how": "AI schedules by workload and trade and warns of conflicts. Which crew can be trusted and how to race the tide and weather stays with the people on the job." },
+  { "name": "Settling things on site with owner's representatives and surveyors", "how": "AI can translate and write up the meeting. Standing at the dock bottom, whether a plate is renewed and whose bill it goes on is talked out face to face, and a person signs." }
+ ],
+ "events": {
+  "e_first_tank": "For the first time you crawl a ship's entire port ballast tanks alone. You come out covered in rust. Your supervisor reads your notes and changes only two things.",
+  "e_english": "The owner's representative's English emails are thick with abbreviations. You look words up as you answer. After you send it he replies OK, and you read that several times.",
+  "e_typhoon": "A typhoon is coming and the whole yard prepares. You spend half the night adding mooring lines and lashing down whatever's up high. The next morning the sea is as flat as if nothing had happened.",
+  "e_overdue": "A ship overstays the dock by two days and the owner docks pay by the day. You and the subcontractors go two nights without sleep to finish the deck piping. The day she floats out no one says a thing.",
+  "e_good_owner": "An owner's representative takes you aside before leaving and says when this ship comes back here he'll ask for you by name.",
+  "e_market_down": "In a bad year for shipping, half the docks stand empty. The yard cuts bonuses and several subcontractor crews leave. The island's little shops close early at night.",
+  "e_market_up": "The market recovers and the dock is booked six months out. The year-end bonus beats the last two combined. You take your parents to an expensive seafood dinner on the island.",
+  "e_retrofit": "You take on a scrubber retrofit and the drawings go through eleven revisions. On the day of the lift the tower clears the funnel by only a few centimeters, and everyone on site holds their breath.",
+  "e_commute": "The child is small and your spouse works in the city. Every Friday you run for the last ferry. When wind stops the service, the family looks at each other on video.",
+  "e_surveyor": "The surveyor won't pass a weld. You don't argue. You go through the ultrasound report with him again and redo a short length, and as he signs he says you're easy to deal with.",
+  "e_back": "Your back acts up every plum-rain season, and tank crawling isn't as nimble as it was. You start taking younger ones down and calling to them from the manhole.",
+  "e_apprentice": "On deck you teach a new kid to listen with the chipping hammer. He can't hear it. You tell him no hurry, a hundred ships and he'll hear it.",
+  "e_ai_quote": "AI is hooked into the quoting system, and a repair list gets a price in ten minutes. On the very first job it prices a work-at-height item too low. You break a sweat catching it.",
+  "e_ai_drone": "A drone flies into the cargo hold for panoramas and AI marks the corrosion. You follow the marks and find it has also flagged an old paint line.",
+  "e_ai_paper": "AI assembles the completion report in half an hour and the younger staff go home earlier. You spend the time saved on two more trips into the tanks.",
+  "e_ship_old": "A ship you repaired when you were young comes back, with a new name and a new owner. On a port-side insert plate the welder's mark is still there.",
+  "e_signing": "A subcontractor settlement doesn't reconcile and two crews come to you. You lay job sheets and photos across the table and go item by item until nine at night.",
+  "e_workers_old": "The welders are getting older and the crews can't hire young ones. On the schedule you set aside day-shift work for welders in their fifties."
+ },
+ "choices": {
+  "c_english": { "title": "Whether to get through the English and the rules", "situation": "On foreign ships, engineers who can talk things out with owner's representatives and surveyors move up faster. But it's nine by the time you get back to the dormitory, and your neighbor is playing games.", "options": [
+   { "label": "A chapter of the rules each night", "result": "You keep the English edition of the classification rules by your bed, and half a year on you can argue with a representative at the bottom of the dock." },
+   { "label": "Get the yard down first", "result": "You set English aside and go into many more tanks. The feel in your hands comes faster than a dictionary." }
+  ] },
+  "c_main": { "title": "Taking over as Principal Repair Engineer on one ship", "situation": "The principal is on long leave and this ship's hull work has no owner. The department asks if you dare. If it goes wrong, the bill has your name on it.", "options": [
+   { "label": "Take it", "result": "Over twenty days in dock you lose four kilos. The ship floats out on time and the owner's representative signs the completion sheet." },
+   { "label": "Follow one more ship", "result": "You say you'd like to learn one more ship. When the principal returns and reads your notes, the verdict is: no rush." }
+  ] },
+  "c_owner": { "title": "A Shanghai shipowner wants you as superintendent", "situation": "A Shanghai shipowner wants you as a technical superintendent. No more island; you'd fly port to port watching its own ships, at twice the pay. It would close the road on the repair side.", "options": [
+   { "label": "Go to Shanghai", "result": "You turn in the bedding and leave on the earliest ferry.", "end": "You become the owner's superintendent, on the other side of the dock wall now: holding the repair list and chasing other people. You live the second half of your life between airports and ports, and still look twice at any yard's gantry cranes." },
+   { "label": "Stay on the island", "result": "You tell them you'll think about it, and the thinking outlasts the deadline. There's a ship waiting in the dock." },
+   { "label": "Ask them to base the job in Zhoushan", "result": "They can't, but they remember you. Later on, a few of their ships are sent here specially." }
+  ] },
+  "c_pm": { "title": "Applying for Project Manager (Dry-Docking)", "situation": "The yard is promoting a group of people to run dockings. This level handles money and people, not only hull work. You sign the subcontractor settlements, and a day late out of dock is on you.", "options": [
+   { "label": "Apply", "result": "You explain at the meeting how to cut three days from the dock period. The vice president asks about cost and you slide the sheet across." },
+   { "label": "Stay technical", "result": "You say you'd rather read drawings. Same pay, and a full night's sleep." }
+  ] },
+  "c_house": { "title": "Where to make a home", "situation": "Housing on the island is cheap, but school means crossing water. Ningbo is far more expensive and the schools are better, and you'd go back and forth every week.", "options": [
+   { "label": "On the island", "result": "Home ten minutes after work and a hot dinner. When the child starts junior high, it's lodging with relatives in the city." },
+   { "label": "Stretch to buy in Ningbo", "result": "The early Monday shuttle becomes your new alarm clock, and the mortgage figure goes up on the fridge." }
+  ] },
+  "c_ai": { "title": "Feeding the yard's data to AI", "situation": "The yard wants a repair knowledge base, thirty years of workloads and prices arranged for AI. It's thankless, no one wants to lead it, and once it's done the whole yard will have to go through it.", "options": [
+   { "label": "Lead the sorting", "result": "You and two younger engineers go through old job sheets one by one and write the factors into rules. A year on, quoting takes half the time." },
+   { "label": "Stay on the docks", "result": "You stay in the yard. When the system goes live you're the one who points out where it's wrong." }
+  ] },
+  "c_manager": { "title": "Applying for Head of Technical Department", "situation": "The yard's pricing standards and conversion plans will all pass through this seat. Fewer tanks, more meetings, and young engineers' titles and futures become your business.", "options": [
+   { "label": "Apply", "result": "You move to the third floor of the office block, window facing the dock gate, and watch other people go down into tanks." },
+   { "label": "Keep running ships", "result": "You tell the boss the docks are short of people. That's true. It's also that you don't want to go upstairs." }
+  ] },
+  "c_surveyor": { "title": "Qualifying as a surveyor for a classification society", "situation": "An old surveyor at the classification society is close to retiring and asks if you'd qualify and take over from him. From repairing ships to inspecting repairs: steadier pay, and you'd no longer belong to this yard.", "options": [
+   { "label": "Qualify and go", "result": "It takes two years. On the day you leave, the old hands line up along the dock wall.", "end": "You become a surveyor, walking into other people's docks with a flashlight and a stamp. When you meet a young engineer tapping rust with care, you look at him a moment longer." },
+   { "label": "Stay at the yard", "result": "You thank the old surveyor and say there are still a few ships unfinished here." }
+  ] }
+ },
+ "endings": {
+  "retire": "The day your last ship floats out is a spring tide. You stand on the dock wall and watch her slowly lift. As the tug takes her away you're still holding half a stick of chalk. A colleague in the office puts away your work pass, and outside the gantry crane is turning toward the next dock.",
+  "burnout": "Your back and knees won't let you into the tanks anymore, so the yard moves you to support staff, filing records. You file stacks of old job sheets while the cranes come and go outside. Eventually you retire early and move to the city, where you can't hear chipping hammers, and that takes some getting used to."
+ },
+ "stages": [
+  "Your tools are a flashlight, a chipping hammer and a frame plan. Most of the day you are crawling tanks, copying down gauge readings to work out steel renewal, tidying job sheets and revising CAD drawings. You write down what the principal says and pass the owner's representative's questions to him. No signing at this level. Getting plate numbers right counts as skill.",
+  "A ship's hull work is yours now: going through the repair list with the owner's representative, booking surveys with class, dividing and accepting work from subcontractor crews, updating the progress chart at night. Drawings go from correcting someone else's to deciding your own, and if they're wrong you're the one explaining. Foremen start calling you engineer, and stop calling you kid.",
+  "You hold the whole ship's accounts: the dock plan, budget, subcontractor settlements, additions and deductions. Morning meetings on deck, afternoons negotiating new items with the owner's representative, evenings with the tide table. You don't crawl tanks anymore, but every discipline has to report to you, and you have to hear who's bluffing.",
+  "The yard's process documents, pricing standards and conversion plans all pass through you. You read drawings for risk and money, not detail. More meetings, and recruitment and title reviews are yours too. You negotiate with outside design institutes and equipment makers and send the young ones to the site to come back and tell you.",
+  "Whether to take a big contract, whether to bring in a new process: all of it waits for your word. You sit with the owner and shipowners' technical directors, and one sentence can decide half a year of work for the yard. On your desk there's still an old chipping hammer, and young engineers are too shy to ask what it's for."
+ ],
+ "work": [
+  "You mark twelve plates to renew on the hold's frame plan in red. Old Zhou goes through it and crosses out one, saying that one isn't there yet, don't make the owner spend extra.",
+  "Subcontractor foreman Zhang comes with your job sheet and says this plate thickness is wrong. Checking back, you find you skipped a row when copying, and fix and reprint it on the spot.",
+  "You go into the double bottom with the gauging technician for the first time, sixty meters on your stomach. The writing in your notebook comes out crooked, and you copy it out again later.",
+  "The owner's representative wants a sea chest cleaning added. You add a line to the repair list, price it first, then send pipe crew hand Old Shen to look at the valve in the afternoon.",
+  "The surveyor said nine. By eight-thirty you have the ultrasound report and the renewal record laid out on the hatch cover. He glances over them and says today will finish early.",
+  "A pipe section welded by subcontractor Xiao Zheng fails the pressure test. You look for the leak together, with soapy water, and find it behind the third flange.",
+  "The owner's bill has three extra items. You attach site photos and job sheets to each and send them off, and the next day they are confirmed.",
+  "Tomorrow's tide only has room for one ship in the dock. You make one call to dispatcher Old Wang, and the order of two ships is swapped.",
+  "Old Hong of the paint crew says it can't be done in the rain. You push the coating plan back two days and bring the rudder work forward, and the schedule fits together again.",
+  "Reviewing a ballast water retrofit plan, you mark one bulkhead penetration in red and send designer Xiao Sun to measure it on site first.",
+  "Title review files are stacked across your desk. You write a paragraph for the young woman who joined last year, stressing she was the first to find the crack in that plate.",
+  "An inquiry comes in for an offshore conversion. The department spends three days on it. You read it and ask only: can this be lifted. Everyone goes back to their calculations.",
+  "You walk the new general manager along the dock bottom, telling him which spot needs repairing every year and which old welder's hands can't be found elsewhere."
+ ],
+ "past": [
+  "You grew up in Zhoushan with a ferry at your door. The summer after the high school entrance exam, a relative took you to see a ten-thousand-ton ship come into dock. Standing at the edge, you felt that thing should not be able to float.",
+  "On your gaokao (college entrance exam) form you put naval architecture and ocean engineering. Your classmates all wanted computer science. Your father said there would always be ships. You couldn't say whether that counted as a reason.",
+  "In your second year you studied structural mechanics and ship theory and modeled in Tribon until dawn. A professor said it looked nice, but had you ever seen a real frame?",
+  "A summer internship took you to a big shipbuilding yard. Walking the blocks in new work clothes, you saw a welder gauge a gap with his hand and know it was enough.",
+  "At graduation the design institutes paid less than the repair yards, and Shanghai housing cost more than the islands. You chose repair: real ships to touch, and home two hours away."
+ ],
+ "late": {
+  "pension_note": "Estimate: a private shipyard pays social insurance at the standard base. The pension comes to about half of final pay; an enterprise annuity is not guaranteed.",
+  "scenes": [
+   "Walking by the wharf, you watch a tug ease a ship alongside. You still look at the waterline first.",
+   "The old yard asks you back to look at a difficult rudder system. You bring your flashlight, and privately you've been pleased since the phone call.",
+   "Your grandchild has built a model ship with the rudder on backward. You say nothing and wait for the child to find out at the water.",
+   "You go to a hospital in the city for treatment on your back. Two old welders you know are in the queue.",
+   "You still keep an eye on the island's typhoon forecasts, and only afterward remember you needn't go add mooring lines.",
+   "Old colleagues come over for a drink and say the new people at the dock don't like going into tanks. You smile and top up the glasses.",
+   "Somewhere new, you still keep a flashlight in your bag. There's always one in a business hotel wardrobe.",
+   "Once, passing through Zhoushan, you change buses twice to get back to the dock gate. The guard is new and doesn't let you in.",
+   "Traveling with younger staff, you pass on what Old Zhou once said: don't make the owner spend extra.",
+   "The bridges reach more of the islands now. There are fewer ferries, and the shop by the pier is still there.",
+   "A big ship comes up on the news and you tell the television its rudder system is hard to repair. The family has long been used to this."
+  ],
+  "closing": {
+   "retire": "Evening, low tide, the mudflats showing. The gantry cranes in the distance still have their lights on. You watch a while, then go in to eat.",
+   "burnout": "Your back still knows about rain before it comes. You sit at the window, the sound of the sea a few streets away.",
+   "end": "At a window in another city, there's a bit of sea color on the horizon, and that dock's tide table is still on your phone."
+  }
+ }
+}

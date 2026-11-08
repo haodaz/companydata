@@ -1,0 +1,293 @@
+{
+ "id": "fitness-luoyang",
+ "occupation": "Fitness Trainer",
+ "role": "Junior Personal Trainer at a Gym",
+ "headline": "Six years of long jump at a sports school until your knee gave out; now, certificate in hand, you're back in Luoyang, starting with trial sessions at a gym above a shopping mall in Jianxi",
+ "unit": "A gym on the fourth floor of a mall in Jianxi, Luoyang",
+ "unit_type": "Chain gym",
+ "city": "Luoyang",
+ "city_tier": "Third-tier city",
+ "education": "Associate degree (Sports Operations and Management)",
+ "level": "Your own squat, deadlift and bench are clean, and you have the certificate. But how to ask someone for money, and how to tell whether a fifty-year-old should squat at all, nobody has taught you yet.",
+ "intro": "You did six years of long jump at a sports school, had one small operation on your knee, and that road closed. Back in Luoyang you spent more than ¥10,000 on a certification course and got taken on at a gym on the fourth floor of a mall in Jianxi: base pay ¥1,800, ¥30 commission a session. From today you stand next to the front desk in a black T-shirt with the gym's name on it, waiting for the first person willing to try a free session with you.",
+ "salary_note": "Estimate: a personal training session in Luoyang sells for 40 to 50 percent of the first-tier city price, base pay is low and income depends on session commission, so taken at 70 percent of the national figure.",
+ "facts": [
+  {
+   "label": "Junior Trainer (current level)",
+   "value": "0–2 years, ¥3,500–6,000 a month (national average, estimated)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Intermediate Trainer (2–6 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Correcting form on the floor and spotting with your hands",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Writing training plans and meal plans",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "You ride your e-bike along the Jian River. The stall at the junction selling bufan tang, the local mung-bean pancake soup, already has a queue. You get a bowl without the glass noodles and count today's protein in advance.",
+  "Morning meeting. The whiteboard shows the month's target and each trainer's percentage. Your column is empty. The manager says: mall entrance at noon, finish your flyers before you eat.",
+  "A retiree from the old tractor plant comes for a trial session his daughter paid for. You have him sit and stand ten times. By the seventh he's holding his knee, and you quietly cross squats off the plan.",
+  "Handing out flyers at the mall door. Around the thirtieth, a young guy asks: coach, how many years did those arms take? You say six, and don't mention it was long jump.",
+  "Floor duty. Someone has the treadmill at twelve, someone else drops a barbell on the ground. You rack dumbbells and watch whose form is off. Anyone you can start a sentence with is today's chance.",
+  "The after-work crowd pours in; the busiest hour of the day. An older trainer has you spot his client. Both your hands are under the bar and you don't dare let them go slack.",
+  "After the trial session you sit down next to the member and take out the price list. Thirty sessions, ¥5,400. She says she'll talk it over with her husband at home. You say of course, and make a note in your little book.",
+  "Closing. You mop the floor and disinfect the mats, train for half an hour yourself, and on the walk back to your rented room post: helped another member find their glutes today."
+ ],
+ "ladder": [
+  {
+   "title": "Junior Trainer",
+   "stage": "Entry",
+   "focus": "Trial sessions, floor duty and flyers; learning assessment and sales from the older trainers, racking up enough hours to get your name on the board."
+  },
+  {
+   "title": "Intermediate Trainer",
+   "stage": "Making a living",
+   "focus": "A dozen or two regular clients and over a hundred sessions a month, living on renewals and referrals."
+  },
+  {
+   "title": "Senior Trainer",
+   "stage": "A specialty",
+   "focus": "Your own area (postnatal, older adults, posture), a higher session price, newer trainers to bring along, and a reputation instead of a sales pitch."
+  },
+  {
+   "title": "Head Trainer",
+   "stage": "Running the team",
+   "focus": "Schedules, numbers and training for a dozen trainers in one gym; you answer for the owner's monthly figure and teach fewer and fewer sessions yourself."
+  }
+ ],
+ "ai_tasks": [
+  {
+   "name": "Correcting form on the floor and spotting with your hands",
+   "how": "In the second a barbell comes down, a hand has to be under it. When a knee caves in, someone has to press it and say so. That takes a person standing there, and a person who answers for it if it goes wrong."
+  },
+  {
+   "name": "Writing training plans and meal plans",
+   "how": "AI can turn out a plan in seconds from a goal and a list of equipment. Whether this person has a bad lower back, whether he's out drinking with clients every night, whether he'll actually do it: a trainer has to change that."
+  },
+  {
+   "name": "Posture assessment and reading body scans",
+   "how": "Film a clip on a phone and the software marks an anterior pelvic tilt or uneven shoulders. Whether it's a real problem or just how someone stands takes a trainer's hands and a few questions."
+  },
+  {
+   "name": "Member follow-ups and check-in reminders",
+   "how": "Time to renew, three days since your last visit, what did you eat today: the system can send all of those reminders and scripts. A person only handles the few who are really leaving."
+  },
+  {
+   "name": "Finding out, face to face, about the body and what someone really wants",
+   "how": "The form says weight loss; twenty minutes of talking and you find out she got divorced and wants a different life. Nobody says that to a questionnaire."
+  }
+ ],
+ "events": {
+  "e1": "Three months at the bottom of the sales board. The manager calls you into the stairwell and says one more like this and you're out. That night you stand at the mall door reciting your pitch until the streetlights go off.",
+  "e2": "Your first renewal is a woman who runs a pharmacy. She's lost six kilos, and she passes your WeChat to three shop owners on the same street.",
+  "e3": "The month of the Peony Festival, the mall entrance is full of tourists in Hanfu taking pictures and the gym is half empty. Your sessions fall off, and this month's rent is borrowed from a friend.",
+  "e4": "Spotting a member on a heavy lift, you tweak your back. You rest for two weeks, and for those two weeks you earn no commission at all.",
+  "e5": "The owner stops answering his phone overnight and a sheet of paper appears on the gym door. Members holding prepaid cards crowd the entrance. One recognizes you and asks what happens to the money. You're owed two months' pay yourself.",
+  "e6": "A woman you've trained for eight months sends you a photo of herself in a wedding dress, with two words: thank you. You screenshot it and don't post it.",
+  "e7": "A member hid his high blood pressure and gets dizzy during a set. You sit him down, take his pressure and phone his family at once; he's fine. From then on you read the first-session questionnaire aloud, line by line.",
+  "e8": "You and your partner register your marriage. The banquet is at a water-feast restaurant in the old town, twenty-four courses, and for once you eat all of them.",
+  "e9": "The new trainer is twenty-two, has a better chest than you and 20,000 followers on Douyin. His trial sessions fill up in the first month. You eat your chicken breast in the staff room and say nothing.",
+  "e10": "The company installs a new system: when members walk in, their phones show an AI plan for the day. In the first week someone holds up a phone and asks you: it says back today, so why are you making me do legs?",
+  "e11": "Your child is born. When you get home at ten-thirty the baby is asleep, and when you leave in the morning the baby isn't up yet. You've become a photograph on a phone.",
+  "e12": "The retired factory director you've trained for five years can now stand up from a chair on his own and pick up his grandchild. He tells everyone: these legs, my trainer gave me these.",
+  "e13": "Check-in reminders and renewal scripts now belong to the system, and the time saved goes to two extra sessions. Members say the voice message you send still sounds more like a person.",
+  "e14": "The old left knee has started reminding you on rainy days. Demonstrating a squat, you quietly halve the weight. The member doesn't notice.",
+  "e15": "The mall is being renovated and the gym has to move. Half your longtime members follow you. One old man rides the bus forty minutes just to keep training under your hands.",
+  "e16": "At a class reunion someone asks how many more years you can do this. You laugh and say ten, easily. On the way home you work out that you're now older than most of the members.",
+  "e17": "Your child does homework at the gym after school and watches you teach. A school composition later says: the grown-up in my family has a job stopping other people from getting hurt.",
+  "e18": "Your back and shoulders have lodged a long-standing complaint. The physio presses on them and says: those things you teach other people, you could try doing them too.",
+  "e19": "Your first ever client, the pharmacy woman, is past sixty now and calls to ask whether you still take students. The other trainers are too young, she says; they can't understand where it hurts."
+ },
+ "choices": {
+  "c1": {
+   "title": "Whether to push the sale in your first month",
+   "situation": "The manager's advice: talk money the moment a trial session ends; don't let anyone walk out that door. The woman in front of you has a pension of a little over ¥3,000 and wants to buy thirty sessions. For her legs, ten would be enough to learn the movements.",
+   "options": [
+    {
+     "label": "Sell thirty, as the manager said",
+     "result": "She swipes her card and your sales sheet has a number on it for the first time. She praises you every visit, and every visit you find it a little hard to look at her."
+    },
+    {
+     "label": "Sell only ten",
+     "result": "The manager doesn't speak to you that day. Half a year later she brings two old friends and asks for you by name."
+    }
+   ]
+  },
+  "c2": {
+   "title": "Getting on the board as an Intermediate Trainer",
+   "situation": "House rules: three hundred hours, then passing a form exam and a theory exam, and you get the Intermediate Trainer badge and ¥30 more a session. You pay the exam fee yourself and give up two months of evenings.",
+   "options": [
+    {
+     "label": "Take the exam",
+     "result": "You wear out your anatomy book and recite the four rotator cuff muscles in your sleep. On the day, your hands don't shake at all."
+    },
+    {
+     "label": "Fill your schedule first",
+     "result": "You teach several dozen more sessions and get the money up front. The badge can wait until next year."
+    }
+   ]
+  },
+  "c3": {
+   "title": "Zhengzhou or Luoyang",
+   "situation": "A classmate has opened a gym in Zhengzhou where a session sells for double the Luoyang price, and wants you there. But your clients are here, and so are your parents, a walk away from Jianxi for dinner.",
+   "options": [
+    {
+     "label": "Go to Zhengzhou",
+     "result": "You take your suitcase onto the high-speed train. Each session pays more, and you start over handing out flyers."
+    },
+    {
+     "label": "Stay in Luoyang",
+     "result": "You send your classmate two words: not yet. That night you finish your sessions and go home for a bowl of jiangmian, fermented-bean noodles."
+    }
+   ]
+  },
+  "c4": {
+   "title": "Picking a direction to make Senior Trainer",
+   "situation": "The company says to make Senior Trainer you need a specialty you can show. This city has grown old: rows of retired factory workers, and plenty of new mothers too. The course costs ¥20,000 and needs a month's leave.",
+   "options": [
+    {
+     "label": "Older adults and chronic illness",
+     "result": "You learn to read lab results and medication lists and your sessions slow down. The old men and women of the factory district start arriving, one telling the next."
+    },
+    {
+     "label": "Postnatal recovery",
+     "result": "Half your schedule becomes young mothers with their babies, in daytime hours. In the evenings you can finally go home for dinner."
+    },
+    {
+     "label": "No course; keep doing muscle and fat loss",
+     "result": "You keep the ¥20,000. Your sessions are still full, only the people coming get younger, and you have less and less to say to them."
+    }
+   ]
+  },
+  "c5": {
+   "title": "Whether to learn to coach with AI",
+   "situation": "A new product: members are watched by AI at home and see you once a week, at a third of the personal training price. The old trainers say it's smashing your own rice bowl. The manager asks if you'd like to try it first.",
+   "options": [
+    {
+     "label": "Try it",
+     "result": "You take on form videos for forty members and learn which alerts are real. Your income barely rises, but you've seen what's coming."
+    },
+    {
+     "label": "Stick to in-person sessions",
+     "result": "A hand on a person, you say, is what coaching means. Some old clients swear by it. Fewer and fewer new ones come."
+    }
+   ]
+  },
+  "c6": {
+   "title": "Your own studio",
+   "situation": "A member who owns a supermarket will put up half the money to rent 150 square meters in Xigong, with you as the boss. It takes everything you have, the rent comes every month, and your knee won't wait.",
+   "options": [
+    {
+     "label": "Open it",
+     "result": "You leave the chain and the sign has your own name on it. In the first year you are the trainer, the cleaner and the accountant."
+    },
+    {
+     "label": "Don't; keep working for someone",
+     "result": "You keep the supermarket owner's offer in mind and your pay keeps arriving at the end of the month. Sometimes you wonder what if."
+    },
+    {
+     "label": "Go into sports goods with your backer",
+     "result": "Why not do something steadier together, says the supermarket owner. You take off the black T-shirt and start chasing his orders for sports equipment from malls and schools.",
+     "end": "You don't teach anymore. Only when you deliver equipment to a school do you sometimes straighten out a child's squat."
+    }
+   ]
+  },
+  "c7": {
+   "title": "Standing for Head Trainer",
+   "situation": "The Head Trainer is being transferred and the manager asks you to think about the job. It means a dozen trainers' numbers, a lot of meetings, few sessions and income tied to the whole gym. If you say no, your time and your clients remain your own.",
+   "options": [
+    {
+     "label": "Stand for it",
+     "result": "You present a full year of renewal data. When you finish, the owner asks only: so how much can we hit this month?"
+    },
+    {
+     "label": "Keep teaching",
+     "result": "You say you'd rather stay on the floor. The next morning your first session starts at eight-thirty as usual."
+    }
+   ]
+  },
+  "c8": {
+   "title": "How much longer these knees will last",
+   "situation": "The doctor looks at the film and says one more stretch of heavy loading and the knee will need replacing. A community seniors' college is hiring an exercise instructor: little pay, no barbells, three days a week. At the gym some people say a veteran like you could just do sales.",
+   "options": [
+    {
+     "label": "Go to the seniors' college",
+     "result": "You trade the black T-shirt for a tracksuit and teach a roomful of old people how to get up from a chair. Your pay slip is cut in half.",
+     "end": "You've left the gym. Three days a week at the seniors' college you teach people to stand up and walk steadily, and no one ever asks you about body fat again."
+    },
+    {
+     "label": "Stay, but less heavy lifting",
+     "result": "You change your schedule to stretching and older adults. You touch the deadlift bar less now, and talk more."
+    }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "At fifty-five you teach your last session and leave your badge at the front desk. The barbells you've held up over the years probably add up to several mountains. At the mall door someone hands you a gym flyer. You look it over, fold it and put it in your pocket.",
+  "burnout": "Your knees and your back have handed in their resignation together. The doctor says no more loading. You lie in bed for a while and answer every member on your phone, one by one. After that you seldom go to a gym. When you pass, you glance up at the lights on the fourth floor."
+ },
+ "stages": [
+  "Half your time is floor duty: racking dumbbells, wiping down machines, spotting the older trainers' clients. The other half is finding people to talk to, with the flyers at the mall door, the trial cards at the front desk and the prospect list in Excel. The most important things you own are a stopwatch and a small notebook, where you write down where each person hurts and when they're free.",
+  "Your name is on the schedule now, five or six sessions a day from eight-thirty in the morning until nine-thirty at night. Before each session you check the logbook for last week's numbers; after it you send videos and diet reminders from your phone. What's different is that some people now come for you, and the renewal slips at the end of the month have your name on them.",
+  "In a first session you don't let anyone near the machines. You read the health-check report and the medication list, and test the shoulders and hips with a resistance band and a foam roller. Two new trainers follow you around. They know how to sell; you teach them when to send someone back to the hospital. Your session price is the highest in the gym, and you find yourself more and more often telling people: you don't need to do this one.",
+  "In the morning you read the gym's session counts, renewal rates and schedule on a computer; in the afternoon you sit down with trainers one at a time, about whose clients are drifting off and who's on their phone on the floor. Member complaints end up with you, and so does the owner's monthly target. You teach only five or six sessions a week now, you talk more than you lift, and you lie awake over other people's numbers."
+ ],
+ "work": [
+  "A young man studying for the civil-service exam says his back hurts. An older trainer has you watch his deadlift. You lie on the floor to watch three sets from the side, see that his back only rounds on the fifth rep, and sketch it in your notebook.",
+  "The front desk hands you a stack of expired trial cards. You call forty names from the list, and of the forty, two say: maybe I'll come and see on Saturday.",
+  "A woman is afraid of the treadmill. You keep a finger on the pause button and walk beside her for twenty minutes at a speed of 3.5.",
+  "Lao Zhou, a renovation contractor, can't raise his shoulder above his head. You have him lift a PVC pipe against the wall for three weeks. Then he sends a video: he's hung the curtains himself.",
+  "A two o'clock client cancels at the last minute. You shuffle the next three around in the booking mini-app and send all four WeChat messages before you've had a sip of water.",
+  "You draw up the final four-week food list for Xiao Wu before her wedding. She says there's nothing but takeout near the office, so you read the menus of all the nearby shops and circle what she can eat.",
+  "The retired director comes in six months after his bypass with the discharge summary. You read his medication list to work out where to cap his heart rate, and in the first session you let him only walk.",
+  "A new trainer has given crunches to a mother two months postpartum. You pull the training sheet, say nothing in front of her, and in the staff room have him feel along the midline of his own stomach.",
+  "The posture software flags a young woman for uneven shoulders. You have her put down the hand that's carried a bag for years and take another picture. The shoulders are level.",
+  "Reconciling the session sheet at the end of the month, you find Xiao Liu has reported three too many. You don't mention it in the group chat. You take him to the stairwell and have him go through the sign-in records himself.",
+  "A member complains that a trainer talks too much. You pull the footage, sit with the trainer for an hour, and write on the review form: starting next week, no phones in sessions.",
+  "The owner brings a quote for AI coaching. You pick five old clients to try it for three weeks, write down everything they say, and then go and haggle with the owner."
+ ],
+ "past": [
+  "In your second year of junior high you set a school record at the sports meet. The PE teacher rode a bicycle to your house and told your parents this kid could go to a sports school.",
+  "You entered the city sports school to train long jump, in the sandpit at five-thirty every morning. The textbooks mostly served as something to stand on.",
+  "Before the provincial games your left meniscus failed. After the operation your coach patted your shoulder and told you to start thinking about the special admission track for the gaokao (college entrance exam).",
+  "You got into a sports management course at a junior college through that track. In your dorm you were the only one still waking at five-thirty.",
+  "Your internship was taking tickets at a swimming pool. You watched a personal trainer next door earn two days of your pay in a single session, and something stirred.",
+  "You borrowed more than ¥10,000 for a certification course and spent two months on a bunk in Zhengzhou. The day you got the certificate, you went back to Luoyang."
+ ],
+ "late": {
+  "pension_note": "Estimate: years of contributions at the minimum level or as a flexible worker put the pension at a little under 40 percent of final pay, topped up by savings and the odd session.",
+  "scenes": [
+   "Your first month of retirement you still wake at six. You walk along the river in Luopu Park and see an old man stretching his leg the wrong way. You hold back for a moment, and then you don't.",
+   "The tai chi group in the park asks you to talk about protecting the knees. You bring a small stool and have everyone sit down and stand up, ten times.",
+   "Some of your old clients can't walk now, and some are still training. Every Spring Festival you get a few greetings by text, all starting with the word 'Coach'.",
+   "In the first months without sessions you line up the chairs at home out of habit. Your partner looks at them, says nothing, and carries them back one at a time.",
+   "You've had your knee replaced and become a patient in rehab. A young therapist corrects your form, and you do exactly as you're told.",
+   "You look over check-up reports in the neighborhood and teach old people how to take the stairs. You don't charge. People bring you steamed buns they've made at home.",
+   "The first week in different clothes, you see your reflection in the elevator and pull in your stomach without thinking.",
+   "The new job doesn't keep you on your feet all day. Someone hears you used to be a trainer and asks how to lose a belly. Eat less, you say, and don't ask me.",
+   "Passing the old mall, you see the fourth floor has become a children's playground. You stand below, thinking of the woman in the trial session who was afraid of the treadmill.",
+   "The year your child goes to college, you're asked whether this line of work was worth it. You think about it, then tell the child to straighten up first.",
+   "Buying vegetables you run into an old man on a cane. He stops you: aren't you the one who taught me to stand up?"
+  ],
+  "closing": {
+   "retire": "Morning by the river. Someone slowly lifts a leg to the railing, and slowly lowers it again.",
+   "burnout": "A rainy day. You sit by the window rubbing your knee and watch a child downstairs jump over a puddle.",
+   "end": "Every so often you still sketch a person's side view on a piece of paper, circle the lower back, and crumple it up."
+  }
+ }
+}

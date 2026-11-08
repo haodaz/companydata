@@ -1,0 +1,154 @@
+{
+ "id": "av-tester-sz",
+ "occupation": "Connected and Automated Vehicle Tester",
+ "role": "Autonomous Driving Road Tester",
+ "headline": "With a junior college diploma in vehicle inspection you sit in the driver's seat of an autonomous test car in Xiangcheng, Suzhou, hands resting near the wheel, covering 300 kilometers a day and logging every time you have to take over",
+ "unit": "The testing department of an autonomous driving company in Xiangcheng, Suzhou",
+ "unit_type": "Autonomous driving startup",
+ "city": "Suzhou",
+ "city_tier": "New first-tier city",
+ "education": "Associate degree (Automotive Inspection and Maintenance)",
+ "level": "You've got your license and passed the safety driver course, and you can name every sensor on the car. But what it's going to do in the next second, you can still only guess.",
+ "intro": "You spent half a year repairing cars at a dealership, saw 'autonomous driving testing' on a job post, and came to Suzhou. The trainer sat you in the driver's seat, hands near the wheel, and said: remember, the car is driving, but if anything goes wrong, you were driving. From today your job is to sit in a car that drives itself and wait for it to make a mistake.",
+ "salary_note": "Estimate: Suzhou pay runs a little under Shanghai and above the national average, and startups add night-test allowances, so roughly level with the national figure for this job.",
+ "facts": [
+  { "label": "Road Tester (current level)", "value": "0–3 years, ¥7,000–11,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Test Engineer (3–7 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Setting up and debugging test equipment and data acquisition systems", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Writing test plans and test cases for connected and automated vehicles", "source": "AI exposure" },
+  { "label": "Open positions", "value": "7 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "A bowl of first-batch noodles at the entrance to your compound in Xiangcheng, pickled greens and shredded pork, so hot it burns your mouth. You've a whole day of rush hour to drive, and this bowl needs to be solid.",
+  "Pre-drive check. You walk around the car looking for bugs and mud on the lidar, log in to the in-car computer, and confirm the build number matches today's list of test cases.",
+  "The car pulls out of the park and you say 'entering autonomous mode'. Dozens of colored boxes jump on the screen, following the people and cars on the road, and your right foot hangs over the brake.",
+  "A woman on an e-bike with a bundle of reeds comes the wrong way out of an intersection. The car hesitates. You take over with one stab of your foot, press the marker button on the wheel, and only then does your heartbeat catch up.",
+  "A boxed lunch in the car. The data specialist in the passenger seat scrolls through video as he shovels in his rice. He asks if you braked too early. Want to try half a second later? you say.",
+  "An afternoon thunderstorm, the road shining, and the perception boxes start to jitter. This is the weather you've all been hoping for. You drive back to that stretch and do it three more times.",
+  "Out of the car and uploading data. You plug the drive into the workstation and go through today's seven takeovers in Jira, one at a time: time, place, what happened, why you hit the brake.",
+  "Someone in the R&D group chat mentions you: your ticket says the car was 'kind of hesitant'. Could you be more specific? You go back to the screen and split that second into ten frames."
+ ],
+ "ladder": [
+  { "title": "Road Tester", "stage": "In the car", "focus": "Monitoring the vehicle from the driver's seat, driving routes according to test cases, taking over when needed, flagging issues, and sorting logs and video once you get out." },
+  { "title": "Test Engineer", "stage": "Writing the cases", "focus": "Designing scenarios and test cases, setting up and calibrating equipment, analyzing takeover data, reproducing defects on the actual vehicle and explaining them clearly to R&D." },
+  { "title": "Senior Test Engineer", "stage": "Setting the standard", "focus": "Owning the overall validation of a feature, judging whether a release can ship, leading the loop between simulation and real vehicles, managing a few people." },
+  { "title": "Test Manager", "stage": "Running the team", "focus": "The test team, the fleet and the budget; dealing with regulators, permits and product. The final 'cleared for the road' is your nod." }
+ ],
+ "ai_tasks": [
+  { "name": "Writing test plans and test cases for connected and automated vehicles", "how": "AI can draft plans and cases quickly from standards and past cases, and fill in edge scenarios. A person judges whether the scenarios cover the real risks and finalizes the plan." },
+  { "name": "Setting up and debugging test equipment and data acquisition systems", "how": "AI can help look up wiring manuals and troubleshoot configuration. Mounting sensors, calibrating equipment, connecting harnesses and on-site integration all take hands, and when something's wrong, a person judges it." },
+  { "name": "Road and test-track testing of automated driving functions to standard", "how": "AI can help plan routes and monitor the data being collected. Driving or supervising a test vehicle, reacting to sudden road conditions and keeping the site safe all need a person in the car or at the trackside." },
+  { "name": "Testing vehicle connectivity and in-car systems", "how": "AI can run protocol checks, interface calls and repetitive regression scripts automatically. Integration in a real vehicle, odd behavior like unstable signal, and judging whether the experience is right fall to a person." },
+  { "name": "Recording data and observations during testing", "how": "AI can automatically collect, organize and annotate logs, data and video and produce a timeline. A person only spot-checks that key data is complete and nothing seen on site was missed." },
+  { "name": "Analyzing test results and judging compliance with standards", "how": "AI can compare data against thresholds in bulk, flag anomalies and give preliminary conclusions. A person has to understand where a standard applies, judge the borderline cases and answer for pass or fail." },
+  { "name": "Tracing and reproducing faults and defects found in testing", "how": "AI can find suspicious log segments, merge similar defects and suggest likely causes. A person reproduces it on the real vehicle, verifies the cause and confirms it with R&D." },
+  { "name": "Writing test reports and making recommendations", "how": "AI can draft reports from the data and notes, draw charts and compile defect lists. A person verifies the content, writes recommendations that hold up, and signs." }
+ ],
+ "events": {
+  "e1": "Your first eight straight hours with no takeover, and when you get out your calves are rigid. Not driving is more tiring than driving. Only people who've done it know that.",
+  "e2": "A defect you filed is confirmed by R&D and, once fixed, that intersection never gives trouble again. The day the ticket closes, someone gives you a thumbs-up in the group chat.",
+  "e3": "In the plum rain season it rains for over twenty days, the whole company delighted, and your cars go back and forth through standing water. Your clothes never get dry.",
+  "e4": "A night test runs to three in the morning and a hairy crab stall by the road still has its light on. You and the data specialist pull over, buy two, and eat squatting at the roadside. The next day you both have upset stomachs.",
+  "e5": "The company's funding round doesn't close, pay comes half a month late and the number of cars out is cut by half. HR takes away the snack shelf, and everyone knows what that means.",
+  "e6": "You start using a tool that generates logs automatically and cuts and labels takeover clips. You can get through three times as many issues a day. Writing tickets takes no less time, since there's three times as much to look at.",
+  "e7": "A driver deliberately cuts off your test car, films it and posts that these things shouldn't be on the road. You read the comments, and part way through you put the phone down.",
+  "e8": "You buy a place in Suzhou, forty-some square meters, and the down payment empties two families. After you sign you go downstairs and eat a bowl of braised pork noodles.",
+  "e9": "A scenario you designed has gone into the company's regression test set. From now on every release has to pass through your intersection, with the woman and her reeds coming the wrong way.",
+  "e10": "Long hours sitting and staring at screens and your neck has started to protest. You raise your monitor five centimeters, the biggest investment you've made this year.",
+  "e11": "The company starts driverless testing. There's no safety driver on board now; you sit in the control center watching six cars on screen. That place beside the steering wheel is empty.",
+  "e12": "Your child is born. You take annual leave, just as the company is rushing a release. Outside the delivery room you take two calls, and hang up and stand in the corridor for a while.",
+  "e13": "The company is acquired, departments merge and your team is cut in half. You write references for the people leaving and start looking at your own resume.",
+  "e14": "The simulation platform runs more miles in one night than you've driven in all your years in real cars. But what really goes wrong is still the stuff the simulator doesn't have.",
+  "e15": "Your parents ride in one of your driverless cars for the first time, to buy groceries. Your mother holds on to the handle the whole way. Getting out she says: not bad, smoother than you.",
+  "e16": "The new hires call you the old master. You tell them there used to be a person in the car, whose job was to step on the brake, and they listen with the look of people hearing about steam engines.",
+  "e17": "Long overtime and late nights and your check-up report has grown more arrows. You start taking a lap of the campus after lunch, with your phone still in your hand.",
+  "e18": "You take a driverless car home from work. On the road is an old person on a bicycle with a load of reeds, and the car makes way, steadily. In the back seat your right foot stirs."
+ },
+ "choices": {
+  "c1": { "title": "Whether to take the night road tests", "situation": "The company is short of people for night testing: ¥200 more a shift, but a straight month of it. There's less going on at night, and those are exactly the scenarios the algorithm needs. Your senior says the people who do night tests grow fast.", "options": [
+   { "label": "Take them", "result": "A month of night roads. You learn how to negotiate with sleep at two-thirty, and you see what this city looks like with nobody in it." },
+   { "label": "Don't", "result": "You stay on days. You could tell with your eyes shut where the next person or e-bike in the morning rush will come from." }
+  ] },
+  "c2": { "title": "Moving up to Test Engineer", "situation": "The test team lead asks if you want to become a Test Engineer. You'd have to teach yourself Python, read logs, write test cases, and learn CAN bus analysis from R&D after hours. On the gaokao (college entrance exam) you got 42 in math.", "options": [
+   { "label": "Move up", "result": "You start typing your first lines of code from a tutorial. The day your first script runs, you get up and walk two laps around your desk." },
+   { "label": "Stay on the road", "result": "What I do in the car I do best, you say. The next year the company starts discussing whether anyone needs to be in the car at all, and you hear about it." }
+  ] },
+  "c3": { "title": "A steady job at the carmaker", "situation": "A vehicle manufacturer in Suzhou is hiring quality engineers, nine to six, full benefits and a year-end bonus, and no more worrying about funding rounds. But it's traditional inspection, and autonomous driving won't have anything to do with you.", "options": [
+   { "label": "Go to the carmaker", "result": "You put on the factory uniform and face inspection-line data every day. On the way home one of your old test cars passes and you look at it a second longer.", "end": "You've gone to the carmaker in quality, and life is steady. Sometimes you see a test car on the road, and you still look to see if there's anybody in the driver's seat." },
+   { "label": "Stay at the startup", "result": "You turn down the headhunter. This month your pay is five days late, and you accept that too." }
+  ] },
+  "c4": { "title": "Whether to learn AI-driven testing", "situation": "The company wants everyone using large models to generate test scenarios and analyze logs. Some people say five years of that and there won't be a tester's job left. You have a release you very much want to see through. To learn this, you'd have to hand it off.", "options": [
+   { "label": "Learn it", "result": "You learn to have the model generate a thousand weird scenarios, then pick out, one by one, the few worth putting on the road. The picking is the part it can't do." },
+   { "label": "Stay with the real cars", "result": "You see the release through and witness every takeover yourself. Your colleagues, though, have started making reports with tools you don't understand." }
+  ] },
+  "c5": { "title": "Competing for Senior Test Engineer", "situation": "The team is promoting a Senior Test Engineer, responsible for the final verdict before each release. Once you're there, a 'fail' can delay the whole company; a 'pass' goes on the road, and that's yours to carry.", "options": [
+   { "label": "Compete", "result": "At your first release meeting everyone waits for you to speak. You say run three more days, and no one in the room says a word." },
+   { "label": "Don't; stay technical", "result": "You leave it to a colleague and stay buried in scenarios. You can get to sleep at night, and that's no small thing." }
+  ] },
+  "c6": { "title": "A big company in Shanghai", "situation": "A big company in Shanghai has offered you a job at 40 percent more pay, commuting by high-speed rail. Your child has just started primary school in Suzhou, and if you go you'll be home only two or three days a week.", "options": [
+   { "label": "Go to Shanghai", "result": "You start eating breakfast on the early train from Suzhou North. Your pay slip looks fine, and you don't make a single parent-teacher meeting." },
+   { "label": "Stay in Suzhou", "result": "You thank them and decline. On the weekend you still take your child to the shore of Yangcheng Lake, to watch the wind blow the reeds down and blow them back up." }
+  ] },
+  "c7": { "title": "Competing for Test Manager", "situation": "The boss wants you to take over as Test Manager: fifty-some people and the entire fleet, and talking to permit authorities and insurers. You'd hardly ever touch a car, and every release incident review would call you first.", "options": [
+   { "label": "Take it", "result": "You buy a shirt and start explaining 'acceptable risk' in PowerPoint." },
+   { "label": "Don't", "result": "I'll keep looking at the data, you say. A new manager comes in, eight years younger than you, and when things come up still asks you first." },
+   { "label": "Move to product", "result": "You tell the boss you'd like to try working on this from the other end. The next week you move to a desk in the product group.", "end": "You're no longer testing. You're defining what a car ought to do, and whenever you write a requirement you think of the woman with the reeds." }
+  ] },
+  "c8": { "title": "The young people and your place", "situation": "Another round of restructuring: much of testing goes to simulation and automation, and veterans can take a payout and leave. Your resume has nothing but this trade on it, and outside they're all hiring under thirty-five.", "options": [
+   { "label": "Take the money and open a driving school", "result": "You and a friend go into partnership on a driving school in Wujiang, and you teach kids how to step on the brake.", "end": "You've opened a driving school and teach beginners to brake. When people say it's expensive you tell them that one stab of the foot is worth the money." },
+   { "label": "Stay", "result": "You stay on with the new safety review team, looking only at what machines can't read. The pay is less. The desk is still there." }
+  ] }
+ },
+ "endings": {
+  "retire": "At sixty you sign one last test report in the system. Out at the company gate an empty car is waiting at the curb, and its door opens by itself. You get in the back and it pulls away smoothly. Your right foot moves slightly on the floor mat, then lies flat.",
+  "burnout": "Year after year of releases and incident reviews, and in the end your body was the first to call a stop. You resign, and for the first few months at home whenever your phone rings your hand goes to where the wheel would be. Later you go everywhere by bus, looking out the window, with nothing to flag."
+ },
+ "stages": [
+  "You spend most of the day in the driver's seat, hands loose, foot hanging, watching the screen and the road. Every takeover, you press the marker. When you get out you plug the drive into a workstation and file tickets in Jira. Your conversations with data specialists and R&D consist of explaining, again and again, what you saw in that second.",
+  "You've come back from the car to the desk, writing test cases and setting up equipment: calibrating lidar and cameras on the roof, capturing bus data with CANoe, running batch comparisons in Python. When you find a defect you reproduce it on the real car and bring it to R&D. What's different is you now decide where the car goes today and what kind of intersection it should wait for.",
+  "Your calendar is full of reviews. In the morning you read simulation pass rates and coverage; in the afternoon you explain at the release meeting why this version can't go on the road. Four or five engineers report to you and their conclusions cross your desk. You start arguing with the algorithm lead, with facts and reasons, and then you eat together.",
+  "You're in charge of dozens of people, a fleet and a sizable budget, and your calendar is full of permit authorities, insurance clauses and the boss's road map. At an incident review you're the first to stand up. You haven't sat in a driver's seat for years, and you understand better than anyone why that seat matters."
+ ],
+ "work": [
+  "Lao Yang has you run a loop. On the third lap you notice one intersection brakes hard every time. You cut three clips together and send them to the group, and the next day R&D comes to you for the route.",
+  "A leaf has stuck on the roof camera and perception is all over the place. You pull over and wipe it with your glasses cloth, and write in the ticket: cause, leaf.",
+  "You show the new data specialist Xiao Hu around, telling him which intersection the three-wheelers always shoot out of from the right. He marks it on his own map.",
+  "You and Xiao Zheng from the perception team spend an afternoon crouched in the garage with a calibration board, working on camera extrinsics. By the end the error has gone from three pixels to under one.",
+  "A defect appears only at dusk after rain. You wait two weeks and finally record it on a flooded road, and toss the bag file to R&D.",
+  "You write a script that sorts hundreds of daily logs by error type. Lao Fang, the team lead, looks at it and says this should have existed long ago.",
+  "Lao Song, the algorithm lead, insists this version can ship. You put three failed regression cases on the big screen at one-fifth speed, and he stops talking.",
+  "A new engineer has marked a boundary condition as passed. You have him read the standard again, and together you add a line of explanation to the table.",
+  "Breaking down the scenario library's coverage report, you find what's missing is all those few minutes outside school gates at dismissal. You schedule a week of field collection for the team.",
+  "The permit authority comes to review the test reports. You've already sorted every takeover by category into tables they can read.",
+  "Lao Chen from the insurance company has come up with a premium higher than last year's. You bring out the accident rate and takeover rate curves and talk to him for an hour in the tea room.",
+  "The annual budget is cut by 20 percent. You go through the fleet car by car in a spreadsheet and finally decide to keep the three oldest for new hires to practice on."
+ ],
+ "past": [
+  "You grew up in a county town in northern Jiangsu, where your uncle had a repair shop. After school you'd squat next to him as he changed the oil, and gradually you could tell what was wrong with each car.",
+  "With 42 in math on the gaokao (college entrance exam), you chose a vehicle inspection program at a vocational college in Suzhou, thinking at least you'd be around cars.",
+  "Interning in after-sales at a dealership, you saw a car with lidar for the first time. The owner said that thing cost more than his last car.",
+  "After graduating you fixed cars at the dealership for half a year, with the same wrench every day. You realized the cars you would spend your life fixing hadn't been built yet.",
+  "On a job app you saw 'autonomous driving testing', paying half again as much as repairs. You took the safety driver course and left the service pit for good."
+ ],
+ "late": {
+  "pension_note": "Estimate: Suzhou's basic employee pension plus personal savings comes to about 45 percent of final pay.",
+  "scenes": [
+   "In retirement you take a driverless minibus to buy groceries every day, sitting at the very front, always looking for something to hold that isn't there.",
+   "Your grandchild asks why there used to be people in the cars. Because cars made mistakes, you say. And people? asks your grandchild.",
+   "Early morning by Yangcheng Lake. The wind bends the reeds. An empty car comes along the shore and steadily makes way for a duck.",
+   "In the first months after you leave, you always pause at an intersection when you're walking, to check for a wrong-way e-bike.",
+   "You've begun eating on time and sleeping on time. You leave the work chat groups on your phone one by one. There's one left, and you've never left it.",
+   "The neighborhood invites you to talk to older residents about self-driving cars. You talk for half an hour. What they finally ask is: so do we need insurance?",
+   "The first week after you leave you drive to work with your right foot over the brake, not pressing it, out of habit.",
+   "In a traffic jam a test car edges past you. You look through the glass. There's no one in that seat anymore.",
+   "A former colleague says in the group chat that the intersection you wrote, with the woman and her reeds, is still in the regression set. You smile and put your phone down.",
+   "On a plum-rain day you watch the rain hit the road from your window and think what fine data you'd get if you drove it right now.",
+   "On an old hard drive you find your first year's takeover footage. In the frame is a hand of yours, lifting away from beside the wheel."
+  ],
+  "closing": {
+   "retire": "Dusk. The driverless minibus stops smoothly at the platform and the door opens. You stand a while, and wait for the next one.",
+   "burnout": "The road shines after the rain. You stand at the window, and flag nothing.",
+   "end": "You're driving yourself home. The light turns green at the intersection, and it's two seconds before you go."
+  }
+ }
+}

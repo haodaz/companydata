@@ -1,0 +1,153 @@
+{
+ "id": "indie-app-dali",
+ "occupation": "Mobile App Developer",
+ "role": "Freelance Developer Moved to Dali",
+ "headline": "After seven years writing mobile apps in Hangzhou, a developer quits and moves to Dali, doing contract work by day and patching a little bookkeeping app by night",
+ "unit": "A small rented courtyard at the edge of Dali Old Town, just you",
+ "unit_type": "Self-employed",
+ "city": "Dali, Yunnan (resident)",
+ "city_tier": "Fourth-tier city",
+ "education": "Bachelor's in computer science",
+ "level": "Swift and Kotlin come easily and you can take an app from design to store on your own. You have no idea how many users it takes to cover one month's rent.",
+ "intro": "You gave up your desk and your apartment in Hangzhou and drove three days. When you reached Dali there was still a little snow on top of the Cangshan range. The courtyard's Wi-Fi depends on one more cable from the landlord, and your first job is a booking mini-program for an inn in the old town. From today, no one pays your salary, and no one sets your schedule.",
+ "salary_note": "Estimate: indie developer income swings widely and living costs in Dali are low. The long-run average is about seventy percent of the national figure, and good and bad years differ severalfold.",
+ "facts": [
+  { "label": "Freelance Contract Developer (current level)", "value": "5-8 years, ¥10,000–20,000 a month (national average, estimated)", "source": "Industry norm" },
+  { "label": "Next level up", "value": "Indie Developer (8-14 years)", "source": "Industry norm" },
+  { "label": "What AI can't take", "value": "Listening to users and deciding what to build and what not to", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Writing routine feature code", "source": "AI exposure" },
+  { "label": "Open positions", "value": "17 related listings nationwide, 0 in this city (the database leans toward campus and intern roles)", "source": "Job listings" }
+ ],
+ "day": [
+  "You wake and check your phone first: three new subscriptions overnight, a 0.4% crash rate, one bad review saying the icon is ugly. Cloud is pressing halfway down the Cangshan range.",
+  "The Xiaguan wind rattles the courtyard gate. You brew some Yunnan beans and open Xcode. Last night's bug is still there.",
+  "A voice call with the innkeeper, who wants a shake-to-win lottery added to the mini-program. You ask, gently, about the budget.",
+  "At the market you buy a handful of fresh wild mushrooms. The stallholder tells you how long to cook them and you time it faithfully.",
+  "At the coworking place, the next table is shooting short videos and another is doing cross-border e-commerce. You nod to each other and don't pry.",
+  "You send a test build through TestFlight to twenty old users. A retired math teacher replies at length, pointing out that something is wrong with the decimal point.",
+  "You bike to Erhai Lake to catch the sunset. On your feed your former colleagues are posting about team building. You give it a like.",
+  "You answer user email, then bring the Kotlin side up to date. Today ¥72 came in, and you record it in your own app."
+ ],
+ "ladder": [
+  { "title": "Mobile Client Engineer", "stage": "In-house", "focus": "Writes features, fixes crashes and helps ship releases on a company's mobile team, with pay rising on projects and years served." },
+  { "title": "Freelance Contract Developer", "stage": "Contract work", "focus": "Takes outsourced mini-programs and apps to get by while saving up for a product of one's own; moves forward on repeat customers and a first real income from one's own work." },
+  { "title": "Indie Developer", "stage": "Living on products", "focus": "Subscription income from one or two small tool apps is enough to live on and most contract work stops; held up by retention and word of mouth." },
+  { "title": "Owner of a Small Tools Studio", "stage": "Small team", "focus": "Several products and two or three people; manages cash flow and collaborators, with less and less time spent writing code." }
+ ],
+ "ai_tasks": [
+  { "name": "Listening to users and deciding what to build and what not to", "how": "AI can sort reviews into piles. What this small tool ought to be and which request to refuse takes someone thinking on the user's behalf and willing to lose out for that decision." },
+  { "name": "Writing routine feature code", "how": "AI coding assistants can write most screens and logic from a description, and one person's speed matches a small team's from before. The person mostly reviews and corrects." },
+  { "name": "Connecting APIs and handling data", "how": "AI generates request layers and data models from the docs; a person only checks fields and error cases." },
+  { "name": "Tracking down crashes and device compatibility", "how": "AI reads logs and proposes fixes. Crashes that won't reproduce and oddities in manufacturers' systems still take trying them on real phones, one at a time." },
+  { "name": "Writing store copy and translations", "how": "AI turns out multilingual versions and image captions in minutes. Which sentence really moves people is something you have to have read and changed yourself." }
+ ],
+ "events": {
+  "e_first_paid": "A ¥12 subscription arrives from a stranger. You look at it for a long time and send a screenshot to your mother, who asks if it's a scam.",
+  "e_client_nopay": "A client's final payment drags on for four months while the boss posts about a new store opening. After several phone calls you recover only half.",
+  "e_friends_visit": "Friends take turns visiting Dali, all assuming you're on vacation. They move into your courtyard and order takeout while you keep fixing bugs next door.",
+  "e_review": "Store review says your new version's screenshots break the rules. Three rounds of back and forth eat your whole May Day launch window.",
+  "e_featured": "Your app gets a featured slot and one week's income beats a whole former quarter. You save a screenshot of the numbers and go back to fixing crashes.",
+  "e_ipc": "New rules require app registration. You work through several agency websites, fill in a dozen-odd pages and wait two months. A one-person company goes through the same steps.",
+  "e_rain": "In the rainy season the roof leaks and the router gets soaked. You carry your laptop into town to borrow the Wi-Fi at a small restaurant, and the owner brings you a bowl of rice noodles and won't take money.",
+  "e_alone": "Half a month goes by without a word about work to another person. You start talking to the code, and set yourself a rule of meeting one person a week.",
+  "e_rent": "Dali has another moment of fame and the landlord says next year's rent goes up by thirty percent. You move to a courtyard farther out, with a view of more fields.",
+  "e_ai_clone": "Someone uses AI to build almost the same app as yours in a week, for free. Within a month your new users fall by half.",
+  "e_ai_speed": "A feature that took two weeks now takes AI one afternoon. You use the extra time answering users' email, and more of them stay.",
+  "e_ai_bug": "A piece of AI-written sync code has a hidden flaw, and some users' data goes wrong. You write a recovery script through the night and send each of them an apology.",
+  "e_email": "A user writes that she used your bookkeeping app for the accounts from the years of her husband's illness. You go out for a walk after reading it and answer nothing. Later you write back only: thank you.",
+  "e_shebao": "Social insurance for the self-employed you pay yourself, sum by sum from the account. In your spreadsheet you give it its own line: later.",
+  "e_payment_cut": "The store changes its commission policy and your income falls overnight. You sit in front of the spreadsheet all evening working out your prices again.",
+  "e_neck": "Your neck is acting up again. You set up a standing desk in the courtyard, and birds keep landing on the monitor.",
+  "e_meetup": "You host a small talk at the coworking place and a dozen-odd coders come. Someone asks how much you make in a month. You say enough for rent, and everyone laughs.",
+  "e_old_system": "A major system update finally breaks the old code you wrote more than a decade ago. You want to delete it but can't, and put it in a folder called Old."
+ },
+ "choices": {
+  "c_focus": { "title": "Contract work, or betting your time on your own app", "situation": "The money in the account lasts eight months. Contract jobs pay fast, but when one's done you're still where you were. Your own app brings in a dozen yuan a day, and who knows when it can feed you.", "options": [
+   { "label": "More contracts, survive first", "result": "You build mini-programs for inns, guesthouses and cafes. The account steadies, and your own app goes half a year without an update." },
+   { "label": "Half contracts, half product", "result": "You keep three days a week for your own app. The account thins a little at a time, and new versions go out one after another." }
+  ] },
+  "c_price": { "title": "One-time purchase or subscription", "situation": "A one-time price sits easy with old users. Subscriptions can keep you alive, but the reviews will curse you. Your app has one small function. How can you charge by the month?", "options": [
+   { "label": "Switch to subscription", "result": "Twenty one-star reviews arrive. Three months later, your monthly income passes the contract money for the first time." },
+   { "label": "Stay one-time", "result": "Old users write to say thanks. You do the math: you'll always need new people coming in to survive." }
+  ] },
+  "c_back": { "title": "Your old company asks you back", "situation": "Your old team needs someone who can carry weight, at three times what you make now, with the option of six months remote from Dali. If you go back, the courtyard and the app are both likely to fall by the wayside.", "options": [
+   { "label": "Back to Hangzhou", "result": "You give up the courtyard and return the shed key to the landlord. As you leave, it's snowing on the Cangshan range again.", "end": "You return to the cubicles, and your pay slip is on time again. You never do delete that little tool, and now and then at midnight you still send an update to a few old users." },
+   { "label": "Don't go back", "result": "You say thank you. Then you add up this month's income one more time." },
+   { "label": "Take only the six-month remote contract", "result": "Six months earns you a year's money, and shows you that over there the meetings are as many as ever." }
+  ] },
+  "c_indie": { "title": "Stopping contract work to become an Indie Developer", "situation": "Your own app's income now covers about half your expenses. Hold out one more year, or push away all the contracts now.", "options": [
+   { "label": "Push them all away", "result": "You hand over the last job and change your business WeChat picture to the app's icon." },
+   { "label": "One more year", "result": "The account looks better, and that big version you've thought about for so long goes back another year." }
+  ] },
+  "c_ai": { "title": "Letting AI write your app", "situation": "AI can now write most of the code and one person could run three products. You also know that what you have and others don't is exactly that hand-finished thing.", "options": [
+   { "label": "Use it fully, make more apps", "result": "In a year you launch three small tools. One goes nowhere and one does surprisingly well." },
+   { "label": "Use it only for the dirty work", "result": "You still adjust every animation yourself. Users say the app is comfortable to use and can't say why." }
+  ] },
+  "c_sell": { "title": "Someone wants to buy your app", "situation": "A small company wants to buy your bookkeeping app for enough to live on for several years. They say they'll take good care of it. You know that probably means ads.", "options": [
+   { "label": "Sell", "result": "The day the money arrives, you press the button to transfer the developer account.", "end": "You sell the app, use the money to get your parents a new place back home, and go teach coding at a vocational school. The app has splash-screen ads now, and you've never opened it again." },
+   { "label": "Don't sell", "result": "You write back saying no. After you do you feel a little regret, and eat dinner slowly." },
+   { "label": "Sell only a minor app you don't care about", "result": "You sell a secondary product for some money and keep going on the main one." }
+  ] },
+  "c_kid": { "title": "The child starts school. Stay in Dali?", "situation": "Your child is about to start school. Dali's schools aren't bad, but the grandparents are far away and neither of your incomes sits inside any work unit's system.", "options": [
+   { "label": "Stay in Dali", "result": "Your child bikes to school every day and goes to the lake on holidays, and picks up English with the accent of the foreign neighbors next door." },
+   { "label": "Move back to the provincial capital", "result": "A home in a good school district eats a good part of your savings, and you go on writing code in a Kunming cafe." }
+  ] },
+  "c_studio": { "title": "Hiring people to become Owner of a Small Tools Studio", "situation": "There's more work than one person can do. Hire two and there are wages to pay and people to lead, and the days of writing whatever you please are over.", "options": [
+   { "label": "Hire", "result": "On the first payday you are more nervous than when you received your first income." },
+   { "label": "Stay alone", "result": "You cut half of the feature requests and save your energy for those still using it." }
+  ] },
+  "c_home": { "title": "Going home to look after your parents", "situation": "Your father is unwell, and your mother doesn't say so on the phone. You hear it from a relative. You can write code back in the county town too, but your users and friends are elsewhere, and you may simply stop.", "options": [
+   { "label": "Hand over the app, go home", "result": "You pass the account to the young man you work with and keep only a copy of the old code.", "end": "You go back to your home county, help teach computer class at a middle school and watch television with your parents at night. Now and then someone still leaves a note on the app: is the developer still there?" },
+   { "label": "Go back and forth", "result": "You fly home six times a year and change code in the cabin. Your father says you are always busy." }
+  ] }
+ },
+ "endings": {
+  "retire": "The year you turn sixty you ship the app's final version, with release notes that read: still works, take your time. Income still trickles in, enough for mushrooms. You close the laptop. The courtyard cat jumps on top of it, where it's warm.",
+  "burnout": "Your neck and eyes have stopped doing as they're told. You stop updating, and leave only a note on the account. The bookkeeping app is still up, and some people still use it. You turn to growing vegetables in the courtyard, and the first crop doesn't do well."
+ },
+ "stages": [
+  "By day you take mini-program and app jobs for inns, restaurants and startups, confirming requirements back and forth on Feishu and WeChat and chasing each contract and final payment. At night you open Xcode and Android Studio and work on your own small tool, design to store, all alone. At a company someone made the schedule and someone tested. Now one unclear button means you apologize to the client yourself.",
+  "Your morning starts in the store dashboard: subscriptions, retention curves, crash rates, new reviews, a reply to every user email. Only one or two of the most familiar contract clients remain, and the big blocks of time go to the next version, with pricing, screenshots and translations all your own too. Unlike before, no one is pushing you now, and that is what you fear most.",
+  "The courtyard has two more desks: a young man on Android and a young woman on design. Every Monday you hold a twenty-minute meeting over the cash flow sheet, store revenue and next month's wages, and more and more of the code you read is someone else's. With contracts, social insurance and invoices you begin dealing with the tax office, and you begin saying no to some of your friends' ideas."
+ ],
+ "work": [
+  "You build an ordering mini-program for Old Zhou at a cafe in the old town. He draws it with pen and paper, you photograph it and send it to the designer, and in the end you follow his drawing.",
+  "A client's page is misaligned on a cheap Android phone. You pay ¥200 at the secondhand market for an identical one, fix it and put it in the drawer, which already holds seven.",
+  "You archive and submit from Xcode. The next day store review says a paragraph is missing from the privacy statement. You add a sentence and wait another day.",
+  "In the crash console there's an error that shows up only on one model of phone. You borrow Xiao Li's, who runs a guesthouse, reproduce it in an afternoon, and it's a date format.",
+  "You change the purchase page button from 'Subscribe now' to 'Try a week first.' After comparing two weeks of data, conversions rise by a hair, and you note it in your sheet.",
+  "The retired math teacher writes again to say the decimal point is finally right. You put him at the top of the beta list and give him a lifetime membership.",
+  "New hire Xiao He submits his first code and in the review you leave one comment: this is fine, but what about the second time the user opens it?",
+  "The day before payroll you stare at the cash flow sheet for half an hour and shut down the server of a small tool no one uses, saving ¥400 a month.",
+  "A friend introduces an investor, who asks after your chat whether DAU could grow tenfold. You say no, and you finish your bowl of rice noodles and go home separately."
+ ],
+ "past": [
+  "You first learned to write web pages at an internet cafe. You put your junior high classmates' names into a scrolling banner, everyone crowded around, and you were happier than when you came first in the class.",
+  "On your gaokao (college entrance exam) form you chose computer science, because the family said it led to jobs. In the dorm you wrote a little tool to look up grades and classmates passed it around.",
+  "After graduating you joined an internet company in Hangzhou writing mobile clients. The pay covered the money you'd borrowed for a down payment, and the overtime had you keeping a camp bed under your desk.",
+  "In your spare time you built a little bookkeeping tool. In its first month on the store it earned ¥37, and you posted a screenshot in the classmates' group.",
+  "Half your group was laid off and you were not. The next morning you turned on your computer, looked at the empty desks around you, and began seriously thinking of other ways to live.",
+  "On a trip to Dali you sat in a teahouse in the old town, connected to the Wi-Fi and fixed a bug, and looked up to see the mountains. Back in Hangzhou you started working out how many months your money would last."
+ ],
+ "late": {
+  "pension_note": "Estimate: self-employed workers pay their own social insurance at a low base, so the pension is about thirty percent of earlier income, topped up by the app's remaining trickle and savings.",
+  "scenes": [
+   "You turn off the store dashboard's notifications, then turn them back on, then off. The persimmons in the courtyard are nearly ripe.",
+   "A young person comes to Dali to find you, and says he used your app as a kid. You make him tea and show him the old computer.",
+   "The system stopped supporting your version long ago, and the app opens only on one old phone. Now and then you open it and look at the accounts inside.",
+   "You have your eyes checked and the doctor tells you to look at screens less. You buy a deck of large-print playing cards.",
+   "The vegetables are coming along better. The neighbor next door drops by now and then to ask how to close this pop-up on the phone.",
+   "Your developer account gets an email from a child asking on her father's behalf if his data can be exported. You spend an afternoon getting it out for her.",
+   "A colleague asks if those years in Dali felt especially free. You think it over and say the bills were pretty free too.",
+   "You take your child back to Dali once. The courtyard has someone else in it now and a plum tree by the gate, and you stand at the door a moment.",
+   "You search for your own app in the store. It's still there, rated 4.1. A new review says: this developer hasn't updated in years, but I'm used to it.",
+   "The path along Erhai Lake has grown longer, half a day to bike to the end, and you always turn back halfway.",
+   "AI can now make in one sentence something you once spent three years on. You try it and the result is quite good, only there is no story about the decimal point."
+  ],
+  "closing": {
+   "retire": "The cloud moves slowly down the Cangshan range. The cat has fallen asleep on the keyboard. You dim the screen and don't wake it.",
+   "burnout": "You finish watering the last row in the vegetable plot and set the can on the step. The evening wind moves slowly.",
+   "end": "On your old phone you come across that undeleted icon. Your finger pauses, then you press the screen dark."
+  }
+ }
+}

@@ -1,0 +1,322 @@
+{
+ "id": "tax-agent-hf",
+ "occupation": "Tax Preparer",
+ "role": "Tax Filer, Bookkeeping Agency",
+ "headline": "Out of junior college with an accounting diploma, a tax filer at a Hefei bookkeeping agency with dozens of owners' WeChat groups on one phone, and dozens of tiny businesses to file by the fifteenth of every month",
+ "unit": "A bookkeeping agency in Hefei",
+ "unit_type": "Bookkeeping agency",
+ "city": "Hefei, Anhui",
+ "city_tier": "Second-tier city",
+ "education": "Junior college (accounting)",
+ "level": "You don't get debits and credits wrong and you've practiced on a simulated e-tax portal in school. What to do when an owner sends half a blurry invoice, you haven't yet found out.",
+ "intro": "The agency is on the sixth floor of an old office building in Luyang District, eight people at one long table, two screens each. The woman training you adds you to forty-three WeChat groups and tells you not to turn on the alert sound, or you'll go mad. From today, forty-three owners' invoices will all find their way to you, and before the fifteenth of each month not one can be missed.",
+ "salary_note": "Estimate: a tax filer at a Hefei bookkeeping agency earns close to the national average, with commission by client count. There's no overtime pay for filing season.",
+ "facts": [
+  {
+   "label": "Tax Filer (current level)",
+   "value": "0-2 years, ¥4,000–6,000 a month (national average, estimated)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "Next level up",
+   "value": "Lead Accountant (2-5 years)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "Pay after 3–5 years",
+   "value": "¥6,300 a month (national average)",
+   "source": "Pay by experience"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Sitting down with owners and explaining the books and taxes",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Generating accounting entries from invoices and bank statements",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "3 related listings nationwide, 0 in this city (the database leans toward campus and intern roles)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "Metro Line 1, bodies against bodies. On your phone you answer two owners: photograph the invoice clearly, all four corners.",
+  "You open the e-tax portal and log in one business at a time, each needing a face scan or a verification code. For small owners you have to phone and chase the code.",
+  "Entering vouchers. A man who sells braised meats sends a stack of receipts reading '30 jin of pig's head,' and you add them up against his stall's payment records.",
+  "A takeout duck-oil flatbread and a bowl of vermicelli soup. You eat and read a restaurant owner's question: why is my tax higher than last year?",
+  "An owner comes to the office to reconcile, hugging a plastic bag full of receipts. You sort as you ask: is this one for the shop or for home?",
+  "A small business is about to exceed its threshold. You go through its invoices and tell the owner not to issue more this month. He says you could have told me sooner.",
+  "The fourteenth, and no one at the long table has left. The system is lagging. Everyone waits for the circle to stop spinning, and someone starts passing around sunflower seeds.",
+  "Business number forty-three submits successfully. You color it green in Excel, take off your shoes and sit a while."
+ ],
+ "ladder": [
+  {
+   "title": "Tax Filer",
+   "stage": "Entry",
+   "focus": "Collects invoices, enters vouchers, runs filings; zero returns and small-scale taxpayers come first. Moves up by not missing a single client in a month."
+  },
+  {
+   "title": "Lead Accountant",
+   "stage": "On your own",
+   "focus": "Solely responsible for the books and taxes of dozens of clients, can take general taxpayers, and owners come straight to you."
+  },
+  {
+   "title": "Review Supervisor",
+   "stage": "Quality check",
+   "focus": "Reviews others' books and returns, handles tax risk notices and owners' hard problems, trains newcomers."
+  },
+  {
+   "title": "Department Manager",
+   "stage": "Leads a team",
+   "focus": "Manages a department's people, clients and renewal rate, sets prices and handles complaints."
+  },
+  {
+   "title": "Partner",
+   "stage": "Shareholder",
+   "focus": "Buys in and helps run the firm; its client mix, risk control and survival become your worry."
+  }
+ ],
+ "ai_tasks": [
+  {
+   "name": "Sitting down with owners and explaining the books and taxes",
+   "how": "AI can write an explanation, and owners won't read it. Why this one has to be paid and that one can't be invoiced this way takes someone sitting across from them. Owners trust a person."
+  },
+  {
+   "name": "Generating accounting entries from invoices and bank statements",
+   "how": "AI reads invoices and bank statements and makes vouchers automatically, mostly right. A person spot-checks and deals with those whose purpose can't be explained."
+  },
+  {
+   "name": "Generating and checking tax returns",
+   "how": "The system pulls figures from the books, produces returns and cross-checks them; a person looks only at exceptions and submits."
+  },
+  {
+   "name": "Spotting abnormal tax burdens and risk notices",
+   "how": "AI can watch burden ratios and input-output and raise alarms. What this owner really does for a living, whether to make it up and what to tell the tax office is for a person to judge."
+  },
+  {
+   "name": "Answering small owners' policy questions",
+   "how": "AI can find and interpret the latest policy. Whether it fits this shop and whether it will bury a mine further on takes someone who knows these books."
+  },
+  {
+   "name": "Going to the tax hall on special matters",
+   "how": "AI helps prepare the documents. Explaining the situation at the window, what to add and who comes next time still takes someone making the trip."
+  }
+ ],
+ "events": {
+  "e_first_all": "You file all forty-odd clients alone for the first time, none missed. The woman training you sends a one-yuan red envelope, and you save a screenshot.",
+  "e_late": "One client's verification code can't be chased down by phone and the filing is missed, a ¥50 fine. The owner won't accept it, the agency covers it, and you buy a meal to make amends.",
+  "e_peak": "The quarterly return collides with annual settlement. All this week when you leave the building, the barbecue stalls downstairs have already closed.",
+  "e_client_run": "One client owner goes missing, with accounts unsettled and six months of fees unpaid. You move that business out to its own place in Excel, and something sticks in your chest for days.",
+  "e_thanks": "The braised meat seller presses two jin of pig's head on you, saying he'd have been fined without your reminder. You carry it on the metro, and the car smells good all the way.",
+  "e_new_policy": "Tax relief rules change again. The agency holds evening study, and you turn the old and new rules into a table and tape it by your monitor.",
+  "e_tax_notice": "A client gets a tax risk notice and the owner calls seven times in a panic. You dig out three months of input and output and write a page of explanation, and it settles.",
+  "e_ai_invoice": "After AI invoice recognition goes live, voucher entry takes a fraction of the time. The agency, without pausing, raises each person's client count from forty-odd to seventy.",
+  "e_ai_error": "AI books all of one owner's private car fuel as company expenses. You check line by line, put it right and make a rule for that client while you're at it.",
+  "e_ai_price": "An app on the market claims AI bookkeeping for ¥99 a month, and two owners come to haggle. You show them what you saved them last year.",
+  "e_ai_explain": "You use AI to turn policy into voice messages owners can follow, fifty seconds each. One owner says it's the most useful thing your agency does.",
+  "e_friend": "Colleague Xiao Peng gets married and the long table pools gift money. Before the banquet starts everyone is answering clients on WeChat, and the bride asks if you could put down your phones.",
+  "e_neck": "You bring back the films of your neck. The doctor asks how long you face a screen each day. You think about it and give a smaller number.",
+  "e_grow_with": "A small restaurant whose books you've kept for ten years opens its fifth branch. The owner sends a photo and says these books are worth looking at now, aren't they.",
+  "e_tech_client": "A few small suppliers to quantum and new energy firms in the high-tech zone find you, needing R&D super-deductions collected item by item. You sit down with the engineers and sort through their timesheets.",
+  "e_staff_leave": "A young woman you'd just finished training quits to be a cashier at a company, taking three clients' goodwill with her. You redo the client assignments.",
+  "e_small_end": "An owner who has been with you for more than ten years closes his shop. With the final filing he sends you a red envelope with the note: thanks.",
+  "e_tea": "Old clients still send a packet of Lu'an melon-seed tea at the holidays. You brew a cup and leaf through their old ledgers, the handwriting nicer than now."
+ },
+ "choices": {
+  "c_main": {
+   "title": "Taking on the Lead Accountant's work",
+   "situation": "The woman training you is having a baby, and her general-taxpayer clients need someone. More commission if you take them, and if anything goes wrong it's on you.",
+   "options": [
+    {
+     "label": "Take them",
+     "result": "In the first month you get stuck for three nights on input VAT reversals. By the second month you don't."
+    },
+    {
+     "label": "Steady on the small ones first",
+     "result": "You tell your supervisor to wait. This year you don't miss a single one."
+    }
+   ]
+  },
+  "c_gray": {
+   "title": "An owner asks you to think of something",
+   "situation": "An owner wants you to underreport income a little and buy a few invoices to offset costs, saying everyone else's accountant does it. His yearly fee is a tenth of your commission.",
+   "options": [
+    {
+     "label": "Refuse and spell out the consequences",
+     "result": "He curses a little and takes his books away. Six months later someone tells you his new accountant has been called in for questioning."
+    },
+    {
+     "label": "Find a compliant way to save him money",
+     "result": "After two days in the policies you find a relief he qualifies for. It saves less than he wanted, but you sleep."
+    }
+   ]
+  },
+  "c_firm": {
+   "title": "A client's company asks you to be its staff accountant",
+   "situation": "The owner of a client that's doing well says quit bookkeeping and come do my finances, full benefits, one company only, no filing-season scramble.",
+   "options": [
+    {
+     "label": "Go",
+     "result": "You leave the forty-odd groups, and your phone goes quiet all at once, quiet enough to feel strange.",
+     "end": "You become a company's staff accountant, looking at one set of books each day, far more closely than before. Every fifteenth you still look at the calendar a second time."
+    },
+    {
+     "label": "Stay",
+     "result": "You tell the owner a few more years of agency work will show you more. He says fine, the books are still yours."
+    },
+    {
+     "label": "Ask if you can do both",
+     "result": "You gain extra income and an owner whose messages you answer on weekends too."
+    }
+   ]
+  },
+  "c_ai": {
+   "title": "AI bookkeeping has arrived. Will you learn it?",
+   "situation": "The agency is adopting an AI bookkeeping system and needs someone to write rules and bring everyone over. Those who don't learn can only keep piling up client counts.",
+   "options": [
+    {
+     "label": "Learn it and help build the rules",
+     "result": "You write the owners' habits you've kept in your head all these years into the system, one by one."
+    },
+    {
+     "label": "Concentrate on the owners",
+     "result": "You only use the system, but you remember everything about the owners. Some leave for the app and come back to find you."
+    }
+   ]
+  },
+  "c_review": {
+   "title": "Applying for Review Supervisor",
+   "situation": "The supervisor is leaving and the boss invites applications. This level reviews others' books, takes the blame for mistakes and teaches the young ones. Fewer clients, more to worry about.",
+   "options": [
+    {
+     "label": "Apply",
+     "result": "You begin marking up other people's books in red, your notes more careful than any teacher's were."
+    },
+    {
+     "label": "Stay with your own clients",
+     "result": "You say you know your clients and the commission's not bad. The post goes to Xiao Peng."
+    }
+   ]
+  },
+  "c_cta": {
+   "title": "The Certified Tax Agent exam",
+   "situation": "Five papers, each harder than the last, taking every evening and weekend. With it you can take bigger work or move to a tax firm, but your child has just started primary school.",
+   "options": [
+    {
+     "label": "Sit it",
+     "result": "It takes three years. The day the last result comes you're in the kitchen. You don't shout. You turn the flame down a little."
+    },
+    {
+     "label": "Don't sit it, be with the child",
+     "result": "You know all the homework now, and you've started writing things other than accounting."
+    }
+   ]
+  },
+  "c_own": {
+   "title": "Going out on your own with your clients",
+   "situation": "A few old clients say that if you set up on your own, their books will come with you. A small rented office, one or two people, however much you make is yours to bear.",
+   "options": [
+    {
+     "label": "Go out on your own",
+     "result": "You put your badge on the boss's desk. The boss says nothing, and the next day posts on WeChat, wishing you well.",
+     "end": "You open a very small bookkeeping agency, its sign on the second floor of an old building. You still file everything by the fifteenth, only now no one pays you and no one chases you."
+    },
+    {
+     "label": "Don't go",
+     "result": "You say taking clients away isn't right, and you're afraid as well. You keep working."
+    }
+   ]
+  },
+  "c_manager": {
+   "title": "Applying for Department Manager",
+   "situation": "The firm has expanded and needs someone to run a whole floor. Client counts, renewal rates and complaints would all be yours, and you'd decide whose commission rises and whose client count falls.",
+   "options": [
+    {
+     "label": "Apply",
+     "result": "At your first department meeting you lay down three rules, the second being no meetings until after the fifteenth."
+    },
+    {
+     "label": "Keep reviewing books",
+     "result": "You say you don't want to run this floor and that looking at books is fine. So every day you look at books."
+    }
+   ]
+  },
+  "c_hall": {
+   "title": "Buying in as Partner, or going to the tax service hall",
+   "situation": "The boss says you can buy in as a partner for several hundred thousand yuan. The tax bureau's service hall is hiring contract staff, an easy job at half the pay, off at five.",
+   "options": [
+    {
+     "label": "Buy in",
+     "result": "You and your spouse talk over your savings all night, and the next day you sign."
+    },
+    {
+     "label": "Go to the service hall",
+     "result": "You turn in your badge and from then on see owners with receipts from behind a window.",
+     "end": "You sit behind a window at the tax service hall, telling people again and again to photograph all four corners of the invoice. At five you leave on time and buy a flatbread downstairs."
+    },
+    {
+     "label": "Neither, stay as you are",
+     "result": "You say you're not young, and these clients are plenty."
+    }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "You hand your last client's books to your apprentice and leave the forty-odd groups one by one. As you reach the last, the braised meat seller sends a picture and a red envelope with the words: the books are right. You switch off your phone. Today is the fourteenth, and there's nothing you have to do.",
+  "burnout": "Your neck and eyes won't let you look at two screens anymore, and you tell the boss that after this month's filings you won't be coming in. At home you put the household receipts in a shoebox and don't want to enter a single one. On the fifteenth you still wake early, lying there listening to the flatbread stall downstairs open up."
+ },
+ "stages": [
+  "Your job is collecting invoices, entering vouchers and filing. You take invoice photos from forty-odd WeChat groups, enter them one by one in the accounting software, then file business by business on the e-tax portal, getting zero returns and small-scale taxpayers down first. Toward owners you're responsible for one sentence: have you sent all the invoices? The skill at this level is not missing one.",
+  "Dozens of clients' books and taxes are yours, general taxpayers included: input VAT selection, reversals, statements and annual settlement at year's end. Owners phone you directly, and you have to put the policy in words they understand. It used to be getting invoices entered right. Now you have to know whether this entry will cause trouble later.",
+  "What you hold now is other people's books. You go through vouchers and returns client by client, marking them up in red, and tax risk notices come to you first so you can decide how to answer. New hires spend their first month with you. You begin to get to know the tax officers assigned to your clients and must choose your words. Fewer clients, but any error is yours.",
+  "You manage a floor of people: assigning clients, watching renewal rates, having tea with owners about to leave, phoning back those who complain. Price sheets and commission tables are yours to set. You no longer enter a single invoice, yet before every fifteenth you're still the last to leave.",
+  "How much money the firm has, whether to give up a risky client, which system to buy: all to be discussed with the two other partners. Your job has become risk control and people. You often go see those old clients of ten years and more, drink a cup of tea and listen to their business."
+ ],
+ "work": [
+  "Boss Wang at the hardware store sends an invoice photo with only three corners. You call him to retake it. He says isn't it clear enough, and you enlarge it to show him.",
+  "On the e-tax portal you click a zero return into the wrong month and hurry to correct it. Sister Tang, who trains you, says she's done that too.",
+  "Xiao Wu from the milk tea shop sends half a year's records as more than a hundred screenshots. You enter them one by one and find at the fortieth that he has sent duplicates.",
+  "A building materials company's input far exceeds its output. You go through the contracts and shipping documents, find one batch won't be invoiced until next month, and explain it on the return.",
+  "During annual settlement the hotpot owner's entertainment costs are over the limit. You adjust the tables into the night and tell him this part can't be deducted. Once he understands he says next time he'll treat less.",
+  "You make an Excel comparison of each client's tax burden and leave it in the group files. Colleague Xiao Peng picks it up, and by the next month the whole team is using it.",
+  "Reviewing Xiao Guo's books you find an 'office supplies' figure that's too round, and have her go ask. The owner says it was an air conditioner for his home, and it's changed back.",
+  "A tax officer sends a risk notice. You write the company's explanation in half a page, the numbers of the three contracts clear. The next day the reply is: received.",
+  "New hire Xiao Jiang gets debit and credit backwards. You open the ledger and explain how you once learned to remember it.",
+  "An old client wants to leave over the price. You sit in his shop an afternoon and show him three years of tax burdens. He stays, and you give a little on the price.",
+  "You change the commission rule from client count to difficulty. Some at the long table are pleased and some say nothing, and you talk with each of them.",
+  "At the risk meeting you decide to drop two clients whose books can't be explained. You make the calls yourself, polite in tone, with reasons kept short.",
+  "A salesman presents an AI system. You bring out a stack of real receipts for it to read on the spot, then ask one question: if it's wrong, whose fault is it?"
+ ],
+ "past": [
+  "You grew up in a small town in Lu'an, Anhui. A few points short of the key senior high, your mother said to learn a trade. You chose accounting because it kept you out of the wind and sun.",
+  "Your higher vocational exam got you into an accounting program in Hefei. In the first class the teacher said every debit has a credit. You wrote that in your notebook and thought the world seemed fair.",
+  "On summer break you helped at your uncle's supermarket and found he kept his accounts on cigarette packets. You made him an Excel file. He said what's the use, and later came to you every month.",
+  "You sat the junior accountant exam and failed economic law the first time, passing the second. The certificate reached your dorm while you were learning the simulated e-tax system.",
+  "Your internship before graduation was at this very agency. The first week you did nothing but paste invoices at the long table. The supervisor said paste them flat and the books come out flat."
+ ],
+ "late": {
+  "pension_note": "Estimate: bookkeeping agencies usually pay social insurance at a low base, and the pension runs a bit over forty percent of final pay.",
+  "scenes": [
+   "You wake on the morning of the fifteenth and check your phone. There are no messages. You check again.",
+   "The property office asks you to look over its books. You put on your reading glasses and say the date on this receipt is wrong. After that no one dares cross you.",
+   "The braised meat seller's son has taken over the shop and still has you on WeChat. For the holiday he sends a picture of a red envelope.",
+   "The doctor tells you to look at screens less. You find a book in large print at home and, reading along, circle the typos.",
+   "You work out the numbers for the flatbread stall downstairs and tell him small-scale tax doesn't apply this year. He gives you an extra piece of meat.",
+   "You find your old handwritten ledgers, as neat as ever, and put them with your child's certificates.",
+   "In the new days your phone is much quieter. Now and then you open the invoice photos you saved before you left and take a look.",
+   "At a gathering your old colleagues are all talking about AI bookkeeping. You say: you still have to remember to get owners to shoot all four corners.",
+   "Shopping at the supermarket, you glance at the tax on the receipt the cashier hands you, then fold it and put it in your wallet.",
+   "A young person asks if accounting is still worth studying. You say yes, but you'll have to know how to talk to people.",
+   "Walking in Xiaoyaojin Park, you overhear two old men on a bench working out their pensions. They've got one item wrong."
+  ],
+  "closing": {
+   "retire": "The flatbread stall downstairs has opened again. The smell from the oven rises, and you open the window wider. There's no account to settle.",
+   "burnout": "The afternoon sun moves slowly off the table. The shoebox is on top of the cabinet, and you don't take it down again.",
+   "end": "At month's end you turn a page on the calendar. Your finger rests a moment longer on the fifteenth, then lets go."
+  }
+ }
+}

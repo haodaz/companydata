@@ -1,0 +1,185 @@
+{
+ "id": "cardio-hd",
+ "occupation": "Internist",
+ "role": "Resident physician in cardiology",
+ "headline": "Three years of residency training just finished, staying on in cardiology at a top-tier (Grade 3A) hospital in Handan, in charge of twelve beds and the chest-pain phone, with patients who mostly come in from villages around Wu'an, Cixian and Weixian",
+ "unit": "A top-tier (Grade 3A) hospital in Handan, Hebei, Department of Cardiology (eighty beds, with a separate chest-pain center rota)",
+ "unit_type": "Grade 3A hospital",
+ "city": "Handan",
+ "city_tier": "Third-tier",
+ "education": "Master's in Clinical Medicine (Internal Medicine, combined with residency training)",
+ "level": "Residency passed. You read ECGs fast. Coronary angiography you have only watched from below the table, and you have never held a guidewire",
+ "intro": "You did your master's in Handan and your three years of residency training at this same hospital. The department has eighty beds, and more are often added in the corridor. A senior physician hands you the charts for twelve of them and says that from tonight you carry the chest-pain phone as well. From today your ringtone stays at full volume, and within twenty minutes you have to be able to get from home to the door of the cath lab.",
+ "salary_note": "Estimate: performance pay at Handan's top hospitals is lower than in first-tier cities, about eighty percent of the national average.",
+ "facts": [
+  { "label": "Resident Physician (current level)", "value": "0-5 years, ¥8,000–14,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Attending Physician (5-12 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Handling acute and critical cases at the bedside", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Outpatient visits and differential diagnosis", "source": "AI exposure" },
+  { "label": "Open positions", "value": "9 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You ride your e-bike down Zhonghua Avenue and stop outside the hospital for a bowl of millet-and-bean porridge with a fried dough stick. The phone hasn't rung, which is today's best news so far.",
+  "Morning handover. The night doctor reads out the new admissions. The department head leafs through the ECGs, stopping now and then to ask: how do you read this ST segment?",
+  "Rounds, bed by bed through your twelve. The old man in Bed 3 has stopped his blood pressure pills again. His head isn't dizzy, so why bother? You take out the pill box, set it in front of him, and explain once more.",
+  "Progress notes, orders, test requests. The records system freezes for a moment and you take the chance to drink some water, then notice the cup is from yesterday.",
+  "You assist in the cath lab, wearing a lead apron of twenty-odd pounds, as second assistant. The senior's hands are steady, and when a shadow moves on the screen you make a note of it in your head.",
+  "A talk with a family. A son from Wu'an is squatting in the corridor doing sums. Can the stent be a cheaper one? Let me explain the situation first, you say.",
+  "The night shift begins. On a slip of paper in your palm you write the few patients who need special attention tonight. The nurses' station is very bright, and someone hands you half an apple.",
+  "The chest-pain phone rings. A county hospital is sending a patient. Walking toward the cath lab, you ask over the phone when the symptoms began, your voice flat."
+ ],
+ "ladder": [
+  { "title": "Resident Physician", "stage": "Ward work", "focus": "Manage beds, write records, take night shifts; move up on basic skills and passing the attending exam" },
+  { "title": "Attending Physician", "stage": "Lead a team", "focus": "Lead a treatment team and begin doing interventions alone; move up through case numbers and steadiness in emergencies" },
+  { "title": "Associate Chief Physician", "stage": "Gatekeeper", "focus": "Lead rounds, perform complex procedures, consult across the hospital; move up through rural service, papers and reputation" },
+  { "title": "Chief Physician", "stage": "Set direction", "focus": "Set the department's technical direction, handle the hardest cases, and manage people and the specialty" }
+ ],
+ "ai_tasks": [
+  { "name": "Outpatient visits and differential diagnosis", "how": "AI can help organize complaints and flag dangerous conditions to rule out. Whether someone can go home today, after you've heard them out, is a doctor's decision and a doctor's responsibility." },
+  { "name": "Handling acute and critical cases at the bedside", "how": "When chest pain, heart failure or dangerous arrhythmia comes in, the judgment, the orders and the conversation with the family need a person present. AI can only prompt from the side." },
+  { "name": "Reading ECGs, labs and imaging", "how": "AI reads ECGs fast and reliably and marks abnormalities. Doctors have to match results with history and exam, rule out false alarms, and make the final diagnosis." },
+  { "name": "Writing medical records and discharge summaries", "how": "AI can turn voice from rounds into structured records and summaries. Doctors need only check, edit and sign." },
+  { "name": "Prescribing and adjusting long-term medication", "how": "AI can give guideline-based regimens and check interactions. Doctors have to see whether a patient can afford it and will remember it, and then decide." },
+  { "name": "Planning interventions before the procedure", "how": "AI can take measurements from angiography and imaging and suggest stents and routes. Once at the table, the feel in the hands and the decisions in the moment belong to the operator." }
+ ],
+ "events": {
+  "e_first_stent": "A senior physician hands you the guidewire for the first time, with only the words: slowly. Time behaves strangely at the table. Afterward you find your shirt soaked through at the back.",
+  "e_ecg": "The emergency room sends over an ECG. You catch a small change others missed, and go to the bedside to ask for the history again. At handover the next day the department head reads out your name, and you pretend to be looking through your notebook.",
+  "e_night": "Two night shifts in a row without closing your eyes. The next afternoon you fall asleep standing in the elevator. It reaches the ground floor and you don't get out, and the doors close again.",
+  "e_family": "A relative holds on to you in the corridor and weeps for a long time, asking if coming a little sooner would have made the difference. You stand and listen to the end, and don't say much. Back in the office, it's a good while before you open the chart.",
+  "e_dumpling": "A patient who's gone home sends a bag of pears from Weixian, handing them to the nurses' station and leaving at once. You eat one, cloyingly sweet, and you take an extra look at his follow-up results.",
+  "e_lead": "A few years of the lead apron, and your back has stopped obeying you. A classmate in rehab gives you a brace. You wear it under your scrubs, and at the table no one can tell.",
+  "e_vbg": "A small problem you wrote into a chart is picked up by quality control and circulated to the whole hospital. You revise it three times and explain the cause in front of everyone at the next department meeting. Then it's over.",
+  "e_vbp": "After centralized stent purchasing, you no longer have to talk around the cost when you tell a family. An old farmer hears the price and asks if he's heard wrong. He hasn't. He asks you to say it again.",
+  "e_ai_ecg": "The hospital connects an AI system that reads ECGs. At night reports come back in seconds, mostly quicker than you. Once it also takes a burst of interference for a catastrophe, and it is you who goes to the bedside, looks, and sends everyone away.",
+  "e_ai_note": "A small device worn on rounds turns what you say into records, and you get off half an hour earlier. You often spend the extra time at the bedside, listening a little longer to an old man talk about his land and his sheep.",
+  "e_drill": "The chest-pain center has to report its figures, and your door-to-artery time has come down by a few more minutes. Those minutes came from nurses at a trot, an elevator held ready, and two sentences you didn't say on the phone.",
+  "e_dispute": "A relative with questions about the bill files a complaint at the medical affairs office. You pull out the record page by page and go through it three times. In the end there's an apology and no payment, and you've lost a few pounds.",
+  "e_kid": "Your child has a first kindergarten performance, and you promised to go. As you head out the chest-pain phone rings. At the cath lab door you message your spouse: sorry. A video comes back, with the volume down low.",
+  "e_xiaxiang": "You're assigned to support a county hospital in Shexian for a year, two hours by car and most of it mountain road. The doctors there ask careful questions and record what you say on their phones. You sleep rather well that year.",
+  "e_junior": "A resident in training phones in the middle of the night, unsure. You don't give a conclusion at once. You have him read out the ECG findings. When he's finished he offers an answer himself. Good, you say, go ahead.",
+  "e_body": "Your own blood pressure is up too, the report lying among a pile of patients' results. You prescribe for yourself. The next week you find that like the old man in Bed 3, you forget to take them.",
+  "e_old_pt": "The first patient you ever managed comes back for a checkup after more than ten years, walking steadily and bringing his grandson. He calls you young doctor. You don't correct him, and the younger staff all laugh.",
+  "e_mother": "Your mother is found to have a heart condition, and she's admitted to your ward. On rounds you say to her what you'd say to anyone. Out in the corridor, you stand still for a while.",
+  "e_slower": "You go to the table less often, and more often you sit in the control room watching younger doctors. Once you start to say something, then hold back. At the table the young doctor stops of his own accord and changes the wire."
+ },
+ "choices": {
+  "c_zhuzhi": {
+   "title": "Sit the Attending Physician exam",
+   "situation": "You have the years, and the department wants you to register this year for the Attending Physician exam. But the chest-pain center is preparing for inspection this year and there are more night shifts than before. The only time for books is after midnight.",
+   "options": [
+    { "label": "Sit it this year", "result": "You bring the books to the duty room and go through them page by page. On the morning of the exam there's a light rain. When the results come out, you just nod." },
+    { "label": "Next year", "result": "You put your energy into the inspection this year, and the department head notices. Only, classmates your year are already in attendings' white coats." }
+   ]
+  },
+  "c_bj": {
+   "title": "A year of training in Beijing",
+   "situation": "The department has one slot to train in interventional work in Beijing for a year. You'd pay your own rent and receive only base pay. Your child was born not long ago. If you want to go, go, your spouse says, in a level voice.",
+   "options": [
+    { "label": "Go", "result": "You live a year in a basement in Beijing, and each day you watch one procedure after another. You come back with something more in your hands. Your child doesn't know you." },
+    { "label": "Stay and learn at the table here", "result": "You stay in the department and learn from your chief's hands, not too slowly. You're there when your child first walks." }
+   ]
+  },
+  "c_money": {
+   "title": "A family who can't decide",
+   "situation": "An old patient's condition could be treated with a procedure, or observed on medication first. Doctor, says the family, if it were your own family, what would you choose? He is gripping money he has borrowed from relatives.",
+   "options": [
+    { "label": "Explain both paths and let them decide", "result": "It takes forty minutes, and they follow about half. The next day they choose medication, and they thank you." },
+    { "label": "Give one clear recommendation", "result": "If it were mine, you say, I would do it. They nod. You come back to that sentence on several nights afterward." }
+   ]
+  },
+  "c_ai": {
+   "title": "AI-assisted diagnosis pilot",
+   "situation": "The hospital wants cardiology to pilot an AI-assisted diagnosis platform, and someone to lead data collection and compare accuracy. It hardly counts as workload and it will eat your rest time. But done well, it might be a good paper.",
+   "options": [
+    { "label": "Lead it", "result": "You compare more than two thousand ECGs and records, and learn how to see where a model goes wrong. Later, the IT department comes to you with its questions." },
+    { "label": "Let a younger colleague do it", "result": "You give up the chance and take on a few more clinics. Your patients mostly remember you as the doctor who talks slowly." }
+   ]
+  },
+  "c_device": {
+   "title": "An invitation from a device maker",
+   "situation": "A cardiovascular device company wants you in medical affairs. No night shifts, double the pay, an office in Beijing. But you are only five years away from the senior title, and these years of handwork will have no use over there.",
+   "options": [
+    { "label": "Stay in clinical work", "result": "You decline. That night the chest-pain phone rings again, and you run a little faster than usual." },
+    { "label": "Go to the company", "result": "You take off the white coat and board the high-speed train to Beijing. As it pulls out, your phone is, from habit, turned all the way up.", "end": "You went to the device company, and spent your days in meeting rooms explaining to other doctors the things you once placed with your own hands. Sometimes you woke in the night. The phone was silent, and you always looked at it anyway." }
+   ]
+  },
+  "c_fufu": {
+   "title": "The paper for Associate Chief Physician",
+   "situation": "To be evaluated for Associate Chief Physician you need papers. Someone in the department can find a way, for a bit of money, to get one published. Writing it yourself means reworking the data from scratch, a year of nights at least, with no guarantee.",
+   "options": [
+    { "label": "Write it yourself", "result": "You go back through five years of the department's chest-pain cases one by one. It's accepted by a modest journal. You print it out and put it in a drawer." },
+    { "label": "Use the ready-made route", "result": "The money is spent and the paper appears. The evaluation goes smoothly. You never mention this paper to anyone again." }
+   ]
+  },
+  "c_county": {
+   "title": "A county hospital asks you to run its department",
+   "situation": "The hospital in Cixian wants to build a cath lab and its president comes to you: be our department head, the county will provide housing, thirty percent more pay. You know how far those patients are from a cath lab. You also know what the equipment and staffing are like there.",
+   "options": [
+    { "label": "Go to the county hospital", "result": "You take two young doctors and teach from the first procedure. County patients no longer have to be sent to the city. You often sit alone in the corridor outside the cath lab.", "end": "You went to the county hospital and built that cath lab. Before you retired you handed its keys to a young doctor you had raised yourself, and the old people of the county called you our doctor." },
+    { "label": "Stay in the city", "result": "You decline, and promise to come one day a week to supervise. Four hours round trip, and you keep at it for several years." }
+   ]
+  },
+  "c_chief": {
+   "title": "Apply for Chief Physician, or give up the slot",
+   "situation": "There is just one slot for Chief Physician this year. You and the senior colleague who brought you up both qualify. Privately, the department head says: he's getting on, this is his last chance, you will have others.",
+   "options": [
+    { "label": "Put in your own name", "result": "You apply. On the day of your defense your senior colleague meets you outside the door, pats your shoulder and says nothing." },
+    { "label": "Not this time", "result": "You wait a year. When your senior colleague retires, he leaves you the stethoscope he used for thirty years, with a small strip of tape on it." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last night shift the phone doesn't ring, and you stay up all night anyway. After the next day's handover you put your ringtone back to normal volume. You've thought about this for years, and when the moment comes it's two presses of a button. Downstairs, the porridge stall at the gate has changed hands. It tastes about the same.",
+  "burnout": "Your blood pressure and your back tell you together that you can't go to the table anymore. You arrange with the department to move to outpatient clinics and chronic disease care, and to stop carrying the chest-pain phone. You still wake at night and reach for the bedside table, where the phone is on silent."
+ },
+ "stages": [
+  "Your day circles twelve beds: progress notes, orders, lab results, the phone at night, and by day the second assistant's place at the table. When a senior asks something on rounds, you have to have the answer. The records system, the ECG machine and a guideline book that gets more worn each year are your possessions. For real decisions, you still go and ask.",
+  "You begin leading a treatment team, overseeing residents below you, and doing some simple interventions alone. The chest-pain call at three in the morning ends with you, and the pen for consent forms is in your hand. It used to be enough to do things right. Now you have to judge whether a person can really wait until tomorrow.",
+  "You lead grand rounds, see difficult cases, do the complicated procedures, and take consults from across the hospital. Your clinic slots go early in the morning, with patients who ride in from the counties. You've started catching whatever falls from below: their phone calls, their complications, the decisions they don't dare to make, all end up with you.",
+  "You decide where the department goes: what new techniques to open, who to train, which equipment is worth requesting, and you speak for the department at hospital meetings. The hardest cases still get carried to you. You do fewer procedures, but one sentence of yours decides whether a patient goes to the table. Your signature weighs much more than it did when you were young."
+ ],
+ "work": [
+  "The old woman in Bed 5 feels her heart racing in the night. You pull the ECG machine over and do one yourself, send a photo to the second on call, who replies with two words: add medication. You enter the order, and go back and sit with her for ten minutes.",
+  "Xiao Liu, a resident in training, leaves a drug off a discharge summary. You catch it in the records system, and take him to the bedside to read out the pill box himself.",
+  "You take the angiography disc to explain it to a family, and draw a diagram of the vessels on the back of a sheet of printer paper. The relative folds it and puts it into an inside pocket.",
+  "You complete your first elective stent alone, your senior standing behind the control room glass, silent throughout. Afterward he signs the record and passes you the pen.",
+  "A county hospital phones to ask if an old heart-failure patient should be transferred. You ask about urine output and weight, tell them what to give first, and say you'll see tomorrow.",
+  "A resident, Xiao Tian, has a dispute with a family. You bring the family to the talking room and go through the case from the top. On the way out, you tell Xiao Tian to bring the old man a cup of water.",
+  "An outside hospital sends a complicated angiogram. At case review you set out the possible approaches and let a young attending choose first. Only then do you say how you'd do it.",
+  "Pulmonology asks you to consult. You read the chart and write three lines on the consultation form, then go to the bedside and ask: can you lie flat at night? The old man shakes his head, and you change the third line.",
+  "At clinic, a son has brought his old father two hours by car from Wu'an. After the tests you simplify the prescription to three drugs, writing them in big characters on the back of the prescription.",
+  "Equipment brings the budget for upgrading the cath lab. You speak for ten minutes at the president's meeting, and when you reach the county transfer times, the president puts down his phone.",
+  "At the department meeting you decide who will train in structural heart disease this year. The most senior doctor isn't on the list. Afterward you invite him privately for tea.",
+  "A young associate chief phones at midnight, unsure about this case. You throw on your clothes and get to the hospital, and watch from the control room for three minutes. Your hands are fine, you say. Carry on."
+ ],
+ "past": [
+  "Your family lives in Cheng'an County, near Handan. Your grandfather's heart is bad, and every attack means asking around for where to go. The thing people say most at home is: the big hospitals are so far.",
+  "Your gaokao (college entrance exam) score is good enough for the provincial medical college. Study medicine, say your parents, then there will be someone to see us when we're old. You put down clinical medicine, without much thought for how many years that means.",
+  "In your fourth-year clinical rotation you reach cardiology. The teacher shows you how to take a pulse and read an ECG, and for the first time you feel that those lines are saying something.",
+  "You take the postgraduate exam and choose internal medicine, a professional degree that counts toward residency training. Your classmates are already earning, and you are still biking between the dorm and the ward.",
+  "In your second year of training you stand outside the cath lab and watch the doctors walk out in lead aprons, faces calm, shoes wet with sweat.",
+  "Near the end of your training the department says you can stay. You work out what housing costs in Handan, and how close it is to home, and you say yes."
+ ],
+ "late": {
+  "pension_note": "Estimate: basic pension plus occupational annuity for a public institution employee comes to about sixty percent of pay before retirement.",
+  "scenes": [
+   "In your first month of retirement you keep waking at handover time. You go down to buy vegetables and run into old patients, who stretch out a wrist for you to feel. In the market, you take three pulses.",
+   "The hospital rehires you for two half-days of clinic a week. You speak even more slowly than before. This doctor's in no hurry, the old people say, so we aren't either.",
+   "You grow a grape trellis at the old house in Cheng'an, not very well. You take your own medicine on time now, with two alarms set, one morning and one night.",
+   "In your first month without the phone, you keep feeling for it at night. Clinic ends early too, and you sit a while in the hospital garden before remembering what day it is.",
+   "The chronic disease clinic is full of old acquaintances, and you ask each about their blood pressure and pills. You laugh more than you used to, someone says.",
+   "Your back is a little better. You walk around the compound, and on the seventh lap someone calls out: doctor. You turn around and don't know the face. You nod anyway.",
+   "In your first year away from clinical work, you still turn the ringer all the way up every night. It's a long time before you remember that no one will be calling you at midnight now.",
+   "At a training session a young doctor asks you about an angiogram. You don't use the slides. You take a pen and begin to draw on paper.",
+   "Relatives at home still phone to ask what they should take. You ask very carefully, and when you're done you add: don't stop on your own.",
+   "Your child is applying to college and asks if you think medicine is a good choice. You think for a long time, then say only: go stand outside a cath lab for a day, then come back and tell me.",
+   "In a drawer you find the diagram of vessels on the back of printer paper, an extra one you drew that day, the lines all crooked. You look at it for a while and put it back."
+  ],
+  "closing": {
+   "retire": "Steam rises from the porridge stall in the early morning. You buy a bowl and drink it slowly. The phone hasn't rung today.",
+   "burnout": "The afternoon clinic has emptied, and only the light from the windows is left in the corridor. You take off your stethoscope, put it in the drawer, and sit a little while.",
+   "end": "At dusk you put the phone on the table with the ringer on. It doesn't ring. Outside the window it slowly gets dark."
+  }
+ }
+}

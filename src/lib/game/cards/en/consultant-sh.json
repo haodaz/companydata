@@ -1,0 +1,194 @@
+{
+ "id": "consultant-sh",
+ "occupation": "Strategy Consultant",
+ "role": "Strategy analyst at a foreign consulting firm",
+ "headline": "Twenty-four, on a salary your classmates envy, in a glass tower on Nanjing West Road, waiting at Hongqiao at six-thirty every Monday morning to fly off and tell people twenty years older than you how to run their businesses",
+ "unit": "A foreign strategy consulting firm in Shanghai (Nanjing West Road, about two hundred people in the China office)",
+ "unit_type": "Foreign consulting firm",
+ "city": "Shanghai",
+ "city_tier": "First-tier",
+ "education": "Master's (Finance)",
+ "level": "You have memorized the Excel shortcuts. You don't yet know why a single slide can go through eleven versions",
+ "intro": "When your offer letter arrived, your parents printed it out. In your first week the firm hands you a laptop, a suitcase and a thin handbook whose first page explains what makes a good question. Your first project is in Hefei, looking at overseas markets for a home appliance maker. From today, your week begins on Monday morning at Hongqiao Airport.",
+ "salary_note": "Estimate: starting pay and the steps between levels at foreign consulting firms in Shanghai run well above the national average for this job.",
+ "facts": [
+  { "label": "Analyst (current level)", "value": "0-2 years, ¥18,000–30,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Consultant (2-5 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Talking with clients to understand what they actually need", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Drafting strategy and operating proposals for clients", "source": "AI exposure" },
+  { "label": "Open positions", "value": "92 related listings nationwide, 16 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Monday's alarm. A taxi to Hongqiao. In the airport coffee shop stand several people who, like you, carry backpacks and clutch laptops. You all know each other, and nobody speaks.",
+  "At the client's office. They've given you a windowless meeting room with a sign on the door reading Project Team. For air conditioning you have to apply to Admin.",
+  "An expert call with a former executive at a Southeast Asian distributor, at a steep hourly rate. You type as he talks, keeping the numbers apart from the grumbling.",
+  "You feed what the expert said into the Excel model and calculate the market size in two directions. They differ by thirty percent. You stare at the sheet, unsure which one to believe.",
+  "The project manager leafs through your deck, slide by slide, and stops at number seven. What's the takeaway on this page? You give two sentences. One, he says.",
+  "A bowl of noodles downstairs at the hotel, the expense limit just covering an egg. In the team chat, the partner has sent a one-line comment. Everyone reads it three times, trying to guess what he means.",
+  "Version eleven goes out. You lie on the hotel bed. The person speaking tomorrow morning is your project manager. You are responsible only for page seven.",
+  "The flight back to Hongqiao, then Metro Line 2, packed. Your flatmate asks where you were this week. You think for a moment. A meeting room in Hefei, you say."
+ ],
+ "ladder": [
+  { "title": "Analyst", "stage": "Slides", "focus": "Build models, make expert calls, produce individual slides; move up with solid data and clean pages" },
+  { "title": "Consultant", "stage": "Own a module", "focus": "Run a module on your own and meet the client's middle managers directly; move up by thinking clearly and saying it clearly" },
+  { "title": "Project Manager", "stage": "Run projects", "focus": "Lead the team on schedule, quality and client relations; move up when clients ask for you by name" },
+  { "title": "Associate Partner", "stage": "Sell work", "focus": "Oversee several projects and start selling your own; move up by bringing in revenue" },
+  { "title": "Partner", "stage": "Own revenue", "focus": "Answer for the revenue of a business area, hold client relationships, and decide who stays and who goes" }
+ ],
+ "ai_tasks": [
+  { "name": "Talking with clients to understand what they actually need", "how": "AI can help with interview outlines, meeting notes and background on the client. But what a client says and what the client needs to solve are often different, and it takes a person in the room to listen, press, read the mood, and confirm it within a relationship of trust." },
+  { "name": "Drafting strategy and operating proposals for clients", "how": "AI can quickly do industry research, competitor comparisons and data analysis, and draft frameworks and presentations. People have to judge which conclusions hold up, set a direction in light of the client's resources and situation, and answer for the final advice." },
+  { "name": "Managing and coordinating consulting projects", "how": "AI can schedule, chase progress, write weekly reports and minutes, and flag risks. People have to balance interests, settle disagreements between the team and the client, and push things through when it counts." }
+ ],
+ "events": {
+  "e_first_page": "One of your slides goes into a client presentation for the first time, not a word changed. No one praises you. You secretly save a copy, naming the file: I made this page.",
+  "e_redeye": "The flight is delayed till midnight and you go straight from the plane to the client's office. At the presentation next day you speak smoothly, except for one paragraph you can't remember writing.",
+  "e_model_err": "A cell reference in your model has slipped a row, and the market size has doubled. The project manager catches it just before the presentation. He doesn't get angry. All he says is: every number, you have to be able to point to where it came from.",
+  "e_review": "It's the half-yearly review, and your comments include the words needs to be more proactive. Two of your cohort have vanished from the corridor. New people soon fill their desks, and nobody in the company chat brings it up.",
+  "e_expert": "At the end of an interview an old factory director says: you young people calculate everything right, you've just never spent a night on the shop floor. You write this inside the cover of your notebook, and on the next project you ask to go to the production line.",
+  "e_bench": "Projects dry up, and for three weeks you have no work. You dress properly each day, go in, open your laptop and read industry reports, pretending to be busy. HR calls this period internal development.",
+  "e_thanks": "At the end-of-project dinner, one of the client's middle managers, a few drinks in, says that these past months he has understood his own company's accounts for the first time. You send this to your mother.",
+  "e_miss": "A close friend is getting married and you've promised to give a speech. At the last minute you're called out to a client emergency. You send a red envelope from the high-speed train. Your friend replies with an emoji, and for a long time after that you don't talk.",
+  "e_body": "The checkup report has grown a few small upward arrows. The doctor asks what time you usually sleep. You think about it and say it depends on the project. He writes one word on the sheet: rest.",
+  "e_ai_research": "The firm's internal AI tool can go through four hundred industry reports in a night, and three weeks of analyst groundwork is done in half a day. Then you make one phone call and find that the market size it gave is off by a definition.",
+  "e_ai_team": "The firm starts cutting analysts on each team from three to one, plus an AI. The new kids are quick. You often wonder when they'll first get a number wrong with their own hands.",
+  "e_house": "You buy an old apartment in Xuhui, fifty-odd square meters, a thirty-year mortgage. On your first weekend with no travel you spend an afternoon sitting in it and find you don't know what kind of tree that is outside the window.",
+  "e_layoff": "Headquarters squeezes the China budget. One Thursday afternoon, several people are called into a small meeting room. At five o'clock a consultant on your team sends a message: thank you for everything these past few years.",
+  "e_child": "Your child says its first word while you are in a meeting room in Zhengzhou, and you see it on video. In that day's discussion you say one more thing that doesn't matter, and fall silent again.",
+  "e_client_call": "A client CEO you've known for ten years phones in the middle of the night. The board wants to replace him. He asks if you can think of anything. You put on a jacket and sit in the living room. This call isn't billed and will not be in any report.",
+  "e_junior": "You hand a slide back to the new analyst and ask what its takeaway is. She gives two sentences. You pause and say: one. Walking out of the meeting room, you think of that man.",
+  "e_alumni": "At the annual alumni party, half the room are senior executives on the client side. A former analyst comes over with a glass and says: now we pay your fees, so you'd better get the numbers right.",
+  "e_parent": "Your father is in the hospital, and you move all your conference calls to a bench in the ward corridor. A nurse goes by, hears you saying synergy, and looks at you a moment longer.",
+  "e_old_deck": "You come across a proposal you made in your twenties. That company's overseas market really did take off, by a route that had nothing whatever to do with what the proposal said. You spend an evening reading it, and tell no one."
+ },
+ "choices": {
+  "c_number": {
+   "title": "An ugly number",
+   "situation": "You've worked out that the client's most prized overseas market is really half the size they think. The project manager says it has to be said next week. But the partner would rather not put it so firmly, since he hopes to sell a second phase.",
+   "options": [
+    { "label": "Put the number on page one", "result": "You insist. The partner deletes a line and keeps the conclusion. The client's vice president looks at it for a long time, then asks who worked it out." },
+    { "label": "Move it to the appendix and mention it aloud", "result": "It goes on page 43 of the appendix. The second phase is signed. No one ever turns to your number again." }
+   ]
+  },
+  "c_mba": {
+   "title": "A firm-sponsored MBA",
+   "situation": "After two years there's one sponsored slot for an MBA overseas, on condition you come back and serve two more years. If you stay, you get in front of clients sooner, and you'd make Consultant on schedule.",
+   "options": [
+    { "label": "Apply to go", "result": "You spend two years on the US East Coast, and for the first time you go through an autumn without a Sunday-night phone call. When you return, your cohort is half a level ahead of you." },
+    { "label": "Stay and go for Consultant", "result": "You take on a manufacturing module and go alone for the first time to see a client's factory director, your palms wet." }
+   ]
+  },
+  "c_ai": {
+   "title": "Wiring AI into the project workflow",
+   "situation": "The firm wants someone to try linking research, interview notes and modeling into one AI workflow. It doesn't count as billable hours. If you do it you may get noticed, or you may just be saving the firm the next batch of analysts.",
+   "options": [
+    { "label": "Take it on", "result": "You build the thing on weekends and half the groundwork runs three times faster. One old project manager says you are tearing down your own stage." },
+    { "label": "Stick with your clients", "result": "You spend your time in clients' offices. Later, when other people's tools produce numbers, you can often see at a glance what's wrong." }
+   ]
+  },
+  "c_inhouse": {
+   "title": "A client asks you over",
+   "situation": "The owner of a new-energy company you've served invites you to run its strategy department. Same money, no travel, and you'd get to see something through from start to finish. Your project manager says that if you leave now, these years will have been wasted.",
+   "options": [
+    { "label": "Stay in consulting", "result": "You politely refuse, and the owner says you're welcome any time. The following week, you're at the gate at Hongqiao again." },
+    { "label": "Agree with the owner to talk again next year", "result": "The owner laughs and says that this time next year, the seat may not be the same seat. You have a meal, and neither of you mentions it again." },
+    { "label": "Go in-house", "result": "You give your badge back at reception. As you walk out of the Nanjing West Road tower, the sky is still light.", "end": "You went in-house, and now you had to carry out the plans you wrote. In the first year you finally understood that behind each recommendation you had ever written for a client stood a crowd of people who did not want to move." }
+   ]
+  },
+  "c_manager": {
+   "title": "The last project before Project Manager",
+   "situation": "The next promotion depends on whether you can carry a project, and the firm gives you one nobody wanted: a long state-enterprise restructuring, with difficult personnel, a client divided against itself, and little glory even if it goes well.",
+   "options": [
+    { "label": "Take it", "result": "You live in that city for nine months, and you learn to tell what gets said in the meeting from what gets said in the corridor." },
+    { "label": "Wait for a better project", "result": "A consumer goods project comes along, easy and smooth, and everyone says it went well. At your review someone asks: has this one ever carried anything hard?" }
+   ]
+  },
+  "c_cut": {
+   "title": "A client who wants a layoff number",
+   "situation": "The client's owner says privately that he brought you in to have outsiders say the number: eight hundred people have to go. Your team's model says five hundred.",
+   "options": [
+    { "label": "Write five hundred", "result": "The owner's face darkens and the final payment comes three months late. Your superior writes in your review: client management could improve." },
+    { "label": "Write eight hundred, with the assumptions", "result": "You spell out the assumptions in detail. The owner reads only the conclusion. Later, passing that city on the high-speed train, you don't look out the window." }
+   ]
+  },
+  "c_home": {
+   "title": "A chance at a year without travel",
+   "situation": "Your child is about to start primary school and your parents are getting older. The firm has a post in internal knowledge management: no travel, thirty percent less pay, and everyone knows that road leads nowhere else.",
+   "options": [
+    { "label": "Transfer for a year", "result": "You do the school run for a whole year, and the parents at the gate all come to know you. When you return to the front line, your clients have changed hands." },
+    { "label": "Push on a few more years", "result": "Two more years and things will be fine, you tell your spouse. You say this twice more in the years that follow." }
+   ]
+  },
+  "c_ap": {
+   "title": "Going for Associate Partner means bringing in business",
+   "situation": "The standard for Associate Partner is written out plainly: have your own clients and bring in revenue. You've got one old client, but his budget is tight this year. You know that if you push just a little, he will buy.",
+   "options": [
+    { "label": "Sell him the project", "result": "The project happens and you put real care into the report. But you both know that he didn't have to spend this money." },
+    { "label": "Advise him to wait a year", "result": "Your numbers look bad that year. The next year, he gives you a bigger project directly, in a phone call of two sentences." }
+   ]
+  },
+  "c_pe": {
+   "title": "A partner's seat at an investment fund",
+   "situation": "An industrial investment fund wants you to lead portfolio management, on base salary plus carry. A friend says you've spent your whole life writing prescriptions for other people's businesses, and it's time you held a position of your own.",
+   "options": [
+    { "label": "Stay", "result": "You say you'll think about it, and in the end you really don't. Nobody rides the Monday flight as expertly as you." },
+    { "label": "Quit and start a small boutique", "result": "You rent a small office and bring along an old colleague. Your first job is at a friend's factory.", "end": "You left the big firm and opened a four-person consultancy, traveling among small factories across Jiangsu. No one asked you anymore what the takeaway on this page was. You still asked yourself." },
+    { "label": "Go to the fund", "result": "You move into another tower in Lujiazui and begin to learn to judge other people's businesses with your own money.", "end": "You joined the fund, and this time the numbers you wrote had your own money behind them. At one investment committee meeting, a young analyst reached page seven and you heard yourself ask: what's the takeaway on this page?" }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "You leave the Nanjing West Road tower for the last time without a suitcase, just a paper bag. There's a small farewell, and most of the younger staff couldn't name a single project of yours. You stand a while at the mouth of the metro. On Monday morning you won't have to go to Hongqiao.",
+  "burnout": "In the middle of a presentation you stop, unable to find the next sentence, and the room goes very quiet. When the medical and counseling notes have piled up, you talk with the firm about leaving the front line for training and internal review. Your phone is quiet at night. On Sunday evenings you still, out of habit, tidy your luggage."
+ },
+ "stages": [
+  "Your work is one slide after another: Excel models, expert calls, turning interview notes into three bullet points. The project manager reads your pages like an exam paper, and clients almost never speak to you. think-cell and the shortcuts are your hands, and you must be able to point to the source of every number.",
+  "You now run a whole module: setting the questions, breaking down the hypotheses, going yourself to see the client's middle managers and factory directors. Sometimes you have an analyst under you, and you take half the revisions on his behalf. It used to be about doing it right. Now you first have to work out what's worth doing, and then explain it to someone who doesn't much want to hear.",
+  "The project is yours now: the workplan, the steering committee every three weeks, the various camps on the client side all pass through you. By day you maneuver in the client's offices, by night you fix the team's slides and prepare the partner's twenty minutes. You have gone from doing things to managing them, and you've begun to answer for other people's mistakes.",
+  "You watch three projects at once, and spend two or three days a week at dinner tables or in owners' offices. You start writing proposals and working out fees, and reading only the first three pages of anyone's deck. Once you only had to do the work well. Now you think about where next quarter's revenue comes from, and which old clients are due a call.",
+  "Your name sits on the revenue sheet, and every year you answer for a number. You meet owners and directors, and often what you discuss isn't a project. At promotion meetings you decide who stays and who goes, and on calls with headquarters you speak for China. You no longer open PowerPoint, but you still ask: what's the takeaway on this page?"
+ ],
+ "work": [
+  "Xiao Qiu on the next team lends you his expert-interview template. You adapt a version, and on your next call you get someone to name a specific gross margin for the first time.",
+  "You make a waterfall chart in think-cell, and the four figures keep summing up 0.1 off. The project manager has you explain the rounding in a footnote. It takes three drafts to get it short enough.",
+  "A young woman in the client's finance team sends you three years of sales data, 120,000 rows. You break it down with pivot tables all night and find one province's figures were entered twice.",
+  "You go to a parts factory in Ningbo and ask a shift leader why a changeover takes forty minutes. He shows you a fixture rack, and you write it up as the first item in the cost-reduction plan.",
+  "The client's sales director says nothing useful in the interview. You ask a different question: how did you lose that big order last year? He lights a cigarette and talks for half an hour.",
+  "Xiao Yang's model won't run. You sit down beside him and have him explain it from the first row. At the third assumption, he stops by himself.",
+  "The night before the steering committee, two of the client's vice presidents each send you messages rejecting the other's plan. You put both on one slide, and rewrite the headline six times.",
+  "You cross out all of the team's Saturday work on the plan, go back to the hotel alone, and revise the twenty pages for tomorrow yourself.",
+  "A consultant tells you he wants to quit. You sit with him in the hotel lobby until one. In the morning, you both go to the client's office together.",
+  "You write a proposal for the head of an old-line automaker and change the fee three times. His assistant phones to say the boss read the first page and would like you to come in next Monday.",
+  "Project manager Chen sends you the final report. You read only the executive summary, and next to point two you write: and then? He understands it has to be redone.",
+  "At the promotion meeting, the group is discussing a project manager. You open his review form and mention something he took a beating for on a state-enterprise job, and the wind in the room shifts a little.",
+  "The call with headquarters runs past midnight in Shanghai. On screen you explain China's revenue forecast, and then lower a figure by three points. Tomorrow you'll have to tell the team."
+ ],
+ "past": [
+  "Your family is in Nantong, Jiangsu, where your parents run a small factory making textile parts. You've been leafing through its account books since you were little. Business, your father always says, is at the mercy of the weather.",
+  "You do well in the gaokao (college entrance exam) and choose finance. Relatives say you'll end up at a bank. You haven't really decided. You just want to get away from the noise of the factory.",
+  "In your third year you go to an alumni talk where a senior in a suit says he flies to three cities a week. You ask whether it's tiring. He smiles and says: that's a good question.",
+  "In your master's year you drill case interviews with classmates. How many cups of coffee can a city sell in a day? You work that out more than two hundred times.",
+  "Five rounds of interviews. The partner in the last one asks why you want to do this. You say you would like to see how a lot of different companies work. HR calls the next day."
+ ],
+ "late": {
+  "pension_note": "Estimate: social insurance contributions are capped, so high earners get a low replacement rate, and you live mainly on years of savings and investments.",
+  "scenes": [
+   "In your first winter without travel you buy yourself an annual park pass. You still wake at six-thirty, staring at the ceiling, thinking of the gate at Hongqiao.",
+   "A young company asks you to advise them one day a month. The owner talks for half an hour. What worries you most about this? you ask. He's quiet for a while.",
+   "You go back to Nantong. Where the old factory stood there is a housing compound. You stand a while at the gate, working out what that land was worth back then.",
+   "In your first three months away from projects, the phone stays in your hand. On Sunday evening you wipe the dust off your suitcase and put it back in the cupboard.",
+   "You start teaching seniors at the community college to use smartphones. Why do you always say things in first, second, third? one old lady asks. You laugh.",
+   "You finally find out that the tree outside your window is a camphor. You sit beneath it for an afternoon, analyzing nothing.",
+   "On your first Monday after leaving, you wake at six and check the calendar, which is empty. You go downstairs for breakfast and eat it slowly.",
+   "You run into your old project manager at an airport, his hair gone white. He asks what you've been up to and you give a longish answer. One, he says. You both laugh.",
+   "Now and then you dig out the I made this page file. The font on that page is long out of date. The numbers still hold.",
+   "Your child asks what exactly you used to do. You think for a long time and say: I helped people think. Your child says: and did you work it out?",
+   "In a drawer you come across a wad of boarding passes: Shanghai to Hefei, to Ningbo, to Zhengzhou, the print all faded. You don't count them. You put them back."
+  ],
+  "closing": {
+   "retire": "On Wukang Road at dusk a layer of plane tree leaves has come down. You walk without hurrying, your phone charging at home.",
+   "burnout": "Afternoon light falls on the windowsill. You make tea, and it goes cold, and you don't look at the time.",
+   "end": "Monday morning, not quite light. You hear someone downstairs dragging a suitcase away, and you turn over."
+  }
+ }
+}

@@ -1,0 +1,189 @@
+{
+  "id": "social-worker-dg",
+  "occupation": "Social Worker",
+  "role": "Assistant Social Worker, Industrial-Zone Agency",
+  "headline": "With a degree in social work, in a service post in one of Dongguan's industrial zones, an assistant social worker who sits with night-shift workers' children over homework and helps their parents make sense of forms",
+  "unit": "A private social work agency in Dongguan (industrial-zone service post)",
+  "unit_type": "Private social service agency",
+  "city": "Dongguan",
+  "city_tier": "New first-tier city",
+  "education": "Bachelor's degree (Social Work)",
+  "level": "Fresh out of college. You can write a case record, but you're still not quite brave enough to knock on the doors of the workers' dorms.",
+  "intro": "The service post is on the ground floor of a dormitory block in the industrial zone, next to the parcel lockers, with work uniforms drying on every floor above. Most of the parents work at electronics and shoe factories in three shifts, and their children have nowhere to go after school. You graduated this year and have come as an assistant social worker. From today, at half past four in the afternoon, the door of this room is yours to open.",
+  "salary_note": "Estimate: social work agencies pay wages from government-purchased service projects. Dongguan is about the national average, somewhat less than people your age get in the factories, with full social insurance.",
+  "facts": [
+    { "label": "Assistant Social Worker (current level)", "value": "0–3 years, ¥4,200–5,800 a month (national average, estimate)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Frontline Social Worker (3–7 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Building trust with families and doing face-to-face casework", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Writing activity logs, records and evaluation reports", "source": "AI exposure" },
+    { "label": "Open positions", "value": "10 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "You arrive at the post and start by opening the system to fill in yesterday's activity log: photos, sign-in sheets, service counts, none can be left out.",
+    "You go along with A-Juan, a senior social worker, on a home visit to the dorms. Before she knocks she checks the shoe rack to see whether this family's father has just come off night shift.",
+    "A ¥12 fast-food lunch at the zone's gate, the street full of people in uniforms, with an hour for lunch break.",
+    "You phone a teacher about a child who keeps missing school. She says the parents' phone doesn't get answered. I'll go tonight, you say.",
+    "The half-past-four class opens. A dozen-odd children pour in with their homework, and you check pinyin while you stop two of them from fighting.",
+    "The last child still hasn't been picked up. His mother sends a voice message that she has to work overtime. You make him a pack of instant noodles and stay to finish the jigsaw puzzle with him.",
+    "Now that workers are off shift, you set up a small table by the door and help a middle-aged woman go through her pay slip, reading it out to her line by line."
+  ],
+  "ladder": [
+    { "title": "Assistant Social Worker", "stage": "Starting out", "focus": "Run activities, keep the logs, go on home visits, study for the social worker's license. You move up by building trust with families." },
+    { "title": "Frontline Social Worker", "stage": "Own caseload", "focus": "Follow cases and groups yourself, work with schools, communities and employers. You move up by doing solid casework." },
+    { "title": "Project Manager", "stage": "Runs a project", "focus": "Manage a service post's projects, budget and team, write bids and prepare for evaluations." },
+    { "title": "Clinical Supervisor", "stage": "Mentors social workers", "focus": "Supervise frontline social workers, guard service quality and ethics, and represent the agency to town governments and foundations." }
+  ],
+  "ai_tasks": [
+    { "name": "Building trust with families and doing face-to-face casework", "how": "Getting a dorm door to open, listening to a couple quarrel, waiting for a child to be willing to speak: all that takes a person sitting there. AI can at most help prepare an outline for the talk." },
+    { "name": "Writing activity logs, records and evaluation reports", "how": "AI can turn activity photos and sign-in sheets into standard logs and draft reports. The social worker only checks the facts and the clients' privacy." },
+    { "name": "Planning activities and group sessions", "how": "AI can quickly produce a plan for an after-school class or a parent-child group. When this zone's parents get off work and what these children like has to be fixed by a person." },
+    { "name": "Looking up policy and helping families with forms", "how": "AI can explain the process and paperwork for school enrollment, health insurance and work-injury claims. Going to the window with someone and working out what they're really missing still takes a person." },
+    { "name": "Project bids and budgets", "how": "AI can write a bid framework and fill in a budget template. Whether the service numbers are true, and whether the project can actually be delivered, is the manager's decision." }
+  ],
+  "events": {
+    "e_open": "The boy who hadn't said a word to you in three months pushed a drawing into your hand and ran off. It showed this room, with the door open and one person standing in it.",
+    "e_move": "The family you'd followed for two years went home to their village when the factory moved away, without saying goodbye. In the case record you wrote: case closed; reason, lost contact.",
+    "e_ledger": "End-of-project evaluation, and hundreds of pages of logs had to be completed one by one. You spent three nights in a row at the post, with the printer too hot to touch.",
+    "e_pay": "Project funds came two months late and your wages followed them. A classmate doing clerical work at the factory next door earns over a thousand a month more than you.",
+    "e_form": "You went through the school enrollment paperwork from start to finish with a mother: seven forms, two windows. The day her child got a place, she brought you a bag of her own pickled long beans.",
+    "e_refer": "A worker named Xiao Chen had hurt his hand on the job and didn't know what to do. You helped him sort out the papers, got in touch with legal aid, and saw each step through, over eight months.",
+    "e_ai_ledger": "The agency began using AI for its logs, and a month of activity records comes out in ten minutes. With the time saved, your supervisor says, go walk around the dorm blocks more.",
+    "e_ai_privacy": "A promotional article generated by AI laid out one child's real situation in full detail. It almost went out. You stopped it, and wrote a set of guidelines for the whole agency.",
+    "e_ai_hotline": "The town launched a smart Q&A service, and workers can look up social insurance and school enrollment on their phones. Fewer people come to ask, and the ones who still do can't say what they want to ask.",
+    "e_child_grow": "A girl from your half-past-four class got into college and sent a picture of her admission letter. She wrote: I want to study social work too. You replied: think it over first.",
+    "e_tired": "You've heard so many people's troubles. One night alone in your rented room you found yourself crying for no reason you could name. The next day you booked a talk with your supervisor.",
+    "e_colleague": "A colleague who started with you passed the exam for a permanent state post back home and left. One more key to the post ended up in your hands. In four years you've seen seven people off.",
+    "e_factory": "The largest shoe factory in the zone moved to Vietnam. Your after-school class lost half its children at a stroke, and a stretch of dorm windows went dark.",
+    "e_morning": "On a weekend you went to Houjie for dim sum and ordered roast goose with rice noodles. A kid at the next table called you teacher. You didn't place him at first. He was already taller than you.",
+    "e_exam": "The results of the social worker exam came out, and you'd passed two of three parts. You put the battered law textbook back on your nightstand.",
+    "e_parents": "Your mother phoned to ask what exactly this job of yours is. You thought for a long time and said: helping people fill in forms. That's good, she said. That's useful.",
+    "e_volunteer": "You got workers to set up a mutual-aid group, led by a woman with over ten years in quality control. Now she knows better than you who in this building needs help.",
+    "e_voice": "Your throat and your neck have started to give you trouble, and you've spaced your home visits out a little. Younger colleagues keep wanting to do a few blocks for you. You still go yourself."
+  },
+  "choices": {
+    "c_exam": {
+      "title": "Sit the social worker's exam?",
+      "situation": "The agency encourages people to qualify as an Assistant Social Work Practitioner, which adds ¥300 a month. But with activities by day and logs at night, all you have left is the time after eleven.",
+      "options": [
+        { "label": "Study at night", "result": "You memorized regulations at the little tables in the after-school room, and the children asked what homework you were doing. The next year your certificate came in the mail." },
+        { "label": "Settle into the job first", "result": "You spent your evenings walking the dorm blocks instead. You got to know more people, and left the certificate for next year." }
+      ]
+    },
+    "c_door": {
+      "title": "Do you knock on this door?",
+      "situation": "Something about one child doesn't feel right to you, and the parents keep saying it's nothing. Pressing could scare this family away, and not asking leaves you uneasy. Your supervisor says this one you have to judge first.",
+      "options": [
+        { "label": "Report it and follow procedure", "result": "You reported to the agency and the school, and the procedure ran its course. The parent didn't speak to you for a long time, and the child still came at half past four every day." },
+        { "label": "Spend a few more weeks with them", "result": "You went a few more times and sorted vegetables with the mother. In the end she brought it up herself. It was less serious than you had feared, and harder to explain." }
+      ]
+    },
+    "c_line": {
+      "title": "Moving up to Frontline Social Worker: your own cases",
+      "situation": "The agency wants to make you a Frontline Social Worker, following cases alone, with the outcome of each counted against you from now on. A few hundred yuan more in pay and twice the work.",
+      "options": [
+        { "label": "Take it", "result": "For the first time you signed your own name on a case-closing evaluation, and looked at it several times." },
+        { "label": "One more year shadowing", "result": "You told A-Juan: bring me along one more year. That year, you learned when not to speak." }
+      ]
+    },
+    "c_hr": {
+      "title": "A factory wants you for employee relations",
+      "situation": "An electronics factory you work with often needs someone in employee relations, and they think you understand workers. Half again the pay, with a year-end bonus. Only, over there, you'd be sitting on the other side of the table.",
+      "options": [
+        { "label": "Stay at the agency", "result": "You thanked the factory's HR manager. At half past four that day you opened the door as usual, and the children poured in as usual." },
+        { "label": "Go to the factory", "result": "You put on a uniform with the factory's name on it, and your first task was to rewrite the dorm repair procedure.", "end": "You worked in employee relations at the factory for many years. Sometimes after a meeting you still walk around to the foot of the dorm block, to see how many slippers are on the rack today." }
+      ]
+    },
+    "c_pm": {
+      "title": "Apply for Project Manager",
+      "situation": "The next round of projects goes out to bid, and the agency wants you to apply for Project Manager. That means budgets, bids, evaluations and staff turnover all fall to you, and more time away from this room.",
+      "options": [
+        { "label": "Apply for Project Manager", "result": "You wrote your first bid, one hundred and twenty pages, and went over every service indicator with A-Juan to see whether it was true." },
+        { "label": "Stay on the front line", "result": "You still open the door at half past four every day. The new manager is four years younger than you and in meetings keeps asking you about this family or that one." }
+      ]
+    },
+    "c_ai": {
+      "title": "Should the agency roll out AI follow-up calls?",
+      "situation": "A foundation is willing to pay for AI phone follow-ups, reaching hundreds of families a week, and the evaluation numbers would look very good. But you know some things workers will only say to someone they know.",
+      "options": [
+        { "label": "Lead it and set boundaries", "result": "You set the rule: AI asks only about facts, and anything concerning children or family situations must get a call back from a social worker. The foundation agreed." },
+        { "label": "Keep going in person", "result": "Your follow-up count is half that of other agencies. The evaluation score didn't go up, but the people in the dorm blocks still say hello when they see you." }
+      ]
+    },
+    "c_home": {
+      "title": "Your parents back home need looking after",
+      "situation": "Your father hasn't recovered well from his stroke. The civil affairs bureau back in your home county has a post, with lower pay and close to family. Here in Dongguan, the project you lead has only just taken off.",
+      "options": [
+        { "label": "Stay, and bring your parents here", "result": "You rented a slightly larger place in Chang'an, and your father sits on the balcony watching the workers come off shift. All these people, he asks, you're in charge of them?" },
+        { "label": "Go home", "result": "You handed the keys to your youngest colleague and told her to open up ten minutes before half past four.", "end": "Back home you still fill in forms and make visits. The old people left behind at the village gate all know you. Many of those children's parents are working in the place you came from." }
+      ]
+    },
+    "c_bid": {
+      "title": "The project lost the bid",
+      "situation": "The post you've run for eight years didn't win this round, and a new agency bid lower. The team will be disbanded, but the families you serve are still there. You could move to the new agency, or go with your old colleagues and bid in another town.",
+      "options": [
+        { "label": "Move towns with the old team", "result": "You got to know a new set of dorm blocks from scratch. The first afternoon at half past four, only three children came to the door." },
+        { "label": "Stay and hand over to the new agency", "result": "You handed over eight years of case files as the rules require, then walked the buildings with them. The children said: you've changed clothes." }
+      ]
+    },
+    "c_sup": {
+      "title": "Becoming a Clinical Supervisor",
+      "situation": "The agency wants you as a supervisor. It means an intermediate exam, racking up supervision hours, and letting younger colleagues pick apart your cases. There are few places and not much money.",
+      "options": [
+        { "label": "Take the exam and lead others", "result": "For the first time you sat in the supervisor's seat, listening to a new social worker tell how she couldn't get a door to open. First, you said, tell me about the shoes." },
+        { "label": "Keep opening this door", "result": "At your age, you said, you're better off at the door. The children have turned over many times, and you can still call them by name." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On the last afternoon you opened the door ten minutes early and the children poured in with their homework, none of them knowing anything was different. That night you closed the last logbook and left the keys on the table. Walking out of the industrial zone, you met people coming home off shift. Someone called out to you, and you turned and waved.",
+    "burnout": "That year the doctor told you it was time to rest, your neck and your heart alike. You wrote a page of handover for every open case, telling whoever took it what hours this family was home. After that you seldom went to the zone. On the street, when you see someone in a uniform leading a child, you still look a little longer at the shoes."
+  },
+  "stages": [
+    "You open up, take attendance, run the half-past-four class, go along to the dorm blocks in the afternoon, and come back to enter sign-in sheets and photos into the log system. You are learning to write case records, learning to change I feel to the client says. Most people who come to you ask first: do you charge? You say no, and that worries them more.",
+    "You carry a dozen-odd cases, each with its own assessment form, service plan and follow-up records. You meet with teachers and workshop supervisors and go to the human resources office windows with workers. Unlike your assistant days, your supervisor no longer decides for you. You have to sign the closing form and think through for yourself why you did what you did.",
+    "You manage a post's budget, schedules and four or five social workers, and spend most of your time writing bids, checking financial statements and preparing for mid-term evaluations by the town and third parties. You have to keep people too, and a few times a year you sit down for a resignation talk. The half-past-four door you can only open once or twice a week now.",
+    "Each week you supervise frontline social workers, listening to where their cases are stuck, helping them see their own feelings and boundaries, and reviewing reports for ethical problems. You represent the agency with foundations, towns and universities, a supervision notebook in hand. You no longer solve things for them. You only ask: and what do you think?"
+  ],
+  "work": [
+    "Xiao Yu in the after-school class never does his homework. You find out he can't read the words in the questions, so you read the math aloud, and he gets all of it at once. You write this down on an observation sheet.",
+    "You go with A-Juan on a home visit to a night-shift family and sit on a folding stool with the consent form in your hand, and after a long wait finally say: there's no hurry to sign this.",
+    "Summer day-care registration is opening. You make an online form on your phone and find the parents can't fill it in, so you set up a table and read it out to them one at a time.",
+    "Old Luo, a delivery rider, is one document short for his daughter's enrollment. With the checklist in hand you go with him to two windows, and at the second one you help him get the words out clearly.",
+    "You run a fathers' group, six night-shift workers talking about their children over a box of building blocks. By the fourth session, some have started bringing their children.",
+    "A workshop supervisor won't let his workers take time off for parent-teacher meetings. You take him a shift schedule and suggest moving a rotation. He says what a nuisance, and the following week changes it.",
+    "A third-party evaluation team checks the logs and pulls three case files. You've gone over them beforehand and corrected two inflated service counts back to the truth. The score is a bit lower and your mind is easier.",
+    "Xiao Su, a new social worker, comes to say she has to quit because her wages can't cover rent. You bring out the budget, work at it for a long time, and get her an extra ¥300 a month as a transport allowance.",
+    "Five drafts into a bid, in the service indicator column you write: home visit rate, dorm blocks. Can that be billed, asks the woman in finance. Yes, you say, just not for much.",
+    "In her supervision hour Xiao Su talks about a parent who keeps missing appointments. You draw a line in your notebook and ask: is he hiding, or are you afraid?",
+    "A foundation's program officer comes to visit and wants attractive case stories. You strike every detail by which a child might be recognized and only then hand the draft over.",
+    "You give a first lesson to social work interns from a university, with no slides, only an old sign-in sheet. You have them guess where the dozen-odd children on it ended up."
+  ],
+  "past": [
+    "Your parents worked at a shoe factory in Dongguan while you stayed in your home village in Hunan with your grandmother, and every summer you took an overnight train to see them.",
+    "You did your homework in a tiny room in the industrial zone. Your parents came back from night shift, glanced at it and went to sleep. That summer a college student came next door to teach the children to draw.",
+    "Your gaokao (college entrance exam) application was reassigned to social work, which you assumed meant being a neighborhood official. Your father asked if that would get you into a factory.",
+    "You interned at a special education school, and when you finished your first case record your teacher wrote on it: all of this is about you. What about him?",
+    "In graduation season, classmates went into real estate and tutoring. You went back to Dongguan and applied to a social work agency, at a salary even lower than you'd thought."
+  ],
+  "late": {
+    "pension_note": "Estimate: the agency pays full social insurance on Dongguan's base. Wages are modest but the years are long, so the pension is about half of final pay.",
+    "scenes": [
+      "The first month after you retire, at half past four in the afternoon you still glance at your watch, then go back to sorting vegetables.",
+      "A child from the old industrial zone comes to see you, with a child of their own, and opens with: teacher, did that jigsaw ever get finished?",
+      "You volunteer at the neighborhood activity room. A young social worker very gravely asks you to sign the sign-in sheet, and you sign.",
+      "You lie at home with your phone on silent. For the first few months you often dream of knocking on a door that won't open.",
+      "The neighbors downstairs are quarreling. You don't go down. Only the next day in the elevator you ask: had your dinner?",
+      "You get a hand-drawn card signed by a child you need a long time to remember. On it is a room with the door open.",
+      "After leaving the agency your phone still holds several hundred workers' numbers. You can't bring yourself to delete them, and you don't call them either.",
+      "You pass an industrial zone and see After-School Class on a sign by a door, and children's racket comes through the crack.",
+      "Someone posts online that when he was small, a teacher in the industrial zone sat with him over his homework. You read it several times, leave no comment and tap the like button.",
+      "Workers can now get social insurance and school enrollment straight from their phones, but at every service post there's still someone standing at the door, not knowing where to begin.",
+      "Your granddaughter can't do her homework. You don't tell her the answer. You pull up a chair beside her and ask: read it to me first."
+    ],
+    "closing": {
+      "retire": "One afternoon many years later you doze off in the yard and wake just at half past four. You look at your watch. A child runs past outside the gate, you smile a little, and close your eyes again.",
+      "burnout": "Many years later you sort through that box of old sign-in sheets, the writing all faded. You don't throw them away. You put them at the very back of the cupboard.",
+      "end": "Many years later the door of a room in an industrial zone is still open, its handle worn bright. A child with homework runs in and bangs it against the wall."
+    }
+  }
+}

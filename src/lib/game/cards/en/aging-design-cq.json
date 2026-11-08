@@ -1,0 +1,158 @@
+{
+ "id": "aging-design-cq",
+ "occupation": "Aging-in-Place Designer",
+ "role": "Aging-in-Place Assessor, Old Neighborhoods",
+ "headline": "An environmental design graduate staying on in Chongqing, climbing seven floors with a laser measure to size up old people's bathroom thresholds, one home at a time",
+ "unit": "A Chongqing design firm doing home retrofits in old neighborhoods",
+ "unit_type": "Small design firm",
+ "city": "Chongqing",
+ "city_tier": "New first-tier city",
+ "education": "Bachelor's in environmental design",
+ "level": "Fluent in CAD and SketchUp, and you've read the accessibility code. Where an old person's hand goes first when they stand up, you've never really looked.",
+ "intro": "The firm has taken on a subdistrict's home-retrofit program. The first household on the list is at the end of a stone stairway; you climb more than two hundred steps to find the door number. The old woman who opens up pulls you into her kitchen and pours you water. Sit, child, she says, the threshold can wait. From today, how high a handrail goes in someone else's home is yours to measure.",
+ "salary_note": "Estimate: pay at a small Chongqing design firm is about seventy-five percent of the national average. Government projects pay slowly, and private jobs carry commission.",
+ "facts": [
+  { "label": "Interior Design Assistant / Aging-in-Place Assessor (current level)", "value": "0-2 years, ¥5,950–8,750 a month (national average, derived from pay by experience)", "source": "Pay by experience" },
+  { "label": "Next level up", "value": "Aging-in-Place Designer (1-4 years)", "source": "Career map" },
+  { "label": "Pay after 10+ years", "value": "¥15,600 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Briefing the builders and walking the site mid-job", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Completing a home assessment", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the database leans toward campus and intern roles)", "source": "Job listings" }
+ ],
+ "day": [
+  "Two liang of Chongqing noodles with a fried egg at the stall. Fog has covered the hill and the towers across the way, and the light rail comes straight out of a building.",
+  "At the neighborhood committee you collect today's list. The grid worker reads off each home: this one lives alone, that one's son is in Guangdong, this granny doesn't hear well.",
+  "Up to the seventh floor of an old building with no elevator. You catch your breath at the door and pull on shoe covers. The laser measure in your hand is still warm.",
+  "You ask the old man to get out of bed and walk to the toilet and follow behind watching. His hand goes first to his knee, then the doorframe, and at the bathroom door his leg lifts a beat slow.",
+  "The bathroom is less than ninety centimeters wide, with a squat toilet and a twelve-centimeter threshold. You measure and sketch it in your notebook. The granny says from the doorway not to touch her pickle crocks.",
+  "Back at the office you enter photos and dimensions into CAD, draw the floor plan and mark two options for the handrail. The designer looks and asks if the old man can reach that high.",
+  "On the phone with the foreman you confirm the anti-slip tile. He says trucks can't get up that lane and the material will have to be carried in on people's backs.",
+  "In your rented room you finish today's assessment forms. A video arrives on WeChat from somebody's grown child, asking if the bathroom can be made a bit nicer looking."
+ ],
+ "ladder": [
+  { "title": "Interior Design Assistant / Aging-in-Place Assessor", "stage": "Entry", "focus": "Goes along on home assessments, draws and organizes requirements" },
+  { "title": "Aging-in-Place Designer", "stage": "Junior", "focus": "Does assessments, individualized retrofit plans and budgets independently" },
+  { "title": "Aging-in-Place Designer (Project Lead)", "stage": "Mid-level", "focus": "Follows construction through to completion and takes on public spaces" },
+  { "title": "Aging-in-Place Design Director / Lead Designer", "stage": "Senior", "focus": "Leads a team, deals with government programs and elder-care institutions" },
+  { "title": "Founder, Aging-in-Place Design Studio", "stage": "Veteran", "focus": "Builds a design method and a name of one's own" }
+ ],
+ "ai_tasks": [
+  { "name": "Completing a home assessment", "how": "AI can generate checklists, turn recordings and photos into records and spot steps and wet areas in pictures. Watching how an old person walks and stands, what their habits and worries are, and the risks they don't say out loud takes a person." },
+  { "name": "Writing an individualized retrofit plan", "how": "AI drafts plans from assessment records, renders images, lists materials and estimates a budget. The designer weighs the person's body, the family's wishes and the money, confirms it truly suits this household and takes responsibility for it." },
+  { "name": "Designing bathroom anti-slip and fall prevention", "how": "AI offers standard practice for anti-slip floors, handrail positions and shower seats, and sketches layouts. The designer measures on site, watches the actual turning, sitting and washing, deals with pipes, waterproofing and an old building's limits, and signs off on safety." },
+  { "name": "Briefing the builders and walking the site mid-job", "how": "AI can generate briefing checklists, organize inspection records and flag milestones. The real briefing is done facing the workers, and inspection means looking at the quality, correcting and arranging rework, and testing by hand whether a rail is firm and a ramp is right." },
+  { "name": "Handing over and teaching old people to use it", "how": "AI can produce acceptance forms and instructions in large print or audio. On site you try everything yourself, have them practice again and again, watch whether they truly can and will use it, and win over the old person and family." },
+  { "name": "Taking government retrofit projects and working through many homes", "how": "AI can sort lists, plan routes, batch-generate assessment forms and plan templates, and collect progress reports. People have to coordinate with civil affairs, the subdistrict, residents and builders, handle each home's special case and answer for quality and compliance." },
+  { "name": "Retrofitting public spaces in community elder care centers", "how": "AI can produce layouts, circulation analyses and renderings and summarize the accessibility code. The designer has to see how people actually move, listen to staff and old people, balance budget, fire rules and construction limits, then decide and answer for it." },
+  { "name": "Emergency small retrofits after a fall", "how": "AI can list common hazards and emergency changes and find products. Within three days someone must judge the most dangerous spot, install rails, remove thresholds and move furniture on site, take the discharge condition and the family's anxiety into account, and decide fast. A person has to be there." }
+ ],
+ "events": {
+  "e_first_house": "You complete your first home assessment alone. Back at the office the designer changes two things and tells you the little step by the door was well noted.",
+  "e_summer": "Chongqing summer, forty degrees, no air in the stairwell. You climb five homes in a day and your calves ache too much to sleep.",
+  "e_refuse": "The old man refuses to give up his squat toilet and says he can't go sitting down. There's no reasoning with him about it. In the end you add a fold-up rail and let him choose.",
+  "e_kids": "The old man's son lives elsewhere and on video keeps asking for this and that. He finally says he's paying, so the old man's opinion doesn't count. You send over the drawings and copy the old man.",
+  "e_back_visit": "On a return visit the granny takes your arm and says that night when she got up, the moment her hand touched the rail she knew you had put it there.",
+  "e_payment": "The final payment on a government project drags for most of a year, pay starts arriving a few days late, and the boss posts an apologetic emoji in the group chat.",
+  "e_bangbang": "The material truck can't reach the lane. You and the workers carry the anti-slip tile up by hand, and a passing old man asks whose toilet's getting fixed this time.",
+  "e_fall_call": "An old person just out of the hospital needs the home changed in three days. You draw all night and the workers arrive next morning. When the rails are in, you let out a breath.",
+  "e_neighbor": "Two elderly households in the same building start comparing whose handrail looks better, and later everyone on the stairwell comes to find you.",
+  "e_ai_plan": "AI can mark handrails and anti-slip mats from photos and drawings come much faster. You move one position it chose: the old lady is left-handed.",
+  "e_ai_form": "AI does the batch project assessment forms in half an hour. You visit three more homes, and listen to three more people.",
+  "e_knee": "After so many years of stone steps, your own knees begin to creak. On site you try the handrail you always recommend and find it really works.",
+  "e_elevator": "Retrofitting an elevator into an old building needs every household's signature. The second floor refuses, the seventh begs you to talk to them. You sit in the doorway three nights and end up one household short.",
+  "e_passed": "On a return visit you find the name by the door has changed. A neighbor says the old person is gone and had lived well there until the end. You sit on the step a while.",
+  "e_apprentice": "A new assistant finishes measuring and wants to leave. You have her sit five minutes talking with the granny first, then come out and say what needs to change.",
+  "e_center": "The community elder care center reopens after the retrofit, and old people gather around the new low table to play cards. Someone asks who thought of the table. You say nothing, standing to one side.",
+  "e_my_parents": "On a trip home you find yourself measuring your parents' bathroom. Your father looks at you and says he isn't that old yet. You don't put the tape away.",
+  "e_policy_end": "The subdistrict's subsidy program isn't renewed this year. With no orders coming in, the firm takes on small guesthouse and home decoration jobs to get by."
+ },
+ "choices": {
+  "c_cert": { "title": "The aging-in-place retrofit training certificate", "situation": "The training is two weeks of class in Chengdu, a few thousand yuan out of your own pocket. With it you can take on government project assessments. The boss says go if you want, half pay while you're away.", "options": [
+   { "label": "Go", "result": "In class you learn the elderly functional assessment form. Back at your first home, the form in your hand is finally not a blank to you." },
+   { "label": "Keep following the homes", "result": "You stay and walk dozens more homes. You can now draw with your eyes shut how an old person stands up." }
+  ] },
+  "c_designer": { "title": "Becoming a full Aging-in-Place Designer", "situation": "The boss asks if you want to do your own plans: individualized designs, budgets, talking with families. If it's wrong, you'll be the one standing at the door on the return visit.", "options": [
+   { "label": "Yes", "result": "In your first plan you move where the kettle goes. The granny laughs a long while and asks how you knew." },
+   { "label": "One more year following", "result": "You tell the boss you'd like to learn more, and spend one more year listening to old people." }
+  ] },
+  "c_home": { "title": "A home decoration firm wants you", "situation": "A classmate's home decoration company needs a designer, forty percent more pay, clients are young couples buying new apartments, elevators straight up. You think about the seven floors you climb each day.", "options": [
+   { "label": "Go do home decoration", "result": "You take the laser measure and leave the stair-climbing shoes.", "end": "You go back to home decoration, designing kitchen islands and TV walls for young people. Sometimes when you see a threshold in a plan, you delete it without telling anyone." },
+   { "label": "Stay", "result": "You tell your classmate to wait a bit. The next day's list has another long stone stairway on it." },
+   { "label": "Take private jobs for them on weekends", "result": "You earn a little more, and find weekends cost more than you thought." }
+  ] },
+  "c_lead": { "title": "Applying for Aging-in-Place Designer (Project Lead)", "situation": "A batch of a hundred subdistrict homes needs someone to see it through: construction, acceptance, payment, dealing with foremen, civil affairs and neighborhood committees.", "options": [
+   { "label": "Take it on", "result": "The day the hundred homes are finished, your phone holds over a hundred old people's numbers." },
+   { "label": "Keep writing plans", "result": "You say you'd rather sit across from old people. The project goes to someone else, and you still get called in to rescue it." }
+  ] },
+  "c_city": { "title": "A big firm in Chengdu, or stay in the mountain city", "situation": "An elder care company in Chengdu wants a designer who understands old people. Better pay, standardized products. Stay, and it's one home, one climb, at a time.", "options": [
+   { "label": "Stay in Chongqing", "result": "You keep running up and down the slopes. The grannies remember you and so does the subdistrict." },
+   { "label": "Go to Chengdu, do product lines", "result": "The handrail you design goes on to hundreds of projects, but you never see anyone using it." }
+  ] },
+  "c_ai": { "title": "Using AI for plans in batches", "situation": "The firm wants AI to turn assessment recordings and photos directly into plans and budgets, a week's work to match a month's. But an old person's words may not all be recorded.", "options": [
+   { "label": "Build the process and check it yourself", "result": "You write a checklist of prompts for the AI. The first item is: ask how many times they get up at night." },
+   { "label": "Keep handwriting the first draft", "result": "It's slower, but there's always something an old person said that only you heard." }
+  ] },
+  "c_assess": { "title": "Going over to elderly functional assessment", "situation": "Hospital rehab departments and assessment centers are hiring experienced people. Elderly functional assessment is a new path, stable, no construction sites, and no more dealing with money.", "options": [
+   { "label": "Move over", "result": "You hand your site helmet back to the firm and put on a vest that resembles a lab coat.", "end": "You become an elderly functional assessor, your forms still asking how they stand up. You no longer measure thresholds, though you always glance down at them." },
+   { "label": "Keep designing", "result": "You say there are a few return visits still to do, and somehow there always are." }
+  ] },
+  "c_director": { "title": "Applying for Aging-in-Place Design Director", "situation": "The firm wants to extend the Chongqing approach to the surrounding districts and needs someone to run a team and deal with government and elder care institutions. The stair-climbing would go to younger people.", "options": [
+   { "label": "Apply", "result": "You start sitting in meeting rooms talking about individualized plans, and halfway through you think of a certain granny's pickle crocks." },
+   { "label": "Keep visiting homes", "result": "You say your legs are still fine. Let someone who wants the team have the team." }
+  ] }
+ },
+ "endings": {
+  "retire": "You hand your laser measure, used for decades, to your apprentice, and ask her to look again at the few homes on that stone stairway. On the day you retire you climb the old building you always went to. On the way down your hand rests on a rail you once put there. The height is just right.",
+  "burnout": "Your legs can't take the climb anymore. The firm finds you drawing work in the back office, and then you stop going there too. Your own bathroom was changed long ago, the threshold gone. Afternoons you sit by the window and watch old people across the way walk slowly past."
+ },
+ "stages": [
+  "Your work is going into homes: following the designer with assessment form and laser measure, taking threshold heights, the clear width of the bathroom, the number of steps from bed to toilet, taking photos and sketching in your notebook, then drawing plans in CAD back at the office. Old people and families talk to the designer, and you take it down beside them. What you learn at this level is how people walk, not only how to measure rooms.",
+  "You begin writing individualized plans alone, with low, middle and high budgets, and pull models up in SketchUp for grown children to see. With old people you talk slowly, with their children clearly, and when the foreman asks which wall the rail goes on you have to answer on the spot. Once it was getting numbers right. Now you decide what to change and what to leave alone.",
+  "What comes after the plan is yours too: briefing the foreman, following progress, acceptance, payment, tracking dozens of homes at once. You deal with civil affairs, subdistrict and neighborhood committee staff, and begin taking on public spaces at community centers. You've gained a Gantt chart and a stack of acceptance forms, and lost time alone with old people.",
+  "You lead a small team on government procurement and elder care institution projects, your desk covered in bid documents, staffing charts and quality sheets. When you review your people's plans you read the old person's page first and the budget second. More meetings, less climbing, and every month you still pick the hardest home and go yourself.",
+  "The studio bears your name. You have to set down these years of practice as a method of your own, train apprentices, and think about rent and payments every month. Visitors want to hear individualized-plan stories, and what you tell them is always the path some old person walks at night. Whether to take a project is now yours alone to say."
+ ],
+ "work": [
+  "You measure the bathroom with the laser, and the number keeps getting blocked by the mop behind the door. Granny Li moves the mop and asks if you're married yet.",
+  "Designer Old Chen has you collect twenty homes' threshold heights into one sheet. Three numbers have been copied wrong, and you climb back to measure them again.",
+  "For the first time you draw an L-shaped rail beside a toilet in CAD. Old Chen shifts it five centimeters with a red line and says the old man's arm is shorter than yours.",
+  "In your plan for Grandpa Huang you turn the bedside cabinet around, so when he gets up his hand comes right onto it. The budget rises by only sixty yuan.",
+  "Granny Zhang's daughter wants anti-slip tile throughout. With the budget sheet in hand you talk her into doing only the bathroom and kitchen, and the savings buy a good shower chair.",
+  "Foreman Old Tan says this brick wall won't take expansion bolts. You go to the site, tap it, switch to the adjacent load-bearing wall and resend the plan that night.",
+  "On the acceptance form, the rail in home thirty-seven has a wobble. You tell worker Old Liu to redo it. He says it's only a little. You put your hand on it and have him feel it too.",
+  "The community center bathroom needs changing, and the grid worker and property manager disagree. You call both to the site and chalk a wheelchair's turning circle on the floor.",
+  "The Gantt chart shows a hundred homes stuck at sixty. You call the owner of the building supply store and get the anti-slip tile delivered three days sooner.",
+  "The technical part of a tender needs twenty pages. You have assistant Xiao Wu draft it, and you cross out every 'human-centered' in red and ask her to write something specific.",
+  "The director of a nursing home wants the corridors painted pink. You walk an old resident along the corridor with her, and at the end she herself proposes a darker handrail color.",
+  "The first lesson you give a new apprentice isn't drafting. You have her put on simulation gloves and reading glasses and go through a whole day of tasks at home.",
+  "A developer asks you to lend your name to a project for good money. You look at the drawings, circle the stairs between the parking and the entrance, and send them back."
+ ],
+ "past": [
+  "You grew up in Chongqing's old city. Your grandmother lived on the sixth floor of a building with no elevator and rested twice going down for groceries. As a child you thought she went slowly to look at the neighbors.",
+  "On your gaokao (college entrance exam) form you put environmental design, because you liked to draw but weren't good enough for art school. Relatives asked what it was and you couldn't say, only that it's about the insides of houses.",
+  "Your grandmother slipped in the bathroom and spent a month in the hospital, and only then did the family notice the threshold was more than ten centimeters high. As you measured it, your uncle asked what was the point.",
+  "In your third-year internship at a home decoration firm you spent your days fitting kitchen islands into young people's homes. You tried once to remove a threshold in a drawing and your supervisor changed it back.",
+  "At graduation you saw a small firm hiring an assistant in aging-in-place design, at lower pay than home decoration. You thought about your grandmother's threshold and sent your resume."
+ ],
+ "late": {
+  "pension_note": "Estimate: a small design firm pays social insurance at a low local base, so the pension runs a bit over forty percent of final pay.",
+  "scenes": [
+   "Walking around your compound you want to measure every threshold you see. Your partner drags you away.",
+   "You redo your own bathroom once more, this time for yourself. You measure the rail height three times.",
+   "Handrails have gone up along both sides of the stone stairway, one stretch of them your old suggestion. You hold on and go slowly up, more slowly than the grannies did back then.",
+   "Your legs need physical therapy. The nurse asks how much you usually walk. You laugh and say that's hard to answer.",
+   "A former colleague calls about a bathroom that's hard to change. You have her send a photo, look a long while and say the rail goes on the left.",
+   "You're sitting watching television when the news turns to home retrofits, and you tell the screen that height is wrong.",
+   "The new job has no climbing, but you still glance at your shoe soles before going out.",
+   "Your grandmother's building has been torn down. Passing the site you stand by the road and think of that threshold, more than ten centimeters high.",
+   "The child of someone you once worked for finds you online and says the chair is still in use.",
+   "The neighborhood has opened more canteens for the elderly. Walking past, you look in. The table heights are all right.",
+   "On a foggy morning you take a few stone steps with your cane and stop to watch the light rail pass through the building across the way."
+  ],
+  "closing": {
+   "retire": "Your hand on the rail, you stand on the slope. Fog rises slowly from the river side, and someone below is calling a child home to eat.",
+   "burnout": "The banyan outside has dropped its leaves all over the ground. You bring a stool and sit, hands on your knees.",
+   "end": "Passing along an old street you see an open door, its threshold smoothed by someone with cement into a small ramp. You smile and walk on."
+  }
+ }
+}

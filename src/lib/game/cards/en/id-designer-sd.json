@@ -1,0 +1,180 @@
+{
+  "id": "id-designer-sd",
+  "occupation": "Industrial Designer",
+  "role": "Small-Appliance Industrial Designer",
+  "headline": "At a small factory in Shunde that makes rice cookers and health kettles, an industrial designer who draws the outside of things and haggles with the toolmakers over what it costs",
+  "unit": "A small-appliance factory in Shunde, Foshan",
+  "unit_type": "Private small-appliance manufacturer",
+  "city": "Shunde, Foshan",
+  "city_tier": "Second-tier city",
+  "education": "Bachelor's degree (Industrial Design)",
+  "level": "You can bring your own exterior designs to a finish and have fallen into a tooling trap or two, but you can't yet talk the boss around.",
+  "intro": "The factory is in an industrial zone between Beijiao and Ronggui: injection molding on the first floor, assembly on the second, and the design department in a west-facing corner of the third, where the afternoon sun bleaches the monitors. You've been an assistant here for two years, and this year a product is yours. From today, every line you draw, the toolmaker is going to tell you what it costs.",
+  "salary_note": "Estimate: pay at Shunde appliance factories runs slightly under the national design average, with a year-end bonus if something sells big. Lower than design firms in first-tier cities, but so is the housing.",
+  "facts": [
+    { "label": "Industrial Designer (current level)", "value": "2–5 years, ¥7,000–12,000 a month (national average, estimate)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Senior Designer (5–10 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Building prototypes and judging whether a design can work", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Researching target markets and user needs", "source": "AI exposure" },
+    { "label": "Open positions", "value": "64 related listings nationwide, 1 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "You clock in, go up to the third floor and make gongfu tea first. To the three rice cooker exteriors you sent last night, the boss has replied with one line: a bit rounder.",
+    "You rework the lid surface in Rhino, render one in matte white in KeyShot and one in brushed stainless steel, and put them side by side.",
+    "Lao Tan, the structural engineer, comes over and points at the screen. That fillet won't release from the mold. Either add draft or add another slide.",
+    "A plate of roast goose rice at the factory gate. The next table is arguing about which air fryer blew up this year, and you take out your phone to look.",
+    "Down in the injection workshop for a mold trial. The parting line on the first shot is too visible. The toolmaker rubs at it with an oilstone and says changing the mold will take three days.",
+    "The prototype is back. You set it on a counter the height of a stove and mimic a hand lifting the pot. The handle still digs in a little.",
+    "The export department wants a rendering with a European plug for a client tomorrow. You change the plug, change the date, and stay another half hour."
+  ],
+  "ladder": [
+    { "title": "Design Assistant", "stage": "Starting out", "focus": "Draw line art, build models, fix renderings, and follow along to prototype reviews and mold trials." },
+    { "title": "Industrial Designer", "stage": "Own products", "focus": "Take sole charge of one product's exterior and CMF, work with structure and tooling. You move up by getting things into mass production." },
+    { "title": "Senior Designer", "stage": "Leads a project", "focus": "Lead a product series, set its direction, argue for designs with the boss and the sales team. You move up on bestsellers and cost control." },
+    { "title": "Design Manager", "stage": "Runs the team", "focus": "Manage the department's people and schedule, set the brand's product language, deal with the supply chain and export clients, and answer for the year's new products." }
+  ],
+  "ai_tasks": [
+    { "name": "Researching target markets and user needs", "how": "AI can quickly pull together market reports, competitor information and online reviews into preliminary conclusions. Going into the places where people use the product, seeing the needs they don't say out loud, still takes the designer, who also has to judge which conclusions to trust." },
+    { "name": "Drawing up product design proposals", "how": "AI can draft a planning framework and list and compare options. The designer settles the product's positioning and trade-offs, weighing the company's resources and risks." },
+    { "name": "Drawing product sketches and concepts", "how": "AI can generate sketches and style directions in bulk from a text description, greatly speeding up the divergent phase. The designer picks the direction, draws original line work with an idea behind it, and pulls scattered ideas into one logical design." },
+    { "name": "Building 3D models and rendering", "how": "AI can already produce rough 3D forms, apply materials automatically and render images, and routine renderings can basically be left to it. The designer spot-checks structure, proportion and detail against the intent, and complex surfaces are still finished by hand." },
+    { "name": "Building prototypes and judging whether a design can work", "how": "A prototype has to be made by hand and held: the feel of it, the fit, how the materials behave, the real problems. AI is little help. The designer personally judges feasibility and decides how to change it." },
+    { "name": "Working with engineering and production teams", "how": "Dealing with engineers and factories means negotiation, compromise and mutual trust, and often going on site to see the process and talk costs. AI can only help with meeting notes and documents. The key conversations still take people." },
+    { "name": "Tracking schedules and managing the design process", "how": "AI tools can schedule automatically, track milestones, warn of delays and produce progress reports. The designer steps in only when resources collide or the direction changes." },
+    { "name": "Monitoring design quality and gathering user feedback", "how": "AI can gather user feedback, sort the problems and count the most common complaints. The designer judges which are design flaws, decides how to improve them, and answers for product quality." }
+  ],
+  "events": {
+    "e_hit": "The health kettle you were responsible for blew up on a livestream, with several thousand orders in one session. The boss thumped his desk and said the next one had to feel like this too.",
+    "e_mold": "The mold was half cut when the boss changed his mind and wanted a different shape. The toolmaker came to settle up, with a bill of over ¥60,000 on the table, and everyone looked at you.",
+    "e_copy": "A month after your new model came out, a town over had an identical one for thirty yuan less. The lawyer said the design patent would take half a year to come through.",
+    "e_ai_render": "AI produced two hundred concept images in one afternoon. The boss picked three and said: these are fine. You opened them up. The kettle handles were all attached to thin air.",
+    "e_ai_cut": "All the rendering has gone to AI, and a colleague in the department who made the visuals wasn't renewed. The day he left, he zipped up his material library and posted it to the group chat.",
+    "e_ai_feedback": "AI summarized thirty thousand e-commerce reviews, and the commonest complaints were an inner pot that's too heavy and a handle that gets hot. You printed one page and took it to the structural team, and this time they didn't argue.",
+    "e_fair": "You went along to the trade fair in Guangzhou. Standing at the booth, you watched a client from the Middle East lift a lid and close it more than twenty times.",
+    "e_overtime": "A rush to get new products out before Singles' Day. You ran between the workshop and the third floor for two weeks, with blisters on your heels and a phone full of mold-trial photos.",
+    "e_mother": "Your mother stayed in Shunde for a while and cooked rice in the cooker you designed. The buttons were too small to read, she said. You took a photo, and the next day you changed the size of the type.",
+    "e_slow": "Business was bad, export orders were down thirty percent, the factory started long shutdowns and paid seventy percent of wages. With the time you put these years of designs into a portfolio.",
+    "e_food": "One weekday evening you and Lao Tan rode out to Daliang for double-skin milk pudding. The skin on this bowl, he said, was smoother than the surface on your lid.",
+    "e_neck": "So much drawing that your right wrist aches whenever it rains. The doctor says tenosynovitis. You've switched to a drawing tablet and put a cushion behind your back.",
+    "e_house": "You bought a small three-bedroom in Ronggui, with the mortgage eating half your pay. On moving day, the first thing you set on the stove was a kettle you designed.",
+    "e_patent": "For the first time your name appeared on a design patent, and the factory gave you an ¥800 reward. You photocopied it and mailed it home.",
+    "e_recall": "A batch of kettles had lid clips that were too loose, and a client returned a full container. You spent all night unpacking and checking at the warehouse. Your line wasn't at fault, but you squatted there through two nights anyway.",
+    "e_intern": "A new intern brought you a very pretty picture. Can this come out of a mold, you asked. He blinked. You remembered the look Lao Tan gave you, back then.",
+    "e_dragon": "Dragon boat racing at Duanwu, and the factory gave a half day off. On the riverbank you watched the line of the bow cut the water, took out your phone and saved it in your inspiration folder.",
+    "e_old": "Of the people who started with you, some have opened restaurants and some gone to e-commerce companies. At a Spring Festival class reunion they asked: are you still drawing that stuff?"
+  },
+  "choices": {
+    "c_struct": {
+      "title": "Do you learn structure and tooling?",
+      "situation": "Lao Tan says that if you understood draft angle and wall thickness, half the trouble with your drawings would vanish. But that means going down to the workshop to mix with the toolmakers, and it doesn't count toward your KPIs.",
+      "options": [
+        { "label": "Go down and follow the molds", "result": "You learned to read gates and parting lines. A toolmaker handed you a cigarette. You don't smoke, but you took it." },
+        { "label": "Perfect the exterior", "result": "Your feel for surfaces kept improving. On the day of the mold trial, Lao Tan was still sighing beside you." }
+      ]
+    },
+    "c_copy": {
+      "title": "The boss wants you to rework a bestseller",
+      "situation": "The boss sets a competitor's hit on your desk: change this a bit, and I need it next month. Change it too little and there's a lawsuit. Change it too much and he won't be happy.",
+      "options": [
+        { "label": "Do as he asks", "result": "You changed the side curve and moved the buttons, and it went to production quickly. It sold well, and you never mentioned it to anyone." },
+        { "label": "Bring a separate design", "result": "You stayed up two nights on a new shape and showed it alongside the knockoff. He kept the knockoff and put yours in a drawer. Half a year later, the drawer opened." }
+      ]
+    },
+    "c_big": {
+      "title": "A big company in Beijiao is calling",
+      "situation": "A major appliance company in Beijiao is hiring designers. Pay is forty percent higher and the process is proper, but you might spend years on one component. Here at the small factory, a product is yours from start to finish.",
+      "options": [
+        { "label": "Go to the big company", "result": "You have a badge and weekends now, and design guidelines as thick as a dictionary. In your first year you drew three knobs." },
+        { "label": "Stay at the small factory", "result": "You went on taking one product all the way through alone. Your pay didn't change, and the next year the boss agreed to share a little of each year's sales." }
+      ]
+    },
+    "c_shop": {
+      "title": "Start a design firm with friends?",
+      "situation": "Lao Tan and a few others want to start a design firm taking exterior and structural outsourcing from Shunde's small factories. Rent is cheap, but winning jobs runs on connections, and payment can drag on for half a year.",
+      "options": [
+        { "label": "Stay employed", "result": "You gave Lao Tan a tea set. His firm later took a job from your factory, and the two of you were soon arguing again across a meeting room." },
+        { "label": "Leave and start the firm", "result": "You gave up your third-floor desk and set up the first computer in a small building in Daliang.", "end": "The firm's work came and went. You did rice cookers, garment steamers, pet water fountains. Every time you went to a factory the gate guard took you for a salesman, and you stopped explaining." }
+      ]
+    },
+    "c_senior": {
+      "title": "Senior Designer: you need a whole series",
+      "situation": "The company is going to appoint a Senior Designer to lead the small kitchen appliance line, and the boss has asked each of you for a series proposal. Doing it would eat the whole National Day holiday.",
+      "options": [
+        { "label": "Work overtime on the series", "result": "You unified the buttons, fillets and indicator lights of three products into one language. Looking it over, the boss for the first time did not say a bit rounder." },
+        { "label": "Spend the holiday with family", "result": "You all went on a trip to Zhaoqing. When you came back, the name on the list was someone else's." }
+      ]
+    },
+    "c_ai": {
+      "title": "How should the department use AI?",
+      "situation": "AI can already turn one sentence into dozens of renderings. The boss asks: from now on, will one hire be enough? You could lead the setup of an AI workflow, or put your weight back on prototypes and mold trials.",
+      "options": [
+        { "label": "Lead it and set the process", "result": "You wrote the process: AI diverges, people converge, and anything going to a mold gets a physical prototype. All the boss saw was saves two people." },
+        { "label": "Stick to prototypes and molds", "result": "You still go down to the workshop every day. At mold trials everyone asks you: will this do?" }
+      ]
+    },
+    "c_pm": {
+      "title": "An e-commerce company wants you as a product manager",
+      "situation": "An e-commerce company with its own appliance brand wants someone who knows factories as a product manager. No more drawing, just watching the data and the costs, and a complete goodbye to this line of work.",
+      "options": [
+        { "label": "Keep designing", "result": "You went back to the monitor. The west-facing corner has curtains now, and you can see the screen in the afternoon." },
+        { "label": "Become a product manager", "result": "You put your drawing tablet in a drawer, and in your first week you learned what ROI is.", "end": "You never drew another line, but when you pick up a competitor's product, your hand still goes first to that parting line." }
+      ]
+    },
+    "c_head": {
+      "title": "The old manager's gone: applying for Design Manager",
+      "situation": "The department's old manager has retired. Moving up to Design Manager means schedules, meetings, wrangling with the supply chain, and very little drawing. Younger colleagues say: you do it.",
+      "options": [
+        { "label": "Apply for Design Manager", "result": "At the selection meeting you showed one photo of a prototype and talked for ten minutes. The next day your calendar was full." },
+        { "label": "Keep drawing", "result": "You left the place for those behind you, and in the west-facing corner you opened that old model." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "In your last week you brought thirty-odd years of prototypes out of the cabinet, wiped them clean one by one, and handed them to the factory's sample room. The last was that rice cooker, its buttons still in the type size you'd changed. On your way down through the injection workshop the machines were running, and a toolmaker nodded to you. You went home to cook, and it was the one you used.",
+    "burnout": "That year your wrist and your neck both gave out, and the doctor told you not to hold a pen for long. You put your designs and tooling files in order and handed them to your apprentice. After that you seldom went to the factory. Passing the appliance aisle at the supermarket, you would still stop, lift the lid of a pot and close it again."
+  },
+  "stages": [
+    "You have a product of your own to carry: from taking competitors apart and sketching by hand to modeling in Rhino, going over structure with Lao Tan and seeing mold trials with the toolmakers. The boss's opinion always comes last and always hurts most. Unlike your assistant days, you now answer for a line, and every time that line changes, someone has to pay.",
+    "You lead a product line with two or three people under you, run the topic meetings, set the year's exterior direction, and fight over cost with sales and purchasing, with a box of color chips and a CMF sheet always close by. You no longer draw every picture yourself, but each one passes before your eyes, and on mold-trial days everyone waits for you to speak.",
+    "Your calendar is full of project schedules, supplier reviews and video calls with export clients. You set the brand's product language, manage the performance of several people, and talk with the boss about how many molds to open next year. There's little time for drawing. When a prototype arrives, yours is still the first hand to reach for it."
+  ],
+  "work": [
+    "You take a competitor's rice cooker apart down to the last screw and weigh each piece. Passing by, Lao Tan says this one's skimped 0.2 millimeters on the inner pot, no wonder it's cheap.",
+    "The export department needs one more language on the European control panel. You re-lay the silk-screen type and add another column to the CMF sheet.",
+    "Lao Feng, the prototype maker, mills a lid on the CNC. You feel the edge and think it needs 0.5 more on the fillet. With a cigarette between his lips he says: you college types, your hands aren't bad.",
+    "You drag the sales director down to the workshop, hand him two handles and have him lift each with his eyes closed. He says nothing afterward, goes back and places the order for yours.",
+    "Xiao Wu, the new designer, can't get his surfaces continuous. You turn on the zebra stripes in Rhino and have him find where they break for himself.",
+    "Purchasing says this matte spray coating is thirty cents too much. You get a color chip and switch to a spray-free compound. At the mold trial the color's off a little, but the sums work.",
+    "You lay out the year's twenty new products on a Gantt chart and cut three that collide with stock in the warehouse. After a long look the boss asks just one thing: whose was the one you cut?",
+    "A German client's audit team arrives. You take them through each model's buttons and drop test in the sample room, and when the interpreter can't keep up you simply pick up the product and show them.",
+    "Over tea you and the toolmaker's owner discuss next year's unit prices. He brings out a photo of a mold that has run for ten years, and you bring out a returns chart, and you brew one more pot."
+  ],
+  "past": [
+    "In middle school you took the family's electric fan apart and put it back together. There was a screw left over at the end, and the fan went on turning.",
+    "You weren't especially good at art or especially good at exams. Your teacher said industrial design takes both drawing and reasoning, so you applied.",
+    "As a junior you got high marks for a desk lamp in a course project. On a factory internship, you found out it could never be molded.",
+    "On graduating you had offers from a design firm in Shenzhen and this small factory in Shunde. The factory paid a bit less, but you'd see your things actually made.",
+    "In your second year as a design assistant you saw a kettle you'd cleaned up the line art for on a supermarket shelf for the first time. You picked it up and put it down."
+  ],
+  "late": {
+    "pension_note": "Estimate: private firms pay social insurance on the local base, and wages rise late, so the pension comes to about half of final pay, enough to live on in Shunde.",
+    "scenes": [
+      "Your first month of retirement you move all the small appliances in the house to new places, and then move them back.",
+      "Lao Tan asks you out for morning tea. The two of you discuss the pleats on a plate of shrimp dumplings, and neither looks up when the waiter refills the pot.",
+      "At a secondhand market in your neighborhood you see a health kettle of yours, eight yuan. You buy it, take it home, wash it out, and it works.",
+      "You're home resting your hand, and have even switched to lighter chopsticks. For the first few months you keep staring at the switches and handles around the house.",
+      "Old people in your compound complain that the new elevator's buttons are too small. You sketch one on a sheet of paper and tape it to the property office door.",
+      "Your apprentice mails you a new prototype with a note: give it a feel, Master. You feel it and text back: take a little more off the edge.",
+      "The month you leave the design department you're still in the habit, at meals, of turning your bowl over to look at the mold line on the bottom.",
+      "You go back to the industrial zone once. The west-facing windows have new glass. The gate guard is new too and asks who you're here to see. Just passing, you say.",
+      "Your daughter brings home a new rice cooker. You walk around it once and say: whose work is this? It's fine.",
+      "Most small-appliance exteriors now come from AI and look more and more alike. In the supermarket, you choose only the pot that feels right in your hand.",
+      "Your grandchild takes the alarm clock apart, and when it's back together there's a screw left over. The clock keeps going. You look at it, say nothing, and put the screw in a drawer."
+    ],
+    "closing": {
+      "retire": "One evening many years later you cook rice in the old cooker, and the click of it switching over is the same as on that long-ago day of mold trials. You lift the lid, the steam rises and your glasses go white for a moment.",
+      "burnout": "Many years later, repotting flowers on the balcony, you set an old prototype under a pot as a stand. The sun comes round, and that fillet is still very smooth.",
+      "end": "Many years later, outside a scrapyard, you see a discarded kettle with a curve on its handle that you know. You stand there a moment, set it upright, and walk on."
+    }
+  }
+}

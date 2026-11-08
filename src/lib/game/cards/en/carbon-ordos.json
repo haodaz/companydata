@@ -1,0 +1,195 @@
+{
+ "id": "carbon-ordos",
+ "occupation": "Carbon Emissions Manager",
+ "role": "Carbon emissions manager at a coal power company",
+ "headline": "Fresh out of an environmental engineering degree, sent from Shanxi to a pit-mouth power plant in Jungar Banner, where each month you turn the carbon content of the coal going into the boilers into a line on a carbon-market report",
+ "unit": "A pit-mouth power plant in Ordos run by a state coal power company (safety and environment department; counting you, two people handle carbon)",
+ "unit_type": "State-owned coal power company",
+ "city": "Ordos (Jungar Banner)",
+ "city_tier": "Third-tier",
+ "education": "Bachelor's (Environmental Engineering)",
+ "level": "You can read the accounting guidelines. You have never seen how a coal sample comes off the belt",
+ "intro": "You grew up in Shuozhou, Shanxi, and your first job has brought you to this pit-mouth plant in Jungar Banner. The shuttle from the dormitory takes twenty minutes, all of it behind heavy coal trucks. Two people in the department handle carbon, you included. Your mentor sets a stack of lab sheets on your desk and tells you to understand those first. From today, every ton of coal this plant burns has to become a number in your spreadsheet.",
+ "salary_note": "Estimate: coal power state enterprises pay well for Ordos, and field and shift allowances put this slightly above the national average.",
+ "facts": [
+  { "label": "Carbon Emissions Manager (current level)", "value": "0-3 years, ¥6,500–10,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Carbon Emissions Engineer (3-8 years)", "source": "Common in the trade" },
+  { "label": "Where AI is moving in", "value": "Mapping a company's emission sources and building the inventory", "source": "AI exposure" },
+  { "label": "Open positions", "value": "10 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "On the plant shuttle the driver has the heater all the way up. Outside, wind carries fine sand and coal dust, and it hisses against the glass.",
+  "You collect yesterday's lab sheets at the fuel laboratory: lower heating value, elemental carbon, total moisture, one by one into the ledger. The old technician glances at you. That sample came off the night shift, the handwriting's bad, don't misread it.",
+  "You pull generation, power supplied and station-use rate from the production reports and check them against the settlement sheet. They are off by three parts in a thousand. You call Operations. The unit ramped down for peak-shaving last night, they say.",
+  "Coal received and coal burned differ by more than two hundred tons. You go to the Fuel Department and ask whether the belt scale has been calibrated. It has. Send me a photo of the calibration sheet, you say.",
+  "You climb the coal conveyor gantry to look at the mechanical sampler. The wind pulls the helmet strap tight under your chin. Your mentor points out where the sampling head falls in the stream of coal. If this step is crooked, everything after it is wasted arithmetic.",
+  "You log in to the national carbon market reporting platform and upload this month's evidence files. Screenshots, stamps, scans, each file named by the rules. One wrong field and the system sends it all back.",
+  "The department head leans in and asks roughly how short the plant will be on allowances this year. You say you need the year-end numbers. Give me a rough one, he says, the group is asking.",
+  "Pickled cabbage stew and steamed buns in the canteen, then back to the dormitory. Outside the window the steam from the two cooling towers blows sideways. You send your mother a photo. She asks if something is on fire."
+ ],
+ "ladder": [
+  { "title": "Carbon Emissions Manager", "stage": "Entry", "focus": "Keep ledgers, follow the coal samples, file monthly data; move up by never getting a number wrong and spending time on site" },
+  { "title": "Carbon Emissions Engineer", "stage": "Own the books", "focus": "Own the plant's accounting and annual report, and sit with third-party verifiers; move up by holding up under questioning" },
+  { "title": "Carbon Asset Supervisor", "stage": "Manage assets", "focus": "Work out the allowance surplus or shortfall, set the timing of trades, lead reduction plans; move up by saving the company real money" },
+  { "title": "Head of Low-Carbon Management", "stage": "Set direction", "focus": "Run the carbon books of several plants, deal with the group and regulators, and have a say in unit retrofits and retirements" }
+ ],
+ "ai_tasks": [
+  { "name": "Mapping a company's emission sources and building the inventory", "how": "AI can draft a source list from process diagrams, equipment ledgers and past reports, and check it against the standards. People still have to go on site to confirm the equipment exists, set the boundaries, and catch what's missing." },
+  { "name": "Collecting energy use and production data", "how": "AI can pull, clean and compile data from energy bills, ledgers, ERP systems and spreadsheets, and flag gaps and anomalies. People only spot-check the source and definitions of key figures." },
+  { "name": "Calculating greenhouse gas emissions under accounting standards", "how": "Applying standards and emission factors is work AI and existing tools can do almost alone, leaving an audit trail. People confirm the factors and version of the standard, and spot-check results." },
+  { "name": "Monitoring emissions and analyzing the trends", "how": "AI can gather monitoring data in real time, draw trends, flag unusual swings and guess at causes. People have to read the changes against shift schedules, maintenance and what actually happened." },
+  { "name": "Writing emissions accounting reports and annual inventories", "how": "AI can draft the text, generate charts and format to template. People check data and conclusions, explain special circumstances, and sign their names to the report." },
+  { "name": "Drafting low-carbon plans and following them through", "how": "AI can list common measures and estimate reductions and returns. People have to set the plan against real production, budgets and how willing each department is, then push it through and track results." },
+  { "name": "Working with third-party verifiers", "how": "AI can organize evidence and predict verifiers' questions. People have to accompany the verification, answer on site, and argue out disagreements about the data." },
+  { "name": "Handling allowance compliance and managing carbon assets", "how": "AI can flag compliance deadlines, estimate shortfalls and collect market information. People decide timing and strategy, carry responsibility for those decisions, and handle the formalities." }
+ ],
+ "events": {
+  "e_sample": "The old technician takes you once through the sample preparation room: crushing, dividing, bagging, each bag of coal sealed in triplicate. For the first time you understand that the number with four decimal places on your report comes out of this small, dust-filled room.",
+  "e_dust": "The spring dust presses the sky down to a yellow-brown, and the plant runs its streetlights at noon. You walk the two hundred meters to the lab with your eyes narrowed, then go back to the dormitory and tape up the window cracks again.",
+  "e_decimal": "You type one month's emission factor with an extra decimal place and the annual total leaps to a frightening figure. Your mentor doesn't shout. He has you check the whole year's sheets from the top. You finish at one in the morning.",
+  "e_frozen": "Twenty-seven below, and the sampling head is jammed with frozen coal. You and two people from Fuel wait until midnight for maintenance to free it, and the shift's sample is saved from breaking the record.",
+  "e_auditor": "A third-party verifier turns to a lab record from three years ago and asks where the calibration certificate is. You pull it from the cabinet in two minutes. He nods and turns the page.",
+  "e_peak": "In the months of plenty of wind and sun, the units often run at very low load. Coal consumption per kilowatt-hour climbs, and your carbon-intensity curve curls upward with it. Operations says that one isn't their fault.",
+  "e_coalmix": "Fuel buys a batch of coal from another mine with quite a different carbon content. You redo the full-year projection and send the department one page. This time the people from Operations come to ask you.",
+  "e_deadline": "In the last week before the compliance deadline, you sit with the trading system and the finance payment process, topping up the missing allowances lot by lot. The afternoon it is confirmed done, you fall asleep at your desk.",
+  "e_home": "The New Year duty roster has your name on it. You video-call home from the dormitory, with canteen lamb dumplings in a takeout box on the desk. Shuozhou isn't far from here. You still can't go.",
+  "e_marry": "You buy a small apartment in Dongsheng, the down payment being what these years have saved, and ride two hours back each weekend. You always smell a bit of coal, your partner says. That's the smell of work, you say, and you both laugh.",
+  "e_lung": "The checkup report mentions a few small nodules in your lungs, and the doctor says to come back regularly. At the plant you go up the gantry as usual, except that now your mask has a valve.",
+  "e_ai_ledger": "The plant installs automatic data collection. Electricity and lab figures no longer need copying; the system compiles them and flags anomalies in red. You keep one habit: each month you pick three lab sheets and check them by hand.",
+  "e_ai_report": "AI writes the first draft of the annual accounting report in twenty minutes, tables neat. You correct one coal-type note: it treated the month of the overhaul as normal operation. That is the sort of thing only someone who has been on site knows.",
+  "e_apprentice": "The new graduate won't go up on the gantry either. You take her up and show her where the sampling head falls, saying what your mentor once said to you. She writes it down.",
+  "e_export": "An aluminum smelter downstream calls. They have to work out a product carbon footprint for a European customer and want your plant's supply emissions data. Only then do you see that the numbers you've been calculating for years have ended up on customs forms overseas.",
+  "e_solar": "You go out to the Kubuqi Desert to see the group's solar project, panels laid row after row to the horizon, and a little real grass growing beneath them. On the way back the driver says that in a few more years you power-plant people will all be working out here.",
+  "e_child": "Parent-teacher night. By the time you get from the plant to Dongsheng it's over, and the teacher has left the report card with the gatekeeper. You read it in the car and send your child a line: well done, next week both of us will be home.",
+  "e_parent": "Your father's legs are giving out, and you bring him from Shuozhou to stay for half a year. He sees your plant for the first time and stands a long while under the cooling towers. All that smoke, and you're the one in charge of it? It's water vapor, you say.",
+  "e_ccs": "The group is running a carbon capture trial on the neighboring unit. You look three times at the cost of a ton of carbon dioxide. You put the number in your presentation. The room is silent for a while. Someone says: let's keep an eye on it.",
+  "e_oldlab": "The old lab technician who taught you retires and leaves behind the weighing spoon he used for thirty years. You go to see him off. Everything's analyzed by machine now, he says, and you lot still remember my spoon?"
+ },
+ "choices": {
+  "c_cert": {
+   "title": "The certificate you need to become Carbon Emissions Engineer",
+   "situation": "To move up to Carbon Emissions Engineer, the department wants a vocational skill certificate first. But the course is in Hohhot, two weeks' leave, your mentor's back is bad, and it's compliance season, when you're short-handed.",
+   "options": [
+    { "label": "Take leave and go", "result": "In the course you work through every formula in the guidelines. When you get back your mentor's ledgers are two weeks behind, and you work overtime for a week." },
+    { "label": "Wait until compliance season is over", "result": "You stay and help your mentor file this year's numbers. The certificate comes a year late. Your mentor tells everyone you can be relied on." }
+   ]
+  },
+  "c_default": {
+   "title": "A set of lab records past the deadline",
+   "situation": "Two months of elemental carbon tests ran past the required time limit. By the rules you must use the higher default value, which means tens of thousands more tons of allowance shortfall. In the corridor the deputy general manager says: the date on a lab sheet is only a matter of filling it in.",
+   "options": [
+    { "label": "Report the default value", "result": "The extra shortfall costs real money to cover. The deputy never mentions it again; your name just isn't among that year's commendations." },
+    { "label": "Write up what happened and send it up the line", "result": "You set the facts out and hand it to your boss to decide. In the end they report the default value anyway, but this paper gets everyone's signature, and you carry half the weight you might have." }
+   ]
+  },
+  "c_verify": {
+   "title": "A verification firm comes looking",
+   "situation": "A third-party verification firm in Beijing wants you. You know plants better than their verifiers do, they say. Thirty percent more pay, two hundred days a year on the road. You look at the contract in your hand, and at this office out of the wind.",
+   "options": [
+    { "label": "Stay at the plant", "result": "You thank them. That year's overhaul is the first time you walk every metering point in the plant." },
+    { "label": "Become a verifier", "result": "You leave with a suitcase, and in another power plant's meeting room, you sit down on the other side of the table.", "end": "You went to Beijing as a third-party verifier and spent your days hunting other people's decimal points in other people's ledgers. Now and then a scrawled lab sheet brings back the wind of Jungar Banner." }
+   ]
+  },
+  "c_ai": {
+   "title": "The automatic data project",
+   "situation": "The group is rolling out automatic collection and accounting of emissions data across several plants, and wants someone to lead it. It means learning data interfaces and model checks, talking the lab and Operations out of old habits, and no extra pay.",
+   "options": [
+    { "label": "Take the lead", "result": "You spend half a year on the interface documents and half a year being glared at by the lab. The day the system launches, you are the only person who knows where every number comes from." },
+    { "label": "Keep doing the accounting properly", "result": "You leave the system alone and check by the old method. When other people's systems go wrong, you're the first one they come to." }
+   ]
+  },
+  "c_trade": {
+   "title": "When to buy the allowances",
+   "situation": "The plant is more than a hundred thousand tons short this year. Buy now and the price looks fine; wait until the deadline and it may be dearer, or cheaper. Finance says the money won't come until next quarter. Your boss turns to you: what do you think?",
+   "options": [
+    { "label": "Push to buy in batches now", "result": "One page persuades Finance to pay early. Later the price rises, and the general manager reads out your name at a meeting." },
+    { "label": "Wait, on Finance's schedule", "result": "Nobody blames you. The price does go up some before the deadline, and the extra money goes into the annual costs." }
+   ]
+  },
+  "c_family": {
+   "title": "Move to Dongsheng, or stay at the plant",
+   "situation": "Your child is starting primary school, and the schools are better in Dongsheng. The group head office in Kangbashi has a quiet post, nine to five, twenty percent less pay. At the plant you'd get home once a week.",
+   "options": [
+    { "label": "Go to head office", "result": "You get home for dinner every day. But now your numbers are all what others report to you, and you are often on the phone asking: who took this sample?" },
+    { "label": "Stay at the plant", "result": "You ride the Sunday-night shuttle for many years. Your child's homework reaches you through your phone." }
+   ]
+  },
+  "c_zhuguan": {
+   "title": "Applying for Carbon Asset Supervisor",
+   "situation": "The Carbon Asset Supervisor post is open and there will be a panel interview. Your opponent is a young person sent down from the group who knows trading and speaks well. What you know is coal, the laboratory and that belt.",
+   "options": [
+    { "label": "Get up and talk about the plant", "result": "You don't show a single pretty chart. You just describe the money you've kept from being lost. An old chief engineer on the panel nods." },
+    { "label": "Cram trading and talk markets", "result": "You spend weeks on spot, forward and hedging, and the interview goes better than you expected, though it doesn't quite sound like you." }
+   ]
+  },
+  "c_green": {
+   "title": "An invitation from the renewables company",
+   "situation": "The group's new renewable energy company needs people who understand carbon to work out the books on green power and hydrogen projects. The pay is about the same. But you'd be leaving coal power after a decade and more, and this spreadsheet with it.",
+   "options": [
+    { "label": "Stay in coal power", "result": "You stay. Someone has to work out the last accounts of these units properly." },
+    { "label": "Go and count green power", "result": "You move to a project office at the edge of the desert, and the column in your spreadsheet turns from emissions to generation.", "end": "You joined the renewables company and spent the rest of your career working out how much electricity the panels in the desert could make. When old colleagues ask if you miss coal, you say the wind is a little lighter out here." }
+   ]
+  },
+  "c_director": {
+   "title": "The retirement plan for an old unit",
+   "situation": "The group has to decide whether to extend the life of an old unit or retire it, and you are to write the carbon part. Extension is cheaper. Retirement means finding new places for hundreds of people. The Party secretary says: keep the numbers honest, and weigh your words.",
+   "options": [
+    { "label": "Lay out the books as they are", "result": "The report goes up, and some say you have no heart. The unit is later retired. Some of the old hands from the three shifts stop saying hello." },
+    { "label": "Count the cost of resettling people too", "result": "It takes two more months to turn hundreds of futures into numbers. The people at the group say you've overthought it. The people at the plant remember." },
+    { "label": "Step back to an advisory post", "result": "You say this report ought to be written by someone younger, and hand in your application.", "end": "You retired early to an advisory role, and signed nothing more about the fate of any unit. Someone else wrote the report. You only checked the decimal points." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "In your last compliance season you don't guard the trading system. You hand the login and the password book to someone younger. You climb the conveyor gantry once more. The sampling head still falls in the same place, and the wind is still the same wind. On the shuttle home you don't look back at the cooling towers, whose steam slants across the rearview mirror.",
+  "burnout": "The doctor lays the lung scan and the blood pressure sheet side by side and tells you to stay off the plant floor. You are moved to the archive at head office, and spend the days boxing up more than ten years of ledgers. No sand taps on these windows. Sometimes that wakes you early."
+ },
+ "stages": [
+  "You copy lab sheets, check electricity figures, follow your mentor up the gantry to watch sampling, and upload evidence to the reporting platform at the end of the month. The lab and Fuel people are far senior to you, and you begin most sentences with an apology. Your tools are Excel, calibration sheets and a red pen you can never find. Your job is to enter the numbers right; whether the numbers are right isn't yet for you to say.",
+  "The whole plant's accounting is yours now: the source inventory, the monthly evidence, the annual report, and the verifier sitting across from you. Before you touch a spreadsheet, you go to Operations and Fuel to find out what happened that month. The difference is that now your name is on the last page of the report, and every question the verifier asks is aimed at you.",
+  "You have an allowance ledger now: how much surplus or shortfall, when to buy, and a report for the general manager that can only be one page. You lead two engineers and deal with Finance, the group's traders and carbon asset companies, and your desk has gained a market screen. You've gone from working out the emissions to working out what they're worth.",
+  "You run the carbon books of several of the group's plants, and mostly what you do is attend meetings: retrofit approvals, allowance allocation, explaining data definitions to regulators. You seldom look at lab sheets now, just a few summary tables, and now and then you ask: who took this month's sample? Your signature decides millions of yuan and where some people go next."
+ ],
+ "work": [
+  "Old Sun in the lab has you label a bag of divided coal sample. You get the sampling date wrong. He picks the label off with a fingernail and has you rewrite it from the logbook.",
+  "You take the belt scale calibration sheet to young Wang in Fuel: the date is three days later than the procedure allows. He searches his phone for a long time and turns up a record of a make-up calibration.",
+  "Uploading evidence at the end of the month, the system rejects your electricity screenshot for low resolution. You run to Operations, lean over the screen, take another, and get the stamp done again.",
+  "Verifier Fang points at the source inventory and asks: what about the standby diesel generator? You find its yearly running hours in the equipment ledger and add those few tons of carbon dioxide to the sheet.",
+  "The numbers from the overhaul month are abnormal. You get the work orders from Maintenance and write a paragraph of explanation in the report. Your boss reads it and changes one punctuation mark.",
+  "You take the coal-consumption curve to the shift supervisor and ask why the load dropped on the night of the fifth. He brings up the history in the DCS and you both stay looking at it till midnight, then write the cause in the ledger.",
+  "Sister Liu in Finance holds up your allowance budget: why can't this three million wait until next year? You draw the compliance dates and the shortfall on one sheet of paper, and she clips it to the approval form.",
+  "One of your engineers writes an emissions reduction plan eight pages long. You circle one item on waste heat recovery and send him to ask Maintenance whether the unit could really be stopped for it. Come back and tell me how many tons.",
+  "You and the group's trader go back and forth on bids over the phone all afternoon, and only half the planned volume is filled. You write the reason in the trading record. Tomorrow morning you'll explain it to the general manager.",
+  "The night before a briefing, you lay out the intensity tables from several plants side by side. One looks unusually good. You say nothing, and the next day you call the shift leader who takes samples there.",
+  "At the project meeting for the old unit's retrofit, the chief engineer and Finance argue for an hour. You push a one-page carbon cost estimate to the middle of the table. Curse this page as much as you like, you say, the numbers are right.",
+  "A young engineer comes to you wanting to transfer to renewables. You sign the transfer form, then photocopy your handwritten notebook of metering points and give it to him."
+ ],
+ "past": [
+  "Your family lives in Shuozhou, Shanxi, where your father has driven trucks at the mine for half his life. In winter the dust on the windowsill is thick enough to write in by evening, and your mother wipes it every morning.",
+  "You miss your first choice in the gaokao (college entrance exam) and are assigned to environmental engineering. Good, says your father. You can do something about all the dust here.",
+  "In your third year you take an elective on greenhouse gas accounting. The teacher says this is tomorrow's rice bowl. A dozen people sign up, half of them for the credits.",
+  "You intern one summer at an environmental impact firm in Taiyuan, copying monitoring data for two months. The hard part, you find, is not the calculating. It's working out where the numbers come from.",
+  "At the campus job fair, a coal power company is hiring for a carbon emissions post. The pay is better than the consulting firm, and the location is Jungar Banner. You check the map. It isn't too far from home, so you sign."
+ ],
+ "late": {
+  "pension_note": "Estimate: the basic pension plus enterprise annuity for a state enterprise worker comes to about half of final pay.",
+  "scenes": [
+   "At the end of your first month of retirement you wake in the night, suddenly sure you haven't uploaded the evidence. You lie back down. It's no longer yours to upload.",
+   "You move back to Shuozhou, where there is far less dust on the windowsill than there used to be. Your mother still wipes it every morning. Then she says: there's nothing left to wipe.",
+   "The news says one of the units at your old plant has been retired. You read to the end and start working out roughly how much coal it burned in its life. Halfway through, you put down the pen.",
+   "In your first months away from the floor, your hand keeps going to a helmet strap that isn't there. The archive is very quiet, nothing but the turning of pages.",
+   "You go regularly for checkups and the nodules hardly change. The doctor says to keep it up, and on the way home you buy a bag of crabapples.",
+   "Old Sun comes to Dongsheng to see a doctor, and you spend the day with him. Sitting outside the hospital he asks who takes the samples now. The machine, you say. He nods and says nothing for a while.",
+   "In your first year in the new job you still pick a few numbers each month to check by hand. A new colleague asks why. Habit, you say.",
+   "On a business trip through Jungar Banner, you ask the driver to take a detour. The plant is still there. The guard at the gate is new and asks who you're looking for. No one, you say.",
+   "At an industry conference someone quotes a paragraph you wrote more than a decade ago, without your name. You hear it through and go on drinking your tea.",
+   "Your child writes a composition called My Parents, and in it says: someone in my family looks after the air. You read it for a long time and don't correct it.",
+   "Sorting old things at home, you find a sealed coal-sample bag with a label in your younger handwriting, the date written wrong and corrected."
+  ],
+  "closing": {
+   "retire": "Evening wind comes in from the west and the sky is very high. You sit in the yard and watch a cloud slowly lean across it.",
+   "burnout": "The archive lights go off, and the streetlights outside have just come on. You slide the last box of ledgers back on the shelf and walk slowly downstairs.",
+   "end": "When the wind stops, the air smells of nothing at all. You stand a while with your hands in your pockets."
+  }
+ }
+}

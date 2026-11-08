@@ -1,0 +1,186 @@
+{
+ "id": "epi-zy",
+ "occupation": "Epidemiologist",
+ "role": "Epidemiology specialist at a center for disease control",
+ "headline": "A master's in public health, a place won by exam at the municipal center for disease control in Zunyi, and a duty phone that sends you off down county mountain roads the moment it rings, your days spent with school principals, township health workers and lab reports",
+ "unit": "The municipal center for disease control in Zunyi, Guizhou (infectious disease control section, seven people)",
+ "unit_type": "Public institution",
+ "city": "Zunyi",
+ "city_tier": "Third-tier",
+ "education": "Master's (Epidemiology and Health Statistics)",
+ "level": "You are at home in statistics software. You have never yet questioned a canteen cook who would rather not talk to you",
+ "intro": "You did your graduate degree in Guiyang and won a place, a permanent state post, at the municipal center for disease control in Zunyi. There are seven people in the infectious disease section. The section chief puts an old phone on your desk: this is the duty phone, and on your week it stays on twenty-four hours. County mountain roads have a lot of bends, the driver says, so keep carsickness pills in the car. From today every number that jumps out of the citywide reports may put you in a car to a county the next morning.",
+ "salary_note": "Estimate: a Zunyi municipal public institution offers steady but modest pay, about eighty percent of the national average for this post.",
+ "facts": [
+  { "label": "Public Health Physician (current level)", "value": "0-5 years, ¥5,500–8,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Attending Physician, Public Health (5-10 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Running vaccination and preventive medication", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Monitoring disease and carrying out field epidemiological investigation", "source": "AI exposure" },
+  { "label": "Open positions", "value": "4 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "A bowl of lamb rice noodles at a little place on the Xiang River, the one that runs through Zunyi, chili added by hand. The sky is overcast, as it usually is in a Zunyi winter. The duty phone sits next to your bowl.",
+  "You open the online infectious disease reporting system and review yesterday's cards. On this one, the onset date is later than the visit date. You call the public health office at the county hospital.",
+  "You compile school absences due to illness. One class at one primary school has a few more children with fever. You circle the name of the class and phone the district.",
+  "The section chief has you run last month's hand, foot and mouth data. You produce charts in the stats software, put the lines of several townships side by side, and look again.",
+  "The car heads for Zheng'an County, bend after mountain bend. You can't look at your laptop, so you go over the survey form in your head: what to ask, and how to ask without it sounding like blame.",
+  "In a township school's canteen, you ask the cook what time he lit the stove yesterday and where the green beans came from. The principal stands to the side and asks what happens next.",
+  "In the county guesthouse you sort the survey forms, seal the samples in clear bags, and label them to take back to the lab tomorrow. A light rain outside the window.",
+  "You write the preliminary report and revise the wording twice. How much separates possibly from considered to be, you can now tell a lot better than you used to."
+ ],
+ "ladder": [
+  { "title": "Public Health Physician", "stage": "In the field", "focus": "Review disease report cards, assist field investigations, sort data; move up by asking carefully and recording accurately" },
+  { "title": "Attending Physician, Public Health", "stage": "Stand alone", "focus": "Lead responses to clusters in schools and communities, write investigation reports; move up on steady judgment and solid reports" },
+  { "title": "Associate Chief Physician, Public Health", "stage": "Gatekeeper", "focus": "Oversee one area of surveillance, guide the counties, review reports; move up through expertise and research" },
+  { "title": "Chief Physician, Public Health", "stage": "Set direction", "focus": "Hold the city's final technical judgment in one field, speak on expert panels, and train those who come next" }
+ ],
+ "ai_tasks": [
+  { "name": "Monitoring disease and carrying out field epidemiological investigation", "how": "AI can combine multiple data sources, detect anomalies and warn of clustered cases. People have to go on site, sample, ask, judge whether a signal is real, and take responsibility for conclusions." },
+  { "name": "Studying causes and risk factors and researching interventions", "how": "AI can search the literature, run statistical models and pick out suspicious associations. People have to design the study, separate correlation from cause, exclude confounders, and judge whether an intervention can work in reality." },
+  { "name": "Running vaccination and preventive medication", "how": "AI can help calculate coverage, find those missed and generate reminder lists. Organizing vaccination, answering doubts, handling adverse reactions and keeping order on site still depends mostly on people." },
+  { "name": "Giving technical guidance on disinfection and pest control", "how": "AI can generate procedures and flag priority areas from weather and environmental data. Field surveys, hands-on guidance, checking results and dealing with residents depend on people." },
+  { "name": "Guiding interventions on chronic disease risk factors", "how": "AI can stratify risk, draft educational materials and analyze behavior data. People have to design interventions around the community, mobilize, and get behavior really to change." },
+  { "name": "Screening and treating high-risk groups", "how": "AI can pick out high-risk people from health files and screening data and rank priorities. People have to organize screening at homes or institutions, communicate, refer, and make sure follow-up happens." },
+  { "name": "Public health supervision under the law", "how": "AI can compare legal provisions and draft checklists and documents. Inspections, gathering evidence, penalty decisions and legal responsibility must rest with qualified people." }
+ ],
+ "events": {
+  "e_first_call": "On your first duty week the phone rings in the middle of the night. A county wants to know how to fill in a report card. You sit bolt upright, your voice more anxious than theirs. After you hang up you lie laughing in the dark for a bit.",
+  "e_mushroom": "Wild mushroom season comes with the rains, and several families in one village feel unwell after eating. You go in with county colleagues, turn over a washed pot, and find out exactly who had how many bowls and who had none.",
+  "e_road": "A landslide on the road to Wuchuan keeps the car waiting in the mountains for four hours. You share a bag of biscuits with driver Old Yu. Your lot are all the same, he says, nobody thanks you when you get there either.",
+  "e_right_call": "In a pile of ordinary absence data you notice one school that looks wrong, and phone ahead. What might have followed doesn't develop, so nobody ever knows about it. This is the commonest reward in the trade.",
+  "e_vaccinator": "You go to a township health center to check its vaccine refrigerator's temperature log. The older woman in charge of immunization hands over the book, not a stroke missing. Twenty-two years in the job, she says, and she remembers the name of every child in the township.",
+  "e_fluorosis": "You accompany endemic disease colleagues to a mountain village, checking children's teeth and asking whether the coal stoves have been replaced. The old people bring you cups of corn tea. You drink, and enter the data item by item.",
+  "e_dog": "An old man in a township has been bitten by a dog and doesn't want to spend money on the shots. You talk at length by phone with the health center's doctor, then make sure his son has heard the cost and the consequences clearly. The next day the old man gets his first shot.",
+  "e_report": "The section chief circles three things in your investigation report, all of them word choices. You say this phrasing is more accurate. Accurate, yes, he says, but think about how the people in the county will have to go to work the morning after they read that sentence.",
+  "e_overtime": "A week on duty with one phone call after another, and your normal work by day. At the weekend you sleep more than ten hours. When you wake the window is still overcast and you can't tell what day it is.",
+  "e_privacy": "A person you follow up with asks you over and over not to let the village know. You change into everyday clothes, park in town and walk the twenty minutes in. On the way back a text arrives, two words: thank you.",
+  "e_ai_signal": "The warning system now cross-checks pharmacy sales, school absences and clinic data by itself and sends you several signals each morning. You phone about them one at a time. Some are real. One is a school spring outing.",
+  "e_ai_lit": "Literature reviews no longer mean hours in the library. In an afternoon AI gives you eighty articles, sorted by category. Two of them you cannot find anywhere, because they don't exist.",
+  "e_marry": "You settle in Zunyi, in a mortgaged apartment with a view of a small stretch of the Xiang River. The wedding is set for a weekend and you specially swap duty with a colleague. The phone still ends up in your pocket.",
+  "e_young": "A young person at a county center writes a first investigation report and sends you the file. You revise it closely, and at the end add one line: this sentence is good. He replies with a long row of exclamation marks.",
+  "e_kid": "Your child has a fever while you are away in a county, and your spouse asks over the phone what medicine to give. You explain every detail, hang up, and go back to asking what someone else's child has eaten.",
+  "e_knee": "Going up and down village slopes, your knees begin to protest. You buy better shoes, and their soles soon wear thin too. A colleague says: at our work, shoes get used up faster than papers get reimbursed.",
+  "e_nothing": "This year the whole city has not had one notable cluster. At the year-end meeting a leader asks what you all did. The section chief considers, then sets this year's phone records on the table.",
+  "e_old_nurse": "The township immunization worker who spent her whole life at it retires, handing the refrigerator key to a younger person. You go to see her. She brings out a stack of old vaccination registers and asks you to find them somewhere safe.",
+  "e_parent": "Your father's blood pressure is poorly controlled, and you nag him more than his doctor. You run the whole city's affairs all day, he says, leave this one alone. You don't reply. You sort his pills and set the box by his bed."
+ },
+ "choices": {
+  "c_zhuguan": {
+   "title": "Sit the exam for Attending Physician",
+   "situation": "You've got the years, and the center wants you to register for the Attending Physician exam. This year several field cases have come one after another. By day you're on county roads, by night you read in guesthouses. If you can manage both, try it, says the section chief.",
+   "options": [
+    { "label": "This year", "result": "You bring the books to the guesthouse and get a certain number of pages in before the phone cuts you off. When results come out your colleagues are more pleased than you are." },
+    { "label": "Next year", "result": "You take on the field work and the people in the counties all get to know you. The certificate comes a year late, and you don't much mind." }
+   ]
+  },
+  "c_school": {
+   "title": "The principal asks how this will be written up",
+   "situation": "Several children at a school have diarrhea at the same time. The principal is anxious and keeps asking what the report will say and whether it will affect the children's lessons. You know that whatever must be reported will be. You also know that how you say it will decide how easily you work in this county from now on.",
+   "options": [
+    { "label": "Report by the rules and speak plainly", "result": "You report by the rules, and stay to see the canteen fixes through with the principal. He doesn't say much afterward. The next time, he is the first to call you." },
+    { "label": "Report by the rules and let county colleagues talk", "result": "You write the report and the county colleagues do the talking. It passes, and the principal never learns your name." }
+   ]
+  },
+  "c_ai": {
+   "title": "Who runs the new warning system",
+   "situation": "The province is piloting a data warning platform and someone has to compare, correct, and watch for false alarms. No one wants it: it doesn't count as field work, it isn't your job, and there's a lot to learn.",
+   "options": [
+    { "label": "Take it on", "result": "You spend half a year learning data interfaces and half a year watching false alarms. Afterward, when county colleagues have doubts, they say: ask that one." },
+    { "label": "Stay in the field", "result": "You go on traveling to the counties and wearing down your soles. You use the system too, later, having learned a little late." }
+   ]
+  },
+  "c_dr": {
+   "title": "Whether to go for a doctorate",
+   "situation": "Your old supervisor says he can take you as a part-time doctoral student, with a year and a half off work on base pay only. The section is already short-handed, and your child is small.",
+   "options": [
+    { "label": "Go", "result": "You get a solid grasp of the methods, and owe the section a year and a half of duty. When you come back, the section chief has a little less hair." },
+    { "label": "Stay at the center", "result": "You stay in the section. Your name appears a few more times on that year's duty roster, and you go to every parent meeting." }
+   ]
+  },
+  "c_pharma": {
+   "title": "An invitation from a drug company",
+   "situation": "A drug company in Shanghai is hiring for medical affairs, at three times your pay. Several classmates have gone, and they send photos with floor-to-ceiling windows behind them. But your permanent state post didn't come easily, and your parents still live in Zunyi.",
+   "options": [
+    { "label": "Stay at the CDC", "result": "You thank them and go to the county as usual that afternoon. In the car you look at the mountains for a while." },
+    { "label": "Go to the company", "result": "You hand back the duty phone. The section chief takes it and says the battery isn't so good, the next person will have to replace it.", "end": "You went to the drug company in Shanghai and used the same statistics to calculate other things. Your county colleagues still post pictures of mountain roads, and you like every one." }
+   ]
+  },
+  "c_assist": {
+   "title": "A year on assignment in a county",
+   "situation": "The center needs someone to spend a year at a county CDC helping build up its work, and this counts as grassroots experience when you are evaluated for Associate Chief Physician. The county is in the mountains. You'd get home once a week.",
+   "options": [
+    { "label": "Go", "result": "You live in the county for a year and walk all dozen-plus townships with their health workers. The young people there often phone you afterward." },
+    { "label": "Let a younger person go", "result": "You stay in the city and refine the data work. In that year's evaluation, you have no such experience to list." }
+   ]
+  },
+  "c_fuzhu": {
+   "title": "Associate Chief Physician, or stay in the field",
+   "situation": "To be evaluated for Associate Chief Physician you need projects and papers, which means a year or two sitting down to write. But the old hands in the counties are retiring one by one, and the field can't do without you these two years.",
+   "options": [
+    { "label": "Sit down and write", "result": "You go back through these years of investigation materials and write several papers. For the first time you see that all these small things in the mountains, set side by side, have a pattern." },
+    { "label": "Keep going to the field", "result": "You spend two years taking young people around the counties, and each of them comes to stand on their own. The blank on the evaluation form, you let stay blank." }
+   ]
+  },
+  "c_hospital": {
+   "title": "An invitation from an infection control department",
+   "situation": "A top-tier hospital's infection control department needs someone and wants you. No more mountain roads, somewhat better pay, but from then on your world would be a few buildings of this one hospital.",
+   "options": [
+    { "label": "Stay at the CDC", "result": "You decline politely. On another Monday, you get into that car going to the county." },
+    { "label": "Watch for two more years", "result": "You say you'll think about it. Two years later the post has been filled, and you don't ask again." },
+    { "label": "Go to the hospital", "result": "You move your office. On the new badge it says Infection Control, and for a long time your shoes don't wear out.", "end": "You went to the hospital, and your days were spent in a few buildings checking hand hygiene and infection data. On rainy days you thought of that road to the county, which was probably washed out again." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "All through your last week on duty the phone stays by your pillow. It rings once, a young person in a county asking you for a number. You give it, and he says thank you. You hand the phone to the new person in the section and remind her to keep the battery charged. Outside the sky is overcast, as a Zunyi winter always is.",
+  "burnout": "Your knees and your insomnia tell you together that you can't manage the mountain roads anymore. You ask to move to an office job in archives and training. Hardly anyone calls you at midnight now. The phone stays by your pillow and now and then you still glance at it."
+ },
+ "stages": [
+  "Your work begins with report cards: whether the date is right, the diagnosis is right, and if not you phone the county. In the field you follow an older colleague with a survey form, questioning cooks and parents, then enter the forms and run the stats software. Whatever you say, people still go and check it with someone else.",
+  "Now you're the one who leads the field trip: a school, a village, working out the extent first, then asking, sampling, and writing up the preliminary situation at night. County colleagues wait for you to say what's next, and principals and township officials come to ask you too. People have begun writing down what you say and acting on it.",
+  "You oversee one area of surveillance, reviewing reports from the whole city, guiding the counties, and reporting upward too. You've begun to read others' investigation reports and tell them which sentences won't stand up to questions. You go to the field less. More often you're on the phone, helping the people out there decide whether to keep looking.",
+  "You speak on expert panels, and the final technical judgment for this area comes to you. You lead young people on research, lecture in the counties, sit in coordination meetings with other departments, and how you put things matters more than before. You seldom read the survey forms yourself. When you do, you still look first at the handwriting and the date."
+ ],
+ "work": [
+  "Xiao Yang in a county hospital's public health office reports a card wrong. You go over it with him field by field on the phone, and find a doctor has written down a township by its nickname.",
+  "You follow Old Song to a village. He asks much more slowly than you do, and helps someone shoo the dog away. On the way back he says: your questions are all correct. People just don't want to answer them.",
+  "You enter twenty survey forms in EpiData. On the seventh, age is written as seventy-something. You call the village doctor and get the old person's birth year.",
+  "In a school canteen, you take yesterday's retained samples out box by box, noting number and temperature, while school doctor Xiao Chen holds the plastic bag open for you.",
+  "You draw an epidemic curve for a village, with cases all bunched on one day. You show the old county chief and he nods. Wasn't that the day that family held a banquet?",
+  "A township official isn't sure whether those few migrant workers who've been away should be counted. You lay out your field notebook on the table, go through them one by one, and note beside each one whether and why.",
+  "A report comes in from a county. You put a question mark on the conclusion, and phone the young attending to ask how the control group was chosen. There's a silence at the other end.",
+  "You go to Chishui to check a monitoring site and pull a few of the past three years' registers to read. The handwriting in the second is identical for months. You don't say anything on the spot. You make the call when you are back at your desk.",
+  "The night before the annual report you check the citywide cause-of-death table again and find two counties using different codes. You write a one-page note and clip it at the back of the report.",
+  "At a coordination meeting several departments want others to do a little more. You put several years of data in one table and say: this is our judgment on it, and what follows is for all of you to decide.",
+  "A newly arrived master's graduate, Xiao Zheng, asks what's most important in this trade. You don't answer. You take her to the archives, pull out a handwritten investigation report from thirty years ago, and have her read the handwriting.",
+  "A provincial colleague phones to check a judgment. You give your basis over the phone, including the half you aren't sure of. That half is enough for me, she says."
+ ],
+ "past": [
+  "Your family lives in Tongzi County, in Zunyi. When you were little someone came to the village to vaccinate the children, and your mother held you down on a bench. The man's hands were very steady, and he made a mark in a book before he left.",
+  "Your gaokao (college entrance exam) score falls just short of clinical medicine and you're moved to preventive medicine. Prevention? asks your father. Is that the medicine where you don't get sick?",
+  "On placement you follow a district CDC team to look into diarrhea at a school. Your classmates put on masks. For the first time you see a teacher work through a questionnaire as if it were a chat.",
+  "In graduate school you study epidemiology and spend all day with statistics software. There are people behind every number, your supervisor says. At the time you find this a bit trite.",
+  "On graduating you sit the exam for a permanent state post, with only a few places in the province. You come third on the written paper. In the interview they ask why you want to come back to Guizhou. Because I know the roads, you say."
+ ],
+ "late": {
+  "pension_note": "Estimate: basic pension plus occupational annuity on a modest salary base yields a high replacement rate, close to seventy percent of final pay.",
+  "scenes": [
+   "In your first month of retirement you still check the weather on your phone every day, looking to see which counties have rain. Later you realize you just want to see.",
+   "You go back to Tongzi and show the old people how to take their blood pressure. They can't remember numbers, so for each you draw a chart with smiling and frowning faces.",
+   "Walking along the Xiang River you run into driver Old Yu. Still get carsick? he asks. I can recite those bends now, you say.",
+   "In your first month at the office you number the old survey forms one by one. Sometimes reading them, you forget the rain outside the window.",
+   "Your knees are somewhat better and you begin walking slowly around the compound. You have that same habit: when someone coughs, a part of you starts counting.",
+   "When the young people get stuck they often come looking for you in the archives. You first pour them water. Slowly now, you say. When did it start?",
+   "Your first year after leaving the CDC, your phone is very quiet. Now and then you open the old bookmark for the reporting system. The login page no longer loads.",
+   "At a training session you use your old slide of an epidemic curve from a mountain village. Everyone is taking photos, and no one knows where that village is.",
+   "Home in Zunyi for the New Year, you make a point of taking a bus to the county. The road is much better than it was. The driver plays music the whole way, and there are fewer bends.",
+   "Your child asks: when nothing happens, does that mean you weren't working? You think about it. Yes, you say. That was the work.",
+   "In a drawer you find an old laminated work badge. The eyes in the photo are bright, and the date on the back has faded. You rub it with your sleeve and put it back."
+  ],
+  "closing": {
+   "retire": "After many gray days, this afternoon the sky opens a crack and light falls on the Xiang River. You stand and watch a while, and don't take a photo.",
+   "burnout": "A light rain outside and the archive lights still on. You put the last survey book back on the shelf and close the door.",
+   "end": "The rain stops at dusk, and the outlines of the mountains slowly come back. You stay at the window, and don't look at your phone again."
+  }
+ }
+}

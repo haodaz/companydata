@@ -1,0 +1,301 @@
+{
+ "id": "farm-machinery-suihua",
+ "occupation": "Agricultural Equipment Operator",
+ "role": "Machine Operator at a Farm Machinery Cooperative (New Shareholder)",
+ "headline": "After years repairing cars in another city you've come back to Suihua to take over your father's old tractor and his share in the cooperative; you race the soil moisture in spring and the frost in autumn, and are learning to do the accounts from the driver's seat",
+ "unit": "A farm machinery cooperative in Wangkui County, Suihua",
+ "unit_type": "Farm machinery cooperative",
+ "city": "Wangkui County, Suihua",
+ "city_tier": "County town",
+ "education": "Vocational secondary school (Automotive Repair)",
+ "level": "You still have the repair skills and you can drive a big tractor. But how much to charge per mu, or whose bill can be put off until after harvest, you don't know at all.",
+ "intro": "You spent five years fixing cars in Harbin. This spring your father's back stopped straightening, and one phone call brought you home to Wangkui. Over a dozen machines stand in the cooperative's yard, with your family's old tractor at the far end, the scratches you made as a boy still on its door. From today, on this black earth, one of the rows is yours to drive.",
+ "salary_note": "Estimate: machinery income comes mostly in spring and autumn. Averaged out it runs close to the national figure for similar farm machinery work, higher in good years and lower in bad ones, taken here at 90 percent.",
+ "facts": [
+  {
+   "label": "Machine Operator (current level)",
+   "value": "0–4 years, ¥3,500–6,000 a month (national average, estimated)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Machinery Team Leader (4–10 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Checking soil moisture on foot and deciding if a machine can go in",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Tractor autosteer and route planning",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "Still dark. In the yard the diesels wake one after another. You start yours, let it turn over for ten minutes, and watch the gauges with your hands up your sleeves.",
+  "At the edge of the field. The old chairman squats, takes a fistful of soil, squeezes it into a ball and lets it fall apart. One more day, he says. You look across at other people's machines already out in their fields.",
+  "A different field, and this one you can get onto. You line up on the first row; the line on the guidance screen is straight as a drawing. The old chairman says in his day they aimed at a poplar in the distance.",
+  "You eat at the field edge from the lunchbox your wife brought, sauerkraut dumplings still warm. You keep the engine running, take two bites and look up, afraid the machines behind you will back up.",
+  "Old Zhang, who owns the plot, runs over and says you've crushed the edge of his land. You jump down and the two of you stand in the furrow measuring for ages, and in the end he hands you a cigarette.",
+  "A hydraulic line bursts. You lie under the machine with oil all over your hands and fix it with what you learned in Harbin. The sky is already red.",
+  "Back at the cooperative to fuel up and log your acreage. The bookkeeper shakes her head at your sheet: you've entered Old Wang's plot as credit again. You'll have to redo the lot.",
+  "By the time you lie down your back is numb. With your eyes shut you work out how many mu you did today and what each one earned, and you're asleep halfway through."
+ ],
+ "ladder": [
+  {
+   "title": "Machine Operator",
+   "stage": "Driving",
+   "focus": "Tilling in spring, spraying in summer, harvesting in autumn: driving, maintenance, reckoning acreage at the field edge, learning the land and the people from the old chairman."
+  },
+  {
+   "title": "Machinery Team Leader",
+   "stage": "Running the fleet",
+   "focus": "Seven or eight machines and a crew of operators. You order the work and manage fuel and parts; in the rush it all depends on how you send out the machines."
+  },
+  {
+   "title": "Cooperative Manager",
+   "stage": "Running the business",
+   "focus": "Chasing contracts and managed land, negotiating prices and loans, working out costs, applying for machinery subsidies. Every entry in the books crosses your hands."
+  },
+  {
+   "title": "Cooperative Chairman",
+   "stage": "The final word",
+   "focus": "The debts, the land and the members' dividends. Whether to buy a new machine, whether to take a big order: you're the one who signs."
+  }
+ ],
+ "ai_tasks": [
+  {
+   "name": "Checking soil moisture on foot and deciding if a machine can go in",
+   "how": "Whether a field can take a machine, you have to go down and squeeze a handful of soil. The data says the moisture is right, and every year someone steps in and sinks to the ankle."
+  },
+  {
+   "name": "Tractor autosteer and route planning",
+   "how": "Satellite guidance plows dead-straight rows and works at night. Turns at the headland, drainage lines and graves in the way, an engine that sounds wrong: those need someone sitting in the cab."
+  },
+  {
+   "name": "Drone spraying and spotting crop disease",
+   "how": "A drone is ten times faster than a person and image recognition can identify blight spots. Which chemical, how strong the wind is, whether that's someone's rice next door, that takes someone who knows the land."
+  },
+  {
+   "name": "Work records and subsidy paperwork",
+   "how": "Machine tracks, acreage and field areas are generated by the system and subsidy forms export at one click. A person just spot-checks that they're right."
+  },
+  {
+   "name": "Negotiating with farmers, collecting debts, getting along with the neighbors",
+   "how": "Whose debts can wait because the hail hit them this year, who really has no money and who's pretending: that kind of talk at the field edge happens only between people."
+  }
+ ],
+ "events": {
+  "e1": "Your first all-nighter alone, and before dawn you plow thirty meters of row off line, there for anyone passing to see. The old chairman doesn't yell. Next day he has you do it over from the start.",
+  "e2": "You repair a harvester in the next village that's been sitting for two years, and charge nothing. After that, every autumn, their work comes to you first.",
+  "e3": "In autumn it rains for ten days without stopping. Machines can't get into the fields and the corn stands waiting. The cooperative's phone never stops. You sit in the cab watching the sky.",
+  "e4": "At the New Year pig-killing the cooperative sets out three tables. The old chairman gets drunk, slaps your shoulder and says the land never lies, your dad was just the same. A whole pot of pork and blood-sausage stew is scraped clean.",
+  "e5": "For the twenty days of the harvest rush you sleep three or four hours a night, and when you get down your legs don't work. This happens twice a year.",
+  "e6": "The cooperative installs satellite guidance and work monitoring, and subsoiling acreage is plainly visible on a phone instead of being one person's word. Two households have no complaints about your bill for the first time.",
+  "e7": "In the repair shed at thirty below, you press your hands to the radiator for a moment and go back to the bolts. You spend the whole winter taking engines apart, waiting for next spring.",
+  "e8": "Diesel goes up by seventy fen in a year. You work the season's rates out over and over. Raise them a yuan and the farmers curse you; don't, and you're the one who loses.",
+  "e9": "The day your child is one month old you're out in the field. Your wife sends the photo to the field edge. You open it with oily fingers and enlarge it, and enlarge it again.",
+  "e10": "Years of sitting in a jolting cab and your back has started to hurt, in the very spot where your father's stopped straightening.",
+  "e11": "A good harvest. At the year-end dividend, members put their thumbprints in the ledger as they collect. Old Wang takes his money and puts a carton of cigarettes back on your desk.",
+  "e12": "A hailstorm flattens a stretch of managed soybeans. You walk the fields all day with the insurance adjuster, and at night go house to house explaining how much will be paid.",
+  "e13": "The young drone pilot sprays in a day what used to take all of you a week. He asks whether this plot once flooded. How did you know? you say. He points at the screen.",
+  "e14": "The county sends people to look at straw return. You talk for half an hour at the field edge. They write down a lot, and after they go back a section of your village's road gets paved.",
+  "e15": "The month your machinery loan comes due, grain prices are at the bottom. You mortgage your own house deed, and in the middle of the night you sit in the cab and smoke half a pack.",
+  "e16": "People who've gone away to work come home for New Year and hand over their land for you to farm. They stand in the yard admiring the new tractor, and say the cab's softer than the couch at home.",
+  "e17": "Your child gets into an agricultural university and comes home on break to tell you about soil organic matter. You listen, pick up a handful from the ground and hold it to your nose.",
+  "e18": "Every year there are fewer old people in the village. One by one, the houses you once hauled grain for have padlocks on their gates."
+ },
+ "choices": {
+  "c1": {
+   "title": "This first year's bills: extend credit or not",
+   "situation": "Old Sun is putting off this year's fees, saying he'll pay when he sells his grain, which is what he said last year too. You've only just got back and don't want to make enemies in your first year, but the diesel in your own machine is on credit as well.",
+   "options": [
+    {
+     "label": "Give him credit",
+     "result": "You nod and Old Sun pats your shoulder. The money doesn't come until spring, along with a bag of sticky bean buns."
+    },
+    {
+     "label": "Payment first, then the work",
+     "result": "Old Sun, face like thunder, scrapes it together. Your account is clear. Some in the village say this one's come back from outside, and he's tight."
+    }
+   ]
+  },
+  "c2": {
+   "title": "Standing for Machinery Team Leader",
+   "situation": "The old team leader is getting on. A members' meeting will choose a Machinery Team Leader to run all the machines and operators, which means shouting at the field edge all day during the rush. Some say you haven't been back long enough; others say it needs someone who can fix things.",
+   "options": [
+    {
+     "label": "Stand up",
+     "result": "At the meeting you talk about repairs and the cost of parts, not one empty word. More hands go up than you expected."
+    },
+    {
+     "label": "Drive a few more years",
+     "result": "You say you'll learn for two more years. The old team leader hangs on for another season and shoves a wrinkled logbook into your hands."
+    }
+   ]
+  },
+  "c3": {
+   "title": "Borrowing for a big tractor",
+   "situation": "The subsidy for the new 200-horsepower tractor has come through, and you'd still need ¥600,000 of your own, mostly borrowed. With it you can take large blocks of managed land. Cooperatives that can't afford one will live on what's left over.",
+   "options": [
+    {
+     "label": "Borrow and buy",
+     "result": "The whole village comes to see the machine arrive. Your hand is steady on the contract, and you can't sleep once you get home."
+    },
+    {
+     "label": "Keep fixing the old one",
+     "result": "You fix the old machine for another year. There's less work, and you don't owe anybody."
+    }
+   ]
+  },
+  "c4": {
+   "title": "Cross-region work, or stay close to home",
+   "situation": "Wheat and corn ripen at different times in Inner Mongolia and Jilin. Cross-region work earns an extra crop's worth of money, but you'd be gone more than a month, eating and sleeping beside the machine, and the work at home would have to go to someone else.",
+   "options": [
+    {
+     "label": "Take a convoy out",
+     "result": "Your convoy heads west on the highway and at night you sleep under the trailer. You come back with a ledger half again as thick as last year's."
+    },
+    {
+     "label": "Keep the local work",
+     "result": "You stay and negotiate another three hundred mu of managed land. On weekends your child can find you in the yard."
+    }
+   ]
+  },
+  "c5": {
+   "title": "Whether to learn autosteer and data",
+   "situation": "The county is running a smart farming pilot and choosing cooperatives for autosteer and field sensors. For the first three years the data goes up the chain and you do the work yourselves. The old operators call it working for someone else. The young ones can't wait.",
+   "options": [
+    {
+     "label": "Be the first",
+     "result": "You sit in front of the screen for a whole evening drawing the fields into the system. The next spring the machine drives itself and you sit on it drinking water."
+    },
+    {
+     "label": "Wait and see",
+     "result": "Let others try it first, you say. The old way can still farm. It's just that the next plot over has straighter rows than yours."
+    }
+   ]
+  },
+  "c6": {
+   "title": "Becoming Cooperative Manager",
+   "situation": "The old chairman wants to hand over the business side and asks whether you'd be Cooperative Manager. That means chasing loans, fertilizer and the county government, not much driving, and if money's lost the whole cooperative will be looking at you.",
+   "options": [
+    {
+     "label": "Take it",
+     "result": "You start haggling with fertilizer dealers and learn to read a balance sheet. Your days of driving get fewer every year."
+    },
+    {
+     "label": "Stay with the fleet",
+     "result": "I can't make sense of accounts, you say, but I can farm the land right. You still touch every machine in the yard with your own hands."
+    }
+   ]
+  },
+  "c7": {
+   "title": "A job in the city",
+   "situation": "A sales manager at a farm machinery maker has noticed you and invites you to Harbin as head of after-sales technical support, with a monthly salary much steadier than the cooperative's and no more living by the weather. The debts of all these years and your standing with the members would go to someone else.",
+   "options": [
+    {
+     "label": "Go to Harbin",
+     "result": "You hand back the cooperative's seal. The day you leave, all the machines in the yard are parked and no one starts one up.",
+     "end": "You've gone to Harbin to take calls from operators all over the province. Every spring when someone shouts that the field won't take a machine, you still want to go down and squeeze a handful of soil."
+    },
+    {
+     "label": "Stay",
+     "result": "You put the business card away in a drawer. The next spring, you're first onto the land again."
+    },
+    {
+     "label": "Consult for the maker on the side",
+     "result": "Twice a month you go to the city to give talks, and you still do the driving yourself. A bit more tiring, a bit more money."
+    }
+   ]
+  },
+  "c8": {
+   "title": "The election for Cooperative Chairman",
+   "situation": "The old chairman is stepping down for health reasons and the members will elect a Cooperative Chairman. The position requires mortgaging your own house to guarantee the cooperative's debts. In good years everyone shares the money; in bad ones it's yours to carry.",
+   "options": [
+    {
+     "label": "Stand up",
+     "result": "You put the house deed on the table. The members are slow to raise their hands that day, but they all do."
+    },
+    {
+     "label": "Let someone else",
+     "result": "You back someone younger and keep managing the machines. Your wife says you'll be able to sleep now."
+    }
+   ]
+  },
+  "c9": {
+   "title": "Whether to hand it all over",
+   "situation": "Your back won't straighten as it used to, and a big agribusiness wants to buy out the cooperative's land and machines in one package, with a sum for each member. If you don't sell, you don't know whether the young will take it on.",
+   "options": [
+    {
+     "label": "Sell",
+     "result": "You press your thumbprint on the transfer agreement. The company's machines arrive the next year, and their rows are straighter than anyone's.",
+     "end": "The land and machines are gone. You go on living in the village, and every spring you still get up early to take a look at the field edge."
+    },
+    {
+     "label": "Don't sell; wait for the next generation",
+     "result": "You put the ledgers in order, one by one, and wait for someone willing to come back. That's how your father waited for you."
+    }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "At sixty-two you hand the keys to your successor. There are several times more machines in the yard than when you came. The old tractor has been repainted and stands at the far end, not sold because nobody could bring themselves to. On the first morning of spring you still get up before everyone, and stand at the field edge with a handful of soil.",
+  "burnout": "Your back has finally gone and the doctor says no more machines. You spend one spring on the kang, the heated brick bed, listening to the diesels start up one after another outside. Later you walk to the field edge with a cane, and as a machine goes by, the driver gives you a blast on the horn."
+ },
+ "stages": [
+  "In spring you drive the tractor for tilling, ridging and seeding, in autumn you climb into the harvester's cab, and you eat in the seat. In the slack times it's maintenance: grease gun, filters, belts, one by one. You listen to the old chairman allot the fields and to farmers argue about their borders, and you write acreage in a wrinkled notebook that never quite adds up.",
+  "You stand at the field edge with a radio and seven or eight machines answer to you. Who goes into which field first, which wet field to go around, when the fuel truck arrives, who picks up parts from the county: you have to carry it all in your head. Unlike driving, when a machine breaks now you think first of what will replace it, and you keep your itchy hands to yourself.",
+  "Your main battlefield has moved to dinner tables and counters: pushing down fertilizer dealers, chasing subsidies at the county machinery station, getting managed-land contracts signed household by household. You read work data on your phone and cost sheets in Excel. You no longer ask how much grain a mu will yield. You ask whether a mu can make money.",
+  "The cooperative's loans, insurance, dividends and land are all written under your name. You attend county meetings, see the bank's people, and sit on a kang listening to old members complain. Whether to buy a new machine, how much land to manage, soybeans or corn: in the end you have to nod. You seldom drive anymore, but when you walk into the yard you still listen to the engines first."
+ ],
+ "work": [
+  "There's a hidden ditch in Old Sun's field. The old chairman warned you three times, and only the fourth time you pass do you mark it on the guidance screen.",
+  "The harvester's header jams. You spend half an hour poking at it with a pry bar, the stalks wound dead tight, and finally burn through them one by one with a lighter.",
+  "Before winter you drain the machines and miss the radiator on one. Next morning the old chairman takes you to see it, says nothing, and has you replace it yourself.",
+  "Operators Xiao Li and Xiao Liu argue over who goes out first. You pull out the work sheet, reorder it by distance, and give the biggest field to the quiet one, Lao Ma.",
+  "Before the harvest you lay out the whole cooperative's parts list in the yard and go through it. Two belts short. You call the owner of the parts store in the county.",
+  "A new young man does his first subsoiling at the wrong depth. You see it on the monitoring curve on your phone and call to have him stop.",
+  "You sit all afternoon with three fertilizer quotes and Lao Zhou the dealer, and at last get urea down by ¥60 a ton. As he leaves he gives you two extra cases of water.",
+  "Subsidies require uploading tracks and three hundred mu of data won't match in the system. You spend an evening redrawing the plots and submit on deadline day.",
+  "Lao Zhao, off working in the city, wants to put his land in your care. On the kang you read the contract aloud clause by clause to his mother. The old woman asks only: who gets the grain?",
+  "The bank's account manager comes to check the mortgaged machines. You walk him round them and spread the invoices and insurance slips on your desk, and he photographs each one.",
+  "At year end you post the accounts on the wall in the yard. One member goes through it with a little notebook, line by line. You stand beside him until he's done.",
+  "The county wants to report a thousand-mu demonstration plot. You talk for half an hour with field maps and drone photos, and the conversation ends up on when the road will be paved."
+ ],
+ "past": [
+  "The autumn you finished junior high, you sat on your father's tractor and rolled down a row. He shouted from the ground for you to go slower, and the engine covered his voice.",
+  "Too good for farming, you thought. You went to the county vocational school to learn car repair, boarded, and came home once a month.",
+  "After graduation you went to a garage in Harbin and started as a car-wash apprentice. The master tapped your hand with a wrench and you knew where you'd gone wrong.",
+  "You could do a full engine rebuild now, and your pay reached ¥5,000. Winters in Harbin you and two others from home squeezed into a half-basement room.",
+  "Your father phoned to say the cooperative was resetting everyone's shares and told you to come and see. You said you were busy, and at the end of the year you went home anyway."
+ ],
+ "late": {
+  "pension_note": "Estimate: the rural residents' pension plus cooperative dividends comes to about 30 percent of final income.",
+  "scenes": [
+   "The first spring you don't go out, you sit in the yard all morning, listening to an engine to the east and guessing which machine it is.",
+   "When something comes up, your successor still comes to ask. You don't tell him what to do. You only say: did you go and look at that field this time last year?",
+   "The new road in the village reaches the field edge. You walk to the end of it on your cane, and the land is still there, the same piece you drove for decades.",
+   "After your back went you hung the keys on the wall and looked at them all winter. Your wife says: stop looking, they aren't going anywhere.",
+   "You sit in the yard helping the young people with the accounts, faster on the abacus than they are on their phones. Someone passing calls out: Old Team Leader.",
+   "You no longer go out at harvest. But when you smell diesel and straw you still get up and look out of the window for a while.",
+   "The first spring after you've left, somewhere else, your phone's weather app still has Wangkui County on it.",
+   "Someone asks what you used to do. Farming, you say, and then add: farming from a machine.",
+   "Back in the village to visit, you find that the field has changed hands and the rows are still straight. You squat, take a handful of soil and put it back.",
+   "At New Year your child plays your grandchild a video of you driving. The grandchild asks: why is there a person on that machine?",
+   "Heavy snow has closed the yard. You lean at the window, remembering decades ago in the repair shed at thirty below, your hands pressed to the radiator."
+  ],
+  "closing": {
+   "retire": "An early spring morning, and the soil at the field edge falls apart at a squeeze. You dust off your hands and stand there.",
+   "burnout": "Dusk in the yard. You catch a faint smell of diesel and can't tell where it's coming from.",
+   "end": "You check the weather before bed. It's not snowing there anymore."
+  }
+ }
+}

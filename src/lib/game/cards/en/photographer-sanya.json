@@ -1,0 +1,171 @@
+{
+  "id": "photographer-sanya",
+  "occupation": "Photographer",
+  "role": "Destination Wedding Photographer",
+  "headline": "Up from photo assistant, chasing sunrise and sunset every day at a destination wedding studio in Sanya, photographing one couple after another",
+  "unit": "A destination wedding studio in Sanya",
+  "unit_type": "Destination wedding photo studio",
+  "city": "Sanya",
+  "city_tier": "Fourth-tier city",
+  "education": "Associate degree (Photography)",
+  "level": "You can run a shoot on your own and have met backlight and sea wind, but your retouching and your way with clients are not quite there yet.",
+  "intro": "The studio is on a street in Dadonghai hung with white gowns. The posters out front change every month. The boss says what changes is the face, and what's for sale is the sea. You've spent two years here as an assistant and this year you start taking shoots yourself. From today, you eat when the sun tells you to, and how blue Sanya's water looks depends on this one press of your finger.",
+  "salary_note": "Estimate: base pay for destination photography in Sanya is low and commission does the work. Income doubles around Spring Festival, and in the summer low season you may get only the base.",
+  "facts": [
+    { "label": "Photographer (current level)", "value": "2–5 years, ¥6,000–10,000 a month (national average, estimate)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Lead Photographer (5–10 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Guiding a couple's poses and moods on location", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Batch color grading and retouching of client photos", "source": "AI exposure" },
+    { "label": "Open positions", "value": "3 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "It's still dark when you meet the clients in the hotel lobby. The bride's makeup is half done and the groom is yawning.",
+    "You reach the beach at Houhai. Your assistant lifts the reflector, the sun comes up behind the fishing boats, and you have forty minutes of good light.",
+    "The light turns hard and you head back. You clear the salt from your lens with a blower and a soft cloth and load the card into the computer.",
+    "A boxed lunch at the studio. The boss posts today's schedule in the group chat: the Coconut Dream Corridor this afternoon, then a couple from Harbin.",
+    "In Lightroom you make a first cut of the morning, dropping closed eyes and wind-tossed hair, three thousand frames down to four hundred.",
+    "You go scouting in full sun. The rocks are crowded with other studios' crews. You find a spot nobody's standing on and work out where the sun will set.",
+    "The tide is in. The bride holds up her skirt, you stand soaked to the thigh, and you shout: don't look at me, look at him.",
+    "Back at the studio you sit with the sales consultant while the morning's couple view their pictures. When the client says this one makes me look fat, you silently move to the next."
+  ],
+  "ladder": [
+    { "title": "Photo Assistant", "stage": "Starting out", "focus": "Carry the gear, hold the reflector, mind the train, and watch how the photographer talks to clients." },
+    { "title": "Photographer", "stage": "Own shoots", "focus": "Shoot a full day on location by yourself. You move up on repeat business and good reviews." },
+    { "title": "Lead Photographer", "stage": "The studio's face", "focus": "Take the high-priced packages, get requested by name, train assistants and new photographers. You move up on style and reputation." },
+    { "title": "Photography Director", "stage": "Owns the look", "focus": "Set the studio's style and shooting routes, run the team, review the work, negotiate channels and new packages, and answer for complaints and repeat business." }
+  ],
+  "ai_tasks": [
+    { "name": "Guiding a couple's poses and moods on location", "how": "How to make two nervous people laugh in the sea wind, and when to press the shutter, is something worked out on the spot. AI can't lend a hand." },
+    { "name": "Batch color grading and retouching of client photos", "how": "AI can set the skin tones and skies across a whole set in one click, remove passersby and swap backgrounds. A person only checks whether the finished set looks like that person." },
+    { "name": "Scouting locations and planning routes", "how": "AI can calculate sunset angles and tides and suggest shooting positions. Whether a rock can be stood on, and what the wind and crowds are doing today, takes someone going to look." },
+    { "name": "Writing copy and promoting packages", "how": "AI can produce a full set of social posts and promo posters in minutes. Which client photo will move anyone, the boss still picks personally." },
+    { "name": "Picking photos and talking clients into extras", "how": "AI can pull out closed eyes and duplicates and put the rest in suggested order. The few words needed when a client hesitates over the money still come from a person." }
+  ],
+  "events": {
+    "e_sunset": "A glow arrived out of nowhere and turned the entire sea pink. You took more than nine hundred frames that evening, and the last one became the client's phone wallpaper for life.",
+    "e_typhoon": "The day before the typhoon made landfall, every one of the studio's dozen-odd bookings was postponed. You carried the gear upstairs while the calls came one after another, each saying the flights couldn't be refunded.",
+    "e_new_year": "Spring Festival season. Sanya's hotels were absurdly expensive, you did three shoots a day and ate boxed lunches for more than ten days running. When the commission arrived you had lost a layer of skin to the sun.",
+    "e_complaint": "A client said the retouched pictures didn't look like her, demanded a full refund, and wrote a long post on a review site. The boss had you write an explanation. You looked at that face for a long time and still couldn't say what was off.",
+    "e_lens": "A wave came in. You saved the bride's veil but not the lens on your shoulder, and half the repair bill was yours.",
+    "e_off": "After May, everyone was gone. The studio did only a few shoots in two months. You lived on base pay and rode your e-bike to the shore to photograph clouds for yourself.",
+    "e_ai_retouch": "The studio brought in AI retouching. A set now comes out in half an hour, and of the two women who used to do fine retouching, one remains, checking the results.",
+    "e_ai_home": "Someone in your feed turned two selfies into a full set of Sanya beach wedding photos for free. You zoomed in on the sand. The sand was right. The light was false.",
+    "e_again": "A couple you shot seven years ago came back with a child and asked for you by name. Their little girl couldn't stay still. You lay flat on the sand and caught her running after her father's footprints.",
+    "e_knee": "Your knees have started to crack when you squat, and your back has gone too. All these years half-kneeling, and the rocks and the sand never said a word.",
+    "e_sun": "After one summer your arms and face are two different colors. Going home, your mother touches the skin on the back of your neck and doesn't say anything.",
+    "e_assistant": "The assistant you trained comes back from a first solo shoot and hands you the camera. You flip through a few frames and point at the horizon: crooked, the rest is good.",
+    "e_rent": "The landlord raised your rent in high season, so you moved to a village-in-the-city out by Lizhigou. The ride to work is twenty minutes longer, and a sweat towel hangs from your mirror.",
+    "e_drone": "You got your drone pilot's license. The first time you went up over the water, the bride on the rocks was the size of a grain of rice. Those pictures now add ¥800 a shoot.",
+    "e_close": "The studio across the street closed after ten years. Before the shutter came down, their photographer gave you a whole row of reflectors.",
+    "e_coconut": "After work you have a bowl of Baoluo noodles near the First Market. At the next table someone is scrolling through wedding photos. You recognize them as yours, say nothing, and eat one more peanut.",
+    "e_parents": "Your parents come to Sanya for the winter, and you take them to the shore and photograph the two of them for the first time. Your father doesn't know what to do with his hands. He's stiffer than any groom.",
+    "e_gear": "A new camera body came out whose autofocus finds people's eyes. You tried it and found that the focus tracking you'd practiced for ten years now takes one press."
+  },
+  "choices": {
+    "c_video": {
+      "title": "Do you learn wedding video?",
+      "situation": "More and more clients ask for a short film to post online, and the boss says whoever learns it gets twenty percent more commission. A gimbal and editing would eat a lot of evenings, and your wrists are tired enough.",
+      "options": [
+        { "label": "Learn the gimbal and editing", "result": "You walked the yard with a gimbal for a month. When your first film was cut, the boss changed the music and posted it." },
+        { "label": "Get the stills right first", "result": "You came to understand the light around sunset one layer deeper. The video jobs went to someone else." }
+      ]
+    },
+    "c_style": {
+      "title": "Shoot what the boss wants, or what you want?",
+      "situation": "Clients like the classics: the big train, the look over the shoulder, the held hands. Lately you want to shoot moving, unlovely moments. Clients, the boss says, are paying to look good.",
+      "options": [
+        { "label": "Do the poses, then shoot a few of your own", "result": "You shot one more hour and put the results at the very end of the package. One bride later changed her profile picture to just that frame." },
+        { "label": "Follow the sample book", "result": "Repeat business went up, and you could call the next pose with your eyes shut. The commission was steady." }
+      ]
+    },
+    "c_city": {
+      "title": "A friend in Shanghai wants you to open a studio",
+      "situation": "A classmate has opened a portrait studio in Shanghai and wants a partner, and you'd have to put money in. No more sun up there, but no more of this sea either.",
+      "options": [
+        { "label": "Stay in Sanya", "result": "You answered the message and rode your e-bike to Houhai. The clouds were good that day, and you thought: I'll stay like this." },
+        { "label": "Open a studio in Shanghai", "result": "You left Dadonghai's white gowns behind and took two lenses and your sunburned arms.", "end": "After that you took a great many ID photos and headshots in a studio in an office tower, where the light was always right. Sometimes, unscrewing a lens cap, your fingers half-remembered sand." }
+      ]
+    },
+    "c_main": {
+      "title": "Lead Photographer: asking the boss for the big shoots",
+      "situation": "The boss plans to name two Lead Photographers, with prices doubled and your face on the studio's feed. But if you botch one, the bad review carries your name, and you'd have to give up your small jobs.",
+      "options": [
+        { "label": "Go for Lead Photographer", "result": "You made a book of your twenty best frames of these years and set it on the boss's desk. He turned the pages for a long time." },
+        { "label": "Keep taking small jobs", "result": "You went on shooting the young couples who had saved for a long time to come. The pay was slight, and their smiles were loose." }
+      ]
+    },
+    "c_ai": {
+      "title": "The new shot-plus-AI package",
+      "situation": "The studio wants a new package: you shoot for half a day, and AI extends it to the remaining scenes. Half the price, twice the clients. Some of the older photographers think it means selling yourself.",
+      "options": [
+        { "label": "Design the process yourself", "result": "You set one rule: no changing the face, the hands or the look in the eyes. It went into the contract, and clients actually felt better for it." },
+        { "label": "Shoot only real sessions", "result": "Your jobs grew fewer and pricier. The people who came all said the same thing: we want it real." }
+      ]
+    },
+    "c_own": {
+      "title": "Go home and open a small photo shop?",
+      "situation": "Your knees keep getting worse. A relative in your home county says there's a little storefront by the high school: ID photos, graduation photos, family portraits, no chasing the sun. The boss in Sanya wants you for a few more years.",
+      "options": [
+        { "label": "A few more years", "result": "You bought better knee braces and kept kneeling on the sand. The tide waits for no one, and neither do you." },
+        { "label": "Open the shop back home", "result": "You wrote the shop's name on a whiteboard. Your first customer was your old high school homeroom teacher.", "end": "Your shop took graduation photos, and portraits of eighty-year-olds. Before pressing the shutter you always said: don't look at me, look at him. The children in the shop never knew those words were first said by the sea." }
+      ]
+    },
+    "c_director": {
+      "title": "The studio needs a Photography Director",
+      "situation": "The boss's health is poor and he wants someone to set the studio's style, run the team and review the work. That's what moving up to Photography Director means, and you would seldom press the shutter yourself again.",
+      "options": [
+        { "label": "Take Photography Director", "result": "You began spending your mornings on other people's pictures and redrew the three-thousand-frame routes. Before long you wanted to go to the beach." },
+        { "label": "Keep the camera", "result": "You told the boss your legs could squat for a few more years. At 5:20 the next morning you were waiting in a hotel lobby again." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "Your last shoot was a white-haired couple making up for the wedding photos they didn't take thirty years ago. As the sun went down you told them they needn't look at the camera. Back at the studio you cleaned it, took out the battery and set it on the table. Out in the street, the white gowns were still hanging in the wind.",
+    "burnout": "That year the doctor looked at your scans and said your knees and back could not take kneeling to shoot any more. You gave the schedule to your assistant and drew your favorite positions on a sheet of paper. After that you seldom went to the shore. On summer evenings, when the sky went pink, your finger would still move a little."
+  },
+  "stages": [
+    "With one assistant and one makeup artist you go out shoot by shoot, reading the light, choosing the rocks, calling the poses, and at night cutting three thousand frames to four hundred and marking them for the sales consultant. The studio schedule says when you get up. Between you and the boss there is only one client-satisfaction sheet.",
+    "The expensive shoots are yours now, and it's your face on the studio's feed. Besides shooting you train the assistants, check their lighting ratios and framing, teach newcomers how to talk, and pick work for the sample book at review. You used to answer for one couple; now people ask you about the color of the whole book.",
+    "You seldom go out in the morning now. You sit at the studio with other people's client sets: has the color drifted, are the bride's eyes alive. You set the routes and shooting positions, negotiate commissions with hotels and wedding planners, and phone complaining clients yourself. Your camera stays in the cabinet and comes out a few times a year."
+  ],
+  "work": [
+    "The couple from Chengdu can't smile. You have the groom turn his back to the camera and tell the bride what he said in his sleep last night, and you press the shutter just as the reflector comes round right.",
+    "Your assistant turns the reflector to the wrong side, and there's a flat silver glare across her face. You raise a hand, switch to the soft face, drop the exposure one stop, and the set is saved.",
+    "You apply a preset to a set in Lightroom and pull the bride's skin tone back a little by hand. This time, the sales consultant says, she probably won't say it doesn't look like her.",
+    "Xiao He, the new photographer, brings back pictures that are all alike. You pull up the metadata and find he spent the whole afternoon at one focal length, so next time he goes out with only a 35mm.",
+    "The wedding manager from a five-star hotel comes to talk business. You open the sample book at an underwater shot and say that this light only exists on April mornings. He writes it down.",
+    "You rewrite the studio's sample review form, striking out looks good and adding who is this. The next week, three photographers' work no longer looks the same.",
+    "On an old map you redraw the studio's whole set of location routes, split up three crowded positions, and lay them out by the tide table. Old Chen, the driver, takes one look and says that'll save fuel.",
+    "A client's complaint has made it up to you. You invite her for coconut water, go through all the raw frames, pick nine to redo, and waive the fee. When she leaves, she changes a few words in her bad review.",
+    "At the annual planning meeting you project the margin table for the AI-extension package on the wall, then put up one unretouched client photo and say: this is what we're actually selling."
+  ],
+  "past": [
+    "The year you finished middle school your uncle left you his point-and-shoot, and you filled it with pictures of the family dog.",
+    "Your gaokao (college entrance exam) score wasn't high, so you chose photography at a vocational college back home in Henan. Your father thought it counted as a trade, better than going into a factory.",
+    "You interned at a portrait shop in Zhengzhou, shooting dozens of ID photos a day. Get people flat first, your teacher said, and then we can talk about getting them pretty.",
+    "Before graduation a classmate said the destination wedding studios in Sanya were always hiring, with lodging included, and you boarded a southbound train with one suitcase.",
+    "You started as a photo assistant, holding the reflector and minding the train, and in your first month the skin peeled off the back of your neck.",
+    "Your first set was shot on a day off, of a colleague. The lead photographer looked at it and said: you see the light well. You didn't see the person."
+  ],
+  "late": {
+    "pension_note": "Estimate: studios tend to pay social insurance at the minimum base, or on and off, so the pension is under forty percent of final income, supplemented by savings and the occasional job.",
+    "scenes": [
+      "Your first month of retirement you still wake at five, lie listening to the wind, and work out today's sunrise in your head.",
+      "An apprentice has opened a studio and invites you to see the opening samples. You look through them and say only: the horizon's level. He laughs for a long time.",
+      "You and your spouse walk down to the beach at Houhai and watch someone else's crew calling poses on the rocks. You want to go over. You take two steps and stop.",
+      "You rest at home, the gear put away in the dry cabinet, its small light steady green. For the first few months you keep getting up to look at it.",
+      "At a neighborhood seniors' event someone asks if you can take a group photo. You bring a chair and take it sitting down.",
+      "A client from long ago sends a picture of their child, with a note: the one you took is still on our living room wall. You tuck it into an album.",
+      "After leaving Sanya you look at your phone, and the cloud album still reminds you: five years ago today, Houhai.",
+      "You return to Sanya on holiday with your family and walk that street in Dadonghai. The gowns still hang, and a new set of young people stands at the door.",
+      "A young person asks why you went into that line of work. You think it over and show them a picture of the sea at dusk: because of this.",
+      "A lot of wedding pictures now are generated on a phone. You look through a set now and then, at the sand, at the light, at where the bride's hand is.",
+      "Your granddaughter holds up her phone to show you the sunset she took, sideways. You turn her hand a little and say: like this, and wait a moment."
+    ],
+    "closing": {
+      "retire": "One evening many years later you are sitting on the balcony when the sky starts to go pink. You don't reach for a camera. You watch it slowly turn gray, then get up and switch on the light.",
+      "burnout": "Many years later you hand your child a box of hard drives labeled by year. Who's on them, the child asks. Other people's good days, you say.",
+      "end": "Many years later you find one very fine grain of sand in an old lens pouch. You look at it in your palm for a while and blow on it, and the wind outside goes on blowing."
+    }
+  }
+}

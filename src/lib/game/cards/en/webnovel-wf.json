@@ -1,0 +1,181 @@
+{
+  "id": "webnovel-wf",
+  "occupation": "Writer",
+  "role": "Full-time Web Novelist",
+  "headline": "Quit an electronics factory, now writing six thousand words a day in the spare bedroom of an old Weifang flat, living on attendance bonuses and subscriptions",
+  "unit": "Home in Weifang (under contract to a web fiction platform)",
+  "unit_type": "Self-employed, platform-contracted",
+  "city": "Weifang",
+  "city_tier": "Third-tier city",
+  "education": "Associate degree (Mechatronics)",
+  "level": "You've just signed your first book with a platform. You check the read-through numbers eight times a day, and your stockpile of chapters lasts only a week.",
+  "intro": "You've put a desk in the spare bedroom of a flat in an old compound in Kuiwen District, with a view of the neighbors' air conditioners. Last year you quit the electronics factory and signed your first book with a platform, and the back end shows a hundred-odd readers following it each day. From today your six thousand words are your time card. No one clocks you in, and no one can give you the day off.",
+  "salary_note": "Estimate: income is all subscriptions and ad share. For the first few years it often falls short of local factory pay, and the few who make it earn far above the local level. You pay your own social insurance.",
+  "facts": [
+    { "label": "Newly Signed Author (current level)", "value": "0–3 years, ¥1,800–4,500 a month (national average, estimate)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Full-Attendance Author (3–6 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Writing characters and plots in a voice of your own", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Research and worldbuilding", "source": "AI exposure" },
+    { "label": "Open positions", "value": "9 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "You eat a meat-stuffed flatbread and open the back end to see yesterday's read-through and comments. One says the hero is an idiot. You read it three times.",
+    "You open the document and first reread yesterday's last five hundred words to get your hand back. Today's chapter has to turn over half of the enemy's cards.",
+    "Three thousand words in, you get up to boil noodles. Standing at the stove, you are still working on the hook for the end of chapter two.",
+    "Afternoons are hardest. You set a pomodoro timer: twenty-five minutes of writing, five minutes of stretching. There is always one cord at the small of your back.",
+    "Six thousand words done and scheduled to post. You enter today's foreshadowing in the settings sheet, so that next month you don't forget it yourself.",
+    "A walk along the Bailang River, with kites still up in the sky over the bank. In your phone notes you write down something a passerby said.",
+    "Your editor posts a new promotion in the authors' group. You read it, then write another eight hundred words of stockpile, and feel a little safer."
+  ],
+  "ladder": [
+    { "title": "Newly Signed Author", "stage": "Testing the water", "focus": "Finish a first book, learn openings, pacing and the end-of-chapter hook. You move up by finishing and keeping readers." },
+    { "title": "Full-Attendance Author", "stage": "Staying alive", "focus": "Never miss a day all year, earn the monthly attendance bonus, hold a core of two or three thousand readers. You move up by launching one book after another without a flop." },
+    { "title": "Mid-List Author", "stage": "A name", "focus": "New books open with steady first-day subscriptions, and audio and short-drama adaptation rights sell. You move up with one signature book." },
+    { "title": "Star Author", "stage": "The few", "focus": "Readers follow your name, your books are adapted and the platform gives you resources. The daily word count doesn't change. More people are simply watching." }
+  ],
+  "ai_tasks": [
+    { "name": "Writing characters and plots in a voice of your own", "how": "AI can write a smooth chapter, but what readers follow is why this character had to do that, and why only he would say that line. It takes an author who has lived and thought." },
+    { "name": "Research and worldbuilding", "how": "AI can quickly gather material on dynasties, official ranks, weapons and geography and lay out a setting. What to use and how it holds together is the author's call." },
+    { "name": "Outlining books and chapters", "how": "AI can lay out dozens of chapters of rising and falling action by genre formula and offer several directions. Which turn readers will curse and which they'll chase is still the author's judgment." },
+    { "name": "Proofreading for typos and contradictions", "how": "AI reads the whole book and flags typos, names that drift and timelines that collide, and the author fixes them in one pass." },
+    { "name": "Answering comments and running the fan group", "how": "AI can sum up the complaints in the comments and draft notices. How to talk to longtime readers, and which comment deserves a real answer, is the author's own business." }
+  ],
+  "events": {
+    "e_flop": "A book that had run to eight hundred thousand words opened with just seventy first-day subscriptions. Your editor said perhaps wrap it up and start a new one. You spent an afternoon deleting the last thirty pages of the outline.",
+    "e_first_pay": "Your first payment arrived: ¥1,120, a little less than a week of overtime at the factory. You went out for chaotianguo, the open-air pot stew, anyway, and asked for an extra egg.",
+    "e_back": "Your lumbar trouble flared up. You lay on your stomach on the bed dictating into your phone, and there were so many errors it looked like someone else had written it.",
+    "e_fan": "A high school senior left a comment: he waited up every night at midnight for the update, and this book had seen him through the exam. You took a screenshot and saved it in the folder named Don't Delete.",
+    "e_family": "Home in Changle for New Year, relatives asked where you work. Your mother got in first: at home, writing things for a company. The table went quiet for a moment.",
+    "e_ins": "You did the sums: social insurance as a flexibly employed person comes to over ten thousand yuan a year. You set the money aside first, on a card you never look at.",
+    "e_block": "You were stuck. On the third day without a word you forced out six thousand of them to keep your attendance bonus, and the comments said this part was padding.",
+    "e_ai_flood": "Suddenly the platform had tens of thousands of new books posting twenty thousand words a day, all reading much the same. They filled the new-release chart, and yours fell to page four.",
+    "e_ai_check": "The platform's AI detector flagged a chapter you'd written by hand as likely generated, and your attendance bonus was docked. You appealed to your editor, screenshotting dozens of revision versions page by page.",
+    "e_ai_help": "AI went through three million words of yours, sorting out every character's age and form of address, and caught eleven contradictions. You fixed them and thought: readers saw those too, they just didn't say.",
+    "e_friend": "An older writer from the group drove over from Shouguang to see you with a box of vegetables. Two people who write books sat in a little restaurant, saying little, asking each other how much stockpile they had.",
+    "e_audio": "An audio company bought one of your books for a flat ¥32,000. For the first time you used writing money to buy your family a new refrigerator.",
+    "e_pirate": "You found your book on a pirate site, updating two minutes faster than the real one. Someone in the comments said this author is pretty good, just hard to find legally.",
+    "e_rule": "The platform changed its revenue rules again, and ad income from free readers now makes up the bulk. You were down thirty percent this month, and you got out the calculator again.",
+    "e_kite": "April, kite festival, and the whole city headed out of doors. You staged a final battle in your book along the kite strings, and that chapter drew twice the usual comments.",
+    "e_eye": "After too long at the screen the characters began to double. You bought a height-adjustable desk and a big monitor, and now put in eye drops before you write.",
+    "e_end": "A book three years in the writing is finally finished. You post the last chapter, the comments fill all night with congratulations, and you sit at the desk not knowing what to do tomorrow.",
+    "e_child": "The kindergarten wanted the parents' occupations. You wrote self-employed. The next day the teacher asked: and what business are you in?"
+  },
+  "choices": {
+    "c_genre": {
+      "title": "What's the second book?",
+      "situation": "Your editor recommends following the hottest genre right now, where read-through is proven. But there's a story you've carried for a long time about a factory back home, and almost no one reads that kind of thing on the platform.",
+      "options": [
+        { "label": "Follow the hot genre", "result": "Three months later you had your first payment over ten thousand yuan. You looked at the outline and felt the hero could be anyone." },
+        { "label": "Write your own story", "result": "You wrote slowly and comfortably. There were thirty-two first-day subscriptions, and one reader wrote that his father worked in that kind of factory." }
+      ]
+    },
+    "c_full": {
+      "title": "Reaching Full-Attendance Author: first, the stockpile",
+      "situation": "To be a Full-Attendance Author who collects the bonus every month, you can't miss a single day all year. A friend is getting married and an old relative is going into the hospital, both next month, and your stockpile is two days long.",
+      "options": [
+        { "label": "Push through, make up the stock at night", "result": "You typed two chapters on your phone in a hospital corridor. The day the attendance bonus came, you slept until afternoon." },
+        { "label": "Take a week off and stop posting", "result": "You posted a line saying something had come up at home. When you came back, your read-through was down twenty percent, but you had eaten every one of those meals with your relative." }
+      ]
+    },
+    "c_quit": {
+      "title": "An old workmate calls you back to lead a shift",
+      "situation": "The electronics factory you left is expanding, and your old shift leader wants you back, with full social insurance and over seven thousand a month. Your writing averages less than that, and your child is nearly school age.",
+      "options": [
+        { "label": "Keep writing", "result": "You thanked him and opened the document. You wrote seven thousand words that day, a thousand over, and couldn't tell who you were daring." },
+        { "label": "Go back to the factory", "result": "You finished your last book and then collected your badge.", "end": "You stood at a workstation for many more years. On the way home from night shift an opening would sometimes come to you. You put it in your phone and never did write the second sentence." }
+      ]
+    },
+    "c_ai": {
+      "title": "Do you let AI into your document?",
+      "situation": "Plenty of people in the group are using AI for detailed outlines and transitions and have doubled their daily count. Some veteran authors say that if you use it too much your hand won't come back. And the platform's AI detection is getting stricter.",
+      "options": [
+        { "label": "Use it for settings and plot holes", "result": "You set yourself a rule: it can help with the outline, but it doesn't write a word of the text. You more or less kept to it." },
+        { "label": "Not one word", "result": "You kept to a hand-drawn chart of who's who. You wrote slowly, but in the comments someone said your sentences could be spotted at a glance." }
+      ]
+    },
+    "c_mid": {
+      "title": "Mid-List Author: the platform wants a change of genre",
+      "situation": "The platform is picking a group to raise to Mid-List Author, with promotional placement, but it wants you to switch to a more marketable genre geared for short-drama adaptation. Your longtime readers won't like it.",
+      "options": [
+        { "label": "Switch and take the placement", "result": "The day the new book went on sale, first-day subscriptions passed five thousand. You sent a red packet to the group with a slightly shaking hand." },
+        { "label": "Stay with your genre", "result": "The placement went to someone else. Your old readers are still here, following you book by book, the same number, a little older." }
+      ]
+    },
+    "c_film": {
+      "title": "A short-drama company wants to buy your book outright",
+      "situation": "A short-drama company wants your best book. The money would pay off the mortgage, but the adaptation rights would be bought out entirely, the ending changed, and the hero's name too.",
+      "options": [
+        { "label": "Sell", "result": "The money arrived. Half a year later you scrolled past a clip on your phone in which the hero said something you had never written. You watched to the end." },
+        { "label": "Don't sell", "result": "You put the contract in a drawer and went on paying the mortgage. One day you opened the book at chapter one and changed a word." }
+      ]
+    },
+    "c_teach": {
+      "title": "A training school wants you as lead instructor",
+      "situation": "A training company wants you to teach web fiction writing. The income is steady, you'd no longer post daily, and your back can't take much more anyway. But once you stop, the readers go quickly.",
+      "options": [
+        { "label": "Keep writing", "result": "You bought a better chair. At half past nine the next morning you opened the document and read yesterday's last five hundred words." },
+        { "label": "Go and teach", "result": "You handed the fan group over to its admin. In your first class you explained what an end-of-chapter hook is.", "end": "You taught several hundred students, some of whom ended up writing better than you. Every April at kite festival you get one or two messages saying their new book has gone on sale." }
+      ]
+    },
+    "c_god": {
+      "title": "Fifty years old: still going for Star Author?",
+      "situation": "The book in your hands is the best you've ever written. The platform asks whether you want to try for the Star Author tier: rankings, events, short videos showing your face. You've never shown your face.",
+      "options": [
+        { "label": "Show your face and go for it", "result": "You read a passage from the book to your phone, stopped halfway, and started again. So that's who it is, readers said." },
+        { "label": "Just finish the book", "result": "You didn't film anything. The day you reached the ending was an afternoon. You opened the window a crack, and the wind came in and stirred the edge of a sticky note on the desk." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "The day you finished your last book you wrote no afterword, only rounded the chapter count. You closed the back end and put the pomodoro timer in a drawer. Down in the old compound the air conditioners were still going, the same sound as twenty-some years ago. The next day you woke at half past nine, sat down at the desk and didn't open the document.",
+    "burnout": "That year the doctor said your neck and back needed a rest, and you could no longer sit all day. You wrote one last notice saying you'd update tomorrow, and after that there was no tomorrow. Every year someone in the fan group still asks. You look in sometimes and don't reply. You only scroll a little further down that folder."
+  },
+  "stages": [
+    "Your job is writing: watch the numbers, redo the opening, leave a hook at the end of each chapter, flip between the document and the settings sheet. Your editor is the only person between you and the platform and answers every few days. You're still learning what read-through and pacing mean, and when you finish for the day you open the back end and refresh it several times.",
+    "You get the attendance bonus every month now. Six thousand a day is no longer the problem. The hard part is one book after another not flopping. You have two or three thousand readers, a fan group, regular notices, and you sound out a new genre in the authors' group before you start. You've stopped caring so much about a single day's numbers. You look at the monthly average.",
+    "New books open with people waiting, and first-day and average subscriptions have a floor. You negotiate placements with your editor and licensing with audio and short-drama companies, and read contract clauses wondering whether to change them. The non-writing work takes half the day. You've started paying a part-time proofreader and using a settings database to keep three million words of characters straight.",
+    "Readers follow your name. The platform asks you onstage, and adaptors' screenwriters phone to ask why a character did such a thing. The daily count hasn't changed, only now one typo is seen by thousands. You've also begun helping new writers, listening to their numbers at the annual meeting and answering their drafts line by line."
+  ],
+  "work": [
+    "Your editor sends back your opening with one note: nothing happens until the third paragraph, too late. You move the fight up to the first sentence and tuck his origins into chapter two, and read-through rises by forty the next day.",
+    "In Excel you make a table color-coding the conflict in each of the first ten chapters of hit books. Only then do you see they have something happen every two thousand words.",
+    "You write your first love scene and revise it seven times. An older reader in the group sends a voice message: this girl isn't like any girl. You ask your younger sister, who laughs for a long time and tells you how to fix it.",
+    "Before starting a new book you post three openings anonymously in a small group of authors for a vote. An older writer points to the second one: this one, the hero's in debt from the first line, everyone gets that.",
+    "You add a column to your settings sheet called who knows this. At chapter three hundred it saves you, when the hero is about to say something he has no way of knowing.",
+    "Xiao Tang, the audiobook narrator, asks how to read a rare character. It doesn't matter if you get it wrong, you say. He phones anyway and reads it to you three times.",
+    "A short-drama company sends an adaptation contract. You and a lawyer friend go through it clause by clause, strike the one on derivative rights, keep the credit for the character names, and in the end they agree.",
+    "Xiao Lin, your part-time proofreader, sends a sheet: thirty typos and two characters who come back from the dead. You add a hundred yuan to his pay.",
+    "On the phone your editor says there's a front-page slot next month, and you'd need two hundred thousand words in stock beforehand. You look at the calendar and push your trip home back a week.",
+    "A young screenwriter from the adaptation team phones to ask why the hero never took his revenge. You talk for an hour, and the sound of typing on the other end never stops.",
+    "Backstage at the platform's annual meeting, a new writer three years in holds out a phone to show you the numbers. You don't look at them. You scroll to the last chapter and tell him this last sentence can go.",
+    "You turn your settings database into an indexed document and send it to the young author taking on a spin-off, with a note: these few characters, don't let them die easily."
+  ],
+  "past": [
+    "In middle school you read novels on a keypad phone in the back of the class. A teacher confiscated it once, and you bought another.",
+    "You did badly on the gaokao (college entrance exam) and went to a local vocational college in Weifang to study mechatronics, because you heard it was easy to find work.",
+    "You went to work at an electronics factory making earphones, on rotating night shifts. On breaks you turned your phone sideways and wrote the first passages of a story in the notes app.",
+    "Writing two thousand words after night shift became a habit. Your first book ran online for eight months and earned not a cent, with three hundred-odd bookmarks.",
+    "On your second book an editor left a message: can we talk? You read it several times in the workshop bathroom. At the end of that year you handed in your resignation."
+  ],
+  "late": {
+    "pension_note": "Estimate: flexibly employed workers contribute on their own at a low band, so the pension is about thirty percent of income. Royalties and small earnings from old books add a little.",
+    "scenes": [
+      "In your first month of no more updates you still sit down at the desk at the usual hour, open the document, start a new page and don't write.",
+      "The back end still sends a few hundred yuan a month from old books. You spend it on meat flatbreads, and feel they are what all those words have turned into.",
+      "The admin of your fan group visits Weifang and you meet for the first time. You're not what I imagined, he says. Nor me, you say.",
+      "You lie resting, your fingers moving a little on the quilt. They are typing the opening of yesterday's chapter.",
+      "At the compound gate you read phone instructions aloud for old people, because the print's too small. They say you explain well. I used to write, you say.",
+      "A reader finds your old account and leaves a message: I told this book to my kid later. You look at it for a long time and reply with one word: good.",
+      "The first morning after you stop writing books you sleep half an hour longer, and on waking still think for a moment about today's hook.",
+      "A coworker asks what you did when you were young. Wrote a few things, you say. No one follows up. You are relieved, and a little disappointed.",
+      "You search online and find that old book of yours, still there. The last comment is from last year and says: anyone here? You reply: yes.",
+      "There are more books on the sites now than anyone could read, most of them written by AI. Readers have started giving the ones that aren't a small mark, like a stamp on an egg.",
+      "Your grandchild asks what became of the hero of that book. You think it over and tell a story with an ending the book doesn't have."
+    ],
+    "closing": {
+      "retire": "One spring many years later they are flying kites again along the Bailang River. You sit on a bench watching one string go up and up to where it can't be seen. In your head you write it an opening, then put your hands back in your pockets.",
+      "burnout": "Many years later you find a sheet in a drawer full of names, all of them people from your books. You read them out one by one, and by the last one the sun has moved to the other side of the windowsill.",
+      "end": "Many years later a stranger going through an old phone finds an unfinished book with your name on it. He reads to the last chapter, closes it, then opens it again to see if there's an update."
+    }
+  }
+}

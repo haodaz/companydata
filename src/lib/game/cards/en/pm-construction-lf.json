@@ -1,0 +1,186 @@
+{
+ "id": "pm-construction-lf",
+ "occupation": "Construction Project Manager",
+ "role": "Deputy project manager at a general contractor",
+ "headline": "Thirty-one, your constructor's license just registered, on a residential site in Gu'an, Langfang, keeping more than two hundred workers and an endless book of change orders, and waiting for a project of your own",
+ "unit": "A private general contractor in Langfang (started with a second-class building license; every site is in the ring around Beijing)",
+ "unit_type": "Private general contractor",
+ "city": "Langfang (Gu'an)",
+ "city_tier": "Third-tier",
+ "education": "Associate degree (Building Engineering), upgraded to bachelor's part-time",
+ "level": "You can handle layout, leveling and drawings. You are learning how to talk to the owner, the supervising engineer and the crew bosses all at once",
+ "intro": "This site is in Gu'an: four high-rises, for a developer from Beijing. It took you seven years to rise from site technician to deputy project manager, and you've lived in the prefab dorms of nine sites. Your Grade 2 constructor's license has only just been registered. Project manager Chang slaps a stack of schedules in front of you and says this month's output is yours to deliver. From today your phone holds the numbers of more than two hundred people, and none of them is calling with good news.",
+ "salary_note": "Estimate: at a private contractor around Beijing the base pay is not high and project bonuses depend on settlement and collection, so it runs slightly under the national average.",
+ "facts": [
+  { "label": "Deputy Project Manager (current level)", "value": "4-9 years, ¥10,880–16,000 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Project Manager (9-15 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥21,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Coordinating on site and handling emergencies", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Preparing construction plans and schedules", "source": "AI exposure" },
+  { "label": "Open positions", "value": "43 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The concrete trucks are already lined up outside the prefab dorm. You wipe your face with cold water, take your helmet off the back of the door, and put yesterday's site log in your jacket pocket.",
+  "A crowd stands at the worker-ID turnstile, from Henan, Sichuan, the villages of Baoding. You confirm today's floors with carpenter boss Old Jia. He hasn't lit his cigarette yet.",
+  "The supervising engineer finds fault with the rebar on the twelfth floor: not enough concrete cover. You go up with a tape measure, then say: we'll fix it, recheck this afternoon. The crew boss mutters behind you.",
+  "The owner's engineer sends a new drawing that moves a sump pit in the basement. That pit was poured last week. You file the drawing with last week's photos and start writing up a change order.",
+  "The production meeting in the prefab: crane shifts, concrete volumes, next week's air pollution alert, item by item. Don't tell me the problems, says Chang, tell me what day we top out.",
+  "The labor contractor wants his progress payment. The owner's money hasn't come. All you have is a commercial bill. You pour him a glass of water and tell him one more week.",
+  "The night pour is about to begin. You stand beside the pump truck and watch load after load of concrete go up, your phone still answering the owner.",
+  "The prefab lights are still on. You photograph today's progress and post it to the group. Your spouse asks if you're coming home to Baoding this weekend. You think about it, and reply first with an emoji."
+ ],
+ "ladder": [
+  { "title": "Site Technician", "stage": "On site", "focus": "Lay out lines, watch crews, keep the site log; move up by spotting work and knowing the drawings cold" },
+  { "title": "Deputy Project Manager", "stage": "Production", "focus": "Schedule work, assign crews and cranes, deal with the supervisor; move up by keeping control of the site and earning a constructor's license" },
+  { "title": "Project Manager", "stage": "Own a project", "focus": "Answer for a project's cost, schedule, quality and safety, and sign the documents; move up by closing accounts and collecting payment" },
+  { "title": "Project Director", "stage": "Run a territory", "focus": "Manage several projects and project managers, chase owners and collections; move up with projects and people of your own" },
+  { "title": "Branch General Manager", "stage": "Run the branch", "focus": "Win local work, run the cash flow, carry the company's safety liability; few ever hold this seat" }
+ ],
+ "ai_tasks": [
+  { "name": "Preparing construction plans and schedules", "how": "AI can draft schedules from project documents and lay out the critical path. Which step to rush, how crews overlap, how much slack to leave for the rainy season and pollution stoppages: people on the project decide." },
+  { "name": "Coordinating on site and handling emergencies", "how": "AI can only flag problems through cameras. Adjusting a lift, a quarrel between crews, a drawing the owner changes on the spot: someone has to go and look, decide right there, and take responsibility afterward." },
+  { "name": "Safety patrols and fixing hazards", "how": "AI can spot missing helmets and unguarded edges and generate correction notices. Staying on people until habits change, having the nerve to stop work, carrying the liability when things go wrong: that's still on people." },
+  { "name": "Keeping site logs and archiving records", "how": "AI can generate logs and inspection-lot records from voice and photos, and archiving needs almost no one. The records clerk only spot-checks and signs." },
+  { "name": "Quantity takeoffs and cost analysis", "how": "AI can calculate quantities from BIM models and progress claims and compare cost overruns. Which change orders can be recovered, and how to settle with subcontractors, takes people talking." }
+ ],
+ "events": {
+  "e_smog": "A heavy-pollution alert comes in, and earthworks and concrete all have to stop. You work it out: five more days gone from the schedule. You start calling crew bosses to tell the workers not to leave yet.",
+  "e_sign": "A change order you've chased for three months finally gets the owner's stamp, and more than ¥400,000 comes back to the job. Chang takes everyone out for lamb spine and never mentions who did the chasing.",
+  "e_foreman": "The rebar and carpentry crews fall out over a floor's working face and almost come to blows. You call the two bosses to the prefab, a cigarette each, and set the order. As they leave, neither looks at the other.",
+  "e_rain": "A rainstorm fills the drainage ditch at the edge of the foundation pit, and you and a few others guard the pumps all night. By dawn the rain has stopped. Your shoes stay wet through the next day.",
+  "e_son": "Your child writes a composition called My Home, and in it says: someone in my family lives inside a phone. The teacher has drawn a small smiley beside it in red. You look at the photo in the prefab, and take a long time to reply.",
+  "e_stop": "The safety officer sends you a photo of a guardrail gap and says this floor needs to stop for correction. The foreman is frantic. You look at the photo and say: stop. That afternoon you walk the building three times and write down several more hazards.",
+  "e_handover": "Your project tops out, and the workers set off a string of firecrackers on the highest floor. You stand on the roof looking north. On a clear day you can see the towers over toward Beijing.",
+  "e_debt": "The developer's cash runs out, and suddenly the site is quiet. You follow your boss to an office tower in Beijing to collect. The receptionist says the person in charge is traveling. Three hours later you catch him at the elevator. He says: give me another month.",
+  "e_back": "Your back and knees hurt in chorus. After decades of stairs and scaffolding, the doctor says to climb less. And before the elevators are installed? you ask. That's up to you, says the doctor.",
+  "e_bim": "A new technician uses a BIM model to find more than a dozen pipe clashes inside the walls, saving later demolition. You call him over to the prefab and have him explain it again, and you bring in a few of the old foremen to listen.",
+  "e_ai_camera": "AI cameras go up on site, and a missing helmet goes straight to your phone. On the first day it rings over a hundred times. This thing nags more than my wife, says Old Jia. You adjust the alert levels and keep the few that can kill.",
+  "e_ai_log": "The records clerk no longer has to stay up all night. AI fills in the inspection records from photos and voice. Spot-checking, you find it has dated work in the second basement to days before the basement was dug.",
+  "e_new_year": "On the twenty-seventh of the last lunar month, the money finally arrives in the wage account. You stand beside the turnstile and watch the workers check their phones one by one, then shoulder their woven bags toward the bus. See you next year, says Old Jia, don't change your number.",
+  "e_quality": "At completion inspection the quality station finds three problems on the outer wall. You walk through each one with them and write the correction plan in your handbook on the spot. This project manager means what they say, an owner's rep says.",
+  "e_old_boss": "Chang retires and hands you a handwritten cost notebook with every project's concrete wastage and each crew's temper. Halfway through, you find your own name a few times, never for anything good.",
+  "e_visit": "You take your child past a compound you built when you were younger. Someone is walking a dog downstairs. I built this one, you say. Your child looks up. Can you go in? No, you say.",
+  "e_market": "New starts are getting fewer, and the company scrambles for factory buildings and old-neighborhood renovation. With half the people you once had, on a much smaller site, you learn again how to earn this little money.",
+  "e_parent": "A call from home: your father has had a fall. You drive to Baoding overnight, and drive back next morning for a meeting on project payments. The coffee at the highway service area, you drink half of and forget.",
+  "e_fellow": "Old Jia's son comes to the site too, a college graduate in a new white helmet, and greets you. Old Jia stands far off, says nothing, and keeps looking."
+ },
+ "choices": {
+  "c_yijian": {
+   "title": "Sit the Grade 1 constructor exam, to take on Project Manager",
+   "situation": "If you want to take over as Project Manager, the company says, a Grade 2 license can't carry big projects. You need Grade 1. Four subjects, you only get to the books after ten at night, and this year's schedule is tight. Your spouse says the child has reached an age that needs someone around.",
+   "options": [
+    { "label": "Grit your teeth and sign up", "result": "You listen to online lessons in the prefab until midnight, and take the practical subject twice. The day the license comes, you buy one extra pack of cigarettes at the site shop." },
+    { "label": "Finish this phase first", "result": "You set the books aside. The schedule holds, and the boss says you're dependable. Grade 1 doesn't come up the next year either." }
+   ]
+  },
+  "c_gua": {
+   "title": "Someone wants to borrow your license",
+   "situation": "A company sends word asking if you would register your license with them for a few tens of thousands a year, no need to show up. Everyone does it, says a friend, and your mortgage happens to be short by about that much. Enforcement comes and goes.",
+   "options": [
+    { "label": "Don't lend it", "result": "You hang up. That year's mortgage is covered by two extra night shifts, and you don't think about it again." },
+    { "label": "Try it for a year", "result": "The money arrives and the mortgage is lighter. Each time a crackdown notice appears, you open your phone and read it over, until the next one." }
+   ]
+  },
+  "c_shangpiao": {
+   "title": "The owner pays in commercial bills",
+   "situation": "The developer says that this quarter's progress payment will be entirely in commercial bills, maturing in six months. Workers need cash. The company doesn't have enough, and discounting the bills costs several points. If you won't take them, the owner says, then stop work.",
+   "options": [
+    { "label": "Take the bills and discount them for wages", "result": "You go to three banks, take an eight-point discount, and wages go out before the holiday. By year-end those bills are the biggest hole in the company." },
+    { "label": "Insist on cash and prepare to stop", "result": "You write the stoppage letter and leave it on their desk. Three weeks later they come up with half in cash, and this owner never gives you another job." }
+   ]
+  },
+  "c_ai": {
+   "title": "Who leads the smart site project",
+   "situation": "The company wants to try an intelligent scheduling system and takeoff tools on one project and asks who will lead. The old foremen don't like them, and the schedule might suffer. But while the boss speaks, his eyes stay on you.",
+   "options": [
+    { "label": "Take it and try", "result": "It takes half a year to get the data to match the site. Later the company's bids have one more page, and it's about your site." },
+    { "label": "Schedule the old way", "result": "You keep planning on a whiteboard and the foremen respect it. When the system takes hold at other sites, you are a bit slow to learn it." }
+   ]
+  },
+  "c_far": {
+   "title": "A big project in Xiong'an",
+   "situation": "The company has won a contract in Xiong'an and needs someone who can take hardship: twenty percent more pay for three years. You have only just settled in Gu'an, and your child has started primary school. Your spouse says: you decide, you're the same wherever you are.",
+   "options": [
+    { "label": "Go to Xiong'an", "result": "Outside your project office there's a stretch of bare ground, and three years later it is a road. Your child asks where you are. You send a location pin, and there is nothing on the map." },
+    { "label": "Stay around Langfang", "result": "You take a logistics park in Yongqing and get home twice a week. The work is small and dull, and the workers all come to know you." }
+   ]
+  },
+  "c_owner": {
+   "title": "An owner asks you over",
+   "situation": "A logistics-park developer has noticed you and asks you to join its engineering department. No more living on site, but from now on you stand on the other side, going over other people's change orders with a magnifying glass.",
+   "options": [
+    { "label": "Stay with the contractor", "result": "I feel better on site, you say. The boss hears about it and gives you one more project." },
+    { "label": "Go to the owner", "result": "You move out of the prefab and walk onto a site for the first time in clean leather shoes.", "end": "You went to the owner's engineering department, reviewing other people's change orders, and could tell at a glance which ones were invented. The project manager across the table called you boss, and you always wanted to hand him back the cigarette." }
+   ]
+  },
+  "c_zongjian": {
+   "title": "The boss wants to make you Project Director",
+   "situation": "The boss says he'll make you Project Director, over three projects, on one condition: you help collect the final payment on your current project, and put up some of the working capital yourself.",
+   "options": [
+    { "label": "Put some in and accept", "result": "You put in ¥200,000 of the family's money and end up in the same boat as the boss. Part of the money later comes back." },
+    { "label": "Not the money; just do the work well", "result": "You say you can't put up money. The boss isn't angry, but the seat stays empty for another two years." }
+   ]
+  },
+  "c_team": {
+   "title": "Your own crew",
+   "situation": "A few crew bosses who've followed you for more than a decade say: let's do it ourselves, you know the projects and we have the people. The company has been collecting ever more slowly. But on your own, you'd personally guarantee every worker's wage.",
+   "options": [
+    { "label": "Stay with the company", "result": "You shake your head and give each of them a cigarette. That night Old Jia is the last one to leave." },
+    { "label": "Wait a year or two", "result": "Let's see this batch of projects settled first, you say. A year or two later, nobody brings it up." },
+    { "label": "Go on your own", "result": "You register a small company, bring together thirty-odd people, and take on an old-neighborhood renovation.", "end": "You took the old crew to small jobs, putting right one old neighborhood after another that nobody else wanted. You never paid a wage late, and the account never held much." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "The last project is settled, and you hang your helmet behind the prefab door, the writing on the brim long worn away. The workers scattered to other sites long ago, and your phone keeps more than two hundred undeleted numbers. Driving home you pass a compound you built, its lights coming on window by window, not one of them anything to do with you.",
+  "burnout": "With the spine X-ray and the blood pressure sheet side by side, you finally tell the boss you can't climb anymore. The company puts you in the budgeting department, reading drawings, no stairs. But at five each morning you still wake, listening for concrete trucks."
+ },
+ "stages": [
+  "Each morning you schedule the cranes and crews, watch concrete and rebar come in, and spend the day in the building measuring cover with the supervising engineer. Change orders, site logs and the weekly plan all pass through your hands. Chang goes off to deal with the owner, and you take the abuse for him on site. Unlike when you were a technician, the crew bosses now come to you about other people's mistakes as well.",
+  "The project is yours, its seal and your name bound together. Once a month you work out the costs, reconcile progress with the owner, settle with subcontractors, sign safety documents, and pound the table with labor contractors in the prefab. It used to be enough to build fast. Now you have to ask whether this project makes any money at all.",
+  "You have three project managers under you, three sites in different counties. You rarely measure rebar anymore. You drive between owners, banks and sites, and the sheet in your hand has changed from schedule to collections. You used to carry the load yourself. Now you decide who goes to which site, and which project's final payment comes first.",
+  "You run the branch's contract volume and cash flow for the year, and on the last page of the bids, the company licenses and the safety liability pledges is your name. You dine with local owners, ask headquarters for credit, and decide which two project offices to close this year. You still visit the sites often. The workers no longer know you."
+ ],
+ "work": [
+  "Crane operator Xiao Meng says the wind is over the limit. You go up with an anemometer, look, and push the lift back two hours. Old Jia says you fuss like an old woman.",
+  "You measure the spacing of the rebar in a beam with a tape, and it's two centimeters more than the drawing. You tell Old Yu of the rebar crew to redo it. He looks at you, looks at his watch, and silently takes it apart.",
+  "On the weekly plan you book the pump truck for three nights, then call the concrete plant dispatcher to ask whether the road south of Gu'an will be passable on the day the highway restricts trucks.",
+  "Xiao Tian in cost control brings you this month's materials sheet. Rebar wastage is two points over. The two of you go to the yard and measure bar by bar for half a day, and find a few bundles never cut.",
+  "In the owner's meeting room you take their accountant through a progress claim page by page. Her calculator keys are loud, and at the end she strikes out more than ¥100,000.",
+  "The safety director asks you to sign a hot-work plan. You read it and ask: are the fire extinguishers on these drawings, or in the building? He turns and goes back upstairs.",
+  "Project manager Xiao Zhou's cost sheet shows a loss of over ¥1 million. You drive out to his site, go through the drawings and subcontracts for half a day, and find one change order that was never filed.",
+  "In a small meeting room at a bank you walk the loan officer through the collection plan on three projects. He asks how many commercial bills you are holding. You tell him honestly, and the room goes quiet for a moment.",
+  "Two projects need a tower crane and the company can spare only one. On the phone you ask how each is progressing and give it to the one with the tighter schedule. The other project manager doesn't speak to you for a week.",
+  "The night before a bid, the business department brings you the price sheet. You strike out an attractive low price. Win it at this number, you say, and we'll be carrying it until the year after next.",
+  "You take the safety director to every site and read the annual responsibility pledge in each prefab. Halfway through, a new project manager puts down his phone."
+ ],
+ "past": [
+  "Your family lives in a village near Baoding. Your father has followed labor bosses through a good many buildings in Beijing. Home for New Year, he points at towers on TV and says: I plastered that floor.",
+  "Your gaokao (college entrance exam) didn't go well, and you attend a vocational college in Shijiazhuang, in building engineering. In the first class the teacher says: in this trade you'll never go hungry.",
+  "After graduation you join a general contractor in Langfang, move into a prefab dorm and become a site technician. On the first day you get the layout wrong, and an old hand kicks your chalk line aside.",
+  "After two years on a logistics park site, you run a whole floor's crews for the first time, and have your first three-in-the-morning shouting match with a concrete plant.",
+  "You sign up for a part-time bachelor's, with online lessons at night and exams on Sundays. When you marry, your father-in-law asks where you are all year. In a building, you say.",
+  "You pass the Grade 2 constructor exam, and the company makes you deputy project manager and moves you to Gu'an. Do well, says the boss, there are projects for you later."
+ ],
+ "late": {
+  "pension_note": "Estimate: private companies contribute on a low base, so the pension comes to about forty percent of final pay.",
+  "scenes": [
+   "In your first month of retirement you wake at 5:50 every day. You go down to watch the workers repairing the compound's path. After a good while you walk over and say your brick joints are a bit wide.",
+   "Old Jia calls to say he's stopped working too, and asks if you'll go fishing. You sit by the Yongding River and catch nothing all afternoon, and don't say much.",
+   "A grandchild asks what you used to do. You drive to a stretch of housing and point. You don't say which building. All of those, you say.",
+   "In your first month in budgeting your shoes stay clean. You keep feeling something's missing, and when you look down, it's the mud.",
+   "The rehab doctor has you walk flat ground for half an hour a day. As you walk you look up and count the floors of other people's balconies, one by one.",
+   "A young project manager comes to you about the accounts of an old project, and you dig out your notebook from the drawer. He takes a photo. Don't photograph it, you say. Take it.",
+   "After leaving the contractor, you always slow down passing a site. A crew boss smokes at the gate. You don't stop. You just look a little longer at the tower crane.",
+   "Someone who can't get paid for a job is sent to you. You sort the change orders for him one by one and take no money. I know this kind of thing, you say.",
+   "You build a three-room bungalow back home, setting out the lines yourself. Villagers stand around watching. Such a big engineer, they say, and such a small house.",
+   "Your child brings friends home and points to the helmet on the bookshelf: that's our family heirloom. The friends laugh, and so do you, a little.",
+   "The news says a stretch of old buildings around Beijing is going to be renovated, and one you built is on the list. You work it out. It's almost thirty, a little older than you were then."
+  ],
+  "closing": {
+   "retire": "As dark comes on, a red light goes on atop a distant tower crane. You watch a while and carry your teacup inside.",
+   "burnout": "Five in the morning, and no concrete trucks. You turn over and hear the shutter of the breakfast shop go up downstairs.",
+   "end": "Evening wind passes the eaves of the bungalow. The house is small and the walls are straight. You light a cigarette and don't smoke it, and watch it burn down."
+  }
+ }
+}

@@ -1,0 +1,298 @@
+{
+ "id": "mine-safety-jc",
+ "occupation": "Mining Safety Engineer",
+ "role": "Trainee Technician, Mine Ventilation and Safety",
+ "headline": "Back in Jincheng with a safety engineering degree, a mine safety engineer who changes into work clothes every day and follows the gas inspectors underground",
+ "unit": "The ventilation and safety section of a state-owned coal mine in Jincheng, Shanxi",
+ "unit_type": "State-owned coal mine",
+ "city": "Jincheng, Shanxi",
+ "city_tier": "Fourth-tier city",
+ "education": "Bachelor's in safety engineering",
+ "level": "You know the regulations by heart and have never used an anemometer underground. You can tell through-ventilation from auxiliary ventilation. You cannot yet tell what the old hands mean by 'this air isn't right.'",
+ "intro": "The mine hands you a helmet, a cap lamp and a self-rescuer, your number stamped on a tag you must hang on the board before going down. The old hand assigned to you looks at your new rubber boots and says to learn the roadways first and talk later. From today, some small share of where the air goes down there is yours to answer for.",
+ "salary_note": "Estimate: pay at a state-owned coal mine is high by Jincheng standards, with an underground allowance, roughly a little above the national average. In years of weak coal prices the bonus shrinks.",
+ "facts": [
+  {
+   "label": "Ventilation and Safety Technician (current level)",
+   "value": "0-3 years, ¥6,000–9,000 a month (national average, estimated)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "Next level up",
+   "value": "Ventilation and Safety Engineer (3-8 years)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Walking the roadways to check ventilation structures and dead-end headings",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Reading methane monitoring curves for anomalies",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "3 related listings nationwide, 0 in this city (the database leans toward campus and intern roles)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "Steam rises off the breakfast stall in the mine compound. You eat millet porridge and toasted bread. The sky over the hills is only starting to lighten, and the spoil heap has a sharper outline than the Taihang Mountains behind it.",
+  "The pre-shift meeting. The section chief reads out today's working faces and warnings. Everyone presses a thumbprint on the safety sheet. Yours is always fainter than the old hands'.",
+  "Work clothes, cap lamp, then the security check where lighters and phones stay behind. As the cage drops, your ears know the depth before you do.",
+  "You ride the man-carrier to its end and walk another twenty minutes. In the return airway you hold the anemometer up and walk for a minute. The old hand looks at the dial and has you do it again: your hand shook.",
+  "At the upper corner of the working face, the gas inspector raises his interferometer methane detector and reads you the number. You write it in your handbook. He chalks it on the little blackboard in the roadway.",
+  "Back on the surface. The first shower runs black; only after the second can you see your own face. The canteen has noodles with gravy and you can eat two big bowls.",
+  "Back in the office you enter the readings in the ventilation ledger and work out the air volume for each roadway. One number won't reconcile. The section chief tells you to walk that roadway again tomorrow.",
+  "From the singles' dormitory you can see the lights along the conveyor gallery. Your father calls to ask whether you were scared. You say no. He says then read your regulations."
+ ],
+ "ladder": [
+  {
+   "title": "Ventilation and Safety Technician",
+   "stage": "Entry",
+   "focus": "Measures airflow and checks methane with the shift crews, keeps the ledgers, learns every roadway in the mine; moves up on a safety management certificate, hours underground and three years in the field."
+  },
+  {
+   "title": "Ventilation and Safety Engineer",
+   "stage": "Mainstay",
+   "focus": "Does ventilation design, air distribution and methane drainage calculations alone and writes the ventilation measures for each face; moves up on the Registered Safety Engineer license and plans that hold."
+  },
+  {
+   "title": "Deputy Chief, Ventilation Section",
+   "stage": "Crew lead",
+   "focus": "Runs the gas inspector and ventilation crews, the daily care of air doors, auxiliary fans and drainage pump stations, and starts taking turns as the duty leader underground."
+  },
+  {
+   "title": "Chief, Ventilation Section",
+   "stage": "In charge",
+   "focus": "Answers for the whole mine's ventilation, gas, dust and fire prevention; reviews measures, signs, hosts inspections, negotiates with the mining crews and the dispatch room."
+  },
+  {
+   "title": "Deputy Chief Engineer for Safety",
+   "stage": "Final sign-off",
+   "focus": "The last signature on the mine's safety technology, sets the annual hazard plan, and has to be able to explain it both up and down the chain."
+  }
+ ],
+ "ai_tasks": [
+  {
+   "name": "Walking the roadways to check ventilation structures and dead-end headings",
+   "how": "AI can watch sensors and cameras, but not the places with none. Whether an air door seals, whether standing water is blocking the airway, whether something smells wrong by the old workings: someone has to walk up and look and smell."
+  },
+  {
+   "name": "Reading methane monitoring curves for anomalies",
+   "how": "AI reads the curves from hundreds of sensors together and flags anomalies and likely causes. Whether it is a true release, sensor drift or production disturbance takes someone who knows that roadway."
+  },
+  {
+   "name": "Compiling monthly ventilation reports and methane classification paperwork",
+   "how": "AI pulls from the monitoring and the ledgers and fills in monthly reports and annual classification forms. A person checks the key figures and signs."
+  },
+  {
+   "name": "Calculating air distribution and auxiliary ventilation design",
+   "how": "AI solves the ventilation network and offers several plans in minutes. Which roadway really leaks and which air door has been in service ten years has to be fed in by a person, who then settles the plan and takes the responsibility."
+  },
+  {
+   "name": "Spotting violations such as not carrying a self-rescuer underground",
+   "how": "Cameras and AI catch violations and log them automatically. How to speak to the worker and how to handle the entry remain the business of the crew and the section."
+  },
+  {
+   "name": "Directing methane discharge and restoring ventilation on site",
+   "how": "AI can bring up the steps and the regulations. Who stands where, how slowly the air comes back, how far the power is cut: that takes a qualified person on the spot, signing for it."
+  }
+ ],
+ "events": {
+  "e_read_wind": "The old hand makes you stand five minutes at an air door and feel for leaks with your face. Ever after, when you reach an air door, you pause.",
+  "e_redo_report": "Your air distribution table left out a crosscut. The section chief circles it in red and sends you back down to verify. You walk nearly twenty kilometers of roadway in two days.",
+  "e_night_shift": "Spring Festival maintenance puts you on the New Year's Eve night shift. Near dawn you come up. The dumplings from the mine get reheated in your dormitory rice cooker.",
+  "e_alarm_clear": "A sensor reports over-limit in the middle of the night, and by the rules the men come out and the power goes off. You get there and find moisture drift. After recalibration everything comes back, and you go to sleep at daybreak.",
+  "e_inspection": "An inspection team is coming, and the section goes over the ledgers all night. You turn through three years of airflow records and find one page you wrote wrong yourself.",
+  "e_old_worker": "An old hand from the mining crew moved the air duct half a meter because it was in his way. You don't argue. You crouch down and work out for him what that half meter costs in airflow. The next day he moves it back himself.",
+  "e_coal_price": "Coal prices slide. The mine cuts bonuses by thirty percent and the canteen drops one meat dish. Your wife spends a long time with the calculator on her phone.",
+  "e_coal_price_up": "In a good year for coal the year-end bonus runs well above usual. You buy your parents a space heater for winter and yourself a decent pair of padded shoes.",
+  "e_knees": "The doctor at the mine hospital looks at the films and says your knees and back are older than you are. You rearrange things so the sloping roadways are split across two days a week.",
+  "e_apprentice": "The new graduate's hand shakes on the anemometer. You tell him to walk it again, and hear the old hand's voice as you say it.",
+  "e_family_worry": "Your daughter writes in a composition that her dad 'goes to work under the ground.' The teacher posts it in the parents' group and everyone laughs. You save the picture.",
+  "e_ai_monitor": "The whole mine goes onto an AI monitoring platform. A dozen alerts jump on your phone in the night. You check each, and only two need someone to go down.",
+  "e_ai_report": "AI now assembles the monthly report in half an hour. You spend the time saved going underground twice more, and find that one roadway on the platform is not the roadway under your feet.",
+  "e_sensor_trust": "The younger staff watch the big screen and don't go down. At a section meeting you say that sensors are installed by people. You don't say it hard. The next week the underground log has a few more lines.",
+  "e_gas_use": "The drained methane now goes to a power station, and the pump station flow and the generated power sit on one sheet. For the first time it seems to you this gas has done something useful.",
+  "e_sign": "You read a face ventilation plan three times before signing. The heading crew chief smokes half a pack waiting at the door. Leaving, he still gives you a nod.",
+  "e_duty_week": "On your duty week as underground leader, your phone goes at its loudest by the bed. The family long ago stopped asking when it rings at night.",
+  "e_retire_old": "The old hand who trained you comes back after retirement for his physical form and insists on sitting a while in the ventilation office. He points at the system map on the wall and asks if this roadway is still there.",
+  "e_mine_shrink": "You can now count the mine's reserves in years. Support services are merging and younger people want transfers. On the plan you see the roadways you walked for twenty years marked for sealing."
+ },
+ "choices": {
+  "c_cert": {
+   "title": "Take the Registered Safety Engineer exam?",
+   "situation": "Only two people in the section have the license. It would eat every evening after your shifts and pay only a few hundred yuan more a month, but it is a hard requirement further up.",
+   "options": [
+    {
+     "label": "Take it, books in the locker",
+     "result": "You study for half a year on the bench outside the bathhouse. The day you pass you tell no one."
+    },
+    {
+     "label": "Master the underground work first",
+     "result": "The license can wait. In these two years you walk every roadway in the mine and can say with your eyes shut which way the air moves."
+    }
+   ]
+  },
+  "c_surface": {
+   "title": "A transfer to the surface control room",
+   "situation": "The dispatch monitoring center is short of people. Mostly day shifts, no going underground, a smaller allowance. The section chief says it's up to you, and that they need people below as well.",
+   "options": [
+    {
+     "label": "Go up, be home more",
+     "result": "You start eating dinner at normal hours. The roadways on the big screen are not quite the ones you walked, and you often stare at it."
+    },
+    {
+     "label": "Stay underground",
+     "result": "You keep wearing the boots. You accept the allowance on your pay slip and the look on your wife's face."
+    }
+   ]
+  },
+  "c_cbm": {
+   "title": "A coalbed methane company comes recruiting",
+   "situation": "A coalbed methane company in the Qinshui Basin wants people who understand gas. No underground work, driving between surface wells, noticeably better pay the first year. Leave and you will hardly get this position back.",
+   "options": [
+    {
+     "label": "Go to the wells",
+     "result": "You take off the rubber boots and hand in the lamp.",
+     "end": "You join the coalbed methane company and spend your days driving between wells on the surface. Old colleagues from the mine still call, and at dinners they still make you talk about gas."
+    },
+    {
+     "label": "Stay",
+     "result": "You thank your old classmate over there. You haven't finished walking the roadways here."
+    },
+    {
+     "label": "Consult for them on the side",
+     "result": "A few weekends at the wells earn you some extra money and teach you that drawing gas from the surface and from below are different things."
+    }
+   ]
+  },
+  "c_vice": {
+   "title": "Applying for Deputy Chief, Ventilation Section",
+   "situation": "The old chief is stepping down and a post has opened. You'd have to present a plan and deal with the mining crews. Get it, and you take turns leading the shifts underground, and the midnight calls are yours.",
+   "options": [
+    {
+     "label": "Apply and tell the truth",
+     "result": "You present the three worst-leaking roadways, no slide animations. Someone in the audience takes notes."
+    },
+    {
+     "label": "Stay technical",
+     "result": "You tell the chief you would rather do the calculations. Less signing pressure, more time with drawings."
+    }
+   ]
+  },
+  "c_school": {
+   "title": "The child goes to school in the city",
+   "situation": "The mine compound's school has been merged, and your child must attend junior high in downtown Jincheng. Buy a place in the city and you get two days a week at home, or wife and child move first and you stay in the singles' building.",
+   "options": [
+    {
+     "label": "The whole family moves",
+     "result": "Every dawn you take the mine shuttle, over an hour each way, and sleep on the bus."
+    },
+    {
+     "label": "Boarding school, no house yet",
+     "result": "The savings stay intact. When the child comes back on weekends you are often underground, and on the phone everyone says things are fine."
+    }
+   ]
+  },
+  "c_ai": {
+   "title": "The intelligent ventilation pilot",
+   "situation": "The mine will pilot intelligent ventilation, with air doors and fans adjusted by the system. No one understands it. The chief engineer asks if you'll lead it. If it goes badly, you're the one who wears it.",
+   "options": [
+    {
+     "label": "Lead it",
+     "result": "You study network solving while going down to calibrate sensors, and in the first year you relocate more than seventy of them."
+    },
+    {
+     "label": "Let the younger ones do it, you check",
+     "result": "You stay behind to watch whether the data is right. You don't always follow what the system suggests, but you read all of it."
+    }
+   ]
+  },
+  "c_chief": {
+   "title": "Applying for Chief, Ventilation Section",
+   "situation": "This post signs for the whole mine's ventilation, gas, dust and fire prevention. Inspections, coordination and approvals all land here, and you'd go down less. The chief engineer says to think first about whether you're willing to stop doing the part you like.",
+   "options": [
+    {
+     "label": "Apply",
+     "result": "From that day there are more documents than drawings on your desk. Going underground begins to feel like a holiday."
+    },
+    {
+     "label": "Don't compete, keep leading shifts",
+     "result": "You say someone has to keep a steady eye on this, and that you still can. Same pay, and you sleep no better."
+    }
+   ]
+  },
+  "c_gov": {
+   "title": "A third-party safety assessment firm",
+   "situation": "A safety assessment firm wants you as technical lead: travel, other people's mines, reports, no longer answering for one mine. A bit more money, but from then on you can only offer opinions on someone else's mine.",
+   "options": [
+    {
+     "label": "Go",
+     "result": "You wash and fold your work clothes and hand in the tag.",
+     "end": "You become an assessor traveling from coal mine to coal mine, reading other people's ledgers and walking other people's roadways. At each one you still stop at the first air door."
+    },
+    {
+     "label": "Stay at the mine",
+     "result": "You write back that there are a few roadways here you can't put down yet."
+    }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last trip up, you turn your tag to the surface side and take it off the board. The bathhouse water is as hot as ever. The young woman in the lamp room says your lamp number will go to a new hire now. You nod, and at the door you look up at the hill.",
+  "burnout": "The mine hospital's reports grow longer, and the section chief crosses your name off the underground rota. You take early retirement but still wake at six, and listen for the conveyor gallery outside. There is no draft in the apartment, and you keep wanting to open the window a crack."
+ },
+ "stages": [
+  "Your work is measured with your feet: anemometer and handbook, roadway by roadway, taking airflow, recording cross-sections, working out air volumes and filling in the ventilation ledger. You follow the gas inspectors and ventilation hands to learn air doors and duct-hanging, and you write down whatever they say. At this level you decide nothing. You just get the numbers right.",
+  "You start writing the plans yourself: air distribution in the ventilation network software, auxiliary ventilation designs for new headings, ventilation measures that the mining crews must sign. Going underground means something new, not to learn but to check whether what you calculated is true. Crew chiefs begin to phone you directly.",
+  "The rota for gas inspectors and ventilation hands is yours; broken air doors, auxiliary fans and drainage pumps come to you first. You take turns leading shifts underground, and your location card pings several times a day. You used to be circled in red. Now you circle the young ones, and at the pre-shift meeting you have to say things in a way old workers will hear.",
+  "Every ventilation, gas, dust and fire document crosses your desk: system change reports, the annual methane classification, fire prevention measures. You argue air volumes with the deputy mine manager for production at dispatch meetings and lead inspection teams down the roadways. You no longer carry an anemometer. You carry a pen that works.",
+  "You lead the mine's annual hazard plan and go through it item by item with the chief engineer and manager. Measures end with you, and what you look at is no longer whether the number is right, but whether the person behind it really went to look. You start thinking about who's next, and send a few young ones in rotation to the hard places."
+ ],
+ "work": [
+  "You measure the return airway a third time with the anemometer while gas inspector Old Du times it and says your hand is steady now. You write 3.2 meters per second in the handbook, the digits smaller than the last two tries.",
+  "An air door's hinge is loose, and you write one line on the inspection sheet. In the afternoon ventilation hand Xiao Xing goes to fix it with a wrench and asks which door your handwriting says.",
+  "The section chief has you complete six months of portable detector calibration records. Going through the ledger one by one, you find a serial number copied wrong, and it costs you a whole afternoon.",
+  "A new haulage heading needs an auxiliary fan. You work out two duct diameters in the ventilation software and show heading crew chief Old Song, who points at the drawing and says you haven't walked that bend, have you. You walk it the next day.",
+  "The chief engineer sends back your ventilation measures for Face No. 3 with a single comment: how does the upper-corner drainage connect. You revise until late, and he signs the second version.",
+  "You measure borehole flow with the drainage crew, and one group's concentration has dropped wrongly. The drilling record shows the seal is a few meters off, and you have them redrill three holes.",
+  "On the rota, gas inspector Old Fan needs leave to look after his parents, and you write your own name in for the shift. The next day he hands you a bag of millet from his family's plot.",
+  "A new graduate reads the regulations too fast at the pre-shift meeting. You have him put down the paper and say in his own words why the air must go this way.",
+  "The annual methane classification report arrives, and you go through it page by page with the outside expert. You ask for a remeasurement of the page 17 face emissions. The expert says fine, your mine is a stickler.",
+  "At dispatch the coal crew wants to advance faster. You lay the air volume margin sheet on the table and tell the deputy manager how much further they can go. He looks at it and writes the figure into the plan.",
+  "You take three young engineers underground to an old roadway and have each of them say how the air moves. Three people, three answers. You say only: come back next week.",
+  "The fourth draft of the annual hazard plan is on the table. The manager asks if this drainage budget can wait a year. You set ten years of emission curves in front of him and say nothing more."
+ ],
+ "past": [
+  "You grew up in the mine compound; your father worked on a coal crew. The year of the high school entrance exam, a teacher at the mine's school said you were good at sums, stay out of the pit, go to senior high.",
+  "Your score from the gaokao (college entrance exam) was good enough for an engineering school out of province. You wrote safety engineering on the form. Your father studied it a long while and said it was a good major, the one that keeps other people from getting hurt.",
+  "On a sophomore internship you rode a cage for the first time. At the bottom you found that the dark wasn't the hard part. The hard part was the closeness, and only later did you learn that was the air running short.",
+  "Most of your graduating class went to safety consultancies and construction sites in the city. You applied to the mine back home. The interviewer's first question was: which crew is your father on?",
+  "Before starting there were seventy-two hours of three-level safety training in a classroom. You passed and were cleared to go underground. On the last day they gave you a book of regulations thicker than a dictionary."
+ ],
+ "late": {
+  "pension_note": "Estimate: a state-owned mine worker's pension plus enterprise annuity comes to about sixty percent of final pay, with some recognition for years underground.",
+  "scenes": [
+   "You pile twenty-odd years of underground handbooks on the balcony. Your grandchild takes them for drawing paper, and you pull back the oldest one.",
+   "The mine invites you back to give new workers a lesson. You bring no slides. You draw a roadway on the blackboard and ask where the air comes from.",
+   "The old mine compound is being turned into a heritage town, and you take relatives from out of town to see it. Behind the glass sits an anemometer just like the one you carried.",
+   "After early retirement you go to the mine hospital once a week. Everyone you meet on the way is someone you know, and you all ask after each other's legs.",
+   "You help mind the bikes at the compound gate, and every time you see a range hood that isn't drawing you want to say something.",
+   "The old section chief's kid has been admitted to safety engineering and comes to ask if it's worth studying. You say study it, and go down and look often.",
+   "Your colleagues at the new place don't know what methane smells like. You say it has no smell, and they don't believe you.",
+   "Old colleagues call you back to the mine for a dinner. You drive around to the auxiliary shaft and stand a while, a pair of old rubber boots still in the car.",
+   "The last apprentice you trained before you retired asks what would have happened if you hadn't left. You say the roadways are still there, and life goes on just as well somewhere else.",
+   "The trees planted on the hill a few years back are taller than a person now, and the spoil heap doesn't look as black as it used to.",
+   "Your daughter takes you to the dentist. The dentist asks what you used to do and you say you looked after the air. He thinks you mean meteorology, and you let it go."
+  ],
+  "closing": {
+   "retire": "In the evening a wind comes down from the Taihang side. Standing below your building, you turn your face a little, out of habit.",
+   "burnout": "The window is open a crack. Someone outside is taking in the quilts, and the air lifts the curtain slowly.",
+   "end": "You pull over by the road. Outside is a stand of poplars, grown tall now, their leaves all turning the same way."
+  }
+ }
+}

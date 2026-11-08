@@ -1,0 +1,182 @@
+{
+  "id": "archivist-jz",
+  "occupation": "Archivist",
+  "role": "County Archives Clerk",
+  "headline": "A county archives clerk in Jinzhong, Shanxi, with a permanent state post, whose job is to pull one sheet of paper from decades ago off the shelves for whoever comes asking",
+  "unit": "A county archives in Jinzhong",
+  "unit_type": "County-level archives",
+  "city": "Jinzhong",
+  "city_tier": "Fourth-tier city",
+  "education": "Bachelor's degree (History)",
+  "level": "New to the archives: you still look up call numbers in the catalog, and you can barely read your older colleagues' handwritten index cards.",
+  "intro": "The archives is on the third floor of the old building behind the county government. There are seven people on staff, and the stacks only open when two of them turn their keys together. You passed the exam for a permanent state post this year and were sent here, and on your first day someone asked you where the 1978 hiring forms were kept. From today, the year anyone in this county joined a factory, or married, has to be found again in the paper in your hands.",
+  "salary_note": "Estimate: county public institutions pay on the local scale, below the national average. The appeal is stability, and the year-end bonus is small.",
+  "facts": [
+    { "label": "Archives Clerk (current level)", "value": "0–3 years, ¥4,500–6,000 a month (national average, estimate)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Assistant Archivist (3–8 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Deciding whether old records can be opened, and who may read them", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Recognizing and cataloging old records after scanning", "source": "AI exposure" },
+    { "label": "Open positions", "value": "11 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "Into the stacks first to read the thermo-hygrometer and write the numbers in the log, then to empty yesterday's half-bucket of water from the dehumidifier.",
+    "At the request window, a man close to retirement holds out his ID and a sheet covered in factory names. His work history, he says, is three years short.",
+    "You follow the fonds, catalog and file numbers and crank the handle of the compact shelving. A row of steel racks slowly opens a gap, and the smell of old paper comes out first.",
+    "The hiring form turns up. You photocopy it, stamp it with the archives seal, and write in the use register what was looked up and who received it.",
+    "A bowl of tijian noodles at the end of the lane, with an extra spoonful of vinegar. The owner knows you and asks who you found today.",
+    "You check the filing sent in by the townships: page numbers, item numbers, filing stamps, one item at a time. If a page is missing you phone, and the voice on the other end always says right away.",
+    "You catalog this morning's scans. Ballpoint on carbon paper has bled into a blur, so you pull the desk lamp closer and work it out character by character.",
+    "You lock the stacks with a colleague and both sign the handover book. Going downstairs, your hands still carry paper dust and camphorwood."
+  ],
+  "ladder": [
+    { "title": "Archives Clerk", "stage": "New hire", "focus": "Tend the temperature and humidity of the stacks, receive requests, number incoming files. You move up by making no mistakes and learning to read old handwriting." },
+    { "title": "Assistant Archivist", "stage": "On your own", "focus": "Run a fonds by yourself, go out to the townships to guide filing, start writing work summaries and papers. Promotion comes with years and paperwork." },
+    { "title": "Archivist", "stage": "Backbone", "focus": "Handle accessions, appraisal for opening and digitization, train new staff, teach the county's filing clerks. Promotion depends on results and papers." },
+    { "title": "Associate Research Archivist", "stage": "Rare in a county", "focus": "Lead research publications and oversee the archives' professional work. A county seldom has one, and it takes papers, projects and an open quota." }
+  ],
+  "ai_tasks": [
+    { "name": "Deciding whether old records can be opened, and who may read them", "how": "AI can list the files that have come due and flag passages that may touch on privacy. Which page can be shown to whom, and who answers for it if it goes wrong, is decided file by file by someone at the archives." },
+    { "name": "Recognizing and cataloging old records after scanning", "how": "AI already reads print and most fountain-pen writing, and fills in titles, dates and authors on its own. People spot-check it, above all for personal names and place names." },
+    { "name": "Searching for what a request needs", "how": "AI can dredge the electronic catalog by name, employer and year for every file that might match. Homophones, renamed factories and years entered wrong still take a person thinking and leafing through." },
+    { "name": "Guiding offices in putting their files in order", "how": "AI can generate lists of what must be filed and check that page and item numbers are complete. Showing a township clerk by hand, and talking to offices that won't hand files over, still takes someone going there." },
+    { "name": "Repairing and preserving damaged records", "how": "Backing a torn sheet, cleaning it, adjusting the climate in the stacks: AI can't help with the weight of the hand. At most it can remind you which rack is due for inspection." }
+  ],
+  "events": {
+    "e_miner": "An old miner's years underground didn't add up. You spent three days in the records of a bankrupt enterprise and found his name in a payroll ledger. Through the window he said it several times: that's the one, that's the character.",
+    "e_leak": "A summer rainstorm came through the roof of the third-floor stacks. The whole staff carried out two racks of files and spread them to dry, and you spent two days crouching in the corridor.",
+    "e_sack": "A village Party secretary from up in the hills hauled in a woven plastic sack: decades of the village's accounts and contracts, with nowhere to keep them now that the village office was being rebuilt. You flattened them sheet by sheet for a whole week.",
+    "e_wrong": "You mixed up the files of two people with the same name, and a photocopy nearly went off to be used in official paperwork. When they came back to find you, your face burned. The director had you write an explanation.",
+    "e_dust": "After so many years among old paper, your rhinitis flares every spring. A box of masks and a nasal spray live in your drawer.",
+    "e_inspect": "Inspectors came to check the safety of the archives: the eight protections, the logs, the fire equipment. You wiped the dates on the extinguishers too, and went three weekends without a day off.",
+    "e_marriage": "An elderly couple needed to transfer a property, and their marriage certificate had been lost for forty years. You found the line in the old marriage register. She put on her reading glasses and looked at it for a long time, and said his handwriting used to be rather good.",
+    "e_millet": "A man whose record you'd found came back the next day and set a bag of his own millet on the counter. You pushed it back twice, and he put it down and left. So you logged it, as the rules require, and passed it to the office.",
+    "e_ocr": "The archives connected its scans to AI recognition. It turns out thousands of catalog entries a day, and half a year does the work of several. Your job, and your colleagues', became sitting at a screen spot-checking the names it reads.",
+    "e_ocr_wrong": "AI read one old man's surname as a different, similar-looking character, so the electronic catalog couldn't find him. You remembered how the name is said around here, tried another way of searching, and there he was.",
+    "e_paper": "The county was compiling historical materials, and a retired teacher came every day to copy out co-op account books from the 1950s. He left on the dot and never asked for a page more than he needed. At noon you always poured him a cup of hot water.",
+    "e_house": "You bought a two-bedroom flat in the county town, with half the down payment saved by your parents. The day the housing-fund loan came through, you worked out your next thirty years of wages for the first time.",
+    "e_winter": "The heating in the old building is weak, and the stacks can't be warmed anyway. In the deep of winter you go through files in a padded coat, your fingers too stiff to turn thin paper.",
+    "e_town": "You went out to a township to guide its filing. The archives clerk there is part-time, and also handles family planning and publicity. You explained how to order a folder three times, and she recorded it on her phone.",
+    "e_factory": "The records of a factory that closed years ago finally came in. Among the certificates and payroll sheets you saw your father's name. You paused for a moment, then went on numbering.",
+    "e_bonus": "At year's end some back pay came through. Not much, but enough to replace the washing machine at home.",
+    "e_eyes": "You can no longer make out the writing on carbon paper. Along with reading glasses you keep a magnifying glass in your drawer, and your colleagues often come to borrow it.",
+    "e_young": "The new graduate at the archives asked you: now that it's all in the system, will anyone still need to go into the stacks? You didn't answer. You took her in and had her touch a sheet of paper from the 1950s."
+  },
+  "choices": {
+    "c_title": {
+      "title": "Assistant Archivist: do you write the work summary?",
+      "situation": "To be assessed as Assistant Archivist you nearly have the years, but you also need a decent work summary. The director suggests something on damp-proofing the stacks. It means a lot of reading at home after work.",
+      "options": [
+        { "label": "Write it at night", "result": "You turned three years of temperature and humidity logs into a single curve. The director read it without comment and told you to fix the typos." },
+        { "label": "Do the work well first", "result": "You went home on time and helped your mother make dumplings. The paperwork can wait until next year." }
+      ]
+    },
+    "c_gap": {
+      "title": "Three missing years",
+      "situation": "An old worker's proof is short by one last page, and you've been through all the factory's old files. He's coming back tomorrow. By the rules, no record means issuing a statement of no record, but this one sheet is all he lacks.",
+      "options": [
+        { "label": "Try the old labor bureau storeroom", "result": "In a basement you found the stub of a transfer order. He got his three years back. You got a cold." },
+        { "label": "Issue the no-record statement", "result": "You handed the statement over and told him where else he might ask. He nodded and folded the paper twice." }
+      ]
+    },
+    "c_transfer": {
+      "title": "The county wants to borrow you to write documents",
+      "situation": "The county government office is short of hands, and its director likes your handwriting and your patience. Going would put you closer to promotion, but it is a different sort of life from then on. And once you leave the archives, there is no coming back.",
+      "options": [
+        { "label": "Stay at the archives", "result": "You turned it down politely. Back in the stacks, the compact shelving made the same sound as ever." },
+        { "label": "Go and write documents", "result": "You handed your keys and the handover book to a colleague and moved to the second floor of the county government.", "end": "From then on you wrote about things that hadn't happened yet. For many years you could still glance at the top corner of a document and see which category it would one day be filed under." }
+      ]
+    },
+    "c_digital": {
+      "title": "Will you lead the digitization?",
+      "situation": "The province has allotted money to digitize the records. A contractor is coming in, the system will get AI recognition, and someone has to watch the rules and the quality. It's draining work, and it won't count as an achievement.",
+      "options": [
+        { "label": "Lead it and set the rules", "result": "You decided which characters must be checked by a person, and no name of a person or place would slip through. The young women from the contractor ended up calling you teacher." },
+        { "label": "Let the younger ones do it", "result": "You stayed with the window and the stacks. The day the system went live you searched for a name in it, and then went into the stacks anyway." }
+      ]
+    },
+    "c_guanyuan": {
+      "title": "Archivist: one place only",
+      "situation": "The county has just one place this year for assessment as Archivist, and you and an older colleague from the office both qualify. She got here four years before you and will retire in two.",
+      "options": [
+        { "label": "Hand in your materials", "result": "Your two files sat on the same table. When you met in the corridor afterward, she still asked if you'd eaten." },
+        { "label": "Let her have it this time", "result": "You told the director you'd wait a year. The day she retired, she bought you a bowl of wantuo, the local buckwheat jelly." }
+      ]
+    },
+    "c_firm": {
+      "title": "The contractor wants you in Taiyuan",
+      "situation": "The digitization company has opened a branch in Taiyuan, the provincial capital, and the boss wants someone who knows archives to run projects, at more than twice your pay. But your permanent post would be gone, and your child is still in school in the county.",
+      "options": [
+        { "label": "Stay in the county", "result": "You slipped the business card into an old book. The next morning you read the thermo-hygrometer first, as usual." },
+        { "label": "Go to Taiyuan", "result": "You turned in your resignation, and everyone at the archives said what a pity. You left the magnifying glass in your drawer to your apprentice.", "end": "After that you went to every county town in Shanxi. At each archives, the first thing you did was go look at the dehumidifier in the stacks." }
+      ]
+    },
+    "c_compile": {
+      "title": "Will you compile the old factory records?",
+      "situation": "The archives holds records from dozens of old factories, and you want to compile a volume of historical materials. What to include and which names to withhold would be yours to decide. There's no funding, and nobody has asked for it.",
+      "options": [
+        { "label": "Do it in your spare time", "result": "Two years later three hundred copies were printed, and the county's old people scrambled for them. One came to ask whether a photo of their workshop could go in." },
+        { "label": "Just make a good index", "result": "You made the index clear and left it for whoever wants to compile later. That is a kind of compiling too." }
+      ]
+    },
+    "c_senior": {
+      "title": "Past fifty: try for Associate Research Archivist?",
+      "situation": "Nobody in the county has yet made Associate Research Archivist. It takes projects and papers, the places are held at the city level, and if you get it, it's a few hundred yuan more. People ask what you're after.",
+      "options": [
+        { "label": "One more try", "result": "You arranged your compilations from all these years in order and wrote the cover yourself. The result won't come until next year." },
+        { "label": "Train your apprentice", "result": "You handed over the handwritten index cards box by box, and told her which ones were wrong and where." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On the last day you and your apprentice locked the stacks, and you signed the handover book for the last time. The keys made a very small sound on the desk. Outside the window one more person was waiting, a paper with a factory's name clutched in one hand. You stood and watched for a while. Your apprentice had already cranked open the row.",
+    "burnout": "That year the doctor said your lungs and your eyes could not stay among old paper any longer. You handed over the unfinished catalogs with a note taped to every box. After that you seldom went back to the building. Walking behind the county government you would still look up at the third-floor windows."
+  },
+  "stages": [
+    "Most of your work lies between the stacks and the window: crank the compact shelving, pull a file, copy it, stamp it, write in the use register who received it. Your older colleagues teach you to read the old hands on the index cards, and how to talk to people who come: first ask what they need to get done, and only then what they want to look up.",
+    "You run several fonds on your own now, and every year's end you go out to the townships with the filing schedule to see how each office boxes its files and sets retention periods. Back at the archives you write up your summaries and check accession lists in Excel. What's different is that when someone hands in the wrong thing, you are now the one who has to send it back.",
+    "Accessions, appraisal and review for opening have come to you. You and a colleague go through files that have come due, decide which can be opened, and sign the review sheet. You teach the county's part-time filing clerks and go over scan quality with the contractor. You turn fewer pages than you used to, and judge more.",
+    "The county's hard questions end up on your desk: does this old document count as permanent, how should this office's records be merged. You lead the research work, with grant applications and proofs spread across the table, and you go to meetings in the city in the director's place. When your apprentices come to you, you always send them to look it up themselves first."
+  ],
+  "work": [
+    "A retired accountant from the next county comes about an old ledger entry. You follow the voucher number from the catalog into the file, and your finger stops on page 31. He nods: that one.",
+    "An older colleague gives you a box of index cards and has you check them against the electronic catalog. You pencil seventeen errors on a note. The next day she has fixed fifteen; the other two, she says, are yours.",
+    "You back a torn old form for the first time and mix the paste too thick, so one corner puckers. Your teacher peels it off and has you thin it and start again. The hand, she says, has to be lighter than the paper.",
+    "Xiao Liu from the township government has stuffed three years of documents into one carton. In the yard you help him sort them by year and retention period, fill nine archive boxes, and walk him through the catalog sheet line by line.",
+    "You build an accession register for your fonds, list what six offices are still missing, and post it to the work group chat. The next day four of them phone and two send someone over.",
+    "The county hospital wants to transfer its old patient records. You go to see the storeroom, measure the shelves with a tape, and come back to write a one-page plan that begins with what will not be accepted.",
+    "Twenty cartons of files due for opening are spread over the meeting table. You and a colleague review them one by one, write down three page numbers that touch on private matters and must be withheld, and sign.",
+    "The contractor delivers a batch of digital copies. You sample three hundred images at random, find nine skewed and two with pages missing, and have the project manager rescan the whole lot. On the phone he is silent for a long time.",
+    "You teach township clerks about retention periods, using a land-contract form as an example. Afterward a woman asks: those boxes in our village got damp. Can they still be saved?",
+    "A local-history teacher asks after the drafts for one year's irrigation project. You run through it in your head and say don't look in the water bureau's fonds, try the commune's files. The next day, there they are.",
+    "You read the proofs of the compilation from start to finish, circle two wrong names under a group photo, and phone the ninety-year-old former factory head to confirm. Over the phone he counts them off for you one by one.",
+    "At the city review meeting, with the draft digitization standard in hand, you say a word on behalf of the small county archives: scanning costs money, people need training, and someone has to pay for the electricity."
+  ],
+  "past": [
+    "The year of your high school entrance exam, you bought a yellowing county gazetteer at a secondhand bookstall. When you came upon the name of your own village you stopped short. So this place was written down in a book too.",
+    "Your score in the gaokao (college entrance exam) was good enough for a decent university in the province. Your father wanted teacher training. You picked history, for no reason you could really give.",
+    "As a junior you interned at the city archives and, in white gloves, turned the pages of a Republican-era account book for the first time. This work can't be rushed, your teacher said. Paper is better at waiting than people are.",
+    "After graduating you taught history at a tutoring center in Taiyuan for a year. Rent took half your pay, and every holiday made you want to go home.",
+    "The county advertised permanent posts, and the archives had one. The requirements said able to endure hardship, familiar with computers. You came second in the exam; the person who came first went elsewhere."
+  ],
+  "late": {
+    "pension_note": "Estimate: a public-institution pension depends on years of contributions. County wages are modest, so it replaces about seventy percent of final pay, enough for a steady life in the county town.",
+    "scenes": [
+      "Your first month of retirement you still wake at eight and want to go check the temperature and humidity. You buy a small thermometer for your balcony.",
+      "Your apprentice phones to ask what a shorthand on an old card means. You tell her, and tell her to check with old Zhou next door as well, because he'll remember too.",
+      "You need your own file for your child's paperwork. Waiting in line at the window, you watch a young person crank open that row, in the way you taught.",
+      "You rest at home with the windows wide open. For the first month you keep smelling old paper, and only later realize it's your old padded coat.",
+      "Someone in the neighborhood wants to write about the old street. You help put everyone's old photos in order by year, and write down the names and places.",
+      "Someone from the archives comes to see you and says that form you repaired scans very clearly now. Is the paste still mixed the same way, you ask.",
+      "The first Spring Festival after leaving the archives, a relative asks if you can still look up an old hiring form. It has to be the person themselves, you say. There's someone at the window.",
+      "Now and then you pass the old building behind the county government. The third-floor windows are still shut, and you know the dehumidifier inside is humming.",
+      "At a retirement dinner someone mentions the payroll ledger you once handled. You think a moment. You still remember which rack.",
+      "You can apply for records on your phone now, and AI answers quickly. Fewer people come to the window, and most of those who do come for what the electronic catalog can't find.",
+      "Your grandchild asks what an archive is. You take your own marriage certificate from the cupboard and have the child read it aloud. One character comes out wrong, and you correct it."
+    ],
+    "closing": {
+      "retire": "One afternoon many years later you are airing your books in the yard, turning each one over, and a library slip falls out. You look at the date and put it back on the same page.",
+      "burnout": "Many years later, at home, you have written on the back of every old photo: who this is, where that was, who took it. The sun reaches the corner of the table, and you put the magnifying glass back in its box.",
+      "end": "Many years later someone at a county bookstall opens an old factory history and finds a receipt tucked inside, in your young handwriting. The stallholder dusts it off and puts it back."
+    }
+  }
+}

@@ -1,0 +1,303 @@
+{
+ "id": "env-ts",
+ "occupation": "Environmental Engineer",
+ "role": "Trainee Environmental Engineer, Industrial Park Wastewater Plant",
+ "headline": "An environmental engineering graduate back in Tangshan, watching sludge and inflow at an industrial park wastewater plant and catching whatever a dozen factories upstream send down",
+ "unit": "The wastewater treatment plant of an industrial park in Tangshan",
+ "unit_type": "Industrial park wastewater plant",
+ "city": "Tangshan, Hebei",
+ "city_tier": "Third-tier city",
+ "education": "Bachelor's in environmental engineering",
+ "level": "You can recite the formulas for COD and ammonia nitrogen and have done the dichromate method in a lab. What activated sludge is supposed to smell like, someone still has to tell you.",
+ "intro": "The plant sits at the end of the park nearest the sea. Past its wall run the pipe racks of the steel mills and coking plants, and the wind tells you what you'll be smelling today. The process supervisor hands you rubber boots and a logbook and says never mind the reports, go smell the tanks first. From today, the water from a dozen factories upstream ends up in your hands.",
+ "salary_note": "Estimate: an engineer at a Tangshan park wastewater plant earns over ten percent below the national average. The job is stable, with allowances for night shifts and emergencies.",
+ "facts": [
+  {
+   "label": "Assistant Environmental Engineer (current level)",
+   "value": "0-3 years, ¥5,000–7,500 a month (national average, estimated)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "Next level up",
+   "value": "Environmental Engineer (3-7 years)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Walking the tanks and reading the sludge to judge the biological system",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Analyzing inflow quality and online monitoring data",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "19 related listings nationwide, 0 in this city (the database leans toward campus and intern roles)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "Breakfast is a go-piece flatbread, a Tangshan thing. You ride your e-bike down the park's main road. The dead grass along it wears a thin coat of dust.",
+  "Handover with the night shift. The inflow curve on the control room screen had a spike last night, and the logbook has one word: coking.",
+  "Tank rounds. You scoop a cylinder of sludge and water from the aeration tank and let it stand by the railing for thirty minutes to see how fast it settles.",
+  "The lab. The dichromate reflux apparatus is simmering. The senior lab technician asks why this number is higher than yesterday's.",
+  "The filter press has torn another cloth. You and the maintenance man stand by the machine and talk it over. The sludge cake is already too wet.",
+  "You call the environmental officer at a chemical plant upstream and ask what happened with last night's water. He says nothing happened. You say then I'll take a sample at your outfall tonight.",
+  "You fill in the online monitoring comparison data, and only then does the day's ledger close. Outside the window a steel mill releases a sheet of white steam.",
+  "Dinner with classmates, a plate of mantis shrimp. They ask what you do at a wastewater plant. You say you raise sludge. No one gets it and you don't explain."
+ ],
+ "ladder": [
+  {
+   "title": "Assistant Environmental Engineer",
+   "stage": "Entry",
+   "focus": "Walks the tanks with the shift, takes samples, runs lab work, keeps the operating logs, learns to read sludge and water; moves up on three years of shifts and a certificate passed."
+  },
+  {
+   "title": "Environmental Engineer",
+   "stage": "Mainstay",
+   "focus": "Runs a process line, writes pollutant discharge permit reports, handles abnormal inflow; moves up on stable effluent and a full grasp of the process."
+  },
+  {
+   "title": "Process Supervisor",
+   "stage": "Leads crews",
+   "focus": "Runs the plant's process, lab and control room crews, sets dosing and aeration plans, deals with upstream companies and inspections."
+  },
+  {
+   "title": "Deputy Plant Manager (Technical)",
+   "stage": "Runs engineering",
+   "focus": "Runs upgrades, water reuse, budgets and outside coordination; responsibility for meeting effluent limits sits at this desk."
+  },
+  {
+   "title": "Plant Manager",
+   "stage": "Whole plant",
+   "focus": "Operations, staff, costs and relations with the park all come here, and the year's accounts have to add up."
+  }
+ ],
+ "ai_tasks": [
+  {
+   "name": "Walking the tanks and reading the sludge to judge the biological system",
+   "how": "AI has the dissolved oxygen and sludge concentration readings. The color of the foam, the smell off the water, how fast the sludge settles: someone has to stand at the edge and look."
+  },
+  {
+   "name": "Analyzing inflow quality and online monitoring data",
+   "how": "AI watches COD, ammonia and total nitrogen curves, warns early and guesses the upstream source. Which process at which plant has changed and whether to make the call is for a person."
+  },
+  {
+   "name": "Compiling discharge permit reports and operating ledgers",
+   "how": "AI generates ledgers and draft reports from control system data and checks them automatically; a person verifies the figures and stamps them."
+  },
+  {
+   "name": "Adjusting aeration and chemical dosing",
+   "how": "AI suggests air and chemical doses from inflow forecasts and saves a lot of power and chemicals. When the water from upstream changes, someone still has to watch and adjust, and the responsibility is theirs."
+  },
+  {
+   "name": "Tracing abnormal inflow back along the sewer network",
+   "how": "AI can only mark likely sections on a map. Lifting manhole covers, taking samples and talking to people at the plant take someone going there."
+  },
+  {
+   "name": "Writing upgrade plans and reuse project feasibility studies",
+   "how": "AI drafts and compares options and looks up standards and cases. The park's swings in flow, the old equipment's habits and whether the money exists are for a person to bring in."
+  }
+ ],
+ "events": {
+  "e_sv30": "The old lab technician teaches you to read the flocs in the cylinder, and says this sludge is alive today and was lazy yesterday. You begin to see the difference.",
+  "e_night": "Several nights in a row you sit in the control room, getting up twice for the rounds. Toward morning a layer of white mist lies on the tanks.",
+  "e_winter": "As winter comes the water temperature falls, the nitrifying bacteria slack off, and ammonia in the effluent creeps up. You adjust the return ratio again and again until it holds.",
+  "e_shock": "A slug of high-strength water hits, and the foam on the aeration tank changes color overnight. You cut part of the inflow and aerate without feeding. It takes three weeks to recover.",
+  "e_trace": "You walk the sewer manhole by manhole with sample bottles. At the fifth the water has changed color, and you find the plant upstream. Its environmental officer is silent a moment and says he'll talk to them.",
+  "e_inspect": "Inspectors come to check the ledgers. You stack three years of operating logs and online comparisons neatly. They turn to one page, ask two questions and leave.",
+  "e_reuse": "Reclaimed water is connected to the steel mill's cooling system. The first time you see the water you treated being put to work, you stand by the pipe a while.",
+  "e_odor": "You sit on the sofa at home and your child leans over, sniffs, and says your clothes smell like the tanks. You take a second shower.",
+  "e_sludge_cost": "The cost of sludge disposal goes up and the books get tighter. You spend an afternoon with the maintenance man and bring the filter press dose down a little more.",
+  "e_raise": "The park revises the operating fee and everyone at the plant gets a small raise. You buy a fresh-air unit for home that can filter the haze.",
+  "e_factory_close": "Two upstream coking companies relocate. Inflow falls by thirty percent, and the plant's load and earnings go with it. People's minds begin to wander.",
+  "e_mentor": "The new graduate washes the cylinder too clean. You tell him to rinse it with tank water first when sampling. His first logbook is better than yours was.",
+  "e_health": "There's one more line in small print about your lungs on the checkup report. The doctor says don't worry too much, and to smoke less by the tanks. You switch to lozenges.",
+  "e_ai_warn": "Water quality alerts now run through AI. Your phone rings twice at night, once for real and once for a blocked probe. You begin to know what to believe first.",
+  "e_ai_aeration": "Three months after AI aeration goes live, the power bill is down more than ten percent. Visitors take pictures. You stand by thinking: let's see what it does this winter.",
+  "e_ai_report": "AI writes the permit report in an afternoon. The figures are right, but its account of one overhaul reads like some other plant. You change three places and stamp it.",
+  "e_callnight": "The control room calls before dawn: the effluent online reading has jumped. You pull on a coat and drive over, already deciding which three things to look at first.",
+  "e_fish": "A flock of egrets lands on the mudflat below the outfall channel. The young staff post pictures in the group chat. You save one and say nothing."
+ },
+ "choices": {
+  "c_cert": {
+   "title": "Take the Registered Environmental Protection Engineer exam?",
+   "situation": "The foundation exam alone is hard enough, harder for someone on shifts. With it you can sign designs, and outside firms want people who have it.",
+   "options": [
+    {
+     "label": "Study through the night shifts",
+     "result": "You drill questions under the control room lamp. In the first year you pass the foundation exam, and you own a thick stack of notes."
+    },
+    {
+     "label": "Master this plant first",
+     "result": "You put the books down and walk every pipe in the plant. The license can wait for next year, and next year doesn't bring it up again."
+    }
+   ]
+  },
+  "c_steel": {
+   "title": "The steel mill's environmental department is hiring",
+   "situation": "A big mill in the park is hiring for its environmental department, at thirty percent more pay, doing internal compliance and inspection prep. Go, and you become the side you are now checking up on.",
+   "options": [
+    {
+     "label": "Go to the mill",
+     "result": "You take off the rubber boots and put on a badge. The new office window faces the blast furnace.",
+     "end": "You become the mill's environmental officer, living between emissions data and the production plan. When the wastewater plant occasionally calls, you still ask first how the sludge is doing."
+    },
+    {
+     "label": "Stay at the plant",
+     "result": "You tell them you'll think about it. Around then the lab technician keeps bringing you pickles she made."
+    },
+    {
+     "label": "Ask for a raise to stay",
+     "result": "The plant manager gives you a little more and tells you not to mention it."
+    }
+   ]
+  },
+  "c_shift": {
+   "title": "Take over a process line, or stay on shifts",
+   "situation": "The process supervisor wants you to run a line, days at work and your phone on at night. On shifts at least, when you're off you're off.",
+   "options": [
+    {
+     "label": "Take it",
+     "result": "You start watching your own line. By habit you wake around two and look at the curve on your phone."
+    },
+    {
+     "label": "Stay on shifts",
+     "result": "You get more daytime with your child, and one more 'wait a while.'"
+    }
+   ]
+  },
+  "c_foreman": {
+   "title": "Applying for Process Supervisor",
+   "situation": "The old supervisor is moving to a new plant and the crews are watching. This level sets lab and control room rotas, and the factories' environmental officers become yours to deal with.",
+   "options": [
+    {
+     "label": "Apply",
+     "result": "You explain how this winter's three ammonia swings were handled. The old hands in the audience nod."
+    },
+    {
+     "label": "Let Xiao Li have it",
+     "result": "You help Xiao Li revise his application, and walk an extra ten minutes home after work."
+    }
+   ]
+  },
+  "c_consult": {
+   "title": "Going to an environmental impact consultancy",
+   "situation": "A classmate's consultancy needs someone who knows operations. Reports go fast, every contract is real money, no calls at midnight and no more smelling tanks.",
+   "options": [
+    {
+     "label": "Go",
+     "result": "You leave your rubber boots in the cabinet by the tanks, just in case.",
+     "end": "You become technical lead at an impact assessment firm, dealing with water in another way: water on paper, other people's water. At a faint smell of sludge you still raise your head."
+    },
+    {
+     "label": "Don't go",
+     "result": "You say writing reports isn't as solid as looking at sludge. Your classmate laughs at your one-track mind."
+    }
+   ]
+  },
+  "c_ai": {
+   "title": "Letting AI run the aeration",
+   "situation": "The plant will try AI precision aeration. The vendor promises twenty percent less power, but part of the control room would go to the system. You must decide how much to trust it.",
+   "options": [
+    {
+     "label": "Lead the trial and watch it",
+     "result": "For the first three months you compare the numbers every day. The system gets it wrong once in the rainy season and you write that day's numbers into the rules."
+    },
+    {
+     "label": "Try it on one line only",
+     "result": "You keep the other line manual. It's stable, and saves only half the money."
+    }
+   ]
+  },
+  "c_vice": {
+   "title": "Applying for Deputy Plant Manager (Technical)",
+   "situation": "This seat negotiates money with the park committee, water with upstream factories, and pay with your own people. You'll look at the tanks less and less, and sign more and more.",
+   "options": [
+    {
+     "label": "Apply",
+     "result": "You start wearing a shirt to meetings and leave the boots behind your office door."
+    },
+    {
+     "label": "Don't compete",
+     "result": "You say you haven't had enough of looking at these tanks. Everyone laughs, and you mean it."
+    }
+   ]
+  },
+  "c_public": {
+   "title": "A public-institution post in the environmental monitoring system",
+   "situation": "A monitoring station is hiring engineers with operating experience, a permanent state post, somewhat less pay and a secure retirement. But from then on others are at the tank edge, and you are at a computer.",
+   "options": [
+    {
+     "label": "Sit the exam",
+     "result": "You pass. On your last day the lab technician insists on handing you a jar of pickles.",
+     "end": "You join the monitoring station, where every water sample comes labeled. Sometimes the person delivering one is an apprentice you trained when you were young. You say hello, and neither of you says much."
+    },
+    {
+     "label": "Stay",
+     "result": "You tell your family the plant can't do without you. You know that's not necessarily true, and you want a few more years."
+    },
+    {
+     "label": "Help your apprentices sit it",
+     "result": "You revise the applications of two younger colleagues, and one of them gets in."
+    }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you go to the aeration tank as always, scoop a cylinder and stand it on the railing to settle. Your apprentice says he'll take this reading, boss. Thirty minutes later you glance at it, rinse the cylinder and put it back on the rack.",
+  "burnout": "Your body won't take night shifts anymore, so you ask to move to the records room, where you scan twenty-odd years of ledgers one by one. You can't smell the plant from there, and you sleep worse for it. Later you complete the paperwork and go home, and on the balcony you grow a pothos that survives in any dirt."
+ },
+ "stages": [
+  "Your days are an inspection form: measuring dissolved oxygen, reading sludge settleability, doing COD and ammonia with the lab technician, copying control room figures into the operating log, watching inflow on night shift. When there's a problem you call the process supervisor and change no parameters yourself. What you learn here is looking: the color of sludge, the look of the foam, the smell of the water.",
+  "A process line is yours: you set return ratios and aeration, write the pollutant discharge permit report, phone environmental officers upstream to check on water quality. Control room staff come ask whether they should adjust. You used to just write the number down. Now you have to explain why it looks like that.",
+  "Your name is on the control room and lab rotas, and dosing plans, process changes and maintenance all wait for your nod. You meet the park's factory environmental officers regularly and walk inspectors around the site. The plant's curves hang on your phone, and you rarely sample by hand anymore, though each week you still scoop one cylinder yourself.",
+  "On your desk are upgrade budgets, reuse feasibility studies and equipment tenders, and half your time goes to meetings with the park committee and the steel mill's energy department. Effluent limits are this level's floor. On a young engineer's plan you look first at risk and money, and then you ask whether they've been to the site.",
+  "A hundred or so people's pay, the accounts for chemicals and power, and the operating contract with the park are all yours. You speak about inflow and cost at the quarterly meeting, and you're the first to appear when the phone rings at night. You don't look at the tanks much now, but whenever you bring visitors around you still stop by that cylinder."
+ ],
+ "work": [
+  "You set the SV30 cylinder on the railing and time thirty minutes. The supernatant is a little cloudy. You write it into the handover book, and Old Han on night shift reads it and says look again tomorrow.",
+  "Sister Zhou in the lab has you run a parallel ammonia sample. The two numbers are too far apart. You redo it with slower hands, and the gap closes.",
+  "You stand in for the first time to sample the outfall, writing the bottle label and the exact minute, and hand it to the online comparison man, who nods and signs.",
+  "You raise the secondary clarifier's return ratio from 80% to 100% and write down why in the ledger. The next day turbidity in the effluent falls, and you draw a small check in the handover book.",
+  "The quarterly table of the permit report is missing two sludge transfer records. You go to the filter press shop, dig out the transport manifests and match the numbers one by one.",
+  "Xiao Liu, the chemical plant's environmental officer, sends his discharge plan. You ask him to split tomorrow's wastewater into two batches. He says he'll check with production, and in the afternoon writes back OK.",
+  "New control room operator Xiao Sun turned up the dosing pump one notch overnight. The next day you don't scold him. You have him write out his reason, and you watch him write it.",
+  "A blower must be stopped for overhaul. You draw up three days of load tables and have maintenance man Old Geng do it on the day shift, away from peak inflow.",
+  "At the park meeting you bring out six months of inflow exceedance records and read out several companies' names in a level voice. When you finish everyone is writing.",
+  "The reuse feasibility study reaches a sixth draft. You give membrane replacement cost its own line and tell young Xiao Wu not to hide that one.",
+  "In an equipment tender two suppliers' prices are absurdly far apart. You ask for third-party operating data, go through it page by page, and rank the cheap one second.",
+  "The park committee wants next year's operating fee cut by ten percent. You lay twelve months of cost-per-ton sheets on the table and show which line can give and which can't.",
+  "You walk the plant with the new process supervisor, stopping at each tank to have him say one sentence about how it is today. At the end you tell him: tomorrow you take me around."
+ ],
+ "past": [
+  "You grew up in Tangshan, where the smell by the river got especially heavy in autumn. The year of the high school entrance exam, a teacher set an essay on your hometown river. Yours was short.",
+  "Your gaokao (college entrance exam) score was enough for chemical engineering. Your family said environmental work had a future, so you wrote environmental engineering on the form, not yet knowing what those words would have you smelling each day.",
+  "In a sophomore water treatment lab, the teacher had each of you culture a small flask of activated sludge. Yours died. That's normal, the teacher said, try again.",
+  "Your graduation internship was at a steel company's water treatment station. Wastewater came clear after a few tanks. You told the old hand it seemed magical. What's magical, he said, is that it's different every day.",
+  "Most of your classmates went to consultancies in Beijing. You applied to the wastewater plant in your hometown industrial park. The plant manager asked if you could handle night shifts. You said yes, though you never had."
+ ],
+ "late": {
+  "pension_note": "Estimate: state-owned park plant staff pay into social insurance, and the pension is about fifty-five percent of final pay.",
+  "scenes": [
+   "For the first time at eight in the morning you don't open the curves on your phone. By nine you've looked anyway, and then you delete the app.",
+   "An apprentice from the old plant brings you an inflow chart. You put on your reading glasses, look at it and say this looks like somebody's coking wastewater.",
+   "Walking in the South Lake park, you go to the water's edge and, by habit, try to smell it. There's no smell, and you're satisfied.",
+   "Your first year at home, you change the water for the pothos on the windowsill three times. A neighbor asks if you've studied gardening.",
+   "From time to time you go look at the water quality noticeboard in the neighborhood. There's a typo in it, and you tell the property office.",
+   "The old lab technician comes to visit, and you talk about that first tank of sludge in more detail than you ever talk about your children.",
+   "At your new place your clothes finally lose the smell. Your spouse says there's still a little. You both laugh.",
+   "Passing the industrial park, you go out of your way to the plant gate. The poplars outside have grown taller and the guard doesn't know you.",
+   "A young person asks why you left the wastewater plant. You think for a bit and say the water is still the same water.",
+   "Your child asks if the smell by the river back then was really so strong. You say stronger than you can imagine, and that it's much better now.",
+   "Tangshan has several clear winter days in a row. You stand below your building looking up and the sky seems further away than when you were young."
+  ],
+  "closing": {
+   "retire": "The evening wind comes in from the sea and smells only of the sea. You stand a while on the balcony and give the plants a cup of water.",
+   "burnout": "The pothos has trailed below the windowsill. You bring over a little stool and gently set one of its stems back in place.",
+   "end": "You rinse a cup under the tap. The water runs clear. You look at it a moment longer and turn it off."
+  }
+ }
+}

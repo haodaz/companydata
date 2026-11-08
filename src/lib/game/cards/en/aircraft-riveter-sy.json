@@ -1,0 +1,151 @@
+{
+ "id": "aircraft-riveter-sy",
+ "occupation": "Aircraft Component Assembler",
+ "role": "Riveter at an Aircraft Parts Factory (Junior Grade)",
+ "headline": "Fresh out of technical school, learning the trade under one of your father's old workmates, carrying the rivet gun, working the shift handovers and passing tools to your master at an aircraft parts factory in Shenyang",
+ "unit": "An aircraft parts factory in Shenyang",
+ "unit_type": "Machinery manufacturer",
+ "city": "Shenyang",
+ "city_tier": "Provincial capital",
+ "education": "Technical school (Fitting)",
+ "level": "You can read a drawing and you can hold a rivet gun. The ear that lets your master know good from bad at a single sound, you haven't grown yet.",
+ "intro": "Your father worked half his life at an old Shenyang factory, went home at the end of the nineties, and to this day says the skill wasn't what went wrong, something else was. The year you finished technical school he asked an old workmate to take you on. On your first day your master didn't let you touch the rivet gun. He had you lay out everything in the toolbox and count it. From today, you will count it again before you leave, every single day.",
+ "salary_note": "Estimate: skilled pay in old-industrial Shenyang runs slightly under the national figure for the job, offset by a stable employer and full benefits; taken at 95 percent.",
+ "facts": [
+  { "label": "Junior Grade (current level)", "value": "0–3 years, ¥4,000–6,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Intermediate Grade (3–8 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Hand fitting and the feel in your hands", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Assembling to drawings and process cards", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Still dark, and the radiator gurgles. Downstairs the soy milk at the breakfast shop has just come to the boil. You buy two youtiao and eat them on the walk, hands in your sleeves for warmth.",
+  "Work clothes on, badge on, and into the team's pre-shift meeting. The team leader reads out today's work and then the precautions, which you've heard hundreds of times. He doesn't skip a word.",
+  "Handover from the previous shift. Lao Guo of the night shift pushes the handover book toward your master, points to each item, and they both sign.",
+  "You pass tools to your master. He doesn't look up. His hand comes out and you must put the right one in it. When you get it wrong he says nothing; the hand simply stays in the air, waiting.",
+  "A morning in earplugs, and when you take them out the world is hollow and quiet. There's a line for the sweet-and-sour pork in the canteen. You and Xiao Sun, who started with you, sit by the window with your trays.",
+  "Afternoon: practicing basics on scrap. The same piece riveted and undone, riveted and undone. Your master comes by, listens to one strike, shakes his head and walks off.",
+  "End-of-shift count. Tools laid out one by one against the list. If one is missing, no one on the team goes home. Today they're all there, and you breathe out.",
+  "Home. Your father raises a glass of baijiu and asks: what did your master say today? Nothing much, you say. He nods. Nothing much is good."
+ ],
+ "ladder": [
+  { "title": "Junior Grade", "stage": "Apprentice", "focus": "Passing tools, helping out and practicing the basics, counting the tools every day, and passing an assessment before you can work alone." },
+  { "title": "Intermediate Grade", "stage": "Working alone", "focus": "Finishing routine assembly independently from the process card, inspecting your own and each other's work, clean handovers. Steady hands and no errors are how you move up." },
+  { "title": "Senior Grade", "stage": "Backbone of the team", "focus": "Taking the hard jobs, bringing on apprentices, solving small problems on the floor. When the team isn't sure about something, they come and ask you." },
+  { "title": "Technician", "stage": "Checking and teaching", "focus": "Overseeing the critical steps, training young workers, working with process engineers and inspectors on problems that keep coming back. The craft has to be written down and passed on." }
+ ],
+ "ai_tasks": [
+  { "name": "Hand fitting and the feel in your hands", "how": "When parts are off by just a little, you ease them in by feel, a bit at a time. A machine can measure how far off; a person is still what gets it exactly right." },
+  { "name": "Assembling to drawings and process cards", "how": "The system can turn a drawing into a 3D guide with step-by-step prompts. When something looks wrong a person has to decide in front of the actual part, and answer for it." },
+  { "name": "Inspecting quality and keeping records", "how": "Vision and measuring equipment can find defects and write up the record automatically. Anomalies still need a person to review them, and a person signs for the release." },
+  { "name": "Checking out parts and tools", "how": "A scan checks them out and back in automatically; a person only deals with what doesn't match the books." },
+  { "name": "Teaching apprentices, handing over shifts", "how": "How many times a thing has to be said, why this kid's hands are shaking today: those are things a system can't see." }
+ ],
+ "events": {
+  "e1": "The first job you do alone is sent back by the inspector. You take it apart and redo it, working until eight at night. Your master sits with you, says nothing, and drinks tea.",
+  "e2": "At the end-of-shift count one small wrench is missing. The team searches for an hour and a half, and it's found up your own sleeve. That night you buy kao lengmian, griddled cold noodles, for everyone.",
+  "e3": "Your master finally listens to a strike and doesn't shake his head. He walks two steps away and looks back at you. You tell your father that night. He has an extra glass.",
+  "e4": "When the factory is rushing to deliver you go more than forty days without a full weekend. You go home and collapse. Even asleep, your hand keeps the shape of the rivet gun.",
+  "e5": "Xiao Sun from your intake is off to the south, where he says you can make ¥3,000 more a month. The day he leaves you eat chicken racks in Zhongjie and drink until midnight. Neither of you brings up the future.",
+  "e6": "You marry someone you met at a union event. The banquet is at a Dongbei restaurant in the old part of town, and your master, drunk, taps a chopstick on a bowl and hums half an errenzhuan song.",
+  "e7": "Your wrists have started swelling at night. The doctor says it's the tendon sheath and to go easy. You nod, and the next day you go to the factory anyway.",
+  "e8": "At the factory skills contest you take third place. The prize is a thermos and a certificate. Your father tapes the certificate to the wall at home, happier about it than you are.",
+  "e9": "The shop floor switches to scanning for parts and electronic work cards. The paper books are gone. Lao Guo still keeps one in his pocket, and copies everything out by hand before he can rest easy.",
+  "e10": "Your child is born. Rocking the baby in the middle of the night, you find your hands are stronger and steadier than they used to be. The baby falls asleep in them without a sound.",
+  "e11": "The day your master retires he hands you the toolbox he's used for thirty years, the handle wrapped in tape worn shiny. He posts two words in the team chat: work well.",
+  "e12": "A few inspection machines arrive in the workshop. They catch problems the eye can't see, and they also flag good work as bad. The old hands argue with the machines for half a year, and finally learn to look together with them.",
+  "e13": "Ringing in the ears, most noticeable at night. The doctor at the occupational health check says from now on keep your earplugs in properly, stuffy or not.",
+  "e14": "Your apprentice works alone for the first time. You stand behind and listen. On the fifth strike you quietly take your hands from behind your back.",
+  "e15": "The heating fee goes up in winter and the pipes in the old family housing leak again. You put a basin under the radiator and get up twice in the night to empty it.",
+  "e16": "Your child writes a composition about you that mentions only the calluses on your hands. You never go into detail at home about what you do, and your child has never asked. Except one day: of the things that fly up there, did you work on any?",
+  "e17": "Your hands have begun to tremble, very slightly. You quietly leave the hard jobs on the team to your apprentices. They quietly take them, and neither side says a word.",
+  "e18": "Each year there's one fewer of your father's old workmates. At Qingming, the grave-sweeping festival, you lay a small polished wrench at his grave, leave it a while, and put it back in your pocket."
+ },
+ "choices": {
+  "c1": { "title": "Learning fast or learning right", "situation": "The shop pays bonuses by the job hour and Xiao Sun from your intake has already started taking on jobs. Your master wants you to practice basics for six more months. Hands without roots, he says, get you nowhere however fast they are.", "options": [
+   { "label": "Do as he says, six more months", "result": "Your bonus is a good deal smaller than Xiao Sun's, and little by little your hands stop needing to think." },
+   { "label": "Take jobs and earn hours", "result": "Your pay slip looks better. Your master glances at it, says nothing, and doesn't teach you one word more." }
+  ] },
+  "c2": { "title": "Sitting for Intermediate Grade", "situation": "The team recommends you for Intermediate Grade: a whole book of theory to memorize and a piece of work to complete in front of the examiner. Pass and your pay goes up a step. But the shop is rushing to deliver these few months, and no one can cover for you after hours.", "options": [
+   { "label": "Sit it", "result": "You stay two extra hours in the workshop every day. Your master sees this and stays with you, and doesn't say why." },
+   { "label": "Next year", "result": "These days you're just too tired, you say. When you sign up the following year, the questions have all changed." }
+  ] },
+  "c3": { "title": "A private factory in the south comes recruiting", "situation": "Xiao Sun phones from the south. His factory is looking for experienced riveters and the monthly pay can double, the boss said so himself. If you stay in Shenyang your pay will rise slowly, and your parents are getting on.", "options": [
+   { "label": "Go south", "result": "On the train after Spring Festival you stand for a long time. The snow of the Northeast moves away behind you until you can't see it.", "end": "You've gone to the factory in the south, where summers are long. Each New Year back in Shenyang, the first thing you do is buy a chicken rack." },
+   { "label": "Stay", "result": "Let me think about it, you tell Xiao Sun. When you hang up your father asks who it was. Wrong number, you say." }
+  ] },
+  "c4": { "title": "Taking on an apprentice or not", "situation": "The team leader assigns you a kid just out of technical school. An apprentice eats into your hours, and his mistakes are yours to answer for. Then again, to make Senior Grade, bringing on an apprentice is a hard requirement.", "options": [
+   { "label": "Take him on", "result": "You put the kid's hands in the right place, the way your master did with you. After a month your bonus is smaller and you talk more." },
+   { "label": "Turn it down and do your own work", "result": "Your hours remain the highest on the team. The team leader gives the kid to someone else, and looks at you as he goes." }
+  ] },
+  "c5": { "title": "Going for Senior Grade", "situation": "This round of Senior Grade has few places. They look at the skills assessment, your work record, and whether you've solved problems on the floor. You've always had a few homemade tricks. Written down, they're your application, and then they won't be only yours.", "options": [
+   { "label": "Write the tricks down", "result": "For the first time you spend a week in front of a computer, turning what's in your hands into words. When you finish you find some of it can't be written." },
+   { "label": "No writing; go on skill alone", "result": "The skill is in the hands, you say; paper doesn't count. You do well in the exam. It's just that the panel has nothing of yours to read." }
+  ] },
+  "c6": { "title": "Whether to learn the new digital equipment", "situation": "The factory is picking people from each team to learn the new inspection and digital guidance systems, then teach everyone else. The old hands feel this is forcing them out. Others say not learning is what will really force you out.", "options": [
+   { "label": "Go and learn it", "result": "You put on your reading glasses and sit at the computer, slower than the young people, but you know what the system misses." },
+   { "label": "No; let the hands do the talking", "result": "Machines have their own road, you say. Your skills are still the best. There are slowly fewer places to use them." }
+  ] },
+  "c7": { "title": "Going for Technician", "situation": "The factory is urging its older workers to apply for Technician, which takes a technical summary, an oral defense, and a decent apprentice to show for it. It won't mean much more money, but your name will go on the workshop wall. At your age, half have given up.", "options": [
+   { "label": "Apply", "result": "You wear a new shirt to the defense. When you get to the work of your hands, you talk more slowly than anyone." },
+   { "label": "Not anymore", "result": "Let the chance go to the young ones, you say. You still arrive first every day and wipe down the toolbox." }
+  ] },
+  "c8": { "title": "The hands aren't what they were", "situation": "These hands are no longer what they were. The tool store needs an old hand to run it: easy work, 30 percent less pay. A relative who owns a hardware shop also asks whether you'd come and help out.", "options": [
+   { "label": "Go to the relative's hardware shop", "result": "You do the paperwork, leave the toolbox to your apprentice, and change into a blue shop coat.", "end": "You've left the workshop and help people pick out screws at the hardware store. When someone buys the wrong size, you can't help saying something." },
+   { "label": "Go to the tool store", "result": "You take your seat in the tool store and go on counting tools every day, only now it's the whole factory's." },
+   { "label": "Hang on a few more years", "result": "You wrap your wrists tighter and keep to your old spot. Your apprentices do a bit more for you, and no one mentions it." }
+  ] }
+ },
+ "endings": {
+  "retire": "On the last day, at sixty, you lay your tools out one by one and count them against the list one final time. Nothing is missing. Your apprentice carries the box for you all the way to the gate. On the way home a plane passes very high up. You look up once, look down, and keep walking.",
+  "burnout": "Your wrists and ears have raised their objections together, and the factory doctor advises you to stop. The day you finish the paperwork you wipe the tools clean one last time and hand them to your apprentice. At home, afterward, the house always seems too quiet."
+ },
+ "stages": [
+  "Each day starts with counting tools and ends with counting tools. During the shift you pass tools to your master, hold things steady and learn to read drawings and process cards, and before you leave you practice over and over on scrap. You and your master exchange no more than ten sentences a day. Most of them are 'mm', and all of them count.",
+  "You have your own workstation now, and the right to sign. You take a work card, finish the steps, inspect it yourself and pass it to the inspector; if there's a problem you write it clearly in the handover book. Unlike your apprentice days, when a job goes wrong the name they trace it to is yours. You start to learn to slow down, and to say everything out loud to the next shift.",
+  "The team's hardest jobs start coming to you, and inspectors and process engineers bring you their questions directly. You have apprentices now. By day you stand behind them and watch; at night you think about how to bring it up. There's a little less for your hands to do and a lot more for your mouth and eyes, and you begin to lose sleep over other people's mistakes.",
+  "You sit in technical meetings now, arguing line by line over process documents with the engineers. You have to be there for the critical jobs, you teach the training for young workers, and you write up the problems that keep recurring. When something happens, the first thing the bosses think of is your hands, and you find yourself clasping them behind your back more and more."
+ ],
+ "work": [
+  "Your master tosses you a piece of practice stock and tells you to listen to your own strikes. You do ten and mark the three that sound wrong. He looks, crosses out one, and adds two more.",
+  "At handover Lao Guo asks if you used the number four tool today. You open the sign-out book, find you've left out a line, and quickly add it and sign.",
+  "The team leader has you redo the labels on the tool cabinet. You spend an afternoon on your knees doing it, and that night you find your master has peeled one off and put it back straight.",
+  "Xiao Tang the inspector, with a magnifying glass, says this spot needs another look. You fetch the work card and go through it with her item by item until she writes 'passed' on the record.",
+  "Taking over the night shift, you find Xiao Wu's note in the handover book is vague. You phone and get him out of bed to explain. He grumbles for a while, and then he tells you.",
+  "A job just won't line up. You don't force it. You call over Lao Feng, the process engineer. He looks at it a long time, then changes a footnote on the process card.",
+  "Your apprentice Xiao Gao's hands keep shaking. You don't scold him. After work you take him to the canteen and ask about things at home for half an hour, and the next day his hands are half as unsteady.",
+  "The team leader's called away on a trip. You take up the schedule, rearrange the week's work, and keep the most troublesome job for yourself.",
+  "The new inspection machine keeps reporting one spot as a problem. You stay with it for three days, copying down each alert, and take them to compare with the young man from the equipment maker.",
+  "You give just one lesson at the young workers' training. You open by putting an old spoiled part on the table and having them pass it around, without a word.",
+  "A young man from the process department brings a new document. You put on your reading glasses, read it out item by item, and beside item seven you write: can't be done.",
+  "The factory wants to shoot a teaching video. You freeze in front of the camera and can't say anything. Your apprentices, beside you, try not to laugh. In the end they film your hands."
+ ],
+ "past": [
+  "After he was laid off, your father spent some years fixing bicycles at the gate of the compound. After school you passed him wrenches. He never let you touch the chain.",
+  "You didn't get into a good high school. Go to technical school, your father said; a person with a trade won't go hungry. He was fixing someone's bike as he said it.",
+  "The first time you handled a file in the school workshop, you raised two blisters in an afternoon. This is only the start, the teacher said.",
+  "Your classmates were all talking about going south. Your father dug out an old phone book and went through his former workmates one by one.",
+  "One of them answered: send the kid over. It's hard, though; three years of learning and not a word of complaint. Your father hung up and poured himself a drink."
+ ],
+ "late": {
+  "pension_note": "Estimate: forty years of continuous contributions as a factory employee put the pension at about 60 percent of final pay.",
+  "scenes": [
+   "After retiring you lay out the tools at home in order of size. Your partner sees them and asks: opening a shop?",
+   "Your apprentice is a master now and brings his own apprentice to give you New Year's greetings, with a fish. You make them hold out their hands, and inspect each one.",
+   "Walking by the Hun River, you see a plane pass, drawing a white line. A child next to you points and says: so high. Mm, you say, so high.",
+   "When you've just left, you keep standing up a little after five to look for something. You stand there a while before remembering you have no tools to count today.",
+   "Your wrists have got a little better. The sound in your ears has stayed. At night you tell yourself it's the workshop, and slowly you fall asleep.",
+   "Everyone in the compound brings you what's broken. You fix a door handle tighter than it was to begin with, and don't take a cent.",
+   "In your first month in a new place, you still count what's near you before you leave. Someone asks what you're counting. Nothing, you say.",
+   "An old workmate posts a photo in the group chat of your master's eightieth birthday. You enlarge it and see his hands, still resting on his knees.",
+   "You take your child to the airport to watch planes through the glass. The child asks why you keep staring at the side of the plane. No reason, you say. Just looking.",
+   "Winter comes to Shenyang and you dig the old padded work jacket out of the wardrobe. The shoulders still hold their shape; the cuffs have worn shiny.",
+   "You lend a hand assembling a cabinet at your child's home. One screw has gone in crooked. You take it out and redo it. Can't see it, says your child. You can hear it, you say."
+  ],
+  "closing": {
+   "retire": "Dusk on the balcony. You wipe down the little wrench, put it back in its box, and count. Nothing missing.",
+   "burnout": "It's snowing outside. The radiator gurgles once and you lift your head.",
+   "end": "Evening, a white line across the sky, slowly coming apart. You're still standing there."
+  }
+ }
+}

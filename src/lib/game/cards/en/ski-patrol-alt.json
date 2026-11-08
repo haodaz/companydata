@@ -1,0 +1,181 @@
+{
+  "id": "ski-patrol-alt",
+  "occupation": "Ski Patroller",
+  "role": "Ski Patroller",
+  "headline": "Come from the interior to Altay in far northwest Xinjiang, clearing and checking runs at twenty-odd below and getting people down the mountain safely",
+  "unit": "The patrol team of a ski resort in Altay",
+  "unit_type": "Ski resort patrol and rescue team",
+  "city": "Altay",
+  "city_tier": "Fourth-tier city",
+  "education": "Associate degree (Sports Training)",
+  "level": "You can take a rescue toboggan down intermediate runs on your own. Expert runs and heavy snow days still mean following an older patroller.",
+  "intro": "The resort is in a valley at the foot of the Altai Mountains. The lifts open in November and don't close until the end of April. You came from a sports school in the interior and spent two years trailing the team, and this year you get a run of your own. From today, you are the first one up the mountain every day and the last one down, and only when everyone up there is accounted for do your skis come off.",
+  "salary_note": "Estimate: winter wages plus allowances, with only basic pay in summer. Local pay is below the national average, and the high-cold allowance makes up a little of it.",
+  "facts": [
+    { "label": "Ski Patroller (current level)", "value": "2–5 years, ¥4,500–7,500 a month (national average, estimate)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Senior Ski Patroller (5–11 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Setting and maintaining warning signs, fencing and run closures", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Inspecting runs for hazards such as ice and exposed rocks", "source": "AI exposure" },
+    { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "Still dark, minus twenty-seven. You pack your radio and first-aid bag, and your breath forms a layer of frost on your face mask.",
+    "First chair up for the opening sweep. You check nets and foam pads run by run, and note where last night's wind has drifted snow onto the bends.",
+    "The resort opens. You stand at a fork on an intermediate run and stop someone without a helmet. Just one run, he says. You point down at the rental shop.",
+    "The radio goes: someone's down and can't move, mid-way along Run 2. You ski over with the rescue toboggan, get those behind to go around, then crouch down and ask his name.",
+    "Instant noodles at the patrol hut. Your fingers need a while by the stove before they'll bend, and then you write up the morning's call-out in the logbook.",
+    "A whiteout blows in, with visibility under thirty meters. The captain says on the radio to close the upper half, and you and your partner plant the poles one by one.",
+    "Closing sweep. From the summit you ski down slowly, calling out: anyone there? The snow swallows half of your voice.",
+    "You take off your boots, and only now do your toes start to hurt. The dorm radiator is hung with gloves and socks."
+  ],
+  "ladder": [
+    { "title": "Trainee Patroller", "stage": "Trailing the team", "focus": "Learn run inspection, net-setting and the rescue toboggan from older patrollers, and earn a first-aider certificate." },
+    { "title": "Ski Patroller", "stage": "On duty alone", "focus": "Handle the opening sweep and rescue calls on a few runs. You move up by handling things steadily." },
+    { "title": "Senior Ski Patroller", "stage": "Expert runs", "focus": "Take expert runs and bad-weather days, lead trainees, make decisions on site." },
+    { "title": "Patrol Captain", "stage": "Leads the team", "focus": "Make schedules, set closure standards, manage gear and drills, deal with the resort and hospitals, and be the first to stand up when something goes wrong." }
+  ],
+  "ai_tasks": [
+    { "name": "Inspecting runs for hazards such as ice and exposed rocks", "how": "AI can combine weather data with drone or fixed camera images to flag suspicious icy or rocky patches. A person still has to go out on the run to confirm, and judge whether to close it and how to deal with it." },
+    { "name": "Setting and maintaining warning signs, fencing and run closures", "how": "At most, AI can remind you where the markers should go. Carrying posts, stringing nets, planting flags and checking that they're firm all has to be done by hand, in the snow." },
+    { "name": "Aiding injured skiers with first aid on site", "how": "AI can offer prompts on first-aid procedures, but judging an injury on the spot, stabilizing it, calming the person and answering for how it's handled can only be done by someone trained." },
+    { "name": "Moving injured skiers by rescue toboggan to the aid station or medical staff", "how": "AI can't help with the handwork: controlling a toboggan on a slope, keeping the injured person stable, crossing rough ground. It's all strength, teamwork and experience." },
+    { "name": "Searching for lost or stranded skiers", "how": "AI can use drones, thermal imaging or phone location clues to narrow the search. People go into the mountains, talk to the person, weigh the risk and make the rescue decisions." },
+    { "name": "Stopping dangerous skiing and keeping order on the runs", "how": "AI cameras can spot speeding, skiing against traffic and crossing boundaries, and raise an alert. Talking to someone face to face, handling conflict and deciding whether to pull a lift pass takes a person." },
+    { "name": "Teaching safety and giving skiers guidance", "how": "AI can generate safety notices, multilingual reminders, short videos and Q&A. Demonstrating on the snow, correcting a stance and adjusting what you say to the person's state are still done by someone there." },
+    { "name": "Recording accidents and filling in patrol and rescue reports", "how": "AI can turn spoken accounts, on-site photos and timelines into a draft accident report and file it. A person only has to check the key facts and sign." }
+  ],
+  "events": {
+    "e_found": "At closing, the count was one short. You followed the tree line with headlamps and brought back a young man who had gotten lost on a side trail. His phone had long since died.",
+    "e_storm": "A big snow fell for three days and the road to the county town closed, leaving the resort an island. You took turns pushing snow and checking the nets, and ate the last few cases of instant noodles from the storeroom.",
+    "e_argue": "You stopped a guest skiing out of bounds. He said he'd paid and could ski where he liked, and he took a picture of your badge and posted it online. The resort manager had you write an explanation.",
+    "e_thanks": "A guest you brought down off the mountain sent a small pennant and a box of apples in spring, with a note: thank you for talking to me the whole time that day.",
+    "e_knee": "Towing a toboggan for so long, your knee began to swell with fluid. The doctor looked at your scan and told you to rest properly after the season. You nodded and went back up the next day.",
+    "e_frost": "During the coldest week of January, a patch of skin on your cheek got frostbitten, peeled and regrew a little darker. You looked in the mirror and put on frostbite cream.",
+    "e_summer": "In summer the resort is all green. You carry steel pipe up the slope, mend the nets and pull weeds. In these months without snow, your pay is a little over half.",
+    "e_drone": "The resort installed AI cameras that recognize speeding and skiing against traffic, and the screen in the patrol hut began sounding its own alarms. At first it flagged every fast instructor too.",
+    "e_ai_report": "Accident reports have been handed to AI. You talk through it once on your phone, it makes a form, and you only correct the time and place. Those forms you used to stay up for are gone.",
+    "e_ai_thermal": "A drone with thermal imaging flew along the tree line and in a quarter of an hour had narrowed the search to one hollow. But the way down there you and your partner still broke through the snow on foot.",
+    "e_family": "Spring Festival is the resort's busiest time. You've lost count of how many years you've missed it. Your father sent a photo of the New Year's Eve table, with a pair of chopsticks set out for you.",
+    "e_powder": "An hour before opening, after new snow, the sky cleared and the pines hung with rime. On your sweep you skied a stretch of untouched powder, and half your body felt weightless.",
+    "e_city": "You rented a little room in the city of Altay. At the vegetable market people know you now, and say big snow this year, you'll be tired again. The place has begun to feel somewhat like home.",
+    "e_mistake": "You missed a rock blown bare at the edge of a bend. Luckily the guest only took a tumble. The captain said nothing, and the next day walked your inspection route himself.",
+    "e_drill": "The county's rescue services came to the resort for a joint drill. You practiced a rope descent from a lift cabin, and your legs were still shaking a bit when you got down.",
+    "e_youth": "A trainee you've been leading went out alone for the first time and came back with hands still trembling. You poured him hot water and had him go through it all. When he finished you said: not bad.",
+    "e_back": "Your back can't carry a stretcher any more. You leave the heavy work to the young ones and take over more of the radio and the coordination. All those years on the snow are kept in your lower back.",
+    "e_bonus": "A quiet season with no major incidents, and the resort paid a safety bonus. You bought a better pair of gloves and sent the rest home."
+  },
+  "choices": {
+    "c_cert": {
+      "title": "Spend the summer getting first-aid and rope certificates?",
+      "situation": "The resort won't reimburse it. A course in Urumqi costs several thousand yuan and would take up the only days in summer you can go home. You'll need it sooner or later, the captain says.",
+      "options": [
+        { "label": "Get certified", "result": "You pressed on a training mannequin hundreds of times. The certificate came, valid for three years, and you put it in an inside pocket." },
+        { "label": "Go home to your parents", "result": "You spent a month at home and helped your father patch the roof. When you left, your mother pressed two packets of dried pickles on you." }
+      ]
+    },
+    "c_close": {
+      "title": "Close the run, or wait and see?",
+      "situation": "Spring Festival rush, and a whiteout is just starting. This expert run has sold hundreds of tickets today. The resort manager says on the radio to wait and see. The captain's away, and on the spot, the call is yours.",
+      "options": [
+        { "label": "Close it", "result": "You planted the poles. Guests cursed at the lift station for an hour, and at night the wind really did rise. The manager never mentioned it." },
+        { "label": "Watch for half an hour", "result": "Half an hour later the wind had dropped a little and the day passed safely. But you had stood the whole time in the gap, and your feet had lost all feeling." }
+      ]
+    },
+    "c_coach": {
+      "title": "The ski school wants you as an instructor",
+      "situation": "The resort's ski school is short of staff. Beginner lessons bring several hundred yuan an hour, the commission is more than a month of your allowances, and there'd be no more dragging toboggans through storms. Everyone on the team says that with your legs, you'll end up there sooner or later.",
+      "options": [
+        { "label": "Stay on the patrol", "result": "You went back to the dorm and changed your headlamp batteries again. The captain left a new radio on your bed." },
+        { "label": "Teach at the ski school", "result": "You changed into a red instructor's jacket. In your first lesson you taught a five-year-old how to fall.", "end": "You went on to teach many people to ski. Every time you bring students to a fork, you first look up at the safety net, and then tell them: not this one." }
+      ]
+    },
+    "c_senior": {
+      "title": "Senior Ski Patroller: the expert run test",
+      "situation": "The team is naming a group of Senior Ski Patrollers, and the test is toboggan handling on an expert run on a windy day. Your knee isn't great, but passing means leading patrollers and a higher pay grade.",
+      "options": [
+        { "label": "Go up and take it", "result": "The snow was hard. You held the toboggan on your inside edge the whole way, and only at the bottom noticed your teeth were clenched." },
+        { "label": "Next year", "result": "You stood guard on the intermediate run for one more season. The regulars at the fork all know your name." }
+      ]
+    },
+    "c_ai": {
+      "title": "Will you take on drones and AI inspection?",
+      "situation": "The resort wants to feed hazard alerts from drones and cameras into the patrol routine, and someone has to set the rules: which alerts require going up to look, which can wait. It's a lot to learn, on top of the same patrol duties.",
+      "options": [
+        { "label": "Learn and set the rules", "result": "You wrote one line in the spreadsheet: even if the system says it's fine, someone walks the bends. That line stayed in the regulations." },
+        { "label": "Trust your eyes", "result": "You left the screen to the young ones and kept taking the first chair up. You can tell what the snow is like with one step." }
+      ]
+    },
+    "c_south": {
+      "title": "A resort in Chongli wants you",
+      "situation": "A resort in Chongli, in Hebei, invites you to lead a team, at thirty percent more pay, near Beijing, and with better schools for your child. The patrollers here have been with you for years, and you know every step of this mountain.",
+      "options": [
+        { "label": "Go to Chongli", "result": "You packed your things and the old skis. There you found the snow too hard and the people too many, but the pay really did come on time." },
+        { "label": "Stay in Altay", "result": "You sent back a thank-you. The next day a big snow fell and nothing could be seen in the valley, and you thought this was fine as well." }
+      ]
+    },
+    "c_office": {
+      "title": "The resort wants you off the hill and in safety management",
+      "situation": "You're in your forties and your knees and back aren't up to much. Resort headquarters wants you as a safety officer: write the rules and check compliance in an office, with heating and two days off a week, and never go up the mountain again.",
+      "options": [
+        { "label": "A few more years on patrol", "result": "You declined, and the next day was first chair again. The old hands had all come down off the hill, and you were the last." },
+        { "label": "Come down to safety management", "result": "You handed in your gear and switched the radio to a channel nobody has to stand by.", "end": "You wrote regulations in an office for many years, with a photo of the valley on your desk. On the day of the first snow you still get up very early, open the window and smell it." }
+      ]
+    },
+    "c_lead": {
+      "title": "The old captain's retiring: applying for Patrol Captain",
+      "situation": "The old captain is retiring and asks if you'll apply for Patrol Captain. That means managing schedules, budgets and accident accountability. When something really goes wrong, the first to stand up will be you.",
+      "options": [
+        { "label": "Apply for Patrol Captain", "result": "You went through all the patrollers' medical records, and the first thing you did was change the schedule. The second was to replace the old toboggan." },
+        { "label": "Train the new people", "result": "You told the old captain to let someone younger have it. You drew them every bend on every run most likely to go wrong." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On the last day of your last season you skied down slowly from the summit, calling all the way: anyone there? No one answered. At the bottom you bent to release your skis, and your knee cracked once. The young ones had left a cup of hot tea for you in the hut, with something they'd written on the cup. You finished it and looked back at the mountain, already dark.",
+    "burnout": "That spring the doctor held your scan up and said these two legs could not go on the snow any more. You gave your radio to your partner and leaned your skis in the corner. After that, when snow fell you often stood at the window watching it come down, wondering who would be taking first chair up by now."
+  },
+  "stages": [
+    "Every day you take first chair up and go along your runs checking the nets and foam pads and noting the snow. After opening you guard the fork, and when the radio sounds you go out with the rescue toboggan. You and your partner work by hand signals and a few words. Unlike your trainee days, on the scene no one speaks for you now. The first thing said has to come from you.",
+    "The expert runs and the bad weather belong to you. You decide when to call for backup and which line to take down, bring trainees along on call-outs, and in the patrol hut afterward go over the rescue record with them item by item. There's half as much work for your hands, and twice as much to think about.",
+    "You make the schedule, keep the gear inventory, and set the closure standards for wind speed and visibility, and you deal with the resort manager, the county hospital and the rescue services. When there's an accident you write the report, meet the family, attend the meetings. You still go up the mountain every day, but mostly stand at the fork and watch the young ones tow the toboggan past."
+  ],
+  "work": [
+    "A young woman from Guangdong has frozen in fear in the middle of a steep slope. You set your skis across below her, have her hold your shoulder and bring her bit by bit down to easier ground.",
+    "You and your partner Lao Zheng use a drill to re-anchor a stretch of net posts. Your gloves are frozen stiff, and every few turns you have to warm them over the kettle on the stove.",
+    "On the closing sweep you find an unclaimed pair of ski poles at the edge of the woods and report them on the radio. The next day a child comes red-faced to collect them.",
+    "Xiao Zhou, a trainee, handles the rescue toboggan for the first time with his grip too tight. You have him loosen his wrists and go back and forth on an easy slope twenty times. By the twentieth, he's smiling.",
+    "On the opening sweep after a heavy snow you measure the depth on the bends with a probe and radio the resort: open the upper half one hour later, and run the groomer through once more.",
+    "At the incident review you write the call-out timeline on the whiteboard. From the alert to handing over to the ambulance was nineteen minutes, and you circle the four that were wasted.",
+    "You redo the season's schedule to make sure everyone gets one day a week off the mountain. The resort manager comes with the budget sheet, and the two of you spend an afternoon on it in the office.",
+    "The head of the county hospital's emergency department brings people to the resort. You walk them through the handover route, settle where the ambulance will stop, and draw a circle on the map.",
+    "You change the old crash-pad inspection sheet to phone entry, but keep one item that requires a photo: the outside of the bend, taken from a skier's eye level."
+  ],
+  "past": [
+    "You trained in track and field at a sports school back home in Hebei. Your knees weren't good, but your coach said you had endurance.",
+    "You took the sports entrance track instead of the regular gaokao (college entrance exam) and studied sports training. In your second year you took an elective on winter sports, put on skis for the first time and fell down all day.",
+    "As a junior you interned at a ski resort as a beginner instructor, and watched patrollers slide by with a rescue toboggan, silent and very steady.",
+    "After graduating you heard that Xinjiang's snow season was long and that it was short of people. Thirty-odd hours by train and a night on a bus, and when you reached Altay it was already dark.",
+    "You spent two years as a trainee patroller, learned to read the wind and set nets, and for the first time ran through the whole first-aider procedure at minus thirty."
+  ],
+  "late": {
+    "pension_note": "Estimate: resort contract staff pay social insurance on a low base. Wages are modest and the contribution years long, so the pension is about half of final pay and you'll need some savings.",
+    "scenes": [
+      "The first winter after you retire, you wake at six on the day of the first snow and lie listening to the silence outside.",
+      "A young patroller phones to ask who drove the old post on a certain bend. Me, you say, and tell him the second one down is crooked.",
+      "You ride the chairlift up, for the first time with nothing to look for. At the top your hand goes without thinking to your chest, where a radio used to hang.",
+      "You rest your legs at home, holding the railing on the stairs. In those first months, whenever the wind blows outside, you look up at the window.",
+      "The neighborhood runs a first-aid class and you go and teach it once. Pressing on the mannequin on a table, you tell everyone: don't rush, first ask his name.",
+      "Xiao Zhou, whom you trained, has become captain and makes a special visit in summer, with a newly made inspection sign. You run your hand over the letters and say it's well done.",
+      "The first season after you come down from the hill, you keep waking at six in the morning before you remember there's no first chair to catch.",
+      "You bring your family skiing, and your child asks what the people in red are for. They're the last ones down the mountain, you say.",
+      "An old colleague posts a picture of the valley in the group chat, the snow as deep as ever. You zoom in and see the nets are just where they were when you left.",
+      "Now the resort is covered in cameras and drones, and alarms beat people to it. You hear that at closing, someone still skis down slowly from the top and calls out.",
+      "Your grandchild goes skiing for the first time and takes several tumbles. You stand at the bottom of the slope and wait for the child to get up alone, and only then go over and brush off the snow."
+    ],
+    "closing": {
+      "retire": "One winter many years later it starts snowing outside the window again. You make tea and watch the snow fall in the yard, slowly covering all the footprints, and then you turn out the light.",
+      "burnout": "Many years later you find an old pair of gloves in the cupboard, the fingertips still worn through. You put your hands in, close them, then take them off and put them back.",
+      "end": "One morning many years later there is no wind in the valley. A young person skis slowly down from the summit and calls out once, and the snow swallows half the voice. You aren't there, but it sounds the same as yours once did."
+    }
+  }
+}

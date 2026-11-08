@@ -1,0 +1,151 @@
+{
+ "id": "call-center-xa",
+ "occupation": "Customer Service Representative",
+ "role": "Customer Service Representative at an E-commerce Call Center",
+ "headline": "From the mountains of Shangluo, junior college behind you, wearing a headset in an office tower in Xi'an's High-Tech Zone, answering more than a hundred calls a day and opening every one of them with 'It's a pleasure to serve you'",
+ "unit": "An outsourced e-commerce call center in Xi'an's High-Tech Zone",
+ "unit_type": "BPO call center",
+ "city": "Xi'an",
+ "city_tier": "New first-tier city",
+ "education": "Associate degree (Marketing)",
+ "level": "Your Mandarin has passed the test and you've memorized half the script manual. But when someone on the other end starts yelling, your throat still tightens.",
+ "intro": "You came from Shangluo and share a room with two other girls in the urban village of Yuhuazhai, ¥600 a month. The company is on the sixteenth floor of a building in the High-Tech Zone, with rows of desks like a honeycomb, where four hundred people talk at once and keep their voices low. After seven days of training, today for the first time you put on the headset alone. From today your name doesn't matter. Your agent number is 3127.",
+ "salary_note": "Estimate: base plus performance pay at Xi'an outsourcers runs below the national average for the job, with allowances for night shifts and big sales, so taken at 85 percent.",
+ "facts": [
+  { "label": "Customer Service Representative (current level)", "value": "0–2 years, ¥3,500–5,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Senior Representative (2–5 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Calming customers who are worked up", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Answering calls and questions", "source": "AI exposure" },
+  { "label": "Open positions", "value": "34 related listings nationwide, 1 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "In the lanes of the urban village, steam comes off the roujiamo stall. You buy one to take with you and squeeze onto the metro, where everyone's head is bent over a phone.",
+  "Clock in, turn on the computer, log in to the softphone and the ticket system, line up the five windows. The team leader writes today's targets on the whiteboard: satisfaction 92, average handle time 280 seconds.",
+  "First call. 'Hello, agent 3127, it's a pleasure to serve you.' A young woman who ordered the wrong size. You sort it out in a minute forty and feel something ease in your chest.",
+  "A man's package has been lost, and he's swearing from the first sentence. You turn the volume down a notch, your fingers going steadily on the keyboard, and keep saying: I completely understand how you feel.",
+  "Only half an hour for lunch; the scheduling system is strict. You make instant noodles. Your colleagues' mugs of boat-fruit tea for the throat stand in a row, and no one talks about the calls.",
+  "An old woman doesn't know how to use the app. You teach her button by button, and the call goes seven minutes over. The number at the top right of your screen turns red.",
+  "Quality has pulled one of your recordings and marked you down: 'insufficient soothing language'. The team leader hands you the headset to listen to yourself, and you hear a stranger.",
+  "Back in the urban village, you take off your shoes and sit on the bed, wanting to say nothing at all. Your roommate asks what you want for dinner. You make a gesture: you decide."
+ ],
+ "ladder": [
+  { "title": "Customer Service Representative", "stage": "On the phones", "focus": "Answering calls and online messages, solving returns and delivery problems from the script, keeping an eye on handle time and satisfaction." },
+  { "title": "Senior Representative", "stage": "The hard ones", "focus": "Handling escalated complaints and transferred problems, helping new people, knowing the exceptions to every rule." },
+  { "title": "Team Leader", "stage": "Leading a team", "focus": "Fifteen to twenty people: scheduling, listening in on recordings, coaching. The team's numbers are your numbers." },
+  { "title": "Customer Service Supervisor", "stage": "Running the account", "focus": "Several teams on one account, dealing with the client on targets and billing, hiring and keeping people. Lose the account and everything goes with it." }
+ ],
+ "ai_tasks": [
+  { "name": "Calming customers who are worked up", "how": "Whether someone is truly desperate or angling for more compensation, whether to take up or let go of that one sentence said in anger: a person has to hear it, and only a person gets listened to." },
+  { "name": "Answering calls and questions", "how": "The bot answers common questions by itself. What reaches a person is whatever it couldn't handle and whoever's in a temper." },
+  { "name": "Logging tickets and routing them", "how": "Calls are automatically transcribed, summarized and sent to the right department. A person only spot-checks the misrouted ones." },
+  { "name": "Tracking progress and chasing it up", "how": "Deadline reminders, follow-ups and status reports are all done by the system. A person steps in only when something gets stuck." },
+  { "name": "Follow-up calls and satisfaction surveys", "how": "AI can send follow-ups in bulk and summarize results. For unhappy longtime customers, someone still has to pick up the phone and listen." }
+ ],
+ "events": {
+  "e1": "In your first week a customer yells at you until you cry. You spend four minutes in a bathroom stall and go back to the phones. Those four minutes are recorded by the system as 'not ready'.",
+  "e2": "An old man finishes asking about his package and says: lass, you've got a nice voice. Have you eaten? You freeze for a moment. He's the first person to ask you that all day.",
+  "e3": "On Singles' Day the company adds temporary seats and gives everyone a packet of goji berries. You take calls from eight in the morning to two the next morning, and your voice takes until the third day to come back.",
+  "e4": "The company loses a big account, and a whole floor of desks goes empty, with people leaving carrying their potted plants. Your account is still here, for now.",
+  "e5": "Three straight months first in satisfaction, an ¥800 bonus. You send ¥500 home and eat a bowl of meatball hot-and-sour soup on the Muslim Quarter's food street.",
+  "e6": "The chatbot goes live and all the easy questions go to it. The calls that reach you begin: I've been talking to that machine for half an hour! Each one is harder than the last.",
+  "e7": "Half a year on rotating night shifts and your sleep is in pieces. Getting off work in the morning, with the sun on the High-Tech Road, you wait for the bus in sunglasses and feel like someone from another time zone.",
+  "e8": "You get married, more than ten tables back home. Your parents say you sure talk nicely now. Mom, you say, that's an occupational illness.",
+  "e9": "Pharyngitis has become an old friend. The doctor gives you medicine and tells you to talk less. You smile at the prescription and go back to your headset.",
+  "e10": "AI writes up your tickets and summaries automatically, and you no longer have to type as you listen. The company quickly converts the time saved into twenty extra calls a day.",
+  "e11": "A young woman you trained quits and goes south. As she leaves she gives you a succulent, and says you're the one who taught her how not to cry when customers yell.",
+  "e12": "After your maternity leave you come back and the schedule still has you on the late shift. You make a video call to the baby from the stairwell. The baby looks at the screen and doesn't know you.",
+  "e13": "The client changes the rules and the refund process is different overnight. The next morning the whole team has to memorize it in ten minutes.",
+  "e14": "The daughter of a bedridden old man calls about a wheelchair that never arrived. You make six calls to the courier. Three days later she sends one line: it came, thank you.",
+  "e15": "The company opens a new center in a cheaper third-tier city, and half your account stays in Xi'an. The meeting is very quiet that day.",
+  "e16": "With years of savings you buy a not very big apartment in Xi'an. On moving day you leave your headset at work and don't say 'hello' to anyone.",
+  "e17": "Your child comes home from school imitating you: Hello, it's a pleasure to serve you. You laugh along, and then you notice your voice has got lower than it was.",
+  "e18": "Young people don't want to answer phones anymore, and the pay on the job ads keeps going up. You look at the new hires' badges and think of your own old agent number."
+ },
+ "choices": {
+  "c1": { "title": "Follow the rule, or help this once", "situation": "A woman is three days past the return window, and by the rules can't return. She says it's because she was in the hospital. You have an 'exception' button; using it means writing an explanation and getting spot-checked by quality.", "options": [
+   { "label": "Apply for an exception", "result": "You write three extra lines. Quality asks why, you play them the recording, and they say no more." },
+   { "label": "Explain the rules", "result": "You patiently repeat the rule. She hangs up and rates you one point. You did nothing wrong." }
+  ] },
+  "c2": { "title": "Applying to be a Senior Representative", "situation": "Your team leader asks if you want to go up to Senior Representative, handling escalated complaints only. ¥800 more, but everybody you speak to all day will already have been passed along three times. Few people last half a year.", "options": [
+   { "label": "Apply", "result": "You learn to let the other person finish before you say your first sentence. You practice that first sentence for a month." },
+   { "label": "Wait a while", "result": "You say you'll stay on the regular line for now. As you leave you look at the row of desks where the escalations team sits. Their lights are still on." }
+  ] },
+  "c3": { "title": "Going into livestream e-commerce", "situation": "A friend's livestreaming company in Qujiang is short of people and asks if you'd want to do operations. No one yells at you there, but pay depends on sales, you work until midnight, and it's hard to say whether the boss keeps his word.", "options": [
+   { "label": "Go", "result": "You hand in your badge. That day, for the first time, you end a call without saying 'hello'.", "end": "You've left the call center and now tally sales behind a livestream. When someone swears in the comments, you still automatically want to say: I completely understand how you feel." },
+   { "label": "Stay", "result": "You say this is steadier for now. Your friend replies with an emoji, and later you're seldom in touch." }
+  ] },
+  "c4": { "title": "Competing for Team Leader", "situation": "The Team Leader's job is open and being competed for. It means managing people, schedules and spot-checking recordings, with pay tied to the whole team. You have quite a few close friends on this floor, and as Team Leader you'd be the one handing them their performance slips.", "options": [
+   { "label": "Compete", "result": "You talk about how to bring in new people without tears. Three weeks later, for the first time you turn in your headset to the store room, and come away with a boom-mic model." },
+   { "label": "Stay on the phones", "result": "I'm good on the phones, you say; I'm no good managing people. Back at your desk, the next call is already coming in." }
+  ] },
+  "c5": { "title": "Moving into AI training", "situation": "The company is hiring internally to feed your call experience into the bot: labeling transcripts, writing scripts, reviewing replies. A colleague says that's handing your own job over to the machine with your own hands.", "options": [
+   { "label": "Go and learn", "result": "You start using a spreadsheet to teach the bot the difference between 'furious' and 'a bit annoyed'. It learns faster than a new hire, and it's more stubborn too." },
+   { "label": "Stay on this end of the phone", "result": "Somebody has to listen to the phone, you say. That's true; it's just that fewer of them are needed." }
+  ] },
+  "c6": { "title": "The late shift or your child", "situation": "The client wants longer service hours and the late shift pays ¥1,500 more. Your child has started primary school and there's no one to do the school run, and your mother back home is getting too old to help.", "options": [
+   { "label": "Take the late shift for the money", "result": "This year your pay is second on the team. The signature in your child's homework book has been someone else's all year." },
+   { "label": "Ask for days, earn less", "result": "You get to the school gate every day now. When your child runs over, for the first time it feels like talking doesn't have to be so tiring." },
+   { "label": "Quit and go home to Shangluo", "result": "You work out the numbers, rent out the apartment, and take your child back to the county town.", "end": "You're back in Shangluo at a window in the county services hall. When someone comes in you say hello, in that same old tune." }
+  ] },
+  "c7": { "title": "Competing for Customer Service Supervisor", "situation": "The account needs a Customer Service Supervisor to deal with the client and manage several teams. You have only a junior college diploma, and your rival is a college graduate brought in from outside. But nobody in the building knows better than you what these calls are really like.", "options": [
+   { "label": "Compete", "result": "You bring three months of complaint data and fixes. The young woman from the client finishes listening and asks: you worked all this out yourself?" },
+   { "label": "No more competing", "result": "You spend three months handing over to the new supervisor. She says afterward that you were the one who actually took her through this account." }
+  ] },
+  "c8": { "title": "These last few years", "situation": "The bot now takes 90 percent of the calls and the company is starting to trim older staff, with decent severance. The neighborhood service center is also hiring: not much pay, all face to face.", "options": [
+   { "label": "Take the severance and go to the service center", "result": "You set up a desk at the service center with no headset on it. People can talk for as long as they want.", "end": "You've taken a seat at the neighborhood service center, and no one times your conversations anymore." },
+   { "label": "Stay until you retire", "result": "You stay on, taking only the calls the bot can do nothing with. The desks get emptier and the calls get harder." }
+  ] }
+ },
+ "endings": {
+  "retire": "At fifty-five you click 'not ready' on the softphone for the last time. The calls you've taken over the years add up to a few hundred thousand. You can't recall one of them, and somehow you remember them all. Going downstairs, someone in the elevator asks which floor. Sixteen, you say. And yours?",
+  "burnout": "Your voice got the final word. The doctor told you to rest and talk less, and you really were quiet for a long time. Now when you get a sales call you wait until the caller finishes and then say softly: thank you, no need."
+ },
+ "stages": [
+  "Your day is cut into segments of 280 seconds. The script library on the left, the ticket system on the right, somebody from another city in your ear, and well-trained sentences in your mouth. The team leader stands behind you listening in; quality marks you item by item on a score sheet. Your job is to make everyone who calls feel that their problem now belongs to someone.",
+  "The calls that reach you have already been taken two or three times by someone else. You have more exceptions at your disposal and a notebook of your own for rule changes, matching up the rules of merchant, courier and platform. What's harder than the regular line is that there's no one left to transfer to. You are the last stop.",
+  "You take off your headset and start bouncing between the WFM scheduling system and Excel. In the morning you listen to your team's recordings and coach them one on one using the score sheet; in the afternoon you enter handle times and satisfaction in the daily report. New hires come to you crying, veterans come to you to swap shifts, and you've started keeping track of whose child has a parent-teacher meeting.",
+  "Every week you sit down with the client for a business review, walking through satisfaction and resolution rates page by page and haggling over billing multipliers. The team leaders under you wait for people and policies; HR asks why this batch of new hires hasn't stayed. You don't have an agent number anymore, just a profit and loss sheet for the account, and if the account goes, hundreds of people have no work."
+ ],
+ "work": [
+  "A young man who bought a pillow says it's too soft. You turn to item 14 of the script and try asking him to sleep on it for three more nights. He laughs and asks if you're reading something.",
+  "The system has sent a refund to the wrong department. You add a note to the ticket and run over to Lao Huang on the next team. He's on a call and gestures at you to wait.",
+  "On one call a child keeps crying, and you wait twenty seconds without saying a word. Quality later marks that segment with a question mark, and then crosses it out.",
+  "A merchant and a buyer have been fighting for three days. You put the chat logs, delivery tracking and platform rules into one table, and on the fourth day it's over.",
+  "Xiao Chen, who's new, is yelled at until he can't talk, and transfers the call to you. You pick up and say: don't worry, I can see it all here. Take your time.",
+  "Lao Jia, the courier company's contact, never answers messages. You save his personal number, and every Monday post a list of open items in the group chat.",
+  "You pull ten of Xiao Mei's recordings from this week and find she speeds up at the three-minute mark every time. You clip that segment and play it back for her.",
+  "The schedule before the big sale just won't fill. You call people one by one. Lao Zhou's willing to work overtime, only not on Sunday morning, when her child has a shot.",
+  "When the bot transfers to a person it keeps losing information. You take ten screenshots to the young man in IT and point at each one.",
+  "The client's new head wants resolution up by five points. You open a year of data and tell her which three points are possible, and which two would be fooling herself.",
+  "Two team leaders on the account are at odds. You take them for paomo, lamb soup with torn flatbread, and have them finish tearing their bread before anyone says anything.",
+  "Head office says to downsize. You revise the list three times, lock the final version in a drawer, and the next day go first to talk to the veterans on your own team."
+ ],
+ "past": [
+  "You grew up in the mountains of Shangluo and it took two hours to walk to the township school. On the way home you and your friends competed to see who could sound the most like the people on TV.",
+  "Your mother worked as a domestic helper in Xi'an. One year she came home with a phone and had you call her. When she heard your voice, she said, she wasn't tired anymore.",
+  "Your gaokao (college entrance exam) score was just enough for junior college. You picked marketing, which sounded like it had something to do with any job you might end up in.",
+  "One summer you temped at an insurance sales company making calls and got hung up on two hundred times a day. You worked out what each hang-up was worth.",
+  "At a job fair one company's sign said 'guaranteed base pay, training included, office work'. You liked the sound of 'office' and handed in your resume."
+ ],
+ "late": {
+  "pension_note": "Estimate: with a low contribution base and thirty-some years of contributions, the pension comes to a little over 40 percent of final pay.",
+  "scenes": [
+   "The first week of retirement your phone rings and you answer without thinking: Hello. It's your mother, asking if you're still at work.",
+   "You've learned to sit in the park all afternoon, listening to people talk, and fix nothing. It's the first time in your life.",
+   "Older people in the neighborhood come to you with their phones. You teach them button by button, and no red light comes on at the top right of your screen.",
+   "For months after you leave, you tense up whenever the phone rings at home. Later you change the ringtone to birdsong.",
+   "Your voice slowly gets better. You begin standing in the back row of the compound's choir, singing softly and off key, and no one gives you a score.",
+   "You get a follow-up call from an AI asking how satisfied you were with the service. You hear it out, and give it ten.",
+   "The first day with no need to open with 'hello', you don't quite know how a sentence is supposed to start.",
+   "Your former colleagues still have their group chat. Sometimes someone posts: got yelled at again today. A row of replies follows: I completely understand how you feel.",
+   "One day you call to complain about a piece of clothing and the voice of the young woman who answers is tight. Don't worry, you say. Take your time. I'm in no hurry.",
+   "Passing that building in the High-Tech Zone, at ten at night the sixteenth floor is still lit. There are far fewer lights than there used to be, and they aren't all out yet.",
+   "Your grandchild asks what work you used to do. You think for a while. Somebody would be angry, you say, and I'd listen."
+  ],
+  "closing": {
+   "retire": "Evening in the park. Someone is singing Qinqiang opera, and you stay on the bench until the end of the aria.",
+   "burnout": "The room is quiet. There's a bird outside, and you don't answer it.",
+   "end": "Your phone buzzes once with a satisfaction survey. You set it aside and go on eating."
+  }
+ }
+}

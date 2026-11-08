@@ -1,0 +1,154 @@
+{
+ "id": "ai-trainer-ty",
+ "occupation": "AI Trainer",
+ "role": "Data Annotator, Labeling Center",
+ "headline": "A vocational college graduate at a Taiyuan data labeling center, headphones on all day, boxing cars, listening to dialect and ranking a large model's answers",
+ "unit": "A data labeling center in Taiyuan",
+ "unit_type": "Data labeling center",
+ "city": "Taiyuan, Shanxi",
+ "city_tier": "Second-tier city",
+ "education": "Junior college (big data technology)",
+ "level": "You type fast and can follow a rules document. How to make a machine understand whether a sentence is polite or merely perfunctory, you have no idea.",
+ "intro": "The center takes up the third floor of an office block, more than two hundred desks stretching out of sight, a screen and headphones each. The shift lead hands you a two-hundred-page rules document and says to first memorize 'more than half occluded doesn't count.' From today, anything a machine learns to recognize may be something you told it first.",
+ "salary_note": "Estimate: the database's pay by experience leans toward big tech in first-tier cities. Piece-rate take-home at a Taiyuan labeling center is a bit over forty percent of the national figure, with performance pay once you're fast.",
+ "facts": [
+  { "label": "Data Annotator (current level)", "value": "0-1 years, ¥10,200–15,000 a month (national average, derived from pay by experience)", "source": "Industry norm" },
+  { "label": "Next level up", "value": "Annotation Quality Inspector (1-3 years)", "source": "Industry norm" },
+  { "label": "Pay after 3–5 years", "value": "¥25,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Judging whether a model's answer is right and appropriate", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Boxing images and routine text classification", "source": "AI exposure" },
+  { "label": "Open positions", "value": "71 related listings nationwide, 0 in this city (the database leans toward campus and intern roles)", "source": "Job listings" }
+ ],
+ "day": [
+  "A bowl of tofu pudding and a fried dough stick from the stall downstairs. The wind off the Fen River is a little cold. Everyone on the bus is scrolling; you're memorizing rules.",
+  "The morning meeting. The team lead reads out yesterday's accuracy, and you rank seventeenth. Three rules were updated, sent by the client last night.",
+  "You open the labeling platform, street scene after street scene. Box the cars, box the people, box the non-motor vehicles; anything more than half occluded doesn't count. Your mouse is getting hot.",
+  "You switch to the audio queue. In your headphones is a phone call in a Jinzhong accent. You replay it again and again and type out the word for squatting down in dialect, and the platform says it isn't in the lexicon.",
+  "A bowl of knife-cut noodles at the canteen. The young woman at the next table says the unit price dropped two more fen this week.",
+  "Ranking tasks for a large model: three answers to the same question, pick the best. You read and reread, and decide the second, though short, tells no lies.",
+  "Quality control has sent back nine items. You go through them one at a time. A few really are wrong. One you want to appeal, and you paste in a screenshot and the page number of the rule.",
+  "At night you open the calculator and work out this month's piece count, a little over four thousand yuan. Your mother calls to ask what you're doing. You say teaching computers to recognize things."
+ ],
+ "ladder": [
+  { "title": "Data Annotator", "stage": "Entry", "focus": "Boxes images, transcribes speech and classifies text according to the rules document, paid by the piece on accuracy and output; mastering the rules is the only way forward." },
+  { "title": "Annotation Quality Inspector", "stage": "Quality control", "focus": "Spot-checks others' data, writes up error cases, teaches rules to newcomers; moves up by catching things accurately and explaining them clearly." },
+  { "title": "AI Trainer (Level 3)", "stage": "Trains models", "focus": "Designs prompts and test cases, scores and ranks model answers, explains business requirements to algorithm engineers; requires the vocational skill certificate." },
+  { "title": "Project Supervisor", "stage": "Runs projects", "focus": "Leads a project group of dozens, negotiates rules, delivery and price with clients elsewhere, manages schedules and turnover." },
+  { "title": "Center Operations Manager", "stage": "Runs the center", "focus": "The center's orders, staffing, training and costs all come here, and on the road to AI replacing annotation this seat has to find work for hundreds of people." }
+ ],
+ "ai_tasks": [
+  { "name": "Judging whether a model's answer is right and appropriate", "how": "AI can give a first score. Whether the tone is too sharp, whether this is the right thing to say to an old person, whether the facts are wrong: a person has to read it and decide." },
+  { "name": "Boxing images and routine text classification", "how": "AI pre-labeling already does most of it, and people only spot-check and correct the hard cases." },
+  { "name": "Speech transcription and dialect correction", "how": "AI is accurate at Mandarin. Dialects and place names need someone who knows them to listen and put the mistakes right." },
+  { "name": "Designing prompts and test cases", "how": "AI can generate variants and cases in bulk. What the business actually wants and which tricky case matters is for a person to think of." },
+  { "name": "Writing labeling standards and training logs", "how": "AI drafts standards and logs from the records, and a person checks the key conclusions." }
+ ],
+ "events": {
+  "e_acc": "This month your accuracy passes 98% for the first time. The team lead calls you out by name in the group chat, and you add an extra dish at dinner.",
+  "e_rule_change": "The client changes the rules in the middle of the night and the three thousand items before it all have to be redone. These few days might as well not have happened. The group sighs as it works.",
+  "e_eyes": "Your eyes keep getting drier. You put a bottle of drops on your desk and close your eyes for one minute at three o'clock sharp, and soon the whole team is copying you.",
+  "e_project_end": "A big project stops without warning. Half the group moves to other tasks, and a few go home without waiting for new orders.",
+  "e_dialect": "A dialect speech project is short of people and your Taiyuan speech becomes a skill. The client's engineer video calls to ask what this word really means, and you get him nodding.",
+  "e_appeal": "Your appeal is accepted. A note is added to page 143 of the rules document, in small print: from frontline feedback.",
+  "e_ai_prelabel": "The platform adds pre-labeling. The boxes are drawn in advance and you only have to drag them a bit. A month later the unit price falls by half as well.",
+  "e_ai_rank": "An AI grader starts scoring routine samples. What's left in your hands is all hard, like a child asking a question only adults ask.",
+  "e_ai_tool": "A prompt template you wrote doubles evaluation efficiency. Other centers ask for it, and you zip up the document and send it off with your name on it.",
+  "e_ai_sound": "The model begins to understand a little Taiyuan speech, and one sentence is exactly one you transcribed years ago. You stare at the screen for a second.",
+  "e_winter": "Once Taiyuan's heating comes on, the office gets stuffy and sleepy. At noon you go down and walk two laps along the road, and only the wind on your face wakes you.",
+  "e_turnover": "Two newcomers you've just finished training leave again, one back to Lüliang and one to deliver food. You wipe down their desks. There'll be new ones next week.",
+  "e_family": "You buy a small two-bedroom on the South Inner Ring. Half the down payment is your parents' and half was labeled out one item at a time over the years.",
+  "e_hard_content": "After a week reviewing content safety data, you don't want to speak when you get off. The team lead moves you to something else and doesn't ask further.",
+  "e_client": "The client's algorithm engineer tours the center and asks in surprise whether you wrote these rules. You show him the error board on the wall.",
+  "e_order_cut": "Headquarters says next year's labeling volume will be cut in half. You know each person at the center. The list stays in the drawer, and for days you don't pull it open.",
+  "e_old_label": "The driver assistance in a car brakes on its own for a pedestrian half hidden ahead. You think of that old rule: more than half occluded doesn't count.",
+  "e_field_new": "The center's work now is teaching industry models the ways of coal mines and hospitals. The people who come in are retired old hands, and you hand them their headphones."
+ },
+ "choices": {
+  "c_qc": { "title": "Applying for Annotation Quality Inspector", "situation": "Two inspector posts have come open. Pay would be steady and no longer all piecework, but you'd be watching your friends' mistakes and writing them up.", "options": [
+   { "label": "Apply", "result": "You begin sending other people's data back. Two people stop sitting with you at lunch, and later they sit with you again." },
+   { "label": "Keep labeling, more pieces", "result": "You buy a faster mouse, and this month you top the whole team." }
+  ] },
+  "c_cert": { "title": "Taking the AI Trainer (Level 3) certificate", "situation": "The course costs over two thousand yuan, and you'd have to learn basic Python and evaluation methods. The center says the certificate raises your pay by a grade, and some people leave as soon as they have it.", "options": [
+   { "label": "Sign up", "result": "After work in the center's training room you write your first line of code. The first run produces a screen of red." },
+   { "label": "Save the money", "result": "The money goes home. Two years later that certificate is required on job postings." }
+  ] },
+  "c_beijing": { "title": "A large-model company in Beijing wants you", "situation": "The client's operations person has noticed you and asks if you'd go to Beijing for data operations. Double the pay, and three thousand yuan for a shared room. You've never left Shanxi.", "options": [
+   { "label": "Go to Beijing", "result": "You drag your suitcase onto the high-speed train while your mother waves and waves from the platform.", "end": "You stay in Beijing, managing data at a company that builds models. Your desk is three rows from the algorithm people, and you tell them how the young women in Taiyuan read a sentence." },
+   { "label": "Don't go", "result": "You say thank you, and that night you have dumplings with your parents and don't mention it." },
+   { "label": "Ask about working remotely", "result": "They say they can try three months. You gain a side job, and a lot of late-night meetings." }
+  ] },
+  "c_ai": { "title": "Where to go after pre-labeling arrives", "situation": "The simple work is nearly gone. You can move over to writing prompts and evaluation, which takes thought and carries responsibility, or stay on the dialect speech line, which for now still belongs to people.", "options": [
+   { "label": "Move to prompts and evaluation", "result": "You start setting hard problems for the large model. When it gets one wrong, you're a little pleased." },
+   { "label": "Hold the dialect line", "result": "You become the person at the center who best knows the accents of Shanxi. How far this line goes, you don't know." }
+  ] },
+  "c_lead": { "title": "Applying for Project Supervisor", "situation": "A new project needs a supervisor over dozens of people, to fight clients over unit prices and deadlines and to explain to the team why the unit price dropped again.", "options": [
+   { "label": "Apply", "result": "For the first time you tell the client this deadline can't be done. Your palms are wet when you finish, and they give you a week." },
+   { "label": "Keep doing evaluation", "result": "You stay on the business line, dealing with hard problems every day and leaving on time." }
+  ] },
+  "c_school": { "title": "Going back to your vocational college as a practice instructor", "situation": "Your old college has opened an AI training major and needs teachers with hands-on experience. A permanent state post isn't likely. Pay is lower but there are winter and summer breaks.", "options": [
+   { "label": "Go back to school", "result": "You put up a page of real error cases on the lectern and say this is your future work.", "end": "You become a practice instructor at the college, teaching class after class to read rules. When students ask if this line of work has a future, you say first understand this error." },
+   { "label": "Stay at the center", "result": "You tell your teacher in two more years, and never mention it again." }
+  ] },
+  "c_ecom": { "title": "An e-commerce company wants you for AI customer service", "situation": "An in-province e-commerce company is rolling out AI customer service and wants someone who knows how to tune models. The pay is noticeably better, but the company went through three owners last year.", "options": [
+   { "label": "Go", "result": "You turn in your center badge and take your stack of error notes with you.", "end": "You tune customer service bots at the e-commerce company, watching them learn to say sorry over and over. You still sometimes miss the sight of more than two hundred screens at the center lighting up together." },
+   { "label": "Stay", "result": "You say there are people here following you, and you feel the weight of that as you say it." },
+   { "label": "Do an outsourced project for them", "result": "The center takes the job and you lead the team through it, and it gets renewed for two more phases." }
+  ] },
+  "c_manager": { "title": "Applying for Center Operations Manager", "situation": "The old manager has retired. The center's orders are enough for three hundred people, and there are four hundred now. In this seat the first thing is deciding who stays and who goes, and finding new work for everyone.", "options": [
+   { "label": "Apply", "result": "You say at the meeting that training comes before layoffs. Headquarters gives you three months, and you dare not rest a single day." },
+   { "label": "Don't compete", "result": "You watch the new manager put the list in a drawer and tell yourself you're glad it isn't you, and feel that was a poor thing to say." }
+  ] }
+ },
+ "endings": {
+  "retire": "The center's two-hundred-odd desks have long since become thirty or so. On your last day you wind up your headphone cord and put it back in the drawer. On the screen the model is answering somebody's question in a good tone of voice, and you know that tone. You and many others taught it. As you turn off the light, the guard says goodbye.",
+  "burnout": "Your eyes and neck have stopped agreeing to it. You tell the team lead you'll finish this month and go home. You leave your badge in the drawer. Later the appliances and the phones at home all begin talking to you, and sometimes you don't answer them."
+ },
+ "stages": [
+  "Your work comes one item after another: drawing boxes, choosing categories, listening and typing, and the counter in the lower right decides what you earn this month. The rules document is dog-eared. What the team lead says is wrong is wrong, and whatever quality control sends back, you fix. At this level you don't think about why. First your hands and eyes have to memorize the rules.",
+  "You begin spot-checking other people's data, sending back errors on the quality platform with rule page numbers attached, and each week making typical errors into slides for the new people. You used to be sent back; now you send others back, and you have to think how to say it. You've got a whole-group accuracy sheet in your hands now.",
+  "You set the model its questions: writing prompts, building evaluation sets, scoring and ranking answers, and turning platform results into charts for algorithm engineers elsewhere. You have to translate the business meaning into language they understand, and their new demands into rules your team can follow. Whether a sentence is good now requires you to give the reason.",
+  "You lead a project group of dozens, with schedules, delivery progress and attrition sheets open on the desktop. Mornings on video with the client over unit prices, afternoons dividing tasks among team leads, evenings talking with a young woman who's leaving. You've handed rules and hard problems to the trainers. Your product now is a batch of data delivered on time.",
+  "The center's orders, training plans, budgets and the paperwork for government employment subsidies are all in your hands. Half your time goes to headquarters and clients, and half to thinking about what else these hundreds of people can do. You can call most of them by name in the hallway, and you've begun to be afraid to."
+ ],
+ "work": [
+  "In a street scene a child is sitting on a three-wheeler, and the rules don't say what this counts as. You ask in the group chat. The team lead replies in two words: skip it.",
+  "In one recording an old woman keeps saying no, no, no need. You transcribe it and set the emotion tag to 'polite.' Xiao Xia next to you picks 'refusal.'",
+  "Spot-checking a hundred audio items from Xiao Li, you find he's written one place name wrong throughout as a homophone. You note it clearly in the error sheet and tell him privately.",
+  "At Friday training you put an occluded car up on the screen and have eight newcomers raise their hands, four saying it counts and four saying it doesn't. You turn to page 58 of the rules.",
+  "One of your test cases reads: the user says 'my mom is in the hospital,' what should the model say first. Old Xu on the algorithm side replies: this one's interesting.",
+  "Comparing the two versions' scores, you find the new one likes long answers. You paste ten examples into your weekly report and have Xiao Zhou turn the length weighting back down.",
+  "You and Sister Liu of the dialect group rewrite the prompt. On the seventh version the model finally admits it doesn't know this word.",
+  "The client's project manager wants delivery moved up a week. You send over the schedule and staffing sheets and propose two options. He takes the one that costs more.",
+  "Team lead Xiao Meng wants to go home. You walk two laps with her downstairs and list the steps for transferring her social insurance in the notes on her phone.",
+  "You take the center's training plan to the human resources bureau to apply for a subsidy. The clerk asks how many people this occupation will still need. You hand over the order forecast with your finger on the last page.",
+  "You walk the deputy from headquarters over to the window by the speech group and say these twenty people know things the model hasn't learned yet. Give them six more months."
+ ],
+ "past": [
+  "You grew up in a county town in the Lüliang Mountains. The year of the high school entrance exam there were many online classes. The family phone kept freezing, and you learned to download the videos first and watch later.",
+  "Your gaokao (college entrance exam) score wasn't high. A teacher said a junior college in Taiyuan had a big data major with good job prospects. You asked what big data was and the teacher said, anyway, it's work on a computer.",
+  "In your second year you studied Excel, SQL and a little Python while classmates played on their phones. Your graduation project tallied which window in the school canteen had the longest line.",
+  "The school arranged an internship at the center, and on the first day they taught you to draw boxes. You drew three hundred. The shift lead said your error rate was twelve percent, carry on tomorrow.",
+  "At graduation going back to the county town meant working at a supermarket. The center in Taiyuan offered full social insurance. You worked out rent and food and stayed."
+ ],
+ "late": {
+  "pension_note": "Estimate: labeling centers pay social insurance at a low base, and the Taiyuan pension runs a bit over forty percent of final pay.",
+  "scenes": [
+   "You talk to the speaker at home and it mishears a word. You wave a hand and say never mind. Then you say it once more for its sake.",
+   "The community senior college asks you to teach a smartphone class. Someone asks if the thing really understands. You say we're the ones who taught it.",
+   "On a bench by the Fen River your granddaughter takes your picture on her phone. A little square on the screen frames your face exactly, and you smile.",
+   "You go back to Lüliang and grow a season of millet with your parents, your hand free of the mouse at last.",
+   "You open a print shop in the county town, printing medical insurance forms for old people and showing them how to talk to their phones.",
+   "The eye recheck isn't bad. On the ride home you close your eyes and keep them closed all the way.",
+   "A new colleague says AI is so smart. You don't answer, and save a screenshot of a flawed reply.",
+   "Back in Taiyuan on an errand you pass the center's building. Most of the third floor's lights are out.",
+   "Someone from your first batch of newcomers sends you a message. She's teaching a model to read CT scans now, and asks if you still remember her.",
+   "The assistant on your phone can greet you in Taiyuan speech now. You listen and say the accent isn't quite right.",
+   "At the supermarket checkout the machine misreads a bunch of greens. You wait for it to correct itself and don't rush it."
+  ],
+  "closing": {
+   "retire": "The streetlight below comes on. You look out at the cars going by one by one and the people one by one, and none of them has a box.",
+   "burnout": "Millet is drying in the courtyard. You sit at the door squinting, and the sun turns your eyelids red.",
+   "end": "Your phone's screen lights up and reads: was this answer helpful. You smile, turn it over and put it down."
+  }
+ }
+}
