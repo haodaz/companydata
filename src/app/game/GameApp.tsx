@@ -100,9 +100,9 @@ function Home({ busy, err, onEnter, resume, onResume, archive, shared }: { busy:
   return (
     <main className="g-wrap g-home">
       <section className="g-hero">
-        <LangSwitch />
+        <div className="g-toprow"><span className="g-eyebrow g-eb-m">{tr('1JOB1LIFE · 职业生涯模拟', '1JOB1LIFE · A CAREER SIMULATOR')}</span><LangSwitch /></div>
         <img className="g-art g-art-hero" src="/game/art/hero.jpg" alt="" />
-        <div className="g-eyebrow">{tr('1JOB1LIFE · 职业生涯模拟', '1JOB1LIFE · A CAREER SIMULATOR')}</div>
+        <div className="g-eyebrow g-eb-d">{tr('1JOB1LIFE · 职业生涯模拟', '1JOB1LIFE · A CAREER SIMULATOR')}</div>
         <h1 className="g-title">{tr('入一行，过一生', 'One Job, One Life')}</h1>
         {shared && <div className="g-shared"><b>{shared.title}</b><span>{shared.sub}</span><em>{tr('轮到你了：抽一张卡，过你自己的这一生。', 'Your turn: draw a card and live your own.')}</em></div>}
         <p className="g-lead">{tr('抽一张入职登记卡。城市、单位、资历都不由你选，就像真的入行一样。从这一天起，一年一年，把这段职业生涯过到退休。', 'Draw a random job card and live one working life in China, all the way to retirement.')}</p>
@@ -533,6 +533,17 @@ const CSS = `
 .g-codes figure { margin: 0; } .g-codes img { width: 200px; max-height: 300px; height: auto; object-fit: contain; border-radius: 12px; border: 1px solid var(--line); background: #fff; }
 .g-art { display: block; width: 100%; aspect-ratio: 1440 / 800; object-fit: cover; border-radius: 16px; margin: 0 0 18px; box-shadow: 0 10px 30px rgba(31,61,107,.12); background: #e9eef5; }
 .g-art-hero { margin-bottom: 22px; aspect-ratio: 1213 / 800; }
+.g-toprow { display: flex; align-items: center; justify-content: flex-end; gap: 10px; margin-bottom: 10px; } .g-toprow .g-lang { margin: 0; } .g-eb-m { display: none; }
+/* 手机首页第一屏多露点东西（用户 11-07）：眉题和语言同一行、字小一号、空白收紧；网页版不变 */
+@media (max-width: 640px) {
+  .g-hero { padding-top: 0; }
+  .g-toprow { justify-content: space-between; margin-bottom: 8px; } .g-eb-m { display: block; text-align: left; font-size: 11px; letter-spacing: .16em; } .g-eb-d { display: none; }
+  .g-toprow .g-lang { font-size: 12px; padding: 2px 10px; }
+  .g-art-hero { margin-bottom: 12px; border-radius: 12px; }
+  .g-hero .g-title { margin: 4px 0 8px; }
+  .g-hero .g-lead { font-size: 14.5px; line-height: 1.6; margin-bottom: 0; }
+  .g-hero .g-deck { margin: 70px auto 22px; }
+}
 .g-codes figcaption { font-size: 12.5px; color: var(--ink3); margin-top: 4px; }
 .g-in { animation: g-in .6s ease-out both; }
 .g-path li.bad::before { border-color: var(--bad); } .g-path li.good::before { border-color: var(--good); }
