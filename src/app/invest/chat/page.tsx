@@ -108,7 +108,8 @@ export default function InvestChat() {
   return <ActCtx.Provider value={act}><div className="iv-chat">
     <section className="iv-talk" onClickCapture={onLink}>
       {tabs.length > 0 && <div className="iv-talk-top"><button className={`iv-tog${show ? ' on' : ''}`} aria-pressed={show} onClick={() => { setShow(v => !v); setFull(false); }}><PanelRight size={14} />应用区 {tabs.length}</button></div>}
-      {!items.length ? <div className="iv-hero"><h1>想查什么，直接说</h1>{composer(true)}<div className="iv-starts">{STARTS.map(s => <button key={s.t} onClick={() => send(s.p)}><b>{s.t}</b><span>{s.d}</span></button>)}</div></div> : <>
+      {!items.length && <div className="iv-scene" aria-hidden />}
+      {!items.length ? <div className="iv-hero"><div className="iv-eb">产业投资地图</div><h1>想查什么，直接说</h1>{composer(true)}<div className="iv-starts">{STARTS.map(s => <button key={s.t} onClick={() => send(s.p)}><b>{s.t}</b><span>{s.d}</span></button>)}</div></div> : <>
         <div className="iv-stream">
           {items.map((x, i) => {
             if (x.k === 'user') return <div key={i} className="iv-user"><div>{x.text}</div></div>;

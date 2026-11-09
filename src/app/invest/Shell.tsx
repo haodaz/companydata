@@ -44,7 +44,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
     <header className="iv-mtop"><button className="iv-ic" aria-label="打开菜单" onClick={() => setDrawer(true)}><Menu size={20} /></button><b>产业投资地图</b><button className="iv-ic" aria-label="新对话" onClick={() => openThread(null)}><SquarePen size={18} /></button></header>
     <div className={`iv-scrim${drawer ? ' open' : ''}`} onClick={() => setDrawer(false)} />
     <aside className={`iv-side${m ? ' mini' : ''}${drawer ? ' open' : ''}`}>
-      <div className="iv-side-top"><button className="iv-ic" aria-label={m ? '展开侧栏' : '收起侧栏'} onClick={drawer ? () => setDrawer(false) : toggle}>{drawer ? <X size={18} /> : <PanelLeft size={18} />}</button>{!m && <b>产业投资地图</b>}</div>
+      <div className="iv-side-top"><button className="iv-ic" aria-label={m ? '展开侧栏' : '收起侧栏'} onClick={drawer ? () => setDrawer(false) : toggle}>{drawer ? <X size={18} /> : <PanelLeft size={18} />}</button>{!m && <><span className="iv-mark">投</span><b>产业投资地图</b></>}</div>
       <nav className="iv-nav">
         <button className={path === CHAT && !cur ? 'on' : ''} title="新对话" onClick={() => openThread(null)}><SquarePen size={17} />{!m && '新对话'}</button>
         {NAV.map(x => <Link key={x.href} href={x.href} title={x.t} className={x.on(path) ? 'on' : ''}><x.ic size={17} />{!m && x.t}</Link>)}

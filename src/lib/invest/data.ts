@@ -12,7 +12,7 @@ const short = (s: string) => s.replace(/(省|市|壮族自治区|回族自治区
 const placeOf = (c: Co) => SAR[c.country || ''] || (c.country === '156' && c.province ? short(regionName('province', c.province)) : c.country === '156' ? null : '海外');
 
 async function base() {
-  return cachedStats('invest:base', async () => {
+  return cachedStats('invest:base:2', async () => {
     const { data: cs, error } = await selectAll(() => db.from('companies').select('id, name, industry, sub_industry, one_sentence, product_area, country, province, city, company_type, stock_code, info_founding_year, registered_capital, supplier_categories, logo_url, human_review_status').not('if_delete', 'is', true).order('id'));
     if (error) throw error;
     const cos = (cs as any[]).filter(c => !['hidden', 'rejected'].includes(c.human_review_status || '')).map(c => ({ ...c, chains: classify(c) })) as Co[];
@@ -35,7 +35,9 @@ async function base() {
       finBy.set(f.company_id, list);
     }
     const fins = [...finBy.values()].flat();
-    return { cos, byId, fins, jobs, finBy };
+    const Y0 = nowY - 7;
+    const chains = CHAINS.map(ch => { const list = cos.filter(c => c.chains.some(x => x.chain === ch.key)), ev = list.flatMap(c => finBy.get(c.id) || []); return { key: ch.key, name: ch.name, companies: list.length, events: ev.length, recent: ev.filter(f => (f.date || '') >= `${nowY - 3}`).length, jobs: list.reduce((s, c) => s + (jobs.get(c.id)?.open || 0), 0), spark: Array.from({ length: nowY - Y0 + 1 }, (_, i) => ev.filter(f => f.year === Y0 + i).length) }; });
+    return { cos, byId, fins, jobs, finBy, chains };
   }, 600_000);
 }
 
@@ -55,7 +57,9 @@ export async function overview(chain: string) {
   for (const c of cs) { const p = placeOf(c); if (!p) continue; const v = prov.get(p) || { companies: 0, events: 0 }; v.companies++; v.events += b.finBy.get(c.id)?.length || 0; prov.set(p, v); }
   const invEvents = new Map<string, Record<StageKey, number>>();
   for (const f of fs) for (const n of f.investors) { const v = invEvents.get(n) || emptyStages(); v[f.stage]++; invEvents.set(n, v); }
-  const topInvestors = [...invEvents.entries()].map(([name, st]) => ({ name, stages: st, total: Object.values(st).reduce((s, n) => s + n, 0) })).sort((x, y) => y.total - x.total).slice(0, 15);
+  const cut3 = `${nowY - 3}`, invCo = new Map<string, Set<number>>(), invRecent = new Map<string, number>();
+  for (const f of fs) for (const n of f.investors) { invCo.set(n, (invCo.get(n) || new Set()).add(f.company_id)); if ((f.date || '') >= cut3) invRecent.set(n, (invRecent.get(n) || 0) + 1); }
+  const topInvestors = [...invEvents.entries()].map(([name, st]) => ({ name, stages: st, total: Object.values(st).reduce((s, n) => s + n, 0), companies: invCo.get(name)?.size || 0, recent: invRecent.get(name) || 0 })).sort((x, y) => y.total - x.total).slice(0, 15);
   const provinces = [...prov.entries()].map(([name, v]) => ({ name, ...v })).sort((x, y) => y.events - x.events || y.companies - x.companies);
   const dom = provinces.filter(p => p.name !== '海外'), domEv = dom.reduce((s, p) => s + p.events, 0);
   const staged = STAGES.map(s => ({ n: s.name, v: stageTotals[s.key] })).sort((x, y) => y.v - x.v), stagedSum = staged.reduce((s, x) => s + x.v, 0);
@@ -74,7 +78,7 @@ export async function overview(chain: string) {
   }) })) || [];
   const recent = fs.filter(f => f.date).sort((x, y) => String(y.date).localeCompare(String(x.date))).slice(0, 10).map(f => ({ id: f.company_id, name: b.byId.get(f.company_id)!.name, round: f.round, stage: f.stage, date: f.date, amount: f.amount, investors: f.investors.slice(0, 3) }));
   const hiring = cs.map(c => ({ c, j: b.jobs.get(c.id) })).filter(x => x.j?.open).sort((x, y) => y.j!.open - x.j!.open).slice(0, 8).map(x => ({ id: x.c.id, name: x.c.name, open: x.j!.open, d30: x.j!.d30, funded: b.finBy.has(x.c.id) }));
-  return { label, kpi: { companies: cs.length, funded: cs.filter(c => b.finBy.has(c.id)).length, events: fs.length, investors: invEvents.size, listed: cs.filter(c => c.stock_code || c.company_type === 'public').length, jobs: cs.reduce((s, c) => s + (b.jobs.get(c.id)?.open || 0), 0) }, years, stageTotals, provinces, topInvestors, insight, stages, recent, hiring, chains: CHAINS.map(c => ({ key: c.key, name: c.name, companies: b.cos.filter(x => inChain(x, c.key)).length })) };
+  return { label, kpi: { companies: cs.length, funded: cs.filter(c => b.finBy.has(c.id)).length, events: fs.length, investors: invEvents.size, listed: cs.filter(c => c.stock_code || c.company_type === 'public').length, unfunded: cs.filter(c => !b.finBy.has(c.id) && !c.stock_code && c.company_type !== 'public').length, recent: fs.filter(f => (f.date || '') >= cut3).length, jobs: cs.reduce((s, c) => s + (b.jobs.get(c.id)?.open || 0), 0) }, years, stageTotals, provinces, topInvestors, insight, stages, recent, hiring, chains: b.chains };
 }
 
 export async function companies(q: { chain: string; node?: string; place?: string; investor?: string; tab?: string; q?: string; sort?: string; page: number }) {

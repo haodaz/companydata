@@ -1,6 +1,7 @@
 'use client';
 /** /invest 共用部件：图表、企业表、产业链板、企业 / 机构详情。整页和对话右边的应用区用同一套，点企业、点机构做什么由 ActCtx 决定 */
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { BatteryCharging, Cpu, Dna, Factory, FlaskConical, Sparkles, Stethoscope } from 'lucide-react';
 import MAP from '@/data/china-map.json';
 
 const STAGES = [['early', '早期', '种子、天使、Pre-A'], ['growth', '成长期', 'A、B 轮'], ['late', '后期', 'C 轮及以后、Pre-IPO'], ['strategic', '战略并购', '战略投资、并购、增资'], ['public', '上市再融资', 'IPO、定增、可转债']] as const;
@@ -18,14 +19,47 @@ export const TipBox = ({ tip }: { tip: Tip }) => tip && <div className="iv-tip" 
 const Legend = () => <div className="iv-legend">{STAGES.map(([k, n, d]) => <span key={k} title={d}><i style={{ background: SC(k) }} />{n}</span>)}</div>;
 const stageLines = (st: Record<string, number>) => STAGES.filter(([k]) => st[k]).map(([k, n]) => <div key={k}>{n} {st[k]}</div>);
 
+const CK = 'iv-ov-3-';
+const readCache = (chain: string) => { try { return JSON.parse(localStorage.getItem(CK + chain) || 'null'); } catch { return null; } };
+const writeCache = (chain: string, d: any) => { try { localStorage.setItem(CK + chain, JSON.stringify(d)); } catch {} };
+let warmed = false;
+/** 先出上次看到的（本机缓存），后台再刷新；第一次拿到后顺手把各产业也存好，切换不用等 */
 export function useOverview(chain: string) {
   const [d, setD] = useState<any>(null), [err, setErr] = useState('');
-  useEffect(() => { let live = true; setErr(''); api({ view: 'overview', chain }).then(x => live && setD(x)).catch(e => live && setErr(e.message)); return () => { live = false; }; }, [chain]);
+  useEffect(() => {
+    let live = true; setErr('');
+    const hit = readCache(chain); setD(hit);
+    api({ view: 'overview', chain }).then(x => {
+      if (live) setD(x); writeCache(chain, x);
+      if (!warmed) { warmed = true; setTimeout(async () => { for (const c of ['all', ...(x.chains || []).map((k: any) => k.key)]) if (c !== chain) await api({ view: 'overview', chain: c }).then(v => writeCache(c, v)).catch(() => {}); }, 800); }
+    }).catch(e => { if (live && !hit) setErr(e.message); });
+    return () => { live = false; };
+  }, [chain]);
   return { d, err };
 }
-export const ChainChips = ({ chains, chain, setChain }: { chains?: any[]; chain: string; setChain: (c: string) => void }) => <div className="iv-chips"><button className={chain === 'all' ? 'on' : ''} onClick={() => setChain('all')}>全部产业</button>{chains?.map((c: any) => <button key={c.key} className={chain === c.key ? 'on' : ''} onClick={() => setChain(c.key)}>{c.name}<small>{fmt(c.companies)}</small></button>)}</div>;
+export const ChainChips = ({ chains, chain, setChain, noAll }: { chains?: any[]; chain: string; setChain: (c: string) => void; noAll?: boolean }) => <div className="iv-chips">{!noAll && <button className={chain === 'all' ? 'on' : ''} onClick={() => setChain('all')}>全部产业</button>}{chains?.map((c: any) => <button key={c.key} className={chain === c.key ? 'on' : ''} onClick={() => setChain(c.key)}>{c.name}<small>{fmt(c.companies)}</small></button>)}</div>;
 
-/** 省级融资地图：边界来自 DataV.GeoAtlas（scripts/invest/build-china-map.mjs）。南海诸岛放右下角小窗。港澳台只记国家这一级，也按地区显示 */
+/** 数字滚上来；只在第一次出现时滚 */
+export function Count({ v }: { v: number }) {
+  const [n, setN] = useState(0), from = useRef(0);
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setN(v); return; }
+    const a = from.current, t0 = performance.now(); let id = 0;
+    const step = (t: number) => { const p = Math.min(1, (t - t0) / 700), val = Math.round(a + (v - a) * (1 - Math.pow(1 - p, 3))); setN(val); from.current = val; if (p < 1) id = requestAnimationFrame(step); };
+    id = requestAnimationFrame(step); return () => cancelAnimationFrame(id);
+  }, [v]);
+  return <>{fmt(n)}</>;
+}
+export const Spark = ({ data, w = 84, h = 26 }: { data: number[]; w?: number; h?: number }) => { const max = Math.max(1, ...data), bw = w / data.length; return <svg width={w} height={h} aria-hidden style={{ display: 'block' }}>{data.map((v, i) => { const bh = Math.max(v ? 2 : 1, v / max * h); return <rect key={i} x={i * bw + .8} y={h - bh} width={bw - 1.6} height={bh} rx="1.4" fill={i === data.length - 1 ? 'var(--acc)' : 'rgba(91,79,233,.32)'} />; })}</svg>; };
+const CHAIN_IC: Record<string, [any, string, string]> = { semi: [Cpu, '#EEECFD', '#5B4FE9'], ai: [Sparkles, '#FBE8EF', '#C2386E'], bio: [Dna, '#E2F4F0', '#0E8A73'], med: [Stethoscope, '#E5F0FC', '#2672C4'], inst: [FlaskConical, '#FBF0DD', '#B4730F'], energy: [BatteryCharging, '#E6F6E4', '#3C8F2F'], equip: [Factory, '#ECEEF4', '#4A5270'] };
+/** 七条产业链卡片：选产业，也顺带看每条链的热度 */
+export function ChainStrip({ chains, chain, setChain, all = true }: { chains?: any[]; chain: string; setChain: (c: string) => void; all?: boolean }) {
+  if (!chains) return <div className="iv-strip">{Array.from({ length: 7 }, (_, i) => <div key={i} className="iv-sk" style={{ height: 96 }} />)}</div>;
+  return <div className="iv-strip">{chains.map((c: any) => { const [I, bg, fg] = CHAIN_IC[c.key] || CHAIN_IC.equip, on = chain === c.key; return <button key={c.key} className={`iv-sc${on ? ' on' : ''}`} onClick={() => setChain(on && all ? 'all' : c.key)}><span className="iv-sc-h"><i style={{ background: bg, color: fg }}><I size={15} /></i><b>{c.name}</b></span><span className="iv-sc-b"><span><strong>{fmt(c.recent)}</strong><small>近三年融资</small></span>{c.spark && <Spark data={c.spark} />}</span><small className="iv-sc-f">{fmt(c.companies)} 家企业 · {fmt(c.jobs || 0)} 个在招</small></button>; })}</div>;
+}
+export const Sk = ({ h, style }: { h: number; style?: React.CSSProperties }) => <div className="iv-sk" style={{ height: h, ...style }} />;
+export const StageLegend = () => <Legend />;
+
 function ChinaMap({ data, on }: { data: any[]; on: any }) {
   const act = useAct(), m = new Map(data.map(p => [p.name, p])), dom = data.filter(p => p.name !== '海外' && p.events > 0), max = Math.max(1, ...dom.map(p => p.events));
   const fill = (v: number) => v ? `color-mix(in srgb, #4B3FD8 ${Math.round(12 + Math.pow(Math.log(1 + v) / Math.log(1 + max), 1.2) * 88)}%, #ECEEFA)` : '#EFF0F6';
@@ -56,24 +90,24 @@ function YearBars({ years, on }: { years: any[]; on: any }) {
 
 const Stack = ({ st, total, max }: { st: Record<string, number>; total: number; max: number }) => <div className="iv-stack" style={{ width: `${Math.max(4, total / max * 100)}%` }}>{STAGES.filter(([k]) => st[k]).map(([k]) => <i key={k} style={{ width: `${st[k] / total * 100}%`, background: SC(k) }} />)}{st.other ? <i style={{ width: `${st.other / total * 100}%`, background: SC('other') }} /> : null}</div>;
 
-export function InvestorRank({ list, on, wide }: { list: any[]; on: any; wide?: boolean }) {
-  const act = useAct(), max = Math.max(1, ...list.map(t => t.total));
+export function InvestorRank({ list, on, wide, max: m }: { list: any[]; on: any; wide?: boolean; max?: number }) {
+  const act = useAct(), max = m || Math.max(1, ...list.map(t => t.total));
   return <>{list.map(t => <button className="iv-rank" style={wide ? { gridTemplateColumns: '150px minmax(0,1fr) 44px' } : undefined} key={t.name} onClick={() => act.investor(t.name)} {...on(<><b>{t.name} · {t.total} 起</b>{stageLines(t.stages)}</>)}><span>{t.name}</span><Stack st={t.stages} total={t.total} max={max} /><b>{t.total}</b></button>)}</>;
 }
 
+export const KPI = ({ d }: { d: any }) => { const sp = d.years.slice(-8).map((y: any) => y.total); return <section className="iv-kpis">{[['企业', d.kpi.companies], ['有融资记录', d.kpi.funded], ['融资事件', d.kpi.events, sp], ['投资机构', d.kpi.investors], ['上市公司', d.kpi.listed], ['在招岗位', d.kpi.jobs]].map(([n, v, s]) => <div className="iv-kpi" key={n as string}><span>{n}</span><div><b><Count v={v as number} /></b>{s && <Spark data={s as number[]} w={64} h={24} />}</div></div>)}</section>; };
+
 /** 全景看板：首页和应用区共用 */
-export function Overview({ d, on }: { d: any; on: any }) {
+export function Overview({ d, on, kpi = true }: { d: any; on: any; kpi?: boolean }) {
   const act = useAct();
   const totalSt = Object.values(d.stageTotals as Record<string, number>).reduce((s, n) => s + n, 0);
   return <>
-    <section className="iv-kpis">{[['企业', d.kpi.companies], ['有融资记录', d.kpi.funded], ['融资事件', d.kpi.events], ['投资机构', d.kpi.investors], ['上市公司', d.kpi.listed], ['在招岗位', d.kpi.jobs]].map(([n, v]) => <div className="iv-kpi" key={n as string}><b>{fmt(v as number)}</b><span>{n}</span></div>)}</section>
-    <div className="iv-insight">{d.insight.join('')}</div>
+    {kpi && <><KPI d={d} /><div className="iv-insight">{d.insight.join('')}</div></>}
     <div className="iv-grid">
       <section className="iv-card s5"><h2>融资流向哪里</h2><p className="iv-sub">颜色越深融资事件越多，点省份看当地企业。海外 {d.provinces.find((p: any) => p.name === '海外')?.events || 0} 起未显示</p><ChinaMap data={d.provinces} on={on} /></section>
-      <section className="iv-card s7"><h2>每年融资事件</h2><p className="iv-sub">{totalSt > 0 && <>样本共 {fmt(totalSt)} 起，{STAGES.map(([k, n]) => `${n} ${Math.round(d.stageTotals[k] / totalSt * 100)}%`).join('，')}</>}</p><Legend /><YearBars years={d.years} on={on} /></section>
+      <section className="iv-card s7"><h2>每年融资事件</h2><p className="iv-sub">{totalSt > 0 && <>样本共 {fmt(totalSt)} 起，{STAGES.map(([k, n]) => `${n} ${Math.round(d.stageTotals[k] / totalSt * 100)}%`).join('，')}</>}</p><Legend /><YearBars years={d.years} on={on} /><div className="iv-mini"><div><h3>谁在招人</h3><p>融资之外的前瞻信号</p></div><div className="iv-mini-l">{d.hiring.slice(0, 6).map((h: any) => <button key={h.id} onClick={() => act.company(h.id, h.name)}><span>{h.name}</span><b>{fmt(h.open)}</b></button>)}</div></div></section>
       <section className="iv-card s5"><h2>谁在出手</h2><p className="iv-sub">按参与事件数排名，点机构看组合和合作伙伴</p><Legend /><InvestorRank list={d.topInvestors} on={on} /></section>
-      <section className="iv-card s4"><h2>最新融资</h2><p className="iv-sub">按披露日期</p><div className="iv-list">{d.recent.map((r: any, i: number) => <button key={i} className="iv-row" onClick={() => act.company(r.id, r.name)}><span><strong>{r.name}</strong><small>{[r.round, r.amount, r.investors[0]].filter(Boolean).join(' · ')}</small></span><em>{r.date?.slice(2)}</em></button>)}</div></section>
-      <section className="iv-card s3"><h2>谁在招人</h2><p className="iv-sub">融资之外的前瞻信号</p><div className="iv-list">{d.hiring.map((h: any) => <button key={h.id} className="iv-row" onClick={() => act.company(h.id, h.name)}><span><strong>{h.name}</strong>{h.d30 > 0 && <small>30 天内新增 {h.d30}</small>}</span><em>{h.open}</em></button>)}</div></section>
+      <section className="iv-card s7"><h2>最新融资</h2><p className="iv-sub">按披露日期</p><div className="iv-feed">{d.recent.map((r: any, i: number) => <button key={i} onClick={() => act.company(r.id, r.name)}><i style={{ background: SC(r.stage === 'other' ? 'other' : r.stage) }} /><span><strong>{r.name}</strong><small>{[r.round, r.amount, r.investors[0]].filter(Boolean).join(' · ')}</small></span><em>{r.date?.slice(5)}</em></button>)}</div></section>
     </div>
   </>;
 }
