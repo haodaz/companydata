@@ -4,7 +4,7 @@
  *   国家 243 个（中国 156、美国 840、中国香港 344…）；省 34 个（浙江 33）；城市 348 个，只有中国的地级市（杭州 330100）。
  * 海外城市（10-20 起）：数据部门《全球城市.xlsx》→ src/data/world-cities.json，21 国 6052 个城市、529 个州 / 省，
  *   城市编码如 city_us_5_san_francisco、州 / 省如 state_ca_ontario；同名城市（伦敦、悉尼）按岗位的国家区分。
- * 港澳台：国家存 中国香港 344 / 中国澳门 446 / 中国台湾 158；省、市照《全球城市1106》填 81 / 810000、82 / 820000、71 / 710000（10-20 时留空）。
+ * 港澳台：国家存 中国香港 344 / 中国澳门 446 / 中国台湾 158，省市留空（数据部门 10-20 确认）。
  * 认不出的（县级市、选项集里没有的海外城市）留空，原文在 location 里。
  */
 import opts from '@/data/region-options.json';
@@ -54,10 +54,6 @@ const NAME_OF = {
 };
 /** 港澳台：中国省表里的省编码 → 国家表里的编码 */
 const SAR: Record<string, string> = { '81': '344', '82': '446', '71': '158' };
-/** 港澳台的省、市（数据部门《全球城市1106》：中国香港 344 → 省 81 / 市 810000，中国澳门 446 → 82 / 820000，中国台湾 158 → 71 / 710000） */
-const SAR_FULL: Record<string, { country: string; province: string[]; city: string }> = {
-  '344': { country: '344', province: ['81'], city: '810000' }, '446': { country: '446', province: ['82'], city: '820000' }, '158': { country: '158', province: ['71'], city: '710000' },
-};
 
 /** 常见别名 → 选项集里的叫法 */
 const COUNTRY_ALIAS: Record<string, string> = {
@@ -155,7 +151,7 @@ export function resolveRegion(input: { country?: any; province?: any; city?: any
       }
     }
     const sarHit = SAR_TEXT.find(([re]) => re.test(srcText));
-    if (sarHit) return SAR_FULL[sarHit[1]];
+    if (sarHit) return { country: sarHit[1], province: [], city: null };
   }
   // 城市栏 / 地点里写的其实是国家（「越南」「日本」「国外」）：国家以它为准（国家栏常被默认填成中国）
   if (!city && !province) {
@@ -168,9 +164,9 @@ export function resolveRegion(input: { country?: any; province?: any; city?: any
   if (city && !province) province = PROVINCE.find(o => o.value === city!.parent) || null;
   if ((city || province) && !country) country = COUNTRY.find(o => o.value === '156') || null;
 
-  // 港澳台：国家存国家表里的编码（中国香港 344 / 中国澳门 446 / 中国台湾 158）；省、市 11-06 起照《全球城市1106》填上（10-20 时是留空）
-  const sar = SAR[province?.value || ''] || SAR[city?.parent || ''] || (country && SAR_FULL[country.value] ? country.value : '');
-  if (sar) return SAR_FULL[sar];
+  // 港澳台：国家存国家表里的编码（中国香港 344 / 中国澳门 446 / 中国台湾 158），省市留空（数据部门 10-20）
+  const sar = SAR[province?.value || ''] || SAR[city?.parent || ''];
+  if (sar) return { country: sar, province: [], city: null };
   return { country: country?.value || null, province: province ? [province.value] : [], city: city?.value || null };
 }
 
