@@ -1,6 +1,6 @@
 /**
  * /invest 接 datasquare 的人才关系：只做查人和找路径，只读，不做图谱展示（用户 11-09）。
- * 节点和边全量读一次缓存 10 分钟，路径在服务端算好，前端只拿结果。家庭关系不进来（/invest 对外部账号也开放）。
+ * 节点和边全量读一次缓存 10 分钟，路径在服务端算好，前端只拿结果。家庭关系也算（用户 11-09 确认要）。
  */
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { cachedStats } from '@/lib/db-stats';
@@ -10,6 +10,7 @@ type Edge = { id: number; source_node_id: number; target_node_id: number; relati
 const META: Record<string, { label: string; weight: number }> = {
   co_author: { label: '论文合著', weight: 8 }, advisor: { label: '师生', weight: 10 }, student: { label: '师生', weight: 10 }, project: { label: '项目合作', weight: 6 }, colleague: { label: '同事', weight: 5 },
   alumni: { label: '校友', weight: 3 }, same_org: { label: '同机构', weight: 2 }, affiliated_institution: { label: '任职 / 就读', weight: 2 }, affiliated_company: { label: '任职于企业', weight: 2 }, member_of: { label: '成员', weight: 4 }, part_of: { label: '隶属', weight: 3 },
+  spouse: { label: '配偶', weight: 14 }, parent: { label: '父母子女', weight: 13 }, grandparent: { label: '祖辈', weight: 12 }, sibling: { label: '兄弟姐妹', weight: 11 },
   co_founder: { label: '联合创办', weight: 9 }, business_partner: { label: '商业伙伴', weight: 6 }, investor: { label: '投资', weight: 6 }, same_company: { label: '同企业', weight: 2 }, co_investor: { label: '联合投资', weight: 4 },
 };
 // 校友 / 同机构 / 同企业是由共同机构派生的两两边，不当路径的一跳；走「人 → 机构 ← 人」更明白
@@ -34,7 +35,7 @@ async function all<T>(table: string, cols: string): Promise<T[]> {
 }
 const graph = () => cachedStats('invest:graph', async () => {
   const [nodes, edges0] = await Promise.all([all<Node>('talent_graph_nodes', 'id, node_key, name_cn, name_en, institution, kind, research_fields, h_index'), all<Edge>('talent_graph_edges', 'id, source_node_id, target_node_id, relation_type')]);
-  const edges = edges0.filter(e => META[e.relation_type]);   // 家庭和系统关系不在 META 里，直接不要
+  const edges = edges0.filter(e => META[e.relation_type]);   // 系统关系（me_connection）不在 META 里，不要
   const byId = new Map(nodes.map(n => [n.id, n]));
   const adj = new Map<number, { to: number; type: string; edge: number }[]>();
   for (const e of edges) {

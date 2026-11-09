@@ -164,6 +164,6 @@ export function PathCards({ paths }: { paths: any[] }) {
     <h3>{p.depth} 步{p.via_hub && <span className="iv-tag">经共同机构，弱关系</span>}</h3>
     <div className="iv-chainline">{p.nodes.map((n: string, k: number) => <span key={k} className="iv-link-step"><b>{n}</b>{k < p.steps.length && <em>{p.steps[k].relation}</em>}</span>)}</div>
     {p.steps.some((s: any) => s.evidence) && <ul>{p.steps.filter((s: any) => s.evidence).map((s: any, k: number) => <li key={k}><b>{s.from} · {s.to}</b>：{s.evidence}</li>)}</ul>}
-  </section>)}<p className="iv-sub">路径来自公开的合作、师承和任职记录，只说明有过这层关系，不代表现在熟悉。</p></div>;
+  </section>)}<p className="iv-sub">路径来自公开的合作、师承、任职和亲属记录，只说明有过这层关系，不代表现在熟悉。</p></div>;
 }
 
