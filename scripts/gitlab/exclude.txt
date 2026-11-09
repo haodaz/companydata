@@ -38,3 +38,10 @@
 ^scripts/college-research-core\.mts$
 ^scripts/college-private-demo\.mts$
 ^scripts/data/private/
+# /invest 产业投资地图：对话依赖工作台 src/lib/ws（不推），整块不推
+src/app/invest
+src/app/api/invest
+src/lib/invest
+scripts/invest
+src/data/china-map.json
+supabase/migrations/069_invest_threads.sql
