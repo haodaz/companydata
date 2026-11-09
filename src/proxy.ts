@@ -193,7 +193,7 @@ export async function proxy(req: NextRequest) {
 }
 
 /** 原来 matcher 管的路径（别的域名只在这些路径上走 proxy 的规则） */
-const PROXIED = [/^\/admin(\/|$)/, /^\/office(\/|$)/, /^\/lab(\/|$)/, /^\/college\/admin(\/|$)/, /^\/college\/s\//, /^\/work\/mine$/, /^\/work\/new(\/|$)/, /^\/work\/admin$/, /^\/workspace$/, /^\/research$/, /^\/api\//, /^\/$/, /^\/favicon\.ico$/];
+const PROXIED = [/^\/admin(\/|$)/, /^\/invest(\/|$)/, /^\/office(\/|$)/, /^\/lab(\/|$)/, /^\/college\/admin(\/|$)/, /^\/college\/s\//, /^\/work\/mine$/, /^\/work\/new(\/|$)/, /^\/work\/admin$/, /^\/workspace$/, /^\/research$/, /^\/api\//, /^\/$/, /^\/favicon\.ico$/];
 
 export const config = {
   // 全部页面都过 proxy，由 PROXIED 决定走不走规则；Next 自己的静态资源不过
