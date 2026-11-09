@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>产业投资地图 · 封面</title>
+<!-- 《产业投资地图》短片封面 / 收尾：?a=第一行&b=第二行（紫色）&sub=小字 -->
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #fff; color: #171a2b; font-family: ui-sans-serif, system-ui, -apple-system, "PingFang SC", sans-serif; }
+  .w { height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 0 130px; box-sizing: border-box; }
+  .e { font-size: 26px; font-weight: 700; color: #5b4fe9; letter-spacing: .08em; margin-bottom: 26px; animation: up .7s both; }
+  .l { font-size: 112px; line-height: 1.22; font-weight: 800; animation: up .8s .12s both; } .l b { color: #5b4fe9; font-weight: 800; display: block; }
+  .s { font-size: 34px; color: #555c74; margin-top: 34px; animation: up .8s .35s both; }
+  @keyframes up { from { opacity: 0; transform: translateY(16px); } }
+</style></head><body><div class="w"><div class="e">平方智能</div><div class="l"><span id="a"></span><b id="b"></b></div><div class="s" id="s"></div></div>
+<script>const q = new URLSearchParams(location.search); a.textContent = q.get('a') || ''; b.textContent = q.get('b') || ''; s.textContent = q.get('sub') || '';</script></body></html>

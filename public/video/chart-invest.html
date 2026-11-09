@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>产业投资地图 · 图卡</title>
+<!-- 《产业投资地图》短片的图卡：1600×900，白底。 -->
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #fff; color: #171a2b; font-family: ui-sans-serif, system-ui, -apple-system, "PingFang SC", sans-serif; }
+  .page { position: absolute; inset: 0; padding: 92px 110px; box-sizing: border-box; }
+  .eb { font-size: 24px; font-weight: 700; color: #5b4fe9; letter-spacing: .08em; }
+  h1 { font-size: 60px; line-height: 1.25; margin: 16px 0 54px; font-weight: 800; }
+  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+  .c { border-radius: 20px; padding: 34px 30px 36px; height: 330px; box-sizing: border-box; animation: up .6s both; animation-delay: calc(.25s + var(--i) * .22s); }
+  .c b { display: block; font-size: 22px; font-weight: 700; opacity: .7; margin-bottom: 18px; }
+  .c h3 { margin: 0 0 16px; font-size: 42px; line-height: 1.25; font-weight: 800; }
+  .c p { margin: 0; font-size: 25px; line-height: 1.5; color: #454b63; }
+  @keyframes up { from { opacity: 0; transform: translateY(16px); } }
+</style></head>
+<body><div class="page"><div class="eb">投资的一天</div><h1>一个项目摆到面前，先要弄清四件事</h1>
+<div class="cards">
+  <div class="c" style="--i:0;background:#EEECFD"><b>01</b><h3>这条赛道<br>热不热</h3><p>钱流向哪些环节</p></div>
+  <div class="c" style="--i:1;background:#E2F4F0"><b>02</b><h3>谁在投</h3><p>谁常和谁一起投</p></div>
+  <div class="c" style="--i:2;background:#FBF0DD"><b>03</b><h3>这家公司<br>怎么样</h3><p>融资、团队、在招人</p></div>
+  <div class="c" style="--i:3;background:#FBE8EF"><b>04</b><h3>怎么<br>搭上线</h3><p>中间隔着谁</p></div>
+</div></div></body></html>

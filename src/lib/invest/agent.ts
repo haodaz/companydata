@@ -56,7 +56,7 @@ async function run(name: string, i: any): Promise<{ result: any; ui?: any; label
   if (name === 'chain_map') {
     const d = await overview(i.chain);
     if (!d.stages.length) return { label: '没有这条产业链', result: { error: chainHelp } };
-    return { label: `看了${d.label}产业链`, result: { label: d.label, stages: d.stages, total: d.kpi } };
+    return { label: `看了${d.label}产业链`, result: { 产业: d.label, 总览: { 企业: d.kpi.companies, 融资事件: d.kpi.events }, 环节: d.stages.map(s => ({ 段: s.name, 环节: s.nodes.map(n => ({ key: n.key, 名称: n.name, 企业数: n.companies, 有融资企业: n.funded, 融资事件: n.events, 近三年融资: n.recent, 在招岗位: n.jobs })) })) } };
   }
   if (name === 'search_companies') {
     const d = await companies({ chain: i.chain || 'all', node: i.node, place: i.place, investor: i.investor, tab: i.tab, q: i.q, sort: i.sort, page: Math.max(1, Number(i.page) || 1) });
