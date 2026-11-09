@@ -157,3 +157,13 @@ export function CompanyDetail({ id }: { id: number }) {
     {d.news.length > 0 && <><h3>近期动态</h3><div className="iv-list">{d.news.map((n: any, i: number) => <a key={i} className="iv-row" href={n.source_url || undefined} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}><span style={{ fontSize: 13 }}>{n.description}</span><em>{n.publish_date || ''}</em></a>)}</div></>}
   </div>;
 }
+
+/** 关系路径：一串文字卡片，不画图 */
+export function PathCards({ paths }: { paths: any[] }) {
+  return <div className="iv-paths">{paths.map((p, i) => <section key={i} className="iv-path">
+    <h3>{p.depth} 步{p.via_hub && <span className="iv-tag">经共同机构，弱关系</span>}</h3>
+    <div className="iv-chainline">{p.nodes.map((n: string, k: number) => <span key={k} className="iv-link-step"><b>{n}</b>{k < p.steps.length && <em>{p.steps[k].relation}</em>}</span>)}</div>
+    {p.steps.some((s: any) => s.evidence) && <ul>{p.steps.filter((s: any) => s.evidence).map((s: any, k: number) => <li key={k}><b>{s.from} · {s.to}</b>：{s.evidence}</li>)}</ul>}
+  </section>)}<p className="iv-sub">路径来自公开的合作、师承和任职记录，只说明有过这层关系，不代表现在熟悉。</p></div>;
+}
+

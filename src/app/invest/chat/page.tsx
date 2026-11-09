@@ -7,9 +7,9 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ArrowUp, Maximize2, Minimize2, PanelRight, Square, X } from 'lucide-react';
 import { Md } from '@/components/ws/Md';
 import { fromHistory, type Item } from '@/components/work/ChatKit';
-import { ActCtx, ChainBoard, CompanyDetail, CompanyTable, InvestorDetail, Overview, TipBox, useAct, useOverview, useTip, type Act } from '../ui';
+import { ActCtx, ChainBoard, CompanyDetail, CompanyTable, InvestorDetail, Overview, PathCards, TipBox, useAct, useOverview, useTip, type Act } from '../ui';
 
-type Tab = { key: string; title: string; panel: 'company' | 'investor' | 'chain' | 'overview' | 'projects'; id?: number; name?: string; chain?: string; params?: any };
+type Tab = { key: string; title: string; panel: 'company' | 'investor' | 'chain' | 'overview' | 'projects' | 'path'; id?: number; name?: string; chain?: string; params?: any; paths?: any[] };
 const keyOf = (u: any) => [u.panel, u.id, u.name, u.chain, u.params && JSON.stringify(u.params)].filter(Boolean).join(':');
 const STARTS = [
   { t: '看一个产业', d: '半导体哪些环节近三年融资最热？', p: '半导体哪些环节近三年融资最热？还有哪些环节企业不少但很少融资？' },
@@ -17,9 +17,10 @@ const STARTS = [
   { t: '找项目', d: '上海在大量招人、还没见融资的 AI 公司', p: '上海有哪些在大量招人、还没见融资的人工智能公司？' },
   { t: '查一个人或一家公司', d: '谁是 CTO、团队和融资历程', p: '帮我看一下深圳优艾智合机器人的融资历程和管理团队' },
 ];
-const RUNNING: Record<string, string> = { industry_overview: '看产业全景', chain_map: '看产业链', search_companies: '筛企业', company_profile: '看企业资料', search_investors: '找机构', investor_profile: '看机构画像', search_financings: '查融资', search_people: '查人', search_jobs: '查岗位', search_news: '查动态', search_products: '查产品', search_knowledge: '查职业和标准', open_panel: '打开应用区' };
+const RUNNING: Record<string, string> = { industry_overview: '看产业全景', chain_map: '看产业链', search_companies: '筛企业', company_profile: '看企业资料', search_investors: '找机构', investor_profile: '看机构画像', search_financings: '查融资', search_people: '查人', search_jobs: '查岗位', search_news: '查动态', search_products: '查产品', search_knowledge: '查职业和标准', search_person: '查人', find_path: '找路径', open_panel: '打开应用区' };
 
 function Panel({ t, on }: { t: Tab; on: any }) {
+  if (t.panel === 'path') return <PathCards paths={t.paths || []} />;
   if (t.panel === 'company') return <CompanyDetail id={t.id!} />;
   if (t.panel === 'investor') return <InvestorDetail name={t.name!} on={on} />;
   if (t.panel === 'projects') return <CompanyTable params={t.params || { chain: 'all' }} />;

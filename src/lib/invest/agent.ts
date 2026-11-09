@@ -6,6 +6,7 @@ import type Anthropic from '@anthropic-ai/sdk';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import type { AgentKit } from '@/lib/ws/agent';
 import { CHAINS, STAGES } from './taxonomy';
+import { findPath, searchPerson } from './people';
 import { companies, company, companyNames, findCompany, investor, overview, searchFinancings, searchInvestors } from './data';
 
 const chainHelp = `产业链 key：${CHAINS.map(c => `${c.key}=${c.name}`).join('、')}，不限产业传 all`;
@@ -27,6 +28,8 @@ export const INVEST_TOOLS: Anthropic.Tool[] = [
   tool('search_news', '查企业动态和新闻：按关键词，或限定某家企业（company_id）。', { q: str, company_id: num, limit: num }),
   tool('search_products', '查产品：企业主营产品和科研产品库（仪器、试剂、耗材等）。', { q: str, limit: num }, ['q']),
   tool('search_knowledge', '查职业库和行业标准。', { q: str, limit: num }, ['q']),
+  tool('search_person', '在人才关系库里查人（学者、创始人、高管等）：单位、方向；只对上一位时带直接关系。同名会列出多位，要让用户选。', { name: str }, ['name']),
+  tool('find_path', '找两个人（或人和机构）之间怎么搭上线：最短的关系链，优先只经过人的路径，也给经过共同机构的。名字对上多位时返回候选，让用户选后用 from_id / to_id 再查。', { from: str, to: str, from_id: num, to_id: num }),
   tool('open_panel', '在对话右边的应用区打开内容。用户说「打开 / 给我看 / 放到旁边」时用。kind：company（要 id）、investor（要 name）、chain（要 chain）、overview（可给 chain）、projects（可给 chain / node / place / investor）。', { kind: str, id: num, name: str, chain: str, node: str, place: str, investor: str }, ['kind']),
 ];
 
@@ -40,6 +43,7 @@ export const INVEST_SYSTEM = `你是平方「产业投资地图」的研究助�
 - 提到库里的企业一律写成链接 [企业名](/invest/c/企业id)，投资机构写成 [机构名](/invest/i/机构名)，方便点开。id 必须来自工具结果。
 - 多条对比用表格。融资、新闻这类事实，有来源链接时附上。
 - 同名的人不能当成同一个人；搭线路径只能基于共同投资、同一企业任职这些库里有的关系，说清是什么关系。
+- 找人脉用 search_person 和 find_path。路径只是公开合作、师承、任职这些记录算出来的，说明每一步是什么关系，别说成「认识」「关系好」；经过共同机构的路径是弱关系，要点明。
 - 用户要看某家企业、机构、产业链的详情时，用 open_panel 打开，不用在对话里把详情再抄一遍。`;
 
 async function run(name: string, i: any): Promise<{ result: any; ui?: any; label: string }> {
@@ -95,6 +99,12 @@ async function run(name: string, i: any): Promise<{ result: any; ui?: any; label
     const n = lim(i.limit, 10, 20);
     const [{ data: a }, { data: b }] = await Promise.all([db.from('occupations').select('name, career_category, intro').not('if_delete', 'is', true).ilike('name', `%${i.q}%`).limit(n), db.from('industry_standards').select('code, title, issuer, status, official_url').ilike('title', `%${i.q}%`).limit(n)]);
     return { label: `查到 ${(a?.length || 0) + (b?.length || 0)} 条`, result: { occupations: (a || []).map((x: any) => ({ ...x, intro: clip(x.intro, 200) })), standards: b } };
+  }
+  if (name === 'search_person') { const r = await searchPerson(String(i.name)); return { label: r.found ? `查到 ${r.found} 位` : '人才库里没找到', result: r }; }
+  if (name === 'find_path') {
+    const r = await findPath(i);
+    if (r.status !== 'ok') return { label: r.status === 'ambiguous' ? '名字对上了多位' : r.status === 'no_path' ? '库里没有连上的路径' : '没找到这个人', result: r };
+    return { label: `找到 ${r.paths.length} 条路径`, result: r, ui: { kind: 'invest', panel: 'path', name: `${r.from.name}→${r.to.name}`, title: `${r.from.name} → ${r.to.name}`, paths: r.paths } };
   }
   if (name === 'open_panel') {
     const chainName = CHAINS.find(c => c.key === i.chain)?.name;
