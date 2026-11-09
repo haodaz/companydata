@@ -243,6 +243,11 @@ export function resolveCompanyRegion(input: { country?: any; province?: any; cit
   const sarOnly = (c: string | null) => c === '344' || c === '446' || c === '158';
   let r = cityText ? resolveRegion({ country: input.country, city: cityText }) : resolveRegion(input);
   if (sarOnly(r.country)) return { country: r.country, province: null, city: null, county_area: null };
+  // 省写的是中国的省，市却认成了外国（上海的公司 city 写 Singapore）：国家、省不动，市当认不出
+  if (r.country && r.country !== '156') {
+    const p = resolveRegion({ country: '156', province: provText }).province[0];
+    if (p && /^\d+$/.test(p) && resolveRegion({ country: input.country }).country === '156') r = { country: '156', province: [], city: null };
+  }
   // 市认不出：看省；省的「直辖市同名」规则不能把写了别的城市的企业改成直辖市，所以市留空，再试县级市
   if (cityText && !r.city) {
     const byProv = resolveRegion({ country: input.country, province: provText });
