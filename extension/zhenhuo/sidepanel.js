@@ -85,8 +85,8 @@ function render() {
   app.innerHTML = `
     ${sess.warn === '1' || (ms <= 60_000 && ms > 0) ? `<div class="banner w1">还剩 1 分钟：时间到会自动交卷，把交付链接和说明贴好</div>` : sess.warn === '5' || (ms <= 300_000 && ms > 0) ? `<div class="banner w5">还剩 5 分钟：开始收尾，写好交付说明</div>` : ''}
     <div class="card"><div class="k">${esc(sess.company || '')}</div><div class="title">${esc(sess.title)}</div>
-      <div class="clock ${ms <= 60_000 ? 'hot' : ms <= 300_000 ? 'warn' : ''}" id="clock">${fmt(ms)}</div>
-      <div class="muted" style="text-align:center">剩余时间 · 建议 ${sess.minutes} 分钟，到时间自动交卷</div></div>
+      ${sess.deadline ? `<div class="clock ${ms <= 60_000 ? 'hot' : ms <= 300_000 ? 'warn' : ''}" id="clock">${fmt(ms)}</div>
+      <div class="muted" style="text-align:center">剩余时间 · 限时 ${sess.minutes} 分钟，到时间自动交卷</div>` : `<div class="muted" style="text-align:center">建议 ${sess.minutes} 分钟，超时可以继续，用时如实记录</div>`}</div>
     <div class="card">
       <div class="rec ${rec ? '' : 'off'}"><i></i>${rec ? '记录中' : '还没开始记录'}</div>
       ${rec

@@ -43,7 +43,7 @@ export async function baseTaskText(item: ShowcaseItem): Promise<string> {
   // 任务库里标的台子优先（11-05：IP 设计题原任务用的是参数草图台，按口径应该用白板）
   L.push('### 交付物', ...(T.deliverables || []).map((d: any, i: number) => { const m = item.deliverables?.[i]?.module || d.module; return `- ${item.deliverables?.[i]?.module && item.deliverables[i].module !== d.module ? item.deliverables[i].title : d.title}（format：${(item.deliverables?.[i]?.module !== d.module && item.deliverables?.[i]?.format) || d.format || '—'}；module：${m || '—'}）${d.desc ? `：${d.desc}` : ''}`; }));
   if (T.rules?.length) L.push('### 规则', ...T.rules.map((r: string) => `- ${r}`));
-  L.push(`### 操作台：${item.env || T.env?.type || 'doc'}；建议用时 ${T.time_minutes || item.time_minutes || '—'} 分钟`);
+  L.push(`### 操作台：${item.env || T.env?.type || 'doc'}；限时 ${T.time_minutes || item.time_minutes || '—'} 分钟`);
   L.push('### 材料（原题的材料，看它们各自的作用和埋的坑）');
   for (const m of (t.materials || []) as any[]) L.push(`#### ${m.title}（${m.kind || ''}）\n${String(m.content || '').slice(0, 1800)}`);
   if (Array.isArray(t.rubric) && t.rubric.length) L.push('### 评分要点', ...t.rubric.map((r: any) => `- ${r.title}（${r.weight ?? ''}%）：${String(r.desc || '').slice(0, 200)}`));

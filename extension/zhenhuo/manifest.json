@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "真活插件",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "百业AI｜真活：用自己的工具答题时，只在答题期间记录打开的网页、页面上的文字（含 AI 对话）和打字粘贴的量；可选每 10 秒截一张整屏（本地软件也记得到）。交卷后由 AI 回看过程。",
   "permissions": [
     "sidePanel",

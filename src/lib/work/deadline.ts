@@ -7,11 +7,13 @@ export const GRACE_MS = 60_000;
 /** 这个时间之后开始的作答，人走了才由管理页代为收卷（更早的弃考不拿去花钱评分） */
 export const AUTO_FROM = Date.parse('2026-11-10T00:00:00+08:00');
 
+/** 到点自动交卷默认开；出任务的人关掉后 task.soft_limit=true：时长只作建议，超时可以继续、用时如实记录 */
+export const withAutoSubmit = (task: any, on: boolean) => { const { soft_limit: _s, ...rest } = task || {}; return on ? rest : { ...rest, soft_limit: true }; };
 export const limitSec = (task: any) => (Number(task?.time_minutes) || 60) * 60;
 
-/** elapsed 已用秒数；limit 时限秒数（出任务的人预览不限时，为 null）；expired 到点；closed 过了宽限，内容一律不再收 */
+/** elapsed 已用秒数；limit 时限秒数（出任务的人预览、或这道题关了到点交卷，为 null）；expired 到点；closed 过了宽限，内容一律不再收 */
 export function timing(task: any, s: { started_at: string; participant?: any }, now = Date.now()) {
   const ms = Math.max(0, now - new Date(s.started_at).getTime());
-  const limit = s.participant?.preview ? null : limitSec(task);
+  const limit = s.participant?.preview || task?.soft_limit ? null : limitSec(task);
   return { elapsed: Math.round(ms / 1000), limit, expired: limit != null && ms >= limit * 1000 - 5000, closed: limit != null && ms >= limit * 1000 + GRACE_MS };
 }

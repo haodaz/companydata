@@ -1,6 +1,7 @@
 import { refreshSignals } from '@/lib/work/question-bank';
 import { NextRequest, NextResponse, after } from 'next/server';
-import { AUTO_FROM, timing } from '@/lib/work/deadline';
+import { AUTO_FROM, timing, withAutoSubmit } from '@/lib/work/deadline';
+import { cleanLabels, invitesOf, newInvites } from '@/lib/work/invite';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { attachmentsToMaterials, mergeAttachmentDupes, reviseTask, runBaseline, sourcesOf, withMinutes, withRole } from '@/lib/work/generator';
 import { withCost, logTokenUsage } from '@/lib/token-logger';
@@ -28,7 +29,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ toke
   const left = (sessions || []).filter(s => !s.submitted_at && new Date(s.started_at).getTime() >= AUTO_FROM && timing(t.task, s).closed).slice(0, 3);
   if (left.length) after(() => Promise.all(left.map(s => fetch(`${req.nextUrl.origin}/api/work/${token}/sessions/${s.id}/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ auto: true, sync: true }) }).catch(e => console.warn('[work] 代收卷失败', e)))));
   const { owner_key: _k, context: ctx, ...task } = t;
-  return NextResponse.json({ ok: true, task: { ...task, notes: ctx?.notes || [], sources: ctx ? sourcesOf(ctx) : null }, sessions: sessions || [] });
+  return NextResponse.json({ ok: true, task: { ...task, notes: ctx?.notes || [], sources: ctx ? sourcesOf(ctx) : null, invites: ctx?.invites || [], invite_only: !!ctx?.invite_only }, sessions: sessions || [] });
 }
 
 /** 发布 / 下架 */
@@ -37,7 +38,21 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ to
   const t = await auth(token, req);
   if (!t) return NextResponse.json({ ok: false, error: '管理链接不对' }, { status: 404 });
   const body = await req.json().catch(() => ({}));
-  // 改建议用时（20–240 分钟，题面里写的时长一起换）
+  // 专属邀请链接：{ add_invites: ['张三', ...] } 一人一条；{ invite_only: true } 公开链接不再能开新的作答
+  if (Array.isArray(body.add_invites) || typeof body.invite_only === 'boolean') {
+    const labels = cleanLabels(body.add_invites);
+    const context = { ...(t.context || {}), invites: [...invitesOf(t), ...newInvites(labels)], ...(typeof body.invite_only === 'boolean' ? { invite_only: body.invite_only } : {}) };
+    const { error } = await db.from('work_tasks').update({ context, updated_at: new Date().toISOString() }).eq('id', t.id);
+    if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
+    return NextResponse.json({ ok: true, invites: context.invites, invite_only: !!context.invite_only });
+  }
+  // 到点自动交卷的开关
+  if (typeof body.auto_submit === 'boolean') {
+    const { error } = await db.from('work_tasks').update({ task: withAutoSubmit(t.task, body.auto_submit), updated_at: new Date().toISOString() }).eq('id', t.id);
+    if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
+    return NextResponse.json({ ok: true, auto_submit: body.auto_submit });
+  }
+  // 改限时（20–240 分钟，题面里写的时长一起换）
   if (body.time_minutes != null) {
     const r = withMinutes(t.task, body.time_minutes);
     await db.from('work_tasks').update({ task: r.task, updated_at: new Date().toISOString() }).eq('id', t.id);

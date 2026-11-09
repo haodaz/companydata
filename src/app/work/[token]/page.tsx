@@ -38,7 +38,7 @@ function SheetView({ text, dark }: { text: string; dark: boolean }) {
 }
 type Env = { type: 'doc' | 'code' | 'sheet' | 'design' | 'open' | 'plugin'; language?: string; starter?: string; tests?: { name: string; code: string }[]; csv?: string; params?: { name: string; unit?: string; hint?: string }[]; sketch_hint?: string };
 type Stage = { id: string; type: string; question: string; reveal: string };
-type Task = { id: string; company_name: string; role: string; statement: string; task: { title: string; brief: string; deliverables: { id: string; title: string; format: string; module?: string }[]; time_minutes: number; rules: string[]; env?: Env; stages?: Stage[] }; materials: Material[] };
+type Task = { id: string; company_name: string; role: string; statement: string; task: { title: string; brief: string; deliverables: { id: string; title: string; format: string; module?: string }[]; time_minutes: number; soft_limit?: boolean; rules: string[]; env?: Env; stages?: Stage[] }; materials: Material[] };
 type Ev = { t: number; type: string; [k: string]: any };
 
 // 操作台模组按交付物挂（2026-10-25，王刚：交付物不止一个 Word，表 / 脚本 / 流程图可以混用；考试台不是在线 Word）
@@ -83,11 +83,18 @@ export default function WorkPage() {
   useEffect(() => { const f = () => setNarrow(window.innerWidth < 980); f(); window.addEventListener('resize', f); return () => window.removeEventListener('resize', f); }, []);
   useEffect(() => {
     (async () => {
-      const j = await (await fetch(`/api/work/${token}${sp.get('k') ? `?k=${encodeURIComponent(sp.get('k')!)}` : ''}`)).json();
+      // 专属链接按邀请码找这次作答（换浏览器也接得回来），不看本机记录
+      const inv = sp.get('i') || '';
+      let saved = sp.get('s') || '';
+      if (!saved && inv) saved = (await (await fetch(`/api/work/${token}/sessions?invite=${encodeURIComponent(inv)}`)).json()).session_id || '';
+      else if (!saved && typeof localStorage !== 'undefined') saved = localStorage.getItem(`work:${token}`) || '';
+      const qs = new URLSearchParams(); if (sp.get('k')) qs.set('k', sp.get('k')!); if (inv) qs.set('i', inv); if (saved) qs.set('s', saved);
+      const j = await (await fetch(`/api/work/${token}${qs.size ? `?${qs}` : ''}`)).json();
+      if (j.invite?.label) setName(j.invite.label);
       if (j.ok) setPreview(!!j.preview);
       if (!j.ok) { setErr(j.error || '链接不可用'); setPhase('intro'); return; }
       setTask(j.task); if (j.task?.task?.env?.type === 'open') setMode('open'); if (j.task?.task?.env?.type === 'plugin') setMode('plugin');   // 出任务的人指定了「自己录制电脑操作」：只有开放模式
-      const s = sp.get('s') || (typeof localStorage !== 'undefined' ? localStorage.getItem(`work:${token}`) : '') || '';
+      const s = saved;
       if (s) {
         const r = await (await fetch(`/api/work/${token}/sessions/${s}`)).json();
         if (r.ok) { setSid(s); setParticipant(r.session.participant); if (r.session.participant?.mode === 'open' || j.task?.task?.env?.type === 'open') setMode('open'); if (r.session.participant?.mode === 'plugin') setMode('plugin'); if (r.session.report?.auditing) { setPhase('grading'); return; } if (r.session.report) { setReport(r.session.report); setPhase('report'); return; } if (r.session.submitted_at) { setPhase('grading'); return; }
@@ -101,7 +108,7 @@ export default function WorkPage() {
 
   const start = async () => {
     if (!name.trim()) return;
-    const j = await (await fetch(`/api/work/${token}/sessions`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, contact, mode, k: sp.get('k') || undefined, from: switchFrom || undefined }) })).json();
+    const j = await (await fetch(`/api/work/${token}/sessions`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, contact, mode, k: sp.get('k') || undefined, from: switchFrom || undefined, invite: sp.get('i') || undefined }) })).json();
     if (!j.ok) { setErr(j.error); return; }
     if (switchFrom) { const r = await (await fetch(`/api/work/${token}/sessions/${j.session_id}`)).json(); if (r.ok) setResume(r.session); setSwitchFrom(''); }
     setSid(j.session_id); setParticipant({ name, contact, mode, ...(j.code ? { code: j.code } : {}) }); try { localStorage.setItem(`work:${token}`, j.session_id); } catch {}
@@ -121,7 +128,7 @@ export default function WorkPage() {
         <div style={{ color: '#666', marginBottom: 20 }}>{task.statement}</div>
         <Box title="任务书"><div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8 }}>{task.task.brief}</div></Box>
         <Box title="要交什么"><ol style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9 }}>{task.task.deliverables.map(d => <li key={d.id}><b>{d.title}</b> <span style={{ color: '#888' }}>{d.format}</span></li>)}</ol></Box>
-        <Box title="规则"><ul style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9 }}>{task.task.rules.map((r, i) => <li key={i}>{r}</li>)}</ul><div style={{ color: '#888', fontSize: 13, marginTop: 6 }}>操作台：{modulesLabel(task, env)}（按交付物切换） · 限时 {task.task.time_minutes} 分钟（开始后时间不暂停，到点自动交卷）· 材料 {task.materials.length} 份 · 交卷后立刻出报告</div></Box>
+        <Box title="规则"><ul style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9 }}>{task.task.rules.map((r, i) => <li key={i}>{r}</li>)}</ul><div style={{ color: '#888', fontSize: 13, marginTop: 6 }}>操作台：{modulesLabel(task, env)}（按交付物切换） · {task.task.soft_limit ? `建议 ${task.task.time_minutes} 分钟（开始后时间不暂停，超时会如实记录）` : `限时 ${task.task.time_minutes} 分钟（开始后时间不暂停，到点自动交卷）`}· 材料 {task.materials.length} 份 · 交卷后立刻出报告</div></Box>
         {env.type === 'plugin'
           ? <Box title="怎么做"><div style={{ lineHeight: 1.8 }}><b>用你自己的工具做。</b>在线文档、表格、设计工具、各家 AI 都可以。点「开始做」后会给你一个真活码，装好「真活插件」（一次就好，<a href="/work/plugin" target="_blank" rel="noreferrer">看说明</a>）、关联这次作答，插件只在答题期间记录你打开的网页、页面上的文字和打字粘贴的量。交付说明在插件侧边栏或本页写，做完点「结束作答」；到时间会自动交卷。</div></Box>
           : env.type === 'open'
@@ -173,7 +180,7 @@ export default function WorkPage() {
 
   if (mode === 'plugin' && participant?.code) return <Shell><PluginWork code={participant.code} task={task as any} onSubmitted={() => setPhase('grading')} /></Shell>;
 
-  return <Workspace key={`${sid}:${mode}`} token={token} sid={sid} task={task} env={env} mode={mode as 'bench' | 'open'} narrow={narrow} grading={phase === 'grading'} error={err} resume={resume} limit={preview || participant?.preview ? null : (Number(task.task.time_minutes) || 60) * 60} onRestart={() => { setSwitchFrom(sid); setName(participant?.name || ''); setPhase('intro'); window.scrollTo(0, 0); }} onSubmit={async (deliverable, events, auto) => {
+  return <Workspace key={`${sid}:${mode}`} token={token} sid={sid} task={task} env={env} mode={mode as 'bench' | 'open'} narrow={narrow} grading={phase === 'grading'} error={err} resume={resume} limit={preview || participant?.preview || task.task.soft_limit ? null : (Number(task.task.time_minutes) || 60) * 60} onRestart={() => { setSwitchFrom(sid); setName(participant?.name || ''); setPhase('intro'); window.scrollTo(0, 0); }} onSubmit={async (deliverable, events, auto) => {
     setPhase('grading');
     const j = await (await fetch(`/api/work/${token}/sessions/${sid}/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deliverable, events, auto }) })).json();
     if (!j.ok) { if (auto || j.expired) { setPhase('ended'); return; } setErr(j.error || '交卷失败，再试一次'); setPhase('work'); return; }
@@ -544,7 +551,7 @@ const TOUR_STEPS: TourStep[] = [
   { key: 'materials', title: '材料包', text: '题目给你的材料都在这里，点一份在中间看。材料面板可以拖高、占满、收成一条或关掉。「要交什么」和「任务书」也在这一栏。' },
   { key: 'tabs', title: '作答区有几个标签，都要做', text: '每个交付物一个标签（文档 / 表格 / 代码 / 画布），切着做。小圆点变绿表示动过笔；20 分钟还没打开的会提醒你。' },
   { key: 'ai', title: 'AI 助手', text: '随便问，不算作弊。评的是你怎么用、哪些判断是你自己定的。它看得到你当前打开的材料；回答可以一键放进当前交付物。' },
-  { key: 'clock', title: '时间和交卷', text: '右上角看剩余时间，到点自动交卷，离开页面时间也不暂停。做完点「交卷」，再点一次确认——交了就不能改。' },
+  { key: 'clock', title: '时间和交卷', text: '右上角看时间，离开页面也不暂停；限时的任务到点自动交卷。做完点「交卷」，再点一次确认——交了就不能改。' },
   { key: 'views', title: '两侧可以收起', text: '文件夹 = 材料栏，星芒 = AI 助手，点一下收起或展开，给作答区腾地方。随时点「?」再看这份说明。' },
 ];
 

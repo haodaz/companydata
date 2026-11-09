@@ -8,7 +8,7 @@ import { NewModeSwitch, WorkTopBar } from '@/components/work/WorkTopBar';
 import React, { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
-import { App, Button, ConfigProvider, Input, Select, Typography, Tag } from 'antd';
+import { App, Button, ConfigProvider, Input, InputNumber, Segmented, Select, Switch, Typography, Tag } from 'antd';
 import { SampleUpload, type SampleRow } from '@/components/work/SampleUpload';
 import { AttachUpload, type Attachment } from '@/components/work/AttachUpload';
 import { RocketOutlined } from '@ant-design/icons';
@@ -60,15 +60,22 @@ function Inner() {
     fetch('/api/work/library').then(r => r.json()).then(j => { const it = j.ok && j.items.find((x: any) => x.id === id); if (it) { setLib(it); setF(x => ({ ...x, role: x.role || it.role })); } }).catch(() => {});
   }, []);
   const dropLib = () => { setLib(null); window.history.replaceState(null, '', '/work/new'); };
+  // 限时和发放（2026-11-09）：限时不填就按题量定，默认到点自动交卷、一条公开链接；专属链接一人一条，只能做一次
+  const [mins, setMins] = useState<number | null>(null);
+  const [autoSubmit, setAutoSubmit] = useState(true);
+  const [linkMode, setLinkMode] = useState<'public' | 'invite'>('public');
+  const [names, setNames] = useState('');
+  const nameList = names.split(/[\n,，、;；]+/).map(x => x.trim()).filter(Boolean);
   const [busy, setBusy] = useState('');
   // 出题等待的进度：gen 出题中 → base AI 基线中 → done 好了（GenProgress 一行一行列出平方在做什么）
   const [phase, setPhase] = useState<'gen' | 'base' | 'done'>('gen');
 
   const create = async () => {
     if (way === 'verbatim' ? verbatim.trim().length < 60 : (!f.company.trim() || !f.role.trim())) return message.warning(way === 'verbatim' ? '把整道题贴进来（60 字以上）' : '企业和要找的人都要填');
+    if (linkMode === 'invite' && !nameList.length) return message.warning('写上候选人的名字，或者改成一条公开链接');
     setBusy(way === 'verbatim' ? '原题不改，正在整理成交付物和评分点……约 1 分钟' : '在拼这家企业的材料、出任务、做材料包、定标准……约 2 分钟，别关页面'); setPhase('gen');
     try {
-      const r = await fetch('/api/admin/work/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ company: f.company, company_id: picked?.id, intro: picked ? undefined : f.intro.trim() || undefined, role: f.role, env: f.env || undefined, focus: f.focus || undefined, model: f.model, ...(lib ? { showcase_id: lib.id, showcase_use: use } : {}), sample_id: ref?.id, sample_mode: 'reskin', attachments: atts, verbatim: way === 'verbatim' ? verbatim.trim() : undefined }) });
+      const r = await fetch('/api/admin/work/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ time_minutes: mins || undefined, auto_submit: autoSubmit, invites: linkMode === 'invite' ? nameList : undefined, company: f.company, company_id: picked?.id, intro: picked ? undefined : f.intro.trim() || undefined, role: f.role, env: f.env || undefined, focus: f.focus || undefined, model: f.model, ...(lib ? { showcase_id: lib.id, showcase_use: use } : {}), sample_id: ref?.id, sample_mode: 'reskin', attachments: atts, verbatim: way === 'verbatim' ? verbatim.trim() : undefined }) });
       if (r.status === 401) { location.href = `/work/login?next=${encodeURIComponent('/work/new')}`; return; }
       const j = await r.json();
       if (!j.ok) throw new Error(j.error);
@@ -82,6 +89,14 @@ function Inner() {
   };
   const env = ENVS.find(e => e.value === f.env) || ENVS[0];
   const model = MODELS.find(m => m.id === f.model);
+  const delivery = (n: string) => <Sec n={n} t="限时多久，链接怎么发？" d={linkMode === 'invite' ? '一人一条，只能做一次，换设备回来还是同一次；公开链接不再能开新的作答。出好后还能加人。' : '时间从候选人点开始算，离开页面也不暂停。这些出好后都能改。'}>
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px 20px', alignItems: 'center', marginBottom: 10 }}>
+      <InputNumber size="large" min={20} max={240} step={10} value={mins} onChange={v => setMins(v == null ? null : Number(v))} placeholder="按题量定" suffix="分钟" style={{ width: 170 }} />
+      <span style={{ fontSize: 13.5, color: '#555' }}><Switch size="small" checked={autoSubmit} onChange={setAutoSubmit} style={{ marginRight: 8 }} />{autoSubmit ? '到点自动交卷' : '不卡时间，超时可以继续'}</span>
+    </div>
+    <Segmented block value={linkMode} onChange={v => setLinkMode(v as 'public' | 'invite')} options={[{ value: 'public', label: '一条公开链接' }, { value: 'invite', label: '每人一条专属链接' }]} />
+    {linkMode === 'invite' && <Input.TextArea value={names} onChange={e => setNames(e.target.value)} autoSize={{ minRows: 2, maxRows: 6 }} placeholder="候选人姓名，一行一个或用逗号隔开" style={{ marginTop: 10 }} />}
+  </Sec>;
 
   return (
     <div style={{ minHeight: '100vh', background: '#f6f7fb', color: '#1a1a2e' }}>
@@ -141,6 +156,8 @@ function Inner() {
             <SampleUpload shared={false} onDone={s => { setRefs(x => [s, ...x]); setRef(s); }} pastePlaceholder="把整道题贴进来：背景、每一问、要给的数据、参考答案（有就带上）" />
             {ref?.summary && <div style={{ marginTop: 8, fontSize: 12.5, color: '#555', background: '#faf9ff', padding: '8px 12px', borderRadius: 10 }}>照这份出：{ref.summary}</div>}
           </Sec>}
+          {lib && delivery('3')}
+          {way === 'verbatim' && !lib && delivery('5')}
           {lib && <Button type="primary" size="large" block icon={<RocketOutlined />} loading={!!busy} onClick={() => { if (!f.company.trim()) return message.warning('先说是哪家企业'); create(); }} style={{ height: 50, fontWeight: 700 }}>出任务（约 2–3 分钟）</Button>}
           {way === 'gen' && !lib && <Button type="primary" size="large" block onClick={() => { if (!f.company.trim() || !f.role.trim()) return message.warning('企业和要找的人都要填'); setPage(2); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ height: 50, fontWeight: 700, marginTop: 6 }}>下一步：任务设置 →</Button>}
           </>}
@@ -154,6 +171,7 @@ function Inner() {
           <Sec n="2" t="要指定操作台吗？" d="">
             <Select value={f.env} onChange={v => setF(x => ({ ...x, env: v }))} size="large" style={{ width: '100%' }} options={ENVS.map(e => ({ value: e.value, label: e.value ? e.label : '操作台：' + e.label }))} />
           </Sec>
+          {delivery('3')}
             <div style={{ display: 'flex', gap: 10 }}>
               <Button size="large" onClick={() => setPage(1)} style={{ height: 50, width: 120 }}>← 上一步</Button>
           <Button type="primary" size="large" icon={<RocketOutlined />} loading={!!busy} onClick={create} style={{ height: 50, fontWeight: 700, flex: 1 }}>出任务（约 2–3 分钟）</Button>

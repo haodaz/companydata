@@ -25,7 +25,7 @@ export const WORK_HOME_TOOLS: Anthropic.Tool[] = [
   { name: 'task_people', description: '一道真活谁做了：每个人的名字、作答方式、开始 / 交卷时间、用时、总分、AI 使用分、一句话总结、最强和最弱的一条。按分数排。预览（出任务的人自己试做的）单独标出，不算候选人。', input_schema: { type: 'object', properties: { task_id: { type: 'string', description: '任务 id 或参与链接里的编号' } }, required: ['task_id'] } },
   { name: 'read_report', description: '读一个人的完整报告：逐条评分（等级、得分、证据）、做得好的 / 差的、过程（阶段、高光、风险、怎么用 AI）、AI 使用评价、和 AI 基线差多少、交付物原文摘录、问 AI 的前几个问题、最后一问写了什么。分析某个人、回答「他为什么分低」时用。会在右边打开这份报告。', input_schema: { type: 'object', properties: { session_id: { type: 'string' } }, required: ['session_id'] } },
   { name: 'compare_people', description: '把一道题里的几个人逐条并排比（每条评分标准各人得分 + AI 基线），加上各自的强项弱项。不给 session_ids 就取交卷的前 4 名。', input_schema: { type: 'object', properties: { task_id: { type: 'string' }, session_ids: { type: 'array', items: { type: 'string' } } }, required: ['task_id'] } },
-  { name: 'task_insights', description: '一道题整体的作答情况：交卷率、用时分布（对比建议用时）、作答方式分布、每条评分标准的平均 / 最低 / 最高和 L1 人数（哪条普遍做不到）、AI 使用分、反复出现的短板、和 AI 基线的差距。用户问「这道题出得怎么样」「大家卡在哪」「题是不是太难」时用。', input_schema: { type: 'object', properties: { task_id: { type: 'string' } }, required: ['task_id'] } },
+  { name: 'task_insights', description: '一道题整体的作答情况：交卷率、用时分布（对比限时）、作答方式分布、每条评分标准的平均 / 最低 / 最高和 L1 人数（哪条普遍做不到）、AI 使用分、反复出现的短板、和 AI 基线的差距。用户问「这道题出得怎么样」「大家卡在哪」「题是不是太难」时用。', input_schema: { type: 'object', properties: { task_id: { type: 'string' } }, required: ['task_id'] } },
   { name: 'set_task_status', description: '上架 / 下架一道题：published = 发布（参与链接可用），archived = 下架（链接停用，已有作答保留）。下架前用 ask_user 确认。', input_schema: { type: 'object', properties: { task_id: { type: 'string' }, status: { type: 'string', enum: ['published', 'archived'] } }, required: ['task_id', 'status'] } },
   { name: 'search_library', description: '在平台任务库里找现成的任务（去了企业名的好题，可以原题直出换成用户的公司，或只做参考）。按关键词（行业、方向、岗位、要考的本事，如「数据分析」「投研」「品牌设计」）找，返回编号、标题、行业 · 方向、岗位、场景摘要、要交什么、建议用时。不给关键词就返回各行业有多少道。用户说「从任务库挑」「有没有现成的题」时用；会在右边打开任务库。', input_schema: { type: 'object', properties: { query: { type: 'string', description: '关键词，空格分开' }, industry: { type: 'string' } } } },
   { name: 'kb_lookup', description: '查用户知识库里存过的企业资料和岗位（要找什么样的人、看重什么）。出任务前先查：存过就直接用，复述时说「按你知识库里的 X」，不再让用户重说。', input_schema: { type: 'object', properties: { company: { type: 'string' }, role: { type: 'string' } } } },
@@ -198,7 +198,7 @@ export function workHomeKit(user: User, focus?: { task_id?: string; session_id?:
   const system = `${workChatSystemPrompt(user.email).replace('你是「百业AI｜真活」的出任务助理，在帮出任务的人', '你是「百业AI｜真活」工作台的助理，在帮出任务的人')}
 
 工作台（2026-11-05 起）：你不只出任务，出任务的人在真活里要干的事都能做——
-- 管：看他出过哪些题（my_tasks）、上架下架（set_task_status，下架先 ask_user 确认）、改用时 / 岗位名 / 素材（update_task_settings）、改题目内容（revise_task）。
+- 管：看他出过哪些题（my_tasks）、上架下架（set_task_status，下架先 ask_user 确认）、改限时 / 到点交卷 / 岗位名 / 素材、发专属链接（update_task_settings）、改题目内容（revise_task）。
 - 看：一道题谁做了（task_people）、一个人的报告（read_report）、几个人并排比（compare_people）、整道题的作答情况（task_insights）。
 - 任务库：用户说「从任务库挑」「有没有现成的题」，search_library 按他要考的本事 / 行业找，挑最合适的 2–3 道用 ask_user 让他选（选项写标题，问题里一句话说清各自考什么）；选定后照「用任务库里的某任务」的流程走：问企业、问原题直出还是只做参考，create_task 传 showcase_id 和 showcase_use。没找到合适的就直说，建议按他的话从头出。
 - 知识库：用户存的企业资料、岗位（kb_lookup / kb_save），任务样本（my_references / read_reference），出过的题里的素材。出任务前先 kb_lookup 这家企业和岗位，存过就用、只问缺的；对话里新讲清的企业或岗位，出完任务用 kb_save 整理存进去（AI 先出初稿，用户在知识库里校正）。

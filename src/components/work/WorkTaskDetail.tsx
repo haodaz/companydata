@@ -47,7 +47,7 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
     } catch (e: any) { message.error(e.message); setAiBusy(''); }
   };
   const aiOf = (s: any) => s.report?.ai_use;
-  // 改建议用时（20–240 分钟）：计时器和任务书里写的时长一起换（2026-11-03，潜历反馈对 AI 说改 180 改不动）
+  // 改限时（20–240 分钟）：计时器和任务书里写的时长一起换（2026-11-03，潜历反馈对 AI 说改 180 改不动）
   const [minutes, setMinutes] = useState<number>(Number(T.task?.time_minutes) || 60);
   const [minEdit, setMinEdit] = useState<number>(minutes);
   const [minBusy, setMinBusy] = useState(false);
@@ -58,7 +58,7 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
     try {
       const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(ownerKey)}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ time_minutes: minEdit }) })).json();
       if (!j.ok) throw new Error(j.error || '没改成');
-      setMinutes(j.time_minutes); setMinEdit(j.time_minutes); message.success(`建议用时改成 ${j.time_minutes} 分钟，任务书里写的时长也一起改了`);
+      setMinutes(j.time_minutes); setMinEdit(j.time_minutes); message.success(`限时改成 ${j.time_minutes} 分钟，任务书里写的时长也一起改了`);
     } catch (e: any) { message.error(e.message); } finally { setMinBusy(false); }
   };
   // 改岗位名 / 要找的人（2026-11-05 潜历：对 AI 说改岗位名没反应）——直接改，题面里的旧名字一起换
@@ -122,7 +122,7 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
             { key: 'e', label: '依据', children: <ul style={{ margin: 0, paddingLeft: 18 }}>{(T.problem?.evidence || []).map((x: any, i: number) => <li key={i}>{x.text} <Text type="secondary">— {x.source}</Text></li>)}</ul> },
             { key: 'd', label: '交付物', children: <ol style={{ margin: 0, paddingLeft: 18 }}>{(T.task?.deliverables || []).map((d: any) => <li key={d.id}>{d.title} <Text type="secondary">{d.format}</Text></li>)}</ol> },
             { key: 'r', label: '规则', children: <ul style={{ margin: 0, paddingLeft: 18 }}>{(T.task?.rules || []).map((r: string, i: number) => <li key={i}>{r}</li>)}</ul> },
-            { key: 'm', label: '时间与操作台', children: <Space wrap><span>建议 {minutes} 分钟 · 操作台 {ENV_META[T.task?.env?.type]?.label || '文档'}</span>{ownerKey && inlineEdit && <Space.Compact size="small"><InputNumber size="small" min={20} max={240} step={10} value={minEdit} onChange={v => setMinEdit(Number(v) || minutes)} suffix="分钟" style={{ width: 110 }} /><Button size="small" disabled={minEdit === minutes} loading={minBusy} onClick={saveMinutes}>改用时</Button></Space.Compact>}</Space> },
+            { key: 'm', label: '时间与操作台', children: <Space wrap><span>{T.task?.soft_limit ? '建议' : '限时'} {minutes} 分钟 · 操作台 {ENV_META[T.task?.env?.type]?.label || '文档'}</span>{ownerKey && inlineEdit && <Space.Compact size="small"><InputNumber size="small" min={20} max={240} step={10} value={minEdit} onChange={v => setMinEdit(Number(v) || minutes)} suffix="分钟" style={{ width: 110 }} /><Button size="small" disabled={minEdit === minutes} loading={minBusy} onClick={saveMinutes}>改用时</Button></Space.Compact>}</Space> },
           ]} />
           <Paragraph style={{ marginTop: 12, whiteSpace: 'pre-wrap', background: '#fafbff', padding: 12, borderRadius: 10 }}>{T.task?.brief}</Paragraph>
           {T.task?.env?.type === 'code' && <Paragraph><b>自测用例</b>：{(T.task.env.tests || []).map((t: any) => t.name).join('、') || '无'}</Paragraph>}

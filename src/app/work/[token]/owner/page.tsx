@@ -7,7 +7,7 @@ import { roleLabel } from '@/lib/work/role-label';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 
-import { App, Button, ConfigProvider, Input, InputNumber, Space, Tag } from 'antd';
+import { App, Button, ConfigProvider, Input, InputNumber, Space, Switch, Tag } from 'antd';
 import { WorkTaskDetail, ENV_META } from '@/components/work/WorkTaskDetail';
 import { GenericCompare } from '@/components/work/GenericCompare';
 
@@ -27,7 +27,7 @@ function Inner() {
   const [tour, setTour] = useState<number | null>(null);
   useEffect(() => { let seen = false; try { seen = localStorage.getItem('work-owner-tour-done') === '1'; } catch {} if (!seen) { const t = setTimeout(() => setTour(0), 900); return () => clearTimeout(t); } }, []);
   const OWNER_TOUR: TourStep[] = [
-    { key: 'stats', title: '这是一道题的空间', text: '题名、企业、要找的人、建议时长，和四个数：多少人参与、多少人交了、平均分、AI 基线。这条链接带管理密钥，可以转给同事，别发给候选人。' },
+    { key: 'stats', title: '这是一道题的空间', text: '题名、企业、要找的人、时限，和四个数：多少人参与、多少人交了、平均分、AI 基线。这条链接带管理密钥，可以转给同事，别发给候选人。' },
     { key: 'share', title: '预览、发布、下架', text: '出好的题先是「待发布」。点「预览做题台」看候选人会看到什么；确认了点「发布」，参与链接才生效；之后随时下架。改过题记得「重跑 AI 基线」。' },
     { key: 'revise', title: '调整这道题', text: '左边直接改岗位名、用时、素材，马上生效；右边把意见写给 AI，它只改提到的部分，其余原样保留，改完留一条修订记录。' },
     { key: 'detail', title: '题的全部', text: '问题与任务、推进步骤、材料包、评分标准、AI 基线、做题情况——分标签看。做题情况里点「看报告」：分「交了什么 / 怎么做的 / 评得怎样」三栏。' },
@@ -59,7 +59,7 @@ function Inner() {
         <div style={{ position: 'relative', maxWidth: 1080, margin: '0 auto', padding: '30px 20px 26px' }}>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 10 }}><Tag color={ENV_META[env]?.color} style={{ margin: 0 }}>{ENV_META[env]?.label}</Tag><Tag color={T.status === 'published' ? 'green' : 'default'} style={{ margin: 0 }}>{T.status === 'published' ? '已发布' : T.status === 'archived' ? '已下架' : '待发布'}</Tag></div>
           <h1 style={{ fontSize: 30, margin: '0 0 6px', lineHeight: 1.25 }}>{T.task?.title}</h1>
-          <div style={{ opacity: .85 }} title={T.role}>{T.company_name} · {roleLabel(T.role, T.task?.role)} · 建议 {T.task?.time_minutes} 分钟</div>
+          <div style={{ opacity: .85 }} title={T.role}>{T.company_name} · {roleLabel(T.role, T.task?.role)} · {T.task?.soft_limit ? '建议' : '限时'} {T.task?.time_minutes} 分钟</div>
           <div data-tour="stats" style={{ display: 'flex', gap: 26, marginTop: 18, flexWrap: 'wrap' }}>
             {[[d.sessions.length, '参与'], [done.length, '交卷'], [avg ?? '–', '平均分'], [T.baseline?.result?.total ?? '–', 'AI 基线']].map(([n, l]) => <div key={String(l)}><div style={{ fontSize: 28, fontWeight: 800 }}>{n}</div><div style={{ fontSize: 12, opacity: .8 }}>{l}</div></div>)}
           </div>
@@ -77,6 +77,7 @@ function Inner() {
             <GenericCompare token={token} ownerKey={k} task={T} />
           </Space>
         </div>
+        <InviteBox token={token} k={k} origin={origin} invites={T.invites || []} only={!!T.invite_only} sessions={d.sessions} onChange={load} />
         {/* 调整这道题（11-05 重排）：以前改岗位名 / 用时藏在下面的表格里、加删素材在「材料包」标签、AI 修订又单独一块——
             用户要改一样东西得先知道它在哪。现在一张卡：左边直接改（马上生效），右边让 AI 改题目内容 */}
         <div data-tour="revise" style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '14px 18px', marginBottom: 16 }}>
@@ -102,14 +103,14 @@ function Inner() {
   );
 }
 
-/** 直接改、马上生效：岗位名、建议用时；素材的加删在「材料包」里（点了就切过去） */
+/** 直接改、马上生效：岗位名、限时、到点交卷；素材的加删在「材料包」里（点了就切过去） */
 function QuickSettings({ T, token, k, onSaved }: { T: any; token: string; k: string; onSaved: () => void }) {
   const { message } = App.useApp();
   const [role, setRole] = useState<string>(T.role || ''); const [mins, setMins] = useState<number>(Number(T.task?.time_minutes) || 60); const [busy, setBusy] = useState('');
   useEffect(() => { setRole(T.role || ''); setMins(Number(T.task?.time_minutes) || 60); }, [T.role, T.task?.time_minutes]);
   const save = async (body: any, what: string) => {
     setBusy(what);
-    try { const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(k)}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })).json(); if (!j.ok) throw new Error(j.error || '没改成'); message.success(`${what}改好了，任务书里的写法也一起换了`); onSaved(); }
+    try { const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(k)}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })).json(); if (!j.ok) throw new Error(j.error || '没改成'); message.success(what === '到点交卷' ? '改好了，候选人那边马上生效' : `${what}改好了，任务书里的写法也一起换了`); onSaved(); }
     catch (e: any) { message.error(e.message); } finally { setBusy(''); }
   };
   const mats = T.materials || []; const files = mats.filter((m: any) => m.kind === 'file').length;
@@ -119,8 +120,46 @@ function QuickSettings({ T, token, k, onSaved }: { T: any; token: string; k: str
     <div>
       <div style={{ fontSize: 12.5, color: '#888', fontWeight: 600, marginBottom: 6 }}>直接改 · 马上生效</div>
       <div style={row}><span style={lab} title="岗位名，或一句话写要找什么样的人">岗位</span><Space.Compact style={{ width: '100%' }}><Input value={role} onChange={e => setRole(e.target.value)} maxLength={120} onPressEnter={() => role.trim() && role !== T.role && save({ role }, '岗位名')} /><Button disabled={!role.trim() || role === T.role} loading={busy === '岗位名'} onClick={() => save({ role }, '岗位名')}>保存</Button></Space.Compact></div>
-      <div style={row}><span style={lab}>建议用时</span><Space.Compact><InputNumber min={20} max={240} step={10} value={mins} onChange={v => setMins(Number(v) || mins)} suffix="分钟" style={{ width: 130 }} /><Button disabled={mins === Number(T.task?.time_minutes)} loading={busy === '用时'} onClick={() => save({ time_minutes: mins }, '用时')}>保存</Button></Space.Compact></div>
+      <div style={row}><span style={lab}>限时</span><Space.Compact><InputNumber min={20} max={240} step={10} value={mins} onChange={v => setMins(Number(v) || mins)} suffix="分钟" style={{ width: 130 }} /><Button disabled={mins === Number(T.task?.time_minutes)} loading={busy === '用时'} onClick={() => save({ time_minutes: mins }, '用时')}>保存</Button></Space.Compact></div>
+      <div style={row}><span style={lab}>到点交卷</span><span style={{ fontSize: 13, color: '#666' }}><Switch size="small" checked={!T.task?.soft_limit} loading={busy === '到点交卷'} onChange={v => save({ auto_submit: v }, '到点交卷')} style={{ marginRight: 8 }} />{T.task?.soft_limit ? '关着：超时可以继续做，用时如实记录' : '时间一到自动交卷，不能再改'}</span></div>
       <div style={row}><span style={lab}>素材</span><span style={{ fontSize: 13 }}>{mats.length} 份{files ? `（上传的文件 ${files} 个）` : ''} · <a onClick={() => { window.dispatchEvent(new CustomEvent('work-tab', { detail: 'm' })); document.querySelector('[data-tour="detail"]')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}>加删素材 →</a></span></div>
+    </div>
+  );
+}
+
+/** 专属邀请链接：一人一条，一条只能作答一次；打开「只允许专属链接」后公开链接不能再开新的作答 */
+function InviteBox({ token, k, origin, invites, only, sessions, onChange }: { token: string; k: string; origin: string; invites: { code: string; label: string }[]; only: boolean; sessions: any[]; onChange: () => void }) {
+  const { message } = App.useApp();
+  const [names, setNames] = useState(''); const [busy, setBusy] = useState(false);
+  const patch = async (body: any) => {
+    setBusy(true);
+    try { const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(k)}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })).json(); if (!j.ok) throw new Error(j.error); onChange(); return true; }
+    catch (e: any) { message.error(e.message); return false; } finally { setBusy(false); }
+  };
+  const link = (c: string) => `${origin}/work/${token}?i=${c}`;
+  const add = async () => { const list = names.split('\n').map(x => x.trim()).filter(Boolean); if (list.length && await patch({ add_invites: list })) setNames(''); };
+  const copy = (text: string, tip: string) => { navigator.clipboard.writeText(text); message.success(tip); };
+  const stateOf = (c: string) => { const s = sessions.find(x => x.participant?.invite === c); return !s ? <Tag style={{ margin: 0 }}>未开始</Tag> : s.submitted_at ? <Tag color="green" style={{ margin: 0 }}>已交卷{s.score != null ? ` · ${s.score}` : ''}</Tag> : <Tag color="blue" style={{ margin: 0 }}>作答中</Tag>; };
+  return (
+    <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '14px 18px', marginBottom: 16 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginBottom: 10 }}>
+        <b>专属邀请链接</b>
+        <span style={{ fontSize: 13, color: '#888', flex: 1, minWidth: 240 }}>一人一条，一条只能作答一次，换浏览器打开也是同一次。要让谁重做，就给他再生成一条。</span>
+        <span style={{ fontSize: 13 }}>只允许专属链接 <Switch size="small" checked={only} loading={busy} onChange={v => patch({ invite_only: v })} /></span>
+      </div>
+      <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start', flexWrap: 'wrap' }}>
+        <Input.TextArea value={names} onChange={e => setNames(e.target.value)} autoSize={{ minRows: 1, maxRows: 5 }} placeholder="候选人姓名，一行一个" style={{ flex: 1, minWidth: 240 }} />
+        <Button type="primary" onClick={add} loading={busy} disabled={!names.trim()}>生成链接</Button>
+        {invites.length > 0 && <Button onClick={() => copy(invites.map(i => `${i.label}\t${link(i.code)}`).join('\n'), `已复制 ${invites.length} 条链接`)}>复制全部</Button>}
+      </div>
+      {invites.length > 0 && <div style={{ marginTop: 10, maxHeight: 260, overflowY: 'auto' }}>
+        {invites.map(i => <div key={i.code} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '6px 0', borderTop: '1px solid #f0f1f6', fontSize: 13 }}>
+          <span style={{ width: 120, flexShrink: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{i.label}</span>
+          {stateOf(i.code)}
+          <code style={{ flex: 1, minWidth: 0, color: '#666', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{link(i.code)}</code>
+          <Button size="small" onClick={() => copy(link(i.code), `${i.label} 的链接已复制`)}>复制</Button>
+        </div>)}
+      </div>}
     </div>
   );
 }
