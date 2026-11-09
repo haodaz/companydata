@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { timing } from '@/lib/work/deadline';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { generateContent } from '@/lib/llm-client';
 import { logTokenUsage, withCost } from '@/lib/token-logger';
@@ -14,9 +15,10 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   const { token, sid } = await params;
   const { data: t } = await db.from('work_tasks').select('id, task, materials, company_name').eq('share_token', token).maybeSingle();
   if (!t) return NextResponse.json({ ok: false, error: '链接不可用' }, { status: 404 });
-  const { data: s } = await db.from('work_sessions').select('id, ai_chat, submitted_at, started_at').eq('id', sid).eq('task_id', t.id).maybeSingle();
+  const { data: s } = await db.from('work_sessions').select('id, ai_chat, submitted_at, started_at, participant').eq('id', sid).eq('task_id', t.id).maybeSingle();
   if (!s) return NextResponse.json({ ok: false, error: '没有这次作答' }, { status: 404 });
   if (s.submitted_at) return NextResponse.json({ ok: false, error: '已经交卷了' }, { status: 409 });
+  if (timing(t.task, s).closed) return NextResponse.json({ ok: false, error: '时间到了', expired: true }, { status: 409 });
   const body = await req.json().catch(() => ({}));
   const q = String(body.q || '').trim().slice(0, 4000);
   if (!q) return NextResponse.json({ ok: false, error: '问题为空' }, { status: 400 });

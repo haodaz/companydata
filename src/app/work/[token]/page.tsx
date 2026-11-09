@@ -70,7 +70,9 @@ export default function WorkPage() {
   const [task, setTask] = useState<Task | null>(null);
   const [preview, setPreview] = useState(false);   // 出任务的人预览（待发布的题，带管理密钥进来）
   const [err, setErr] = useState('');
-  const [phase, setPhase] = useState<'loading' | 'intro' | 'work' | 'grading' | 'report'>('loading');
+  const [phase, setPhase] = useState<'loading' | 'intro' | 'work' | 'grading' | 'report' | 'ended'>('loading');
+  const [resume, setResume] = useState<any>(null);   // 回到还没交卷的作答：服务器记的用时、聊天、内容
+  const [switchFrom, setSwitchFrom] = useState('');   // 换作答方式：沿用这一次作答，时钟不重置
   const [sid, setSid] = useState<string>('');
   const [name, setName] = useState(''); const [contact, setContact] = useState('');
   const [mode, setMode] = useState<'bench' | 'open' | 'plugin'>('bench');
@@ -88,7 +90,10 @@ export default function WorkPage() {
       const s = sp.get('s') || (typeof localStorage !== 'undefined' ? localStorage.getItem(`work:${token}`) : '') || '';
       if (s) {
         const r = await (await fetch(`/api/work/${token}/sessions/${s}`)).json();
-        if (r.ok) { setSid(s); setParticipant(r.session.participant); if (r.session.participant?.mode === 'open' || j.task?.task?.env?.type === 'open') setMode('open'); if (r.session.participant?.mode === 'plugin') setMode('plugin'); if (r.session.report?.auditing) { setPhase('grading'); return; } if (r.session.report) { setReport(r.session.report); setPhase('report'); return; } if (!r.session.submitted_at) { setPhase('work'); return; } }
+        if (r.ok) { setSid(s); setParticipant(r.session.participant); if (r.session.participant?.mode === 'open' || j.task?.task?.env?.type === 'open') setMode('open'); if (r.session.participant?.mode === 'plugin') setMode('plugin'); if (r.session.report?.auditing) { setPhase('grading'); return; } if (r.session.report) { setReport(r.session.report); setPhase('report'); return; } if (r.session.submitted_at) { setPhase('grading'); return; }
+          // 时间到了才回来：按最后保存的内容收卷，这次作答结束，不能接着做
+          if (r.session.expired) { const a = await (await fetch(`/api/work/${token}/sessions/${s}/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ auto: true }) })).json(); if (a.report) { setReport(a.report); setPhase('report'); } else setPhase(a.ok ? 'grading' : 'ended'); return; }
+          setResume(r.session); setPhase('work'); return; }
       }
       setPhase('intro');
     })();
@@ -96,13 +101,15 @@ export default function WorkPage() {
 
   const start = async () => {
     if (!name.trim()) return;
-    const j = await (await fetch(`/api/work/${token}/sessions`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, contact, mode, k: sp.get('k') || undefined }) })).json();
+    const j = await (await fetch(`/api/work/${token}/sessions`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, contact, mode, k: sp.get('k') || undefined, from: switchFrom || undefined }) })).json();
     if (!j.ok) { setErr(j.error); return; }
+    if (switchFrom) { const r = await (await fetch(`/api/work/${token}/sessions/${j.session_id}`)).json(); if (r.ok) setResume(r.session); setSwitchFrom(''); }
     setSid(j.session_id); setParticipant({ name, contact, mode, ...(j.code ? { code: j.code } : {}) }); try { localStorage.setItem(`work:${token}`, j.session_id); } catch {}
     setPhase('work');
   };
 
   if (phase === 'loading') return <Shell><div style={{ padding: 40, color: '#888' }}>加载中…</div></Shell>;
+  if (phase === 'ended') return <Shell><div style={{ maxWidth: 560, margin: '80px auto', padding: 24, lineHeight: 1.8 }}><h1 style={{ fontSize: 22, margin: '0 0 8px' }}>这次作答已结束</h1><div style={{ color: '#666' }}>作答时间已经到了。如需重新作答，请联系发给你链接的公司。</div></div></Shell>;
   if (!task) return <Shell><div style={{ padding: 40, color: '#c0392b' }}>{err || '链接不可用'}</div></Shell>;
   const env: Env = task.task.env || { type: 'doc' };
 
@@ -114,7 +121,7 @@ export default function WorkPage() {
         <div style={{ color: '#666', marginBottom: 20 }}>{task.statement}</div>
         <Box title="任务书"><div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8 }}>{task.task.brief}</div></Box>
         <Box title="要交什么"><ol style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9 }}>{task.task.deliverables.map(d => <li key={d.id}><b>{d.title}</b> <span style={{ color: '#888' }}>{d.format}</span></li>)}</ol></Box>
-        <Box title="规则"><ul style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9 }}>{task.task.rules.map((r, i) => <li key={i}>{r}</li>)}</ul><div style={{ color: '#888', fontSize: 13, marginTop: 6 }}>操作台：{modulesLabel(task, env)}（按交付物切换） · 建议用时 {task.task.time_minutes} 分钟（不强制停表，但用时会记）· 材料 {task.materials.length} 份 · 交卷后立刻出报告</div></Box>
+        <Box title="规则"><ul style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9 }}>{task.task.rules.map((r, i) => <li key={i}>{r}</li>)}</ul><div style={{ color: '#888', fontSize: 13, marginTop: 6 }}>操作台：{modulesLabel(task, env)}（按交付物切换） · 限时 {task.task.time_minutes} 分钟（开始后时间不暂停，到点自动交卷）· 材料 {task.materials.length} 份 · 交卷后立刻出报告</div></Box>
         {env.type === 'plugin'
           ? <Box title="怎么做"><div style={{ lineHeight: 1.8 }}><b>用你自己的工具做。</b>在线文档、表格、设计工具、各家 AI 都可以。点「开始做」后会给你一个真活码，装好「真活插件」（一次就好，<a href="/work/plugin" target="_blank" rel="noreferrer">看说明</a>）、关联这次作答，插件只在答题期间记录你打开的网页、页面上的文字和打字粘贴的量。交付说明在插件侧边栏或本页写，做完点「结束作答」；到时间会自动交卷。</div></Box>
           : env.type === 'open'
@@ -166,18 +173,18 @@ export default function WorkPage() {
 
   if (mode === 'plugin' && participant?.code) return <Shell><PluginWork code={participant.code} task={task as any} onSubmitted={() => setPhase('grading')} /></Shell>;
 
-  return <Workspace token={token} sid={sid} task={task} env={env} mode={mode as 'bench' | 'open'} narrow={narrow} grading={phase === 'grading'} error={err} onRestart={() => { try { localStorage.removeItem(`work:${token}`); } catch {} setSid(''); setParticipant(null); setPhase('intro'); window.scrollTo(0, 0); }} onSubmit={async (deliverable, events) => {
+  return <Workspace key={`${sid}:${mode}`} token={token} sid={sid} task={task} env={env} mode={mode as 'bench' | 'open'} narrow={narrow} grading={phase === 'grading'} error={err} resume={resume} limit={preview || participant?.preview ? null : (Number(task.task.time_minutes) || 60) * 60} onRestart={() => { setSwitchFrom(sid); setName(participant?.name || ''); setPhase('intro'); window.scrollTo(0, 0); }} onSubmit={async (deliverable, events, auto) => {
     setPhase('grading');
-    const j = await (await fetch(`/api/work/${token}/sessions/${sid}/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deliverable, events }) })).json();
-    if (!j.ok) { setErr(j.error || '交卷失败，再试一次'); setPhase('work'); return; }
+    const j = await (await fetch(`/api/work/${token}/sessions/${sid}/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deliverable, events, auto }) })).json();
+    if (!j.ok) { if (auto || j.expired) { setPhase('ended'); return; } setErr(j.error || '交卷失败，再试一次'); setPhase('work'); return; }
     if (j.staged) return;   // 进「AI 审计中」，由 AuditPanel 推进
     setReport(j.report); setPhase('report');
   }} />;
 }
 
-function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubmit, onRestart }: { token: string; sid: string; task: Task; env: Env; mode: 'bench' | 'open'; narrow: boolean; grading: boolean; error?: string; onRestart?: () => void; onSubmit: (deliverable: string, events: Ev[]) => Promise<void> }) {
-  const t0 = useRef(Date.now());
-  const [now, setNow] = useState(0);
+function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubmit, onRestart, resume, limit }: { resume?: any; limit: number | null;  token: string; sid: string; task: Task; env: Env; mode: 'bench' | 'open'; narrow: boolean; grading: boolean; error?: string; onRestart?: () => void; onSubmit: (deliverable: string, events: Ev[], auto?: boolean) => Promise<void> }) {
+  const t0 = useRef(Date.now() - (resume?.elapsed_s || 0) * 1000);   // 从开始作答算起：刷新、回来都接着走，不重置
+  const [now, setNow] = useState<number>(resume?.elapsed_s || 0);
   const buf = useRef<Ev[]>([]);
   const lastAct = useRef(Date.now());
   const idleMarked = useRef(false);
@@ -197,8 +204,12 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   const [brief, setBrief] = useState(false);   // 「← 任务说明」面板（11-05 潜历：选了作答方式后想回去看任务说明）
   // 草稿存在本机（11-05）：各台子的内容以前只在内存里，刷新 / 误关就没了。按作答编号存，打开时恢复
   const draftKey = `work:draft:${sid}`; const restored = useRef(false);   // 恢复的草稿不算「打字」
-  useEffect(() => { try { const raw = localStorage.getItem(draftKey); if (raw) { const o = JSON.parse(raw); if (o && typeof o === 'object') { setPs(x => ({ ...x, ...o })); restored.current = true; } } } catch { /* 无痕 / 坏数据 */ } }, [draftKey]);
-  useEffect(() => { const h = setTimeout(() => { try { localStorage.setItem(draftKey, JSON.stringify(ps)); } catch { /* 太大（白板贴了很多图）就不存 */ } }, 800); return () => clearTimeout(h); }, [ps, draftKey]);
+  useEffect(() => { try { const raw = localStorage.getItem(draftKey); const o = raw ? JSON.parse(raw) : resume?.resume?.draft; if (o && typeof o === 'object') { setPs(x => ({ ...x, ...o })); restored.current = true; } } catch { /* 无痕 / 坏数据 */ } }, [draftKey]);
+  // 节流而不是防抖：连续操作时防抖会一直等，中途刷新就丢了（11-09）
+  const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const saveDraft = () => { try { localStorage.setItem(draftKey, JSON.stringify(psRef.current)); } catch { /* 太大（白板贴了很多图）就不存 */ } };
+  useEffect(() => { if (saveTimer.current) return; saveTimer.current = setTimeout(() => { saveTimer.current = null; saveDraft(); }, 800); }, [ps, draftKey]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { window.addEventListener('pagehide', saveDraft); return () => window.removeEventListener('pagehide', saveDraft); }, [draftKey]); // eslint-disable-line react-hooks/exhaustive-deps
   const curPart = parts.find(p => p.id === cur) || parts[0];
   const st = ps[cur] || blank();
   const setPart = (patch: Partial<PartState> | ((x: PartState) => Partial<PartState>)) => setPs(all => { const x = all[cur] || blank(); return { ...all, [cur]: { ...x, ...(typeof patch === 'function' ? patch(x) : patch) } }; });
@@ -254,10 +265,15 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
     return () => clearInterval(iv);
   }, [deliverable]);
   const delivRef = useRef(deliverable); delivRef.current = deliverable;
+  const psRef = useRef(ps); psRef.current = ps; const lastDraft = useRef('');
+  // 回来时记一笔离开了多久；离开页面前提醒（时间不会停）
+  useEffect(() => { if (resume) { const away = (resume.elapsed_s || 0) - (resume.resume?.last_t || 0); if (away >= 10) ev('away', { seconds: away }); } }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { const h = (e: BeforeUnloadEvent) => { if (grading) return; e.preventDefault(); e.returnValue = ''; }; window.addEventListener('beforeunload', h); return () => window.removeEventListener('beforeunload', h); }, [grading]);
   useEffect(() => {
     const sync = async () => {
       const events = buf.current.splice(0);
-      try { await fetch(`/api/work/${token}/sessions/${sid}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ events, deliverable: delivRef.current }) }); } catch { buf.current.unshift(...events); }
+      const raw = JSON.stringify(psRef.current), draft = raw !== lastDraft.current ? psRef.current : undefined;
+      try { await fetch(`/api/work/${token}/sessions/${sid}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ events, deliverable: delivRef.current, draft }) }); lastDraft.current = raw; } catch { buf.current.unshift(...events); }
     };
     const iv = setInterval(sync, 30_000);
     // 关页 / 切到别的标签：把剩下的事件用 sendBeacon 补发（fetch 在卸载时会被掐）
@@ -271,12 +287,12 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   const openMat = (m: Material) => { setMat(m); ev('open_material', { id: m.id }); };
   // 案例推进式（深度样本出的题）：一步一步给信息，看完当步再答、答完再开下一步；每一步的揭示都记进过程
   const stages = task?.task?.stages || [];
-  const [unlocked, setUnlocked] = useState(1);
+  const [unlocked, setUnlocked] = useState(() => Math.max(1, ...((resume?.resume?.unlocked || []) as string[]).map(id => stages.findIndex((s: Stage) => s.id === id) + 1)));
   const STAGE_CN: Record<string, string> = { structuring: '搭框架', judgement: '判断与洞察', numeracy: '测算', creativity: '出主意', synthesis: '综合建议', other: '' };
   const openStage = (st: Stage, i: number) => { if (i >= unlocked) { setUnlocked(i + 1); ev('stage_unlock', { id: st.id }); } setMat({ id: st.id, title: `${st.id} · ${st.question}`, kind: 'stage', content: st.reveal || '（这一步没有新信息，直接作答）', source: 'stage' }); ev('open_stage', { id: st.id }); };
 
   // AI
-  const [chat, setChat] = useState<{ q: string; a: string }[]>([]);
+  const [chat, setChat] = useState<{ q: string; a: string }[]>(resume?.resume?.ai_chat || []);
   const [q, setQ] = useState(''); const [asking, setAsking] = useState(false);
   const ask = async () => {
     const text = q.trim(); if (!text || asking) return;
@@ -370,11 +386,15 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
     if (mode === 'open' && !recording) { setLocalErr('先记录屏幕再交卷：点「开始记录」，选「整个屏幕」'); setTimeout(() => setLocalErr(''), 5000); return; }
     if (!arm) { setArm(true); if (emptyParts.length) { setLocalErr(`${emptyParts.map(p => `${p.id} ${p.title}`).join('、')} 还没动笔。确定要交就再点一次交卷`); setTimeout(() => setLocalErr(''), 6000); } setTimeout(() => setArm(false), 6000); return; }
     setArm(false);
+    finish();
+  };
+  // 手动确认后，或者时间到了，都走这里
+  const finish = (auto?: boolean) => {
     if (nextStep.trim()) ev('next_step', { text: nextStep.trim().slice(0, 1000) });
     const events = buf.current.splice(0);
     // 白板：交卷前把每张画板导出 PNG 存起来（给出任务的人看），文字版照样进交付内容
     const boards = parts.filter(p => p.module === 'board' && (ps[p.id]?.board.elements || []).some((e: any) => !e.isDeleted));
-    if (!boards.length) { onSubmit(deliverable, events); return; }
+    if (!boards.length) { onSubmit(deliverable, events, auto); return; }
     (async () => {
       const shots: Record<string, string> = {};
       try {
@@ -388,10 +408,13 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
           if (j.ok) shots[p.id] = j.url;
         }
       } catch (e) { console.warn('[work] 白板截图失败，只交文字版', e); }
-      onSubmit(build(shots), events);
+      onSubmit(build(shots), events, auto);
     })();
   };
-  const over = now > task.task.time_minutes * 60;
+  const left = limit == null ? null : Math.max(0, limit - now);
+  const autoFired = useRef(false);
+  useEffect(() => { if (limit != null && now >= limit && !autoFired.current && !grading) { autoFired.current = true; finish(true); } });
+  const over = left == null ? now > task.task.time_minutes * 60 : left <= 300;   // 最后 5 分钟变红
 
   const matBody = mat && (mat.kind === 'next' ? <div style={{ marginTop: 8 }}>
     <div style={{ fontSize: 13, color: ink2, lineHeight: 1.7, marginBottom: 8 }}>有余力就写，不写不扣分。写清楚交付里哪里还不够可靠、你会先补什么，算进评价。</div>
@@ -413,7 +436,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
         </div>}
         <button onClick={() => setTour(0)} title="界面说明" style={{ ...viewBtn(false), border: `1px solid ${line}`, fontWeight: 700, fontSize: 13 }}>?</button>
         <div data-tour="clock" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-        <div style={{ fontFamily: 'ui-monospace, Menlo, monospace', fontWeight: 700, fontSize: 13.5, color: over ? '#ff8a80' : dark ? '#e6e8f0' : '#1a1a2e' }}>{fmt(now)}{!narrow && <span style={{ color: '#aaa', fontWeight: 400 }}> / {task.task.time_minutes}:00</span>}</div>
+        <div style={{ fontFamily: 'ui-monospace, Menlo, monospace', fontWeight: 700, fontSize: 13.5, color: over ? '#ff8a80' : dark ? '#e6e8f0' : '#1a1a2e' }}>{left == null ? fmt(now) : <>剩 {fmt(left)}</>}{!narrow && <span style={{ color: '#aaa', fontWeight: 400 }}> / {task.task.time_minutes}:00</span>}</div>
         <button onClick={submit} disabled={grading} style={{ ...btnPrimary, padding: '7px 16px', fontSize: 13.5, ...(arm ? { background: '#c0392b' } : {}) }}>{grading ? '评卷中…' : arm ? '再点一次确认交卷' : '交卷 →'}</button>
         </div>
       </div>
@@ -424,7 +447,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
           <div style={{ fontWeight: 700, margin: '10px 0 4px' }}>任务书</div><div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8, fontSize: 14 }}>{task.task.brief}</div>
           <div style={{ fontWeight: 700, margin: '14px 0 4px' }}>要交什么</div><ol style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9, fontSize: 14 }}>{task.task.deliverables.map(d => <li key={d.id}><b>{d.title}</b> <span style={{ color: '#888' }}>{d.format}</span></li>)}</ol>
           <div style={{ fontWeight: 700, margin: '14px 0 4px' }}>规则</div><ul style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9, fontSize: 14 }}>{task.task.rules.map((r, i) => <li key={i}>{r}</li>)}</ul>
-          {onRestart && <div style={{ marginTop: 18, paddingTop: 12, borderTop: '1px solid #eee', fontSize: 13, color: '#666', display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}><span style={{ flex: 1 }}>想换一种作答方式（用自己的软件 / 网页工具）？会重新开始一次作答，这次不交卷就不算。</span><button onClick={() => { if (confirm('换一种方式会重新开始一次作答，这次写的内容不交卷就不算。确定吗？')) onRestart(); }} style={{ border: '1px solid #c9c3ff', background: '#fff', color: '#6055f5', borderRadius: 999, padding: '6px 14px', cursor: 'pointer', fontWeight: 600 }}>换一种方式重新开始</button></div>}
+          {onRestart && <div style={{ marginTop: 18, paddingTop: 12, borderTop: '1px solid #eee', fontSize: 13, color: '#666', display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}><span style={{ flex: 1 }}>想换一种作答方式（用自己的软件 / 网页工具）？还是这一次作答，时间接着走，不会重新开始。</span><button onClick={() => { if (confirm('换一种方式后时间接着走，不会重新开始。确定吗？')) onRestart(); }} style={{ border: '1px solid #c9c3ff', background: '#fff', color: '#6055f5', borderRadius: 999, padding: '6px 14px', cursor: 'pointer', fontWeight: 600 }}>换一种方式重新开始</button></div>}
         </div>
       </div>}
       {tour != null && <Tour step={tour} steps={TOUR_STEPS.filter(t => mode !== 'open' || t.key !== 'tabs')} onStep={setTour} onDone={() => { setTour(null); try { localStorage.setItem('work-tour-done', '1'); } catch {} }} />}
@@ -521,7 +544,7 @@ const TOUR_STEPS: TourStep[] = [
   { key: 'materials', title: '材料包', text: '题目给你的材料都在这里，点一份在中间看。材料面板可以拖高、占满、收成一条或关掉。「要交什么」和「任务书」也在这一栏。' },
   { key: 'tabs', title: '作答区有几个标签，都要做', text: '每个交付物一个标签（文档 / 表格 / 代码 / 画布），切着做。小圆点变绿表示动过笔；20 分钟还没打开的会提醒你。' },
   { key: 'ai', title: 'AI 助手', text: '随便问，不算作弊。评的是你怎么用、哪些判断是你自己定的。它看得到你当前打开的材料；回答可以一键放进当前交付物。' },
-  { key: 'clock', title: '时间和交卷', text: '右上角看用时；到时不强制停表，但会记录。做完点「交卷」，再点一次确认——交了就不能改。' },
+  { key: 'clock', title: '时间和交卷', text: '右上角看剩余时间，到点自动交卷，离开页面时间也不暂停。做完点「交卷」，再点一次确认——交了就不能改。' },
   { key: 'views', title: '两侧可以收起', text: '文件夹 = 材料栏，星芒 = AI 助手，点一下收起或展开，给作答区腾地方。随时点「?」再看这份说明。' },
 ];
 

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { labMediaUrl } from '@/lib/media-url';
+import { timing } from '@/lib/work/deadline';
 
 export const runtime = 'nodejs';
 export const maxDuration = 120;
@@ -15,11 +16,12 @@ const BUCKET = 'lab-media';
  */
 export async function POST(req: NextRequest, { params }: { params: Promise<{ token: string; sid: string }> }) {
   const { token, sid } = await params;
-  const { data: t } = await db.from('work_tasks').select('id').eq('share_token', token).maybeSingle();
+  const { data: t } = await db.from('work_tasks').select('id, task').eq('share_token', token).maybeSingle();
   if (!t) return NextResponse.json({ ok: false, error: '链接不可用' }, { status: 404 });
-  const { data: s } = await db.from('work_sessions').select('id, events, submitted_at, started_at').eq('id', sid).eq('task_id', t.id).maybeSingle();
+  const { data: s } = await db.from('work_sessions').select('id, events, submitted_at, started_at, participant').eq('id', sid).eq('task_id', t.id).maybeSingle();
   if (!s) return NextResponse.json({ ok: false, error: '没有这次作答' }, { status: 404 });
   if (s.submitted_at) return NextResponse.json({ ok: false, error: '已经交卷了' }, { status: 409 });
+  if (timing(t.task, s).closed) return NextResponse.json({ ok: false, error: '时间到了', expired: true }, { status: 409 });
   const form = await req.formData();
   const file = form.get('file') as File | null;
   const k0 = String(form.get('kind') || 'file');

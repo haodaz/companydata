@@ -1,5 +1,6 @@
 import { refreshSignals } from '@/lib/work/question-bank';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse, after } from 'next/server';
+import { AUTO_FROM, timing } from '@/lib/work/deadline';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { attachmentsToMaterials, mergeAttachmentDupes, reviseTask, runBaseline, sourcesOf, withMinutes, withRole } from '@/lib/work/generator';
 import { withCost, logTokenUsage } from '@/lib/token-logger';
@@ -23,6 +24,9 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ toke
   const t = await auth(token, req);
   if (!t) return NextResponse.json({ ok: false, error: '管理链接不对' }, { status: 404 });
   const { data: sessions } = await db.from('work_sessions').select('id, participant, started_at, submitted_at, score, report, deliverable').eq('task_id', t.id).order('created_at', { ascending: false });
+  // 到点后人没回来的作答：出任务的人打开管理页时代为收卷（一次最多 3 份，评完下次刷新能看到）
+  const left = (sessions || []).filter(s => !s.submitted_at && new Date(s.started_at).getTime() >= AUTO_FROM && timing(t.task, s).closed).slice(0, 3);
+  if (left.length) after(() => Promise.all(left.map(s => fetch(`${req.nextUrl.origin}/api/work/${token}/sessions/${s.id}/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ auto: true, sync: true }) }).catch(e => console.warn('[work] 代收卷失败', e)))));
   const { owner_key: _k, context: ctx, ...task } = t;
   return NextResponse.json({ ok: true, task: { ...task, notes: ctx?.notes || [], sources: ctx ? sourcesOf(ctx) : null }, sessions: sessions || [] });
 }
