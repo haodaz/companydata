@@ -13,6 +13,7 @@ import { ensureDownloadAllowed, clearDownloadPermissionCache } from '@/lib/downl
 import { REVIEW_STATUS, REVIEW_STATUS_OPTIONS } from '@/lib/review-status';
 import { COMPLETENESS_BUCKETS } from '@/lib/completeness-filter';
 import { BRAND } from '@/lib/theme';
+import { regionName } from '@/lib/region-codes';
 
 const FIELD_LABELS: Record<string, string> = Object.fromEntries(COMPANY_EDIT_FIELDS.map(f => [f.key, f.label]));
 
@@ -212,7 +213,7 @@ export default function DbCompanyPage() {
     { title: '分类', dataIndex: 'segment', width: 100, render: (s: string) => s ? <Tag color={SEGMENT_LABELS[s]?.color}>{SEGMENT_LABELS[s]?.label || s}</Tag> : <Text type="secondary">未分类</Text> },
     { title: '行业', dataIndex: 'industry', width: 130, render: (t: string, r: any) => t ? <span>{t}{r.sub_industry && <span style={{ color: BRAND.ink3 }}> · {r.sub_industry}</span>}</span> : '-' },
     { title: '类型', dataIndex: 'company_type', width: 100, render: (t: string) => COMPANY_TYPE_LABELS[t] || '-' },
-    { title: '总部', width: 140, render: (_: any, r: any) => [r.country, r.city].filter(Boolean).join(' · ') || '-' },
+    { title: '总部', width: 140, render: (_: any, r: any) => [regionName('country', r.country), regionName('city', r.city)].filter(Boolean).join(' · ') || '-' },
     { title: '500 强', dataIndex: 'fortune_global_rank', width: 80, align: 'center' as const, render: (n: number) => n ? `#${n}` : '-' },
     {
       title: '校招官网', dataIndex: 'campus_url', width: 90, align: 'center' as const,

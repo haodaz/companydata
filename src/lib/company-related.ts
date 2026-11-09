@@ -9,6 +9,7 @@
  */
 import { kwList } from '@/lib/entity-ids';
 import { TYPE_LABEL_LABELS } from '@/lib/company-fields';
+import { regionName } from '@/lib/region-codes';
 
 export interface RelatedInput {
   companies: { id: number; name: string; industry: string | null; sub_industry: string | null; city: string | null; type_label: string[] | null; tags: string[] | null; segment: string | null; completeness_score?: number | null }[];
@@ -61,7 +62,7 @@ export function computeRelated(targetId: number, input: RelatedInput, limit = 8)
   const out: RelatedResult = { industry: [], products: [], investors: [], people: [], local: [] };
   const push = (kind: RelationKind, c: RelatedInput['companies'][number], score: number, reasons: string[]) => {
     if (score <= 0) return;
-    out[kind].push({ id: c.id, name: c.name, industry: c.industry, city: c.city, score: Math.round(score * 100) / 100, reasons });
+    out[kind].push({ id: c.id, name: c.name, industry: c.industry, city: regionName('city', c.city), score: Math.round(score * 100) / 100, reasons });
   };
 
   for (const c of input.companies) {
@@ -101,7 +102,7 @@ export function computeRelated(targetId: number, input: RelatedInput, limit = 8)
     if (myCity && norm(c.city) === myCity && myLabels.size) {
       const labels = labelsOf(c);
       const hit = [...labels.keys()].filter(x => myLabels.has(x));
-      if (hit.length) push('local', c, hit.length, [`同城 ${c.city} · ${hit.slice(0, 3).map(x => labels.get(x)).join('、')}`]);
+      if (hit.length) push('local', c, hit.length, [`同城 ${regionName('city', c.city)} · ${hit.slice(0, 3).map(x => labels.get(x)).join('、')}`]);
     }
   }
 

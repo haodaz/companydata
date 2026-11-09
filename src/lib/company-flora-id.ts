@@ -11,8 +11,13 @@
 import { pinyin } from 'pinyin-pro';
 import { supabaseAdmin } from '@/lib/supabase';
 
-/** 和迁移 018 的 country_iso2 同一张表：库里的国家写的是中文名（偶尔英文） */
+/** 和迁移 065 的 country_iso2 同一张表：库里的国家 11-09 起存选项集编码（156），老写法是中文名（偶尔英文） */
 const COUNTRY: Record<string, string> = {
+  156: 'cn', 344: 'hk', 446: 'mo', 158: 'tw', 840: 'us', 826: 'gb', 250: 'fr', 276: 'de', 392: 'jp', 410: 'kr', 756: 'ch', 752: 'se', 528: 'nl', 56: 'be', 380: 'it', 724: 'es',
+  208: 'dk', 578: 'no', 246: 'fi', 372: 'ie', 40: 'at', 442: 'lu', 376: 'il', 643: 'ru', 124: 'ca', 36: 'au', 554: 'nz', 702: 'sg', 458: 'my', 356: 'in', 360: 'id', 764: 'th',
+  704: 'vn', 608: 'ph', 682: 'sa', 784: 'ae', 634: 'qa', 76: 'br', 484: 'mx', 710: 'za', 792: 'tr',
+  616: 'pl', 428: 'lv', 348: 'hu', 620: 'pt', 203: 'cz', 100: 'bg', 440: 'lt', 438: 'li', 300: 'gr', 359: 'me',
+  波兰: 'pl', 拉脱维亚: 'lv', 匈牙利: 'hu', 葡萄牙: 'pt', 捷克: 'cz', 保加利亚: 'bg', 立陶宛: 'lt', 列支敦士登: 'li', 希腊: 'gr', 黑山: 'me',
   中国: 'cn', 中国大陆: 'cn', 中华人民共和国: 'cn', china: 'cn',
   中国香港: 'hk', 香港: 'hk', 中国澳门: 'mo', 澳门: 'mo', 中国台湾: 'tw', 台湾: 'tw',
   美国: 'us', usa: 'us', 'united states': 'us', 英国: 'gb', uk: 'gb', 'united kingdom': 'gb',

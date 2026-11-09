@@ -9,6 +9,7 @@ import { COMPANY_EDITABLE_KEYS, SEGMENT_LABELS } from '@/lib/company-fields';
 import { trackDemand } from '@/lib/flywheel/signals';
 import { requireDownload } from '@/lib/download-permission';
 import { SOURCE_ORDER, toSources } from '@/lib/source-tags';
+import { normalizeCompanyRegion } from '@/lib/region-codes';
 import { cachedStats, countMany } from '@/lib/db-stats';
 import { getSessionUser } from '@/lib/session';
 
@@ -134,7 +135,7 @@ export async function POST(request: Request) {
       if (!name) continue;
       const row: Record<string, any> = { name };
       for (const k of COMPANY_EDITABLE_KEYS) if (k !== 'name' && c[k] !== undefined && c[k] !== null && c[k] !== '') row[k] = c[k];
-      rows.set(name.toLowerCase(), row);
+      rows.set(name.toLowerCase(), normalizeCompanyRegion(row));
     }
     if (rows.size === 0) return NextResponse.json({ success: false, error: '没有可导入的企业名称' }, { status: 400 });
 

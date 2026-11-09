@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { resolveOrCreateCompany } from '@/lib/company-match';
+import { normalizeCompanyRegion } from '@/lib/region-codes';
 
 export const runtime = 'nodejs';
 
@@ -19,7 +20,7 @@ export async function POST(req: Request) {
     const { data: company } = await supabaseAdmin.from('companies').select('*').eq('id', id).single();
     const updates: Record<string, any> = {};
     for (const k of FILLABLE) if (body[k] && company && (company[k] === null || company[k] === '')) updates[k] = body[k];
-    if (Object.keys(updates).length) await supabaseAdmin.from('companies').update(updates).eq('id', id);
+    if (Object.keys(updates).length) await supabaseAdmin.from('companies').update(normalizeCompanyRegion(updates, company)).eq('id', id);
 
     return NextResponse.json({ id, name: company?.name || name, profiled: !!company?.profile_updated_at });
   } catch (e: any) {

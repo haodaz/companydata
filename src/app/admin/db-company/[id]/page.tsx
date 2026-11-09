@@ -15,6 +15,7 @@ import { JOB_STATUS, JOB_TYPE_LABELS, RECRUIT_SEASON_LABELS, REMOTE_TYPE_LABELS 
 import { REVIEW_STATUS, REVIEW_STATUS_OPTIONS } from '@/lib/review-status';
 import { URL_TYPE_ORDER, URL_TYPES, subtypeLabel, urlTypeMeta } from '@/lib/url-types';
 import { RELATION_LABELS, type RelatedResult, type RelationKind } from '@/lib/company-related';
+import { regionName, companyRegionName, withRegionNames, COMPANY_REGION_KEYS } from '@/lib/region-codes';
 
 const { Text, Paragraph } = Typography;
 
@@ -113,7 +114,8 @@ export default function CompanyDetailPage() {
     message.success(ok); load();
   };
 
-  const openEdit = (group: string | null = null) => { form.setFieldsValue(company); setEditGroup(group); setEditOpen(true); };
+  const openEdit = (group: string | null = null) => { form.setFieldsValue(withRegionNames(company));   // 地区字段库里存 value，框里显示中文名
+    setEditGroup(group); setEditOpen(true); };
 
   /** 子实体审核 / 软删 */
   const entityReview = async (entity: string, row: any, status: string) => {
@@ -290,7 +292,7 @@ export default function CompanyDetailPage() {
                             <Descriptions column={1} size="small" styles={{ label: { width: 100 } }}>
                               {shortOnes.map(f => (
                                 <Descriptions.Item key={f.key} label={<span>{f.label}{aiTag(f.key)}</span>}>
-                                  <span style={aiBg(f.key)}>{f.kind === 'url' ? link(f.key) : withSource(f.key, formatProfileValue(f.key, company[f.key]))}</span>
+                                  <span style={aiBg(f.key)}>{f.kind === 'url' ? link(f.key) : withSource(f.key, formatProfileValue(f.key, COMPANY_REGION_KEYS.includes(f.key as any) ? companyRegionName(f.key, company[f.key]) : company[f.key]))}</span>
                                 </Descriptions.Item>
                               ))}
                             </Descriptions>
@@ -410,7 +412,7 @@ export default function CompanyDetailPage() {
               {children.map(c => (
                 <div key={c.id} style={{ display: 'flex', justifyContent: 'space-between', gap: 8, padding: '4px 0', borderBottom: `1px solid ${BRAND.borderSoft}` }}>
                   <a onClick={() => router.push(`/admin/db-company/${c.id}`)}>{c.name}</a>
-                  <span style={{ fontSize: 12, color: BRAND.ink3, whiteSpace: 'nowrap' }}>{[c.country, c.city].filter(Boolean).join(' · ')}{c.completeness_score != null ? ` · 完整度 ${c.completeness_score}` : ''}</span>
+                  <span style={{ fontSize: 12, color: BRAND.ink3, whiteSpace: 'nowrap' }}>{[regionName('country', c.country), regionName('city', c.city)].filter(Boolean).join(' · ')}{c.completeness_score != null ? ` · 完整度 ${c.completeness_score}` : ''}</span>
                 </div>
               ))}
             </Card>
@@ -440,7 +442,7 @@ export default function CompanyDetailPage() {
               </div>
               <Table rowKey="id" size="small" dataSource={related[k]} pagination={false} showHeader={false}
                 columns={[
-                  { dataIndex: 'name', render: (t: string, r: any) => <div><a onClick={() => router.push(`/admin/db-company/${r.id}`)} style={{ fontWeight: 600, fontSize: 13 }}>{t}</a><div style={{ fontSize: 11, color: BRAND.ink4 }}>{[r.industry, r.city].filter(Boolean).join(' · ')}</div></div> },
+                  { dataIndex: 'name', render: (t: string, r: any) => <div><a onClick={() => router.push(`/admin/db-company/${r.id}`)} style={{ fontWeight: 600, fontSize: 13 }}>{t}</a><div style={{ fontSize: 11, color: BRAND.ink4 }}>{[r.industry, regionName('city', r.city)].filter(Boolean).join(' · ')}</div></div> },
                   { dataIndex: 'reasons', width: 150, render: (rs: string[]) => <Space size={2} wrap>{rs.map(x => <Tag key={x} style={{ margin: 0, fontSize: 11, whiteSpace: 'normal' }}>{x}</Tag>)}</Space> },
                 ]} />
             </div>

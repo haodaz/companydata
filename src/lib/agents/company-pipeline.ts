@@ -12,6 +12,7 @@ import { parseJsonLoose, searchJson } from '@/lib/agents/search-llm';
 import { fetchJinaUrl } from '@/lib/agents/fetcher';
 import { PROFILE_TOPICS, SEGMENT_LABELS, COMPANY_TYPE_LABELS, KIND_LABELS, FINANCE_ROUND_LABELS, EDUCATION_LABELS, NEWS_KIND_LABELS, TYPE_LABEL_LABELS, PRODUCT_KIND_LABELS } from '@/lib/company-fields';
 import { str, url } from '@/lib/company-merge';
+import { regionName } from '@/lib/region-codes';
 
 const TOOL = 'company-pipeline' as const;
 
@@ -22,7 +23,7 @@ const PAGE_SUBTYPE_LABEL: Record<LocatedPage['subtype'], string> = { homepage: '
 export { PAGE_SUBTYPE_LABEL };
 
 function companyLine(c: { name: string; name_en?: string | null; brief_name?: string | null; country?: string | null; official_website?: string | null; industry?: string | null }) {
-  return [c.name, c.name_en && c.name_en !== c.name ? `(${c.name_en})` : '', c.brief_name && c.brief_name !== c.name ? `简称 ${c.brief_name}` : '', c.country ? `· ${c.country}` : '', c.industry ? `· ${c.industry}` : '', c.official_website ? `· 官网 ${c.official_website}` : ''].filter(Boolean).join(' ');
+  return [c.name, c.name_en && c.name_en !== c.name ? `(${c.name_en})` : '', c.brief_name && c.brief_name !== c.name ? `简称 ${c.brief_name}` : '', c.country ? `· ${regionName('country', c.country)}` : '', c.industry ? `· ${c.industry}` : '', c.official_website ? `· 官网 ${c.official_website}` : ''].filter(Boolean).join(' ');
 }
 
 const RULES = `

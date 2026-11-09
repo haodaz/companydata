@@ -3,6 +3,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { findCompanyProfile } from '@/lib/agents/company-profile';
 import { PROFILE_FIELDS } from '@/lib/company-fields';
 import { FROZEN_REVIEW_STATUSES } from '@/lib/review-status';
+import { normalizeCompanyRegion, regionName } from '@/lib/region-codes';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -18,7 +19,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
 
     if (FROZEN_REVIEW_STATUSES.has(company.human_review_status || '')) return NextResponse.json({ success: false, error: '这家企业审核已定论（通过 / 不通过 / 隐藏），不再由 AI 覆盖。需要更新请先改回「待审核」。' }, { status: 400 });
     const locked = new Set<string>(company.human_locked_fields || []);
-    const profile = await findCompanyProfile(company.name, company.name_en || '', company.country || '', model || undefined);
+    const profile = await findCompanyProfile(company.name, company.name_en || '', regionName('country', company.country), model || undefined);
 
     const updates: Record<string, any> = {};
     const filled: string[] = [];
@@ -36,7 +37,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       updates.profile_updated_at = new Date().toISOString();
       updates.updated_at = updates.profile_updated_at;
       if (!company.human_review_status) updates.human_review_status = 'review';
-      const { error: upErr } = await supabaseAdmin.from('companies').update(updates).eq('id', id);
+      const { error: upErr } = await supabaseAdmin.from('companies').update(normalizeCompanyRegion(updates, company)).eq('id', id);
       if (upErr) throw upErr;
     }
 

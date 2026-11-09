@@ -1,5 +1,6 @@
 /** 产业链环节 → 企业库里的真实公司（「我的行当」页和「和我聊」的知识包共用） */
 import { supabaseAdmin } from '@/lib/supabase';
+import { regionName } from '@/lib/region-codes';
 
 /**
  * 拿环节关键词去企业库里捞真实公司。
@@ -31,5 +32,5 @@ export async function matchCompanies(keywords: string[], limit = 4) {
   const seen = new Set<string>();
   return scored.filter(x => { if (seen.has(x.c.name)) return false; seen.add(x.c.name); return true; })
     .slice(0, limit)
-    .map(x => ({ id: x.c.id, name: x.c.name, industry: x.c.industry || x.c.sub_industry, city: x.c.city || x.c.province, one_sentence: x.c.one_sentence }));
+    .map(x => ({ id: x.c.id, name: x.c.name, industry: x.c.industry || x.c.sub_industry, city: regionName('city', x.c.city) || regionName('province', x.c.province), one_sentence: x.c.one_sentence }));
 }

@@ -13,6 +13,7 @@ import { findOccupation } from '@/lib/occupation-store';
 import { ensureCompanyFloraId } from '@/lib/company-flora-id';
 import { withCost } from '@/lib/token-logger';
 import type { WsOrg } from '@/lib/ws/org';
+import { normalizeCompanyRegion, regionName } from '@/lib/region-codes';
 
 export const SOURCE = '企业工作台';
 /**
@@ -104,13 +105,13 @@ export async function enrichCompany(companyId: number): Promise<string[]> {
   if (!c) return [];
   if (['complete', 'rejected', 'hidden'].includes(c.human_review_status || '')) return [];
   const locked = new Set<string>(c.human_locked_fields || []);
-  const profile: any = await withCost({ tool_name: 'workspace', task_name: '工作台 · 补全企业画像', stage: 'create' }, () => findCompanyProfile(c.name, c.name_en || '', c.country || '', PROFILE_MODEL));
+  const profile: any = await withCost({ tool_name: 'workspace', task_name: '工作台 · 补全企业画像', stage: 'create' }, () => findCompanyProfile(c.name, c.name_en || '', regionName('country', c.country), PROFILE_MODEL));
   const up: Record<string, any> = {}; const filled: string[] = [];
   for (const f of PROFILE_FIELDS) { const v = profile[f]; if (v == null || v === '' || locked.has(f)) continue; if (c[f] == null || c[f] === '') { up[f] = v; filled.push(f); } }
   if (filled.length) {
     up.profile_source = { ...(c.profile_source || {}), ...(profile.sources || {}) }; up.profile_updated_at = new Date().toISOString(); up.updated_at = up.profile_updated_at;
     if (!c.human_review_status) up.human_review_status = 'review';
-    await db.from('companies').update(up).eq('id', companyId);
+    await db.from('companies').update(normalizeCompanyRegion(up, c)).eq('id', companyId);
   }
   return filled;
 }
@@ -159,7 +160,7 @@ export async function saveContext(org: WsOrg, email: string, pub: Record<string,
       if (cur == null || cur === '') { up[k] = v; applied.push(k); await db.from('ws_contributions').insert({ org_id: org.id, entity_type: 'company', entity_id: String(org.company_id), field: k, old_value: null, new_value: v, status: 'applied', created_by: email }); }
       else { pending.push(k); await db.from('ws_contributions').insert({ org_id: org.id, entity_type: 'company', entity_id: String(org.company_id), field: k, old_value: String(cur).slice(0, 4000), new_value: v, status: 'pending', created_by: email }); }
     }
-    if (Object.keys(up).length) await db.from('companies').update({ ...up, updated_at: new Date().toISOString() }).eq('id', org.company_id);
+    if (Object.keys(up).length) await db.from('companies').update(normalizeCompanyRegion({ ...up, updated_at: new Date().toISOString() }, c)).eq('id', org.company_id);
   }
   const ctx: Record<string, string> = {};
   for (const f of knowhow(org.kind).priv) if (priv && f.key in priv) ctx[f.key] = String(priv[f.key] || '').trim().slice(0, 2000);

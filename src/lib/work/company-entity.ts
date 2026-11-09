@@ -5,6 +5,7 @@
  */
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { createCompanyEntity } from '@/lib/ws/setup';
+import { normalizeCompanyRegion } from '@/lib/region-codes';
 
 const FIELDS = ['industry', 'city', 'company_scale', 'one_sentence', 'introduction', 'business_profile', 'product_area', 'tech_advantage', 'growth_signals', 'industry_position', 'public_sentiment'] as const;
 export const WORK_SOURCE = '真活出题';
@@ -20,6 +21,7 @@ export async function ensureWorkCompany(name: string, profile: Record<string, an
     for (const f of FIELDS) { const v = profile?.[f]; if (typeof v === 'string' && v.trim() && !(cur as any)?.[f]) up[f] = v.trim().slice(0, 4000); }
     if (Object.keys(up).length) {
       up.updated_at = new Date().toISOString();
+      Object.assign(up, normalizeCompanyRegion(up, cur as any));
       const { error } = await db.from('companies').update(up).eq('id', id);
       // 某个字段在库里类型不对：逐个写，能写的写进去
       if (error) for (const [k, v] of Object.entries(up)) await db.from('companies').update({ [k]: v }).eq('id', id).then(() => {}, () => {});

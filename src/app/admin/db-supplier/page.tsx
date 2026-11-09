@@ -12,6 +12,7 @@ import { PageHeader, Panel } from '@/components/admin/PageHeader';
 import { StatCards } from '@/components/admin/StatCards';
 import { INSTRUMENT_CATEGORIES, INSTRUMENT_CATEGORY_NAMES, INSTRUMENT_EXHIBITIONS } from '@/lib/instrument-categories';
 import { BRAND } from '@/lib/theme';
+import { regionName } from '@/lib/region-codes';
 
 const { Text } = Typography;
 
@@ -85,7 +86,7 @@ export default function DbSupplierPage() {
                 <div style={{ fontWeight: 600, color: BRAND.primary }}>{v}</div>
                 {r.name_en && <div style={{ fontSize: 12, color: BRAND.ink3 }}>{r.name_en}</div>}
               </div>) },
-            { title: '国内 / 海外', dataIndex: 'domestic', width: 100, render: (d: boolean, r: any) => <Tag color={d ? 'red' : 'blue'} icon={d ? <FlagOutlined /> : <GlobalOutlined />}>{d ? '国内' : (r.country || '海外')}</Tag> },
+            { title: '国内 / 海外', dataIndex: 'domestic', width: 100, render: (d: boolean, r: any) => <Tag color={d ? 'red' : 'blue'} icon={d ? <FlagOutlined /> : <GlobalOutlined />}>{d ? '国内' : (regionName('country', r.country) || '海外')}</Tag> },
             { title: '仪器类目', dataIndex: 'supplier_categories', render: (v: string[]) => <Space size={4} wrap>{(v || []).map(k => <Tag key={k}>{INSTRUMENT_CATEGORY_NAMES[k] || k}</Tag>)}</Space> },
             { title: '展会', dataIndex: 'supplier_exhibitions', width: 200, render: (v: string[]) => (v || []).length ? <Tooltip title={(v || []).map(n => INSTRUMENT_EXHIBITIONS.find(e => e.name === n)?.full || n).join('、')}><Text style={{ fontSize: 12 }}>{(v || []).join('、')}</Text></Tooltip> : <Text type="secondary" style={{ fontSize: 12 }}>按类目搜的</Text> },
             { title: '产品', dataIndex: 'products', width: 70, align: 'right' as const, render: (n: number, r: any) => n ? <a onClick={() => router.push(`/admin/db-research-product?supplier=${r.id}`)}>{n}</a> : <Text type="secondary">—</Text> },

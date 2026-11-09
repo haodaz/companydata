@@ -6,9 +6,12 @@
  *   城市编码如 city_us_5_san_francisco、州 / 省如 state_ca_ontario；同名城市（伦敦、悉尼）按岗位的国家区分。
  * 港澳台：国家存 中国香港 344 / 中国澳门 446 / 中国台湾 158，省市留空（数据部门 10-20 确认）。
  * 认不出的（县级市、选项集里没有的海外城市）留空，原文在 location 里。
+ * 县（区）（11-09 起，只有企业库有）：数据部门《全球城市-20261109》→ src/data/county-cn.json，2846 个 [名称, 编码, 城市编码, 省编码]；
+ *   同名县区（朝阳区在北京、长春都有）按所在城市认，省直辖的县（城市编码为空）按省认。
  */
 import opts from '@/data/region-options.json';
 import world from '@/data/world-cities.json';
+import counties from '@/data/county-cn.json';
 
 type Opt = { name: string; short?: string; value: string; parent: string; region?: string };
 const COUNTRY = opts.country as Opt[];
@@ -51,7 +54,21 @@ const NAME_OF = {
   country: new Map(COUNTRY.map(o => [o.value, o.name])),
   province: new Map([...PROVINCE.map(o => [o.value, o.name] as [string, string]), ...Object.entries(WORLD_STATES).map(([v, [n]]) => [v, n] as [string, string])]),
   city: new Map([...CITY.map(o => [o.value, o.name] as [string, string]), ...WORLD_CITIES.map(c => [c[1], c[0]] as [string, string])]),
+  county: new Map((counties as string[][]).map(c => [c[1], c[0]] as [string, string])),
 };
+/** 城市编码（省直辖的用 p: + 省编码）→ (写法 → 县区)：全称，以及同一城市里不重名的简称（海淀 → 海淀区） */
+const COUNTY_BY = new Map<string, Map<string, string>>();
+for (const [name, value, cityV, provV] of counties as string[][]) {
+  const key = cityV || `p:${provV}`;
+  const m = COUNTY_BY.get(key) || COUNTY_BY.set(key, new Map()).get(key)!;
+  m.set(clean(name), value);
+}
+for (const [key, m] of COUNTY_BY) {
+  const short = new Map<string, string | null>();
+  for (const [n, v] of m) { const k = n.replace(/(自治县|新区|区|县|市)$/, ''); if (k.length >= 2 && k !== n) short.set(k, short.has(k) ? null : v); }
+  for (const [k, v] of short) if (v && !m.has(k)) m.set(k, v);
+  COUNTY_BY.set(key, m);
+}
 /** 港澳台：中国省表里的省编码 → 国家表里的编码 */
 const SAR: Record<string, string> = { '81': '344', '82': '446', '71': '158' };
 
@@ -171,8 +188,95 @@ export function resolveRegion(input: { country?: any; province?: any; city?: any
 }
 
 /** 编码 → 中文名（页面显示用）；不是编码的原样返回（老数据 / 海外城市） */
-export function regionName(kind: 'country' | 'province' | 'city', v: any): string {
+export function regionName(kind: 'country' | 'province' | 'city' | 'county', v: any): string {
   if (Array.isArray(v)) return v.map(x => regionName(kind, x)).filter(Boolean).join('、');
   const s = String(v ?? '').trim();
   return NAME_OF[kind].get(s) || s;
+}
+
+export const COMPANY_REGION_KEYS = ['country', 'province', 'city', 'county_area'] as const;
+type CompanyRegion = { country: string | null; province: string | null; city: string | null; county_area: string | null };
+
+/** 在这个城市（省直辖的看省）下面认县区：编码原样；全称 / 简称；「广东省深圳市龙岗区」这种取里面的县区名 */
+function countyOf(raw: string, city: string | null, province: string | null): string | null {
+  const s = clean(raw);
+  if (!s) return null;
+  const maps = [city && COUNTY_BY.get(city), province && COUNTY_BY.get(`p:${province}`)].filter(Boolean) as Map<string, string>[];
+  if (NAME_OF.county.has(s)) return s;
+  for (const m of maps) {
+    if (m.has(s)) return m.get(s)!;
+    const hit = [...m.keys()].filter(n => /(区|县|市)$/.test(n) && s.includes(n)).sort((a, b) => b.length - a.length)[0];
+    if (hit) return m.get(hit)!;
+  }
+  return null;
+}
+
+/** 某省里按名字找县区（省不明时全国唯一才认）：县级市写在城市栏（昆山市）、城市写错时用，返回县区和它的上级 */
+function countyInProvince(raw: string, province: string | null): { county: string; city: string | null; province: string } | null {
+  const s = clean(raw), short = s.replace(/(自治县|新区|区|县|市)$/, '');
+  if (s.length < 2) return null;
+  const hits = (counties as string[][]).filter(c => (!province || c[3] === province) && (c[0] === s || (province && short.length >= 2 && c[0].replace(/(自治县|新区|区|县|市)$/, '') === short)));
+  return hits.length === 1 ? { county: hits[0][1], city: hits[0][2] || null, province: hits[0][3] } : null;
+}
+/** 选项集里重名的海外城市带括注（慕尼黑（巴伐利亚州））：去掉括注再认，同名的按州省挑，挑不出不认 */
+function overseasCity(country: string | null, raw: string, state: string | null) {
+  if (!country || country === '156') return null;
+  const s = clean(raw).replace(/市$/, '');
+  if (s.length < 2) return null;
+  const hits = WORLD_CITIES.filter(c => c[3] === country && clean(c[0]).replace(/市$/, '') === s);
+  const inState = state ? hits.filter(c => c[2] === state) : hits;
+  return inState.length === 1 ? inState[0] : hits.length === 1 ? hits[0] : null;
+}
+function overseasState(country: string | null, raw: string): string | null {
+  const m = country && STATE_BY.get(country); const s = raw.trim();
+  return m ? m.get(s) || m.get(s.replace(/(都|道|府|县|州|省|大区|地区)$/, '')) || m.get(latin(s)) || null : null;
+}
+
+/**
+ * 企业库：国家 - 省 - 城市 - 县区 四级，库里存 value（数据部门 11-09）；岗位库三级见 resolveRegion。
+ * 港澳台只到国家这一级（344 / 446 / 158）。输入是中文名、英文名或编码都行，认不出的留空。
+ * 省和市对不上时以市为准（市更具体）；市写的是县级市（昆山市）时，市填上级（苏州市）、县区填它。
+ */
+export function resolveCompanyRegion(input: { country?: any; province?: any; city?: any; county_area?: any }): CompanyRegion {
+  const cityText = String(input.city ?? '').trim(), countyText = String(input.county_area ?? '').trim();
+  const provText = Array.isArray(input.province) ? String(input.province[0] ?? '') : String(input.province ?? '').trim();
+  const sarOnly = (c: string | null) => c === '344' || c === '446' || c === '158';
+  let r = cityText ? resolveRegion({ country: input.country, city: cityText }) : resolveRegion(input);
+  if (sarOnly(r.country)) return { country: r.country, province: null, city: null, county_area: null };
+  // 市认不出：看省；省的「直辖市同名」规则不能把写了别的城市的企业改成直辖市，所以市留空，再试县级市
+  if (cityText && !r.city) {
+    const byProv = resolveRegion({ country: input.country, province: provText });
+    if (sarOnly(byProv.country)) return { country: byProv.country, province: null, city: null, county_area: null };
+    const province = byProv.province[0] || null, country = r.country || byProv.country;
+    if (!country || country === '156') {
+      const hit = countyInProvince(cityText, province);
+      if (hit) return { country: '156', province: hit.province, city: hit.city, county_area: hit.county };
+    }
+    const state = province || overseasState(country, provText);
+    const wc = overseasCity(country, cityText, state);
+    return { country, province: wc?.[2] || state, city: wc?.[1] || null, county_area: null };
+  }
+  const province = r.province[0] || (cityText ? null : overseasState(r.country, provText)) || (r.city ? null : overseasState(r.country, provText));
+  if (r.country !== '156') return { country: r.country, province, city: r.city, county_area: null };
+  return { country: r.country, province, city: r.city, county_area: countyOf(countyText, r.city, province) };
+}
+
+/** 写库前调：只改这次要写的地区字段，其他级别用现有的值帮着判断（只改县区时要知道在哪个城市） */
+export function normalizeCompanyRegion<T extends Record<string, any>>(updates: T, current?: Record<string, any> | null): T {
+  if (!COMPANY_REGION_KEYS.some(k => k in updates)) return updates;
+  const pick = (o?: Record<string, any> | null) => Object.fromEntries(COMPANY_REGION_KEYS.filter(k => o?.[k] != null && o[k] !== '').map(k => [k, o![k]]));
+  const r = resolveCompanyRegion({ ...pick(current), ...pick(updates) });
+  const out: Record<string, any> = { ...updates };
+  for (const k of COMPANY_REGION_KEYS) if (k in updates) out[k] = updates[k] == null || updates[k] === '' ? null : r[k];
+  return out as T;
+}
+
+/** 编码 → 中文名，按字段名选（页面显示用） */
+const REGION_KIND = { country: 'country', province: 'province', city: 'city', county_area: 'county' } as const;
+export const companyRegionName = (key: string, v: any): string => key in REGION_KIND ? regionName(REGION_KIND[key as keyof typeof REGION_KIND], v) : String(v ?? '');
+/** 把一行企业的四个地区字段换成中文名（给页面、给模型看） */
+export function withRegionNames<T extends Record<string, any>>(c: T): T {
+  const out: Record<string, any> = { ...c };
+  for (const k of COMPANY_REGION_KEYS) if (out[k] != null && out[k] !== '') out[k] = companyRegionName(k, out[k]);
+  return out as T;
 }

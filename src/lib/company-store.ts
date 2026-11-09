@@ -9,6 +9,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { PIPELINE_FIELDS, computeCompanyCompleteness, hasValue, type SubEntityKey } from '@/lib/company-fields';
 import { FROZEN_REVIEW_STATUSES } from '@/lib/review-status';
 import { financingKey, newsKey, executiveKey, productKey, normalizeFinancing, normalizeNews, normalizeExecutive, normalizeProduct, normalizeProfileValue, type ProfileBundle } from '@/lib/company-merge';
+import { normalizeCompanyRegion } from '@/lib/region-codes';
 
 export async function subEntityCounts(companyId: number): Promise<Record<SubEntityKey, number>> {
   const [f, n, e, p] = await Promise.all([
@@ -141,7 +142,7 @@ export async function applyProfileBundle(logId: number, companyId: number, bundl
   updates.profile_crawled_at = now;
   updates.profile_log_id = logId;
   updates.updated_at = now;
-  const { error: upErr } = await supabaseAdmin.from('companies').update(updates).eq('id', companyId);
+  const { error: upErr } = await supabaseAdmin.from('companies').update(normalizeCompanyRegion(updates, company)).eq('id', companyId);
   if (upErr) throw new Error(`companies 更新失败: ${upErr.message}`);
 
   return { filled, financings_saved: fs, news_saved: ns, executives_saved: es, products_saved: ps, completeness_before: before, completeness_after: after, frozen };

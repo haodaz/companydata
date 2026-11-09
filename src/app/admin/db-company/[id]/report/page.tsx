@@ -12,6 +12,7 @@ import { App, Button, Space, Spin, Tag } from 'antd';
 import { ArrowLeftOutlined, PrinterOutlined, LinkOutlined, FilePdfOutlined, PictureOutlined } from '@ant-design/icons';
 import { ensureDownloadAllowed, guardLink } from '@/lib/download-gate';
 import { COMPANY_TYPE_LABELS, SEGMENT_LABELS, KIND_LABELS, FINANCE_ROUND_LABELS, NEWS_KIND_LABELS } from '@/lib/company-fields';
+import { regionName } from '@/lib/region-codes';
 
 /** 有的模型把每个字段都包成 { value, source }（2906 鼎峰科创那份）：只有这两个键的就取 value，递归拆；带 currency / as_of 的金额对象原样留着（页面单独渲染） */
 const unwrapVS = (x: any): any => Array.isArray(x) ? x.map(unwrapVS) : x && typeof x === 'object' ? (Object.keys(x).every(k => k === 'value' || k === 'source') && 'value' in x ? unwrapVS(x.value) : Object.fromEntries(Object.entries(x).map(([k, y]) => [k, unwrapVS(y)]))) : x;
@@ -170,7 +171,7 @@ export default function CompanyReportPage() {
         <Sec no="01" id="s1" title={isVC ? "机构概况" : "公司概况"}>
           <KV items={[
             ['成立', c.info_founding_year ? `${c.info_founding_year} 年` : '—'],
-            ['总部', [c.country, c.province, c.city].filter(Boolean).join(' · ')],
+            ['总部', [regionName('country', c.country), regionName('province', c.province), regionName('city', c.city)].filter(Boolean).join(' · ')],
             ['地址', c.address],
             ['注册地址', c.registration_address],
             ['规模', c.company_scale],
@@ -194,7 +195,7 @@ export default function CompanyReportPage() {
         {isVC && (<>
         <Sec no="02" id="v2" title="基金与规模" lead="来自机构官网、基金业协会备案、募资公告与财经媒体；规模为披露口径，币种以原文为准。">
           <KV items={[
-            ['成立', v(fund.founded) || (c.info_founding_year ? `${c.info_founding_year} 年` : '—')], ['总部', v(fund.headquarters) || [c.country, c.province, c.city].filter(Boolean).join(' · ')],
+            ['成立', v(fund.founded) || (c.info_founding_year ? `${c.info_founding_year} 年` : '—')], ['总部', v(fund.headquarters) || [regionName('country', c.country), regionName('province', c.province), regionName('city', c.city)].filter(Boolean).join(' · ')],
             ['在管规模', fund.aum?.value ? <span>{fund.aum.value} {fund.aum.currency || ''} <small>{fund.aum.as_of || ''}</small> <Src u={fund.aum.source} /></span> : '—'],
             ['GP 主体', (fund.gp_entities || []).map((x: any) => v(x)).filter(Boolean).join('；')], ['LP 类型', (fund.lp_types || []).map((x: any) => v(x)).filter(Boolean).join('、')],
             ['备案 / 注册', v(fund.registration)], ['说明', fund.notes],

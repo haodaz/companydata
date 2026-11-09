@@ -12,6 +12,7 @@ import { MODEL_OPTIONS } from '@/lib/model-options';
 import { PASS_SCORE } from '@/lib/lab-cert';
 import { getSessionUser } from '@/lib/session';
 import { searchCompanies } from '@/lib/work/generator';
+import { regionName } from '@/lib/region-codes';
 
 export type StudentKind = 'platform' | 'customer';
 export type EnrollmentStatus = 'enrolled' | 'training' | 'examining' | 'graduated' | 'remedial' | 'withdrawn';
@@ -241,7 +242,7 @@ export async function searchTargets(q: string) {
   ]);
   return {
     ws_org: orgs.map((o: any) => ({ id: o.id, name: o.name, hint: o.kind === 'research' ? '科研版工作台' : '企业版工作台' })),
-    company: companies.map((c: any) => ({ id: String(c.id), name: c.name, hint: [c.industry, c.city, c.jobs ? `在招 ${c.jobs}` : ''].filter(Boolean).join(' · ') })),
+    company: companies.map((c: any) => ({ id: String(c.id), name: c.name, hint: [c.industry, regionName('city', c.city), c.jobs ? `在招 ${c.jobs}` : ''].filter(Boolean).join(' · ') })),
     demand: demands.map((d: any) => ({ id: d.id, name: `${d.org} · ${d.title}`, hint: `培养需求 · ${APP_STATUS[d.status] || d.status}${d.payload?.headcount ? ` · 要 ${d.payload.headcount}` : ''}` })),
   };
 }

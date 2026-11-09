@@ -11,6 +11,7 @@ import { CAREER_CATEGORY_LABELS, SALARY_CN_REGIONS, SALARY_COUNTRIES, SALARY_YEA
 import { ITEM_KIND_LABELS, TASK_DIFFICULTY_LABELS } from '@/lib/entity-fields';
 import { JOB_TYPE_LABELS, formatSalary } from '@/lib/job-fields';
 import type { ChatSource } from '@/components/kg/PersonaChat';
+import { regionName } from '@/lib/region-codes';
 
 const C = { ink: '#1f2233', ink2: '#4b5064', ink3: '#8a8fa3', border: '#e8eaf2', soft: '#f6f7fb', v: '#6055f5', chip: 'rgba(96,85,245,.08)' };
 const SECTION_TITLE: Record<string, string> = { intro: '职业介绍', graph: '发展与升迁', salary: '薪资', context: '在哪干 · 用什么', jobs: '在招岗位', eco: '我的行当 · 上下游' };
@@ -122,7 +123,7 @@ function Body({ d }: { d: any }) {
       <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
         {c.logo_url && <img src={c.logo_url} alt="" referrerPolicy="no-referrer" onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }} style={{ width: 56, height: 56, objectFit: 'contain', borderRadius: 10, border: `1px solid ${C.border}`, background: '#fff' }} />}
         <div><div style={{ fontSize: 13, color: C.ink3 }}>{c.registered_name && c.registered_name !== c.name ? c.registered_name : c.name_en || ''}</div>
-          <div style={{ fontSize: 12, color: C.ink3 }}>{[c.industry, c.sub_industry, c.city, c.company_scale, c.info_founding_year && `${c.info_founding_year} 年成立`].filter(Boolean).join(' · ')}</div></div>
+          <div style={{ fontSize: 12, color: C.ink3 }}>{[c.industry, c.sub_industry, regionName('city', c.city), c.company_scale, c.info_founding_year && `${c.info_founding_year} 年成立`].filter(Boolean).join(' · ')}</div></div>
       </div>
       {(c.one_sentence || c.introduction) && <><H>企业介绍</H><P>{c.introduction || c.one_sentence}</P></>}
       <H>在招的{d.occupation.name}岗位（{d.total}）</H>

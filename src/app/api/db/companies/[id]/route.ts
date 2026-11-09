@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { COMPANY_EDITABLE_KEYS } from '@/lib/company-fields';
 import { getSessionUser } from '@/lib/session';
+import { normalizeCompanyRegion, companyRegionName, COMPANY_REGION_KEYS } from '@/lib/region-codes';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -51,6 +52,14 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
     const updates: Record<string, any> = { updated_at: now };
     const { data: current } = await supabaseAdmin.from('companies').select('*').eq('id', id).single();
     const locked = new Set<string>(current?.human_locked_fields || []);
+    // 地区字段：页面上填中文名，库里存 value（数据部门 11-09）；先换成 value 再比，没改的不算人工改过
+    const region = normalizeCompanyRegion(Object.fromEntries(COMPANY_REGION_KEYS.filter(k => body[k] !== undefined).map(k => [k, body[k]])), current);
+    for (const k of COMPANY_REGION_KEYS) {
+      if (body[k] === undefined || !body[k] || region[k]) continue;
+      if (body[k] === current?.[k] || body[k] === companyRegionName(k, current?.[k])) { region[k] = current?.[k] ?? null; continue; }
+      return NextResponse.json({ success: false, error: `「${body[k]}」对不上选项集，请按国家 / 省 / 市 / 县区的标准名称填` }, { status: 400 });
+    }
+    Object.assign(body, region);
     for (const k of COMPANY_EDITABLE_KEYS) {
       if (body[k] === undefined) continue;
       const v = body[k] === '' ? null : body[k];
