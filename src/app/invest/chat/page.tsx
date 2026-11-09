@@ -56,7 +56,12 @@ export default function InvestChat() {
   const openThread = useCallback(async (id: string) => {
     reset(); setThreadId(id);
     const j = await (await fetch(`/api/invest/chat?id=${id}`)).json(); if (!j.ok) return;
-    setItems(fromHistory(j.thread.messages || []));
+    const hist = fromHistory(j.thread.messages || []);
+    setItems(hist);
+    // 这段对话里 AI 打开过的东西恢复成标签，停在最后一个
+    const seen = new Map<string, Tab>();
+    for (const x of hist) if (x.k === 'tool' && x.ui?.kind === 'invest') seen.set(keyOf(x.ui), { ...x.ui, key: keyOf(x.ui) });
+    if (seen.size) { const list = [...seen.values()]; setTabs(list); setActive(list[list.length - 1].key); if (window.innerWidth > 760) setShow(true); }
   }, [reset]);
   useEffect(() => { const h = (e: Event) => { const id = (e as CustomEvent).detail; if (id) openThread(id); else { reset(); setThreadId(null); } }; window.addEventListener('iv-open', h); return () => window.removeEventListener('iv-open', h); }, [openThread, reset]);
 

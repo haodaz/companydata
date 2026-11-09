@@ -44,6 +44,8 @@ export const INVEST_SYSTEM = `你是平方「产业投资地图」的研究助�
 - 多条对比用表格。融资、新闻这类事实，有来源链接时附上。
 - 同名的人不能当成同一个人；搭线路径只能基于共同投资、同一企业任职这些库里有的关系，说清是什么关系。
 - 找人脉用 search_person 和 find_path。路径只是公开的合作、师承、任职、亲属这些记录算出来的，说明每一步是什么关系，别说成「认识」「关系好」；经过共同机构的路径是弱关系，要点明。
+- 回答里不要出现字段名、工具名、JSON（如 finances、lastRound、[]），用大白话说「库里没有融资记录」。
+- 「动态、新闻」用 search_news，「融资事件」用 search_financings，别混用。
 - 用户要看某家企业、机构、产业链的详情时，用 open_panel 打开，不用在对话里把详情再抄一遍。`;
 
 async function run(name: string, i: any): Promise<{ result: any; ui?: any; label: string }> {
