@@ -11,9 +11,9 @@ const SETS = {
   work: { guides: './guides.mjs', web: 'work-guide', docs: '真活操作手册', brand: '百业AI｜真活', name: '真活操作手册', h1: '真活怎么用',
     DATE: '2026-11-03', VERSION: '百业AI｜真活 1.1（2026-11-03 线上版本）', site: 'www.aisimjob.com/work-guide/',
     intro: '五个模块：出任务的三种方式、候选人做题、看答卷比候选人。一份手册讲一件事，每步一张真实截图，框出来的地方就是要点。' },
-  // 1.2（11-05 界面重排后）：单独一套，旧的 work-guide 原样保留，看过效果再替换
+  // 1.2（11-05 界面重排后）：单独一套，旧的 work-guide 原样保留，看过效果再替换；1.3（11-09）限时、到点交卷、专属链接，在这套上改
   work2: { guides: './guides-v2.mjs', web: 'work-guide-v2', docs: '真活操作手册-v2', brand: '百业AI｜真活', name: '真活操作手册', h1: '真活怎么用',
-    DATE: '2026-11-05', VERSION: '百业AI｜真活 1.2（2026-11-05 线上版本）', site: 'www.aisimjob.com/work-guide-v2/',
+    DATE: '2026-11-09', VERSION: '百业AI｜真活 1.3（2026-11-09 线上版本）', site: 'www.aisimjob.com/work-guide-v2/',
     intro: '五个模块：出任务的三种方式、候选人做题、看答卷比候选人。一份手册讲一件事，每步一张真实截图，框出来的地方就是要点。' },
   lab: { guides: '../lab-guide/guides.mjs', web: 'lab-guide', docs: '百业体验手册', brand: 'AI 百业', name: '百业体验手册', h1: 'AI 百业怎么玩',
     DATE: '2026-11-03', VERSION: 'AI 百业 · 数字技能空间（2026-11-03 线上版本）', site: 'www.aisimjob.com/lab-guide/', ext: 'jpg',

@@ -58,6 +58,8 @@ export function WorkProcess({ events, aiChat, materials, deliverables, shots = [
         case 'screen': { const n = near(e.t); out.push({ t: e.t, kind: 'screen', color: C.screen, label: '屏幕画面（AI 看图记的）', body: String(e.note || ''), ...(n ? { link: { href: n.url, text: '看截图' } } : {}) }); break; }
         case 'draft': out.push({ t: e.t, kind: 'draft', color: C.draft, label: `稿子快照 · ${e.chars || String(e.text || '').length} 字`, detail: String(e.text || '') }); break;
         case 'next_step': out.push({ t: e.t, kind: 'end', color: C.end, label: '最后一问：如果再给一天，先改哪里', body: String(e.text || '') }); break;
+        case 'away': out.push({ t: e.t, kind: 'away', color: C.away, label: `离开后回来（中间约 ${Math.max(1, Math.round((Number(e.seconds) || 0) / 60))} 分钟，时间没有暂停）` }); break;
+        case 'auto_submit': out.push({ t: e.t, kind: 'end', color: C.end, label: '时间到，系统自动交卷' }); break;
         case 'submit': out.push({ t: e.t, kind: 'end', color: C.end, label: `交卷（交付物 ${e.chars || 0} 字）` }); break;
         default: if (/^plugin_/.test(e.type) || e.note) out.push({ t: e.t, kind: 'other', color: C.screen, label: `${e.type.replace(/^plugin_/, '插件 · ')}${e.host ? ` · ${e.host}` : ''}`, body: e.note ? String(e.note) : undefined });
       }

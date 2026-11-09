@@ -122,7 +122,8 @@ export function appendUser(history: Msg[], text: string): Msg[] {
   const pending = pendingIn(last) || (last?.role === 'tool' ? pendingIn(prev) : undefined);
   if (pending) {
     const r: Result = { id: pending.id, name: 'ask_user', content: JSON.stringify({ answer: text }), label: `你选了：${text}` };
-    if (last.role === 'tool') return [...history.slice(0, -1), { role: 'tool', results: [...last.results, r] }];
+    // 答完页面就断了、回来又答一次时，同一个问题只留最新的回答（重复的结果模型接口直接报 400，这条对话就废了）
+    if (last.role === 'tool') return [...history.slice(0, -1), { role: 'tool', results: [...last.results.filter(x => x.id !== pending.id), r] }];
     return [...history, { role: 'tool', results: [r] }];
   }
   return [...history, { role: 'user', text, at: new Date().toISOString() }];

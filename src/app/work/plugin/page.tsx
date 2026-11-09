@@ -58,7 +58,7 @@ function Inner() {
         <section className="zp-launch">
           <div className="zp-in">
             <div className="zp-k">启动 · 关联这次作答</div>
-            {task?.ok ? <h2>{task.task.title}<small>{task.task.company} · 建议 {task.task.time_minutes} 分钟{task.submitted ? ' · 已交卷' : ''}</small></h2> : task ? <h2 className="zp-bad">真活码 {code} 没找到：回答题页再点一次「去装插件 / 关联」</h2> : <h2>读取中…</h2>}
+            {task?.ok ? <h2>{task.task.title}<small>{task.task.company} · {task.deadline ? '限时' : '建议'} {task.task.time_minutes} 分钟{task.submitted ? ' · 已交卷' : ''}</small></h2> : task ? <h2 className="zp-bad">真活码 {code} 没找到：回答题页再点一次「去装插件 / 关联」</h2> : <h2>读取中…</h2>}
             <div className="zp-code"><span>真活码</span><b>{code}</b><button onClick={copy}>{copied ? '已复制' : '复制'}</button></div>
             {task?.ok && !task.submitted && (installed
               ? <div className="zp-act">

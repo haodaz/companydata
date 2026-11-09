@@ -15,6 +15,7 @@ const out = {};
 const b = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new', args: ['--lang=zh-CN'] });
 const p = await b.newPage(); await p.setViewport({ width: W, height: H, deviceScaleFactor: 2 });
 const wait = ms => new Promise(r => setTimeout(r, ms));
+p.on('dialog', d => d.accept());   // 作答页离开时会弹确认（11-09 起），不点掉导航会一直卡住
 /** 元素位置：CSS 选择器，或「选择器::文字」按文字开头找 */
 const rect = sel => p.evaluate(sel => {
   let el = null;
@@ -32,12 +33,22 @@ const shot = async (name, boxes) => {
 
 // ── 候选人做题：示范题开一次预览作答 ──
 {
-  const { token, k } = keys.do;
-  const j = await (await fetch(`${B}/api/work/${token}/sessions`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: '示范·小周', mode: 'bench', k }) })).json();
+  const { token } = keys.do;
+  // 开始之前的任务说明页（2026-11-09 起）：规则那行写着限时和到点交卷
+  await p.goto(`${B}/work/${token}`, { waitUntil: 'networkidle0', timeout: 300000 }); await wait(2000);
+  const mark = (title, name) => p.evaluate((title, name) => { const c = [...document.querySelectorAll('div')].find(x => x.firstElementChild && x.firstElementChild.textContent.trim() === title && x.style.borderRadius); c?.setAttribute('data-shot', name); return !!c; }, title, name);
+  await mark('任务书', 'brief0'); await mark('规则', 'rules0');
+  await shot('do-1', [['[data-shot="brief0"]', '任务书：要做什么、交给谁'], ['[data-shot="rules0"]', '规则：可以用 AI；最后一行是限时']]);
+  await mark('怎么做', 'how0'); await mark('留个名字就开始', 'name0');
+  await p.evaluate(() => document.querySelector('[data-shot="name0"]')?.scrollIntoView({ block: 'end' })); await wait(400);
+  await shot('do-1b', [['[data-shot="how0"]', '选做法（推荐第一种）'], ['[data-shot="name0"]', '留名字，点「开始做」']]);
+  // 不带管理密钥才是候选人看到的倒计时；这次作答的编号写进 out，截完由调用的人删掉，别进统计
+  const j = await (await fetch(`${B}/api/work/${token}/sessions`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: '示范·小周', mode: 'bench' }) })).json();
+  out.demo_session = j.session_id;
   await p.evaluateOnNewDocument((tok, sid) => { localStorage.setItem(`work:${tok}`, sid); localStorage.setItem('work-tour-done', '1'); }, token, j.session_id);
   await p.goto(`${B}/work/${token}?s=${j.session_id}`, { waitUntil: 'networkidle0', timeout: 300000 }); await wait(2500);
   await p.evaluate(() => { [...document.querySelectorAll('button')].find(x => /回到真活空间|收起/.test(x.textContent || ''))?.blur(); });
-  await shot('do-2', [['[data-tour="materials"]', '推进和材料包'], ['[data-tour="tabs"]', '交付物标签：每样都要做'], ['[data-tour="ai"]', 'AI 助手随便问'], ['[data-tour="clock"]', '计时 / 交卷'], ['button::← 任务说明', '随时回看任务说明'], ['button::📎 附件', '别的软件做的，传这里']]);
+  await shot('do-2', [['[data-tour="materials"]', '推进和材料包'], ['[data-tour="tabs"]', '交付物标签：每样都要做'], ['[data-tour="ai"]', 'AI 助手随便问'], ['[data-tour="clock"]', '剩余时间 / 交卷'], ['button::← 任务说明', '随时回看任务说明'], ['button::📎 附件', '别的软件做的，传这里']]);
   await p.evaluate(() => [...document.querySelectorAll('button')].find(x => (x.textContent || '').startsWith('📎 附件'))?.click()); await wait(600);
   const pop = await p.evaluate(() => { const btn = [...document.querySelectorAll('button')].find(x => (x.textContent || '').startsWith('📎 附件')); const d = btn?.parentElement?.querySelector('div'); if (!d) return null; d.setAttribute('data-shot', 'att'); return 1; });
   await shot('do-att', pop ? [['[data-shot="att"]', '这份交付物的附件：传文件、看已传的'], ['label::＋ 上传文件', '点这里上传']] : []);
@@ -71,7 +82,7 @@ if (keys.next) {
   await shot('own-1', [['[data-tour="stats"]', '参与 / 交卷 / 平均分 / AI 基线'], ['[data-tour="revise"]', '调整这道题'], ['[role=tab]::做题情况', '「做题情况与评分」看每个人']]);
   // 调整这道题：左右两半
   await p.evaluate(() => { const c = document.querySelector('[data-tour="revise"]'); c?.scrollIntoView({ block: 'center' }); const cols = c?.querySelectorAll(':scope > div > div'); cols?.[0]?.setAttribute('data-shot', 'left'); cols?.[1]?.setAttribute('data-shot', 'right'); }); await wait(400);
-  await shot('own-2', [['[data-shot="left"]', '直接改：岗位、用时、素材，马上生效'], ['[data-shot="right"]', '让 AI 改题目内容']]);
+  await shot('own-2', [['[data-shot="left"]', '直接改：岗位、限时、到点交卷，马上生效'], ['[data-shot="right"]', '让 AI 改题目内容']]);
   // 做题情况
   await p.evaluate(() => { [...document.querySelectorAll('[role=tab]')].find(x => (x.textContent || '').includes('做题情况'))?.click(); }); await wait(800);
   await p.evaluate(() => { document.querySelector('.ant-table')?.scrollIntoView({ block: 'center' }); }); await wait(500);
@@ -89,6 +100,13 @@ if (keys.next) {
   await p.evaluate(() => { document.querySelectorAll('.ant-table-tbody .ant-checkbox-input:checked').forEach(c => c.click()); [...document.querySelectorAll('.ant-table-tbody button')].find(x => x.textContent?.includes('看报告'))?.click(); }); await wait(2500);
   await p.evaluate(() => { const tl = document.querySelector('.ant-drawer-body [role=tablist]'); tl?.setAttribute('data-shot', 'tabs'); tl?.previousElementSibling?.setAttribute('data-shot', 'sum'); });
   await shot('rev-2', [['[data-shot="sum"]', '结果 / AI 使用 / 用时'], ['[data-shot="tabs"]', '三栏：交了什么 · 怎么做的 · 评得怎样']]);
+}
+// ── 专属邀请链接：要有一道已经生成了名单的题（keys.invite） ──
+if (keys.invite) {
+  const { token, k } = keys.invite;
+  await p.goto(`${B}/work/${token}/owner?k=${k}`, { waitUntil: 'networkidle0', timeout: 300000 }); await wait(2500);
+  await p.evaluate(() => { const c = [...document.querySelectorAll('div')].find(x => x.firstElementChild && (x.firstElementChild.textContent || '').trim().startsWith('专属邀请链接') && x.style.borderRadius); c?.setAttribute('data-shot', 'inv'); c?.scrollIntoView({ block: 'center' }); }); await wait(500);
+  await shot('own-inv', [['[data-shot="inv"]', '一人一条，复制后分别发给候选人'], ['button::复制全部', '名字和链接一起复制'], ['.ant-switch', '开着时，公开链接不能开始新的作答']]);
 }
 if (process.argv[3]) fs.writeFileSync(process.argv[3], JSON.stringify(out, null, 1));
 await b.close();
