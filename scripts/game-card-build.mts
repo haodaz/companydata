@@ -85,6 +85,9 @@ async function build(id: string) {
     choices: d.choices.map((c: any, i: number) => ({ ...c, id: String(c.id || `c${i + 1}`), from: +c.from || 0, to: +c.to || 40 })),
     endings: d.endings, past: d.past, late: d.late, ...(d.stages ? { stages: d.stages } : {}), ...(d.work ? { work: d.work } : {}), meta: { model: d.author || 'claude-code', at: new Date().toISOString(), brief: d.brief || '' },
   };
+  // 身份字段必须齐，缺了不生成这张卡（11-07 一条写在长行中间的注释吞掉过这些字段，当时校验全过）
+  const lost = [['role', card.role], ['headline', card.headline], ['unit', card.unit], ['unit_type', card.unit_type], ['city', card.city], ['city_tier', card.city_tier], ['education', card.education], ['intro', card.intro], ['occupation.name', card.occupation?.name], ['start.level', card.start?.level]].filter(([, v]) => !String(v ?? '').trim()).map(([k]) => k);
+  if (lost.length) throw new Error(`缺身份字段：${lost.join('、')}，这张卡没有生成`);
   // 校验
   check(id, ladder.length >= 3, '职业库没有晋升阶梯');
   check(id, card.day?.length >= 6, 'day 少于 6 格');

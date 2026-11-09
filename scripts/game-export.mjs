@@ -10,6 +10,13 @@ for (const id of ids) for (const sub of ['', 'en/']) {
   const from = `${SRC}/${sub}${id}.json`;
   if (!fs.existsSync(from)) { console.error(`缺 ${from}，什么都没导出`); process.exit(1); }
 }
+// 身份字段缺了不准导出（中文卡和英文覆盖层的字段名略有不同）
+const blank = v => !String(v ?? '').trim();
+for (const id of ids) {
+  const c = JSON.parse(fs.readFileSync(`${SRC}/${id}.json`, 'utf8')), e = JSON.parse(fs.readFileSync(`${SRC}/en/${id}.json`, 'utf8'));
+  const lost = [...['role', 'headline', 'unit', 'unit_type', 'city', 'city_tier', 'education', 'intro'].filter(k => blank(c[k])), ...(blank(c.occupation?.name) ? ['occupation.name'] : []), ...(blank(c.start?.level) ? ['start.level'] : []), ...['occupation', 'role', 'headline', 'unit', 'unit_type', 'city', 'city_tier', 'education', 'level', 'intro'].filter(k => blank(e[k])).map(k => `en.${k}`)];
+  if (lost.length) { console.error(`${id} 缺身份字段：${lost.join('、')}，什么都没导出`); process.exit(1); }
+}
 for (const id of ids) for (const sub of ['', 'en/']) fs.copyFileSync(`${SRC}/${sub}${id}.json`, `${DST}/${sub}${id}.json`);
 const list = fs.readdirSync(DST).filter(f => f.endsWith('.json')).map(f => f.replace('.json', '')).sort();
 const noEn = list.filter(i => !fs.existsSync(`${DST}/en/${i}.json`));
