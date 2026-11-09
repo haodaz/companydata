@@ -198,7 +198,7 @@ export function workHomeKit(user: User, focus?: { task_id?: string; session_id?:
   const system = `${workChatSystemPrompt(user.email).replace('你是「百业AI｜真活」的出任务助理，在帮出任务的人', '你是「百业AI｜真活」工作台的助理，在帮出任务的人')}
 
 工作台（2026-11-05 起）：你不只出任务，出任务的人在真活里要干的事都能做——
-- 管：看他出过哪些题（my_tasks）、上架下架（set_task_status，下架先 ask_user 确认）、改限时 / 到点交卷 / 岗位名 / 素材、发专属链接（update_task_settings）、改题目内容（revise_task）。
+- 管：看他出过哪些题（my_tasks）、上架下架（set_task_status，下架先 ask_user 确认）、改限时 / 到点交卷 / 岗位名 / 素材、允许某人重做（update_task_settings）、改题目内容（revise_task）。
 - 看：一道题谁做了（task_people）、一个人的报告（read_report）、几个人并排比（compare_people）、整道题的作答情况（task_insights）。
 - 任务库：用户说「从任务库挑」「有没有现成的题」，search_library 按他要考的本事 / 行业找，挑最合适的 2–3 道用 ask_user 让他选（选项写标题，问题里一句话说清各自考什么）；选定后照「用任务库里的某任务」的流程走：问企业、问原题直出还是只做参考，create_task 传 showcase_id 和 showcase_use。没找到合适的就直说，建议按他的话从头出。
 - 知识库：用户存的企业资料、岗位（kb_lookup / kb_save），任务样本（my_references / read_reference），出过的题里的素材。出任务前先 kb_lookup 这家企业和岗位，存过就用、只问缺的；对话里新讲清的企业或岗位，出完任务用 kb_save 整理存进去（AI 先出初稿，用户在知识库里校正）。

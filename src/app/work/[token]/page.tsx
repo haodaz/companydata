@@ -6,6 +6,7 @@
  * ?s=<session id> 回到已有的一次作答（看报告）。
  */
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { contactKey } from '@/lib/work/contact';
 import { useParams, useSearchParams } from 'next/navigation';
 import { WorkReport } from '@/components/work/WorkReport';
 import { roleLabel } from '@/lib/work/role-label';
@@ -75,6 +76,9 @@ export default function WorkPage() {
   const [switchFrom, setSwitchFrom] = useState('');   // 换作答方式：沿用这一次作答，时钟不重置
   const [sid, setSid] = useState<string>('');
   const [name, setName] = useState(''); const [contact, setContact] = useState('');
+  const [linkTip, setLinkTip] = useState(false);
+  // 留下信息后地址变成这个人自己的，后面不再用公共链接认人
+  const pinLink = (id: string) => { if (!sp.get('k')) window.history.replaceState(null, '', `/work/${token}?s=${id}`); };
   const [mode, setMode] = useState<'bench' | 'open' | 'plugin'>('bench');
   const [report, setReport] = useState<any>(null);
   const [participant, setParticipant] = useState<any>(null);
@@ -83,33 +87,34 @@ export default function WorkPage() {
   useEffect(() => { const f = () => setNarrow(window.innerWidth < 980); f(); window.addEventListener('resize', f); return () => window.removeEventListener('resize', f); }, []);
   useEffect(() => {
     (async () => {
-      // 专属链接按邀请码找这次作答（换浏览器也接得回来），不看本机记录
-      const inv = sp.get('i') || '';
-      let saved = sp.get('s') || '';
-      if (!saved && inv) saved = (await (await fetch(`/api/work/${token}/sessions?invite=${encodeURIComponent(inv)}`)).json()).session_id || '';
-      else if (!saved && typeof localStorage !== 'undefined') saved = localStorage.getItem(`work:${token}`) || '';
-      const qs = new URLSearchParams(); if (sp.get('k')) qs.set('k', sp.get('k')!); if (inv) qs.set('i', inv); if (saved) qs.set('s', saved);
-      const j = await (await fetch(`/api/work/${token}${qs.size ? `?${qs}` : ''}`)).json();
-      if (j.invite?.label) setName(j.invite.label);
+      // 地址里的个人编号优先，其次是本机记录
+      const saved = sp.get('s') || (typeof localStorage !== 'undefined' ? localStorage.getItem(`work:${token}`) || '' : '');
+      const j = await (await fetch(`/api/work/${token}${sp.get('k') ? `?k=${encodeURIComponent(sp.get('k')!)}` : ''}`)).json();
       if (j.ok) setPreview(!!j.preview);
       if (!j.ok) { setErr(j.error || '链接不可用'); setPhase('intro'); return; }
       setTask(j.task); if (j.task?.task?.env?.type === 'open') setMode('open'); if (j.task?.task?.env?.type === 'plugin') setMode('plugin');   // 出任务的人指定了「自己录制电脑操作」：只有开放模式
       const s = saved;
       if (s) {
         const r = await (await fetch(`/api/work/${token}/sessions/${s}`)).json();
-        if (r.ok) { setSid(s); setParticipant(r.session.participant); if (r.session.participant?.mode === 'open' || j.task?.task?.env?.type === 'open') setMode('open'); if (r.session.participant?.mode === 'plugin') setMode('plugin'); if (r.session.report?.auditing) { setPhase('grading'); return; } if (r.session.report) { setReport(r.session.report); setPhase('report'); return; } if (r.session.submitted_at) { setPhase('grading'); return; }
+        // 公司允许重做了：回到公共链接就是新的一次，别被本机记录带回旧报告
+        if (r.ok && r.session.participant?.retake_allowed && !sp.get('s')) { try { localStorage.removeItem(`work:${token}`); } catch {} setPhase('intro'); return; }
+        if (r.ok) { pinLink(s); setSid(s); setParticipant(r.session.participant); if (r.session.participant?.mode === 'open' || j.task?.task?.env?.type === 'open') setMode('open'); if (r.session.participant?.mode === 'plugin') setMode('plugin'); if (r.session.report?.auditing) { setPhase('grading'); return; } if (r.session.report) { setReport(r.session.report); setPhase('report'); return; } if (r.session.submitted_at) { setPhase('grading'); return; }
           // 时间到了才回来：按最后保存的内容收卷，这次作答结束，不能接着做
           if (r.session.expired) { const a = await (await fetch(`/api/work/${token}/sessions/${s}/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ auto: true }) })).json(); if (a.report) { setReport(a.report); setPhase('report'); } else setPhase(a.ok ? 'grading' : 'ended'); return; }
           setResume(r.session); setPhase('work'); return; }
       }
       setPhase('intro');
     })();
-  }, [token, sp]);
+  }, [token]); // eslint-disable-line react-hooks/exhaustive-deps   // 地址换成个人链接时不要重新加载
 
+  const needContact = !sp.get('k');
   const start = async () => {
-    if (!name.trim()) return;
-    const j = await (await fetch(`/api/work/${token}/sessions`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, contact, mode, k: sp.get('k') || undefined, from: switchFrom || undefined, invite: sp.get('i') || undefined }) })).json();
+    if (!name.trim() || (needContact && !switchFrom && !contactKey(contact))) return;
+    const j = await (await fetch(`/api/work/${token}/sessions`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, contact, mode, device: deviceId(), k: sp.get('k') || undefined, from: switchFrom || undefined }) })).json();
     if (!j.ok) { setErr(j.error); return; }
+    // 这个手机或邮箱已经开始过：回到那一次（走完整加载，时间和内容都从服务器恢复）
+    if (j.resumed) { try { localStorage.setItem(`work:${token}`, j.session_id); } catch {} location.replace(`/work/${token}?s=${j.session_id}`); return; }
+    if (needContact) { pinLink(j.session_id); setLinkTip(true); }
     if (switchFrom) { const r = await (await fetch(`/api/work/${token}/sessions/${j.session_id}`)).json(); if (r.ok) setResume(r.session); setSwitchFrom(''); }
     setSid(j.session_id); setParticipant({ name, contact, mode, ...(j.code ? { code: j.code } : {}) }); try { localStorage.setItem(`work:${token}`, j.session_id); } catch {}
     setPhase('work');
@@ -140,11 +145,11 @@ export default function WorkPage() {
             ))}
           </div>
         </Box>}
-        <Box title="留个名字就开始">
+        <Box title="留下姓名和联系方式就开始">
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <input value={name} onChange={e => setName(e.target.value)} placeholder="姓名 / 昵称" style={inp} />
-            <input value={contact} onChange={e => setContact(e.target.value)} placeholder="联系方式（选填，报告发你）" style={{ ...inp, flex: 1, minWidth: 220 }} />
-            <button onClick={start} disabled={!name.trim()} style={btnPrimary}>开始做 →</button>
+            <input value={contact} onChange={e => setContact(e.target.value)} placeholder="手机号或邮箱（换设备回来靠它接着做）" style={{ ...inp, flex: 1, minWidth: 220 }} />
+            <button onClick={start} disabled={!name.trim() || (needContact && !switchFrom && !contactKey(contact))} style={btnPrimary}>开始做 →</button>
           </div>
           {err && <div style={{ color: '#c0392b', marginTop: 8 }}>{err}</div>}
         </Box>
@@ -178,16 +183,20 @@ export default function WorkPage() {
     </Shell>
   );
 
-  if (mode === 'plugin' && participant?.code) return <Shell><PluginWork code={participant.code} task={task as any} onSubmitted={() => setPhase('grading')} /></Shell>;
+  const tipBar = linkTip && sid ? <div style={{ position: 'fixed', top: 54, left: '50%', transform: 'translateX(-50%)', zIndex: 60, maxWidth: 'calc(100vw - 24px)', display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px', background: '#fff', border: '1px solid #d8d4ff', borderRadius: 10, boxShadow: '0 8px 24px rgba(20,24,60,.16)', fontSize: 13, color: '#333' }}><span>地址已变成你的作答链接，换设备打开能接着做</span><button onClick={() => navigator.clipboard.writeText(location.href)} style={{ border: 0, background: 'none', color: '#6055f5', fontWeight: 700, cursor: 'pointer', padding: 0, whiteSpace: 'nowrap' }}>复制</button><button onClick={() => setLinkTip(false)} aria-label="关闭" style={{ border: 0, background: 'none', color: '#999', cursor: 'pointer', padding: 0 }}>×</button></div> : null;
+  if (mode === 'plugin' && participant?.code) return <Shell>{tipBar}<PluginWork code={participant.code} task={task as any} onSubmitted={() => setPhase('grading')} /></Shell>;
 
-  return <Workspace key={`${sid}:${mode}`} token={token} sid={sid} task={task} env={env} mode={mode as 'bench' | 'open'} narrow={narrow} grading={phase === 'grading'} error={err} resume={resume} limit={preview || participant?.preview || task.task.soft_limit ? null : (Number(task.task.time_minutes) || 60) * 60} onRestart={() => { setSwitchFrom(sid); setName(participant?.name || ''); setPhase('intro'); window.scrollTo(0, 0); }} onSubmit={async (deliverable, events, auto) => {
+  return <>{tipBar}<Workspace key={`${sid}:${mode}`} token={token} sid={sid} task={task} env={env} mode={mode as 'bench' | 'open'} narrow={narrow} grading={phase === 'grading'} error={err} resume={resume} limit={preview || participant?.preview || task.task.soft_limit ? null : (Number(task.task.time_minutes) || 60) * 60} onRestart={() => { setSwitchFrom(sid); setName(participant?.name || ''); setContact(participant?.contact || ''); setPhase('intro'); window.scrollTo(0, 0); }} onSubmit={async (deliverable, events, auto) => {
     setPhase('grading');
     const j = await (await fetch(`/api/work/${token}/sessions/${sid}/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deliverable, events, auto }) })).json();
     if (!j.ok) { if (auto || j.expired) { setPhase('ended'); return; } setErr(j.error || '交卷失败，再试一次'); setPhase('work'); return; }
     if (j.staged) return;   // 进「AI 审计中」，由 AuditPanel 推进
     setReport(j.report); setPhase('report');
-  }} />;
+  }} /></>;
 }
+
+/** 这台浏览器的编号：同一浏览器换联系方式重做时，管理页能标出来（只提示，不拦） */
+function deviceId() { try { let d = localStorage.getItem('work-device'); if (!d) { d = crypto.randomUUID(); localStorage.setItem('work-device', d); } return d; } catch { return undefined; } }
 
 function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubmit, onRestart, resume, limit }: { resume?: any; limit: number | null;  token: string; sid: string; task: Task; env: Env; mode: 'bench' | 'open'; narrow: boolean; grading: boolean; error?: string; onRestart?: () => void; onSubmit: (deliverable: string, events: Ev[], auto?: boolean) => Promise<void> }) {
   const t0 = useRef(Date.now() - (resume?.elapsed_s || 0) * 1000);   // 从开始作答算起：刷新、回来都接着走，不重置

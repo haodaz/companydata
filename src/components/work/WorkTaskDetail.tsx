@@ -1,7 +1,8 @@
 'use client';
 
 /** 真活台 · 一道题的详情（后台和出题人管理页共用）：问题与任务 / 材料包 / rubric / AI 基线 / 作答 */
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
+import { timing } from '@/lib/work/deadline';
 import { Button, Descriptions, Drawer, Input, InputNumber, Space, Table, Tabs, Tag, Tooltip, Typography, App } from 'antd';
 import { WorkReport } from '@/components/work/WorkReport';
 import { ReportView } from '@/components/work/ReportView';
@@ -47,6 +48,14 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
     } catch (e: any) { message.error(e.message); setAiBusy(''); }
   };
   const aiOf = (s: any) => s.report?.ai_use;
+  // 同一浏览器用不同的手机或邮箱做过：只标出来，公司自己判断
+  const swapped = useMemo(() => { const by = new Map<string, any[]>(); for (const s of sessions) if (s.participant?.device) by.set(s.participant.device, [...(by.get(s.participant.device) || []), s]); return new Set([...by.values()].filter(g => new Set(g.map(x => x.participant?.contact)).size > 1).flat().map(x => x.id)); }, [sessions]);
+  const allowRetake = async (s: any) => {
+    const token = (shareLink.match(/\/work\/([^/?#]+)/) || [])[1];
+    const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(ownerKey || '')}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ allow_retake: s.id }) })).json();
+    if (!j.ok) return message.error(j.error || '没改成');
+    message.success(`${s.participant?.name} 再用这条链接进来就是新的一次，旧的作答和报告都留着`); setTimeout(() => location.reload(), 900);
+  };
   // 改限时（20–240 分钟）：计时器和任务书里写的时长一起换（2026-11-03，潜历反馈对 AI 说改 180 改不动）
   const [minutes, setMinutes] = useState<number>(Number(T.task?.time_minutes) || 60);
   const [minEdit, setMinEdit] = useState<number>(minutes);
@@ -103,7 +112,7 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
   const exportCsv = () => {
     const items: any[] = T.rubric || [];
     const esc = (v: any) => `"${String(v ?? '').replace(/"/g, '""')}"`;
-    const head = ['名次', '姓名', '联系方式', '总分', 'AI 使用', ...items.map((r: any) => r.title), '交卷时间', '报告链接'];
+    const head = ['名次', '姓名', '联系方式', '总分', 'AI 使用', ...items.map((r: any) => r.title), '交卷时间', '个人链接'];
     const lines = graded.map((s: any, i: number) => { const it = s.report?.result?.items || []; return [i + 1, s.participant?.name, s.participant?.contact, s.score, aiOf(s) ? (aiOf(s).score ?? '没用 AI') : '', ...items.map((r: any) => it.find((x: any) => x.id === r.id)?.score ?? ''), s.submitted_at ? new Date(s.submitted_at).toLocaleString('zh-CN', { hour12: false }) : '', `${shareLink}?s=${s.id}`].map(esc).join(','); });
     const blob = new Blob(['\ufeff' + [head.map(esc).join(','), ...lines].join('\n')], { type: 'text/csv;charset=utf-8' });
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `候选名单-${(T.task?.title || '真活').slice(0, 20)}.csv`; a.click(); URL.revokeObjectURL(a.href);
@@ -175,12 +184,12 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
           <Table size="small" rowKey="id" pagination={false} dataSource={ordered}
             rowSelection={{ selectedRowKeys: picked, onChange: k => setPicked((k as string[]).slice(0, 4)), getCheckboxProps: (s: any) => ({ disabled: !s.report?.result }) }} columns={[
           { title: '#', width: 44, render: (_: any, s: any) => (rankOf.has(s.id) ? <b style={{ color: rankOf.get(s.id)! <= 3 ? '#6055f5' : '#888' }}>{rankOf.get(s.id)}</b> : <Text type="secondary">–</Text>) },
-          { title: '谁', render: (_: any, s: any) => <span>{s.participant?.name} {s.participant?.preview && <Tag color="orange" style={{ marginLeft: 4 }}>预览</Tag>}{s.participant?.mode === 'ai' && <Tag style={{ marginLeft: 4 }}>AI 学员</Tag>}<Text type="secondary">{s.participant?.contact}</Text></span> },
+          { title: '谁', render: (_: any, s: any) => <span>{s.participant?.name} {s.participant?.preview && <Tag color="orange" style={{ marginLeft: 4 }}>预览</Tag>}{s.participant?.mode === 'ai' && <Tag style={{ marginLeft: 4 }}>AI 学员</Tag>}<Text type="secondary">{s.participant?.contact}</Text>{swapped.has(s.id) && <Tag color="orange" style={{ marginLeft: 4 }} title="同一个浏览器用不同的手机或邮箱做过这道题">同一浏览器换过联系方式</Tag>}{s.participant?.retake_allowed && <Tag style={{ marginLeft: 4 }}>已允许重做</Tag>}</span> },
           { title: '开始', dataIndex: 'started_at', render: (v: string) => new Date(v).toLocaleString('zh-CN', { hour12: false }) },
           { title: '交卷', dataIndex: 'submitted_at', render: (v: string) => (v ? new Date(v).toLocaleString('zh-CN', { hour12: false }) : <Text type="secondary">做着呢</Text>) },
           { title: '结果', dataIndex: 'score', width: 70, render: (v: number) => (v == null ? '–' : <b>{v}</b>) },
           { title: 'AI 使用', width: 80, render: (_: any, s: any) => { const u = aiOf(s); return !u ? <Text type="secondary">–</Text> : u.score == null ? <Text type="secondary" style={{ fontSize: 12 }}>没用</Text> : <b style={{ color: '#6055f5' }}>{u.score}</b>; } },
-          { title: '', width: 180, render: (_: any, s: any) => <Space>{s.report && <Button size="small" type="primary" ghost onClick={() => setReport(s)}>看报告</Button>}<Button size="small" onClick={() => { navigator.clipboard.writeText(`${shareLink}?s=${s.id}`); message.success('报告链接已复制'); }}>报告链接</Button></Space> },
+          { title: '', width: 260, render: (_: any, s: any) => <Space>{s.report && <Button size="small" type="primary" ghost onClick={() => setReport(s)}>看报告</Button>}<Button size="small" onClick={() => { navigator.clipboard.writeText(`${shareLink}?s=${s.id}`); message.success('个人链接已复制'); }}>个人链接</Button>{ownerKey && s.participant?.contact_key && (s.submitted_at || timing(T.task, s).closed) && <Button size="small" onClick={() => allowRetake(s)}>允许重做</Button>}</Space> },
         ]} /></> },
       ]} />
       <Drawer open={cmpOpen} onClose={() => setCmpOpen(false)} size={Math.min(1100, typeof window !== 'undefined' ? window.innerWidth - 40 : 1100)} title="并排对比">

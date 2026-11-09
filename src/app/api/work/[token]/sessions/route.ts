@@ -1,37 +1,31 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { newCode } from '@/lib/work/plugin';
-import { findInvite, inviteOnly } from '@/lib/work/invite';
+import { contactKey } from '@/lib/work/contact';
+import { timing } from '@/lib/work/deadline';
 
 export const runtime = 'nodejs';
 
-/** 这条专属链接有没有已经开始的作答（换浏览器打开时接回去） */
-export async function GET(req: NextRequest, { params }: { params: Promise<{ token: string }> }) {
-  const { token } = await params;
-  const { data: t } = await db.from('work_tasks').select('id, context').eq('share_token', token).maybeSingle();
-  const inv = t && findInvite(t, req.nextUrl.searchParams.get('invite'));
-  if (!t || !inv) return NextResponse.json({ ok: true, session_id: null });
-  const { data: s } = await db.from('work_sessions').select('id').eq('task_id', t.id).eq('participant->>invite', inv.code).order('created_at').limit(1).maybeSingle();
-  return NextResponse.json({ ok: true, session_id: s?.id || null });
-}
-
-/** 开始作答：{ name, contact? } → session id（留名字就能做，不用登录） */
+/** 开始作答：{ name, contact } → session id（不用登录）。同一个手机或邮箱回来还是同一次，做完或到点后不再新开 */
 export async function POST(req: NextRequest, { params }: { params: Promise<{ token: string }> }) {
   const { token } = await params;
-  const { data: t } = await db.from('work_tasks').select('id, status, owner_key, context').eq('share_token', token).maybeSingle();
+  const { data: t } = await db.from('work_tasks').select('id, status, owner_key, task').eq('share_token', token).maybeSingle();
   const body = await req.json().catch(() => ({}));
   const preview = !!(t && body.k && body.k === t.owner_key);   // 出题人预览做题台：待发布也能开一次作答，记成预览
   if (!t || !(t.status === 'published' || (t.status === 'ready' && preview))) return NextResponse.json({ ok: false, error: '这个链接不可用' }, { status: 404 });
   // 换一种作答方式：还是这一次作答，时钟不重置（11-09）
   const { data: prev } = body.from ? await db.from('work_sessions').select('id, participant, submitted_at').eq('id', String(body.from)).eq('task_id', t.id).maybeSingle() : { data: null };
-  // 专属链接：一条只对应一次作答，已经开始过就接回那一次
-  const inv = findInvite(t, body.invite);
-  if (!preview && !prev && inviteOnly(t) && !inv) return NextResponse.json({ ok: false, error: '这个任务只接受专属邀请链接，请联系发给你链接的公司。' }, { status: 403 });
-  if (inv) {
-    const { data: ex } = await db.from('work_sessions').select('id, participant').eq('task_id', t.id).eq('participant->>invite', inv.code).order('created_at').limit(1).maybeSingle();
-    if (ex) return NextResponse.json({ ok: true, session_id: ex.id, ...(ex.participant?.code ? { code: ex.participant.code } : {}) });
+  const key = contactKey(body.contact || prev?.participant?.contact);
+  if (!preview && !prev) {
+    if (!key) return NextResponse.json({ ok: false, error: '请填手机号或邮箱，换设备回来靠它接着做' }, { status: 400 });
+    const { data: ex } = await db.from('work_sessions').select('id, participant, submitted_at, started_at').eq('task_id', t.id).eq('participant->>contact_key', key).order('created_at', { ascending: false }).limit(1).maybeSingle();
+    if (ex) {
+      // 做完或到点的不接回去：只凭手机号不能看别人的报告
+      if (ex.submitted_at || timing(t.task, ex).expired) return NextResponse.json({ ok: false, done: true, error: '这个手机号或邮箱已经做过这道题了。如需重新作答，请联系发给你链接的公司。' }, { status: 409 });
+      return NextResponse.json({ ok: true, session_id: ex.id, resumed: true, ...(ex.participant?.code ? { code: ex.participant.code } : {}) });
+    }
   }
-  const name = String(body.name || prev?.participant?.name || inv?.label || '').trim().slice(0, 40);
+  const name = String(body.name || prev?.participant?.name || '').trim().slice(0, 40);
   if (!name) return NextResponse.json({ ok: false, error: '留个名字' }, { status: 400 });
   const mode = body.mode === 'open' ? 'open' : body.mode === 'plugin' ? 'plugin' : 'bench';   // bench 站内工作台 / open 用自己的软件（录屏 + 上传）/ plugin 用自己的网页工具（真活插件记过程）
   // 插件模式：发一个真活码，插件凭它把记到的东西挂到这次作答上（撞码就重抽）
@@ -42,7 +36,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
     return NextResponse.json({ ok: true, session_id: prev.id, ...(code ? { code } : {}) });
   }
-  const { data, error } = await db.from('work_sessions').insert({ task_id: t.id, participant: { name, contact: String(body.contact || '').slice(0, 80), mode, ...(inv ? { invite: inv.code } : {}), ...(code ? { code } : {}), ...(preview ? { preview: true } : {}) }, events: [{ t: 0, type: 'start', note: mode }] }).select('id').single();
+  const { data, error } = await db.from('work_sessions').insert({ task_id: t.id, participant: { name, contact: String(body.contact || '').slice(0, 80), ...(key ? { contact_key: key } : {}), ...(body.device ? { device: String(body.device).slice(0, 40) } : {}), mode, ...(code ? { code } : {}), ...(preview ? { preview: true } : {}) }, events: [{ t: 0, type: 'start', note: mode }] }).select('id').single();
   if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
   return NextResponse.json({ ok: true, session_id: data.id, ...(code ? { code } : {}) });
 }

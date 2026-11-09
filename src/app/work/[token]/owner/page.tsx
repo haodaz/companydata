@@ -77,7 +77,6 @@ function Inner() {
             <GenericCompare token={token} ownerKey={k} task={T} />
           </Space>
         </div>
-        <InviteBox token={token} k={k} origin={origin} invites={T.invites || []} only={!!T.invite_only} sessions={d.sessions} onChange={load} />
         {/* 调整这道题（11-05 重排）：以前改岗位名 / 用时藏在下面的表格里、加删素材在「材料包」标签、AI 修订又单独一块——
             用户要改一样东西得先知道它在哪。现在一张卡：左边直接改（马上生效），右边让 AI 改题目内容 */}
         <div data-tour="revise" style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '14px 18px', marginBottom: 16 }}>
@@ -127,39 +126,3 @@ function QuickSettings({ T, token, k, onSaved }: { T: any; token: string; k: str
   );
 }
 
-/** 专属邀请链接：一人一条，一条只能作答一次；打开「只允许专属链接」后公开链接不能再开新的作答 */
-function InviteBox({ token, k, origin, invites, only, sessions, onChange }: { token: string; k: string; origin: string; invites: { code: string; label: string }[]; only: boolean; sessions: any[]; onChange: () => void }) {
-  const { message } = App.useApp();
-  const [names, setNames] = useState(''); const [busy, setBusy] = useState(false);
-  const patch = async (body: any) => {
-    setBusy(true);
-    try { const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(k)}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })).json(); if (!j.ok) throw new Error(j.error); onChange(); return true; }
-    catch (e: any) { message.error(e.message); return false; } finally { setBusy(false); }
-  };
-  const link = (c: string) => `${origin}/work/${token}?i=${c}`;
-  const add = async () => { const list = names.split('\n').map(x => x.trim()).filter(Boolean); if (list.length && await patch({ add_invites: list })) setNames(''); };
-  const copy = (text: string, tip: string) => { navigator.clipboard.writeText(text); message.success(tip); };
-  const stateOf = (c: string) => { const s = sessions.find(x => x.participant?.invite === c); return !s ? <Tag style={{ margin: 0 }}>未开始</Tag> : s.submitted_at ? <Tag color="green" style={{ margin: 0 }}>已交卷{s.score != null ? ` · ${s.score}` : ''}</Tag> : <Tag color="blue" style={{ margin: 0 }}>作答中</Tag>; };
-  return (
-    <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '14px 18px', marginBottom: 16 }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginBottom: 10 }}>
-        <b>专属邀请链接</b>
-        <span style={{ fontSize: 13, color: '#888', flex: 1, minWidth: 240 }}>一人一条，一条只能作答一次，换浏览器打开也是同一次。要让谁重做，就给他再生成一条。</span>
-        <span style={{ fontSize: 13 }}>只允许专属链接 <Switch size="small" checked={only} loading={busy} onChange={v => patch({ invite_only: v })} /></span>
-      </div>
-      <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start', flexWrap: 'wrap' }}>
-        <Input.TextArea value={names} onChange={e => setNames(e.target.value)} autoSize={{ minRows: 1, maxRows: 5 }} placeholder="候选人姓名，一行一个" style={{ flex: 1, minWidth: 240 }} />
-        <Button type="primary" onClick={add} loading={busy} disabled={!names.trim()}>生成链接</Button>
-        {invites.length > 0 && <Button onClick={() => copy(invites.map(i => `${i.label}\t${link(i.code)}`).join('\n'), `已复制 ${invites.length} 条链接`)}>复制全部</Button>}
-      </div>
-      {invites.length > 0 && <div style={{ marginTop: 10, maxHeight: 260, overflowY: 'auto' }}>
-        {invites.map(i => <div key={i.code} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '6px 0', borderTop: '1px solid #f0f1f6', fontSize: 13 }}>
-          <span style={{ width: 120, flexShrink: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{i.label}</span>
-          {stateOf(i.code)}
-          <code style={{ flex: 1, minWidth: 0, color: '#666', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{link(i.code)}</code>
-          <Button size="small" onClick={() => copy(link(i.code), `${i.label} 的链接已复制`)}>复制</Button>
-        </div>)}
-      </div>}
-    </div>
-  );
-}
