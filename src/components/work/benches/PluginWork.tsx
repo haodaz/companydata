@@ -6,12 +6,12 @@
  * 侧边栏那边交了卷，这页轮询到就切到「AI 审计中」。
  */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useL } from '@/lib/work/i18n';
+import { useL, useLang } from '@/lib/work/i18n';
 
 type Material = { id: string; title: string; kind: string; content: string; url?: string; mime?: string; name?: string };
 
 export function PluginWork({ code, task, onSubmitted }: { code: string; task: { task: { title: string; brief: string; time_minutes: number; deliverables: { id: string; title: string; format: string }[] }; materials: Material[]; company_name: string; role: string }; onSubmitted: () => void }) {
-  const [st, setSt] = useState<any>(null); const L = useL();
+  const [st, setSt] = useState<any>(null); const L = useL(); const lang = useLang();
   const [draft, setDraft] = useState<string | null>(null);
   const [saved, setSaved] = useState('');
   const [busy, setBusy] = useState(false);
@@ -83,7 +83,7 @@ export function PluginWork({ code, task, onSubmitted }: { code: string; task: { 
             <b style={{ font: '800 30px/1 ui-monospace, Menlo, monospace', letterSpacing: 5, color: '#6055f5' }}>{code}</b>
             <button style={ghost} onClick={() => navigator.clipboard.writeText(code)}>{L('复制', 'Copy')}</button>
           </div>
-          <a href={`/work/plugin?code=${code}`} target="_blank" rel="noreferrer" style={{ ...primary, display: 'inline-block', marginTop: 12, textDecoration: 'none' }}>{L('去装插件 / 关联 →', 'Install / link the extension →')}</a>
+          <a href={`/work/plugin?code=${code}${lang === 'en' ? '&lang=en' : ''}`} target="_blank" rel="noreferrer" style={{ ...primary, display: 'inline-block', marginTop: 12, textDecoration: 'none' }}>{L('去装插件 / 关联 →', 'Install / link the extension →')}</a>
           <div style={{ fontSize: 13, color: '#666', marginTop: 10, lineHeight: 1.7 }}>{L('没装过插件：那一页有下载和三步安装。装过了：点「关联这次作答」，再在插件侧边栏点「同意并开始记录」。', 'Not installed yet: that page has the download and a three-step setup. Already installed: click "Link this attempt", then click "Agree and start recording" in the extension sidebar.')}</div>
         </div>
         <div style={card}>

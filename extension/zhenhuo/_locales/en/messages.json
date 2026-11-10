@@ -1,0 +1,5 @@
+{
+  "name": { "message": "Work sample extension (True Work)" },
+  "description": { "message": "Baiye AI · True Work: when you answer a work sample with your own tools, it records only during the task — the pages you open, their text (including AI chats) and how much you type and paste. Optionally a full-screen screenshot every 10 seconds, so desktop apps are covered too. After you submit, AI reviews how you worked." },
+  "action_title": { "message": "Open the work sample extension" }
+}

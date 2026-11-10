@@ -73,16 +73,18 @@ function schedule(s) {
   chrome.alarms.create('end', { when: Math.max(Date.now() + 1000, d) });
 }
 
+// 语言（11-10）：用户在侧边栏切过就用他选的（langPref），否则跟题目（sess.lang）；事件 note 是给评卷看的，不翻
+async function T(zh, en) { const { langPref, sess } = await chrome.storage.local.get(['langPref', 'sess']); return (langPref || sess?.lang) === 'en' ? en : zh; }
 function notify(title, message) { chrome.notifications.create({ type: 'basic', iconUrl: 'icons/icon128.png', title, message, priority: 2 }); }
 
 async function bind(code, api) {
   code = String(code || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
   api = api || (await chrome.storage.local.get('lastApi')).lastApi || DEFAULT_API;
-  const r = await fetch(`${api}/api/work/plugin/${code}`).then(x => x.json()).catch(() => ({ ok: false, error: '连不上真活网站，检查网络' }));
+  const r = await fetch(`${api}/api/work/plugin/${code}`).then(x => x.json()).catch(async () => ({ ok: false, error: await T('连不上真活网站，检查网络', 'Cannot reach the site. Check your network.') }));
   if (!r.ok) return { ok: false, error: r.error };
   const old = await getSess();
   const same = old?.code === r.code;
-  const s = { code: r.code, api, title: r.task.title, company: r.task.company, minutes: r.task.time_minutes, startedAt: r.started_at, deadline: r.deadline, share_token: r.share_token, sid: r.sid, submitted: r.submitted, recording: same ? old.recording && !r.submitted : false, warn: null };
+  const s = { code: r.code, api, lang: r.lang === 'en' ? 'en' : 'zh', title: r.task.title, company: r.task.company, minutes: r.task.time_minutes, startedAt: r.started_at, deadline: r.deadline, share_token: r.share_token, sid: r.sid, submitted: r.submitted, recording: same ? old.recording && !r.submitted : false, warn: null };
   if (!same) await chrome.storage.local.set({ q: [], cq: [] });
   await setSess(s); await chrome.storage.local.set({ lastApi: api });
   schedule(s);
@@ -90,7 +92,7 @@ async function bind(code, api) {
 }
 
 async function submit(auto, deliverable) {
-  const s = await getSess(); if (!s?.code) return { ok: false, error: '还没关联作答' };
+  const s = await getSess(); if (!s?.code) return { ok: false, error: await T('还没关联作答', 'Not linked to an attempt yet') };
   if (s.submitted) return { ok: true, already: true };
   await flush();
   const r = await fetch(`${s.api}/api/work/plugin/${s.code}/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ auto, ...(typeof deliverable === 'string' ? { deliverable } : {}) }) }).then(x => x.json()).catch(() => ({ ok: false, error: '连不上真活网站，稍后再点一次' }));
@@ -145,9 +147,9 @@ chrome.alarms.onAlarm.addListener(async a => {
     await flush();
     if (s.deadline && !s.submitted && Date.now() >= new Date(s.deadline).getTime()) await submit(true);
   }
-  if (a.name === 'warn5' && !s.submitted) { await setSess({ ...s, warn: '5' }); notify('真活：还剩 5 分钟', `「${s.title}」还剩 5 分钟，记得在侧边栏写好交付说明。`); }
-  if (a.name === 'warn1' && !s.submitted) { await setSess({ ...s, warn: '1' }); notify('真活：还剩 1 分钟', '1 分钟后自动交卷：把交付链接和说明贴进侧边栏。'); }
-  if (a.name === 'end' && !s.submitted) { notify('真活：时间到，已自动交卷', 'AI 正在回看你的过程，报告页已打开。'); await submit(true); }
+  if (a.name === 'warn5' && !s.submitted) { await setSess({ ...s, warn: '5' }); notify(await T('真活：还剩 5 分钟', 'Work sample: 5 minutes left'), await T(`「${s.title}」还剩 5 分钟，记得在侧边栏写好交付说明。`, `"${s.title}" has 5 minutes left. Write your hand-in note in the side panel.`)); }
+  if (a.name === 'warn1' && !s.submitted) { await setSess({ ...s, warn: '1' }); notify(await T('真活：还剩 1 分钟', 'Work sample: 1 minute left'), await T('1 分钟后自动交卷：把交付链接和说明贴进侧边栏。', 'Auto-submit in 1 minute: paste your deliverable links and note into the side panel.')); }
+  if (a.name === 'end' && !s.submitted) { notify(await T('真活：时间到，已自动交卷', 'Work sample: time is up, submitted'), await T('AI 正在回看你的过程，报告页已打开。', 'AI is reviewing how you worked. The report page is open.')); await submit(true); }
 });
 
 chrome.runtime.onStartup.addListener(async () => { const s = await getSess(); if (s) schedule(s); });

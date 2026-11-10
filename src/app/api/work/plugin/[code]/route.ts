@@ -13,9 +13,12 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ cod
   const minutes = Number(t.task?.time_minutes) || 60;
   const ev = (s.events || []) as any[];
   const plugin = ev.filter(e => e.src === 'plugin');
+  // 题目语言（11-10）：插件侧边栏默认跟着它；英文题企业名用英文名（「潜历（DeepTalent）」→「DeepTalent」）
+  const en = t.task?.lang === 'en';
+  const company = en ? ((/[（(]\s*([A-Za-z][^（）()]*?)\s*[）)]/.exec(t.company_name || '') || [])[1] || t.company_name) : t.company_name;
   return NextResponse.json({
-    ok: true, code: normCode(code), share_token: t.share_token, sid: s.id, name: s.participant?.name || '',
-    task: { title: t.task?.title, company: t.company_name, role: t.role, time_minutes: minutes, brief: String(t.task?.brief || '').slice(0, 600), deliverables: t.task?.deliverables || [], materials: (t.materials || []).map((m: any) => ({ id: m.id, title: m.title })) },
+    ok: true, lang: en ? 'en' : 'zh', code: normCode(code), share_token: t.share_token, sid: s.id, name: s.participant?.name || '',
+    task: { title: t.task?.title, company, role: t.role, time_minutes: minutes, brief: String(t.task?.brief || '').slice(0, 600), deliverables: t.task?.deliverables || [], materials: (t.materials || []).map((m: any) => ({ id: m.id, title: m.title })) },
     started_at: s.started_at, deadline: t.task?.soft_limit ? null : new Date(new Date(s.started_at).getTime() + minutes * 60_000).toISOString(),
     submitted: !!s.submitted_at, auditing: !!s.report?.auditing, deliverable: s.deliverable || '', next_step: s.participant?.next_step || '',
     recorded: { events: plugin.length, pages: plugin.filter(e => e.type === 'visit').length, ai: (s.ai_chat || []).filter((c: any) => c.src === 'plugin').length, last_t: plugin.length ? plugin[plugin.length - 1].t : null },
