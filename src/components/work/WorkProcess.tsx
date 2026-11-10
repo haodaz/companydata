@@ -55,7 +55,7 @@ export function WorkProcess({ events, aiChat, materials, deliverables, shots = [
         case 'recording': out.push({ t: e.t, kind: 'mat', color: C.file, label: `上传录屏${e.duration ? `（${fmt(e.duration)}）` : ''}`, link: { href: e.url, text: '播放' } }); break;
         case 'rec_start': out.push({ t: e.t, kind: 'other', color: C.screen, label: '开始记录屏幕' }); break;
         case 'rec_stop': out.push({ t: e.t, kind: 'other', color: C.screen, label: '暂停记录屏幕' }); break;
-        case 'screen': { const n = near(e.t); out.push({ t: e.t, kind: 'screen', color: C.screen, label: '屏幕画面（AI 看图记的）', body: String(e.note || ''), ...(n ? { link: { href: n.url, text: '看截图' } } : {}) }); break; }
+        case 'screen': { const n = near(e.t); out.push({ t: e.t, kind: 'screen', color: C.screen, label: '屏幕画面（AI 看图记的）', body: String(e.note || '') }); break; }
         case 'draft': out.push({ t: e.t, kind: 'draft', color: C.draft, label: `稿子快照 · ${e.chars || String(e.text || '').length} 字`, detail: String(e.text || '') }); break;
         case 'next_step': out.push({ t: e.t, kind: 'end', color: C.end, label: '最后一问：如果再给一天，先改哪里', body: String(e.text || '') }); break;
         case 'away': out.push({ t: e.t, kind: 'away', color: C.away, label: `离开后回来（中间约 ${Math.max(1, Math.round((Number(e.seconds) || 0) / 60))} 分钟，时间没有暂停）` }); break;
@@ -83,7 +83,8 @@ export function WorkProcess({ events, aiChat, materials, deliverables, shots = [
           <a href={f.url} target="_blank" rel="noreferrer" style={{ color: '#6055f5', fontWeight: 700 }}>{f.type === 'recording' ? '播放' : '下载'}</a>
         </div>)}</div>
       </div>}
-      {part !== 'files' && shots.length > 0 && <div style={box}>
+      {/* 原始截图不展示（11-10），只留 AI 看图写的逐条记录 */}
+      {false && part !== 'files' && shots.length > 0 && <div style={box}>
         <div style={head}>屏幕截图（每 10 秒一张，画面没变的不存；这里列 {shots.length} 张，点开看大图）</div>
         <div style={{ display: 'flex', gap: 6, overflowX: 'auto', padding: '8px 12px 10px' }}>{shots.map(s => <a key={s.t} href={s.url} target="_blank" rel="noreferrer" style={{ flex: '0 0 auto', textAlign: 'center', textDecoration: 'none' }}><img src={s.url} alt={fmt(s.t)} loading="lazy" style={{ width: 128, height: 80, objectFit: 'cover', borderRadius: 4, border: '1px solid #e8e9f0', display: 'block' }} /><span style={{ fontSize: 11, color: '#8a8fa8', fontFamily: 'ui-monospace, Menlo, monospace' }}>{fmt(s.t)}</span></a>)}</div>
       </div>}

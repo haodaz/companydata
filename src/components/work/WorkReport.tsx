@@ -39,12 +39,9 @@ export function WorkReport({ report, participant, section = 'all' }: { report: a
       {G && r.items?.length >= 2 && <Overview items={r.items} cmp={c} />}
       {G && u?.score != null && <AiUse u={u} />}
       {section === 'all' && report.next_step && <Card title="如果再给一天，先改哪里（候选人交卷时写的）"><div style={{ fontSize: 13.5, lineHeight: 1.75, whiteSpace: 'pre-wrap' }}>{report.next_step}</div></Card>}
-      {Pr && report.recording && <Card title={report.recording.url ? '录屏回放 · 用自己的软件做的' : `屏幕记录 · 用自己的软件做的（整屏截图 ${report.recording.shots || 0} 张）`}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 14, alignItems: 'start' }}>
-          {report.recording.url ? <video controls preload="metadata" src={report.recording.url} style={{ width: '100%', borderRadius: 10, background: '#000' }} />
-            : <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 4 }}>{(report.recording.gallery || []).filter((_: any, i: number, a: any[]) => a.length <= 12 || i % Math.ceil(a.length / 12) === 0).slice(0, 12).map((g: any) => <a key={g.t} href={g.url} target="_blank" rel="noreferrer" title={fmt(g.t)}><img src={g.url} alt={fmt(g.t)} style={{ width: '100%', aspectRatio: '16/10', objectFit: 'cover', borderRadius: 4, border: '1px solid #e8e9f0' }} /></a>)}</div>}
-          <div style={{ fontSize: 13.5, lineHeight: 1.7 }}><div style={{ color: '#888', fontSize: 12, marginBottom: 4 }}>时长 {fmt(report.recording.duration || 0)} · {report.recording.url ? '抽帧' : '挑'} {report.recording.frames} 张看图{report.recording.url ? '' : '（全部截图在下面的答题历程里）'}</div>{report.recording.summary}</div>
-        </div>
+      {/* 屏幕记录（11-10 潜历：原始录屏不给招聘方看）：只给 AI 看图写的概述，逐时间点的记录在答题历程里；原图不展示 */}
+      {Pr && report.recording && <Card title="屏幕记录 · 用自己的软件做的">
+        <div style={{ fontSize: 13.5, lineHeight: 1.7 }}><div style={{ color: '#888', fontSize: 12, marginBottom: 4 }}>时长 {fmt(report.recording.duration || 0)} · AI 看了 {report.recording.frames} 张截图写的概述；为保护候选人隐私，原始截图不展示，逐时间点的记录在答题历程里</div>{report.recording.summary}</div>
       </Card>}
       {G && <Card title="逐条（每条都有证据；前置没做到的，后置封顶）">
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>

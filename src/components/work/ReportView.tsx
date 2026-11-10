@@ -37,7 +37,7 @@ export function ReportView({ report, participant, deliverable, events, aiChat, m
       </div>
       <div role="tablist" style={{ display: 'flex', gap: 4, borderBottom: '1px solid #e8e9f0' }}>
         {TABS.map(([k, t]) => <button key={k} role="tab" aria-selected={tab === k} onClick={() => setTab(k)} style={{ border: 0, background: 'none', padding: '8px 14px', fontSize: 14, fontWeight: tab === k ? 700 : 500, color: tab === k ? '#4c43c9' : '#666', borderBottom: `2px solid ${tab === k ? '#6055f5' : 'transparent'}`, marginBottom: -1, cursor: 'pointer' }}>
-          {t}{k === 'deliv' && nFiles ? <span style={badge}>{nFiles} 个文件</span> : k === 'process' && shots.length ? <span style={badge}>{report.recording?.shots || shots.length} 张截图</span> : null}
+          {t}{k === 'deliv' && nFiles ? <span style={badge}>{nFiles} 个文件</span> : k === 'process' && report.recording?.shots ? <span style={badge}>屏幕记录 {report.recording.shots} 张</span> : null}
         </button>)}
       </div>
       {tab === 'deliv' && <div style={{ display: 'grid', gap: 14 }}>
