@@ -9,8 +9,12 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 import { Radar } from '@/components/work/WorkReport';
 import { WorkLogo } from '@/components/work/WorkLogo';
+import { aiItemL, pick, type Lang } from '@/lib/work/i18n';
+import { roleLabel } from '@/lib/work/role-label';
 
-const grade = (v: number) => (v >= 85 ? { t: '优秀', c: '#12a150' } : v >= 70 ? { t: '良好', c: '#2f80ed' } : v >= 60 ? { t: '合格', c: '#b7791f' } : { t: '待提升', c: '#8c8c8c' });
+const grade = (v: number, lang?: Lang) => (v >= 85 ? { t: pick(lang, '优秀', 'Excellent'), c: '#12a150' } : v >= 70 ? { t: pick(lang, '良好', 'Good'), c: '#2f80ed' } : v >= 60 ? { t: pick(lang, '合格', 'Pass'), c: '#b7791f' } : { t: pick(lang, '待提升', 'Developing'), c: '#8c8c8c' });
+/** 英文题显示企业英文名（同作答页） */
+const enCompany = (n: string) => { const m = /[（(]\s*([A-Za-z][^（）()]*?)\s*[）)]/.exec(n || ''); return m ? m[1] : n; };
 
 export default function CardPage() {
   const { token } = useParams<{ token: string }>();
@@ -29,40 +33,44 @@ export default function CardPage() {
   }, [token, sid]);
   if (err) return <div style={{ padding: 60, textAlign: 'center', color: '#888' }}>{err}</div>;
   if (!d) return <div style={{ padding: 60, textAlign: 'center', color: '#999' }}>成绩单生成中…</div>;
+  // 英文题（11-10）：成绩单整页英文
+  const lang: Lang | undefined = d.task.task?.lang; const L = (zh: string, en: string) => pick(lang, zh, en);
+  if (lang === 'en' && typeof document !== 'undefined') document.title = `${d.task.task?.title} · Score card`;
   const r = d.s.report.result, cmp = d.s.report.compare;
-  const g = grade(r.total);
+  const g = grade(r.total, lang);
   const rows = (r.items || []).map((i: any) => ({ title: String(i.title), score: Number(i.score) || 0, base: cmp?.items?.find((x: any) => x.id === i.id)?.baseline }));
   const when = new Date(d.s.submitted_at || d.s.started_at || Date.now());
+  const company = lang === 'en' ? enCompany(d.task.company_name) : d.task.company_name;
   const code = `ZH-${String(d.s.id).replace(/-/g, '').slice(0, 10).toUpperCase()}`;
   const link = typeof location !== 'undefined' ? location.href : '';
   return (
     <div className="zc-bg">
       <style>{CSS}</style>
       <div className="zc-actions">
-        <button onClick={() => window.print()}>打印 / 存成 PDF</button>
-        <button onClick={() => { navigator.clipboard.writeText(link); }}>复制分享链接</button>
-        <a href={`/work/${token}?s=${sid}`}>看完整报告 →</a>
+        <button onClick={() => window.print()}>{L('打印 / 存成 PDF', 'Print / save as PDF')}</button>
+        <button onClick={() => { navigator.clipboard.writeText(link); }}>{L('复制分享链接', 'Copy share link')}</button>
+        <a href={`/work/${token}?s=${sid}`}>{L('看完整报告 →', 'Full report →')}</a>
       </div>
       <div className="zc-card">
-        <div className="zc-top"><WorkLogo size="md" href={null} /><span className="zc-kind">真活成绩单</span></div>
-        <div className="zc-name">{d.s.participant?.name || '候选人'}</div>
-        <div className="zc-task">完成了一道真活：<b>{d.task.task?.title}</b></div>
-        <div className="zc-meta">{[d.task.company_name, d.task.role].filter(Boolean).join(' · ')}</div>
+        <div className="zc-top"><WorkLogo size="md" href={null} /><span className="zc-kind">{L('真活成绩单', 'WORK SAMPLE SCORE CARD')}</span></div>
+        <div className="zc-name">{d.s.participant?.name || L('候选人', 'Candidate')}</div>
+        <div className="zc-task">{L('完成了一道真活：', 'Completed a work sample: ')}<b>{d.task.task?.title}</b></div>
+        <div className="zc-meta">{[company, lang === 'en' ? roleLabel(d.task.role, d.task.task?.role, 'en') : d.task.role].filter(Boolean).join(' · ')}</div>
         <div className="zc-mid">
           <div className="zc-score">
             <div className="zc-num" style={{ color: g.c }}>{r.total}<span>/100</span></div>
             <div className="zc-grade" style={{ background: g.c }}>{g.t}</div>
-            {cmp && <div className="zc-base">同一道任务 AI 基线 {cmp.baseline_total} 分</div>}
+            {cmp && <div className="zc-base">{L(`同一道任务 AI 基线 ${cmp.baseline_total} 分`, `AI baseline on the same task: ${cmp.baseline_total}`)}</div>}
           </div>
           {rows.length >= 3 && rows.length <= 10 && <div className="zc-radar"><Radar rows={rows} /></div>}
         </div>
-        {d.s.report.ai_use?.score != null && <div className="zc-sec"><div className="zc-h">AI 使用能力 · <b style={{ color: '#6055f5' }}>{d.s.report.ai_use.score}</b> / 100</div>
-          <div className="zc-ai">{(d.s.report.ai_use.items || []).map((i: any) => <span key={i.key}>{i.title} <b>{i.score}</b></span>)}</div>
+        {d.s.report.ai_use?.score != null && <div className="zc-sec"><div className="zc-h">{L('AI 使用能力', 'AI use')} · <b style={{ color: '#6055f5' }}>{d.s.report.ai_use.score}</b> / 100</div>
+          <div className="zc-ai">{(d.s.report.ai_use.items || []).map((i: any) => <span key={i.key}>{aiItemL(i.key, i.title, lang)} <b>{i.score}</b></span>)}</div>
           {d.s.report.ai_use.verdict && <div style={{ fontSize: 13, color: '#555', marginTop: 4 }}>{d.s.report.ai_use.verdict}</div>}</div>}
-        {!!r.strengths?.length && <div className="zc-sec"><div className="zc-h">做得好的地方</div><ul>{r.strengths.slice(0, 3).map((x: string, i: number) => <li key={i}>{x}</li>)}</ul></div>}
+        {!!r.strengths?.length && <div className="zc-sec"><div className="zc-h">{L('做得好的地方', 'What went well')}</div><ul>{r.strengths.slice(0, 3).map((x: string, i: number) => <li key={i}>{x}</li>)}</ul></div>}
         <div className="zc-foot">
-          <div>完成于 {when.toLocaleDateString('zh-CN')} · 验证码 {code}</div>
-          <div>任务来自企业的真实业务问题，评分逐条对照评分标准并留有证据 · 百业AI｜真活 www.aidataoffice.com</div>
+          <div>{L('完成于', 'Completed')} {when.toLocaleDateString(lang === 'en' ? 'en-US' : 'zh-CN')} · {L('验证码', 'Verification code')} {code}</div>
+          <div>{L('任务来自企业的真实业务问题，评分逐条对照评分标准并留有证据', 'The task comes from a real business problem at the company; each criterion is scored against a rubric with evidence')} · {L('百业AI｜真活', 'Baiye AI · True Work')} www.aidataoffice.com</div>
         </div>
       </div>
     </div>

@@ -74,12 +74,29 @@ export const BOARD_LIBRARY: { name: string; sk: Sk[] }[] = [
   { name: '表情 · 生气', sk: face(0, 0, 'angry') },
 ];
 
+/** 英文题候选人端（11-10）：组件名和组件里的字换成英文；中文原样不动 */
+const EN: Record<string, string> = {
+  '标注箭头': 'Callout arrow', '这里要注意': 'Note this', '用户画像': 'Persona', '姓名，年龄': 'Name, age', '职业 · 城市': 'Job · City', '想要：……\n烦恼：……\n常用：……': 'Wants: …\nPain points: …\nUses: …',
+  '小人': 'Stick figure', '表情 · 开心': 'Face · happy', '表情 · 难过': 'Face · sad', '表情 · 惊讶': 'Face · surprised', '表情 · 生气': 'Face · angry',
+  '主按钮': 'Primary', '次按钮': 'Secondary', '输入框': 'Input', '请输入…': 'Enter text…', '搜索框': 'Search box', '搜索': 'Search', '顶部导航栏': 'Top nav bar', '页面标题': 'Page title',
+  '底部标签栏': 'Bottom tab bar', '首页': 'Home', '发现': 'Explore', '消息': 'Inbox', '我的': 'Me', '卡片': 'Card', '卡片标题': 'Card title', '一行说明文字，说清这张卡片是什么': 'One line saying what this card is',
+  '列表项': 'List item', '主标题': 'Title', '副标题 / 补充信息': 'Subtitle / details', '图片占位': 'Image placeholder', '头像': 'Avatar', '开关': 'Toggle', '复选框': 'Checkbox', '选项文字': 'Option text',
+  '弹窗': 'Dialog', '弹窗标题': 'Dialog title', '说明这一步要用户确认什么，\n以及确认之后会发生什么。': 'Explain what the user is confirming\nand what happens next.', '取消': 'Cancel', '确认': 'Confirm',
+  '轻提示': 'Toast', '已保存': 'Saved', '标签': 'Tag', '色板': 'Palette', '主色 · 辅色 · 点缀色（改成你的）': 'Primary · secondary · accent (use yours)', '九宫格辅助线': 'Rule-of-thirds grid',
+  '角色比例草稿': 'Character proportions', '头身比 1 : 2（Q 版），按需改': 'Head-to-body 1 : 2 (chibi), adjust as needed', '进度条': 'Progress bar', '分段切换': 'Segmented control', '全部': 'All', '进行中': 'Active', '已完成': 'Done',
+  '步骤条': 'Stepper', '填信息': 'Details', '完成': 'Finish', '价格卡': 'Pricing card', '专业版': 'Pro', '¥ 99 / 月': '$ 99 / mo', '✓ 功能一\n✓ 功能二\n✓ 功能三': '✓ Feature one\n✓ Feature two\n✓ Feature three', '立即开通': 'Get started',
+  '对话气泡': 'Speech bubble', '一句台词 / 一条消息': 'A line / a message', '星级评分': 'Star rating', '常用图标': 'Common icons', '柱状图': 'Bar chart', '图表标题': 'Chart title', '折线图': 'Line chart', '趋势标题': 'Trend title',
+  '指标卡': 'Metric card', '本月新增用户': 'New users this month', '▲ 18% 环比': '▲ 18% MoM', '数据表格': 'Data table', '列一': 'Col 1', '列二': 'Col 2', '列三': 'Col 3',
+  '流程三步': 'Three-step flow', '第一步': 'Step 1', '第二步': 'Step 2', '第三步': 'Step 3', '判断': 'Decision', '是否…？': 'Is it …?', '是': 'Yes', '否': 'No', '时间轴': 'Timeline', '第 1 周': 'Week 1', '第 2 周': 'Week 2', '第 4 周': 'Week 4', '上线': 'Launch',
+};
+const enSk = (s: any): any => Array.isArray(s) ? s.map(enSk) : s && typeof s === 'object' ? Object.fromEntries(Object.entries(s).map(([k, v]) => [k, k === 'text' && typeof v === 'string' ? EN[v] ?? v : enSk(v)])) : s;
+
 /** 转成 Excalidraw 的素材库条目：每个组件的元素编成一组 */
-export function buildBoardLibrary(convert: (sk: any[]) => any[]): any[] {
+export function buildBoardLibrary(convert: (sk: any[]) => any[], lang?: 'zh' | 'en'): any[] {
   const now = Date.now();
   return BOARD_LIBRARY.map((it, i) => {
     const g = `lib-${i}-${now.toString(36)}`;
-    const els = convert(it.sk).map((e: any) => ({ ...e, groupIds: [g] }));
-    return { id: `work-lib-${i}`, status: 'published', name: it.name, created: now, elements: els };
+    const els = convert(lang === 'en' ? enSk(it.sk) : it.sk).map((e: any) => ({ ...e, groupIds: [g] }));
+    return { id: `work-lib-${i}`, status: 'published', name: lang === 'en' ? EN[it.name] ?? it.name : it.name, created: now, elements: els };
   });
 }

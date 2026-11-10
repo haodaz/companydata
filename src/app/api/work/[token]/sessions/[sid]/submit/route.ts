@@ -7,6 +7,7 @@ import { describeFrames, framesFromRecording, framesFromShots, listShots, readLi
 import { describeImage } from '@/lib/work/vision';
 import { withCost } from '@/lib/token-logger';
 import { timing } from '@/lib/work/deadline';
+import { errL } from '@/lib/work/errors-en';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -15,9 +16,9 @@ export const maxDuration = 300;
 export async function POST(req: NextRequest, { params }: { params: Promise<{ token: string; sid: string }> }) {
   const { token, sid } = await params;
   const { data: t } = await db.from('work_tasks').select('*').eq('share_token', token).maybeSingle();
-  if (!t) return NextResponse.json({ ok: false, error: '链接不可用' }, { status: 404 });
+  if (!t) return NextResponse.json({ ok: false, error: errL(t, '链接不可用') }, { status: 404 });
   const { data: s } = await db.from('work_sessions').select('*').eq('id', sid).eq('task_id', t.id).maybeSingle();
-  if (!s) return NextResponse.json({ ok: false, error: '没有这次作答' }, { status: 404 });
+  if (!s) return NextResponse.json({ ok: false, error: errL(t, '没有这次作答') }, { status: 404 });
   if (s.submitted_at && s.report) return s.report.auditing ? NextResponse.json({ ok: true, staged: true, total: s.report.total }) : NextResponse.json({ ok: true, report: s.report, score: s.score });
   const body = await req.json().catch(() => ({}));
   const open = s.participant?.mode === 'open', plugin = s.participant?.mode === 'plugin';
@@ -31,7 +32,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     // 什么都没做就到点的：不评分，这次作答就结束了
     const shots0 = open || plugin ? await listShots(sid) : [];
     const touched = plugin ? events.length > 0 : events.some(e => ['edit', 'paste', 'adopt', 'file', 'recording', 'draft'].includes(e.type)) || (s.ai_chat || []).length > 0;
-    if (!touched && !shots0.length) return NextResponse.json({ ok: false, error: '时间到了，这次作答没有内容', expired: true });
+    if (!touched && !shots0.length) return NextResponse.json({ ok: false, error: errL(t, '时间到了，这次作答没有内容'), expired: true });
     events = [...events, { t: tsec, type: 'auto_submit' }];
   }
   // 开放模式：交付 = 交付说明 + 能读的文件；过程 = 录屏抽帧看图
@@ -42,8 +43,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     const files = events.filter(e => e.type === 'file' && e.url && !removed.has(e.url)).map(e => ({ name: e.name, url: e.url, size: e.size || 0 }));
     const rec = [...events].reverse().find(e => e.type === 'recording' && e.url);
     const shots = await listShots(sid);   // 11-05 起：整屏定时截图（老作答是整段录屏）
-    if (!rec && !shots.length && !auto) return NextResponse.json({ ok: false, error: '还没有屏幕记录：开放模式要先点「开始记录」再交卷' }, { status: 400 });
-    if (deliverable.trim().length < 30 && !auto) return NextResponse.json({ ok: false, error: '交付说明太短了：把结论、关键数字、口径和假设写清楚' }, { status: 400 });
+    if (!rec && !shots.length && !auto) return NextResponse.json({ ok: false, error: errL(t, '还没有屏幕记录：开放模式要先点「开始记录」再交卷') }, { status: 400 });
+    if (deliverable.trim().length < 30 && !auto) return NextResponse.json({ ok: false, error: errL(t, '交付说明太短了：把结论、关键数字、口径和假设写清楚') }, { status: 400 });
     const links = await readLinks(deliverable);
     deliverable = `## 交付说明\n${deliverable}\n\n## 交付文件\n${files.length ? await readTextFiles(files) : '（没有上传文件）'}${links ? `\n\n## 交付说明里的链接\n${links}` : ''}`;
     if (rec || shots.length) try {
@@ -61,8 +62,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
       } catch (e) { console.warn('[work] 插件截图分析失败：', String((e as any)?.message).slice(0, 160)); recording = { url: '', duration: shots[shots.length - 1].t - shots[0].t, summary: '（截图看图失败）', frames: 0, shots: shots.length }; }
     }
     // 真活插件：交付 = 交付说明 + 链接；到时间自动收卷时没写也照收（按未交付评）
-    if (deliverable.trim().length < 20) { if (!auto) return NextResponse.json({ ok: false, error: '交付说明太短了：贴上交付物链接，写清结论和假设' }, { status: 400 }); deliverable = `（时间到，自动交卷；候选人没写完交付说明）\n${deliverable}`; }
-  } else if (deliverable.trim().length < 50 && !auto) return NextResponse.json({ ok: false, error: '交付物太短了，至少写点东西' }, { status: 400 });
+    if (deliverable.trim().length < 20) { if (!auto) return NextResponse.json({ ok: false, error: errL(t, '交付说明太短了：贴上交付物链接，写清结论和假设') }, { status: 400 }); deliverable = `（时间到，自动交卷；候选人没写完交付说明）\n${deliverable}`; }
+  } else if (deliverable.trim().length < 50 && !auto) return NextResponse.json({ ok: false, error: errL(t, '交付物太短了，至少写点东西') }, { status: 400 });
   // 工作台作答的附件（11-05）：文件抽文字、图片看图写说明，接在交付物后面给评卷（以原文件为准）
   if (!open) {
     const files = events.filter(e => e.type === 'file' && e.url && !removed.has(e.url));

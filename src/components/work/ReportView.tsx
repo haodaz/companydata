@@ -9,10 +9,12 @@ import React, { useState } from 'react';
 import { WorkReport } from '@/components/work/WorkReport';
 import { WorkProcess } from '@/components/work/WorkProcess';
 import { Md } from '@/components/ws/Md';
+import { useL } from '@/lib/work/i18n';
 
 type Tab = 'deliv' | 'process' | 'grade';
-const TABS: [Tab, string][] = [['deliv', '交了什么'], ['process', '怎么做的'], ['grade', '评得怎样']];
+const TABS: [Tab, string, string][] = [['deliv', '交了什么', 'Submission'], ['process', '怎么做的', 'Process'], ['grade', '评得怎样', 'Assessment']];
 const fmt = (t: number) => `${Math.floor(t / 60)} 分 ${String(Math.floor(t % 60)).padStart(2, '0')} 秒`;
+const fmtEn = (t: number) => `${Math.floor(t / 60)} min ${String(Math.floor(t % 60)).padStart(2, '0')} s`;
 const col = (v: number) => (v >= 80 ? '#12a150' : v >= 60 ? '#b7791f' : '#c0392b');
 
 export function ReportView({ report, participant, deliverable, events, aiChat, materials, deliverables, defaultTab = 'grade' }: {
@@ -21,7 +23,7 @@ export function ReportView({ report, participant, deliverable, events, aiChat, m
   materials?: { id: string; title: string }[]; deliverables?: { id: string; title: string }[];
   defaultTab?: Tab;
 }) {
-  const [tab, setTab] = useState<Tab>(defaultTab);
+  const [tab, setTab] = useState<Tab>(defaultTab); const L = useL();
   if (!report) return null;
   if (report.auditing) return <WorkReport report={report} participant={participant} />;   // 还在审：显示审计进度
   const r = report.result, u = report.ai_use, p = report.process;
@@ -31,25 +33,25 @@ export function ReportView({ report, participant, deliverable, events, aiChat, m
     <div style={{ display: 'grid', gap: 14 }}>
       {/* 概要：一眼看到分数、用 AI 怎么样、用了多久 */}
       <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap', alignItems: 'baseline', padding: '12px 16px', borderRadius: 12, background: '#fafbff', border: '1px solid #e8e9f0' }}>
-        {r && <span><span style={lab}>结果</span><b style={{ fontSize: 26, color: col(r.total) }}>{r.total}</b><span style={dim}> / 100</span></span>}
-        {u && <span><span style={lab}>AI 使用</span>{u.score == null ? <b style={{ color: '#8c8c8c' }}>没用 AI</b> : <><b style={{ fontSize: 22, color: col(u.score) }}>{u.score}</b><span style={dim}> / 100</span></>}</span>}
-        {p?.duration_s != null && <span><span style={lab}>用时</span><b>{fmt(p.duration_s)}</b></span>}
+        {r && <span><span style={lab}>{L('结果', 'Result')}</span><b style={{ fontSize: 26, color: col(r.total) }}>{r.total}</b><span style={dim}> / 100</span></span>}
+        {u && <span><span style={lab}>{L('AI 使用', 'AI use')}</span>{u.score == null ? <b style={{ color: '#8c8c8c' }}>{L('没用 AI', 'No AI used')}</b> : <><b style={{ fontSize: 22, color: col(u.score) }}>{u.score}</b><span style={dim}> / 100</span></>}</span>}
+        {p?.duration_s != null && <span><span style={lab}>{L('用时', 'Time taken')}</span><b>{L(fmt(p.duration_s), fmtEn(p.duration_s))}</b></span>}
       </div>
       <div role="tablist" style={{ display: 'flex', gap: 4, borderBottom: '1px solid #e8e9f0' }}>
-        {TABS.map(([k, t]) => <button key={k} role="tab" aria-selected={tab === k} onClick={() => setTab(k)} style={{ border: 0, background: 'none', padding: '8px 14px', fontSize: 14, fontWeight: tab === k ? 700 : 500, color: tab === k ? '#4c43c9' : '#666', borderBottom: `2px solid ${tab === k ? '#6055f5' : 'transparent'}`, marginBottom: -1, cursor: 'pointer' }}>
-          {t}{k === 'deliv' && nFiles ? <span style={badge}>{nFiles} 个文件</span> : k === 'process' && report.recording?.shots ? <span style={badge}>屏幕记录 {report.recording.shots} 张</span> : null}
+        {TABS.map(([k, t, te]) => <button key={k} role="tab" aria-selected={tab === k} onClick={() => setTab(k)} style={{ border: 0, background: 'none', padding: '8px 14px', fontSize: 14, fontWeight: tab === k ? 700 : 500, color: tab === k ? '#4c43c9' : '#666', borderBottom: `2px solid ${tab === k ? '#6055f5' : 'transparent'}`, marginBottom: -1, cursor: 'pointer' }}>
+          {L(t, te)}{k === 'deliv' && nFiles ? <span style={badge}>{L(`${nFiles} 个文件`, `${nFiles} file${nFiles === 1 ? '' : 's'}`)}</span> : k === 'process' && report.recording?.shots ? <span style={badge}>{L(`屏幕记录 ${report.recording.shots} 张`, `${report.recording.shots} screenshots`)}</span> : null}
         </button>)}
       </div>
       {tab === 'deliv' && <div style={{ display: 'grid', gap: 14 }}>
-        <div style={box}><div style={head}>交付物原文</div>
-          <div className="wk-deliv" style={{ padding: 12, fontSize: 13.5, lineHeight: 1.75, maxHeight: 560, overflow: 'auto' }}>{deliverable ? <Md text={deliverable} /> : <span style={{ color: '#999' }}>（没有交付物文本）</span>}</div>
+        <div style={box}><div style={head}>{L('交付物原文', 'Submitted text')}</div>
+          <div className="wk-deliv" style={{ padding: 12, fontSize: 13.5, lineHeight: 1.75, maxHeight: 560, overflow: 'auto' }}>{deliverable ? <Md text={deliverable} /> : <span style={{ color: '#999' }}>{L('（没有交付物文本）', '(No submitted text)')}</span>}</div>
         </div>
         {events && <WorkProcess part="files" events={events} aiChat={aiChat || []} materials={materials} deliverables={deliverables} />}
-        {report.next_step && <div style={box}><div style={head}>最后一问：如果再给一天，先改哪里（候选人写的）</div><div style={{ padding: 12, fontSize: 13.5, lineHeight: 1.75, whiteSpace: 'pre-wrap' }}>{report.next_step}</div></div>}
+        {report.next_step && <div style={box}><div style={head}>{L('最后一问：如果再给一天，先改哪里（候选人写的）', 'Last question: with one more day, what to improve first (written by the candidate)')}</div><div style={{ padding: 12, fontSize: 13.5, lineHeight: 1.75, whiteSpace: 'pre-wrap' }}>{report.next_step}</div></div>}
       </div>}
       {tab === 'process' && <div style={{ display: 'grid', gap: 14 }}>
         <WorkReport report={report} participant={participant} section="process" />
-        {events ? <WorkProcess part="timeline" events={events} aiChat={aiChat || []} materials={materials} deliverables={deliverables} shots={shots} /> : <div style={{ color: '#999', fontSize: 13 }}>读取答题历程…</div>}
+        {events ? <WorkProcess part="timeline" events={events} aiChat={aiChat || []} materials={materials} deliverables={deliverables} shots={shots} /> : <div style={{ color: '#999', fontSize: 13 }}>{L('读取答题历程…', 'Loading the work history…')}</div>}
       </div>}
       {tab === 'grade' && <WorkReport report={report} participant={participant} section="grade" />}
     </div>

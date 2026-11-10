@@ -3,13 +3,14 @@
  * 模组可复选：按交付物挂，候选人在页面里切标签做。旧题没写 module 的按 format 字面推。
  */
 export type Module = 'doc' | 'sheet' | 'code' | 'design' | 'canvas' | 'board';
-export const MODULES: Record<Module, { label: string; short: string; hint: string }> = {
-  doc:    { label: '文档', short: '文', hint: '备忘录 / 报告 / 方案 / 邮件，Markdown 编辑区' },
-  sheet:  { label: '表格', short: '表', hint: '对账表 / 测算表 / 模型，电子表格 + 口径说明' },
-  code:   { label: '代码', short: '码', hint: '脚本 / SQL / 函数，编辑器 + 自测' },
-  design: { label: '参数与草图', short: '图', hint: '设计参数表 + 草图' },
-  canvas: { label: '画布', short: '布', hint: '流程图 / 泳道图 / 思维导图 / 架构图，拖节点连线' },
-  board:  { label: '白板', short: '板', hint: '线框图 / 界面草图 / 海报 / IP 形象：自由画、拖图形、贴图片（2026-10-27）' },
+/** en / en_hint：英文题候选人端用（11-10） */
+export const MODULES: Record<Module, { label: string; short: string; hint: string; en: string; en_hint: string }> = {
+  doc:    { label: '文档', short: '文', hint: '备忘录 / 报告 / 方案 / 邮件，Markdown 编辑区', en: 'Document', en_hint: 'Memo / report / proposal / email, Markdown editor' },
+  sheet:  { label: '表格', short: '表', hint: '对账表 / 测算表 / 模型，电子表格 + 口径说明', en: 'Spreadsheet', en_hint: 'Reconciliation / estimate / model: spreadsheet + notes on definitions' },
+  code:   { label: '代码', short: '码', hint: '脚本 / SQL / 函数，编辑器 + 自测', en: 'Code', en_hint: 'Script / SQL / function: editor + self-tests' },
+  design: { label: '参数与草图', short: '图', hint: '设计参数表 + 草图', en: 'Parameters & sketch', en_hint: 'Design parameter table + sketch' },
+  canvas: { label: '画布', short: '布', hint: '流程图 / 泳道图 / 思维导图 / 架构图，拖节点连线', en: 'Canvas', en_hint: 'Flowchart / swimlane / mind map / architecture: drag nodes and connect' },
+  board:  { label: '白板', short: '板', hint: '线框图 / 界面草图 / 海报 / IP 形象：自由画、拖图形、贴图片（2026-10-27）', en: 'Whiteboard', en_hint: 'Wireframe / UI sketch / poster / mascot: draw freely, drag shapes, paste images' },
 };
 export function moduleOf(format: string | undefined, fallback: Module = 'doc'): Module {
   const f = String(format || '');

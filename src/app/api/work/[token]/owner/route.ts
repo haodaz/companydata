@@ -77,7 +77,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ to
   }
   // 改标题（11-10 潜历：标题改不了，要像岗位名一样直接改）
   if (body.title != null) {
-    const title = String(body.title).trim().slice(0, 40);
+    const title = String(body.title).trim().slice(0, 100);
     if (title.length < 2) return NextResponse.json({ ok: false, error: '标题至少 2 个字' }, { status: 400 });
     await db.from('work_tasks').update({ task: { ...t.task, title }, updated_at: new Date().toISOString() }).eq('id', t.id);
     return NextResponse.json({ ok: true, title });

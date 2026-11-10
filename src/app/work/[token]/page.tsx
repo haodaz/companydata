@@ -26,6 +26,10 @@ import { Md } from '@/components/ws/Md';
 import { Tour, type TourStep } from '@/components/work/Tour';
 import { MODULES, boardToText, canvasToText, resolveModule, type CanvasGraph, type Module } from '@/lib/work/modules';
 import { PluginWork } from '@/components/work/benches/PluginWork';
+import { WorkLang, pick, useL, useLang, type Lang } from '@/lib/work/i18n';
+
+/** 英文题显示企业英文名：「潜历（DeepTalent）」→「DeepTalent」；没有英文名就原样 */
+const enCompany = (n: string) => { const m = /[（(]\s*([A-Za-z][^（）()]*?)\s*[）)]/.exec(n || ''); return m ? m[1] : n; };
 
 type Material = { id: string; title: string; kind: string; content: string; source: string; url?: string; mime?: string; name?: string };
 
@@ -33,23 +37,24 @@ type Material = { id: string; title: string; kind: string; content: string; sour
 function isSheet(m: Material) { return m.kind === 'file' && (/csv|spreadsheet|ms-excel/.test(m.mime || '') || /\.(csv|xlsx?)$/i.test(m.name || m.title || '')) && !!m.content?.trim(); }
 function parseCsvLine(line: string) { const out: string[] = []; let cur = '', q = false; for (let i = 0; i < line.length; i++) { const ch = line[i]; if (q) { if (ch === '"') { if (line[i + 1] === '"') { cur += '"'; i++; } else q = false; } else cur += ch; } else if (ch === '"') q = true; else if (ch === ',') { out.push(cur); cur = ''; } else cur += ch; } out.push(cur); return out; }
 function SheetView({ text, dark }: { text: string; dark: boolean }) {
+  const L = useL();
   const blocks = text.split(/\n(?=## )/).map(b => { const m = b.match(/^## (.*)\n?/); return { name: m ? m[1] : '', rows: b.replace(/^## .*\n?/, '').split(/\r?\n/).filter(l => l.trim()).slice(0, 200).map(parseCsvLine) }; }).filter(b => b.rows.length);
   const bd = dark ? '#2b2d3e' : '#e8e9f0';
-  return <div style={{ margin: '8px 0 0' }}>{blocks.map((b, i) => <div key={i} style={{ marginBottom: 12 }}>{b.name && <div style={{ fontSize: 12, color: '#888', margin: '6px 0' }}>工作表 · {b.name}</div>}
+  return <div style={{ margin: '8px 0 0' }}>{blocks.map((b, i) => <div key={i} style={{ marginBottom: 12 }}>{b.name && <div style={{ fontSize: 12, color: '#888', margin: '6px 0' }}>{L('工作表', 'Sheet')} · {b.name}</div>}
     <div style={{ overflow: 'auto' }}><table style={{ borderCollapse: 'collapse', fontSize: 13, minWidth: '100%' }}><thead><tr>{b.rows[0].map((c, j) => <th key={j} style={{ border: `1px solid ${bd}`, padding: '6px 10px', background: dark ? '#262838' : '#f6f7fb', textAlign: 'left', whiteSpace: 'nowrap', fontWeight: 600 }}>{c}</th>)}</tr></thead>
     <tbody>{b.rows.slice(1).map((r, k) => <tr key={k}>{r.map((c, j) => <td key={j} style={{ border: `1px solid ${bd}`, padding: '5px 10px', whiteSpace: 'nowrap', textAlign: /^-?[\d.,%]+$/.test(c.trim()) ? 'right' : 'left', fontVariantNumeric: 'tabular-nums' }}>{c}</td>)}</tr>)}</tbody></table></div>
-    {b.rows.length >= 200 && <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>只显示前 200 行，完整文件点上面的链接下载</div>}</div>)}</div>;
+    {b.rows.length >= 200 && <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>{L('只显示前 200 行，完整文件点上面的链接下载', 'Showing the first 200 rows. Download the full file from the link above.')}</div>}</div>)}</div>;
 }
 type Env = { type: 'doc' | 'code' | 'sheet' | 'design' | 'open' | 'plugin'; language?: string; starter?: string; tests?: { name: string; code: string }[]; csv?: string; params?: { name: string; unit?: string; hint?: string }[]; sketch_hint?: string };
 type Stage = { id: string; type: string; question: string; reveal: string };
-type Task = { id: string; company_name: string; role: string; statement: string; task: { title: string; brief: string; deliverables: { id: string; title: string; format: string; module?: string }[]; time_minutes: number; soft_limit?: boolean; rules: string[]; env?: Env; stages?: Stage[] }; materials: Material[] };
+type Task = { id: string; company_name: string; role: string; statement: string; task: { title: string; brief: string; deliverables: { id: string; title: string; format: string; module?: string }[]; time_minutes: number; soft_limit?: boolean; rules: string[]; env?: Env; stages?: Stage[]; lang?: 'zh' | 'en' }; materials: Material[] };
 type Ev = { t: number; type: string; [k: string]: any };
 
 // 操作台模组按交付物挂（2026-10-25，王刚：交付物不止一个 Word，表 / 脚本 / 流程图可以混用；考试台不是在线 Word）
 type Part = { id: string; title: string; format: string; module: Module };
 function partsOf(task: Task, env: Env): Part[] {
   const fb = (['doc', 'sheet', 'code', 'design'].includes(env.type) ? env.type : 'doc') as Module;
-  const ds = task.task.deliverables.length ? task.task.deliverables : [{ id: 'd1', title: '按题目要求作答', format: '' }];
+  const ds = task.task.deliverables.length ? task.task.deliverables : [{ id: 'd1', title: pick(task.task.lang, '按题目要求作答', 'Answer as the task asks'), format: '' }];
   return ds.map(d => ({ id: d.id, title: d.title, format: d.format, module: resolveModule(d.format, d.module, fb) }));
 }
 // 线性小图标（16px，currentColor）：左栏 / AI / 最大化 / 分屏 / 最小化 / 关闭
@@ -64,7 +69,8 @@ function Ico({ k }: { k: 'left' | 'ai' | 'max' | 'split' | 'min' | 'close' }) {
   };
   return <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">{P[k]}</svg>;
 }
-const modulesLabel = (task: Task, env: Env) => [...new Set(partsOf(task, env).map(p => MODULES[p.module].label))].join(' + ');
+const modLabel = (m: Module, lang?: Lang) => (lang === 'en' ? MODULES[m].en : MODULES[m].label);
+const modulesLabel = (task: Task, env: Env) => [...new Set(partsOf(task, env).map(p => modLabel(p.module, task.task.lang)))].join(' + ');
 const ENV_NAME: Record<string, string> = { doc: '文档 / 对账台', code: '代码台', sheet: '表格 / 数据台', design: '设计台', open: '用自己的软件做（录屏）', plugin: '用自己的网页工具做（真活插件）' };
 const fmt = (t: number) => `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
 
@@ -95,7 +101,8 @@ export default function WorkPage() {
       const j = await (await fetch(`/api/work/${token}${sp.get('k') ? `?k=${encodeURIComponent(sp.get('k')!)}` : ''}`)).json();
       if (j.ok) setPreview(!!j.preview);
       if (!j.ok) { setErr(j.error || '链接不可用'); setPhase('intro'); return; }
-      setTask(j.task); if (j.task?.task?.env?.type === 'open') setMode('open'); if (j.task?.task?.env?.type === 'plugin') setMode('plugin');   // 出任务的人指定了「自己录制电脑操作」：只有开放模式
+      // 英文题：企业名换成英文名（「潜历（DeepTalent）」→「DeepTalent」），英文句子里不夹全角括号（11-10 实测）
+      setTask(j.task?.task?.lang === 'en' ? { ...j.task, company_name: enCompany(j.task.company_name) } : j.task); if (j.task?.task?.lang === 'en') document.title = `${j.task.task.title} · Work sample`; if (j.task?.task?.env?.type === 'open') setMode('open'); if (j.task?.task?.env?.type === 'plugin') setMode('plugin');   // 出任务的人指定了「自己录制电脑操作」：只有开放模式
       const s = saved;
       if (s) {
         const r = await (await fetch(`/api/work/${token}/sessions/${s}`)).json();
@@ -110,6 +117,7 @@ export default function WorkPage() {
     })();
   }, [token]); // eslint-disable-line react-hooks/exhaustive-deps   // 地址换成个人链接时不要重新加载
 
+  const lang = task?.task?.lang; const L = (zh: string, en: string) => pick(lang, zh, en);
   const needContact = !sp.get('k');
   // 开始前的告知（11-10）：候选人同意了才开始；出任务的人预览不弹
   const [consentOpen, setConsentOpen] = useState(false);
@@ -127,87 +135,88 @@ export default function WorkPage() {
     setPhase('work');
   };
 
-  if (phase === 'loading') return <Shell><div style={{ padding: 40, color: '#888' }}>加载中…</div></Shell>;
-  if (phase === 'ended') return <Shell><div style={{ maxWidth: 560, margin: '80px auto', padding: 24, lineHeight: 1.8 }}><h1 style={{ fontSize: 22, margin: '0 0 8px' }}>这次作答已结束</h1><div style={{ color: '#666' }}>作答时间已经到了。如需重新作答，请联系发给你链接的公司。</div></div></Shell>;
-  if (!task) return <Shell><div style={{ padding: 40, color: '#c0392b' }}>{err || '链接不可用'}</div></Shell>;
+  if (phase === 'loading') return <Shell lang={lang}><div style={{ padding: 40, color: '#888' }}>加载中…</div></Shell>;
+  if (phase === 'ended') return <Shell lang={lang}><div style={{ maxWidth: 560, margin: '80px auto', padding: 24, lineHeight: 1.8 }}><h1 style={{ fontSize: 22, margin: '0 0 8px' }}>{L('这次作答已结束', 'This attempt has ended')}</h1><div style={{ color: '#666' }}>{L('作答时间已经到了。如需重新作答，请联系发给你链接的公司。', 'Time is up. If you need another attempt, please contact the company that sent you the link.')}</div></div></Shell>;
+  if (!task) return <Shell lang={lang}><div style={{ padding: 40, color: '#c0392b' }}>{err || '链接不可用'}</div></Shell>;
   const env: Env = task.task.env || { type: 'doc' };
 
   if (phase === 'intro') return (
-    <Shell>
+    <Shell lang={lang}>
       <div style={{ maxWidth: 820, margin: '0 auto', padding: '32px 20px' }}>
-        <div style={{ fontSize: 12, letterSpacing: 2, color: '#6055f5', fontWeight: 700 }}>真活台 · {task.company_name} · {roleLabel(task.role, (task.task as any).role)}</div>
+        <div style={{ fontSize: 12, letterSpacing: 2, color: '#6055f5', fontWeight: 700 }}>{L('真活台', 'Work sample')} · {task.company_name} · {roleLabel(task.role, (task.task as any).role, lang)}</div>
         <h1 style={{ fontSize: 28, margin: '8px 0 4px', lineHeight: 1.3 }}>{task.task.title}</h1>
         <div style={{ color: '#666', marginBottom: 20 }}>{task.statement}</div>
-        <Box title="任务书"><MdView text={task.task.brief} style={{ lineHeight: 1.8 }} /></Box>
-        <Box title="要交什么"><ol style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9 }}>{task.task.deliverables.map(d => <li key={d.id}><b>{d.title}</b> <span style={{ color: '#888' }}>{d.format}</span></li>)}</ol></Box>
-        <Box title="规则"><RulesView rules={task.task.rules} /><div style={{ color: '#888', fontSize: 13, marginTop: 6 }}>操作台：{modulesLabel(task, env)}（按交付物切换） · {task.task.soft_limit ? `建议 ${task.task.time_minutes} 分钟（开始后时间不暂停，超时会如实记录）` : `限时 ${task.task.time_minutes} 分钟（开始后时间不暂停，到点自动交卷）`}· 材料 {task.materials.length} 份 · 交卷后立刻出报告</div></Box>
+        <Box title={L('任务书', 'The task')}><MdView text={task.task.brief} style={{ lineHeight: 1.8 }} /></Box>
+        <Box title={L('要交什么', 'What to submit')}><ol style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9 }}>{task.task.deliverables.map(d => <li key={d.id}><b>{d.title}</b> <span style={{ color: '#888' }}>{d.format}</span></li>)}</ol></Box>
+        <Box title={L('规则', 'Rules')}><RulesView rules={task.task.rules} /><div style={{ color: '#888', fontSize: 13, marginTop: 6 }}>{L('操作台：', 'Workbench: ')}{modulesLabel(task, env)}{L('（按交付物切换） · ', ' (one per deliverable) · ')}{task.task.soft_limit ? L(`建议 ${task.task.time_minutes} 分钟（开始后时间不暂停，超时会如实记录）`, `Suggested time: ${task.task.time_minutes} minutes (the clock doesn't pause once you start; going over is recorded as is)`) : L(`限时 ${task.task.time_minutes} 分钟（开始后时间不暂停，到点自动交卷）`, `${task.task.time_minutes}-minute limit (the clock doesn't pause once you start; your work is submitted automatically when time is up)`)}{L(`· 材料 ${task.materials.length} 份 · 交卷后立刻出报告`, ` · ${task.materials.length} ${task.materials.length === 1 ? 'material' : 'materials'} · Report right after you submit`)}</div></Box>
         {env.type === 'plugin'
-          ? <Box title="怎么做"><div style={{ lineHeight: 1.8 }}><b>用你自己的工具做。</b>在线文档、表格、设计工具、各家 AI 都可以。点「开始做」后会给你一个真活码，装好「真活插件」（一次就好，<a href="/work/plugin" target="_blank" rel="noreferrer">看说明</a>）、关联这次作答，插件只在答题期间记录你打开的网页、页面上的文字和打字粘贴的量。交付说明在插件侧边栏或本页写，做完点「结束作答」；到时间会自动交卷。</div></Box>
+          ? <Box title={L('怎么做', 'How to work')}>{lang === 'en' ? <div style={{ lineHeight: 1.8 }}><b>Use your own tools.</b> Online docs, spreadsheets, design tools and any AI are all fine. After you click "Start" you'll get a work code. Install the work-sample extension (one time only, <a href="/work/plugin" target="_blank" rel="noreferrer">see how</a>) and link it to this attempt. While you work, the extension only records the pages you open, the text on them, and how much you type and paste. Write your hand-in notes in the extension sidebar or on this page, then click "Finish" when you're done; your work is submitted automatically when time is up.</div> : <div style={{ lineHeight: 1.8 }}><b>用你自己的工具做。</b>在线文档、表格、设计工具、各家 AI 都可以。点「开始做」后会给你一个真活码，装好「真活插件」（一次就好，<a href="/work/plugin" target="_blank" rel="noreferrer">看说明</a>）、关联这次作答，插件只在答题期间记录你打开的网页、页面上的文字和打字粘贴的量。交付说明在插件侧边栏或本页写，做完点「结束作答」；到时间会自动交卷。</div>}</Box>
           : env.type === 'open'
-          ? <Box title="怎么做"><div style={{ lineHeight: 1.8 }}><b>用自己的软件做。</b>下载材料，用你顺手的 Excel / CAD / IDE / AI 做；浏览器录屏（不用装东西），做完上传交付文件 + 写交付说明。出任务的人指定了这种做法，过程由录屏还原。</div></Box>
-          : <Box title="怎么做">
+          ? <Box title={L('怎么做', 'How to work')}>{lang === 'en' ? <div style={{ lineHeight: 1.8 }}><b>Use your own software.</b> Download the materials and work in whatever you like: Excel, CAD, an IDE, AI tools. Your screen is recorded in the browser (nothing to install). When you're done, upload your files and write a short hand-in note. The company chose this way of working, so your process is shown through the recording.</div> : <div style={{ lineHeight: 1.8 }}><b>用自己的软件做。</b>下载材料，用你顺手的 Excel / CAD / IDE / AI 做；浏览器录屏（不用装东西），做完上传交付文件 + 写交付说明。出任务的人指定了这种做法，过程由录屏还原。</div>}</Box>
+          : <Box title={L('怎么做', 'How to work')}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 10 }}>
-            {([['bench', '在本页的操作台做', `${modulesLabel(task, env)}：每个交付物一个标签页，材料、编辑区、AI 都在页面里，每一步自动记录。省事，推荐。`], ['plugin', '用自己的网页工具做', '在线文档 / 表格 / 设计工具 / 各家 AI 都行。装一次「真活插件」，它只在答题期间记录你打开的网页和页面文字；交付说明在侧边栏写。'], ['open', '用自己的桌面软件做', '装在电脑上的 Excel / CAD / IDE：下载材料，浏览器录屏（不用装东西），做完上传交付文件 + 写交付说明。']] as const).map(([k, t, d]) => (
+            {([['bench', L('在本页的操作台做', 'Work on this page'), L(`${modulesLabel(task, env)}：每个交付物一个标签页，材料、编辑区、AI 都在页面里，每一步自动记录。省事，推荐。`, `${modulesLabel(task, env)}: one tab per deliverable, with materials, editor and AI all on this page. Every step is saved automatically. Easiest, recommended.`)], ['plugin', L('用自己的网页工具做', 'Use your own web tools'), L('在线文档 / 表格 / 设计工具 / 各家 AI 都行。装一次「真活插件」，它只在答题期间记录你打开的网页和页面文字；交付说明在侧边栏写。', 'Online docs, spreadsheets, design tools, any AI. Install the work-sample extension once; it only records the pages you open and their text while you work. Write your hand-in notes in its sidebar.')], ['open', L('用自己的桌面软件做', 'Use your own desktop software'), L('装在电脑上的 Excel / CAD / IDE：下载材料，浏览器录屏（不用装东西），做完上传交付文件 + 写交付说明。', 'Excel, CAD, an IDE on your computer: download the materials, record your screen in the browser (nothing to install), then upload your files and write a short hand-in note.')]] as const).map(([k, t, d]) => (
               <div key={k} onClick={() => setMode(k)} style={{ cursor: 'pointer', padding: '12px 14px', borderRadius: 12, border: `2px solid ${mode === k ? '#6055f5' : '#e8e9f0'}`, background: mode === k ? '#f3f2ff' : '#fff' }}><div style={{ fontWeight: 700 }}>{mode === k ? '● ' : '○ '}{t}</div><div style={{ fontSize: 13, color: '#666', lineHeight: 1.6, marginTop: 4 }}>{d}</div></div>
             ))}
           </div>
         </Box>}
-        <Box title="留下姓名和联系方式就开始">
+        <Box title={L('留下姓名和联系方式就开始', 'Enter your name and contact to start')}>
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-            <input value={name} onChange={e => setName(e.target.value)} placeholder="姓名 / 昵称" style={inp} />
-            <input value={contact} onChange={e => setContact(e.target.value)} placeholder="手机号或邮箱（换设备回来靠它接着做）" style={{ ...inp, flex: 1, minWidth: 220 }} />
-            <button onClick={() => (needContact ? setConsentOpen(true) : start())} disabled={!ready} style={btnPrimary}>开始做 →</button>
+            <input value={name} onChange={e => setName(e.target.value)} placeholder={L('姓名 / 昵称', 'Name')} style={inp} />
+            <input value={contact} onChange={e => setContact(e.target.value)} placeholder={L('手机号或邮箱（换设备回来靠它接着做）', 'Phone or email (use it to pick up on another device)')} style={{ ...inp, flex: 1, minWidth: 220 }} />
+            <button onClick={() => (needContact ? setConsentOpen(true) : start())} disabled={!ready} style={btnPrimary}>{L('开始做 →', 'Start →')}</button>
           </div>
           {err && <div style={{ color: '#c0392b', marginTop: 8 }}>{err}</div>}
         </Box>
-        <Box title="数据与作品"><div style={{ display: 'grid', gap: 6, fontSize: 13, lineHeight: 1.7, color: '#555' }}>{consentItems(mode, task.company_name).map(([h, t]) => <div key={h}><b style={{ color: '#444' }}>{h}：</b>{t}</div>)}</div></Box>
+        <Box title={L('数据与作品', 'Your data and work')}><div style={{ display: 'grid', gap: 6, fontSize: 13, lineHeight: 1.7, color: '#555' }}>{consentItems(mode, task.company_name, lang).map(([h, t]) => <div key={h}><b style={{ color: '#444' }}>{h}{L('：', ': ')}</b>{t}</div>)}</div></Box>
         <ConsentNotice open={consentOpen} mode={mode} company={task.company_name} onAgree={start} onCancel={() => setConsentOpen(false)} />
       </div>
     </Shell>
   );
 
   if (phase === 'report') return (
-    <Shell>
+    <Shell lang={lang}>
       <div style={{ maxWidth: 1040, margin: '0 auto', padding: '28px 20px' }}>
-        <div style={{ fontSize: 12, letterSpacing: 2, color: '#6055f5', fontWeight: 700 }}>真活台 · 报告</div>
-        <h1 style={{ fontSize: 24, margin: '6px 0 16px' }}>{task.task.title} <span style={{ fontSize: 14, color: '#888', fontWeight: 400 }}>{task.company_name} · {roleLabel(task.role, (task.task as any).role)}</span></h1>
+        <div style={{ fontSize: 12, letterSpacing: 2, color: '#6055f5', fontWeight: 700 }}>{L('真活台 · 报告', 'Work sample · Report')}</div>
+        <h1 style={{ fontSize: 24, margin: '6px 0 16px' }}>{task.task.title} <span style={{ fontSize: 14, color: '#888', fontWeight: 400 }}>{task.company_name} · {roleLabel(task.role, (task.task as any).role, lang)}</span></h1>
         {report?.result && <a href={`/work/${token}/card?s=${sid}`} style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16, padding: '14px 18px', borderRadius: 14, textDecoration: 'none', color: 'inherit', background: 'linear-gradient(135deg, #f4f2ff, #eef9fb)', border: '1px solid #ddd9ff' }}>
-          <div style={{ fontSize: 26 }}>🎖️</div><div style={{ flex: 1 }}><div style={{ fontWeight: 800 }}>领取你的真活成绩单</div><div style={{ fontSize: 13, color: '#666' }}>总分、等级、逐条雷达和做得好的地方，一页可以分享、可以存成 PDF</div></div><span style={{ color: '#6055f5', fontWeight: 700 }}>去看 →</span>
+          <div style={{ fontSize: 26 }}>🎖️</div><div style={{ flex: 1 }}><div style={{ fontWeight: 800 }}>{L('领取你的真活成绩单', 'Get your score card')}</div><div style={{ fontSize: 13, color: '#666' }}>{L('总分、等级、逐条雷达和做得好的地方，一页可以分享、可以存成 PDF', 'Total score, level, a radar of each criterion and what you did well, on one page you can share or save as PDF')}</div></div><span style={{ color: '#6055f5', fontWeight: 700 }}>{L('去看 →', 'View →')}</span>
         </a>}
         <ReportFull token={token} sid={sid} task={task} report={report} participant={participant} />
-        <div style={{ marginTop: 16, fontSize: 13, color: '#888' }}>这页的链接：<code>{typeof location !== 'undefined' ? `${location.origin}/work/${token}?s=${sid}` : ''}</code></div>
+        <div style={{ marginTop: 16, fontSize: 13, color: '#888' }}>{L('这页的链接：', 'Link to this page: ')}<code>{typeof location !== 'undefined' ? `${location.origin}/work/${token}?s=${sid}` : ''}</code></div>
       </div>
     </Shell>
   );
 
   // 交卷后：「AI 审计中」一段一段推进（笔记追加着出现），done 了换成正式报告
   if (phase === 'grading' && sid) return (
-    <Shell>
+    <Shell lang={lang}>
       <div style={{ maxWidth: 880, margin: '0 auto', padding: '28px 20px' }}>
-        <div style={{ fontSize: 12, letterSpacing: 2, color: '#6055f5', fontWeight: 700 }}>真活台 · 交卷了</div>
+        <div style={{ fontSize: 12, letterSpacing: 2, color: '#6055f5', fontWeight: 700 }}>{L('真活台 · 交卷了', 'Work sample · Submitted')}</div>
         <h1 style={{ fontSize: 24, margin: '6px 0 4px' }}>{task.task.title}</h1>
-        <div style={{ color: '#666', marginBottom: 18, fontSize: 13.5 }}>AI 正在回看你的操作过程，一段一段记；看完再逐条核对交付物、和 AI 基线比。别关页面（关了也没事，回来接着看）。</div>
+        <div style={{ color: '#666', marginBottom: 18, fontSize: 13.5 }}>{L('AI 正在回看你的操作过程，一段一段记；看完再逐条核对交付物、和 AI 基线比。别关页面（关了也没事，回来接着看）。', "AI is reviewing how you worked, step by step. Then it checks each deliverable and compares it with an AI baseline. Keep this page open (if you close it, just come back to see the result).")}</div>
         <AuditPanel token={token} sid={sid} onDone={rep => { setReport(rep); setPhase('report'); }} />
       </div>
     </Shell>
   );
 
-  const tipBar = linkTip && sid ? <div style={{ position: 'fixed', top: 54, left: '50%', transform: 'translateX(-50%)', zIndex: 60, maxWidth: 'calc(100vw - 24px)', display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px', background: '#fff', border: '1px solid #d8d4ff', borderRadius: 10, boxShadow: '0 8px 24px rgba(20,24,60,.16)', fontSize: 13, color: '#333' }}><span>地址已变成你的作答链接，换设备打开能接着做</span><button onClick={() => navigator.clipboard.writeText(location.href)} style={{ border: 0, background: 'none', color: '#6055f5', fontWeight: 700, cursor: 'pointer', padding: 0, whiteSpace: 'nowrap' }}>复制</button><button onClick={() => setLinkTip(false)} aria-label="关闭" style={{ border: 0, background: 'none', color: '#999', cursor: 'pointer', padding: 0 }}>×</button></div> : null;
-  if (mode === 'plugin' && participant?.code) return <Shell>{tipBar}<PluginWork code={participant.code} task={task as any} onSubmitted={() => setPhase('grading')} /></Shell>;
+  const tipBar = linkTip && sid ? <div style={{ position: 'fixed', top: 54, left: '50%', transform: 'translateX(-50%)', zIndex: 60, maxWidth: 'calc(100vw - 24px)', display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px', background: '#fff', border: '1px solid #d8d4ff', borderRadius: 10, boxShadow: '0 8px 24px rgba(20,24,60,.16)', fontSize: 13, color: '#333' }}><span>{L('地址已变成你的作答链接，换设备打开能接着做', 'This address is now your personal link. Open it on another device to continue.')}</span><button onClick={() => navigator.clipboard.writeText(location.href)} style={{ border: 0, background: 'none', color: '#6055f5', fontWeight: 700, cursor: 'pointer', padding: 0, whiteSpace: 'nowrap' }}>{L('复制', 'Copy')}</button><button onClick={() => setLinkTip(false)} aria-label={L('关闭', 'Close')} style={{ border: 0, background: 'none', color: '#999', cursor: 'pointer', padding: 0 }}>×</button></div> : null;
+  if (mode === 'plugin' && participant?.code) return <Shell lang={lang}>{tipBar}<PluginWork code={participant.code} task={task as any} onSubmitted={() => setPhase('grading')} /></Shell>;
 
-  return <>{tipBar}<Workspace key={`${sid}:${mode}`} token={token} sid={sid} task={task} env={env} mode={mode as 'bench' | 'open'} narrow={narrow} grading={phase === 'grading'} error={err} resume={resume} limit={preview || participant?.preview || task.task.soft_limit ? null : (Number(task.task.time_minutes) || 60) * 60} onRestart={() => { setSwitchFrom(sid); setName(participant?.name || ''); setContact(participant?.contact || ''); setPhase('intro'); window.scrollTo(0, 0); }} onSubmit={async (deliverable, events, auto) => {
+  return <WorkLang lang={lang}>{tipBar}<Workspace key={`${sid}:${mode}`} token={token} sid={sid} task={task} env={env} mode={mode as 'bench' | 'open'} narrow={narrow} grading={phase === 'grading'} error={err} resume={resume} limit={preview || participant?.preview || task.task.soft_limit ? null : (Number(task.task.time_minutes) || 60) * 60} onRestart={() => { setSwitchFrom(sid); setName(participant?.name || ''); setContact(participant?.contact || ''); setPhase('intro'); window.scrollTo(0, 0); }} onSubmit={async (deliverable, events, auto) => {
     setPhase('grading');
     const j = await (await fetch(`/api/work/${token}/sessions/${sid}/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deliverable, events, auto }) })).json();
-    if (!j.ok) { if (auto || j.expired) { setPhase('ended'); return; } setErr(j.error || '交卷失败，再试一次'); setPhase('work'); return; }
+    if (!j.ok) { if (auto || j.expired) { setPhase('ended'); return; } setErr(j.error || L('交卷失败，再试一次', "Couldn't submit. Please try again.")); setPhase('work'); return; }
     if (j.staged) return;   // 进「AI 审计中」，由 AuditPanel 推进
     setReport(j.report); setPhase('report');
-  }} /></>;
+  }} /></WorkLang>;
 }
 
 /** 这台浏览器的编号：同一浏览器换联系方式重做时，管理页能标出来（只提示，不拦） */
 function deviceId() { try { let d = localStorage.getItem('work-device'); if (!d) { d = crypto.randomUUID(); localStorage.setItem('work-device', d); } return d; } catch { return undefined; } }
 
 function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubmit, onRestart, resume, limit }: { resume?: any; limit: number | null;  token: string; sid: string; task: Task; env: Env; mode: 'bench' | 'open'; narrow: boolean; grading: boolean; error?: string; onRestart?: () => void; onSubmit: (deliverable: string, events: Ev[], auto?: boolean) => Promise<void> }) {
+  const L = useL(); const lang = useLang();
   const t0 = useRef(Date.now() - (resume?.elapsed_s || 0) * 1000);   // 从开始作答算起：刷新、回来都接着走，不重置
   const [now, setNow] = useState<number>(resume?.elapsed_s || 0);
   const buf = useRef<Ev[]>([]);
@@ -221,7 +230,8 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   type PartState = { doc: string; code: string; csv: string; notes: string; params: Record<string, string>; sketch: { pts: [number, number][]; label: string }[]; graph: CanvasGraph; board: BoardValue };
   const blank = (): PartState => ({ doc: '', code: '', csv: '', notes: '', params: {}, sketch: [], graph: { nodes: [], edges: [], lanes: [] }, board: emptyBoard() });
   // 要求印在试卷里（文档开头印标题 + 形态，代码开头一行注释），不堆在顶栏；seed 用来判断有没有真动笔
-  const seedOf = (p: Part) => p.module === 'doc' ? `# ${p.title}\n${p.format ? `（${p.format}）\n` : ''}\n` : p.module === 'code' ? `// ${p.title}${p.format ? `（${p.format}）` : ''}\n` : '';
+  const paren = (x: string) => (lang === 'en' ? ` (${x})` : `（${x}）`);
+  const seedOf = (p: Part) => p.module === 'doc' ? `# ${p.title}\n${p.format ? `${paren(p.format).trim()}\n` : ''}\n` : p.module === 'code' ? `// ${p.title}${p.format ? paren(p.format) : ''}\n` : '';
   const [ps, setPs] = useState<Record<string, PartState>>(() => { const o: Record<string, PartState> = {}; let seededCode = false, seededCsv = false; for (const p of parts) { const st = blank(); const seed = seedOf(p); if (p.module === 'doc') st.doc = seed; if (p.module === 'code' && !seededCode) { st.code = seed + (env.starter || ''); seededCode = true; } else if (p.module === 'code') st.code = seed; if (p.module === 'sheet' && !seededCsv) { st.csv = env.csv || ''; seededCsv = true; } o[p.id] = st; } return o; });
   const [opened, setOpened] = useState<Set<string>>(() => new Set(parts[0] ? [parts[0].id] : []));
   const [nudge, setNudge] = useState<string | null>(null); const nudged = useRef(false);
@@ -253,13 +263,13 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
     for (const f of Array.from(list)) {
       setPfBusy(n => n + 1);
       try { const j = await uploadWorkFile(token, sid, f, { t: now_s(), part }); setPfiles(x => [...x, { ...j, part }]); }
-      catch (e: any) { setPfErr(`${f.name} 没传上去：${e.message}`); }
+      catch (e: any) { setPfErr(L(`${f.name} 没传上去：${e.message}`, `${f.name} didn't upload: ${e.message}`)); }
       setPfBusy(n => n - 1);
     }
   };
   const removePart = async (f: PFile) => {
-    if (!confirm(`删掉附件「${f.name}」？交卷时就不算了。`)) return;
-    try { await removeWorkFile(token, sid, f.url, now_s()); setPfiles(x => x.filter(y => y.url !== f.url)); } catch (e: any) { setPfErr(`没删掉：${e.message}`); }
+    if (!confirm(L(`删掉附件「${f.name}」？交卷时就不算了。`, `Delete "${f.name}"? It won't be part of your submission.`))) return;
+    try { await removeWorkFile(token, sid, f.url, now_s()); setPfiles(x => x.filter(y => y.url !== f.url)); } catch (e: any) { setPfErr(L(`没删掉：${e.message}`, `Couldn't delete: ${e.message}`)); }
   };
   const isImg = (n: string) => /\.(png|jpe?g|webp|gif)$/i.test(n);
   // 附件写进交付物：图片直接显示，其他是可下载的链接（交卷时平台再把文字 / 看图说明接在后面给评卷）
@@ -316,8 +326,8 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   // 案例推进式（深度样本出的题）：一步一步给信息，看完当步再答、答完再开下一步；每一步的揭示都记进过程
   const stages = task?.task?.stages || [];
   const [unlocked, setUnlocked] = useState(() => Math.max(1, ...((resume?.resume?.unlocked || []) as string[]).map(id => stages.findIndex((s: Stage) => s.id === id) + 1)));
-  const STAGE_CN: Record<string, string> = { structuring: '搭框架', judgement: '判断与洞察', numeracy: '测算', creativity: '出主意', synthesis: '综合建议', other: '' };
-  const openStage = (st: Stage, i: number) => { if (i >= unlocked) { setUnlocked(i + 1); ev('stage_unlock', { id: st.id }); } setMat({ id: st.id, title: `${st.id} · ${st.question}`, kind: 'stage', content: st.reveal || '（这一步没有新信息，直接作答）', source: 'stage' }); ev('open_stage', { id: st.id }); };
+  const STAGE_CN: Record<string, string> = lang === 'en' ? { structuring: 'Structuring', judgement: 'Judgement & insight', numeracy: 'Numbers', creativity: 'Ideas', synthesis: 'Recommendation', other: '' } : { structuring: '搭框架', judgement: '判断与洞察', numeracy: '测算', creativity: '出主意', synthesis: '综合建议', other: '' };
+  const openStage = (st: Stage, i: number) => { if (i >= unlocked) { setUnlocked(i + 1); ev('stage_unlock', { id: st.id }); } setMat({ id: st.id, title: `${st.id} · ${st.question}`, kind: 'stage', content: st.reveal || L('（这一步没有新信息，直接作答）', '(No new information in this step. Go ahead and answer.)'), source: 'stage' }); ev('open_stage', { id: st.id }); };
 
   // AI
   const [chat, setChat] = useState<{ q: string; a: string }[]>(resume?.resume?.ai_chat || []);
@@ -327,7 +337,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
     setAsking(true); setQ(''); ev('ai_ask', { chars: text.length });
     try {
       const j = await (await fetch(`/api/work/${token}/sessions/${sid}/ai`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ q: text, material: mat ? `${mat.title}\n${mat.content}` : '' }) })).json();
-      setChat(c => [...c, { q: text, a: j.ok ? j.a : `（出错：${j.error}）` }]);
+      setChat(c => [...c, { q: text, a: j.ok ? j.a : L(`（出错：${j.error}）`, `(Error: ${j.error})`) }]);
     } finally { setAsking(false); }
   };
   const adopt = (a: string) => { ev('adopt', { chars: a.length }); if (curPart.module === 'doc') setPart(x => ({ doc: x.doc + (x.doc ? '\n\n' : '') + a })); else setNotes(n => n + (n ? '\n\n' : '') + a); };
@@ -344,12 +354,12 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
           const mod = new Function('module', 'exports', src + '\\n;return [' + names.map(n => 'typeof ' + n + '!=="undefined"?' + n + ':undefined').join(',') + '];');
           const module = { exports: {} }; const found = mod(module, module.exports);
           solution = found.find(f => typeof f === 'function') || (typeof module.exports === 'function' ? module.exports : Object.values(module.exports).find(f => typeof f === 'function'));
-          if (typeof solution !== 'function') { self.postMessage({ error: '没找到可调用的函数：请定义 function solution(...) 或在代码里定义一个函数' }); return; }
+          if (typeof solution !== 'function') { self.postMessage({ error: ${JSON.stringify(L('没找到可调用的函数：请定义 function solution(...) 或在代码里定义一个函数', 'No callable function found: define function solution(...) or another function in your code'))} }); return; }
         } catch (err) { self.postMessage({ error: String(err) }); return; }
         for (const t of tests) { try { out.push({ name: t.name, ok: !!(new Function('solution', t.code))(solution) }); } catch (err) { out.push({ name: t.name, ok: false, err: String(err) }); } }
         self.postMessage({ out }); };`], { type: 'text/javascript' })));
-    const timer = setTimeout(() => { worker.terminate(); setTestOut('超时（3 秒）：可能死循环'); ev('run_tests', { note: 'timeout' }); }, 3000);
-    worker.onmessage = (e) => { clearTimeout(timer); worker.terminate(); if (e.data.error) { setTestOut(`代码报错：${e.data.error}`); ev('run_tests', { note: 'error' }); return; } const out = e.data.out as { name: string; ok: boolean; err?: string }[]; const pass = out.filter(x => x.ok).length; setTestOut(out.map(x => `${x.ok ? '✓' : '✗'} ${x.name}${x.err ? '  ' + x.err : ''}`).join('\n') + `\n通过 ${pass}/${out.length}`); ev('run_tests', { note: `${pass}/${out.length}` }); };
+    const timer = setTimeout(() => { worker.terminate(); setTestOut(L('超时（3 秒）：可能死循环', 'Timed out (3 s): possibly an infinite loop')); ev('run_tests', { note: 'timeout' }); }, 3000);
+    worker.onmessage = (e) => { clearTimeout(timer); worker.terminate(); if (e.data.error) { setTestOut(L(`代码报错：${e.data.error}`, `Error: ${e.data.error}`)); ev('run_tests', { note: 'error' }); return; } const out = e.data.out as { name: string; ok: boolean; err?: string }[]; const pass = out.filter(x => x.ok).length; setTestOut(out.map(x => `${x.ok ? '✓' : '✗'} ${x.name}${x.err ? '  ' + x.err : ''}`).join('\n') + L(`\n通过 ${pass}/${out.length}`, `\nPassed ${pass}/${out.length}`)); ev('run_tests', { note: `${pass}/${out.length}` }); };
     worker.postMessage({ src, tests: env.tests });
   };
 
@@ -382,15 +392,15 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   }, []);
   const showMat = (m: Material) => { openMat(m); if (matMode === 'bar') setMatMode('split'); };
   // 题目列表最后一问（选填）：在材料面板里直接写
-  const NEXT_Q = '如果再给你一天，你会先改哪里、为什么？';
-  const openNext = () => { setMat({ id: 'next', title: `选填 · ${NEXT_Q}`, kind: 'next', content: '', source: 'next' }); ev('open_next_step'); if (matMode === 'bar') setMatMode('split'); };
+  const NEXT_Q = L('如果再给你一天，你会先改哪里、为什么？', 'If you had one more day, what would you improve first, and why?');
+  const openNext = () => { setMat({ id: 'next', title: L(`选填 · ${NEXT_Q}`, `Optional · ${NEXT_Q}`), kind: 'next', content: '', source: 'next' }); ev('open_next_step'); if (matMode === 'bar') setMatMode('split'); };
   const nextQCard = (label: string, locked: boolean) => <div onClick={() => { if (!locked) openNext(); }} style={{ padding: '9px 12px', borderRadius: 10, marginBottom: 6, cursor: locked ? 'not-allowed' : 'pointer', opacity: locked ? .45 : 1, background: mat?.id === 'next' ? panel : 'transparent', border: `1px dashed ${mat?.id === 'next' ? '#6055f5' : line}` }}>
-    <div style={{ fontSize: 11, color: '#999', letterSpacing: 1 }}>{label} · 选填{locked ? ' · 先答上一步' : nextStep.trim() ? ' · 已写' : ''}</div>
+    <div style={{ fontSize: 11, color: '#999', letterSpacing: 1 }}>{label} · {L('选填', 'Optional')}{locked ? L(' · 先答上一步', ' · Answer the previous step first') : nextStep.trim() ? L(' · 已写', ' · Written') : ''}</div>
     <div style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.5, marginTop: 2 }}>{locked ? '…' : NEXT_Q}</div>
   </div>;
   const filledOf = (id: string) => { if (pfiles.some(f => f.part === id)) return true; const x = ps[id]; const p = parts.find(q => q.id === id); if (!x || !p) return false; const seed = seedOf(p).trim(); const docReal = x.doc.trim() && x.doc.trim() !== seed; const codeReal = x.code.trim() && x.code.trim() !== seed && x.code.trim() !== (seed + (env.starter || '')).trim(); return !!(docReal || x.csv.trim() || codeReal || x.notes.trim() || x.graph.nodes.length || Object.keys(x.params).length || x.board.elements.some((e: any) => !e.isDeleted)); };
   // 20 分钟还没打开的交付物：弹一次气泡（别等到交卷才说）
-  useEffect(() => { if (nudged.current || mode === 'open') return; if (now >= 1200) { const miss = parts.filter(p => !opened.has(p.id)); if (miss.length) { nudged.current = true; setNudge(`${miss.map(p => `${p.id} ${MODULES[p.module].label}`).join('、')} 还没打开过，别漏了`); ev('nudge', { parts: miss.map(p => p.id) }); } } }, [now, parts, opened, mode, ev]);
+  useEffect(() => { if (nudged.current || mode === 'open') return; if (now >= 1200) { const miss = parts.filter(p => !opened.has(p.id)); if (miss.length) { nudged.current = true; setNudge(L(`${miss.map(p => `${p.id} ${MODULES[p.module].label}`).join('、')} 还没打开过，别漏了`, `You haven't opened ${miss.map(p => `${p.id} ${MODULES[p.module].en}`).join(', ')} yet. Don't miss it.`)); ev('nudge', { parts: miss.map(p => p.id) }); } } }, [now, parts, opened, mode, ev]);
   const switchPart = (id: string) => { setCur(id); setOpened(o => new Set(o).add(id)); ev('switch_part', { id }); };
   const line = dark ? '#2b2d3e' : '#e8e9f0', panel = dark ? '#1e1f2b' : '#fff', ink2 = dark ? '#aab' : '#777';
   const miniBtn: React.CSSProperties = { border: `1px solid ${line}`, background: 'transparent', color: ink2, borderRadius: 6, padding: '2px 8px', cursor: 'pointer', font: 'inherit', fontSize: 12 };
@@ -398,21 +408,21 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   const partFiles = (id: string) => pfiles.filter(f => f.part === id || (!f.part && id === parts[0]?.id));
   const curFiles = partFiles(cur);
   const attEl = mode === 'open' ? null : <span style={{ position: 'relative' }}>
-    <button onClick={() => setAttOpen(o => !o)} title="用别的软件做的（设计稿、图、Excel、PDF…）传到这份交付物" style={{ ...miniBtn, color: curFiles.length ? '#6055f5' : ink2, fontWeight: curFiles.length ? 700 : 400, whiteSpace: 'nowrap' }}>📎 附件{curFiles.length ? ` ${curFiles.length}` : ''}{pfBusy ? ' · 上传中' : ''}</button>
+    <button onClick={() => setAttOpen(o => !o)} title={L('用别的软件做的（设计稿、图、Excel、PDF…）传到这份交付物', 'Upload work made in other software (designs, images, Excel, PDF…) to this deliverable')} style={{ ...miniBtn, color: curFiles.length ? '#6055f5' : ink2, fontWeight: curFiles.length ? 700 : 400, whiteSpace: 'nowrap' }}>📎 {L('附件', 'Files')}{curFiles.length ? ` ${curFiles.length}` : ''}{pfBusy ? L(' · 上传中', ' · Uploading') : ''}</button>
     {attOpen && <div style={{ position: 'absolute', top: 30, left: 0, zIndex: 30, width: 320, background: panel, color: dark ? '#d6d8e6' : '#333', border: `1px solid ${line}`, borderRadius: 12, boxShadow: '0 12px 32px rgba(20,24,60,.16)', padding: 12, fontSize: 12.5 }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}><b style={{ flex: 1 }}>「{parts.find(p => p.id === cur)?.title}」的附件</b><button onClick={() => setAttOpen(false)} style={{ ...miniBtn, padding: '0 6px' }}>×</button></div>
-      {curFiles.length ? curFiles.map(f => <div key={f.url} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '4px 0' }}><a href={f.url} target="_blank" rel="noreferrer" style={{ flex: 1, minWidth: 0, color: '#6055f5', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={f.name}>{isImg(f.name) ? '🖼' : '📄'} {f.name}</a><a onClick={() => removePart(f)} style={{ color: '#c0392b', cursor: 'pointer', fontSize: 12, flexShrink: 0 }}>删除</a></div>) : <div style={{ color: ink2, padding: '2px 0 6px' }}>还没有。用别的软件做的也能交到这里。</div>}
-      <label style={{ display: 'inline-block', marginTop: 8, padding: '5px 12px', borderRadius: 999, background: '#6055f5', color: '#fff', cursor: 'pointer', fontWeight: 600 }}>{pfBusy ? `上传中（${pfBusy}）…` : '＋ 上传文件'}<input type="file" multiple style={{ display: 'none' }} onChange={e => { uploadPart(e.target.files, cur); e.target.value = ''; }} /></label>
-      <div style={{ color: ink2, marginTop: 8, lineHeight: 1.6 }}>{pfErr ? <span style={{ color: '#c0392b' }}>{pfErr}</span> : '设计稿、图、Excel、PDF、PPT、压缩包都行，单个 200MB 内。交卷时会读出文字、看图写说明一起评。'}</div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}><b style={{ flex: 1 }}>{L(`「${parts.find(p => p.id === cur)?.title}」的附件`, `Files for "${parts.find(p => p.id === cur)?.title}"`)}</b><button onClick={() => setAttOpen(false)} style={{ ...miniBtn, padding: '0 6px' }}>×</button></div>
+      {curFiles.length ? curFiles.map(f => <div key={f.url} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '4px 0' }}><a href={f.url} target="_blank" rel="noreferrer" style={{ flex: 1, minWidth: 0, color: '#6055f5', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={f.name}>{isImg(f.name) ? '🖼' : '📄'} {f.name}</a><a onClick={() => removePart(f)} style={{ color: '#c0392b', cursor: 'pointer', fontSize: 12, flexShrink: 0 }}>{L('删除', 'Delete')}</a></div>) : <div style={{ color: ink2, padding: '2px 0 6px' }}>{L('还没有。用别的软件做的也能交到这里。', 'None yet. You can hand in work made in other software here too.')}</div>}
+      <label style={{ display: 'inline-block', marginTop: 8, padding: '5px 12px', borderRadius: 999, background: '#6055f5', color: '#fff', cursor: 'pointer', fontWeight: 600 }}>{pfBusy ? L(`上传中（${pfBusy}）…`, `Uploading (${pfBusy})…`) : L('＋ 上传文件', '＋ Upload files')}<input type="file" multiple style={{ display: 'none' }} onChange={e => { uploadPart(e.target.files, cur); e.target.value = ''; }} /></label>
+      <div style={{ color: ink2, marginTop: 8, lineHeight: 1.6 }}>{pfErr ? <span style={{ color: '#c0392b' }}>{pfErr}</span> : L('设计稿、图、Excel、PDF、PPT、压缩包都行，单个 200MB 内。交卷时会读出文字、看图写说明一起评。', 'Designs, images, Excel, PDF, PPT or zip files, up to 200 MB each. When you submit, their text is read and images are described so they are graded together with your work.')}</div>
     </div>}
   </span>;
-  const tabsEl = mode === 'open' ? null : <div data-tour="tabs" style={{ display: 'flex', gap: 4, alignItems: 'center' }}>{parts.map(p => { const on = p.id === cur; const filled = filledOf(p.id); return <button key={p.id} onClick={() => switchPart(p.id)} title={`${p.title}${p.format ? `（${p.format}）` : ''}`} style={{ border: 0, background: on ? '#6055f5' : 'transparent', color: on ? '#fff' : dark ? '#b8bdd6' : '#555', borderRadius: 8, padding: '4px 10px', cursor: 'pointer', font: 'inherit', fontSize: 12.5, fontWeight: on ? 700 : 500, display: 'flex', gap: 6, alignItems: 'center', whiteSpace: 'nowrap' }}>{p.id} {MODULES[p.module].label}{partFiles(p.id).length ? <span style={{ fontSize: 11, opacity: .85 }}>📎{partFiles(p.id).length}</span> : null}<span style={{ width: 6, height: 6, borderRadius: 99, background: filled ? '#22c55e' : on ? 'rgba(255,255,255,.45)' : '#d9dbe6' }} /></button>; })}{attEl}</div>;
+  const tabsEl = mode === 'open' ? null : <div data-tour="tabs" style={{ display: 'flex', gap: 4, alignItems: 'center' }}>{parts.map(p => { const on = p.id === cur; const filled = filledOf(p.id); return <button key={p.id} onClick={() => switchPart(p.id)} title={`${p.title}${p.format ? `（${p.format}）` : ''}`} style={{ border: 0, background: on ? '#6055f5' : 'transparent', color: on ? '#fff' : dark ? '#b8bdd6' : '#555', borderRadius: 8, padding: '4px 10px', cursor: 'pointer', font: 'inherit', fontSize: 12.5, fontWeight: on ? 700 : 500, display: 'flex', gap: 6, alignItems: 'center', whiteSpace: 'nowrap' }}>{p.id} {modLabel(p.module, lang)}{partFiles(p.id).length ? <span style={{ fontSize: 11, opacity: .85 }}>📎{partFiles(p.id).length}</span> : null}<span style={{ width: 6, height: 6, borderRadius: 99, background: filled ? '#22c55e' : on ? 'rgba(255,255,255,.45)' : '#d9dbe6' }} /></button>; })}{attEl}</div>;
   const emptyParts = mode === 'open' ? [] : parts.filter(p => !filledOf(p.id));
   const viewBtn = (on: boolean): React.CSSProperties => ({ width: 30, height: 26, border: 0, background: on ? (dark ? '#2b2a4a' : '#e9e7ff') : 'transparent', color: on ? '#4c43c9' : ink2, borderRadius: 6, cursor: 'pointer', display: 'grid', placeItems: 'center', padding: 0 });
   const iconBtn = (on: boolean): React.CSSProperties => ({ width: 26, height: 24, border: 0, background: on ? (dark ? '#2b2a4a' : '#e9e7ff') : 'transparent', color: on ? '#4c43c9' : ink2, borderRadius: 6, cursor: 'pointer', display: 'grid', placeItems: 'center', padding: 0 });
   const submit = () => {
-    if (mode === 'open' && !recording) { setLocalErr('先记录屏幕再交卷：点「开始记录」，选「整个屏幕」'); setTimeout(() => setLocalErr(''), 5000); return; }
-    if (!arm) { setArm(true); if (emptyParts.length) { setLocalErr(`${emptyParts.map(p => `${p.id} ${p.title}`).join('、')} 还没动笔。确定要交就再点一次交卷`); setTimeout(() => setLocalErr(''), 6000); } setTimeout(() => setArm(false), 6000); return; }
+    if (mode === 'open' && !recording) { setLocalErr(L('先记录屏幕再交卷：点「开始记录」，选「整个屏幕」', 'Record your screen before submitting: click "Start recording" and choose "Entire screen".')); setTimeout(() => setLocalErr(''), 5000); return; }
+    if (!arm) { setArm(true); if (emptyParts.length) { setLocalErr(L(`${emptyParts.map(p => `${p.id} ${p.title}`).join('、')} 还没动笔。确定要交就再点一次交卷`, `You haven't started ${emptyParts.map(p => `${p.id} ${p.title}`).join(', ')}. Click Submit again if you're sure.`)); setTimeout(() => setLocalErr(''), 6000); } setTimeout(() => setArm(false), 6000); return; }
     setArm(false);
     finish();
   };
@@ -445,10 +455,10 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   const over = left == null ? now > task.task.time_minutes * 60 : left <= 300;   // 最后 5 分钟变红
 
   const matBody = mat && (mat.kind === 'next' ? <div style={{ marginTop: 8 }}>
-    <div style={{ fontSize: 13, color: ink2, lineHeight: 1.7, marginBottom: 8 }}>有余力就写，不写不扣分。写清楚交付里哪里还不够可靠、你会先补什么，算进评价。</div>
-    <textarea className="wk-ta" value={nextStep} onChange={e => setNextStep(e.target.value)} rows={6} placeholder="比如：第二部分的转化率是 AI 按行业均值估的，我只核了一份材料，会先拉真实漏斗数据再算一遍" style={{ width: '100%', boxSizing: 'border-box', border: `1px solid ${line}`, borderRadius: 8, padding: '8px 10px', font: 'inherit', fontSize: 13.5, resize: 'vertical', background: dark ? '#16171f' : '#fff', color: 'inherit' }} />
+    <div style={{ fontSize: 13, color: ink2, lineHeight: 1.7, marginBottom: 8 }}>{L('有余力就写，不写不扣分。写清楚交付里哪里还不够可靠、你会先补什么，算进评价。', "Write this if you have time; skipping it costs nothing. Say which parts of your work aren't solid yet and what you'd fix first. It counts toward your evaluation.")}</div>
+    <textarea className="wk-ta" value={nextStep} onChange={e => setNextStep(e.target.value)} rows={6} placeholder={L('比如：第二部分的转化率是 AI 按行业均值估的，我只核了一份材料，会先拉真实漏斗数据再算一遍', 'e.g. The conversion rate in part 2 is an AI estimate from industry averages and I only checked one source. I would pull real funnel data and redo the numbers first.')} style={{ width: '100%', boxSizing: 'border-box', border: `1px solid ${line}`, borderRadius: 8, padding: '8px 10px', font: 'inherit', fontSize: 13.5, resize: 'vertical', background: dark ? '#16171f' : '#fff', color: 'inherit' }} />
   </div> : <>
-    {mat.kind === 'file' && mat.url && (/^image\//.test(mat.mime || '') ? <a href={mat.url} target="_blank" rel="noreferrer"><img src={mat.url} alt={mat.name || mat.title} style={{ maxWidth: '100%', display: 'block', margin: '8px 0', borderRadius: 8, border: `1px solid ${line}` }} /></a> : <a href={mat.url} target="_blank" rel="noreferrer" style={{ display: 'inline-block', margin: '8px 0 0', color: '#6055f5', fontWeight: 600 }}>打开 / 下载附件：{mat.name || mat.title} ↗</a>)}
+    {mat.kind === 'file' && mat.url && (/^image\//.test(mat.mime || '') ? <a href={mat.url} target="_blank" rel="noreferrer"><img src={mat.url} alt={mat.name || mat.title} style={{ maxWidth: '100%', display: 'block', margin: '8px 0', borderRadius: 8, border: `1px solid ${line}` }} /></a> : <a href={mat.url} target="_blank" rel="noreferrer" style={{ display: 'inline-block', margin: '8px 0 0', color: '#6055f5', fontWeight: 600 }}>{L('打开 / 下载附件：', 'Open / download: ')}{mat.name || mat.title} ↗</a>)}
     {isSheet(mat) ? <SheetView text={mat.content} dark={dark} /> : mat.kind === 'stage' || /^(data)$/.test(mat.kind) && !/\|/.test(mat.content) ? <pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: 13.5, lineHeight: 1.75, margin: '8px 0 0', color: dark ? '#cfd3e6' : '#333' }}>{mat.content}</pre> : <div className="wk-md wk-mat" style={{ fontSize: 13.5, lineHeight: 1.75, color: dark ? '#cfd3e6' : '#333', marginTop: 6 }}><Md text={mat.content} /></div>}
   </>);
 
@@ -456,73 +466,73 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
     <Shell dark={dark}>
       <style>{`.wk-md p{margin:0 0 8px}.wk-md ul,.wk-md ol{margin:0 0 8px;padding-left:20px}.wk-md li{margin:2px 0}.wk-md .ws-h{font-weight:700;margin:10px 0 4px}.wk-md a{color:#6055f5}.wk-md .ws-code{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;background:rgba(96,85,245,.08);padding:1px 5px;border-radius:4px}.wk-md>:last-child{margin-bottom:0}.wk-md .ws-tw{overflow:auto;margin:6px 0 10px}.wk-md .ws-table{border-collapse:collapse;font-size:12.5px;min-width:60%}.wk-md .ws-table th,.wk-md .ws-table td{border:1px solid rgba(120,120,160,.25);padding:5px 9px;text-align:left;vertical-align:top}.wk-md .ws-table th{background:rgba(96,85,245,.06);font-weight:600;white-space:nowrap}.wk-md .ws-quote{margin:6px 0 10px;padding:6px 12px;border-left:3px solid #c9c9dc;color:#666;background:rgba(120,120,160,.05);border-radius:0 8px 8px 0}.wk-md .ws-pre{white-space:pre-wrap;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;background:rgba(120,120,160,.08);padding:10px 12px;border-radius:8px;margin:6px 0 10px}.wk-mat .ws-h{font-size:14px;margin:12px 0 4px}.wk-ta:focus{outline:none;border-color:#6055f5!important;box-shadow:0 0 0 3px rgba(96,85,245,.12)}`}</style>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 14px', borderBottom: `1px solid ${line}`, background: dark ? '#16171f' : '#fff', color: dark ? '#e6e8f0' : undefined, position: 'sticky', top: 0, zIndex: 5, height: 52, boxSizing: 'border-box' }}>
-        {!grading ? <button onClick={() => setBrief(true)} title="看任务说明（作答不受影响）" style={{ border: `1px solid ${line}`, background: 'transparent', color: '#6055f5', borderRadius: 8, padding: '3px 9px', fontSize: 12, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>← 任务说明</button> : <div style={{ fontSize: 11, letterSpacing: 2, color: '#6055f5', fontWeight: 700 }}>真活台</div>}
-        <div style={{ fontWeight: 700, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 14 }}>{task.task.title} <span style={{ color: '#888', fontWeight: 400, fontSize: 12.5 }}>{task.company_name} · {task.role} · {mode === 'open' ? '用自己的软件做' : modulesLabel(task, env)}</span></div>
+        {!grading ? <button onClick={() => setBrief(true)} title={L('看任务说明（作答不受影响）', 'View the task (your work is kept)')} style={{ border: `1px solid ${line}`, background: 'transparent', color: '#6055f5', borderRadius: 8, padding: '3px 9px', fontSize: 12, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>{L('← 任务说明', '← Task')}</button> : <div style={{ fontSize: 11, letterSpacing: 2, color: '#6055f5', fontWeight: 700 }}>{L('真活台', 'Work sample')}</div>}
+        <div style={{ fontWeight: 700, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 14 }}>{task.task.title} <span style={{ color: '#888', fontWeight: 400, fontSize: 12.5 }}>{task.company_name} · {lang === 'en' ? roleLabel(task.role, (task.task as any).role, lang) : task.role} · {mode === 'open' ? L('用自己的软件做', 'Own software') : modulesLabel(task, env)}</span></div>
         {!narrow && <div data-tour="views" style={{ display: 'flex', gap: 2, padding: 2, border: `1px solid ${line}`, borderRadius: 8 }}>
-          <button onClick={() => setLeftOpen(v => !v)} style={viewBtn(leftOpen)} title={leftOpen ? '收起材料栏' : '展开材料栏'}><Ico k="left" /></button>
-          <button onClick={() => setAiOpen(v => !v)} style={viewBtn(aiOpen)} title={aiOpen ? '收起 AI 助手' : '展开 AI 助手'}><Ico k="ai" /></button>
+          <button onClick={() => setLeftOpen(v => !v)} style={viewBtn(leftOpen)} title={leftOpen ? L('收起材料栏', 'Hide materials') : L('展开材料栏', 'Show materials')}><Ico k="left" /></button>
+          <button onClick={() => setAiOpen(v => !v)} style={viewBtn(aiOpen)} title={aiOpen ? L('收起 AI 助手', 'Hide AI assistant') : L('展开 AI 助手', 'Show AI assistant')}><Ico k="ai" /></button>
         </div>}
-        <button onClick={() => setTour(0)} title="界面说明" style={{ ...viewBtn(false), border: `1px solid ${line}`, fontWeight: 700, fontSize: 13 }}>?</button>
+        <button onClick={() => setTour(0)} title={L('界面说明', 'How this page works')} style={{ ...viewBtn(false), border: `1px solid ${line}`, fontWeight: 700, fontSize: 13 }}>?</button>
         <div data-tour="clock" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-        <div style={{ fontFamily: 'ui-monospace, Menlo, monospace', fontWeight: 700, fontSize: 13.5, color: over ? '#ff8a80' : dark ? '#e6e8f0' : '#1a1a2e' }}>{left == null ? fmt(now) : <>剩 {fmt(left)}</>}{!narrow && <span style={{ color: '#aaa', fontWeight: 400 }}> / {task.task.time_minutes}:00</span>}</div>
-        <button onClick={submit} disabled={grading} style={{ ...btnPrimary, padding: '7px 16px', fontSize: 13.5, ...(arm ? { background: '#c0392b' } : {}) }}>{grading ? '评卷中…' : arm ? '再点一次确认交卷' : '交卷 →'}</button>
+        <div style={{ fontFamily: 'ui-monospace, Menlo, monospace', fontWeight: 700, fontSize: 13.5, color: over ? '#ff8a80' : dark ? '#e6e8f0' : '#1a1a2e' }}>{left == null ? fmt(now) : lang === 'en' ? <>{fmt(left)} left</> : <>剩 {fmt(left)}</>}{!narrow && <span style={{ color: '#aaa', fontWeight: 400 }}> / {task.task.time_minutes}:00</span>}</div>
+        <button onClick={submit} disabled={grading} style={{ ...btnPrimary, padding: '7px 16px', fontSize: 13.5, ...(arm ? { background: '#c0392b' } : {}) }}>{grading ? L('评卷中…', 'Grading…') : arm ? L('再点一次确认交卷', 'Click again to confirm') : L('交卷 →', 'Submit →')}</button>
         </div>
       </div>
       {brief && <div onClick={() => setBrief(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(10,12,30,.35)', zIndex: 40, display: 'flex', justifyContent: 'center', alignItems: 'flex-start', padding: '40px 16px', overflow: 'auto' }}>
         <div onClick={e => e.stopPropagation()} style={{ width: '100%', maxWidth: 760, background: '#fff', color: '#1a1a2e', borderRadius: 16, padding: '22px 26px', boxShadow: '0 20px 60px rgba(20,20,60,.25)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}><b style={{ fontSize: 18, flex: 1 }}>{task.task.title}</b><button onClick={() => setBrief(false)} style={{ border: '1px solid #e0e0ee', background: '#fff', borderRadius: 8, padding: '4px 12px', cursor: 'pointer' }}>继续作答</button></div>
-          <div style={{ color: '#666', fontSize: 13, margin: '4px 0 14px' }}>{task.company_name} · {roleLabel(task.role, (task.task as any).role)} · {task.task.soft_limit ? '建议' : '限时'} {task.task.time_minutes} 分钟 · 作答进度都在，关掉这个面板就回去</div>
-          <div style={{ fontWeight: 700, margin: '10px 0 4px' }}>任务书</div><MdView text={task.task.brief} style={{ fontSize: 14 }} />
-          <div style={{ fontWeight: 700, margin: '14px 0 4px' }}>要交什么</div><ol style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9, fontSize: 14 }}>{task.task.deliverables.map(d => <li key={d.id}><b>{d.title}</b> <span style={{ color: '#888' }}>{d.format}</span></li>)}</ol>
-          <div style={{ fontWeight: 700, margin: '14px 0 4px' }}>规则</div><RulesView rules={task.task.rules} dark={dark} />
-          {onRestart && <div style={{ marginTop: 18, paddingTop: 12, borderTop: '1px solid #eee', fontSize: 13, color: '#666', display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}><span style={{ flex: 1 }}>想换一种作答方式（用自己的软件 / 网页工具）？还是这一次作答，时间接着走，不会重新开始。</span><button onClick={() => { if (confirm('换一种方式后时间接着走，不会重新开始。确定吗？')) onRestart(); }} style={{ border: '1px solid #c9c3ff', background: '#fff', color: '#6055f5', borderRadius: 999, padding: '6px 14px', cursor: 'pointer', fontWeight: 600 }}>换一种方式重新开始</button></div>}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}><b style={{ fontSize: 18, flex: 1 }}>{task.task.title}</b><button onClick={() => setBrief(false)} style={{ border: '1px solid #e0e0ee', background: '#fff', borderRadius: 8, padding: '4px 12px', cursor: 'pointer' }}>{L('继续作答', 'Back to work')}</button></div>
+          <div style={{ color: '#666', fontSize: 13, margin: '4px 0 14px' }}>{task.company_name} · {roleLabel(task.role, (task.task as any).role, lang)} · {lang === 'en' ? `${task.task.time_minutes} minutes${task.task.soft_limit ? ' suggested' : ' limit'} · Your progress is saved; close this panel to go back` : <>{task.task.soft_limit ? '建议' : '限时'} {task.task.time_minutes} 分钟 · 作答进度都在，关掉这个面板就回去</>}</div>
+          <div style={{ fontWeight: 700, margin: '10px 0 4px' }}>{L('任务书', 'The task')}</div><MdView text={task.task.brief} style={{ fontSize: 14 }} />
+          <div style={{ fontWeight: 700, margin: '14px 0 4px' }}>{L('要交什么', 'What to submit')}</div><ol style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9, fontSize: 14 }}>{task.task.deliverables.map(d => <li key={d.id}><b>{d.title}</b> <span style={{ color: '#888' }}>{d.format}</span></li>)}</ol>
+          <div style={{ fontWeight: 700, margin: '14px 0 4px' }}>{L('规则', 'Rules')}</div><RulesView rules={task.task.rules} dark={dark} />
+          {onRestart && <div style={{ marginTop: 18, paddingTop: 12, borderTop: '1px solid #eee', fontSize: 13, color: '#666', display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}><span style={{ flex: 1 }}>{L('想换一种作答方式（用自己的软件 / 网页工具）？还是这一次作答，时间接着走，不会重新开始。', 'Want to switch how you work (your own software / web tools)? It stays the same attempt: the clock keeps running and nothing restarts.')}</span><button onClick={() => { if (confirm(L('换一种方式后时间接着走，不会重新开始。确定吗？', 'After switching, the clock keeps running and nothing restarts. Continue?'))) onRestart(); }} style={{ border: '1px solid #c9c3ff', background: '#fff', color: '#6055f5', borderRadius: 999, padding: '6px 14px', cursor: 'pointer', fontWeight: 600 }}>{L('换一种方式重新开始', 'Switch how I work')}</button></div>}
         </div>
       </div>}
-      {tour != null && <Tour step={tour} steps={TOUR_STEPS.filter(t => mode !== 'open' || t.key !== 'tabs')} onStep={setTour} onDone={() => { setTour(null); try { localStorage.setItem('work-tour-done', '1'); } catch {} }} />}
-      {grading && <div style={{ padding: '12px 18px', background: '#f3f2ff', color: '#4c43c9', fontSize: 13.5 }}>交卷了。正在逐条核对交付物、回看过程、和 AI 基线比——大约 1–2 分钟，别关页面。</div>}
+      {tour != null && <Tour step={tour} steps={TOUR_STEPS(L).filter(t => mode !== 'open' || t.key !== 'tabs')} onStep={setTour} onDone={() => { setTour(null); try { localStorage.setItem('work-tour-done', '1'); } catch {} }} />}
+      {grading && <div style={{ padding: '12px 18px', background: '#f3f2ff', color: '#4c43c9', fontSize: 13.5 }}>{L('交卷了。正在逐条核对交付物、回看过程、和 AI 基线比——大约 1–2 分钟，别关页面。', 'Submitted. Checking each deliverable, reviewing your process and comparing with an AI baseline. This takes about 1–2 minutes; please keep this page open.')}</div>}
       {(error || localErr) && !grading && <div style={{ padding: '10px 18px', background: '#fff1f0', color: '#c0392b', fontSize: 13.5 }}>{error || localErr}</div>}
       <div ref={boxRef} style={{ display: 'flex', flexDirection: narrow ? 'column' : 'row', height: narrow ? (boxH ?? 'calc(100dvh - 110px)') : 'calc(100vh - 52px)' }}>
         {/* 材料包 · 要交什么（可收） */}
         {(narrow ? pane === 'mat' && !mat : leftOpen) && <aside data-tour="materials" style={{ width: narrow ? undefined : 272, flex: narrow ? 1 : 'none', borderRight: narrow ? undefined : `1px solid ${line}`, background: dark ? '#16171f' : '#fafbff', color: dark ? '#d6d8e6' : undefined, padding: 14, overflow: 'auto', minHeight: 0 }}>
           {stages.length > 0 && <div style={{ marginBottom: 14 }}>
-            <div style={{ ...capStyle, color: dark ? '#8b8fa8' : capStyle.color }}>推进 · {stages.length + 1} 步</div>
+            <div style={{ ...capStyle, color: dark ? '#8b8fa8' : capStyle.color }}>{L(`推进 · ${stages.length + 1} 步`, `Steps · ${stages.length + 1}`)}</div>
             {stages.map((st2, i) => { const locked = i >= unlocked; const on = mat?.id === st2.id; return (
               <div key={st2.id} onClick={() => { if (!locked || i === unlocked) { openStage(st2, i); if (matMode === 'bar') setMatMode('split'); } }} style={{ padding: '9px 12px', borderRadius: 10, marginBottom: 6, cursor: locked && i !== unlocked ? 'not-allowed' : 'pointer', opacity: locked && i !== unlocked ? .45 : 1, background: on ? panel : 'transparent', border: `1px solid ${on ? '#6055f5' : line}` }}>
-                <div style={{ fontSize: 11, color: '#999', letterSpacing: 1 }}>{st2.id.toUpperCase()}{STAGE_CN[st2.type] ? ` · ${STAGE_CN[st2.type]}` : ''}{locked ? (i === unlocked ? ' · 点开下一步' : ' · 先答上一步') : ''}</div>
+                <div style={{ fontSize: 11, color: '#999', letterSpacing: 1 }}>{st2.id.toUpperCase()}{STAGE_CN[st2.type] ? ` · ${STAGE_CN[st2.type]}` : ''}{locked ? (i === unlocked ? L(' · 点开下一步', ' · Open next step') : L(' · 先答上一步', ' · Answer the previous step first')) : ''}</div>
                 <div style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.5, marginTop: 2 }}>{locked && i !== unlocked ? '…' : st2.question}</div>
               </div>); })}
             {nextQCard(`Q${stages.length + 1}`, unlocked < stages.length)}
           </div>}
-          <div style={{ ...capStyle, color: dark ? '#8b8fa8' : capStyle.color }}>材料包 · {task.materials.length} 份</div>
-          {task.materials.map(m => <div key={m.id} onClick={() => showMat(m)} style={{ padding: '9px 12px', borderRadius: 10, marginBottom: 6, cursor: 'pointer', background: mat?.id === m.id ? panel : 'transparent', border: `1px solid ${mat?.id === m.id ? '#6055f5' : line}` }}><div style={{ fontWeight: 600, fontSize: 13, lineHeight: 1.4 }}>{m.title}</div><div style={{ fontSize: 11, color: '#999', marginTop: 2 }}>{m.id} · {m.kind === 'file' ? (/^image\//.test(m.mime || '') ? '附图' : '附件') : m.kind}</div></div>)}
-          <div style={{ ...capStyle, marginTop: 16, color: dark ? '#8b8fa8' : capStyle.color }}>要交什么</div>
+          <div style={{ ...capStyle, color: dark ? '#8b8fa8' : capStyle.color }}>{L(`材料包 · ${task.materials.length} 份`, `Materials · ${task.materials.length}`)}</div>
+          {task.materials.map(m => <div key={m.id} onClick={() => showMat(m)} style={{ padding: '9px 12px', borderRadius: 10, marginBottom: 6, cursor: 'pointer', background: mat?.id === m.id ? panel : 'transparent', border: `1px solid ${mat?.id === m.id ? '#6055f5' : line}` }}><div style={{ fontWeight: 600, fontSize: 13, lineHeight: 1.4 }}>{m.title}</div><div style={{ fontSize: 11, color: '#999', marginTop: 2 }}>{m.id} · {m.kind === 'file' ? (/^image\//.test(m.mime || '') ? L('附图', 'Image') : L('附件', 'File')) : m.kind}</div></div>)}
+          <div style={{ ...capStyle, marginTop: 16, color: dark ? '#8b8fa8' : capStyle.color }}>{L('要交什么', 'What to submit')}</div>
           <ol style={{ margin: 0, paddingLeft: 18, fontSize: 13, lineHeight: 1.7 }}>{task.task.deliverables.map(d => <li key={d.id}>{d.title} <span style={{ color: '#999' }}>{d.format}</span></li>)}</ol>
-          {!stages.length && <div style={{ marginTop: 8 }}>{nextQCard('最后一问', false)}</div>}
-          <details style={{ marginTop: 12, fontSize: 13 }}><summary style={{ cursor: 'pointer', color: dark ? '#8f87ff' : '#6055f5' }}>任务书</summary><MdView text={task.task.brief} style={{ lineHeight: 1.7, color: dark ? '#b8bdd6' : '#444', marginTop: 6 }} /></details>
+          {!stages.length && <div style={{ marginTop: 8 }}>{nextQCard(L('最后一问', 'Last question'), false)}</div>}
+          <details style={{ marginTop: 12, fontSize: 13 }}><summary style={{ cursor: 'pointer', color: dark ? '#8f87ff' : '#6055f5' }}>{L('任务书', 'The task')}</summary><MdView text={task.task.brief} style={{ lineHeight: 1.7, color: dark ? '#b8bdd6' : '#444', marginTop: 6 }} /></details>
         </aside>}
         {/* 作答区：交付物标签常驻 → 材料面板（可拖高 / 占满 / 一条 / 关）→ 操作台 */}
         {(!narrow || pane === 'work' || (pane === 'mat' && mat)) && <main style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 10, padding: '10px 12px', background: dark ? '#14151e' : undefined, minHeight: 0 }}>
-          {nudge && <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px', borderRadius: 10, background: '#fff7e6', border: '1px solid #ffd591', color: '#8a5a00', fontSize: 13 }}><span>⏱ 20 分钟了：{nudge}</span><button onClick={() => setNudge(null)} style={{ marginLeft: 'auto', ...miniBtn, color: '#8a5a00', borderColor: '#ffd591' }}>知道了</button></div>}
+          {nudge && <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px', borderRadius: 10, background: '#fff7e6', border: '1px solid #ffd591', color: '#8a5a00', fontSize: 13 }}><span>{L('⏱ 20 分钟了：', '⏱ 20 minutes in: ')}{nudge}</span><button onClick={() => setNudge(null)} style={{ marginLeft: 'auto', ...miniBtn, color: '#8a5a00', borderColor: '#ffd591' }}>{L('知道了', 'Got it')}</button></div>}
           {mat && (!narrow || pane === 'mat') && <div style={{ background: panel, color: dark ? '#d6d8e6' : undefined, border: `1px solid ${line}`, borderRadius: 12, display: 'flex', flexDirection: 'column', flex: narrow || matMode === 'full' ? 1 : 'none', height: !narrow && matMode === 'split' ? matH : undefined, minHeight: 0, overflow: 'hidden' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', borderBottom: matMode === 'bar' ? 0 : `1px solid ${line}` }}>
               <b style={{ fontSize: 13.5, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{mat.title}</b>
-              {narrow ? <button onClick={() => setMat(null)} style={{ ...miniBtn, order: -1 }}>← 材料</button> : <><button onClick={() => setMatMode('full')} style={iconBtn(matMode === 'full')} title="最大化：材料占满，作答区收成一条"><Ico k="max" /></button>
-              <button onClick={() => setMatMode('split')} style={iconBtn(matMode === 'split')} title="分屏：上下分，中间可拖"><Ico k="split" /></button>
-              <button onClick={() => setMatMode('bar')} style={iconBtn(matMode === 'bar')} title="最小化：只留标题一条"><Ico k="min" /></button>
-              <button onClick={() => setMat(null)} style={iconBtn(false)} title="关闭"><Ico k="close" /></button></>}
+              {narrow ? <button onClick={() => setMat(null)} style={{ ...miniBtn, order: -1 }}>{L('← 材料', '← Materials')}</button> : <><button onClick={() => setMatMode('full')} style={iconBtn(matMode === 'full')} title={L('最大化：材料占满，作答区收成一条', 'Maximize: materials fill the space, answer area collapses')}><Ico k="max" /></button>
+              <button onClick={() => setMatMode('split')} style={iconBtn(matMode === 'split')} title={L('分屏：上下分，中间可拖', 'Split: top and bottom, drag the divider')}><Ico k="split" /></button>
+              <button onClick={() => setMatMode('bar')} style={iconBtn(matMode === 'bar')} title={L('最小化：只留标题一条', 'Minimize: keep only the title bar')}><Ico k="min" /></button>
+              <button onClick={() => setMat(null)} style={iconBtn(false)} title={L('关闭', 'Close')}><Ico k="close" /></button></>}
             </div>
             {(narrow || matMode !== 'bar') && <div style={{ flex: 1, minHeight: 0, overflow: 'auto', padding: '4px 14px 14px' }}>{matBody}</div>}
           </div>}
-          {mat && !narrow && matMode === 'split' && <div onMouseDown={e => { dragRef.current = { y: e.clientY, h: matH }; document.body.style.cursor = 'row-resize'; document.body.style.userSelect = 'none'; }} style={{ height: 10, margin: '-6px 0', cursor: 'row-resize', display: 'flex', alignItems: 'center', justifyContent: 'center' }} title="拖动调整材料 / 作答高度"><div style={{ width: 48, height: 4, borderRadius: 4, background: dark ? '#3a3d52' : '#d9dbe6' }} /></div>}
+          {mat && !narrow && matMode === 'split' && <div onMouseDown={e => { dragRef.current = { y: e.clientY, h: matH }; document.body.style.cursor = 'row-resize'; document.body.style.userSelect = 'none'; }} style={{ height: 10, margin: '-6px 0', cursor: 'row-resize', display: 'flex', alignItems: 'center', justifyContent: 'center' }} title={L('拖动调整材料 / 作答高度', 'Drag to resize materials / answer area')}><div style={{ width: 48, height: 4, borderRadius: 4, background: dark ? '#3a3d52' : '#d9dbe6' }} /></div>}
           {narrow && pane !== 'work' ? null : mat && !narrow && matMode === 'full'
-            ? <div onClick={() => setMatMode('split')} style={{ flex: 'none', border: `1px solid ${line}`, background: panel, borderRadius: 12, padding: '9px 14px', fontSize: 13, color: ink2, cursor: 'pointer', display: 'flex', justifyContent: 'space-between' }}><span>作答区 · {mode === 'open' ? '用自己的软件做' : `${curPart.id} ${MODULES[curPart.module].label}`}</span><span style={{ color: '#6055f5' }}>展开 ▴</span></div>
+            ? <div onClick={() => setMatMode('split')} style={{ flex: 'none', border: `1px solid ${line}`, background: panel, borderRadius: 12, padding: '9px 14px', fontSize: 13, color: ink2, cursor: 'pointer', display: 'flex', justifyContent: 'space-between' }}><span>{L('作答区', 'Answer area')} · {mode === 'open' ? L('用自己的软件做', 'Own software') : `${curPart.id} ${modLabel(curPart.module, lang)}`}</span><span style={{ color: '#6055f5' }}>{L('展开 ▴', 'Expand ▴')}</span></div>
             : <div style={{ flex: 1, minHeight: narrow ? 0 : mode === 'open' ? 420 : 320, display: 'flex', flexDirection: 'column' }}>
             {mode === 'open' && <OpenBench token={token} sid={sid} materials={task.materials} deliverables={task.task.deliverables} summary={summary} onSummary={setSummary} onEvent={(type, extra) => ev(type, extra)} uploads={uploads} onUploads={setUploads} recording={recording} onRecording={setRecording} t0={t0.current} />}
             {mode !== 'open' && curPart.module === 'doc' && <DocBench key={cur} leading={tabsEl} value={st.doc} onChange={setDoc} onPaste={onPaste} deliverables={stages.length && parts.findIndex(p => p.module === 'doc') === parts.findIndex(p => p.id === cur) ? stages.map(s2 => ({ id: s2.id, title: `${s2.id} ${s2.question}`, format: '' })) : []} title={task.task.title} />}
             {mode !== 'open' && curPart.module === 'code' && <CodeBench key={cur} leading={tabsEl} code={st.code} onCode={setCode} notes={st.notes} onNotes={setNotes} tests={env.tests || []} language={env.language || 'js'} onRun={runTests} testOut={testOut} onPaste={onPaste} />}
-            {mode !== 'open' && curPart.module === 'sheet' && <SheetBench key={cur} leading={tabsEl} caption={`${curPart.title}${curPart.format ? `（${curPart.format}）` : ''}`} csv={st.csv} onCsv={setCsv} notes={st.notes} onNotes={setNotes} onPaste={onPaste} />}
-            {mode !== 'open' && curPart.module === 'canvas' && <CanvasBench key={cur} leading={tabsEl} graph={st.graph} onChange={f => setPart(x => ({ graph: f(x.graph) }))} notes={st.notes} onNotes={setNotes} onPaste={onPaste} onEvent={(t2, extra) => ev(t2, extra)} hint={`${curPart.title}${curPart.format ? `（${curPart.format}）` : ''}`} />}
-            {mode !== 'open' && curPart.module === 'board' && <BoardBench key={cur} leading={tabsEl} refs={task.materials.filter(m => m.kind === 'file' && m.url && /^image\//.test(m.mime || '')).map(m => ({ title: m.title, url: m.url! }))} caption={`${curPart.title}${curPart.format ? `（${curPart.format}）` : ''}`} value={st.board} onChange={v => setPart({ board: v })} notes={st.notes} onNotes={setNotes} onEvent={(t, d) => ev(t, d || {})} />}
+            {mode !== 'open' && curPart.module === 'sheet' && <SheetBench key={cur} leading={tabsEl} caption={`${curPart.title}${curPart.format ? paren(curPart.format) : ''}`} csv={st.csv} onCsv={setCsv} notes={st.notes} onNotes={setNotes} onPaste={onPaste} />}
+            {mode !== 'open' && curPart.module === 'canvas' && <CanvasBench key={cur} leading={tabsEl} graph={st.graph} onChange={f => setPart(x => ({ graph: f(x.graph) }))} notes={st.notes} onNotes={setNotes} onPaste={onPaste} onEvent={(t2, extra) => ev(t2, extra)} hint={`${curPart.title}${curPart.format ? paren(curPart.format) : ''}`} />}
+            {mode !== 'open' && curPart.module === 'board' && <BoardBench key={cur} leading={tabsEl} refs={task.materials.filter(m => m.kind === 'file' && m.url && /^image\//.test(m.mime || '')).map(m => ({ title: m.title, url: m.url! }))} caption={`${curPart.title}${curPart.format ? paren(curPart.format) : ''}`} value={st.board} onChange={v => setPart({ board: v })} notes={st.notes} onNotes={setNotes} onEvent={(t, d) => ev(t, d || {})} />}
             {mode !== 'open' && curPart.module === 'design' && <DesignBench key={cur} leading={tabsEl} params={env.params || []} values={st.params} onParam={(k, v) => setPart(x => ({ params: { ...x.params, [k]: v } }))} onParamDone={k => ev('set_param', { id: k })} sketch={st.sketch} setSketch={f => setPart(x => ({ sketch: f(x.sketch) }))} hint={env.sketch_hint} notes={st.notes} onNotes={setNotes} onPaste={onPaste} onSketch={label => ev('sketch', { label })} />}
           </div>}
         </main>}
@@ -531,29 +541,29 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
           <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', background: panel, color: dark ? '#d6d8e6' : undefined, border: `1px solid ${line}`, borderRadius: 16, boxShadow: dark ? 'none' : '0 6px 24px rgba(30,30,60,.06)', overflow: 'hidden' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', borderBottom: `1px solid ${line}` }}>
               <span style={{ width: 22, height: 22, borderRadius: 7, background: 'linear-gradient(135deg,#6055f5,#12b5cb)', color: '#fff', fontSize: 12, display: 'grid', placeItems: 'center' }}>✦</span>
-              <b style={{ fontSize: 13.5, flex: 1 }}>AI 助手</b>
-              <span style={{ fontSize: 11.5, color: ink2 }}>看得到你打开的材料</span>
-              {!narrow && <button onClick={() => setAiOpen(false)} style={miniBtn} title="收起">✕</button>}
+              <b style={{ fontSize: 13.5, flex: 1 }}>{L('AI 助手', 'AI assistant')}</b>
+              <span style={{ fontSize: 11.5, color: ink2 }}>{L('看得到你打开的材料', 'Sees the material you have open')}</span>
+              {!narrow && <button onClick={() => setAiOpen(false)} style={miniBtn} title={L('收起', 'Hide')}>✕</button>}
             </div>
             <div style={{ flex: 1, overflow: 'auto', padding: 14, display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {!chat.length && <div style={{ fontSize: 12.5, color: ink2, lineHeight: 1.7, padding: '4px 2px' }}>随便问，不算作弊。评的是你怎么用、哪些判断是你自己定的。可以让它核算、起草、挑毛病，但结论要你自己写。</div>}
+              {!chat.length && <div style={{ fontSize: 12.5, color: ink2, lineHeight: 1.7, padding: '4px 2px' }}>{L('随便问，不算作弊。评的是你怎么用、哪些判断是你自己定的。可以让它核算、起草、挑毛病，但结论要你自己写。', "Ask anything. It's not cheating. We look at how you use it and which calls you make yourself. Let it check numbers, draft or find holes, but write the conclusions yourself.")}</div>}
               {chat.map((c, i) => <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                 <div style={{ alignSelf: 'flex-end', maxWidth: '88%', background: '#6055f5', color: '#fff', padding: '8px 12px', borderRadius: '14px 14px 4px 14px', fontSize: 13.5, whiteSpace: 'pre-wrap', lineHeight: 1.55 }}>{c.q}</div>
-                <div style={{ alignSelf: 'flex-start', maxWidth: '94%', background: dark ? '#262838' : '#f7f7fb', padding: '10px 12px', borderRadius: '4px 14px 14px 14px', fontSize: 13.5, lineHeight: 1.65 }} className="wk-md"><Md text={c.a} /><div style={{ marginTop: 8 }}><button onClick={() => adopt(c.a)} style={{ ...miniBtn, color: '#6055f5', borderColor: 'rgba(96,85,245,.4)' }}>放进当前交付物</button></div></div>
+                <div style={{ alignSelf: 'flex-start', maxWidth: '94%', background: dark ? '#262838' : '#f7f7fb', padding: '10px 12px', borderRadius: '4px 14px 14px 14px', fontSize: 13.5, lineHeight: 1.65 }} className="wk-md"><Md text={c.a} /><div style={{ marginTop: 8 }}><button onClick={() => adopt(c.a)} style={{ ...miniBtn, color: '#6055f5', borderColor: 'rgba(96,85,245,.4)' }}>{L('放进当前交付物', 'Add to current deliverable')}</button></div></div>
               </div>)}
-              {asking && <div style={{ color: ink2, fontSize: 13 }}>AI 在想…</div>}
+              {asking && <div style={{ color: ink2, fontSize: 13 }}>{L('AI 在想…', 'AI is thinking…')}</div>}
             </div>
             <div style={{ padding: 10, borderTop: `1px solid ${line}` }}>
               <div style={{ border: `1px solid ${line}`, borderRadius: 14, background: dark ? '#1a1b26' : '#fff', padding: '8px 8px 8px 12px', display: 'flex', alignItems: 'flex-end', gap: 8 }}>
-                <textarea className="wk-ta" value={q} onChange={e => setQ(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(); } }} placeholder="问 AI… Enter 发送，Shift+Enter 换行" rows={2} style={{ flex: 1, border: 0, outline: 'none', resize: 'none', font: 'inherit', fontSize: 13.5, lineHeight: 1.5, background: 'transparent', color: 'inherit', minHeight: 40, maxHeight: 140 }} />
-                <button onClick={ask} disabled={asking || !q.trim()} style={{ width: 32, height: 32, borderRadius: 10, border: 0, background: q.trim() && !asking ? 'linear-gradient(135deg,#6055f5,#12b5cb)' : (dark ? '#2b2d3e' : '#e8e9f0'), color: '#fff', cursor: q.trim() ? 'pointer' : 'default', fontSize: 15, flex: 'none' }} title="发送">↑</button>
+                <textarea className="wk-ta" value={q} onChange={e => setQ(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(); } }} placeholder={L('问 AI… Enter 发送，Shift+Enter 换行', 'Ask AI… Enter to send, Shift+Enter for a new line')} rows={2} style={{ flex: 1, border: 0, outline: 'none', resize: 'none', font: 'inherit', fontSize: 13.5, lineHeight: 1.5, background: 'transparent', color: 'inherit', minHeight: 40, maxHeight: 140 }} />
+                <button onClick={ask} disabled={asking || !q.trim()} style={{ width: 32, height: 32, borderRadius: 10, border: 0, background: q.trim() && !asking ? 'linear-gradient(135deg,#6055f5,#12b5cb)' : (dark ? '#2b2d3e' : '#e8e9f0'), color: '#fff', cursor: q.trim() ? 'pointer' : 'default', fontSize: 15, flex: 'none' }} title={L('发送', 'Send')}>↑</button>
               </div>
             </div>
           </div>
         </aside>}
       </div>
       {narrow && <nav style={{ position: 'fixed', left: 0, right: 0, bottom: 0, height: 58, display: 'flex', borderTop: `1px solid ${line}`, background: dark ? '#16171f' : '#fff', zIndex: 6, paddingBottom: 'env(safe-area-inset-bottom)' }}>
-        {([['mat', '材料', `${task.materials.length} 份${stages.length ? ` · ${stages.length} 步` : ''}`], ['work', '作答', mode === 'open' ? '开放作答' : `${parts.length} 个交付物`], ['ai', 'AI 助手', chat.length ? `${chat.length} 轮` : '随便问']] as const).map(([k, t, sub]) => (
+        {([['mat', L('材料', 'Materials'), L(`${task.materials.length} 份${stages.length ? ` · ${stages.length} 步` : ''}`, `${task.materials.length}${stages.length ? ` · ${stages.length} steps` : ''}`)], ['work', L('作答', 'Answer'), mode === 'open' ? L('开放作答', 'Own software') : L(`${parts.length} 个交付物`, `${parts.length} deliverable(s)`)], ['ai', L('AI 助手', 'AI'), chat.length ? L(`${chat.length} 轮`, `${chat.length} turns`) : L('随便问', 'Ask anything')]] as const).map(([k, t, sub]) => (
           <button key={k} onClick={() => setPane(k)} style={{ flex: 1, border: 0, background: 'transparent', font: 'inherit', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 1, color: pane === k ? '#6055f5' : ink2, borderTop: `2px solid ${pane === k ? '#6055f5' : 'transparent'}` }}>
             <b style={{ fontSize: 14 }}>{t}</b><span style={{ fontSize: 11, opacity: .8 }}>{sub}</span>
           </button>))}
@@ -568,12 +578,12 @@ function CsvPreview({ csv }: { csv: string }) {
   return <div style={{ overflow: 'auto', border: '1px solid #e8e9f0', borderRadius: 10, maxHeight: 260 }}><table style={{ borderCollapse: 'collapse', fontSize: 12.5, minWidth: '100%' }}><tbody>{rows.map((r, i) => <tr key={i} style={{ background: i === 0 ? '#fafbff' : undefined }}>{r.map((c, j) => <td key={j} style={{ padding: '4px 8px', borderBottom: '1px solid #f0f0f0', borderRight: '1px solid #f5f5f5', fontWeight: i === 0 ? 700 : 400, whiteSpace: 'nowrap' }}>{c}</td>)}</tr>)}</tbody></table></div>;
 }
 
-const TOUR_STEPS: TourStep[] = [
-  { key: 'materials', title: '材料包', text: '题目给你的材料都在这里，点一份在中间看。材料面板可以拖高、占满、收成一条或关掉。「要交什么」和「任务书」也在这一栏。' },
-  { key: 'tabs', title: '作答区有几个标签，都要做', text: '每个交付物一个标签（文档 / 表格 / 代码 / 画布），切着做。小圆点变绿表示动过笔；20 分钟还没打开的会提醒你。' },
-  { key: 'ai', title: 'AI 助手', text: '随便问，不算作弊。评的是你怎么用、哪些判断是你自己定的。它看得到你当前打开的材料；回答可以一键放进当前交付物。' },
-  { key: 'clock', title: '时间和交卷', text: '右上角看时间，离开页面也不暂停；限时的任务到点自动交卷。做完点「交卷」，再点一次确认——交了就不能改。' },
-  { key: 'views', title: '两侧可以收起', text: '文件夹 = 材料栏，星芒 = AI 助手，点一下收起或展开，给作答区腾地方。随时点「?」再看这份说明。' },
+const TOUR_STEPS = (L: (zh: string, en: string) => string): TourStep[] => [
+  { key: 'materials', title: L('材料包', 'Materials'), text: L('题目给你的材料都在这里，点一份在中间看。材料面板可以拖高、占满、收成一条或关掉。「要交什么」和「任务书」也在这一栏。', 'Everything the task gives you is here. Click one to read it in the middle. You can resize the materials panel, make it fill the space, collapse it to a bar or close it. "What to submit" and "The task" are in this column too.') },
+  { key: 'tabs', title: L('作答区有几个标签，都要做', 'The answer area has several tabs. Do them all'), text: L('每个交付物一个标签（文档 / 表格 / 代码 / 画布），切着做。小圆点变绿表示动过笔；20 分钟还没打开的会提醒你。', 'Each deliverable has its own tab (document / spreadsheet / code / canvas). Switch between them as you work. A green dot means you\'ve started it; you\'ll get a reminder about any tab still unopened after 20 minutes.') },
+  { key: 'ai', title: L('AI 助手', 'AI assistant'), text: L('随便问，不算作弊。评的是你怎么用、哪些判断是你自己定的。它看得到你当前打开的材料；回答可以一键放进当前交付物。', 'Ask anything. It\'s not cheating. We look at how you use it and which calls you make yourself. It can see the material you have open, and you can add any answer to the current deliverable in one click.') },
+  { key: 'clock', title: L('时间和交卷', 'Time and submitting'), text: L('右上角看时间，离开页面也不暂停；限时的任务到点自动交卷。做完点「交卷」，再点一次确认——交了就不能改。', 'The time is at the top right, and it keeps running if you leave the page. Timed tasks are submitted automatically when time is up. When you\'re done, click "Submit" and then click again to confirm. You can\'t edit after that.') },
+  { key: 'views', title: L('两侧可以收起', 'Hide the side panels'), text: L('文件夹 = 材料栏，星芒 = AI 助手，点一下收起或展开，给作答区腾地方。随时点「?」再看这份说明。', 'The folder is the materials panel and the star is the AI assistant. Click to hide or show them and make room for your work. Click "?" any time to see this guide again.') },
 ];
 
 /** 出题人带管理密钥来预览做题台（?k=）：每个阶段顶上一条提示 + 回到真活空间（候选人的链接没有 k，看不到） */
@@ -585,7 +595,7 @@ function OwnerPreviewBar() {
     <a href={`/work/${token}/owner?k=${encodeURIComponent(k)}`} style={{ color: '#6055f5', fontWeight: 700, textDecoration: 'none' }}>← 回到真活空间</a>
   </div>;
 }
-function Shell({ children, dark }: { children: React.ReactNode; dark?: boolean }) { return <div style={{ minHeight: '100vh', background: dark ? '#14151e' : '#f6f7fb', color: dark ? '#e6e8f0' : '#1a1a2e', fontFamily: 'var(--font-geist-sans), -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif' }}><OwnerPreviewBar />{children}</div>; }
+function Shell({ children, dark, lang }: { children: React.ReactNode; dark?: boolean; lang?: Lang }) { const body = <div style={{ minHeight: '100vh', background: dark ? '#14151e' : '#f6f7fb', color: dark ? '#e6e8f0' : '#1a1a2e', fontFamily: 'var(--font-geist-sans), -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif' }}><OwnerPreviewBar />{children}</div>; return lang === undefined ? body : <WorkLang lang={lang}>{body}</WorkLang>; }
 function Box({ title, children }: { title: string; children: React.ReactNode }) { return <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '14px 18px', marginBottom: 14 }}><div style={capStyle}>{title}</div>{children}</div>; }
 const capStyle: React.CSSProperties = { fontSize: 11, letterSpacing: 1.5, color: '#8c8c8c', marginBottom: 6, fontWeight: 600 };
 const inp: React.CSSProperties = { padding: '9px 12px', border: '1px solid #d9dbe6', borderRadius: 10, fontSize: 14, outline: 'none' };

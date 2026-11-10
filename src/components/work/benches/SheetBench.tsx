@@ -2,6 +2,7 @@
 
 /** 表格 / 数据台：像电子表格——列号 A/B/C、行号、公式栏、单元格直接改、加行加列；底层还是 CSV */
 import React, { useMemo, useState } from 'react';
+import { useL } from '@/lib/work/i18n';
 
 const parse = (csv: string): string[][] => csv.split(/\r?\n/).filter((l, i, a) => l.length || i < a.length - 1).map(l => l.split(','));
 const ser = (rows: string[][]) => rows.map(r => r.join(',')).join('\n');
@@ -10,7 +11,7 @@ const colName = (i: number) => { let s = ''; i++; while (i > 0) { const m = (i -
 export function SheetBench({ csv, onCsv, notes, onNotes, onPaste, onCell, leading, caption }: { csv: string; onCsv: (v: string) => void; notes: string; onNotes: (v: string) => void; onPaste: (e: React.ClipboardEvent) => void; onCell?: () => void; leading?: React.ReactNode; caption?: string }) {
   // 空表默认铺 8 行 × 4 列（像一张新开的工作表），真填了才序列化
   const rows = useMemo(() => { const r = parse(csv); return r.length && r.some(x => x.some(c => c !== '')) ? r : Array.from({ length: 8 }, () => Array(4).fill('')); }, [csv]);
-  const cols = Math.max(1, ...rows.map(r => r.length));
+  const cols = Math.max(1, ...rows.map(r => r.length)); const L = useL();
   const [sel, setSel] = useState<[number, number]>([0, 0]);
   const [raw, setRaw] = useState(false);
   const set = (r: number, c: number, v: string) => { const next = rows.map(x => [...x]); while (next.length <= r) next.push([]); while (next[r].length <= c) next[r].push(''); next[r][c] = v.replace(/,/g, '，'); onCsv(ser(next)); onCell?.(); };
@@ -21,23 +22,23 @@ export function SheetBench({ csv, onCsv, notes, onNotes, onPaste, onCell, leadin
   const delCol = () => { if (cols <= 1) return; onCsv(ser(rows.map(r => r.filter((_, i) => i !== sel[1])))); setSel([sel[0], Math.max(0, sel[1] - 1)]); };
   const num = (v: string) => { const n = parseFloat(String(v).replace(/[,，%\s]/g, '')); return Number.isFinite(n) ? n : null; };
   const sortCol = (dir: 1 | -1) => { if (rows.length < 3) return; const [h, ...body] = rows; const c = sel[1]; body.sort((a, b) => { const x = num(a[c] ?? ''), y = num(b[c] ?? ''); if (x != null && y != null) return (x - y) * dir; return String(a[c] ?? '').localeCompare(String(b[c] ?? ''), 'zh') * dir; }); onCsv(ser([h, ...body])); };
-  const sumCol = () => { const c = sel[1]; const vals = rows.slice(1).map(r => num(r[c] ?? '')).filter((x): x is number => x != null); const s = vals.reduce((a, b) => a + b, 0); setTip(vals.length ? `${colName(c)} 列求和 = ${Number(s.toFixed(4))}（${vals.length} 个数）` : `${colName(c)} 列没有数字`); setTimeout(() => setTip(''), 6000); };
-  const clearAll = () => { if (confirm('清空整张表？')) onCsv(''); };
+  const sumCol = () => { const c = sel[1]; const vals = rows.slice(1).map(r => num(r[c] ?? '')).filter((x): x is number => x != null); const s = vals.reduce((a, b) => a + b, 0); setTip(vals.length ? L(`${colName(c)} 列求和 = ${Number(s.toFixed(4))}（${vals.length} 个数）`, `Sum of column ${colName(c)} = ${Number(s.toFixed(4))} (${vals.length} numbers)`) : L(`${colName(c)} 列没有数字`, `Column ${colName(c)} has no numbers`)); setTimeout(() => setTip(''), 6000); };
+  const clearAll = () => { if (confirm(L('清空整张表？', 'Clear the whole sheet?'))) onCsv(''); };
   const [tip, setTip] = useState('');
   const cur = rows[sel[0]]?.[sel[1]] ?? '';
   const mono = 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: '#fff', borderRadius: 14, overflow: 'hidden', border: '1px solid #d9dbe6' }}>
       {/* 工具栏 */}
-      {leading && <div style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '6px 10px', background: '#fff', borderBottom: '1px solid #eef0f5' }}>{leading}<span style={{ marginLeft: 'auto', fontSize: 12, color: '#aaa', whiteSpace: 'nowrap' }}>{rows.length} 行 × {cols} 列</span></div>}
+      {leading && <div style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '6px 10px', background: '#fff', borderBottom: '1px solid #eef0f5' }}>{leading}<span style={{ marginLeft: 'auto', fontSize: 12, color: '#aaa', whiteSpace: 'nowrap' }}>{rows.length} {L('行', 'rows')} × {cols} {L('列', 'cols')}</span></div>}
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 10px', background: '#f3f5f9', borderBottom: '1px solid #d9dbe6', fontSize: 12.5, flexWrap: 'wrap' }}>
-        <button onClick={addRow} style={tb} title="末尾加一行">＋ 行</button><button onClick={insRow} style={tb} title="在当前行上方插入">↥ 插行</button><button onClick={delRow} style={tb} title="删除当前行">− 行</button>
+        <button onClick={addRow} style={tb} title={L('末尾加一行', 'Add a row at the end')}>{L('＋ 行', '＋ Row')}</button><button onClick={insRow} style={tb} title={L('在当前行上方插入', 'Insert above the current row')}>{L('↥ 插行', '↥ Insert row')}</button><button onClick={delRow} style={tb} title={L('删除当前行', 'Delete the current row')}>{L('− 行', '− Row')}</button>
         <span style={{ width: 1, height: 16, background: '#d9dbe6' }} />
-        <button onClick={addCol} style={tb} title="末尾加一列">＋ 列</button><button onClick={delCol} style={tb} title="删除当前列">− 列</button>
+        <button onClick={addCol} style={tb} title={L('末尾加一列', 'Add a column at the end')}>{L('＋ 列', '＋ Column')}</button><button onClick={delCol} style={tb} title={L('删除当前列', 'Delete the current column')}>{L('− 列', '− Column')}</button>
         <span style={{ width: 1, height: 16, background: '#d9dbe6' }} />
-        <button onClick={() => sortCol(1)} style={tb} title="按当前列升序（首行当表头）">↑ 排序</button><button onClick={() => sortCol(-1)} style={tb} title="按当前列降序">↓ 排序</button><button onClick={sumCol} style={tb} title="当前列求和">Σ 求和</button>
+        <button onClick={() => sortCol(1)} style={tb} title={L('按当前列升序（首行当表头）', 'Sort ascending by the current column (first row is the header)')}>{L('↑ 排序', '↑ Sort')}</button><button onClick={() => sortCol(-1)} style={tb} title={L('按当前列降序', 'Sort descending by the current column')}>{L('↓ 排序', '↓ Sort')}</button><button onClick={sumCol} style={tb} title={L('当前列求和', 'Sum the current column')}>{L('Σ 求和', 'Σ Sum')}</button>
         <span style={{ width: 1, height: 16, background: '#d9dbe6' }} />
-        <button onClick={() => setRaw(r => !r)} style={{ ...tb, background: raw ? '#dfe3ee' : undefined }} title="直接编辑 CSV 文本">{raw ? '表格视图' : 'CSV 源'}</button><button onClick={clearAll} style={tb} title="清空">清空</button>
+        <button onClick={() => setRaw(r => !r)} style={{ ...tb, background: raw ? '#dfe3ee' : undefined }} title={L('直接编辑 CSV 文本', 'Edit the CSV text directly')}>{raw ? L('表格视图', 'Grid view') : L('CSV 源', 'CSV source')}</button><button onClick={clearAll} style={tb} title={L('清空', 'Clear')}>{L('清空', 'Clear')}</button>
         {tip && <span style={{ marginLeft: 'auto', color: '#6055f5', fontWeight: 600 }}>{tip}</span>}
       </div>
       {caption && <div style={{ padding: '7px 12px', fontSize: 13, color: '#555', borderBottom: '1px solid #e6e8f0', background: '#fff' }}>{caption}</div>}
@@ -71,7 +72,7 @@ export function SheetBench({ csv, onCsv, notes, onNotes, onPaste, onCell, leadin
         </div>
       )}
       <div style={{ borderTop: '1px solid #d9dbe6', padding: '8px 12px', background: '#fafbff' }}>
-        <div style={{ fontSize: 11.5, color: '#888', letterSpacing: 1, marginBottom: 4, fontWeight: 600 }}>口径说明（怎么对的账、哪些是假设）</div>
+        <div style={{ fontSize: 11.5, color: '#888', letterSpacing: 1, marginBottom: 4, fontWeight: 600 }}>{L('口径说明（怎么对的账、哪些是假设）', 'Notes on definitions (how you reconciled, what is assumed)')}</div>
         <textarea value={notes} onChange={e => onNotes(e.target.value)} onPaste={onPaste} style={{ width: '100%', minHeight: 90, border: '1px solid #d9dbe6', borderRadius: 8, padding: '8px 10px', fontSize: 13.5, lineHeight: 1.6, resize: 'vertical', outline: 'none', fontFamily: 'inherit' }} />
       </div>
     </div>

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { labMediaUrl } from '@/lib/media-url';
 import { timing } from '@/lib/work/deadline';
+import { errL } from '@/lib/work/errors-en';
 
 export const runtime = 'nodejs';
 export const maxDuration = 120;
@@ -17,18 +18,18 @@ const BUCKET = 'lab-media';
 export async function POST(req: NextRequest, { params }: { params: Promise<{ token: string; sid: string }> }) {
   const { token, sid } = await params;
   const { data: t } = await db.from('work_tasks').select('id, task').eq('share_token', token).maybeSingle();
-  if (!t) return NextResponse.json({ ok: false, error: '链接不可用' }, { status: 404 });
+  if (!t) return NextResponse.json({ ok: false, error: errL(t, '链接不可用') }, { status: 404 });
   const { data: s } = await db.from('work_sessions').select('id, events, submitted_at, started_at, participant').eq('id', sid).eq('task_id', t.id).maybeSingle();
-  if (!s) return NextResponse.json({ ok: false, error: '没有这次作答' }, { status: 404 });
-  if (s.submitted_at) return NextResponse.json({ ok: false, error: '已经交卷了' }, { status: 409 });
-  if (timing(t.task, s).closed) return NextResponse.json({ ok: false, error: '时间到了', expired: true }, { status: 409 });
+  if (!s) return NextResponse.json({ ok: false, error: errL(t, '没有这次作答') }, { status: 404 });
+  if (s.submitted_at) return NextResponse.json({ ok: false, error: errL(t, '已经交卷了') }, { status: 409 });
+  if (timing(t.task, s).closed) return NextResponse.json({ ok: false, error: errL(t, '时间到了'), expired: true }, { status: 409 });
   // 交付文件直传（11-10）：sign 发签名地址 → 浏览器直传存储 → done 登记事件；remove 记一条 file_remove（交卷时不算）。见 lib/work/upload-client.ts
   if ((req.headers.get('content-type') || '').includes('application/json')) {
     const b = await req.json().catch(() => ({}));
     const tsec = Number(b.t) || Math.round((Date.now() - new Date(s.started_at).getTime()) / 1000);
     const safe = String(b.name || 'file').replace(/[^\w.\-一-龥]+/g, '_').slice(0, 80);
     if (b.step === 'sign') {
-      if (Number(b.size) > MAX) return NextResponse.json({ ok: false, error: '文件太大（上限 200MB）' }, { status: 413 });
+      if (Number(b.size) > MAX) return NextResponse.json({ ok: false, error: errL(t, '文件太大（上限 200MB）') }, { status: 413 });
       const ext = (safe.match(/\.[A-Za-z0-9]{1,8}$/) || [''])[0].toLowerCase();
       const path = `work/${sid}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}${ext}`;
       const { data, error } = await db.storage.from(BUCKET).createSignedUploadUrl(path, { upsert: true });
@@ -37,11 +38,11 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     }
     if (b.step === 'done') {
       const path = String(b.path || '');
-      if (!path.startsWith(`work/${sid}/`) || path.includes('..')) return NextResponse.json({ ok: false, error: '路径不对' }, { status: 400 });
+      if (!path.startsWith(`work/${sid}/`) || path.includes('..')) return NextResponse.json({ ok: false, error: errL(t, '路径不对') }, { status: 400 });
       const dir = path.slice(0, path.lastIndexOf('/')), base = path.slice(path.lastIndexOf('/') + 1);
       const { data: found } = await db.storage.from(BUCKET).list(dir, { search: base, limit: 5 });
       const obj = (found || []).find(o => o.name === base);
-      if (!obj) return NextResponse.json({ ok: false, error: '存储里没找到这个文件，再传一次' }, { status: 400 });
+      if (!obj) return NextResponse.json({ ok: false, error: errL(t, '存储里没找到这个文件，再传一次') }, { status: 400 });
       const size = Number(obj.metadata?.size) || Number(b.size) || 0;
       const url = labMediaUrl(db.storage.from(BUCKET).getPublicUrl(path).data.publicUrl);
       const part = String(b.part || '').slice(0, 20);
@@ -52,11 +53,11 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     if (b.step === 'remove') {
       const url = String(b.url || '');
       const f = (s.events || []).find((e: any) => e.type === 'file' && e.url === url);
-      if (!f) return NextResponse.json({ ok: false, error: '没有这个文件' }, { status: 404 });
+      if (!f) return NextResponse.json({ ok: false, error: errL(t, '没有这个文件') }, { status: 404 });
       await db.from('work_sessions').update({ events: [...(s.events || []), { t: tsec, type: 'file_remove', url, name: f.name }].slice(-3000) }).eq('id', sid);
       return NextResponse.json({ ok: true });
     }
-    return NextResponse.json({ ok: false, error: '不认识的操作' }, { status: 400 });
+    return NextResponse.json({ ok: false, error: errL(t, '不认识的操作') }, { status: 400 });
   }
   const form = await req.formData();
   const file = form.get('file') as File | null;
@@ -69,8 +70,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     return NextResponse.json({ ok: true, t });
   }
   const kind = k0 === 'recording' ? 'recording' : 'file';
-  if (!file) return NextResponse.json({ ok: false, error: '没有文件' }, { status: 400 });
-  if (file.size > MAX) return NextResponse.json({ ok: false, error: '文件太大（上限 200MB）' }, { status: 413 });
+  if (!file) return NextResponse.json({ ok: false, error: errL(t, '没有文件') }, { status: 400 });
+  if (file.size > MAX) return NextResponse.json({ ok: false, error: errL(t, '文件太大（上限 200MB）') }, { status: 413 });
   const safe = (file.name || 'file').replace(/[^\w.\-一-龥]+/g, '_').slice(0, 80);
   // 存储路径只用 ASCII（中文文件名会报 Invalid key，11-05 自测发现）；显示仍用原名 safe
   const ext = (safe.match(/\.[A-Za-z0-9]{1,8}$/) || [''])[0].toLowerCase();

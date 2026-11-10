@@ -9,6 +9,7 @@
  * - 左边侧栏里的项、高的竖条：卡片放右边，不挡下一项。
  */
 import React, { useEffect, useRef, useState } from 'react';
+import { useL } from '@/lib/work/i18n';
 
 const DIM = 'rgba(20,22,40,.28)';
 // 可视区域：用 clientWidth / clientHeight（手机上页面被撑宽时 innerWidth 会跟着变大，卡片就放歪了）
@@ -17,7 +18,8 @@ const vh0 = () => document.documentElement.clientHeight || window.innerHeight;
 export type TourStep = { key: string; title: string; text: string };
 type Rect = { x: number; y: number; w: number; h: number };
 
-export function Tour({ step, steps, onStep, onDone, doneLabel = '开始做题' }: { step: number; steps: TourStep[]; onStep: (n: number) => void; onDone: () => void; doneLabel?: string }) {
+export function Tour({ step, steps, onStep, onDone, doneLabel: doneLabel0 }: { step: number; steps: TourStep[]; onStep: (n: number) => void; onDone: () => void; doneLabel?: string }) {
+  const L = useL(); const doneLabel = doneLabel0 ?? L('开始做题', 'Start the task');
   const [rect, setRect] = useState<Rect | null>(null);
   const [vp, setVp] = useState({ w: 1200, h: 800 });
   const last = useRef('');
@@ -61,14 +63,14 @@ export function Tour({ step, steps, onStep, onDone, doneLabel = '开始做题' }
       <div style={{ position: 'absolute', left: rect.x, top: rect.y, width: rect.w, height: rect.h, borderRadius: 12, boxShadow: '0 0 0 2px #6055f5, 0 0 0 6px rgba(96,85,245,.18)' }} />
     </> : <div style={{ position: 'absolute', inset: 0, background: DIM }} />}
     <div onClick={e => e.stopPropagation()} onMouseDown={e => e.stopPropagation()} style={{ position: 'absolute', left: cx, top: cy, width: W, background: '#fff', color: '#1a1a2e', borderRadius: 14, padding: '14px 16px 12px', boxShadow: '0 12px 40px rgba(10,10,40,.25)', fontSize: 13.5, lineHeight: 1.65, transition: 'left .2s ease, top .2s ease' }}>
-      <div style={{ fontSize: 11, letterSpacing: 1.5, color: '#6055f5', fontWeight: 700, marginBottom: 4 }}>界面说明 · {step + 1} / {steps.length}</div>
+      <div style={{ fontSize: 11, letterSpacing: 1.5, color: '#6055f5', fontWeight: 700, marginBottom: 4 }}>{L('界面说明', 'Quick tour')} · {step + 1} / {steps.length}</div>
       <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 4 }}>{cur.title}</div>
       <div style={{ color: '#444' }}>{cur.text}</div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 12 }}>
         <div style={{ display: 'flex', gap: 4 }}>{steps.map((_, i) => <span key={i} style={{ width: 6, height: 6, borderRadius: 99, background: i === step ? '#6055f5' : '#d9dbe6' }} />)}</div>
-        <button onClick={onDone} style={{ marginLeft: 'auto', border: 0, background: 'transparent', color: '#888', cursor: 'pointer', font: 'inherit', fontSize: 12.5 }}>跳过</button>
-        {step > 0 && <button onClick={() => onStep(step - 1)} style={{ border: '1px solid #e0e0ee', background: '#fff', borderRadius: 8, padding: '5px 10px', cursor: 'pointer', font: 'inherit', fontSize: 12.5 }}>上一步</button>}
-        <button onClick={() => (step >= steps.length - 1 ? onDone() : onStep(step + 1))} style={{ border: 0, background: '#6055f5', color: '#fff', borderRadius: 8, padding: '5px 14px', cursor: 'pointer', font: 'inherit', fontSize: 12.5, fontWeight: 700 }}>{step >= steps.length - 1 ? doneLabel : '下一步'}</button>
+        <button onClick={onDone} style={{ marginLeft: 'auto', border: 0, background: 'transparent', color: '#888', cursor: 'pointer', font: 'inherit', fontSize: 12.5 }}>{L('跳过', 'Skip')}</button>
+        {step > 0 && <button onClick={() => onStep(step - 1)} style={{ border: '1px solid #e0e0ee', background: '#fff', borderRadius: 8, padding: '5px 10px', cursor: 'pointer', font: 'inherit', fontSize: 12.5 }}>{L('上一步', 'Back')}</button>}
+        <button onClick={() => (step >= steps.length - 1 ? onDone() : onStep(step + 1))} style={{ border: 0, background: '#6055f5', color: '#fff', borderRadius: 8, padding: '5px 14px', cursor: 'pointer', font: 'inherit', fontSize: 12.5, fontWeight: 700 }}>{step >= steps.length - 1 ? doneLabel : L('下一步', 'Next')}</button>
       </div>
     </div>
   </div>;

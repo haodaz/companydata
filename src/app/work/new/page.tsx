@@ -64,6 +64,8 @@ function Inner() {
   const [mins, setMins] = useState<number | null>(null);
   const [autoSubmit, setAutoSubmit] = useState(true);
   // 出法（11-10 潜历：拆得太细像教学）：默认按字面出、不替候选人拆步骤；交了自己的参考资料时默认照它分步
+  // 题目语言（11-10）：英文 = 题面和候选人的作答界面都是英文
+  const [lang, setLang] = useState<'zh' | 'en'>('zh');
   const [deep, setDeep] = useState(false); const [steps, setSteps] = useState<boolean | null>(null);
   const [busy, setBusy] = useState('');
   // 出题等待的进度：gen 出题中 → base AI 基线中 → done 好了（GenProgress 一行一行列出平方在做什么）
@@ -73,7 +75,7 @@ function Inner() {
     if (way === 'verbatim' ? verbatim.trim().length < 60 : (!f.company.trim() || !f.role.trim())) return message.warning(way === 'verbatim' ? '把整道题贴进来（60 字以上）' : '企业和要找的人都要填');
     setBusy(way === 'verbatim' ? '原题不改，正在整理成交付物和评分点……约 1 分钟' : '在拼这家企业的材料、出任务、做材料包、定标准……约 2 分钟，别关页面'); setPhase('gen');
     try {
-      const r = await fetch('/api/admin/work/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deep, steps: steps ?? !!ref, time_minutes: mins || undefined, auto_submit: autoSubmit, company: f.company, company_id: picked?.id, intro: picked ? undefined : f.intro.trim() || undefined, role: f.role, env: f.env || undefined, focus: f.focus || undefined, model: f.model, ...(lib ? { showcase_id: lib.id, showcase_use: use } : {}), sample_id: ref?.id, sample_mode: 'reskin', attachments: atts, verbatim: way === 'verbatim' ? verbatim.trim() : undefined }) });
+      const r = await fetch('/api/admin/work/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ lang, deep, steps: steps ?? !!ref, time_minutes: mins || undefined, auto_submit: autoSubmit, company: f.company, company_id: picked?.id, intro: picked ? undefined : f.intro.trim() || undefined, role: f.role, env: f.env || undefined, focus: f.focus || undefined, model: f.model, ...(lib ? { showcase_id: lib.id, showcase_use: use } : {}), sample_id: ref?.id, sample_mode: 'reskin', attachments: atts, verbatim: way === 'verbatim' ? verbatim.trim() : undefined }) });
       if (r.status === 401) { location.href = `/work/login?next=${encodeURIComponent('/work/new')}`; return; }
       const j = await r.json();
       if (!j.ok) throw new Error(j.error);
@@ -87,8 +89,9 @@ function Inner() {
   };
   const env = ENVS.find(e => e.value === f.env) || ENVS[0];
   const model = MODELS.find(m => m.id === f.model);
-  const delivery = (n: string) => <Sec n={n} t="限时多久？" d="时间从候选人点开始算，离开页面也不暂停。出好后也能改。">
+  const delivery = (n: string) => <Sec n={n} t="限时多久？用什么语言？" d="时间从候选人点开始算，离开页面也不暂停。出好后也能改。选英文，题面和候选人的作答界面都是英文。">
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px 20px', alignItems: 'center' }}>
+      <Select size="large" value={lang} onChange={setLang} style={{ width: 150 }} options={[{ value: 'zh', label: '题目用中文' }, { value: 'en', label: 'English 英文题' }]} />
       <InputNumber size="large" min={20} max={240} step={10} value={mins} onChange={v => setMins(v == null ? null : Number(v))} placeholder="按题量定" suffix="分钟" style={{ width: 170 }} />
       <span style={{ fontSize: 13.5, color: '#555' }}><Switch size="small" checked={autoSubmit} onChange={setAutoSubmit} style={{ marginRight: 8 }} />{autoSubmit ? '到点自动交卷' : '不卡时间，超时可以继续'}</span>
     </div>

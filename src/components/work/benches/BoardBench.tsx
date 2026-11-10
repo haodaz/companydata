@@ -10,10 +10,12 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import '@excalidraw/excalidraw/index.css';
 import { BOARD_LIBRARY, buildBoardLibrary } from './boardLibrary';
+import { useL, useLang } from '@/lib/work/i18n';
 
 // 白板字体放本站（public/excalidraw-assets/fonts，从包里拷的）：默认从海外 CDN esm.sh 拉，国内网络会卡住导出截图（11-05 国内版验收）
 if (typeof window !== 'undefined') (window as any).EXCALIDRAW_ASSET_PATH = '/excalidraw-assets/';
-const Excalidraw = dynamic(() => import('@excalidraw/excalidraw').then(m => m.Excalidraw), { ssr: false, loading: () => <div style={{ display: 'grid', placeItems: 'center', height: '100%', color: '#999', fontSize: 13 }}>白板加载中…</div> });
+function BoardLoading() { const L = useL(); return <div style={{ display: 'grid', placeItems: 'center', height: '100%', color: '#999', fontSize: 13 }}>{L('白板加载中…', 'Loading whiteboard…')}</div>; }
+const Excalidraw = dynamic(() => import('@excalidraw/excalidraw').then(m => m.Excalidraw), { ssr: false, loading: () => <BoardLoading /> });
 
 let libLoading: Promise<void> | null = null;   // 素材库是整页共用的一份（开发模式会挂两个白板实例）：整页只装一次
 
@@ -37,7 +39,7 @@ export function BoardBench({ value, onChange, notes, onNotes, caption, leading, 
   /** 材料里的图片：可以一键贴到白板上当参考（比如做 IP 变体时贴原形象） */
   refs?: { title: string; url: string }[];
 }) {
-  const [refOpen, setRefOpen] = useState(false);
+  const [refOpen, setRefOpen] = useState(false); const L = useL(); const lang = useLang();
   const fileIn = useRef<HTMLInputElement>(null);
   const api = useRef<any>(null);
   const lastCount = useRef(value.elements.filter(e => !e.isDeleted).length);
@@ -49,10 +51,10 @@ export function BoardBench({ value, onChange, notes, onNotes, caption, leading, 
     // 组件库：白板就绪后放进素材库。按 id 替换我们自己的那批（开发模式会初始化两次，不能叠加），用户自己存的条目保留
     if (!a || libLoading) return;
     libLoading = import('@excalidraw/excalidraw').then(({ convertToExcalidrawElements }) => {
-      const ours = buildBoardLibrary(convertToExcalidrawElements as any);
+      const ours = buildBoardLibrary(convertToExcalidrawElements as any, lang);
       a.updateLibrary?.({ libraryItems: (cur: any[]) => [...(cur || []).filter(x => !String(x.id).startsWith('work-lib-')), ...ours], merge: false });
     }).catch(() => {});
-  }, [apiRef]);
+  }, [apiRef, lang]);
   // Excalidraw 每次指针移动都会触发 onChange：攒 400ms 再写回父组件；元素数变化记一条事件
   const change = useCallback((els: readonly any[], _st: any, files: any) => {
     clearTimeout(timer.current);
@@ -71,10 +73,10 @@ export function BoardBench({ value, onChange, notes, onNotes, caption, leading, 
     const cur = a.getSceneElements();
     const x0 = cur.length ? Math.max(...cur.map((e: any) => e.x + (e.width || 0))) + 80 : 40, y0 = 40;
     const sk: any[] = kind === 'phone'
-      ? [{ type: 'frame', x: x0, y: y0, width: 375, height: 812, name: '手机屏', children: [] }]
+      ? [{ type: 'frame', x: x0, y: y0, width: 375, height: 812, name: L('手机屏', 'Phone screen'), children: [] }]
       : kind === 'web'
-        ? [{ type: 'frame', x: x0, y: y0, width: 1280, height: 800, name: '网页屏', children: [] }]
-        : [{ type: 'rectangle', x: x0, y: y0, width: 220, height: 140, backgroundColor: '#ffec99', fillStyle: 'solid', strokeColor: '#e0b400', label: { text: '便签' } }];
+        ? [{ type: 'frame', x: x0, y: y0, width: 1280, height: 800, name: L('网页屏', 'Web screen'), children: [] }]
+        : [{ type: 'rectangle', x: x0, y: y0, width: 220, height: 140, backgroundColor: '#ffec99', fillStyle: 'solid', strokeColor: '#e0b400', label: { text: L('便签', 'Sticky note') } }];
     a.updateScene({ elements: [...cur, ...convertToExcalidrawElements(sk)] });
     a.scrollToContent(undefined, { fitToContent: true, animate: true });
     onEvent?.('board_template', { kind });
@@ -104,33 +106,33 @@ export function BoardBench({ value, onChange, notes, onNotes, caption, leading, 
       {leading && <div style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '6px 10px', background: '#fff', borderBottom: '1px solid #eef0f5' }}>{leading}</div>}
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 10px', borderBottom: '1px solid #eef0f5', background: '#fafbff', flexWrap: 'wrap' }}>
         {caption && <span style={{ fontSize: 12.5, color: '#3b405a', fontWeight: 600, marginRight: 6, maxWidth: '55%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={caption}>{caption}</span>}
-        <span style={{ fontSize: 12, color: '#999', marginLeft: 'auto' }}>放一个：</span>
-        <button style={btn} onClick={() => addTemplate('phone')}>手机屏</button>
-        <button style={btn} onClick={() => addTemplate('web')}>网页屏</button>
-        <button style={btn} onClick={() => addTemplate('note')}>便签</button>
+        <span style={{ fontSize: 12, color: '#999', marginLeft: 'auto' }}>{L('放一个：', 'Add:')}</span>
+        <button style={btn} onClick={() => addTemplate('phone')}>{L('手机屏', 'Phone screen')}</button>
+        <button style={btn} onClick={() => addTemplate('web')}>{L('网页屏', 'Web screen')}</button>
+        <button style={btn} onClick={() => addTemplate('note')}>{L('便签', 'Sticky note')}</button>
         <span style={{ position: 'relative' }}>
-          <button style={btn} onClick={() => (refs.length ? setRefOpen(v => !v) : fileIn.current?.click())}>贴参考图</button>
+          <button style={btn} onClick={() => (refs.length ? setRefOpen(v => !v) : fileIn.current?.click())}>{L('贴参考图', 'Add reference image')}</button>
           {refOpen && <div style={{ position: 'absolute', right: 0, top: 30, zIndex: 20, background: '#fff', border: '1px solid #e0e0ee', borderRadius: 10, boxShadow: '0 8px 24px rgba(20,20,60,.12)', padding: 6, width: 240 }}>
             {refs.map(r => <div key={r.url} onClick={() => addRef(r)} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 8px', borderRadius: 7, cursor: 'pointer', fontSize: 12.5 }} onMouseEnter={e => (e.currentTarget.style.background = '#f4f3ff')} onMouseLeave={e => (e.currentTarget.style.background = '')}><img src={r.url} alt="" style={{ width: 34, height: 34, objectFit: 'cover', borderRadius: 5, border: '1px solid #eee' }} /><span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.title}</span></div>)}
-            <div onClick={() => fileIn.current?.click()} style={{ padding: '7px 8px', borderTop: '1px solid #f0f0f5', marginTop: 4, fontSize: 12.5, color: '#4c43c9', cursor: 'pointer' }}>从电脑选一张…</div>
+            <div onClick={() => fileIn.current?.click()} style={{ padding: '7px 8px', borderTop: '1px solid #f0f0f5', marginTop: 4, fontSize: 12.5, color: '#4c43c9', cursor: 'pointer' }}>{L('从电脑选一张…', 'Choose from your computer…')}</div>
           </div>}
           <input ref={fileIn} type="file" accept="image/*" hidden onChange={e => { const f = e.target.files?.[0]; e.target.value = ''; if (f) addImage(f, '本机图片'); }} />
         </span>
-        <button style={{ ...btn, borderColor: '#d8d4ff', color: '#4c43c9', fontWeight: 600 }} onClick={() => { api.current?.toggleSidebar?.({ name: 'default', tab: 'library', force: true }); onEvent?.('board_library'); }}>组件库</button>
+        <button style={{ ...btn, borderColor: '#d8d4ff', color: '#4c43c9', fontWeight: 600 }} onClick={() => { api.current?.toggleSidebar?.({ name: 'default', tab: 'library', force: true }); onEvent?.('board_library'); }}>{L('组件库', 'Components')}</button>
       </div>
       <div style={{ flex: 1, minHeight: 360, position: 'relative' }}>
         <Excalidraw
           excalidrawAPI={setApi}
           initialData={{ elements: value.elements, files: value.files, appState: { viewBackgroundColor: '#ffffff', currentItemFontFamily: 2 }, scrollToContent: value.elements.length > 0 }}
           onChange={change}
-          langCode="zh-CN"
+          langCode={lang === 'en' ? 'en' : 'zh-CN'}
           theme="light"
           UIOptions={{ canvasActions: { loadScene: false, saveToActiveFile: false, export: false, toggleTheme: false, saveAsImage: true, clearCanvas: true, changeViewBackgroundColor: false } }}
         />
       </div>
       <div style={{ borderTop: '1px solid #e6e8f0', padding: '8px 12px', background: '#fafbff' }}>
-        <div style={{ fontSize: 12, color: '#888', marginBottom: 4 }}>设计说明（思路、取舍、没画出来的交互）</div>
-        <textarea value={notes} onChange={e => onNotes(e.target.value)} rows={2} placeholder="比如：首页先给结果再给入口，因为……；头像变体按职业 × 情绪两个维度……" style={{ width: '100%', border: '1px solid #e0e0ee', borderRadius: 8, padding: '6px 10px', font: 'inherit', fontSize: 13, resize: 'vertical', boxSizing: 'border-box' }} />
+        <div style={{ fontSize: 12, color: '#888', marginBottom: 4 }}>{L('设计说明（思路、取舍、没画出来的交互）', 'Design notes (approach, trade-offs, interactions not drawn)')}</div>
+        <textarea value={notes} onChange={e => onNotes(e.target.value)} rows={2} placeholder={L('比如：首页先给结果再给入口，因为……；头像变体按职业 × 情绪两个维度……', 'e.g. The home screen shows results before entry points because…; avatar variants vary by job × mood…')} style={{ width: '100%', border: '1px solid #e0e0ee', borderRadius: 8, padding: '6px 10px', font: 'inherit', fontSize: 13, resize: 'vertical', boxSizing: 'border-box' }} />
       </div>
     </div>
   );

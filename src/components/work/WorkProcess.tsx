@@ -8,6 +8,7 @@
  *   出题人「看报告」抽屉和报告页共用；数据来自 GET /api/work/<token>/sessions/<sid>?full=1（交卷后才给）。
  */
 import React, { useMemo, useState } from 'react';
+import { useL } from '@/lib/work/i18n';
 
 const fmt = (t: number) => `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
 const kb = (n: number) => (n > 1024 * 1024 ? `${(n / 1024 / 1024).toFixed(1)} MB` : `${Math.max(1, Math.round(n / 1024))} KB`);
@@ -16,11 +17,11 @@ type Chat = { t: number; q: string; a: string };
 type Row = { t: number; to?: number; kind: string; color: string; label: string; body?: React.ReactNode; detail?: string; link?: { href: string; text: string } };
 
 const C = { mat: '#12b5cb', ai: '#6055f5', write: '#16a34a', paste: '#f59e0b', file: '#0ea5e9', away: '#b0b4c6', draft: '#8b5cf6', end: '#1a1a2e', screen: '#64748b' };
-const FILTERS: [string, string][] = [['all', '全部'], ['ai', '问 AI'], ['mat', '材料与文件'], ['draft', '稿子快照']];
+const FILTERS: [string, string, string][] = [['all', '全部', 'All'], ['ai', '问 AI', 'AI questions'], ['mat', '材料与文件', 'Materials & files'], ['draft', '稿子快照', 'Draft snapshots']];
 
 export function WorkProcess({ events, aiChat, materials, deliverables, shots = [], part = 'all' }: { /** files 只出交付文件；timeline 只出截图 + 时间轴（报告三栏用，11-05） */ part?: 'all' | 'files' | 'timeline'; events: Ev[]; aiChat: Chat[]; materials?: { id: string; title: string }[]; deliverables?: { id: string; title: string }[]; /** 开放模式整屏截图（11-05，报告里 recording.gallery） */ shots?: { t: number; url: string }[] }) {
   const near = (t: number) => { let best: { t: number; url: string } | null = null; for (const s of shots) if (Math.abs(s.t - t) <= 60 && (!best || Math.abs(s.t - t) < Math.abs(best.t - t))) best = s; return best; };
-  const [filter, setFilter] = useState('all');
+  const [filter, setFilter] = useState('all'); const L = useL();
   const [open, setOpen] = useState<Record<number, boolean>>({});
   const matName = (id: string) => materials?.find(m => m.id === id)?.title || '';
   const partName = (id: string) => deliverables?.find(d => d.id === id)?.title || id;
@@ -34,11 +35,11 @@ export function WorkProcess({ events, aiChat, materials, deliverables, shots = [
     for (const e of ev) {
       const last = out[out.length - 1];
       switch (e.type) {
-        case 'start': out.push({ t: e.t, kind: 'end', color: C.end, label: '开始作答' }); break;
-        case 'open_material': if (last?.kind === 'mat' && last.label.includes(` ${e.id}`)) break; out.push({ t: e.t, kind: 'mat', color: C.mat, label: `打开材料 ${e.id}${matName(e.id) ? `《${matName(e.id)}》` : ''}` }); break;
-        case 'download': out.push({ t: e.t, kind: 'mat', color: C.mat, label: `下载材料 ${e.id}${matName(e.id) ? `《${matName(e.id)}》` : ''}` }); break;
-        case 'switch_part': out.push({ t: e.t, kind: 'other', color: C.screen, label: `切到交付物「${partName(e.id)}」` }); break;
-        case 'stage_unlock': out.push({ t: e.t, kind: 'other', color: C.screen, label: `解锁第 ${String(e.id).replace(/\D/g, '') || e.id} 步` }); break;
+        case 'start': out.push({ t: e.t, kind: 'end', color: C.end, label: L('开始作答', 'Started') }); break;
+        case 'open_material': if (last?.kind === 'mat' && last.label.includes(` ${e.id}`)) break; out.push({ t: e.t, kind: 'mat', color: C.mat, label: L(`打开材料 ${e.id}${matName(e.id) ? `《${matName(e.id)}》` : ''}`, `Opened material ${e.id}${matName(e.id) ? ` "${matName(e.id)}"` : ''}`) }); break;
+        case 'download': out.push({ t: e.t, kind: 'mat', color: C.mat, label: L(`下载材料 ${e.id}${matName(e.id) ? `《${matName(e.id)}》` : ''}`, `Downloaded material ${e.id}${matName(e.id) ? ` "${matName(e.id)}"` : ''}`) }); break;
+        case 'switch_part': out.push({ t: e.t, kind: 'other', color: C.screen, label: L(`切到交付物「${partName(e.id)}」`, `Switched to deliverable "${partName(e.id)}"`) }); break;
+        case 'stage_unlock': out.push({ t: e.t, kind: 'other', color: C.screen, label: L(`解锁第 ${String(e.id).replace(/\D/g, '') || e.id} 步`, `Unlocked step ${String(e.id).replace(/\D/g, '') || e.id}`) }); break;
         case 'open_stage': break;
         case 'edit': {
           const d = Number(e.delta) || 0;
@@ -46,26 +47,26 @@ export function WorkProcess({ events, aiChat, materials, deliverables, shots = [
           else out.push({ t: e.t, to: e.t, kind: 'write', color: C.write, label: '', plus: Math.max(0, d), minus: Math.max(0, -d) } as any);
           break;
         }
-        case 'paste': out.push({ t: e.t, kind: 'paste', color: C.paste, label: `粘贴 ${e.chars || 0} 字` }); break;
-        case 'adopt': out.push({ t: e.t, kind: 'ai', color: C.ai, label: `把 AI 的回答采纳进稿子（${e.chars || 0} 字）` }); break;
-        case 'ai_ask': if (!hasChat) out.push({ t: e.t, kind: 'ai', color: C.ai, label: `问 AI（${e.chars || 0} 字）` }); break;
-        case 'idle': out.push({ t: e.t, kind: 'away', color: C.away, label: '两分钟没有操作' }); break;
-        case 'leave': out.push({ t: e.t, kind: 'away', color: C.away, label: '离开了作答页（切到别的窗口 / 标签）' }); break;
-        case 'file': out.push({ t: e.t, kind: 'mat', color: C.file, label: `上传文件 ${e.name}（${kb(e.size || 0)}）`, link: { href: e.url, text: '下载' } }); break;
-        case 'recording': out.push({ t: e.t, kind: 'mat', color: C.file, label: `上传录屏${e.duration ? `（${fmt(e.duration)}）` : ''}`, link: { href: e.url, text: '播放' } }); break;
-        case 'rec_start': out.push({ t: e.t, kind: 'other', color: C.screen, label: '开始记录屏幕' }); break;
-        case 'rec_stop': out.push({ t: e.t, kind: 'other', color: C.screen, label: '暂停记录屏幕' }); break;
-        case 'screen': { const n = near(e.t); out.push({ t: e.t, kind: 'screen', color: C.screen, label: '屏幕画面（AI 看图记的）', body: String(e.note || '') }); break; }
-        case 'draft': out.push({ t: e.t, kind: 'draft', color: C.draft, label: `稿子快照 · ${e.chars || String(e.text || '').length} 字`, detail: String(e.text || '') }); break;
-        case 'next_step': out.push({ t: e.t, kind: 'end', color: C.end, label: '最后一问：如果再给一天，先改哪里', body: String(e.text || '') }); break;
-        case 'away': out.push({ t: e.t, kind: 'away', color: C.away, label: `离开后回来（中间约 ${Math.max(1, Math.round((Number(e.seconds) || 0) / 60))} 分钟，时间没有暂停）` }); break;
-        case 'auto_submit': out.push({ t: e.t, kind: 'end', color: C.end, label: '时间到，系统自动交卷' }); break;
-        case 'submit': out.push({ t: e.t, kind: 'end', color: C.end, label: `交卷（交付物 ${e.chars || 0} 字）` }); break;
-        default: if (/^plugin_/.test(e.type) || e.note) out.push({ t: e.t, kind: 'other', color: C.screen, label: `${e.type.replace(/^plugin_/, '插件 · ')}${e.host ? ` · ${e.host}` : ''}`, body: e.note ? String(e.note) : undefined });
+        case 'paste': out.push({ t: e.t, kind: 'paste', color: C.paste, label: L(`粘贴 ${e.chars || 0} 字`, `Pasted ${e.chars || 0} chars`) }); break;
+        case 'adopt': out.push({ t: e.t, kind: 'ai', color: C.ai, label: L(`把 AI 的回答采纳进稿子（${e.chars || 0} 字）`, `Adopted the AI's answer into the draft (${e.chars || 0} chars)`) }); break;
+        case 'ai_ask': if (!hasChat) out.push({ t: e.t, kind: 'ai', color: C.ai, label: L(`问 AI（${e.chars || 0} 字）`, `Asked AI (${e.chars || 0} chars)`) }); break;
+        case 'idle': out.push({ t: e.t, kind: 'away', color: C.away, label: L('两分钟没有操作', 'No activity for two minutes') }); break;
+        case 'leave': out.push({ t: e.t, kind: 'away', color: C.away, label: L('离开了作答页（切到别的窗口 / 标签）', 'Left the task page (switched to another window / tab)') }); break;
+        case 'file': out.push({ t: e.t, kind: 'mat', color: C.file, label: L(`上传文件 ${e.name}（${kb(e.size || 0)}）`, `Uploaded file ${e.name} (${kb(e.size || 0)})`), link: { href: e.url, text: L('下载', 'Download') } }); break;
+        case 'recording': out.push({ t: e.t, kind: 'mat', color: C.file, label: L(`上传录屏${e.duration ? `（${fmt(e.duration)}）` : ''}`, `Uploaded screen recording${e.duration ? ` (${fmt(e.duration)})` : ''}`), link: { href: e.url, text: L('播放', 'Play') } }); break;
+        case 'rec_start': out.push({ t: e.t, kind: 'other', color: C.screen, label: L('开始记录屏幕', 'Started screen recording') }); break;
+        case 'rec_stop': out.push({ t: e.t, kind: 'other', color: C.screen, label: L('暂停记录屏幕', 'Paused screen recording') }); break;
+        case 'screen': { const n = near(e.t); out.push({ t: e.t, kind: 'screen', color: C.screen, label: L('屏幕画面（AI 看图记的）', 'Screen (described by AI from screenshots)'), body: String(e.note || '') }); break; }
+        case 'draft': out.push({ t: e.t, kind: 'draft', color: C.draft, label: L(`稿子快照 · ${e.chars || String(e.text || '').length} 字`, `Draft snapshot · ${e.chars || String(e.text || '').length} chars`), detail: String(e.text || '') }); break;
+        case 'next_step': out.push({ t: e.t, kind: 'end', color: C.end, label: L('最后一问：如果再给一天，先改哪里', 'Last question: with one more day, what to improve first'), body: String(e.text || '') }); break;
+        case 'away': out.push({ t: e.t, kind: 'away', color: C.away, label: L(`离开后回来（中间约 ${Math.max(1, Math.round((Number(e.seconds) || 0) / 60))} 分钟，时间没有暂停）`, `Came back after about ${Math.max(1, Math.round((Number(e.seconds) || 0) / 60))} min away (the timer kept running)`) }); break;
+        case 'auto_submit': out.push({ t: e.t, kind: 'end', color: C.end, label: L('时间到，系统自动交卷', 'Time up, submitted automatically') }); break;
+        case 'submit': out.push({ t: e.t, kind: 'end', color: C.end, label: L(`交卷（交付物 ${e.chars || 0} 字）`, `Submitted (deliverable ${e.chars || 0} chars)`) }); break;
+        default: if (/^plugin_/.test(e.type) || e.note) out.push({ t: e.t, kind: 'other', color: C.screen, label: `${e.type.replace(/^plugin_/, L('插件 · ', 'Extension · '))}${e.host ? ` · ${e.host}` : ''}`, body: e.note ? String(e.note) : undefined });
       }
     }
-    for (const c of aiChat) out.push({ t: c.t, kind: 'ai', color: C.ai, label: '问 AI', body: c.q, detail: c.a });
-    for (const r of out) if (r.kind === 'write') { const x = r as any; r.label = `写作${r.to && r.to > r.t ? ` ${fmt(r.t)}–${fmt(r.to)}` : ''}：+${x.plus} 字${x.minus ? ` / 删 ${x.minus} 字` : ''}`; }
+    for (const c of aiChat) out.push({ t: c.t, kind: 'ai', color: C.ai, label: L('问 AI', 'Asked AI'), body: c.q, detail: c.a });
+    for (const r of out) if (r.kind === 'write') { const x = r as any; r.label = L(`写作${r.to && r.to > r.t ? ` ${fmt(r.t)}–${fmt(r.to)}` : ''}：+${x.plus} 字${x.minus ? ` / 删 ${x.minus} 字` : ''}`, `Writing${r.to && r.to > r.t ? ` ${fmt(r.t)}–${fmt(r.to)}` : ''}: +${x.plus} chars${x.minus ? ` / −${x.minus} deleted` : ''}`); }
     return out.filter(r => r.kind !== 'write' || (r as any).plus || (r as any).minus).sort((a, b) => a.t - b.t);
   }, [events, aiChat]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -76,11 +77,11 @@ export function WorkProcess({ events, aiChat, materials, deliverables, shots = [
   return (
     <div style={{ display: 'grid', gap: 14 }}>
       {part !== 'timeline' && (files.length > 0 || recs.length > 0) && <div style={box}>
-        <div style={head}>交付文件（候选人上传的原文件）</div>
+        <div style={head}>{L('交付文件（候选人上传的原文件）', 'Submitted files (originals uploaded by the candidate)')}</div>
         <div style={{ padding: '6px 12px 10px' }}>{[...files, ...recs].map((f, i) => <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'center', padding: '6px 0', borderTop: i ? '1px solid #f1f2f6' : 0, fontSize: 13.5 }}>
-          <span>{f.type === 'recording' ? '🎬' : '📎'}</span><span style={{ flex: 1, wordBreak: 'break-all' }}>{f.type === 'recording' ? '录屏' : f.name}</span>
+          <span>{f.type === 'recording' ? '🎬' : '📎'}</span><span style={{ flex: 1, wordBreak: 'break-all' }}>{f.type === 'recording' ? L('录屏', 'Screen recording') : f.name}</span>
           <span style={{ color: '#8a8fa8', fontSize: 12 }}>{fmt(f.t)} · {kb(f.size || 0)}</span>
-          <a href={f.url} target="_blank" rel="noreferrer" style={{ color: '#6055f5', fontWeight: 700 }}>{f.type === 'recording' ? '播放' : '下载'}</a>
+          <a href={f.url} target="_blank" rel="noreferrer" style={{ color: '#6055f5', fontWeight: 700 }}>{f.type === 'recording' ? L('播放', 'Play') : L('下载', 'Download')}</a>
         </div>)}</div>
       </div>}
       {/* 原始截图不展示（11-10），只留 AI 看图写的逐条记录 */}
@@ -90,17 +91,17 @@ export function WorkProcess({ events, aiChat, materials, deliverables, shots = [
       </div>}
       {part !== 'files' && <div style={box}>
         <div style={{ ...head, display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-          <span>答题历程</span><span style={{ fontWeight: 400, color: '#8a8fa8', fontSize: 12 }}>用时 {fmt(real)} · 问 AI {n('ai')} 条 · 材料 / 文件 {n('mat')} 次 · 稿子快照 {n('draft')} 份</span>
+          <span>{L('答题历程', 'Work history')}</span><span style={{ fontWeight: 400, color: '#8a8fa8', fontSize: 12 }}>{L(`用时 ${fmt(real)} · 问 AI ${n('ai')} 条 · 材料 / 文件 ${n('mat')} 次 · 稿子快照 ${n('draft')} 份`, `Time ${fmt(real)} · ${n('ai')} AI questions · ${n('mat')} material / file actions · ${n('draft')} draft snapshots`)}</span>
           <span style={{ flex: 1 }} />
-          {FILTERS.map(([k, t]) => <button key={k} onClick={() => setFilter(k)} style={{ border: '1px solid ' + (filter === k ? '#6055f5' : '#e3e4ec'), background: filter === k ? '#f1efff' : '#fff', color: filter === k ? '#4c43c9' : '#555', borderRadius: 999, padding: '2px 10px', fontSize: 12, cursor: 'pointer' }}>{t}</button>)}
+          {FILTERS.map(([k, t, te]) => <button key={k} onClick={() => setFilter(k)} style={{ border: '1px solid ' + (filter === k ? '#6055f5' : '#e3e4ec'), background: filter === k ? '#f1efff' : '#fff', color: filter === k ? '#4c43c9' : '#555', borderRadius: 999, padding: '2px 10px', fontSize: 12, cursor: 'pointer' }}>{L(t, te)}</button>)}
         </div>
         {/* 总览条：每条记录在整段用时上的位置 */}
         <div style={{ position: 'relative', height: 18, margin: '10px 12px 2px', background: '#f4f5f9', borderRadius: 9 }}>
           {rows.map((r, i) => <span key={i} title={`${fmt(r.t)} ${r.label}`} style={{ position: 'absolute', top: 3, left: `calc(${(r.t / end) * 100}% - 2px)`, width: r.to ? `max(4px, ${((r.to - r.t) / end) * 100}%)` : 4, height: 12, borderRadius: 3, background: r.color, opacity: r.kind === 'away' ? .5 : .9 }} />)}
         </div>
-        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', fontSize: 11.5, color: '#8a8fa8', margin: '0 12px 6px' }}>{[['材料 / 文件', C.mat], ['问 AI', C.ai], ['写作', C.write], ['粘贴', C.paste], ['稿子快照', C.draft], ['离开 / 空闲', C.away]].map(([t, c]) => <span key={t}><i style={{ display: 'inline-block', width: 8, height: 8, borderRadius: 2, background: c, marginRight: 4 }} />{t}</span>)}</div>
+        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', fontSize: 11.5, color: '#8a8fa8', margin: '0 12px 6px' }}>{[[L('材料 / 文件', 'Materials / files'), C.mat], [L('问 AI', 'Ask AI'), C.ai], [L('写作', 'Writing'), C.write], [L('粘贴', 'Paste'), C.paste], [L('稿子快照', 'Draft snapshot'), C.draft], [L('离开 / 空闲', 'Away / idle'), C.away]].map(([t, c]) => <span key={t}><i style={{ display: 'inline-block', width: 8, height: 8, borderRadius: 2, background: c, marginRight: 4 }} />{t}</span>)}</div>
         <div style={{ maxHeight: 520, overflow: 'auto', padding: '0 12px 10px' }}>
-          {!shown.length && <div style={{ color: '#999', fontSize: 13, padding: '10px 0' }}>{rows.length ? '这一类没有记录' : '这次作答没有过程记录（AI 学员，或旧版本作答）'}</div>}
+          {!shown.length && <div style={{ color: '#999', fontSize: 13, padding: '10px 0' }}>{rows.length ? L('这一类没有记录', 'Nothing in this category') : L('这次作答没有过程记录（AI 学员，或旧版本作答）', 'No process recorded for this attempt (AI trainee, or an older version)')}</div>}
           {shown.map((r, i) => { const k = rows.indexOf(r); const can = !!r.detail; return (
             <div key={k} style={{ display: 'grid', gridTemplateColumns: '54px 10px 1fr', gap: 8, padding: '7px 0', borderTop: i ? '1px solid #f3f3f7' : 0, fontSize: 13.5, lineHeight: 1.6 }}>
               <span style={{ fontFamily: 'ui-monospace, Menlo, monospace', color: '#6b6f86', fontSize: 12.5 }}>{fmt(r.t)}</span>
@@ -109,7 +110,7 @@ export function WorkProcess({ events, aiChat, materials, deliverables, shots = [
                 <span style={{ color: r.kind === 'away' ? '#8a8fa8' : '#1a1a2e', fontWeight: r.kind === 'end' ? 700 : 500 }}>{r.label}</span>
                 {r.link && <a href={r.link.href} target="_blank" rel="noreferrer" style={{ marginLeft: 8, color: '#6055f5', fontWeight: 700 }}>{r.link.text}</a>}
                 {r.body && <div style={{ color: '#2a2e45', whiteSpace: 'pre-wrap', background: r.kind === 'ai' ? '#f6f5ff' : 'transparent', borderRadius: 8, padding: r.kind === 'ai' ? '4px 10px' : 0, marginTop: 2 }}>{r.body}</div>}
-                {can && <button onClick={() => setOpen({ ...open, [k]: !open[k] })} style={{ marginTop: 4, border: 0, background: 'none', color: '#6055f5', cursor: 'pointer', padding: 0, fontSize: 12.5 }}>{open[k] ? '收起' : r.kind === 'ai' ? '看 AI 的回答' : '看这一刻的稿子'}</button>}
+                {can && <button onClick={() => setOpen({ ...open, [k]: !open[k] })} style={{ marginTop: 4, border: 0, background: 'none', color: '#6055f5', cursor: 'pointer', padding: 0, fontSize: 12.5 }}>{open[k] ? L('收起', 'Hide') : r.kind === 'ai' ? L('看 AI 的回答', "View the AI's answer") : L('看这一刻的稿子', 'View the draft at this point')}</button>}
                 {can && open[k] && <div style={{ marginTop: 4, whiteSpace: 'pre-wrap', fontSize: 13, color: '#444', background: '#fafbff', border: '1px solid #ecedf4', borderRadius: 8, padding: '8px 10px', maxHeight: 320, overflow: 'auto' }}>{r.detail}</div>}
               </div>
             </div>); })}

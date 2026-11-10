@@ -8,9 +8,12 @@ import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { logTokenUsage } from '@/lib/token-logger';
 import type { WorkTask } from '@/lib/work/generator';
 import { SKILL_DIMS, type WorkEvent } from '@/lib/work/grader';
+import { enTail } from './grader';
 
 const AUDIT_MODEL = process.env.WORK_AUDIT_MODEL || 'claude-sonnet-5-5';   // 分段审计是小段、要快；总评仍走 GRADE_MODEL
 const s = (v: any, n = 600) => (v == null ? '' : typeof v === 'string' ? v : JSON.stringify(v)).slice(0, n);
+/** 存模型输出用：英文题同样的意思字符多两三倍，截断上限放宽（11-10 实测英文段标题被截成半个词） */
+const sl = (task: any) => (v: any, n = 600) => s(v, task?.task?.lang === 'en' ? Math.round(n * 2.5) : n);
 const fmt = (t: number) => `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
 
 export interface AuditObservation { t: number; skill: string; signal: 'high' | 'risk' | 'neutral'; note: string; evidence: string }
@@ -68,9 +71,9 @@ ${idx === total - 1 && opts.deliverableHead ? `## 交付物开头（最后一段
 
 六个维度：${SKILL_DIMS.join('、')}。BARS：L1 没有表现 / L2 零星 / L3 稳定 / L4 主动且有依据。
 只返回 JSON：{ "label": "这段在干什么（≤8 字）", "observations": [ { "t": 120, "skill": "信息核验", "signal": "high|risk|neutral", "note": "观察到…", "evidence": "事件 / 原话" } ], "so_far": "到这段为止的一句话印象", "dims": { "问题界定": "L2" }, "tentative": 0-100 的过程信号 }`;
-  const p = await askJson(prompt, opts.institution);
+  const p = await askJson(prompt + enTail(task), opts.institution);
   const dims: AuditSegment['dims'] = {};
   for (const d of SKILL_DIMS) { const v = p.dims?.[d]; dims[d] = (['L1', 'L2', 'L3', 'L4'].includes(v) ? v : (prior[prior.length - 1]?.dims?.[d] || 'L1')); }
-  const observations: AuditObservation[] = (Array.isArray(p.observations) ? p.observations : []).slice(0, 5).map((o: any) => ({ t: Math.max(seg.from, Math.min(seg.to, Number(o.t) || seg.from)), skill: s(o.skill, 20), signal: (['high', 'risk', 'neutral'].includes(o.signal) ? o.signal : 'neutral'), note: s(o.note, 200), evidence: s(o.evidence, 200) }));
-  return { idx, from: seg.from, to: seg.to, label: s(p.label, 16) || `第 ${idx + 1} 段`, observations, so_far: s(p.so_far, 200), dims, tentative: Math.max(0, Math.min(100, Math.round(Number(p.tentative) || 0))), generated_at: new Date().toISOString() };
+  const observations: AuditObservation[] = (Array.isArray(p.observations) ? p.observations : []).slice(0, 5).map((o: any) => ({ t: Math.max(seg.from, Math.min(seg.to, Number(o.t) || seg.from)), skill: sl(task)(o.skill, 20), signal: (['high', 'risk', 'neutral'].includes(o.signal) ? o.signal : 'neutral'), note: sl(task)(o.note, 200), evidence: sl(task)(o.evidence, 200) }));
+  return { idx, from: seg.from, to: seg.to, label: sl(task)(p.label, 16) || `第 ${idx + 1} 段`, observations, so_far: sl(task)(p.so_far, 200), dims, tentative: Math.max(0, Math.min(100, Math.round(Number(p.tentative) || 0))), generated_at: new Date().toISOString() };
 }

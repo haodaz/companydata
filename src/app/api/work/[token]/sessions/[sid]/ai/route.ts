@@ -3,6 +3,7 @@ import { timing } from '@/lib/work/deadline';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { generateContent } from '@/lib/llm-client';
 import { logTokenUsage, withCost } from '@/lib/token-logger';
+import { errL } from '@/lib/work/errors-en';
 
 export const runtime = 'nodejs';
 export const maxDuration = 120;
@@ -14,23 +15,24 @@ const ASSIST_MODEL = 'qwen-plus';   // 候选人做题时的实时助手要快�
 export async function POST(req: NextRequest, { params }: { params: Promise<{ token: string; sid: string }> }) {
   const { token, sid } = await params;
   const { data: t } = await db.from('work_tasks').select('id, task, materials, company_name').eq('share_token', token).maybeSingle();
-  if (!t) return NextResponse.json({ ok: false, error: '链接不可用' }, { status: 404 });
+  if (!t) return NextResponse.json({ ok: false, error: errL(t, '链接不可用') }, { status: 404 });
   const { data: s } = await db.from('work_sessions').select('id, ai_chat, submitted_at, started_at, participant').eq('id', sid).eq('task_id', t.id).maybeSingle();
-  if (!s) return NextResponse.json({ ok: false, error: '没有这次作答' }, { status: 404 });
-  if (s.submitted_at) return NextResponse.json({ ok: false, error: '已经交卷了' }, { status: 409 });
-  if (timing(t.task, s).closed) return NextResponse.json({ ok: false, error: '时间到了', expired: true }, { status: 409 });
+  if (!s) return NextResponse.json({ ok: false, error: errL(t, '没有这次作答') }, { status: 404 });
+  if (s.submitted_at) return NextResponse.json({ ok: false, error: errL(t, '已经交卷了') }, { status: 409 });
+  if (timing(t.task, s).closed) return NextResponse.json({ ok: false, error: errL(t, '时间到了'), expired: true }, { status: 409 });
   const body = await req.json().catch(() => ({}));
   const q = String(body.q || '').trim().slice(0, 4000);
-  if (!q) return NextResponse.json({ ok: false, error: '问题为空' }, { status: 400 });
+  if (!q) return NextResponse.json({ ok: false, error: errL(t, '问题为空') }, { status: 400 });
   const history = (s.ai_chat || []).slice(-6).map((c: any) => `用户：${c.q}\n助手：${String(c.a).slice(0, 800)}`).join('\n\n');
-  const prompt = `你是做题人手边的 AI 助手（像平时工作里用的那种），帮他完成一道真活。有问必答、直接给可用的内容；涉及材料里没有的数据要提醒「这是假设」。不要替他做判断取舍，把选项和依据摆出来。
+  // 英文题（11-10 实测：只在末尾提一句，模型还是用中文答）：开头就定死语言
+  const prompt = `${t.task?.lang === 'en' ? 'IMPORTANT: The candidate works in English. Write your entire reply in English (keep company and product names as they are). Only reply in Chinese if the candidate writes in Chinese.\n\n' : ''}你是做题人手边的 AI 助手（像平时工作里用的那种），帮他完成一道真活。有问必答、直接给可用的内容；涉及材料里没有的数据要提醒「这是假设」。不要替他做判断取舍，把选项和依据摆出来。
 ## 任务
 ${t.task?.title}：${String(t.task?.brief || '').slice(0, 800)}
 ## 材料目录
 ${(t.materials || []).map((m: any) => `- ${m.id} ${m.title}`).join('\n')}
 ${body.material ? `## 他现在打开的材料\n${String(body.material).slice(0, 3000)}\n` : ''}${history ? `## 前面的对话\n${history}\n` : ''}
 ## 他的问题
-${q}`;
+${q}${t.task?.lang === 'en' ? '\n\nReply in English.' : ''}`;
   try {
     const t0 = Date.now();
     const a = await withCost({ tool_name: 'work', task_name: 'Assist · 工作台 AI', stage: 'use' }, async () => {

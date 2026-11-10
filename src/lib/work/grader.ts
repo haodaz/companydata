@@ -11,6 +11,11 @@ import { buildAiPolicy, hardRedFlags, STANCE_LABEL, USE_LABEL, type AiPolicy } f
 
 const GRADE_MODEL = process.env.WORK_GRADE_MODEL || 'claude-opus-5-5';   // 优先 Claude，千问兜底（2026-10-28）
 const s = (v: any, n = 600) => (v == null ? '' : typeof v === 'string' ? v : JSON.stringify(v)).slice(0, n);
+/** 存模型输出用：英文题同样的意思字符多两三倍，截断上限放宽（11-10 实测英文段标题被截成半个词） */
+const sl = (task: any) => (v: any, n = 600) => s(v, task?.task?.lang === 'en' ? Math.round(n * 2.5) : n);
+
+/** 英文题（11-10）：报告里给人看的文字用英文写 */
+export const enTail = (task: { task?: { lang?: string } } | null | undefined) => (task?.task?.lang === 'en' ? '\n\n（这是英文题：JSON 里所有给人看的文字——评语、观察、证据说明、总结、建议、短标签——都用自然的英文写；引用的原句照抄原文。字段名、等级代码（L1–L4 等）和枚举值不变。）' : '');
 
 async function askJson(prompt: string, task_name: string, institution?: string): Promise<any> {
   let lastErr: any = null;
@@ -46,12 +51,12 @@ ${task.task.stages?.length ? `## 推进步骤与参考答案（候选人看不�
 ${deliverable.slice(0, 12000)}
 
 只返回 JSON：{ "items": [ { "id": "r1", "score": 0, "level": "L1", "evidence": "引用原句", "note": "一句为什么" } ], "summary": "三句话总评（观察到什么，不下定性）", "strengths": ["", ""], "gaps": ["", ""] }`;
-  const p = await askJson(prompt, 'Grade · 结果', opts.institution);
+  const p = await askJson(prompt + enTail(task), 'Grade · 结果', opts.institution);
   const got = new Map<string, any>((Array.isArray(p.items) ? p.items : []).map((x: any) => [String(x.id), x]));
   const items: ResultItem[] = task.rubric.map(r => {
     const x = got.get(r.id) || {};
     const lv = (['L1', 'L2', 'L3', 'L4'].includes(x.level) ? x.level : 'L1') as ResultItem['level'];
-    return { id: r.id, title: r.title, weight: r.weight, score: Math.max(0, Math.min(100, Number(x.score) || 0)), level: lv, evidence: s(x.evidence, 300), note: s(x.note, 200) };
+    return { id: r.id, title: r.title, weight: r.weight, score: Math.max(0, Math.min(100, Number(x.score) || 0)), level: lv, evidence: sl(task)(x.evidence, 300), note: sl(task)(x.note, 200) };
   });
   // 依赖：前置没过（< 50）的，后置封顶 60 / L2，并写明被谁卡住
   const byId = new Map(items.map(i => [i.id, i]));
@@ -60,7 +65,7 @@ ${deliverable.slice(0, 12000)}
     if (weak.length && me.score > 60) { me.score = 60; if (me.level === 'L3' || me.level === 'L4') me.level = 'L2'; me.blocked_by = weak.join('、'); }
   }
   const total = Math.round(items.reduce((a, i) => a + i.score * i.weight, 0) / (items.reduce((a, i) => a + i.weight, 0) || 1));
-  return { total, items, summary: s(p.summary, 500), strengths: (Array.isArray(p.strengths) ? p.strengths : []).slice(0, 4).map((x: any) => s(x, 120)), gaps: (Array.isArray(p.gaps) ? p.gaps : []).slice(0, 4).map((x: any) => s(x, 120)), who: opts.who };
+  return { total, items, summary: sl(task)(p.summary, 500), strengths: (Array.isArray(p.strengths) ? p.strengths : []).slice(0, 4).map((x: any) => sl(task)(x, 120)), gaps: (Array.isArray(p.gaps) ? p.gaps : []).slice(0, 4).map((x: any) => sl(task)(x, 120)), who: opts.who };
 }
 
 /** 六维人机协作技能（先定小的，别一上来 29 项；每维给 BARS 等级 + 一句观察） */
@@ -107,11 +112,11 @@ ${deliverable.slice(0, 800)}
 ${opts.audit?.length ? `## 分段审计笔记（边看边记的，总评要和它连续：可以修正，但别无视）\n${opts.audit.map(a => `第 ${a.idx + 1} 段 ${fmt(a.from)}–${fmt(a.to)} ${a.label}：${a.so_far}` + a.observations.map(o => `\n  - [${fmt(o.t)}] ${o.signal} ${o.skill}：${o.note}`).join('')).join('\n')}\n` : ''}
 六个维度：${SKILL_DIMS.join('、')}。BARS：L1 没有表现 / L2 零星 / L3 稳定 / L4 主动且有依据。
 只返回 JSON：{ "phases": [ { "from": 0, "to": 300, "label": "读材料" } ], "highlights": [ { "t": 120, "behavior": "", "evidence": "", "skill": "信息核验" } ], "risks": [ { "t": 0, "behavior": "", "evidence": "", "skill": "" } ], "skills": { "问题界定": { "level": "L2", "note": "" } }, "delegation": "两三句：哪些自己做的、哪些交给 AI 的、采纳时有没有核" }`;
-  const p = await askJson(prompt, 'Grade · 过程', opts.institution);
+  const p = await askJson(prompt + enTail(task), 'Grade · 过程', opts.institution);
   const skills: ProcessReport['skills'] = {};
-  for (const d of SKILL_DIMS) { const x = p.skills?.[d] || {}; skills[d] = { level: (['L1', 'L2', 'L3', 'L4'].includes(x.level) ? x.level : 'L1'), note: s(x.note, 160) }; }
-  const pick = (arr: any) => (Array.isArray(arr) ? arr : []).slice(0, 6).map((h: any) => ({ t: Math.max(0, Number(h.t) || 0), behavior: s(h.behavior, 160), evidence: s(h.evidence, 200), skill: s(h.skill, 20) }));
-  return { duration_s: duration, phases: (Array.isArray(p.phases) ? p.phases : []).slice(0, 8).map((x: any) => ({ from: Number(x.from) || 0, to: Number(x.to) || 0, label: s(x.label, 30) })), highlights: pick(p.highlights), risks: pick(p.risks), skills, delegation: s(p.delegation, 400), stats };
+  for (const d of SKILL_DIMS) { const x = p.skills?.[d] || {}; skills[d] = { level: (['L1', 'L2', 'L3', 'L4'].includes(x.level) ? x.level : 'L1'), note: sl(task)(x.note, 160) }; }
+  const pick = (arr: any) => (Array.isArray(arr) ? arr : []).slice(0, 6).map((h: any) => ({ t: Math.max(0, Number(h.t) || 0), behavior: sl(task)(h.behavior, 160), evidence: sl(task)(h.evidence, 200), skill: sl(task)(h.skill, 20) }));
+  return { duration_s: duration, phases: (Array.isArray(p.phases) ? p.phases : []).slice(0, 8).map((x: any) => ({ from: Number(x.from) || 0, to: Number(x.to) || 0, label: sl(task)(x.label, 30) })), highlights: pick(p.highlights), risks: pick(p.risks), skills, delegation: sl(task)(p.delegation, 400), stats };
 }
 
 /**
@@ -175,8 +180,8 @@ export async function analyzeAiUse(task: WorkTask, events: WorkEvent[], aiChat: 
   const standard = pol ? { stance: STANCE_LABEL[pol.stance.level], summary: pol.summary, weights: pol.weights } : null;
   // 在自己的软件里做、截图又没看出东西的：平台看不到他用没用 AI，不能说「没用」（11-10 潜历：全程用 WorkBuddy，报告写没用 AI）
   const offsite = ev.some(e => e.type === 'rec_start' || /^plugin_/.test(e.type));
-  if (!chat.length && !outside.length && offsite && !ev.some(e => e.type === 'screen')) return { score: null, level: null, verdict: '在自己的软件里做的，屏幕截图没读出来，平台看不到 AI 使用情况，这一项不评。', items: [], stats, standard, violations: [] };
-  if (!chat.length && !outside.length) return { score: null, level: null, verdict: offsite ? '平台内的 AI 助手没用；屏幕截图里也没看到用别的 AI。' : pol && pol.stance.level === 'ai_native' ? '这次没用 AI：这家企业期待深度用 AI，这一点要留意。' : '这次没用 AI：全程自己做的。', items: [], stats, standard, violations: [] };
+  if (!chat.length && !outside.length && offsite && !ev.some(e => e.type === 'screen')) return { score: null, level: null, verdict: task.task?.lang === 'en' ? 'Worked in their own software and the screenshots could not be read, so AI use cannot be assessed.' : '在自己的软件里做的，屏幕截图没读出来，平台看不到 AI 使用情况，这一项不评。', items: [], stats, standard, violations: [] };
+  if (!chat.length && !outside.length) return { score: null, level: null, verdict: task.task?.lang === 'en' ? (offsite ? 'Did not use the on-page AI assistant, and no other AI tool appears in the screenshots.' : 'Did not use AI: did everything themselves.') : offsite ? '平台内的 AI 助手没用；屏幕截图里也没看到用别的 AI。' : pol && pol.stance.level === 'ai_native' ? '这次没用 AI：这家企业期待深度用 AI，这一点要留意。' : '这次没用 AI：全程自己做的。', items: [], stats, standard, violations: [] };
   const flags = hardRedFlags(chat);
   const nextStep = nextStepOf(events);
   const lines = ev.filter(e => ['open_material', 'ai_ask', 'adopt', 'paste', 'edit', 'submit', 'screen'].includes(e.type) || /^plugin_/.test(e.type)).slice(0, 300)
@@ -209,20 +214,20 @@ ${AI_USE_ITEMS.map(i => `- ${i.key} ${i.title}：${i.desc}`).join('\n')}
 打分口径：90+ 主动、有依据、能纠 AI 的错；75 稳定会用；60 会用但照单全收较多；40 以下 基本是把题丢给 AI 或问得很空。原样照搬比例高、AI 编的数字被直接写进交付物，核验和整合要明显扣分。
 ${pol ? '对照标准：在「不能用 / 慎用」的环节把判断整个交给 AI、碰了治理红线，分工和核验要扣；在「鼓励用」的环节完全不用，提问和整合也不该给高分。red_line_hits 只写确实碰了上面红线的时刻（没有就空数组）。\n' : ''}措辞用「观察到…」。verdict 一句话总评（30–60 字），说清他是怎么用 AI 的${pol ? '，以及合不合这家企业的标准' : ''}。只返回 JSON：
 { "items": [ { "key": "ask", "score": 0, "note": "", "evidence": [ { "t": 0, "quote": "" } ] } ], "red_line_hits": [ { "t": 0, "what": "碰了哪条红线", "quote": "" } ], "verdict": "" }`;
-  const p = await askJson(prompt, 'Grade · AI 使用', opts.institution);
+  const p = await askJson(prompt + enTail(task), 'Grade · AI 使用', opts.institution);
   const items = AI_USE_ITEMS.map(i => {
     const x = (Array.isArray(p.items) ? p.items : []).find((y: any) => y?.key === i.key) || {};
-    return { key: i.key, title: i.title, score: Math.max(0, Math.min(100, Math.round(Number(x.score) || 0))), note: s(x.note, 200), evidence: (Array.isArray(x.evidence) ? x.evidence : []).slice(0, 2).map((e: any) => ({ t: Math.max(0, Number(e?.t) || 0), quote: s(e?.quote, 160) })) };
+    return { key: i.key, title: i.title, score: Math.max(0, Math.min(100, Math.round(Number(x.score) || 0))), note: sl(task)(x.note, 200), evidence: (Array.isArray(x.evidence) ? x.evidence : []).slice(0, 2).map((e: any) => ({ t: Math.max(0, Number(e?.t) || 0), quote: sl(task)(e?.quote, 160) })) };
   });
   // 按标准的权重加权（没有标准就平均）；碰红线每条扣 8，最多 24
   const w: Record<string, number> = pol?.weights || { ask: 20, verify: 20, select: 20, divide: 20, integrate: 20 };
   const raw = Math.round(items.reduce((n, i) => n + i.score * (w[i.key] ?? 20), 0) / (items.reduce((n, i) => n + (w[i.key] ?? 20), 0) || 1));
   const violations: NonNullable<AiUseReport['violations']> = [
     ...flags.map(f => ({ t: f.t, what: `问 AI 时贴了${f.what}`, quote: f.quote, by: 'program' as const })),
-    ...(pol?.red_lines.length && Array.isArray(p.red_line_hits) ? p.red_line_hits : []).slice(0, 4).map((h: any) => ({ t: Math.max(0, Number(h?.t) || 0), what: s(h?.what, 80), quote: s(h?.quote, 120), by: 'review' as const })).filter((h: any) => h.what),
+    ...(pol?.red_lines.length && Array.isArray(p.red_line_hits) ? p.red_line_hits : []).slice(0, 4).map((h: any) => ({ t: Math.max(0, Number(h?.t) || 0), what: sl(task)(h?.what, 80), quote: sl(task)(h?.quote, 120), by: 'review' as const })).filter((h: any) => h.what),
   ].slice(0, 6);
   const score = Math.max(0, raw - Math.min(24, violations.length * 8));
-  return { score, raw_score: raw, level: score >= 90 ? 'L4' : score >= 75 ? 'L3' : score >= 60 ? 'L2' : 'L1', verdict: s(p.verdict, 180), items, stats, standard, violations };
+  return { score, raw_score: raw, level: score >= 90 ? 'L4' : score >= 75 ? 'L3' : score >= 60 ? 'L2' : 'L1', verdict: sl(task)(p.verdict, 180), items, stats, standard, violations };
 }
 
 /** 交卷时选填的「如果再给一天，先改哪里」：存成事件 next_step（2026-11-02，借潜历「迭代与判断」的一问） */

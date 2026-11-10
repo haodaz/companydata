@@ -44,7 +44,7 @@ export const clampMinutes = (v: any, d: number) => Math.min(240, Math.max(20, Ma
 export function withMinutes(task: any, v: any) {
   const old = Number(task?.time_minutes) || 60, mins = clampMinutes(v, old);
   const label = mins % 60 === 0 ? `${mins / 60} 小时` : `${mins} 分钟`;
-  const swap = (x: string) => { let y = String(x || '').replace(new RegExp(`${old}\\s*分钟`, 'g'), `${mins} 分钟`); if (old % 60 === 0) y = y.replace(new RegExp(`${old / 60}\\s*个?小时`, 'g'), label); return y; };
+  const swap = (x: string) => { let y = String(x || '').replace(new RegExp(`${old}\\s*分钟`, 'g'), `${mins} 分钟`).replace(new RegExp(`\\b${old}(\\s*|-)(minutes?|mins?)\\b`, 'gi'), (_m, sep, u) => `${mins}${sep}${u}`); if (old % 60 === 0) y = y.replace(new RegExp(`${old / 60}\\s*个?小时`, 'g'), label); return y; };
   return { old, mins, task: { ...task, time_minutes: mins, brief: swap(task?.brief), rules: (task?.rules || []).map(swap) } };
 }
 
@@ -264,7 +264,7 @@ export function attachmentsToMaterials(atts: Attachment[], startAt: number): Wor
  * 原题直发（2026-10-24，王刚：一道题本来很干净，什么都不改直接发出去）：不改写题面，只整理成平台的结构（标题 / 交付物 / 评分点）。
  * 评分点只从题目自己的要求里推，不加题里没有的。
  */
-export async function verbatimTask(text: string, opts: { company?: string; role?: string; env?: WorkEnvType; model?: string; attachments?: Attachment[] } = {}): Promise<{ task: WorkTask; model: string }> {
+export async function verbatimTask(text: string, opts: { lang?: 'zh' | 'en'; company?: string; role?: string; env?: WorkEnvType; model?: string; attachments?: Attachment[] } = {}): Promise<{ task: WorkTask; model: string }> {
   const model = opts.model || WORK_MODEL;
   const prompt = `出题人交来一道现成的题，要**原样**发给候选人做，不许改写、不许增删要求。你只做整理：
 - title：题里有标题就用，没有就用 8–16 字概括。
@@ -275,15 +275,15 @@ export async function verbatimTask(text: string, opts: { company?: string; role?
 - rubric：从题目自己的要求里推出评分点，5–8 条，basis 写「题目要求：…」并引原句；levels 四档可观察；weight 加起来 100。不加题里没有的要求。
 - env：按题的作答媒介选 doc / code / sheet / design。
 ${opts.attachments?.length ? `\n题目附件（会原样挂给候选人）：${opts.attachments.map(a => a.name).join('、')}` : ''}
-## 原题
+${opts.lang === 'en' ? '- 这是英文题：title、deliverables 的 title 和 format、rubric 的 title / desc / levels 用英文写（候选人在报告里看得到）；rubric 的 basis 用中文。\n' : ''}## 原题
 ${text.slice(0, 12000)}
 只返回 JSON：{ "env": { "type": "doc" }, "title": "", "deliverables": [ { "id": "d1", "title": "", "format": "", "module": "doc" } ], "time_minutes": 60, "materials": [ { "id": "m1", "title": "", "kind": "doc", "content": "" } ], "rubric": [ { "id": "r1", "title": "", "desc": "", "weight": 20, "depends_on": [], "basis": "", "levels": { "L1": "", "L2": "", "L3": "", "L4": "" } } ] }`;
   const { parsed: p, model: used } = await askJson(prompt, model, 'Generate · 原题直发', opts.company);
   const envType: WorkEnvType = opts.env || (['doc', 'code', 'sheet', 'design'].includes(p.env?.type) ? p.env.type : 'doc');
   const task: WorkTask = {
     env: { type: envType },
-    problem: { statement: `出题人给的原题${opts.company ? `（${opts.company}）` : ''}`, why_now: '', evidence: [] },
-    task: { title: s(p.title, 40) || '真活', role: opts.role || '候选人', brief: text.slice(0, 6000), deliverables: (Array.isArray(p.deliverables) ? p.deliverables : []).slice(0, 4).map((d: any, i: number) => ({ id: d.id || `d${i + 1}`, title: s(d.title, 60), format: s(d.format, 60), module: resolveModule(s(d.format, 60), d.module) })), time_minutes: clampMinutes(p.time_minutes, 60), rules: ['交付：题目原样，不改一字', 'AI 使用：可以随便用 AI，不算作弊；评的是你怎么用', '数据与来源：材料里没有的数据要标注假设'] },
+    problem: { statement: opts.lang === 'en' ? `Task provided by ${opts.company || 'the hiring company'}` : `出题人给的原题${opts.company ? `（${opts.company}）` : ''}`, why_now: '', evidence: [] },
+    task: { title: s(p.title, 40) || '真活', role: opts.role || '候选人', brief: text.slice(0, 6000), deliverables: (Array.isArray(p.deliverables) ? p.deliverables : []).slice(0, 4).map((d: any, i: number) => ({ id: d.id || `d${i + 1}`, title: s(d.title, 60), format: s(d.format, 60), module: resolveModule(s(d.format, 60), d.module) })), time_minutes: clampMinutes(p.time_minutes, 60), rules: opts.lang === 'en' ? ['Deliverables: The task is shown exactly as written.', 'AI use: You may use AI freely — it is not cheating; we assess how you use it.', 'Data & sources: Flag any figure that is not in the materials as an assumption.'] : ['交付：题目原样，不改一字', 'AI 使用：可以随便用 AI，不算作弊；评的是你怎么用', '数据与来源：材料里没有的数据要标注假设'], ...(opts.lang === 'en' ? { lang: 'en' as const } : {}) },
     // 模型拆出的材料：内容空的、或和上传附件重名的都丢掉（附件另挂）
     materials: (Array.isArray(p.materials) ? p.materials : []).filter((m: any) => String(m.content || '').trim().length >= 20 && !(opts.attachments || []).some(a => a.name && String(m.title || '').includes(a.name.replace(/\.[^.]+$/, '')))).slice(0, 6).map((m: any, i: number) => ({ id: `m${i + 1}`, title: s(m.title, 60), kind: (['doc', 'table', 'note', 'email', 'data'].includes(m.kind) ? m.kind : 'doc'), content: s(m.content, 8000), source: 'generated' as const, basis: '原题附带' })),
     rubric: (Array.isArray(p.rubric) ? p.rubric : []).slice(0, 10).map((r: any, i: number) => ({ id: r.id || `r${i + 1}`, title: s(r.title, 60), desc: s(r.desc, 300), weight: Math.max(1, Number(r.weight) || 10), depends_on: Array.isArray(r.depends_on) ? r.depends_on.map(String) : [], basis: s(r.basis, 200), levels: { L1: s(r.levels?.L1, 160), L2: s(r.levels?.L2, 160), L3: s(r.levels?.L3, 160), L4: s(r.levels?.L4, 160) } })),
@@ -298,19 +298,24 @@ export type TaskStyle = { deep?: boolean; steps?: boolean };
 export interface WorkTask {
   env: WorkEnv;
   problem: { statement: string; why_now: string; evidence: { text: string; source: string }[] };
-  task: { /** 出题风格（11-10） */ style?: TaskStyle; title: string; role: string; brief: string; deliverables: { id: string; title: string; format: string; module?: 'doc' | 'sheet' | 'code' | 'design' | 'canvas' | 'board' }[]; time_minutes: number; rules: string[]; stages?: SampleStage[] };   // stages：案例推进式（照深度样本出）：一步步给信息、每步有问、有参考答案和要算的数（2026-10-23）
+  task: { /** 题目语言（11-10），不写 = 中文 */ lang?: 'zh' | 'en'; /** 出题风格（11-10） */ style?: TaskStyle; title: string; role: string; brief: string; deliverables: { id: string; title: string; format: string; module?: 'doc' | 'sheet' | 'code' | 'design' | 'canvas' | 'board' }[]; time_minutes: number; rules: string[]; stages?: SampleStage[] };   // stages：案例推进式（照深度样本出）：一步步给信息、每步有问、有参考答案和要算的数（2026-10-23）
   materials: { id: string; title: string; kind: 'doc' | 'table' | 'note' | 'email' | 'data' | 'file'; content: string; source: 'db' | 'generated' | 'mixed' | 'upload'; basis?: string; url?: string; mime?: string; name?: string }[];   // file = 出题人上传的附件（表格 / 图纸 / 截图 / PDF），候选人能看原件；content 是抽出的文字或说明
   rubric: { id: string; title: string; desc: string; weight: number; depends_on: string[]; basis: string; levels: { L1: string; L2: string; L3: string; L4: string } }[];
 }
+
+/** 英文题必含的两条规则（11-10） */
+const EN_RULE = 'AI use: You may use AI freely — it is not cheating; we assess how you use it.';
+const EN_DATA = 'Data & sources: Flag any figure that is not in the materials as an assumption.';
 
 /** 第二步：问题 → 任务 → 材料包 → rubric（一次生成，JSON） */
 /** 研究真活（2026-10-20）：科研院所招博士后 / 研究员 / 教授，考的是研究方向上的操作和研究技能 */
 export const RESEARCH_TASK_KINDS = ['实验设计（给研究问题，设计方案、对照、变量与样本量）', '数据分析（给一份真实格式的实验 / 观测数据，找异常、选统计方法、下结论并说清局限）', '文献与选题（给一个方向，梳理进展、指出研究空白、提可做的课题）', '审稿（给一篇稿件或摘要，找方法和结论上的问题，写审稿意见）', '写基金本子（研究目标、技术路线、可行性与风险）', '复现（用代码复现论文里的一个结果并解释差异）'];
 
-export async function generateTask(ctx: WorkContext, role: string, opts: { /** 出题风格（11-10 潜历：拆得太细像教学）：deep 升维解读、steps 给候选人拆推进步骤，默认都关 */ style?: TaskStyle; model?: string; /** 出题人点名的台子（一样交付物一个，11-05） */ modules?: string[]; focus?: string; env?: WorkEnvType; research?: boolean; sample?: SampleSkeleton | null; sampleMode?: 'reskin' | 'inspire'; attachments?: Attachment[] ; bankRefs?: string; base?: { text: string; mode: 'base' | 'ref'; title: string; origin?: string[] } } = {}): Promise<{ task: WorkTask; model: string }> {
+export async function generateTask(ctx: WorkContext, role: string, opts: { /** 题目语言（11-10）：en = 候选人看到的内容用英文 */ lang?: 'zh' | 'en'; /** 出题风格（11-10 潜历：拆得太细像教学）：deep 升维解读、steps 给候选人拆推进步骤，默认都关 */ style?: TaskStyle; model?: string; /** 出题人点名的台子（一样交付物一个，11-05） */ modules?: string[]; focus?: string; env?: WorkEnvType; research?: boolean; sample?: SampleSkeleton | null; sampleMode?: 'reskin' | 'inspire'; attachments?: Attachment[] ; bankRefs?: string; base?: { text: string; mode: 'base' | 'ref'; title: string; origin?: string[] } } = {}): Promise<{ task: WorkTask; model: string }> {
   const model = opts.model || WORK_MODEL;
   const name = ctx.company?.name || (opts.research ? '这个科研团队' : '这家企业');
-  const deep = !!opts.style?.deep, staged = !!opts.sample && opts.style?.steps !== false;
+  const deep = !!opts.style?.deep, staged = !!opts.sample && opts.style?.steps !== false, en = opts.lang === 'en';
+  const n = (x: number) => (en ? Math.round(x * 2.5) : x);   // 英文同样的意思字符多两三倍，截断上限放宽（11-10 英文题标题被截成半个词）
   const need = isNeedText(role);
   const needNote = need ? `
 ## 出题人要找的人（自然语言，原话）
@@ -358,7 +363,9 @@ env 字段：{ "type": "doc|code|sheet|design", "language": "", "starter": "", "
 - task：title（8–16 字）；brief（给做题人看的任务书，300–500 字，口吻像业务负责人交代活；**用 Markdown 分小节写**，依次是「#### 背景」「#### 要你做什么」「#### 交付」（交什么、交给谁）「#### 时间与方式」，每节 1–4 句或短列表，不要写成一大段；「交给谁」写角色（如「交给投委会」），**不要给真实人物编邮箱、电话、微信**）；deliverables 2–3 个（id d1…，title，format 如「一页纸方案 / 估值表 / 筛选脚本 / 流程图」，**module** 从 doc / sheet / code / design / canvas / board 里选：文档类 doc，表格 / 模型 / 测算表 sheet，脚本 / SQL / 函数 code，工程参数表 + 尺寸草图 design（只给结构 / 机械 / 电气这类要定尺寸的工程设计），流程图 / 泳道图 / 思维导图 / 架构图 canvas，线框图 / 界面草图 / 海报 / IP 形象 / 视觉方案这类自由画的设计 board（产品经理、UI / 视觉 / 品牌设计师用这个，不要给他们 design）——**一道题的交付物可以混用模组**，这个岗位真实工作里会交什么就交什么，别为了省事全写成文档）；time_minutes 45–90（这是候选人的限时：开始后不暂停、到点自动交卷，按交付物的量定，让认真做的人做得完；出任务的人说了时长就照他说的，最多 240）；rules 3–6 条，**每条以分类开头**：「AI 使用：」「数据与来源：」「工作过程：」「交付：」之一（必须含「AI 使用：可以随便用 AI，不算作弊；评的是你怎么用」和「数据与来源：材料里没有的数据要标注假设」）；同一类可以有多条，一条只说一件事。
 - materials 3–5 份，做这件事真的会拿到的东西：kind ∈ doc/table/note/email/data；content 用 Markdown，每份 300–900 字，表格用 Markdown 表；source：db=全部来自材料、generated=为任务合理补写（必须贴近企业真实情况并在正文标「示例数据」）、mixed；basis 写它依据材料的哪一段。至少一份是「有坑」的（信息不全、口径不一致、过期），这是真活。
 ${staged ? `- stages（必填，${opts.sample?.stages.length} 步，和样本一一对应）：id q1…；type 同样本；question（这一步问候选人什么，一句话）；reveal（这一步才给的信息：背景、数据表、图表，Markdown，图表用 Markdown 表把数据给全，300–900 字；数据要和 materials 里的事实一致，材料没有的标「示例数据」）；expected（参考答案 / 关键结论，评卷用，候选人看不到，含关键数字）；calc（这一步要算的数：label、expr 只含数字和 + - * / ( )、value；没有测算填 []）。brief 里要告诉候选人「这道题分 ${opts.sample?.stages.length} 步推进，每一步看完信息再答，答完再看下一步」，deliverables 按步骤对应。\n` : ''}- rubric 5–8 条：id r1…；title；desc（怎么算做到）；weight 加起来 100；${staged ? '每一步至少对应一条（desc 里写明对应 q 几）；' : ''}depends_on 填前置条目 id（没有填 []）；basis 必须指向材料来源（「行业标准 xxx 第 n 点」「岗位职责：…」「典型任务：…」），实在没有写「出题人判断，待业务负责人确认」；levels L1–L4 各一句可观察的行为描述（BARS）。
-只返回 JSON：
+${en ? `## 语言：这是英文题
+给候选人看的内容**全部用英文**写（自然、地道的职场英文，不要中式英文）：problem.statement（候选人在标题下看得到）、task.title（6–12 个词）、task.role、task.brief（小节标题依次用「#### Background」「#### What you'll do」「#### Deliverables」「#### Time & format」）、deliverables 的 title 和 format、rules（分类前缀用「AI use:」「Data & sources:」「Process:」「Deliverables:」，必须含「${EN_RULE}」和「${EN_DATA}」）、materials 的 title 和 content${staged ? '、stages 的 question 和 reveal' : ''}、rubric 的 title / desc / levels（候选人在报告里看得到）。只给出题人看的用中文：problem.why_now、evidence、materials 和 rubric 的 basis${staged ? '、stages 的 expected 和 calc 的 label' : ''}。企业名、产品名保留原文。
+` : ''}只返回 JSON：
 { "env": { "type": "doc" },
   "problem": { "statement": "", "why_now": "", "evidence": [ { "text": "", "source": "" } ] },
   "task": { "title": "", "role": "${role}", "brief": "", "deliverables": [ { "id": "d1", "title": "", "format": "", "module": "doc" } ], "time_minutes": 60, "rules": [""] },
@@ -374,8 +381,8 @@ ${staged ? `- stages（必填，${opts.sample?.stages.length} 步，和样本一
   const task: WorkTask = {
     env,
     problem: { statement: s(p.problem?.statement, 400), why_now: s(p.problem?.why_now, 400), evidence: (Array.isArray(p.problem?.evidence) ? p.problem.evidence : []).slice(0, 6).map((e: any) => ({ text: s(e.text, 300), source: s(e.source, 80) })) },
-    task: { title: s(p.task?.title, 40) || `${name} · 真活`, role: need ? (s(p.task?.role, 40) || s(role, 40)) : role, brief: s(p.task?.brief, 2000), deliverables: (Array.isArray(p.task?.deliverables) ? p.task.deliverables : []).slice(0, 4).map((d: any, i: number) => ({ id: d.id || `d${i + 1}`, title: s(d.title, 60), format: s(d.format, 60), module: resolveModule(s(d.format, 60), d.module) })), time_minutes: clampMinutes(p.task?.time_minutes, 60), rules: (Array.isArray(p.task?.rules) ? p.task.rules : []).slice(0, 6).map((r: any) => s(r, 120)) },
-    materials: (Array.isArray(p.materials) ? p.materials : []).slice(0, 6).map((m: any, i: number) => ({ id: m.id || `m${i + 1}`, title: s(m.title, 60), kind: (['doc', 'table', 'note', 'email', 'data'].includes(m.kind) ? m.kind : 'doc'), content: s(m.content, 6000), source: (['db', 'generated', 'mixed'].includes(m.source) ? m.source : 'generated'), basis: s(m.basis, 200) })),
+    task: { title: s(p.task?.title, n(40)) || `${name} · 真活`, role: need ? (s(p.task?.role, n(40)) || s(role, 40)) : role, brief: s(p.task?.brief, n(2000)), deliverables: (Array.isArray(p.task?.deliverables) ? p.task.deliverables : []).slice(0, 4).map((d: any, i: number) => ({ id: d.id || `d${i + 1}`, title: s(d.title, n(60)), format: s(d.format, n(60)), module: resolveModule(s(d.format, n(60)), d.module) })), time_minutes: clampMinutes(p.task?.time_minutes, 60), rules: (Array.isArray(p.task?.rules) ? p.task.rules : []).slice(0, 6).map((r: any) => s(r, n(120))) },
+    materials: (Array.isArray(p.materials) ? p.materials : []).slice(0, 6).map((m: any, i: number) => ({ id: m.id || `m${i + 1}`, title: s(m.title, n(60)), kind: (['doc', 'table', 'note', 'email', 'data'].includes(m.kind) ? m.kind : 'doc'), content: s(m.content, n(6000)), source: (['db', 'generated', 'mixed'].includes(m.source) ? m.source : 'generated'), basis: s(m.basis, 200) })),
     rubric: (Array.isArray(p.rubric) ? p.rubric : []).slice(0, 10).map((r: any, i: number) => ({ id: r.id || `r${i + 1}`, title: s(r.title, 60), desc: s(r.desc, 300), weight: Math.max(1, Number(r.weight) || 10), depends_on: Array.isArray(r.depends_on) ? r.depends_on.map(String) : [], basis: s(r.basis, 200), levels: { L1: s(r.levels?.L1, 160), L2: s(r.levels?.L2, 160), L3: s(r.levels?.L3, 160), L4: s(r.levels?.L4, 160) } })),
   };
   // 出题人点名了台子和数量：程序强制（模型常多出一样、或把白板换成画布）
@@ -391,8 +398,9 @@ ${staged ? `- stages（必填，${opts.sample?.stages.length} 步，和样本一
   for (const r of task.rubric) { r.weight = Math.round(r.weight / sum * 100); r.depends_on = r.depends_on.filter(d => ids.has(d) && d !== r.id); }
   // 出题的内部约束（企业负面舆情不进题等）是给出题模型看的，不许印进候选人看的规则——那句话本身就点出了负面话题（11-05 国内版验收）
   task.task.rules = task.task.rules.filter(r => !/负面|舆情/.test(r) && !(/(严禁|不得|不要|禁止|切勿).{0,12}(提及|涉及|出现|谈及)/.test(r) && /监管|减持|丑闻|传闻|亏损|离职|处罚|立案/.test(r)));
-  if (!task.task.rules.some(r => /AI/.test(r))) task.task.rules.unshift('AI 使用：可以随便用 AI，不算作弊；评的是你怎么用、什么是你自己判断的');
+  if (!task.task.rules.some(r => /AI/.test(r))) task.task.rules.unshift(en ? 'AI use: You may use AI freely — it is not cheating; we assess how you use it.' : 'AI 使用：可以随便用 AI，不算作弊；评的是你怎么用、什么是你自己判断的');
   task.task.style = { deep, steps: staged };
+  if (en) task.task.lang = 'en';
   // 案例推进式：步骤归一，测算在代码里真算一遍（模型给的「答案」和「数据」对不上是常事）
   if (staged) {
     const { stages, fixed, failed } = verifyCalcs(normalizeStages(p.stages));
