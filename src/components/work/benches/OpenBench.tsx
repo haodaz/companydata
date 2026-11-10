@@ -7,6 +7,7 @@
  * 选「整个屏幕」，本地软件也记得到。过程由截图看图得来（交卷时均匀挑 30 张给会看图的模型）。
  */
 import React, { useEffect, useRef, useState } from 'react';
+import { removeWorkFile, uploadWorkFile } from '@/lib/work/upload-client';
 
 type Material = { id: string; title: string; kind: string; content: string; url?: string; mime?: string; name?: string };
 type Up = { name: string; size: number; url: string };
@@ -74,13 +75,21 @@ export function OpenBench({ token, sid, materials, deliverables, summary, onSumm
     if (rec === 'on' || started.current) onEvent('rec_stop', { duration: Math.round((Date.now() - started.current) / 1000) });
     setRec('idle');
   };
-  const upload = async (files: FileList | null) => {
-    if (!files?.length) return; setErr('');
-    for (const f of Array.from(files)) {
-      const fd = new FormData(); fd.append('file', f); fd.append('kind', 'file'); fd.append('t', String(Math.round((Date.now() - t0) / 1000)));
-      try { const j = await (await fetch(`/api/work/${token}/sessions/${sid}/upload`, { method: 'POST', body: fd })).json(); if (!j.ok) throw new Error(j.error); onUploads(u => [...u, { name: j.name, size: j.size, url: j.url }]); onEvent('file', { note: j.name }); }
-      catch (e: any) { setErr(`${f.name} 上传失败：${e.message}`); }
+  // 直传存储（大文件不再卡在 4.5MB）；一个一个传，哪个失败就说哪个（11-10）
+  const [upBusy, setUpBusy] = useState('');
+  const upload = async (files: File[]) => {
+    if (!files.length) return; setErr('');
+    for (const f of files) {
+      setUpBusy(`${f.name} 上传中…`);
+      try { const j = await uploadWorkFile(token, sid, f, { t: Math.round((Date.now() - t0) / 1000) }); onUploads(u => [...u, j]); onEvent('file', { note: j.name }); }
+      catch (e: any) { setErr(`${f.name} 没传上去：${e.message}`); }
     }
+    setUpBusy('');
+  };
+  const remove = async (u: Up) => {
+    if (!confirm(`删掉「${u.name}」？交卷时就不算这个文件了。`)) return;
+    try { await removeWorkFile(token, sid, u.url, Math.round((Date.now() - t0) / 1000)); onUploads(x => x.filter(y => y.url !== u.url)); onEvent('file_remove', { note: u.name }); }
+    catch (e: any) { setErr(`没删掉：${e.message}`); }
   };
   const fmt = (s: number) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
   return (
@@ -90,9 +99,9 @@ export function OpenBench({ token, sid, materials, deliverables, summary, onSumm
         <div style={{ width: 12, height: 12, borderRadius: '50%', background: rec === 'on' ? '#e5484d' : '#c9ccd6', boxShadow: rec === 'on' ? '0 0 0 6px rgba(229,72,77,.18)' : 'none' }} />
         <div style={{ flex: 1, minWidth: 240 }}>
           <div style={{ fontWeight: 700 }}>{rec === 'on' ? `记录中 ${fmt(secs)} · 已存 ${shots} 张${pending ? `（${pending} 张在传）` : ''}` : shots ? `已存 ${shots} 张截图` : '第一步：开始记录屏幕'}</div>
-          <div style={{ fontSize: 12.5, color: '#666' }}>{rec === 'on' ? '去你的软件里做题，这个页面别关（可以切走）；做完回来交卷，交卷时自动停止。' : shots ? '可以接着记录，截图会续在后面。' : `选「整个屏幕」：本地软件（PS、Excel、本地 AI）也记得到。每 ${EVERY} 秒存一张截图、边做边传，几个小时也不怕传不上去；不录视频、不录声音，只用于评价过程（你用了什么工具、怎么核验、怎么取舍）。`}</div>
+          <div style={{ fontSize: 12.5, color: '#666' }}>{rec === 'on' ? '去你的软件里做题，这个页面别关（可以切走）；做完回来交卷，交卷时自动停止。要输密码、看私人消息时先点「暂停记录」，弄完回来点「继续记录」。' : shots ? '可以接着记录，截图会续在后面。' : `选「整个屏幕」：本地软件（PS、Excel、本地 AI）也记得到。每 ${EVERY} 秒存一张截图、边做边传，几个小时也不怕传不上去；不录视频、不录声音，只用于评价过程（你用了什么工具、怎么核验、怎么取舍）。`}</div>
         </div>
-        {rec === 'on' ? <button onClick={stop} style={{ ...btn, background: '#e5484d' }}>■ 暂停记录</button> : <button onClick={start} style={btn}>{shots ? '继续记录' : '● 开始记录'}</button>}
+        {rec === 'on' ? <button onClick={stop} title="输密码、看私人消息前先暂停" style={{ ...btn, background: '#e5484d' }}>⏸ 暂停记录</button> : <button onClick={start} style={btn}>{shots ? '继续记录' : '● 开始记录'}</button>}
       </div>
       {/* 材料 */}
       <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '14px 18px' }}>
@@ -104,8 +113,10 @@ export function OpenBench({ token, sid, materials, deliverables, summary, onSumm
       <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '14px 18px' }}>
         <div style={{ fontWeight: 700, marginBottom: 6 }}>第三步：交付</div>
         <div style={{ fontSize: 13, color: '#666', marginBottom: 8 }}>要交：{deliverables.map(d => `${d.title}（${d.format}）`).join('；')}</div>
-        <label style={{ ...chip, display: 'inline-block', cursor: 'pointer' }}>⬆ 上传交付文件（表格 / 图纸 / PDF / 截图 / 压缩包）<input type="file" multiple style={{ display: 'none' }} onChange={e => upload(e.target.files)} /></label>
-        {!!uploads.length && <ul style={{ margin: '8px 0 0', paddingLeft: 18, fontSize: 13 }}>{uploads.map(u => <li key={u.url}><a href={u.url} target="_blank" rel="noreferrer">{u.name}</a> <span style={{ color: '#999' }}>{Math.round(u.size / 1024)} KB</span></li>)}</ul>}
+        <label style={{ ...chip, display: 'inline-block', cursor: 'pointer' }}>⬆ 上传交付文件（表格 / 图纸 / PDF / 截图 / 压缩包）<input type="file" multiple style={{ display: 'none' }} disabled={!!upBusy} onChange={e => { const fs = Array.from(e.target.files || []); e.target.value = ''; upload(fs); }} /></label>
+        {upBusy && <span style={{ marginLeft: 10, fontSize: 13, color: '#6055f5' }}>{upBusy}</span>}
+        <div style={{ fontSize: 12, color: '#888', marginTop: 6 }}>可以一次选多个，单个 200MB 以内；传错了点「删除」。在线文档 / 智能体里的内容，平台不一定打得开链接（要登录或动态加载的读不到正文），请导出成 PDF / Word / 图片一起传上来。</div>
+        {!!uploads.length && <ul style={{ margin: '8px 0 0', paddingLeft: 18, fontSize: 13 }}>{uploads.map(u => <li key={u.url}><a href={u.url} target="_blank" rel="noreferrer">{u.name}</a> <span style={{ color: '#999' }}>{Math.round(u.size / 1024)} KB</span> <a onClick={() => remove(u)} style={{ color: '#c0392b', cursor: 'pointer', marginLeft: 6 }}>删除</a></li>)}</ul>}
         <div style={{ fontSize: 12.5, color: '#888', marginTop: 10, marginBottom: 4 }}>交付说明（必填：结论、关键数字、口径和假设、哪些没做完——文件里机器读不了的，这里要写清楚）</div>
         <textarea value={summary} onChange={e => onSummary(e.target.value)} placeholder="例：供需平衡表见 balance.xlsx；口径统一为 GWh，pack 按 75kWh/包折算（假设）；德布勒森 11–12 月缺口 0.4 GWh，建议国内基地海运补……" style={{ width: '100%', minHeight: 160, border: '1px solid #d9dbe6', borderRadius: 10, padding: '10px 12px', fontSize: 14, lineHeight: 1.7, resize: 'vertical', outline: 'none', fontFamily: 'inherit' }} />
       </div>

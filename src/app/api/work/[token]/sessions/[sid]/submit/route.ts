@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { buildReport, ensureAiPolicy } from '@/lib/work/grader';
 import { planSegments } from '@/lib/work/audit';
-import { describeFrames, framesFromRecording, framesFromShots, listShots, readTextFiles } from '@/lib/work/recording';
+import { describeFrames, framesFromRecording, framesFromShots, listShots, readLinks, readTextFiles } from '@/lib/work/recording';
 import { describeImage } from '@/lib/work/vision';
 import { withCost } from '@/lib/token-logger';
 import { timing } from '@/lib/work/deadline';
@@ -37,13 +37,16 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   // 开放模式：交付 = 交付说明 + 能读的文件；过程 = 录屏抽帧看图
   let recording: { url: string; duration: number; summary: string; frames: number; shots?: number; gallery?: { t: number; url: string }[] } | null = null;
   const thin = <T,>(a: T[], n: number) => (a.length <= n ? a : Array.from({ length: n }, (_, i) => a[Math.round(i * (a.length - 1) / (n - 1))]));
+  // 候选人删掉的附件（14：传错了要能删）不算交付
+  const removed = new Set(events.filter(e => e.type === 'file_remove').map(e => e.url));
   if (open) {
-    const files = events.filter(e => e.type === 'file' && e.url).map(e => ({ name: e.name, url: e.url, size: e.size || 0 }));
+    const files = events.filter(e => e.type === 'file' && e.url && !removed.has(e.url)).map(e => ({ name: e.name, url: e.url, size: e.size || 0 }));
     const rec = [...events].reverse().find(e => e.type === 'recording' && e.url);
     const shots = await listShots(sid);   // 11-05 起：整屏定时截图（老作答是整段录屏）
     if (!rec && !shots.length && !auto) return NextResponse.json({ ok: false, error: '还没有屏幕记录：开放模式要先点「开始记录」再交卷' }, { status: 400 });
     if (deliverable.trim().length < 30 && !auto) return NextResponse.json({ ok: false, error: '交付说明太短了：把结论、关键数字、口径和假设写清楚' }, { status: 400 });
-    deliverable = `## 交付说明\n${deliverable}\n\n## 交付文件\n${files.length ? await readTextFiles(files) : '（没有上传文件）'}`;
+    const links = await readLinks(deliverable);
+    deliverable = `## 交付说明\n${deliverable}\n\n## 交付文件\n${files.length ? await readTextFiles(files) : '（没有上传文件）'}${links ? `\n\n## 交付说明里的链接\n${links}` : ''}`;
     if (rec || shots.length) try {
       const frames = await withCost({ tool_name: 'work', task_name: 'Grade · 录屏看图', stage: 'use' }, async () => { const fr = shots.length ? await framesFromShots(shots) : await framesFromRecording(rec!.url); const d = await describeFrames(fr, t.task?.brief || '', t.company_name); return { ...d, n: fr.length }; });
       events = [...events, ...frames.events].sort((a, b) => a.t - b.t);
@@ -63,7 +66,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   } else if (deliverable.trim().length < 50 && !auto) return NextResponse.json({ ok: false, error: '交付物太短了，至少写点东西' }, { status: 400 });
   // 工作台作答的附件（11-05）：文件抽文字、图片看图写说明，接在交付物后面给评卷（以原文件为准）
   if (!open) {
-    const files = events.filter(e => e.type === 'file' && e.url);
+    const files = events.filter(e => e.type === 'file' && e.url && !removed.has(e.url));
     if (files.length) {
       const docs = files.filter(f => !/\.(png|jpe?g|webp|gif)$/i.test(f.name)), imgs = files.filter(f => /\.(png|jpe?g|webp|gif)$/i.test(f.name)).slice(0, 8);
       const parts: string[] = [];
@@ -78,6 +81,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
       if (parts.length) deliverable = `${deliverable}\n\n## 附件内容（平台读出的文字 / 看图说明，以原文件为准）\n${parts.join('\n\n')}`.slice(0, 60000);
     }
   }
+  // 插件模式交的是链接：能读到正文的读进来，读不到的如实写（11-10）
+  if (plugin) { const links = await readLinks(deliverable); if (links) deliverable = `${deliverable}\n\n## 交付说明里的链接（平台读到的内容，以原页面为准）\n${links}`.slice(0, 60000); }
   // 插件模式的最后一问（选填）存在 participant 里，交卷时转成事件
   if (s.participant?.next_step?.trim() && !events.some(e => e.type === 'next_step')) events = [...events, { t: tsec, type: 'next_step', text: String(s.participant.next_step).trim().slice(0, 1000) }];
   events = [...events, { t: tsec, type: 'submit', chars: deliverable.length }];

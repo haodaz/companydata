@@ -9,7 +9,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Md } from '@/components/ws/Md';
 import { ReportView } from '@/components/work/ReportView';
-import { CHAT_CSS, CmdChips, Composer, fillComposer, fromHistory, QuickCards, RUNNING, type Item } from '@/components/work/ChatKit';
+import { CHAT_CSS, CmdChips, Composer, fillComposer, fromHistory, QuickCards, RUNNING, type Item, CompanyHits, inlineUi } from '@/components/work/ChatKit';
 import { CMDS, CMDS_REPORT, CMDS_TASK, QUICK, savedModel } from '../ask';
 import { WsTour } from '../ui';
 import type { TourStep } from '@/components/work/Tour';
@@ -51,7 +51,7 @@ function WorkHome() {
     abortRef.current?.abort(); setBusy(false); setThreadId(id); setItems([]); setArt(null);
     const j = await (await fetch(`/api/admin/work/chat?id=${id}`)).json(); if (!j.ok) return;
     setItems(fromHistory(j.thread.messages || []));
-    const last = [...(j.thread.messages || [])].reverse().flatMap((m: any) => (m.role === 'tool' ? [...m.results].reverse() : [])).find((r: any) => r.ui);
+    const last = [...(j.thread.messages || [])].reverse().flatMap((m: any) => (m.role === 'tool' ? [...m.results].reverse() : [])).find((r: any) => r.ui && !inlineUi(r.ui));
     if (last) setArt(last.ui);
   }, []);
   const newChat = useCallback(() => { abortRef.current?.abort(); setBusy(false); setThreadId(null); setItems([]); setArt(null); }, []);
@@ -64,7 +64,7 @@ function WorkHome() {
     if (e.t === 'thread') { setThreadId(e.id); window.dispatchEvent(new Event('wws-threads')); return; }
     if (e.t === 'text') setItems(it => { const last = it[it.length - 1]; return last?.k === 'text' ? [...it.slice(0, -1), { k: 'text', text: last.text + e.delta }] : [...it, { k: 'text', text: e.delta }]; });
     else if (e.t === 'tool_start') setItems(it => [...it, { k: 'tool', id: e.id, name: e.name, input: e.input, running: true }]);
-    else if (e.t === 'tool_end') { setItems(it => it.map(x => (x.k === 'tool' && x.id === e.id ? { ...x, running: false, label: e.label, ui: e.ui, error: e.error } : x))); if (e.ui) setArt({ ...e.ui, _n: Date.now() }); }
+    else if (e.t === 'tool_end') { setItems(it => it.map(x => (x.k === 'tool' && x.id === e.id ? { ...x, running: false, label: e.label, ui: e.ui, error: e.error } : x))); if (e.ui && !inlineUi(e.ui)) setArt({ ...e.ui, _n: Date.now() }); }
     else if (e.t === 'ask') setItems(it => [...it, { k: 'ask', id: e.id, question: e.question, options: e.options }]);
     else if (e.t === 'error') setItems(it => [...it, { k: 'error', text: e.message }]);
   };
@@ -135,7 +135,7 @@ function WorkHome() {
               {items.map((x, i) => {
                 if (x.k === 'user') { const lines = String(x.text || '').split('\n'); const isF = (l: string) => l.startsWith('【文件】') || l.startsWith('【素材】'); const atts = lines.filter(isF).map(l => l.slice(4).split('｜')[0]); const plain = lines.filter(l => !isF(l)).join('\n').trim(); return <div key={i} className="wc-user"><div className="wc-bubble">{plain}{atts.length > 0 && <div className="wc-atts">{atts.map((n, j) => <span key={j} className="wc-att">📎 {n}</span>)}</div>}</div></div>; }
                 if (x.k === 'text') return <div key={i} className="wc-ai"><span className="wc-ava">真</span><div className="wc-ai-body"><Md text={x.text} /></div></div>;
-                if (x.k === 'tool') return <div key={x.id} className="wc-tool"><span className={`wc-dot${x.running ? ' run' : x.error ? ' err' : ''}`} /><span className="wc-tool-t">{x.running ? `${RUNNING[x.name] || '处理中'}…` : x.label || x.name}</span>{x.ui && !x.running && <button className="wc-link" onClick={() => setArt({ ...x.ui, _n: Date.now() })}>看 →</button>}{x.error && <span className="wc-err-t">{x.error}</span>}</div>;
+                if (x.k === 'tool') return <React.Fragment key={x.id}><div className="wc-tool"><span className={`wc-dot${x.running ? ' run' : x.error ? ' err' : ''}`} /><span className="wc-tool-t">{x.running ? `${RUNNING[x.name] || '处理中'}…` : x.label || x.name}</span>{x.ui && !x.running && !inlineUi(x.ui) && <button className="wc-link" onClick={() => setArt({ ...x.ui, _n: Date.now() })}>看 →</button>}{x.error && <span className="wc-err-t">{x.error}</span>}</div>{x.ui?.kind === 'companies' && !x.running && <CompanyHits list={x.ui.list} />}</React.Fragment>;
                 if (x.k === 'ask') return <div key={x.id} className="wc-ask"><div className="wc-ask-q">{x.question}</div><div className="wc-opts">{x.options.map((o, j) => <button key={o} className={`wc-opt${x.answered === o ? ' on' : ''}`} disabled={!!x.answered || busy} onClick={() => send(o)}><i>{j + 1}</i>{o}</button>)}</div>{x.answered && !x.options.includes(x.answered) && <div className="wc-mute" style={{ marginTop: 8 }}>你答：{x.answered}</div>}</div>;
                 return <div key={i} className="wc-error">{x.text}</div>;
               })}

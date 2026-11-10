@@ -28,7 +28,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (!(await canEdit(user, id))) return NextResponse.json({ ok: false, error: '只能改自己出的题' }, { status: 403 });
   const body = await req.json();
   const patch: Record<string, any> = { updated_at: new Date().toISOString() };
-  if (['ready', 'published', 'archived'].includes(body.status)) patch.status = body.status;
+  if (['ready', 'published', 'archived', 'deleted'].includes(body.status)) patch.status = body.status;   // deleted：列表里拿掉、链接失效，作答和报告留着（11-10）
   if (body.task && typeof body.task === 'object') patch.task = body.task;
   if (body.rubric && Array.isArray(body.rubric)) patch.rubric = body.rubric;
   const { error } = await db.from('work_tasks').update(patch).eq('id', id);

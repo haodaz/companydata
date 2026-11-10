@@ -12,8 +12,8 @@ export async function GET(req: NextRequest) {
   const user = await getSessionUser(req);
   if (!user) return NextResponse.json({ ok: false, error: '需要登录' }, { status: 401 });
   const base = 'id, share_token, owner_key, status, company_id, company_name, role, task, baseline, model, created_at, created_by, owner';
-  let r: { data: any[] | null; error: any } = await db.from('work_tasks').select(base).order('created_at', { ascending: false }).limit(300);
-  if (r.error) r = await db.from('work_tasks').select(base.replace(', owner_key', '').replace(', owner', '')).order('created_at', { ascending: false }).limit(300);   // 迁移 036 没跑
+  let r: { data: any[] | null; error: any } = await db.from('work_tasks').select(base).neq('status', 'deleted').order('created_at', { ascending: false }).limit(300);
+  if (r.error) r = await db.from('work_tasks').select(base.replace(', owner_key', '').replace(', owner', '')).neq('status', 'deleted').order('created_at', { ascending: false }).limit(300);   // 迁移 036 没跑
   const { data, error } = r;
   if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
   const isDemo = (t: any) => t.owner?.contact === 'demo';
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
   if (!user) return NextResponse.json({ ok: false, error: '需要登录' }, { status: 401 });
   try {
     const body = await req.json();
-    const r = await createWorkTask({ email: user.email, role: user.role }, { company: String(body.company || ''), company_id: body.company_id, intro: body.intro ? String(body.intro) : undefined, role: String(body.role || ''), env: body.env ? String(body.env) : undefined, focus: body.focus ? String(body.focus) : undefined, model: isKnownModel(String(body.model || '')) ? String(body.model) : undefined, sample_id: body.sample_id ? String(body.sample_id) : undefined, sample_mode: body.sample_mode === 'inspire' ? 'inspire' : 'reskin', attachments: Array.isArray(body.attachments) ? body.attachments : [], verbatim: body.verbatim ? String(body.verbatim) : undefined, showcase_id: body.showcase_id ? String(body.showcase_id) : undefined, showcase_use: body.showcase_use === 'ref' ? 'ref' : 'base', time_minutes: Number(body.time_minutes) || undefined, auto_submit: body.auto_submit === false ? false : undefined });
+    const r = await createWorkTask({ email: user.email, role: user.role }, { deep: body.deep === true ? true : undefined, steps: typeof body.steps === 'boolean' ? body.steps : undefined, company: String(body.company || ''), company_id: body.company_id, intro: body.intro ? String(body.intro) : undefined, role: String(body.role || ''), env: body.env ? String(body.env) : undefined, focus: body.focus ? String(body.focus) : undefined, model: isKnownModel(String(body.model || '')) ? String(body.model) : undefined, sample_id: body.sample_id ? String(body.sample_id) : undefined, sample_mode: body.sample_mode === 'inspire' ? 'inspire' : 'reskin', attachments: Array.isArray(body.attachments) ? body.attachments : [], verbatim: body.verbatim ? String(body.verbatim) : undefined, showcase_id: body.showcase_id ? String(body.showcase_id) : undefined, showcase_use: body.showcase_use === 'ref' ? 'ref' : 'base', time_minutes: Number(body.time_minutes) || undefined, auto_submit: body.auto_submit === false ? false : undefined });
     return NextResponse.json({ ok: true, id: r.id, share_token: r.share_token, owner_key: r.owner_key, title: r.title, env: r.env, notes: r.notes });
   } catch (e: any) {
     return NextResponse.json({ ok: false, error: String(e?.message || e) }, { status: /都要填/.test(String(e?.message)) ? 400 : 500 });

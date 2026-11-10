@@ -6,6 +6,9 @@
  * ?s=<session id> 回到已有的一次作答（看报告）。
  */
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { removeWorkFile, uploadWorkFile } from '@/lib/work/upload-client';
+import { MdView, RulesView } from '@/components/work/WorkText';
+import { CONSENT_V, ConsentNotice, consentItems } from '@/components/work/ConsentNotice';
 import { contactKey } from '@/lib/work/contact';
 import { useParams, useSearchParams } from 'next/navigation';
 import { WorkReport } from '@/components/work/WorkReport';
@@ -108,9 +111,13 @@ export default function WorkPage() {
   }, [token]); // eslint-disable-line react-hooks/exhaustive-deps   // 地址换成个人链接时不要重新加载
 
   const needContact = !sp.get('k');
+  // 开始前的告知（11-10）：候选人同意了才开始；出任务的人预览不弹
+  const [consentOpen, setConsentOpen] = useState(false);
+  const ready = !!name.trim() && !(needContact && !switchFrom && !contactKey(contact));
   const start = async () => {
-    if (!name.trim() || (needContact && !switchFrom && !contactKey(contact))) return;
-    const j = await (await fetch(`/api/work/${token}/sessions`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, contact, mode, device: deviceId(), k: sp.get('k') || undefined, from: switchFrom || undefined }) })).json();
+    if (!ready) return;
+    setConsentOpen(false);
+    const j = await (await fetch(`/api/work/${token}/sessions`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ consent: needContact ? CONSENT_V : undefined, name, contact, mode, device: deviceId(), k: sp.get('k') || undefined, from: switchFrom || undefined }) })).json();
     if (!j.ok) { setErr(j.error); return; }
     // 这个手机或邮箱已经开始过：回到那一次（走完整加载，时间和内容都从服务器恢复）
     if (j.resumed) { try { localStorage.setItem(`work:${token}`, j.session_id); } catch {} location.replace(`/work/${token}?s=${j.session_id}`); return; }
@@ -131,9 +138,9 @@ export default function WorkPage() {
         <div style={{ fontSize: 12, letterSpacing: 2, color: '#6055f5', fontWeight: 700 }}>真活台 · {task.company_name} · {roleLabel(task.role, (task.task as any).role)}</div>
         <h1 style={{ fontSize: 28, margin: '8px 0 4px', lineHeight: 1.3 }}>{task.task.title}</h1>
         <div style={{ color: '#666', marginBottom: 20 }}>{task.statement}</div>
-        <Box title="任务书"><div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8 }}>{task.task.brief}</div></Box>
+        <Box title="任务书"><MdView text={task.task.brief} style={{ lineHeight: 1.8 }} /></Box>
         <Box title="要交什么"><ol style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9 }}>{task.task.deliverables.map(d => <li key={d.id}><b>{d.title}</b> <span style={{ color: '#888' }}>{d.format}</span></li>)}</ol></Box>
-        <Box title="规则"><ul style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9 }}>{task.task.rules.map((r, i) => <li key={i}>{r}</li>)}</ul><div style={{ color: '#888', fontSize: 13, marginTop: 6 }}>操作台：{modulesLabel(task, env)}（按交付物切换） · {task.task.soft_limit ? `建议 ${task.task.time_minutes} 分钟（开始后时间不暂停，超时会如实记录）` : `限时 ${task.task.time_minutes} 分钟（开始后时间不暂停，到点自动交卷）`}· 材料 {task.materials.length} 份 · 交卷后立刻出报告</div></Box>
+        <Box title="规则"><RulesView rules={task.task.rules} /><div style={{ color: '#888', fontSize: 13, marginTop: 6 }}>操作台：{modulesLabel(task, env)}（按交付物切换） · {task.task.soft_limit ? `建议 ${task.task.time_minutes} 分钟（开始后时间不暂停，超时会如实记录）` : `限时 ${task.task.time_minutes} 分钟（开始后时间不暂停，到点自动交卷）`}· 材料 {task.materials.length} 份 · 交卷后立刻出报告</div></Box>
         {env.type === 'plugin'
           ? <Box title="怎么做"><div style={{ lineHeight: 1.8 }}><b>用你自己的工具做。</b>在线文档、表格、设计工具、各家 AI 都可以。点「开始做」后会给你一个真活码，装好「真活插件」（一次就好，<a href="/work/plugin" target="_blank" rel="noreferrer">看说明</a>）、关联这次作答，插件只在答题期间记录你打开的网页、页面上的文字和打字粘贴的量。交付说明在插件侧边栏或本页写，做完点「结束作答」；到时间会自动交卷。</div></Box>
           : env.type === 'open'
@@ -149,10 +156,12 @@ export default function WorkPage() {
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <input value={name} onChange={e => setName(e.target.value)} placeholder="姓名 / 昵称" style={inp} />
             <input value={contact} onChange={e => setContact(e.target.value)} placeholder="手机号或邮箱（换设备回来靠它接着做）" style={{ ...inp, flex: 1, minWidth: 220 }} />
-            <button onClick={start} disabled={!name.trim() || (needContact && !switchFrom && !contactKey(contact))} style={btnPrimary}>开始做 →</button>
+            <button onClick={() => (needContact ? setConsentOpen(true) : start())} disabled={!ready} style={btnPrimary}>开始做 →</button>
           </div>
           {err && <div style={{ color: '#c0392b', marginTop: 8 }}>{err}</div>}
         </Box>
+        <Box title="数据与作品"><div style={{ display: 'grid', gap: 6, fontSize: 13, lineHeight: 1.7, color: '#555' }}>{consentItems(mode, task.company_name).map(([h, t]) => <div key={h}><b style={{ color: '#444' }}>{h}：</b>{t}</div>)}</div></Box>
+        <ConsentNotice open={consentOpen} mode={mode} company={task.company_name} onAgree={start} onCancel={() => setConsentOpen(false)} />
       </div>
     </Shell>
   );
@@ -236,18 +245,21 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   // 工作台每份交付物都能传文件（11-05 潜历：「格式限制」——设计稿、PS / 本地 AI 出的图、Excel 原文件交不进来）
   type PFile = { name: string; size: number; url: string; part: string };
   const [pfiles, setPfiles] = useState<PFile[]>([]); const [attOpen, setAttOpen] = useState(false); const [pfBusy, setPfBusy] = useState(0); const [pfErr, setPfErr] = useState('');
-  useEffect(() => { if (mode === 'open' || !sid) return; fetch(`/api/work/${token}/sessions/${sid}`).then(r => r.json()).then(j => setPfiles(j.session?.files || [])).catch(() => {}); }, [token, sid, mode]);
+  // 刷新 / 换设备回来：已经传的文件从服务器拿回来（开放模式以前没拿，刷新后列表空了、删也删不掉，11-10）
+  useEffect(() => { if (!sid) return; fetch(`/api/work/${token}/sessions/${sid}`).then(r => r.json()).then(j => { const fs: PFile[] = j.session?.files || []; if (mode === 'open') setUploads(fs); else setPfiles(fs); }).catch(() => {}); }, [token, sid, mode]);
 
   const uploadPart = async (list: FileList | null, part: string) => {
     if (!list?.length) return; setPfErr('');
     for (const f of Array.from(list)) {
-      if (f.size > 200 * 1024 * 1024) { setPfErr(`${f.name} 太大（上限 200MB）`); continue; }
       setPfBusy(n => n + 1);
-      const fd = new FormData(); fd.append('file', f); fd.append('kind', 'file'); fd.append('part', part); fd.append('t', String(now_s()));
-      try { const j = await (await fetch(`/api/work/${token}/sessions/${sid}/upload`, { method: 'POST', body: fd })).json(); if (!j.ok) throw new Error(j.error); setPfiles(x => [...x, { name: j.name, size: j.size, url: j.url, part }]); }
+      try { const j = await uploadWorkFile(token, sid, f, { t: now_s(), part }); setPfiles(x => [...x, { ...j, part }]); }
       catch (e: any) { setPfErr(`${f.name} 没传上去：${e.message}`); }
       setPfBusy(n => n - 1);
     }
+  };
+  const removePart = async (f: PFile) => {
+    if (!confirm(`删掉附件「${f.name}」？交卷时就不算了。`)) return;
+    try { await removeWorkFile(token, sid, f.url, now_s()); setPfiles(x => x.filter(y => y.url !== f.url)); } catch (e: any) { setPfErr(`没删掉：${e.message}`); }
   };
   const isImg = (n: string) => /\.(png|jpe?g|webp|gif)$/i.test(n);
   // 附件写进交付物：图片直接显示，其他是可下载的链接（交卷时平台再把文字 / 看图说明接在后面给评卷）
@@ -389,7 +401,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
     <button onClick={() => setAttOpen(o => !o)} title="用别的软件做的（设计稿、图、Excel、PDF…）传到这份交付物" style={{ ...miniBtn, color: curFiles.length ? '#6055f5' : ink2, fontWeight: curFiles.length ? 700 : 400, whiteSpace: 'nowrap' }}>📎 附件{curFiles.length ? ` ${curFiles.length}` : ''}{pfBusy ? ' · 上传中' : ''}</button>
     {attOpen && <div style={{ position: 'absolute', top: 30, left: 0, zIndex: 30, width: 320, background: panel, color: dark ? '#d6d8e6' : '#333', border: `1px solid ${line}`, borderRadius: 12, boxShadow: '0 12px 32px rgba(20,24,60,.16)', padding: 12, fontSize: 12.5 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}><b style={{ flex: 1 }}>「{parts.find(p => p.id === cur)?.title}」的附件</b><button onClick={() => setAttOpen(false)} style={{ ...miniBtn, padding: '0 6px' }}>×</button></div>
-      {curFiles.length ? curFiles.map(f => <a key={f.url} href={f.url} target="_blank" rel="noreferrer" style={{ display: 'block', padding: '4px 0', color: '#6055f5', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={f.name}>{isImg(f.name) ? '🖼' : '📄'} {f.name}</a>) : <div style={{ color: ink2, padding: '2px 0 6px' }}>还没有。用别的软件做的也能交到这里。</div>}
+      {curFiles.length ? curFiles.map(f => <div key={f.url} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '4px 0' }}><a href={f.url} target="_blank" rel="noreferrer" style={{ flex: 1, minWidth: 0, color: '#6055f5', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={f.name}>{isImg(f.name) ? '🖼' : '📄'} {f.name}</a><a onClick={() => removePart(f)} style={{ color: '#c0392b', cursor: 'pointer', fontSize: 12, flexShrink: 0 }}>删除</a></div>) : <div style={{ color: ink2, padding: '2px 0 6px' }}>还没有。用别的软件做的也能交到这里。</div>}
       <label style={{ display: 'inline-block', marginTop: 8, padding: '5px 12px', borderRadius: 999, background: '#6055f5', color: '#fff', cursor: 'pointer', fontWeight: 600 }}>{pfBusy ? `上传中（${pfBusy}）…` : '＋ 上传文件'}<input type="file" multiple style={{ display: 'none' }} onChange={e => { uploadPart(e.target.files, cur); e.target.value = ''; }} /></label>
       <div style={{ color: ink2, marginTop: 8, lineHeight: 1.6 }}>{pfErr ? <span style={{ color: '#c0392b' }}>{pfErr}</span> : '设计稿、图、Excel、PDF、PPT、压缩包都行，单个 200MB 内。交卷时会读出文字、看图写说明一起评。'}</div>
     </div>}
@@ -460,9 +472,9 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
         <div onClick={e => e.stopPropagation()} style={{ width: '100%', maxWidth: 760, background: '#fff', color: '#1a1a2e', borderRadius: 16, padding: '22px 26px', boxShadow: '0 20px 60px rgba(20,20,60,.25)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}><b style={{ fontSize: 18, flex: 1 }}>{task.task.title}</b><button onClick={() => setBrief(false)} style={{ border: '1px solid #e0e0ee', background: '#fff', borderRadius: 8, padding: '4px 12px', cursor: 'pointer' }}>继续作答</button></div>
           <div style={{ color: '#666', fontSize: 13, margin: '4px 0 14px' }}>{task.company_name} · {roleLabel(task.role, (task.task as any).role)} · {task.task.soft_limit ? '建议' : '限时'} {task.task.time_minutes} 分钟 · 作答进度都在，关掉这个面板就回去</div>
-          <div style={{ fontWeight: 700, margin: '10px 0 4px' }}>任务书</div><div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8, fontSize: 14 }}>{task.task.brief}</div>
+          <div style={{ fontWeight: 700, margin: '10px 0 4px' }}>任务书</div><MdView text={task.task.brief} style={{ fontSize: 14 }} />
           <div style={{ fontWeight: 700, margin: '14px 0 4px' }}>要交什么</div><ol style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9, fontSize: 14 }}>{task.task.deliverables.map(d => <li key={d.id}><b>{d.title}</b> <span style={{ color: '#888' }}>{d.format}</span></li>)}</ol>
-          <div style={{ fontWeight: 700, margin: '14px 0 4px' }}>规则</div><ul style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9, fontSize: 14 }}>{task.task.rules.map((r, i) => <li key={i}>{r}</li>)}</ul>
+          <div style={{ fontWeight: 700, margin: '14px 0 4px' }}>规则</div><RulesView rules={task.task.rules} dark={dark} />
           {onRestart && <div style={{ marginTop: 18, paddingTop: 12, borderTop: '1px solid #eee', fontSize: 13, color: '#666', display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}><span style={{ flex: 1 }}>想换一种作答方式（用自己的软件 / 网页工具）？还是这一次作答，时间接着走，不会重新开始。</span><button onClick={() => { if (confirm('换一种方式后时间接着走，不会重新开始。确定吗？')) onRestart(); }} style={{ border: '1px solid #c9c3ff', background: '#fff', color: '#6055f5', borderRadius: 999, padding: '6px 14px', cursor: 'pointer', fontWeight: 600 }}>换一种方式重新开始</button></div>}
         </div>
       </div>}
@@ -486,7 +498,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
           <div style={{ ...capStyle, marginTop: 16, color: dark ? '#8b8fa8' : capStyle.color }}>要交什么</div>
           <ol style={{ margin: 0, paddingLeft: 18, fontSize: 13, lineHeight: 1.7 }}>{task.task.deliverables.map(d => <li key={d.id}>{d.title} <span style={{ color: '#999' }}>{d.format}</span></li>)}</ol>
           {!stages.length && <div style={{ marginTop: 8 }}>{nextQCard('最后一问', false)}</div>}
-          <details style={{ marginTop: 12, fontSize: 13 }}><summary style={{ cursor: 'pointer', color: dark ? '#8f87ff' : '#6055f5' }}>任务书</summary><div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.7, color: dark ? '#b8bdd6' : '#444', marginTop: 6 }}>{task.task.brief}</div></details>
+          <details style={{ marginTop: 12, fontSize: 13 }}><summary style={{ cursor: 'pointer', color: dark ? '#8f87ff' : '#6055f5' }}>任务书</summary><MdView text={task.task.brief} style={{ lineHeight: 1.7, color: dark ? '#b8bdd6' : '#444', marginTop: 6 }} /></details>
         </aside>}
         {/* 作答区：交付物标签常驻 → 材料面板（可拖高 / 占满 / 一条 / 关）→ 操作台 */}
         {(!narrow || pane === 'work' || (pane === 'mat' && mat)) && <main style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 10, padding: '10px 12px', background: dark ? '#14151e' : undefined, minHeight: 0 }}>

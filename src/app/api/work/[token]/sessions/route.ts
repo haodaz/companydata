@@ -36,7 +36,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
     return NextResponse.json({ ok: true, session_id: prev.id, ...(code ? { code } : {}) });
   }
-  const { data, error } = await db.from('work_sessions').insert({ task_id: t.id, participant: { name, contact: String(body.contact || '').slice(0, 80), ...(key ? { contact_key: key } : {}), ...(body.device ? { device: String(body.device).slice(0, 40) } : {}), mode, ...(code ? { code } : {}), ...(preview ? { preview: true } : {}) }, events: [{ t: 0, type: 'start', note: mode }] }).select('id').single();
+  const { data, error } = await db.from('work_sessions').insert({ task_id: t.id, participant: { name, contact: String(body.contact || '').slice(0, 80), ...(key ? { contact_key: key } : {}), ...(body.device ? { device: String(body.device).slice(0, 40) } : {}), ...(body.consent ? { consent: { v: String(body.consent).slice(0, 20), at: new Date().toISOString() } } : {}), mode, ...(code ? { code } : {}), ...(preview ? { preview: true } : {}) }, events: [{ t: 0, type: 'start', note: mode }] }).select('id').single();
   if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
   return NextResponse.json({ ok: true, session_id: data.id, ...(code ? { code } : {}) });
 }

@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
   const user = await getSessionUser(req); if (!user) return NextResponse.json({ ok: false, error: '需要登录' }, { status: 401 });
   const org = await orgFor(req, user).catch(() => null); if (!org) return NextResponse.json({ ok: false, error: '没有企业' }, { status: 404 });
   const [{ data: tasks }, { data: spaces }, jobs] = await Promise.all([
-    db.from('work_tasks').select('id, share_token, owner_key, role, task, baseline, status, created_at').eq('org_id', org.id).order('created_at', { ascending: false }).limit(100),
+    db.from('work_tasks').select('id, share_token, owner_key, role, task, baseline, status, created_at').eq('org_id', org.id).neq('status', 'deleted').order('created_at', { ascending: false }).limit(100),
     db.from('skill_tasks').select('id, title, profile, created_at').eq('org_id', org.id).order('created_at', { ascending: false }).limit(100),
     org.company_id ? companyJobs(org.company_id, 200) : Promise.resolve([]),
   ]);

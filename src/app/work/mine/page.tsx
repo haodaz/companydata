@@ -38,7 +38,9 @@ function Inner() {
 
   const space = (t: any) => `/work/${t.share_token}/owner?k=${encodeURIComponent(t.owner_key || '')}`;
   const copy = (t: any) => { navigator.clipboard.writeText(`${origin}/work/${t.share_token}`); message.success('参与链接已复制，甩出去就能做'); };
-  const setStatus = async (t: any, status: string) => { const j = await (await fetch(`/api/admin/work/tasks/${t.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status }) })).json(); if (!j.ok) return message.error(j.error); message.success(status === 'published' ? '已发布' : '已下架'); load(); };
+  const setStatus = async (t: any, status: string) => { const j = await (await fetch(`/api/admin/work/tasks/${t.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status }) })).json(); if (!j.ok) return message.error(j.error); message.success(status === 'published' ? '已发布' : status === 'deleted' ? '删掉了' : '已下架'); load(); };
+  // 删除（11-10 潜历：只能下架、删不掉）：列表里拿掉、链接失效；作答和报告留在库里
+  const remove = (t: any) => { if (confirm(`删除「${t.task?.title || t.role}」？\n参与链接马上失效，候选人打不开。已有的作答和报告不会丢，要找回请联系我们。`)) setStatus(t, 'deleted'); };
 
   return (
     <div style={{ minHeight: '100vh', background: '#f6f7fb', color: '#1a1a2e' }}>
@@ -82,6 +84,7 @@ function Inner() {
                 <Button size="small" type="primary" icon={<CopyOutlined />} onClick={e => { e.stopPropagation(); copy(t); }}>复制参与链接</Button>
                 <Button size="small" icon={<EyeOutlined />} onClick={e => { e.stopPropagation(); location.href = href; }}>进入空间</Button>
                 {(role === 'admin' || !t.demo) && (t.status === 'published' ? <Button size="small" onClick={e => { e.stopPropagation(); setStatus(t, 'archived'); }}>下架</Button> : <Button size="small" onClick={e => { e.stopPropagation(); setStatus(t, 'published'); }}>发布</Button>)}
+                {(role === 'admin' || !t.demo) && <Button size="small" danger type="text" onClick={e => { e.stopPropagation(); remove(t); }}>删除</Button>}
               </div>
             </Link>); })}
         </div>}

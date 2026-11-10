@@ -16,6 +16,13 @@ export default function TasksPage() {
   const [kw, setKw] = useState(''); const [st, setSt] = useState('all');
   useEffect(() => { fetch('/api/admin/work/home?view=tasks', { cache: 'no-store' }).then(r => r.json()).then(j => setTasks(j.ok ? j.tasks : [])).catch(() => setTasks([])); }, []);
   const list = useMemo(() => (tasks || []).filter(t => (st === 'all' || t.status === st) && (!kw || [t.title, t.company, t.role].some((v: string) => String(v || '').includes(kw)))), [tasks, kw, st]);
+  // 删除（11-10）：列表里拿掉、参与链接失效；作答和报告留在库里
+  const remove = async (t: any) => {
+    if (!confirm(`删除「${t.title}」？\n参与链接马上失效，候选人打不开。已有的作答和报告不会丢，要找回请联系我们。`)) return;
+    const j = await (await fetch(`/api/work/${t.token}/owner?k=${encodeURIComponent(t.owner_key || '')}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'deleted' }) })).json();
+    if (!j.ok) return alert(j.error || '没删掉');
+    setTasks(x => (x || []).filter(y => y.task_id !== t.task_id));
+  };
   const n = (k: string) => (tasks || []).filter(t => k === 'all' || t.status === k).length;
   return (
     <div className="wws-page">
@@ -47,6 +54,7 @@ export default function TasksPage() {
               <td style={{ whiteSpace: 'nowrap', textAlign: 'right' }}>
                 {t.submitted > 0 && <Link href={`/work/ws/reports?task=${t.task_id}`} className="wws-back" style={{ marginRight: 12 }}>看报告</Link>}
                 <Link href={askHref(t.submitted ? '这道题大家做得怎么样？卡在哪，推荐谁？' : '这道题现在什么情况？下一步该做什么？', { task_id: t.task_id, token: t.token, k: t.owner_key, title: t.title })}><button className="wws-ask">问助理</button></Link>
+                <button className="wws-back" onClick={() => remove(t)} style={{ marginLeft: 10, border: 0, background: 'none', color: '#c0392b', cursor: 'pointer', font: 'inherit' }}>删除</button>
               </td>
             </tr>)}
           </tbody>

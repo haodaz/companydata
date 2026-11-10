@@ -171,9 +171,12 @@ export async function analyzeAiUse(task: WorkTask, events: WorkEvent[], aiChat: 
     first_ask_s: firstAsk, materials_before_first_ask: new Set(ev.filter(e => e.type === 'open_material' && (firstAsk == null || e.t <= firstAsk)).map(e => e.id)).size,
   };
   // 开放模式 / 插件：AI 用在他自己的工具里（ChatGPT、Copilot…），只能从录屏描述和插件事件里看
-  const outside = ev.filter(e => (e.type === 'screen' || /^plugin_/.test(e.type)) && /AI|GPT|Copilot|Claude|千问|豆包|Kimi|DeepSeek|文心|智谱|元宝|Gemini|对话|提问|生成/i.test(String(e.note || e.text || e.host || '')));
+  const outside = ev.filter(e => (e.type === 'screen' || /^plugin_/.test(e.type)) && /AI|GPT|Copilot|Claude|千问|通义|豆包|Kimi|DeepSeek|文心|智谱|元宝|Gemini|WorkBuddy|Cursor|Trae|CodeBuddy|智能体|agent|对话|提问|生成/i.test(String(e.note || e.text || e.host || '')));
   const standard = pol ? { stance: STANCE_LABEL[pol.stance.level], summary: pol.summary, weights: pol.weights } : null;
-  if (!chat.length && !outside.length) return { score: null, level: null, verdict: pol && pol.stance.level === 'ai_native' ? '这次没用 AI：这家企业期待深度用 AI，这一点要留意。' : '这次没用 AI：全程自己做的。', items: [], stats, standard, violations: [] };
+  // 在自己的软件里做、截图又没看出东西的：平台看不到他用没用 AI，不能说「没用」（11-10 潜历：全程用 WorkBuddy，报告写没用 AI）
+  const offsite = ev.some(e => e.type === 'rec_start' || /^plugin_/.test(e.type));
+  if (!chat.length && !outside.length && offsite && !ev.some(e => e.type === 'screen')) return { score: null, level: null, verdict: '在自己的软件里做的，屏幕截图没读出来，平台看不到 AI 使用情况，这一项不评。', items: [], stats, standard, violations: [] };
+  if (!chat.length && !outside.length) return { score: null, level: null, verdict: offsite ? '平台内的 AI 助手没用；屏幕截图里也没看到用别的 AI。' : pol && pol.stance.level === 'ai_native' ? '这次没用 AI：这家企业期待深度用 AI，这一点要留意。' : '这次没用 AI：全程自己做的。', items: [], stats, standard, violations: [] };
   const flags = hardRedFlags(chat);
   const nextStep = nextStepOf(events);
   const lines = ev.filter(e => ['open_material', 'ai_ask', 'adopt', 'paste', 'edit', 'submit', 'screen'].includes(e.type) || /^plugin_/.test(e.type)).slice(0, 300)

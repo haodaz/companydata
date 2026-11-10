@@ -136,7 +136,7 @@ ${inside ? `\n${inside}\n（企业自己说的眼下重点要优先考虑，至�
       return { label: `AI 基线跑完：${baseline.result.total} 分`, ui: { kind: 'work', id: t.id, token: t.share_token, owner_key: t.owner_key, title: t.task?.title, role: t.role }, result: { total: baseline.result.total, summary: s(baseline.result.summary, 300), weakest: (baseline.result.items || []).slice().sort((a: any, b: any) => a.score - b.score).slice(0, 2).map((i: any) => i.title) } };
     }
     case 'list_work_tasks': {
-      const { data } = await db.from('work_tasks').select('id, share_token, role, task, baseline, created_at, status').eq('org_id', org.id).order('created_at', { ascending: false }).limit(30);
+      const { data } = await db.from('work_tasks').select('id, share_token, role, task, baseline, created_at, status').eq('org_id', org.id).neq('status', 'deleted').order('created_at', { ascending: false }).limit(30);
       const ids = (data || []).map(t => t.id); const cnt: Record<string, { n: number; done: number }> = {};
       if (ids.length) { const { data: ss } = await db.from('work_sessions').select('task_id, submitted_at').in('task_id', ids); for (const x of ss || []) { const c = cnt[x.task_id] ||= { n: 0, done: 0 }; c.n++; if (x.submitted_at) c.done++; } }
       return { label: `列了本企业的真活（${data?.length || 0} 道）`, result: { tasks: (data || []).map(t => ({ task_id: t.id, title: t.task?.title, role: t.role, status: t.status, joined: cnt[t.id]?.n || 0, submitted: cnt[t.id]?.done || 0, baseline: t.baseline?.result?.total ?? null, share_link: `/work/${t.share_token}`, created: t.created_at?.slice(0, 10) })) } };

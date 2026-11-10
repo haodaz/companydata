@@ -99,6 +99,13 @@ export function Composer({ text, setText, busy, send, stop, model, setModel, pla
   );
 }
 
+/** 企业库里搜到的企业（11-10 潜历：只说「找到了」，看不出是不是心里那家）：全称、行业、城市、官网、一句话简介，就地列在对话里 */
+export function CompanyHits({ list }: { list: { name: string; name_en?: string; industry?: string; city?: string; website?: string; intro?: string }[] }) {
+  return <div className="wc-hits">{list.map((c, i) => <div key={i} className="wc-hit"><b>{c.name}{c.name_en ? <span> · {c.name_en}</span> : null}</b><span>{[c.industry, c.city].filter(Boolean).join(' · ')}{c.website ? <> · <a href={/^https?:/.test(c.website) ? c.website : `https://${c.website}`} target="_blank" rel="noreferrer">{c.website.replace(/^https?:\/\//, '').replace(/\/$/, '')}</a></> : null}</span>{c.intro && <p>{c.intro}{c.intro.length >= 90 ? '…' : ''}</p>}</div>)}</div>;
+}
+/** 只在对话里就地显示、不开右侧面板的工具结果 */
+export const inlineUi = (ui: any) => ui?.kind === 'companies';
+
 export function fromHistory(ms: any[]): Item[] {
   const out: Item[] = [];
   for (let i = 0; i < ms.length; i++) {
@@ -118,6 +125,11 @@ export function fromHistory(ms: any[]): Item[] {
 }
 
 export const CHAT_CSS = `
+.wc-hits { display: grid; gap: 6px; margin: -2px auto 8px; }
+.wc-hit { border: 1px solid #e8e9f0; background: #fff; border-radius: 10px; padding: 8px 12px; font-size: 13px; }
+.wc-hit b { display: block; font-size: 13.5px; } .wc-hit b span { font-weight: 400; color: #888; }
+.wc-hit > span { display: block; color: #666; font-size: 12.5px; margin-top: 1px; } .wc-hit a { color: #6055f5; }
+.wc-hit p { margin: 4px 0 0; color: #555; font-size: 12.5px; line-height: 1.6; }
 .wc-mode { margin-left: auto; display: flex; border: 1px solid #e0e0ee; border-radius: 999px; overflow: hidden; font-size: 13px; }
 .wc-mode a, .wc-mode span { padding: 6px 14px; color: #666; text-decoration: none; } .wc-mode .on { background: #6055f5; color: #fff; font-weight: 700; }
 .wc { flex: 1; display: grid; grid-template-columns: 210px minmax(0, 1fr); min-height: 0; height: calc(100vh - 60px); }

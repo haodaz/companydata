@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { AutoComplete, Tag , Input} from 'antd';
 
-export type PickedCompany = { id: number; name: string; industry?: string; city?: string; completeness?: number; has_profile?: boolean; jobs?: number } | null;
+export type PickedCompany = { id: number; name: string; name_en?: string; website?: string; intro?: string; industry?: string; city?: string; completeness?: number; has_profile?: boolean; jobs?: number } | null;
 
 export function CompanyRolePicker({ company, role, onCompany, onRole, size = 'large' }: { company: string; role: string; onCompany: (name: string, picked: PickedCompany) => void; onRole: (role: string) => void; size?: 'large' | 'middle' }) {
   // 和 lib/work/generator.ts 的 isNeedText 同一判断（那边是服务端模块）
@@ -44,6 +44,8 @@ export function CompanyRolePicker({ company, role, onCompany, onRole, size = 'la
         <Tag color="green">企业库 #{picked.id}</Tag>{picked.industry && <Tag>{picked.industry}</Tag>}{picked.city && <Tag>{picked.city}</Tag>}
         <Tag color={picked.has_profile ? 'blue' : 'default'}>{picked.has_profile ? `画像完整度 ${picked.completeness ?? '–'}` : '没有画像，只能按名字出任务'}</Tag>
         <Tag color={picked.jobs ? 'purple' : 'default'}>在招岗位 {picked.jobs}</Tag>
+        {/* 确认是不是心里那家（11-10 潜历）：全称、英文名、官网、一句话简介 */}
+        <div style={{ flexBasis: '100%', fontSize: 12.5, color: '#555', lineHeight: 1.6, background: '#fafbff', border: '1px solid #e8e9f0', borderRadius: 8, padding: '6px 10px' }}><b>{picked.name}</b>{picked.name_en ? <span style={{ color: '#888' }}> · {picked.name_en}</span> : null}{picked.website ? <> · <a href={/^https?:/.test(picked.website) ? picked.website : `https://${picked.website}`} target="_blank" rel="noreferrer">{picked.website.replace(/^https?:\/\//, '').replace(/\/$/, '')}</a></> : null}{picked.intro ? <div>{picked.intro}{picked.intro.length >= 90 ? '…' : ''}</div> : null}<div style={{ color: '#999', fontSize: 12 }}>不是这家？换个全称或英文名再搜。</div></div>
       </div>}
       <div style={{ fontSize: 14.5, fontWeight: 600, color: '#2b2b40', margin: '18px 0 6px' }}>你在找什么样的人？</div>
       <AutoComplete value={role} size={size} style={{ width: '100%' }}

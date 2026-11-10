@@ -63,6 +63,8 @@ function Inner() {
   // 限时（2026-11-09）：不填就按题量定，默认到点自动交卷
   const [mins, setMins] = useState<number | null>(null);
   const [autoSubmit, setAutoSubmit] = useState(true);
+  // 出法（11-10 潜历：拆得太细像教学）：默认按字面出、不替候选人拆步骤；交了自己的参考资料时默认照它分步
+  const [deep, setDeep] = useState(false); const [steps, setSteps] = useState<boolean | null>(null);
   const [busy, setBusy] = useState('');
   // 出题等待的进度：gen 出题中 → base AI 基线中 → done 好了（GenProgress 一行一行列出平方在做什么）
   const [phase, setPhase] = useState<'gen' | 'base' | 'done'>('gen');
@@ -71,7 +73,7 @@ function Inner() {
     if (way === 'verbatim' ? verbatim.trim().length < 60 : (!f.company.trim() || !f.role.trim())) return message.warning(way === 'verbatim' ? '把整道题贴进来（60 字以上）' : '企业和要找的人都要填');
     setBusy(way === 'verbatim' ? '原题不改，正在整理成交付物和评分点……约 1 分钟' : '在拼这家企业的材料、出任务、做材料包、定标准……约 2 分钟，别关页面'); setPhase('gen');
     try {
-      const r = await fetch('/api/admin/work/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ time_minutes: mins || undefined, auto_submit: autoSubmit, company: f.company, company_id: picked?.id, intro: picked ? undefined : f.intro.trim() || undefined, role: f.role, env: f.env || undefined, focus: f.focus || undefined, model: f.model, ...(lib ? { showcase_id: lib.id, showcase_use: use } : {}), sample_id: ref?.id, sample_mode: 'reskin', attachments: atts, verbatim: way === 'verbatim' ? verbatim.trim() : undefined }) });
+      const r = await fetch('/api/admin/work/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deep, steps: steps ?? !!ref, time_minutes: mins || undefined, auto_submit: autoSubmit, company: f.company, company_id: picked?.id, intro: picked ? undefined : f.intro.trim() || undefined, role: f.role, env: f.env || undefined, focus: f.focus || undefined, model: f.model, ...(lib ? { showcase_id: lib.id, showcase_use: use } : {}), sample_id: ref?.id, sample_mode: 'reskin', attachments: atts, verbatim: way === 'verbatim' ? verbatim.trim() : undefined }) });
       if (r.status === 401) { location.href = `/work/login?next=${encodeURIComponent('/work/new')}`; return; }
       const j = await r.json();
       if (!j.ok) throw new Error(j.error);
@@ -166,6 +168,12 @@ function Inner() {
             <Select value={f.env} onChange={v => setF(x => ({ ...x, env: v }))} size="large" style={{ width: '100%' }} options={ENVS.map(e => ({ value: e.value, label: e.value ? e.label : '操作台：' + e.label }))} />
           </Sec>
           {delivery('3')}
+          <Sec n="4" t="题怎么出？" d="默认按你说的字面意思出、不替候选人拆步骤——考的是他自己的思路。">
+            <div style={{ display: 'grid', gap: 10, fontSize: 13.5, color: '#555' }}>
+              <span><Switch size="small" checked={deep} onChange={setDeep} style={{ marginRight: 8 }} />{deep ? '深度解读：可以从你说的事延伸到背后更大的问题，题更开放' : '按字面出：只覆盖你说的范围，不升维、不联想'}</span>
+              <span><Switch size="small" checked={steps ?? !!ref} onChange={setSteps} style={{ marginRight: 8 }} />{(steps ?? !!ref) ? '分步推进：一步一步给信息、每步一问（适合带教、考细节）' : '不拆步骤：任务书一次给全，怎么拆、先做什么由候选人自己定'}</span>
+            </div>
+          </Sec>
             <div style={{ display: 'flex', gap: 10 }}>
               <Button size="large" onClick={() => setPage(1)} style={{ height: 50, width: 120 }}>← 上一步</Button>
           <Button type="primary" size="large" icon={<RocketOutlined />} loading={!!busy} onClick={create} style={{ height: 50, fontWeight: 700, flex: 1 }}>出任务（约 2–3 分钟）</Button>

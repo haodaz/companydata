@@ -22,6 +22,42 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   if (!s) return NextResponse.json({ ok: false, error: '没有这次作答' }, { status: 404 });
   if (s.submitted_at) return NextResponse.json({ ok: false, error: '已经交卷了' }, { status: 409 });
   if (timing(t.task, s).closed) return NextResponse.json({ ok: false, error: '时间到了', expired: true }, { status: 409 });
+  // 交付文件直传（11-10）：sign 发签名地址 → 浏览器直传存储 → done 登记事件；remove 记一条 file_remove（交卷时不算）。见 lib/work/upload-client.ts
+  if ((req.headers.get('content-type') || '').includes('application/json')) {
+    const b = await req.json().catch(() => ({}));
+    const tsec = Number(b.t) || Math.round((Date.now() - new Date(s.started_at).getTime()) / 1000);
+    const safe = String(b.name || 'file').replace(/[^\w.\-一-龥]+/g, '_').slice(0, 80);
+    if (b.step === 'sign') {
+      if (Number(b.size) > MAX) return NextResponse.json({ ok: false, error: '文件太大（上限 200MB）' }, { status: 413 });
+      const ext = (safe.match(/\.[A-Za-z0-9]{1,8}$/) || [''])[0].toLowerCase();
+      const path = `work/${sid}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}${ext}`;
+      const { data, error } = await db.storage.from(BUCKET).createSignedUploadUrl(path, { upsert: true });
+      if (error || !data) return NextResponse.json({ ok: false, error: error?.message || '没拿到上传地址' }, { status: 500 });
+      return NextResponse.json({ ok: true, signed_url: data.signedUrl, path });
+    }
+    if (b.step === 'done') {
+      const path = String(b.path || '');
+      if (!path.startsWith(`work/${sid}/`) || path.includes('..')) return NextResponse.json({ ok: false, error: '路径不对' }, { status: 400 });
+      const dir = path.slice(0, path.lastIndexOf('/')), base = path.slice(path.lastIndexOf('/') + 1);
+      const { data: found } = await db.storage.from(BUCKET).list(dir, { search: base, limit: 5 });
+      const obj = (found || []).find(o => o.name === base);
+      if (!obj) return NextResponse.json({ ok: false, error: '存储里没找到这个文件，再传一次' }, { status: 400 });
+      const size = Number(obj.metadata?.size) || Number(b.size) || 0;
+      const url = labMediaUrl(db.storage.from(BUCKET).getPublicUrl(path).data.publicUrl);
+      const part = String(b.part || '').slice(0, 20);
+      const ev = { t: tsec, type: 'file', name: safe, size, url, ...(part ? { part } : {}) };
+      await db.from('work_sessions').update({ events: [...(s.events || []), ev].slice(-3000) }).eq('id', sid);
+      return NextResponse.json({ ok: true, url, name: safe, size });
+    }
+    if (b.step === 'remove') {
+      const url = String(b.url || '');
+      const f = (s.events || []).find((e: any) => e.type === 'file' && e.url === url);
+      if (!f) return NextResponse.json({ ok: false, error: '没有这个文件' }, { status: 404 });
+      await db.from('work_sessions').update({ events: [...(s.events || []), { t: tsec, type: 'file_remove', url, name: f.name }].slice(-3000) }).eq('id', sid);
+      return NextResponse.json({ ok: true });
+    }
+    return NextResponse.json({ ok: false, error: '不认识的操作' }, { status: 400 });
+  }
   const form = await req.formData();
   const file = form.get('file') as File | null;
   const k0 = String(form.get('kind') || 'file');

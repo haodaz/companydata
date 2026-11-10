@@ -102,14 +102,15 @@ function Inner() {
   );
 }
 
-/** 直接改、马上生效：岗位名、限时、到点交卷；素材的加删在「材料包」里（点了就切过去） */
+/** 直接改、马上生效：标题、岗位名、限时、到点交卷；素材的加删在「材料包」里（点了就切过去）；最下面删除这道题（11-10） */
 function QuickSettings({ T, token, k, onSaved }: { T: any; token: string; k: string; onSaved: () => void }) {
   const { message } = App.useApp();
+  const [title, setTitle] = useState<string>(T.task?.title || ''); useEffect(() => setTitle(T.task?.title || ''), [T.task?.title]);
   const [role, setRole] = useState<string>(T.role || ''); const [mins, setMins] = useState<number>(Number(T.task?.time_minutes) || 60); const [busy, setBusy] = useState('');
   useEffect(() => { setRole(T.role || ''); setMins(Number(T.task?.time_minutes) || 60); }, [T.role, T.task?.time_minutes]);
   const save = async (body: any, what: string) => {
     setBusy(what);
-    try { const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(k)}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })).json(); if (!j.ok) throw new Error(j.error || '没改成'); message.success(what === '到点交卷' ? '改好了，候选人那边马上生效' : `${what}改好了，任务书里的写法也一起换了`); onSaved(); }
+    try { const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(k)}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })).json(); if (!j.ok) throw new Error(j.error || '没改成'); message.success(what === '到点交卷' || what === '标题' ? '改好了，候选人那边马上生效' : `${what}改好了，任务书里的写法也一起换了`); onSaved(); }
     catch (e: any) { message.error(e.message); } finally { setBusy(''); }
   };
   const mats = T.materials || []; const files = mats.filter((m: any) => m.kind === 'file').length;
@@ -118,10 +119,12 @@ function QuickSettings({ T, token, k, onSaved }: { T: any; token: string; k: str
   return (
     <div>
       <div style={{ fontSize: 12.5, color: '#888', fontWeight: 600, marginBottom: 6 }}>直接改 · 马上生效</div>
+      <div style={row}><span style={lab}>标题</span><Space.Compact style={{ width: '100%' }}><Input value={title} onChange={e => setTitle(e.target.value)} maxLength={40} onPressEnter={() => title.trim().length >= 2 && title !== T.task?.title && save({ title }, '标题')} /><Button disabled={title.trim().length < 2 || title === T.task?.title} loading={busy === '标题'} onClick={() => save({ title }, '标题')}>保存</Button></Space.Compact></div>
       <div style={row}><span style={lab} title="岗位名，或一句话写要找什么样的人">岗位</span><Space.Compact style={{ width: '100%' }}><Input value={role} onChange={e => setRole(e.target.value)} maxLength={120} onPressEnter={() => role.trim() && role !== T.role && save({ role }, '岗位名')} /><Button disabled={!role.trim() || role === T.role} loading={busy === '岗位名'} onClick={() => save({ role }, '岗位名')}>保存</Button></Space.Compact></div>
       <div style={row}><span style={lab}>限时</span><Space.Compact><InputNumber min={20} max={240} step={10} value={mins} onChange={v => setMins(Number(v) || mins)} suffix="分钟" style={{ width: 130 }} /><Button disabled={mins === Number(T.task?.time_minutes)} loading={busy === '用时'} onClick={() => save({ time_minutes: mins }, '用时')}>保存</Button></Space.Compact></div>
       <div style={row}><span style={lab}>到点交卷</span><span style={{ fontSize: 13, color: '#666' }}><Switch size="small" checked={!T.task?.soft_limit} loading={busy === '到点交卷'} onChange={v => save({ auto_submit: v }, '到点交卷')} style={{ marginRight: 8 }} />{T.task?.soft_limit ? '关着：超时可以继续做，用时如实记录' : '时间一到自动交卷，不能再改'}</span></div>
       <div style={row}><span style={lab}>素材</span><span style={{ fontSize: 13 }}>{mats.length} 份{files ? `（上传的文件 ${files} 个）` : ''} · <a onClick={() => { window.dispatchEvent(new CustomEvent('work-tab', { detail: 'm' })); document.querySelector('[data-tour="detail"]')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}>加删素材 →</a></span></div>
+      <div style={row}><span style={lab}>删除</span><span style={{ fontSize: 13, color: '#888' }}><a style={{ color: '#c0392b' }} onClick={async () => { if (!confirm(`删除「${T.task?.title}」？\n从「我的真活」里拿掉，参与链接马上失效，候选人打不开。已有的作答和报告不会丢，要找回请联系我们。`)) return; const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(k)}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'deleted' }) })).json(); if (!j.ok) return message.error(j.error || '没删掉'); message.success('删掉了'); setTimeout(() => { location.href = '/work/mine'; }, 700); }}>删除这道题</a> · 只想暂停用上面的「下架」</span></div>
     </div>
   );
 }
