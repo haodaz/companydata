@@ -152,7 +152,7 @@ export const JOB_FIELDS: JobFieldDef[] = [
   { key: 'education_requirement', label: '最低学历', kind: 'enum', group: 'requirement', core: true, options: EDUCATION_LABELS, hint: '最低学历要求。' },
   { key: 'education_description', label: '学历说明', kind: 'text', group: 'requirement', hint: '学历要求原文（如 "BS/MS in Computer Science or equivalent practical experience"）。' },
   { key: 'major_requirement', label: '专业要求', kind: 'string', group: 'requirement', hint: '专业 / 学科背景要求，用中文概括，专有名词保留原文。' },
-  { key: 'exp_years', label: '最低工作年限', kind: 'string', group: 'requirement', hint: '最低工作经验年限，字符串（如 "3"、"1-3"）；没写年限、应届、不限都为 null，不要写 0（数据部门 10-23 #32）。' },
+  { key: 'exp_years', label: '经验年限', kind: 'string', group: 'requirement', hint: '工作经验年限，只能写成这几种格式之一：X年、X年以上、X年以下、X-Y年、X-Y年以上、X-Y年以下；按月写的把「年」换成「个月」（X个月以上、X-Y个月）；X、Y 可以是小数（3.5年、4-7年）。原文写明不限就填「不限」；没写年限、应届为 null，不要写 0（数据部门 10-23 #32、11-09）。' },
   { key: 'exp_labels', label: '经验标签（要求）', kind: 'string', group: 'requirement', derived: true, hint: '「任职要求」里的经验标签（如 实习经验；项目经验；竞赛获奖），标签之间用中文分号「；」分隔。' },
   { key: 'exp_labels_jd', label: '经验标签（职责）', kind: 'string', group: 'requirement', derived: true, hint: '「岗位职责」里的经验标签，标签之间用中文分号「；」分隔。' },
   { key: 'skill_labels', label: '技能标签（要求）', kind: 'string', group: 'requirement', derived: true, hint: '「任职要求」里的技能标签（如 Python；SQL；CFA），标签之间用中文分号「；」分隔。' },
@@ -297,7 +297,7 @@ export function sanitizeJob(raw: Record<string, any>): Record<string, any> {
   }
   if (out.minimum_working_days !== null) out.minimum_working_days = Math.round(out.minimum_working_days);
   // 最低工作年限：字符串；0 / 不限 / 无要求 / 应届一律留空（数据部门 10-23 #32：没有经验年限的就是空值，不要写 0）
-  if (out.exp_years != null) { const e = String(out.exp_years).replace(/年|years?|\s/gi, ''); out.exp_years = !e || /^(0|0\.0|不限|无|无要求|应届|n\/?a)$/i.test(e) ? null : e; }
+  out.exp_years = normExpYears(out.exp_years);
   out.if_develop_management = isManagementTrainee(out.name);
   return out;
 }
@@ -338,3 +338,22 @@ export function formatSalary(job: Record<string, any>): string {
   const range = lo != null && hi != null && Number(lo) !== Number(hi) ? `${fmt(lo)} – ${fmt(hi)}` : fmt(lo ?? hi);
   return `${cur ? `${cur} ` : ''}${range}${per ? ` ${SALARY_PERIOD_LABELS[per] || per}` : ''}`;
 }
+
+/**
+ * 经验年限统一成数据部门 11-09 的写法：X年 / X年以上 / X年以下 / X-Y年(以上|以下)，按月的换成「个月」，或「不限」。
+ * 只写数字的（老数据 "3"、"1-3"）按「最低年限」理解：单个数是「X年以上」，区间是「X-Y年」。认不出数字的留空。
+ */
+export function normExpYears(v: unknown): string | null {
+  const s0 = String(v ?? '').trim();
+  if (!s0) return null;
+  if (/^(不限|无要求|经验不限|不要求)/.test(s0)) return '不限';
+  if (/^(0|0\.0|无|应届|n\/?a)$/i.test(s0.replace(/年|\s/g, ''))) return null;
+  const s = s0.replace(/[–—~～〜至到]/g, '-').replace(/\s/g, '');
+  const m = s.match(/(\d+(?:\.\d+)?)(?:-(\d+(?:\.\d+)?))?/);
+  if (!m || Number(m[1]) === 0 && !m[2]) return null;
+  const unit = /个?月|months?/i.test(s) && !/年|years?/i.test(s) ? '个月' : '年';
+  const range = m[2] ? `${m[1]}-${m[2]}` : m[1];
+  const q = /以下|以内|不超过|及以下|<|≤/.test(s) ? '以下' : /以上|及以上|或以上|\+|至少|不少于|>|≥/.test(s) ? '以上' : m[2] ? '' : '以上';
+  return `${range}${unit}${q}`;
+}
+

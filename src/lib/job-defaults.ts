@@ -73,13 +73,15 @@ export function applyLangFields(job: Record<string, any>, opts: { overwrite?: st
   const patch: Record<string, string> = {};
   for (const [k, src] of Object.entries(LANG_SOURCE)) {
     const v = String(job[src] ?? '').trim();
-    if (!v) continue;
+    // 原文空了，中英文也不能留（数据部门 11-09：Cn / En 有值，原文必须有值）。原文这次没给（undefined，比如沿用库里的）就不动
+    if (!v) { if (src in job) for (const l of ['cn', 'en']) { const key = `${k}_lang_${l}`; if (job[key]) { patch[key] = null as any; job[key] = null; } } continue; }
     const slots = /^https?:\/\//i.test(v) ? ['cn', 'en'] : [isZhText(v) ? 'cn' : 'en'];
     for (const l of slots) {
       const key = `${k}_lang_${l}`;
       if (!job[key] || opts.overwrite?.includes(k)) { if (job[key] !== v) patch[key] = v; job[key] = v; }
     }
   }
+  if (!job.address && job[ADDRESS_LANG_SOURCE]) { patch.address = job[ADDRESS_LANG_SOURCE]; job.address = job[ADDRESS_LANG_SOURCE]; }   // 活动地址 (Cn/En) 跟工作地点，原文地址也得有
   const want = addressLangOf(job[ADDRESS_LANG_SOURCE]);
   for (const [key, v] of Object.entries(want)) if ((job[key] ?? null) !== v) { patch[key] = v as any; job[key] = v; }
   return patch;
