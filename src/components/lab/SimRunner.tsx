@@ -73,6 +73,9 @@ export interface SimRunnerProps {
 }
 
 /** 模拟操作台：一步一步操作，每一步确认后才推进；下钻 / 询问会浮现新的信息 */
+/** 写一段的题最少几个字（11-10 同事反馈：按钮灰着不知道为什么，所以差几个字要写在框下面） */
+const MIN_TEXT = 20;
+
 export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, backdrop, study, stepExam, career }: SimRunnerProps & { /** 生涯体验：不是考核，交卷的说法换成看反馈 */ career?: boolean; /** 分步考（2026-10-28）：考试模式下工位那一步一步一步来（只提示该动哪个控件），照常计分 */ stepExam?: Lesson; /** 跟我学：带教案（lib/lab-lesson.ts）——每步先讲看什么 / 为什么，自己选完再逐个选项讲对错，工位上一步一步带着做；不计时不评分 */ study?: Lesson; /** 3D beta：这一章发生在已重建的 3D 场景里，用它代替平面背景 */ backdrop?: Beta3DScene | null; /** 演示模式：每一步先填好专家的选择，工位自己走一遍；何时翻页由讲解的人决定 */ demo?: SimTrace; /** 从第几步开始：演示和取图时直接跳到工位那步 */ startAt?: number }) {
   const [idx, setIdx] = useState(Math.min(Math.max(0, startAt || 0), sim.steps.length - 1));
   const [head3d, setHead3d] = useState(false);
@@ -111,13 +114,14 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, 
   }, [step]);
 
   const allocated = step.type === 'allocate' ? (Object.values(value || {}) as number[]).reduce((a, b) => a + (b || 0), 0) : 0;
+  const textShort = step.type === 'text' ? Math.max(0, MIN_TEXT - (value || '').trim().length) : 0;
   const ready = useMemo(() => {
     switch (step.type) {
       case 'choose': return !!value;
       case 'multi': case 'drill': return (value || []).length > 0;
       case 'classify': return (step.options || []).every(o => value?.[o.id]);
       case 'allocate': return allocated === step.total;
-      case 'text': return (value || '').trim().length >= 20;
+      case 'text': return (value || '').trim().length >= MIN_TEXT;
       case 'bench': return !!value?.finished;
       default: return true;
     }
@@ -255,6 +259,7 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, 
         )}
 
         {step.type === 'text' && <textarea className="lab-input" rows={9} value={value || ''} onChange={e => set(e.target.value)} placeholder={step.placeholder || '写下你的结论……'} />}
+        {step.type === 'text' && textShort > 0 && <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 6 }}>{textShort === MIN_TEXT ? `至少写 ${MIN_TEXT} 个字，才能继续` : `再写 ${textShort} 个字就能继续（至少 ${MIN_TEXT} 字，把原因也说一说）`}</div>}
         {lessonBottom}
     </>
   );

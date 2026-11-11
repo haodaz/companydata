@@ -194,9 +194,16 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [running, spec, snapshot, guided, gPhase, gi]);
 
+  /** 跟我学：还没轮到动手时点了控件，弹一句告诉他该干什么（11-10 同事反馈：按钮看着能点，点了没反应，不知道怎么上手） */
+  const [gNudge, setGNudge] = useState(false);
+  const nudgeT = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const nudge = () => { setGNudge(true); if (nudgeT.current) clearTimeout(nudgeT.current); nudgeT.current = setTimeout(() => setGNudge(false), 2600); };
+  const handsOff = !!guided && (gPhase === 'before' || gPhase === 'demo' || gPhase === 'ready');
+
   const act = (id: string, value: number) => {
-    if ((!running && !guided) || auto) return;
-    if (guided && gPhaseRef.current !== 'act' && gPhaseRef.current !== 'done') return;   // 看示范的时候别碰台面
+    if (!running && !guided) return;
+    if (auto) { if (guided) nudge(); return; }
+    if (guided && gPhaseRef.current !== 'act' && gPhaseRef.current !== 'done') { nudge(); return; }   // 看示范的时候别碰台面，但要告诉他为什么没反应
     if (guided && gPhaseRef.current === 'act' && gPausedRef.current) {
       // 旋钮朝一个方向连着拨算一下；拨过头往回调、或摸了别的控件，才算「调整」
       if (id !== gTarget?.control) gTries.current += 2;
@@ -416,8 +423,11 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 10 }}>
       {spec.controls.filter(c => !c.hidden).map(c => {
         const v = st.controls[c.id]; const done = pressed(c);
+        const isTarget = !!guided && gPhase === 'act' && gPaused && gTarget?.control === c.id;
+        const waiting = handsOff || (!!guided && gPhase === 'act' && gPaused && !isTarget);
         return (
-          <div key={c.id} className={hud ? 'hud-card' : undefined} style={{ padding: '10px 12px', borderRadius: 12, border: '1px solid var(--line)', background: 'rgba(255,255,255,.7)' }}>
+          <div key={c.id} className={`${hud ? 'hud-card' : ''}${isTarget ? ' bench-target' : ''}`} style={{ position: 'relative', padding: '10px 12px', borderRadius: 12, border: '1px solid var(--line)', background: 'rgba(255,255,255,.7)', opacity: waiting ? 0.5 : 1, transition: 'opacity .25s' }}>
+            {isTarget && <span className="bench-target-tag">{c.kind === 'button' ? '点这里' : c.kind === 'switch' ? '拨这里' : '拖这里'}</span>}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
               <span className="hud-ink" style={{ fontWeight: 700, fontSize: 13 }}>{c.label}</span>
               {c.kind === 'knob' && <span className="lab-mono" style={{ fontSize: 13, fontWeight: 800, color: 'var(--v)', letterSpacing: 0 }}>{v}{c.unit}</span>}
@@ -482,7 +492,8 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
       <div className="lab-mono lab-cap" style={{ marginBottom: 6, color: 'var(--v)' }}>{exam ? `分步考 · 第 ${Math.min(gi + 1, gScript.length)} / ${gScript.length} 个动作` : <>我教你 · {gPhase === 'before' ? '先看一眼' : gPhase === 'demo' ? `我先做一遍 · 第 ${Math.min(autoI.current, gScript.length)} / ${gScript.length} 下` : gPhase === 'ready' ? '我做完了' : gPhase === 'act' ? `换你比着做 · 第 ${gi + 1} / ${gScript.length} 下` : gPhase === 'after' ? '收尾' : `操作打分 ${gScore()}`}</>}</div>
       {gPhase === 'before' && <>
         <div style={{ fontSize: 13.5, lineHeight: 1.75 }} className="hud-ink">{guided.before || '先把仪表和控件看一遍，知道每样东西管什么。'}</div>
-        <button className="lab-btn" style={{ marginTop: 10, width: '100%' }} onClick={() => { if (!gScript.length) { setGPhase('done'); setGPaused(true); return; } setGPhase('demo'); autoI.current = 0; setGPaused(false); setAuto(true); }}>先看我做一遍 →</button>
+        <button className="lab-btn bench-cta" style={{ marginTop: 10, width: '100%' }} onClick={() => { if (!gScript.length) { setGPhase('done'); setGPaused(true); return; } setGPhase('demo'); autoI.current = 0; setGPaused(false); setAuto(true); }}>先看我做一遍 →</button>
+        <div className="hud-ink3" style={{ fontSize: 11.5, marginTop: 8, lineHeight: 1.6, color: 'var(--ink3)' }}>台面上的按钮现在还不能点，看完这一遍就轮到你。</div>
       </>}
       {gPhase === 'demo' && <>
         <div style={{ fontSize: 14.5, fontWeight: 700, lineHeight: 1.6 }} className="hud-ink">{autoI.current === 0 ? '马上开始，看着仪表……' : demoNow?.say}</div>
@@ -493,7 +504,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
         <div style={{ fontSize: 13.5, lineHeight: 1.75 }} className="hud-ink">{guided.after || '看看目标都达成了没有。'}</div>
         <div className="hud-ink3" style={{ fontSize: 12, marginTop: 4, color: 'var(--ink3)' }}>我这一遍：目标 {goalsDone}/{spec.goals.length} · 违规 {violations}。台面清掉，换你一下一下比着做，每一下我都会评。</div>
         <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
-          <button className="lab-btn" style={{ flex: 1 }} onClick={() => { hardReset(); setGOutcomes([]); gTries.current = 0; gActStart.current = 0; gEvents.current = 0; setGi(0); setGPhase('act'); setGPaused(false); }}>换你比着做 →</button>
+          <button className="lab-btn bench-cta" style={{ flex: 1 }} onClick={() => { hardReset(); setGOutcomes([]); gTries.current = 0; gActStart.current = 0; gEvents.current = 0; setGi(0); setGPhase('act'); setGPaused(false); }}>换你比着做 →</button>
           <button className="lab-btn ghost sm" style={hud ? { color: '#fff', borderColor: 'rgba(255,255,255,.5)' } : undefined} onClick={() => { hardReset(); setGPhase('demo'); autoI.current = 0; setGPaused(false); setAuto(true); }}>再看一遍</button>
         </div>
       </>}
@@ -520,8 +531,11 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
     </div>
   ) : null;
 
+  const nudgeToast = gNudge && handsOff ? <div className="bench-nudge">{gPhase === 'before' ? '还没轮到你动手：先点右边的「先看我做一遍」' : gPhase === 'demo' ? '老手正在做，先看着，做完就换你' : '点右边的「换你比着做」，就可以上手了'}</div> : null;
+
   const side = (
     <>
+      {nudgeToast}
       {guideCard}
       {handMirror}
       <div className={hud ? 'hud-card' : undefined} style={{ padding: 14, borderRadius: 14, background: 'rgba(23,26,46,.04)', border: '1px solid var(--line)' }}>
@@ -627,7 +641,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
       <div className="lab-mono" style={{ position: 'absolute', left: 12, top: hud ? 34 : 10, display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,.6)', letterSpacing: '.06em' }}>
         <span style={{ width: 8, height: 8, borderRadius: 4, background: running ? '#ff3b5c' : '#777', boxShadow: running ? '0 0 8px #ff3b5c' : 'none' }} />CAM 01 · 数字工位 · T+{fmtT(st.t)}
       </div>
-      {!!spec.expertScript?.length && !exam && (
+      {!!spec.expertScript?.length && !guided && (
         <button onClick={() => { if (!auto) { if (stRef.current.t > 0.5) hardReset(); /* 示范从头放：已经走了一段时，前面的动作会挤在同一拍里一起执行 */ autoI.current = 0; setAuto(true); } else setAuto(false); }} style={{ position: 'absolute', right: 12, bottom: 12, padding: '8px 15px', borderRadius: 999, border: '1px solid rgba(255,255,255,.35)', background: auto ? 'linear-gradient(135deg,#3ddc97,#12b5cb)' : 'rgba(15,18,36,.72)', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', backdropFilter: 'blur(6px)', zIndex: 3 }}>
           {auto ? '■ 演示中 · 点此停下' : '▶ 看我操作一遍'}
         </button>

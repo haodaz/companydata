@@ -202,6 +202,12 @@ const LAB_CSS = `
 .bench-hud-stage { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(100%, 177.78vh); max-width: 100%; max-height: 100%; aspect-ratio: 16 / 9; }
 .bench-hud-right { position: absolute; right: 14px; top: 14px; bottom: 14px; width: 340px; display: flex; flex-direction: column; gap: 10px; overflow: auto; z-index: 3; }
 .bench-hud-bottom { position: absolute; left: 14px; right: 368px; bottom: 14px; z-index: 3; }
+@keyframes bench-pulse { 50% { box-shadow: 0 0 0 7px rgba(106,92,255,.28); } }
+.bench-cta { animation: bench-pulse 1.5s ease-in-out infinite; }
+.bench-target { outline: 2px solid #8f7bff; outline-offset: 1px; animation: bench-pulse 1.5s ease-in-out infinite; }
+.bench-target-tag { position: absolute; top: -11px; right: 10px; padding: 1px 9px; border-radius: 999px; font-size: 11.5px; font-weight: 800; color: #fff; background: #6a5cff; z-index: 1; }
+.bench-nudge { position: fixed; left: 50%; bottom: 22%; transform: translateX(-50%); z-index: 60; padding: 10px 18px; border-radius: 12px; font-size: 14.5px; font-weight: 700; color: #fff; background: rgba(15,18,36,.92); box-shadow: 0 10px 30px rgba(0,0,0,.35); white-space: nowrap; max-width: calc(100vw - 32px); }
+@media (prefers-reduced-motion: reduce) { .bench-cta, .bench-target { animation: none; } }
 .bench-hud .hud-card { background: rgba(15,18,36,.78) !important; border: 1px solid rgba(255,255,255,.12) !important; color: #c7cbe6 !important; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 .bench-hud .hud-card .hud-ink { color: #e6e8f5 !important; }
 .bench-hud .hud-card .hud-ink3 { color: #9aa0b8 !important; }
