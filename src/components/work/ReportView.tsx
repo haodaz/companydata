@@ -10,6 +10,8 @@ import { WorkReport } from '@/components/work/WorkReport';
 import { WorkProcess } from '@/components/work/WorkProcess';
 import { Md } from '@/components/ws/Md';
 import { useL } from '@/lib/work/i18n';
+import { noAiLabel } from '@/lib/work/scale';
+import { useWorkScale } from '@/lib/work/scale-client';
 
 type Tab = 'deliv' | 'process' | 'grade';
 const TABS: [Tab, string, string][] = [['deliv', '交了什么', 'Submission'], ['process', '怎么做的', 'Process'], ['grade', '评得怎样', 'Assessment']];
@@ -23,9 +25,10 @@ export function ReportView({ report, participant, deliverable, events, aiChat, m
   materials?: { id: string; title: string }[]; deliverables?: { id: string; title: string }[];
   defaultTab?: Tab;
 }) {
-  const [tab, setTab] = useState<Tab>(defaultTab); const L = useL();
+  const [tab, setTab] = useState<Tab>(defaultTab); const L = useL(); const scale = useWorkScale();
   if (!report) return null;
   if (report.auditing) return <WorkReport report={report} participant={participant} />;   // 还在审：显示审计进度
+  if (!scale) return null;
   const r = report.result, u = report.ai_use, p = report.process;
   const nFiles = (events || []).filter(e => e.type === 'file' && e.url).length;
   const shots = report.recording?.gallery || [];
@@ -33,8 +36,8 @@ export function ReportView({ report, participant, deliverable, events, aiChat, m
     <div style={{ display: 'grid', gap: 14 }}>
       {/* 概要：一眼看到分数、用 AI 怎么样、用了多久 */}
       <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap', alignItems: 'baseline', padding: '12px 16px', borderRadius: 12, background: '#fafbff', border: '1px solid #e8e9f0' }}>
-        {r && <span><span style={lab}>{L('结果', 'Result')}</span><b style={{ fontSize: 26, color: col(r.total) }}>{r.total}</b><span style={dim}> / 100</span></span>}
-        {u && <span><span style={lab}>{L('AI 使用', 'AI use')}</span>{u.score == null ? <b style={{ color: '#8c8c8c' }}>{L('没用 AI', 'No AI used')}</b> : <><b style={{ fontSize: 22, color: col(u.score) }}>{u.score}</b><span style={dim}> / 100</span></>}</span>}
+        {r && scale !== 'ai_use' && <span><span style={lab}>{L('结果', 'Result')}</span><b style={{ fontSize: 26, color: col(r.total) }}>{r.total}</b><span style={dim}> / 100</span></span>}
+        {u && <span><span style={lab}>{L('AI 使用', 'AI use')}</span>{u.score == null ? <b style={{ color: '#8c8c8c' }}>{noAiLabel(u, L)}</b> : <><b style={{ fontSize: 22, color: col(u.score) }}>{u.score}</b><span style={dim}> / 100</span></>}</span>}
         {p?.duration_s != null && <span><span style={lab}>{L('用时', 'Time taken')}</span><b>{L(fmt(p.duration_s), fmtEn(p.duration_s))}</b></span>}
       </div>
       <div role="tablist" style={{ display: 'flex', gap: 4, borderBottom: '1px solid #e8e9f0' }}>

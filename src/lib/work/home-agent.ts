@@ -10,6 +10,7 @@ import { supabaseAdmin as db } from '@/lib/supabase';
 import type { AgentKit } from '@/lib/ws/agent';
 import { WORK_CHAT_TOOLS, loadMine, runWorkChatTool, ui as taskUi, workChatSystemPrompt } from '@/lib/work/chat-agent';
 import { kbLookup, kbSave } from '@/lib/work/kb';
+import { getWorkScale } from '@/lib/work/scale-server';
 import { publicShowcase } from '@/lib/work/showcase';
 
 type User = { email: string; role: string };
@@ -41,7 +42,7 @@ export async function myTasks(user: User, opts: { query?: string; all?: boolean 
   let tasks = (data || []).filter(t => t.status !== 'draft');
   const kw = String(opts.query || '').trim();
   if (kw) tasks = tasks.filter(t => [t.task?.title, t.company_name, t.role].some(v => String(v || '').includes(kw)));
-  const ids = tasks.map(t => t.id);
+  const ids = tasks.map(t => t.id); const aiOnly = (await getWorkScale()) === 'ai_use';
   const agg: Record<string, { n: number; done: number; preview: number; scores: number[]; last: string | null }> = {};
   for (let i = 0; i < ids.length; i += 100) {
     const { data: ss } = await db.from('work_sessions').select('task_id, submitted_at, score, participant').in('task_id', ids.slice(i, i + 100));
@@ -59,22 +60,25 @@ export async function myTasks(user: User, opts: { query?: string; all?: boolean 
       status: t.status, time_minutes: t.task?.time_minutes, created_at: t.created_at,
       started: a.n, submitted: a.done, preview: a.preview,
       avg: a.scores.length ? Math.round(a.scores.reduce((x, y) => x + y, 0) / a.scores.length) : null,
-      best: a.scores.length ? Math.max(...a.scores) : null, baseline: t.baseline?.result?.total ?? null, last_submit: a.last,
+      best: a.scores.length && !aiOnly ? Math.max(...a.scores) : null, baseline: aiOnly ? null : t.baseline?.result?.total ?? null, last_submit: a.last,
     };
   });
 }
 
 /** 一道题的作答人（不含事件流）；工作台的「候选人」页也用 */
+const AI_ONLY_NOTE = '平台现在只按 AI 使用与交互评分：只谈 AI 使用，不提总分、逐条得分和 AI 基线';
+
 export async function taskPeople(taskId: string) {
   const { data } = await db.from('work_sessions').select('id, participant, started_at, submitted_at, score, report').eq('task_id', taskId).order('started_at', { ascending: false }).limit(300);
+  const aiOnly = (await getWorkScale()) === 'ai_use';   // 平台选了「AI 使用与交互」：score 给 AI 使用分，一句话也换成 AI 使用的结论
   return (data || []).map(x => {
     const r = x.report || {}; const items = r.result?.items || [];
     const sorted = [...items].sort((a: any, b: any) => a.score - b.score);
     return {
       session_id: x.id, name: nameOf(x), contact: x.participant?.contact || '', mode: x.participant?.mode || r.mode || 'bench', preview: !!x.participant?.preview,
       started_at: x.started_at, submitted_at: x.submitted_at, minutes: mins(durOf(x)),
-      score: x.score == null ? null : Number(x.score), ai_use: r.ai_use?.score ?? null,
-      summary: s(r.result?.summary, 160), strongest: sorted.length ? `${sorted[sorted.length - 1].title} ${sorted[sorted.length - 1].score}` : '', weakest: sorted.length ? `${sorted[0].title} ${sorted[0].score}` : '',
+      score: aiOnly ? r.ai_use?.score ?? null : x.score == null ? null : Number(x.score), ai_use: r.ai_use?.score ?? null,
+      summary: s(aiOnly ? r.ai_use?.verdict : r.result?.summary, 160), strongest: aiOnly ? '' : sorted.length ? `${sorted[sorted.length - 1].title} ${sorted[sorted.length - 1].score}` : '', weakest: aiOnly ? '' : sorted.length ? `${sorted[0].title} ${sorted[0].score}` : '',
       graded: !!r.result,
     };
   }).sort((a, b) => (b.score ?? -1) - (a.score ?? -1));
@@ -107,6 +111,7 @@ async function run(name: string, input: any, user: User): Promise<{ result: any;
       if (!r.result) return { result: { name: nameOf(x), submitted: !!x.submitted_at, note: x.submitted_at ? '报告还在生成' : '还没交卷' }, ui: reportUi(t, x), label: `${nameOf(x)}：${x.submitted_at ? '报告还在生成' : '还没交卷'}` };
       const p = r.process || {}; const u = r.ai_use || {};
       const chat = (x.ai_chat || []) as any[];
+      if ((await getWorkScale()) === 'ai_use') return { result: { scale_note: AI_ONLY_NOTE, name: nameOf(x), mode: x.participant?.mode, minutes: mins(durOf(x)), time_minutes: t.task?.time_minutes, ai_use: u.score == null ? s(u.verdict, 200) || '没用 AI' : { score: u.score, verdict: u.verdict, items: (u.items || []).map((i: any) => `${i.title} ${i.score}：${s(i.note, 100)}`) }, asks: chat.length, first_asks: chat.slice(0, 6).map((c: any) => s(c.q, 120)) }, ui: reportUi(t, x), label: `读了 ${nameOf(x)} 的报告` };
       const result = {
         name: nameOf(x), mode: x.participant?.mode, minutes: mins(durOf(x)), time_minutes: t.task?.time_minutes, total: r.result.total,
         summary: r.result.summary, strengths: r.result.strengths, gaps: r.result.gaps,
@@ -125,8 +130,10 @@ async function run(name: string, input: any, user: User): Promise<{ result: any;
       const want: string[] = Array.isArray(input.session_ids) ? input.session_ids.map(String) : [];
       const { data } = await db.from('work_sessions').select('id, participant, score, report, started_at, submitted_at').eq('task_id', t.id).not('report', 'is', null);
       let rows = (data || []).filter(x => x.report?.result && !x.participant?.preview);
-      rows = want.length ? rows.filter(x => want.includes(x.id)) : rows.sort((a, b) => (Number(b.score) || 0) - (Number(a.score) || 0)).slice(0, 4);
+      const aiOnly = (await getWorkScale()) === 'ai_use', rank = (x: any) => Number(aiOnly ? x.report.ai_use?.score : x.score) || 0;
+      rows = want.length ? rows.filter(x => want.includes(x.id)) : rows.sort((a, b) => rank(b) - rank(a)).slice(0, 4);
       if (!rows.length) return { result: { error: '这道题还没有评好分的作答' }, ui: taskUi(t), label: '还没有可比的' };
+      if (aiOnly) return { result: { scale_note: AI_ONLY_NOTE, title: t.task?.title, people: rows.map(x => ({ session_id: x.id, name: nameOf(x), minutes: mins(durOf(x)), ai_use: x.report.ai_use?.score ?? null, verdict: s(x.report.ai_use?.verdict, 200), items: (x.report.ai_use?.items || []).map((i: any) => `${i.title} ${i.score}`) })) }, ui: taskUi(t), label: `并排比了 ${rows.length} 个人` };
       const rubric = (t.rubric || []) as any[];
       const base = t.baseline?.result?.items || [];
       const table = rubric.map(rb => ({ item: rb.title, weight: rb.weight, baseline: base.find((b: any) => b.id === rb.id)?.score ?? null, scores: Object.fromEntries(rows.map(x => [nameOf(x), x.report.result.items?.find((i: any) => i.id === rb.id)?.score ?? null])) }));
@@ -148,6 +155,7 @@ async function run(name: string, input: any, user: User): Promise<{ result: any;
       const durs = graded.map(x => mins(durOf(x))).filter((v): v is number => v != null).sort((a, b) => a - b);
       const modes: Record<string, number> = {}; for (const x of all) { const m = x.participant?.mode || 'bench'; modes[m] = (modes[m] || 0) + 1; }
       const ai = graded.map(x => x.report.ai_use?.score).filter((v: any) => v != null) as number[];
+      if ((await getWorkScale()) === 'ai_use') return { result: { scale_note: AI_ONLY_NOTE, title: t.task?.title, status: t.status, time_minutes: t.task?.time_minutes, started: all.length, submitted: done.length, graded: graded.length, modes, ai_use_avg: ai.length ? Math.round(ai.reduce((a, b) => a + b, 0) / ai.length) : null, ai_use_min: ai.length ? Math.min(...ai) : null, ai_use_max: ai.length ? Math.max(...ai) : null, no_ai: graded.filter(x => x.report.ai_use && x.report.ai_use.score == null).length }, ui: taskUi(t), label: '看了这道题的 AI 使用情况' };
       const totals = graded.map(x => Number(x.score) || 0);
       const result = {
         title: t.task?.title, status: t.status, time_minutes: t.task?.time_minutes, started: all.length, submitted: done.length, graded: graded.length,

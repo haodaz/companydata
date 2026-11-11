@@ -12,11 +12,12 @@ import { App, ConfigProvider } from 'antd';
 import { SamplesPanel } from '@/components/work/SamplesPanel';
 import { ShowcaseAdmin } from '@/components/work/ShowcaseAdmin';
 import { GovernancePanel } from '@/components/work/GovernancePanel';
+import { ScaleAdmin } from '@/components/work/ScaleAdmin';
 import { askHref, col, STATUS, when } from '../ask';
 import { Empty, Head } from '../ui';
 
-type Tab = 'tasks' | 'samples' | 'showcase' | 'governance' | 'assets';
-const TABS: [Tab, string, string][] = [['tasks', '全部真活', 'All tasks'], ['samples', '样本库 · 训练素材', 'Samples'], ['showcase', '任务库上架', 'Library'], ['governance', '法规清单', 'Governance'], ['assets', '平台资产', 'Assets']];
+type Tab = 'tasks' | 'samples' | 'showcase' | 'governance' | 'scale' | 'assets';
+const TABS: [Tab, string, string][] = [['tasks', '全部真活', 'All tasks'], ['samples', '样本库 · 训练素材', 'Samples'], ['showcase', '任务库上架', 'Library'], ['governance', '法规清单', 'Governance'], ['scale', '评分方式', 'Scoring'], ['assets', '平台资产', 'Assets']];
 const TONE: Record<string, string> = { published: 'ok', ready: 'warn', archived: 'mute' };
 
 export default function Page() {
@@ -38,6 +39,7 @@ function Admin() {
         {tab === 'samples' && <div className="wws-card pad"><SamplesPanel /></div>}
         {tab === 'showcase' && <div className="wws-card pad"><ShowcaseAdmin /></div>}
         {tab === 'governance' && <div className="wws-card pad"><GovernancePanel /></div>}
+        {tab === 'scale' && <div className="wws-card pad"><ScaleAdmin /></div>}
         {tab === 'assets' && <Assets />}
       </>}
     </div>

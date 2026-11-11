@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { mainScore } from '@/lib/work/scale';
+import { getWorkScale } from '@/lib/work/scale-server';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { wsCtx, fail } from '../../_ctx';
 import { checkVerify, fitCandidate, ownCandidate, setStage, verifyCandidate } from '@/lib/ws/projects';
@@ -13,7 +15,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     let cand = await ownCandidate(c.org, (await params).id);
     if (cand.audit?.status === 'running' && zhichachaReady()) { await checkVerify(c.org, cand.id).catch(() => {}); cand = await ownCandidate(c.org, cand.id); }
     let work: any = null;
-    if (cand.work_session_id) { const { data: s } = await db.from('work_sessions').select('id, task_id, report, score, submitted_at').eq('id', cand.work_session_id).maybeSingle(); if (s) { const { data: t } = await db.from('work_tasks').select('share_token, owner_key, task').eq('id', s.task_id).maybeSingle(); work = { score: s.score, submitted: !!s.submitted_at, report: s.report, token: t?.share_token, owner_key: t?.owner_key, title: t?.task?.title }; } }
+    if (cand.work_session_id) { const { data: s } = await db.from('work_sessions').select('id, task_id, report, score, submitted_at').eq('id', cand.work_session_id).maybeSingle(); if (s) { const { data: t } = await db.from('work_tasks').select('share_token, owner_key, task').eq('id', s.task_id).maybeSingle(); work = { score: mainScore(s, await getWorkScale()), submitted: !!s.submitted_at, report: s.report, token: t?.share_token, owner_key: t?.owner_key, title: t?.task?.title }; } }
     return NextResponse.json({ ok: true, candidate: cand, work, zhichacha: zhichachaReady() });
   } catch (e) { return fail(e, 404); }
 }

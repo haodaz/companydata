@@ -8,13 +8,14 @@ import React, { Suspense, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { ReportView } from '@/components/work/ReportView';
+import { useWorkScale } from '@/lib/work/scale-client';
 import { askHref, col, MODE, when } from '../ask';
 import { Empty, Head } from '../ui';
 
 export default function Page() { return <Suspense><Reports /></Suspense>; }
 
 function Reports() {
-  const task = useSearchParams().get('task');
+  const task = useSearchParams().get('task'); const ai = useWorkScale() === 'ai_use';
   const [people, setPeople] = useState<any[] | null>(null);
   const [kw, setKw] = useState(''); const [onlyDone, setOnlyDone] = useState(true);
   const [pick, setPick] = useState<string[]>([]);
@@ -36,7 +37,7 @@ function Reports() {
       </div>
       <div className="wws-card" style={{ overflowX: 'auto' }}>
         <table className="wws-table t-reports">
-          <thead><tr>{[['', ''], ['NAME', '谁'], ['TASK', '题目'], ['MODE', '方式'], ['SUBMITTED', '交卷'], ['TIME', '用时'], ['SCORE', '总分'], ['AI USE', 'AI 使用'], ['IN A LINE', '一句话'], ['', '']].map(([e, z], i) => <th key={i}>{e}<small>{z}</small></th>)}</tr></thead>
+          <thead><tr>{[['', ''], ['NAME', '谁'], ['TASK', '题目'], ['MODE', '方式'], ['SUBMITTED', '交卷'], ['TIME', '用时'], ...(ai ? [] : [['SCORE', '总分']]), ['AI USE', 'AI 使用'], ['IN A LINE', '一句话'], ['', '']].map(([e, z], i) => <th key={i}>{e}<small>{z}</small></th>)}</tr></thead>
           <tbody>
             {people == null && <tr><td colSpan={10} className="wws-muted">读取中…</td></tr>}
             {people && !list.length && <tr><td colSpan={10}><Empty>{people.length ? '没有符合的。' : '还没有人做过你的题。题发布后把参与链接发给候选人。'}</Empty></td></tr>}
@@ -47,7 +48,7 @@ function Reports() {
               <td className="wws-muted" style={{ whiteSpace: 'nowrap' }}>{MODE[p.mode] || p.mode}</td>
               <td className="wws-muted" style={{ whiteSpace: 'nowrap' }}>{p.submitted_at ? when(p.submitted_at) : <span className="wws-tag warn">做着 / 没交</span>}</td>
               <td className="wws-muted" style={{ whiteSpace: 'nowrap' }}>{p.minutes != null ? `${p.minutes} 分` : '—'}</td>
-              <td><span className="wws-num" style={{ color: col(p.score) }}>{p.score ?? '—'}</span></td>
+              {!ai && <td><span className="wws-num" style={{ color: col(p.score) }}>{p.score ?? '—'}</span></td>}
               <td>{p.ai_use != null ? <span className="wws-num" style={{ fontSize: 15, color: col(p.ai_use) }}>{p.ai_use}</span> : <span className="wws-muted">{p.graded ? '没用' : '—'}</span>}</td>
               <td style={{ color: 'var(--ink2)', minWidth: 240, fontSize: 13 }}>{p.summary || (p.submitted_at && !p.graded ? '报告生成中' : '')}</td>
               <td style={{ whiteSpace: 'nowrap', textAlign: 'right' }}>

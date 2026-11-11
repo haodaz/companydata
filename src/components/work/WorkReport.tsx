@@ -4,6 +4,8 @@
 import React from 'react';
 import { Segment } from '@/components/work/AuditPanel';
 import { aiItemL, dimL, useL, useLang } from '@/lib/work/i18n';
+import { noAiLabel } from '@/lib/work/scale';
+import { useWorkScale } from '@/lib/work/scale-client';
 
 const fmt = (t: number) => `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
 const LV: Record<string, string> = { L1: '#c9ccd6', L2: '#ffd166', L3: '#3ddc97', L4: '#12a150' };
@@ -12,39 +14,40 @@ const col = (v: number) => (v >= 80 ? '#12a150' : v >= 60 ? '#b7791f' : '#c0392b
 /** section（11-05 报告分「交了什么 / 怎么做的 / 评得怎样」三栏）：grade 只出评分那几张、process 只出过程那几张；不传 = 整篇（老用法） */
 export function WorkReport({ report, participant, section = 'all' }: { report: any; participant?: { name?: string }; section?: 'all' | 'grade' | 'process' }) {
   const G = section !== 'process', Pr = section !== 'grade'; const L = useL(); const lang = useLang();
-  if (!report) return null;
+  const scale = useWorkScale(), ai = scale === 'ai_use';   // 平台选了「AI 使用与交互」：回答质量和过程评价不显示
+  if (!report || (!scale && !report.auditing)) return null;
   if (report.auditing) return <div style={{ padding: '14px 18px', background: '#f3f2ff', borderRadius: 14, color: '#4c43c9', fontSize: 14 }}>{L(`AI 审计中：过程 ${report.total ?? ''} 段，已看 ${report.stage ?? ''} 段${report.audit?.length ? `，到 ${fmt(report.audit[report.audit.length - 1].to)} 为止的过程信号 ${report.audit[report.audit.length - 1].tentative}（暂定）` : ''}。候选人那边做完最后一步就出正式报告。`, `AI review in progress: ${report.stage} of ${report.total} process segments reviewed${report.audit?.length ? `; process signal up to ${fmt(report.audit[report.audit.length - 1].to)} is ${report.audit[report.audit.length - 1].tentative} (provisional)` : ''}. The final report is ready once the candidate's side finishes the last step.`)}</div>;
   const r = report.result, p = report.process, c = report.compare, u = report.ai_use;
   if (!r) return null;
   return (
     <div style={{ display: 'grid', gap: 16, fontSize: 14, lineHeight: 1.7, color: '#1a1a2e' }}>
       <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'stretch' }}>
-        {G && <Card title={L('结果', 'Result')} style={{ flex: '1 1 200px' }}>
+        {G && !ai && <Card title={L('结果', 'Result')} style={{ flex: '1 1 200px' }}>
           {section === 'all' && <div style={{ fontSize: 40, fontWeight: 800, color: col(r.total) }}>{r.total}<span style={{ fontSize: 14, color: '#8c8c8c', fontWeight: 500 }}> / 100</span></div>}
           {c && <div style={{ fontSize: 13, color: '#555' }}>{L(`AI 基线 ${c?.baseline_total ?? ''} · 你${c?.delta >= 0 ? '高' : '低'} ${Math.abs(c?.delta)} 分`, `AI baseline ${c?.baseline_total ?? ''} · you scored ${Math.abs(c?.delta)} ${c?.delta >= 0 ? 'higher' : 'lower'}`)}{c?.delta < 0 && <span style={{ color: '#8c8c8c' }}>{L('（大部分人做不过 AI，差距就是要练的地方）', ' (most people score below the AI; the gap is what to practise)')}</span>}</div>}
           <div style={{ marginTop: 8, color: '#444' }}>{r.summary}</div>
         </Card>}
         {G && u && <Card title={L('AI 使用能力', 'AI use')} style={{ flex: '1 1 200px' }}>
-          {u.score == null ? <div style={{ fontSize: 22, fontWeight: 800, color: '#8c8c8c', margin: '6px 0' }}>{L('没用 AI', 'No AI used')}</div>
+          {u.score == null ? <div style={{ fontSize: 22, fontWeight: 800, color: '#8c8c8c', margin: '6px 0' }}>{noAiLabel(u, L)}</div>
             : section !== 'all' ? null : <div style={{ fontSize: 40, fontWeight: 800, color: col(u.score) }}>{u.score}<span style={{ fontSize: 14, color: '#8c8c8c', fontWeight: 500 }}> / 100</span></div>}
           <div style={{ marginTop: 4, color: '#444' }}>{u.verdict}</div>
         </Card>}
-        {Pr && !p && <Card title={L('过程', 'Process')} style={{ flex: '1 1 260px' }}><div style={{ color: '#888', fontSize: 13 }}>{report.who === 'college' ? L('AI 学员做的，没有人工操作过程', 'Done by an AI trainee; no human work process') : L('这次作答没有过程记录', 'No process was recorded for this attempt')}</div></Card>}
-        {Pr && p && <Card title={L('过程', 'Process')} style={{ flex: '1 1 260px' }}>
+        {Pr && !ai && !p && <Card title={L('过程', 'Process')} style={{ flex: '1 1 260px' }}><div style={{ color: '#888', fontSize: 13 }}>{report.who === 'college' ? L('AI 学员做的，没有人工操作过程', 'Done by an AI trainee; no human work process') : L('这次作答没有过程记录', 'No process was recorded for this attempt')}</div></Card>}
+        {Pr && !ai && p && <Card title={L('过程', 'Process')} style={{ flex: '1 1 260px' }}>
           <div style={{ color: '#555', fontSize: 13 }}>{L(`用时 ${fmt(p?.duration_s)} · 问 AI ${p?.stats?.ai_asks || 0} 次 · 看了 ${p?.stats?.materials_opened || 0}/${p?.stats?.materials_total || 0} 份材料 · 粘贴 ${p?.stats?.paste_chars || 0} 字 · 自己敲 ${p?.stats?.typed_chars || 0} 字`, `Time ${fmt(p?.duration_s)} · asked AI ${p?.stats?.ai_asks || 0} times · opened ${p?.stats?.materials_opened || 0}/${p?.stats?.materials_total || 0} materials · pasted ${p?.stats?.paste_chars || 0} chars · typed ${p?.stats?.typed_chars || 0} chars`)}</div>
           <div style={{ marginTop: 8 }}>{p?.delegation}</div>
           {!!p?.phases?.length && <div style={{ display: 'flex', marginTop: 10, height: 10, borderRadius: 5, overflow: 'hidden', background: '#eee' }}>{p?.phases.map((ph: any, i: number) => <div key={i} title={`${ph.label} ${fmt(ph.from)}–${fmt(ph.to)}`} style={{ flex: Math.max(1, ph.to - ph.from), background: ['#6055f5', '#12b5cb', '#3ddc97', '#ffd166', '#fa8c16', '#eb2f96', '#8c8c8c', '#1677ff'][i % 8] }} />)}</div>}
           {!!p?.phases?.length && <div style={{ fontSize: 12, color: '#777', marginTop: 4 }}>{p?.phases.map((ph: any) => ph.label).join(' → ')}</div>}
         </Card>}
       </div>
-      {G && r.items?.length >= 2 && <Overview items={r.items} cmp={c} />}
+      {G && !ai && r.items?.length >= 2 && <Overview items={r.items} cmp={c} />}
       {G && u?.score != null && <AiUse u={u} />}
       {section === 'all' && report.next_step && <Card title={L('如果再给一天，先改哪里（候选人交卷时写的）', 'With one more day, what to improve first (written by the candidate at submission)')}><div style={{ fontSize: 13.5, lineHeight: 1.75, whiteSpace: 'pre-wrap' }}>{report.next_step}</div></Card>}
       {/* 屏幕记录（11-10 潜历：原始录屏不给招聘方看）：只给 AI 看图写的概述，逐时间点的记录在答题历程里；原图不展示 */}
       {Pr && report.recording && <Card title={L('屏幕记录 · 用自己的软件做的', 'Screen record · work done in own software')}>
         <div style={{ fontSize: 13.5, lineHeight: 1.7 }}><div style={{ color: '#888', fontSize: 12, marginBottom: 4 }}>{L(`时长 ${fmt(report.recording.duration || 0)} · AI 看了 ${report.recording.frames ?? ''} 张截图写的概述；为保护候选人隐私，原始截图不展示，逐时间点的记录在答题历程里`, `Duration ${fmt(report.recording.duration || 0)} · summary written by AI from ${report.recording.frames} screenshots; to protect the candidate's privacy the original screenshots are not shown, and the time-stamped log is in the work history`)}</div>{report.recording.summary}</div>
       </Card>}
-      {G && <Card title={L('逐条（每条都有证据；前置没做到的，后置封顶）', 'Item by item (each with evidence; if a prerequisite is missed, later items are capped)')}>
+      {G && !ai && <Card title={L('逐条（每条都有证据；前置没做到的，后置封顶）', 'Item by item (each with evidence; if a prerequisite is missed, later items are capped)')}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead><tr style={{ color: '#8c8c8c', textAlign: 'left' }}><th style={th}>{L('条目', 'Item')}</th><th style={th}>{L('等级', 'Level')}</th><th style={th}>{L('得分', 'Score')}</th>{c && <th style={th}>{L('AI 基线', 'AI baseline')}</th>}<th style={th}>{L('证据 / 说明', 'Evidence / notes')}</th></tr></thead>
           <tbody>{r.items.map((i: any) => { const b = c?.items?.find((x: any) => x.id === i.id)?.baseline; return (
@@ -61,14 +64,14 @@ export function WorkReport({ report, participant, section = 'all' }: { report: a
           {!!r.gaps?.length && <div style={{ flex: 1 }}><div style={{ color: '#c0392b', fontWeight: 700 }}>{L('差的地方', 'Gaps')}</div><ul style={ul}>{r.gaps.map((x: string, i: number) => <li key={i}>{x}</li>)}</ul></div>}
         </div> : null}
       </Card>}
-      {Pr && <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+      {Pr && !ai && <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
         <Card title={L('高光时刻', 'Highlights')} style={{ flex: '1 1 280px' }}>{p?.highlights?.length ? p?.highlights.map((h: any, i: number) => <Moment key={i} m={h} color="#12a150" />) : <span style={{ color: '#999' }}>{L('没有观察到明显的高光', 'No clear highlights observed')}</span>}</Card>
         <Card title={L('风险时刻', 'Risk moments')} style={{ flex: '1 1 280px' }}>{p?.risks?.length ? p?.risks.map((h: any, i: number) => <Moment key={i} m={h} color="#c0392b" />) : <span style={{ color: '#999' }}>{L('没有观察到明显的风险', 'No clear risks observed')}</span>}</Card>
       </div>}
-      {Pr && !!report.audit?.length && <Card title={L('审计过程（交卷后一段一段看的笔记，总评和它连续）', 'Review notes (taken segment by segment after submission; the overall verdict follows from them)')}>
+      {Pr && !ai && !!report.audit?.length && <Card title={L('审计过程（交卷后一段一段看的笔记，总评和它连续）', 'Review notes (taken segment by segment after submission; the overall verdict follows from them)')}>
         <div style={{ display: 'grid', gap: 10 }}>{report.audit.map((seg: any) => <Segment key={seg.idx} seg={seg} compact />)}</div>
       </Card>}
-      {Pr && <Card title={L('人机协作六维（观察到的，不是定性）', 'Six dimensions of human-AI collaboration (observed, not a verdict)')}>
+      {Pr && !ai && <Card title={L('人机协作六维（观察到的，不是定性）', 'Six dimensions of human-AI collaboration (observed, not a verdict)')}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 10 }}>
           {Object.entries(p?.skills || {}).map(([k, v]: any) => <div key={k} style={{ padding: '10px 12px', borderRadius: 10, background: '#fafbff', borderLeft: `4px solid ${LV[v.level]}` }}><div style={{ fontWeight: 700 }}>{dimL(k, lang)} <span style={{ fontSize: 12, color: '#777' }}>{v.level}</span></div><div style={{ fontSize: 13, color: '#555' }}>{v.note}</div></div>)}
         </div>

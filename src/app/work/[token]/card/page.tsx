@@ -10,6 +10,8 @@ import { useParams, useSearchParams } from 'next/navigation';
 import { Radar } from '@/components/work/WorkReport';
 import { WorkLogo } from '@/components/work/WorkLogo';
 import { aiItemL, pick, type Lang } from '@/lib/work/i18n';
+import { noAiLabel } from '@/lib/work/scale';
+import { useWorkScale } from '@/lib/work/scale-client';
 import { roleLabel } from '@/lib/work/role-label';
 
 const grade = (v: number, lang?: Lang) => (v >= 85 ? { t: pick(lang, '优秀', 'Excellent'), c: '#12a150' } : v >= 70 ? { t: pick(lang, '良好', 'Good'), c: '#2f80ed' } : v >= 60 ? { t: pick(lang, '合格', 'Pass'), c: '#b7791f' } : { t: pick(lang, '待提升', 'Developing'), c: '#8c8c8c' });
@@ -21,6 +23,7 @@ export default function CardPage() {
   const sid = useSearchParams().get('s') || '';
   const [d, setD] = useState<{ task: any; s: any } | null>(null);
   const [err, setErr] = useState('');
+  const scale = useWorkScale();
   useEffect(() => {
     (async () => {
       try {
@@ -32,13 +35,15 @@ export default function CardPage() {
     })();
   }, [token, sid]);
   if (err) return <div style={{ padding: 60, textAlign: 'center', color: '#888' }}>{err}</div>;
-  if (!d) return <div style={{ padding: 60, textAlign: 'center', color: '#999' }}>成绩单生成中…</div>;
+  if (!d || !scale) return <div style={{ padding: 60, textAlign: 'center', color: '#999' }}>成绩单生成中…</div>;
   // 英文题（11-10）：成绩单整页英文
   const lang: Lang | undefined = d.task.task?.lang; const L = (zh: string, en: string) => pick(lang, zh, en);
   if (lang === 'en' && typeof document !== 'undefined') document.title = `${d.task.task?.title} · Score card`;
-  const r = d.s.report.result, cmp = d.s.report.compare;
-  const g = grade(r.total, lang);
-  const rows = (r.items || []).map((i: any) => ({ title: String(i.title), score: Number(i.score) || 0, base: cmp?.items?.find((x: any) => x.id === i.id)?.baseline }));
+  const ai = scale === 'ai_use', u = d.s.report.ai_use;   // 平台选了「AI 使用与交互」：主分和雷达都换成 AI 使用
+  const r = d.s.report.result, cmp = ai ? null : d.s.report.compare;
+  const main: number | null = ai ? u?.score ?? null : r.total;
+  const g = grade(main ?? 0, lang);
+  const rows = ai ? (u?.items || []).map((i: any) => ({ title: aiItemL(i.key, i.title, lang), score: Number(i.score) || 0 })) : (r.items || []).map((i: any) => ({ title: String(i.title), score: Number(i.score) || 0, base: cmp?.items?.find((x: any) => x.id === i.id)?.baseline }));
   const when = new Date(d.s.submitted_at || d.s.started_at || Date.now());
   const company = lang === 'en' ? enCompany(d.task.company_name) : d.task.company_name;
   const code = `ZH-${String(d.s.id).replace(/-/g, '').slice(0, 10).toUpperCase()}`;
@@ -58,8 +63,9 @@ export default function CardPage() {
         <div className="zc-meta">{[company, lang === 'en' ? roleLabel(d.task.role, d.task.task?.role, 'en') : d.task.role].filter(Boolean).join(' · ')}</div>
         <div className="zc-mid">
           <div className="zc-score">
-            <div className="zc-num" style={{ color: g.c }}>{r.total}<span>/100</span></div>
-            <div className="zc-grade" style={{ background: g.c }}>{g.t}</div>
+            {main == null ? <div className="zc-num" style={{ color: '#8c8c8c', fontSize: 30 }}>{noAiLabel(u, L)}</div> : <><div className="zc-num" style={{ color: g.c }}>{main}<span>/100</span></div>
+            <div className="zc-grade" style={{ background: g.c }}>{g.t}</div></>}
+            {ai && <div className="zc-base">{L('AI 使用与交互', 'AI use and interaction')}</div>}
             {cmp && <div className="zc-base">{L(`同一道任务 AI 基线 ${cmp.baseline_total} 分`, `AI baseline on the same task: ${cmp.baseline_total}`)}</div>}
           </div>
           {rows.length >= 3 && rows.length <= 10 && <div className="zc-radar"><Radar rows={rows} /></div>}
@@ -67,10 +73,11 @@ export default function CardPage() {
         {d.s.report.ai_use?.score != null && <div className="zc-sec"><div className="zc-h">{L('AI 使用能力', 'AI use')} · <b style={{ color: '#6055f5' }}>{d.s.report.ai_use.score}</b> / 100</div>
           <div className="zc-ai">{(d.s.report.ai_use.items || []).map((i: any) => <span key={i.key}>{aiItemL(i.key, i.title, lang)} <b>{i.score}</b></span>)}</div>
           {d.s.report.ai_use.verdict && <div style={{ fontSize: 13, color: '#555', marginTop: 4 }}>{d.s.report.ai_use.verdict}</div>}</div>}
-        {!!r.strengths?.length && <div className="zc-sec"><div className="zc-h">{L('做得好的地方', 'What went well')}</div><ul>{r.strengths.slice(0, 3).map((x: string, i: number) => <li key={i}>{x}</li>)}</ul></div>}
+        {ai && main == null && u?.verdict && <div className="zc-sec"><div style={{ fontSize: 13, color: '#555' }}>{u.verdict}</div></div>}
+        {!ai && !!r.strengths?.length && <div className="zc-sec"><div className="zc-h">{L('做得好的地方', 'What went well')}</div><ul>{r.strengths.slice(0, 3).map((x: string, i: number) => <li key={i}>{x}</li>)}</ul></div>}
         <div className="zc-foot">
           <div>{L('完成于', 'Completed')} {when.toLocaleDateString(lang === 'en' ? 'en-US' : 'zh-CN')} · {L('验证码', 'Verification code')} {code}</div>
-          <div>{L('任务来自企业的真实业务问题，评分逐条对照评分标准并留有证据', 'The task comes from a real business problem at the company; each criterion is scored against a rubric with evidence')} · {L('百业AI｜真活', 'Baiye AI · True Work')} www.aidataoffice.com</div>
+          <div>{ai ? L('任务来自企业的真实业务问题，AI 使用逐项打分并留有证据', 'The task comes from a real business problem at the company; AI use is scored item by item with evidence') : L('任务来自企业的真实业务问题，评分逐条对照评分标准并留有证据', 'The task comes from a real business problem at the company; each criterion is scored against a rubric with evidence')} · {L('百业AI｜真活', 'Baiye AI · True Work')} www.aidataoffice.com</div>
         </div>
       </div>
     </div>

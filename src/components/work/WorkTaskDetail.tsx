@@ -5,6 +5,8 @@ import React, { useMemo, useEffect, useState } from 'react';
 import { timing } from '@/lib/work/deadline';
 import { Button, Descriptions, Drawer, Input, InputNumber, Space, Table, Tabs, Tag, Tooltip, Typography, App } from 'antd';
 import { WorkReport } from '@/components/work/WorkReport';
+import { mainScore } from '@/lib/work/scale';
+import { useWorkScale } from '@/lib/work/scale-client';
 import { ReportView } from '@/components/work/ReportView';
 import { Md } from '@/components/ws/Md';
 import { MdView, RulesView } from '@/components/work/WorkText';
@@ -28,9 +30,10 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
   // 一道任务发给一批人（2026-10-28）：交了卷的按分排名；勾 2–4 人并排对比；导出候选名单
   const [picked, setPicked] = useState<string[]>([]);
   const [cmpOpen, setCmpOpen] = useState(false);
-  const graded = sessions.filter((s: any) => s.score != null && !s.participant?.preview).sort((a: any, b: any) => b.score - a.score);
-  const rankOf = new Map(graded.map((s: any, i: number) => [s.id, i + 1]));
-  const ordered = [...graded, ...sessions.filter((s: any) => !rankOf.has(s.id))];
+  const scale = useWorkScale(), ai = scale === 'ai_use';   // 平台选了「AI 使用与交互」：按 AI 使用分排，没有这项分的排在后面、不算名次
+  const graded = sessions.filter((s: any) => s.score != null && !s.participant?.preview).sort((a: any, b: any) => (mainScore(b, scale) ?? -1) - (mainScore(a, scale) ?? -1));
+  const rankOf = new Map(graded.filter((s: any) => mainScore(s, scale) != null).map((s: any, i: number) => [s.id, i + 1]));
+  const ordered = [...graded, ...sessions.filter((s: any) => !graded.includes(s))];
   // 补算 AI 使用能力（2026-10-30）：老答卷没有这一项，一次 4 份循环补到底，补完刷新
   const [aiBusy, setAiBusy] = useState('');
   const needAi = graded.filter((s: any) => s.report?.result && !('ai_use' in (s.report || {}))).length;
@@ -113,8 +116,8 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
   const exportCsv = () => {
     const items: any[] = T.rubric || [];
     const esc = (v: any) => `"${String(v ?? '').replace(/"/g, '""')}"`;
-    const head = ['名次', '姓名', '联系方式', '总分', 'AI 使用', ...items.map((r: any) => r.title), '交卷时间', '个人链接'];
-    const lines = graded.map((s: any, i: number) => { const it = s.report?.result?.items || []; return [i + 1, s.participant?.name, s.participant?.contact, s.score, aiOf(s) ? (aiOf(s).score ?? '没用 AI') : '', ...items.map((r: any) => it.find((x: any) => x.id === r.id)?.score ?? ''), s.submitted_at ? new Date(s.submitted_at).toLocaleString('zh-CN', { hour12: false }) : '', `${shareLink}?s=${s.id}`].map(esc).join(','); });
+    const head = ['名次', '姓名', '联系方式', ...(ai ? [] : ['总分']), 'AI 使用', ...(ai ? [] : items.map((r: any) => r.title)), '交卷时间', '个人链接'];
+    const lines = graded.map((s: any, i: number) => { const it = s.report?.result?.items || []; return [ai ? rankOf.get(s.id) ?? '' : i + 1, s.participant?.name, s.participant?.contact, ...(ai ? [] : [s.score]), aiOf(s) ? (aiOf(s).score ?? '没用 AI') : '', ...(ai ? [] : items.map((r: any) => it.find((x: any) => x.id === r.id)?.score ?? '')), s.submitted_at ? new Date(s.submitted_at).toLocaleString('zh-CN', { hour12: false }) : '', `${shareLink}?s=${s.id}`].map(esc).join(','); });
     const blob = new Blob(['\ufeff' + [head.map(esc).join(','), ...lines].join('\n')], { type: 'text/csv;charset=utf-8' });
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `候选名单-${(T.task?.title || '真活').slice(0, 20)}.csv`; a.click(); URL.revokeObjectURL(a.href);
   };
@@ -175,7 +178,7 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
           { title: '依据', dataIndex: 'basis', width: 200, render: (v: string) => <span style={{ fontSize: 12 }}>{v}</span> },
           { title: 'BARS', dataIndex: 'levels', width: 320, render: (l: any) => <div style={{ fontSize: 12 }}>{['L1', 'L2', 'L3', 'L4'].map(k => <div key={k}><b>{k}</b> {l?.[k]}</div>)}</div> },
         ]} /> },
-        { key: 'b', label: `AI 基线${T.baseline ? ` · ${T.baseline.result?.total} 分` : ''}`, children: T.baseline ? <div><Paragraph>AI 先做了一遍，用同一套 rubric 评：<b>{T.baseline.result?.total}</b> 分。{T.baseline.result?.summary}</Paragraph><Table size="small" rowKey="id" pagination={false} dataSource={T.baseline.result?.items || []} columns={[{ title: '条目', dataIndex: 'title' }, { title: '等级', dataIndex: 'level', width: 60 }, { title: '分', dataIndex: 'score', width: 60 }, { title: '证据 / 说明', render: (_: any, i: any) => <span style={{ fontSize: 12 }}>{i.evidence && <i>“{i.evidence}” </i>}{i.note}</span> }]} /><details style={{ marginTop: 12 }}><summary>AI 的答卷</summary><MdView text={T.baseline.answer || ''} style={{ fontSize: 13, background: '#fafbff', padding: 10, borderRadius: 8 }} /></details></div> : <Text type="secondary">AI 基线还没出来。出任务后它在后台跑，约一分钟，刷新这页就有；也可以点上面的「重跑 AI 基线」现在跑。基线 = 一个通用 AI 直接做这道题能得几分，是候选人分数的参照。</Text> },
+        ...(ai ? [] : [{ key: 'b', label: `AI 基线${T.baseline ? ` · ${T.baseline.result?.total} 分` : ''}`, children: T.baseline ? <div><Paragraph>AI 先做了一遍，用同一套 rubric 评：<b>{T.baseline.result?.total}</b> 分。{T.baseline.result?.summary}</Paragraph><Table size="small" rowKey="id" pagination={false} dataSource={T.baseline.result?.items || []} columns={[{ title: '条目', dataIndex: 'title' }, { title: '等级', dataIndex: 'level', width: 60 }, { title: '分', dataIndex: 'score', width: 60 }, { title: '证据 / 说明', render: (_: any, i: any) => <span style={{ fontSize: 12 }}>{i.evidence && <i>“{i.evidence}” </i>}{i.note}</span> }]} /><details style={{ marginTop: 12 }}><summary>AI 的答卷</summary><MdView text={T.baseline.answer || ''} style={{ fontSize: 13, background: '#fafbff', padding: 10, borderRadius: 8 }} /></details></div> : <Text type="secondary">AI 基线还没出来。出任务后它在后台跑，约一分钟，刷新这页就有；也可以点上面的「重跑 AI 基线」现在跑。基线 = 一个通用 AI 直接做这道题能得几分，是候选人分数的参照。</Text> }]),
         { key: 'ai', label: 'AI 使用标准', children: <AiPolicyView task={T} shareLink={shareLink} ownerKey={ownerKey} /> },
         { key: 's', label: `做题情况与评分（${sessions.length}）`, children: <>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 10, flexWrap: 'wrap' }}>
@@ -191,7 +194,7 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
           { title: '谁', render: (_: any, s: any) => <span>{s.participant?.name} {s.participant?.preview && <Tag color="orange" style={{ marginLeft: 4 }}>预览</Tag>}{s.participant?.mode === 'ai' && <Tag style={{ marginLeft: 4 }}>AI 学员</Tag>}<Text type="secondary">{s.participant?.contact}</Text>{swapped.has(s.id) && <Tag color="orange" style={{ marginLeft: 4 }} title="同一个浏览器用不同的手机或邮箱做过这道题">同一浏览器换过联系方式</Tag>}{s.participant?.retake_allowed && <Tag style={{ marginLeft: 4 }}>已允许重做</Tag>}</span> },
           { title: '开始', dataIndex: 'started_at', render: (v: string) => new Date(v).toLocaleString('zh-CN', { hour12: false }) },
           { title: '交卷', dataIndex: 'submitted_at', render: (v: string) => (v ? new Date(v).toLocaleString('zh-CN', { hour12: false }) : <Text type="secondary">做着呢</Text>) },
-          { title: '结果', dataIndex: 'score', width: 70, render: (v: number) => (v == null ? '–' : <b>{v}</b>) },
+          ...(ai ? [] : [{ title: '结果', dataIndex: 'score', width: 70, render: (v: number) => (v == null ? '–' : <b>{v}</b>) }]),
           { title: 'AI 使用', width: 80, render: (_: any, s: any) => { const u = aiOf(s); return !u ? <Text type="secondary">–</Text> : u.score == null ? <Text type="secondary" style={{ fontSize: 12 }}>没用</Text> : <b style={{ color: '#6055f5' }}>{u.score}</b>; } },
           { title: '', width: 260, render: (_: any, s: any) => <Space>{s.report && <Button size="small" type="primary" ghost onClick={() => setReport(s)}>看报告</Button>}<Button size="small" onClick={() => { navigator.clipboard.writeText(`${shareLink}?s=${s.id}`); message.success('个人链接已复制'); }}>个人链接</Button>{ownerKey && s.participant?.contact_key && (s.submitted_at || timing(T.task, s).closed) && <Button size="small" onClick={() => allowRetake(s)}>允许重做</Button>}</Space> },
         ]} /></> },
@@ -254,7 +257,8 @@ function AiPolicyView({ task: T, shareLink, ownerKey }: { task: any; shareLink: 
 }
 
 /** 并排对比：逐条得分（每行最高分加粗）+ AI 基线 + 各人做得好的 / 差的 */
-function Compare({ rubric, people, baseline, rankOf }: { rubric: any[]; people: any[]; baseline: any; rankOf: Map<string, number> }) {
+function Compare({ rubric, people, baseline: base0, rankOf }: { rubric: any[]; people: any[]; baseline: any; rankOf: Map<string, number> }) {
+  const ai = useWorkScale() === 'ai_use', baseline = ai ? null : base0;
   const sc = (p: any, id: string) => p.report?.result?.items?.find((x: any) => x.id === id)?.score;
   const base = (id: string) => baseline?.result?.items?.find((x: any) => x.id === id)?.score;
   const cell: React.CSSProperties = { padding: '8px 10px', borderTop: '1px solid #f0f0f5', textAlign: 'center', fontVariantNumeric: 'tabular-nums' };
@@ -267,9 +271,9 @@ function Compare({ rubric, people, baseline, rankOf }: { rubric: any[]; people: 
           {baseline && <th style={{ ...cell, borderTop: 0, color: '#999', fontWeight: 500 }}>AI 基线</th>}
         </tr></thead>
         <tbody>
-          <tr style={{ background: '#faf9ff' }}><td style={{ ...cell, textAlign: 'left', fontWeight: 700 }}>总分</td>{people.map(p => <td key={p.id} style={{ ...cell, fontSize: 20, fontWeight: 900, color: '#4c43c9' }}>{p.score}</td>)}{baseline && <td style={{ ...cell, color: '#999' }}>{baseline.result?.total}</td>}</tr>
+          {!ai && <tr style={{ background: '#faf9ff' }}><td style={{ ...cell, textAlign: 'left', fontWeight: 700 }}>总分</td>{people.map(p => <td key={p.id} style={{ ...cell, fontSize: 20, fontWeight: 900, color: '#4c43c9' }}>{p.score}</td>)}{baseline && <td style={{ ...cell, color: '#999' }}>{baseline.result?.total}</td>}</tr>}
           <tr style={{ background: '#faf9ff' }}><td style={{ ...cell, textAlign: 'left', fontWeight: 700 }}>AI 使用能力</td>{people.map(p => { const u = p.report?.ai_use; return <td key={p.id} style={{ ...cell, fontSize: 17, fontWeight: 800, color: '#6055f5' }} title={u?.verdict || ''}>{!u ? '–' : u.score ?? '没用 AI'}</td>; })}{baseline && <td style={{ ...cell, color: '#999' }}>–</td>}</tr>
-          {rubric.map((r: any) => { const vals = people.map(p => sc(p, r.id)).filter((v: any) => typeof v === 'number'); const top = vals.length ? Math.max(...vals) : null; return (
+          {(ai ? [] : rubric).map((r: any) => { const vals = people.map(p => sc(p, r.id)).filter((v: any) => typeof v === 'number'); const top = vals.length ? Math.max(...vals) : null; return (
             <tr key={r.id}><td style={{ ...cell, textAlign: 'left' }}>{r.title}<span style={{ color: '#aaa', fontSize: 12, marginLeft: 6 }}>权重 {r.weight}</span></td>
               {people.map(p => { const v = sc(p, r.id); return <td key={p.id} style={{ ...cell, fontWeight: v != null && v === top ? 800 : 400, color: v != null && v === top ? '#12a150' : '#333' }}>{v ?? '–'}</td>; })}
               {baseline && <td style={{ ...cell, color: '#999' }}>{base(r.id) ?? '–'}</td>}</tr>
@@ -279,8 +283,8 @@ function Compare({ rubric, people, baseline, rankOf }: { rubric: any[]; people: 
       <div style={{ display: 'grid', gridTemplateColumns: `repeat(${people.length}, minmax(0, 1fr))`, gap: 12, marginTop: 18 }}>
         {people.map(p => <div key={p.id} style={{ border: '1px solid #ececf4', borderRadius: 10, padding: '10px 12px', fontSize: 13 }}>
           <div style={{ fontWeight: 800, marginBottom: 4 }}>{p.participant?.name}</div>
-          {!!p.report?.result?.strengths?.length && <><div style={{ color: '#12a150', fontWeight: 700, fontSize: 12 }}>做得好的</div><ul style={{ margin: '2px 0 6px', paddingLeft: 16 }}>{p.report.result.strengths.slice(0, 3).map((x: string, i: number) => <li key={i}>{x}</li>)}</ul></>}
-          {!!p.report?.result?.gaps?.length && <><div style={{ color: '#c0392b', fontWeight: 700, fontSize: 12 }}>差的地方</div><ul style={{ margin: '2px 0 0', paddingLeft: 16 }}>{p.report.result.gaps.slice(0, 3).map((x: string, i: number) => <li key={i}>{x}</li>)}</ul></>}
+          {!ai && !!p.report?.result?.strengths?.length && <><div style={{ color: '#12a150', fontWeight: 700, fontSize: 12 }}>做得好的</div><ul style={{ margin: '2px 0 6px', paddingLeft: 16 }}>{p.report.result.strengths.slice(0, 3).map((x: string, i: number) => <li key={i}>{x}</li>)}</ul></>}
+          {!ai && !!p.report?.result?.gaps?.length && <><div style={{ color: '#c0392b', fontWeight: 700, fontSize: 12 }}>差的地方</div><ul style={{ margin: '2px 0 0', paddingLeft: 16 }}>{p.report.result.gaps.slice(0, 3).map((x: string, i: number) => <li key={i}>{x}</li>)}</ul></>}
         </div>)}
       </div>
     </div>

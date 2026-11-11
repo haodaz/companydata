@@ -1,6 +1,8 @@
 'use client';
 
 /** 真活台 · 出题人管理页（凭 ?k=<owner_key>，不用登录）：看题、复制参与链接、发布 / 下架、重跑基线、看每个人的报告 */
+import { mainScore } from '@/lib/work/scale';
+import { useWorkScale } from '@/lib/work/scale-client';
 import { WorkTopBar } from '@/components/work/WorkTopBar';
 import { Tour, type TourStep } from '@/components/work/Tour';
 import { roleLabel } from '@/lib/work/role-label';
@@ -21,6 +23,7 @@ function Inner() {
   const embed = sp.get('embed') === '1';   // 嵌在对话右边（聊着出任务 / 工作台）：外面已经有框，不再套顶栏
   const { message } = App.useApp();
   const [d, setD] = useState<{ task: any; sessions: any[] } | null>(null);
+  const scale = useWorkScale();
   const [err, setErr] = useState(''); const [busy, setBusy] = useState(false);
   const [fb, setFb] = useState(''); const [revising, setRevising] = useState(false);
   // 第一次进空间的引导（按浏览器记；顶栏「?」可重看）
@@ -45,7 +48,7 @@ function Inner() {
   if (err) return <div style={{ padding: 40, color: '#c0392b' }}>{err}</div>;
   if (!d) return <div style={{ padding: 40, color: '#888' }}>加载中…</div>;
   const T = d.task;
-  const done = d.sessions.filter(s => s.submitted_at); const scored = done.filter(s => s.score != null); const avg = scored.length ? Math.round(scored.reduce((a, s) => a + (Number(s.score) || 0), 0) / scored.length) : null;
+  const done = d.sessions.filter(s => s.submitted_at); const scored = done.map(s => mainScore(s, scale)).filter((v): v is number => v != null); const avg = scored.length ? Math.round(scored.reduce((a, v) => a + Number(v), 0) / scored.length) : null;
   const env = T.task?.env?.type || 'doc';
   return (
     <div style={{ minHeight: '100vh', background: '#f6f7fb', color: '#1a1a2e' }}>
@@ -61,7 +64,7 @@ function Inner() {
           <h1 style={{ fontSize: 30, margin: '0 0 6px', lineHeight: 1.25 }}>{T.task?.title}</h1>
           <div style={{ opacity: .85 }} title={T.role}>{T.company_name} · {roleLabel(T.role, T.task?.role)} · {T.task?.soft_limit ? '建议' : '限时'} {T.task?.time_minutes} 分钟</div>
           <div data-tour="stats" style={{ display: 'flex', gap: 26, marginTop: 18, flexWrap: 'wrap' }}>
-            {[[d.sessions.length, '参与'], [done.length, '交卷'], [avg ?? '–', '平均分'], [T.baseline?.result?.total ?? '–', 'AI 基线']].map(([n, l]) => <div key={String(l)}><div style={{ fontSize: 28, fontWeight: 800 }}>{n}</div><div style={{ fontSize: 12, opacity: .8 }}>{l}</div></div>)}
+            {[[d.sessions.length, '参与'], [done.length, '交卷'], [avg ?? '–', '平均分'], ...(scale === 'ai_use' ? [] : [[T.baseline?.result?.total ?? '–', 'AI 基线']])].map(([n, l]) => <div key={String(l)}><div style={{ fontSize: 28, fontWeight: 800 }}>{n}</div><div style={{ fontSize: 12, opacity: .8 }}>{l}</div></div>)}
           </div>
         </div>
       </div>
