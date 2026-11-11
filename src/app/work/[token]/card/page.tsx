@@ -43,7 +43,7 @@ export default function CardPage() {
   const r = d.s.report.result, cmp = ai ? null : d.s.report.compare;
   const main: number | null = ai ? u?.score ?? null : r.total;
   const g = grade(main ?? 0, lang);
-  const rows = ai ? (u?.items || []).map((i: any) => ({ title: aiItemL(i.key, i.title, lang), score: Number(i.score) || 0 })) : (r.items || []).map((i: any) => ({ title: String(i.title), score: Number(i.score) || 0, base: cmp?.items?.find((x: any) => x.id === i.id)?.baseline }));
+  const rows = ai ? (u?.items || []).filter((i: any) => i.score != null).map((i: any) => ({ title: aiItemL(i.key, i.title, lang), score: Number(i.score) || 0 })) : (r.items || []).map((i: any) => ({ title: String(i.title), score: Number(i.score) || 0, base: cmp?.items?.find((x: any) => x.id === i.id)?.baseline }));
   const when = new Date(d.s.submitted_at || d.s.started_at || Date.now());
   const company = lang === 'en' ? enCompany(d.task.company_name) : d.task.company_name;
   const code = `ZH-${String(d.s.id).replace(/-/g, '').slice(0, 10).toUpperCase()}`;
@@ -71,7 +71,7 @@ export default function CardPage() {
           {rows.length >= 3 && rows.length <= 10 && <div className="zc-radar"><Radar rows={rows} /></div>}
         </div>
         {d.s.report.ai_use?.score != null && <div className="zc-sec"><div className="zc-h">{L('AI 使用能力', 'AI use')} · <b style={{ color: '#6055f5' }}>{d.s.report.ai_use.score}</b> / 100</div>
-          <div className="zc-ai">{(d.s.report.ai_use.items || []).map((i: any) => <span key={i.key}>{aiItemL(i.key, i.title, lang)} <b>{i.score}</b></span>)}</div>
+          <div className="zc-ai">{(d.s.report.ai_use.items || []).map((i: any) => <span key={i.key}>{aiItemL(i.key, i.title, lang)} <b>{i.score ?? L('未观测', 'n/a')}</b></span>)}</div>
           {d.s.report.ai_use.verdict && <div style={{ fontSize: 13, color: '#555', marginTop: 4 }}>{d.s.report.ai_use.verdict}</div>}</div>}
         {ai && main == null && u?.verdict && <div className="zc-sec"><div style={{ fontSize: 13, color: '#555' }}>{u.verdict}</div></div>}
         {!ai && !!r.strengths?.length && <div className="zc-sec"><div className="zc-h">{L('做得好的地方', 'What went well')}</div><ul>{r.strengths.slice(0, 3).map((x: string, i: number) => <li key={i}>{x}</li>)}</ul></div>}

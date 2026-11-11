@@ -89,13 +89,22 @@ export function AiUse({ u }: { u: any }) {
     <Card title={L('AI 使用能力 · 怎么问、怎么核、怎么取舍', 'AI use · how you ask, check and decide')}>
       {u.standard && <div style={{ fontSize: 13, color: '#555', marginBottom: 10, padding: '8px 12px', borderRadius: 8, background: '#fafaff', border: '1px solid #eeeefa' }}>{L('照这家企业、这个岗位的 AI 使用标准评：', "Assessed against this company's AI-use standard for this role: ")}<b>{u.standard.stance}</b>{L('。', '. ')}{u.standard.summary}</div>}
       {!!u.violations?.length && <div style={{ marginBottom: 12, padding: '8px 12px', borderRadius: 8, background: '#fff4f2', border: '1px solid #ffd6cf', color: '#b42318', fontSize: 13 }}>
-        <b>{L('碰了治理红线（每条扣 8 分）', 'Crossed governance red lines (−8 points each)')}</b>{u.violations.map((v: any, k: number) => <div key={k}><span style={{ fontFamily: 'ui-monospace, Menlo, monospace' }}>{fmt(v.t)}</span> {v.what}{v.quote ? `：${v.quote}` : ''}</div>)}
+        <b>{u.violations.some((v: any) => v.kind) ? L('负向记录', 'Negative findings') : L('碰了治理红线（每条扣 8 分）', 'Crossed governance red lines (−8 points each)')}</b>{u.violations.map((v: any, k: number) => <div key={k}>{v.kind && <span style={{ fontSize: 11.5, fontWeight: 700, marginRight: 6, padding: '0 6px', borderRadius: 4, background: '#fff', border: '1px solid #ffd6cf' }}>{v.kind === 'veto' ? L('转人工', 'Human review') : v.kind === 'integrity' ? L('诚信 · 封顶 40', 'Integrity · capped at 40') : L('做法 · 压对应子项', 'Conduct · lowers the related item')}</span>}<span style={{ fontFamily: 'ui-monospace, Menlo, monospace' }}>{fmt(v.t)}</span> {v.what}{v.quote ? `：${v.quote}` : ''}</div>)}
       </div>}
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 14 }}>{chips.map(([k, v]) => <span key={k} style={{ fontSize: 12.5, padding: '3px 10px', borderRadius: 999, background: '#f4f3ff', color: '#4c43c9' }}>{k} <b>{v}</b></span>)}</div>
+      {u.disclosure && <div style={{ marginBottom: 12, padding: '8px 12px', borderRadius: 8, background: u.disclosure.match === 'major' ? '#fff4f2' : '#f7f9fc', border: `1px solid ${u.disclosure.match === 'major' ? '#ffd6cf' : '#e8ecf3'}`, fontSize: 13 }}>
+        <b>{L('AI 参与说明（交卷时写的）', 'AI involvement statement (written at submission)')}</b> · <span style={{ fontWeight: 700, color: u.disclosure.match === 'consistent' ? '#12a150' : u.disclosure.match === 'major' ? '#b42318' : '#b7791f' }}>{({ consistent: L('与记录一致', 'Matches the record'), minor: L('有些夸大', 'Somewhat overstated'), major: L('与记录严重不符', 'Contradicts the record'), vague: L('太笼统，没法核对', 'Too vague to check') } as Record<string, string>)[u.disclosure.match]}</span>
+        <div style={{ color: '#555', marginTop: 4, whiteSpace: 'pre-wrap' }}>「{u.disclosure.text}」</div>{u.disclosure.note && <div style={{ color: '#888', marginTop: 2 }}>{u.disclosure.note}</div>}
+      </div>}
       <div style={{ display: 'grid', gap: 12 }}>
-        {(u.items || []).map((i: any) => (
+        {(u.items || []).map((i: any) => i.score == null ? (
+          <div key={i.key} style={{ display: 'grid', gridTemplateColumns: '56px 1fr', gap: 12, alignItems: 'start', color: '#8c8c8c' }}>
+            <div><b style={{ fontSize: 14 }}>{aiItemL(i.key, i.title, lang)}</b><div style={{ fontSize: 12.5, fontWeight: 700, lineHeight: 1.6 }}>{L('未观测', 'Not observed')}</div></div>
+            <div style={{ fontSize: 13, paddingTop: 2 }}>{i.why_na}{L('（不是没做到，是这道题没给机会，不计入分数）', ' (not a weakness: the task gave no chance to show it, so it is left out of the score)')}</div>
+          </div>
+        ) : (
           <div key={i.key} style={{ display: 'grid', gridTemplateColumns: '56px 1fr', gap: 12, alignItems: 'start' }}>
-            <div><b style={{ fontSize: 14 }}>{aiItemL(i.key, i.title, lang)}</b><div style={{ fontSize: 20, fontWeight: 800, color: col(i.score), lineHeight: 1.2 }}>{i.score}</div>{u.standard?.weights?.[i.key] != null && <div style={{ fontSize: 11, color: '#999' }}>{L('权重', 'Weight')} {u.standard.weights[i.key]}%</div>}</div>
+            <div><b style={{ fontSize: 14 }}>{aiItemL(i.key, i.title, lang)}</b><div style={{ fontSize: 20, fontWeight: 800, color: col(i.score), lineHeight: 1.2 }}>{i.score}</div>{i.q != null && <div style={{ fontSize: 11, color: '#999' }}>{L(`第 ${i.q} 档 / 5`, `Level ${i.q} / 5`)}</div>}{u.standard?.weights?.[i.key] != null && <div style={{ fontSize: 11, color: '#999' }}>{L('权重', 'Weight')} {u.standard.weights[i.key]}%</div>}</div>
             <div style={{ minWidth: 0 }}>
               <div style={{ height: 6, borderRadius: 3, background: '#eef0f5', overflow: 'hidden', margin: '6px 0 6px' }}><div style={{ width: `${i.score}%`, height: '100%', background: col(i.score) }} /></div>
               <div style={{ fontSize: 13.5, color: '#333' }}>{i.note}</div>

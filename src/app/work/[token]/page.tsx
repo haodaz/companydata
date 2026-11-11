@@ -365,7 +365,9 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
 
 
   const [arm, setArm] = useState(false);
-  const [nextStep, setNextStep] = useState('');   // 最后一问（选填）：如果再给一天，先改哪里；占作答时间，交卷时存成 next_step 事件
+  const [nextStep, setNextStep] = useState('');
+  // 交卷前的「AI 参与说明」（11-11 借潜历 v3 的 S1）：用过 AI（站内问过或用自己软件做）、交付物里又没写 AI 参与了什么，才问这一句；写了会和记录比对
+  const [disc, setDisc] = useState<string | null>(null);   // 最后一问（选填）：如果再给一天，先改哪里；占作答时间，交卷时存成 next_step 事件
   const dark = false;   // 代码台也用浅色（2026-10-25）：整页一个色调，别忽然深一块
   const [localErr, setLocalErr] = useState('');
   // 布局（2026-10-25，王刚：作答区别太固定，要像 AI workspace）：材料栏可收、材料面板高度可拖 / 占满 / 收成一条 / 关闭、AI 助手是可收的卡片
@@ -424,11 +426,15 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
     if (mode === 'open' && !recording) { setLocalErr(L('先记录屏幕再交卷：点「开始记录」，选「整个屏幕」', 'Record your screen before submitting: click "Start recording" and choose "Entire screen".')); setTimeout(() => setLocalErr(''), 5000); return; }
     if (!arm) { setArm(true); if (emptyParts.length) { setLocalErr(L(`${emptyParts.map(p => `${p.id} ${p.title}`).join('、')} 还没动笔。确定要交就再点一次交卷`, `You haven't started ${emptyParts.map(p => `${p.id} ${p.title}`).join(', ')}. Click Submit again if you're sure.`)); setTimeout(() => setLocalErr(''), 6000); } setTimeout(() => setArm(false), 6000); return; }
     setArm(false);
+    const usedAi = chat.length > 0 || mode === 'open';
+    const disclosed = /(AI|人工智能|大模型|ChatGPT|GPT|Claude|千问|通义|豆包|Kimi|DeepSeek|文心|智能体)[^。\n]{0,16}(生成|辅助|参与|协助|帮我|起草|整理)/i.test(deliverable);
+    if (disc == null && usedAi && !disclosed) { setDisc(''); return; }
     finish();
   };
   // 手动确认后，或者时间到了，都走这里
   const finish = (auto?: boolean) => {
     if (nextStep.trim()) ev('next_step', { text: nextStep.trim().slice(0, 1000) });
+    if (disc && disc.trim().length >= 10) ev('ai_disclosure', { text: disc.trim().slice(0, 800) });
     const events = buf.current.splice(0);
     // 白板：交卷前把每张画板导出 PNG 存起来（给出任务的人看），文字版照样进交付内容
     const boards = parts.filter(p => p.module === 'board' && (ps[p.id]?.board.elements || []).some((e: any) => !e.isDeleted));
@@ -464,6 +470,17 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
 
   return (
     <Shell dark={dark}>
+      {disc != null && !grading && <div style={{ position: 'fixed', inset: 0, zIndex: 60, background: 'rgba(20,24,60,.35)', display: 'grid', placeItems: 'center', padding: 16 }}>
+        <div style={{ width: 'min(560px, 100%)', background: '#fff', borderRadius: 14, padding: '18px 20px', boxShadow: '0 20px 60px rgba(20,24,60,.25)' }}>
+          <div style={{ fontWeight: 800, fontSize: 16, marginBottom: 4 }}>{L('交卷前一句话：AI 参与说明', 'Before you submit: how AI was involved')}</div>
+          <div style={{ fontSize: 13, color: '#666', lineHeight: 1.7, marginBottom: 10 }}>{L('就像附在成果上的说明：AI 参与了哪些环节、哪些是你自己做的。会和你的作答记录比对，照实写就行；不写也能交。', 'Like a note attached to your work: which parts AI helped with and which you did yourself. It will be checked against your work record, so just be accurate. You can also skip it.')}</div>
+          <textarea className="wk-ta" value={disc} onChange={e => setDisc(e.target.value)} rows={4} autoFocus placeholder={L('比如：竞品表的初稿是 AI 整理的，我核了三家的价格、删了一家过期的；结论和测算是我自己写的', 'e.g. AI drafted the competitor table; I checked three prices and removed an outdated entry. The conclusion and the estimate are my own.')} style={{ width: '100%', boxSizing: 'border-box' }} />
+          <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', marginTop: 12 }}>
+            <button onClick={() => setDisc(null)} style={{ border: '1px solid #e0e0ee', background: '#fff', borderRadius: 8, padding: '7px 14px', cursor: 'pointer', font: 'inherit' }}>{L('回去继续做', 'Back to work')}</button>
+            <button onClick={() => finish()} style={{ border: 0, background: '#6055f5', color: '#fff', borderRadius: 8, padding: '7px 16px', cursor: 'pointer', font: 'inherit', fontWeight: 700 }}>{disc.trim() ? L('交卷', 'Submit') : L('不写，直接交卷', 'Skip and submit')}</button>
+          </div>
+        </div>
+      </div>}
       <style>{`.wk-md p{margin:0 0 8px}.wk-md ul,.wk-md ol{margin:0 0 8px;padding-left:20px}.wk-md li{margin:2px 0}.wk-md .ws-h{font-weight:700;margin:10px 0 4px}.wk-md a{color:#6055f5}.wk-md .ws-code{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;background:rgba(96,85,245,.08);padding:1px 5px;border-radius:4px}.wk-md>:last-child{margin-bottom:0}.wk-md .ws-tw{overflow:auto;margin:6px 0 10px}.wk-md .ws-table{border-collapse:collapse;font-size:12.5px;min-width:60%}.wk-md .ws-table th,.wk-md .ws-table td{border:1px solid rgba(120,120,160,.25);padding:5px 9px;text-align:left;vertical-align:top}.wk-md .ws-table th{background:rgba(96,85,245,.06);font-weight:600;white-space:nowrap}.wk-md .ws-quote{margin:6px 0 10px;padding:6px 12px;border-left:3px solid #c9c9dc;color:#666;background:rgba(120,120,160,.05);border-radius:0 8px 8px 0}.wk-md .ws-pre{white-space:pre-wrap;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;background:rgba(120,120,160,.08);padding:10px 12px;border-radius:8px;margin:6px 0 10px}.wk-mat .ws-h{font-size:14px;margin:12px 0 4px}.wk-ta:focus{outline:none;border-color:#6055f5!important;box-shadow:0 0 0 3px rgba(96,85,245,.12)}`}</style>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 14px', borderBottom: `1px solid ${line}`, background: dark ? '#16171f' : '#fff', color: dark ? '#e6e8f0' : undefined, position: 'sticky', top: 0, zIndex: 5, height: 52, boxSizing: 'border-box' }}>
         {!grading ? <button onClick={() => setBrief(true)} title={L('看任务说明（作答不受影响）', 'View the task (your work is kept)')} style={{ border: `1px solid ${line}`, background: 'transparent', color: '#6055f5', borderRadius: 8, padding: '3px 9px', fontSize: 12, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>{L('← 任务说明', '← Task')}</button> : <div style={{ fontSize: 11, letterSpacing: 2, color: '#6055f5', fontWeight: 700 }}>{L('真活台', 'Work sample')}</div>}

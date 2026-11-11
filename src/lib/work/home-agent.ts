@@ -111,14 +111,14 @@ async function run(name: string, input: any, user: User): Promise<{ result: any;
       if (!r.result) return { result: { name: nameOf(x), submitted: !!x.submitted_at, note: x.submitted_at ? '报告还在生成' : '还没交卷' }, ui: reportUi(t, x), label: `${nameOf(x)}：${x.submitted_at ? '报告还在生成' : '还没交卷'}` };
       const p = r.process || {}; const u = r.ai_use || {};
       const chat = (x.ai_chat || []) as any[];
-      if ((await getWorkScale()) === 'ai_use') return { result: { scale_note: AI_ONLY_NOTE, name: nameOf(x), mode: x.participant?.mode, minutes: mins(durOf(x)), time_minutes: t.task?.time_minutes, ai_use: u.score == null ? s(u.verdict, 200) || '没用 AI' : { score: u.score, verdict: u.verdict, items: (u.items || []).map((i: any) => `${i.title} ${i.score}：${s(i.note, 100)}`) }, asks: chat.length, first_asks: chat.slice(0, 6).map((c: any) => s(c.q, 120)) }, ui: reportUi(t, x), label: `读了 ${nameOf(x)} 的报告` };
+      if ((await getWorkScale()) === 'ai_use') return { result: { scale_note: AI_ONLY_NOTE, name: nameOf(x), mode: x.participant?.mode, minutes: mins(durOf(x)), time_minutes: t.task?.time_minutes, ai_use: u.score == null ? s(u.verdict, 200) || '没用 AI' : { score: u.score, verdict: u.verdict, items: (u.items || []).map((i: any) => i.score == null ? `${i.title} 未观测（${s(i.why_na, 60)}）` : `${i.title} ${i.score}：${s(i.note, 100)}`), disclosure: u.disclosure ? `${u.disclosure.match}：${s(u.disclosure.note, 100)}` : undefined }, asks: chat.length, first_asks: chat.slice(0, 6).map((c: any) => s(c.q, 120)) }, ui: reportUi(t, x), label: `读了 ${nameOf(x)} 的报告` };
       const result = {
         name: nameOf(x), mode: x.participant?.mode, minutes: mins(durOf(x)), time_minutes: t.task?.time_minutes, total: r.result.total,
         summary: r.result.summary, strengths: r.result.strengths, gaps: r.result.gaps,
         items: (r.result.items || []).map((i: any) => ({ title: i.title, weight: i.weight, level: i.level, score: i.score, baseline: r.compare?.items?.find((c: any) => c.id === i.id)?.baseline, evidence: s(i.evidence, 200), note: s(i.note, 160), blocked_by: i.blocked_by })),
         baseline_total: r.compare?.baseline_total, vs_baseline: r.compare?.delta,
         process: { phases: (p.phases || []).map((q: any) => `${mins(q.from)}–${mins(q.to)} 分 ${q.label}`), highlights: (p.highlights || []).map((h: any) => `${mins(h.t)} 分 ${h.behavior}`), risks: (p.risks || []).map((h: any) => `${mins(h.t)} 分 ${h.behavior}`), delegation: s(p.delegation, 300) },
-        ai_use: u.score == null ? s(u.verdict, 200) || '没用 AI' : { score: u.score, verdict: u.verdict, items: (u.items || []).map((i: any) => `${i.title} ${i.score}：${s(i.note, 100)}`) },
+        ai_use: u.score == null ? s(u.verdict, 200) || '没用 AI' : { score: u.score, verdict: u.verdict, items: (u.items || []).map((i: any) => i.score == null ? `${i.title} 未观测（${s(i.why_na, 60)}）` : `${i.title} ${i.score}：${s(i.note, 100)}`), disclosure: u.disclosure ? `${u.disclosure.match}：${s(u.disclosure.note, 100)}` : undefined },
         asks: chat.length, first_asks: chat.slice(0, 6).map((c: any) => s(c.q, 120)),
         next_step: s(r.next_step, 600),
         deliverable_excerpt: s(x.deliverable, 3000),
@@ -133,7 +133,7 @@ async function run(name: string, input: any, user: User): Promise<{ result: any;
       const aiOnly = (await getWorkScale()) === 'ai_use', rank = (x: any) => Number(aiOnly ? x.report.ai_use?.score : x.score) || 0;
       rows = want.length ? rows.filter(x => want.includes(x.id)) : rows.sort((a, b) => rank(b) - rank(a)).slice(0, 4);
       if (!rows.length) return { result: { error: '这道题还没有评好分的作答' }, ui: taskUi(t), label: '还没有可比的' };
-      if (aiOnly) return { result: { scale_note: AI_ONLY_NOTE, title: t.task?.title, people: rows.map(x => ({ session_id: x.id, name: nameOf(x), minutes: mins(durOf(x)), ai_use: x.report.ai_use?.score ?? null, verdict: s(x.report.ai_use?.verdict, 200), items: (x.report.ai_use?.items || []).map((i: any) => `${i.title} ${i.score}`) })) }, ui: taskUi(t), label: `并排比了 ${rows.length} 个人` };
+      if (aiOnly) return { result: { scale_note: AI_ONLY_NOTE, title: t.task?.title, people: rows.map(x => ({ session_id: x.id, name: nameOf(x), minutes: mins(durOf(x)), ai_use: x.report.ai_use?.score ?? null, verdict: s(x.report.ai_use?.verdict, 200), items: (x.report.ai_use?.items || []).map((i: any) => `${i.title} ${i.score ?? '未观测'}`) })) }, ui: taskUi(t), label: `并排比了 ${rows.length} 个人` };
       const rubric = (t.rubric || []) as any[];
       const base = t.baseline?.result?.items || [];
       const table = rubric.map(rb => ({ item: rb.title, weight: rb.weight, baseline: base.find((b: any) => b.id === rb.id)?.score ?? null, scores: Object.fromEntries(rows.map(x => [nameOf(x), x.report.result.items?.find((i: any) => i.id === rb.id)?.score ?? null])) }));

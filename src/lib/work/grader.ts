@@ -123,7 +123,23 @@ ${opts.audit?.length ? `## 分段审计笔记（边看边记的，总评要和�
  * AI 使用能力（2026-10-30，潜历：主打用发任务的方式招会用 AI 的人）：和结果分并列的一项 0–100。
  * 证据全来自过程：每一轮问了什么、AI 答了什么、哪些被采纳进交付物、采纳后自己改了多少、问之前看没看材料。
  * 五个子项各 0–100 + 指到时刻的证据；硬指标（问几次、追问几次、采纳几次、交付物里原样来自 AI 的比例）程序算。没用 AI 的不打分（score = null）。
+ * 11-11 借潜历评价体系 v3 的四条：
+ *  ① 没做 ≠ 没机会做：提问、分工是基线项（用了 AI 就一定看得到）；核验、取舍、整合是条件项，这道题没给机会就记「未观测」，不进分母。
+ *  ② 每个子项 1–5 档都写死判定条件（AI_USE_ANCHORS），分 = 档 × 20；只有一条证据撑着的最高 3.5 档（70），偶然一次漂亮不算稳定。
+ *  ③ 大段原样粘贴任务书 / 材料的提问打上标记，不算他自己的提问。
+ *  ⑤ 负向分三类：做法问题只压对应子项、不另扣；诚信问题总分封顶 40；伪造 / 规避限制不出自动分，转人工。
+ *  另：交卷时有条件触发的「AI 参与说明」（ai_disclosure 事件），和记录比对；严重不符按诚信问题处理。
  */
+/** 条件项要满足的场景（没满足 = 这道题没给机会，记未观测）；基线项（提问 / 分工）只要用了 AI 就一定能评 */
+export const AI_USE_COND: Record<string, string> = { verify: 'AI 给出过会影响结论的事实、数字、计算或主张', select: 'AI 给出过可以取舍的方案、内容或建议', integrate: 'AI 的内容进了交付物（采纳、粘贴或改写）' };
+/** 1–5 档判定条件（每档一句，能对着证据判） */
+export const AI_USE_ANCHORS: Record<string, string[]> = {
+  ask: ['把题目原样丢给 AI，或问得很空', '问得具体，但没给材料里的数字和约束', '给了关键数字和约束，一问一件事', '把问题拆成几步问，追问追到点上', '还让 AI 挑战题目本身：真正要解决什么、漏了哪些相关方和前提'],
+  verify: ['AI 给的数字和结论原样用，没核', '偶尔对一处，发现问题也没改', '对照材料核了关键数字，发现错会改', '系统地核：复算、换口径、查来源，留下依据', '让 AI 反驳自己、换方法复算，能指出 AI 哪里不可靠'],
+  select: ['照单全收', '删改凭感觉，说不出理由', '丢掉明显不对的，理由站得住', '比较过几种方案，按任务约束取舍', '取舍有依据，还清楚自己交付里哪里还不可靠'],
+  divide: ['整道题交给 AI，关键判断也是 AI 做的', '有分工但混乱，该自己判断的也交出去了', 'AI 干整理、起草、计算，关键判断自己做', '分工清楚，并按环节调整', '按风险分配：敏感数据不给 AI、关键判断自己核、体力活全交给 AI'],
+  integrate: ['AI 的内容原样贴进交付物', '只改了措辞，口径前后不一致', '改写后融进交付物，口径基本一致', '融成自己的结构，数字口径统一', 'AI 的内容只是素材，交付物明显是他自己的判断和表达'],
+};
 export const AI_USE_ITEMS = [
   { key: 'ask', title: '提问', desc: '会不会拆问题、给足上下文（材料里的数字、约束）、追问到点上；更好的是让 AI 挑战题目本身——这道题真正要解决什么、漏了哪些相关方、约束和前提' },
   { key: 'verify', title: '核验', desc: 'AI 的回答有没有对照材料核对，发现 AI 说错、说漏、编数字；更好的是反向验证——让 AI 反驳自己的结论、换一种算法或口径复算' },
@@ -136,10 +152,15 @@ export interface AiUseReport {
   /** 照哪份标准评的（这家企业 / 这个岗位的 AI 使用标准）；没有标准时按通用口径 */
   standard?: { stance: string; summary: string; weights: Record<string, number> } | null;
   /** 碰了治理红线：程序查到的（贴了手机号 / 身份证…）+ 对照标准判断的；每条扣 8 分，最多 24 */
-  violations?: { t: number; what: string; quote: string; by: 'program' | 'review' }[];
+  violations?: { t: number; what: string; quote: string; by: 'program' | 'review'; /** conduct 做法问题（压对应子项）· integrity 诚信（封顶 40）· veto 转人工；11-11 之前的没有 */ kind?: 'conduct' | 'integrity' | 'veto' }[];
   raw_score?: number | null;
-  items: { key: string; title: string; score: number; note: string; evidence: { t: number; quote: string }[] }[];
-  stats: { asks: number; followups: number; adopted: number; adopted_chars: number; verbatim_ratio: number; first_ask_s: number | null; materials_before_first_ask: number };
+  /** score = 档 × 20；null = 条件项这道题没给机会（why_na 写为什么）。11-11 之前的报告没有 q / why_na */
+  items: { key: string; title: string; score: number | null; q?: number | null; why_na?: string; note: string; evidence: { t: number; quote: string }[] }[];
+  /** 伪造数据 / 规避限制：不出自动分，等人看 */
+  needs_review?: boolean;
+  /** 交卷时的「AI 参与说明」和记录比对：consistent 一致 · minor 轻度夸大 · major 严重不符（按诚信问题封顶）· vague 笼统无法核对 */
+  disclosure?: { text: string; match: 'consistent' | 'minor' | 'major' | 'vague'; note: string } | null;
+  stats: { pasted_asks?: number; asks: number; followups: number; adopted: number; adopted_chars: number; verbatim_ratio: number; first_ask_s: number | null; materials_before_first_ask: number };
 }
 /** 交付物里原样来自 AI 回答的比例：交付物按句切，长度 ≥ 14 的句子在任一 AI 回答里原样出现就算 */
 function verbatimRatio(deliverable: string, answers: string[]) {
@@ -183,6 +204,15 @@ export async function analyzeAiUse(task: WorkTask, events: WorkEvent[], aiChat: 
   if (!chat.length && !outside.length && offsite && !ev.some(e => e.type === 'screen')) return { score: null, level: null, verdict: task.task?.lang === 'en' ? 'Worked in their own software and the screenshots could not be read, so AI use cannot be assessed.' : '在自己的软件里做的，屏幕截图没读出来，平台看不到 AI 使用情况，这一项不评。', items: [], stats, standard, violations: [] };
   if (!chat.length && !outside.length) return { score: null, level: null, verdict: task.task?.lang === 'en' ? (offsite ? 'Did not use the on-page AI assistant, and no other AI tool appears in the screenshots.' : 'Did not use AI: did everything themselves.') : offsite ? '平台内的 AI 助手没用；屏幕截图里也没看到用别的 AI。' : pol && pol.stance.level === 'ai_native' ? '这次没用 AI：这家企业期待深度用 AI，这一点要留意。' : '这次没用 AI：全程自己做的。', items: [], stats, standard, violations: [] };
   const flags = hardRedFlags(chat);
+  // 原样粘贴的任务书 / 材料：30 字一窗、每 15 字滑一次，过半的窗口在任务原文里出现就算（引用块污染，不算他自己的提问）
+  const norm = (x: string) => x.replace(/\s+/g, '');
+  const source = norm([task.task.brief, ...(task.task.rules || []), ...task.materials.map(m => m.content || '')].join(''));
+  const pastedPct = (q: string) => { const t = norm(q); if (t.length < 80) return 0; let n = 0, hit = 0; for (let i = 0; i + 30 <= t.length; i += 15) { n++; if (source.includes(t.slice(i, i + 30))) hit++; } return n ? Math.round((hit / n) * 100) : 0; };
+  const pasted = chat.map(c => pastedPct(c.q || ''));
+  const disclosureText = s([...events].reverse().find(e => e.type === 'ai_disclosure')?.text, 800);
+  stats.pasted_asks = pasted.filter(p => p >= 50).length;
+  // 「整合」能不能评由程序定（模型两次判得不一样）：采纳过、交付物里有 AI 原句、粘贴过，或在自己软件里做（看不到）才评
+  const canIntegrate = () => stats.adopted > 0 || stats.verbatim_ratio > 0 || ev.some(e => e.type === 'paste') || ev.some(e => e.type === 'rec_start' || /^plugin_/.test(e.type));
   const nextStep = nextStepOf(events);
   const lines = ev.filter(e => ['open_material', 'ai_ask', 'adopt', 'paste', 'edit', 'submit', 'screen'].includes(e.type) || /^plugin_/.test(e.type)).slice(0, 300)
     .map(e => `[${fmt(e.t)}] ${e.type}${e.id ? ' ' + e.id : ''}${e.chars ? ` ${e.chars}字` : ''}${e.delta != null ? ` Δ${e.delta}` : ''}${e.note ? ' ' + s(e.note, 100) : ''}`);
@@ -193,7 +223,7 @@ ${task.task.title}：${task.task.brief.slice(0, 500)}
 ## 硬指标（程序算的，照这个说，别自己改数）
 问了 ${stats.asks} 次，其中追问 ${stats.followups} 次；把 AI 的回答采纳进交付物 ${stats.adopted} 次（${stats.adopted_chars} 字）；交付物里原样来自 AI 回答的句子占 ${stats.verbatim_ratio}%；第一次问 AI 在 ${firstAsk == null ? '—' : fmt(firstAsk)}，那之前打开过 ${stats.materials_before_first_ask} 份材料。
 ## 和 AI 的每一轮（按时间）
-${chat.slice(0, 40).map(c => `[${fmt(c.t)}] 问：${s(c.q, 400)}\n   答：${s(c.a, 500)}`).join('\n') || '（站内没问过；看下面录屏 / 插件里的外部 AI 使用）'}
+${chat.slice(0, 40).map(c => `[${fmt(c.t)}] 问：${pasted[chat.indexOf(c)] >= 50 ? `【约 ${pasted[chat.indexOf(c)]}% 是原样粘贴的任务书 / 材料，不算他自己的提问】` : ''}${s(c.q, 400)}\n   答：${s(c.a, 500)}`).join('\n') || '（站内没问过；看下面录屏 / 插件里的外部 AI 使用）'}
 ## 过程事件（open_material 打开材料 · ai_ask 问 AI · adopt 采纳进交付物 · paste 粘贴 · edit 自己改稿 Δ字数 · screen 录屏看到的）
 ${lines.join('\n')}
 ## 交付物（节选）
@@ -209,25 +239,46 @@ ${pol ? `## 这家企业、这个岗位的 AI 使用标准（照它评，不要�
 治理红线：${pol.red_lines.map(x => x.text).join('；') || '（无）'}
 ${pol.summary}
 ` : ''}${flags.length ? `程序查到问 AI 时贴了：${flags.map(f => `${fmt(f.t)} ${f.what}`).join('、')}\n` : ''}
-五个子项各打 0–100，每项一句观察 + 1–2 条证据（证据写时刻和原话 / 原文片段）：
-${AI_USE_ITEMS.map(i => `- ${i.key} ${i.title}：${i.desc}`).join('\n')}
-打分口径：90+ 主动、有依据、能纠 AI 的错；75 稳定会用；60 会用但照单全收较多；40 以下 基本是把题丢给 AI 或问得很空。原样照搬比例高、AI 编的数字被直接写进交付物，核验和整合要明显扣分。
-${pol ? '对照标准：在「不能用 / 慎用」的环节把判断整个交给 AI、碰了治理红线，分工和核验要扣；在「鼓励用」的环节完全不用，提问和整合也不该给高分。red_line_hits 只写确实碰了上面红线的时刻（没有就空数组）。\n' : ''}措辞用「观察到…」。verdict 一句话总评（30–60 字），说清他是怎么用 AI 的${pol ? '，以及合不合这家企业的标准' : ''}。只返回 JSON：
-{ "items": [ { "key": "ask", "score": 0, "note": "", "evidence": [ { "t": 0, "quote": "" } ] } ], "red_line_hits": [ { "t": 0, "what": "碰了哪条红线", "quote": "" } ], "verdict": "" }`;
+${disclosureText ? `## 交卷时他写的「AI 参与说明」（告诉过他会和记录比对）
+${disclosureText}
+拿它和上面的硬指标、每一轮对话、采纳记录比：consistent 逐环节吻合 · minor 颗粒度粗或把自己做的说得更关键 · major 把 AI 生成的说成自己做的（或反过来）· vague 笼统到没法对。
+` : ''}
+五个子项逐项定档。先判这一项能不能评：提问、分工是基线项，只要用了 AI 就一定能评，没看到好的做法就给低档；核验、取舍、整合是条件项，这道题和这次过程没出现对应场景时 observable 填 false、why_na 写一句为什么（不是他做得差，是没机会），不要硬打低分。
+能评的按下面的档位定 level（1–5，只能是整数），每档都要有证据撑着：证据写时刻和原话 / 原文片段，最多 3 条；标了「原样粘贴」的提问不能当提问的证据。
+${AI_USE_ITEMS.map(i => `- ${i.key} ${i.title}（${AI_USE_COND[i.key] ? `条件项：${AI_USE_COND[i.key]}` : '基线项'}）：${i.desc}\n  ${AI_USE_ANCHORS[i.key].map((a, k) => `${k + 1} 档 ${a}`).join('；')}`).join('\n')}
+核验、取舍拿不准这道题有没有给机会时，当作能评。原样照搬比例高、AI 编的数字被直接写进交付物，核验和整合要明显压档。
+负向分三类，写进 negatives（没有就空数组）：
+- conduct 做法问题：某个环节做法不对（比如把客户名单、手机号原样贴给 AI，在不该交的环节把判断整个交给 AI）——把对应子项压到 1–2 档，不另外扣分${flags.length ? '；程序查到的贴个人信息算这一类，压「分工」' : ''}；
+- integrity 诚信问题：AI 参与说明严重不符、把 AI 编的数字说成自己查的、出错甩锅给 AI；
+- veto 一票否决：伪造数据或来源、规避考试限制（找人代做、绕开记录）——这类不出自动分，转人工看。
+${pol ? '对照标准：在「不能用 / 慎用」的环节把判断整个交给 AI、碰了治理红线，按上面三类归；在「鼓励用」的环节完全不用，提问和整合也不该给高档。\n' : ''}措辞用「观察到…」。verdict 一句话总评（30–60 字），说清他是怎么用 AI 的${pol ? '，以及合不合这家企业的标准' : ''}。只返回 JSON：
+{ "items": [ { "key": "ask", "observable": true, "why_na": "", "level": 3, "note": "", "evidence": [ { "t": 0, "quote": "" } ] } ], "negatives": [ { "t": 0, "kind": "conduct", "what": "", "quote": "" } ], "disclosure": ${disclosureText ? '{ "match": "consistent", "note": "一句为什么" }' : 'null'}, "verdict": "" }`;
   const p = await askJson(prompt + enTail(task), 'Grade · AI 使用', opts.institution);
-  const items = AI_USE_ITEMS.map(i => {
+  const items: AiUseReport['items'] = AI_USE_ITEMS.map(i => {
     const x = (Array.isArray(p.items) ? p.items : []).find((y: any) => y?.key === i.key) || {};
-    return { key: i.key, title: i.title, score: Math.max(0, Math.min(100, Math.round(Number(x.score) || 0))), note: sl(task)(x.note, 200), evidence: (Array.isArray(x.evidence) ? x.evidence : []).slice(0, 2).map((e: any) => ({ t: Math.max(0, Number(e?.t) || 0), quote: sl(task)(e?.quote, 160) })) };
+    const evidence = (Array.isArray(x.evidence) ? x.evidence : []).slice(0, 3).map((e: any) => ({ t: Math.max(0, Number(e?.t) || 0), quote: sl(task)(e?.quote, 160) })).filter((e: any) => e.quote);
+    // 条件项没给机会 → 未观测，不进分母；基线项不许 N/A
+    if (i.key === 'integrate' && !canIntegrate()) return { key: i.key, title: i.title, score: null, q: null, why_na: task.task?.lang === 'en' ? 'No AI content went into the deliverable (nothing adopted or pasted)' : 'AI 的内容没进交付物（没采纳、没粘贴），没法评怎么融进去', note: sl(task)(x.note, 200), evidence: [] };
+    if (AI_USE_COND[i.key] && x.observable === false) return { key: i.key, title: i.title, score: null, q: null, why_na: sl(task)(x.why_na, 120) || (task.task?.lang === 'en' ? 'The task gave no chance to show this' : '这道题没给机会'), note: sl(task)(x.note, 200), evidence: [] };
+    let q = Math.max(1, Math.min(5, Math.round(Number(x.level) || 1)));
+    const qq = evidence.length <= 1 && q > 3.5 ? 3.5 : q;   // 单条证据最高 3.5 档
+    return { key: i.key, title: i.title, score: Math.round(qq * 20), q: qq, note: sl(task)(x.note, 200), evidence };
   });
-  // 按标准的权重加权（没有标准就平均）；碰红线每条扣 8，最多 24
+  // 按标准的权重加权（没有标准就平均），只算能评的项
   const w: Record<string, number> = pol?.weights || { ask: 20, verify: 20, select: 20, divide: 20, integrate: 20 };
-  const raw = Math.round(items.reduce((n, i) => n + i.score * (w[i.key] ?? 20), 0) / (items.reduce((n, i) => n + (w[i.key] ?? 20), 0) || 1));
+  const seen = items.filter(i => i.score != null);
+  const raw = Math.round(seen.reduce((n, i) => n + (i.score as number) * (w[i.key] ?? 20), 0) / (seen.reduce((n, i) => n + (w[i.key] ?? 20), 0) || 1));
+  const kindOf = (k: any): 'conduct' | 'integrity' | 'veto' => (k === 'integrity' || k === 'veto' ? k : 'conduct');
   const violations: NonNullable<AiUseReport['violations']> = [
-    ...flags.map(f => ({ t: f.t, what: `问 AI 时贴了${f.what}`, quote: f.quote, by: 'program' as const })),
-    ...(pol?.red_lines.length && Array.isArray(p.red_line_hits) ? p.red_line_hits : []).slice(0, 4).map((h: any) => ({ t: Math.max(0, Number(h?.t) || 0), what: sl(task)(h?.what, 80), quote: sl(task)(h?.quote, 120), by: 'review' as const })).filter((h: any) => h.what),
+    ...flags.map(f => ({ t: f.t, what: `问 AI 时贴了${f.what}`, quote: f.quote, by: 'program' as const, kind: 'conduct' as const })),
+    ...(Array.isArray(p.negatives) ? p.negatives : []).slice(0, 5).map((h: any) => ({ t: Math.max(0, Number(h?.t) || 0), what: sl(task)(h?.what, 80), quote: sl(task)(h?.quote, 120), by: 'review' as const, kind: kindOf(h?.kind) })).filter((h: any) => h.what),
   ].slice(0, 6);
-  const score = Math.max(0, raw - Math.min(24, violations.length * 8));
-  return { score, raw_score: raw, level: score >= 90 ? 'L4' : score >= 75 ? 'L3' : score >= 60 ? 'L2' : 'L1', verdict: sl(task)(p.verdict, 180), items, stats, standard, violations };
+  const dm = p.disclosure?.match;
+  const disclosure = disclosureText ? { text: disclosureText, match: (['consistent', 'minor', 'major', 'vague'].includes(dm) ? dm : 'vague') as 'consistent' | 'minor' | 'major' | 'vague', note: sl(task)(p.disclosure?.note, 160) } : null;
+  const integrity = violations.some(v => v.kind === 'integrity') || disclosure?.match === 'major';
+  if (violations.some(v => v.kind === 'veto')) return { score: null, raw_score: raw, level: null, needs_review: true, verdict: sl(task)(p.verdict, 180), items, stats, standard, violations, disclosure };
+  const score = integrity ? Math.min(raw, 40) : raw;   // 诚信问题封顶 40，不清零：做过的还看得到
+  return { score, raw_score: raw, level: score >= 90 ? 'L4' : score >= 75 ? 'L3' : score >= 60 ? 'L2' : 'L1', verdict: sl(task)(p.verdict, 180), items, stats, standard, violations, disclosure };
 }
 
 /** 交卷时选填的「如果再给一天，先改哪里」：存成事件 next_step（2026-11-02，借潜历「迭代与判断」的一问） */

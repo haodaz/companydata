@@ -12,4 +12,4 @@ export const asScale = (v: unknown): ScaleId => (v === 'ai_use' ? 'ai_use' : DEF
 /** 这个人用来显示和排序的分。AI 模式下没用 AI、或看不到 AI 使用情况的是 null，不是 0 */
 export const mainScore = (s: { score?: number | null; report?: any }, scale: ScaleId | null): number | null => (scale === 'ai_use' ? s.report?.ai_use?.score ?? null : s.score ?? null);
 /** AI 使用分是空的两种情况：确实没用，或者截图读不出来这一项不评 */
-export const noAiLabel = (u: any, L: (zh: string, en: string) => string) => (/不评|cannot be assessed/.test(u?.verdict || '') ? L('无法评价', 'Not assessable') : L('没用 AI', 'No AI used'));
+export const noAiLabel = (u: any, L: (zh: string, en: string) => string) => (u?.needs_review ? L('待人工复核', 'Needs human review') : /不评|cannot be assessed/.test(u?.verdict || '') ? L('无法评价', 'Not assessable') : L('没用 AI', 'No AI used'));
