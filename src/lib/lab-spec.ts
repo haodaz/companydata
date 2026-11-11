@@ -232,3 +232,8 @@ export function cleanAnchor(raw: any): Anchor | null {
 
 /** 这个空间的形态（排一天、写章节按它换结构；没有就 null） */
 export const formOf = (jdSnapshot: any): SpaceForm | null => (isForm(jdSnapshot?.spec?.form) ? jdSnapshot.spec.form : null);
+/** 百业工厂批量配置（11-10）：空间开放哪些模块。jd_snapshot.open_modules 没写 = 全开 */
+export const OPEN_MODULES: { key: string; label: string }[] = [{ key: 'chat', label: '和我聊' }, { key: 'teach', label: '我教你' }, { key: 'test', label: '考考你' }, { key: 'learn', label: '你教我' }, { key: 'solve', label: '问问我' }];
+export const moduleClosed = (jdSnapshot: any, key: string) => Array.isArray(jdSnapshot?.open_modules) && OPEN_MODULES.some(m => m.key === key) && !jdSnapshot.open_modules.includes(key);
+/** 工位只观摩（11-10 同事反馈：高中生上手困难）：师傅做、学生看。生涯体验默认开，其他默认关；工厂里可以按空间改 */
+export const watchBenchOf = (jdSnapshot: any): boolean => (typeof jdSnapshot?.watch_bench === 'boolean' ? jdSnapshot.watch_bench : formOf(jdSnapshot) === 'career');

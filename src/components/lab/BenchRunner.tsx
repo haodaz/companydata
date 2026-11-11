@@ -49,7 +49,9 @@ import type { Beta3DScene } from '@/lib/lab-3d-beta';
 const TICK_MS = PLAY_TICK_MS, SNAP_EVERY_MS = 5000, SNAP_MAX = 16, SNAP_W = 320, SNAP_H = 180;
 const VW = 1600, VH = 900; // 场景覆盖层坐标系（百分比 × 16 / × 9）
 
-export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdrop, guided, exam }: { /** 分步考（2026-10-28）：考试也一步一步来——时钟停着、只提示该动哪个控件（不给数值、不给依据、不能代做），照常计分 */ exam?: boolean; spec: BenchSpec; role: 'rookie' | 'expert'; onFinish: (trace: BenchTrace) => void; onCancel: () => void; /** 沉浸模式：场景撑满，面板 / 控件 / 目标 / 事件流叠成 HUD */ hud?: boolean; /** 演示模式：进来就自己走 */ demo?: boolean; /** 跟我学：按老手脚本一步一步带着做——时钟走到下一个动作就停，说明做什么、为什么，人做对了再往下（lib/lab-lesson.ts 的 bench 教案） */ guided?: { before: string; actions: { i: number; say: string; basis?: string | null }[]; after: string } | null; /** 3D beta：工位画面四周是活的 3D 房间（跟着鼠标微动），工位本身也有一点视差 */ backdrop?: Beta3DScene | null }) {
+export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdrop, guided: guidedProp, exam, watchOnly }: { /** 只观摩（11-10）：师傅把脚本走一遍，体验者看完继续，不用动手；教案里有讲解就边走边讲 */ watchOnly?: boolean; /** 分步考（2026-10-28）：考试也一步一步来——时钟停着、只提示该动哪个控件（不给数值、不给依据、不能代做），照常计分 */ exam?: boolean; spec: BenchSpec; role: 'rookie' | 'expert'; onFinish: (trace: BenchTrace) => void; onCancel: () => void; /** 沉浸模式：场景撑满，面板 / 控件 / 目标 / 事件流叠成 HUD */ hud?: boolean; /** 演示模式：进来就自己走 */ demo?: boolean; /** 跟我学：按老手脚本一步一步带着做——时钟走到下一个动作就停，说明做什么、为什么，人做对了再往下（lib/lab-lesson.ts 的 bench 教案） */ guided?: { before: string; actions: { i: number; say: string; basis?: string | null }[]; after: string } | null; /** 3D beta：工位画面四周是活的 3D 房间（跟着鼠标微动），工位本身也有一点视差 */ backdrop?: Beta3DScene | null }) {
+  const guided = watchOnly ? null : guidedProp;
+  const hasScript = !!spec.expertScript?.length;
   const stRef = useRef<BenchState>(initBench(spec));
   const panelRef = useRef<SVGSVGElement>(null);
   const sceneRef = useRef<SVGSVGElement>(null);
@@ -102,7 +104,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
   }, [scene]);
 
   // ── AI 演示：拿老手脚本自己把这台工位走一遍，人在旁边看 ──
-  const [auto, setAuto] = useState(!!demo);
+  const [auto, setAuto] = useState(!!demo || (!!watchOnly && hasScript));
   const autoI = useRef(0);
   const autoRef = useRef(auto); autoRef.current = auto;
   /** 老手脚本里到点的动作：放在模拟时钟每一拍推进之前做（2026-11-03）。以前演示单独开一个定时器，
@@ -198,9 +200,10 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
   const [gNudge, setGNudge] = useState(false);
   const nudgeT = useRef<ReturnType<typeof setTimeout> | null>(null);
   const nudge = () => { setGNudge(true); if (nudgeT.current) clearTimeout(nudgeT.current); nudgeT.current = setTimeout(() => setGNudge(false), 2600); };
-  const handsOff = !!guided && (gPhase === 'before' || gPhase === 'demo' || gPhase === 'ready');
+  const handsOff = !!watchOnly || (!!guided && (gPhase === 'before' || gPhase === 'demo' || gPhase === 'ready'));
 
   const act = (id: string, value: number) => {
+    if (watchOnly) { nudge(); return; }
     if (!running && !guided) return;
     if (auto) { if (guided) nudge(); return; }
     if (guided && gPhaseRef.current !== 'act' && gPhaseRef.current !== 'done') { nudge(); return; }   // 看示范的时候别碰台面，但要告诉他为什么没反应
@@ -335,6 +338,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
     await snapshot(true);
     const tr: any = finishBench(spec, stRef.current, true);
     if (guided) tr.study = { score: gScore(), outcomes: gOutcomes, violations: gViolations() };
+    if (watchOnly) tr.watched = true;
     if (guided && exam) (tr as any).stepwise = true;   // 分步考：照常评分，记录上标一下
     onFinish(tr);
   };
@@ -426,7 +430,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
         const isTarget = !!guided && gPhase === 'act' && gPaused && gTarget?.control === c.id;
         const waiting = handsOff || (!!guided && gPhase === 'act' && gPaused && !isTarget);
         return (
-          <div key={c.id} className={`${hud ? 'hud-card' : ''}${isTarget ? ' bench-target' : ''}`} style={{ position: 'relative', padding: '10px 12px', borderRadius: 12, border: '1px solid var(--line)', background: 'rgba(255,255,255,.7)', opacity: waiting ? 0.5 : 1, transition: 'opacity .25s' }}>
+          <div key={c.id} className={`${hud ? 'hud-card' : ''}${isTarget ? ' bench-target' : ''}`} style={{ position: 'relative', padding: '10px 12px', borderRadius: 12, border: '1px solid var(--line)', background: 'rgba(255,255,255,.7)', opacity: waiting ? (watchOnly ? 0.8 : 0.5) : 1, transition: 'opacity .25s' }}>
             {isTarget && <span className="bench-target-tag">{c.kind === 'button' ? '点这里' : c.kind === 'switch' ? '拨这里' : '拖这里'}</span>}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
               <span className="hud-ink" style={{ fontWeight: 700, fontSize: 13 }}>{c.label}</span>
@@ -531,11 +535,21 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
     </div>
   ) : null;
 
-  const nudgeToast = gNudge && handsOff ? <div className="bench-nudge">{gPhase === 'before' ? '还没轮到你动手：先点右边的「先看我做一遍」' : gPhase === 'demo' ? '老手正在做，先看着，做完就换你' : '点右边的「换你比着做」，就可以上手了'}</div> : null;
+  const watchDone = !hasScript || (!running && !auto);
+  const watchLine = auto && autoI.current > 0 ? guidedProp?.actions[Math.min(guidedProp.actions.length - 1, autoI.current - 1)] : null;
+  const watchCard = watchOnly ? (
+    <div className={hud ? 'hud-card' : undefined} style={{ padding: 14, borderRadius: 14, background: 'rgba(106,92,255,.08)', border: '1.5px solid rgba(106,92,255,.45)' }}>
+      <div className="lab-mono lab-cap" style={{ marginBottom: 6, color: 'var(--v)' }}>{watchDone ? '看完了' : '看师傅做 · 不用动手'}</div>
+      <div style={{ fontSize: 14, fontWeight: 700, lineHeight: 1.65 }} className="hud-ink">{watchDone ? guidedProp?.after || '这一段师傅做完了，想想刚才哪一下让你印象最深。' : watchLine?.say || guidedProp?.before || '师傅来做这一段，你看着他先动哪儿、盯着哪个仪表。'}</div>
+      {watchLine?.basis && <div className="hud-ink3" style={{ fontSize: 12, marginTop: 6, lineHeight: 1.6, color: 'var(--ink3)' }}>为什么：{watchLine.basis}</div>}
+    </div>
+  ) : null;
+  const nudgeToast = gNudge && handsOff ? <div className="bench-nudge">{watchOnly ? '这一步看师傅做就行，不用动手' : gPhase === 'before' ? '还没轮到你动手：先点右边的「先看我做一遍」' : gPhase === 'demo' ? '老手正在做，先看着，做完就换你' : '点右边的「换你比着做」，就可以上手了'}</div> : null;
 
   const side = (
     <>
       {nudgeToast}
+      {watchCard}
       {guideCard}
       {handMirror}
       <div className={hud ? 'hud-card' : undefined} style={{ padding: 14, borderRadius: 14, background: 'rgba(23,26,46,.04)', border: '1px solid var(--line)' }}>
@@ -555,12 +569,15 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
         {recent.length === 0 && <div style={{ fontSize: 12, color: '#6b7089' }}>还没有操作。</div>}
         {recent.map((e, i) => <EventLine key={i} spec={spec} e={e} />)}
       </div>
-      <div style={{ display: 'flex', gap: 8 }}>
+      {watchOnly ? <div style={{ display: 'flex', gap: 8 }}>
+        <button className={`lab-btn${watchDone ? ' bench-cta' : ''}`} disabled={!watchDone} onClick={finish} style={{ flex: 1 }}>{watchDone ? '看完了，继续 →' : '师傅做着呢…'}</button>
+        {hasScript && <button className="lab-btn ghost" disabled={!watchDone} onClick={() => { hardReset(); autoI.current = 0; setAuto(true); }} style={hud ? { color: '#fff', borderColor: 'rgba(255,255,255,.5)' } : undefined}>再看一遍</button>}
+      </div> : <div style={{ display: 'flex', gap: 8 }}>
         <button className="lab-btn" disabled={!canFinish} onClick={finish} style={{ flex: 1 }}>{running ? '完成操作 →' : '提交这段操作 →'}</button>
         <button className="lab-btn ghost" onClick={reset} title="清掉这次的操作，从头再来" style={armed === 'reset' ? { background: '#ffd166', color: '#171a2e', borderColor: '#ffd166' } : hud ? { color: '#fff', borderColor: 'rgba(255,255,255,.5)' } : undefined}>{armed === 'reset' ? '再点一下 · 重来' : '重来'}</button>
         <button className="lab-btn ghost" onClick={() => { if (armed !== 'exit') { setArmed('exit'); return; } setArmed(null); onCancel(); }} style={armed === 'exit' ? { background: '#ff5fa2', color: '#fff', borderColor: '#ff5fa2' } : hud ? { color: '#fff', borderColor: 'rgba(255,255,255,.5)' } : undefined}>{armed === 'exit' ? '再点一下 · 退出' : '退出'}</button>
-      </div>
-      {!canFinish && !guided && <div style={{ fontSize: 11.5, color: hud ? 'rgba(255,255,255,.7)' : 'var(--ink3)' }}>至少操作 30 秒（模拟时间）后可提交。1 秒真实时间 = {spec.timeScale} 秒模拟时间。</div>}
+      </div>}
+      {!canFinish && !guided && !watchOnly && <div style={{ fontSize: 11.5, color: hud ? 'rgba(255,255,255,.7)' : 'var(--ink3)' }}>至少操作 30 秒（模拟时间）后可提交。1 秒真实时间 = {spec.timeScale} 秒模拟时间。</div>}
     </>
   );
 
@@ -624,7 +641,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
             toolName={l.iconBy ? (l.icons || [])[Math.round(st.controls[l.iconBy] || 0)] || l.icon || 'pitcher' : l.icon || 'pitcher'}
             pick={l.kind === 'tray' && l.control ? Math.round(st.controls[l.control] || 0) : -1}
             onPick={l.kind === 'tray' && l.control && running ? ((i: number) => act(l.control!, i)) : undefined}
-            onGrab={track && running ? (e => { dragRef.current = l; pourStart(); (e.target as Element).setPointerCapture?.(e.pointerId); const q = scenePoint(e.clientX, e.clientY); if (q) onTrack(l, q.x, q.y); }) : undefined} />;
+            onGrab={track && running && !watchOnly ? (e => { dragRef.current = l; pourStart(); (e.target as Element).setPointerCapture?.(e.pointerId); const q = scenePoint(e.clientX, e.clientY); if (q) onTrack(l, q.x, q.y); }) : undefined} />;
         })}
         {isLatteSurface && <LatteOverlay key={resetKey} spec={spec} st={st} running={running} auto={auto} act={act} ev={ev} big={big} setBig={setBig} dragging={!!dragRef.current}
           head={trackLayer?.control ? pointOnPath(trackPts.current, st.controls[trackLayer.control] || 0) : null} />}
@@ -641,12 +658,12 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
       <div className="lab-mono" style={{ position: 'absolute', left: 12, top: hud ? 34 : 10, display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,.6)', letterSpacing: '.06em' }}>
         <span style={{ width: 8, height: 8, borderRadius: 4, background: running ? '#ff3b5c' : '#777', boxShadow: running ? '0 0 8px #ff3b5c' : 'none' }} />CAM 01 · 数字工位 · T+{fmtT(st.t)}
       </div>
-      {!!spec.expertScript?.length && !guided && (
+      {!!spec.expertScript?.length && !guided && !watchOnly && (
         <button onClick={() => { if (!auto) { if (stRef.current.t > 0.5) hardReset(); /* 示范从头放：已经走了一段时，前面的动作会挤在同一拍里一起执行 */ autoI.current = 0; setAuto(true); } else setAuto(false); }} style={{ position: 'absolute', right: 12, bottom: 12, padding: '8px 15px', borderRadius: 999, border: '1px solid rgba(255,255,255,.35)', background: auto ? 'linear-gradient(135deg,#3ddc97,#12b5cb)' : 'rgba(15,18,36,.72)', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', backdropFilter: 'blur(6px)', zIndex: 3 }}>
           {auto ? '■ 演示中 · 点此停下' : '▶ 看我操作一遍'}
         </button>
       )}
-      {trackLayer && (
+      {trackLayer && !watchOnly && (
         <button onClick={() => setCam(v => !v)} style={{ position: 'absolute', left: 12, top: hud ? 58 : 34, padding: '6px 12px', borderRadius: 999, border: '1px solid rgba(255,255,255,.35)', background: cam ? 'linear-gradient(135deg,#ff5fa2,#ff8a5f)' : 'rgba(15,18,36,.7)', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer', backdropFilter: 'blur(6px)' }}>
           {bareHand ? (cam ? '📷 摄像头跟手中 · 关闭' : '📷 用摄像头比划手法') : cam ? `📷 摄像头握${holdName}中 · 关闭` : `📷 用摄像头握${holdName}`}
         </button>

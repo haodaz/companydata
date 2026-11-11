@@ -12,8 +12,9 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { App } from 'antd';
 import { useUser } from '@/lib/user-context';
 import { col, FX_CSS, LISTING, Plays, useLabNav, when } from '@/components/lab/FactoryKit';
+import { OPEN_MODULES } from '@/lib/lab-spec';
 
-type Space = { id: string; title: string; name: string | null; role: string; avatar: string | null; kind: string; company: string | null; anchor: any; preset: string | null; listing: 'draft' | 'listed' | 'unlisted'; chapters: { total: number; published: number }; plays: number; avg: number | null; last_play: string | null; created_by: string; created_at: string };
+type Space = { id: string; title: string; name: string | null; role: string; avatar: string | null; kind: string; company: string | null; anchor: any; preset: string | null; listing: 'draft' | 'listed' | 'unlisted'; chapters: { total: number; published: number }; plays: number; avg: number | null; last_play: string | null; created_by: string; created_at: string; form: string | null; open_modules: string[] | null; watch_bench: boolean };
 const KIND: Record<string, string> = { career: '职业探索', discipline: '学科体验', research_post: '研究岗', pasted: '粘贴 JD', jd: '真实 JD' };
 
 export default function Page() { return <Suspense><App><Factory /></App></Suspense>; }
@@ -54,6 +55,16 @@ function Factory() {
 function Spaces({ d, reload }: { d: { spaces: Space[]; migrated: boolean; role: string } | null; reload: () => void }) {
   const router = useRouter(); const { message } = App.useApp(); const nav = useLabNav();
   const [kw, setKw] = useState(''); const [st, setSt] = useState('all');
+  // 批量配置（11-10）：复选未上架的空间，定开放哪些模块、工位是否只观摩
+  const [pick, setPick] = useState<string[]>([]); const [mods, setMods] = useState<string[]>(OPEN_MODULES.map(m => m.key)); const [watch, setWatch] = useState(false); const [saving, setSaving] = useState(false);
+  const toggle = (s: Space, on: boolean) => { if (on && !pick.length) { setMods(s.open_modules || OPEN_MODULES.map(m => m.key)); setWatch(s.watch_bench); } setPick(x => on ? [...x, s.id] : x.filter(y => y !== s.id)); };
+  const applyBatch = async () => {
+    setSaving(true);
+    const j = await (await fetch('/api/lab/factory', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ids: pick, open_modules: mods, watch_bench: watch }) })).json().catch(() => ({ ok: false, error: '网络错误' }));
+    setSaving(false);
+    if (!j.ok) { message.error(j.error); return; }
+    message.success(`已配置 ${j.done} 个空间${j.skipped ? `，跳过 ${j.skipped} 个（已上架或没有权限）` : ''}`); setPick([]); reload();
+  };
   const list = useMemo(() => (d?.spaces || []).filter(s => (st === 'all' || s.listing === st) && (!kw || [s.title, s.name, s.role, s.company, s.anchor?.label].some(v => String(v || '').includes(kw)))), [d, kw, st]);
   const n = (k: string) => (d?.spaces || []).filter(s => k === 'all' || s.listing === k).length;
   const setListing = async (s: Space, listing: string) => {
@@ -66,17 +77,24 @@ function Spaces({ d, reload }: { d: { spaces: Space[]; migrated: boolean; role: 
       <input className="lab-input fx-in" value={kw} onChange={e => setKw(e.target.value)} placeholder="搜职业 / 岗位 / 名字" />
       {[['all', '全部'], ['draft', '草稿'], ['listed', '已上架'], ['unlisted', '已下架']].map(([k, t]) => <button key={k} className={`fx-chip${st === k ? ' on' : ''}`} onClick={() => setSt(k)}>{t} {d ? n(k) : ''}</button>)}
     </div>
+    {pick.length > 0 && <div className="lab-glass" style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center', padding: '10px 14px', marginBottom: 12, fontSize: 13.5 }}>
+      <b>已选 {pick.length} 个</b>
+      <span style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>开放：{OPEN_MODULES.map(m => <label key={m.key} style={{ cursor: 'pointer' }}><input type="checkbox" checked={mods.includes(m.key)} onChange={e => setMods(x => e.target.checked ? [...x, m.key] : x.filter(y => y !== m.key))} /> {m.label}</label>)}</span>
+      <label style={{ cursor: 'pointer' }} title="师傅把工位操作做一遍，体验者看完继续，不用动手"><input type="checkbox" checked={watch} onChange={e => setWatch(e.target.checked)} /> 工位只观摩</label>
+      <span style={{ marginLeft: 'auto', display: 'flex', gap: 8 }}><button className="lab-btn sm" disabled={saving || !mods.length} onClick={applyBatch}>{saving ? '保存中…' : '应用'}</button><button className="lab-btn ghost sm" onClick={() => setPick([])}>取消</button></span>
+    </div>}
     <div className="lab-glass fx-tablewrap">
       <table className="fx-table t-spaces">
-        <thead><tr><th>空间</th><th>状态</th><th>章节</th><th>作答</th><th>平均分</th><th>最近作答</th>{d?.role === 'admin' && <th>谁生成的</th>}<th /></tr></thead>
+        <thead><tr><th style={{ width: 30 }} /><th>空间</th><th>状态</th><th>章节</th><th>作答</th><th>平均分</th><th>最近作答</th>{d?.role === 'admin' && <th>谁生成的</th>}<th /></tr></thead>
         <tbody>
-          {!d && <tr><td colSpan={8} className="fx-muted">读取中…</td></tr>}
-          {d && !list.length && <tr><td colSpan={8}><div className="fx-empty">{d.spaces.length ? '没有符合的。' : '还没有空间。点右上「＋ 新建空间」，先定位做哪一个，再说给谁看、要多深。'}</div></td></tr>}
+          {!d && <tr><td colSpan={9} className="fx-muted">读取中…</td></tr>}
+          {d && !list.length && <tr><td colSpan={9}><div className="fx-empty">{d.spaces.length ? '没有符合的。' : '还没有空间。点右上「＋ 新建空间」，先定位做哪一个，再说给谁看、要多深。'}</div></td></tr>}
           {list.map(s => <tr key={s.id} className="click" onClick={() => router.push(nav.space(s.id))}>
+            <td onClick={e => e.stopPropagation()}>{s.listing !== 'listed' && <input type="checkbox" checked={pick.includes(s.id)} onChange={e => toggle(s, e.target.checked)} aria-label="选这个空间" />}</td>
             <td style={{ minWidth: 240 }}>
               <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
                 {s.avatar ? <img src={s.avatar} alt="" className="fx-av" /> : <span className="fx-av ph">{(s.role || s.title).slice(0, 1)}</span>}
-                <div style={{ minWidth: 0 }}><b>{s.name ? `${s.name} · ${s.role}` : s.role || s.title}</b><div className="fx-sub">{[KIND[s.kind] || s.kind, s.company, s.preset].filter(Boolean).join(' · ')}</div></div>
+                <div style={{ minWidth: 0 }}><b>{s.name ? `${s.name} · ${s.role}` : s.role || s.title}</b><div className="fx-sub">{[KIND[s.kind] || s.kind, s.company, s.preset, s.watch_bench ? '工位只观摩' : null, s.open_modules ? `开放 ${s.open_modules.length} 个模块` : null].filter(Boolean).join(' · ')}</div></div>
               </div>
             </td>
             <td><span className={`fx-tag ${LISTING[s.listing]?.[1]}`}>{LISTING[s.listing]?.[0]}</span></td>

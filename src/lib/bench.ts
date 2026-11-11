@@ -64,7 +64,7 @@ export interface BenchSpec {
 
 export interface BenchEvent { t: number; kind: 'control' | 'rule' | 'goal' | 'snapshot' | 'note' | 'finish'; control?: string; value?: number; prev?: number; id?: string; label?: string; severity?: BenchSeverity; state?: Record<string, number>; image?: string; text?: string }
 export interface BenchMetrics { duration: number; actions: number; /** 含否决 */ violations: number; vetoes?: number; warnings: number; goals_done: number; goals_total: number; reversals: number; max_idle: number; time_to_goal: Record<string, number | null>; order: string[] }
-export interface BenchTrace { events: BenchEvent[]; final: Record<string, number>; duration: number; metrics: BenchMetrics; finished: boolean }
+export interface BenchTrace { events: BenchEvent[]; final: Record<string, number>; duration: number; metrics: BenchMetrics; finished: boolean; /** 只观摩：师傅做的，体验者没动手（lab-spec watchBenchOf） */ watched?: boolean }
 
 // ────────────────────────────────────────────
 // 安全表达式求值：数字、变量、+ - * / %、比较、&& || !、三元、括号、min/max/abs/clamp
@@ -404,7 +404,7 @@ export function sanitizeBenchTrace(raw: any): BenchTrace | null {
   const m = raw.metrics || {};
   return {
     events, final: Object.fromEntries(Object.entries(raw.final || {}).filter(([, v]) => typeof v === 'number') as [string, number][]),
-    duration: Math.max(0, Number(raw.duration) || 0), finished: raw.finished !== false,
+    duration: Math.max(0, Number(raw.duration) || 0), finished: raw.finished !== false, ...(raw.watched === true ? { watched: true } : {}),
     metrics: { duration: Number(m.duration) || 0, actions: Number(m.actions) || 0, violations: Number(m.violations) || 0, vetoes: Number(m.vetoes) || 0, warnings: Number(m.warnings) || 0, goals_done: Number(m.goals_done) || 0, goals_total: Number(m.goals_total) || 0, reversals: Number(m.reversals) || 0, max_idle: Number(m.max_idle) || 0, time_to_goal: m.time_to_goal && typeof m.time_to_goal === 'object' ? m.time_to_goal : {}, order: Array.isArray(m.order) ? m.order.map(String) : [] },
   };
 }

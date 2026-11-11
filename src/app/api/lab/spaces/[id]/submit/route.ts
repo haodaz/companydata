@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { withCost } from '@/lib/token-logger';
 import { supabaseAdmin } from '@/lib/supabase';
 import { answerTask, gradeAnswer, operateSim } from '@/lib/agents/skill-lab';
+import { watchBenchOf } from '@/lib/lab-spec';
 import { sanitizeTrace, traceMatch, traceToText, traceVetoes, type Sim, type SimTrace } from '@/lib/skill-sim';
 import { chapterExpertTrace, chapterTask, labError, loadSpace, pickChapter, recordInvocation, skillRef } from '@/lib/skill-lab-server';
 import { INVITED } from '@/lib/lab-invite';
@@ -40,6 +41,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       // AI 模式带了轨迹（「我教你」屏幕上演示的那一遍）就直接评它；没带才让模型自己上台操作
       const given = body.trace && typeof body.trace === 'object' ? sanitizeTrace(sim, body.trace) : null;
       trace = given && Object.keys(given).length ? given : mode === 'ai' ? await withCost(cost, () => operateSim({ ...space, ...chapterTask(space, chapter) }, sim, withSkill ? skill : null, model)) : sanitizeTrace(sim, body.trace);
+      if (trace && !watchBenchOf((space as any).jd_snapshot)) for (const v of Object.values(trace) as any[]) if (v?.watched) delete v.watched;   // 只有配了只观摩的空间才认这个标记
       answer = traceToText(sim, trace);
     } else if (mode === 'ai') answer = await withCost(cost, () => answerTask(space, withSkill ? skill : null, model));
     if (answer.length < 20) return NextResponse.json({ ok: false, error: '作答太短了，至少写几句' }, { status: 400 });

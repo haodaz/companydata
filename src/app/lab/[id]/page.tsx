@@ -10,7 +10,7 @@ import { App, Drawer, Input, Modal, Popconfirm } from 'antd';
 import { useModel } from '@/lib/model-context';
 import { useUser } from '@/lib/user-context';
 import { passed, visitorIds } from '@/lib/lab-cert';
-import { formOf } from '@/lib/lab-spec';
+import { formOf, moduleClosed, watchBenchOf } from '@/lib/lab-spec';
 import { SimRunner, SimStage, TraceCompare, enterFullscreen } from '@/components/lab/SimRunner';
 import { ChatLauncher } from '@/components/kg/PersonaChat';
 import { useNicknames } from '@/components/kg/useNicknames';
@@ -537,7 +537,8 @@ export default function SpacePage() {
   // 体验视角（没登录的访客，或从「体验百业」点进来的 ?from=gallery）：只看体验，不给「你教我 / 我被用在哪 / 我的来历」这些工厂侧的入口
   const fromParam = sp.get('from');
   const exp = !guest && (!user || fromParam === 'gallery');
-  const hiddenInExp = (m: Mode) => exp && EXP_HIDDEN.includes(m);
+  const closedMod = (m: string) => !guest && moduleClosed(space?.jd_snapshot, m);   // 百业工厂批量配置关掉的模块（受邀老师傅不受影响）
+  const hiddenInExp = (m: Mode) => (exp && EXP_HIDDEN.includes(m)) || closedMod(m);
   const mode: Mode | null = guest ? 'learn' : (urlMode && ALL_MODES.includes(urlMode) && !hiddenInExp(urlMode) ? urlMode : null);
   // 章节也跟着网址走（?ch=章节编号）：一个职业可以有几章组成「一天」，分享链接能直达某一章
   const chParam = sp.get('ch');
@@ -981,7 +982,7 @@ function castOf(space: any, sim: Sim | null) {
     ...(jd.kind !== 'career' ? [{ key: 'jd' as Mode, label: '我的来历', icon: 'jd', sub: jd.company || '岗位 JD' }] : []),
   ];
   // 「你教我」在体验视角也有（专业数采）：点了领一张邀请票进去示范，之后照样过示范评审
-  const portals = allPortals.filter(p => p.key === 'chat' || p.key === 'learn' || !hiddenInExp(p.key));
+  const portals = allPortals.filter(p => !closedMod(p.key) && (p.key === 'chat' || p.key === 'learn' || !hiddenInExp(p.key)));
 
   // 你教我：横幅下方的那一块——请老师傅把这一天走一遍（留名 → 逐段示范 → 每段走完接受追问 → 吸收）
   const walkedLabels = Object.values(chTraces).map(x => x.label);
@@ -1177,13 +1178,13 @@ function castOf(space: any, sim: Sim | null) {
               profile={askProfile && !demo && !study ? { name: rookie.name, note: rookie.note, location: rookie.location, set: (k: 'name' | 'note' | 'location', v: string) => setRookie(r => ({ ...r, [k]: v })) } : null}
               onStart={() => { if (askProfile && !demo && !study) saveProfile(); setIntro(false); }} />
           ) : (
-            <SimRunner key={runKey + (demo ? '-demo' : '') + (study ? '-study' : '') + (stepLesson ? '-step' : '')} startAt={startAt} demo={demo || undefined} study={study || undefined} stepExam={!study && !demo && stepLesson ? stepLesson : undefined} sim={sim} role="rookie" career={formOf(space?.jd_snapshot) === 'career'} busy={!!busy} backdrop={beta3dForChapter(String(id), chapter?.slot)} onCancel={() => { setStageReport(null); setAnswering(false); setDemo(null); setStudy(null); }} onFinish={trace => { if (study) { finishStudy(trace); return; } const d = !!demo; setDemo(null); submit(d ? 'ai' : 'human', d, trace); }} />
+            <SimRunner key={runKey + (demo ? '-demo' : '') + (study ? '-study' : '') + (stepLesson ? '-step' : '')} startAt={startAt} demo={demo || undefined} study={study || undefined} stepExam={!study && !demo && stepLesson ? stepLesson : undefined} sim={sim} role="rookie" career={formOf(space?.jd_snapshot) === 'career'} watchBench={watchBenchOf(space?.jd_snapshot)} busy={!!busy} backdrop={beta3dForChapter(String(id), chapter?.slot)} onCancel={() => { setStageReport(null); setAnswering(false); setDemo(null); setStudy(null); }} onFinish={trace => { if (study) { finishStudy(trace); return; } const d = !!demo; setDemo(null); submit(d ? 'ai' : 'human', d, trace); }} />
           )}
         </SimStage>
       )}
 
       {isDay && !(answering && sim) && (
-        <DayView mode={mode as DayMode} modes={guest ? ['learn'] : exp ? ['test', 'teach'] : ['test', 'teach', 'learn']} space={space} chapters={chapters} chapter={chapter} sim={sim} rubric={chapterRubric} canTeach={!!(sim && chapterTrace)} busy={!!busy} bareBusy={bareBusy}
+        <DayView mode={mode as DayMode} modes={guest ? ['learn'] : (exp ? ['test', 'teach'] as DayMode[] : ['test', 'teach', 'learn'] as DayMode[]).filter(m => !closedMod(m))} space={space} chapters={chapters} chapter={chapter} sim={sim} rubric={chapterRubric} canTeach={!!(sim && chapterTrace)} busy={!!busy} bareBusy={bareBusy}
           onBack={guest ? null : () => setMode(null)} onMode={m => setMode(m, true)}
           done={mode === 'learn' ? new Set(Object.keys(chTraces)) : undefined}
           actions={mode === 'learn' && !(guest && taught) ? (

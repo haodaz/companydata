@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { getSessionUser } from '@/lib/session';
 import { denyUnlessLabOwner } from '@/lib/lab-owner';
+import { formOf, OPEN_MODULES, watchBenchOf } from '@/lib/lab-spec';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -13,6 +14,7 @@ export const dynamic = 'force-dynamic';
  * GET ?view=plays[&space=]    作答记录（回收）：谁、哪个空间哪一章、分数、时间；带 space 只看这一个
  * GET ?view=chapters&space=   这个空间每一章的进入 / 平均分 / 人工改分（分析）
  * PATCH { id, listing }       上架 / 下架 / 退回草稿（迁移 065）
+ * PATCH { ids, open_modules, watch_bench }  批量配置未上架的空间：开放哪些模块、工位是否只观摩
  */
 type Me = { email: string; role: string };
 async function mySpaceIds(me: Me): Promise<string[] | null> {   // null = 管理员看全部
@@ -62,6 +64,7 @@ export async function GET(req: NextRequest) {
           listing: migrated ? (s.listing || 'listed') : (c.published ? 'listed' : 'draft'), listed_at: s.listed_at || null,
           chapters: c, plays: x?.plays || 0, avg: x?.scored ? n1(x.sum / x.scored) : null, last_play: x?.last || null,
           created_by: s.created_by, created_at: s.created_at,
+          form: formOf(jd), open_modules: Array.isArray(jd.open_modules) ? jd.open_modules : null, watch_bench: watchBenchOf(jd),
         };
       });
       return NextResponse.json({ ok: true, migrated, role: me.role, spaces: rows });
@@ -116,6 +119,20 @@ export async function GET(req: NextRequest) {
 
 export async function PATCH(req: NextRequest) {
   const b = await req.json().catch(() => ({}));
+  if (Array.isArray(b.ids)) {
+    const mods = (Array.isArray(b.open_modules) ? b.open_modules : []).filter((k: any) => OPEN_MODULES.some(m => m.key === k));
+    if (!mods.length) return NextResponse.json({ ok: false, error: '至少开放一个模块' }, { status: 400 });
+    let done = 0, skipped = 0;
+    for (const id of b.ids.slice(0, 100).map(String)) {   // 一个一个来，库是线上共用的
+      const denied = await denyUnlessLabOwner(req, id); if (denied) { skipped++; continue; }
+      const { data: t } = await db.from('skill_tasks').select('jd_snapshot, listing').eq('id', id).maybeSingle();
+      if (!t || t.listing === 'listed') { skipped++; continue; }   // 已上架的要先下架，别动正在给人体验的
+      const { error } = await db.from('skill_tasks').update({ jd_snapshot: { ...(t.jd_snapshot || {}), open_modules: mods, watch_bench: b.watch_bench === true } }).eq('id', id);
+      if (error) return NextResponse.json({ ok: false, error: error.message, done }, { status: 500 });
+      done++;
+    }
+    return NextResponse.json({ ok: true, done, skipped });
+  }
   const id = String(b.id || '');
   const denied = await denyUnlessLabOwner(req, id); if (denied) return denied;
   if (!['draft', 'listed', 'unlisted'].includes(b.listing)) return NextResponse.json({ ok: false, error: 'listing 只能是 draft / listed / unlisted' }, { status: 400 });

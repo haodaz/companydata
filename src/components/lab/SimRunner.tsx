@@ -76,7 +76,7 @@ export interface SimRunnerProps {
 /** 写一段的题最少几个字（11-10 同事反馈：按钮灰着不知道为什么，所以差几个字要写在框下面） */
 const MIN_TEXT = 20;
 
-export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, backdrop, study, stepExam, career }: SimRunnerProps & { /** 生涯体验：不是考核，交卷的说法换成看反馈 */ career?: boolean; /** 分步考（2026-10-28）：考试模式下工位那一步一步一步来（只提示该动哪个控件），照常计分 */ stepExam?: Lesson; /** 跟我学：带教案（lib/lab-lesson.ts）——每步先讲看什么 / 为什么，自己选完再逐个选项讲对错，工位上一步一步带着做；不计时不评分 */ study?: Lesson; /** 3D beta：这一章发生在已重建的 3D 场景里，用它代替平面背景 */ backdrop?: Beta3DScene | null; /** 演示模式：每一步先填好专家的选择，工位自己走一遍；何时翻页由讲解的人决定 */ demo?: SimTrace; /** 从第几步开始：演示和取图时直接跳到工位那步 */ startAt?: number }) {
+export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, backdrop, study, stepExam, career, watchBench }: SimRunnerProps & { /** 工位只观摩（lab-spec watchBenchOf） */ watchBench?: boolean; /** 生涯体验：不是考核，交卷的说法换成看反馈 */ career?: boolean; /** 分步考（2026-10-28）：考试模式下工位那一步一步一步来（只提示该动哪个控件），照常计分 */ stepExam?: Lesson; /** 跟我学：带教案（lib/lab-lesson.ts）——每步先讲看什么 / 为什么，自己选完再逐个选项讲对错，工位上一步一步带着做；不计时不评分 */ study?: Lesson; /** 3D beta：这一章发生在已重建的 3D 场景里，用它代替平面背景 */ backdrop?: Beta3DScene | null; /** 演示模式：每一步先填好专家的选择，工位自己走一遍；何时翻页由讲解的人决定 */ demo?: SimTrace; /** 从第几步开始：演示和取图时直接跳到工位那步 */ startAt?: number }) {
   const [idx, setIdx] = useState(Math.min(Math.max(0, startAt || 0), sim.steps.length - 1));
   const [head3d, setHead3d] = useState(false);
   // 评分要十几秒：按钮上走秒，让人知道没卡住
@@ -277,10 +277,10 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, 
   );
   const benchDone = step.type === 'bench' && step.bench && value?.finished ? (
     <div className="lab-in" style={{ padding: '12px 14px', borderRadius: 14, background: 'rgba(18,161,80,.07)', border: '1px solid rgba(18,161,80,.25)' }}>
-      <div style={{ fontWeight: 700, color: '#0d7a3d', marginBottom: 4 }}>这段操作已记录</div>
+      <div style={{ fontWeight: 700, color: '#0d7a3d', marginBottom: 4 }}>{(value as any)?.watched ? '这段看完了' : '这段操作已记录'}</div>
       <div style={{ fontSize: 13.5, color: 'var(--ink2)' }}>{describeStep(step, value)}{(value as any)?.study && <span style={{ marginLeft: 8, fontWeight: 700, color: (value as any).study.score >= 80 ? '#0d7a3d' : (value as any).study.score >= 60 ? '#b7791f' : '#8a94a6' }}>· 操作打分 {(value as any).study.score}</span>}</div>
       <SnapshotStrip trace={value as BenchTrace} />
-      <button className="lab-btn ghost" style={{ marginTop: 6 }} onClick={() => set(undefined)}>重新操作</button>
+      <button className="lab-btn ghost" style={{ marginTop: 6 }} onClick={() => set(undefined)}>{(value as any)?.watched ? '再看一遍' : '重新操作'}</button>
     </div>
   ) : null;
 
@@ -302,7 +302,7 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, 
           <span className="lab-mono">{study ? 'LESSON · 我教你' : role === 'expert' ? 'EXPERT RUN' : 'SIMULATION'} · {String(idx + 1).padStart(2, '0')}/{String(sim.steps.length).padStart(2, '0')}</span>
           {sim.steps.map((s, i) => <span key={s.id} style={{ flex: 1, height: 4, borderRadius: 2, background: i < idx ? 'linear-gradient(90deg,var(--v),var(--c))' : i === idx ? '#fff' : 'rgba(255,255,255,.25)' }} />)}
         </div>
-        {phase === 'dialogue' && step.scene && <NpcDialogue key={step.id} scene={step.scene} portrait={portrait} onDone={() => setPhase('question')} cta={isBench ? '开始操作' : undefined} />}
+        {phase === 'dialogue' && step.scene && <NpcDialogue key={step.id} scene={step.scene} portrait={portrait} onDone={() => setPhase('question')} cta={isBench ? (watchBench && role === 'rookie' ? '开始看' : '开始操作') : undefined} />}
         {phase === 'question' && !benchLive && (
           <div className={`lab-game-mask${backdrop ? ' is-3d' : ''}`}>
             <div className={`lab-game-modal lab-in${busy ? ' lab-scan' : ''}`}>
@@ -313,7 +313,7 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, 
             </div>
           </div>
         )}
-        {benchLive && <BenchRunner hud demo={!!demo} guided={ls?.bench || (stepExam && !study ? stepExam.steps?.[step.id]?.bench || null : null)} exam={!!stepExam && !study} key={step.id} spec={step.bench!} role={role} onFinish={tr => set(tr)} onCancel={onCancel} backdrop={backdrop} />}
+        {benchLive && <BenchRunner hud watchOnly={!!watchBench && role === 'rookie'} demo={!!demo} guided={ls?.bench || (stepExam && !study ? stepExam.steps?.[step.id]?.bench || null : null)} exam={!!stepExam && !study} key={step.id} spec={step.bench!} role={role} onFinish={tr => set(tr)} onCancel={onCancel} backdrop={backdrop} />}
         {backdrop && !benchLive && (
           <button onClick={() => setHead3d(v => !v)} title="摄像头只在本机算头的位置，不录、不传"
             style={{ position: 'absolute', left: 16, bottom: 16, zIndex: 6, padding: '8px 14px', borderRadius: 999, border: '1px solid rgba(255,255,255,.3)', cursor: 'pointer', fontWeight: 700, fontSize: 12.5, color: '#fff', background: head3d ? 'linear-gradient(135deg,#3ddc97,#12b5cb)' : 'rgba(15,18,36,.72)', backdropFilter: 'blur(6px)' }}>
@@ -341,15 +341,15 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, 
         {step.type === 'bench' && step.bench && (
           value?.finished ? (
             <div className="lab-in" style={{ padding: '12px 14px', borderRadius: 14, background: 'rgba(18,161,80,.07)', border: '1px solid rgba(18,161,80,.25)' }}>
-              <div style={{ fontWeight: 700, color: '#0d7a3d', marginBottom: 4 }}>这段操作已记录</div>
+              <div style={{ fontWeight: 700, color: '#0d7a3d', marginBottom: 4 }}>{(value as any)?.watched ? '这段看完了' : '这段操作已记录'}</div>
               <div style={{ fontSize: 13.5, color: 'var(--ink2)' }}>{describeStep(step, value)}{(value as any)?.study && <span style={{ marginLeft: 8, fontWeight: 700, color: (value as any).study.score >= 80 ? '#0d7a3d' : (value as any).study.score >= 60 ? '#b7791f' : '#8a94a6' }}>· 操作打分 {(value as any).study.score}</span>}</div>
               <SnapshotStrip trace={value as BenchTrace} />
-              <button className="lab-btn ghost" style={{ marginTop: 6 }} onClick={() => set(undefined)}>重新操作</button>
+              <button className="lab-btn ghost" style={{ marginTop: 6 }} onClick={() => set(undefined)}>{(value as any)?.watched ? '再看一遍' : '重新操作'}</button>
             </div>
           ) : (
             <div>
               <div style={{ fontSize: 13.5, color: 'var(--ink2)', lineHeight: 1.75, marginBottom: 12, padding: '10px 14px', borderRadius: 12, background: 'rgba(106,92,255,.06)' }}>{step.bench.brief}</div>
-              <BenchRunner demo={!!demo} guided={ls?.bench || (stepExam && !study ? stepExam.steps?.[step.id]?.bench || null : null)} exam={!!stepExam && !study} key={step.id} spec={step.bench} role={role} onFinish={tr => set(tr)} onCancel={onCancel} />
+              <BenchRunner watchOnly={!!watchBench && role === 'rookie'} demo={!!demo} guided={ls?.bench || (stepExam && !study ? stepExam.steps?.[step.id]?.bench || null : null)} exam={!!stepExam && !study} key={step.id} spec={step.bench} role={role} onFinish={tr => set(tr)} onCancel={onCancel} />
             </div>
           )
         )}

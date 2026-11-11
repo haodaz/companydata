@@ -52,14 +52,14 @@ export function describeStep(step: SimStep, value: any): string {
     case 'classify': return (step.options || []).map(o => `${o.label}→${step.labels?.find(l => l.id === value[o.id])?.label || '未标记'}`).join('；');
     case 'allocate': return (step.options || []).map(o => `${o.label} ${value[o.id] || 0}${step.unit || ''}`).join('；');
     case 'slider': return `${value}${step.unit || ''}`;
-    case 'bench': { const m = (value as BenchTrace)?.metrics; return m ? `用时 ${Math.round(m.duration)} 秒 · 目标 ${m.goals_done}/${m.goals_total} · 违规 ${m.violations} · 操作 ${m.actions} 次` : '（未操作）'; }
+    case 'bench': { const m = (value as BenchTrace)?.metrics; if ((value as any)?.watched) return '看师傅把这段操作做了一遍'; return m ? `用时 ${Math.round(m.duration)} 秒 · 目标 ${m.goals_done}/${m.goals_total} · 违规 ${m.violations} · 操作 ${m.actions} 次` : '（未操作）'; }
     default: return String(value);
   }
 }
 
 /** 整条轨迹碰了哪些工位否决项：有就本段不合格（资格考核的一票否决） */
 export function traceVetoes(sim: Sim, trace: SimTrace | null): string[] {
-  return trace ? sim.steps.flatMap(s => s.type === 'bench' ? vetoesOf(trace[s.id] as BenchTrace) : []) : [];
+  return trace ? sim.steps.flatMap(s => s.type === 'bench' && !(trace[s.id] as any)?.watched ? vetoesOf(trace[s.id] as BenchTrace) : []) : [];
 }
 
 /** 整条轨迹 → 文字记录 */
@@ -67,6 +67,7 @@ export function traceToText(sim: Sim, trace: SimTrace): string {
   return sim.steps.map((s, i) => {
     if (s.type === 'bench' && s.bench) {
       const tr = trace[s.id] as BenchTrace | undefined;
+      if ((tr as any)?.watched) return `【第 ${i + 1} 步 · 虚拟工位「${s.bench.name}」】这一步是看师傅操作，体验者没有动手：不评操作，也不因此扣分；和操作有关的评分项，按他后面答题时有没有看懂来评。`;
       return `【操作 ${i + 1} · 虚拟工位「${s.bench.name}」】${s.prompt}\n${tr?.events?.length ? benchTimeline(s.bench, tr) : '→ （未操作）'}`;
     }
     const skipped = s.type === 'multi' || s.type === 'drill' ? (s.options || []).filter(o => !(trace[s.id] || []).includes(o.id)).map(o => o.label) : [];
