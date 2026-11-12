@@ -37,13 +37,15 @@ export function stagesNote(task: WorkTask): string {
 
 export function buildSolvePrompt(task: WorkTask, opts: SolveOpts = {}): string {
   const who = opts.persona || `应聘「${task.task.role}」的候选人`;
-  return `你是${who}，现在做这道真活。只能用下面的材料；材料里没有的数据要明确标注假设。总共 ${opts.words || '1200–2500 字'}。
+  // 11-12：英文题要用英文交（AI 基线和学院学员原来都交中文）；任务规则也给做题的人看（候选人看得到，基线不该看不到）
+  const en = task.task?.lang === 'en';
+  return `${en ? 'This task is in English: write the entire deliverable in English (about 600–1200 words), including headings, tables and notes.\n' : ''}你是${who}，现在做这道真活。只能用下面的材料；材料里没有的数据要明确标注假设。${en ? '' : `总共 ${opts.words || '1200–2500 字'}。`}
 ${envNote(task)}
 ${opts.rules?.length ? `## 你总结过的工作规则（照着做）\n${opts.rules.map(r => `- ${r}`).join('\n')}\n` : ''}## 任务书
 ${task.task.brief}
 ## 交付物
 ${(task.task.deliverables || []).map(d => `- ${d.id} ${d.title}（${d.format}）`).join('\n')}
-## 材料
+${(task.task.rules || []).length ? `## 规则\n${(task.task.rules || []).map(r => `- ${r}`).join('\n')}\n` : ''}## 材料
 ${(task.materials || []).map(m => `### ${m.id} ${m.title}\n${m.content}`).join('\n\n')}${stagesNote(task)}`;
 }
 
