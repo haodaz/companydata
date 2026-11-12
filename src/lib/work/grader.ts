@@ -160,6 +160,8 @@ export interface AiUseReport {
   needs_review?: boolean;
   /** 几乎没用 AI（站内只问过 1 次、站外也没看到）：提问、分工最高 2 档；企业鼓励用 AI 时总分封顶 40 */
   low_use?: boolean;
+  /** 每次评的分（11-12 起评两次，差太多评第三次）和最大差值 */
+  runs?: (number | null)[]; spread?: number;
   /** 交卷时的「AI 参与说明」和记录比对：consistent 一致 · minor 轻度夸大 · major 严重不符（按诚信问题封顶）· vague 笼统无法核对 */
   disclosure?: { text: string; match: 'consistent' | 'minor' | 'major' | 'vague'; note: string } | null;
   stats: { pasted_asks?: number; /** AI 回答里算出来、任务原文里没有、交付物里又出现的数字个数（手敲照抄） */ ai_numbers_carried?: number; asks: number; followups: number; adopted: number; adopted_chars: number; verbatim_ratio: number; first_ask_s: number | null; materials_before_first_ask: number };
@@ -261,6 +263,7 @@ ${AI_USE_ITEMS.map(i => `- ${i.key} ${i.title}（${AI_USE_COND[i.key] ? `条件�
 - veto 一票否决：伪造数据或来源、规避考试限制（找人代做、绕开记录）——这类不出自动分，转人工看。
 ${pol ? '对照标准：在「不能用 / 慎用」的环节把判断整个交给 AI、碰了治理红线，按上面三类归；在「鼓励用」的环节完全不用，提问和整合也不该给高档。\n' : ''}措辞用「观察到…」。verdict 一句话总评（30–60 字），说清他是怎么用 AI 的${pol ? '，以及合不合这家企业的标准' : ''}。只返回 JSON：
 { "items": [ { "key": "ask", "observable": true, "why_na": "", "level": 3, "note": "", "evidence": [ { "t": 0, "quote": "" } ] } ], "negatives": [ { "t": 0, "kind": "conduct", "what": "", "quote": "" } ], "disclosure": ${disclosureText ? '{ "match": "consistent", "note": "一句为什么" }' : 'null'}, "verdict": "" }`;
+  const runOnce = async (): Promise<AiUseReport> => {
   const p = await askJson(prompt + enTail(task), 'Grade · AI 使用', opts.institution);
   const items: AiUseReport['items'] = AI_USE_ITEMS.map(i => {
     const x = (Array.isArray(p.items) ? p.items : []).find((y: any) => y?.key === i.key) || {};
@@ -289,6 +292,18 @@ ${pol ? '对照标准：在「不能用 / 慎用」的环节把判断整个交�
   const lowCap = lowUse && !!pol && pol.stance.level !== 'traditional';   // 企业鼓励用 AI，却几乎没用
   const score = integrity || lowCap ? Math.min(raw, 40) : raw;   // 诚信问题封顶 40，不清零：做过的还看得到
   return { score, raw_score: raw, level: score >= 90 ? 'L4' : score >= 75 ? 'L3' : score >= 60 ? 'L2' : 'L1', verdict: sl(task)(p.verdict, 180), items, stats, standard, violations, disclosure, ...(lowUse ? { low_use: true } : {}) };
+  };
+  // 一致性（11-12）：评两次；都出了分就取平均，差 10 分以上再评第三次取中位数。说明、证据用最接近最终分的那一次
+  const runs = await Promise.all([runOnce(), runOnce()]);
+  const sc = (r: AiUseReport) => r.score;
+  if (runs.every(r => sc(r) != null) && Math.abs((sc(runs[0]) as number) - (sc(runs[1]) as number)) > 10) runs.push(await runOnce());
+  else if (runs.some(r => r.needs_review) && !runs.every(r => r.needs_review)) runs.push(await runOnce());   // 一次说要转人工、一次没说：评第三次定
+  const review = runs.filter(r => r.needs_review).length * 2 > runs.length;
+  const pool = runs.filter(r => !!r.needs_review === review);
+  const nums = pool.map(r => sc(r)).filter((v): v is number => v != null).sort((a, b) => a - b);
+  const final = review ? null : nums.length === 2 ? Math.round((nums[0] + nums[1]) / 2) : nums[Math.floor((nums.length - 1) / 2)] ?? null;
+  const best = review ? pool[0] : pool.reduce((a, b) => (Math.abs((sc(a) ?? 0) - (final ?? 0)) <= Math.abs((sc(b) ?? 0) - (final ?? 0)) ? a : b));
+  return { ...best, score: final, level: final == null ? null : final >= 90 ? 'L4' : final >= 75 ? 'L3' : final >= 60 ? 'L2' : 'L1', runs: runs.map(r => sc(r)), spread: nums.length >= 2 ? nums[nums.length - 1] - nums[0] : 0 };
 }
 
 /** 交卷时选填的「如果再给一天，先改哪里」：存成事件 next_step（2026-11-02，借潜历「迭代与判断」的一问） */

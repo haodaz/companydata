@@ -45,7 +45,9 @@ export async function listShots(sid: string): Promise<{ t: number; url: string }
   return out.sort((a, b) => a.t - b.t);
 }
 /** 从截图里均匀挑 max 张下载下来，给 describeFrames 看 */
-export async function framesFromShots(shots: { t: number; url: string }[], max = 30): Promise<{ t: number; jpeg: Buffer }[]> {
+export async function framesFromShots(shots: { t: number; url: string }[], max?: number): Promise<{ t: number; jpeg: Buffer }[]> {
+  // 张数按作答时长（11-12）：每分钟约一张，30–60 张。原来固定 30 张，90 分钟的作答平均 3 分钟才看一张，中间的细节丢了
+  if (!max) { const mins = shots.length ? (shots[shots.length - 1].t - shots[0].t) / 60 : 0; max = Math.min(60, Math.max(30, Math.round(mins))); }
   const pick = shots.length <= max ? shots : Array.from({ length: max }, (_, i) => shots[Math.round(i * (shots.length - 1) / (max - 1))]);
   const out: { t: number; jpeg: Buffer }[] = [];
   for (const s of pick) { try { out.push({ t: s.t, jpeg: Buffer.from(await (await fetch(s.url)).arrayBuffer()) }); } catch { /* 跳过 */ } }
