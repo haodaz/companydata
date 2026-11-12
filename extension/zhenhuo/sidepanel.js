@@ -3,7 +3,7 @@ const $ = s => document.querySelector(s);
 const app = $('#app');
 const send = m => chrome.runtime.sendMessage(m);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-let sess = null, remote = null, err = '', saveTimer = null, draft = null, nextDraft = null, nextTimer = null;
+let sess = null, remote = null, err = '', saveTimer = null, draft = null, nextDraft = null, nextTimer = null, discDraft = null, discTimer = null;
 // 语言（11-10）：用户点过「中 / EN」就用他选的（langPref，记在本机）；没选过跟题目语言（sess.lang）；还没关联就看浏览器语言
 let langPref = null;
 const lang = () => langPref || sess?.lang || (/^zh/i.test(navigator.language || '') ? 'zh' : 'en');
@@ -15,7 +15,7 @@ function header() {
   document.querySelector('#lang').onclick = async () => { langPref = lang() === 'en' ? 'zh' : 'en'; await chrome.storage.local.set({ langPref }); render(); };
 }
 // 正在写的输入框：后台刷新时不重绘，免得打字被打断
-const typing = () => ['deliv', 'next'].includes(document.activeElement?.id);
+const typing = () => ['deliv', 'next', 'disc'].includes(document.activeElement?.id);
 
 async function load() {
   const got = await chrome.storage.local.get(['sess', 'langPref']);
@@ -25,6 +25,7 @@ async function load() {
     if (remote?.ok && remote.submitted && !sess.submitted) { sess = { ...sess, submitted: true, recording: false }; await chrome.storage.local.set({ sess }); }
     if (draft === null && remote?.ok) draft = remote.deliverable || '';
     if (nextDraft === null && remote?.ok) nextDraft = remote.next_step || '';
+    if (discDraft === null && remote?.ok) discDraft = remote.ai_disclosure || '';
   }
   render();
 }
@@ -125,6 +126,11 @@ function render() {
       <textarea id="next" class="short" placeholder="${T('比如：第二部分的数字是 AI 估的，我只核了一个来源，会先找两份报告交叉验证', 'e.g. The figures in part 2 were estimated by AI and I only checked one source; I would cross-check two reports first.')}">${esc(nextDraft ?? '')}</textarea>
       <div class="muted" id="nsaved"></div>
     </div>
+    <div class="card dashed"><div class="k">${T('AI 参与说明 · 选填', 'How AI was involved · optional')}</div>
+      <div class="muted">${T('就像附在成果上的说明：AI 参与了哪些环节、哪些是你自己做的。会和你的作答记录比对，照实写就行；不写也能交。', 'Like a note attached to your work: which parts AI helped with and which you did yourself. It is checked against your work record, so just be accurate. You can leave it blank.')}</div>
+      <textarea id="disc" class="short" placeholder="${T('比如：竞品表的初稿是 AI 整理的，我核了三家的价格；结论和测算是我自己写的', 'e.g. AI drafted the competitor table and I checked three prices; the conclusion and the estimate are my own.')}">${esc(discDraft ?? '')}</textarea>
+      <div class="muted" id="dsaved"></div>
+    </div>
     <button class="end" id="end">${T('结束作答（交卷）', 'Finish and submit')}</button>
     ${err ? `<div class="err">${esc(err)}</div>` : ''}`;
   $('#start') && ($('#start').onclick = async () => { await send({ type: 'start' }); load(); });
@@ -145,6 +151,13 @@ function render() {
       const el = $('#nsaved'); if (el) el.textContent = r.ok ? T('已保存', 'Saved') : T('没保存上，检查网络', 'Not saved. Check your network.');
     }, 1200);
   };
+  $('#disc').oninput = e => {
+    discDraft = e.target.value; $('#dsaved').textContent = T('保存中…', 'Saving…');
+    clearTimeout(discTimer); discTimer = setTimeout(async () => {
+      const r = await fetch(`${sess.api}/api/work/plugin/${sess.code}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ai_disclosure: discDraft }) }).then(x => x.json()).catch(() => ({ ok: false }));
+      const el = $('#dsaved'); if (el) el.textContent = r.ok ? T('已保存', 'Saved') : T('没保存上，检查网络', 'Not saved. Check your network.');
+    }, 1200);
+  };
   $('#end').onclick = async () => {
     if (!confirm(T('确定结束作答并交卷？交卷后不能再改。', 'Finish and submit? You cannot change anything after submitting.'))) return;
     $('#end').disabled = true; $('#end').textContent = T('交卷中…', 'Submitting…');
@@ -157,5 +170,5 @@ function render() {
 // 倒计时每秒走；记录量每 15 秒刷新
 setInterval(() => { const el = $('#clock'); if (el && sess && !sess.submitted) { const ms = left(); el.textContent = fmt(ms); if ((ms <= 300_000 && !$('.banner')) || (ms <= 60_000 && !$('.banner.w1'))) render(); } }, 1000);
 setInterval(() => { if (sess?.code && !sess.submitted && !typing()) load(); }, 15000);
-chrome.storage.onChanged.addListener(c => { if (c.langPref) { langPref = c.langPref.newValue || null; if (!typing()) render(); } if (c.sess && !typing()) { sess = c.sess.newValue || null; if (!sess) { remote = null; draft = null; nextDraft = null; } render(); } });
+chrome.storage.onChanged.addListener(c => { if (c.langPref) { langPref = c.langPref.newValue || null; if (!typing()) render(); } if (c.sess && !typing()) { sess = c.sess.newValue || null; if (!sess) { remote = null; draft = null; nextDraft = null; discDraft = null; } render(); } });
 load();

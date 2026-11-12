@@ -20,7 +20,7 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ cod
     ok: true, lang: en ? 'en' : 'zh', code: normCode(code), share_token: t.share_token, sid: s.id, name: s.participant?.name || '',
     task: { title: t.task?.title, company, role: t.role, time_minutes: minutes, brief: String(t.task?.brief || '').slice(0, 600), deliverables: t.task?.deliverables || [], materials: (t.materials || []).map((m: any) => ({ id: m.id, title: m.title })) },
     started_at: s.started_at, deadline: t.task?.soft_limit ? null : new Date(new Date(s.started_at).getTime() + minutes * 60_000).toISOString(),
-    submitted: !!s.submitted_at, auditing: !!s.report?.auditing, deliverable: s.deliverable || '', next_step: s.participant?.next_step || '',
+    submitted: !!s.submitted_at, auditing: !!s.report?.auditing, deliverable: s.deliverable || '', next_step: s.participant?.next_step || '', ai_disclosure: s.participant?.ai_disclosure || '',
     recorded: { events: plugin.length, pages: plugin.filter(e => e.type === 'visit').length, ai: (s.ai_chat || []).filter((c: any) => c.src === 'plugin').length, last_t: plugin.length ? plugin[plugin.length - 1].t : null },
   });
 }
@@ -32,10 +32,12 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ co
   if (!x) return NextResponse.json({ ok: false, error: '真活码不对' }, { status: 404 });
   if (x.s.submitted_at) return NextResponse.json({ ok: false, error: '已经交卷了' }, { status: 409 });
   const body = await req.json().catch(() => ({}));
-  if (typeof body.deliverable !== 'string' && typeof body.next_step !== 'string') return NextResponse.json({ ok: false, error: '没有内容' }, { status: 400 });
+  if (typeof body.deliverable !== 'string' && typeof body.next_step !== 'string' && typeof body.ai_disclosure !== 'string') return NextResponse.json({ ok: false, error: '没有内容' }, { status: 400 });
   const patch: Record<string, any> = {};
   if (typeof body.deliverable === 'string') patch.deliverable = body.deliverable.slice(0, 60000);
   if (typeof body.next_step === 'string') patch.participant = { ...(x.s.participant || {}), next_step: body.next_step.slice(0, 1000) };
+  // AI 参与说明（11-12，插件模式也要有）：交卷时转成 ai_disclosure 事件，评分时和记录比对
+  if (typeof body.ai_disclosure === 'string') patch.participant = { ...(patch.participant || x.s.participant || {}), ai_disclosure: body.ai_disclosure.slice(0, 800) };
   const { error } = await db.from('work_sessions').update(patch).eq('id', x.s.id);
   if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
   return NextResponse.json({ ok: true });
