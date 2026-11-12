@@ -59,16 +59,20 @@ async function methodKeysFor(en: { space_id: string; notebook: Notebook; student
 }
 async function saveNotebook(id: string, nb: Notebook) { await db.from('college_enrollments').update({ notebook: nb, updated_at: new Date().toISOString() }).eq('id', id); }
 
+/** 学院校规：老实（11-12）。毕业考装进技能卡第一条；入学考是裸考，不装 */
+const HONEST_RULE = '材料、工位记录和对话里没看到的读数、编号、日期时间、谁说了什么，一律不写；必须写的标「假设」或「待核」，并说清依据。不确定就说不确定。';
+
 /** 装进考试的东西 = 技能卡 + 这一章的教材要点 + 错题本总结的规则（当成「这位学员自己的补充规则」）+ 修过的方法卡 */
 function augmentSkill(skill: { name: string; card: any } | null, nb: Notebook, chapterId?: string | null, nova = 'NOVA', methods: MethodCard[] = []) {
   const points = (chapterId && nb.lessons?.[chapterId]) || [];
   const rules = nb.rules || [];
   if (!skill) return null;
-  if (!points.length && !rules.length && !methods.length) return skill;
   const mr = methodRules(methods);
+  // 11-12 补考实测：错题本的规则接在技能卡规则后面，模型不当回事（反思写了「不许编」，考试照编）。
+  // 学院校规（老实）放第一条，错题本规则放在技能卡规则前面，都标「必须遵守」
   return { name: skill.name, card: { ...skill.card,
     steps: [...(skill.card?.steps || []), ...mr.steps],
-    rules: [...(skill.card?.rules || []), ...rules.map((r: string) => `（${nova} 从错题里总结）${r}`), ...mr.rules],
+    rules: [`（学院校规，必须遵守）${HONEST_RULE}`, ...rules.map((r: string) => `（${nova} 从错题里总结，必须遵守）${r}`), ...(skill.card?.rules || []), ...mr.rules],
     checklist: [...(skill.card?.checklist || []), ...points.slice(0, 8).map(p => `（这一章教材要点）${p}`), ...mr.checklist] } };
 }
 
@@ -290,7 +294,7 @@ ${COLLEGE_DIMS.map(d => `- ${d.key}｜${d.name}｜满分 ${d.weight}｜${d.descr
 function simHonestyParts(sim: Sim, trace: SimTrace | null) {
   if (!trace) return undefined;
   const bench = sim.steps.filter(x => x.type === 'bench'), own = sim.steps.filter(x => x.type !== 'bench');
-  const script = JSON.stringify(sim.steps.map((x: any) => ({ prompt: x.prompt, scene: x.scene, options: x.options, bench: x.bench ? { name: x.bench.name, gauges: x.bench.gauges, vars: x.bench.vars, controls: x.bench.controls } : undefined }))).slice(0, 9000);
+  const script = JSON.stringify(sim.steps.map((x: any) => ({ prompt: x.prompt, scene: x.scene, options: x.options, bench: x.bench ? { name: x.bench.name, gauges: x.bench.gauges, vars: x.bench.vars, controls: x.bench.controls } : undefined }))).slice(0, 20000);
   return { claims: own.length ? traceToText({ ...sim, steps: own }, trace) : '', extraSource: `## 章节剧本与工位设定\n${script}\n## 工位时间线（模拟器记的）\n${bench.length ? traceToText({ ...sim, steps: bench }, trace).slice(0, 6000) : ''}` };
 }
 

@@ -16,7 +16,7 @@ export interface Honesty {
   level: number;   // 0–4
   statement: string | null;
   statement_match: 'consistent' | 'minor' | 'major' | 'vague' | null;
-  unsourced: { claim: string; kind: 'derived' | 'assumed' | 'knowledge' | 'unsourced' }[];
+  unsourced: { claim: string; kind: 'derived' | 'assumed' | 'knowledge' | 'judgement' | 'unsourced' }[];
   integrity: boolean;
   note: string;
 }
@@ -61,7 +61,7 @@ ${statement ? `## 学员交卷时写的说明（告诉过它会比对）\n${stat
 ## 程序挑出来的、材料里没有的数字（逐个判）
 ${nums.length ? nums.map((x, i) => `${i + 1}. ${x.num}　上下文：…${x.ctx}…`).join('\n') : '（没有）'}
 
-每个数字判一类：derived 能从材料或模拟记录算出来（有算式、说清了怎么来的，或一眼能看出是换算）· assumed 作答里标了「假设 / 估算 / 约 / 按……算」· knowledge 这一行的常规参数或做法（比如标准离心力、常用浓度、规范阈值），是专业知识，不是在说这次发生了什么 · unsourced 当成「这一次的事实」写的（观察到的读数、记录编号、发生的时间、谁说了什么），但材料和记录里没有、也没标假设。年份、序号、章节号这种不算，跳过。
+每个数字和作答里当事实说的关键说法判一类：derived 能从材料或模拟记录算出来（有算式、说清了怎么来的，或一眼能看出是换算）· assumed 作答里标了「假设 / 估算 / 约 / 按……算」· knowledge 这一行的常规参数或做法（比如标准离心力、常用浓度、规范阈值），是专业知识，不是在说这次发生了什么 · judgement 分析判断或建议（比如「口径没定义」「建议设停止线」），可能对可能错，但不是编事实——依据没说清的在 note 里提 · unsourced 当成「这一次的事实」写的具体事实（观察到的读数、记录编号、发生的时间、谁说了什么、对方有没有收入这类事实），但材料和记录里没有、也没标假设。对材料的质疑（材料没写口径，他说「口径没定义」）是对的，不算 unsourced。年份、序号、章节号这种不算，跳过。
 ${statement ? '说明和作答、材料比：consistent 逐条对得上 · minor 有些夸大（把推断说成来自材料，但不严重）· major 严重不符（说来自材料，材料里根本没有；或说没推断，其实满篇推断）· vague 太笼统没法比。\n' : ''}老实按 0–4 档：${HONESTY_ANCHORS.map((a, i) => `${i} ${a}`).join('；')}。
 只输出 JSON：{"unsourced":[{"claim":"数字和它说的事，20 字内","kind":"derived"}],${statement ? '"statement_match":"consistent",' : ''}"level":3,"note":"一句为什么"}`;
   let p: any = null;
@@ -73,7 +73,7 @@ ${statement ? '说明和作答、材料比：consistent 逐条对得上 · minor
     } catch { p = null; }
   }
   p = p || {};
-  const unsourced = (Array.isArray(p.unsourced) ? p.unsourced : []).slice(0, 20).map((x: any) => ({ claim: str(x?.claim, 60), kind: (['derived', 'assumed', 'knowledge', 'unsourced'].includes(x?.kind) ? x.kind : 'unsourced') as Honesty['unsourced'][number]['kind'] })).filter((x: any) => x.claim);
+  const unsourced = (Array.isArray(p.unsourced) ? p.unsourced : []).slice(0, 20).map((x: any) => ({ claim: str(x?.claim, 60), kind: (['derived', 'assumed', 'knowledge', 'judgement', 'unsourced'].includes(x?.kind) ? x.kind : 'unsourced') as Honesty['unsourced'][number]['kind'] })).filter((x: any) => x.claim);
   const sm = statement ? ((['consistent', 'minor', 'major', 'vague'].includes(p.statement_match) ? p.statement_match : 'vague') as Honesty['statement_match']) : null;
   const bad = unsourced.filter((x: { kind: string }) => x.kind === 'unsourced').length;
   let level = Math.max(0, Math.min(4, Math.round(Number(p.level))));
