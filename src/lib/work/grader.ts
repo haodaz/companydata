@@ -158,6 +158,8 @@ export interface AiUseReport {
   items: { key: string; title: string; score: number | null; q?: number | null; why_na?: string; note: string; evidence: { t: number; quote: string }[] }[];
   /** 伪造数据 / 规避限制：不出自动分，等人看 */
   needs_review?: boolean;
+  /** 几乎没用 AI（站内只问过 1 次、站外也没看到）：提问、分工最高 2 档；企业鼓励用 AI 时总分封顶 40 */
+  low_use?: boolean;
   /** 交卷时的「AI 参与说明」和记录比对：consistent 一致 · minor 轻度夸大 · major 严重不符（按诚信问题封顶）· vague 笼统无法核对 */
   disclosure?: { text: string; match: 'consistent' | 'minor' | 'major' | 'vague'; note: string } | null;
   stats: { pasted_asks?: number; /** AI 回答里算出来、任务原文里没有、交付物里又出现的数字个数（手敲照抄） */ ai_numbers_carried?: number; asks: number; followups: number; adopted: number; adopted_chars: number; verbatim_ratio: number; first_ask_s: number | null; materials_before_first_ask: number };
@@ -210,6 +212,8 @@ export async function analyzeAiUse(task: WorkTask, events: WorkEvent[], aiChat: 
   const pastedPct = (q: string) => { const t = norm(q); if (t.length < 80) return 0; let n = 0, hit = 0; for (let i = 0; i + 30 <= t.length; i += 15) { n++; if (source.includes(t.slice(i, i + 30))) hit++; } return n ? Math.round((hit / n) * 100) : 0; };
   const pasted = chat.map(c => pastedPct(c.q || ''));
   const disclosureText = s([...events].reverse().find(e => e.type === 'ai_disclosure')?.text, 800);
+  // 用得少本身就是信号（11-12 用户：使用少、聊天少本来也意味着不合格）
+  const lowUse = chat.length <= 1 && !outside.length;
   stats.pasted_asks = pasted.filter(p => p >= 50).length;
   // 手敲照抄（11-11 实测）：AI 算出的数字被自己敲进交付物，采纳和原句都对不上。取 3 位以上或带小数的数字，去掉任务原文里本来就有的
   const numsOf = (x: string) => new Set(((x || '').replace(/(\d),(?=\d{3})/g, '$1').match(/\d+(?:\.\d+)?/g) || []).filter(n => n.replace('.', '').length >= 3));
@@ -265,6 +269,7 @@ ${pol ? '对照标准：在「不能用 / 慎用」的环节把判断整个交�
     if (i.key === 'integrate' && !canIntegrate()) return { key: i.key, title: i.title, score: null, q: null, why_na: task.task?.lang === 'en' ? 'No AI content went into the deliverable (nothing adopted or pasted)' : 'AI 的内容没进交付物（没采纳、没粘贴），没法评怎么融进去', note: sl(task)(x.note, 200), evidence: [] };
     if (AI_USE_COND[i.key] && x.observable === false) return { key: i.key, title: i.title, score: null, q: null, why_na: sl(task)(x.why_na, 120) || (task.task?.lang === 'en' ? 'The task gave no chance to show this' : '这道题没给机会'), note: sl(task)(x.note, 200), evidence: [] };
     let q = Math.max(1, Math.min(5, Math.round(Number(x.level) || 1)));
+    if (lowUse && (i.key === 'ask' || i.key === 'divide')) q = Math.min(q, 2);   // 只问过一次：谈不上会问、会分工
     const qq = evidence.length <= 1 && q > 3.5 ? 3.5 : q;   // 单条证据最高 3.5 档
     return { key: i.key, title: i.title, score: Math.round(qq * 20), q: qq, note: sl(task)(x.note, 200), evidence };
   });
@@ -281,8 +286,9 @@ ${pol ? '对照标准：在「不能用 / 慎用」的环节把判断整个交�
   const disclosure = disclosureText ? { text: disclosureText, match: (['consistent', 'minor', 'major', 'vague'].includes(dm) ? dm : 'vague') as 'consistent' | 'minor' | 'major' | 'vague', note: sl(task)(p.disclosure?.note, 160) } : null;
   const integrity = violations.some(v => v.kind === 'integrity') || disclosure?.match === 'major';
   if (violations.some(v => v.kind === 'veto')) return { score: null, raw_score: raw, level: null, needs_review: true, verdict: sl(task)(p.verdict, 180), items, stats, standard, violations, disclosure };
-  const score = integrity ? Math.min(raw, 40) : raw;   // 诚信问题封顶 40，不清零：做过的还看得到
-  return { score, raw_score: raw, level: score >= 90 ? 'L4' : score >= 75 ? 'L3' : score >= 60 ? 'L2' : 'L1', verdict: sl(task)(p.verdict, 180), items, stats, standard, violations, disclosure };
+  const lowCap = lowUse && !!pol && pol.stance.level !== 'traditional';   // 企业鼓励用 AI，却几乎没用
+  const score = integrity || lowCap ? Math.min(raw, 40) : raw;   // 诚信问题封顶 40，不清零：做过的还看得到
+  return { score, raw_score: raw, level: score >= 90 ? 'L4' : score >= 75 ? 'L3' : score >= 60 ? 'L2' : 'L1', verdict: sl(task)(p.verdict, 180), items, stats, standard, violations, disclosure, ...(lowUse ? { low_use: true } : {}) };
 }
 
 /** 交卷时选填的「如果再给一天，先改哪里」：存成事件 next_step（2026-11-02，借潜历「迭代与判断」的一问） */
