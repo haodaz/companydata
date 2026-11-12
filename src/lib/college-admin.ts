@@ -143,7 +143,7 @@ export async function createEnrollment(studentId: string, spaceId: string, by: s
 }
 
 export interface ChapterRow { id: string; seq: number; slot: string | null; title: string; kind: string; bench: boolean; lesson: boolean; before: number | null; after: number | null; runs: number; passed: boolean; latest: { id: string; score: number | null; match: number | null; after: boolean; model: string; at: string; standard: string | null; moves: { done: number; total: number } | null; caps: string[]; spread: number | null; honesty: { level: number; integrity: boolean; note: string } | null; summary: string; missed: string[] }[] }
-export interface WorkRow { id: string; task_id: string; title: string; role: string; company: string; score: number | null; baseline: number | null; at: string; summary: string }
+export interface WorkRow { id: string; task_id: string; title: string; role: string; company: string; score: number | null; baseline: number | null; at: string; summary: string; process: string | null; honesty: { level: number; integrity: boolean } | null }
 export interface EnrollmentDetail { [k: string]: any; id: string; space_id: string; status: EnrollmentStatus; model_id: string | null; notebook: any; graduated_at: string | null; demand_id: string | null; chapters: ChapterRow[]; work: WorkRow[]; teacher: any; placements: any[]; lessons: { done: number; total: number } }
 
 /** 一份学籍的全部：课程的每一章（入学考 / 毕业考最好成绩、几次）、真活考、教案覆盖、分配 */
@@ -154,7 +154,7 @@ export async function enrollmentDetail(id: string): Promise<EnrollmentDetail> {
   const [{ data: chs }, { data: subs }, { data: ws }, { data: pl }, { data: sp }] = await Promise.all([
     db.from('lab_chapters').select('id, seq, slot, title, kind, lesson_at, sim').eq('task_id', e.space_id).eq('status', 'published').order('seq'),
     db.from('skill_submissions').select('id, chapter_id, score, match, with_skill_id, candidate_note, graded_by_model, submitted_at, grading').eq('enrollment_id', id).order('submitted_at', { ascending: false }),
-    db.from('work_sessions').select('id, task_id, score, report, submitted_at, participant').eq('enrollment_id', id).order('created_at', { ascending: false }),
+    db.from('work_sessions').select('id, task_id, score, report, submitted_at, participant, events').eq('enrollment_id', id).order('created_at', { ascending: false }),
     db.from('college_placements').select('*').eq('enrollment_id', id).order('created_at', { ascending: false }),
     db.from('skill_tasks').select('skill:skills(id, name, source, expert_name, expert_location, card)').eq('id', e.space_id).single(),
   ]);
@@ -173,7 +173,10 @@ export async function enrollmentDetail(id: string): Promise<EnrollmentDetail> {
   });
   const wids = [...new Set((ws || []).map(w => w.task_id))];
   const { data: wt } = wids.length ? await db.from('work_tasks').select('id, role, company_name, task, baseline').in('id', wids) : { data: [] as any[] };
-  const work: WorkRow[] = (ws || []).map(w => { const t = (wt || []).find((x: any) => x.id === w.task_id); return { id: w.id, task_id: w.task_id, title: t?.task?.title || '', role: t?.role || '', company: t?.company_name || '', score: w.score, baseline: t?.baseline?.result?.total ?? null, at: w.submitted_at, summary: w.report?.result?.summary || '' }; });
+  const work: WorkRow[] = (ws || []).map(w => { const t = (wt || []).find((x: any) => x.id === w.task_id); return { id: w.id, task_id: w.task_id, title: t?.task?.title || '', role: t?.role || '', company: t?.company_name || '', score: w.score, baseline: t?.baseline?.result?.total ?? null, at: w.submitted_at, summary: w.report?.result?.summary || '',
+    // 四步过程（11-12 起才有）：计划用了几份材料 → 初稿 → 自查改了几处 → 定稿
+    process: (() => { const ev: any[] = (w as any).events || []; if (!ev.some(e => e.type === 'plan')) return null; const sc = ev.find(e => e.type === 'self_check'); return `计划（看 ${ev.filter(e => e.type === 'open_material').length} 份材料）→ 初稿 → 自查 ${sc?.checks?.length ?? 0} 项、改 ${(sc?.checks || []).filter((c: any) => !c.ok).length} 项 → 定稿`; })(),
+    honesty: w.report?.honesty ? { level: w.report.honesty.level, integrity: !!w.report.honesty.integrity } : null }; });
   return { ...en, teacher: skill ? { id: skill.id, name: skill.name, expert: skill.source !== 'jd-draft', expert_name: skill.expert_name, place: skill.expert_location, rules: skill.card?.rules?.length || 0 } : null,
     chapters, work, placements: (pl || []).map(p => ({ ...p, kind_label: PLACE_KIND[p.target_kind as PlacementKind], status_label: PLACE_STATUS[p.status as PlacementStatus] })),
     lessons: { done: chapters.filter(c => c.lesson).length, total: chapters.length } } as EnrollmentDetail;

@@ -377,10 +377,9 @@ export async function runWorkExam(enrollmentId: string, workTaskId: string) {
   const task: WorkTask = { env: t.task?.env || { type: 'doc' }, problem: t.problem, task: t.task, materials: t.materials || [], rubric: t.rubric || [] };
   // 做题走真活共用的 solve.ts（和 AI 基线同一份提示，分步推进、操作台说明都在里面）；学院只多传笔记本里的规则和学员身份
   const rules = en.notebook.rules || [];
-  const { solveWorkTask } = await import('@/lib/work/solve');
-  const { answer: raw } = await solveWorkTask(task, model, { persona: `${en.nova}，正在学院里做真活实习`, rules, task_name: 'College · 学员做真活', institution: t.company_name || '' });
-  const res = { text: raw };
-  const answer = res.text.trim();
+  // 过程留痕（11-12）：不再一口气写完，按「计划 → 初稿 → 自查 → 定稿」四步做，每一步记进事件流——
+  // 训练数据里 AI 学员就有过程可以和真人比，回放和报告也看得到它是怎么做的。t 是步骤序号换算的秒数，不是真实耗时
+  const { answer, events } = await solveStaged(task, model, { persona: `${en.nova}，正在学院里做真活实习`, rules, institution: t.company_name || '' });
   if (answer.length < 50) throw new Error('模型没有给出像样的交付物');
   const result = await gradeResult(task, answer, { institution: t.company_name || '', who: en.nova });
   // 老实（11-12）：真活也写交卷说明、判无来源的数字；诚信问题封顶 45
@@ -392,7 +391,7 @@ export async function runWorkExam(enrollmentId: string, workTaskId: string) {
   const now = new Date().toISOString();
   const { data: s, error: e2 } = await db.from('work_sessions').insert({
     task_id: t.id, participant: { name: en.nova, contact: 'baiye-college', mode: 'ai', model, enrollment_id: en.id },
-    started_at: now, submitted_at: now, deliverable: answer, events: [], ai_chat: [], report: { result, compare, honesty, generated_at: now, who: 'college' }, score: result.total, enrollment_id: en.id,
+    started_at: now, submitted_at: now, deliverable: answer, events: [...events, ...(statement ? [{ t: events.length ? events[events.length - 1].t + 30 : 0, type: 'ai_disclosure', text: statement }] : []), { t: (events.length ? events[events.length - 1].t : 0) + 60, type: 'submit', chars: answer.length }], ai_chat: [], report: { result, compare, honesty, generated_at: now, who: 'college' }, score: result.total, enrollment_id: en.id,
   }).select('id, score').single();
   if (e2) throw e2;
   // 真活经验进笔记（评卷的差距就是教训）
@@ -400,6 +399,32 @@ export async function runWorkExam(enrollmentId: string, workTaskId: string) {
   await saveNotebook(en.id, nb);
   await recomputeEnrollment(en.id);
   return { id: s.id, score: Number(s.score), title: t.task?.title || '', baseline: b?.total ?? null };
+}
+
+/** 学员做真活的四步（计划 → 初稿 → 自查 → 定稿），每步一条事件：plan / open_material / draft / self_check。提示走真活共用的 buildSolvePrompt */
+async function solveStaged(task: WorkTask, model: string, opts: { persona: string; rules: string[]; institution: string }) {
+  const { buildSolvePrompt } = await import('@/lib/work/solve');
+  const base = buildSolvePrompt(task, { persona: opts.persona, rules: opts.rules });
+  const call = async (prompt: string, name: string, json = false) => {
+    const r = await generateContent(prompt, model, json ? { jsonMode: true, temperature: 0 } : { temperature: 0 });
+    await logTokenUsage({ tool_name: 'college', task_name: `College · 学员做真活 · ${name}`, institution: opts.institution, model_id: model, usageMetadata: r.usageMetadata } as any).catch(() => {});
+    return r.text.trim();
+  };
+  const events: { t: number; type: string; [k: string]: any }[] = [];
+  const ids = new Set((task.materials || []).map(m => m.id));
+  let plan: any = {};
+  try { plan = parseJsonLoose(await call(`${base}\n\n先别写交付物。先读题和材料，用 JSON 写做题计划：{"problem":"一句话，真正要解决什么","materials":[{"id":"m1","why":"为什么要用它"}],"steps":["先做什么、后做什么"],"risks":["材料里的坑、口径不一致、要标假设的地方"]}`, '计划', true)) || {}; } catch { plan = {}; }
+  events.push({ t: 0, type: 'plan', note: str([plan.problem, ...(plan.steps || []).slice(0, 5)].filter(Boolean).join(' → '), 400), risks: (plan.risks || []).slice(0, 5).map((x: any) => str(x, 120)) });
+  (Array.isArray(plan.materials) ? plan.materials : []).filter((m: any) => ids.has(m?.id)).slice(0, 8).forEach((m: any, i: number) => events.push({ t: 30 + i * 30, type: 'open_material', id: m.id, note: str(m.why, 120) }));
+  const draft = await call(`${base}${plan.problem ? `\n\n## 你的做题计划\n${JSON.stringify(plan).slice(0, 2000)}` : ''}\n\n按计划写出完整交付物。`, '初稿');
+  events.push({ t: 600, type: 'draft', text: draft.slice(0, 8000), chars: draft.length });
+  let checks: any[] = [];
+  try { const c = parseJsonLoose(await call(`${base}\n\n## 你的初稿\n${draft.slice(0, 8000)}\n\n对照任务书、规则和材料逐条自查：关键数字核对材料没有、口径对不对、交付物齐不齐、哪里该标假设。只输出 JSON：{"checks":[{"item":"查了什么","ok":true,"fix":"不对的话怎么改"}]}`, '自查', true)) || {}; checks = Array.isArray(c.checks) ? c.checks.slice(0, 10) : []; } catch { checks = []; }
+  const fixes = checks.filter(c => c && c.ok === false);
+  events.push({ t: 900, type: 'self_check', note: `自查 ${checks.length} 项，要改 ${fixes.length} 项`, checks: checks.map(c => ({ item: str(c?.item, 100), ok: c?.ok !== false, fix: str(c?.fix, 140) })) });
+  const answer = fixes.length ? await call(`${base}\n\n## 你的初稿\n${draft.slice(0, 8000)}\n\n## 自查发现要改的\n${fixes.map(c => `- ${str(c.item, 100)}：${str(c.fix, 160)}`).join('\n')}\n\n按自查改好，输出完整的最终交付物（不要只写改动）。`, '定稿') : draft;
+  if (fixes.length) events.push({ t: 1200, type: 'draft', text: answer.slice(0, 8000), chars: answer.length, note: '按自查改定稿' });
+  return { answer: answer.trim(), events };
 }
 
 /* ───────────── 教案 / 真活备选 ───────────── */

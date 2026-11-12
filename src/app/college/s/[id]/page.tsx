@@ -74,7 +74,7 @@ export default function StudentView() {
       {d.work.length > 0 && (
         <section className="sv-sec">
           <div className="sv-sec-h"><span className="sv-eyebrow">Real Work · 真活</span><h2>企业真实的活，我做了一遍</h2></div>
-          <div className="sv-cards">{d.work.map((w: any) => <article key={w.id} className="sv-card work"><div className="sv-card-top"><span className="sv-slot">{w.company}</span><span className="sv-tag">{w.role}</span></div><h3>{w.title}</h3><div className="sv-scores"><div><i>我的分</i><b className={w.score >= 60 ? 'ok' : 'bad'}>{Math.round(w.score)}</b></div>{w.baseline != null && <div><i>最强模型基线</i><b>{Math.round(w.baseline)}</b></div>}{w.baseline != null && <div><i>差距</i><b className={w.score - w.baseline < 0 ? 'bad' : 'ok'}>{Math.round(w.score - w.baseline)}</b></div>}</div>{w.summary && <div className="sv-mistake"><i>评卷说</i>{w.summary}</div>}</article>)}</div>
+          <div className="sv-cards">{d.work.map((w: any) => <article key={w.id} className="sv-card work"><div className="sv-card-top"><span className="sv-slot">{w.company}</span><span className="sv-tag">{w.role}</span></div><h3>{w.title}</h3><div className="sv-scores"><div><i>我的分</i><b className={w.score >= 60 ? 'ok' : 'bad'}>{Math.round(w.score)}</b></div>{w.baseline != null && <div><i>最强模型基线</i><b>{Math.round(w.baseline)}</b></div>}{w.baseline != null && <div><i>差距</i><b className={w.score - w.baseline < 0 ? 'bad' : 'ok'}>{Math.round(w.score - w.baseline)}</b></div>}</div>{w.process && <div className="sv-notes"><i>我是怎么做的</i>{w.process}</div>}{w.summary && <div className="sv-mistake"><i>评卷说</i>{w.summary}</div>}</article>)}</div>
         </section>
       )}
 
