@@ -23,7 +23,13 @@ const TABLE: [RegExp, string][] = [
   [/消防|公务|政务|社工|公共|律师|法务|安监/, '公共服务'],
 ];
 
+/** 「设计 / 品牌 / 内容 / 艺术」哪行都有，只在别的都对不上时才用 */
+const WEAK = new Set(['文化创意']);
+
+/** 先按职业名本身认，再看标题、领域，最后才看企业名（11-12 国内反馈：「会计专员」因为企业是制造业，被归进了制造与工程）。
+ *  每条线索单独判、只认专门的行当词；都对不上再把线索拼起来按老办法判（含「设计」这类泛词）。 */
 export function familyOf(...hints: (string | undefined | null)[]): string {
+  for (const h of hints) { if (!h) continue; const hit = TABLE.find(([re, f]) => !WEAK.has(f) && re.test(h)); if (hit) return hit[1]; }
   const s = hints.filter(Boolean).join(' ');
   return TABLE.find(([re]) => re.test(s))?.[1] || '其他';
 }
