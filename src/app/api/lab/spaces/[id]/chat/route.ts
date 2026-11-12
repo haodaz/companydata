@@ -4,6 +4,11 @@ import { LAB_GUEST } from '@/lib/lab-guest';
 import { getSessionUser } from '@/lib/session';
 import { trackDemand } from '@/lib/flywheel/signals';
 import { supabaseAdmin } from '@/lib/supabase';
+import { moduleClosed } from '@/lib/lab-spec';
+
+/** 百业工厂批量配置关掉了「和我聊」：直接打开链接也不让聊（11-12） */
+async function chatClosed(id: string) { const { data } = await supabaseAdmin.from('skill_tasks').select('jd_snapshot').eq('id', id).maybeSingle(); return moduleClosed(data?.jd_snapshot, 'chat'); }
+const CLOSED = () => NextResponse.json({ success: false, error: '这个空间没有开放「和我聊」' }, { status: 403 });
 
 export const runtime = 'nodejs';
 export const maxDuration = 120;
@@ -14,6 +19,7 @@ type Ctx = { params: Promise<{ id: string }> };
 export async function GET(_req: Request, ctx: Ctx) {
   try {
     const { id } = await ctx.params;
+    if (await chatClosed(id)) return CLOSED();
     const c = await loadChatContext({ spaceId: id });
     const nick = String(new URL(_req.url).searchParams.get('nickname') || '').trim().slice(0, 16);
     if (nick) c.persona = { ...c.persona, nickname: nick };
@@ -33,6 +39,7 @@ export async function POST(req: Request, ctx: Ctx) {
     const { question, history = [], chatId = null, surface = 'lab', nickname = '' } = await req.json();
     const q = String(question || '').trim().slice(0, 500);
     if (!q) return NextResponse.json({ success: false, error: '说点什么吧' }, { status: 400 });
+    if (await chatClosed(id)) return CLOSED();
     // 游客一段对话最多 30 轮，防刷
     if (req.headers.get(LAB_GUEST) && Array.isArray(history) && history.length > 60) return NextResponse.json({ success: false, error: '这段聊得够久啦，刷新一下重新开始吧' }, { status: 429 });
     const c = await loadChatContext({ spaceId: id });

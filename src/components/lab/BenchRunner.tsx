@@ -540,8 +540,15 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
   const watchCard = watchOnly ? (
     <div className={hud ? 'hud-card' : undefined} style={{ padding: 14, borderRadius: 14, background: 'rgba(106,92,255,.08)', border: '1.5px solid rgba(106,92,255,.45)' }}>
       <div className="lab-mono lab-cap" style={{ marginBottom: 6, color: 'var(--v)' }}>{watchDone ? '看完了' : '看师傅做 · 不用动手'}</div>
-      <div style={{ fontSize: 14, fontWeight: 700, lineHeight: 1.65 }} className="hud-ink">{watchDone ? guidedProp?.after || '这一段师傅做完了，想想刚才哪一下让你印象最深。' : watchLine?.say || guidedProp?.before || '师傅来做这一段，你看着他先动哪儿、盯着哪个仪表。'}</div>
+      <div style={{ fontSize: 14, fontWeight: 700, lineHeight: 1.65 }} className="hud-ink">{watchDone ? guidedProp?.after || '这一段师傅做完了，想想刚才哪一下让你印象最深。' : watchLine?.say ? `师傅这一步：${watchLine.say}` : guidedProp?.before || '师傅来做这一段，你看着他先动哪儿、盯着哪个仪表。'}</div>
       {watchLine?.basis && <div className="hud-ink3" style={{ fontSize: 12, marginTop: 6, lineHeight: 1.6, color: 'var(--ink3)' }}>为什么：{watchLine.basis}</div>}
+    </div>
+  ) : null;
+  // 第一次上手的指引（11-12）：考考你、训练、上岗这些自己动手的工位，开局还没动过任何控件时告诉他从哪下手
+  const firstHint = !guided && !watchOnly && !demo && role === 'rookie' && running && !st.events.some(e => e.kind === 'control') ? (
+    <div className={hud ? 'hud-card' : undefined} style={{ padding: 12, borderRadius: 14, background: 'rgba(18,181,203,.08)', border: '1.5px solid rgba(18,181,203,.45)', fontSize: 13, lineHeight: 1.7 }}>
+      <div className="lab-mono lab-cap" style={{ marginBottom: 4, color: '#12b5cb' }}>怎么上手</div>
+      <div className="hud-ink">先看下面的「目标」，再用{hud ? '画面下方' : '下方'}的控件操作：按钮点一下，滑块拖动{scene?.layers.some(l => l.control) ? '，画面里的虚线框可以直接拖' : ''}。做完点「完成操作」。</div>
     </div>
   ) : null;
   const nudgeToast = gNudge && handsOff ? <div className="bench-nudge">{watchOnly ? '这一步看师傅做就行，不用动手' : gPhase === 'before' ? '还没轮到你动手：先点右边的「先看我做一遍」' : gPhase === 'demo' ? '老手正在做，先看着，做完就换你' : '点右边的「换你比着做」，就可以上手了'}</div> : null;
@@ -549,6 +556,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
   const side = (
     <>
       {nudgeToast}
+      {firstHint}
       {watchCard}
       {guideCard}
       {handMirror}
