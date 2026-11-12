@@ -164,7 +164,7 @@ export interface AiUseReport {
   runs?: (number | null)[]; spread?: number;
   /** 交卷时的「AI 参与说明」和记录比对：consistent 一致 · minor 轻度夸大 · major 严重不符（按诚信问题封顶）· vague 笼统无法核对 */
   disclosure?: { text: string; match: 'consistent' | 'minor' | 'major' | 'vague'; note: string } | null;
-  stats: { pasted_asks?: number; /** AI 回答里算出来、任务原文里没有、交付物里又出现的数字个数（手敲照抄） */ ai_numbers_carried?: number; asks: number; followups: number; adopted: number; adopted_chars: number; verbatim_ratio: number; first_ask_s: number | null; materials_before_first_ask: number };
+  stats: { pasted_asks?: number; /** AI 回答里算出来、任务原文里没有、交付物里又出现的数字个数（手敲照抄） */ ai_numbers_carried?: number; /** 交付物 8 字片段在 AI 回答里出现过的比例（%，改写后也认得出） */ ai_overlap?: number; asks: number; followups: number; adopted: number; adopted_chars: number; verbatim_ratio: number; first_ask_s: number | null; materials_before_first_ask: number };
 }
 /** 交付物里原样来自 AI 回答的比例：交付物按句切，长度 ≥ 14 的句子在任一 AI 回答里原样出现就算 */
 function verbatimRatio(deliverable: string, answers: string[]) {
@@ -221,8 +221,11 @@ export async function analyzeAiUse(task: WorkTask, events: WorkEvent[], aiChat: 
   const numsOf = (x: string) => new Set(((x || '').replace(/(\d),(?=\d{3})/g, '$1').match(/\d+(?:\.\d+)?/g) || []).filter(n => n.replace('.', '').length >= 3));
   const srcNums = numsOf(source), delNums = numsOf(deliverable);
   stats.ai_numbers_carried = [...new Set(chat.flatMap(c => [...numsOf(c.a || '')]))].filter(n => !srcNums.has(n) && delNums.has(n)).length;
+  // 改写后放进交付物（11-12）：句子对不上原文时，看 8 字片段的重合——交付物里有多少片段在 AI 回答里出现过
+  const grams = (x: string) => { const t = (x || '').replace(/[\s\p{P}\p{S}]/gu, ''); const g = new Set<string>(); for (let k = 0; k + 8 <= t.length; k++) g.add(t.slice(k, k + 8)); return g; };
+  const dg = grams(deliverable); if (dg.size >= 50) { const ag = grams(chat.map(c => c.a || '').join('')); let hit = 0; for (const g of dg) if (ag.has(g)) hit++; stats.ai_overlap = Math.round((hit / dg.size) * 100); }
   // 「整合」能不能评由程序定（模型两次判得不一样）：采纳过、交付物里有 AI 原句、粘贴过，或在自己软件里做（看不到）才评
-  const canIntegrate = () => (stats.ai_numbers_carried || 0) >= 2 || stats.adopted > 0 || stats.verbatim_ratio > 0 || ev.some(e => e.type === 'paste') || ev.some(e => e.type === 'rec_start' || /^plugin_/.test(e.type));
+  const canIntegrate = () => (stats.ai_overlap || 0) >= 15 || (stats.ai_numbers_carried || 0) >= 2 || stats.adopted > 0 || stats.verbatim_ratio > 0 || ev.some(e => e.type === 'paste') || ev.some(e => e.type === 'rec_start' || /^plugin_/.test(e.type));
   const nextStep = nextStepOf(events);
   const lines = ev.filter(e => ['open_material', 'ai_ask', 'adopt', 'paste', 'edit', 'submit', 'screen'].includes(e.type) || /^plugin_/.test(e.type)).slice(0, 300)
     .map(e => `[${fmt(e.t)}] ${e.type}${e.id ? ' ' + e.id : ''}${e.chars ? ` ${e.chars}字` : ''}${e.delta != null ? ` Δ${e.delta}` : ''}${e.note ? ' ' + s(e.note, 100) : ''}`);
@@ -231,7 +234,7 @@ export async function analyzeAiUse(task: WorkTask, events: WorkEvent[], aiChat: 
 ${task.task.title}：${task.task.brief.slice(0, 500)}
 材料：${task.materials.map(m => `${m.id} ${m.title}`).join('；')}
 ## 硬指标（程序算的，照这个说，别自己改数）
-问了 ${stats.asks} 次，其中追问 ${stats.followups} 次；把 AI 的回答采纳进交付物 ${stats.adopted} 次（${stats.adopted_chars} 字）；交付物里原样来自 AI 回答的句子占 ${stats.verbatim_ratio}%${stats.ai_numbers_carried ? `；交付物里有 ${stats.ai_numbers_carried} 个数字和 AI 回答里算出的一致、任务材料里没有（手敲照抄，算 AI 内容进了交付物）` : ''}；第一次问 AI 在 ${firstAsk == null ? '—' : fmt(firstAsk)}，那之前打开过 ${stats.materials_before_first_ask} 份材料。
+问了 ${stats.asks} 次，其中追问 ${stats.followups} 次；把 AI 的回答采纳进交付物 ${stats.adopted} 次（${stats.adopted_chars} 字）；交付物里原样来自 AI 回答的句子占 ${stats.verbatim_ratio}%${stats.ai_numbers_carried ? `；交付物里有 ${stats.ai_numbers_carried} 个数字和 AI 回答里算出的一致、任务材料里没有（手敲照抄，算 AI 内容进了交付物）` : ''}${stats.ai_overlap != null ? `；交付物里 ${stats.ai_overlap}% 的 8 字片段在 AI 回答里出现过（含改写后的）` : ''}；第一次问 AI 在 ${firstAsk == null ? '—' : fmt(firstAsk)}，那之前打开过 ${stats.materials_before_first_ask} 份材料。
 ## 和 AI 的每一轮（按时间）
 ${chat.slice(0, 40).map(c => `[${fmt(c.t)}] 问：${pasted[chat.indexOf(c)] >= 50 ? `【约 ${pasted[chat.indexOf(c)]}% 是原样粘贴的任务书 / 材料，不算他自己的提问】` : ''}${s(c.q, 400)}\n   答：${s(c.a, 500)}`).join('\n') || '（站内没问过；看下面录屏 / 插件里的外部 AI 使用）'}
 ## 过程事件（open_material 打开材料 · ai_ask 问 AI · adopt 采纳进交付物 · paste 粘贴 · edit 自己改稿 Δ字数 · screen 录屏看到的）
