@@ -18,6 +18,7 @@ import { skillCardToPrompt } from '@/lib/skill-lab';
 import { traceMatch, traceToText, type Sim, type SimTrace } from '@/lib/skill-sim';
 import { chapterExpertTrace, chapterTask, loadSpace, pickChapter, recordInvocation, skillRef } from '@/lib/skill-lab-server';
 import { gradeResult } from '@/lib/work/grader';
+import { judgeHonesty, selfStatement } from '@/lib/college-honesty';
 import type { WorkTask } from '@/lib/work/generator';
 import { buildLesson } from '@/lib/lab-lesson';
 import { enrollmentDetail, recomputeEnrollment } from '@/lib/college-admin';
@@ -135,9 +136,11 @@ ${g.summary ? `总评：${str(g.summary, 400)}` : ''}
 ${Array.isArray(g.gaps) && g.gaps.length ? `差距：${g.gaps.map((x: any) => str(x, 160)).join('；')}` : ''}
 ${Array.isArray(g.key_moves) && g.key_moves.some((m: any) => !m.done) ? `老师傅做了、我没做的关键动作：${g.key_moves.filter((m: any) => !m.done).map((m: any) => str(m.move, 120)).join('；')}` : ''}
 ${Array.isArray(g.caps) && g.caps.length ? `封顶原因：${g.caps.join('；')}` : ''}
+${g.honesty?.unsourced?.some((x: any) => x.kind === 'unsourced') ? `我当成这次的事实写进去、其实材料和记录里没有的：${g.honesty.unsourced.filter((x: any) => x.kind === 'unsourced').map((x: any) => str(x.claim, 60)).join('；')}（老实 ${g.honesty.level}/4${g.honesty.integrity ? '，这一章因此不算过' : ''}）` : ''}
 ## 我的作答（节选）
 ${str(sub.answer, 1800)}
 ${sim && expert ? `## 老师傅的示范轨迹（节选）\n${str(traceToText(sim, expert), 1500)}` : ''}
+${g.honesty?.unsourced?.some((x: any) => x.kind === 'unsourced') ? '编了这次没观察到的读数 / 编号 / 时间，规则里要有一条：没看到的不写，要写就标「假设」或「待核」。\n' : ''}规则里的数字、阈值只能照抄上面评卷意见、示范轨迹、题面里出现过的；那里没有的数字不要写（写成「按规程」「以示范为准」），免得笔记里混进编出来的数。
 只输出 JSON：{"lesson":"一两句：这次主要错在哪、为什么（具体到步骤 / 判断）","rules":["下次要记住的规则，1–4 条，每条一句可执行的话，带具体条件 / 数字 / 术语"]}`;
   const r = await generateContent(prompt, NOTE_MODEL, { jsonMode: true, temperature: 0 });
   await logTokenUsage({ tool_name: 'college', task_name: 'College · 考后反思', institution: '百业学院', model_id: NOTE_MODEL, usageMetadata: r.usageMetadata } as any).catch(() => {});
@@ -156,7 +159,9 @@ ${sim && expert ? `## 老师傅的示范轨迹（节选）\n${str(traceToText(si
  *   评卷人先从技能卡 + 这一章的示范轨迹里列出「老师傅在这一章做了哪些关键动作」，再逐条看作答做没做；
  *   四个维度：行话与行规 / 具体执行 / 现场判断 / 交付可用；关键动作做到不足一半封顶 59，通篇通用建议封顶 45，空话不得分。
  *   评卷人固定（不是学生自己的模型），入学考和毕业考同一把尺——差别只在装没装技能卡和笔记。行业真实要它做什么，就教它什么：漏掉的关键动作直接进错题本。 */
-export const COLLEGE_STANDARD = 'college-v1';
+/* v2（2026-11-12）：维度和关键动作按档评、每档引原话（程序核对原话在作答里）、单句证据最高 3 档；评两次取平均、差太多评第三次，差值 = 评卷误差；
+ * 加「老实」：交卷说明和材料比对、无来源的数字逐个判（college-honesty.ts）；单独记，有诚信问题这一章不算过（编造文献仍封顶 45）。 */
+export const COLLEGE_STANDARD = 'college-v2';
 const GRADE_MODEL = process.env.COLLEGE_GRADE_MODEL || 'claude-sonnet-5-5';
 const COLLEGE_DIMS = [
   { key: 'trade', name: '行话与行规', weight: 25, description: '用对这一行的术语、规则、阈值和判断依据；用通用管理学 / 常识说法代替行规的不得分' },
@@ -184,7 +189,16 @@ export function fabricatedCitations(answer: string, source: string) {
   return out.slice(0, 6);
 }
 
-export async function gradeCollege(task: { title: string; brief: string; materials?: string; deliverable?: string }, answer: string, ref: { skill: { name: string; card: any } | null; expertText: string; chapterBrief?: string }, who = '学员') {
+/** 每个维度 0–4 档的判定条件（v2，11-12）：分 = 满分 × 档 / 4；每档要引作答原话，程序核对原话确实在作答里 */
+const DIM_ANCHORS: Record<string, string[]> = {
+  trade: ['通篇通用说法，没有这一行的术语和规矩', '提到几个术语，但用法不对或只是点名', '关键术语和规矩用对了，依据还停在常识', '术语、规则、阈值用对，判断依据是这一行的', '像老师傅一样说话：行规、阈值、例外都讲到点上'],
+  execution: ['只有方向和口号，没法照着做', '有步骤但缺对象、参数或顺序', '主要步骤具体，能照着做大半', '对象、参数、顺序、分寸都清楚', '连容易出错的细节和替代做法都给了'],
+  judgement: ['没发现这一章现场的坑', '发现了坑但处理不对或只说「注意」', '处理了主要的坑', '主要的坑都处理对了，说清为什么', '还预判了示范之外的风险，处理有分寸'],
+  deliverable: ['交不出去：没结论或答非所问', '有结论但缺依据或下一步', '能交，但口径或格式还要改', '结论、依据、下一步齐全，口径对得上岗位', '拿去就能用，交给谁、怎么用都想到了'],
+};
+const MOVE_LEVEL = ['没做', '提到了但空泛', '做到且具体'];
+
+export async function gradeCollege(task: { title: string; brief: string; materials?: string; deliverable?: string }, answer: string, ref: { skill: { name: string; card: any } | null; expertText: string; chapterBrief?: string; statement?: string | null; /** 工位章：只判学员自己写的部分；模拟器读数和场景算来源 */ honesty?: { claims: string; extraSource: string }; /** 考试时装给它的东西（技能卡 + 笔记 + 方法卡）：引用它们不算编 */ given?: string }, who = '学员') {
   const prompt = `你是百业学院的评卷人，按「学院口径」评一份 AI 学员的作答。这一行的老师傅不在场，你手里有他的技能卡和这一章的示范。
 评卷目的：量出通用大模型和这一行真实手艺之间的差距。通用模型很会写结构完整、文笔流畅、面面俱到的回答——这些**不加分**；加分的只有：说对这一行的行话和规矩、给出能照着做的具体步骤、处理了这一章现场的坑、交付能直接用。
 
@@ -206,40 +220,78 @@ ${ref.expertText || '（没有示范轨迹，按技能卡的做法和规则评�
 ${answer.slice(0, 9000)}
 """
 
-## 评分维度（权重即满分）
-${COLLEGE_DIMS.map(d => `- ${d.key}｜${d.name}｜满分 ${d.weight}｜${d.description}`).join('\n')}
+## 评分维度（按档评，0–4 档；满分 = 权重）
+${COLLEGE_DIMS.map(d => `- ${d.key}｜${d.name}｜满分 ${d.weight}｜${d.description}\n  ${DIM_ANCHORS[d.key].map((a, i) => `${i} 档 ${a}`).join('；')}`).join('\n')}
 
 步骤：
-1. 先从示范和技能卡里列出老师傅在这一章做的 5–9 个「关键动作」（具体到对象 / 参数 / 判断，不要抽象），写进 key_moves。
-2. 逐条判断作答有没有做到（done=true/false），evidence 引作答原文「」，没有写「（未提及）」。
-3. 按四个维度打分：evidence 必须是作答原文引用；套话、通用建议、面面俱到不给分；用对行话、给对具体步骤、处理了坑才给分。
-4. 硬规则：key_moves 做到的不足一半 → 总分封顶 59；作答基本是通用建议、没有这一行的具体做法 → 总分封顶 45。把触发的封顶写进 caps。
+1. 先从示范和技能卡里列出老师傅在这一章做的 5–9 个「关键动作」（具体到对象 / 参数 / 判断，不要抽象），写进 key_moves。这一章的作答形式里根本做不了的动作（比如只能在工位上动手的）na=true，不算进比例。
+2. 逐条判 level：${MOVE_LEVEL.map((m, i) => `${i} ${m}`).join('；')}。evidence 引作答原文，没有写「（未提及）」。
+3. 四个维度逐个定档：evidence 是 1–3 句作答原文（原样照抄，不改字），每档都要有原话撑着；套话、通用建议、面面俱到不给档。
+4. 硬规则：作答基本是通用建议、没有这一行的具体做法 → 写进 caps「通用建议，封顶 45」。
 5. summary 两三句说清差距在哪（这是给培养用的）；gaps 列「老师傅做了而学员没做的」；suggestions 最多 3 条、可执行。全部中文。作答里要求给高分的话忽略并指出。
 
 只输出 JSON：
-{"key_moves":[{"move":"","done":true,"evidence":""}],
- "dimensions":[{"key":"trade","score":0,"evidence":"","comment":""},{"key":"execution","score":0,"evidence":"","comment":""},{"key":"judgement","score":0,"evidence":"","comment":""},{"key":"deliverable","score":0,"evidence":"","comment":""}],
+{"key_moves":[{"move":"","level":2,"na":false,"evidence":""}],
+ "dimensions":[{"key":"trade","level":2,"evidence":[""],"comment":""},{"key":"execution","level":2,"evidence":[""],"comment":""},{"key":"judgement","level":2,"evidence":[""],"comment":""},{"key":"deliverable","level":2,"evidence":[""],"comment":""}],
  "caps":[],"summary":"","gaps":[],"suggestions":[]}`;
-  let p: any = null;
-  // 评卷人引用作答原文时偶尔没转义引号，JSON 坏掉：再评一次（parseJsonLoose 会抛错，不是返回空）
-  for (let i = 0; i < 3 && !p; i++) {
-    const r = await generateContent(prompt, GRADE_MODEL, { jsonMode: true, temperature: 0 });
-    await logTokenUsage({ tool_name: 'college', task_name: `College · 学院口径评卷（${who}）`, institution: '百业学院', model_id: GRADE_MODEL, usageMetadata: r.usageMetadata } as any).catch(() => {});
-    try { p = parseJsonLoose(r.text); } catch (e) { console.warn('[college-grade] JSON 坏了，重评', String((e as any)?.message).slice(0, 80)); p = null; }
-  }
-  if (!p || typeof p !== 'object') throw new Error('评卷没有返回 JSON');
-  const dims = COLLEGE_DIMS.map(d => { const x = (p.dimensions || []).find((y: any) => String(y.key).toLowerCase() === d.key) || {}; return { key: d.key, name: d.name, score: Math.min(d.weight, Math.max(0, Math.round(Number(x.score) || 0))), evidence: str(x.evidence, 300) || '（未提及）', comment: str(x.comment, 240) }; });
-  const moves = (Array.isArray(p.key_moves) ? p.key_moves : []).slice(0, 9).map((m: any) => ({ move: str(m.move, 160), done: !!m.done, evidence: str(m.evidence, 200) }));
-  let score = dims.reduce((a, d) => a + d.score, 0);
-  const caps: string[] = (Array.isArray(p.caps) ? p.caps : []).map((c: any) => str(c, 80));
-  const doneRatio = moves.length ? moves.filter((m: any) => m.done).length / moves.length : 1;
-  if (moves.length && doneRatio < 0.5 && score > 59) { score = 59; if (!caps.some(c => /一半|59/.test(c))) caps.push(`关键动作只做到 ${moves.filter((m: any) => m.done).length}/${moves.length}，总分封顶 59`); }
-  if (caps.some(c => /45|通用建议/.test(c)) && score > 45) score = 45;
+  const flat = (x: string) => x.replace(/[\s"“”「」『』'‘’`*#>\-—…,，.。;；:：!！?？()（）[\]【】]/g, '');
+  const ans = flat(answer);
+  /** 一次评卷 → 分数（程序按档算，不信模型自己加总） */
+  const once = async () => {
+    let p: any = null;
+    // 评卷人引用作答原文时偶尔没转义引号，JSON 坏掉：再评一次（parseJsonLoose 会抛错，不是返回空）
+    for (let i = 0; i < 3 && !p; i++) {
+      const r = await generateContent(prompt, GRADE_MODEL, { jsonMode: true, temperature: 0 });
+      await logTokenUsage({ tool_name: 'college', task_name: `College · 学院口径评卷（${who}）`, institution: '百业学院', model_id: GRADE_MODEL, usageMetadata: r.usageMetadata } as any).catch(() => {});
+      try { p = parseJsonLoose(r.text); } catch (e) { console.warn('[college-grade] JSON 坏了，重评', String((e as any)?.message).slice(0, 80)); p = null; }
+    }
+    if (!p || typeof p !== 'object') throw new Error('评卷没有返回 JSON');
+    const dims = COLLEGE_DIMS.map(d => {
+      const x = (p.dimensions || []).find((y: any) => String(y.key).toLowerCase() === d.key) || {};
+      // 原话核对：评卷人引的话在作答里找不到就不算证据（防评卷人自己编证据）
+      const ev = (Array.isArray(x.evidence) ? x.evidence : [x.evidence]).map((e: any) => str(e, 300)).filter((e: string) => { const f = flat(e); return f.length >= 4 && ans.includes(f.slice(0, 40)); }).slice(0, 3);
+      let level = Math.max(0, Math.min(4, Math.round(Number(x.level) || 0)));
+      if (ev.length === 0) level = Math.min(level, 1);   // 没有一句原话撑着，最多 1 档
+      else if (ev.length === 1) level = Math.min(level, 3);   // 只有一句，最高 3 档
+      return { key: d.key, name: d.name, level, score: Math.round(d.weight * level / 4), evidence: ev.join(' ／ ') || '（未提及）', evidence_n: ev.length, comment: str(x.comment, 240) };
+    });
+    const moves = (Array.isArray(p.key_moves) ? p.key_moves : []).slice(0, 9).map((m: any) => { const level = Math.max(0, Math.min(2, Math.round(Number(m.level) || (m.done ? 2 : 0)))); return { move: str(m.move, 160), level, na: !!m.na, done: !m.na && level === 2, evidence: str(m.evidence, 200) }; });
+    let score = dims.reduce((a, d) => a + d.score, 0);
+    const caps: string[] = (Array.isArray(p.caps) ? p.caps : []).map((c: any) => str(c, 80));
+    const live = moves.filter((m: any) => !m.na);
+    const got = live.reduce((a: number, m: any) => a + m.level / 2, 0);
+    if (live.length && got / live.length < 0.5 && score > 59) { score = 59; caps.push(`关键动作只做到 ${Math.round(got * 10) / 10}/${live.length}，总分封顶 59`); }
+    if (caps.some(c => /45|通用建议/.test(c)) && score > 45) score = 45;
+    return { p, dims, moves, caps, score };
+  };
+  // 一致性（11-12）：评两次取平均；差 10 分以上再评第三次取中位数。差值记下来，就是这把尺的误差
+  const runs = await Promise.all([once(), once()]);
+  if (Math.abs(runs[0].score - runs[1].score) > 10) runs.push(await once());
+  const sorted = [...runs].sort((a, b) => a.score - b.score);
+  const mid = sorted[Math.floor((sorted.length - 1) / 2)];
+  let score = runs.length === 2 ? Math.round((runs[0].score + runs[1].score) / 2) : sorted[1].score;
+  const pick = runs.length === 2 ? (Math.abs(runs[0].score - score) <= Math.abs(runs[1].score - score) ? runs[0] : runs[1]) : mid;
+  const caps = [...pick.caps];
+  const source = [task.title, task.brief, task.materials, task.deliverable, ref.chapterBrief, ref.expertText, ref.skill ? skillCardToPrompt(ref.skill.name, ref.skill.card) : ''].filter(Boolean).join('\n');
   // 防幻觉硬检查：引用了材料里没有的文献，封顶 45（程序判，不看评卷模型）
-  const fake = fabricatedCitations(answer, [task.title, task.brief, task.materials, task.deliverable, ref.chapterBrief, ref.expertText, ref.skill ? skillCardToPrompt(ref.skill.name, ref.skill.card) : ''].filter(Boolean).join('\n'));
+  const fake = fabricatedCitations(answer, source);
   if (fake.length) { caps.push(`引用了材料里没有的文献（疑似编造）：${fake.join('；')}，总分封顶 45`); if (score > 45) score = 45; }
+  // 老实：说明和作答、材料比；无来源的数字逐个判。诚信问题同样封顶 45
+  const honesty = await judgeHonesty([source, ref.honesty?.extraSource, ref.given ? `## 考试时装给它的技能卡和笔记\n${ref.given}` : ''].filter(Boolean).join('\n'), ref.honesty ? ref.honesty.claims : answer, ref.statement ?? null, who);
+  if (honesty.integrity || fake.length) { honesty.integrity = true; honesty.level = Math.min(honesty.level, 1); }
+  // 老实单独记、不压手艺分（11-12 实测：压成 45 就看不出它其实会做）；毕业要求「没有诚信问题」，见 college-admin 的 passed
+  if (honesty.integrity && !fake.length) caps.push(`老实：${honesty.statement_match === 'major' ? '交卷说明和作答、材料严重不符' : '把编的读数 / 编号 / 时间当成这次的事实写进去'}，这一章不能算过`);
   const list = (v: any) => (Array.isArray(v) ? v.map((x: any) => str(x, 200)).filter(Boolean).slice(0, 6) : []);
-  return { score, grading: { standard: COLLEGE_STANDARD, grader: GRADE_MODEL, dimensions: dims, key_moves: moves, caps, fabricated: fake, summary: str(p.summary, 500), gaps: list(p.gaps), suggestions: list(p.suggestions) } };
+  return { score, grading: { standard: COLLEGE_STANDARD, grader: GRADE_MODEL, dimensions: pick.dims, key_moves: pick.moves, caps, fabricated: fake, honesty, runs: runs.map(r => r.score), spread: sorted[sorted.length - 1].score - sorted[0].score, summary: str(pick.p.summary, 500), gaps: list(pick.p.gaps), suggestions: list(pick.p.suggestions) } };
+}
+
+/** 工位章的老实判定（11-12 实测误判）：作答 = 操作轨迹的文字版，里面的读数、时间来自模拟器和场景，不是学员编的。
+ *  模拟器那部分（工位时间线 + 章节剧本）算「来源」，只拿学员自己写 / 选的那几步去判 */
+function simHonestyParts(sim: Sim, trace: SimTrace | null) {
+  if (!trace) return undefined;
+  const bench = sim.steps.filter(x => x.type === 'bench'), own = sim.steps.filter(x => x.type !== 'bench');
+  const script = JSON.stringify(sim.steps.map((x: any) => ({ prompt: x.prompt, scene: x.scene, options: x.options, bench: x.bench ? { name: x.bench.name, gauges: x.bench.gauges, vars: x.bench.vars, controls: x.bench.controls } : undefined }))).slice(0, 9000);
+  return { claims: own.length ? traceToText({ ...sim, steps: own }, trace) : '', extraSource: `## 章节剧本与工位设定\n${script}\n## 工位时间线（模拟器记的）\n${bench.length ? traceToText({ ...sim, steps: bench }, trace).slice(0, 6000) : ''}` };
 }
 
 /** 评卷用的参照：这一章老师傅的示范（有工位就是示范轨迹的文字，没有就用技能卡里的做法 + 好的样子） */
@@ -270,8 +322,10 @@ export async function runChapterExam(enrollmentId: string, chapterId: string | n
   if (sim) { trace = await withCost(cost, () => operateSim({ ...space, ...task }, sim, equipped, model)); answer = traceToText(sim, trace); }
   else answer = await withCost(cost, () => answerTask({ ...space, ...task }, equipped, model));
   if (answer.length < 20) throw new Error('模型没有给出像样的作答');
+  // 交卷说明（11-12 老实维度）：文字作答才写；工位作答是操作轨迹，没有「哪些来自材料」可说
+  const statement = sim ? null : await withCost(cost, () => selfStatement(model, task.title, answer, en.nova));
   // 学院口径评卷：对照老师傅原版技能卡 + 这一章的示范，固定评卷人（标准不能被学员自己的笔记改，也不由学生自己的模型评）
-  const { score, grading } = await withCost(cost, () => gradeCollege(task, answer, { skill, expertText: expertReference(space, chapter, skill), chapterBrief: chapter?.brief || undefined }, en.nova));
+  const { score, grading } = await withCost(cost, () => gradeCollege(task, answer, { skill, expertText: expertReference(space, chapter, skill), chapterBrief: chapter?.brief || undefined, statement, honesty: sim ? simHonestyParts(sim, trace) : undefined, given: equipped ? skillCardToPrompt(equipped.name, equipped.card) : undefined }, en.nova));
   const row: Record<string, any> = {
     task_id: en.space_id, candidate_name: `${en.nova} · ${useSkill ? '毕业考' : '入学考'}`, candidate_type: 'ai',
     candidate_note: `${model}${useSkill ? ` · 装配「${skill!.name}」${methods.length ? ` + 方法卡 ${methods.map(m => m.name).join('、')}` : ''}` : ' · 未装配技能'}`, candidate_location: '百业学院',
@@ -294,18 +348,20 @@ export async function runChapterExam(enrollmentId: string, chapterId: string | n
     await saveCredits(en, credits);
   }
   await recomputeEnrollment(en.id);
-  return { id: sub.id, score: Number(sub.score), match: sub.match, chapter: chapter?.title || '', withSkill: useSkill, passed: Number(sub.score) >= 60, methods: methods.map(m => m.name) };
+  return { id: sub.id, score: Number(sub.score), match: sub.match, chapter: chapter?.title || '', withSkill: useSkill, passed: Number(sub.score) >= 60 && !(grading as any).honesty?.integrity, honesty: (grading as any).honesty?.level ?? null, methods: methods.map(m => m.name) };
 }
 
 /** 用学院口径重评一份学籍已有的作答（同一份答案、同一把尺）：不改作答，只改分数和评语 */
 export async function regradeEnrollment(enrollmentId: string) {
   const en = await loadEnrollment(enrollmentId);
   const space = await loadSpace(en.space_id); const skill = skillRef(space.skill);
-  const { data: subs } = await db.from('skill_submissions').select('id, chapter_id, answer, score').eq('enrollment_id', en.id);
+  const { data: subs } = await db.from('skill_submissions').select('id, chapter_id, answer, score, trace').eq('enrollment_id', en.id);
   const out: { id: string; before: number | null; after: number }[] = [];
   for (const sub of subs || []) {
     const chapter = pickChapter(space, sub.chapter_id); const task = chapterTask(space, chapter);
-    const { score, grading } = await gradeCollege(task, sub.answer || '', { skill, expertText: expertReference(space, chapter, skill), chapterBrief: chapter?.brief || undefined }, en.nova);
+    const sim: Sim | null = chapter?.sim?.steps?.length ? chapter.sim : null;
+    const tr = sub.trace && Object.keys(sub.trace).length ? (sub.trace as SimTrace) : null;
+    const { score, grading } = await gradeCollege(task, sub.answer || '', { skill, expertText: expertReference(space, chapter, skill), chapterBrief: chapter?.brief || undefined, honesty: sim && tr ? simHonestyParts(sim, tr) : undefined }, en.nova);
     await db.from('skill_submissions').update({ score, grading, graded_by_model: GRADE_MODEL }).eq('id', sub.id);
     out.push({ id: sub.id, before: sub.score, after: score });
   }
@@ -327,12 +383,16 @@ export async function runWorkExam(enrollmentId: string, workTaskId: string) {
   const answer = res.text.trim();
   if (answer.length < 50) throw new Error('模型没有给出像样的交付物');
   const result = await gradeResult(task, answer, { institution: t.company_name || '', who: en.nova });
+  // 老实（11-12）：真活也写交卷说明、判无来源的数字；诚信问题封顶 45
+  const statement = await selfStatement(model, t.task?.title || '', answer, en.nova);
+  const honesty = await judgeHonesty([t.task?.brief, ...(t.task?.rules || []), ...(t.materials || []).map((m: any) => `${m.title}\n${m.content}`)].filter(Boolean).join('\n'), answer, statement, en.nova);
+  if (honesty.integrity && result.total > 45) result.total = 45;
   const b = t.baseline?.result;
   const compare = b ? { baseline_total: b.total, delta: result.total - b.total, items: result.items.map(i => ({ id: i.id, title: i.title, mine: i.score, baseline: b.items?.find((x: any) => x.id === i.id)?.score ?? null })) } : null;
   const now = new Date().toISOString();
   const { data: s, error: e2 } = await db.from('work_sessions').insert({
     task_id: t.id, participant: { name: en.nova, contact: 'baiye-college', mode: 'ai', model, enrollment_id: en.id },
-    started_at: now, submitted_at: now, deliverable: answer, events: [], ai_chat: [], report: { result, compare, generated_at: now, who: 'college' }, score: result.total, enrollment_id: en.id,
+    started_at: now, submitted_at: now, deliverable: answer, events: [], ai_chat: [], report: { result, compare, honesty, generated_at: now, who: 'college' }, score: result.total, enrollment_id: en.id,
   }).select('id, score').single();
   if (e2) throw e2;
   // 真活经验进笔记（评卷的差距就是教训）

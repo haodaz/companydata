@@ -52,6 +52,7 @@ export default function StudentView() {
                   <div><i>入学考</i><b>{c.before ?? '—'}</b></div>
                   <div><i>毕业考</i><b className={c.passed ? 'ok' : c.after != null ? 'bad' : ''}>{c.after ?? '—'}</b></div>
                   {l?.moves && <div><i>老师傅的关键动作</i><b className={l.moves.done * 2 < l.moves.total ? 'bad' : ''}>{l.moves.done}/{l.moves.total}</b></div>}
+                  {l?.honesty && <div title={l.honesty.note}><i>老实</i><b className={l.honesty.integrity ? 'bad' : ''}>{l.honesty.level}/4</b></div>}
                 </div>
                 {l?.missed?.length > 0 && !c.passed && <div className="sv-missed"><i>我没做到的</i><ul>{l.missed.slice(0, 3).map((m: string, i: number) => <li key={i}>{m}</li>)}</ul></div>}
                 {points.length > 0 && <div className="sv-notes"><i>上课记下的要点</i><ul>{points.slice(0, 4).map((p, i) => <li key={i}>{p}</li>)}</ul>{points.length > 4 && <small>还有 {points.length - 4} 条</small>}</div>}
