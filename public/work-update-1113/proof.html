@@ -1,0 +1,67 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>作品存档与核验：做过的真活能带走、能被核对 · 本轮更新使用介绍</title><style>
+:root { --v: #6055f5; --ink: #1a1a2e; --ink2: #4a4f66; --ink3: #8a8fa8; --mark: #ff5a36; --line: #e8e9f0; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #f5f6fb; color: var(--ink); font: 15px/1.75 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+.wrap { max-width: 1000px; margin: 0 auto; padding: 36px 20px 56px; }
+.eb { font-size: 12px; letter-spacing: .14em; color: var(--v); font-weight: 700; }
+h1 { font-size: 34px; line-height: 1.25; margin: 8px 0 10px; }
+h1 small { font-size: 18px; color: var(--ink3); font-weight: 600; margin-right: 10px; }
+.meta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.meta span { font-size: 13px; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; color: var(--ink2); }
+.lead { font-size: 16px; color: var(--ink2); background: #fff; border-left: 4px solid var(--v); border-radius: 0 12px 12px 0; padding: 12px 16px; margin: 0 0 26px; }
+.step { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 20px 20px 18px; margin-bottom: 22px; box-shadow: 0 10px 30px -22px rgba(40,44,110,.35); }
+.step h2 { display: flex; align-items: center; gap: 12px; font-size: 21px; margin: 0 0 6px; }
+.step h2 i { font-style: normal; flex: none; width: 34px; height: 34px; border-radius: 10px; background: var(--v); color: #fff; display: grid; place-items: center; font-size: 17px; }
+.step .d { color: var(--ink2); margin: 0 0 14px 46px; }
+.shot { position: relative; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: #fff; }
+.shot img { display: block; width: 100%; }
+.box { position: absolute; border: 3px solid var(--mark); border-radius: 8px; }
+.tag { position: absolute; left: -3px; transform: translateY(-100%); display: flex; align-items: center; gap: 6px; white-space: nowrap; background: var(--mark); color: #fff; font-size: 12.5px; font-weight: 700; padding: 3px 9px 3px 4px; border-radius: 8px 8px 8px 0; max-width: 520px; overflow: hidden; text-overflow: ellipsis; }
+.tag.below { transform: none; top: calc(100% + 4px); border-radius: 0 8px 8px 8px; }
+.tag.below.right { border-radius: 8px 0 8px 8px; }
+.tag.right { left: auto; right: -3px; border-radius: 8px 8px 0 8px; }
+.tag b, .notes b { flex: none; width: 19px; height: 19px; border-radius: 50%; background: #fff; color: var(--mark); display: grid; place-items: center; font-size: 12px; }
+.notes { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 6px; }
+.notes li { display: flex; gap: 8px; align-items: flex-start; font-size: 14.5px; }
+.notes b { background: var(--mark); color: #fff; margin-top: 3px; }
+.ex { background: linear-gradient(135deg, #f3f2ff, #eefbfd); border: 1px solid #dcd8ff; border-radius: 16px; padding: 16px 20px; margin: 0 0 24px; }
+.ex h3 { margin: 0 0 8px; font-size: 17px; color: var(--v); }
+.ex ul { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 6px; }
+.ex li { background: #fff; border-radius: 10px; padding: 8px 12px; font-size: 15px; }
+.ex p { margin: 10px 0 0; color: var(--ink2); font-size: 14px; }
+@media print { body { background: #fff; font-size: 16px; } .notes li { font-size: 15.5px; } .step .d { font-size: 15.5px; } .step, .ex, .lead { break-inside: avoid; } .wrap { padding-top: 8px; } }
+.pb { break-before: page; }
+.divider { min-height: 1180px; display: flex; flex-direction: column; justify-content: center; padding: 0 60px; background: linear-gradient(135deg, #f3f2ff, #eefbfd); border-radius: 24px; }
+.divider .no { font-size: 120px; font-weight: 900; line-height: 1; background: linear-gradient(120deg, var(--v), #12b5cb); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.divider h2 { font-size: 46px; margin: 18px 0 12px; } .divider .m { color: var(--ink2); font-size: 17px; margin-bottom: 18px; } .divider p { font-size: 18px; color: var(--ink2); max-width: 720px; }
+.cover { min-height: 1180px; display: flex; flex-direction: column; justify-content: center; padding: 0 60px; }
+.cover h1 { font-size: 64px; } .cover .ver { margin-top: 28px; display: grid; gap: 8px; font-size: 17px; color: var(--ink2); } .cover .ver b { color: var(--ink); }
+.toc a { display: flex; gap: 18px; align-items: baseline; text-decoration: none; color: inherit; padding: 16px 0; border-bottom: 1px solid var(--line); } .toc i { font-style: normal; font-weight: 900; color: var(--v); font-size: 26px; width: 48px; } .toc b { font-size: 21px; } .toc span { color: var(--ink2); font-size: 14.5px; display: block; }
+.faq { display: grid; gap: 12px; } .qa { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px; break-inside: avoid; } .qa b { font-size: 17px; } .qa p { margin: 6px 0 0; color: var(--ink2); }
+.foot { text-align: center; color: var(--ink3); font-size: 12.5px; margin-top: 28px; }
+@media (max-width: 640px) { h1 { font-size: 26px; } .step .d { margin-left: 0; } .tag { font-size: 11px; max-width: 70vw; } }
+</style></head><body><div class="wrap">
+<div class="eb">百业AI｜真活 · 操作手册 05</div>
+<h1>作品存档与核验：做过的真活能带走、能被核对</h1>
+<div class="meta"><span>候选人 · 看作品的人</span><span>2 分钟读完</span></div>
+<p class="lead">交卷出报告后，候选人可以把整份作品存成 PDF，放进简历和作品集。PDF 上有核验码、二维码和交付原文的数字指纹，别人扫码就能看到平台存的原件，改过的作品一对就知道。</p>
+
+<section class="step"><h2><i>1</i>报告页：领成绩单，或保存整份作品</h2><p class="d">成绩单是一页分数和要点；「保存我的作品」是整份：任务书、交付原文、附件。</p>
+      <div class="shot"><div style="aspect-ratio:115200/27000;overflow:hidden"><img src="img/rep-save.png" alt="" style="width:125.000%;max-width:none;margin-left:-12.500%;margin-top:-3.125%"></div><div class="box" style="left:6.25%;top:25.33%;width:87.50%;height:29.67%"><span class="tag"><b>1</b>成绩单：链接可发给下一家公司，也能存 PDF</span></div><div class="box" style="left:16.38%;top:56.33%;width:34.88%;height:9.33%"><span class="tag"><b>2</b>保存整份作品：任务书 + 交付原文 + 附件，带核验码</span></div></div>
+      <ul class="notes"><li><b>1</b><span>成绩单：链接可发给下一家公司，也能存 PDF</span></li><li><b>2</b><span>保存整份作品：任务书 + 交付原文 + 附件，带核验码</span></li></ul></section>
+<section class="step"><h2><i>2</i>作品存档：存成 PDF 带走</h2><p class="d">点「存成 PDF / 打印」，选「存储为 PDF」。核验链接可以单独复制发给别人。附件里平台读出的文字默认折叠，以原文件为准。</p>
+      <div class="shot"><div style="aspect-ratio:92160/54000;overflow:hidden"><img src="img/arc-top.png" alt="" style="width:156.250%;max-width:none;margin-left:-28.125%;margin-top:-0.000%"></div><div class="box" style="left:5.16%;top:4.50%;width:15.47%;height:9.00%"><span class="tag below"><b>1</b>存成 PDF</span></div><div class="box" style="left:20.63%;top:4.50%;width:13.28%;height:9.00%"><span class="tag below"><b>2</b>复制核验链接</span></div><div class="box" style="left:9.53%;top:61.17%;width:80.94%;height:28.67%"><span class="tag"><b>3</b>任务书、交付原文、附件都在一页</span></div></div>
+      <ul class="notes"><li><b>1</b><span>存成 PDF</span></li><li><b>2</b><span>复制核验链接</span></li><li><b>3</b><span>任务书、交付原文、附件都在一页</span></li></ul></section>
+<section class="step"><h2><i>3</i>PDF 最下面：核验码、二维码、数字指纹</h2><p class="d">数字指纹由交付原文算出来，原文改一个字，指纹就完全不同。</p>
+      <div class="shot"><div style="aspect-ratio:86400/32400;overflow:hidden"><img src="img/arc-proof.png" alt="" style="width:166.667%;max-width:none;margin-left:-33.333%;margin-top:-62.500%"></div><div class="box" style="left:8.83%;top:40.28%;width:13.67%;height:36.39%"><span class="tag"><b>1</b>扫码看平台存的原件</span></div><div class="box" style="left:28.83%;top:40.56%;width:13.00%;height:8.06%"><span class="tag"><b>2</b>核验码</span></div><div class="box" style="left:23.33%;top:62.50%;width:60.33%;height:8.33%"><span class="tag"><b>3</b>交付原文的数字指纹：改一个字就对不上</span></div></div>
+      <ul class="notes"><li><b>1</b><span>扫码看平台存的原件</span></li><li><b>2</b><span>核验码</span></li><li><b>3</b><span>交付原文的数字指纹：改一个字就对不上</span></li></ul></section>
+<section class="step"><h2><i>4</i>扫码进核验页：看到的是平台存的原件</h2><p class="d">核验页公开、只读，显示作答人姓名（不显示手机和邮箱）、交卷时间、分数、任务书、交付原文和附件原件。</p>
+      <div class="shot"><div style="aspect-ratio:86400/45000;overflow:hidden"><img src="img/ver-top.png" alt="" style="width:166.667%;max-width:none;margin-left:-33.333%;margin-top:-0.000%"></div><div class="box" style="left:6.83%;top:12.60%;width:86.33%;height:10.40%"><span class="tag"><b>1</b>这一页是平台存的原件，作答人改不了</span></div></div>
+      <ul class="notes"><li><b>1</b><span>这一页是平台存的原件，作答人改不了</span></li></ul></section>
+<section class="step"><h2><i>5</i>想核对手里那份：整段粘进来</h2><p class="d">把手里那份的交付原文整段原样粘进来，马上显示一致还是不一致；不一致时也可以直接对照上面的原文看哪里不同。</p>
+      <div class="shot"><div style="aspect-ratio:86400/37800;overflow:hidden"><img src="img/ver-check.png" alt="" style="width:166.667%;max-width:none;margin-left:-33.333%;margin-top:-58.333%"></div><div class="box" style="left:6.83%;top:43.33%;width:86.33%;height:29.05%"><span class="tag"><b>1</b>把手里那份的交付原文粘进来</span></div><div class="box" style="left:6.83%;top:73.57%;width:86.33%;height:7.62%"><span class="tag"><b>2</b>一致 / 不一致，马上知道</span></div></div>
+      <ul class="notes"><li><b>1</b><span>把手里那份的交付原文粘进来</span></li><li><b>2</b><span>一致 / 不一致，马上知道</span></li></ul></section>
+
+<div class="foot">百业AI｜真活 · 编写于 2026-11-13 · 适用 百业AI｜真活 1.4（2026-11-13 线上版本） · 操作手册 05 · 作品存档与核验：做过的真活能带走、能被核对</div>
+</div></body></html>

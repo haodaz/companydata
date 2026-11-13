@@ -15,6 +15,10 @@ const SETS = {
   work2: { guides: './guides-v2.mjs', web: 'work-guide-v2', docs: '真活操作手册-v2', brand: '百业AI｜真活', name: '真活操作手册', h1: '真活怎么用',
     DATE: '2026-11-09', VERSION: '百业AI｜真活 1.3（2026-11-09 线上版本）', site: 'www.aisimjob.com/work-guide-v2/',
     intro: '五个模块：出任务的三种方式、候选人做题、看答卷比候选人。一份手册讲一件事，每步一张真实截图，框出来的地方就是要点。' },
+  // 11-13 一轮更新的使用介绍（潜历 / 宇宁反馈之后）：只讲这一轮新加的和改清楚的，给项目方看
+  upd1113: { guides: './guides-update-1113.mjs', web: 'work-update-1113', docs: '真活更新使用介绍-20261113', brand: '百业AI｜真活', name: '本轮更新使用介绍', h1: '这一轮更新怎么用',
+    DATE: '2026-11-13', VERSION: '百业AI｜真活 1.4（2026-11-13 线上版本）', site: 'www.aisimjob.com/work-update-1113/',
+    intro: '这一轮按大家的反馈改了出任务、发布、看答卷、候选人做题四处，又加了作品存档与核验。一份讲一件事，每步一张真实截图，红框编号就是要看的地方。' },
   lab: { guides: '../lab-guide/guides.mjs', web: 'lab-guide', docs: '百业体验手册', brand: 'AI 百业', name: '百业体验手册', h1: 'AI 百业怎么玩',
     DATE: '2026-11-03', VERSION: 'AI 百业 · 数字技能空间（2026-11-03 线上版本）', site: 'www.aisimjob.com/lab-guide/', ext: 'jpg',
     intro: '走进一个职业的一天、跟数字职人学和聊、拿证书、看 AI 会怎么改变你的工作。一份手册讲一件事，每步一张真实截图，框出来的地方就是要点；最后一份是常见问题。' },
@@ -83,7 +87,7 @@ function stepsOf(g) {
     const img = full ? `<img src="img/${s.img}.${EXT}" alt="">`
       : `<div style="aspect-ratio:${(1440 * vw).toFixed(0)}/${(900 * vh).toFixed(0)};overflow:hidden"><img src="img/${s.img}.${EXT}" alt="" style="width:${(10000 / vw).toFixed(3)}%;max-width:none;margin-left:-${(vx * 100 / vw).toFixed(3)}%;margin-top:-${(vy * 62.5 / vw).toFixed(3)}%"></div>`;
     return `<section class="step"><h2><i>${i + 1}</i>${esc(s.t)}</h2><p class="d">${esc(s.d)}</p>
-      <div class="shot">${img}${boxes}</div>
+      ${s.img ? `<div class="shot">${img}${boxes}</div>` : ''}
       ${(s.box || []).length ? `<ul class="notes">${s.box.map(b => `<li><b>${b[4]}</b><span>${esc(b[5])}</span></li>`).join('')}</ul>` : ''}</section>`;
   }).join('\n');
 }
