@@ -10,9 +10,19 @@ import { useWorkScale } from '@/lib/work/scale-client';
 import { ReportView } from '@/components/work/ReportView';
 import { Md } from '@/components/ws/Md';
 import { MdView, RulesView } from '@/components/work/WorkText';
+import { MODULES, type Module } from '@/lib/work/modules';
 
 const { Text, Paragraph } = Typography;
 export const ENV_META: Record<string, { label: string; color: string }> = { doc: { label: '文档 / 对账台', color: 'purple' }, code: { label: '代码台', color: 'geekblue' }, sheet: { label: '表格 / 数据台', color: 'cyan' }, design: { label: '设计台', color: 'orange' }, plugin: { label: '真活插件 · 自己的工具', color: 'magenta' }, open: { label: '自己录制电脑操作', color: 'green' } };
+/** 操作台叫法（11-13 潜历：原题直发的题交表格 + 白板 + 文档，标签却是「文档 / 对账台」）：开放 / 插件按做法叫，其余按交付物用的台子叫 */
+export function envLabel(T: any) {
+  const env = T?.task?.env?.type || 'doc';
+  if (env === 'open' || env === 'plugin') return ENV_META[env].label;
+  const mods = [...new Set(((T?.task?.deliverables || []) as any[]).map(d => d?.module).filter((m: any) => m && MODULES[m as Module]))] as Module[];
+  return mods.length ? mods.map(m => MODULES[m].label).join(' + ') : ENV_META[env]?.label || '文档';
+}
+/** 原题直发没有问题陈述，生成时填的是占位「出题人给的原题」：显示时跳过 */
+export const realStatement = (s?: string) => (s && !/^(出题人给的原题|Task provided by )/.test(s) ? s : '');
 
 export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab, ownerKey, inlineEdit = true }: { /** 任务空间把岗位名 / 用时放到上面的「调整这道题」里，这里只显示（11-05） */ inlineEdit?: boolean; task: any; sessions: any[]; shareLink: string; notes?: string[]; defaultTab?: string; /** 有管理密钥才能补算 AI 使用分 */ ownerKey?: string }) {
   // 出题人是不是用一句话说的要找什么样的人（和 lib/work/generator.ts 的 isNeedText 同一判断；那边是服务端模块，这里不能直接引）
@@ -131,14 +141,14 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
               : <Space wrap><span>{T.company_name} · {role}</span>{ownerKey && inlineEdit && <a onClick={() => setRoleEdit(role)}>改岗位名</a>}</Space> },
             { key: 'link', label: '参与链接', children: <Space><code>{shareLink}</code><Button size="small" onClick={() => { navigator.clipboard.writeText(shareLink); message.success('已复制'); }}>复制</Button></Space> },
             // 出题依据（11-10 潜历：「为什么是现在」看不懂、候选人也看不到）：改叫人话，标明谁看得到
-            { key: 's', label: <span>要解决的问题<div style={{ fontSize: 11, color: '#999', fontWeight: 400 }}>候选人在标题下看得到</div></span>, children: T.problem?.statement },
+            ...(realStatement(T.problem?.statement) ? [{ key: 's', label: <span>要解决的问题<div style={{ fontSize: 11, color: '#999', fontWeight: 400 }}>候选人在标题下看得到</div></span>, children: T.problem?.statement }] : []),
             ...(T.problem?.why_now ? [{ key: 'w', label: <span>为什么现在要做<div style={{ fontSize: 11, color: '#999', fontWeight: 400 }}>出题依据 · 候选人看不到</div></span>, children: T.problem.why_now }] : []),
             { key: 'e', label: <span>材料依据<div style={{ fontSize: 11, color: '#999', fontWeight: 400 }}>候选人看不到</div></span>, children: <ul style={{ margin: 0, paddingLeft: 18 }}>{(T.problem?.evidence || []).map((x: any, i: number) => <li key={i}>{x.text} <Text type="secondary">— {x.source}</Text></li>)}</ul> },
             { key: 'd', label: '交付物', children: <ol style={{ margin: 0, paddingLeft: 18 }}>{(T.task?.deliverables || []).map((d: any) => <li key={d.id}>{d.title} <Text type="secondary">{d.format}</Text></li>)}</ol> },
             { key: 'r', label: '规则', children: <RulesView rules={T.task?.rules || []} fontSize={13.5} /> },
             ...(T.task?.lang === 'en' ? [{ key: 'lang', label: '题目语言', children: <span style={{ fontSize: 13 }}>英文：候选人看到的题面、作答界面、AI 助手、评分标准和报告都是英文；出题依据（为什么现在要做、材料依据）仍是中文</span> }] : []),
             ...(T.task?.style ? [{ key: 'st', label: '出法', children: <span style={{ fontSize: 13 }}>{T.task.style.deep ? '升维解读（可以延伸到更大的问题）' : '按字面出，不升维'} · {T.task.style.steps ? '分步推进' : '不替候选人拆步骤'}</span> }] : []),
-            { key: 'm', label: '时间与操作台', children: <Space wrap><span>{T.task?.soft_limit ? '建议' : '限时'} {minutes} 分钟 · 操作台 {ENV_META[T.task?.env?.type]?.label || '文档'}</span>{ownerKey && inlineEdit && <Space.Compact size="small"><InputNumber size="small" min={20} max={240} step={10} value={minEdit} onChange={v => setMinEdit(Number(v) || minutes)} suffix="分钟" style={{ width: 110 }} /><Button size="small" disabled={minEdit === minutes} loading={minBusy} onClick={saveMinutes}>改用时</Button></Space.Compact>}</Space> },
+            { key: 'm', label: '时间与操作台', children: <Space wrap><span>{T.task?.soft_limit ? '建议' : '限时'} {minutes} 分钟 · 操作台 {envLabel(T)}</span>{ownerKey && inlineEdit && <Space.Compact size="small"><InputNumber size="small" min={20} max={240} step={10} value={minEdit} onChange={v => setMinEdit(Number(v) || minutes)} suffix="分钟" style={{ width: 110 }} /><Button size="small" disabled={minEdit === minutes} loading={minBusy} onClick={saveMinutes}>改用时</Button></Space.Compact>}</Space> },
           ]} />
           <div style={{ marginTop: 12, background: '#fafbff', padding: 12, borderRadius: 10 }}><div style={{ fontSize: 12, color: '#999', marginBottom: 6 }}>任务书（候选人看到的）</div><MdView text={T.task?.brief || ''} /></div>
           {T.task?.env?.type === 'code' && <Paragraph><b>自测用例</b>：{(T.task.env.tests || []).map((t: any) => t.name).join('、') || '无'}</Paragraph>}
@@ -180,7 +190,7 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
         ]} /> },
         ...(ai ? [] : [{ key: 'b', label: `AI 基线${T.baseline ? ` · ${T.baseline.result?.total} 分` : ''}`, children: T.baseline ? <div><Paragraph>AI 先做了一遍，用同一套 rubric 评：<b>{T.baseline.result?.total}</b> 分。{T.baseline.result?.summary}</Paragraph><Table size="small" rowKey="id" pagination={false} dataSource={T.baseline.result?.items || []} columns={[{ title: '条目', dataIndex: 'title' }, { title: '等级', dataIndex: 'level', width: 60 }, { title: '分', dataIndex: 'score', width: 60 }, { title: '证据 / 说明', render: (_: any, i: any) => <span style={{ fontSize: 12 }}>{i.evidence && <i>“{i.evidence}” </i>}{i.note}</span> }]} /><details style={{ marginTop: 12 }}><summary>AI 的答卷</summary><MdView text={T.baseline.answer || ''} style={{ fontSize: 13, background: '#fafbff', padding: 10, borderRadius: 8 }} /></details></div> : <Text type="secondary">AI 基线还没出来。出任务后它在后台跑，约一分钟，刷新这页就有；也可以点上面的「重跑 AI 基线」现在跑。基线 = 一个通用 AI 直接做这道题能得几分，是候选人分数的参照。</Text> }]),
         { key: 'ai', label: 'AI 使用标准', children: <AiPolicyView task={T} shareLink={shareLink} ownerKey={ownerKey} /> },
-        { key: 's', label: `做题情况与评分（${sessions.length}）`, children: <>
+        { key: 's', label: `做题情况与评分（${sessions.filter((s: any) => !s.participant?.preview).length}）`, children: <>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 10, flexWrap: 'wrap' }}>
             <Text type="secondary" style={{ fontSize: 13 }}>交卷 {graded.length} 人，按分数排名；勾 2–4 人可以并排对比</Text>
             <span style={{ flex: 1 }} />

@@ -4,6 +4,7 @@
  */
 import { generateContent } from '@/lib/llm-client';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
+import { seenOutsideAi } from '@/lib/work/outside-ai';
 import { logTokenUsage } from '@/lib/token-logger';
 import type { WorkTask } from '@/lib/work/generator';
 import { supabaseAdmin as db } from '@/lib/supabase';
@@ -36,15 +37,19 @@ async function askJson(prompt: string, task_name: string, institution?: string):
 export interface ResultItem { id: string; title: string; weight: number; score: number; level: 'L1' | 'L2' | 'L3' | 'L4'; evidence: string; note: string; blocked_by?: string }
 export interface ResultReport { total: number; items: ResultItem[]; summary: string; strengths: string[]; gaps: string[]; who?: string }
 
+/** 录屏画面 / 插件事件里看得出在用外部 AI 的（评分用，词比较宽；报告计数用 outside-ai.ts 那套严的） */
+export const OUTSIDE_AI_RE = /AI|GPT|Copilot|Claude|千问|通义|豆包|Kimi|DeepSeek|文心|智谱|元宝|Gemini|WorkBuddy|Cursor|Trae|CodeBuddy|智能体|agent|对话|提问|生成/i;
+const isOutsideAi = (e: any) => (e.type === 'screen' || /^plugin_/.test(e.type)) && OUTSIDE_AI_RE.test(String(e.note || e.text || e.host || ''));
+const LEVEL_BAND: Record<ResultItem['level'], [number, number]> = { L1: [0, 39], L2: [40, 59], L3: [60, 79], L4: [80, 100] };
 /** 结果：rubric 逐条，每条引用交付物原句当证据；前置条目没做到的，后置条目封顶 L2 */
 export async function gradeResult(task: WorkTask, deliverable: string, opts: { institution?: string; who?: string } = {}): Promise<ResultReport> {
-  const prompt = `你是「真活台」的评卷 agent。按 rubric 逐条评这份交付物，每条必须引用交付物里的原句当证据（没有就写「未见」），给 BARS 等级 L1–L4 和 0–100 分。只看交付物和材料，不脑补。
+  const prompt = `你是「真活台」的评卷 agent。按 rubric 逐条评这份交付物，每条必须引用交付物里的原句当证据（没有就写「未见」），给 BARS 等级 L1–L4 和 0–100 分，分数落在等级的区间里：L1 0–39、L2 40–59、L3 60–79、L4 80–100。只看交付物和材料，不脑补。
 ## 任务书
 ${task.task.brief}
 ## 交付物要求
 ${task.task.deliverables.map(d => `- ${d.id} ${d.title}（${d.format}）`).join('\n')}
 ## 材料（判断事实与假设是否标注用）
-${task.materials.map(m => `### ${m.id} ${m.title}\n${m.content.slice(0, 1500)}`).join('\n\n')}
+${task.materials.map(m => `### ${m.id} ${m.title}\n${m.content.slice(0, m.kind === 'file' ? 4000 : 1500)}`).join('\n\n')}
 ## rubric
 ${task.rubric.map(r => `- ${r.id} ${r.title}（权重 ${r.weight}${r.depends_on.length ? '，依赖 ' + r.depends_on.join('/') : ''}）：${r.desc}\n  依据：${r.basis}\n  L1 ${r.levels.L1} | L2 ${r.levels.L2} | L3 ${r.levels.L3} | L4 ${r.levels.L4}`).join('\n')}
 ${task.task.stages?.length ? `## 推进步骤与参考答案（候选人看不到；测算按 value 核对，误差 ±5% 内算对；判断题看结论和理由是否成立，不要求措辞一致）\n${task.task.stages.map(st => `- ${st.id} 问：${st.question}\n  参考：${st.expected}${st.calc?.length ? `\n  数：${st.calc.map(c => `${c.label} = ${c.expr} = ${c.value}`).join('；')}` : ''}`).join('\n')}\n` : ''}## 交付物
@@ -56,13 +61,15 @@ ${deliverable.slice(0, 12000)}
   const items: ResultItem[] = task.rubric.map(r => {
     const x = got.get(r.id) || {};
     const lv = (['L1', 'L2', 'L3', 'L4'].includes(x.level) ? x.level : 'L1') as ResultItem['level'];
-    return { id: r.id, title: r.title, weight: r.weight, score: Math.max(0, Math.min(100, Number(x.score) || 0)), level: lv, evidence: sl(task)(x.evidence, 300), note: sl(task)(x.note, 200) };
+    // 等级定分数区间（11-13 潜历：同是 L2，一条给 40、一条给 60）：越界的按等级拉回
+    const [lo, hi] = LEVEL_BAND[lv];
+    return { id: r.id, title: r.title, weight: r.weight, score: Math.max(lo, Math.min(hi, Number(x.score) || 0)), level: lv, evidence: sl(task)(x.evidence, 300), note: sl(task)(x.note, 200) };
   });
-  // 依赖：前置没过（< 50）的，后置封顶 60 / L2，并写明被谁卡住
+  // 依赖：前置没过（< 50）的，后置封顶 59 / L2，并写明被谁卡住
   const byId = new Map(items.map(i => [i.id, i]));
   for (const r of task.rubric) {
     const me = byId.get(r.id)!; const weak = r.depends_on.filter(d => (byId.get(d)?.score ?? 100) < 50);
-    if (weak.length && me.score > 60) { me.score = 60; if (me.level === 'L3' || me.level === 'L4') me.level = 'L2'; me.blocked_by = weak.join('、'); }
+    if (weak.length && me.score > 59) { me.score = 59; me.level = 'L2'; me.blocked_by = weak.join('、'); }
   }
   const total = Math.round(items.reduce((a, i) => a + i.score * i.weight, 0) / (items.reduce((a, i) => a + i.weight, 0) || 1));
   return { total, items, summary: sl(task)(p.summary, 500), strengths: (Array.isArray(p.strengths) ? p.strengths : []).slice(0, 4).map((x: any) => sl(task)(x, 120)), gaps: (Array.isArray(p.gaps) ? p.gaps : []).slice(0, 4).map((x: any) => sl(task)(x, 120)), who: opts.who };
@@ -89,7 +96,7 @@ export async function analyzeProcess(task: WorkTask, events: WorkEvent[], aiChat
   const duration = Math.round(ev.length ? ev[ev.length - 1].t : 0);
   const stats: Record<string, number> = {};
   for (const e of ev) stats[e.type] = (stats[e.type] || 0) + 1;
-  stats.ai_asks = aiChat.length; stats.materials_opened = new Set(ev.filter(e => e.type === 'open_material').map(e => e.id)).size; stats.materials_total = task.materials.length;
+  stats.ai_asks = aiChat.length; stats.ai_outside = ev.filter(e => (e.type === 'screen' || /^plugin_/.test(e.type)) && seenOutsideAi(String(e.note || e.text || e.host || ''))).length;   // 录屏 / 插件里看到在用外部 AI 的条数（11-13 潜历：开放模式只数平台内助手，显示「问 AI 0 次」） stats.materials_opened = new Set(ev.filter(e => e.type === 'open_material').map(e => e.id)).size; stats.materials_total = task.materials.length;
   stats.paste_chars = ev.filter(e => e.type === 'paste').reduce((a, e) => a + (Number(e.chars) || 0), 0);
   stats.typed_chars = ev.filter(e => e.type === 'edit').reduce((a, e) => a + Math.max(0, Number(e.delta) || 0), 0);
   stats.deliverable_chars = deliverable.length;
@@ -164,7 +171,7 @@ export interface AiUseReport {
   runs?: (number | null)[]; spread?: number;
   /** 交卷时的「AI 参与说明」和记录比对：consistent 一致 · minor 轻度夸大 · major 严重不符（按诚信问题封顶）· vague 笼统无法核对 */
   disclosure?: { text: string; match: 'consistent' | 'minor' | 'major' | 'vague'; note: string } | null;
-  stats: { pasted_asks?: number; /** AI 回答里算出来、任务原文里没有、交付物里又出现的数字个数（手敲照抄） */ ai_numbers_carried?: number; /** 交付物 8 字片段在 AI 回答里出现过的比例（%，改写后也认得出） */ ai_overlap?: number; asks: number; followups: number; adopted: number; adopted_chars: number; verbatim_ratio: number; first_ask_s: number | null; materials_before_first_ask: number };
+  stats: { pasted_asks?: number; /** AI 回答里算出来、任务原文里没有、交付物里又出现的数字个数（手敲照抄） */ ai_numbers_carried?: number; /** 交付物 8 字片段在 AI 回答里出现过的比例（%，改写后也认得出） */ ai_overlap?: number; /** 录屏 / 插件里看到在用外部 AI 的条数（11-13 起） */ outside?: number; asks: number; followups: number; adopted: number; adopted_chars: number; verbatim_ratio: number; first_ask_s: number | null; materials_before_first_ask: number };
 }
 /** 交付物里原样来自 AI 回答的比例：交付物按句切，长度 ≥ 14 的句子在任一 AI 回答里原样出现就算 */
 function verbatimRatio(deliverable: string, answers: string[]) {
@@ -199,9 +206,10 @@ export async function analyzeAiUse(task: WorkTask, events: WorkEvent[], aiChat: 
     adopted: adopts.length, adopted_chars: adopts.reduce((n, e) => n + (Number(e.chars) || 0), 0),
     verbatim_ratio: verbatimRatio(deliverable, chat.map(c => c.a || '')),
     first_ask_s: firstAsk, materials_before_first_ask: new Set(ev.filter(e => e.type === 'open_material' && (firstAsk == null || e.t <= firstAsk)).map(e => e.id)).size,
+    outside: ev.filter(e => (e.type === 'screen' || /^plugin_/.test(e.type)) && seenOutsideAi(String(e.note || e.text || e.host || ''))).length,
   };
   // 开放模式 / 插件：AI 用在他自己的工具里（ChatGPT、Copilot…），只能从录屏描述和插件事件里看
-  const outside = ev.filter(e => (e.type === 'screen' || /^plugin_/.test(e.type)) && /AI|GPT|Copilot|Claude|千问|通义|豆包|Kimi|DeepSeek|文心|智谱|元宝|Gemini|WorkBuddy|Cursor|Trae|CodeBuddy|智能体|agent|对话|提问|生成/i.test(String(e.note || e.text || e.host || '')));
+  const outside = ev.filter(isOutsideAi);
   const standard = pol ? { stance: STANCE_LABEL[pol.stance.level], summary: pol.summary, weights: pol.weights } : null;
   // 在自己的软件里做、截图又没看出东西的：平台看不到他用没用 AI，不能说「没用」（11-10 潜历：全程用 WorkBuddy，报告写没用 AI）
   const offsite = ev.some(e => e.type === 'rec_start' || /^plugin_/.test(e.type));

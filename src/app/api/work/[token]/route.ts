@@ -15,5 +15,5 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ toke
   // 出题侧的东西不给候选人：AI 使用标准（评分照它评）、修订记录、通用大模型对比（2026-10-30）
   const { ai_policy: _p, revisions: _r, compare: _c, ...pub } = t.task || {};
   const task = pub.stages ? { ...pub, stages: pub.stages.map((st: any) => ({ id: st.id, type: st.type, question: st.question, reveal: st.reveal })) } : pub;
-  return NextResponse.json({ ok: true, preview, status: t.status, task: { id: t.id, company_name: t.company_name, role: t.role, statement: t.problem?.statement, task, materials: t.materials } });
+  return NextResponse.json({ ok: true, preview, status: t.status, task: { id: t.id, company_name: t.company_name, role: t.role, statement: /^(出题人给的原题|Task provided by )/.test(String(t.problem?.statement || '')) ? '' : t.problem?.statement, task, materials: t.materials } });
 }

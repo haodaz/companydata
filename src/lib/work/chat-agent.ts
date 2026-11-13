@@ -16,6 +16,7 @@ import { bankTask, pickBankRefs, refreshSignals, renderBankRefs } from '@/lib/wo
 import { randomBytes } from 'node:crypto';
 import { timing, withAutoSubmit } from '@/lib/work/deadline';
 import { contactKey, releaseContact } from '@/lib/work/contact';
+import { fillAttachText, refreshImageMaterials } from '@/lib/work/attach-text';
 
 type Ui = { kind: 'work_task'; token: string; owner_key: string; title: string; task_id: string } | { kind: 'companies'; list: { name: string; name_en?: string; industry?: string; city?: string; website?: string; intro?: string }[] };   // companies：搜到的企业卡片，对话里就地显示（不开右侧面板）
 const s = (v: any, n = 300) => (v == null ? '' : typeof v === 'string' ? v : JSON.stringify(v)).slice(0, n);
@@ -32,7 +33,7 @@ export const WORK_CHAT_TOOLS: Anthropic.Tool[] = [
   { name: 'task_summary', description: '看一道已出的题的要点：业务问题、任务书、推进步骤、材料清单、评分标准、基线分。回答用户「题是什么样」「哪条标准是什么意思」用它。', input_schema: { type: 'object', properties: { task_id: { type: 'string' } }, required: ['task_id'] } },
   { name: 'run_baseline', description: 'AI 先做一遍当基线（约 1 分钟）。出完题接着调。', input_schema: { type: 'object', properties: { task_id: { type: 'string' } }, required: ['task_id'] } },
   { name: 'revise_task', description: '按用户的意见修订这道题（没提到的部分不动；修订后基线作废，要重跑）。用户说「材料太少」「难度降一点」「换个角度」都用它。', input_schema: { type: 'object', properties: { task_id: { type: 'string' }, feedback: { type: 'string' } }, required: ['task_id', 'feedback'] } },
-  { name: 'update_task_settings', description: '直接改题目设置，不经过模型改写、马上生效：title 改任务标题（2–40 字）；time_minutes 改限时（20–240 分钟，计时器跟着变；题面里写的时长也一并替换）；auto_submit 开关到点自动交卷（false = 时长只作建议，超时可以继续）；allow_retake 允许某个已经做完或到点的人重做（照用户说的名字或手机邮箱）；role 改岗位名 / 要找的人（页头显示的那个，题面里的旧名字一起换）；attachments 把用户这回上传的图 / 文件补进材料包（候选人能看原图，消息里【文件】行的 url / name / mime / text 原样传）。用户说「时长改成 X」「不用卡时间」「让某人重做」「标题改成 X」「岗位名 / 职位改成 X」「把这张图附到题目里」「候选人看不到图」一律用它，不要用 revise_task。', input_schema: { type: 'object', properties: { title: { type: 'string', description: '新的任务标题' }, auto_submit: { type: 'boolean' }, allow_retake: { type: 'string', description: '要重做的人的名字或手机邮箱' }, task_id: { type: 'string' }, time_minutes: { type: 'number' }, role: { type: 'string', description: '新的岗位名或要找的人，照用户原话' }, attachments: { type: 'array', items: { type: 'object', properties: { url: { type: 'string' }, name: { type: 'string' }, mime: { type: 'string' }, text: { type: 'string' }, image: { type: 'boolean' } }, required: ['url', 'name'] } } }, required: ['task_id'] } },
+  { name: 'update_task_settings', description: '直接改题目设置，不经过模型改写、马上生效：title 改任务标题（2–40 字）；time_minutes 改限时（20–240 分钟，计时器跟着变；题面里写的时长也一并替换）；auto_submit 开关到点自动交卷（false = 时长只作建议，超时可以继续）；allow_retake 允许某个已经做完或到点的人重做（照用户说的名字或手机邮箱）；role 改岗位名 / 要找的人（页头显示的那个，题面里的旧名字一起换）；attachments 把用户这回上传的图 / 文件补进材料包（候选人能看原图，消息里【文件】行的 url / name / mime / text 原样传；text 太长可以不传，服务端按地址读全文）；refresh_images 把材料包里没看成的图（只有「附图：文件名」）重新看一遍、补上说明——用户说「补图片说明」「AI 看不到图」就传 true。返回里说没改成的，照实告诉用户，不要接着重跑基线。用户说「时长改成 X」「不用卡时间」「让某人重做」「标题改成 X」「岗位名 / 职位改成 X」「把这张图附到题目里」「候选人看不到图」一律用它，不要用 revise_task。', input_schema: { type: 'object', properties: { title: { type: 'string', description: '新的任务标题' }, auto_submit: { type: 'boolean' }, allow_retake: { type: 'string', description: '要重做的人的名字或手机邮箱' }, task_id: { type: 'string' }, time_minutes: { type: 'number' }, role: { type: 'string', description: '新的岗位名或要找的人，照用户原话' }, refresh_images: { type: 'boolean', description: '重新看材料包里没看成的图' }, attachments: { type: 'array', items: { type: 'object', properties: { url: { type: 'string' }, name: { type: 'string' }, mime: { type: 'string' }, text: { type: 'string' }, image: { type: 'boolean' } }, required: ['url', 'name'] } } }, required: ['task_id'] } },
   { name: 'ask_user', description: '需要用户决定时用：一句话的问题 + 2–4 个短选项（不带编号；也可以自己打字）。出任务前确认题意、选企业 / 岗位有歧义、要不要照参考资料出，用它。', input_schema: { type: 'object', properties: { question: { type: 'string' }, options: { type: 'array', items: { type: 'string' } } }, required: ['question'] } },
 ];
 
@@ -53,7 +54,7 @@ const withDelivery = (row: any, body: { auto_submit?: boolean }) => ({ ...row, t
 
 export async function createWorkTask(user: { email: string; role: string }, body: { /** 题目语言（11-10）：en = 候选人看到的题面和作答界面都是英文 */ lang?: 'zh' | 'en'; /** 出题风格（11-10）：deep 升维解读、steps 给候选人拆推进步骤；不传 = 都不（照出题人自己的参考资料出时默认分步） */ deep?: boolean; steps?: boolean; auto_submit?: boolean; time_minutes?: number; modules?: string[]; company: string; company_id?: number | string | null; intro?: string; role: string; env?: string; focus?: string; model?: string; sample_id?: string; sample_mode?: 'reskin' | 'inspire'; attachments?: Attachment[]; verbatim?: string; showcase_id?: string; showcase_use?: 'base' | 'ref' }) {
   const company = String(body.company || '').trim(), role = String(body.role || '').trim();
-  const atts: Attachment[] = (body.attachments || []).filter(a => a && a.url && a.name).slice(0, 10).map(a => ({ url: String(a.url), name: String(a.name).slice(0, 80), mime: a.mime, size: a.size, text: a.text ? String(a.text).slice(0, 20000) : '', image: !!a.image }));
+  const atts: Attachment[] = await fillAttachText((body.attachments || []).filter(a => a && a.url && a.name).slice(0, 10).map(a => ({ url: String(a.url), name: String(a.name).slice(0, 80), mime: a.mime, size: a.size, text: a.text ? String(a.text).slice(0, 20000) : '', image: !!a.image })));
   // 原题直发：不改写题面，只整理结构；企业 / 岗位可不填
   if (body.verbatim && String(body.verbatim).trim().length >= 60) {
     const text = String(body.verbatim).trim();
@@ -166,6 +167,11 @@ async function run(name: string, input: any, user: { email: string; role: string
       const t = await loadMine(user, String(input.task_id)); const feedback = String(input.feedback || '').trim();
       const cur = { env: t.task?.env || { type: 'doc' }, problem: t.problem, task: t.task, materials: t.materials, rubric: t.rubric };
       const { task: next, model, changelog } = await withCost({ tool_name: 'work', task_name: 'Revise · 按意见修订', stage: 'create', actor: user.email }, () => reviseTask(cur, t.context, feedback));
+      // 改完和原来一样（11-13 潜历：让它补图片说明，上传的素材原样保留、什么都没变，却报「按意见改了」、清了基线）：照实说，不清基线
+      const same = (a: any, b: any) => JSON.stringify(a ?? null) === JSON.stringify(b ?? null);
+      if (same(next.problem, cur.problem) && same(next.materials, cur.materials) && same(next.rubric, cur.rubric) && same({ ...next.task, revisions: undefined }, { ...cur.task, revisions: undefined })) {
+        return { result: { error: '改完和原来一样，什么都没变（上传的图片和文件不经过改写；补图片说明用 update_task_settings 的 refresh_images）。照实告诉用户，基线不用重跑。' }, label: '没改动' };
+      }
       const revisions = [...(t.task?.revisions || []), { at: new Date().toISOString(), feedback: feedback.slice(0, 1200), changelog, model }];
       const { error } = await db.from('work_tasks').update({ problem: next.problem, task: { ...next.task, env: next.env, revisions }, materials: next.materials, rubric: next.rubric, baseline: null, updated_at: new Date().toISOString() }).eq('id', t.id);
       if (error) throw new Error(error.message);
@@ -186,13 +192,22 @@ async function run(name: string, input: any, user: { email: string; role: string
         patch.role = r.role; patch.task = r.task; patch.problem = r.problem; done.push(`岗位名「${r.old}」→「${r.role}」`);
       }
       const atts: Attachment[] = (Array.isArray(input.attachments) ? input.attachments : []).filter((a: any) => a?.url && a?.name).slice(0, 10).map((a: any) => ({ url: String(a.url), name: String(a.name).slice(0, 80), mime: a.mime, text: a.text ? String(a.text).slice(0, 20000) : '', image: !!a.image || /^image\//.test(String(a.mime || '')) }));
-      const fresh = atts.filter(a => !(t.materials || []).some((m: any) => m.url === a.url));
+      const fresh = await fillAttachText(atts.filter(a => !(t.materials || []).some((m: any) => m.url === a.url)));
+      // 补图片说明（11-13 潜历：传的是已经在材料包里的图，以前算「没有要改的」，助理照样重跑基线）：材料里没看成的图重新看一遍
+      if (input.refresh_images || atts.length > fresh.length) {
+        const r = await refreshImageMaterials(patch.materials || t.materials || []);
+        if (r.fixed.length) { patch.materials = r.materials; patch.baseline = null; done.push(`重新看了图：${r.fixed.join('、')}（基线要重跑）`); }
+        else if (input.refresh_images) done.push((t.materials || []).some((m: any) => /^附图[:：]/.test(String(m.content || ''))) ? '图还是没看成，换个格式（PNG / JPG）重新传一次试试' : '材料里的图都已经有看图说明，不用补');
+      }
       if (fresh.length) {
-        patch.materials = [...(t.materials || []), ...attachmentsToMaterials(fresh, (t.materials || []).length + 1)];
+        const base = patch.materials || t.materials || [];
+        patch.materials = [...base, ...attachmentsToMaterials(fresh, base.length + 1)];
         patch.context = { ...(t.context || {}), attachments: [...(t.context?.attachments || []), ...fresh.map(a => ({ name: a.name, url: a.url }))] };
         const merged = mergeAttachmentDupes({ task: patch.task || t.task, problem: t.problem, rubric: t.rubric, materials: patch.materials });
         patch.materials = merged.materials; if (merged.task !== (patch.task || t.task)) patch.task = merged.task; if (merged.rubric !== t.rubric) patch.rubric = merged.rubric; if (merged.problem !== t.problem) patch.problem = merged.problem;
         done.push(`材料包加了 ${fresh.map(a => a.name).join('、')}`);
+        const blind = fresh.filter(a => a.image && !a.text).map(a => a.name);
+        if (blind.length) done.push(`${blind.join('、')} 没看成（AI 只知道文件名），换个格式再传试试`);
       }
       if (input.allow_retake) {
         const who = String(input.allow_retake).trim(), key = contactKey(who);

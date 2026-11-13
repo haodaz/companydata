@@ -10,7 +10,7 @@ import Link from 'next/link';
 
 import { App, Button, ConfigProvider, Tag, Typography } from 'antd';
 import { CopyOutlined, EyeOutlined, PlusOutlined, RocketOutlined } from '@ant-design/icons';
-import { ENV_META } from '@/components/work/WorkTaskDetail';
+import { ENV_META, envLabel } from '@/components/work/WorkTaskDetail';
 
 const { Text } = Typography;
 const badge = (strong: boolean): React.CSSProperties => ({ padding: '3px 9px', borderRadius: 999, fontSize: 11.5, fontWeight: 700, color: '#fff', background: strong ? 'linear-gradient(120deg,#6a5cff,#12b5cb)' : 'rgba(10,12,30,.55)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,.35)' });
@@ -66,7 +66,7 @@ function Inner() {
                 <img src={`/work/shot-${env}.png`} alt="" className="wk-cover" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', transition: 'transform .5s cubic-bezier(.2,.8,.2,1)' }} onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }} />
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,12,30,0) 35%, rgba(10,12,30,.78) 100%)' }} />
                 <div style={{ position: 'absolute', left: 12, top: 12, display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  <span style={badge(true)}>{ENV_META[env]?.label || '真活'}</span>
+                  <span style={badge(true)}>{envLabel(t)}</span>
                   {t.demo && <span style={{ ...badge(false), background: 'rgba(250,140,22,.85)' }}>示范题</span>}
                   <span style={badge(false)}>{t.status === 'published' ? '已发布' : t.status === 'archived' ? '已下架' : '未发布'}</span>
                 </div>

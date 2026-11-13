@@ -72,8 +72,9 @@ export async function extractText(buf: Buffer, filename: string): Promise<string
   if (ext === 'pdf') {
     const { extractText: ex, getDocumentProxy } = await import('unpdf');
     const pdf = await getDocumentProxy(new Uint8Array(buf));
-    const { text } = await ex(pdf, { mergePages: true });
-    return String(text || '').replace(/Private copy of .*\n?/g, '').replace(/Copy and Sharing Prohibited\.?\n?/g, '').trim();
+    // 按页取、页之间空一行（11-13 潜历：合成一页后换行很少，候选人端成了一大段）
+    const { text } = await ex(pdf, { mergePages: false });
+    return (Array.isArray(text) ? text.join('\n\n') : String(text || '')).replace(/Private copy of .*\n?/g, '').replace(/Copy and Sharing Prohibited\.?\n?/g, '').trim();
   }
   if (ext === 'docx') {
     let xml = '';

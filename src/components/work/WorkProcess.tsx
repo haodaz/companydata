@@ -9,6 +9,7 @@
  */
 import React, { useMemo, useState } from 'react';
 import { useL } from '@/lib/work/i18n';
+import { seenOutsideAi } from '@/lib/work/outside-ai';
 
 const fmt = (t: number) => `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
 const kb = (n: number) => (n > 1024 * 1024 ? `${(n / 1024 / 1024).toFixed(1)} MB` : `${Math.max(1, Math.round(n / 1024))} KB`);
@@ -71,8 +72,11 @@ export function WorkProcess({ events, aiChat, materials, deliverables, shots = [
   }, [events, aiChat]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const real = Math.max(0, ...rows.map(r => r.to ?? r.t)), end = Math.max(60, real);   // end 只用来画总览条
-  const shown = rows.filter(r => filter === 'all' || (filter === 'ai' ? r.kind === 'ai' : filter === 'mat' ? r.kind === 'mat' : r.kind === 'draft'));
+  // 录屏画面里在用外部 AI 的：开放模式没在平台内问，以前「问 AI」显示 0 条、筛出来是空的（11-13 宇宁）
+  const isOutside = (r: Row) => r.kind === 'screen' && seenOutsideAi(String(r.body || ''));
+  const shown = rows.filter(r => filter === 'all' || (filter === 'ai' ? r.kind === 'ai' || isOutside(r) : filter === 'mat' ? r.kind === 'mat' : r.kind === 'draft'));
   const n = (k: string) => rows.filter(r => r.kind === k).length;
+  const outside = rows.filter(isOutside).length;
 
   return (
     <div style={{ display: 'grid', gap: 14 }}>
@@ -91,7 +95,7 @@ export function WorkProcess({ events, aiChat, materials, deliverables, shots = [
       </div>}
       {part !== 'files' && <div style={box}>
         <div style={{ ...head, display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-          <span>{L('答题历程', 'Work history')}</span><span style={{ fontWeight: 400, color: '#8a8fa8', fontSize: 12 }}>{L(`用时 ${fmt(real)} · 问 AI ${n('ai')} 条 · 材料 / 文件 ${n('mat')} 次 · 稿子快照 ${n('draft')} 份`, `Time ${fmt(real)} · ${n('ai')} AI questions · ${n('mat')} material / file actions · ${n('draft')} draft snapshots`)}</span>
+          <span>{L('答题历程', 'Work history')}</span><span style={{ fontWeight: 400, color: '#8a8fa8', fontSize: 12 }}>{L(`用时 ${fmt(real)} · 平台内问 AI ${n('ai')} 条${outside ? ` · 录屏里用外部 AI ${outside} 处` : ''} · 材料 / 文件 ${n('mat')} 次 · 稿子快照 ${n('draft')} 份`, `Time ${fmt(real)} · ${n('ai')} on-page AI questions${outside ? ` · outside AI seen ${outside} times on screen` : ''} · ${n('mat')} material / file actions · ${n('draft')} draft snapshots`)}</span>
           <span style={{ flex: 1 }} />
           {FILTERS.map(([k, t, te]) => <button key={k} onClick={() => setFilter(k)} style={{ border: '1px solid ' + (filter === k ? '#6055f5' : '#e3e4ec'), background: filter === k ? '#f1efff' : '#fff', color: filter === k ? '#4c43c9' : '#555', borderRadius: 999, padding: '2px 10px', fontSize: 12, cursor: 'pointer' }}>{L(t, te)}</button>)}
         </div>

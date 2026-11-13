@@ -32,5 +32,6 @@ export async function handleAttach(req: NextRequest, whoRaw: string) {
   } else if (/pdf|word|officedocument|text\/|csv/.test(mime) || /\.(pdf|docx|txt|md|csv)$/i.test(safe)) { try { text = (await extractText(buf, safe)).slice(0, 20000); } catch {} }
   const image = /^image\//.test(mime);
   if (image && !text) { try { const { describeImage } = await import('@/lib/work/vision'); text = await describeImage(buf, mime, safe); } catch (e) { console.warn('[attach] 看图失败', String((e as any)?.message).slice(0, 100)); } }
-  return NextResponse.json({ ok: true, url, name: safe, mime, size: file.size, text, image });
+  if (text) { const { saveAttachText } = await import('@/lib/work/attach-text'); await saveAttachText(path, text); }   // 出任务时按地址读回全文，不靠出题助理转述
+  return NextResponse.json({ ok: true, url, name: safe, mime, size: file.size, text, image, ...(image && !text ? { warn: '这张图没看成，出任务时会再试一次' } : {}) });
 }

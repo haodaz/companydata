@@ -56,13 +56,18 @@ export function Tour({ step, steps, onStep, onDone, doneLabel: doneLabel0 }: { s
       cy = Math.max(16, Math.min(vh - CH - 16, rect.y));
     }
   }
-  const stop = (e: React.SyntheticEvent) => { e.stopPropagation(); e.preventDefault(); };
-  return <div role="dialog" aria-modal="true" aria-label={cur.title} style={{ position: 'fixed', inset: 0, zIndex: 60 }} onClick={stop} onMouseDown={stop}>
+  // 点卡片以外：引导收起、这一下照常点到页面上（11-13 潜历：引导弹出来时第一下「发布」被吞了，还按步骤滚到了页底）
+  const card = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const f = (e: PointerEvent) => { if (card.current && !card.current.contains(e.target as Node)) onDone(); };
+    document.addEventListener('pointerdown', f, true); return () => document.removeEventListener('pointerdown', f, true);
+  }, [onDone]);
+  return <div role="dialog" aria-modal="true" aria-label={cur.title} style={{ position: 'fixed', inset: 0, zIndex: 60, pointerEvents: 'none' }}>
     {rect ? <>
       {[{ left: 0, top: 0, width: '100%', height: Math.max(0, rect.y) }, { left: 0, top: rect.y + rect.h, width: '100%', bottom: 0 }, { left: 0, top: rect.y, width: Math.max(0, rect.x), height: rect.h }, { left: rect.x + rect.w, top: rect.y, right: 0, height: rect.h }].map((st, i) => <div key={i} style={{ position: 'absolute', background: DIM, ...st }} />)}
       <div style={{ position: 'absolute', left: rect.x, top: rect.y, width: rect.w, height: rect.h, borderRadius: 12, boxShadow: '0 0 0 2px #6055f5, 0 0 0 6px rgba(96,85,245,.18)' }} />
     </> : <div style={{ position: 'absolute', inset: 0, background: DIM }} />}
-    <div onClick={e => e.stopPropagation()} onMouseDown={e => e.stopPropagation()} style={{ position: 'absolute', left: cx, top: cy, width: W, background: '#fff', color: '#1a1a2e', borderRadius: 14, padding: '14px 16px 12px', boxShadow: '0 12px 40px rgba(10,10,40,.25)', fontSize: 13.5, lineHeight: 1.65, transition: 'left .2s ease, top .2s ease' }}>
+    <div ref={card} onClick={e => e.stopPropagation()} onMouseDown={e => e.stopPropagation()} style={{ pointerEvents: 'auto', position: 'absolute', left: cx, top: cy, width: W, background: '#fff', color: '#1a1a2e', borderRadius: 14, padding: '14px 16px 12px', boxShadow: '0 12px 40px rgba(10,10,40,.25)', fontSize: 13.5, lineHeight: 1.65, transition: 'left .2s ease, top .2s ease' }}>
       <div style={{ fontSize: 11, letterSpacing: 1.5, color: '#6055f5', fontWeight: 700, marginBottom: 4 }}>{L('界面说明', 'Quick tour')} · {step + 1} / {steps.length}</div>
       <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 4 }}>{cur.title}</div>
       <div style={{ color: '#444' }}>{cur.text}</div>

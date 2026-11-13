@@ -85,31 +85,65 @@ export function parseFrames(text: string): { frames: any[]; summary: string } {
   return { frames, summary: sm ? sm[1] : '' };
 }
 
-/** 交付文件读进交付物：文本直接读；PDF / Word / Excel 抽文字，抽不出文字的 PDF（图片型）交给 Claude 看原件；图片看图写说明；一模一样的文件只读一次 */
+/** zip 里的文件（11-13 潜历：界面说压缩包都行，其实没读）：走中央目录，只解 stored / deflate；跳过目录和 __MACOSX，最多 30 个、单个 30MB 内 */
+export async function unzipEntries(buf: Buffer): Promise<{ name: string; data: Buffer }[]> {
+  const { inflateRawSync } = await import('node:zlib');
+  let e = -1;
+  for (let i = buf.length - 22; i >= Math.max(0, buf.length - 65557); i--) if (buf.readUInt32LE(i) === 0x06054b50) { e = i; break; }
+  if (e < 0) return [];
+  const n = buf.readUInt16LE(e + 10); let p = buf.readUInt32LE(e + 16);
+  const out: { name: string; data: Buffer }[] = [];
+  for (let k = 0; k < n && out.length < 30 && p + 46 <= buf.length; k++) {
+    if (buf.readUInt32LE(p) !== 0x02014b50) break;
+    const flags = buf.readUInt16LE(p + 8), method = buf.readUInt16LE(p + 10), csize = buf.readUInt32LE(p + 20), usize = buf.readUInt32LE(p + 24);
+    const nlen = buf.readUInt16LE(p + 28), xlen = buf.readUInt16LE(p + 30), clen = buf.readUInt16LE(p + 32), off = buf.readUInt32LE(p + 42);
+    const raw = buf.subarray(p + 46, p + 46 + nlen);
+    const name = raw.toString('utf8');   // 没打 UTF-8 标记（flags & 0x800）的也按 UTF-8：Windows 中文名可能乱码，不影响读内容
+    p += 46 + nlen + xlen + clen;
+    if (name.endsWith('/') || /(^|\/)(__MACOSX|\.DS_Store)/.test(name) || usize > 30_000_000 || !(method === 0 || method === 8)) continue;
+    if (buf.readUInt32LE(off) !== 0x04034b50) continue;
+    const start = off + 30 + buf.readUInt16LE(off + 26) + buf.readUInt16LE(off + 28);
+    try { const d = buf.subarray(start, start + csize); out.push({ name, data: method === 8 ? inflateRawSync(d) : Buffer.from(d) }); } catch {}
+  }
+  return out;
+}
+
+const IMG_PROMPT = '这是候选人做一道考核任务时交上来的一张图（作品 / 截图 / 图表 / 画布 / 设计稿）。请用中文写 150–400 字：画的是什么、里面的文字和数字、结构和连线关系、能看出的完成度和明显的问题。只描述看到的，不要打分。';
+
+/** 交付文件读进交付物：文本直接读；PDF / Word / Excel 抽文字，抽不出文字的 PDF（图片型）交给 Claude 看原件；图片看图写说明；zip 解开逐个读；一模一样的文件只读一次 */
 export async function readTextFiles(files: { name: string; url: string; size: number }[]): Promise<string> {
   const parts: string[] = []; const seen = new Map<string, string>();
   const { createHash } = await import('node:crypto');
   const { describeImage, readPdfVisually } = await import('./vision');
+  const readOne = async (name: string, buf: Buffer, head: string, inZip = false): Promise<void> => {
+    const size = buf.length;
+    const md5 = createHash('md5').update(buf).digest('hex');
+    if (seen.has(md5)) { parts.push(`${head}（和「${seen.get(md5)}」是同一个文件，内容见上）`); return; }
+    seen.set(md5, name);
+    if (/\.(txt|md|csv|json|tsv)$/i.test(name) && size < 400_000) parts.push(`${head}\n${buf.toString('utf8').slice(0, 12000)}`);
+    else if (/\.(pdf|docx|xlsx?)$/i.test(name) && size < 30_000_000) {
+      try {
+        let txt = '', how = '抽出的文字';
+        if (/\.xlsx?$/i.test(name)) { const XLSX = await import('xlsx'); const wb = XLSX.read(buf, { type: 'buffer' }); txt = wb.SheetNames.slice(0, 6).map(n => `#### ${n}\n` + XLSX.utils.sheet_to_csv(wb.Sheets[n])).join('\n\n'); }
+        else { const { extractText } = await import('./samples'); txt = await extractText(buf, name).catch(() => ''); }
+        if (txt.replace(/\s/g, '').length < 80 && /\.pdf$/i.test(name)) { txt = await readPdfVisually(buf, name); how = 'PDF 是图片型，AI 看原件转写的'; }
+        parts.push(txt.trim() ? `${head}（${how}，以原文件为准）\n${txt.slice(0, 12000)}` : `${head}（${Math.round(size / 1024)} KB，没读出内容，按交付说明评）`);
+      } catch { parts.push(`${head}（${Math.round(size / 1024)} KB，解析失败，按交付说明评）`); }
+    } else if (/\.(png|jpe?g|webp|gif)$/i.test(name) && size < 10_000_000) {
+      const d = await describeImage(buf, /\.png$/i.test(name) ? 'image/png' : /\.webp$/i.test(name) ? 'image/webp' : /\.gif$/i.test(name) ? 'image/gif' : 'image/jpeg', name, IMG_PROMPT).catch(() => '');
+      parts.push(d ? `${head}（看图说明，以原图为准）\n${d}` : `${head}（图片，没读出来）`);
+    } else if (!inZip && /\.zip$/i.test(name)) {
+      const es = await unzipEntries(buf).catch(() => []);
+      if (!es.length) { parts.push(`${head}（压缩包，没解开，按交付说明评）`); return; }
+      parts.push(`${head}（压缩包，里面 ${es.length} 个文件：${es.map(x => x.name).join('、').slice(0, 600)}）`);
+      for (const x of es.slice(0, 12)) await readOne(x.name, x.data, `#### ${name} › ${x.name}`, true);
+    } else parts.push(`${head}（${Math.round(size / 1024)} KB，这种格式读不了，按交付说明评）`);
+  };
   for (const f of files) {
     const head = `### 文件 [${f.name}](${f.url})`;
     let buf: Buffer;
     try { buf = Buffer.from(await (await fetch(f.url)).arrayBuffer()); } catch { parts.push(`${head}（读取失败）`); continue; }
-    const md5 = createHash('md5').update(buf).digest('hex');
-    if (seen.has(md5)) { parts.push(`${head}（和「${seen.get(md5)}」是同一个文件，内容见上）`); continue; }
-    seen.set(md5, f.name);
-    if (/\.(txt|md|csv|json|tsv)$/i.test(f.name) && f.size < 400_000) parts.push(`${head}\n${buf.toString('utf8').slice(0, 12000)}`);
-    else if (/\.(pdf|docx|xlsx?)$/i.test(f.name) && f.size < 30_000_000) {
-      try {
-        let txt = '', how = '抽出的文字';
-        if (/\.xlsx?$/i.test(f.name)) { const XLSX = await import('xlsx'); const wb = XLSX.read(buf, { type: 'buffer' }); txt = wb.SheetNames.slice(0, 6).map(n => `#### ${n}\n` + XLSX.utils.sheet_to_csv(wb.Sheets[n])).join('\n\n'); }
-        else { const { extractText } = await import('./samples'); txt = await extractText(buf, f.name).catch(() => ''); }
-        if (txt.replace(/\s/g, '').length < 80 && /\.pdf$/i.test(f.name)) { txt = await readPdfVisually(buf, f.name); how = 'PDF 是图片型，AI 看原件转写的'; }
-        parts.push(txt.trim() ? `${head}（${how}，以原文件为准）\n${txt.slice(0, 12000)}` : `${head}（${Math.round(f.size / 1024)} KB，没读出内容，按交付说明评）`);
-      } catch { parts.push(`${head}（${Math.round(f.size / 1024)} KB，解析失败，按交付说明评）`); }
-    } else if (/\.(png|jpe?g|webp|gif)$/i.test(f.name) && f.size < 10_000_000) {
-      const d = await describeImage(buf, /\.png$/i.test(f.name) ? 'image/png' : /\.webp$/i.test(f.name) ? 'image/webp' : /\.gif$/i.test(f.name) ? 'image/gif' : 'image/jpeg', f.name, '这是候选人做一道考核任务时交上来的一张图（作品 / 截图 / 图表 / 画布 / 设计稿）。请用中文写 150–400 字：画的是什么、里面的文字和数字、结构和连线关系、能看出的完成度和明显的问题。只描述看到的，不要打分。').catch(() => '');
-      parts.push(d ? `${head}（看图说明，以原图为准）\n${d}` : `${head}（图片，没读出来）`);
-    } else parts.push(`${head}（${Math.round(f.size / 1024)} KB，这种格式读不了，按交付说明评）`);
+    await readOne(f.name, buf, head);
   }
   return parts.join('\n\n');
 }

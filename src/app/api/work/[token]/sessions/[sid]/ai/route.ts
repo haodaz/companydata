@@ -25,7 +25,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   if (!q) return NextResponse.json({ ok: false, error: errL(t, '问题为空') }, { status: 400 });
   const history = (s.ai_chat || []).slice(-6).map((c: any) => `用户：${c.q}\n助手：${String(c.a).slice(0, 800)}`).join('\n\n');
   // 英文题（11-10 实测：只在末尾提一句，模型还是用中文答）：开头就定死语言
-  const prompt = `${t.task?.lang === 'en' ? 'IMPORTANT: The candidate works in English. Write your entire reply in English (keep company and product names as they are). Only reply in Chinese if the candidate writes in Chinese.\n\n' : ''}你是做题人手边的 AI 助手（像平时工作里用的那种），帮他完成一道真活。有问必答、直接给可用的内容；涉及材料里没有的数据要提醒「这是假设」。不要替他做判断取舍，把选项和依据摆出来。
+  const prompt = `${t.task?.lang === 'en' ? 'IMPORTANT: The candidate works in English. Write your entire reply in English (keep company and product names as they are). Only reply in Chinese if the candidate writes in Chinese.\n\n' : ''}你是做题人手边的 AI 助手（像平时工作里用的那种），帮他完成一道真活。有问必答、直接给可用的内容；涉及材料里没有的数据要提醒「这是假设」。不要替他做判断取舍，把选项和依据摆出来。你看不到图片本身，只能读到下面写的文字（图片材料是 AI 看图写的说明）；问到说明里没有的画面细节，直说「我看不到这一处」，不要猜，更不要编公司、岗位、数字。
 ## 任务
 ${t.task?.title}：${String(t.task?.brief || '').slice(0, 800)}
 ## 材料目录

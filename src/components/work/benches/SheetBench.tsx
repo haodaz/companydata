@@ -8,9 +8,18 @@ const parse = (csv: string): string[][] => csv.split(/\r?\n/).filter((l, i, a) =
 const ser = (rows: string[][]) => rows.map(r => r.join(',')).join('\n');
 const colName = (i: number) => { let s = ''; i++; while (i > 0) { const m = (i - 1) % 26; s = String.fromCharCode(65 + m) + s; i = Math.floor((i - 1) / 26); } return s; };
 
-export function SheetBench({ csv, onCsv, notes, onNotes, onPaste, onCell, leading, caption }: { csv: string; onCsv: (v: string) => void; notes: string; onNotes: (v: string) => void; onPaste: (e: React.ClipboardEvent) => void; onCell?: () => void; leading?: React.ReactNode; caption?: string }) {
-  // 空表默认铺 8 行 × 4 列（像一张新开的工作表），真填了才序列化
-  const rows = useMemo(() => { const r = parse(csv); return r.length && r.some(x => x.some(c => c !== '')) ? r : Array.from({ length: 8 }, () => Array(4).fill('')); }, [csv]);
+/** 交付要求里写了每条要哪些字段（「每条包含：页面 / 截图编号 / …」），拿来当空表的表头（11-13 潜历：要 7 个字段，空表却是 8×4） */
+export function fieldsOf(format?: string): string[] {
+  const m = String(format || '').match(/(?:每条|每行|每项)?(?:包含|写清|写明|字段|列)[:：]\s*([^。；;\n]+)/);
+  if (!m) return [];
+  const body = m[1].replace(/（[^）]*）?|\([^)]*\)?/g, '');
+  const f = (/[\/／]/.test(body) ? body.split(/[\/／]/) : body.split(/[、，,]/)).map(x => x.trim().replace(/^(和|及|以及)/, '')).filter(Boolean);
+  return f.length >= 3 && f.length <= 12 && f.every(x => x.length <= 16) ? f : [];
+}
+
+export function SheetBench({ csv, onCsv, notes, onNotes, onPaste, onCell, leading, caption, header }: { csv: string; onCsv: (v: string) => void; notes: string; onNotes: (v: string) => void; onPaste: (e: React.ClipboardEvent) => void; onCell?: () => void; leading?: React.ReactNode; caption?: string; header?: string[] }) {
+  // 空表默认铺 8 行 × 4 列（像一张新开的工作表）；交付要求列了字段就按字段铺表头；真填了才序列化
+  const rows = useMemo(() => { const r = parse(csv); if (r.length && r.some(x => x.some(c => c !== ''))) return r; const h = (header || []).map(x => x.replace(/,/g, '，')); return h.length ? [h, ...Array.from({ length: 7 }, () => Array(h.length).fill(''))] : Array.from({ length: 8 }, () => Array(4).fill('')); }, [csv, header]);
   const cols = Math.max(1, ...rows.map(r => r.length)); const L = useL();
   const [sel, setSel] = useState<[number, number]>([0, 0]);
   const [raw, setRaw] = useState(false);
