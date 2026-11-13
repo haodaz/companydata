@@ -240,7 +240,7 @@ export default function StudioPage() {
         if (!c) { message.warning('这条评审对应的章节已经不在了'); return; }
         if (c.id !== cur && dirty && !(await confirmBy(modal, '当前这一章还有没保存的改动，丢掉吗？'))) return;
         setCur(c.id); setDraft(clone(c)); setDirty(false); setRaw({}); setOpen({});
-        router.replace(`${nav.space(id)}?ch=${c.id}`);
+        window.history.replaceState(null, '', `${nav.space(id)}?ch=${c.id}`);   // 直接写地址：下面「切章节写进地址」的 effect 会按当前地址补 ch，用 router.replace 会被它带回 tab=review
         if (t.target === 'chapter') { setGenHint(t.fix); message.info('已把评审建议填进「AI · 按格生成」的要求里，点「重新生成」'); }
         else setPendingRevise({ chapterId: c.id, target: t.target === 'step' && !t.step_id ? 'opening' : t.target, stepId: t.step_id || undefined, text: t.fix });
       }} onJob={() => loadJobs()} />}
