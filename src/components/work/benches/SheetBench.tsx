@@ -81,7 +81,7 @@ export function SheetBench({ csv, onCsv, notes, onNotes, onPaste, onCell, leadin
         </div>
       )}
       <div style={{ borderTop: '1px solid #d9dbe6', padding: '8px 12px', background: '#fafbff' }}>
-        <div style={{ fontSize: 11.5, color: '#888', letterSpacing: 1, marginBottom: 4, fontWeight: 600 }}>{L('口径说明（怎么对的账、哪些是假设）', 'Notes on definitions (how you reconciled, what is assumed)')}</div>
+        <div style={{ fontSize: 11.5, color: '#888', letterSpacing: 1, marginBottom: 4, fontWeight: 600 }}>{L('口径说明 · 平台附加 · 选填（怎么对的账、哪些是假设）', 'Notes on definitions · added by the platform · optional (how you reconciled, what is assumed)')}</div>
         <textarea value={notes} onChange={e => onNotes(e.target.value)} onPaste={onPaste} style={{ width: '100%', minHeight: 90, border: '1px solid #d9dbe6', borderRadius: 8, padding: '8px 10px', fontSize: 13.5, lineHeight: 1.6, resize: 'vertical', outline: 'none', fontFamily: 'inherit' }} />
       </div>
     </div>

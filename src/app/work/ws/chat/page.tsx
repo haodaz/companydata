@@ -127,6 +127,7 @@ function WorkHome() {
             <h1>你需要做什么，让 AI 来办<span>Tell it what you need. It drafts, reads, compares — you decide.</span></h1>
             <div data-tour="chat-ask">{composer(true)}</div>
             <div data-tour="quick"><QuickCards items={QUICK} setText={setText} /></div>
+            <div style={{ marginTop: 12, fontSize: 13, color: '#777' }}>不知道出什么任务？<a href="/work/ws/library" style={{ color: '#6055f5' }}>去任务库挑一道现成的好任务 →</a>　挑中后点「原题直出，换成我们公司」或「只做参考」，会回到这里接着聊。</div>
             <WsTour id="chat" steps={CHAT_TOUR} />
           </div>
         ) : (
@@ -136,7 +137,7 @@ function WorkHome() {
                 if (x.k === 'user') { const lines = String(x.text || '').split('\n'); const isF = (l: string) => l.startsWith('【文件】') || l.startsWith('【素材】'); const atts = lines.filter(isF).map(l => l.slice(4).split('｜')[0]); const plain = lines.filter(l => !isF(l)).join('\n').trim(); return <div key={i} className="wc-user"><div className="wc-bubble">{plain}{atts.length > 0 && <div className="wc-atts">{atts.map((n, j) => <span key={j} className="wc-att">📎 {n}</span>)}</div>}</div></div>; }
                 if (x.k === 'text') return <div key={i} className="wc-ai"><span className="wc-ava">真</span><div className="wc-ai-body"><Md text={x.text} /></div></div>;
                 if (x.k === 'tool') return <React.Fragment key={x.id}><div className="wc-tool"><span className={`wc-dot${x.running ? ' run' : x.error ? ' err' : ''}`} /><span className="wc-tool-t">{x.running ? `${RUNNING[x.name] || '处理中'}…` : x.label || x.name}</span>{x.ui && !x.running && !inlineUi(x.ui) && <button className="wc-link" onClick={() => setArt({ ...x.ui, _n: Date.now() })}>看 →</button>}{x.error && <span className="wc-err-t">{x.error}</span>}</div>{x.ui?.kind === 'companies' && !x.running && <CompanyHits list={x.ui.list} />}</React.Fragment>;
-                if (x.k === 'ask') return <div key={x.id} className="wc-ask"><div className="wc-ask-q">{x.question}</div><div className="wc-opts">{x.options.map((o, j) => <button key={o} className={`wc-opt${x.answered === o ? ' on' : ''}`} disabled={!!x.answered || busy} onClick={() => send(text.trim() ? `${o}\n${text.trim()}` : o)}><i>{j + 1}</i>{o}</button>)}</div>{x.answered && !x.options.includes(x.answered) && <div className="wc-mute" style={{ marginTop: 8 }}>你答：{x.answered}</div>}</div>;
+                if (x.k === 'ask') return <div key={x.id} className="wc-ask"><div className="wc-ask-q">{x.question}</div><div className="wc-opts">{x.options.map((o, j) => <button key={o} className={`wc-opt${x.answered === o ? ' on' : ''}`} disabled={!!x.answered || busy} onClick={() => send(text.trim() ? `${o}\n${text.trim()}` : o)}><i>{j + 1}</i>{o}</button>)}{!x.answered && <button className="wc-opt" disabled={busy} onClick={() => (document.querySelector('.wc-composer textarea') as HTMLTextAreaElement | null)?.focus()}><i>…</i>其他，我自己说</button>}</div>{x.answered && !x.options.includes(x.answered) && <div className="wc-mute" style={{ marginTop: 8 }}>你答：{x.answered}</div>}</div>;
                 return <div key={i} className="wc-error">{x.text}</div>;
               })}
               {busy && items[items.length - 1]?.k !== 'text' && !(items[items.length - 1]?.k === 'tool' && (items[items.length - 1] as any).running) && <div className="wc-typing"><i /><i /><i /></div>}

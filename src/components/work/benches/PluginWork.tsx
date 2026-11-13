@@ -131,7 +131,7 @@ export function PluginWork({ code, task, onSubmitted }: { code: string; task: { 
       </div>
 
       <div style={{ ...card, marginTop: 14, borderStyle: 'dashed' }}>
-        <div style={k}>{L('⑤ 最后一问 · 选填', '⑤ One last question · optional')}</div>
+        <div style={k}>{L('⑤ 最后一问 · 平台附加 · 选填', '⑤ One last question · added by the platform · optional')}</div>
         <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 4 }}>{L('如果再给你一天，你会先改哪里、为什么？', 'If you had one more day, what would you improve first, and why?')}</div>
         <div style={{ fontSize: 13, color: '#666', marginBottom: 6 }}>{L('有余力就写，不写不扣分。写清楚交付里哪里还不够可靠、你会先补什么，算进评价。', 'Answer if you have time; skipping it costs nothing. Saying which parts of your work are not yet reliable and what you would shore up first counts toward your assessment.')}</div>
         <textarea value={nextStep ?? ''} onChange={e => saveNext(e.target.value)} rows={3} placeholder={L('比如：第二部分的转化率是 AI 按行业均值估的，我只核了一份材料，会先拉真实漏斗数据再算一遍', 'e.g. The conversion rate in part 2 was an AI estimate from industry averages and I only checked it against one source; I would pull real funnel data and redo it first')} style={{ width: '100%', border: '1px solid #d9d9e3', borderRadius: 8, padding: '8px 10px', font: 'inherit', resize: 'vertical', boxSizing: 'border-box' }} />

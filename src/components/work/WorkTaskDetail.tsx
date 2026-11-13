@@ -213,6 +213,15 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
         {cmpOpen && <Compare rubric={T.rubric || []} people={picked.map(id => sessions.find((s: any) => s.id === id)).filter(Boolean)} baseline={T.baseline} rankOf={rankOf} />}
       </Drawer>
       <Drawer open={!!report} onClose={() => setReport(null)} size={Math.min(900, typeof window !== 'undefined' ? window.innerWidth - 60 : 900)} title={report ? `${report.participant?.name} 的报告` : ''}>
+        {/* 在这一批人里的位置（11-13 宇宁：想在报告里看到和竞争者比、和最好的比、和 AI 比；排名和并排对比在列表上，单份报告里也给一行） */}
+        {report && (() => {
+          const me = mainScore(report, scale); const k = graded.findIndex((s: any) => s.id === report.id);
+          if (me == null || k < 0) return null;
+          const top = mainScore(graded[0], scale); const base = scale === 'ai_use' ? null : T.baseline?.result?.total;
+          return <div style={{ marginBottom: 12, padding: '8px 12px', borderRadius: 8, background: '#fafaff', border: '1px solid #eeeefa', fontSize: 13, color: '#555' }}>
+            这道题 {graded.length} 人交卷，{report.participant?.name || '他'}排第 {k + 1}（{me} 分）{k > 0 && top != null ? ` · 最高 ${top} 分，差 ${Math.round(Number(top) - Number(me))}` : graded.length > 1 ? ' · 目前最高' : ''}{base != null ? ` · AI 基线 ${base} 分` : ''}{graded.length > 1 && <> · <a onClick={() => { setReport(null); }}>回列表勾选并排对比</a></>}
+          </div>;
+        })()}
         {/* 三栏：交了什么 / 怎么做的 / 评得怎样；出任务的人先看交了什么（产品负责人 10-24：先看提交的答案本身，AI 只是辅助评价） */}
         {report && <ReportView report={report.report} participant={report.participant} deliverable={report.deliverable} events={proc && proc.id === report.id ? proc.events : null} aiChat={proc && proc.id === report.id ? proc.ai_chat : []} materials={T.materials} deliverables={T.task?.deliverables} defaultTab="deliv" />}
       </Drawer>
