@@ -70,7 +70,7 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
     if (!j.ok) return message.error(j.error || '没改成');
     message.success(`${s.participant?.name} 再用这条链接进来就是新的一次，旧的作答和报告都留着`); setTimeout(() => location.reload(), 900);
   };
-  // 改限时（20–240 分钟）：计时器和任务书里写的时长一起换（2026-11-03，潜历反馈对 AI 说改 180 改不动）
+  // 改限时（15–240 分钟）：计时器和任务书里写的时长一起换（2026-11-03，潜历反馈对 AI 说改 180 改不动）
   const [minutes, setMinutes] = useState<number>(Number(T.task?.time_minutes) || 60);
   const [minEdit, setMinEdit] = useState<number>(minutes);
   const [minBusy, setMinBusy] = useState(false);
@@ -148,7 +148,7 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
             { key: 'r', label: '规则', children: <RulesView rules={T.task?.rules || []} fontSize={13.5} /> },
             ...(T.task?.lang === 'en' ? [{ key: 'lang', label: '题目语言', children: <span style={{ fontSize: 13 }}>英文：候选人看到的题面、作答界面、AI 助手、评分标准和报告都是英文；出题依据（为什么现在要做、材料依据）仍是中文</span> }] : []),
             ...(T.task?.style ? [{ key: 'st', label: '出法', children: <span style={{ fontSize: 13 }}>{T.task.style.deep ? '升维解读（可以延伸到更大的问题）' : '按字面出，不升维'} · {T.task.style.steps ? '分步推进' : '不替候选人拆步骤'}</span> }] : []),
-            { key: 'm', label: '时间与操作台', children: <Space wrap><span>{T.task?.soft_limit ? '建议' : '限时'} {minutes} 分钟 · 操作台 {envLabel(T)}</span>{ownerKey && inlineEdit && <Space.Compact size="small"><InputNumber size="small" min={20} max={240} step={10} value={minEdit} onChange={v => setMinEdit(Number(v) || minutes)} suffix="分钟" style={{ width: 110 }} /><Button size="small" disabled={minEdit === minutes} loading={minBusy} onClick={saveMinutes}>改用时</Button></Space.Compact>}</Space> },
+            { key: 'm', label: '时间与操作台', children: <Space wrap><span>{T.task?.soft_limit ? '建议' : '限时'} {minutes} 分钟 · 操作台 {envLabel(T)}</span>{ownerKey && inlineEdit && <Space.Compact size="small"><InputNumber size="small" min={15} max={240} step={5} value={minEdit} onChange={v => setMinEdit(Number(v) || minutes)} suffix="分钟" style={{ width: 110 }} /><Button size="small" disabled={minEdit === minutes} loading={minBusy} onClick={saveMinutes}>改用时</Button></Space.Compact>}</Space> },
           ]} />
           <div style={{ marginTop: 12, background: '#fafbff', padding: 12, borderRadius: 10 }}><div style={{ fontSize: 12, color: '#999', marginBottom: 6 }}>任务书（候选人看到的）</div><MdView text={T.task?.brief || ''} /></div>
           {T.task?.env?.type === 'code' && <Paragraph><b>自测用例</b>：{(T.task.env.tests || []).map((t: any) => t.name).join('、') || '无'}</Paragraph>}

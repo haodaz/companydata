@@ -53,7 +53,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ to
     if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
     return NextResponse.json({ ok: true, auto_submit: body.auto_submit });
   }
-  // 改限时（20–240 分钟，题面里写的时长一起换）
+  // 改限时（15–240 分钟，题面里写的时长一起换）
   if (body.time_minutes != null) {
     const r = withMinutes(t.task, body.time_minutes);
     await db.from('work_tasks').update({ task: r.task, updated_at: new Date().toISOString() }).eq('id', t.id);

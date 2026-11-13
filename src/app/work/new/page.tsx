@@ -66,7 +66,7 @@ function Inner() {
   // 出法（11-10 潜历：拆得太细像教学）：默认按字面出、不替候选人拆步骤；交了自己的参考资料时默认照它分步
   // 题目语言（11-10）：英文 = 题面和候选人的作答界面都是英文
   const [lang, setLang] = useState<'zh' | 'en'>('zh');
-  const [deep, setDeep] = useState(false); const [steps, setSteps] = useState<boolean | null>(null);
+  const [deep, setDeep] = useState(false); const [steps, setSteps] = useState<boolean | null>(null); const [rich, setRich] = useState(false);
   const [busy, setBusy] = useState('');
   // 出题等待的进度：gen 出题中 → base AI 基线中 → done 好了（GenProgress 一行一行列出平方在做什么）
   const [phase, setPhase] = useState<'gen' | 'base' | 'done'>('gen');
@@ -75,7 +75,7 @@ function Inner() {
     if (way === 'verbatim' ? verbatim.trim().length < 60 : (!f.company.trim() || !f.role.trim())) return message.warning(way === 'verbatim' ? '把整道题贴进来（60 字以上）' : '企业和要找的人都要填');
     setBusy(way === 'verbatim' ? '原题不改，正在整理成交付物和评分点……约 1 分钟' : '在拼这家企业的材料、出任务、做材料包、定标准……约 2 分钟，别关页面'); setPhase('gen');
     try {
-      const r = await fetch('/api/admin/work/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ lang, deep, steps: steps ?? !!ref, time_minutes: mins || undefined, auto_submit: autoSubmit, company: f.company, company_id: picked?.id, intro: picked ? undefined : f.intro.trim() || undefined, role: f.role, env: f.env || undefined, focus: f.focus || undefined, model: f.model, ...(lib ? { showcase_id: lib.id, showcase_use: use } : {}), sample_id: ref?.id, sample_mode: 'reskin', attachments: atts, verbatim: way === 'verbatim' ? verbatim.trim() : undefined }) });
+      const r = await fetch('/api/admin/work/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ lang, deep, steps: steps ?? !!ref, hints: rich ? 'rich' : 'lean', time_minutes: mins || undefined, auto_submit: autoSubmit, company: f.company, company_id: picked?.id, intro: picked ? undefined : f.intro.trim() || undefined, role: f.role, env: f.env || undefined, focus: f.focus || undefined, model: f.model, ...(lib ? { showcase_id: lib.id, showcase_use: use } : {}), sample_id: ref?.id, sample_mode: 'reskin', attachments: atts, verbatim: way === 'verbatim' ? verbatim.trim() : undefined }) });
       if (r.status === 401) { location.href = `/work/login?next=${encodeURIComponent('/work/new')}`; return; }
       const j = await r.json();
       if (!j.ok) throw new Error(j.error);
@@ -92,7 +92,7 @@ function Inner() {
   const delivery = (n: string) => <Sec n={n} t="限时多久？用什么语言？" d="时间从候选人点开始算，离开页面也不暂停。出好后也能改。选英文，题面和候选人的作答界面都是英文。">
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px 20px', alignItems: 'center' }}>
       <Select size="large" value={lang} onChange={setLang} style={{ width: 150 }} options={[{ value: 'zh', label: '题目用中文' }, { value: 'en', label: 'English 英文题' }]} />
-      <InputNumber size="large" min={20} max={240} step={10} value={mins} onChange={v => setMins(v == null ? null : Number(v))} placeholder="按题量定" suffix="分钟" style={{ width: 170 }} />
+      <InputNumber size="large" min={15} max={240} step={5} value={mins} onChange={v => setMins(v == null ? null : Number(v))} placeholder="默认 60" suffix="分钟" style={{ width: 170 }} />
       <span style={{ fontSize: 13.5, color: '#555' }}><Switch size="small" checked={autoSubmit} onChange={setAutoSubmit} style={{ marginRight: 8 }} />{autoSubmit ? '到点自动交卷' : '不卡时间，超时可以继续'}</span>
     </div>
   </Sec>;
@@ -175,6 +175,7 @@ function Inner() {
             <div style={{ display: 'grid', gap: 10, fontSize: 13.5, color: '#555' }}>
               <span><Switch size="small" checked={deep} onChange={setDeep} style={{ marginRight: 8 }} />{deep ? '深度解读：可以从你说的事延伸到背后更大的问题，题更开放' : '按字面出：只覆盖你说的范围，不升维、不联想'}</span>
               <span><Switch size="small" checked={steps ?? !!ref} onChange={setSteps} style={{ marginRight: 8 }} />{(steps ?? !!ref) ? '分步推进：一步一步给信息、每步一问（适合带教、考细节）' : '不拆步骤：任务书一次给全，怎么拆、先做什么由候选人自己定'}</span>
+              <span><Switch size="small" checked={rich} onChange={setRich} style={{ marginRight: 8 }} />{rich ? '材料带些提示：给一点背景解读，帮候选人更快上手' : '材料只给事实：数据、记录、原话，要他发现的问题不点破'}</span>
             </div>
           </Sec>
             <div style={{ display: 'flex', gap: 10 }}>
