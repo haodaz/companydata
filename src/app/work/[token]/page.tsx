@@ -182,6 +182,7 @@ export default function WorkPage() {
         {report?.result && <a href={`/work/${token}/card?s=${sid}`} style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16, padding: '14px 18px', borderRadius: 14, textDecoration: 'none', color: 'inherit', background: 'linear-gradient(135deg, #f4f2ff, #eef9fb)', border: '1px solid #ddd9ff' }}>
           <div style={{ fontSize: 26 }}>🎖️</div><div style={{ flex: 1 }}><div style={{ fontWeight: 800 }}>{L('领取你的真活成绩单', 'Get your score card')}</div><div style={{ fontSize: 13, color: '#666' }}>{L('分数、等级和要点一页纸：链接可以发给下一家公司，也可以存成 PDF 放进简历和作品集，当你真干过这件活的证明', 'Your score, grade and key points on one page: send the link to your next employer, or save it as a PDF for your CV and portfolio as proof of work')}</div></div><span style={{ color: '#6055f5', fontWeight: 700 }}>{L('去看 →', 'View →')}</span>
         </a>}
+        {report?.result && <div style={{ margin: '-6px 0 16px', fontSize: 13, color: '#777' }}>{L('想把整份作品带走？', 'Want to keep the whole piece of work? ')}<a href={`/work/${token}/archive?s=${sid}`} style={{ color: '#6055f5' }}>{L('保存我的作品（任务书 + 交付原文 + 附件，带核验码，可存 PDF）→', 'Save my work (task, submission and files, with a verification code, as PDF) →')}</a></div>}
         <ReportFull token={token} sid={sid} task={task} report={report} participant={participant} />
         <div style={{ marginTop: 16, fontSize: 13, color: '#888' }}>{L('这页的链接：', 'Link to this page: ')}<code>{typeof location !== 'undefined' ? `${location.origin}/work/${token}?s=${sid}` : ''}</code></div>
       </div>

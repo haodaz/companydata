@@ -54,7 +54,8 @@ export default function CardPage() {
       <div className="zc-actions">
         <button onClick={() => window.print()}>{L('打印 / 存成 PDF', 'Print / save as PDF')}</button>
         <button onClick={() => { navigator.clipboard.writeText(link); }}>{L('复制分享链接', 'Copy share link')}</button>
-        <a href={`/work/${token}?s=${sid}`}>{L('看完整报告 →', 'Full report →')}</a>
+        <a href={`/work/${token}/archive?s=${sid}`} style={{ marginLeft: 'auto' }}>{L('保存完整作品（带核验码）→', 'Save full work (with verification code) →')}</a>
+        <a href={`/work/${token}?s=${sid}`} style={{ marginLeft: 0 }}>{L('看完整报告 →', 'Full report →')}</a>
       </div>
       <div className="zc-card">
         <div className="zc-top"><WorkLogo size="md" href={null} /><span className="zc-kind">{L('真活成绩单', 'WORK SAMPLE SCORE CARD')}</span></div>
