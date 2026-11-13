@@ -35,7 +35,8 @@ const CAST_RULES = `人物 / 场景 / 道具的规则：
 - 这一章确实需要新的人（同行、客户、别的部门）、新的地方（户外、办公室、仓库）、新的道具，就在 new_cast 里新建，用临时编号 N1、N2… 指它。新建很正常，不要硬塞进已有的。
 - 新建的要给规范类型名 type_name（通用类型，给素材库跨空间复用用）。人物写成「角色·性别年龄段」：带教师傅·中年男、患者家属·青年女、术后患者·老年女、挑剔的顾客·中年女；
   地点和道具写通用名：商场公共卫生间、数控车间、灭火器、交接记录本…和外形 / 陈设描述 look（画图用：人写性别、年龄、发型、职业装束、手里拿着什么、神情；地方写陈设和氛围；道具写外观）。
-- 一个人一行：两个人（患者和家属、护士长和夜班医生、两个科室的医生）一定分开写，各有各的名字和外形，不要合成一行。
+- 一个人一行：两个人（患者和家属、护士长和夜班医生、两个科室的医生）一定分开写，各有各的名字和外形，不要合成一行；也不要把体验者写进去（不要有「师傅 & 你」这种人，说话人只写对方）。
+- 这一行是现代职业：人物穿当代职业装束，场景是今天的工作场所，不要古装、长袍、佩剑这类古风扮相（除非职业本身就是古代题材）。
 - 人名要像真人（老周、小林、王姐、陈先生），不要写成一句话（「老周通过对讲机提醒你」是错的，who 只写「老周」，对讲机写进台词）。`;
 
 export function spaceText(space: any): string {
@@ -106,11 +107,14 @@ async function addCast(taskId: string, cast: CastMember[], x: { kind: CastKind; 
   return data as CastMember;
 }
 
+/** 「师傅 & 你」「你和老周」这种把体验者并进去的名字，只留对方（11-13 反馈：立绘画成两个人、台词说话人写成「师傅 & 你」） */
+const noYou = (s: string) => String(s || '').replace(/\s*[&＆和与]\s*你$/, '').replace(/^你\s*[&＆和与]\s*/, '').trim();
+
 function readNewCast(raw: any): { tmp: string; kind: CastKind; name: string; type_name: string; note: string; look: string }[] {
   return (Array.isArray(raw) ? raw : []).map((c: any, i: number) => ({
     tmp: str(c.id || c.tmp || `N${i + 1}`, 10), kind: CAST_K.includes(c.kind) ? c.kind : 'person',
     // 模型偶尔把编号填进名字（name: "T01"）：这种用类型名当名字
-    name: /^[PSTN]\d{1,2}$/.test(str(c.name, 30)) ? str(c.type_name, 30) : str(c.name, 30), type_name: str(c.type_name, 30), note: str(c.note, 120), look: str(c.look, 300),
+    name: noYou(/^[PSTN]\d{1,2}$/.test(str(c.name, 30)) ? str(c.type_name, 30) : str(c.name, 30)), type_name: noYou(str(c.type_name, 30)), note: str(c.note, 120), look: str(c.look, 300),
   })).filter(c => c.name).slice(0, 8);
 }
 
@@ -118,10 +122,10 @@ function readNewCast(raw: any): { tmp: string; kind: CastKind; name: string; typ
 // 1. 一天骨架
 // ────────────────────────────────────────────
 /** 排一天骨架（记账：这次的调用都记到这个空间上，环节 create） */
-export function buildDay(spaceId: string, model: string, hint: string, progress: Progress): Promise<{ added: number; cast: number }> {
+export function buildDay(spaceId: string, model: string, hint: string, progress: Progress): Promise<{ added: number; total: number; cast: number }> {
   return withCost({ space_id: spaceId, stage: 'create' }, () => buildDayInner(spaceId, model, hint, progress));
 }
-async function buildDayInner(spaceId: string, model: string, hint: string, progress: Progress): Promise<{ added: number; cast: number }> {
+async function buildDayInner(spaceId: string, model: string, hint: string, progress: Progress): Promise<{ added: number; total: number; cast: number }> {
   const { data: space, error } = await supabaseAdmin.from('skill_tasks').select('id, title, profile, jd_snapshot, bible').eq('id', spaceId).single();
   if (error) throw error;
   // 重排骨架：空的、没锁的草稿格子先清掉（有步骤的、锁定的、已发布的都留着）
@@ -151,7 +155,8 @@ ${DAY_RULES}
 ${hint ? `\n管理员的要求：${hint}\n` : ''}
 要求：
 ${form ? `- 这个空间的形态是「${FORMS[form].label}」（${FORMS[form].essence}），体验者是${FORMS[form].who}。${FORMS[form].day}
-  （形态的排法优先于上面「一天」的时段规则；格数含已有章节。）新格子只给标题和要交代的事，不出题。` : '- 整天 6–8 格（含已有章节）。新格子只给标题和要交代的事，不出题。'}
+  （形态的排法优先于上面「一天」的时段规则。）新格子只给标题和要交代的事，不出题。` : '- 整天 6–8 格。新格子只给标题和要交代的事，不出题。'}
+- **格数含已有章节**：上面已经做好的 ${chapters.length} 章算在这一天的格数里，新格子 = 总格数 − ${chapters.length}；已有的每一章都要在 existing 里给一个时段（建空间时自带的那一章一般是操作台章，放在上午的核心操作时段）。
 - 这一天会反复出场、但角色表里还没有的人物 / 地点 / 道具，放进 new_cast（各章生成时会优先用）。人物 2–6 个，地点 2–4 个，道具 2–5 个（道具一定要有）。
 ${CAST_RULES}
 - 要前后一致的事实 3–6 条（如「上午 9 点有一批团购顾客」「消毒液只剩半桶」）。${form === 'training' || form === 'assess' || form === 'certify' ? `
@@ -170,7 +175,7 @@ ${CAST_RULES}
   const ids = new Set(chapters.map(c => c.id));
   for (const e of Array.isArray(p.existing) ? p.existing : []) {
     const c = chapters.find(x => x.id === e?.id);
-    if (c && ids.has(c.id) && !c.slot && str(e.slot, 40)) await supabaseAdmin.from('lab_chapters').update({ slot: str(e.slot, 40) }).eq('id', c.id);
+    if (c && ids.has(c.id) && !c.slot && str(e.slot, 40)) { c.slot = str(e.slot, 40); await supabaseAdmin.from('lab_chapters').update({ slot: c.slot }).eq('id', c.id); }
   }
   if (form === 'certify') { const daily = chapters.filter(c => c.kind !== 'assessment' && !c.locked).map(c => c.id); if (daily.length) await supabaseAdmin.from('lab_chapters').update({ kind: 'assessment' }).in('id', daily); }
   // 新角色先进角色表，好把简介里的编号（P01 / 临时的 N1）换成名字——简介是给体验者看的
@@ -185,7 +190,21 @@ ${CAST_RULES}
     .filter((x: any) => x.slot && x.title)
     // 已有章节占了的时段不再新建（11-06 考核样例：建空间时自带的工位章排到「考核4」，又新建了一格「考核4」做同一件事）
     .filter((x: any) => !chapters.some(c => (c.slot || (Array.isArray(p.existing) ? p.existing.find((e: any) => e?.id === c.id)?.slot : '')) === x.slot))
-    .slice(0, 9);
+    // 生涯体验一天 5–6 格（含已有章节）（11-13 反馈：说排了 5 格，实际出来 6 章，建空间自带的那章还是「未定时段」）
+    .slice(0, form === 'career' ? Math.max(0, 6 - chapters.length) : 9);
+  // 生涯体验最后一格必须是「我和这一行」（讲选科、对口专业、证书、怎么入行）：模型漏了就补上
+  if (form === 'career' && !slots.some((x: any) => x.kind === 'assessment' || /我和这一行/.test(x.title)) && !chapters.some(c => c.kind === 'assessment' || /我和这一行/.test(c.title))) {
+    if (slots.length && slots.length + chapters.length >= 6) slots.pop();
+    slots.push({ slot: '17:30', title: '收尾：我和这一行', kind: 'assessment', brief: '回看这一天，聊聊自己合不合适；讲清高中怎么选科、对口的大学 / 高职专业、要考的证书和入行的路。' });
+  }
+  // 已有章节还没有时段的（模型没给），放进新格子中间空着的时段，别留「未定时段」
+  const used = [...chapters.map(c => c.slot).filter(Boolean), ...slots.map((x: any) => x.slot)].map(x => slotMinutes(x as string)).filter((x): x is number => x != null).sort((a, b) => a - b);
+  for (const c of chapters.filter(c => !c.slot)) {
+    let best = 600, gap = -1;   // 默认 10:00
+    for (let i = 0; i + 1 < used.length; i++) if (used[i + 1] - used[i] > gap) { gap = used[i + 1] - used[i]; best = Math.round((used[i] + used[i + 1]) / 2 / 15) * 15; }
+    c.slot = `${String(Math.floor(best / 60)).padStart(2, '0')}:${String(best % 60).padStart(2, '0')}`; used.push(best); used.sort((a, b) => a - b);
+    await supabaseAdmin.from('lab_chapters').update({ slot: c.slot }).eq('id', c.id);
+  }
   let seq = Math.max(0, ...chapters.map(c => c.seq));
   if (slots.length) {
     const { error: e2 } = await supabaseAdmin.from('lab_chapters').insert(slots.map((x: any) => ({
@@ -201,7 +220,7 @@ ${CAST_RULES}
     updated_at: new Date().toISOString(),
   };
   await supabaseAdmin.from('skill_tasks').update({ bible }).eq('id', spaceId);
-  return { added: slots.length, cast: cast.length - before };
+  return { added: slots.length, total: chapters.length + slots.length, cast: cast.length - before };
 }
 
 // ────────────────────────────────────────────
@@ -360,7 +379,7 @@ function cleanSim(raw: any, ch: StudioChapter, ref: (v: any) => CastMember | nul
     const st: SimStep = { id, type: s.type, prompt: String(s.prompt) };
     if (s.scene?.text) {
       const who = ref(s.scene.who);
-      st.scene = { who: who?.kind === 'person' ? who.name : str(s.scene.who, 20) || '同事', time: s.scene.time ? String(s.scene.time) : undefined, text: String(s.scene.text) };
+      st.scene = { who: noYou(who?.kind === 'person' ? who.name : str(s.scene.who, 20)) || '同事', time: s.scene.time ? String(s.scene.time) : undefined, text: String(s.scene.text) };
     }
     const place = ref(s.place);
     if (place?.kind === 'place') st.place = place.id;

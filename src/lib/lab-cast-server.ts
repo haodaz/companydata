@@ -146,7 +146,13 @@ export async function findReusable(kind: LabAsset['kind'], typeName: string, fam
   if (!typeName) return null;
   const { data } = await supabaseAdmin.from('lab_art_assets').select('*').eq('kind', kind).eq('type_name', typeName).eq('reusable', true).limit(20);
   // 同一个空间里，不同的人不能共用一张脸、不同的地方不能共用一张图
-  const list = ((data || []) as LabAsset[]).filter(a => !exclude.includes(a.id));
+  // 11-13 反馈：潜水中心复用到了古风「带教师傅」（长袍佩剑）。类型名是通用的，只按类型名复用会串风格：
+  // 古风扮相的只给古代题材用；同职业领域的优先，领域对不上的（不是「其他」）不复用
+  const ANCIENT = /古风|古装|汉服|长袍|佩剑|古代|武侠|宫廷|侠客|道袍/;
+  const ancientOk = ANCIENT.test(typeName) || /古|戏曲|非遗/.test(family);
+  const list = ((data || []) as LabAsset[]).filter(a => !exclude.includes(a.id))
+    .filter(a => ancientOk || !ANCIENT.test(`${a.prompt || ''} ${(a.tags || []).join(' ')} ${a.note || ''}`))
+    .filter(a => !family || family === '其他' || !a.family || a.family === family || a.family === '其他');
   if (!list.length) return null;
   list.sort((x, y) => Number(!!y.url) - Number(!!x.url) || Number(y.family === family) - Number(x.family === family) || (x.uses || 0) - (y.uses || 0));
   return list[0];

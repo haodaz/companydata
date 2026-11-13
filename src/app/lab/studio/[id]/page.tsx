@@ -10,7 +10,7 @@ import { SimRunner, SimStage } from '@/components/lab/SimRunner';
 import { CHAPTER_KINDS, STEP_TYPES, blankStep, checkAll, type StudioChapter, type StudioIssue, type BasisRow } from '@/lib/lab-studio';
 import { SpecEditor, SPEC_CSS } from '@/components/lab/SpecEditor';
 import { col, FX_CSS, LISTING, Plays, useLabNav } from '@/components/lab/FactoryKit';
-import { hasSpec, REVISE_CHIPS, type Anchor, type GenSpec } from '@/lib/lab-spec';
+import { formOf, hasSpec, REVISE_CHIPS, watchBenchOf, type Anchor, type GenSpec } from '@/lib/lab-spec';
 import { CAST_KINDS, applyCastArt, castKind, stepsUsing, type CastKind, type CastMember, type LabAsset } from '@/lib/lab-cast';
 
 /**
@@ -234,10 +234,15 @@ export default function StudioPage() {
         <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 12 }}><span style={{ fontSize: 13, color: 'var(--ink2)' }}>这个空间里反复出场的人、地方、道具。同一天各章共用：同一张脸、同一个地方。</span><button className="lab-btn ghost sm" style={{ marginLeft: 'auto' }} onClick={() => router.push(nav.assets)}>素材库 ↗</button></div>
         <CastPanel cast={data.cast} chapters={liveChapters} current={null} onOpen={setCastEdit} />
       </div>}
-      {tab === 'review' && <ReviewTab id={id} model={genModel} onFix={(t: any) => {
-        setTab('day'); setCur(t.chapter_id);
+      {tab === 'review' && <ReviewTab id={id} model={genModel} onFix={async (t: any) => {
+        // 11-13 反馈：以前只 setCur 不换 draft，局部改的弹窗等的是「那一章载入了」，永远等不到；地址里的 ?ch= 也还是旧章
+        const c = data.chapters.find(x => x.id === t.chapter_id);
+        if (!c) { message.warning('这条评审对应的章节已经不在了'); return; }
+        if (c.id !== cur && dirty && !(await confirmBy(modal, '当前这一章还有没保存的改动，丢掉吗？'))) return;
+        setCur(c.id); setDraft(clone(c)); setDirty(false); setRaw({}); setOpen({});
+        router.replace(`${nav.space(id)}?ch=${c.id}`);
         if (t.target === 'chapter') { setGenHint(t.fix); message.info('已把评审建议填进「AI · 按格生成」的要求里，点「重新生成」'); }
-        else setPendingRevise({ chapterId: t.chapter_id, target: t.target, stepId: t.step_id || undefined, text: t.fix });
+        else setPendingRevise({ chapterId: c.id, target: t.target === 'step' && !t.step_id ? 'opening' : t.target, stepId: t.step_id || undefined, text: t.fix });
       }} onJob={() => loadJobs()} />}
       {tab === 'plays' && <>
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: -4 }}><button className="lab-btn ghost sm" onClick={() => router.push(`/lab/studio/review?space=${id}`)}>示范评审 ↗</button></div>
@@ -435,7 +440,7 @@ export default function StudioPage() {
 
       <Modal open={dayOpen} onCancel={() => setDayOpen(false)} title="排一天骨架" okText="开始排" cancelText="取消" onOk={startDay}>
         <div style={{ fontSize: 13, color: 'var(--ink2)', lineHeight: 1.8, marginBottom: 10 }}>
-          按「一天的规则」排 6–8 格（时段、标题、要交代的事），已有章节放进合适的时段；这一天还缺的人物 / 地点 / 道具先进角色表（同类型的从素材库复用）。<br />
+          按「一天的规则」排格子（生涯体验 5–6 格，其余 6–8 格，已有章节算在内；时段、标题、要交代的事），已有章节放进合适的时段；这一天还缺的人物 / 地点 / 道具先进角色表（同类型的从素材库复用）。<br />
           只排骨架、不出题；之后一格一格生成。<b>重排会清掉没有步骤的空草稿格</b>，已写好的、锁定的、已发布的不动。
         </div>
         <textarea className="lab-input" rows={3} style={field} value={dayHint} onChange={e => setDayHint(e.target.value)} placeholder="附几句要求（可空）：如「要有两台不同的手术、上午查房、下午多学科会诊」" />
@@ -450,7 +455,7 @@ export default function StudioPage() {
       {castEdit && <CastEditor spaceId={id} member={castEdit} onClose={() => setCastEdit(null)} onDone={() => { setCastEdit(null); refresh(); }} />}
       {preview && draft && (
         <SimStage title={`试玩 · ${draft.title}`} role="rookie" immersive={!!applyCastArt(draft.sim, data.cast).art} onExit={() => setPreview(false)}>
-          <SimRunner sim={applyCastArt(draft.sim, data.cast)} role="rookie" onCancel={() => setPreview(false)} onFinish={() => { setPreview(false); message.success('走完了。试玩不保存、不评分'); }} />
+          <SimRunner sim={applyCastArt(draft.sim, data.cast)} role="rookie" career={formOf(space.jd_snapshot) === 'career'} watchBench={watchBenchOf(space.jd_snapshot)} onCancel={() => setPreview(false)} onFinish={() => { setPreview(false); message.success('走完了。试玩不保存、不评分'); }} />
         </SimStage>
       )}
     </div>

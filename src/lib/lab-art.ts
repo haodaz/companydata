@@ -122,7 +122,7 @@ export async function makeSceneAsset(prompt: string, name: string): Promise<stri
 }
 /** NPC 立绘：绿幕生成 → 抠图 → 透明 png */
 export async function makeNpcAsset(prompt: string, name: string): Promise<string> {
-  const full = `半写实插画风格的游戏NPC立绘，${prompt}，正面略侧的半身像，人物完整不裁切，纯正绿色平涂背景，背景没有任何阴影和渐变，没有文字，没有logo，竖构图`;
+  const full = `半写实插画风格的游戏NPC立绘，${/古|戏曲|汉服|非遗/.test(prompt) ? '' : '当代人物、现代职业装束（不要古装、长袍、佩剑），'}${prompt}，正面略侧的半身像，人物完整不裁切，纯正绿色平涂背景，背景没有任何阴影和渐变，没有文字，没有logo，竖构图`;
   const raw = await genImage(full, '900*1440', undefined, '人物立绘');
   let png = await chromaKey(raw);
   // 模型给的不一定是纯绿幕（灰绿、带噪点的都有），绿幕抠完四周还是不透明，就换泛洪去背再来一次

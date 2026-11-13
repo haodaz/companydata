@@ -216,7 +216,8 @@ const LAB_CSS = `
 .bench-hud-light .hud-card .hud-ink { color: #171a2e !important; }
 .bench-hud-light .hud-card .hud-ink3 { color: #6b7089 !important; }
 .bench-hud-light .bench-hud-right { background: #f3f4fa; border-left: 1px solid rgba(23,26,46,.08); top: 0; bottom: 0; right: 0; padding: 14px; width: 368px; }
-@media (max-width: 900px) { .bench-hud-right { position: static; width: auto; } .bench-hud-bottom { position: static; } .bench-hud { overflow: auto; } .bench-hud-stage { position: relative; left: 0; top: 0; transform: none; width: 100%; } .lab-game-npc { max-width: 60%; height: 60%; } .lab-game-box { padding-left: 20px; } }
+/* 窄屏：工位画面限高（约半屏），操作区跟在下面不用滚很远（11-13 反馈：要点全屏才看得到操作的地方） */
+@media (max-width: 900px) { .bench-hud-right { position: static; width: auto; } .bench-hud-bottom { position: static; } .bench-hud { overflow: auto; } .bench-hud-stage { position: relative; left: 0; top: 0; transform: none; width: min(100%, 80vh); margin: 0 auto; } .lab-game-npc { max-width: 60%; height: 60%; } .lab-game-box { padding-left: 20px; } }
 .bench-split { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, 1fr); gap: 16px; align-items: start; }
 @media (max-width: 900px) { .bench-split { grid-template-columns: 1fr; } .lab-stage-fields { display: none; } }
 .lab-pre { white-space: pre-wrap; word-break: break-word; line-height: 1.85; font-size: 14px; color: var(--ink2); }

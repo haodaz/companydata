@@ -27,7 +27,7 @@ export const LAB_TOOLS: Anthropic.Tool[] = [
   }, required: ['anchor', 'spec'] } },
   { name: 'my_spaces', description: '列出用户生成的空间（状态、章节、作答、平均分）。用户说「我那个……空间」先用它找 space_id。', input_schema: { type: 'object', properties: { q: { type: 'string' } } } },
   { name: 'space_detail', description: '看一个空间：生成要求、每一章（时段 / 标题 / 状态 / 锁定 / 步数 / 每步题干）、最近一次 AI 评审的待办、正在跑的任务。改之前先看。', input_schema: { type: 'object', properties: { space_id: { type: 'string' } }, required: ['space_id'] } },
-  { name: 'build_day', description: '排一天骨架：6–8 格（时段、标题、要交代的事），不出题。新空间生成好后一般先做这个。后台约 1 分钟。', input_schema: { type: 'object', properties: { space_id: { type: 'string' }, hint: { type: 'string' } }, required: ['space_id'] } },
+  { name: 'build_day', description: '排一天骨架：按空间的形态排（生涯体验 5–6 格，其余 6–8 格，建空间时自带的章节算在内；时段、标题、要交代的事），不出题。新空间生成好后一般先做这个。后台约 1 分钟。', input_schema: { type: 'object', properties: { space_id: { type: 'string' }, hint: { type: 'string' } }, required: ['space_id'] } },
   { name: 'write_chapters', description: '给章节写故事线和示范答案（按生成要求）。chapter_ids 不传 = 所有没写过、没锁定的草稿格。后台顺序跑，每章约 1 分钟。', input_schema: { type: 'object', properties: { space_id: { type: 'string' }, chapter_ids: { type: 'array', items: { type: 'string' } }, hint: { type: 'string' } }, required: ['space_id'] } },
   { name: 'revise', description: '局部改：改某一章的某一步（target=step，step_no 从 1 数）或标题和开场（target=opening）。出一份提案，对话里给用户看改前改后，他点「采纳」才写进去。工位（虚拟操作台）请让用户到工作室里「重新设计」。', input_schema: { type: 'object', properties: { space_id: { type: 'string' }, chapter_id: { type: 'string' }, target: { type: 'string', enum: ['step', 'opening'] }, step_no: { type: 'number' }, instruction: { type: 'string' } }, required: ['space_id', 'chapter_id', 'target', 'instruction'] } },
   { name: 'review', description: 'AI 评审这个空间（约半分钟）：按平台规则 + 生成要求打分，列出具体到哪一章哪一步的待改问题。', input_schema: { type: 'object', properties: { space_id: { type: 'string' } }, required: ['space_id'] } },
@@ -89,7 +89,7 @@ async function run(name: string, input: any, user: User): Promise<{ result: any;
     }
     case 'build_day': {
       const sp = await own(user, input.space_id);
-      const job = await startJob(sp.id, null, 'build_day', async progress => { const r = await buildDay(sp.id, MODEL(), s(input.hint, 500), progress); return `新增 ${r.added} 格 · 角色表新增 ${r.cast} 项`; });
+      const job = await startJob(sp.id, null, 'build_day', async progress => { const r = await buildDay(sp.id, MODEL(), s(input.hint, 500), progress); return `一天共 ${r.total} 格（新排 ${r.added} 格，建空间时自带的章节也算在内）· 角色表新增 ${r.cast} 项`; });
       return { label: job.already ? '骨架已经在排了' : '开始排一天骨架（约 1 分钟）', ui: { ...panel(sp.id, nameOf(sp)), job_id: job.id, job: '排一天骨架' }, result: { job_id: job.id, already: job.already } };
     }
     case 'write_chapters': {

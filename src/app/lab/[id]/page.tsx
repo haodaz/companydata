@@ -1154,7 +1154,7 @@ function castOf(space: any, sim: Sim | null) {
         <SimStage title={chapters.length > 1 && chapter ? `${chapter.slot ? `${chapter.slot} · ` : ""}${chapter.title}` : space.title} role="rookie" immersive={!!sim.art} onExit={() => { setStageReport(null); setAnswering(false); setIntro(true); }}>
           {stageReport ? (
             <div className="lab-game">
-              <img className="lab-game-bg lab-in" src={sim.art?.scenes?.final || sim.art?.cover} alt="" />
+              <img className="lab-game-bg lab-in" src={sim.art?.scenes?.final || sim.art?.cover} alt="" onError={e => { e.currentTarget.style.visibility = 'hidden'; }} />
               <div className="lab-game-vignette" />
               <div className="lab-game-mask">
                 <div className="lab-game-modal lab-in" style={{ width: 'min(100%, 980px)' }}>
@@ -1608,7 +1608,7 @@ function ChapterIntro({ chapter, chapters, space, sim, demo, study, onStart, pro
             {people.map(m => (
               <div key={m.id} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <span style={{ width: 46, height: 46, borderRadius: '50%', overflow: 'hidden', background: 'linear-gradient(135deg,#ffb15f,#ff5fa2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 800, flexShrink: 0, border: '2px solid #fff', boxShadow: '0 4px 12px rgba(50,40,120,.18)' }}>
-                  {m.image ? <img src={m.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 12%' }} /> : m.name[0]}
+                  {m.image ? <img src={m.image} alt="" onError={e => { e.currentTarget.style.visibility = 'hidden'; }} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 12%' }} /> : m.name[0]}
                 </span>
                 <span style={{ display: 'grid', lineHeight: 1.35 }}><b style={{ fontSize: 14 }}>{m.name}</b><span style={{ fontSize: 12, color: 'var(--ink3)' }}>{String(m.type_name || '').split('·')[0]}</span></span>
               </div>
@@ -1645,7 +1645,7 @@ function ChapterIntro({ chapter, chapters, space, sim, demo, study, onStart, pro
   if (!sim.art?.cover) return <div style={{ display: 'flex', justifyContent: 'center', padding: '24px 0' }}>{card}</div>;
   return (
     <div className="lab-game">
-      <img className="lab-game-bg lab-in" src={places.find(m => m.image && !m.name.startsWith('工位'))?.image || sim.art.cover} alt="" />
+      <img className="lab-game-bg lab-in" src={places.find(m => m.image && !m.name.startsWith('工位'))?.image || sim.art.cover} alt="" onError={e => { e.currentTarget.style.visibility = 'hidden'; }} />
       <div className="lab-game-vignette" />
       <div className="lab-game-mask">{card}</div>
     </div>
@@ -1803,7 +1803,7 @@ function DayView({ mode, modes, space, chapters, chapter, sim, rubric, canTeach,
               {people.map(m => (
                 <div key={m.id} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                   <span style={{ width: 54, height: 54, borderRadius: '50%', overflow: 'hidden', background: 'linear-gradient(135deg,#ffb15f,#ff5fa2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 800, flexShrink: 0, border: '2px solid #fff', boxShadow: '0 6px 16px rgba(50,40,120,.18)' }}>
-                    {m.image ? <img src={m.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 12%' }} /> : m.name[0]}
+                    {m.image ? <img src={m.image} alt="" onError={e => { e.currentTarget.style.visibility = 'hidden'; }} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 12%' }} /> : m.name[0]}
                   </span>
                   <span style={{ display: 'grid', lineHeight: 1.4 }}><b style={{ fontSize: 15 }}>{m.name}</b><span style={{ fontSize: 12.5, color: 'var(--ink3)' }}>{String(m.type_name || '').split('·')[0]}</span></span>
                 </div>

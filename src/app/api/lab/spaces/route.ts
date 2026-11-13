@@ -116,6 +116,8 @@ async function listingOf(ids: string[]): Promise<Record<string, string>> {
 async function markDraft(id: string, body: any) {
   if (!body?.draft) return;
   await supabaseAdmin.from('skill_tasks').update({ listing: 'draft' }).eq('id', id).then(() => {}, () => {});
+  // 建表时数据库触发器会把第一章直接建成「已发布」（迁移 015）；工厂里出的空间整套先是草稿，一起看过再发（11-13 反馈：一章直接发布了）
+  await supabaseAdmin.from('lab_chapters').update({ status: 'draft' }).eq('task_id', id).then(() => {}, () => {});
   // AI 全程跟进（C）：建好就在后台评一遍，问题进工厂的「评审」待办
   try { after(() => reviewSpace(id).then(() => {}, e => console.warn('[lab/spaces] 自动评审', e?.message))); } catch { /* 不在请求上下文 */ }
 }
@@ -181,7 +183,11 @@ async function build(req: Request, body: any, costJob: string) {
       trackDemand(req, { source: 'lab_space', query: profession, profession });
       setBuild(buildId, { phase: isDiscipline ? '结构化学科 · 推断典型研究岗' : '结构化职业 · 推断典型岗位' });
       const { jd, career } = await structureCareer(profession, model, isDiscipline ? 'discipline' : 'career');
+      // 生涯体验（高中）：职业名照用户说的（11-13 反馈：「牙医」生成出来成了「口腔住院医师」、「证券分析师」成了「行业研究助理」）；推出来的初级岗位名留作参考
+      const keepName = !isDiscipline && (!spec.form || spec.form === 'career');
+      if (keepName && jd.title !== profession) { (jd as any).entry_title = jd.title; jd.title = profession; }
       const built = await buildSpaceFromJd(jd, model, (phase, detail) => setBuild(buildId, { phase, detail }), { hint: withSpec(isDiscipline ? DISCIPLINE_HINT : spec.form && spec.form !== 'career' ? '' : CAREER_HINT), form: spec.form });
+      if (keepName) built.task.profile = { ...(built.task.profile || {}), role: profession.slice(0, 12) };
       const { data: skill, error: skErr } = await supabaseAdmin.from('skills').insert({
         slug: `career-${Date.now().toString(36)}`, ...built.skill, interview: [],
         expert_name: '岗位 AI 自学草案', expert_title: '从职业公开知识推断 · 等待第一位从业者校正', expert_location: '云端', expert_note: '尚未有真人专家', tz_offset: 0,

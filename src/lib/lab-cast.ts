@@ -98,7 +98,10 @@ export function decodeCastRefs(text: string, lookup: (code: string) => string | 
     // 工位的场景名带「工位：」前缀，放进句子里去掉
     const name = lookup(code)?.replace(/^工位[：:]\s*/, '');
     if (!name) return code.startsWith('N') ? '' : m;
-    return whole.slice(at + m.length).startsWith(name) ? '' : name + sp;
+    // 名字已经写在编号后面（P01林工）或前面（师傅P01、气压表T02）的，只去掉编号（11-13 反馈：「师傅 师傅」「气压表 气压表」叠字）
+    const before = whole.slice(0, at).replace(/[\s（(「]*$/, ''), head = name.split(/\s*[&＆、和与]\s*/)[0];
+    if (whole.slice(at + m.length).startsWith(name) || before.endsWith(name) || (head && before.endsWith(head))) return '';
+    return name + sp;
   });
 }
 

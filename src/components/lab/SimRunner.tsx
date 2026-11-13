@@ -114,18 +114,20 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, 
   }, [step]);
 
   const allocated = step.type === 'allocate' ? (Object.values(value || {}) as number[]).reduce((a, b) => a + (b || 0), 0) : 0;
-  const textShort = step.type === 'text' ? Math.max(0, MIN_TEXT - (value || '').trim().length) : 0;
+  // 说感受、谈想法的短题（生涯体验收尾「我适不适合」、题面写着「80 字以内」）5 个字就够；正经写方案的题还是 20 字（11-13 反馈）
+  const minText = career || /字以内|感受|想法|心里|适合|喜欢/.test(step.prompt || '') ? 5 : MIN_TEXT;
+  const textShort = step.type === 'text' ? Math.max(0, minText - (value || '').trim().length) : 0;
   const ready = useMemo(() => {
     switch (step.type) {
       case 'choose': return !!value;
       case 'multi': case 'drill': return (value || []).length > 0;
       case 'classify': return (step.options || []).every(o => value?.[o.id]);
       case 'allocate': return allocated === step.total;
-      case 'text': return (value || '').trim().length >= MIN_TEXT;
+      case 'text': return (value || '').trim().length >= minText;
       case 'bench': return !!value?.finished;
       default: return true;
     }
-  }, [step, value, allocated]);
+  }, [step, value, allocated, minText]);
 
   // choose 步骤选中后，确认才浮现对方的回复
   const chosenReveal = step.type === 'choose' && confirmed ? step.options?.find(o => o.id === value)?.reveal : null;
@@ -259,7 +261,7 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, 
         )}
 
         {step.type === 'text' && <textarea className="lab-input" rows={9} value={value || ''} onChange={e => set(e.target.value)} placeholder={step.placeholder || '写下你的结论……'} />}
-        {step.type === 'text' && textShort > 0 && <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 6 }}>{textShort === MIN_TEXT ? `至少写 ${MIN_TEXT} 个字，才能继续` : `再写 ${textShort} 个字就能继续（至少 ${MIN_TEXT} 字，把原因也说一说）`}</div>}
+        {step.type === 'text' && textShort > 0 && <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 6 }}>{textShort === minText ? `至少写 ${minText} 个字，才能继续` : `再写 ${textShort} 个字就能继续（至少 ${MIN_TEXT} 字，把原因也说一说）`}</div>}
         {lessonBottom}
     </>
   );
@@ -296,7 +298,7 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, 
         {backdrop && <div style={{ position: 'absolute', inset: 0, visibility: benchLive ? 'hidden' : 'visible' }}>
           <Splat3D scene={backdrop} head={head3d} still={phase === 'question'} pan={sim.steps.length > 1 ? (idx / (sim.steps.length - 1) - 0.5) * 0.9 : 0} camCorner={{ left: 16, bottom: 64 }} />
         </div>}
-        {!benchLive && !backdrop && <img key={bg} className="lab-game-bg lab-in" src={bg} alt="" />}
+        {!benchLive && !backdrop && bg && <img key={bg} className="lab-game-bg lab-in" src={bg} alt="" onError={e => { e.currentTarget.style.display = 'none'; }} />}
         {!benchLive && <div className="lab-game-vignette" />}
         <div className="lab-game-progress">
           <span className="lab-mono">{study ? 'LESSON · 我教你' : role === 'expert' ? 'EXPERT RUN' : 'SIMULATION'} · {String(idx + 1).padStart(2, '0')}/{String(sim.steps.length).padStart(2, '0')}</span>
@@ -371,9 +373,12 @@ function NpcDialogue({ scene, portrait, onDone, cta }: { scene: NonNullable<SimS
     return () => clearInterval(iv);
   }, [scene.text]);
   const advance = () => { if (!done) setN(scene.text.length); else onDone(); };
+  // 图没加载出来（11-13 反馈：收尾章出现裂图图标）就用首字头像
+  const [badPic, setBadPic] = useState(false);
+  useEffect(() => { setBadPic(false); }, [portrait]);
   return (
     <div className="lab-game-dialogue" onClick={advance}>
-      {portrait ? <img className="lab-game-npc lab-in" src={portrait} alt={scene.who} /> : <div className="lab-game-npc-fallback">{scene.who.slice(0, 1)}</div>}
+      {portrait && !badPic ? <img className="lab-game-npc lab-in" src={portrait} alt={scene.who} onError={() => setBadPic(true)} /> : <div className="lab-game-npc-fallback">{scene.who.slice(0, 1)}</div>}
       <div className="lab-game-box">
         <div className="lab-game-name">{scene.who}{scene.time ? <span className="lab-mono" style={{ marginLeft: 10, fontSize: 11, opacity: .7, letterSpacing: '.08em' }}>{scene.time}</span> : null}</div>
         <div className={`lab-game-text${done ? '' : ' lab-caret'}`}>{scene.text.slice(0, n)}</div>
