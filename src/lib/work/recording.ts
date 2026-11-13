@@ -108,6 +108,7 @@ export async function unzipEntries(buf: Buffer): Promise<{ name: string; data: B
   return out;
 }
 
+const MEDIA = /\.(mp4|mov|m4v|webm|avi|mkv|mp3|m4a|wav)$/i;
 const IMG_PROMPT = '这是候选人做一道考核任务时交上来的一张图（作品 / 截图 / 图表 / 画布 / 设计稿）。请用中文写 150–400 字：画的是什么、里面的文字和数字、结构和连线关系、能看出的完成度和明显的问题。只描述看到的，不要打分。';
 
 /** 交付文件读进交付物：文本直接读；PDF / Word / Excel 抽文字，抽不出文字的 PDF（图片型）交给 Claude 看原件；图片看图写说明；zip 解开逐个读；一模一样的文件只读一次 */
@@ -132,6 +133,9 @@ export async function readTextFiles(files: { name: string; url: string; size: nu
     } else if (/\.(png|jpe?g|webp|gif)$/i.test(name) && size < 10_000_000) {
       const d = await describeImage(buf, /\.png$/i.test(name) ? 'image/png' : /\.webp$/i.test(name) ? 'image/webp' : /\.gif$/i.test(name) ? 'image/gif' : 'image/jpeg', name, IMG_PROMPT).catch(() => '');
       parts.push(d ? `${head}（看图说明，以原图为准）\n${d}` : `${head}（图片，没读出来）`);
+    } else if (MEDIA.test(name)) {
+      // 视频 / 录音（11-13 潜历：候选人另录的作品介绍）：原样存给出任务的人看，不进评分
+      parts.push(`${head}（音视频 ${Math.round(size / 1024 / 1024 * 10) / 10} MB，原样保存给出任务的人看，不参与评分）`);
     } else if (!inZip && /\.zip$/i.test(name)) {
       const es = await unzipEntries(buf).catch(() => []);
       if (!es.length) { parts.push(`${head}（压缩包，没解开，按交付说明评）`); return; }
@@ -141,6 +145,7 @@ export async function readTextFiles(files: { name: string; url: string; size: nu
   };
   for (const f of files) {
     const head = `### 文件 [${f.name}](${f.url})`;
+    if (MEDIA.test(f.name)) { parts.push(`${head}（音视频 ${Math.round(f.size / 1024 / 1024 * 10) / 10} MB，原样保存给出任务的人看，不参与评分）`); continue; }   // 不下载
     let buf: Buffer;
     try { buf = Buffer.from(await (await fetch(f.url)).arrayBuffer()); } catch { parts.push(`${head}（读取失败）`); continue; }
     await readOne(f.name, buf, head);
