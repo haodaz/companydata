@@ -296,7 +296,7 @@ export async function designBench(jd: JdInput, task: { title: string; brief: str
 // 4. 场景与人物
 // ────────────────────────────────────────────
 /** family = 一级领域（图库按它分桶）；slot = 场景位 / 人物角色（图库按它匹配） */
-export interface ArtPlan { family: string; /** 空间核心那位数字人自己的形象 */ self: string; scenes: { key: string; slot: string; prompt: string; steps: string[] }[]; npcs: { who: string; slot: string; prompt: string }[] }
+export interface ArtPlan { family: string; /** 空间核心那位数字人自己的形象 */ self: string; scenes: { key: string; name: string; slot: string; prompt: string; steps: string[] }[]; npcs: { who: string; slot: string; prompt: string }[] }
 export const ART_SLOTS = ['办公室', '会议室', '车间', '实验室', '门店', '后厨', '工地', '仓库', '机房', '教室', '诊室', '户外现场', '驾驶舱', '其他'];
 export const NPC_SLOTS = ['带教师傅', '主管', '同事', '客户', '质检', '老师', '专家', '其他'];
 
@@ -311,17 +311,18 @@ ${hint ? `\n    ${hint}\n    （场景、人物、装束都要贴合上面的受
     要求：
     - family：这个岗位属于哪一级领域，从这几个里选一个（原话返回）：${ART_FAMILIES.join(' / ')}
     - 场景 2–3 个（按地点合并步骤），每个给出中文文生图提示词：以「半写实插画风格，正面平视的固定机位，」开头，描述地点与陈设，结尾「明亮，没有人物，没有可辨认文字，没有logo，16:9」。steps 列出用这张底图的步骤 id（bench 步骤不要列）。
-      每个场景还要给一个 slot（这是什么地方，从这几个里选）：${ART_SLOTS.join(' / ')}
+      每个场景还要给一个 name：这个地点的中文名，4–10 个字，就是故事里人会怎么叫这个地方（如「口腔诊室」「候诊区」「中央厨房」），不要写「场景 1」；
+      和一个 slot（这是什么地方，从这几个里选）：${ART_SLOTS.join(' / ')}
     - 人物：每个人物一句外形描述（性别、年龄、发型、职业装束、手里拿着什么、神情），不要写背景；
       每个人物也给一个 slot（他在故事里是什么角色，从这几个里选）：${NPC_SLOTS.join(' / ')}
     slot 和 family 是给素材库做归类用的：领域相近的岗位（会计 ↔ 精算师、咖啡师 ↔ 调酒师）会把同一个地点、同一种角色的图互相复用，所以要选最贴切的那一个。
     - self：这个空间核心那位「从业者数字人」自己的形象——一位正在一线干这行、年轻、状态好的从业者，
       一句外形描述（性别、年龄、发型、这个职业真实的工作装束与随身器具、神情），不要写背景。他会成为这个空间的头像。
-    返回 JSON：{ "family": "", "self": "", "scenes": [ { "key": "<英文短 key>", "slot": "", "prompt": "", "steps": ["<步骤 id>"] } ], "npcs": [ { "who": "<与故事线里完全一致的称呼>", "slot": "", "prompt": "" } ] }
+    返回 JSON：{ "family": "", "self": "", "scenes": [ { "key": "<英文短 key>", "name": "<中文地点名>", "slot": "", "prompt": "", "steps": ["<步骤 id>"] } ], "npcs": [ { "who": "<与故事线里完全一致的称呼>", "slot": "", "prompt": "" } ] }
   `, modelId, 'Build · Plan Art');
   const family = ART_FAMILIES.includes(String(p.family) as any) ? String(p.family) : '其他';
   const self = String(p.self || '').slice(0, 300);
-  const scenes = (Array.isArray(p.scenes) ? p.scenes : []).map((s: any, i: number) => ({ key: String(s.key || `scene${i + 1}`).replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 24) || `scene${i + 1}`, slot: ART_SLOTS.includes(String(s.slot)) ? String(s.slot) : '其他', prompt: String(s.prompt || ''), steps: (Array.isArray(s.steps) ? s.steps : []).map(String) })).filter((s: any) => s.prompt).slice(0, 3);
+  const scenes = (Array.isArray(p.scenes) ? p.scenes : []).map((s: any, i: number) => ({ key: String(s.key || `scene${i + 1}`).replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 24) || `scene${i + 1}`, name: String(s.name || '').replace(/^场景\s*\d*$/, '').trim().slice(0, 16), slot: ART_SLOTS.includes(String(s.slot)) ? String(s.slot) : '其他', prompt: String(s.prompt || ''), steps: (Array.isArray(s.steps) ? s.steps : []).map(String) })).filter((s: any) => s.prompt).slice(0, 3);
   const npcs = (Array.isArray(p.npcs) ? p.npcs : []).map((n: any) => ({ who: String(n.who || ''), slot: NPC_SLOTS.includes(String(n.slot)) ? String(n.slot) : '其他', prompt: String(n.prompt || '') })).filter((n: any) => n.who && n.prompt && cast.includes(n.who)).slice(0, 3);
   return { family, self, scenes, npcs };
 }
@@ -373,7 +374,7 @@ export async function buildSpaceFromJd(jd: JdInput, modelId = DEFAULT_MODEL, pro
     // 工位底图不走库：它和这台设备强绑，复用到别的工位上就是答非所问。
     const meta = { family: art.family, domain: jd.title, profession: `${jd.company} · ${jd.title}` };
     const [sceneHits, npcHits, benchUrl, selfHit] = await Promise.all([
-      Promise.all(art.scenes.map(s => safe(sceneAssetReusing(s.prompt, `${tag}-${s.key}`, { ...meta, slot: s.slot })))),
+      Promise.all(art.scenes.map(s => safe(sceneAssetReusing(s.prompt, `${tag}-${s.key}`, { ...meta, slot: s.slot, title: s.name })))),
       Promise.all(art.npcs.map((n, i) => safe(npcAssetReusing(n.prompt, `${tag}-npc${i + 1}`, { ...meta, slot: n.slot })))),
       bench?.scenePrompt ? safe(makeSceneAsset(bench.scenePrompt, `${tag}-bench`)) : Promise.resolve(null),
       // 数字职人本人的脸永远现画、不进素材库：配角可以撞脸，主角撞脸就不是「一个具体的人」了

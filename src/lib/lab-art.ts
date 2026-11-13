@@ -195,7 +195,7 @@ export const ART_POOL = 3;
 // 收纳师、陪诊师的立绘就被塞进医疗健康的桶里复用。现在只认一份。
 export const ART_FAMILIES = FAMILIES;
 
-export interface ArtAsset { kind: 'scene' | 'npc'; family: string; slot: string; domain?: string; profession?: string; prompt?: string; url: string }
+export interface ArtAsset { kind: 'scene' | 'npc'; family: string; slot: string; domain?: string; profession?: string; prompt?: string; url: string; /** 地点名（「口腔诊室」）：角色表对账时拿它给地点起名，没有就只能叫「场景」 */ title?: string }
 
 /** 库里找一张能直接用的：同组合够 POOL 张就随机给一张，不够就返回 null（让调用方去生成新的） */
 export async function findArtAsset(kind: 'scene' | 'npc', family: string, slot: string, domain = ''): Promise<string | null> {
@@ -225,12 +225,12 @@ export async function registerArtAsset(a: ArtAsset): Promise<void> {
   if (!a.url || !a.family || !a.slot) return;
   try {
     const { supabaseAdmin } = await import('@/lib/supabase');
-    await supabaseAdmin.from('lab_art_assets').upsert({ kind: a.kind, family: a.family, slot: a.slot, domain: a.domain || '', profession: a.profession || '', prompt: (a.prompt || '').slice(0, 2000), url: a.url }, { onConflict: 'url' });
+    await supabaseAdmin.from('lab_art_assets').upsert({ kind: a.kind, family: a.family, slot: a.slot, domain: a.domain || '', profession: a.profession || '', prompt: (a.prompt || '').slice(0, 2000), url: a.url, ...(a.title ? { title: a.title.slice(0, 40) } : {}) }, { onConflict: 'url' });
   } catch (e) { console.warn('[lab-art] 登记图库失败：', (e as any)?.message); }
 }
 
 /** 先查库、没有再生成并登记 */
-export async function sceneAssetReusing(prompt: string, name: string, meta: { family: string; slot: string; domain?: string; profession?: string }): Promise<{ url: string; reused: boolean }> {
+export async function sceneAssetReusing(prompt: string, name: string, meta: { family: string; slot: string; domain?: string; profession?: string; title?: string }): Promise<{ url: string; reused: boolean }> {
   const hit = await findArtAsset('scene', meta.family, meta.slot);
   if (hit) return { url: hit, reused: true };
   const url = await makeSceneAsset(prompt, name);
