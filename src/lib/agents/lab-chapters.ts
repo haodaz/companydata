@@ -14,7 +14,7 @@ import { logTokenUsage, withCost } from '@/lib/token-logger';
 import { buildLesson } from '@/lib/lab-lesson';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { supabaseAdmin } from '@/lib/supabase';
-import { sanitizeTrace, type Sim, type SimStep, type SimTrace } from '@/lib/skill-sim';
+import { oneWho, sanitizeTrace, type Sim, type SimStep, type SimTrace } from '@/lib/skill-sim';
 import { slotMinutes, type StudioChapter } from '@/lib/lab-studio';
 import { applyCastArt, castKind, decodeCastRefs, decodeSimRefs, nextCastCode, stepsUsing, type CastKind, type CastMember } from '@/lib/lab-cast';
 import { drawCastAsset, findReusable, loadCast, registerAsset } from '@/lib/lab-cast-server';
@@ -379,7 +379,7 @@ function cleanSim(raw: any, ch: StudioChapter, ref: (v: any) => CastMember | nul
     const st: SimStep = { id, type: s.type, prompt: String(s.prompt) };
     if (s.scene?.text) {
       const who = ref(s.scene.who);
-      st.scene = { who: noYou(who?.kind === 'person' ? who.name : str(s.scene.who, 20)) || '同事', time: s.scene.time ? String(s.scene.time) : undefined, text: String(s.scene.text) };
+      st.scene = { who: oneWho(who?.kind === 'person' ? who.name : s.scene.who) || '同事', time: s.scene.time ? String(s.scene.time) : undefined, text: String(s.scene.text) };
     }
     const place = ref(s.place);
     if (place?.kind === 'place') st.place = place.id;

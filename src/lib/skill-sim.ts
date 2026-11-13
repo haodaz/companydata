@@ -32,6 +32,11 @@ export interface SimStep {
   props?: string[];               // 这一步用到的道具：角色表里道具（T）的 id
 }
 
+/** 一句台词只有一个说话人：「林老师、患者周然」「师傅 & 你」这种只留第一个、去掉体验者（11-13：被当成一个人物建档、按这串名字画了图） */
+export function oneWho(v: any): string {
+  return String(v || '').replace(/\s*[&＆和与]\s*你$/, '').replace(/^你\s*[&＆和与]\s*/, '').split(/\s*[、，,／/]\s*|\s*[&＆]\s*/)[0].trim().slice(0, 20);
+}
+
 /** 沉浸模式的美术：全景底图、各步骤的场景图、NPC 立绘（按 scene.who 匹配）。有 cover 就进沉浸模式（全屏场景 + NPC 对话 + 蒙版提问 + 工位 HUD） */
 export interface SimArt { cover: string; scenes?: Record<string, string>; npcs?: Record<string, string> }
 
@@ -119,11 +124,11 @@ export function sanitizeSim(raw: any): Sim | null {
   raw.steps.forEach((s: any, i: number) => {
     const type = TYPES.includes(s?.type) ? s.type as SimStepType : null;
     if (!type || !s.prompt) return;
-    if (type === 'bench') { const bench = sanitizeBenchSpec(s.bench); if (!bench) return; steps.push({ id: String(s.id || `s${i + 1}`), type, prompt: String(s.prompt), bench, scene: s.scene?.text ? { who: String(s.scene.who || '同事'), time: s.scene.time ? String(s.scene.time) : undefined, text: String(s.scene.text) } : undefined }); return; }
+    if (type === 'bench') { const bench = sanitizeBenchSpec(s.bench); if (!bench) return; steps.push({ id: String(s.id || `s${i + 1}`), type, prompt: String(s.prompt), bench, scene: s.scene?.text ? { who: oneWho(s.scene.who) || '同事', time: s.scene.time ? String(s.scene.time) : undefined, text: String(s.scene.text) } : undefined }); return; }
     const options: SimOption[] = (Array.isArray(s.options) ? s.options : []).map((o: any, j: number) => ({ id: String(o.id || `o${j + 1}`), label: String(o.label || '').trim(), detail: o.detail ? String(o.detail) : undefined })).filter((o: SimOption) => o.label);
     if (['choose', 'multi', 'classify', 'allocate'].includes(type) && options.length < 2) return;
     const step: SimStep = { id: String(s.id || `s${i + 1}`), type, prompt: String(s.prompt), options: options.length ? options : undefined };
-    if (s.scene?.text) step.scene = { who: String(s.scene.who || '同事'), time: s.scene.time ? String(s.scene.time) : undefined, text: String(s.scene.text) };
+    if (s.scene?.text) step.scene = { who: oneWho(s.scene.who) || '同事', time: s.scene.time ? String(s.scene.time) : undefined, text: String(s.scene.text) };
     if (type === 'multi') step.max = Math.min(options.length - 1, Math.max(1, parseInt(s.max) || 2));
     if (type === 'classify') {
       const labels = (Array.isArray(s.labels) ? s.labels : []).map((l: any, j: number) => ({ id: String(l.id || `l${j + 1}`), label: String(l.label || '') })).filter((l: any) => l.label);

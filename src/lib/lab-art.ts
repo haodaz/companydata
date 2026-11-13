@@ -198,7 +198,7 @@ export const ART_FAMILIES = FAMILIES;
 export interface ArtAsset { kind: 'scene' | 'npc'; family: string; slot: string; domain?: string; profession?: string; prompt?: string; url: string }
 
 /** 库里找一张能直接用的：同组合够 POOL 张就随机给一张，不够就返回 null（让调用方去生成新的） */
-export async function findArtAsset(kind: 'scene' | 'npc', family: string, slot: string): Promise<string | null> {
+export async function findArtAsset(kind: 'scene' | 'npc', family: string, slot: string, domain = ''): Promise<string | null> {
   // 场景不复用。地点感太强了：同样归在「餐饮零售 / 门店」，酒吧吧台和宠物店完全是两回事——
   // 省下那几张图的钱，换来一个「给狗护理却坐在酒吧里」，不划算。
   // 人物立绘不一样：一位穿工装的带教师傅放在哪个厂里都成立，继续复用。
@@ -207,9 +207,14 @@ export async function findArtAsset(kind: 'scene' | 'npc', family: string, slot: 
   if (!family || !slot || slot === '其他') return null;
   try {
     const { supabaseAdmin } = await import('@/lib/supabase');
-    const { data } = await supabaseAdmin.from('lab_art_assets').select('id, url, uses').eq('kind', kind).eq('family', family).eq('slot', slot).limit(ART_POOL + 5);
+    const { data } = await supabaseAdmin.from('lab_art_assets').select('id, url, uses, prompt, domain').eq('kind', kind).eq('family', family).eq('slot', slot).limit(40);
     if (!data || data.length < ART_POOL) return null;
-    const hit = data[Math.floor(Math.random() * data.length)];
+    // 11-13 反馈：同在「医疗健康」，牙医的带教老师拿到了推拿师傅（新中式盘扣短褂）的图；潜水中心拿到了古风师傅。
+    // 立绘只在同一个职业（domain = 职业名）里复用，古风扮相的不给现代职业用
+    const ancient = /古风|古装|汉服|长袍|佩剑|古代|武侠|宫廷|侠客|道袍/;
+    const pool = data.filter((a: any) => !ancient.test(a.prompt || '') && (!domain || a.domain === domain));
+    if (!pool.length) return null;
+    const hit = pool[Math.floor(Math.random() * pool.length)];
     await supabaseAdmin.from('lab_art_assets').update({ uses: (hit.uses || 1) + 1 }).eq('id', hit.id);
     return hit.url;
   } catch (e) { console.warn('[lab-art] 查图库失败，改为新生成：', (e as any)?.message); return null; }
@@ -234,7 +239,7 @@ export async function sceneAssetReusing(prompt: string, name: string, meta: { fa
 }
 
 export async function npcAssetReusing(prompt: string, name: string, meta: { family: string; slot: string; domain?: string; profession?: string }): Promise<{ url: string; reused: boolean }> {
-  const hit = await findArtAsset('npc', meta.family, meta.slot);
+  const hit = await findArtAsset('npc', meta.family, meta.slot, meta.domain || '');
   if (hit) return { url: hit, reused: true };
   const url = await makeNpcAsset(prompt, name);
   await registerArtAsset({ kind: 'npc', ...meta, prompt, url });
