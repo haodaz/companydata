@@ -49,31 +49,51 @@ export async function framesFromShots(shots: { t: number; url: string }[], max?:
   // 张数按作答时长（11-12）：每分钟约一张，30–60 张。原来固定 30 张，90 分钟的作答平均 3 分钟才看一张，中间的细节丢了
   if (!max) { const mins = shots.length ? (shots[shots.length - 1].t - shots[0].t) / 60 : 0; max = Math.min(60, Math.max(30, Math.round(mins))); }
   const pick = shots.length <= max ? shots : Array.from({ length: max }, (_, i) => shots[Math.round(i * (shots.length - 1) / (max - 1))]);
-  const out: { t: number; jpeg: Buffer }[] = [];
-  for (const s of pick) { try { out.push({ t: s.t, jpeg: Buffer.from(await (await fetch(s.url)).arrayBuffer()) }); } catch { /* 跳过 */ } }
-  return out;
+  return fetchShots(pick);
+}
+
+/** 下载截图（6 路并发，下载失败的跳过） */
+async function fetchShots(pick: { t: number; url: string }[]) {
+  const out: { t: number; jpeg: Buffer }[] = []; let i = 0;
+  const work = async () => { while (i < pick.length) { const s = pick[i++]; try { out.push({ t: s.t, jpeg: Buffer.from(await (await fetch(s.url)).arrayBuffer()) }); } catch { /* 跳过 */ } } };
+  await Promise.all(Array.from({ length: 6 }, work));
+  return out.sort((a, b) => a.t - b.t);
+}
+
+/** 用 AI 的那几段补看（11-13 宇宁：均匀抽帧漏了 AI 对话，AI 回答占满屏幕时看不到他问了什么）：
+ * 第一轮看出在用外部 AI 的帧，把它前后 radius 秒内还没看过的截图都找出来，离 AI 帧近的先看，最多 max 张（用户定 200）。 */
+export async function framesAroundAi(shots: { t: number; url: string }[], first: WorkEvent[], max = 200, radius = 30) {
+  const { seenOutsideAi } = await import('./outside-ai');
+  const ai = first.filter(e => e.type === 'screen' && seenOutsideAi(String(e.note || ''))).map(e => e.t);
+  if (!ai.length) return [];
+  const seen = new Set(first.map(e => e.t));
+  const near = shots.map(s => ({ s, d: Math.min(...ai.map(t => Math.abs(t - s.t))) })).filter(x => x.d <= radius && !seen.has(x.s.t));
+  return fetchShots(near.sort((a, b) => a.d - b.d).slice(0, max).map(x => x.s));
 }
 
 /** 逐帧看图 → 事件流（每帧一条 screen 事件：软件 / 动作 / 看到的内容），另给一段总体描述。
  * 11-10 潜历：30 帧一次看，输出超了 max_tokens，JSON 截断解析失败 → 一帧都没进事件流，报告说「没用 AI」（其实全程在 WorkBuddy 里用 AI）。
  * 改成 10 帧一批、每帧一句短话；解析失败时把完整的帧对象一个个捞出来。 */
-export async function describeFrames(frames: { t: number; jpeg: Buffer }[], taskBrief: string, institution?: string): Promise<{ events: WorkEvent[]; summary: string }> {
+export async function describeFrames(frames: { t: number; jpeg: Buffer }[], taskBrief: string, institution?: string, focus?: 'ai'): Promise<{ events: WorkEvent[]; summary: string }> {
   if (!frames.length) return { events: [], summary: '' };
   const { default: Anthropic } = await import('@anthropic-ai/sdk');
   const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
   const fmt = (t: number) => `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(t % 60).padStart(2, '0')}`;
   const events: WorkEvent[] = []; const sums: string[] = [];
-  for (let i = 0; i < frames.length; i += 10) {
-    const content: any[] = [{ type: 'text', text: `下面是一位候选人做一道真活时的屏幕截图（每张标了时间）。任务：${taskBrief.slice(0, 500)}\n请逐张写：用的是什么软件（Excel / CAD / IDE / 浏览器 / 聊天 AI / AI 智能体…，认得出名字就写名字）、在做什么、能看出他在看材料、问 AI（问了什么、AI 在干什么）、还是在写交付物；有没有整段粘贴、长时间停顿、切换多个工具交叉验证。action 和 note 各一句、各不超过 60 字。只写看得见的，看不清就写「看不清」。\n隐私：屏幕上的密码、账号、手机号、私人聊天、和这道题无关的个人信息一律不抄，写「个人信息，略」。\n只返回 JSON：{ "frames": [ { "t": 秒, "app": "", "action": "", "note": "" } ], "summary": "两句话总述这一段的工作方式" }` }];
+  // 10 张一批，4 批并发（补看最多 200 张，串行会超过交卷接口的时限）
+  const starts = Array.from({ length: Math.ceil(frames.length / 10) }, (_, k) => k * 10); let next = 0;
+  const batch = async (i: number) => {
+    const content: any[] = [{ type: 'text', text: `${focus === 'ai' ? '【补看】这些截图是他在用 AI 那几段前后补拍的，重点写：他问了 AI 什么（输入框或对话里看得清就照抄原话，40 字内）、AI 答了什么要点、他接下来拿去干了什么。\n' : ''}下面是一位候选人做一道真活时的屏幕截图（每张标了时间）。任务：${taskBrief.slice(0, 500)}\n请逐张写：用的是什么软件（Excel / CAD / IDE / 浏览器 / 聊天 AI / AI 智能体…，认得出名字就写名字）、在做什么、能看出他在看材料、问 AI（问了什么、AI 在干什么）、还是在写交付物；有没有整段粘贴、长时间停顿、切换多个工具交叉验证。action 和 note 各一句、各不超过 60 字。只写看得见的，看不清就写「看不清」。\n隐私：屏幕上的密码、账号、手机号、私人聊天、和这道题无关的个人信息一律不抄，写「个人信息，略」。\n只返回 JSON：{ "frames": [ { "t": 秒, "app": "", "action": "", "note": "" } ], "summary": "两句话总述这一段的工作方式" }` }];
     for (const f of frames.slice(i, i + 10)) { content.push({ type: 'text', text: `[${fmt(f.t)}]（t=${f.t}）` }); content.push({ type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: f.jpeg.toString('base64') } }); }
     const res = await client.messages.create({ model: VISION_MODEL, max_tokens: 6000, messages: [{ role: 'user', content }] });
     const u = res.usage;
     await logTokenUsage({ tool_name: 'work', task_name: 'Grade · 录屏看图', institution: institution || '', model_id: VISION_MODEL, usageMetadata: { promptTokenCount: (u.input_tokens || 0) + (u.cache_read_input_tokens || 0), candidatesTokenCount: u.output_tokens || 0, totalTokenCount: (u.input_tokens || 0) + (u.output_tokens || 0) }, stage: 'use' } as any).catch(() => {});
     const { frames: fr, summary } = parseFrames(res.content.filter((b): b is Extract<typeof b, { type: 'text' }> => b.type === 'text').map(b => b.text).join('\n'));
-    for (const f of fr) events.push({ t: Number(f.t) || 0, type: 'screen', note: [f.app, f.action, f.note].filter(Boolean).join(' · ').slice(0, 240) });
-    if (summary) sums.push(summary);
-  }
-  return { events: events.sort((a, b) => a.t - b.t), summary: sums.join(' ').slice(0, 900) };
+    for (const f of fr) events.push({ t: Number(f.t) || 0, type: 'screen', note: [f.app, f.action, f.note].filter(Boolean).join(' · ').slice(0, 240), ...(focus === 'ai' ? { extra: true } : {}) } as WorkEvent);
+    if (summary) sums[i / 10] = summary;
+  };
+  await Promise.all(Array.from({ length: 4 }, async () => { while (next < starts.length) await batch(starts[next++]); }));
+  return { events: events.sort((a, b) => a.t - b.t), summary: sums.filter(Boolean).join(' ').slice(0, 900) };
 }
 
 /** 模型回的 JSON 常带 ```json 围栏、偶尔被截断：先整段解析，不行就把完整的 {"t":…} 帧对象一个个捞出来 */
@@ -171,4 +191,17 @@ export async function readLinks(text: string, max = 4): Promise<string> {
     } catch { parts.push(`### 链接 ${u}（打不开，内容以上传的文件和截图为准）`); }
   }
   return parts.join('\n\n');
+}
+
+/** 截图两轮看：第一轮按时长均匀抽 30–60 张；第二轮把在用 AI 那几段前后的截图补看（最多 200 张）。第一轮花太久（> 150 秒）就不补，免得交卷超时 */
+export async function describeShots(shots: { t: number; url: string }[], taskBrief: string, institution?: string) {
+  const t0 = Date.now();
+  const fr = await framesFromShots(shots);
+  const d = await describeFrames(fr, taskBrief, institution);
+  let extra: WorkEvent[] = [];
+  if (Date.now() - t0 < 150_000) {
+    try { const more = await framesAroundAi(shots, d.events); if (more.length) extra = (await describeFrames(more, taskBrief, institution, 'ai')).events; }
+    catch (e) { console.warn('[work] 补看失败：', String((e as any)?.message).slice(0, 120)); }
+  }
+  return { events: [...d.events, ...extra].sort((a, b) => a.t - b.t), summary: d.summary, n: fr.length, extra: extra.length };
 }
