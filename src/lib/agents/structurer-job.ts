@@ -122,7 +122,8 @@ async function structureChunk(markdown: string, company: string, hint: string, m
     const today = new Date().toISOString().slice(0, 10);
     // 提示词顺序为「上下文缓存」优化：固定指令与 schema 前置，变量（公司 / 提示 / 日期 / 正文）后置。
     // SCOPE 只有两种取值，留在前缀里不影响同类任务的命中。
-    const prompt = `
+    // 11-14：横线以上单独当 prefix 打显式缓存标记（光放在前面，千问隐式缓存实测命不中）
+    const prefix = `
       You are an expert recruiting-data extraction AI.
       Your task is to read raw markdown scraped from a company's official recruiting pages and extract EVERY job opening into structured JSON.
 
@@ -157,7 +158,8 @@ ${jobSchemaForPrompt()}
           }
         ]
       }
-
+`;
+    const prompt = `
       ──────────────────────────────────────
       Company: ${company || 'Unknown (infer from the page)'}
       ${hint ? `Focus hint from the user (team / role / location of interest): ${hint}` : ''}
@@ -168,7 +170,7 @@ ${jobSchemaForPrompt()}
       ${markdown.substring(0, 500000)}
     `;
 
-    const result = await generateCheap(prompt, modelId, { jsonMode: true, fast: true });
+    const result = await generateCheap(prompt, modelId, { jsonMode: true, fast: true, prefix });
 
     await logTokenUsage({ tool_name: 'structurer-job', task_name: `Extract Jobs${hint ? ` · ${hint}` : ''}`, institution: company, model_id: result.model || modelId, usageMetadata: result.usageMetadata, success: true, batch_id: batchId })
       .catch(e => console.error('Token logging failed', e));

@@ -97,7 +97,9 @@ export async function resolveGroundingRedirects<T>(value: T): Promise<T> {
   return replace(value);
 }
 
-export async function searchJson(prompt: string, modelId: string, log: Pick<TokenUsageParams, 'tool_name' | 'task_name' | 'institution' | 'batch_id'>, opts: { lenient?: boolean } = {}): Promise<{ parsed: any; searchQueries: string[]; sources: { title: string; url: string }[] }> {
+/** opts.prefix：每次都一样的说明 / 清单（11-14 提示缓存，见 llm-client GenOptions.prefix）；Gemini 自己的检索分支直接拼在最前面 */
+export async function searchJson(prompt: string, modelId: string, log: Pick<TokenUsageParams, 'tool_name' | 'task_name' | 'institution' | 'batch_id'>, opts: { lenient?: boolean; prefix?: string } = {}): Promise<{ parsed: any; searchQueries: string[]; sources: { title: string; url: string }[] }> {
+  const prefix = opts.prefix;
   let text: string;
   let sources: { title: string; url: string }[] = [];
   let usageMetadata: any;
@@ -105,7 +107,7 @@ export async function searchJson(prompt: string, modelId: string, log: Pick<Toke
 
   if (modelId.startsWith('qwen') || modelId.startsWith('claude-')) {
     // 阿里云：通义千问 + 联网搜索（国内企业用这个，便宜、搜得到国内站点）；Claude 走 web_search 工具（海外企业，10-26 起），来源同样附在「搜索来源」里
-    const result = await generateContent(prompt, modelId, { webSearch: true, jsonMode: modelId.startsWith('claude-') });
+    const result = await generateContent(prompt, modelId, { webSearch: true, jsonMode: modelId.startsWith('claude-'), prefix });
     // 千问自己写进 JSON 的网址常是编的，真的链接在附带的「搜索来源」里：拆出来一并返回，调用方拿它校对
     const tail = result.text.match(/\n\n## 搜索来源\n([\s\S]*)$/)?.[1] || '';
     sources = tail.split('\n').map(l => l.match(/^\[\d+\]\s*(.*?)\s+(https?:\/\/\S+)\s*$/)).filter(Boolean).map(m => ({ title: m![1].trim(), url: m![2] }));
@@ -123,7 +125,7 @@ export async function searchJson(prompt: string, modelId: string, log: Pick<Toke
       const model = genAI.getGenerativeModel({ model: attempts[i], tools: [{ googleSearch: {} }] });
       let result: any;
       try {
-        result = await model.generateContent(prompt);
+        result = await model.generateContent(prefix ? `${prefix}\n\n${prompt}` : prompt);
       } catch (e: any) {
         // 503 超时 / 429 限流 / 500：等一下换下一档（最后一档是 3.6-flash）再试；欠费 402 直接抛
         const msg = String(e?.message || '');
@@ -142,7 +144,7 @@ export async function searchJson(prompt: string, modelId: string, log: Pick<Toke
       await logTokenUsage({ ...log, model_id: attempts[i], usageMetadata, success: false, error_message: 'empty response', search_calls: 1 }).catch(() => {});
     }
   } else {
-    const result = await generateContent(prompt, modelId, { jsonMode: true, webSearch: true, fast: true });
+    const result = await generateContent(prompt, modelId, { jsonMode: true, webSearch: true, fast: true, prefix });
     text = result.text;
     usageMetadata = result.usageMetadata;
   }

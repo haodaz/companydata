@@ -57,19 +57,18 @@ export async function findOccupationGaps(opts: { model: string; sinceDays?: numb
   const raw: any[] = [];
   for (let i = 0; i < titles.length; i += 120) {
     const chunk = titles.slice(i, i + 120);
-    const r = await generateContent(`职业库现有职业（括号里是别名）：
+    // 职业清单 + 规则每批一样，当缓存前缀，岗位名放后面（11-14 提示缓存）
+    const r = await generateContent(`岗位名：
+${chunk.map(([t, n]) => `${t}（${n}）`).join('\n')}`, opts.model, { jsonMode: true, prefix: `职业库现有职业（括号里是别名）：
 ${occText}
 
-下面是招聘岗位名（后面是岗位数）。找出职业库里没有对应职业的岗位名，归并成「新职业建议」。
+最后面是招聘岗位名（后面是岗位数）。找出职业库里没有对应职业的岗位名，归并成「新职业建议」。
 规则：
 - 职业库里已有同一个职业、近义职业或别名能覆盖的，不算缺（如「售前工程师」已被「数字化解决方案设计师」覆盖，「AI 应用开发」已被「生成式人工智能系统应用员」覆盖）。
 - 一个岗位名只有在「做的就是这个职业」时才归进去；方向不明、拿不准的不要归，宁缺毋滥。不要把泛泛的「研发工程师」「算法工程师」塞进具体职业。
 - 新职业名用行业通行的规范叫法，不带公司、城市、级别、届别；至少要有一个明确的专业方向（如「数字 IC 验证工程师」「药物警戒专员」）。
 - 公司内部的项目名、产品名、团队名不是职业。
-只返回 JSON：{"items":[{"name":"新职业名","name_en":"English name","titles":["归进来的岗位名，原样照抄"],"why":"现有职业为什么覆盖不了（一句话）"}]}
-
-岗位名：
-${chunk.map(([t, n]) => `${t}（${n}）`).join('\n')}`, opts.model, { jsonMode: true });
+只返回 JSON：{"items":[{"name":"新职业名","name_en":"English name","titles":["归进来的岗位名，原样照抄"],"why":"现有职业为什么覆盖不了（一句话）"}]}` });
     await LLM_LOG('Occupation Gaps · Group', r.model || opts.model, r.usageMetadata);
     raw.push(...(parseJsonLoose(r.text)?.items || []));
   }
@@ -90,17 +89,15 @@ ${chunk.map(([t, n]) => `${t}（${n}）`).join('\n')}`, opts.model, { jsonMode: 
   const aliasHints: AliasHint[] = [];
   for (let i = 0; i < cands.length; i += 25) {
     const chunk = cands.slice(i, i + 25);
-    const r = await generateContent(`职业库现有职业（括号里是别名）：
+    const r = await generateContent(chunk.map((c, j) => `${j + 1}. ${c.name}：${c.titles.join('、')}`).join('\n'), opts.model, { jsonMode: true, prefix: `职业库现有职业（括号里是别名）：
 ${occText}
 
-下面是「新职业建议」，每条带归进来的岗位名。逐条核对：
+最后面是「新职业建议」，每条带归进来的岗位名。逐条核对：
 1. same_as：职业库里如果已有「同一个职业」（只是换个叫法、职责基本一样），填那个职业的名称，必须从上面清单里原样照抄；只是同一大类的不算（如「人工智能工程技术人员」不算覆盖「SLAM 算法工程师」），没有就填 null。
 2. keep_titles：只留下确实属于这个职业的岗位名；方向不明、属于别的职业的去掉。
 3. valid：是不是一个真实存在、有明确专业方向的职业（公司项目名、泛称、凑数的都是 false）。
 4. aliases：这个职业常见的其他叫法（最多 4 个）。
-只返回 JSON：{"items":[{"n":序号,"same_as":null,"keep_titles":[],"valid":true,"aliases":[]}]}
-
-${chunk.map((c, j) => `${j + 1}. ${c.name}：${c.titles.join('、')}`).join('\n')}`, opts.model, { jsonMode: true });
+只返回 JSON：{"items":[{"n":序号,"same_as":null,"keep_titles":[],"valid":true,"aliases":[]}]}` });
     await LLM_LOG('Occupation Gaps · Verify', r.model || opts.model, r.usageMetadata);
     for (const v of parseJsonLoose(r.text)?.items || []) {
       const c = chunk[Number(v.n) - 1];

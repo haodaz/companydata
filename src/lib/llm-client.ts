@@ -32,8 +32,21 @@ export interface LLMResponse {
     webSearchRequests?: number;
     /** llm-client 兜底记账的记录编号（token-logger 回填） */
     __logId?: number;
+    /** 提示缓存（11-14）：命中读取 / 写入的 token（都已算在 promptTokenCount 里），记账时按各家的缓存价算 */
+    cacheReadTokens?: number;
+    cacheWriteTokens?: number;
+    /** explicit = 我们打了缓存标记（千问显式：写 125%、读 10%）；implicit = 平台自己缓存的（千问隐式：读 20%） */
+    cacheMode?: 'explicit' | 'implicit';
   };
 }
+
+/**
+ * prefix：每次都一样的那段开头（规则、分类表、示例），放在最前面并打缓存标记（11-14 提示缓存）。
+ * 同一段 prefix 在 5 分钟内再用，这一段只按原价的零头收：Claude Opus / Sonnet 5.5 读 5%、千问显式读 10%（写 125%）。
+ * 千问实测：不打标记的隐式缓存同一段 8,400 token 的开头连发两次都没命中；打了标记第二次整段命中。
+ * prefix 要真的一字不差（别把时间、企业名、这次的数据放进去），并且够长才有用：千问 ≥1024 token、Claude 5.x ≥512 token，短了照常处理、不缓存。
+ */
+export type GenOptions = { jsonMode?: boolean; webSearch?: boolean; fast?: boolean; temperature?: number; prefix?: string };
 
 // ──── Provider detection ────
 
@@ -66,18 +79,20 @@ export function resolveModel(modelId?: string | null): string {
 export async function generateContent(
   prompt: string,
   modelId: string,
-  /** temperature：目前只有千问接了（打标签这类分类任务设 0，数据部门的提示词要求） */
-  options?: { jsonMode?: boolean; webSearch?: boolean; fast?: boolean; temperature?: number },
+  /** temperature：目前只有千问接了（打标签这类分类任务设 0，数据部门的提示词要求）；prefix 见 GenOptions */
+  options?: GenOptions,
 ): Promise<LLMResponse> {
   const resolvedModelId = resolveModel(modelId);
   // 本地「只用免费额度」：千问以外的模型（OpenAI / Gemini 都是付费的）一律不调
   if (process.env.DASHSCOPE_FREE_ONLY === '1' && !/^(qwen|deepseek)/.test(resolvedModelId)) throw new Error(`已开「只用免费额度」，不调用付费模型 ${resolvedModelId}`);
   let res: LLMResponse;
-  if (isOpenAIModel(resolvedModelId)) res = await generateOpenAI(prompt, resolvedModelId, options);
+  // OpenAI / Gemini 都是平台自动按前缀缓存，prefix 直接拼在最前面就行
+  const joined = options?.prefix ? `${options.prefix}\n\n${prompt}` : prompt;
+  if (isOpenAIModel(resolvedModelId)) res = await generateOpenAI(joined, resolvedModelId, options);
   else if (isClaudeModel(resolvedModelId)) res = await generateClaude(prompt, resolvedModelId, options);
   // DeepSeek 也走阿里云百炼（同一个 DashScope key，国内可用）
   else if (/^(qwen|deepseek)/.test(resolvedModelId)) res = await generateQwen(prompt, resolvedModelId, options);
-  else res = await generateGemini(prompt, resolvedModelId, options);
+  else res = await generateGemini(joined, resolvedModelId, options);
   await autoLog(res, resolvedModelId, options);
   return res;
 }
@@ -145,8 +160,10 @@ async function callDashScope(base: string, key: string, model: string, prompt: s
  * 兼容接口同样支持 enable_search。返回值转成原生接口的样子，下游不用改。
  */
 const compatModels = new Set<string>();
-async function callCompat(base: string, key: string, model: string, prompt: string, parameters: Record<string, any>): Promise<any> {
-  const body: Record<string, any> = { model, messages: [{ role: 'user', content: prompt }] };
+async function callCompat(base: string, key: string, model: string, prompt: string, parameters: Record<string, any>, prefix?: string): Promise<any> {
+  // 有 prefix 就拆成两块、前一块打显式缓存标记（百炼显式缓存只在兼容接口的 content 块上认）
+  const content = prefix ? [{ type: 'text', text: prefix, cache_control: { type: 'ephemeral' } }, { type: 'text', text: prompt }] : prompt;
+  const body: Record<string, any> = { model, messages: [{ role: 'user', content }] };
   if (parameters.enable_search) { body.enable_search = true; body.search_options = parameters.search_options; }
   if (parameters.response_format) body.response_format = parameters.response_format;
   if ('enable_thinking' in parameters) body.enable_thinking = parameters.enable_thinking;
@@ -164,10 +181,13 @@ async function callCompat(base: string, key: string, model: string, prompt: stri
       const err: any = new Error(`DashScope ${res.status}: ${t.slice(0, 300)}`);
       err.status = res.status; err.freeTierOut = res.status === 403 && /FreeTierOnly|AllocationQuota/i.test(t);
       if (res.status === 429 || res.status >= 500) { lastErr = err; continue; }
+      // 哪个模型不认缓存标记（400）：合成一段再发，活照样干
+      if (res.status === 400 && Array.isArray(body.messages[0].content)) { body.messages = [{ role: 'user', content: `${prefix}\n\n${prompt}` }]; lastErr = err; continue; }
       throw err;
     }
     const j: any = await res.json();
-    return { output: { choices: [{ message: { content: j.choices?.[0]?.message?.content || '' } }], search_info: j.search_info }, usage: { input_tokens: j.usage?.prompt_tokens, output_tokens: j.usage?.completion_tokens, total_tokens: j.usage?.total_tokens } };
+    const d = j.usage?.prompt_tokens_details || {};
+    return { output: { choices: [{ message: { content: j.choices?.[0]?.message?.content || '' } }], search_info: j.search_info }, usage: { input_tokens: j.usage?.prompt_tokens, output_tokens: j.usage?.completion_tokens, total_tokens: j.usage?.total_tokens, prompt_tokens_details: { cached_tokens: d.cached_tokens || 0, cache_creation_input_tokens: d.cache_creation_input_tokens || 0 } } };
   }
   throw lastErr;
 }
@@ -175,8 +195,13 @@ async function callCompat(base: string, key: string, model: string, prompt: stri
 async function generateQwen(
   prompt: string,
   modelId: string,
-  options?: { jsonMode?: boolean; webSearch?: boolean; fast?: boolean; temperature?: number },
+  options?: GenOptions,
 ): Promise<LLMResponse> {
+  // 有 prefix 就走兼容接口打显式缓存标记（只在那边生效）；原生接口没有 content 块，只能合成一段。
+  // 联网检索时不打：实测每次都写入、下一次却命不中（搜回来的内容插在了开头前面），白付 25% 写入费
+  const whole = options?.prefix ? `${options.prefix}\n\n${prompt}` : prompt;
+  const prefix = options?.webSearch ? undefined : options?.prefix;
+  if (options?.prefix && !prefix) prompt = whole;
   const parameters: Record<string, any> = { result_format: 'message' };
   if (options?.temperature !== undefined) parameters.temperature = options.temperature;
   if (options?.webSearch) {
@@ -199,13 +224,13 @@ async function generateQwen(
       try {
         // qwen3 系列商用版默认不思考，这里显式关掉，免得哪个快照默认开着、白耗额度
         const p = /^qwen3/.test(m) ? { ...parameters, enable_thinking: false } : parameters;
-        if (compatModels.has(m)) data = await callCompat(freeBase, freeKey, m, prompt, p);
+        if (compatModels.has(m) || prefix) data = await callCompat(freeBase, freeKey, m, prompt, p, prefix);
         else {
-          try { data = await callDashScope(freeBase, freeKey, m, prompt, p); }
+          try { data = await callDashScope(freeBase, freeKey, m, whole, p); }
           catch (e: any) {
             if (e?.status !== 400 || !/url error/i.test(String(e.message))) throw e;
             compatModels.add(m);
-            data = await callCompat(freeBase, freeKey, m, prompt, p);
+            data = await callCompat(freeBase, freeKey, m, prompt, p, prefix);
           }
         }
         used = m; break;
@@ -223,7 +248,7 @@ async function generateQwen(
     const base = (process.env.DASHSCOPE_BASE_URL || 'https://dashscope.aliyuncs.com').replace(/\/compatible-mode\/v1\/?$/, '').replace(/\/$/, '');
     // 付费 key 也一样：qwen3.x 系列原生接口报「url error」，走 OpenAI 兼容接口（2026-10-24，批量解析样本用 qwen3.7-plus 撞上）
     const p = /^qwen3/.test(modelId) ? { ...parameters, enable_thinking: false } : parameters;
-    data = /^qwen3/.test(modelId) || compatModels.has(modelId) ? await callCompat(base, key, modelId, prompt, p) : await callDashScope(base, key, modelId, prompt, parameters);
+    data = /^qwen3/.test(modelId) || compatModels.has(modelId) || prefix ? await callCompat(base, key, modelId, prompt, p, prefix) : await callDashScope(base, key, modelId, whole, parameters);
   }
   let text: string = data.output?.choices?.[0]?.message?.content || '';
   const sources: any[] = data.output?.search_info?.search_results || [];
@@ -238,6 +263,10 @@ async function generateQwen(
       promptTokenCount: u.input_tokens || 0,
       candidatesTokenCount: u.output_tokens || 0,
       totalTokenCount: u.total_tokens || (u.input_tokens || 0) + (u.output_tokens || 0),
+      // 命中 / 写入都包含在 input_tokens 里（原生接口也会回 prompt_tokens_details.cached_tokens）
+      cacheReadTokens: u.prompt_tokens_details?.cached_tokens || 0,
+      cacheWriteTokens: u.prompt_tokens_details?.cache_creation_input_tokens || 0,
+      cacheMode: prefix ? 'explicit' : 'implicit',
     },
   };
 }
@@ -245,7 +274,7 @@ async function generateQwen(
 // ──── Claude（Anthropic）implementation ────
 // 2026-10-18 加：教案 / 讲解这类长文本生成用 Claude（用户：「claude 有钱，抓紧用」）。密钥 ANTHROPIC_API_KEY（.env.local，和 programcrawler 同一把）。
 // Opus 5.5 思考默认开着、effort 默认 medium；jsonMode 靠系统提示约束（这一代不支持 assistant 预填）。
-async function generateClaude(prompt: string, modelId: string, options?: { jsonMode?: boolean; webSearch?: boolean; fast?: boolean }): Promise<LLMResponse> {
+async function generateClaude(prompt: string, modelId: string, options?: GenOptions): Promise<LLMResponse> {
   const { default: Anthropic } = await import('@anthropic-ai/sdk');
   // 国内连 Claude 时通时不通（2026-10-28）：重试只留 1 次，并且 20 秒内一个字节都没回就放弃（首字节看门狗），好让上层尽快换千问兜底
   const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY, maxRetries: 1 });
@@ -260,7 +289,8 @@ async function generateClaude(prompt: string, modelId: string, options?: { jsonM
     ...(system ? { system } : {}),
     // Haiku 4.5 只支持老版搜索工具；批量画像用它省钱，每次最多搜 2 次（搜回来的网页全文按输入 token 计费，10-26 Sonnet 搜 5 次一家 $1.4）
     ...(options?.webSearch ? { tools: [/haiku-4-5/.test(modelId) ? { type: 'web_search_20250305', name: 'web_search', max_uses: 2 } : { type: 'web_search_20260209', name: 'web_search', max_uses: 5 }] as any } : {}),
-    messages: [{ role: 'user', content: prompt }],
+    // prefix 单独成块并打断点：同一段开头 5 分钟内再发，按缓存价读（Opus / Sonnet 5.5 是原价的 5%）
+    messages: [{ role: 'user', content: options?.prefix ? [{ type: 'text', text: options.prefix, cache_control: { type: 'ephemeral' } }, { type: 'text', text: prompt }] : prompt }],
   });
   let started = false;
   stream.on('streamEvent', () => { started = true; });
@@ -285,6 +315,8 @@ async function generateClaude(prompt: string, modelId: string, options?: { jsonM
       candidatesTokenCount: u.output_tokens || 0,
       totalTokenCount: (u.input_tokens || 0) + (u.cache_read_input_tokens || 0) + (u.cache_creation_input_tokens || 0) + (u.output_tokens || 0),
       webSearchRequests: u.server_tool_use?.web_search_requests || 0,
+      cacheReadTokens: u.cache_read_input_tokens || 0,
+      cacheWriteTokens: u.cache_creation_input_tokens || 0,
     },
   };
 }
@@ -315,6 +347,7 @@ async function generateGemini(
       promptTokenCount: usage?.promptTokenCount || 0,
       candidatesTokenCount: usage?.candidatesTokenCount || 0,
       totalTokenCount: usage?.totalTokenCount || 0,
+      cacheReadTokens: (usage as any)?.cachedContentTokenCount || 0,   // Gemini 自动按前缀缓存，命中的算在 promptTokenCount 里
     },
   };
 }
@@ -405,6 +438,7 @@ async function generateOpenAI(
       promptTokenCount: usage.input_tokens || 0,
       candidatesTokenCount: usage.output_tokens || 0,
       totalTokenCount: (usage.input_tokens || 0) + (usage.output_tokens || 0),
+      cacheReadTokens: usage.input_tokens_details?.cached_tokens || 0,   // OpenAI 自动按前缀缓存
     },
   };
 }
@@ -420,7 +454,7 @@ export const cheapModel = () => process.env.CHEAP_MODEL || 'qwen-plus';
 export async function generateCheap(
   prompt: string,
   fallbackModel: string,
-  options?: { jsonMode?: boolean; fast?: boolean; temperature?: number },
+  options?: GenOptions,
 ): Promise<LLMResponse> {
   const cheap = cheapModel();
   try {

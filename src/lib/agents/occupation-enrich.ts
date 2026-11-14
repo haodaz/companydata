@@ -28,8 +28,9 @@ import { CAREER_CATEGORY_LABELS, CAREER_MID_CATEGORIES, SALARY_YEAR_LABELS, SALA
 export type ResearchHook = (prompt: string, task: string) => Promise<any>;
 let researchHook: ResearchHook | null = null;
 export const setResearchHook = (h: ResearchHook | null) => { researchHook = h; };
-const ask = async (prompt: string, modelId: string, meta: { tool_name: any; task_name: string; institution?: string; batch_id?: number }) =>
-  researchHook ? { parsed: await researchHook(prompt, meta.task_name), searchQueries: [] as string[] } : searchJson(prompt, modelId, meta);
+// prefix：每次都一样的说明和清单，当缓存前缀放最前面（11-14 提示缓存）；钩子拿到的是合在一起的整段
+const ask = async (prompt: string, modelId: string, meta: { tool_name: any; task_name: string; institution?: string; batch_id?: number }, prefix?: string) =>
+  researchHook ? { parsed: await researchHook(prefix ? `${prefix}\n\n${prompt}` : prompt, meta.task_name), searchQueries: [] as string[] } : searchJson(prompt, modelId, meta, { prefix });
 
 export interface OccupationResearch { fields: Record<string, any>; salaries: { year: string; salary: number; source_url?: string | null }[]; sources: Record<string, string>; searchQueries: string[]; raw: any }
 
@@ -37,10 +38,9 @@ export async function researchOccupation(o: { name: string; name_lang_en?: strin
   const cats = Object.entries(CAREER_CATEGORY_LABELS).map(([v, n]) => `${v}=${n}`).join('; ');
   const mids = Object.entries(CAREER_MID_CATEGORIES).map(([v, [n, c]]) => `${v}=${n}(${c})`).join('; ');
   const years = Object.entries(SALARY_YEAR_LABELS).map(([v, n]) => `${v}=${n}`).join('; ');
-  const prompt = `
-你是职业研究员，为中国大学生 / 求职者的「职业百科」整理一个职业的档案。用联网检索核实，面向中国就业市场。
-
-职业：${o.name}${o.name_lang_en ? `（${o.name_lang_en}）` : ''}${o.aliases?.length ? `；也叫：${o.aliases.join('、')}` : ''}
+  // 说明 + 三张清单（大类 / 小类 / 91 个专业）每个职业都一样，当缓存前缀；这次的职业放最后
+  const prefix = `
+你是职业研究员，为中国大学生 / 求职者的「职业百科」整理一个职业的档案（职业见最后一行）。用联网检索核实，面向中国就业市场。
 
 返回 JSON（找不到的填 null，不要编造）：
 {
@@ -61,7 +61,8 @@ export async function researchOccupation(o: { name: string; name_lang_en?: strin
 }
 规则：只报告检索到或有把握的事实；薪资必须来自可查的数据源并在 sources 里给链接，查不到就 null；中文字段用中文。
 `;
-  const { parsed, searchQueries } = await ask(prompt, cn(modelId), { tool_name: 'occupation', task_name: 'Occupation Research', institution: o.name, batch_id: batchId });
+  const prompt = `职业：${o.name}${o.name_lang_en ? `（${o.name_lang_en}）` : ''}${o.aliases?.length ? `；也叫：${o.aliases.join('、')}` : ''}`;
+  const { parsed, searchQueries } = await ask(prompt, cn(modelId), { tool_name: 'occupation', task_name: 'Occupation Research', institution: o.name, batch_id: batchId }, prefix);
   const p = parsed || {};
   const fields: Record<string, any> = {};
   for (const k of ['name', 'name_lang_en', 'aliases', 'career_category', 'career_mid_category', 'intro', 'responsibility', 'position_requirement', 'recent_year_monthly_salary', 'relevant_certificates', 'relevant_celebrities', 'relevant_fos_ids']) {

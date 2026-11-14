@@ -107,11 +107,10 @@ const PROFILE_KEYS_FROM_PAGES = [
 ];
 
 export async function extractFromPages(company: { name: string; name_en?: string | null }, markdown: string, modelId: string, batchId: number) {
-  const prompt = `
-You are a data extraction engine. Below is the Markdown of this company's OFFICIAL web pages (each section starts with "### Source: [page](url)").
+  // 说明和字段格式每家都一样，当缓存前缀；企业名和网页放后面（11-14 提示缓存）
+  const prefix = `
+You are a data extraction engine. At the end is the Markdown of a company's OFFICIAL web pages (each section starts with "### Source: [page](url)").
 Extract company profile facts, the management team and recent news items. Do not use outside knowledge; only what the pages say.
-
-Company: ${companyLine(company)}
 
 Return ONLY a JSON object:
 {
@@ -128,11 +127,13 @@ Field notes:
 - news: dated items from the news / press pages, newest first, at most 20, each "description" 1–2 sentences in Chinese; "kind" one of ${Object.keys(NEWS_KIND_LABELS).join('|')}; "publish_date" YYYY-MM-DD; "publish_source" e.g. "官网新闻中心"; "source_url" the article url if present else the page url.
 - products: nameable products / product lines / brands / own apps / services the pages present (核心产品), at most 12, flagship first. "name" as the company writes it; "category" 中文品类 (e.g. 数码钢琴 / 电子鼓 / SaaS 平台 / 咨询服务); "tech_keywords" 2–5 中文 or English technology tags you infer (e.g. 音频 DSP, 嵌入式, 计算机视觉, LLM, 云原生); "kind" one of ${Object.keys(PRODUCT_KIND_LABELS).join('|')}; "status" active|discontinued|unknown; "is_flagship" true for the headline / best-known ones; "description" one sentence 中文 (谁用、解决什么); "source_url" the page url.
 - summary: 3–6 sentences in Chinese describing what the pages contained, what was extracted, and what was missing (like a QA note for a data colleague).
+`;
+  const prompt = `Company: ${companyLine(company)}
 
 Markdown:
 ${markdown.slice(0, EXTRACT_CAP)}
 `;
-  const res = await generateContent(prompt, modelId, { jsonMode: true, fast: true });
+  const res = await generateContent(prompt, modelId, { jsonMode: true, fast: true, prefix });
   await logTokenUsage({ tool_name: TOOL, task_name: 'Extract From Official Pages', institution: company.name, model_id: modelId, usageMetadata: res.usageMetadata, batch_id: batchId }).catch(() => {});
   const parsed = parseJsonLoose(res.text);
   return {

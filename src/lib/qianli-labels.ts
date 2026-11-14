@@ -41,16 +41,15 @@ const jdOf = (j: QianliInput) => flat(j.responsibilities, 2500);
 export async function tagJobFunctions(jobs: QianliInput[], model: string): Promise<Map<number, JobFunction>> {
   const input = jobs.map(j => ({ id: String(j.id), 岗位名称: j.name, JD: flat(j.responsibilities, 2500) }));
   const names = JOB_FUNCTION_TAGS.map(t => t.name);
-  const prompt = `${JOB_FUNCTION_PROMPT}
+  // 职能定义 + 输出要求每批一样，当缓存前缀（11-14：一次 8,400 token 里 8,400 都是它，命中后按 10% 收）
+  const prefix = `${JOB_FUNCTION_PROMPT}
 
 # 输出要求的调整（以这里为准）
 上面「输出格式」里的 value 一律改为填写**中文职能名**，只能是这 26 个之一、原样照抄：${names.join('、')}；无匹配填 "无匹配"。不要填编码，程序会换成编码。
 带 id 的岗位数组时返回：{"results": [{"id": "<原样返回>", "岗位名称": "<原样抄回>", "label": "<中文职能名>", "confidence": "高|中|低", "reason": "<不超过30字>"}]}
-每个岗位单独判断，id 和岗位名称必须原样对应同一个输入岗位。
-
-# 输入（带 id 的岗位数组）
-${JSON.stringify(input)}`;
-  const r = await generateContent(prompt, model, { jsonMode: true, temperature: 0 });
+每个岗位单独判断，id 和岗位名称必须原样对应同一个输入岗位。`;
+  const r = await generateContent(`# 输入（带 id 的岗位数组）
+${JSON.stringify(input)}`, model, { jsonMode: true, temperature: 0, prefix });
   await logTokenUsage({ tool_name: 'job-tagging', task_name: 'Qianli Job Function', institution: jobs[0]?.company || '', model_id: r.model || model, usageMetadata: r.usageMetadata, success: true }).catch(() => {});
   const byName = new Map(JOB_FUNCTION_TAGS.map(t => [t.name.replace(/\s+/g, '').toLowerCase(), t.value]));
   const out = new Map<number, JobFunction>();
@@ -83,16 +82,17 @@ export async function tagJobSpecialties(jobs: QianliInput[], model: string): Pro
   const batchHead = SPECIALTY_BATCH.slice(0, SPECIALTY_BATCH.indexOf('（判定标准同上）'));
   const batchOut = SPECIALTY_BATCH.slice(SPECIALTY_BATCH.indexOf('【输出格式】'));
   const lines = jobs.map((j, i) => `${i + 1}) 岗位ID：${j.id}｜岗位名称：${j.name}｜公司：${j.company || ''}｜岗位职责描述：${flat(j.responsibilities, 2500) || '（空）'}｜要求描述：${flat(j.overview, 1500) || '（空）'}`).join('\n');
-  const prompt = `${SPECIALTY_SYSTEM}
-
-${batchHead.replace('{n}', String(jobs.length)).replace(/1\) 岗位ID：\{id1\}[\s\S]*$/, lines)}
+  // 标准、示例、输出格式每批一样，挪到前面当缓存前缀；这一批的岗位放最后（11-14 提示缓存，原来岗位夹在中间，前缀每批都不同）
+  const prefix = `${SPECIALTY_SYSTEM}
 
 ${standards}
 ${SPECIALTY_EXAMPLES}
 
 ${batchOut}
 为了能用 JSON 模式返回，请把数组放在 {"items": [...]} 里。`;
-  const r = await generateContent(prompt, model, { jsonMode: true, temperature: 0 });
+  const prompt = `${batchHead.replace('{n}', String(jobs.length)).replace(/1\) 岗位ID：\{id1\}[\s\S]*$/, lines)}
+（判定标准、示例和输出格式见上文）`;
+  const r = await generateContent(prompt, model, { jsonMode: true, temperature: 0, prefix });
   await logTokenUsage({ tool_name: 'job-tagging', task_name: 'Qianli Specialty', institution: jobs[0]?.company || '', model_id: r.model || model, usageMetadata: r.usageMetadata, success: true }).catch(() => {});
   const parsed = parseJsonLoose(r.text);
   const items: any[] = Array.isArray(parsed) ? parsed : parsed?.items || parsed?.results || [];

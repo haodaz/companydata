@@ -51,7 +51,8 @@ export async function tagJobs(jobs: TagInput[], model: string, opts: { strongMod
   const cat = await tagCatalog();
   // 按「要求描述」匹配（10-19 #16），职责一起给：要求里常常只有学历 / 性格，具体做什么写在职责里（10-20：「高中物理教师」的要求里没有「高中」，被配成幼儿园教师）
   const lines = jobs.map((j, i) => `${i + 1}. 【${j.name}】职能：${j.job_function || '—'}；要求描述：${squash(j.overview, 400) || '（无）'}；职责：${squash(j.responsibilities || j.summary_cn, 260) || '（无）'}`).join('\n');
-  const prompt = `${cat.text}
+  // 清单 + 规则每批都一样，当缓存前缀（11-14：以前只是放在最前面，千问隐式缓存实测命不中；打了显式标记才稳定命中，命中按 10% 收）
+  const prefix = `${cat.text}
 
 你是招聘数据标注员。根据每个岗位的「要求描述」挑：
 - related_careers：和岗位实际做的事属于同一类工作的职业，只能从【职业清单】里选，名称原样照抄（不要抄括号里的叫法）。宁少勿多，通常 1-2 个就够，最多 ${MAX_TAGS} 个；
@@ -60,12 +61,11 @@ export async function tagJobs(jobs: TagInput[], model: string, opts: { strongMod
   岗位本身不具体的（招聘公告、通用岗、管培 / 实习 / 培训生项目、没写做什么）：related_careers 和 wanted_career 都留空。
 - fos_ids：最适合来做这个岗位的本科专业方向，最多 ${MAX_TAGS} 个，只能用【专业 FOS 清单】里的 key。
 按相关度从高到低排。不要硬凑，不要编清单外的职业 / key。
-只返回 JSON：{"items":[{"n":序号,"related_careers":["职业名称"],"wanted_career":"","fos_ids":[]}]}
-
-岗位：
+只返回 JSON：{"items":[{"n":序号,"related_careers":["职业名称"],"wanted_career":"","fos_ids":[]}]}`;
+  const prompt = `岗位：
 ${lines}`;
   // 职业要从 600 多个里挑准，有强模型就用强模型（10-20 排查：qwen-flash 约 27% 是凑数的）
-  const r = opts.strongModel ? await generateContent(prompt, opts.strongModel, { jsonMode: true, temperature: 0 }) : await generateCheap(prompt, model, { jsonMode: true, temperature: 0 });
+  const r = opts.strongModel ? await generateContent(prompt, opts.strongModel, { jsonMode: true, temperature: 0, prefix }) : await generateCheap(prompt, model, { jsonMode: true, temperature: 0, prefix });
   await logTokenUsage({ tool_name: 'job-tagging', task_name: 'FOS + Career Tags', institution: jobs[0]?.company || '', model_id: r.model || model, usageMetadata: r.usageMetadata, success: true }).catch(() => {});
   const items: any[] = parseJsonLoose(r.text)?.items || [];
   const out = new Map<number, JobTags>();
@@ -94,10 +94,8 @@ ${String(j.overview || '').slice(0, 4000) || '（无）'}
 
 【岗位职责描述(responsibilities)】
 ${String(j.responsibilities || '').slice(0, 4000) || '（无）'}`).join('\n\n');
-  const prompt = `你是一名资深的招聘信息结构化专家。请从下面每个岗位的岗位要求与岗位职责文本中，提取结构化标签信息，并严格按 JSON 格式返回。
-
-## 输入信息
-${blocks}
+  // 规则在前（每批一样，当缓存前缀），岗位在后（11-14 提示缓存）
+  const prefix = `你是一名资深的招聘信息结构化专家。请从后面「输入信息」里每个岗位的岗位要求与岗位职责文本中，提取结构化标签信息，并严格按 JSON 格式返回。
 
 ## 提取要求
 请提取以下字段，无法提取则留空数组。注意：四个标签字段必须尽力提取，尤其是经验标签，若原文没有直接出现"经验"字样，请根据语义总结归纳出合理的经验标签，不要全部留空。
@@ -110,7 +108,9 @@ ${blocks}
 补充（数据部门要求四个字段都必须有值）：技能标签如果原文没有具体的工具 / 技术，也请根据语义归纳 1-3 个能力标签（如 数据分析、沟通协调、项目管理），不要留空。
 
 只返回 JSON：{"items":[{"n":岗位序号,"要求_经验标签":[],"要求_技能标签":[],"职责_经验标签":[],"职责_技能标签":[]}]}`;
-  const r = await generateCheap(prompt, model, { jsonMode: true });
+  const prompt = `## 输入信息
+${blocks}`;
+  const r = await generateCheap(prompt, model, { jsonMode: true, prefix });
   await logTokenUsage({ tool_name: 'job-tagging', task_name: 'Exp + Skill Labels', institution: jobs[0]?.company || '', model_id: r.model || model, usageMetadata: r.usageMetadata, success: true }).catch(() => {});
   const items: any[] = parseJsonLoose(r.text)?.items || [];
   const join = (v: any) => { const arr = [...new Set((Array.isArray(v) ? v : String(v || '').split(/[;；,，、]/)).map((x: any) => String(x).trim()).filter(Boolean))].slice(0, 15); return arr.length ? arr.join('；') : null; };
@@ -137,15 +137,13 @@ export async function fillMissingLabels(jobs: (TagInput & { missing: (keyof JobL
 要补的字段：${j.missing.map(k => LABEL_CN[k]).join('、')}
 【要求描述】${squash(j.overview, 1500) || '（无）'}
 【岗位职责】${squash(j.responsibilities, 1500) || '（无）'}`).join('\n\n');
-  const prompt = `你是一名资深的招聘信息结构化专家。下面每个岗位都有几个标签字段还是空的，请只补这些字段，每个字段给 1-3 个标签，不能留空。
+  const prefix = `你是一名资深的招聘信息结构化专家。后面每个岗位都有几个标签字段还是空的，请只补这些字段，每个字段给 1-3 个标签，不能留空。
 - 经验标签：原文没写经验要求的，根据岗位名称、要求和职责归纳最相关的经验（如 实习经验、项目经验、行业经验、学生干部经验、竞赛获奖、科研经验、销售经验、教学经验）。
 - 技能标签：原文没写具体工具 / 技术的，归纳最相关的能力（如 沟通协调、数据分析、项目管理、英语读写、学习能力）。
 「要求_」开头的字段依据要求描述，「职责_」开头的字段依据岗位职责。
 
-${blocks}
-
 只返回 JSON：{"items":[{"n":岗位序号,"要求_经验标签":[],"要求_技能标签":[],"职责_经验标签":[],"职责_技能标签":[]}]}（只填要补的字段）`;
-  const r = await generateCheap(prompt, model, { jsonMode: true });
+  const r = await generateCheap(blocks, model, { jsonMode: true, prefix });
   await logTokenUsage({ tool_name: 'job-tagging', task_name: 'Fill Missing Labels', institution: todo[0]?.company || '', model_id: r.model || model, usageMetadata: r.usageMetadata, success: true }).catch(() => {});
   const keyOf: Record<string, keyof JobLabels> = { 要求_经验标签: 'exp_labels', 要求_技能标签: 'skill_labels', 职责_经验标签: 'exp_labels_jd', 职责_技能标签: 'skill_labels_jd' };
   for (const it of parseJsonLoose(r.text)?.items || []) {

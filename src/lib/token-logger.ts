@@ -77,6 +77,10 @@ export interface TokenUsageParams {
     toolUsePromptTokenCount?: number;
     /** llm-client 兜底记账时写上的记录编号：再 logTokenUsage 就改那条，不重插 */
     __logId?: number;
+    /** 提示缓存（11-14）：命中读取 / 写入的 token，已包含在 promptTokenCount 里；按 cacheRates 的倍率另算 */
+    cacheReadTokens?: number;
+    cacheWriteTokens?: number;
+    cacheMode?: 'explicit' | 'implicit';
   };
   /** 直接给金额（美元）：系统外的花费补记，不按 token 算 */
   cost_usd?: number;
@@ -117,6 +121,15 @@ async function priceOf(model: string): Promise<Price> {
   return { currency: 'USD', input_per_m: p.input, output_per_m: p.output, search_per_k: /^claude-/.test(model) ? 10 : 0, unit_price: 0, unit: null };
 }
 export const invalidatePriceCache = () => { priceCache = null; };
+
+/** 缓存读 / 写相对原价输入的倍率（11-14，各家官方价）：
+ * Claude：写 1.25（5 分钟档）；读 Opus / Sonnet 5.5 是 0.05、Fable / Mythos 5.1–5.2 是 0.025、其余 0.1。
+ * 百炼上的千问 / DeepSeek / Kimi / GLM：显式写 1.25、读 0.1；隐式不加价、读 0.2。Gemini、OpenAI：自动缓存，读按 0.1。 */
+export function cacheRates(model: string, mode?: 'explicit' | 'implicit'): { read: number; write: number } {
+  if (/^claude-/.test(model)) return { read: /(opus|sonnet)-5-5/.test(model) ? 0.05 : /(fable|mythos)-5-[12]/.test(model) ? 0.025 : 0.1, write: 1.25 };
+  if (/^(qwen|deepseek|kimi|glm)/.test(model)) return mode === 'explicit' ? { read: 0.1, write: 1.25 } : { read: 0.2, write: 1 };
+  return { read: 0.1, write: 1 };
+}
 const USD_CNY = () => parseFloat(process.env.USD_CNY_RATE || '7.2');
 
 export async function logTokenUsage(params: CostParams) {
@@ -132,7 +145,12 @@ export async function logTokenUsage(params: CostParams) {
 
     // 费用 = token 费 + 联网搜索次数 × 单价；按价目表的币种算，统一折成美元存
     const price = await priceOf(resolvedModelId);
-    const tokenCost = (inputTokens / 1_000_000) * price.input_per_m + (outputTokens / 1_000_000) * price.output_per_m;
+    // 输入里命中缓存的、写入缓存的按各自倍率算，其余按原价（11-14 提示缓存）
+    const cRead = Math.min(usageMetadata?.cacheReadTokens || 0, inputTokens), cWrite = Math.min(usageMetadata?.cacheWriteTokens || 0, inputTokens - cRead);
+    const rates = cacheRates(resolvedModelId, usageMetadata?.cacheMode);
+    const inputUnits = inputTokens - cRead - cWrite + cRead * rates.read + cWrite * rates.write;
+    const tokenCost = (inputUnits / 1_000_000) * price.input_per_m + (outputTokens / 1_000_000) * price.output_per_m;
+    const cacheInfo = cRead || cWrite ? { cache_read: cRead, cache_write: cWrite, cache_mode: usageMetadata?.cacheMode || null } : null;
     const searchCost = (search_calls / 1000) * price.search_per_k;
     const unitCost = units * price.unit_price;   // 出图按张、视频按秒
     const rate = USD_CNY();
@@ -155,14 +173,14 @@ export async function logTokenUsage(params: CostParams) {
         batch_id,
         // Optional tracking fields matching datasquare
         records: [],
-        model_breakdown: {},
+        model_breakdown: cacheInfo || {},   // 提示缓存命中 / 写入的 token 记在这里（不加列）
         api_cost_cny: 0,   // 这一列是「数据供应链」（第三方数据接口）费用，AI 费用（含联网搜索、出图、视频）全在 total_cost_usd
         ...(units ? { units, unit: price.unit } : {}),
         ...Object.fromEntries(Object.entries(ctx).filter(([, v]) => v !== undefined && v !== null && v !== '')),
     };
     // llm-client 已经兜底记过这一笔：改那条的归属，不重插（2026-10-18）
     if (usageMetadata?.__logId) {
-      const patch: Record<string, any> = { tool_name, task_name, institution: institution || '', success, error_message, batch_id, search_calls, search_cost_usd: toUsd(searchCost), total_cost_usd: costUsd, ...(units ? { units, unit: price.unit } : {}), ...Object.fromEntries(Object.entries(ctx).filter(([, v]) => v !== undefined && v !== null && v !== '')) };
+      const patch: Record<string, any> = { tool_name, task_name, institution: institution || '', success, error_message, batch_id, search_calls, search_cost_usd: toUsd(searchCost), total_cost_usd: costUsd, ...(cacheInfo ? { model_breakdown: cacheInfo } : {}), ...(units ? { units, unit: price.unit } : {}), ...Object.fromEntries(Object.entries(ctx).filter(([, v]) => v !== undefined && v !== null && v !== '')) };
       const { error } = await supabase.from('token_usage_logs').update(patch).eq('id', usageMetadata.__logId);
       if (!error) return;
       console.warn('[Token Logger] 改兜底记录失败，改为新插一条：', error.message);

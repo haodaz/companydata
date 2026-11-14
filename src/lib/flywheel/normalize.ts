@@ -30,10 +30,10 @@ export async function normalizeCompanyIndustries(model: string): Promise<number>
   let added = 0;
   for (let i = 0; i < list.length; i += 80) {
     const batch = list.slice(i, i + 80);
-    const prompt = `把下面每个「行业写法」归到一个标准行业。标准行业只能取：${INDUSTRIES.join(' / ')}。
-${batch.map((s, k) => `${k + 1}. ${s}`).join('\n')}
+    // 标准清单和格式每批一样，当缓存前缀（11-14 提示缓存）
+    const prefix = `把最后列出的每个「行业写法」归到一个标准行业。标准行业只能取：${INDUSTRIES.join(' / ')}。
 返回 JSON：{ "items": [{ "n": 编号, "industry": "标准行业" }] }`;
-    const r = await generateCheap(prompt, model, { jsonMode: true, fast: true });
+    const r = await generateCheap(batch.map((s, k) => `${k + 1}. ${s}`).join('\n'), model, { jsonMode: true, fast: true, prefix });
     await logTokenUsage({ tool_name: 'flywheel', task_name: 'Normalize · 企业行业', institution: '', model_id: r.model || model, usageMetadata: r.usageMetadata, success: true }).catch(() => {});
     const items = parseJsonLoose(r.text)?.items || [];
     const rows = (Array.isArray(items) ? items : []).map((x: any) => {
@@ -66,19 +66,18 @@ export async function normalizePending(model: string, limit = 400): Promise<{ do
   // 四批并行：一千条信号从十几分钟降到几分钟
   const runChunk = async (batch: typeof rows) => {
     batches++;
-    const prompt = `下面是一批「有人在意什么」的需求信号（来源｜原话）。把每条归到四个口径，归不出的填 null，不要硬猜：
+    const prefix = `最后是一批「有人在意什么」的需求信号（来源｜原话）。把每条归到四个口径，归不出的填 null，不要硬猜：
 - industry 行业，只能取：${INDUSTRIES.join(' / ')}
 - job_function 职能，只能取：${JOB_FUNCTIONS.join(' / ')}
 - career_family 职业领域，只能取：${FAMILIES.join(' / ')}
 - profession 原话里明确提到的具体职业 / 岗位名（如「焊接工程师」「咖啡师」「AI 产品经理」），没有就 null
 - company 原话里明确提到的一家企业 / 机构的名称（原文），没有就 null
 
-${batch.map((r, k) => `${k + 1}. ${sourceLabel(r.source)}｜${String(r.query || r.company_name || '').slice(0, 300)}`).join('\n')}
-
 返回 JSON：{ "items": [{ "n": 编号, "industry": null, "job_function": null, "career_family": null, "profession": null, "company": null }] }`;
+    const prompt = batch.map((r, k) => `${k + 1}. ${sourceLabel(r.source)}｜${String(r.query || r.company_name || '').slice(0, 300)}`).join('\n');
     let items: any[] = [];
     try {
-      const r = await generateCheap(prompt, model, { jsonMode: true, fast: true });
+      const r = await generateCheap(prompt, model, { jsonMode: true, fast: true, prefix });
       await logTokenUsage({ tool_name: 'flywheel', task_name: 'Normalize · 需求信号', institution: '', model_id: r.model || model, usageMetadata: r.usageMetadata, success: true }).catch(() => {});
       items = parseJsonLoose(r.text)?.items || [];
     } catch (e: any) {
