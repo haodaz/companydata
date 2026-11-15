@@ -209,7 +209,8 @@ export function BuildParts({ parts, running }: { parts?: Record<string, any>; ru
   );
 }
 
-export const CHAT_CSS = `
+/** 规格卡 + 出题进度的样式（11-15），单独导出：自己有一套对话样式的页面（如 simulator 的聊着出任务）也能直接用 */
+export const SPEC_CSS = `
 .wc-spec-h { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; } .wc-spec-h b { font-size: 15px; } .wc-spec-h span { color: #888; font-size: 12.5px; }
 .wc-spec-row { display: grid; grid-template-columns: 116px 1fr; gap: 10px; align-items: start; margin: 6px 0; font-size: 13.5px; }
 .wc-spec-row > span { color: #6b6f86; padding-top: 6px; }
@@ -227,6 +228,9 @@ export const CHAT_CSS = `
 .wc-build ul, .wc-build ol { margin: 4px 0 0; padding-left: 18px; } .wc-build li { margin: 2px 0; }
 .wc-build-brief { color: #555; font-size: 13px; margin-top: 3px; line-height: 1.65; }
 .wc-build-next { display: flex; align-items: center; gap: 8px; color: #6b6f86; }
+`;
+
+export const CHAT_CSS = `${SPEC_CSS}
 .wc-hits { display: grid; gap: 6px; margin: -2px auto 8px; }
 .wc-hit { border: 1px solid #e8e9f0; background: #fff; border-radius: 10px; padding: 8px 12px; font-size: 13px; }
 .wc-hit b { display: block; font-size: 13.5px; } .wc-hit b span { font-weight: 400; color: #888; }
