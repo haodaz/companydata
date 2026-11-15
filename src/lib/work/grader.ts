@@ -18,14 +18,14 @@ const sl = (task: any) => (v: any, n = 600) => s(v, task?.task?.lang === 'en' ? 
 /** 英文题（11-10）：报告里给人看的文字用英文写 */
 export const enTail = (task: { task?: { lang?: string } } | null | undefined) => (task?.task?.lang === 'en' ? '\n\n（这是英文题：JSON 里所有给人看的文字——评语、观察、证据说明、总结、建议、短标签——都用自然的英文写；引用的原句照抄原文。字段名、等级代码（L1–L4 等）和枚举值不变。）' : '');
 
-async function askJson(prompt: string, task_name: string, institution?: string): Promise<any> {
+async function askJson(prompt: string, task_name: string, institution?: string, prefix?: string): Promise<any> {
   let lastErr: any = null;
   // 每个模型两次机会：第一次解析失败（常见是字符串里夹了未转义的英文双引号），第二次把「严格 JSON」的要求说死再要一次，比换模型便宜
   const STRICT = '\n\n上一次返回的 JSON 无法解析。这次只返回一个合法 JSON 对象：字符串里不要出现英文双引号（引用用「」），不要在字符串里换行，不要尾随逗号，JSON 前后不要任何说明文字。';
   for (const m of [GRADE_MODEL, 'qwen3.7-plus', 'qwen-plus', 'deepseek-v4-pro'].filter((x, i, a) => a.indexOf(x) === i)) {
     for (let attempt = 0; attempt < 2; attempt++) {
       try {
-        const res = await generateContent(prompt + (attempt ? STRICT : ''), m, { jsonMode: true });
+        const res = await generateContent(prompt + (attempt ? STRICT : ''), m, { jsonMode: true, prefix });
         await logTokenUsage({ tool_name: 'work', task_name, institution: institution || '', model_id: m, usageMetadata: res.usageMetadata } as any).catch(() => {});
         const p = parseJsonLoose(res.text); if (!p || typeof p !== 'object') throw new Error('不是 JSON'); return p;
       } catch (e) { lastErr = e; const msg = String((e as any)?.message); console.warn(`[work-grade] ${m}${attempt ? '（严格重试）' : ''} 失败：${msg.slice(0, 120)}`); if (!/JSON/.test(msg)) break; }
@@ -43,7 +43,8 @@ const isOutsideAi = (e: any) => (e.type === 'screen' || /^plugin_/.test(e.type))
 const LEVEL_BAND: Record<ResultItem['level'], [number, number]> = { L1: [0, 39], L2: [40, 59], L3: [60, 79], L4: [80, 100] };
 /** 结果：rubric 逐条，每条引用交付物原句当证据；前置条目没做到的，后置条目封顶 L2 */
 export async function gradeResult(task: WorkTask, deliverable: string, opts: { institution?: string; who?: string } = {}): Promise<ResultReport> {
-  const prompt = `你是「真活台」的评卷 agent。按 rubric 逐条评这份交付物，每条必须引用交付物里的原句当证据（没有就写「未见」），给 BARS 等级 L1–L4 和 0–100 分，分数落在等级的区间里：L1 0–39、L2 40–59、L3 60–79、L4 80–100。只看交付物和材料，不脑补。
+  // 提示缓存（11-15）：评卷说明、任务书、材料、评分标准、返回格式同一道题都一样，当 prefix；交付物放最后（基线、前后脚交卷的几个人、重评都能命中）
+  const prefix = `你是「真活台」的评卷 agent。按 rubric 逐条评这份交付物，每条必须引用交付物里的原句当证据（没有就写「未见」），给 BARS 等级 L1–L4 和 0–100 分，分数落在等级的区间里：L1 0–39、L2 40–59、L3 60–79、L4 80–100。只看交付物和材料，不脑补。
 ## 任务书
 ${task.task.brief}
 ## 交付物要求
@@ -52,11 +53,8 @@ ${task.task.deliverables.map(d => `- ${d.id} ${d.title}（${d.format}）`).join(
 ${task.materials.map(m => `### ${m.id} ${m.title}\n${m.content.slice(0, m.kind === 'file' ? 4000 : 1500)}`).join('\n\n')}
 ## rubric
 ${task.rubric.map(r => `- ${r.id} ${r.title}（权重 ${r.weight}${r.depends_on.length ? '，依赖 ' + r.depends_on.join('/') : ''}）：${r.desc}\n  依据：${r.basis}\n  L1 ${r.levels.L1} | L2 ${r.levels.L2} | L3 ${r.levels.L3} | L4 ${r.levels.L4}`).join('\n')}
-${task.task.stages?.length ? `## 推进步骤与参考答案（候选人看不到；测算按 value 核对，误差 ±5% 内算对；判断题看结论和理由是否成立，不要求措辞一致）\n${task.task.stages.map(st => `- ${st.id} 问：${st.question}\n  参考：${st.expected}${st.calc?.length ? `\n  数：${st.calc.map(c => `${c.label} = ${c.expr} = ${c.value}`).join('；')}` : ''}`).join('\n')}\n` : ''}## 交付物
-${deliverable.slice(0, 12000)}
-
-只返回 JSON：{ "items": [ { "id": "r1", "score": 0, "level": "L1", "evidence": "引用原句", "note": "一句为什么" } ], "summary": "三句话总评（观察到什么，不下定性）", "strengths": ["", ""], "gaps": ["", ""] }`;
-  const p = await askJson(prompt + enTail(task), 'Grade · 结果', opts.institution);
+${task.task.stages?.length ? `## 推进步骤与参考答案（候选人看不到；测算按 value 核对，误差 ±5% 内算对；判断题看结论和理由是否成立，不要求措辞一致）\n${task.task.stages.map(st => `- ${st.id} 问：${st.question}\n  参考：${st.expected}${st.calc?.length ? `\n  数：${st.calc.map(c => `${c.label} = ${c.expr} = ${c.value}`).join('；')}` : ''}`).join('\n')}\n` : ''}只返回 JSON：{ "items": [ { "id": "r1", "score": 0, "level": "L1", "evidence": "引用原句", "note": "一句为什么" } ], "summary": "三句话总评（观察到什么，不下定性）", "strengths": ["", ""], "gaps": ["", ""] }` + enTail(task);
+  const p = await askJson(`## 交付物\n${deliverable.slice(0, 12000)}`, 'Grade · 结果', opts.institution, prefix);
   const got = new Map<string, any>((Array.isArray(p.items) ? p.items : []).map((x: any) => [String(x.id), x]));
   const items: ResultItem[] = task.rubric.map(r => {
     const x = got.get(r.id) || {};

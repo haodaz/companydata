@@ -132,8 +132,9 @@ export function appendUser(history: Msg[], text: string): Msg[] {
   return [...history, { role: 'user', text, at: new Date().toISOString() }];
 }
 
-const log = (model: string, inTok: number, outTok: number, org: string, task = '工作台 · 总控对话') =>
-  logTokenUsage({ tool_name: 'workspace', task_name: task, institution: org, model_id: model, usageMetadata: { promptTokenCount: inTok, candidatesTokenCount: outTok, totalTokenCount: inTok + outTok } } as any).catch(() => {});
+/** inTok 是全部输入（含缓存命中 / 写入）；cache 给了就按缓存价记（11-15 对话加提示缓存） */
+const log = (model: string, inTok: number, outTok: number, org: string, task = '工作台 · 总控对话', cache?: { read: number; write: number; mode?: 'explicit' | 'implicit' }) =>
+  logTokenUsage({ tool_name: 'workspace', task_name: task, institution: org, model_id: model, usageMetadata: { promptTokenCount: inTok, candidatesTokenCount: outTok, totalTokenCount: inTok + outTok, ...(cache ? { cacheReadTokens: cache.read, cacheWriteTokens: cache.write, cacheMode: cache.mode } : {}) } } as any).catch(() => {});
 
 type Out = { text: string; calls: Call[]; raw?: any };
 
@@ -146,10 +147,12 @@ async function callAnthropic(h: Msg[], model: string, kit: AgentKit, emit: (e: E
     else if (m.role === 'assistant') messages.push({ role: 'assistant', content: m.provider === 'anthropic' && m.raw ? m.raw : [...(m.text ? [{ type: 'text' as const, text: m.text }] : []), ...m.calls.map(c => ({ type: 'tool_use' as const, id: c.id, name: c.name, input: c.input || {} }))] });
     else messages.push({ role: 'user', content: m.results.map(r => ({ type: 'tool_result' as const, tool_use_id: r.id, content: r.content, ...(r.is_error ? { is_error: true } : {}) })) });
   }
-  const stream = client.messages.stream({ model, max_tokens: 8000, system: kit.system, tools: kit.tools, messages });
+  // 自动缓存（11-15）：工具定义 + 系统提示 + 之前的对话每一步都重发，断点跟着对话往后挪，前面的按缓存价读（Opus / Sonnet 5.5 是原价的 5%）
+  const stream = client.messages.stream({ model, max_tokens: 8000, cache_control: { type: 'ephemeral' }, system: kit.system, tools: kit.tools, messages });
   stream.on('text', d => emit({ t: 'text', delta: d }));
   const msg = await stream.finalMessage();
-  await log(model, msg.usage.input_tokens, msg.usage.output_tokens, kit.org, kit.task);
+  const u = msg.usage, read = u.cache_read_input_tokens || 0, write = u.cache_creation_input_tokens || 0;
+  await log(model, u.input_tokens + read + write, u.output_tokens, kit.org, kit.task, { read, write });
   const text = msg.content.filter((b): b is Anthropic.TextBlock => b.type === 'text').map(b => b.text).join('');
   const calls = msg.content.filter((b): b is Anthropic.ToolUseBlock => b.type === 'tool_use').map(b => ({ id: b.id, name: b.name, input: b.input }));
   return { text, calls: msg.stop_reason === 'max_tokens' ? [] : calls, raw: msg.content };
@@ -202,18 +205,22 @@ async function callGemini(h: Msg[], model: string, kit: AgentKit, emit: (e: Ev) 
 
 // ──── 千问（DashScope 兼容接口的 function calling）────
 async function callQwen(h: Msg[], model: string, kit: AgentKit, emit: (e: Ev) => void): Promise<Out> {
-  const messages: any[] = [{ role: 'system', content: kit.system }];
+  // 显式缓存（11-15）：系统提示每一步都一样，打标记（千问隐式缓存实测命不中）；最新一条用户消息也打一个，下一步工具调用接着读
+  const messages: any[] = [{ role: 'system', content: [{ type: 'text', text: kit.system, cache_control: { type: 'ephemeral' } }] }];
   for (const m of h) {
     if (m.role === 'user') messages.push({ role: 'user', content: m.text });
     else if (m.role === 'assistant') messages.push({ role: 'assistant', content: m.text || '', ...(m.calls.length ? { tool_calls: m.calls.map(c => ({ id: c.id, type: 'function', function: { name: c.name, arguments: JSON.stringify(c.input || {}) } })) } : {}) });
     else for (const r of m.results) messages.push({ role: 'tool', tool_call_id: r.id, content: r.content });
   }
+  const lastUser = messages.map(m => m.role).lastIndexOf('user');
+  if (lastUser > 0 && typeof messages[lastUser].content === 'string' && messages[lastUser].content) messages[lastUser] = { role: 'user', content: [{ type: 'text', text: messages[lastUser].content, cache_control: { type: 'ephemeral' } }] };
   const base = (process.env.DASHSCOPE_BASE_URL || 'https://dashscope.aliyuncs.com').replace(/\/compatible-mode\/v1\/?$/, '').replace(/\/$/, '');
   const tools = kit.tools.map(t => ({ type: 'function', function: { name: t.name, description: t.description, parameters: t.input_schema } }));
   const res = await fetch(`${base}/compatible-mode/v1/chat/completions`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.DASHSCOPE_API_KEY || ''}` }, body: JSON.stringify({ model, messages, tools, ...(/^qwen3/.test(model) ? { enable_thinking: false } : {}) }), signal: AbortSignal.timeout(180_000) });
   if (!res.ok) throw new Error(`千问 ${res.status}: ${(await res.text()).slice(0, 300)}`);
   const data: any = await res.json();
-  await log(model, data.usage?.prompt_tokens || 0, data.usage?.completion_tokens || 0, kit.org, kit.task);
+  const d = data.usage?.prompt_tokens_details || {};
+  await log(model, data.usage?.prompt_tokens || 0, data.usage?.completion_tokens || 0, kit.org, kit.task, { read: d.cached_tokens || 0, write: d.cache_creation_input_tokens || 0, mode: 'explicit' });
   const msg = data.choices?.[0]?.message || {};
   const text = msg.content || '';
   if (text) emit({ t: 'text', delta: text });

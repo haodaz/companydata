@@ -79,21 +79,21 @@ export async function buildLesson(spaceId: string, chapterId: string | null, opt
     return lines.join('\n');
   }).join('\n\n');
 
-  const prompt = `你是「${role}」这个岗位的资深带教，在给一个完全没入行的新人讲解下面这一段工作，让他能静下来一步一步学会。
-岗位：${role}。这一段：${chapter ? `${chapter.slot || ''} ${chapter.title}` : sim.title}。
-${chapter?.brief ? `这一段要交代的事：${str(chapter.brief, 400)}` : `开场：${str(sim.intro, 400)}`}
-${realSkill ? `\n真人老师傅 ${realSkill.expert_name} 的技能卡（可以引用，写作「老师傅说」）：\n规则：${(realSkill.card?.rules || []).slice(0, 12).map((r: string) => `- ${str(r, 120)}`).join('\n')}\n做法：${(realSkill.card?.steps || []).slice(0, 8).map((x: any) => `- ${str(x.title, 40)}：${str(x.detail, 120)}`).join('\n')}\n检查：${(realSkill.card?.checklist || []).slice(0, 8).map((r: string) => `- ${str(r, 100)}`).join('\n')}` : '\n（这个空间还没有真人老师傅的技能卡：只能引用题面、老手轨迹和工位规则的依据）'}
-
-${stepsText}
+  // 提示缓存（11-15）：岗位、老师傅技能卡、写法要求、返回格式同一个空间每章都一样，当 prefix；这一段的情节和步骤放后面
+  const prefix = `你是「${role}」这个岗位的资深带教，在给一个完全没入行的新人讲解最后给出的这一段工作，让他能静下来一步一步学会。${realSkill ? `\n真人老师傅 ${realSkill.expert_name} 的技能卡（可以引用，写作「老师傅说」）：\n规则：${(realSkill.card?.rules || []).slice(0, 12).map((r: string) => `- ${str(r, 120)}`).join('\n')}\n做法：${(realSkill.card?.steps || []).slice(0, 8).map((x: any) => `- ${str(x.title, 40)}：${str(x.detail, 120)}`).join('\n')}\n检查：${(realSkill.card?.checklist || []).slice(0, 8).map((r: string) => `- ${str(r, 100)}`).join('\n')}` : '\n（这个空间还没有真人老师傅的技能卡：只能引用题面、老手轨迹和工位规则的依据）'}
 
 写法要求（很重要）：
-- 只用上面的材料。材料里没有的事实（具体数值、现场习惯、某家公司的做法）一律不写；拿不准就写「这一点要问老师傅」。
+- 只用最后给出的这一段的材料。材料里没有的事实（具体数值、现场习惯、某家公司的做法）一律不写；拿不准就写「这一点要问老师傅」。
 - 口语，像师傅带徒弟，不要教科书腔；每句都要落到「看什么、为什么、怎么做」。
 - 每一步：look = 动手前先看什么、注意什么（1–2 句）；think = 老手是怎么判断的、为什么这么选（2–3 句，有依据就点名：「标准 xx 要求…」「老师傅说…」）；master = 老手这一步做了什么（一句）。
 - 有选项的步骤（choose / multi / drill / classify）：options 里每个选项都给 verdict（best 最该选 / ok 也行 / wrong 不该选）和一句 note（为什么）。老手选了的是 best；分类题按老手的归法；没有老手记录就按题面判断并在 think 里说明「这是我的判断，待老师傅确认」。
 - 工位步骤：bench.before = 上手前要看的仪表 / 准备（1–2 句）；bench.actions = 老手脚本每一个动作 #i 一条（i 对应脚本序号，一个都不要漏，顺序照脚本）：say = 「把 xx 调到 xx，因为…」（一句，口语），basis = 这一下依据哪条规则 / 标准 / 老师傅经验（照材料里「依据」原样引用；没有就 null）；bench.after = 做完后怎么确认做对了（看哪个目标 / 仪表）。
 只返回 JSON：
 { "steps": { "<step id>": { "look": "", "think": "", "master": "", "options": { "<option id>": { "verdict": "best|ok|wrong", "note": "" } }, "bench": { "before": "", "actions": [ { "i": 0, "say": "", "basis": null } ], "after": "" } } } }`;
+  const prompt = `岗位：${role}。这一段：${chapter ? `${chapter.slot || ''} ${chapter.title}` : sim.title}。
+${chapter?.brief ? `这一段要交代的事：${str(chapter.brief, 400)}` : `开场：${str(sim.intro, 400)}`}
+
+${stepsText}`;
 
   const lesson = await withCost({ space_id: spaceId, chapter_id: chapterId, stage: 'use' }, async () => {
     // 失败兜底（10-18 批量时见过：JSON 没写完、Claude 误判拒绝）：换 Sonnet 再换千问各试一次
@@ -101,7 +101,7 @@ ${stepsText}
     let p: any = null, used = model, lastErr: any = null;
     for (const m of chain) {
       try {
-        const res = await generateContent(prompt, m, { jsonMode: true });
+        const res = await generateContent(prompt, m, { jsonMode: true, prefix });
         await logTokenUsage({ tool_name: 'skill-lab', task_name: 'Lesson · 跟我学', institution: role, model_id: m, usageMetadata: res.usageMetadata, stage: 'use', space_id: spaceId, chapter_id: chapterId } as any).catch(() => {});
         p = parseJsonLoose(res.text);
         if (!p?.steps) throw new Error('大模型返回的 JSON 无法解析');

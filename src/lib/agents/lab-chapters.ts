@@ -78,9 +78,9 @@ const castText = (cast: CastMember[]) => (['person', 'place', 'prop'] as CastKin
 const chapterLine = (c: StudioChapter) =>
   `- [${c.id}] ${c.slot || '未定时段'} · ${c.kind} · ${c.title}${c.brief ? `：${c.brief}` : ''}${c.sim?.intro ? `\n  开场：${String(c.sim.intro).slice(0, 160)}` : ''}`;
 
-async function ask(prompt: string, model: string, taskName: string) {
+async function ask(prompt: string, model: string, taskName: string, prefix?: string) {
   for (let i = 0; ; i++) {
-    const r = await generateContent(prompt, model, { jsonMode: true });
+    const r = await generateContent(prompt, model, { jsonMode: true, prefix });
     await logTokenUsage({ tool_name: 'skill-lab', task_name: taskName, institution: '', model_id: resolveModel(model), usageMetadata: r.usageMetadata, success: true }).catch(() => {});
     try { return parseJsonLoose(r.text); }
     catch (e) { if (i >= 1) throw e; }
@@ -257,25 +257,14 @@ async function buildChapterInner(spaceId: string, chapterId: string, model: stri
   const benchNote = benches.length ? `\n这一章有虚拟工位「${benches.map(b => b.st.bench?.name || b.st.prompt || '动手操作').join('」「')}」，会原样放回原来的位置（第 ${benches.map(b => b.i + 1).join('、')} 步左右）；你只写其它步骤，steps 里不要出 bench，也别把工位里的操作再出成文字题。` : '';
 
   await progress('写故事线', `${ch.slot || ''} ${ch.title}`);
-  const prompt = (fix: string) => `
+  // 提示缓存（11-15）：空间设定 + 写法规则 + 输出格式每章都一样，当 prefix 放最前面；角色表（带出场标记）、前后章节、这一章的要求放后面
+  const prefix = `
 你在给一个「职业体验空间」写其中一章。${form ? `形态是「${FORMS[form].label}」：${FORMS[form].essence}。体验者是${FORMS[form].who}（用第二人称「你」，台词和题目都按这个身份写）；这一章是一段 5–10 分钟的体验。` : '体验者扮演这个职业的新人，跟着时间把一天走下去；这一章是一段 5–10 分钟的真实工作操作。'}
 
 ${spaceText(space)}
 ${facts}
 
-角色表（编号 · 名字 · 类型；★ 表示这一天前面的章节已经出场过）：
-${(['person', 'place', 'prop'] as CastKind[]).map(k => `${castKind(k).label}：${cast.filter(m => m.kind === k && !m.is_self).map(m => `${m.code} ${m.name}（${m.type_name || '—'}）${usedBefore(m) ? '★' : ''}`).join('；') || '（无）'}`).join('\n')}
-要前后一致的事实：
-${(bible.facts || []).map(f => `- ${f}`).join('\n') || '（无）'}
 
-这一天里，在这一章之前已经发生的：
-${before.length ? before.map(chapterLine).join('\n') : '（这是一天的第一章）'}
-在这一章之后还会发生的（不要抢它们的内容）：
-${after.length ? after.map(c => `- ${c.slot || ''} ${c.title}`).join('\n') : '（无）'}
-
-【要写的这一章】时段 ${ch.slot || '未定'} · 类型 ${ch.kind} · 标题「${ch.title}」${benchNote}
-要交代的事：${ch.brief || '（按标题发挥）'}
-${hint ? `管理员的要求：${hint}\n` : ''}
 ${DAY_RULES}
 ${CAST_RULES}
 
@@ -299,19 +288,33 @@ ${CAST_RULES}
 返回 JSON：
 {
   "new_cast": [ { "id": "N1", "kind": "person|place|prop", "name": "", "type_name": "", "note": "", "look": "" } ],
-  "sim": { "title": "<本章操作台名称>", "intro": "<开场：把体验者带进 ${ch.slot || '这个时段'} 的情境，2–3 句>", "steps": [ { "id": "<英文短 id>", "type": "choose|multi|classify|allocate|slider|text", "scene": { "who": "<P01 / N1>", "time": "", "text": "" }, "place": "<S01 / N2>", "props": ["<T01>"], "prompt": "", "options": [ { "id": "", "label": "", "detail": "" } ], "max": 2, "labels": [ { "id": "", "label": "" } ], "total": 100, "unit": "" } ] },
+  "sim": { "title": "<本章操作台名称>", "intro": "<开场：把体验者带进这一章时段的情境，2–3 句>", "steps": [ { "id": "<英文短 id>", "type": "choose|multi|classify|allocate|slider|text", "scene": { "who": "<P01 / N1>", "time": "", "text": "" }, "place": "<S01 / N2>", "props": ["<T01>"], "prompt": "", "options": [ { "id": "", "label": "", "detail": "" } ], "max": 2, "labels": [ { "id": "", "label": "" } ], "total": 100, "unit": "" } ] },
   "expert": { "<step id>": "<见上>" },
   "rubric": [ { "key": "<英文短 key>", "name": "<维度名>", "weight": <数字>, "description": "<看什么>" } ]
-}${fix}`;
+}`;
+  const prompt = (fix: string) => `角色表（编号 · 名字 · 类型；★ 表示这一天前面的章节已经出场过）：
+${(['person', 'place', 'prop'] as CastKind[]).map(k => `${castKind(k).label}：${cast.filter(m => m.kind === k && !m.is_self).map(m => `${m.code} ${m.name}（${m.type_name || '—'}）${usedBefore(m) ? '★' : ''}`).join('；') || '（无）'}`).join('\n')}
+要前后一致的事实：
+${(bible.facts || []).map(f => `- ${f}`).join('\n') || '（无）'}
+
+这一天里，在这一章之前已经发生的：
+${before.length ? before.map(chapterLine).join('\n') : '（这是一天的第一章）'}
+在这一章之后还会发生的（不要抢它们的内容）：
+${after.length ? after.map(c => `- ${c.slot || ''} ${c.title}`).join('\n') : '（无）'}
+
+【要写的这一章】时段 ${ch.slot || '未定'} · 类型 ${ch.kind} · 标题「${ch.title}」${benchNote}
+要交代的事：${ch.brief || '（按标题发挥）'}
+${hint ? `管理员的要求：${hint}\n` : ''}
+（写法规则和返回格式见上文）${fix}`;
   // 自检：选择 / 多选 / 分类 / 分配题少于两个选项就没法做（模型常只给分类题的 labels、漏了条目）——把问题指出来重写一次
   const lacking = (raw: any) => (Array.isArray(raw?.sim?.steps) ? raw.sim.steps : [])
     .map((st: any, i: number) => ['choose', 'multi', 'classify', 'allocate'].includes(st?.type) && !(Array.isArray(st.options) && st.options.filter((o: any) => o?.id && o?.label).length >= 2) ? `第 ${i + 1} 步（${st.type}）没有给 options 或少于 2 项` : '')
     .filter(Boolean);
-  let p = await ask(prompt(''), model, 'Lab Chapter');
+  let p = await ask(prompt(''), model, 'Lab Chapter', prefix);
   const miss = lacking(p);
   if (miss.length) {
     await progress('自检重写', miss.join('；'));
-    const again = await ask(prompt(`\n\n上一版有问题，这次一定改掉：${miss.join('；')}。classify 的 options 是要贴标签的条目，allocate 的 options 是要分配的项。`), model, 'Lab Chapter');
+    const again = await ask(prompt(`\n\n上一版有问题，这次一定改掉：${miss.join('；')}。classify 的 options 是要贴标签的条目，allocate 的 options 是要分配的项。`), model, 'Lab Chapter', prefix);
     if (lacking(again).length < miss.length) p = again;
   }
 
