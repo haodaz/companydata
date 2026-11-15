@@ -131,7 +131,7 @@ const toList = (v: string) => v.split('\n').map(x => x.replace(/^[-•·\d.、\s
 const SURE = /就这样|可以|确认|没问题/;
 
 function SpecCard({ spec, answered, busy, options, send }: { spec: Spec; answered?: string; busy: boolean; options: string[]; send: (t: string) => void }) {
-  const [v, setV] = useState<Spec>(spec);
+  const [v, setV] = useState<Spec>(spec);   // 限时输入时不修正（11-15：每按一个键就夹到 15–240，打「45」成了「155」），发出去时再夹
   const dirty = JSON.stringify(v) !== JSON.stringify(spec);
   const off = !!answered || busy;
   const set = (k: keyof Spec, x: any) => setV(o => ({ ...o, [k]: x }));
@@ -145,7 +145,7 @@ function SpecCard({ spec, answered, busy, options, send }: { spec: Spec; answere
       {row('要找的人', <input value={v.role || ''} disabled={off} onChange={e => set('role', e.target.value)} />)}
       {row('考什么', <textarea rows={2} value={v.focus || ''} disabled={off} onChange={e => set('focus', e.target.value)} />)}
       <div className="wc-spec-2">
-        {row('限时（分钟）', <input type="number" min={15} max={240} value={v.time_minutes ?? 60} disabled={off} onChange={e => set('time_minutes', Math.max(15, Math.min(240, Number(e.target.value) || 60)))} />)}
+        {row('限时（分钟）', <input type="number" min={15} max={240} value={v.time_minutes ?? ''} disabled={off} onChange={e => set('time_minutes', e.target.value === '' ? undefined : Number(e.target.value))} />)}
         {row('给几年经验的人', <input value={v.experience || ''} disabled={off} onChange={e => set('experience', e.target.value)} />)}
       </div>
       {row('交付（一样一行）', <textarea rows={Math.max(2, (v.deliverables || []).length)} value={lines(v.deliverables)} disabled={off} onChange={e => set('deliverables', toList(e.target.value))} />)}
@@ -158,7 +158,7 @@ function SpecCard({ spec, answered, busy, options, send }: { spec: Spec; answere
         <label><input type="checkbox" checked={v.lang === 'en'} disabled={off} onChange={e => set('lang', e.target.checked ? 'en' : 'zh')} />英文题</label>
       </div>
       {!answered && <div className="wc-opts" style={{ marginTop: 12 }}>
-        <button className="wc-opt wc-opt-main" disabled={busy} onClick={() => send(dirty ? `按这份规格出：${JSON.stringify(v)}` : sure)}><i>✓</i>{dirty ? '按改过的出' : sure}</button>
+        <button className="wc-opt wc-opt-main" disabled={busy} onClick={() => send(dirty ? `按这份规格出：${JSON.stringify({ ...v, time_minutes: Math.max(15, Math.min(240, Number(v.time_minutes) || 60)) })}` : sure)}><i>✓</i>{dirty ? '按改过的出' : sure}</button>
         {rest.map(o => <button key={o} className="wc-opt" disabled={busy} onClick={() => send(o)}><i>·</i>{o}</button>)}
         <button className="wc-opt" disabled={busy} onClick={() => (document.querySelector('.wc-composer textarea') as HTMLTextAreaElement | null)?.focus()}><i>…</i>其他，我自己说</button>
       </div>}
