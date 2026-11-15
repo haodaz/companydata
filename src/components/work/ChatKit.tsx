@@ -10,8 +10,8 @@ import { MODEL_OPTIONS } from '@/lib/model-options';
 export type Item =
   | { k: 'user'; text: string }
   | { k: 'text'; text: string }
-  | { k: 'tool'; id: string; name: string; input: any; label?: string; ui?: any; error?: string; running: boolean }
-  | { k: 'ask'; id: string; question: string; options: string[]; answered?: string }
+  | { k: 'tool'; id: string; name: string; input: any; label?: string; ui?: any; error?: string; running: boolean; /** 出题分段回传（11-15）：problem / task / materials / rubric / stages 的摘要 */ parts?: Record<string, any> }
+  | { k: 'ask'; id: string; question: string; options: string[]; answered?: string; spec?: Spec }
   | { k: 'error'; text: string };
 
 export const MODELS = MODEL_OPTIONS.filter(m => /^(claude-|gpt-|qwen)/.test(m.id));
@@ -116,7 +116,7 @@ export function fromHistory(ms: any[]): Item[] {
       const res = ms[i + 1]?.role === 'tool' ? ms[i + 1].results : [];
       for (const c of m.calls || []) {
         const r = res.find((x: any) => x.id === c.id);
-        if (c.name === 'ask_user') { let a: string | undefined; try { a = r ? JSON.parse(r.content).answer : undefined; } catch { a = r ? '已回答' : undefined; } out.push({ k: 'ask', id: c.id, question: c.input?.question || '', options: c.input?.options || [], answered: a }); }
+        if (c.name === 'ask_user') { let a: string | undefined; try { a = r ? JSON.parse(r.content).answer : undefined; } catch { a = r ? '已回答' : undefined; } out.push({ k: 'ask', id: c.id, question: c.input?.question || '', options: c.input?.options || [], answered: a, ...(c.input?.spec && typeof c.input.spec === 'object' ? { spec: c.input.spec } : {}) }); }
         else out.push({ k: 'tool', id: c.id, name: c.name, input: c.input, label: r?.label, ui: r?.ui, error: r?.is_error ? '出错了' : undefined, running: false });
       }
     }
@@ -124,7 +124,102 @@ export function fromHistory(ms: any[]): Item[] {
   return out;
 }
 
+/** 任务规格卡（11-15）：出题前复述的那一行，结构化成能直接改的卡片。字段和 ask_user.spec 一致 */
+export type Spec = { company?: string; company_id?: number; role?: string; focus?: string; time_minutes?: number; auto_submit?: boolean; experience?: string; materials?: string; lang?: 'zh' | 'en'; deep?: boolean; steps?: boolean; deliverables?: string[]; criteria?: string[] };
+const lines = (v: any) => (Array.isArray(v) ? v.map(String) : []).join('\n');
+const toList = (v: string) => v.split('\n').map(x => x.replace(/^[-•·\d.、\s]+/, '').trim()).filter(Boolean);
+const SURE = /就这样|可以|确认|没问题/;
+
+function SpecCard({ spec, answered, busy, options, send }: { spec: Spec; answered?: string; busy: boolean; options: string[]; send: (t: string) => void }) {
+  const [v, setV] = useState<Spec>(spec);
+  const dirty = JSON.stringify(v) !== JSON.stringify(spec);
+  const off = !!answered || busy;
+  const set = (k: keyof Spec, x: any) => setV(o => ({ ...o, [k]: x }));
+  const sure = options.find(o => SURE.test(o)) || '就这样出';
+  const rest = options.filter(o => o !== sure && !/改一下|修改/.test(o));
+  const row = (label: string, el: React.ReactNode) => <label className="wc-spec-row"><span>{label}</span>{el}</label>;
+  return (
+    <div className="wc-spec">
+      <div className="wc-spec-h"><b>出题前确认</b><span>{answered ? '已确认' : '哪里不对直接在卡片上改，或者在下面说一句'}</span></div>
+      {v.company && row('企业', <div className="wc-spec-ro">{v.company}</div>)}
+      {row('要找的人', <input value={v.role || ''} disabled={off} onChange={e => set('role', e.target.value)} />)}
+      {row('考什么', <textarea rows={2} value={v.focus || ''} disabled={off} onChange={e => set('focus', e.target.value)} />)}
+      <div className="wc-spec-2">
+        {row('限时（分钟）', <input type="number" min={15} max={240} value={v.time_minutes ?? 60} disabled={off} onChange={e => set('time_minutes', Math.max(15, Math.min(240, Number(e.target.value) || 60)))} />)}
+        {row('给几年经验的人', <input value={v.experience || ''} disabled={off} onChange={e => set('experience', e.target.value)} />)}
+      </div>
+      {row('交付（一样一行）', <textarea rows={Math.max(2, (v.deliverables || []).length)} value={lines(v.deliverables)} disabled={off} onChange={e => set('deliverables', toList(e.target.value))} />)}
+      {row('评分主要看（一条一行）', <textarea rows={Math.max(3, (v.criteria || []).length)} value={lines(v.criteria)} disabled={off} onChange={e => set('criteria', toList(e.target.value))} />)}
+      {v.materials && row('素材', <div className="wc-spec-ro">{v.materials}</div>)}
+      <div className="wc-spec-flags">
+        <label><input type="checkbox" checked={!!v.deep} disabled={off} onChange={e => set('deep', e.target.checked)} />往深里延伸</label>
+        <label><input type="checkbox" checked={!!v.steps} disabled={off} onChange={e => set('steps', e.target.checked)} />分步带着做</label>
+        <label><input type="checkbox" checked={v.auto_submit !== false} disabled={off} onChange={e => set('auto_submit', e.target.checked)} />到点自动交卷</label>
+        <label><input type="checkbox" checked={v.lang === 'en'} disabled={off} onChange={e => set('lang', e.target.checked ? 'en' : 'zh')} />英文题</label>
+      </div>
+      {!answered && <div className="wc-opts" style={{ marginTop: 12 }}>
+        <button className="wc-opt wc-opt-main" disabled={busy} onClick={() => send(dirty ? `按这份规格出：${JSON.stringify(v)}` : sure)}><i>✓</i>{dirty ? '按改过的出' : sure}</button>
+        {rest.map(o => <button key={o} className="wc-opt" disabled={busy} onClick={() => send(o)}><i>·</i>{o}</button>)}
+        <button className="wc-opt" disabled={busy} onClick={() => (document.querySelector('.wc-composer textarea') as HTMLTextAreaElement | null)?.focus()}><i>…</i>其他，我自己说</button>
+      </div>}
+      {answered && !SURE.test(answered) && <div className="wc-mute" style={{ marginTop: 8 }}>你答：{answered.startsWith('按这份规格出') ? '按改过的卡片出' : answered}</div>}
+    </div>
+  );
+}
+
+/** 助理的提问：带 spec 的显示成规格卡，其余照旧是一句话 + 选项按钮 */
+export function AskBlock({ x, busy, text, send }: { x: Extract<Item, { k: 'ask' }>; busy: boolean; text: string; send: (t: string) => void }) {
+  if (x.spec) return <div className="wc-ask"><SpecCard spec={x.spec} answered={x.answered} busy={busy} options={x.options} send={send} /></div>;
+  return (
+    <div className="wc-ask"><div className="wc-ask-q">{x.question}</div><div className="wc-opts">{x.options.map((o, j) => <button key={o} className={`wc-opt${x.answered === o ? ' on' : ''}`} disabled={!!x.answered || busy} onClick={() => send(text.trim() ? `${o}\n${text.trim()}` : o)}><i>{j + 1}</i>{o}</button>)}{!x.answered && <button className="wc-opt" disabled={busy} onClick={() => (document.querySelector('.wc-composer textarea') as HTMLTextAreaElement | null)?.focus()}><i>…</i>其他，我自己说</button>}</div>{x.answered && !x.options.includes(x.answered) && <div className="wc-mute" style={{ marginTop: 8 }}>你答：{x.answered}</div>}</div>
+  );
+}
+
+/** 出题分段回传（11-15）：业务问题 → 任务书 → 材料包 → 评分标准，写完一块显示一块；出完收起成一行 */
+const PART_ORDER: [string, string][] = [['context', '用到的材料'], ['problem', '业务问题'], ['task', '任务书'], ['materials', '材料包'], ['rubric', '评分标准'], ['stages', '推进步骤']];
+export function BuildParts({ parts, running }: { parts?: Record<string, any>; running: boolean }) {
+  const [open, setOpen] = useState(true);
+  if (!parts || !Object.keys(parts).length) return null;
+  const done = PART_ORDER.filter(([k]) => parts[k]);
+  const next = PART_ORDER.slice(1, 5).find(([k]) => !parts[k]);
+  if (!running && !open) return <button className="wc-link" style={{ margin: '-2px auto 8px', display: 'block' }} onClick={() => setOpen(true)}>看出题过程（{done.map(([, n]) => n).join(' · ')}）</button>;
+  return (
+    <div className="wc-build">
+      {done.map(([k, name]) => {
+        const d = parts[k];
+        return <div key={k} className="wc-build-b"><div className="wc-build-k">{name}</div>
+          {k === 'context' && <div>{d.company}{!!d.items?.length && <span className="wc-mute">　{d.items.join(' · ')}</span>}</div>}
+          {k === 'problem' && <div>{d.statement}{d.why_now && <div className="wc-mute">为什么是现在：{d.why_now}</div>}</div>}
+          {k === 'task' && <div><b>{d.title}</b>{d.time_minutes && <span className="wc-mute">　限时 {d.time_minutes} 分钟</span>}<div className="wc-build-brief">{d.brief}{d.brief?.length >= 360 ? '…' : ''}</div>{!!d.deliverables?.length && <ul>{d.deliverables.map((x: any, i: number) => <li key={i}>交付 {i + 1}：{x.title}{x.format && <span className="wc-mute">（{x.format}）</span>}</li>)}</ul>}</div>}
+          {k === 'materials' && <ul>{d.items.map((m: any, i: number) => <li key={i}>{m.title}</li>)}</ul>}
+          {k === 'rubric' && <ul>{d.items.map((r: any, i: number) => <li key={i}>{r.title}{r.weight ? <span className="wc-mute">　{r.weight}%</span> : null}</li>)}</ul>}
+          {k === 'stages' && <ol>{d.items.map((q: any, i: number) => <li key={i}>{q.question}</li>)}</ol>}
+        </div>;
+      })}
+      {running && next && <div className="wc-build-b wc-build-next"><span className="wc-dot run" /> 正在写{next[1]}…</div>}
+      {!running && <button className="wc-link" onClick={() => setOpen(false)}>收起</button>}
+    </div>
+  );
+}
+
 export const CHAT_CSS = `
+.wc-spec-h { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; } .wc-spec-h b { font-size: 15px; } .wc-spec-h span { color: #888; font-size: 12.5px; }
+.wc-spec-row { display: grid; grid-template-columns: 116px 1fr; gap: 10px; align-items: start; margin: 6px 0; font-size: 13.5px; }
+.wc-spec-row > span { color: #6b6f86; padding-top: 6px; }
+.wc-spec-row input, .wc-spec-row textarea { width: 100%; box-sizing: border-box; border: 1px solid #e3e4ee; border-radius: 8px; padding: 6px 9px; font: inherit; font-size: 13.5px; background: #fafbff; resize: vertical; }
+.wc-spec-row input:focus, .wc-spec-row textarea:focus { outline: none; border-color: #6055f5; background: #fff; }
+.wc-spec-row input:disabled, .wc-spec-row textarea:disabled { background: #f6f7fb; color: #3b405a; }
+.wc-spec-ro { padding-top: 6px; color: #3b405a; }
+.wc-spec-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; } .wc-spec-2 .wc-spec-row { grid-template-columns: 116px 1fr; }
+.wc-spec-flags { display: flex; flex-wrap: wrap; gap: 14px; margin: 10px 0 0 126px; font-size: 13px; color: #3b405a; } .wc-spec-flags input { margin-right: 4px; accent-color: #6055f5; }
+.wc-opt-main { background: #6055f5 !important; color: #fff !important; border-color: #6055f5 !important; } .wc-opt-main i { color: #fff !important; }
+@media (max-width: 720px) { .wc-spec-row, .wc-spec-2 .wc-spec-row { grid-template-columns: 1fr; gap: 2px; } .wc-spec-2 { grid-template-columns: 1fr; } .wc-spec-flags { margin-left: 0; } }
+.wc-build { border: 1px solid #e8e9f0; background: #fff; border-radius: 12px; padding: 10px 14px; margin: -2px auto 10px; font-size: 13.5px; }
+.wc-build-b { padding: 8px 0; border-top: 1px dashed #eceef5; } .wc-build-b:first-child { border-top: 0; }
+.wc-build-k { font-size: 11.5px; letter-spacing: 1px; color: #6055f5; font-weight: 700; margin-bottom: 3px; }
+.wc-build ul, .wc-build ol { margin: 4px 0 0; padding-left: 18px; } .wc-build li { margin: 2px 0; }
+.wc-build-brief { color: #555; font-size: 13px; margin-top: 3px; line-height: 1.65; }
+.wc-build-next { display: flex; align-items: center; gap: 8px; color: #6b6f86; }
 .wc-hits { display: grid; gap: 6px; margin: -2px auto 8px; }
 .wc-hit { border: 1px solid #e8e9f0; background: #fff; border-radius: 10px; padding: 8px 12px; font-size: 13px; }
 .wc-hit b { display: block; font-size: 13.5px; } .wc-hit b span { font-weight: 400; color: #888; }

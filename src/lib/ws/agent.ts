@@ -21,12 +21,14 @@ export type Ev =
   | { t: 'text'; delta: string }
   | { t: 'tool_start'; id: string; name: string; input: any }
   | { t: 'tool_end'; id: string; name: string; label: string; ui?: ToolUi; error?: string }
-  | { t: 'ask'; id: string; question: string; options: string[] }
+  | { t: 'tool_progress'; id: string; name: string; part: string; data: any }
+  | { t: 'ask'; id: string; question: string; options: string[]; spec?: any }
   | { t: 'error'; message: string };
 
 export const WS_MODEL = process.env.WS_MODEL || 'claude-opus-5-5';
 /** 一套「总控」= 系统提示 + 工具表 + 执行器 + 记账用的机构名。企业 / 科研工作台用默认的；百业学院教务（lib/college-agent.ts）传自己的 */
-export interface AgentKit { system: string; tools: Anthropic.Tool[]; run: (name: string, input: any) => Promise<{ result: any; ui?: ToolUi; label: string }>; org: string; task?: string }
+/** run 的第三个参数 progress（11-15）：工具跑的过程中往前台推进度，runTurn 转成 tool_progress 事件 */
+export interface AgentKit { system: string; tools: Anthropic.Tool[]; run: (name: string, input: any, progress?: (p: { part: string; data: any }) => void) => Promise<{ result: any; ui?: ToolUi; label: string }>; org: string; task?: string }
 const wsKit = (ctx: ToolCtx & { projectTitle?: string }): AgentKit => ({ system: systemPrompt(ctx), tools: toolsFor(ctx.org.kind), run: (n, i) => runTool(n, i, ctx), org: ctx.org.name });
 const provider = (m: string) => (m.startsWith('claude-') ? 'anthropic' : m.startsWith('gpt-') ? 'openai' : m.startsWith('gemini-') ? 'gemini' : m.startsWith('qwen') ? 'qwen' : 'anthropic');
 
@@ -94,7 +96,7 @@ export async function runTurn(history: Msg[], model: string, ctx: ToolCtx, emit:
       if (c.name === 'ask_user') { ask = c; continue; }
       emit({ t: 'tool_start', id: c.id, name: c.name, input: c.input });
       try {
-        const r = await kit.run(c.name, c.input || {});
+        const r = await kit.run(c.name, c.input || {}, p => emit({ t: 'tool_progress', id: c.id, name: c.name, part: p.part, data: p.data }));
         results.push({ id: c.id, name: c.name, content: JSON.stringify(r.result).slice(0, 12000), label: r.label, ui: r.ui });
         emit({ t: 'tool_end', id: c.id, name: c.name, label: r.label, ui: r.ui });
       } catch (e: any) {
@@ -106,7 +108,8 @@ export async function runTurn(history: Msg[], model: string, ctx: ToolCtx, emit:
     if (ask) {
       // 别的工具先跑完、结果先存着；ask_user 的结果等人回答后由 answerAsk 补上
       if (results.length) added.push({ role: 'tool', results });
-      emit({ t: 'ask', id: ask.id, question: String(ask.input?.question || ''), options: (Array.isArray(ask.input?.options) ? ask.input.options : []).map(String).slice(0, 4) });
+      // spec（11-15）：出题前的任务规格卡，结构化给前台渲染成能直接改的卡片
+      emit({ t: 'ask', id: ask.id, question: String(ask.input?.question || ''), options: (Array.isArray(ask.input?.options) ? ask.input.options : []).map(String).slice(0, 4), ...(ask.input?.spec && typeof ask.input.spec === 'object' ? { spec: ask.input.spec } : {}) });
       break;
     }
     added.push({ role: 'tool', results });

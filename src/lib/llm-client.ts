@@ -46,7 +46,9 @@ export interface LLMResponse {
  * 千问实测：不打标记的隐式缓存同一段 8,400 token 的开头连发两次都没命中；打了标记第二次整段命中。
  * prefix 要真的一字不差（别把时间、企业名、这次的数据放进去），并且够长才有用：千问 ≥1024 token、Claude 5.x ≥512 token，短了照常处理、不缓存。
  */
-export type GenOptions = { jsonMode?: boolean; webSearch?: boolean; fast?: boolean; temperature?: number; prefix?: string };
+export type GenOptions = { jsonMode?: boolean; webSearch?: boolean; fast?: boolean; temperature?: number; prefix?: string;
+  /** 边生成边把新写出的字交出来（11-15 出题分段回传）：Claude 本来就是流式；千问改走兼容接口的流式输出；其余模型不支持就不回调，最后照常返回全文 */
+  onText?: (delta: string) => void };
 
 // ──── Provider detection ────
 
@@ -160,7 +162,24 @@ async function callDashScope(base: string, key: string, model: string, prompt: s
  * 兼容接口同样支持 enable_search。返回值转成原生接口的样子，下游不用改。
  */
 const compatModels = new Set<string>();
-async function callCompat(base: string, key: string, model: string, prompt: string, parameters: Record<string, any>, prefix?: string): Promise<any> {
+/** 兼容接口的流式输出（SSE）：每段新字交给 onText，最后拼成和非流式一样的返回 */
+async function readCompatStream(res: Response, onText: (d: string) => void): Promise<any> {
+  const reader = res.body!.getReader(); const dec = new TextDecoder(); let buf = '', text = '', usage: any = null;
+  for (;;) {
+    const { value, done } = await reader.read(); if (done) break;
+    buf += dec.decode(value, { stream: true });
+    let nl;
+    while ((nl = buf.indexOf('\n')) >= 0) {
+      const line = buf.slice(0, nl).trim(); buf = buf.slice(nl + 1);
+      if (!line.startsWith('data:')) continue;
+      const data = line.slice(5).trim(); if (!data || data === '[DONE]') continue;
+      try { const j = JSON.parse(data); const d = j.choices?.[0]?.delta?.content || ''; if (d) { text += d; onText(d); } if (j.usage) usage = j.usage; } catch { /* 半行，等下一段 */ }
+    }
+  }
+  return { choices: [{ message: { content: text } }], usage };
+}
+
+async function callCompat(base: string, key: string, model: string, prompt: string, parameters: Record<string, any>, prefix?: string, onText?: (d: string) => void): Promise<any> {
   // 有 prefix 就拆成两块、前一块打显式缓存标记（百炼显式缓存只在兼容接口的 content 块上认）
   const content = prefix ? [{ type: 'text', text: prefix, cache_control: { type: 'ephemeral' } }, { type: 'text', text: prompt }] : prompt;
   const body: Record<string, any> = { model, messages: [{ role: 'user', content }] };
@@ -168,6 +187,7 @@ async function callCompat(base: string, key: string, model: string, prompt: stri
   if (parameters.response_format) body.response_format = parameters.response_format;
   if ('enable_thinking' in parameters) body.enable_thinking = parameters.enable_thinking;
   if (parameters.temperature !== undefined) body.temperature = parameters.temperature;
+  if (onText) { body.stream = true; body.stream_options = { include_usage: true }; }
   let lastErr: any = null;
   for (let attempt = 0; attempt < 3; attempt++) {
     if (attempt) await new Promise(r => setTimeout(r, 3000 * attempt));
@@ -185,7 +205,7 @@ async function callCompat(base: string, key: string, model: string, prompt: stri
       if (res.status === 400 && Array.isArray(body.messages[0].content)) { body.messages = [{ role: 'user', content: `${prefix}\n\n${prompt}` }]; lastErr = err; continue; }
       throw err;
     }
-    const j: any = await res.json();
+    const j: any = onText ? await readCompatStream(res, onText) : await res.json();
     const d = j.usage?.prompt_tokens_details || {};
     return { output: { choices: [{ message: { content: j.choices?.[0]?.message?.content || '' } }], search_info: j.search_info }, usage: { input_tokens: j.usage?.prompt_tokens, output_tokens: j.usage?.completion_tokens, total_tokens: j.usage?.total_tokens, prompt_tokens_details: { cached_tokens: d.cached_tokens || 0, cache_creation_input_tokens: d.cache_creation_input_tokens || 0 } } };
   }
@@ -224,13 +244,13 @@ async function generateQwen(
       try {
         // qwen3 系列商用版默认不思考，这里显式关掉，免得哪个快照默认开着、白耗额度
         const p = /^qwen3/.test(m) ? { ...parameters, enable_thinking: false } : parameters;
-        if (compatModels.has(m) || prefix) data = await callCompat(freeBase, freeKey, m, prompt, p, prefix);
+        if (compatModels.has(m) || prefix || options?.onText) data = await callCompat(freeBase, freeKey, m, prompt, p, prefix, options?.onText);
         else {
           try { data = await callDashScope(freeBase, freeKey, m, whole, p); }
           catch (e: any) {
             if (e?.status !== 400 || !/url error/i.test(String(e.message))) throw e;
             compatModels.add(m);
-            data = await callCompat(freeBase, freeKey, m, prompt, p, prefix);
+            data = await callCompat(freeBase, freeKey, m, prompt, p, prefix, options?.onText);
           }
         }
         used = m; break;
@@ -248,7 +268,7 @@ async function generateQwen(
     const base = (process.env.DASHSCOPE_BASE_URL || 'https://dashscope.aliyuncs.com').replace(/\/compatible-mode\/v1\/?$/, '').replace(/\/$/, '');
     // 付费 key 也一样：qwen3.x 系列原生接口报「url error」，走 OpenAI 兼容接口（2026-10-24，批量解析样本用 qwen3.7-plus 撞上）
     const p = /^qwen3/.test(modelId) ? { ...parameters, enable_thinking: false } : parameters;
-    data = /^qwen3/.test(modelId) || compatModels.has(modelId) || prefix ? await callCompat(base, key, modelId, prompt, p, prefix) : await callDashScope(base, key, modelId, whole, parameters);
+    data = /^qwen3/.test(modelId) || compatModels.has(modelId) || prefix || options?.onText ? await callCompat(base, key, modelId, prompt, p, prefix, options?.onText) : await callDashScope(base, key, modelId, whole, parameters);
   }
   let text: string = data.output?.choices?.[0]?.message?.content || '';
   const sources: any[] = data.output?.search_info?.search_results || [];
@@ -294,6 +314,7 @@ async function generateClaude(prompt: string, modelId: string, options?: GenOpti
   });
   let started = false;
   stream.on('streamEvent', () => { started = true; });
+  if (options?.onText) { const cb = options.onText; stream.on('text', d => cb(d)); }
   const watchdog = setTimeout(() => { if (!started) stream.abort(); }, firstByteMs);
   const res = await stream.finalMessage().catch((e: any) => { throw started ? e : new Error(`Claude ${firstByteMs / 1000} 秒没有回应（可能连不上）：${String(e?.message || e).slice(0, 120)}`); }).finally(() => clearTimeout(watchdog));
   if (res.stop_reason === 'refusal') throw new Error(`Claude 拒绝了这次请求${res.stop_details?.explanation ? `：${res.stop_details.explanation}` : ''}`);

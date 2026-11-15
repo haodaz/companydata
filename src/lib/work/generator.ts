@@ -4,6 +4,7 @@
  * 输出「问题 → 任务 → 材料包 → 带依赖关系的 rubric（每条带依据）→ AI 基线答卷」。考核空间（工作台 / 报告）只消费这里的产物。
  * 只用材料、不编造：材料里没有的数字一律标「示例数据」；能指回来源的都指回去。
  */
+import { jsonParts } from '@/lib/work/json-parts';
 import { regionName } from '@/lib/region-codes';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { generateContent } from '@/lib/llm-client';
@@ -71,12 +72,13 @@ export function withRole(t: { role?: string; task?: any; problem?: any }, v: any
 }
 
 /** 带兜底链的 JSON 调用：Opus → Sonnet → 千问；记账 tool=work */
-export async function askJson(prompt: string, model: string, task_name: string, institution?: string, extra?: Record<string, any>): Promise<any> {
+/** onPart（11-15）：边生成边把写完的顶层字段交出来（出题分段回传）；换模型重试时会从头再交一遍 */
+export async function askJson(prompt: string, model: string, task_name: string, institution?: string, extra?: Record<string, any>, onPart?: (key: string, value: any) => void): Promise<any> {
   const chain = [model, ...DOMESTIC_FALLBACK.filter(m => m !== model)];
   let lastErr: any = null;
   for (const m of chain) {
     try {
-      const res = await generateContent(prompt, m, { jsonMode: true });
+      const res = await generateContent(prompt, m, { jsonMode: true, ...(onPart ? { onText: jsonParts(onPart) } : {}) });
       await logTokenUsage({ tool_name: 'work', task_name, institution: institution || '', model_id: m, usageMetadata: res.usageMetadata, ...(extra || {}) } as any).catch(() => {});
       const p = parseJsonLoose(res.text);
       if (!p || typeof p !== 'object') throw new Error('返回不是 JSON 对象');
@@ -314,7 +316,9 @@ const EN_DATA = 'Data & sources: Flag any figure that is not in the materials as
 /** 研究真活（2026-10-20）：科研院所招博士后 / 研究员 / 教授，考的是研究方向上的操作和研究技能 */
 export const RESEARCH_TASK_KINDS = ['实验设计（给研究问题，设计方案、对照、变量与样本量）', '数据分析（给一份真实格式的实验 / 观测数据，找异常、选统计方法、下结论并说清局限）', '文献与选题（给一个方向，梳理进展、指出研究空白、提可做的课题）', '审稿（给一篇稿件或摘要，找方法和结论上的问题，写审稿意见）', '写基金本子（研究目标、技术路线、可行性与风险）', '复现（用代码复现论文里的一个结果并解释差异）'];
 
-export async function generateTask(ctx: WorkContext, role: string, opts: { /** 题目语言（11-10）：en = 候选人看到的内容用英文 */ lang?: 'zh' | 'en'; /** 限时（分钟）：出任务的人定的，没定就 60；交付量按它定 */ minutes?: number; /** 出题风格（11-10 潜历：拆得太细像教学）：deep 升维解读、steps 给候选人拆推进步骤，默认都关 */ style?: TaskStyle; model?: string; /** 出题人点名的台子（一样交付物一个，11-05） */ modules?: string[]; focus?: string; env?: WorkEnvType; research?: boolean; sample?: SampleSkeleton | null; sampleMode?: 'reskin' | 'inspire'; attachments?: Attachment[] ; bankRefs?: string; base?: { text: string; mode: 'base' | 'ref'; title: string; origin?: string[] } } = {}): Promise<{ task: WorkTask; model: string }> {
+export async function generateTask(ctx: WorkContext, role: string, opts: { /** 题目语言（11-10）：en = 候选人看到的内容用英文 */ lang?: 'zh' | 'en'; /** 限时（分钟）：出任务的人定的，没定就 60；交付量按它定 */ minutes?: number; /** 出题风格（11-10 潜历：拆得太细像教学）：deep 升维解读、steps 给候选人拆推进步骤，默认都关 */ style?: TaskStyle; model?: string; /** 出题人点名的台子（一样交付物一个，11-05） */ modules?: string[]; focus?: string; env?: WorkEnvType; research?: boolean; sample?: SampleSkeleton | null; sampleMode?: 'reskin' | 'inspire'; attachments?: Attachment[] ; bankRefs?: string; base?: { text: string; mode: 'base' | 'ref'; title: string; origin?: string[] };
+  /** 分段回传（11-15）：业务问题 / 任务书 / 材料包 / 评分标准 / 推进步骤写完一块交一块，前台看着题长出来 */
+  onPart?: (key: string, value: any) => void } = {}): Promise<{ task: WorkTask; model: string }> {
   const model = opts.model || WORK_MODEL;
   const name = ctx.company?.name || (opts.research ? '这个科研团队' : '这家企业');
   const rich = opts.style?.hints === 'rich';
@@ -376,7 +380,7 @@ ${en ? `## 语言：这是英文题
   "task": { "title": "", "role": "${role}", "brief": "", "deliverables": [ { "id": "d1", "title": "", "format": "", "module": "doc" } ], "time_minutes": 60, "rules": [""] },
   "materials": [ { "id": "m1", "title": "", "kind": "doc", "content": "", "source": "db", "basis": "" } ],
   "rubric": [ { "id": "r1", "title": "", "desc": "", "weight": 20, "depends_on": [], "basis": "", "levels": { "L1": "", "L2": "", "L3": "", "L4": "" } } ]${staged ? ',\n  "stages": [ { "id": "q1", "type": "structuring", "question": "", "reveal": "", "expected": "", "calc": [ { "label": "", "expr": "", "value": 0 } ] } ]' : ''} }`;
-  const { parsed: p, model: used } = await askJson(prompt, model, 'Generate · 出题', name);
+  const { parsed: p, model: used } = await askJson(prompt, model, 'Generate · 出题', name, undefined, opts.onPart);
   const e = p.env || {};
   const envType: WorkEnvType = opts.env || (['doc', 'code', 'sheet', 'design'].includes(e.type) ? e.type : 'doc');   // open / plugin 原样保留，参与页据此只给开放模式
   const env: WorkEnv = { type: envType };

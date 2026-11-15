@@ -92,7 +92,7 @@ async function sessionOf(user: User, sid: string) {
 }
 const reportUi = (t: any, x: any): Ui => ({ kind: 'work_report', token: t.share_token, sid: x.id, title: t.task?.title || '', name: nameOf(x), task_id: t.id });
 
-async function run(name: string, input: any, user: User): Promise<{ result: any; ui?: Ui; label: string }> {
+async function run(name: string, input: any, user: User, progress?: (p: { part: string; data: any }) => void): Promise<{ result: any; ui?: Ui; label: string }> {
   switch (name) {
     case 'my_tasks': {
       const list = await myTasks(user, { query: input.query, all: input.scope === 'all' });
@@ -195,7 +195,7 @@ async function run(name: string, input: any, user: User): Promise<{ result: any;
       if (input.kind === 'report') { const { x, t } = await sessionOf(user, String(input.session_id)); return { result: { opened: true }, ui: reportUi(t, x), label: `打开 ${nameOf(x)} 的报告` }; }
       const t = await loadMine(user, String(input.task_id)); return { result: { opened: true }, ui: taskUi(t), label: `打开「${t.task?.title}」` };
     }
-    default: return runWorkChatTool(name, input, user) as any;
+    default: return runWorkChatTool(name, input, user, progress) as any;
   }
 }
 
@@ -217,5 +217,5 @@ export function workHomeKit(user: User, focus?: { task_id?: string; session_id?:
 - 用户说「这道题」「刚才那个人」时先看上下文和右边开着的东西；实在不知道是哪道，my_tasks 列出来用 ask_user 让他点。
 - 说人用名字，说题用标题；session_id、task_id 这些编号不说给用户。
 ${where}`;
-  return { system, tools: WORK_HOME_TOOLS, run: (n, i) => run(n, i, user) as any, org: '真活台', task: '真活 · 工作台' };
+  return { system, tools: WORK_HOME_TOOLS, run: (n, i, p) => run(n, i, user, p) as any, org: '真活台', task: '真活 · 工作台' };
 }

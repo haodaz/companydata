@@ -34,7 +34,14 @@ export const WORK_CHAT_TOOLS: Anthropic.Tool[] = [
   { name: 'run_baseline', description: 'AI 先做一遍当基线（约 1 分钟）。出完题接着调。', input_schema: { type: 'object', properties: { task_id: { type: 'string' } }, required: ['task_id'] } },
   { name: 'revise_task', description: '按用户的意见修订这道题（没提到的部分不动；修订后基线作废，要重跑）。用户说「材料太少」「难度降一点」「换个角度」都用它。', input_schema: { type: 'object', properties: { task_id: { type: 'string' }, feedback: { type: 'string' } }, required: ['task_id', 'feedback'] } },
   { name: 'update_task_settings', description: '直接改题目设置，不经过模型改写、马上生效：title 改任务标题（2–40 字）；time_minutes 改限时（15–240 分钟，计时器跟着变；题面里写的时长也一并替换）；auto_submit 开关到点自动交卷（false = 时长只作建议，超时可以继续）；allow_retake 允许某个已经做完或到点的人重做（照用户说的名字或手机邮箱）；role 改岗位名 / 要找的人（页头显示的那个，题面里的旧名字一起换）；attachments 把用户这回上传的图 / 文件补进材料包（候选人能看原图，消息里【文件】行的 url / name / mime / text 原样传；text 太长可以不传，服务端按地址读全文）；refresh_images 把材料包里没看成的图（只有「附图：文件名」）重新看一遍、补上说明——用户说「补图片说明」「AI 看不到图」就传 true。返回里说没改成的，照实告诉用户，不要接着重跑基线。用户说「时长改成 X」「不用卡时间」「让某人重做」「标题改成 X」「岗位名 / 职位改成 X」「把这张图附到题目里」「候选人看不到图」一律用它，不要用 revise_task。', input_schema: { type: 'object', properties: { title: { type: 'string', description: '新的任务标题' }, auto_submit: { type: 'boolean' }, allow_retake: { type: 'string', description: '要重做的人的名字或手机邮箱' }, task_id: { type: 'string' }, time_minutes: { type: 'number' }, role: { type: 'string', description: '新的岗位名或要找的人，照用户原话' }, refresh_images: { type: 'boolean', description: '重新看材料包里没看成的图' }, attachments: { type: 'array', items: { type: 'object', properties: { url: { type: 'string' }, name: { type: 'string' }, mime: { type: 'string' }, text: { type: 'string' }, image: { type: 'boolean' } }, required: ['url', 'name'] } } }, required: ['task_id'] } },
-  { name: 'ask_user', description: '需要用户决定时用：一句话的问题 + 2–4 个短选项（不带编号；也可以自己打字）。出任务前确认题意、选企业 / 岗位有歧义、要不要照参考资料出，用它。', input_schema: { type: 'object', properties: { question: { type: 'string' }, options: { type: 'array', items: { type: 'string' } } }, required: ['question'] } },
+  { name: 'ask_user', description: '需要用户决定时用：一句话的问题 + 2–4 个短选项（不带编号；也可以自己打字）。出任务前确认题意、选企业 / 岗位有歧义、要不要照参考资料出，用它。出任务前复述题意那一次**必须同时填 spec**（任务规格卡，界面会显示成能直接改的卡片），其余时候不填。', input_schema: { type: 'object', properties: { question: { type: 'string' }, options: { type: 'array', items: { type: 'string' } },
+    spec: { type: 'object', description: '任务规格卡：和复述的那一行同一份内容，结构化给界面渲染；只在出任务前复述题意时填', properties: {
+      company: { type: 'string', description: '企业全称' }, company_id: { type: 'number' }, role: { type: 'string', description: '要找的人（照用户原话）' },
+      focus: { type: 'string', description: '考什么' }, time_minutes: { type: 'number', description: '限时（分钟，15–240）' }, auto_submit: { type: 'boolean', description: '到点自动交卷，默认 true' },
+      experience: { type: 'string', description: '给几年经验的人，如「应届」「3–5 年」' }, materials: { type: 'string', description: '素材用哪些；没有写「按企业材料」' },
+      lang: { type: 'string', enum: ['zh', 'en'] }, deep: { type: 'boolean', description: '往深里延伸' }, steps: { type: 'boolean', description: '分步带着做' },
+      deliverables: { type: 'array', items: { type: 'string' }, description: '交付几样、各是什么，一样一条' }, criteria: { type: 'array', items: { type: 'string' }, description: '评分主要看：3–5 个短语' },
+    } } }, required: ['question'] } },
 ];
 
 const ENV_TYPES = ['doc', 'code', 'sheet', 'design', 'open', 'plugin'];
@@ -52,7 +59,7 @@ export function minutesFromText(x: string) {
 /** 出任务时可以关掉到点自动交卷（2026-11-09） */
 const withDelivery = (row: any, body: { auto_submit?: boolean }) => ({ ...row, task: withAutoSubmit(row.task, body.auto_submit !== false) });
 
-export async function createWorkTask(user: { email: string; role: string }, body: { /** 题目语言（11-10）：en = 候选人看到的题面和作答界面都是英文 */ lang?: 'zh' | 'en'; /** 出题风格（11-10）：deep 升维解读、steps 给候选人拆推进步骤；不传 = 都不（照出题人自己的参考资料出时默认分步） */ deep?: boolean; steps?: boolean; /** 材料给多少提示（11-13）：不传 = lean 只给事实 */ hints?: 'lean' | 'rich'; auto_submit?: boolean; time_minutes?: number; modules?: string[]; company: string; company_id?: number | string | null; intro?: string; role: string; env?: string; focus?: string; model?: string; sample_id?: string; sample_mode?: 'reskin' | 'inspire'; attachments?: Attachment[]; verbatim?: string; showcase_id?: string; showcase_use?: 'base' | 'ref' }) {
+export async function createWorkTask(user: { email: string; role: string }, body: { /** 分段回传（11-15）：出题时写完一块交一块 */ onPart?: (key: string, value: any) => void; /** 题目语言（11-10）：en = 候选人看到的题面和作答界面都是英文 */ lang?: 'zh' | 'en'; /** 出题风格（11-10）：deep 升维解读、steps 给候选人拆推进步骤；不传 = 都不（照出题人自己的参考资料出时默认分步） */ deep?: boolean; steps?: boolean; /** 材料给多少提示（11-13）：不传 = lean 只给事实 */ hints?: 'lean' | 'rich'; auto_submit?: boolean; time_minutes?: number; modules?: string[]; company: string; company_id?: number | string | null; intro?: string; role: string; env?: string; focus?: string; model?: string; sample_id?: string; sample_mode?: 'reskin' | 'inspire'; attachments?: Attachment[]; verbatim?: string; showcase_id?: string; showcase_use?: 'base' | 'ref' }) {
   const company = String(body.company || '').trim(), role = String(body.role || '').trim();
   const atts: Attachment[] = await fillAttachText((body.attachments || []).filter(a => a && a.url && a.name).slice(0, 10).map(a => ({ url: String(a.url), name: String(a.name).slice(0, 80), mime: a.mime, size: a.size, text: a.text ? String(a.text).slice(0, 20000) : '', image: !!a.image })));
   // 原题直发：不改写题面，只整理结构；企业 / 岗位可不填
@@ -95,7 +102,13 @@ export async function createWorkTask(user: { email: string; role: string }, body
   if (show) { (ctx as any).showcase = { id: show.id, title: show.title, use: base!.mode }; ctx.notes.push(`照任务库「${show.title}」${base!.mode === 'base' ? '原题直出、换成这家企业' : '做参考'}`); }
   if (bankRefs.length) (ctx as any).bank_refs = bankRefs.map(r => ({ id: r.id, title: r.title, company: r.company_name }));
   const env = body.env && ENV_TYPES.includes(body.env) ? (body.env as WorkEnvType) : (show && body.showcase_use !== 'ref' && show.env && ENV_TYPES.includes(show.env) ? (show.env as WorkEnvType) : undefined);
-  const { task, model } = await withCost({ tool_name: 'work', task_name: 'Generate · 出题', stage: 'create', actor: user.email }, () => generateTask(ctx, roleUse, { minutes: Number(body.time_minutes) || minutesFromText(String(body.focus || '')) || undefined, lang: body.lang === 'en' ? 'en' : undefined, style: { deep: body.deep === true, steps: typeof body.steps === 'boolean' ? body.steps : !!body.sample_id, hints: body.hints === 'rich' ? 'rich' : 'lean' }, modules: body.modules, base, attachments: atts, sample: sample?.skeleton || null, sampleMode, bankRefs: renderBankRefs(bankRefs, ctx.company?.id ?? null), model: body.model || WORK_MODEL, focus: body.focus ? String(body.focus).slice(0, 1500) : undefined, env, research: false }));
+  // 分段回传第一块（11-15）：材料拼好了先说一声用了哪些（实测从确认到写出第一块要一分多钟，这段别让人干等）。内部自动挑的参照不说
+  body.onPart?.('context', { company: ctx.company?.name || company, items: [
+    ctx.company && '企业画像', ctx.news.length && `近期动态 ${ctx.news.length} 条`, ctx.products.length && `产品 ${ctx.products.length} 个`, ctx.jobs.length && `在招岗位 ${ctx.jobs.length} 个`,
+    ctx.occupation && `职业库：${ctx.occupation.name}`, ctx.typical_tasks.length && `这一行的典型任务 ${ctx.typical_tasks.length} 个`, ctx.standards.length && `行业规范 ${ctx.standards.length} 条`,
+    ctx.deep?.length && `深度画像 ${ctx.deep.length} 个专题`, atts.length && `你传的素材 ${atts.length} 份`, show && `任务库：${show.title || '选定的任务'}`,
+  ].filter(Boolean) });
+  const { task, model } = await withCost({ tool_name: 'work', task_name: 'Generate · 出题', stage: 'create', actor: user.email }, () => generateTask(ctx, roleUse, { minutes: Number(body.time_minutes) || minutesFromText(String(body.focus || '')) || undefined, lang: body.lang === 'en' ? 'en' : undefined, style: { deep: body.deep === true, steps: typeof body.steps === 'boolean' ? body.steps : !!body.sample_id, hints: body.hints === 'rich' ? 'rich' : 'lean' }, modules: body.modules, base, attachments: atts, sample: sample?.skeleton || null, sampleMode, bankRefs: renderBankRefs(bankRefs, ctx.company?.id ?? null), model: body.model || WORK_MODEL, focus: body.focus ? String(body.focus).slice(0, 1500) : undefined, env, research: false, onPart: body.onPart }));
   if (atts.length) { task.materials = [...task.materials, ...attachmentsToMaterials(atts, task.materials.length + 1)]; (ctx as any).attachments = atts.map(a => ({ name: a.name, url: a.url })); }
   Object.assign(task, mergeAttachmentDupes(task as any));   // 出题 AI 另写的「附件1：xx.png」文字材料和真文件合成一份
   const want = Number(body.time_minutes) || minutesFromText(String(body.focus || ''));
@@ -120,7 +133,21 @@ export async function loadMine(user: { email: string; role: string }, id: string
 export const ui = (t: any): Ui => ({ kind: 'work_task', token: t.share_token, owner_key: t.owner_key, title: t.task?.title || '', task_id: t.id });
 const brief = (t: any) => ({ task_id: t.id, title: t.task?.title, company: t.company_name, role: t.role, /* 台子看每份交付物的 module（env.type 是旧字段，11-05 助理据它误判「配成了文档台」去白改一轮） */ deliverables: (t.task?.deliverables || []).map((d: any) => ({ id: d.id, title: d.title, module: d.module || 'doc' })), mode: t.task?.env?.type === 'open' || t.task?.env?.type === 'plugin' ? t.task.env.type : undefined, time_minutes: t.task?.time_minutes, auto_submit: !t.task?.soft_limit, problem: t.problem?.statement, why_now: t.problem?.why_now, brief: s(t.task?.brief, 1200), stages: (t.task?.stages || []).map((st: any) => ({ id: st.id, type: st.type, question: st.question })), materials: (t.materials || []).map((m: any) => ({ id: m.id, title: m.title, kind: m.kind, source: m.source })), rubric: (t.rubric || []).map((r: any) => ({ id: r.id, title: r.title, weight: r.weight, desc: s(r.desc, 200) })), baseline: t.baseline ? { model: t.baseline.model, total: t.baseline.result?.total } : null, notes: t.context?.notes || [] });
 
-async function run(name: string, input: any, user: { email: string; role: string }): Promise<{ result: any; ui?: Ui; label: string }> {
+/** 出题时一块一块往前台推的摘要（11-15）：只给看得见的要点，材料原文、评分细则不推 */
+export function partView(key: string, v: any): any {
+  const t = (x: any, n: number) => String(x ?? '').replace(/\s+/g, ' ').trim().slice(0, n);
+  if (key === 'context') return v;
+  if (key === 'problem') return { statement: t(v?.statement, 300), why_now: t(v?.why_now, 200) };
+  if (key === 'task') return { title: t(v?.title, 80), brief: t(v?.brief, 360), time_minutes: Number(v?.time_minutes) || null, deliverables: (Array.isArray(v?.deliverables) ? v.deliverables : []).slice(0, 6).map((d: any) => ({ title: t(d?.title, 60), format: t(d?.format, 80) })) };
+  if (key === 'materials') return { items: (Array.isArray(v) ? v : []).slice(0, 12).map((m: any) => ({ title: t(m?.title, 60), kind: t(m?.kind, 12) })) };
+  if (key === 'rubric') return { items: (Array.isArray(v) ? v : []).slice(0, 10).map((r: any) => ({ title: t(r?.title, 40), weight: Number(r?.weight) || null })) };
+  if (key === 'stages') return { items: (Array.isArray(v) ? v : []).slice(0, 6).map((q: any) => ({ question: t(q?.question, 90) })) };
+  return null;
+}
+export const PART_KEYS = ['context', 'problem', 'task', 'materials', 'rubric', 'stages'];
+
+/** progress：工具跑的过程中往前台推进度（目前只有出题分段回传用） */
+async function run(name: string, input: any, user: { email: string; role: string }, progress?: (p: { part: string; data: any }) => void): Promise<{ result: any; ui?: Ui; label: string }> {
   switch (name) {
     case 'find_company': { const list = await searchCompanies(String(input.query || ''), 8); return { result: list, label: list.length ? `企业库里找到 ${list.length} 家` : '企业库里没有这家', ...(list.length ? { ui: { kind: 'companies', list: list.slice(0, 5).map(c => ({ name: c.name, name_en: c.name_en, industry: c.industry, city: c.city, website: c.website, intro: c.intro })) } } : {}) }; }
     case 'company_brief': {
@@ -141,7 +168,8 @@ async function run(name: string, input: any, user: { email: string; role: string
       return { result: { reference_id: saved.id, title: k.title, type: k.problem_type, stages: k.stages.map(st => ({ id: st.id, type: st.type, question: st.question })), summary: k.summary }, label: `读完了：${k.title}，${k.stages.length} 步` };
     }
     case 'create_task': {
-      const r = await createWorkTask(user, { company: String(input.company || ''), company_id: input.company_id ? Number(input.company_id) : null, intro: input.intro ? String(input.intro) : undefined, role: String(input.role || ''), env: input.env, time_minutes: input.time_minutes ? Number(input.time_minutes) : undefined, auto_submit: input.auto_submit === false ? false : undefined, lang: input.lang === 'en' ? 'en' : undefined, deep: input.deep === true ? true : undefined, hints: input.hints === 'rich' ? 'rich' : undefined, steps: typeof input.steps === 'boolean' ? input.steps : undefined, modules: Array.isArray(input.modules) ? input.modules.map(String) : undefined, focus: input.focus ? String(input.focus) : undefined, sample_id: input.reference_id ? String(input.reference_id) : undefined, sample_mode: 'reskin', attachments: Array.isArray(input.attachments) ? input.attachments : [], showcase_id: input.showcase_id ? String(input.showcase_id) : undefined, showcase_use: input.showcase_use === 'ref' ? 'ref' : 'base' });
+      const onPart = progress ? (k: string, v: any) => { if (PART_KEYS.includes(k)) { const data = partView(k, v); if (data) progress({ part: k, data }); } } : undefined;
+      const r = await createWorkTask(user, { onPart, company: String(input.company || ''), company_id: input.company_id ? Number(input.company_id) : null, intro: input.intro ? String(input.intro) : undefined, role: String(input.role || ''), env: input.env, time_minutes: input.time_minutes ? Number(input.time_minutes) : undefined, auto_submit: input.auto_submit === false ? false : undefined, lang: input.lang === 'en' ? 'en' : undefined, deep: input.deep === true ? true : undefined, hints: input.hints === 'rich' ? 'rich' : undefined, steps: typeof input.steps === 'boolean' ? input.steps : undefined, modules: Array.isArray(input.modules) ? input.modules.map(String) : undefined, focus: input.focus ? String(input.focus) : undefined, sample_id: input.reference_id ? String(input.reference_id) : undefined, sample_mode: 'reskin', attachments: Array.isArray(input.attachments) ? input.attachments : [], showcase_id: input.showcase_id ? String(input.showcase_id) : undefined, showcase_use: input.showcase_use === 'ref' ? 'ref' : 'base' });
       const t = await loadMine(user, r.id);
       return { result: { ...brief(t), share_link: `/work/${r.share_token}`, owner_link: `/work/${r.share_token}/owner?k=${r.owner_key}` }, ui: ui(t), label: `出好了（待发布）：${r.title}` };
     }
@@ -244,7 +272,8 @@ export function workChatSystemPrompt(user: string) {
 - 他手里已经有一道现成的题、想一字不改发出去：用 publish_verbatim，不要走 create_task 改写。
 - 问一句有没有过往用过的题或内部考题可以参照：有就让他贴进来或上传，read_reference 读成结构；之后 create_task 传 reference_id，题会照它的路数（题型、推进、算法保留，故事换成这家企业、数字换掉）。没有就不传，平台自己有参照。
 - 参考题问完、复述题意之前，**一定要问一句题目怎么出**（他前面已经说过就不问），用 ask_user，问题写「这道题怎么出？按字面出 = 只考你说的范围；往深里延伸 = 可以延伸到背后更大的问题。不拆步骤 = 任务书一次给全，候选人自己拆；分步带着做 = 一步一步给信息、每步一问」，选项固定四个：「按字面出、不拆步骤」「往深里延伸、不拆步骤」「按字面出、分步带着做」「往深里延伸、分步带着做」。选了延伸传 deep=true，选了分步传 steps=true，选了不拆步骤传 steps=false。
-- 出任务前用 ask_user 复述题意让他确认，一行写全：企业｜要找的人｜考什么｜限时 X 分钟（到点自动交卷）｜给几年经验的人｜素材用哪些（没有就写「按企业材料」）｜（英文题才写）语言：英文｜出法：他选的那一项（照实写）｜交付：几样、各是什么｜评分主要看：3–5 个短语（结果怎样算好 + 过程怎样算好，按你对这个岗位的理解先定），复述末尾加一句「你们有现成的考核标准，或者觉得怎样算做得好，直接告诉我，我照着定」，选项如「就这样出」「改一下」；他给了标准就写进 create_task 的 focus（「出题人的考核标准：……」），评分照它定；他改哪项就照改，再复述一次。确认后 create_task 的 time_minutes 填限时，focus 里写明用时和经验段；确认了 create_task（告诉他要 2 分钟），出完接着 run_baseline（1 分钟），然后用三五句话说这道题：要解决什么问题、要交什么、（分步的才说）几步推进、基线几分。**出好的题是待发布**：告诉他右边空间里可以「预览做题台」看候选人会看到什么、哪里不对说一句就改；他说「可以了 / 发布」再调 publish_task，参与链接才生效。
+- 出任务前用 ask_user 复述题意让他确认，一行写全：企业｜要找的人｜考什么｜限时 X 分钟（到点自动交卷）｜给几年经验的人｜素材用哪些（没有就写「按企业材料」）｜（英文题才写）语言：英文｜出法：他选的那一项（照实写）｜交付：几样、各是什么｜评分主要看：3–5 个短语（结果怎样算好 + 过程怎样算好，按你对这个岗位的理解先定），复述末尾加一句「你们有现成的考核标准，或者觉得怎样算做得好，直接告诉我，我照着定」，选项如「就这样出」「改一下」；**这一次 ask_user 同时填 spec**（任务规格卡：company、company_id、role、focus、time_minutes、auto_submit、experience、materials、lang、deep、steps、deliverables、criteria，和复述的那一行一致），界面会把它显示成能直接改的卡片。他给了标准就写进 create_task 的 focus（「出题人的考核标准：……」），评分照它定；他改哪项就照改，再复述一次（同样带 spec）。
+- 他在卡片上改过再确认，会发来「按这份规格出：{JSON}」：这就是确认，**不要再复述**，直接按卡片上的值 create_task——role、time_minutes、auto_submit、lang、deep、steps 照填；focus 写成「考什么：…；面向：经验段；交付：…（一样一条）；出题人确认的评分要点：…」；company / company_id 用卡片上的，素材照之前说定的传 attachments。确认后 create_task 的 time_minutes 填限时，focus 里写明用时和经验段；确认了 create_task（告诉他要 2 分钟），出完接着 run_baseline（1 分钟），然后用三五句话说这道题：要解决什么问题、要交什么、（分步的才说）几步推进、基线几分。**出好的题是待发布**：告诉他右边空间里可以「预览做题台」看候选人会看到什么、哪里不对说一句就改；他说「可以了 / 发布」再调 publish_task，参与链接才生效。
 - 发布后把参与链接给他，告诉他：这一条发给所有候选人就行，不用名单。候选人填姓名和手机或邮箱后，地址变成自己的作答链接；同一个手机或邮箱只能做一次，换设备再填一次就接着做。回收时任务空间里每人一行：个人链接和结果。**不要问链接怎么发，也不要问人数上限。**
 - 候选人时间到了没做完，或者要重做：做过的不能续；公司同意重做就用 update_task_settings 传 allow_retake（名字或手机邮箱），这个人再用同一条链接、同一个手机或邮箱进来就是新的一次，旧的作答和报告留着。
 - 任务出好、给他看的时候顺带一句：材料包只放了事实和数据，要候选人自己发现的问题没点破；预览时觉得提示太少或太多，直接说「材料多给点提示 / 再少给点」就改。（这件事因人而异，不在出任务前单独问。）
@@ -265,7 +294,7 @@ export function workChatSystemPrompt(user: string) {
 }
 
 export function workChatKit(user: { email: string; role: string }): AgentKit {
-  return { system: workChatSystemPrompt(user.email), tools: WORK_CHAT_TOOLS, run: (n, i) => run(n, i, user) as any, org: '真活台', task: '真活 · 聊着出任务' };
+  return { system: workChatSystemPrompt(user.email), tools: WORK_CHAT_TOOLS, run: (n, i, p) => run(n, i, user, p) as any, org: '真活台', task: '真活 · 聊着出任务' };
 }
 
 /** 脚本 / 测试直接调工具用 */
