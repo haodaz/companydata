@@ -167,6 +167,13 @@ function SpecCard({ spec, answered, busy, options, send }: { spec: Spec; answere
   );
 }
 
+/** 用户消息里的「按这份规格出：{JSON}」显示成一句人话（JSON 是发给助理看的） */
+export function userText(t: string): string {
+  if (!t.startsWith('按这份规格出')) return t;
+  try { const j = JSON.parse(t.slice(t.indexOf('{'))); return `按改过的卡片出（限时 ${j.time_minutes} 分钟${j.deep ? '，往深里延伸' : ''}${j.steps ? '，分步带着做' : ''}${j.auto_submit === false ? '，不卡时间' : ''}${j.lang === 'en' ? '，英文题' : ''}）`; }
+  catch { return '按改过的卡片出'; }
+}
+
 /** 助理的提问：带 spec 的显示成规格卡，其余照旧是一句话 + 选项按钮 */
 export function AskBlock({ x, busy, text, send }: { x: Extract<Item, { k: 'ask' }>; busy: boolean; text: string; send: (t: string) => void }) {
   if (x.spec) return <div className="wc-ask"><SpecCard spec={x.spec} answered={x.answered} busy={busy} options={x.options} send={send} /></div>;

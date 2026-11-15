@@ -7,7 +7,7 @@
 import { NewModeSwitch, WorkTopBar } from '@/components/work/WorkTopBar';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Md } from '@/components/ws/Md';
-import { CHAT_CSS as CSS, Composer, fromHistory, RUNNING, type Item, CompanyHits, inlineUi, AskBlock, BuildParts } from '@/components/work/ChatKit';
+import { CHAT_CSS as CSS, Composer, fromHistory, RUNNING, type Item, CompanyHits, inlineUi, AskBlock, BuildParts, userText } from '@/components/work/ChatKit';
 type Art = { kind: 'work_task'; token: string; owner_key: string; title: string; task_id: string; _n?: number };
 
 // 2026-11-03：引导用户先用大白话说一句最实际的要求（不用一次说全，缺的助理会问）；点卡片把例句放进输入框改，不直接发
@@ -98,7 +98,7 @@ export default function WorkChatPage() {
             <>
               <div className="wc-thread">
                 {items.map((x, i) => {
-                  if (x.k === 'user') { const lines = String(x.text || '').split('\n'); const isF = (l: string) => l.startsWith('【文件】') || l.startsWith('【素材】'); const atts = lines.filter(isF).map(l => l.slice(4).split('｜')[0]); const plain = lines.filter(l => !isF(l)).join('\n').trim(); return <div key={i} className="wc-user"><div className="wc-bubble">{plain}{atts.length > 0 && <div className="wc-atts">{atts.map((n, j) => <span key={j} className="wc-att">📎 {n}</span>)}</div>}</div></div>; }
+                  if (x.k === 'user') { const lines = userText(String(x.text || '')).split('\n'); const isF = (l: string) => l.startsWith('【文件】') || l.startsWith('【素材】'); const atts = lines.filter(isF).map(l => l.slice(4).split('｜')[0]); const plain = lines.filter(l => !isF(l)).join('\n').trim(); return <div key={i} className="wc-user"><div className="wc-bubble">{plain}{atts.length > 0 && <div className="wc-atts">{atts.map((n, j) => <span key={j} className="wc-att">📎 {n}</span>)}</div>}</div></div>; }
                   if (x.k === 'text') return <div key={i} className="wc-ai"><span className="wc-ava">题</span><div className="wc-ai-body"><Md text={x.text} /></div></div>;
                   if (x.k === 'tool') return <React.Fragment key={x.id}><div className="wc-tool"><span className={`wc-dot${x.running ? ' run' : x.error ? ' err' : ''}`} /><span className="wc-tool-t">{x.running ? `${RUNNING[x.name] || x.name}…` : x.label || x.name}</span>{x.ui && !x.running && !inlineUi(x.ui) && <button className="wc-link" onClick={() => setArt({ ...x.ui, _n: Date.now() })}>看 →</button>}{x.error && <span className="wc-err-t">{x.error}</span>}</div>{x.ui?.kind === 'companies' && !x.running && <CompanyHits list={x.ui.list} />}{x.name === 'create_task' && <BuildParts parts={x.parts} running={x.running} />}</React.Fragment>;
                   if (x.k === 'ask') return <AskBlock key={x.id} x={x} busy={busy} text={text} send={send} />;

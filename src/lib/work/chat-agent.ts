@@ -138,7 +138,7 @@ export function partView(key: string, v: any): any {
   const t = (x: any, n: number) => String(x ?? '').replace(/\s+/g, ' ').trim().slice(0, n);
   if (key === 'context') return v;
   if (key === 'problem') return { statement: t(v?.statement, 300), why_now: t(v?.why_now, 200) };
-  if (key === 'task') return { title: t(v?.title, 80), brief: t(v?.brief, 360), time_minutes: Number(v?.time_minutes) || null, deliverables: (Array.isArray(v?.deliverables) ? v.deliverables : []).slice(0, 6).map((d: any) => ({ title: t(d?.title, 60), format: t(d?.format, 80) })) };
+  if (key === 'task') return { title: t(v?.title, 80), brief: t(String(v?.brief ?? '').replace(/^#{1,6}\s*/gm, '').replace(/\*\*|__|`/g, ''), 360), time_minutes: Number(v?.time_minutes) || null, deliverables: (Array.isArray(v?.deliverables) ? v.deliverables : []).slice(0, 6).map((d: any) => ({ title: t(d?.title, 60), format: t(d?.format, 80) })) };
   if (key === 'materials') return { items: (Array.isArray(v) ? v : []).slice(0, 12).map((m: any) => ({ title: t(m?.title, 60), kind: t(m?.kind, 12) })) };
   if (key === 'rubric') return { items: (Array.isArray(v) ? v : []).slice(0, 10).map((r: any) => ({ title: t(r?.title, 40), weight: Number(r?.weight) || null })) };
   if (key === 'stages') return { items: (Array.isArray(v) ? v : []).slice(0, 6).map((q: any) => ({ question: t(q?.question, 90) })) };
