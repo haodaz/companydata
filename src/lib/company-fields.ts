@@ -87,7 +87,7 @@ export const COMPANY_EDIT_FIELDS: { key: string; label: string; kind: 'string' |
   { key: 'ranking_year', label: '榜单年份', kind: 'number', group: '企业画像' },
   { key: 'paid_in_capital', label: '实缴资本', kind: 'string', group: '企业画像' },
   { key: 'county_area', label: '所属县（区）', kind: 'string', group: '企业画像' },
-  { key: 'year_report_address', label: '年报地址', kind: 'url', group: '企业画像' },
+  { key: 'year_report_address', label: '年报地址', kind: 'string', group: '企业画像' },   // 文本（数据部门 11-16：不限定必须是链接）
   { key: 'business_range', label: '经营范围', kind: 'text', group: '企业画像' },
   { key: 'type_label', label: '类型标签', kind: 'tags', group: '企业画像' },
   { key: 'note', label: '备注', kind: 'text', group: '企业画像' },
