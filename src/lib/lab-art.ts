@@ -224,8 +224,8 @@ export async function findArtAsset(kind: 'scene' | 'npc', family: string, slot: 
 export async function registerArtAsset(a: ArtAsset): Promise<void> {
   if (!a.url || !a.family || !a.slot) return;
   try {
-    const { supabaseAdmin } = await import('@/lib/supabase');
-    await supabaseAdmin.from('lab_art_assets').upsert({ kind: a.kind, family: a.family, slot: a.slot, domain: a.domain || '', profession: a.profession || '', prompt: (a.prompt || '').slice(0, 2000), url: a.url, ...(a.title ? { title: a.title.slice(0, 40) } : {}) }, { onConflict: 'url' });
+    const { writeArtAsset } = await import('@/lib/lab-cast-server');
+    await writeArtAsset({ kind: a.kind, family: a.family, slot: a.slot, domain: a.domain || '', profession: a.profession || '', prompt: (a.prompt || '').slice(0, 2000), url: a.url, ...(a.title ? { title: a.title.slice(0, 40) } : {}) });
   } catch (e) { console.warn('[lab-art] 登记图库失败：', (e as any)?.message); }
 }
 

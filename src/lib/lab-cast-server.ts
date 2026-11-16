@@ -133,12 +133,26 @@ export async function registerAsset(a: Partial<LabAsset> & { kind: LabAsset['kin
     kind: a.kind, url: a.url || null, title: a.title || '', type_name: a.type_name || '', family: a.family || '', slot: a.slot || '',
     tags: a.tags || [], note: a.note || '', reusable: a.reusable ?? true, prompt: a.prompt || '', source_task_id: a.source_task_id || null,
   };
-  const q = row.url
-    ? supabaseAdmin.from('lab_art_assets').upsert(row, { onConflict: 'url' }).select('*').single()
-    : supabaseAdmin.from('lab_art_assets').insert(row).select('*').single();
-  const { data, error } = await q;
+  return writeArtAsset(row) as Promise<LabAsset>;
+}
+
+/**
+ * 素材库写一行（有 url 按 url 去重）。编号 code 默认取序列 lab_art_asset_no；
+ * 素材包导入的行自带编号、序列没跟上时会撞「lab_art_assets_code」（国内 11-16 排骨架报错），
+ * 撞了就按库里最大编号 +1 显式给编号再写。根治是把序列拨到最大编号之后（见 016 迁移）。
+ */
+export async function writeArtAsset(row: Record<string, any>): Promise<any> {
+  const write = (r: Record<string, any>) => (r.url
+    ? supabaseAdmin.from('lab_art_assets').upsert(r, { onConflict: 'url' }).select('*').single()
+    : supabaseAdmin.from('lab_art_assets').insert(r).select('*').single());
+  let { data, error } = await write(row);
+  for (let i = 0; error && error.code === '23505' && /lab_art_assets_code/.test(error.message) && i < 3; i++) {
+    const { data: codes } = await supabaseAdmin.from('lab_art_assets').select('code').like('code', 'A-%').range(0, 49999);
+    const max = Math.max(0, ...((codes || []) as any[]).map(c => parseInt(String(c.code).slice(2), 10) || 0));
+    ({ data, error } = await write({ ...row, code: `A-${String(max + 1 + i).padStart(4, '0')}` }));
+  }
   if (error) throw error;
-  return data as LabAsset;
+  return data;
 }
 
 /** 按规范类型名在库里找一件能复用的（同类、可复用、有图优先、用得少的优先，避免满屏同一张脸） */
