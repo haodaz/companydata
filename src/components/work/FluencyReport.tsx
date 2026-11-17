@@ -21,7 +21,7 @@ const NA_TIP: Record<string, string> = { 未观测: '这次任务没给机会，
 
 type Peers = { n: number; avg: number | null; max: number | null; rank: number | null; dims: Record<string, { avg: number | null; max: number | null }> } | null;
 
-export function FluencyReport({ f, sid }: { f: any; sid?: string }) {
+export function FluencyReport({ f, sid, expand = false }: { f: any; sid?: string; /** 证据默认全部展开（打印 / 截图用） */ expand?: boolean }) {
   const [peers, setPeers] = useState<Peers>(null);
   useEffect(() => { if (!sid) return; let on = true; fetch(`/api/work/fluency-peers?sid=${encodeURIComponent(sid)}`).then(r => r.json()).then(j => { if (on && j.ok) setPeers(j.peers); }).catch(() => {}); return () => { on = false; }; }, [sid]);
   if (!f) return null;
@@ -45,6 +45,7 @@ export function FluencyReport({ f, sid }: { f: any; sid?: string }) {
           </div> : <div style={{ fontSize: 15, fontWeight: 700, color: '#8a5a12' }}>{f.status === 'manual' ? '转人工复核，不出自动总分' : '只出画像，不出总分'}</div>}
           {shown != null && <div style={{ fontSize: 13, color: '#555', marginTop: 4 }}>{TIER_DESC[f.tier]}</div>}
           {f.status_note && <div style={note('#fff8ec', '#f5dfb8', '#8a5a12')}>{f.status_note}</div>}
+          {f.d1_source === 'outside' && <OutsideNote o={f.outside} />}
           <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap', marginTop: 12, fontSize: 12.5, color: '#555' }}>
             <span>置信 <b style={{ color: f.confidence.level === '高' ? '#12a150' : f.confidence.level === '中' ? '#b7791f' : '#c0392b' }}>{f.confidence.level}</b> · {f.confidence.note}</span>
             <span>可计分 <b>{scored.length}</b> / 25 项</span>
@@ -86,7 +87,7 @@ export function FluencyReport({ f, sid }: { f: any; sid?: string }) {
       {/* 03 7 维逐项 */}
       <Card title="7 个维度 · 25 个行为（点开看原话和定档依据）">
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 14 }}>
-          {f.dims.map((d: any) => <DimCard key={d.num} d={d} B={B} peers={peers} name={name} />)}
+          {f.dims.map((d: any) => <DimCard key={d.num} d={d} B={B} peers={peers} name={name} expand={expand} />)}
         </div>
         <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', fontSize: 12, color: MUTED, marginTop: 12 }}>
           <span>未观测 {naCount('未观测')} 项：{NA_TIP['未观测']}</span><span>不可观测 {naCount('不可观测')} 项：{NA_TIP['不可观测']}</span><span>本次未触发 {naCount('本次未触发')} 项：{NA_TIP['本次未触发']}</span>
@@ -138,8 +139,21 @@ export function FluencyReport({ f, sid }: { f: any; sid?: string }) {
   );
 }
 
-function DimCard({ d, B, peers, name }: { d: any; B: any; peers: Peers; name: (b: string) => string }) {
+/** 对话不是平台 AI 助手的记录，而是从截图 / 插件网页抽出来的外部 AI 提问（11-17） */
+function OutsideNote({ o }: { o: any }) {
   const [open, setOpen] = useState(false);
+  if (!o) return null;
+  return (
+    <div style={note('#f4f3ff', '#dcdcf5', '#4c43c9')}>
+      这份是在自己电脑上用外部 AI 做的：对话是{o.note}的 {o.asks?.length || 0} 条提问原话，只有提问、看不到 AI 的回答，所以迭代、纠错、质疑推理这类要对照 AI 上一轮输出的行为判定受限。
+      <button onClick={() => setOpen(!open)} style={{ marginLeft: 6, border: 0, background: 'none', color: BLUE, cursor: 'pointer', fontSize: 12.5, padding: 0 }}>{open ? '收起' : '看抽出的提问'}</button>
+      {open && <ol style={{ margin: '6px 0 0', paddingLeft: 20, color: '#444', fontSize: 12.5 }}>{(o.asks || []).map((a: any, k: number) => <li key={k}>{a.q.length > 200 ? `${a.q.slice(0, 200)}…` : a.q}{a.complete === false ? '（截图里被截断）' : ''}</li>)}</ol>}
+    </div>
+  );
+}
+
+function DimCard({ d, B, peers, name, expand }: { d: any; B: any; peers: Peers; name: (b: string) => string; expand?: boolean }) {
+  const [open, setOpen] = useState(!!expand);
   const bids: string[] = DIM_BIDS[d.num] || [];
   const p = peers?.dims?.[d.num];
   return (

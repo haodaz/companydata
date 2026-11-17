@@ -132,7 +132,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     let done = 0;
     for (let i = 0; i < batch.length; i += 2) await Promise.all(batch.slice(i, i + 2).map(async (x: any) => {
       try {
-        const fluency = await withCost({ tool_name: 'work', task_name: 'Grade · AI 驾驭量表（补算）', stage: 'use' }, () => fluencyOf(task as any, x.events || [], x.ai_chat || [], String(x.deliverable || ''), t.company_name));
+        const fluency = await withCost({ tool_name: 'work', task_name: 'Grade · AI 驾驭量表（补算）', stage: 'use' }, () => fluencyOf(task as any, x.events || [], x.ai_chat || [], String(x.deliverable || ''), t.company_name, x.id));
         await db.from('work_sessions').update({ report: { ...x.report, fluency } }).eq('id', x.id); done++;
       } catch (e) { console.warn('[work] 补算 AI 驾驭量表失败', x.id, String((e as any)?.message).slice(0, 120)); }
     }));

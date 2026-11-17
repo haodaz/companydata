@@ -29,6 +29,8 @@ export interface FluencyInput {
   profile?: TaskProfile | null;
   /** false = 不写解读（只要分数时省一次调用） */
   narrate?: boolean;
+  /** 站内没问过 AI、但在自己电脑上用了外部 AI：从截图 / 插件网页抽出来的提问原话（lib/work/outside-asks），没有 AI 的回答 */
+  outside?: { asks: { t: number; q: string; complete: boolean; src: string }[]; note: string } | null;
 }
 
 // ─────────── 06 预处理：归一化 + 引用块 ───────────
@@ -248,7 +250,8 @@ async function judge(inp: FluencyInput, cands: Candidate[], stats: string, warn:
     if (c.src !== 'chat') return c.src === 'event' ? `【过程事件】${c.quote}` : `【${c.src === 'deliverable' ? '交付物正文' : '交卷时写的 AI 参与说明'}】${c.src === 'disclosure' ? (inp.events.find(e => e.type === 'ai_disclosure')?.text || c.quote) : c.quote}`;
     const prev = inp.chat[c.i - 1], cur = inp.chat[c.i];
     const clip = (s: string, n: number) => (s.length > n ? `${s.slice(0, Math.round(n * 0.33))}……（中间略）……${s.slice(-Math.round(n * 0.67))}` : s);
-    return `${prev ? `上一轮 AI 回答：${clip(prev.a || '', 400)}\n` : ''}候选人第 ${c.i + 1} 条消息${c.quoted ? '（大部分是原样粘贴的任务书 / 材料）' : ''}：${clip(cur.q, 800)}\nAI 随后的回答：${clip(cur.a || '', 300)}`;
+    const none = '（外部 AI 的回答平台看不到；只按候选人这条消息本身判断，需要对齐上一轮输出的行为，消息里看不出对着什么就判不成立）';
+    return `${prev ? `上一轮 AI 回答：${prev.a ? clip(prev.a, 400) : none}\n` : ''}候选人第 ${c.i + 1} 条消息${c.quoted ? '（大部分是原样粘贴的任务书 / 材料）' : ''}：${clip(cur.q, 800)}\nAI 随后的回答：${cur.a ? clip(cur.a, 300) : '（看不到）'}`;
   };
   const evs: Evidence[] = [], negs: { id: string; i: number; quote: string }[] = [];
   const BATCH = 6;
@@ -379,6 +382,9 @@ export interface FluencyReport {
   negatives: { id: string; name: string; target: string; action: string; msg: number; quote: string; quoted?: boolean }[];
   profile: TaskProfile & { type_name: string; missing: string[] }; not_triggered: { bid: string; why: string }[];
   stats: { user_msgs: number; candidates: number; packages: number; valid: number }; logs: string[]; warnings: string[];
+  /** 对话从哪来：platform = 平台 AI 助手的记录；outside = 从截图 / 插件网页抽出来的外部 AI 提问（只有提问，没有 AI 回答） */
+  d1_source?: 'platform' | 'outside';
+  outside?: { asks: { t: number; q: string; complete: boolean; src: string }[]; note: string };
   /** 只出画像不出总分时（C_elig < 0.75），按公式算出来的数，只给校准看，不对外 */
   portrait_overall?: number | null;
   narrative?: FluencyNarrative | null;
@@ -422,7 +428,10 @@ export async function assessFluency(inp: FluencyInput): Promise<FluencyReport> {
   // 插件抓到的外部 AI 网页（q 是「（插件读到的 chatgpt.com 页面 · …）」占位，原话混在网页正文 a 里）：还没抽成一问一答，不当 D1
   const all = [...(inp.chat || [])].filter(c => (c.q || '').trim()).sort((a, b) => a.t - b.t);
   const pages = all.filter(c => /^（插件读到的/.test(c.q));
-  const chat = all.filter(c => !/^（插件读到的/.test(c.q));
+  let chat = all.filter(c => !/^（插件读到的/.test(c.q));
+  // D1 降级（07 页一）：站内没有对话，用外部 AI 的提问原话顶上；只有提问、看不到 AI 的回答
+  const fromOutside = !chat.length && !!inp.outside?.asks?.length;
+  if (fromOutside) chat = inp.outside!.asks.map(a => ({ t: a.t, q: a.q, a: '' }));
   const I = { ...inp, chat };
   const logs: string[] = [], warnings: string[] = [];
   const disclosure = String([...inp.events].reverse().find(e => e.type === 'ai_disclosure')?.text || '');
@@ -442,6 +451,7 @@ export async function assessFluency(inp: FluencyInput): Promise<FluencyReport> {
       status_note: pages.length ? `插件抓到了 ${pages.length} 页外部 AI 的网页原文（${[...new Set(pages.map(p => (p.q.match(/读到的 (\S+) 页面/) || [])[1]).filter(Boolean))].join('、')}），他的提问混在网页正文里，还没抽成一问一答，这一版先不评。` : inp.mode === 'open' || inp.mode === 'plugin' ? '在自己电脑上做、没用平台的 AI 助手：平台只有屏幕截图，读不到他和 AI 说了什么，这套量表评不了。' : '全程没有用 AI 助手，没有对话记录可评。',
       dims: Object.keys(DIMS).map(num => ({ num, name: DIMS[num].name, score: null, weight: 0, observable: 0, total: DIMS[num].behaviors.length, thin: true })), behaviors: emptyB, negatives: [], not_triggered: notTriggered, stats: { user_msgs: 0, candidates: 0, packages: 0, valid: 0 } };
   }
+  if (fromOutside) logs.push(`站内没问过 AI，用外部 AI 的提问原话顶上（${inp.outside!.asks.length} 条，${inp.outside!.note}）：只有提问、没有 AI 的回答，迭代 / 纠错 / 质疑推理这类要对齐 AI 上一轮输出的行为判定受限`);
   const a = anchorsOf(chat);
   logs.push(`锚点：P1=${a.P1 == null ? '—' : a.P1 + 1} O1=${a.O1 == null ? '—' : a.O1 + 1} A_out=${a.Aout == null ? '—' : a.Aout + 1} O_last=${a.Olast == null ? '—' : a.Olast + 1} A_final=${a.Afinal == null ? '—' : a.Afinal + 1}（第几条用户消息）`);
   if (chat.length < 4) logs.push(`用户消息只有 ${chat.length} 条（<4）：B10 / B15 / B16 / B17 自动记 N/A`);
@@ -489,6 +499,8 @@ export async function assessFluency(inp: FluencyInput): Promise<FluencyReport> {
     confidence: { level, note, c_obs, c_elig: ce.value }, status, status_note, dims, behaviors, negatives: negOut, not_triggered: notTriggered,
     stats: { user_msgs: chat.length, candidates: cands.length, packages: new Set(cands.map(c => `${c.src}:${c.i}`)).size, valid: evs.filter(e => e.valid && !e.related).length },
     portrait_overall: status === 'no_total' ? overall : null,
+    d1_source: fromOutside ? 'outside' : 'platform',
+    ...(fromOutside ? { outside: inp.outside! } : {}),
   };
   if (inp.narrate !== false) rep.narrative = await narrate(rep, I).catch(e => { warnings.push(`解读没写出来：${String(e?.message).slice(0, 80)}`); return null; });
   return rep;

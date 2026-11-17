@@ -10,6 +10,7 @@
 import { mkdirSync, writeFileSync, appendFileSync } from 'fs';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { assessFluency, BIDS, DIMS, type TaskProfile } from '@/lib/work/fluency/engine';
+import { fluencyOf } from '@/lib/work/grader';
 
 const out = process.argv[2] && !process.argv[2].startsWith('--') ? process.argv[2] : 'docs/fluency-dataset';
 const limit = Number(process.argv.find(a => a.startsWith('--limit='))?.split('=')[1] || 0);
@@ -60,7 +61,10 @@ async function one(r: any) {
     existing: { result_score: r.score, ai_use_score: r.report?.ai_use?.score ?? null },
   }) + '\n');
   // 任务画像：题上存过就用存的（和线上 fluencyOf 一致），没存过判一次；--write 时存回题上
-  const rep = await assessFluency({ ...input, profile: profiles.get(r.task_id) || t.task.fluency_profile || null });
+  // 站内有对话的直接评；在自己电脑上做的走线上同一条路（fluencyOf：先从截图 / 插件网页抽外部 AI 提问）
+  const offsite = !input.chat.some((c: any) => !/^（插件读到的/.test(c.q)) && (mode !== 'bench' || input.chat.length);
+  const rep = offsite ? await fluencyOf({ id: r.task_id, task: { ...t.task, fluency_profile: profiles.get(r.task_id) || t.task.fluency_profile }, materials: t.materials || [] } as any, ev, input.chat, input.deliverable, t.company_name || '', r.id)
+    : await assessFluency({ ...input, profile: profiles.get(r.task_id) || t.task.fluency_profile || null });
   if (!profiles.has(r.task_id)) {
     profiles.set(r.task_id, rep.profile);
     if (write && !t.task.fluency_profile) { const { type, x, why } = rep.profile; const { data: cur } = await db.from('work_tasks').select('task').eq('id', r.task_id).single(); if (cur?.task && !cur.task.fluency_profile) await db.from('work_tasks').update({ task: { ...cur.task, fluency_profile: { type, x, why } } }).eq('id', r.task_id); }

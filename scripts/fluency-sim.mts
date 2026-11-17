@@ -117,11 +117,14 @@ const roles = ROLES.filter(r => !pick('roles') || pick('roles')!.includes(r.role
 const levels = LEVELS.filter(l => !pick('levels') || pick('levels')!.includes(l.id));
 const tasks = new Map<string, any>();
 await Promise.all(roles.map(async r => { tasks.set(r.role, await loadTask(r)); console.log('任务就绪', r.role, tasks.get(r.role).task.title); }));
-const jobs = roles.flatMap(r => levels.map(l => ({ r, l })));
+// 断点续跑：已经写进 fluency.jsonl 的跳过
+const done0 = new Set(existsSync(`${out}/fluency.jsonl`) ? readFileSync(`${out}/fluency.jsonl`, 'utf8').trim().split('\n').filter(Boolean).map(l => JSON.parse(l).session_id) : []);
+const jobs = roles.flatMap(r => levels.map(l => ({ r, l }))).filter(j => !done0.has(`sim-${j.r.role}-${j.l.id}`));
+const PAR = Number(process.argv.find(a => a.startsWith('--par='))?.split('=')[1] || 3);
 const csv = [['岗位', '水平', '任务', '对话轮数', '状态', '总分', '段位', '置信', 'C_elig', ...Object.keys(DIMS).map(n => DIMS[n].name), ...BIDS, '负向'].join(',')];
 let n = 0;
 const queue = [...jobs];
-await Promise.all([0, 1, 2].map(async () => {
+await Promise.all(Array.from({ length: PAR }, () => 0).map(async () => {
   while (queue.length) {
     const { r, l } = queue.shift()!; const t = tasks.get(r.role);
     try {
@@ -136,5 +139,8 @@ await Promise.all([0, 1, 2].map(async () => {
     } catch (e) { console.warn('失败', r.role, l.id, String((e as any)?.message).slice(0, 160)); }
   }
 }));
-writeFileSync(`${out}/summary.csv`, '﻿' + csv.join('\n'));
+// summary.csv 从 fluency.jsonl 全量重建（含之前跑完的）
+const all = readFileSync(`${out}/fluency.jsonl`, 'utf8').trim().split('\n').filter(Boolean).map(l => JSON.parse(l));
+const cellA = (v: any) => { const x = v == null ? '' : String(v); return /[",\n]/.test(x) ? `"${x.replace(/"/g, '""')}"` : x; };
+writeFileSync(`${out}/summary.csv`, '\uFEFF' + [csv[0], ...all.map((f: any) => [f.role, f.level, f.task_title, f.stats.user_msgs, f.status, f.overall ?? (f.portrait_overall != null ? `(画像 ${f.portrait_overall})` : ''), f.tier, f.confidence.level, f.confidence.c_elig, ...f.dims.map((d: any) => d.score ?? ''), ...BIDS.map(b => f.behaviors[b].score ?? 'NA'), f.negatives.map((x: any) => x.id).join(' ')].map(cellA).join(','))].join('\n'));
 console.log('写好了', out);

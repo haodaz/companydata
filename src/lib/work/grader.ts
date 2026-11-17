@@ -324,25 +324,46 @@ export function nextStepOf(events: WorkEvent[]): string {
 }
 
 /** 整份报告：结果 + 过程 + AI 使用能力 + 和 AI 基线逐条比 */
-export async function buildReport(task: WorkTask, baseline: { result?: ResultReport } | null, deliverable: string, events: WorkEvent[], aiChat: { t: number; q: string; a: string }[], institution?: string, audit?: any[], policy?: AiPolicy | null) {
+export async function buildReport(task: WorkTask, baseline: { result?: ResultReport } | null, deliverable: string, events: WorkEvent[], aiChat: { t: number; q: string; a: string }[], institution?: string, audit?: any[], policy?: AiPolicy | null, sid?: string) {
   // 平台选了潜历的「AI 驾驭能力」量表（11-16）才多算这一项；底座三层照常算
   const scale = await getWorkScale().catch(() => 'full' as const);
   const [result, process, ai_use, fluency] = await Promise.all([gradeResult(task, deliverable, { institution, who: '候选人' }), analyzeProcess(task, events, aiChat, deliverable, { institution, audit }),
     analyzeAiUse(task, events, aiChat, deliverable, { institution, policy }).catch(e => { console.warn('[work-grade] AI 使用能力没评出来', String(e?.message).slice(0, 120)); return null; }),
-    scale === 'fluency' ? fluencyOf(task, events, aiChat, deliverable, institution).catch(e => { console.warn('[work-grade] AI 驾驭量表没评出来', String(e?.message).slice(0, 120)); return null; }) : Promise.resolve(undefined)]);
+    scale === 'fluency' ? fluencyOf(task, events, aiChat, deliverable, institution, sid).catch(e => { console.warn('[work-grade] AI 驾驭量表没评出来', String(e?.message).slice(0, 120)); return null; }) : Promise.resolve(undefined)]);
   const b = baseline?.result;
   const compare = b ? { baseline_total: b.total, delta: result.total - b.total, items: result.items.map(i => ({ id: i.id, title: i.title, mine: i.score, baseline: b.items.find(x => x.id === i.id)?.score ?? null })) } : null;
   return { result, process, ai_use, ...(fluency !== undefined ? { fluency } : {}), compare, next_step: nextStepOf(events) || undefined, generated_at: new Date().toISOString() };
 }
 
 /** 潜历「AI 驾驭能力」量表（lib/work/fluency）：只看和站内 AI 助手的对话 + 交付物 + AI 参与说明 */
-export async function fluencyOf(task: WorkTask, events: WorkEvent[], aiChat: { t: number; q: string; a: string }[], deliverable: string, institution?: string) {
+export async function fluencyOf(task: WorkTask, events: WorkEvent[], aiChat: { t: number; q: string; a: string }[], deliverable: string, institution?: string, sid?: string) {
   const mode = events.some(e => /^plugin_/.test(e.type)) ? 'plugin' : events.some(e => e.type === 'rec_start') ? 'open' : 'bench';
+  // 在自己电脑上用外部 AI、站内没问过（11-17，借鉴宇宁粗到细的做法）：从插件抓的 AI 网页 / 截图里抽提问原话，给量表当 D1
+  let outside: { asks: any[]; note: string } | null = null;
+  const pages = aiChat.filter(c => /^（插件读到的/.test(c.q || ''));
+  if (!aiChat.some(c => !/^（插件读到的/.test(c.q || '')) && (mode !== 'bench' || pages.length)) {
+    try {
+      const { asksFromPages, asksFromShots } = await import('@/lib/work/outside-asks');
+      if (pages.length) {
+        const asks = await asksFromPages(pages.map(c => ({ t: c.t, host: (String(c.q).match(/读到的 (\S+) 页面/) || [])[1] || '', text: c.a || '' })), institution);
+        if (asks.length) outside = { asks, note: `从插件抓到的 ${pages.length} 页 AI 网页里抽出` };
+      }
+      if (!outside && sid) {
+        const { listShots, framesFromShots } = await import('@/lib/work/recording');
+        const shots = await listShots(sid);
+        if (shots.length) {
+          // 报告接口 300 秒上限：粗筛最多 300 张、精读最多 100 张、150 秒截止
+          const r = await asksFromShots(await framesFromShots(shots, Math.min(300, shots.length)), institution, { maxScreen: 300, maxRead: 100, deadline: Date.now() + 150_000 });
+          if (r.asks.length) outside = { asks: r.asks, note: `从 ${shots.length} 张截图里抽出（粗筛 ${r.screened} 张、精读 ${r.hits} 张${r.partial ? '，到时限没看完' : ''}）` };
+        }
+      }
+    } catch (e) { console.warn('[work-grade] 外部 AI 提问没抽出来', String((e as any)?.message).slice(0, 120)); }
+  }
   // 任务类型 / 结构标签同一道题只判一次、存在题上（11-17：每次让模型判会跳，C_elig 跟着变，出不出总分也跟着变）
   const saved = (task.task as any).fluency_profile || null, id = (task as any).id as string | undefined;
   const rep = await assessFluency({
     task: { title: task.task.title, brief: task.task.brief, rules: task.task.rules || [], materials: task.materials.map(m => ({ id: m.id, title: m.title, content: m.content })), lang: task.task.lang },
-    chat: aiChat, events, deliverable, mode, institution, profile: saved,
+    chat: aiChat, events, deliverable, mode, institution, profile: saved, outside,
   });
   if (!saved && id && rep.profile) {
     const { type, x, why } = rep.profile;
