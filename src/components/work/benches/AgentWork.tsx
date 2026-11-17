@@ -76,6 +76,7 @@ export function AgentWork({ token, sid, task, resume, limit, grading, error, onS
   const [planMode, setPlanMode] = useState(false); const [confirmMode, setConfirmMode] = useState(false); const confirmRef = useRef(false); confirmRef.current = confirmMode;
   const waits = useRef(new Map<string, (ok: boolean) => void>());   // 等人确认的改动
   const [planDraft, setPlanDraft] = useState<Record<string, string>>({});
+  const [askPlan, setAskPlan] = useState<string | null>(null);   // 第一次发指令前问一句「要不要先出计划」（11-17：模拟里没人主动开开关）
   const [model, setModel] = useState(DEFAULT_AGENT_MODEL);
   const [tabs, setTabs] = useState<string[]>([BRIEF]); const [active, setActive] = useState(BRIEF);
   const [appOpen, setAppOpen] = useState(true); const [appMax, setAppMax] = useState(false); const [tree, setTree] = useState(() => typeof window === 'undefined' || window.innerWidth >= 1280);   // 笔电窄屏：文件区开着时工作区默认收起
@@ -205,6 +206,8 @@ export function AgentWork({ token, sid, task, resume, limit, grading, error, onS
   };
   const send = async (text: string, opt: { plan?: boolean } = {}) => {
     if (!text.trim() || busy) return;
+    if (opt.plan === undefined && !planMode && !items.some(x => x.k === 'user')) { setAskPlan(text); return; }   // 第一句：先问要不要出计划
+    setAskPlan(null);
     const plan = opt.plan ?? planMode;
     setQ(''); setBusy(true); setErr(''); stopRef.current = false;
     ev('ai_ask', { chars: text.length, ...(plan ? { note: 'plan' } : {}) });
@@ -369,6 +372,15 @@ export function AgentWork({ token, sid, task, resume, limit, grading, error, onS
         </div>
       </div>
       <div style={{ padding: '8px 20px 16px' }}>
+        {askPlan != null && <div style={{ maxWidth: 760, margin: '0 auto 8px', border: '1px solid #d9d5ff', background: '#fbfaff', borderRadius: 12, padding: '10px 14px', fontSize: 13.5 }}>
+          <div style={{ fontWeight: 600 }}>{L('要不要先让 AI 出计划？', 'Have the AI plan first?')}</div>
+          <div style={{ color: C.ink2, fontSize: 12.5, margin: '2px 0 8px', lineHeight: 1.6 }}>{L('先出计划：AI 只读材料、列出打算怎么做和要你拍板的问题，你批准或改过后它才动手。也可以直接做。', 'Plan first: the AI only reads the materials and lists its plan and the decisions you need to make; it acts only after you approve or edit it. Or just go.')}</div>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <button onClick={() => { const t = askPlan; ev('agent_mode', { note: 'plan:on' }); send(t, { plan: true }); }} style={btnMain}>{L('先出计划再做', 'Plan first')}</button>
+            <button onClick={() => { const t = askPlan; ev('agent_mode', { note: 'plan:skip' }); send(t, { plan: false }); }} style={btnGhost}>{L('直接做', 'Just go')}</button>
+            <button onClick={() => { setQ(askPlan); setAskPlan(null); }} style={{ ...btnGhost, border: 0, color: C.ink2 }}>{L('再改改这句话', 'Edit my message')}</button>
+          </div>
+        </div>}
         <div style={{ maxWidth: 760, margin: '0 auto', border: `1px solid ${C.line}`, borderRadius: 14, background: C.card, boxShadow: '0 2px 10px rgba(20,20,60,.05)' }}>
           <textarea value={q} onChange={e => setQ(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); send(q); } }} rows={3} placeholder={L('告诉 AI 要做什么（Enter 发送，Shift+Enter 换行）', 'Tell the AI what to do (Enter to send, Shift+Enter for a new line)')} style={{ width: '100%', boxSizing: 'border-box', border: 0, outline: 'none', resize: 'none', padding: '12px 14px 4px', fontSize: 14, lineHeight: 1.6, borderRadius: 14, fontFamily: 'inherit' }} />
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '4px 10px 10px', flexWrap: 'wrap' }}>

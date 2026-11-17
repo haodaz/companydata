@@ -88,7 +88,7 @@ async function one(task: typeof TASKS[number], lv: typeof LEVELS[number], py: an
   const ev = (type: string, extra: any = {}) => events.push({ t: ts(), type, ...extra });
   const log: string[] = [];
   const mode = { plan: false, confirm: false };
-  let pendingPlan = '', lastOpen = '', lastRun = '';
+  let pendingPlan = '', lastOpen = '', lastRun = '', firstPlan = false;
   const manifest = () => files.map(f => ({ path: f.path, size: f.bin ? Math.round(f.content.length * 0.75) : f.content.length, by: f.by }));
   const post = async (body: any) => (await fetch(`${BASE}/api/work/${task.token}/sessions/${sid}/agent`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...body, files: manifest() }) })).json();
   const put = (f: WsFile, by: 'agent' | 'human') => { const i = files.findIndex(x => x.path === f.path); const n = { ...f, by }; files = i >= 0 ? files.map((x, k) => (k === i ? n : x)) : [...files, n]; };
@@ -104,6 +104,7 @@ ${lv.persona}
 - 中间：和一个 AI 代理对话。它能读写文件、跑 Python、联网检索，像 Claude Code。
 - 输入框下两个开关：「先出计划」（开着时 AI 先读材料、列执行计划，你批准或改过后它才动手）；「改动要我确认」（开着时 AI 每次写 / 改 / 删文件先给你看改了哪些行，你接受才生效）。用不用随你。
 - 右边：你可以打开任何文件看、自己改、自己运行 .py。
+- 第一次发指令时，页面会问一句「要不要先让 AI 出计划？」（先出计划再做 / 直接做）。
 ## 任务（限时 ${t.task?.time_minutes || 90} 分钟）
 ${t.task?.title}
 ${String(t.task?.brief || '').slice(0, 3500)}
@@ -120,8 +121,14 @@ ${String(t.task?.brief || '').slice(0, 3500)}
 
   // 一轮：发一句话 → 代理一步步干，工具在这边执行
   async function turn(text: string) {
-    ev('ai_ask', { chars: text.length, ...(mode.plan ? { note: 'plan' } : {}) }); log.push(`你：${text}`);
-    let j = await post({ q: text, model: 'claude-sonnet-5-5', plan: mode.plan });
+    // 第一句：页面问要不要先出计划（和线上 AgentWork 一样）
+    if (!mode.plan && !log.some(l => l.startsWith('你：')) && lv.persona) {
+      const d = await ask(`你要发给 AI 的第一句话是：「${text.slice(0, 300)}」。页面弹出一张卡：「要不要先让 AI 出计划？先出计划：AI 只读材料、列出打算怎么做和要你拍板的问题，你批准或改过后它才动手。」这个人会怎么选？只返回 {"plan": true 或 false}`, prefix, 'Fluency 模拟 · 候选人');
+      if (d.plan === true) { firstPlan = true; ev('agent_mode', { note: 'plan:on' }); log.push('你选了「先出计划再做」'); } else { ev('agent_mode', { note: 'plan:skip' }); log.push('你选了「直接做」'); }
+    }
+    const planNow = mode.plan || firstPlan; firstPlan = false;
+    ev('ai_ask', { chars: text.length, ...(planNow ? { note: 'plan' } : {}) }); log.push(`你：${text}`);
+    let j = await post({ q: text, model: 'claude-sonnet-5-5', plan: planNow });
     for (let g = 0; g < 45; g++) {
       if (!j.ok) { log.push(`（AI 出错：${j.error}）`); break; }
       if (j.text) log.push(`AI：${clip(j.text, 1500)}`);
