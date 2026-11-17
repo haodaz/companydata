@@ -79,7 +79,7 @@ export function EntMark({ x, y, s, col, ch = '北' }: { x: number; y: number; s:
 
 /* ---------- 头像：照片位的小人，颜色跟着本人选的头像色 ---------- */
 export function Portrait({ x, y, w, h, color, ink, id }: { x: number; y: number; w: number; h: number; color: string; ink: string; id: string }) {
-  const cx = x + w / 2, bg1 = mix(color, '#FFFFFF', 0.88), bg2 = mix(color, '#FFFFFF', 0.7);
+  const bg1 = mix(color, '#FFFFFF', 0.9), bg2 = mix(color, '#FFFFFF', 0.72);   // 底色跟着本人选的头像色走，人像是插画素材（public/passport/dazhuang.png）
   return (
     <g>
       <defs>
@@ -88,13 +88,7 @@ export function Portrait({ x, y, w, h, color, ink, id }: { x: number; y: number;
       </defs>
       <g clipPath={`url(#${id}pc)`}>
         <rect x={x} y={y} width={w} height={h} fill={`url(#${id}pg)`} />
-        <ellipse cx={cx} cy={y + h * 0.98} rx={w * 0.4} ry={h * 0.3} fill={color} />
-        <path d={`M${cx - w * 0.1} ${y + h * 0.69}L${cx} ${y + h * 0.8}L${cx + w * 0.1} ${y + h * 0.69}Z`} fill="#fff" />
-        <rect x={cx - w * 0.075} y={y + h * 0.5} width={w * 0.15} height={h * 0.16} rx={w * 0.04} fill="#EBC8B2" />
-        <ellipse cx={cx} cy={y + h * 0.4} rx={w * 0.2} ry={h * 0.17} fill="#F3D8C6" />
-        <path d={`M${cx - w * 0.21} ${y + h * 0.39}C${cx - w * 0.23} ${y + h * 0.2} ${cx + w * 0.23} ${y + h * 0.18} ${cx + w * 0.21} ${y + h * 0.37}C${cx + w * 0.12} ${y + h * 0.28} ${cx - w * 0.08} ${y + h * 0.3} ${cx - w * 0.21} ${y + h * 0.39}Z`} fill="#2B2A3A" />
-        <circle cx={cx - w * 0.07} cy={y + h * 0.42} r={w * 0.014} fill="#2B2A3A" /><circle cx={cx + w * 0.07} cy={y + h * 0.42} r={w * 0.014} fill="#2B2A3A" />
-        <path d={`M${cx - w * 0.05} ${y + h * 0.48}Q${cx} ${y + h * 0.51} ${cx + w * 0.05} ${y + h * 0.48}`} stroke="#B9776A" strokeWidth={w * 0.015} fill="none" strokeLinecap="round" />
+        <image href="/passport/dazhuang.png" x={x} y={y} width={w} height={h} preserveAspectRatio="xMidYMid slice" />
       </g>
       <rect x={x} y={y} width={w} height={h} rx={10} fill="none" stroke={ink} strokeOpacity={0.35} strokeWidth={1.2} />
     </g>
