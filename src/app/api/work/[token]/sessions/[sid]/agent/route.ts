@@ -4,7 +4,9 @@ import { timing } from '@/lib/work/deadline';
 import { errL } from '@/lib/work/errors-en';
 import { withCost } from '@/lib/token-logger';
 import { stepOnce, type Msg, type Result } from '@/lib/ws/agent';
-import { AGENT_MODELS, AGENT_TOOLS, DEFAULT_AGENT_MODEL, agentSystem, outputsOf } from '@/lib/work/agent-bench';
+import { AGENT_MODELS, AGENT_TOOLS, DEFAULT_AGENT_MODEL, PLAN_NOTE, PLAN_TOOLS, agentSystem, outputsOf } from '@/lib/work/agent-bench';
+import { generateContent } from '@/lib/llm-client';
+import { logTokenUsage } from '@/lib/token-logger';
 
 export const runtime = 'nodejs';
 export const maxDuration = 180;
@@ -13,9 +15,11 @@ export const maxDuration = 180;
  * AI 工作台的代理（11-17 beta）：前端带着工作区清单来，服务端调一步模型，把工具调用交回前端去沙盒里执行；
  * 前端执行完带着结果再来，直到模型不再调工具。每一步都落在 ai_chat 这一轮的 steps 里（q = 候选人这句话，a = 代理的文字 + 动作摘要），
  * 所以老的评分（AI 使用、AI 驾驭量表）不用改就能读，量表要细看时读 steps。
- * body：{ q, model, files } 开新一轮 · { results, files } 交回工具结果 · { results, stop: true } 候选人叫停
+ * body：{ q, model, files, plan? } 开新一轮（plan = 先出计划，这一轮只许看）· { results, files } 交回工具结果 · { results, stop: true } 候选人叫停 · { search } 代理的联网检索
+ * stream: true 时按行回 NDJSON：{t:'text',delta} 逐字 · {t:'input',chars} 正在写工具参数（写长文件）· 最后一行 {t:'done', ...结果}
  */
-type Turn = { t: number; q: string; a: string; model: string; steps: Msg[]; stopped?: boolean; n?: number };
+type Turn = { t: number; q: string; a: string; model: string; steps: Msg[]; stopped?: boolean; n?: number; plan?: boolean };
+const SEARCH_MODEL = process.env.AGENT_SEARCH_MODEL || 'qwen-plus';
 const MAX_STEPS = 40;
 const clip = (s: string, n: number) => (s.length > n ? `${s.slice(0, n)}\n……（后面 ${s.length - n} 字略）` : s);
 
@@ -42,6 +46,16 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   if (s.submitted_at) return NextResponse.json({ ok: false, error: errL(t, '已经交卷了') }, { status: 409 });
   if (timing(t.task, s).closed) return NextResponse.json({ ok: false, error: errL(t, '时间到了'), expired: true }, { status: 409 });
   const body = await req.json().catch(() => ({}));
+  // 代理的联网检索：前端执行 web_search 时来这里（结果也会作为工具结果记进这一轮）
+  if (typeof body.search === 'string') {
+    const q = body.search.trim().slice(0, 300);
+    if (!q) return NextResponse.json({ ok: false, error: '检索词为空' }, { status: 400 });
+    try {
+      const r = await generateContent(`联网检索并回答：${q}\n要求：列 3–6 条要点，每条是检索到的事实（带数字的写清口径和时间），句末用 [n] 标来源编号；查不到就直说查不到，不要编。`, SEARCH_MODEL, { webSearch: true });
+      await logTokenUsage({ tool_name: 'work', task_name: 'Work · AI 工作台检索', institution: t.company_name || '', model_id: SEARCH_MODEL, usageMetadata: r.usageMetadata } as any).catch(() => {});
+      return NextResponse.json({ ok: true, text: String(r.text || '').slice(0, 6000) });
+    } catch (e: any) { return NextResponse.json({ ok: false, error: `检索失败：${String(e?.message || e).slice(0, 120)}` }, { status: 500 }); }
+  }
   const turns: Turn[] = (s.ai_chat || []).filter((x: any) => Array.isArray(x?.steps));
   const others = (s.ai_chat || []).filter((x: any) => !Array.isArray(x?.steps));
   const tsec = Math.round((Date.now() - new Date(s.started_at).getTime()) / 1000);
@@ -54,7 +68,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     // 上一轮还停在工具调用上（页面刷新 / 断网）：补一条「没执行」的结果，让对话成对
     const last = turns[turns.length - 1], tail = last?.steps[last.steps.length - 1];
     if (tail?.role === 'assistant' && tail.calls.length) last.steps.push({ role: 'tool', results: tail.calls.map(c => ({ id: c.id, name: c.name, content: JSON.stringify({ error: '没有执行（页面中断）' }), is_error: true })) });
-    cur = { t: tsec, q: String(body.q).trim().slice(0, 8000), a: '', model, steps: [], n: 0 };
+    cur = { t: tsec, q: String(body.q).trim().slice(0, 8000), a: '', model, steps: [], n: 0, ...(body.plan ? { plan: true } : {}) };
     turns.push(cur);
   } else {
     cur = turns[turns.length - 1];
@@ -68,21 +82,37 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   if ((cur.n || 0) >= MAX_STEPS) { cur.a = summary(cur) + `\n（这一轮已经连续走了 ${MAX_STEPS} 步，先停下来，请你看看结果再说下一步）`; await save(); return NextResponse.json({ ok: true, done: true, text: `这一轮已经连续走了 ${MAX_STEPS} 步，我先停下来。你看看现在的结果，告诉我下一步怎么做。`, calls: [] }); }
 
   const outputs = outputsOf(t);
-  const kit = { system: agentSystem(t, files, outputs, t.task?.lang), tools: AGENT_TOOLS, run: async () => ({ result: null, label: '' }), org: t.company_name || '', task: 'Work · AI 工作台代理' };
-  try {
+  // eager_input_streaming：工具参数边生成边推（写长文件时进度能动）；千问那边只取 name / description / input_schema，不受影响
+  const kit = { system: agentSystem(t, files, outputs, t.task?.lang) + (cur.plan ? PLAN_NOTE : ''), tools: (cur.plan ? AGENT_TOOLS.filter(x => PLAN_TOOLS.has(x.name)) : AGENT_TOOLS).map(x => ({ ...x, eager_input_streaming: true }) as any), run: async () => ({ result: null, label: '' }), org: t.company_name || '', task: 'Work · AI 工作台代理', streamInput: true, maxTokens: 32000 };
+  const run = async (emit: (e: any) => void) => {
     const t0 = Date.now();
-    const out = await withCost({ tool_name: 'work', task_name: 'Work · AI 工作台代理', stage: 'use' }, () => stepOnce(historyOf(turns), cur.model, kit));
-    cur.steps.push({ role: 'assistant', text: out.text, calls: out.calls, provider: out.provider, at: new Date().toISOString() });
-    cur.n = (cur.n || 0) + 1;
-    cur.a = summary(cur);
-    await save();
-    return NextResponse.json({ ok: true, text: out.text, calls: out.calls, done: !out.calls.length, ms: Date.now() - t0, t: tsec });
-  } catch (e: any) {
-    // 模型出错：这一轮留个说明，别让对话停在半截
-    cur.steps.push({ role: 'assistant', text: `（AI 出错了：${String(e?.message || e).slice(0, 120)}）`, calls: [] });
-    cur.a = summary(cur); await save();
-    return NextResponse.json({ ok: false, error: `AI 出错了，再说一次试试（${String(e?.message || e).slice(0, 80)}）` }, { status: 500 });
-  }
+    try {
+      const out = await withCost({ tool_name: 'work', task_name: 'Work · AI 工作台代理', stage: 'use' }, () => stepOnce(historyOf(turns), cur.model, kit, e => { if (e.t === 'text') emit({ t: 'text', delta: e.delta }); else if (e.t === 'tool_progress' && e.part === 'input') emit({ t: 'input', chars: e.data?.chars || 0 }); }));
+      // 输出到上限被截断：工具调用不完整已丢弃，明说出来（不然看着像 AI 说了句话就停了）
+      if (out.truncated) out.text = `${out.text ? out.text + '\n\n' : ''}（这一步输出太长被截断了，文件没有写成。可以让我把大文件分几段写：先写骨架，再用 edit_file 一段段补。）`;
+      cur.steps.push({ role: 'assistant', text: out.text, calls: out.calls, provider: out.provider, at: new Date().toISOString() });
+      cur.n = (cur.n || 0) + 1;
+      cur.a = summary(cur);
+      await save();
+      return { ok: true, text: out.text, calls: out.calls, done: !out.calls.length, plan: !!cur.plan, ms: Date.now() - t0, t: tsec };
+    } catch (e: any) {
+      // 模型出错：这一轮留个说明，别让对话停在半截
+      cur.steps.push({ role: 'assistant', text: `（AI 出错了：${String(e?.message || e).slice(0, 120)}）`, calls: [] });
+      cur.a = summary(cur); await save();
+      return { ok: false, error: `AI 出错了，再说一次试试（${String(e?.message || e).slice(0, 80)}）` };
+    }
+  };
+  if (!body.stream) { const r = await run(() => {}); return NextResponse.json(r, { status: r.ok ? 200 : 500 }); }
+  const enc = new TextEncoder();
+  return new Response(new ReadableStream({
+    async start(ctrl) {
+      const line = (o: any) => { try { ctrl.enqueue(enc.encode(JSON.stringify(o) + '\n')); } catch { /* 前端断了 */ } };
+      let last = 0;
+      const r = await run(e => { if (e.t === 'input') { if (e.chars - last < 200) return; last = e.chars; } line(e); });
+      line({ ...r, t: 'done' });   // r 里的 t 是开始后第几秒，别把 done 标记盖掉
+      ctrl.close();
+    },
+  }), { headers: { 'Content-Type': 'application/x-ndjson; charset=utf-8', 'Cache-Control': 'no-cache, no-transform', 'X-Accel-Buffering': 'no' } });
 }
 
 /** 刷新 / 换设备回来：把这次作答和代理的对话还原给前端（文件内容不回传，前端从草稿恢复） */
@@ -92,6 +122,6 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ tok
   if (!t) return NextResponse.json({ ok: false }, { status: 404 });
   const { data: s } = await db.from('work_sessions').select('ai_chat, draft').eq('id', sid).eq('task_id', t.id).maybeSingle();
   if (!s) return NextResponse.json({ ok: false }, { status: 404 });
-  const turns = (s.ai_chat || []).filter((x: any) => Array.isArray(x?.steps)).map((tn: Turn) => ({ t: tn.t, q: tn.q, model: tn.model, stopped: !!tn.stopped, steps: tn.steps.map(m => slim(m, true)) }));
+  const turns = (s.ai_chat || []).filter((x: any) => Array.isArray(x?.steps)).map((tn: Turn) => ({ t: tn.t, q: tn.q, model: tn.model, stopped: !!tn.stopped, plan: !!tn.plan, steps: tn.steps.map(m => slim(m, true)) }));
   return NextResponse.json({ ok: true, turns, draft: s.draft || null });
 }

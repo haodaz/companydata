@@ -28,7 +28,7 @@ export type Ev =
 export const WS_MODEL = process.env.WS_MODEL || 'claude-opus-5-5';
 /** 一套「总控」= 系统提示 + 工具表 + 执行器 + 记账用的机构名。企业 / 科研工作台用默认的；百业学院教务（lib/college-agent.ts）传自己的 */
 /** run 的第三个参数 progress（11-15）：工具跑的过程中往前台推进度，runTurn 转成 tool_progress 事件 */
-export interface AgentKit { system: string; tools: Anthropic.Tool[]; run: (name: string, input: any, progress?: (p: { part: string; data: any }) => void) => Promise<{ result: any; ui?: ToolUi; label: string }>; org: string; task?: string }
+export interface AgentKit { /** 写工具参数时也往前推进度（11-17 AI 工作台：写长文件那一步不至于干等） */ streamInput?: boolean; /** 单步输出上限（默认 8000；AI 工作台一次写整个脚本会超） */ maxTokens?: number; system: string; tools: Anthropic.Tool[]; run: (name: string, input: any, progress?: (p: { part: string; data: any }) => void) => Promise<{ result: any; ui?: ToolUi; label: string }>; org: string; task?: string }
 const wsKit = (ctx: ToolCtx & { projectTitle?: string }): AgentKit => ({ system: systemPrompt(ctx), tools: toolsFor(ctx.org.kind), run: (n, i) => runTool(n, i, ctx), org: ctx.org.name });
 const provider = (m: string) => (m.startsWith('claude-') ? 'anthropic' : m.startsWith('gpt-') ? 'openai' : m.startsWith('gemini-') ? 'gemini' : m.startsWith('qwen') ? 'qwen' : 'anthropic');
 
@@ -119,10 +119,10 @@ export async function runTurn(history: Msg[], model: string, ctx: ToolCtx, emit:
 }
 
 /** 只走一步（11-17 AI 驾驭题）：工具在候选人浏览器的沙盒里执行，服务端每次只调一次模型、把工具调用交回前端 */
-export async function stepOnce(h: Msg[], model: string, kit: AgentKit): Promise<{ text: string; calls: Call[]; provider: string }> {
-  const p = provider(model), noop = () => {};
-  const out = p === 'anthropic' ? await callAnthropic(h, model, kit, noop) : p === 'openai' ? await callOpenAI(h, model, kit, noop) : p === 'gemini' ? await callGemini(h, model, kit, noop) : await callQwen(h, model, kit, noop);
-  return { text: out.text, calls: out.calls, provider: p };
+export async function stepOnce(h: Msg[], model: string, kit: AgentKit, emit: (e: Ev) => void = () => {}): Promise<{ text: string; calls: Call[]; provider: string; truncated?: boolean }> {
+  const p = provider(model);
+  const out = p === 'anthropic' ? await callAnthropic(h, model, kit, emit) : p === 'openai' ? await callOpenAI(h, model, kit, emit) : p === 'gemini' ? await callGemini(h, model, kit, emit) : await callQwen(h, model, kit, emit);
+  return { text: out.text, calls: out.calls, provider: p, truncated: out.truncated };
 }
 
 /** 历史停在 ask_user 上时，把人的回答作为那个工具的结果接上（否则直接当一条用户消息） */
@@ -143,7 +143,7 @@ export function appendUser(history: Msg[], text: string): Msg[] {
 const log = (model: string, inTok: number, outTok: number, org: string, task = '工作台 · 总控对话', cache?: { read: number; write: number; mode?: 'explicit' | 'implicit' }) =>
   logTokenUsage({ tool_name: 'workspace', task_name: task, institution: org, model_id: model, usageMetadata: { promptTokenCount: inTok, candidatesTokenCount: outTok, totalTokenCount: inTok + outTok, ...(cache ? { cacheReadTokens: cache.read, cacheWriteTokens: cache.write, cacheMode: cache.mode } : {}) } } as any).catch(() => {});
 
-type Out = { text: string; calls: Call[]; raw?: any };
+type Out = { text: string; calls: Call[]; raw?: any; /** 到了输出上限被截断（工具调用不完整，已丢弃） */ truncated?: boolean };
 
 // ──── Anthropic ────
 async function callAnthropic(h: Msg[], model: string, kit: AgentKit, emit: (e: Ev) => void): Promise<Out> {
@@ -155,14 +155,15 @@ async function callAnthropic(h: Msg[], model: string, kit: AgentKit, emit: (e: E
     else messages.push({ role: 'user', content: m.results.map(r => ({ type: 'tool_result' as const, tool_use_id: r.id, content: r.content, ...(r.is_error ? { is_error: true } : {}) })) });
   }
   // 自动缓存（11-15）：工具定义 + 系统提示 + 之前的对话每一步都重发，断点跟着对话往后挪，前面的按缓存价读（Opus / Sonnet 5.5 是原价的 5%）
-  const stream = client.messages.stream({ model, max_tokens: 8000, cache_control: { type: 'ephemeral' }, system: kit.system, tools: kit.tools, messages });
+  const stream = client.messages.stream({ model, max_tokens: kit.maxTokens || 8000, cache_control: { type: 'ephemeral' }, system: kit.system, tools: kit.tools, messages });
   stream.on('text', d => emit({ t: 'text', delta: d }));
+  if (kit.streamInput) { let n = 0; stream.on('inputJson', (d: string) => { n += d.length; emit({ t: 'tool_progress', id: '', name: '', part: 'input', data: { chars: n } }); }); }
   const msg = await stream.finalMessage();
   const u = msg.usage, read = u.cache_read_input_tokens || 0, write = u.cache_creation_input_tokens || 0;
   await log(model, u.input_tokens + read + write, u.output_tokens, kit.org, kit.task, { read, write });
   const text = msg.content.filter((b): b is Anthropic.TextBlock => b.type === 'text').map(b => b.text).join('');
   const calls = msg.content.filter((b): b is Anthropic.ToolUseBlock => b.type === 'tool_use').map(b => ({ id: b.id, name: b.name, input: b.input }));
-  return { text, calls: msg.stop_reason === 'max_tokens' ? [] : calls, raw: msg.content };
+  return { text, calls: msg.stop_reason === 'max_tokens' ? [] : calls, raw: msg.content, ...(msg.stop_reason === 'max_tokens' ? { truncated: true } : {}) };
 }
 
 // ──── OpenAI（Responses API；推理模型不支持 chat/completions）────

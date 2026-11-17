@@ -18,7 +18,9 @@ type Item =
   | { k: 'user'; text: string }
   | { k: 'agent'; text: string }
   | { k: 'tool'; id: string; name: string; input: any; state: 'run' | 'ok' | 'err' | 'skip'; out?: string }
-  | { k: 'note'; text: string };
+  | { k: 'note'; text: string }
+  | { k: 'plan'; id: string; text: string; state: 'open' | 'ok' | 'edit' | 'reject' | 'closed' }
+  | { k: 'confirm'; id: string; path: string; act: 'write' | 'edit' | 'delete'; before: string; after: string; state: 'wait' | 'ok' | 'no' };
 
 const C = { bg: '#f6f6f9', card: '#ffffff', line: '#e7e7ee', ink: '#1d1d2b', ink2: '#6b6b80', brand: '#5b50e6', soft: '#f1f0ff', ok: '#16a34a', bad: '#dc2626', mono: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace' };
 const fmt = (t: number) => `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
@@ -27,6 +29,7 @@ const BRIEF = '__brief';
 
 function toolLabel(name: string, input: any, L: (a: string, b: string) => string) {
   const p = input?.path ? ` ${input.path}` : '';
+  if (name === 'web_search') return L(`联网检索：${String(input?.query || '').slice(0, 60)}`, `Web search: ${String(input?.query || '').slice(0, 60)}`);
   return ({ list_files: L('看了一眼工作区', 'Listed files'), read_file: L(`读${p}`, `Read${p}`), write_file: L(`写入${p}`, `Wrote${p}`), edit_file: L(`修改${p}`, `Edited${p}`), delete_file: L(`删除${p}`, `Deleted${p}`), run_python: input?.path ? L(`运行${p}`, `Ran${p}`) : L('运行一段 Python', 'Ran Python') } as Record<string, string>)[name] || name;
 }
 
@@ -37,12 +40,25 @@ function itemsOf(turns: any[]): Item[] {
     out.push({ k: 'user', text: tn.q });
     const res = new Map<string, any>();
     for (const m of tn.steps) if (m.role === 'tool') for (const r of m.results) res.set(r.id, r);
+    const lastText = [...tn.steps].reverse().find((m: any) => m.role === 'assistant' && m.text);
     for (const m of tn.steps) if (m.role === 'assistant') {
-      if (m.text) out.push({ k: 'agent', text: m.text });
+      if (m.text) out.push(tn.plan && m === lastText ? { k: 'plan', id: `p${out.length}`, text: m.text, state: 'closed' } : { k: 'agent', text: m.text });
       for (const c of m.calls) { const r = res.get(c.id); out.push({ k: 'tool', id: c.id, name: c.name, input: c.input, state: !r ? 'skip' : r.is_error ? 'err' : 'ok', out: r ? String(r.content).slice(0, 2000) : undefined }); }
     }
     if (tn.stopped) out.push({ k: 'note', text: '你叫停了这一轮' });
   }
+  return out;
+}
+
+/** 逐行对比（改动确认卡用）：太大就不细比，整段旧 / 新 */
+function lineDiff(a: string, b: string): { t: '+' | '-' | ' '; s: string }[] {
+  const x = a ? a.split('\n') : [], y = b ? b.split('\n') : [];
+  if (x.length * y.length > 250_000) return [...x.map(s => ({ t: '-' as const, s })), ...y.map(s => ({ t: '+' as const, s }))];
+  const n = x.length, m = y.length, dp = Array.from({ length: n + 1 }, () => new Uint32Array(m + 1));
+  for (let i = n - 1; i >= 0; i--) for (let j = m - 1; j >= 0; j--) dp[i][j] = x[i] === y[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+  const out: { t: '+' | '-' | ' '; s: string }[] = []; let i = 0, j = 0;
+  while (i < n && j < m) { if (x[i] === y[j]) { out.push({ t: ' ', s: x[i] }); i++; j++; } else if (dp[i + 1][j] >= dp[i][j + 1]) out.push({ t: '-', s: x[i++] }); else out.push({ t: '+', s: y[j++] }); }
+  while (i < n) out.push({ t: '-', s: x[i++] }); while (j < m) out.push({ t: '+', s: y[j++] });
   return out;
 }
 
@@ -55,6 +71,11 @@ export function AgentWork({ token, sid, task, resume, limit, grading, error, onS
   const undo = useRef(new Map<string, WsFile | null>());   // AI 最近一次改某个文件之前的样子（人可以撤销）
   const [items, setItems] = useState<Item[]>([]);
   const [q, setQ] = useState(''); const [busy, setBusy] = useState(false); const stopRef = useRef(false);
+  const [live, setLive] = useState<{ text: string; chars: number } | null>(null);   // 正在流式输出的这一步
+  const stepT0 = useRef(0);   // 这一步开始的时间：等得久时显示秒数，让人知道它还活着
+  const [planMode, setPlanMode] = useState(false); const [confirmMode, setConfirmMode] = useState(false); const confirmRef = useRef(false); confirmRef.current = confirmMode;
+  const waits = useRef(new Map<string, (ok: boolean) => void>());   // 等人确认的改动
+  const [planDraft, setPlanDraft] = useState<Record<string, string>>({});
   const [model, setModel] = useState(DEFAULT_AGENT_MODEL);
   const [tabs, setTabs] = useState<string[]>([BRIEF]); const [active, setActive] = useState(BRIEF);
   const [appOpen, setAppOpen] = useState(true); const [appMax, setAppMax] = useState(false); const [tree, setTree] = useState(() => typeof window === 'undefined' || window.innerWidth >= 1280);   // 笔电窄屏：文件区开着时工作区默认收起
@@ -76,27 +97,27 @@ export function AgentWork({ token, sid, task, resume, limit, grading, error, onS
     (async () => {
       try {
         const j = await (await fetch(`/api/work/${token}/sessions/${sid}/agent`)).json();
-        if (j.ok) { setItems(itemsOf(j.turns || [])); const local = (() => { try { return JSON.parse(localStorage.getItem(draftKey) || 'null'); } catch { return null; } })(); const d = local?.files ? local : j.draft?.agent; if (d?.files?.length) setFiles(d.files); if (d?.model) setModel(d.model); }
+        if (j.ok) { setItems(itemsOf(j.turns || [])); const local = (() => { try { return JSON.parse(localStorage.getItem(draftKey) || 'null'); } catch { return null; } })(); const d = local?.files ? local : j.draft?.agent; if (d?.files?.length) setFiles(d.files); if (d?.model) setModel(d.model); if (d?.plan) setPlanMode(true); if (d?.confirm) setConfirmMode(true); }
       } catch { /* 新作答 */ }
       setRestored(true);
     })();
     warmSandbox().then(r => setPy(r.ok ? 'ready' : 'fail'));
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-  useEffect(() => { chatEnd.current?.scrollIntoView({ block: 'end' }); }, [items]);
+  useEffect(() => { chatEnd.current?.scrollIntoView({ block: 'end' }); }, [items, live?.text.length, live?.chars]);
 
   const deliverable = useCallback((img: Record<string, string> = {}) => buildAgentDeliverable(filesRef.current, outputs, original, img), [outputs, original]);
   // 时钟 + 每 30 秒同步（事件、交付物、草稿 = 工作区文件）；关页时补发
   useEffect(() => { const iv = setInterval(() => setNow(now_s()), 1000); return () => clearInterval(iv); }, []); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!restored) return;
-    const draft = () => ({ agent: { files: filesRef.current.filter(f => !f.bin || f.content.length < 300_000), model } });
+    const draft = () => ({ agent: { files: filesRef.current.filter(f => !f.bin || f.content.length < 300_000), model, plan: planMode, confirm: confirmMode } });
     try { localStorage.setItem(draftKey, JSON.stringify(draft().agent)); } catch { /* 太大 */ }
     const sync = async () => { const events = buf.current.splice(0); try { await fetch(`/api/work/${token}/sessions/${sid}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ events, deliverable: deliverable(), draft: draft() }) }); } catch { buf.current.unshift(...events); } };
     const iv = setInterval(sync, 30_000);
     const flush = () => { if (document.visibilityState === 'visible') return; const events = buf.current.splice(0); navigator.sendBeacon(`/api/work/${token}/sessions/${sid}`, new Blob([JSON.stringify({ events: [...events, { t: now_s(), type: 'leave' }], deliverable: deliverable() })], { type: 'application/json' })); };
     document.addEventListener('visibilitychange', flush); window.addEventListener('pagehide', flush);
     return () => { clearInterval(iv); document.removeEventListener('visibilitychange', flush); window.removeEventListener('pagehide', flush); };
-  }, [restored, files, model]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [restored, files, model, planMode, confirmMode]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { const h = (e: BeforeUnloadEvent) => { if (grading) return; e.preventDefault(); e.returnValue = ''; }; window.addEventListener('beforeunload', h); return () => window.removeEventListener('beforeunload', h); }, [grading]);
 
   // ── 文件操作 ──
@@ -124,14 +145,21 @@ export function AgentWork({ token, sid, task, resume, limit, grading, error, onS
         const body = lines.slice(a - 1, b).join('\n');
         return { content: body.length > 30000 ? `${body.slice(0, 30000)}\n……（文件共 ${lines.length} 行，后面没读，用 start_line / end_line 分段读）` : body };
       }
-      case 'write_file': if (!p) return { content: '{"error":"缺 path"}', is_error: true }; put({ path: p, content: String(i.content ?? '') }, 'agent'); return { content: JSON.stringify({ ok: true, path: p, chars: String(i.content ?? '').length, action: f ? (f.by === 'agent' ? '覆盖了你自己之前写的版本' : '覆盖了已有文件') : '新建' }) };
+      case 'web_search': {
+        const query = String(i.query || '').trim();
+        try { const j = await (await fetch(`/api/work/${token}/sessions/${sid}/agent`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ search: query }) })).json(); return j.ok ? { content: j.text, out: j.text } : { content: JSON.stringify({ error: j.error }), is_error: true }; }
+        catch (e: any) { return { content: JSON.stringify({ error: String(e?.message || e) }), is_error: true }; }
+      }
+      case 'write_file': if (!p) return { content: '{"error":"缺 path"}', is_error: true }; if (typeof i.content !== 'string') return { content: '{"error":"content 不完整（可能输出被截断），文件没写；分段写"}', is_error: true }; if (!(await ask(c.id, p, 'write', f && !f.bin ? f.content : '', String(i.content ?? '')))) return refused(p); put({ path: p, content: String(i.content ?? '') }, 'agent'); return { content: JSON.stringify({ ok: true, path: p, chars: String(i.content ?? '').length, action: f ? (f.by === 'agent' ? '覆盖了你自己之前写的版本' : '覆盖了已有文件') : '新建' }) };
       case 'edit_file': {
         if (!f || f.bin) return { content: JSON.stringify({ error: `没有这个文本文件：${p}` }), is_error: true };
         const o = String(i.old_text ?? ''); const n = f.content.split(o).length - 1;
         if (!o || n !== 1) return { content: JSON.stringify({ error: n ? `old_text 出现了 ${n} 次，要唯一` : 'old_text 在文件里找不到' }), is_error: true };
-        put({ path: p, content: f.content.replace(o, String(i.new_text ?? '')) }, 'agent'); return { content: JSON.stringify({ ok: true, path: p }) };
+        const next = f.content.replace(o, String(i.new_text ?? ''));
+        if (!(await ask(c.id, p, 'edit', f.content, next))) return refused(p);
+        put({ path: p, content: next }, 'agent'); return { content: JSON.stringify({ ok: true, path: p }) };
       }
-      case 'delete_file': if (!f) return { content: JSON.stringify({ error: `没有这个文件：${p}` }), is_error: true }; drop(p, 'agent'); return { content: JSON.stringify({ ok: true }) };
+      case 'delete_file': if (!f) return { content: JSON.stringify({ error: `没有这个文件：${p}` }), is_error: true }; if (!(await ask(c.id, p, 'delete', f.bin ? '（二进制文件）' : f.content, ''))) return refused(p); drop(p, 'agent'); return { content: JSON.stringify({ ok: true }) };
       case 'run_python': {
         if (p && !f) return { content: JSON.stringify({ error: `没有这个文件：${p}` }), is_error: true };
         const r = await runPython(filesRef.current, { path: p || undefined, code: i.code });
@@ -143,20 +171,49 @@ export function AgentWork({ token, sid, task, resume, limit, grading, error, onS
     return { content: JSON.stringify({ error: `没有这个工具：${c.name}` }), is_error: true };
   };
 
-  const post = async (body: any) => {
-    const r = await fetch(`/api/work/${token}/sessions/${sid}/agent`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...body, files: filesRef.current.map(f => ({ path: f.path, size: sizeOf(f), by: f.by })) }) });
-    return r.json();
+  /** 「改动要我确认」开着时：AI 写 / 改 / 删文件先停下，在对话里出一张对比卡，人点接受或拒绝 */
+  const ask = (id: string, path: string, act: 'write' | 'edit' | 'delete', before: string, after: string) => {
+    if (!confirmRef.current || stopRef.current) return Promise.resolve(!stopRef.current);
+    setItems(x => [...x, { k: 'confirm', id: `c${id}`, path, act, before, after, state: 'wait' }]);
+    return new Promise<boolean>(res => waits.current.set(`c${id}`, res));
   };
-  const send = async (text: string) => {
+  const answer = (cid: string, ok: boolean, path: string) => {
+    const f = waits.current.get(cid); if (!f) return; waits.current.delete(cid);
+    setItems(x => x.map(it => (it.k === 'confirm' && it.id === cid ? { ...it, state: ok ? 'ok' : 'no' } : it)));
+    ev(ok ? 'change_ok' : 'change_reject', { note: path.slice(0, 120) }); f(ok);
+  };
+  const refused = (p: string) => ({ content: JSON.stringify({ error: `用户拒绝了这次对 ${p} 的改动，文件没变。先问清楚他要什么再改。` }), is_error: true });
+  /** 一步：流式读回（逐字 + 写长文件时的进度），最后一行是结果；服务端直接回 JSON 的（叫停、到步数上限、出错）照常读 */
+  const post = async (body: any) => {
+    setLive({ text: '', chars: 0 }); stepT0.current = Date.now();   // 头要等第一个字才到，计时从发出去算
+    const r = await fetch(`/api/work/${token}/sessions/${sid}/agent`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...body, stream: true, files: filesRef.current.map(f => ({ path: f.path, size: sizeOf(f), by: f.by })) }) });
+    if (!/ndjson/.test(r.headers.get('content-type') || '') || !r.body) { setLive(null); return r.json(); }
+    const reader = r.body.getReader(), dec = new TextDecoder(); let buf = '', fin: any = null;
+    for (;;) {
+      const { value, done } = await reader.read(); if (done) break;
+      buf += dec.decode(value, { stream: true }); let k: number;
+      while ((k = buf.indexOf('\n')) >= 0) {
+        const line = buf.slice(0, k); buf = buf.slice(k + 1); if (!line.trim()) continue;
+        let o: any; try { o = JSON.parse(line); } catch { continue; }
+        if (o.t === 'text') setLive(l => ({ text: (l?.text || '') + o.delta, chars: l?.chars || 0 }));
+        else if (o.t === 'input') setLive(l => ({ text: l?.text || '', chars: o.chars }));
+        else if (o.t === 'done') fin = o;
+      }
+    }
+    setLive(null);
+    return fin || { ok: false, error: L('连接断了，再说一次试试', 'Connection lost. Please try again.') };
+  };
+  const send = async (text: string, opt: { plan?: boolean } = {}) => {
     if (!text.trim() || busy) return;
+    const plan = opt.plan ?? planMode;
     setQ(''); setBusy(true); setErr(''); stopRef.current = false;
-    ev('ai_ask', { chars: text.length });
+    ev('ai_ask', { chars: text.length, ...(plan ? { note: 'plan' } : {}) });
     setItems(x => [...x, { k: 'user', text }]);
     try {
-      let j = await post({ q: text, model });
+      let j = await post({ q: text, model, plan });
       for (let guard = 0; guard < 45; guard++) {
         if (!j.ok) { setErr(j.error || L('AI 出错了', 'The AI hit an error')); break; }
-        if (j.text) setItems(x => [...x, { k: 'agent', text: j.text }]);
+        if (j.text) setItems(x => [...x, j.plan && (j.done || !j.calls?.length) ? { k: 'plan', id: `p${Date.now()}`, text: j.text, state: 'open' } : { k: 'agent', text: j.text }]);
         if (j.done || !j.calls?.length) break;
         const results: any[] = [];
         for (const c of j.calls as Call[]) {
@@ -173,7 +230,14 @@ export function AgentWork({ token, sid, task, resume, limit, grading, error, onS
     } catch (e: any) { setErr(String(e?.message || e)); }
     setBusy(false);
   };
-  const stop = () => { stopRef.current = true; ev('agent_stop'); };
+  const stop = () => { stopRef.current = true; ev('agent_stop'); for (const [cid, f] of waits.current) { setItems(x => x.map(it => (it.k === 'confirm' && it.id === cid ? { ...it, state: 'no' } : it))); f(false); } waits.current.clear(); };
+  const decidePlan = (it: Extract<Item, { k: 'plan' }>, how: 'ok' | 'edit' | 'reject') => {
+    setItems(x => x.map(y => (y.k === 'plan' && y.id === it.id ? { ...y, state: how } : y)));
+    if (how === 'ok') { ev('agent_plan', { note: 'ok' }); send(L('批准，按这个计划执行。', 'Approved. Go ahead with this plan.'), { plan: false }); }
+    else if (how === 'edit') { const d = planDraft[it.id] ?? it.text; ev('agent_plan', { note: 'edit', delta: d.length - it.text.length }); send(L(`按我改过的计划执行：\n${d}`, `Go ahead with my edited plan:\n${d}`), { plan: false }); }
+    else ev('agent_plan', { note: 'reject' });
+  };
+  const toggleMode = (k: 'plan' | 'confirm') => { if (k === 'plan') { setPlanMode(v => { ev('agent_mode', { note: `plan:${!v ? 'on' : 'off'}` }); return !v; }); } else { setConfirmMode(v => { ev('agent_mode', { note: `confirm:${!v ? 'on' : 'off'}` }); return !v; }); } };
 
   // 人自己动文件
   const editTimer = useRef<Record<string, { t: any; d: number }>>({});
@@ -274,7 +338,7 @@ export function AgentWork({ token, sid, task, resume, limit, grading, error, onS
     </div>;
   };
 
-  const tips = [L('先把材料都读一遍，告诉我数据口径上有哪些问题', 'Read all the materials and tell me what data issues you see'), L('写个脚本把 data 里的表清洗干净，跑一下给我看结果', 'Write a script to clean the tables in data/ and show me the output'), L(`把结论写进 ${outputs[0]?.path || 'output/'}`, `Write the conclusions into ${outputs[0]?.path || 'output/'}`)];
+  const tips = [L('先把材料都读一遍，告诉我数据口径上有哪些问题', 'Read all the materials and tell me what data issues you see'), L('写个脚本把 data 里的表清洗干净，跑一下给我看结果', 'Write a script to clean the tables in data/ and show me the output'), L(`把结论写进 ${(outputs.find(o => /\.md$/.test(o.path)) || outputs[0])?.path || 'output/'}`, `Write the conclusions into ${(outputs.find(o => /\.md$/.test(o.path)) || outputs[0])?.path || 'output/'}`)];
   const chatEl = (
     <div style={{ flex: 1, minWidth: 360, display: appMax ? 'none' : 'flex', flexDirection: 'column', minHeight: 0 }}>
       <div style={{ flex: 1, overflow: 'auto', padding: '18px 20px 8px' }}>
@@ -288,18 +352,31 @@ export function AgentWork({ token, sid, task, resume, limit, grading, error, onS
           {items.map((it, i) => it.k === 'user' ? <div key={i} style={{ alignSelf: 'flex-end', maxWidth: '85%', background: C.soft, borderRadius: 12, padding: '9px 13px', fontSize: 14, lineHeight: 1.7, whiteSpace: 'pre-wrap' }}>{it.text}</div>
             : it.k === 'agent' ? <div key={i}><MdView text={it.text} style={{ fontSize: 14, lineHeight: 1.75 }} /></div>
             : it.k === 'note' ? <div key={i} style={{ fontSize: 12, color: C.ink2, textAlign: 'center' }}>— {it.text} —</div>
+            : it.k === 'plan' ? <div key={i} style={{ border: `1px solid #d9d5ff`, background: '#fbfaff', borderRadius: 12, padding: '10px 14px' }}>
+                <div style={{ fontSize: 12, color: C.brand, fontWeight: 700, marginBottom: 4 }}>{L('AI 的执行计划', "AI's plan")}{it.state === 'ok' ? L(' · 你批准了', ' · approved') : it.state === 'edit' ? L(' · 你改过再执行', ' · edited by you') : it.state === 'reject' ? L(' · 你打回了', ' · rejected') : ''}</div>
+                {it.state === 'open' && planDraft[it.id] != null ? <textarea value={planDraft[it.id]} onChange={e => setPlanDraft(d => ({ ...d, [it.id]: e.target.value }))} rows={10} style={{ width: '100%', boxSizing: 'border-box', border: `1px solid ${C.line}`, borderRadius: 8, padding: 8, fontSize: 13, fontFamily: 'inherit', lineHeight: 1.6 }} /> : <MdView text={it.text} style={{ fontSize: 14, lineHeight: 1.75 }} />}
+                {it.state === 'open' && <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
+                  {planDraft[it.id] != null ? <button disabled={busy} onClick={() => decidePlan(it, 'edit')} style={btnMain}>{L('按改过的执行', 'Run edited plan')}</button> : <button disabled={busy} onClick={() => decidePlan(it, 'ok')} style={btnMain}>{L('批准执行', 'Approve')}</button>}
+                  {planDraft[it.id] == null && <button disabled={busy} onClick={() => setPlanDraft(d => ({ ...d, [it.id]: it.text }))} style={btnGhost}>{L('改一改', 'Edit')}</button>}
+                  <button disabled={busy} onClick={() => decidePlan(it, 'reject')} style={btnGhost}>{L('打回', 'Reject')}</button>
+                </div>}
+              </div>
+            : it.k === 'confirm' ? <ConfirmCard key={i} it={it} onAnswer={ok => answer(it.id, ok, it.path)} L={L} />
             : <ToolRow key={i} it={it} label={toolLabel(it.name, it.input, L)} onOpen={it.input?.path && files.some(f => f.path === it.input.path) ? () => openFile(it.input.path) : undefined} />)}
-          {busy && <div style={{ fontSize: 12.5, color: C.ink2 }}>{L('AI 在干活…', 'AI is working…')}</div>}
+          {busy && live?.text && <div style={{ opacity: 0.85 }}><MdView text={live.text} style={{ fontSize: 14, lineHeight: 1.75 }} /></div>}
+          {busy && <div style={{ fontSize: 12.5, color: C.ink2 }}>{live?.chars ? L(`AI 正在写文件… 约 ${live.chars} 字`, `AI is writing a file… ~${live.chars} chars`) : [...items].reverse().find(x => x.k === 'confirm')?.k === 'confirm' && waits.current.size ? L('等你确认上面的改动', 'Waiting for you to review the change above') : L('AI 在干活…', 'AI is working…')}{live && stepT0.current && now >= 0 ? ` ${Math.round((Date.now() - stepT0.current) / 1000)} ${L('秒', 's')}` : ''}</div>}
           <div ref={chatEnd} />
         </div>
       </div>
       <div style={{ padding: '8px 20px 16px' }}>
         <div style={{ maxWidth: 760, margin: '0 auto', border: `1px solid ${C.line}`, borderRadius: 14, background: C.card, boxShadow: '0 2px 10px rgba(20,20,60,.05)' }}>
           <textarea value={q} onChange={e => setQ(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); send(q); } }} rows={3} placeholder={L('告诉 AI 要做什么（Enter 发送，Shift+Enter 换行）', 'Tell the AI what to do (Enter to send, Shift+Enter for a new line)')} style={{ width: '100%', boxSizing: 'border-box', border: 0, outline: 'none', resize: 'none', padding: '12px 14px 4px', fontSize: 14, lineHeight: 1.6, borderRadius: 14, fontFamily: 'inherit' }} />
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '4px 10px 10px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '4px 10px 10px', flexWrap: 'wrap' }}>
             <select value={model} onChange={e => { setModel(e.target.value); ev('agent_model', { note: e.target.value }); }} disabled={busy} style={{ border: `1px solid ${C.line}`, borderRadius: 8, padding: '4px 6px', fontSize: 12.5, background: '#fff', color: C.ink2 }}>
-              {AGENT_MODELS.map(m => <option key={m.id} value={m.id}>{lang === 'en' ? m.en : m.label} · {m.note}</option>)}
+              {AGENT_MODELS.map(m => <option key={m.id} value={m.id} title={m.note}>{lang === 'en' ? m.en : m.label}</option>)}
             </select>
+            <button onClick={() => toggleMode('plan')} disabled={busy} title={L('开着时：AI 先只读材料、列出执行计划，你批准或改过之后它才动手', 'When on, the AI first reads and proposes a plan; it acts only after you approve or edit it')} style={{ ...chip, ...(planMode ? chipOn : {}) }}>{planMode ? '☑' : '☐'} {L('先出计划', 'Plan first')}</button>
+            <button onClick={() => toggleMode('confirm')} title={L('开着时：AI 每次写 / 改 / 删文件都先给你看改了什么，你接受了才生效', 'When on, every file write / edit / delete is shown to you first and only applies if you accept')} style={{ ...chip, ...(confirmMode ? chipOn : {}) }}>{confirmMode ? '☑' : '☐'} {L('改动要我确认', 'Review changes')}</button>
             <span style={{ flex: 1 }} />
             {busy ? <button onClick={stop} style={{ border: `1px solid ${C.line}`, background: '#fff', borderRadius: 9, padding: '6px 14px', cursor: 'pointer', fontSize: 13 }}>■ {L('停', 'Stop')}</button>
               : <button onClick={() => send(q)} disabled={!q.trim()} style={{ border: 0, background: q.trim() ? C.brand : '#c9c6f5', color: '#fff', borderRadius: 9, padding: '6px 16px', cursor: q.trim() ? 'pointer' : 'default', fontSize: 13, fontWeight: 600 }}>{L('发送', 'Send')}</button>}
@@ -343,6 +420,32 @@ export function AgentWork({ token, sid, task, resume, limit, grading, error, onS
       </div>}
     </div>
   );
+}
+
+const btnMain: React.CSSProperties = { border: 0, background: C.brand, color: '#fff', borderRadius: 8, padding: '5px 12px', cursor: 'pointer', fontSize: 12.5, fontWeight: 600 };
+const btnGhost: React.CSSProperties = { border: `1px solid ${C.line}`, background: '#fff', color: C.ink, borderRadius: 8, padding: '5px 12px', cursor: 'pointer', fontSize: 12.5 };
+const chip: React.CSSProperties = { border: `1px solid ${C.line}`, background: '#fff', color: C.ink2, borderRadius: 99, padding: '3px 10px', cursor: 'pointer', fontSize: 12, whiteSpace: 'nowrap' };
+const chipOn: React.CSSProperties = { borderColor: '#c9c3ff', background: C.soft, color: C.brand };
+
+function ConfirmCard({ it, onAnswer, L }: { it: Extract<Item, { k: 'confirm' }>; onAnswer: (ok: boolean) => void; L: (a: string, b: string) => string }) {
+  const d = useMemo(() => lineDiff(it.before, it.after), [it.before, it.after]);
+  const add = d.filter(x => x.t === '+').length, del = d.filter(x => x.t === '-').length;
+  // 只显示改动附近的行：改动前后各留 2 行
+  const keep = new Set<number>(); d.forEach((x, k) => { if (x.t !== ' ') for (let j = k - 2; j <= k + 2; j++) keep.add(j); });
+  const shown = d.map((x, k) => ({ ...x, k })).filter(x => keep.has(x.k)).slice(0, 80);
+  const act = it.act === 'write' ? (it.before ? L('覆盖', 'Overwrite') : L('新建', 'Create')) : it.act === 'edit' ? L('修改', 'Edit') : L('删除', 'Delete');
+  return <div style={{ border: `1px solid ${it.state === 'wait' ? '#fcd34d' : C.line}`, borderRadius: 10, background: C.card, fontSize: 12.5 }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', borderBottom: `1px solid ${C.line}` }}>
+      <b>{act}</b><code style={{ fontFamily: C.mono, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis' }}>{it.path}</code>
+      <span style={{ color: C.ok }}>+{add}</span><span style={{ color: C.bad }}>−{del}</span>
+      {it.state === 'wait' ? <><button onClick={() => onAnswer(true)} style={btnMain}>{L('接受', 'Accept')}</button><button onClick={() => onAnswer(false)} style={btnGhost}>{L('拒绝', 'Reject')}</button></>
+        : <span style={{ color: it.state === 'ok' ? C.ok : C.bad }}>{it.state === 'ok' ? L('已接受', 'Accepted') : L('已拒绝', 'Rejected')}</span>}
+    </div>
+    <pre style={{ margin: 0, maxHeight: it.state === 'wait' ? 320 : 120, overflow: 'auto', fontFamily: C.mono, fontSize: 11.5, lineHeight: '17px', padding: '6px 0' }}>
+      {shown.map((x, n) => <div key={n} style={{ padding: '0 10px', whiteSpace: 'pre-wrap', background: x.t === '+' ? '#ecfdf3' : x.t === '-' ? '#fef2f2' : 'transparent', color: x.t === ' ' ? C.ink2 : C.ink }}>{x.t === ' ' ? '  ' : x.t + ' '}{x.s}</div>)}
+      {d.filter(x => x.t !== ' ').length > shown.filter(x => x.t !== ' ').length && <div style={{ padding: '2px 10px', color: C.ink2 }}>{L('……（还有改动没显示，接受后可以在文件里看全文）', '…(more changes not shown; open the file after accepting)')}</div>}
+    </pre>
+  </div>;
 }
 
 function ToolRow({ it, label, onOpen }: { it: Extract<Item, { k: 'tool' }>; label: string; onOpen?: () => void }) {

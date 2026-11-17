@@ -199,7 +199,7 @@ function locate(inp: FluencyInput, a: Anchors, source: string, disclosure: strin
   if (tools.length) out.push({ bid: 'B23', src: 'event', i: -2, quote: `交卷前在操作台上${ev.some(e => e.type === 'run_tests') ? `跑了 ${ev.filter(e => e.type === 'run_tests').length} 次测试` : ''}${ev.some(e => e.type === 'self_check') ? `做了 ${ev.filter(e => e.type === 'self_check').length} 次自查` : ''}`, rule: 'B23-事件:测试/自查' });
   // AI 工作台（11-17）：人自己动手的动作是平台直接记下的，不靠说出口——资深的人「自己核、不跟 AI 说」也看得到
   const tAsk = inp.chat[0]?.t ?? 0;
-  const ag = ev.filter(e => /^(ws_|agent_)/.test(e.type) && e.t >= tAsk);
+  const ag = ev.filter(e => /^(ws_|agent_|change_)/.test(e.type) && (e.t >= tAsk || e.type === 'agent_mode'));   // 协作开关常在第一次提问前就设好
   const paths = (xs: any[]) => [...new Set(xs.map(e => String(e.note || '')).filter(Boolean))].slice(0, 4).join('、');
   let k = -10;
   const runs = ag.filter(e => e.type === 'ws_run');
@@ -212,6 +212,13 @@ function locate(inp: FluencyInput, a: Anchors, source: string, disclosure: strin
   if (src0.length) out.push({ bid: 'B13', src: 'event', i: k--, quote: `问过 AI 之后，自己打开原始材料看了 ${src0.length} 次（${paths(src0)}）`, rule: 'B13-事件:自己看原始材料' });
   const rev = ag.filter(e => e.type === 'ws_revert');
   if (rev.length) out.push({ bid: 'B16', src: 'event', i: k--, quote: `撤销了 AI 对文件的改动 ${rev.length} 次（${paths(rev)}）`, rule: 'B16-事件:撤销 AI 改动' });
+  const modes = ag.filter(e => e.type === 'agent_mode' && /:on$/.test(String(e.note || '')));
+  if (modes.length) out.push({ bid: 'B11', src: 'event', i: k--, quote: `主动设定了和 AI 的协作方式：${[...new Set(modes.map(e => /^plan/.test(String(e.note)) ? '先出计划、批准后再动手' : '每次改文件先给我确认'))].join('；')}`, rule: 'B11-事件:设定协作方式' });
+  const plans = ag.filter(e => e.type === 'agent_plan');
+  if (plans.length) out.push({ bid: 'B5', src: 'event', i: k--, quote: `让 AI 先出执行计划 ${plans.length} 次：${plans.map(e => (e.note === 'ok' ? '直接批准' : e.note === 'edit' ? `改过再执行（改动约 ${Math.abs(Number(e.delta) || 0)} 字）` : '打回')).join('、')}`, rule: 'B5-事件:审计划' });
+  const rej = ag.filter(e => e.type === 'change_reject'), acc = ag.filter(e => e.type === 'change_ok');
+  if (rej.length) out.push({ bid: 'B16', src: 'event', i: k--, quote: `逐条确认 AI 的文件改动：接受 ${acc.length} 次、拒绝 ${rej.length} 次（拒绝的：${paths(rej)}）`, rule: 'B16-事件:拒绝 AI 改动' });
+  else if (acc.length >= 3) out.push({ bid: 'B23', src: 'event', i: k--, quote: `逐条看过 AI 的 ${acc.length} 次文件改动后才接受`, rule: 'B23-事件:逐条确认改动' });
   const sw = ag.filter(e => e.type === 'agent_model');
   if (sw.length) out.push({ bid: 'B4', src: 'event', i: k--, quote: `作答中换过模型 ${sw.length} 次（${paths(sw)}）`, rule: 'B4-事件:换模型' });
   return { cands: out, split };

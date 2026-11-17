@@ -106,7 +106,7 @@ export async function analyzeProcess(task: WorkTask, events: WorkEvent[], aiChat
 ## 任务（操作台：${task.env?.type || 'doc'}）
 ${task.task.title}：${task.task.brief.slice(0, 600)}
 事件类型含义：open_material 打开材料 · ai_ask 问 AI · adopt 把 AI 的话放进交付物 · paste 粘贴 · edit 自己改稿（Δ字数）· run_tests 跑自测（note 里是通过数）· set_param 改设计参数 · sketch 画草图 · idle 空闲超过 2 分钟 · submit 交卷 · 真活插件：plugin_start/plugin_stop 开始 / 结束记录 · visit 打开或切到某个网页（host · 标题）· page 网页上读到的文字（摘）· edit 在网页里打字（Δ字数）· paste 粘贴 · copy 复制 · 和 AI 的对话里「插件读到的 xx 页面」是候选人在外部 AI 网站上的对话原文（问和答混在一起，按语义区分）
-AI 工作台（操作台 agent：候选人带一个能读写工作区文件、跑 Python 的 AI 代理做 project；对话里 a 的［write_file 路径］［run_python］是代理做的动作）：ws_open 自己打开某个文件看（note=路径）· ws_edit 自己改文件（note=路径，Δ字数）· ws_run 自己运行脚本（note=路径，id=ok/err）· ws_revert 撤销了 AI 对某个文件的改动 · ws_new 自己新建文件 · agent_stop 叫停 AI · agent_model 换了模型 · download 下载文件
+AI 工作台（操作台 agent：候选人带一个能读写工作区文件、跑 Python 的 AI 代理做 project；对话里 a 的［write_file 路径］［run_python］是代理做的动作）：ws_open 自己打开某个文件看（note=路径）· ws_edit 自己改文件（note=路径，Δ字数）· ws_run 自己运行脚本（note=路径，id=ok/err）· ws_revert 撤销了 AI 对某个文件的改动 · ws_new 自己新建文件 · agent_stop 叫停 AI · agent_model 换了模型 · agent_mode 打开 / 关掉协作开关（plan = 先出计划再动手，confirm = 每次改文件先给他确认）· agent_plan 处理 AI 的计划（ok 批准 / edit 改过再执行 / reject 打回）· change_ok / change_reject 接受 / 拒绝 AI 的一次文件改动 · download 下载文件
 开放模式（用自己的软件做）：download 下载材料 · rec_start / rec_stop 录屏起止 · screen 录屏抽帧看图得到的描述（note = 软件 · 动作 · 看到的内容，这是主要的过程证据）· file 上传交付文件
 ${task.env?.type === 'agent' ? 'AI 工作台：材料是真实工作资料，没有刻意埋坑；看要交的文件做得好不好，以及哪些判断和核对是他自己做的。' : `材料里故意留的坑（看他有没有发现）：${task.materials.filter(m => m.source !== 'db').map(m => m.id + ' ' + m.title).join('、') || '无标注'}`}
 ## 统计
@@ -236,7 +236,7 @@ export async function analyzeAiUse(task: WorkTask, events: WorkEvent[], aiChat: 
   // 「整合」能不能评由程序定（模型两次判得不一样）：采纳过、交付物里有 AI 原句、粘贴过，或在自己软件里做（看不到）才评
   const canIntegrate = () => (stats.ai_overlap || 0) >= 15 || (stats.ai_numbers_carried || 0) >= 2 || stats.adopted > 0 || stats.verbatim_ratio > 0 || ev.some(e => e.type === 'paste') || ev.some(e => e.type === 'rec_start' || /^plugin_/.test(e.type));
   const nextStep = nextStepOf(events);
-  const lines = ev.filter(e => ['open_material', 'ai_ask', 'adopt', 'paste', 'edit', 'submit', 'screen'].includes(e.type) || /^(plugin_|ws_|agent_)/.test(e.type)).slice(0, 300)
+  const lines = ev.filter(e => ['open_material', 'ai_ask', 'adopt', 'paste', 'edit', 'submit', 'screen'].includes(e.type) || /^(plugin_|ws_|agent_|change_)/.test(e.type)).slice(0, 300)
     .map(e => `[${fmt(e.t)}] ${e.type}${e.id ? ' ' + e.id : ''}${e.chars ? ` ${e.chars}字` : ''}${e.delta != null ? ` Δ${e.delta}` : ''}${e.note ? ' ' + s(e.note, 100) : ''}`);
   const prompt = `你在评一个候选人的「AI 使用能力」：他做一道真实业务任务时，怎么用 AI 助手。企业要招的是会用 AI 的人——不是不用，也不是全交给 AI，而是把 AI 用对。
 ## 任务
@@ -246,7 +246,7 @@ ${task.task.title}：${task.task.brief.slice(0, 500)}
 问了 ${stats.asks} 次，其中追问 ${stats.followups} 次；把 AI 的回答采纳进交付物 ${stats.adopted} 次（${stats.adopted_chars} 字）；交付物里原样来自 AI 回答的句子占 ${stats.verbatim_ratio}%${stats.ai_numbers_carried ? `；交付物里有 ${stats.ai_numbers_carried} 个数字和 AI 回答里算出的一致、任务材料里没有（手敲照抄，算 AI 内容进了交付物）` : ''}${stats.ai_overlap != null ? `；交付物里 ${stats.ai_overlap}% 的 8 字片段在 AI 回答里出现过（含改写后的）` : ''}；第一次问 AI 在 ${firstAsk == null ? '—' : fmt(firstAsk)}，那之前打开过 ${stats.materials_before_first_ask} 份材料。
 ## 和 AI 的每一轮（按时间）
 ${chat.slice(0, 40).map(c => `[${fmt(c.t)}] 问：${pasted[chat.indexOf(c)] >= 50 ? `【约 ${pasted[chat.indexOf(c)]}% 是原样粘贴的任务书 / 材料，不算他自己的提问】` : ''}${s(c.q, 400)}\n   答：${s(c.a, 500)}`).join('\n') || '（站内没问过；看下面录屏 / 插件里的外部 AI 使用）'}
-## 过程事件（open_material 打开材料 · ai_ask 问 AI · adopt 采纳进交付物 · paste 粘贴 · edit 自己改稿 Δ字数 · screen 录屏看到的 · AI 工作台：ws_open 自己打开文件看 · ws_edit 自己改文件 · ws_run 自己运行脚本 · ws_revert 撤销 AI 的改动 · agent_stop 叫停 AI · agent_model 换模型）
+## 过程事件（open_material 打开材料 · ai_ask 问 AI · adopt 采纳进交付物 · paste 粘贴 · edit 自己改稿 Δ字数 · screen 录屏看到的 · AI 工作台：ws_open 自己打开文件看 · ws_edit 自己改文件 · ws_run 自己运行脚本 · ws_revert 撤销 AI 的改动 · agent_stop 叫停 AI · agent_model 换模型 · agent_mode 协作开关 · agent_plan 批准 / 改 / 打回 AI 的计划 · change_ok / change_reject 接受 / 拒绝 AI 的文件改动）
 ${lines.join('\n')}
 ## 交付物（节选）
 ${deliverable.slice(0, 2500)}
