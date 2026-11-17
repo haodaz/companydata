@@ -36,14 +36,10 @@
 .tp-book { --pw: min(calc(100vw - 36px), 392px, calc((100dvh - var(--chrome, 190px)) * .707)); position: relative; width: calc(var(--pw) + 14px); padding: 7px; border-radius: 16px; background: linear-gradient(135deg, #22265A, var(--navy)); box-shadow: 0 24px 50px rgba(24, 27, 60, .32), 0 4px 10px rgba(24, 27, 60, .2); touch-action: pan-y; user-select: none; -webkit-user-select: none; }
 .tp-book-in { position: relative; width: var(--pw); aspect-ratio: 707 / 1000; perspective: 1700px; }
 .tp-book-edge { position: absolute; right: -4px; top: 6px; bottom: 6px; width: 6px; border-radius: 0 3px 3px 0; background: repeating-linear-gradient(180deg, #F2EDE2 0 2px, #DCD5C6 2px 3px); }
-.tp-leaf { position: absolute; inset: 0; transform-origin: left center; transform-style: preserve-3d; z-index: 3; will-change: transform; }
-.tp-leaf.fwd { animation: tp-turn-fwd .62s cubic-bezier(.45, .05, .3, 1) forwards; }
-.tp-leaf.back { animation: tp-turn-back .62s cubic-bezier(.45, .05, .3, 1) forwards; }
-.tp-leaf::after { content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: 4px; background: linear-gradient(90deg, rgba(0, 0, 0, .02), rgba(0, 0, 0, .28)); animation: tp-leaf-shade .62s ease forwards; }
-.tp-leaf.back::after { animation-direction: reverse; }
-@keyframes tp-turn-fwd { from { transform: rotateY(0); opacity: 1; } 85% { opacity: 1; } to { transform: rotateY(-104deg); opacity: 0; } }
-@keyframes tp-turn-back { from { transform: rotateY(-104deg); opacity: 0; } 15% { opacity: 1; } to { transform: rotateY(0); opacity: 1; } }
-@keyframes tp-leaf-shade { from { opacity: 0; } to { opacity: 1; } }
+.tp-leaf { position: absolute; inset: 0; transform-origin: left center; z-index: 3; will-change: transform; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 4px 9px 9px 4px; box-shadow: 0 0 0 rgba(0,0,0,0); }
+.tp-leaf-shade { position: absolute; inset: 0; pointer-events: none; border-radius: 4px 9px 9px 4px; background: linear-gradient(90deg, rgba(10, 12, 30, .05) 0%, rgba(10, 12, 30, .18) 55%, rgba(10, 12, 30, .45) 100%); }
+.tp-leaf-gloss { position: absolute; inset: 0; pointer-events: none; border-radius: 4px 9px 9px 4px; background: linear-gradient(90deg, rgba(255,255,255,0) 40%, rgba(255,255,255,.35) 78%, rgba(255,255,255,0) 100%); mix-blend-mode: soft-light; }
+.tp-cast { position: absolute; inset: 0; pointer-events: none; z-index: 2; border-radius: 4px 9px 9px 4px; background: linear-gradient(90deg, rgba(10, 12, 30, .55) 0%, rgba(10, 12, 30, .18) 22%, rgba(10, 12, 30, 0) 60%); }
 .tp-base { position: absolute; inset: 0; transition: transform .2s; }
 .tp-base.drag { transition: none; }
 .tp-nav { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 12px; }
@@ -350,3 +346,35 @@ textarea.tp-input { height: auto; min-height: 76px; padding: 10px 12px; line-hei
 @media (prefers-reduced-motion: reduce) {
   .tp-root *, .tp-root *::before, .tp-root *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
+
+/* ---------- 沉浸翻页（分享出去的那本） ---------- */
+.tp-root.tp-dark { background: radial-gradient(90% 65% at 50% 42%, #2B3070 0%, #171A3C 55%, #0B0C1E 100%); min-height: 100dvh; }
+.tp-root.tp-dark .tp-app { background: none; box-shadow: none; max-width: none; }
+.tp-root.tp-dark::before { content: ''; position: fixed; inset: 0; pointer-events: none; background: radial-gradient(60% 40% at 50% 46%, rgba(217, 182, 106, .10), rgba(217, 182, 106, 0) 70%); }
+.tp-stage.imm { justify-content: center; padding: 54px 0 10px; }
+.tp-stage.imm .tp-book { --pw: min(calc(100vw - 30px), 540px, calc((100dvh - 150px) * .707)); box-shadow: 0 50px 100px rgba(0, 0, 0, .6), 0 10px 24px rgba(0, 0, 0, .4); animation: tp-imm-in .7s cubic-bezier(.2, .9, .3, 1) both; }
+@keyframes tp-imm-in { from { transform: translateY(40px) scale(.86) rotate(-3deg); opacity: 0; } }
+.tp-imm-foot { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 16px; width: 100%; padding: 0 16px; }
+.tp-imm-foot .tp-arrow { background: rgba(255, 255, 255, .1); color: #fff; box-shadow: none; width: 38px; height: 38px; backdrop-filter: blur(6px); }
+.tp-imm-mid { display: flex; flex-direction: column; align-items: center; gap: 7px; min-width: 150px; }
+.tp-imm-tab { font-size: 14px; font-weight: 800; color: #fff; letter-spacing: .04em; }
+.tp-imm-tab span { font-family: var(--mono); font-size: 11px; font-weight: 600; color: rgba(255, 255, 255, .5); margin-left: 8px; }
+.tp-imm-dots { display: flex; gap: 6px; }
+.tp-imm-dots button { width: 7px; height: 7px; padding: 0; border: 0; border-radius: 99px; background: rgba(255, 255, 255, .28); cursor: pointer; transition: width .3s, background .3s; }
+.tp-imm-dots button.on { width: 20px; background: var(--gold); }
+.tp-imm-dots button.sealed { background: rgba(255, 255, 255, .12); }
+.tp-imm-top { position: fixed; z-index: 20; left: max(12px, calc(50% - 270px)); top: 10px; display: flex; align-items: center; gap: 8px; }
+.tp-imm-back { border: 0; cursor: pointer; font-size: 12.5px; font-weight: 700; color: rgba(255, 255, 255, .85); background: rgba(255, 255, 255, .1); backdrop-filter: blur(6px); border-radius: 99px; padding: 6px 12px 6px 10px; }
+.tp-imm-who { font-size: 12px; color: rgba(255, 255, 255, .55); white-space: nowrap; }
+.tp-root.tp-dark .tp-demo-tag { background: rgba(255, 244, 214, .14); color: #F3D78E; border-color: rgba(241, 212, 138, .35); right: max(12px, calc(50% - 270px)); }
+@media (hover: none) { .tp-imm-foot .tp-arrow { display: none; } }
+
+/* 打开前：授权说明只出现这一次 */
+.tp-intro { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 48px 22px 28px; gap: 6px; }
+.tp-intro .tp-eyebrow { margin: 0; }
+.tp-intro-h { font-size: 24px; font-weight: 900; line-height: 1.35; margin: 6px 0 0; }
+.tp-intro-h em { font-style: normal; color: var(--v); }
+.tp-intro .tp-hero { margin: 22px auto 18px; width: min(52vw, 220px); }
+.tp-intro .tp-sharehead { text-align: left; width: 100%; max-width: 380px; margin: 0; }
+.tp-intro-go { width: 100%; max-width: 380px; margin-top: 14px; height: 54px; font-size: 16px; }
+.tp-intro small { display: block; margin-top: 8px; font-size: 12px; color: var(--mu2); }

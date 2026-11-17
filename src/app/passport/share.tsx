@@ -37,6 +37,7 @@ export function ShareApp({ q }: { q: ShareParams }) {
   const initClaim = q.c && claims.get(q.c) && allowed.has(claims.get(q.c)!.page) ? q.c : null;
   const [open, setOpen] = useState<string | null>(initClaim);
   const [index, setIndex] = useState(() => (initClaim ? 1 + PAGES.findIndex(p => p.id === claims.get(initClaim)!.page) : 0));
+  const [opened, setOpened] = useState(!!initClaim);   // 授权说明只在打开前出现一次；带 ?c= 的链接直接进书
   const revoked = useRevokedHere(q.k);
   const hydrated = useHydrated();
   const to = q.to || '你';
@@ -53,27 +54,39 @@ export function ShareApp({ q }: { q: ShareParams }) {
   if (hydrated && revoked) return <VoidView title="本人已撤回这次授权" text="持有人收回了这条分享链接，里面的页已经封住。" />;
   const openClaim = open ? claims.get(open) : undefined;
   const shownPages = [...allowed].filter(p => p !== 'id').map(p => pageDef(p).tab);
-  return (
+  const grantLine = <>可看：身份{shownPages.length ? ' · ' + shownPages.join(' · ') : ''}{days ? ` · ${days} 天有效${q.until ? `（至 ${q.until}）` : ''}` : ''} · 本人可随时撤回</>;
+  if (!opened) return (
     <div className="tp-root">
       <div className="tp-app">
         <span className="tp-demo-tag">演示数据</span>
-        <div className="tp-top">
-          <div className="tp-top-t">
-            <div className="tp-top-cap">TALENT PASSPORT · 分享给你</div>
-            <div className="tp-top-h">{HOLDER.name}的人才护照<small>只读</small></div>
+        <div className="tp-intro">
+          <div className="tp-eyebrow">TALENT PASSPORT · 分享给你</div>
+          <h1 className="tp-intro-h">{HOLDER.name}把他的人才护照<br />交给<em>{to}</em>看</h1>
+          <div className="tp-hero">
+            <div className="tp-hero-book"><Cover owner={`${HOLDER.name}的可信人才档案`} /></div>
           </div>
-        </div>
-        <div className="tp-sharehead">
-          <span className="tp-lock" aria-hidden>✓</span>
-          <div style={{ minWidth: 0 }}>
-            <b>授权给 {to}</b>
-            <span>可看：身份{shownPages.length ? ' · ' + shownPages.join(' · ') : ''}{days ? ` · ${days} 天有效${q.until ? `（至 ${q.until}）` : ''}` : ''} · 本人可随时撤回</span>
+          <div className="tp-sharehead">
+            <span className="tp-lock" aria-hidden>✓</span>
+            <div style={{ minWidth: 0 }}>
+              <b>授权给 {to}</b>
+              <span>{grantLine}</span>
+            </div>
           </div>
+          <button type="button" className="tp-btn v tp-intro-go" onClick={() => { setIndex(0); setOpened(true); }}>查看护照</button>
+          <small>左右滑动翻页 · 签和章都能点开 · 联系方式{VISIBILITY[profile.visibility]}</small>
         </div>
-        <Book pages={pages} index={index} onIndex={setIndex} keys={!open} chrome={262} />
-        <div style={{ textAlign: 'center', fontSize: 12, color: '#9AA0B8', padding: '0 16px 18px' }}>
-          签和章都能点开 · 联系方式{VISIBILITY[profile.visibility]}
+      </div>
+    </div>
+  );
+  return (
+    <div className="tp-root tp-dark">
+      <div className="tp-app">
+        <span className="tp-demo-tag">演示数据</span>
+        <div className="tp-imm-top">
+          <button type="button" className="tp-imm-back" onClick={() => { setOpen(null); setOpened(false); }}>‹ 授权信息</button>
+          <span className="tp-imm-who">{HOLDER.name}的人才护照 · 只读</span>
         </div>
+        <Book pages={pages} index={index} onIndex={setIndex} keys={!open} immersive />
       </div>
       {openClaim && <ClaimDrawer c={openClaim} avatar={profile.avatar} onClose={() => setOpen(null)} shareOrigin={hydrated ? window.location.origin : undefined} />}
     </div>
