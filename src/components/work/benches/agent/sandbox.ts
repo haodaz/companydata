@@ -6,7 +6,8 @@
  */
 import type { WsFile } from '@/lib/work/agent-bench';
 
-const PYODIDE = 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/';
+// Pyodide 完整发行包（含 pandas / numpy / matplotlib 的 wheel）。国内 jsdelivr 不稳：把 v0.26.4 full 整包放到自己的 OSS / CDN，设 NEXT_PUBLIC_PYODIDE_URL
+const PYODIDE = (process.env.NEXT_PUBLIC_PYODIDE_URL || 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/').replace(/\/?$/, '/');
 const BIN = /\.(png|jpe?g|gif|webp|xlsx|xls|pdf|zip|parquet|pkl)$/i;
 const WORKER = `
 importScripts('${PYODIDE}pyodide.js');
