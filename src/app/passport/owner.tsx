@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * 本人版（子链接登录）：/passport/me/<key> 点开就是自己的护照。
+ * 本人版（账号登录）：/passport/me 登录后就是自己的护照。
  * 能翻全部页；能加本人自述的经历 / 作品 / 证书（可申请平方核验）；能改个人信息；能去拿新的认证；
  * 能生成分享链接、看查看记录、撤回授权。改动存在 localStorage（演示），可一键恢复演示数据。
  */
@@ -365,7 +365,7 @@ function ProfilePanel({ profile, onSave, onReset }: { profile: Profile; onSave: 
       </div>
       <div className="tp-card">
         <h2 className="tp-card-h">这条链接就是你的钥匙</h2>
-        <p className="tp-card-p">点开专属链接就直接进自己的护照，不用再登录。链接别转给别人；要给别人看，用「分享」按页授权。</p>
+        <p className="tp-card-p">用你的账号登录就是自己的护照，别人进不来。要给别人看，用「分享」按页授权。</p>
       </div>
       <div className="tp-reset"><button type="button" onClick={() => { if (window.confirm('恢复演示数据？你加的条目、改的资料、生成的分享都会清掉。')) onReset(); }}>恢复演示数据</button></div>
     </div>

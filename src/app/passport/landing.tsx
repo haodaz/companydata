@@ -3,7 +3,7 @@
 /** /passport 落地页：一句话说明 + 护照封面 + 两个入口。 */
 import React from 'react';
 import Link from 'next/link';
-import { DEMO_SHARE_QUERY, HOLDER, OWNER_KEY, SHARE_SID } from './data';
+import { DEMO_SHARE_QUERY, HOLDER, SHARE_SID } from './data';
 import { Cover, Stamp } from './art';
 
 export function Landing() {
@@ -33,9 +33,9 @@ export function Landing() {
           </div>
 
           <div className="tp-ctas">
-            <Link className="tp-btn v" href={`/passport/me/${OWNER_KEY}`}>用我的链接打开</Link>
+            <Link className="tp-btn v" href="/passport/me">登录，管理我的护照</Link>
             <Link className="tp-btn ghost" href={`/passport/s/${SHARE_SID}?${DEMO_SHARE_QUERY}`}>看别人分享给我的</Link>
-            <small>演示：{HOLDER.name}的专属链接 · 他分享给某猎头的链接</small>
+            <small>演示：登录后进{HOLDER.name}的护照 · 他分享给某猎头的链接</small>
           </div>
 
           <div className="tp-three">
