@@ -23,6 +23,7 @@ const ENVS: { value: string; label: string; desc: string }[] = [
   { value: 'code', label: '代码台', desc: '写函数 / 脚本，浏览器里跑自测用例' },
   { value: 'sheet', label: '表格 / 数据台', desc: '电子表格：列号、公式栏、CSV 源' },
   { value: 'design', label: '设计台', desc: '定参数写依据、画草图标尺寸' },
+  { value: 'agent', label: 'AI 工作台（beta）', desc: '候选人驱动一个 agentic AI（像 Claude Code）完成任务：读写材料文件、跑 Python、写代码和文档，重点考察 AI 时代的工作能力' },
   { value: 'plugin', label: '真活插件：用自己的工具做', desc: '候选人用自己浏览器里的在线文档 / 设计工具 / 各家 AI 做，装「真活插件」记录过程：打开了哪些网页、页面上的文字（含 AI 对话）、打字和粘贴；比录屏轻，过程看得更细' },
   { value: 'open', label: '候选人自己录制电脑操作', desc: '不用站内操作台：下载材料，用自己的 Excel / CAD / IDE 做，浏览器录屏 + 上传交付，AI 看录屏还原过程' },
 ];
@@ -169,6 +170,10 @@ function Inner() {
           </Sec>
           <Sec n="2" t="要指定操作台吗？" d="">
             <Select value={f.env} onChange={v => setF(x => ({ ...x, env: v }))} size="large" style={{ width: '100%' }} options={ENVS.map(e => ({ value: e.value, label: e.value ? e.label : '操作台：' + e.label }))} />
+            <div style={{ marginTop: 10, fontSize: 13, color: '#666', lineHeight: 1.8 }}>
+              <div><b style={{ color: '#444' }}>工具 + AI 助理</b>（文档 / 代码 / 表格 / 设计台）：候选人自己动手完成任务，AI 只做沟通助理，看的是本人的专业功底。</div>
+              <div><b style={{ color: '#444' }}>AI 工作台（beta）</b>：候选人驱动 agentic AI 完成任务，AI 能读写文件、跑数据、写代码和文档，重点考察 AI 时代的工作能力。</div>
+            </div>
           </Sec>
           {delivery('3')}
           <Sec n="4" t="题怎么出？" d="默认按你说的字面意思出、不替候选人拆步骤——考的是他自己的思路。">

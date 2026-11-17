@@ -26,6 +26,7 @@ import { Md } from '@/components/ws/Md';
 import { Tour, type TourStep } from '@/components/work/Tour';
 import { MODULES, boardToText, canvasToText, resolveModule, type CanvasGraph, type Module } from '@/lib/work/modules';
 import { PluginWork } from '@/components/work/benches/PluginWork';
+import { AgentWork } from '@/components/work/benches/AgentWork';
 import { WorkLang, pick, useL, useLang, type Lang } from '@/lib/work/i18n';
 
 /** 英文题显示企业英文名：「潜历（DeepTalent）」→「DeepTalent」；没有英文名就原样 */
@@ -45,7 +46,7 @@ function SheetView({ text, dark }: { text: string; dark: boolean }) {
     <tbody>{b.rows.slice(1).map((r, k) => <tr key={k}>{r.map((c, j) => <td key={j} style={{ border: `1px solid ${bd}`, padding: '5px 10px', whiteSpace: 'nowrap', textAlign: /^-?[\d.,%]+$/.test(c.trim()) ? 'right' : 'left', fontVariantNumeric: 'tabular-nums' }}>{c}</td>)}</tr>)}</tbody></table></div>
     {b.rows.length >= 200 && <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>{L('只显示前 200 行，完整文件点上面的链接下载', 'Showing the first 200 rows. Download the full file from the link above.')}</div>}</div>)}</div>;
 }
-type Env = { type: 'doc' | 'code' | 'sheet' | 'design' | 'open' | 'plugin'; language?: string; starter?: string; tests?: { name: string; code: string }[]; csv?: string; params?: { name: string; unit?: string; hint?: string }[]; sketch_hint?: string };
+type Env = { type: 'doc' | 'code' | 'sheet' | 'design' | 'open' | 'plugin' | 'agent'; language?: string; starter?: string; tests?: { name: string; code: string }[]; csv?: string; params?: { name: string; unit?: string; hint?: string }[]; sketch_hint?: string };
 type Stage = { id: string; type: string; question: string; reveal: string };
 type Task = { id: string; company_name: string; role: string; statement: string; task: { title: string; brief: string; deliverables: { id: string; title: string; format: string; module?: string }[]; time_minutes: number; soft_limit?: boolean; rules: string[]; env?: Env; stages?: Stage[]; lang?: 'zh' | 'en' }; materials: Material[] };
 type Ev = { t: number; type: string; [k: string]: any };
@@ -70,7 +71,7 @@ function Ico({ k }: { k: 'left' | 'ai' | 'max' | 'split' | 'min' | 'close' }) {
   return <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">{P[k]}</svg>;
 }
 const modLabel = (m: Module, lang?: Lang) => (lang === 'en' ? MODULES[m].en : MODULES[m].label);
-const modulesLabel = (task: Task, env: Env) => [...new Set(partsOf(task, env).map(p => modLabel(p.module, task.task.lang)))].join(' + ');
+const modulesLabel = (task: Task, env: Env) => env.type === 'agent' ? pick(task.task.lang, '工作区 + AI 代理', 'Workspace + AI agent') : [...new Set(partsOf(task, env).map(p => modLabel(p.module, task.task.lang)))].join(' + ');
 const ENV_NAME: Record<string, string> = { doc: '文档 / 对账台', code: '代码台', sheet: '表格 / 数据台', design: '设计台', open: '用自己的软件做（录屏）', plugin: '用自己的网页工具做（真活插件）' };
 const fmt = (t: number) => `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
 
@@ -148,8 +149,10 @@ export default function WorkPage() {
         <div style={{ color: '#666', marginBottom: 20 }}>{task.statement}</div>
         <Box title={L('任务书', 'The task')}><MdView text={task.task.brief} style={{ lineHeight: 1.8 }} /></Box>
         <Box title={L('要交什么', 'What to submit')}><ol style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9 }}>{task.task.deliverables.map(d => <li key={d.id}><b>{d.title}</b> <span style={{ color: '#888' }}>{d.format}</span></li>)}</ol></Box>
-        <Box title={L('规则', 'Rules')}><RulesView rules={task.task.rules} /><div style={{ color: '#888', fontSize: 13, marginTop: 6 }}>{L('操作台：', 'Workbench: ')}{modulesLabel(task, env)}{L('（按交付物切换） · ', ' (one per deliverable) · ')}{task.task.soft_limit ? L(`建议 ${task.task.time_minutes} 分钟（开始后时间不暂停，超时会如实记录）`, `Suggested time: ${task.task.time_minutes} minutes (the clock doesn't pause once you start; going over is recorded as is)`) : L(`限时 ${task.task.time_minutes} 分钟（开始后时间不暂停，到点自动交卷）`, `${task.task.time_minutes}-minute limit (the clock doesn't pause once you start; your work is submitted automatically when time is up)`)}{L(`· 材料 ${task.materials.length} 份 · 交卷后立刻出报告`, ` · ${task.materials.length} ${task.materials.length === 1 ? 'material' : 'materials'} · Report right after you submit`)}</div></Box>
-        {env.type === 'plugin'
+        <Box title={L('规则', 'Rules')}><RulesView rules={task.task.rules} /><div style={{ color: '#888', fontSize: 13, marginTop: 6 }}>{L('操作台：', 'Workbench: ')}{modulesLabel(task, env)}{env.type === 'agent' ? ' · ' : L('（按交付物切换） · ', ' (one per deliverable) · ')}{task.task.soft_limit ? L(`建议 ${task.task.time_minutes} 分钟（开始后时间不暂停，超时会如实记录）`, `Suggested time: ${task.task.time_minutes} minutes (the clock doesn't pause once you start; going over is recorded as is)`) : L(`限时 ${task.task.time_minutes} 分钟（开始后时间不暂停，到点自动交卷）`, `${task.task.time_minutes}-minute limit (the clock doesn't pause once you start; your work is submitted automatically when time is up)`)}{L(`· 材料 ${task.materials.length} 份 · 交卷后立刻出报告`, ` · ${task.materials.length} ${task.materials.length === 1 ? 'material' : 'materials'} · Report right after you submit`)}</div></Box>
+        {env.type === 'agent'
+          ? <Box title={L('怎么做 · AI 工作台（beta）', 'How to work · AI workspace (beta)')}><div style={{ lineHeight: 1.8 }}>{L('页面里有一个工作区（题目给的材料都在里面）和一个能读写文件、跑 Python、写代码和文档的 AI 搭档，用法像 Claude Code。你可以自己做，也可以让它做，交出去的文件你负责。你和 AI 的每一步、你自己打开 / 改 / 运行的文件都会记录。', 'The page has a workspace with all the task materials and an AI partner that can read and write files, run Python, and write code and documents, much like Claude Code. Work on your own or have it do the work; you are responsible for the files you submit. Every step between you and the AI, and every file you open, edit or run, is recorded.')}</div></Box>
+          : env.type === 'plugin'
           ? <Box title={L('怎么做', 'How to work')}>{lang === 'en' ? <div style={{ lineHeight: 1.8 }}><b>Use your own tools.</b> Online docs, spreadsheets, design tools and any AI are all fine. After you click "Start" you'll get a work code. Install the work-sample extension (one time only, <a href="/work/plugin?lang=en" target="_blank" rel="noreferrer">see how</a>) and link it to this attempt. While you work, the extension only records the pages you open, the text on them, and how much you type and paste. Write your hand-in notes in the extension sidebar or on this page, then click "Finish" when you're done; your work is submitted automatically when time is up.</div> : <div style={{ lineHeight: 1.8 }}><b>用你自己的工具做。</b>在线文档、表格、设计工具、各家 AI 都可以。点「开始做」后会给你一个真活码，装好「真活插件」（一次就好，<a href="/work/plugin" target="_blank" rel="noreferrer">看说明</a>）、关联这次作答，插件只在答题期间记录你打开的网页、页面上的文字和打字粘贴的量。交付说明在插件侧边栏或本页写，做完点「结束作答」；到时间会自动交卷。</div>}</Box>
           : env.type === 'open'
           ? <Box title={L('怎么做', 'How to work')}>{lang === 'en' ? <div style={{ lineHeight: 1.8 }}><b>Use your own software.</b> Download the materials and work in whatever you like: Excel, CAD, an IDE, AI tools. Your screen is recorded in the browser (nothing to install). When you're done, upload your files and write a short hand-in note. The company chose this way of working, so your process is shown through the recording.</div> : <div style={{ lineHeight: 1.8 }}><b>用自己的软件做。</b>下载材料，用你顺手的 Excel / CAD / IDE / AI 做；浏览器录屏（不用装东西），做完上传交付文件 + 写交付说明。出任务的人指定了这种做法，过程由录屏还原。</div>}</Box>
@@ -202,6 +205,13 @@ export default function WorkPage() {
   );
 
   const tipBar = linkTip && sid ? <div style={{ position: 'fixed', top: 54, left: '50%', transform: 'translateX(-50%)', zIndex: 60, maxWidth: 'calc(100vw - 24px)', display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px', background: '#fff', border: '1px solid #d8d4ff', borderRadius: 10, boxShadow: '0 8px 24px rgba(20,24,60,.16)', fontSize: 13, color: '#333' }}><span>{L('地址已变成你的作答链接，换设备打开能接着做', 'This address is now your personal link. Open it on another device to continue.')}</span><button onClick={() => navigator.clipboard.writeText(location.href)} style={{ border: 0, background: 'none', color: '#6055f5', fontWeight: 700, cursor: 'pointer', padding: 0, whiteSpace: 'nowrap' }}>{L('复制', 'Copy')}</button><button onClick={() => setLinkTip(false)} aria-label={L('关闭', 'Close')} style={{ border: 0, background: 'none', color: '#999', cursor: 'pointer', padding: 0 }}>×</button></div> : null;
+  if (env.type === 'agent') return <WorkLang lang={lang}>{tipBar}<AgentWork key={sid} token={token} sid={sid} task={task as any} resume={resume} grading={phase === 'grading'} error={err} limit={preview || participant?.preview || task.task.soft_limit ? null : (Number(task.task.time_minutes) || 60) * 60} onSubmit={async (deliverable, events, auto) => {
+    setPhase('grading'); setErr('');
+    const j = await (await fetch(`/api/work/${token}/sessions/${sid}/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deliverable, events, auto }) })).json();
+    if (!j.ok) { if (auto || j.expired) { setPhase('ended'); return; } setErr(j.error || L('交卷失败，再试一次', "Couldn't submit. Please try again.")); setPhase('work'); return; }
+    if (j.staged) return;
+    setReport(j.report); setPhase('report');
+  }} /></WorkLang>;
   if (mode === 'plugin' && participant?.code) return <Shell lang={lang}>{tipBar}<PluginWork code={participant.code} task={task as any} onSubmitted={() => setPhase('grading')} /></Shell>;
 
   return <WorkLang lang={lang}>{tipBar}<Workspace key={`${sid}:${mode}`} token={token} sid={sid} task={task} env={env} mode={mode as 'bench' | 'open'} narrow={narrow} grading={phase === 'grading'} error={err} resume={resume} limit={preview || participant?.preview || task.task.soft_limit ? null : (Number(task.task.time_minutes) || 60) * 60} onRestart={() => { setSwitchFrom(sid); setName(participant?.name || ''); setContact(participant?.contact || ''); setPhase('intro'); window.scrollTo(0, 0); }} onSubmit={async (deliverable, events, auto) => {

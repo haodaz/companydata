@@ -118,6 +118,13 @@ export async function runTurn(history: Msg[], model: string, ctx: ToolCtx, emit:
   return added;
 }
 
+/** 只走一步（11-17 AI 驾驭题）：工具在候选人浏览器的沙盒里执行，服务端每次只调一次模型、把工具调用交回前端 */
+export async function stepOnce(h: Msg[], model: string, kit: AgentKit): Promise<{ text: string; calls: Call[]; provider: string }> {
+  const p = provider(model), noop = () => {};
+  const out = p === 'anthropic' ? await callAnthropic(h, model, kit, noop) : p === 'openai' ? await callOpenAI(h, model, kit, noop) : p === 'gemini' ? await callGemini(h, model, kit, noop) : await callQwen(h, model, kit, noop);
+  return { text: out.text, calls: out.calls, provider: p };
+}
+
 /** 历史停在 ask_user 上时，把人的回答作为那个工具的结果接上（否则直接当一条用户消息） */
 export function appendUser(history: Msg[], text: string): Msg[] {
   const last = history[history.length - 1], prev = history[history.length - 2];

@@ -226,7 +226,7 @@ export function renderContext(raw: WorkContext): string {
 }
 
 /** 操作台类型（比 NeoWork 多的一层：题按岗位选环境）：doc 文档 / 对账台 · code 代码台 · sheet 表格 / 数据台 · design 设计台（CAD 雏形） */
-export type WorkEnvType = 'doc' | 'code' | 'sheet' | 'design' | 'open' | 'plugin';   // open：不用站内操作台，候选人用自己的软件做、录屏 + 上传交付；plugin：用自己的网页工具做，真活插件记过程
+export type WorkEnvType = 'doc' | 'code' | 'sheet' | 'design' | 'open' | 'plugin' | 'agent';   // agent：AI 工作台（11-17 beta）——站内沙盒工作区 + 能读写文件、跑 Python 的 AI 代理；是作答形态，考什么照岗位定   // open：不用站内操作台，候选人用自己的软件做、录屏 + 上传交付；plugin：用自己的网页工具做，真活插件记过程
 export interface WorkEnv {
   type: WorkEnvType;
   /** code：语言（js 的自测用例能在浏览器里跑）；starter 起始代码；tests 用例 [{ name, code }]，code 是拿到 `solution` 后返回 true/false 的 JS 表达式或函数体 */
@@ -236,7 +236,7 @@ export interface WorkEnv {
   /** design：参数表 [{ name, unit, hint }] + 草图说明 */
   params?: { name: string; unit?: string; hint?: string }[]; sketch_hint?: string;
 }
-export const ENV_LABELS: Record<WorkEnvType, string> = { doc: '文档 / 对账台', code: '代码台', sheet: '表格 / 数据台', design: '设计台', open: '自己录制电脑操作', plugin: '真活插件 · 自己的网页工具' };
+export const ENV_LABELS: Record<WorkEnvType, string> = { doc: '文档 / 对账台', code: '代码台', sheet: '表格 / 数据台', design: '设计台', open: '自己录制电脑操作', plugin: '真活插件 · 自己的网页工具', agent: 'AI 工作台（beta）· 沙盒工作区 + AI 代理；以前的台子是「工具 + AI 助理」' };
 
 export interface Attachment { url: string; name: string; mime?: string; size?: number; text?: string; image?: boolean }
 /** 把上传的附件挂成材料（kind=file）：有文字的带文字（评卷和 AI 做题能读），图片只有链接和说明 */
@@ -360,7 +360,10 @@ ${opts.base.mode === 'base'
   : `**仅做参考**：只借这道题的题型、推进方式、交付形态和难度；业务问题、背景、材料、数字全部按 ${name} 此刻的真实情况重新出，不要和原题撞题。`}
 ` : ''}
 ${opts.modules?.length ? `## 出题人指定的交付物（必须照办）\n交付物正好 ${opts.modules.length} 样，按顺序分别用这些台子：${opts.modules.join('、')}（doc 文档 / sheet 表格 / code 代码 / canvas 画布流程图 / board 白板 / design 参数草图）。不要多出、不要换台子。\n` : ''}## 操作台（环境）
-${opts.env === 'plugin' ? '出题人指定：候选人用自己浏览器里的网页工具做（在线文档 / 表格 / 设计工具 / 各家 AI 都行），装「真活插件」记录过程，最后在插件侧边栏交「交付说明 + 交付物链接」；所以 env 按 doc 出，交付物写成「在线文档或文件链接 + 交付说明」，材料要能下载后独立使用。' : opts.env === 'open' ? '出题人指定：候选人用自己电脑上的软件做（Excel / CAD / IDE 都行），全程录屏、最后上传交付文件；所以 env 按 doc 出，交付物写成「文件 + 交付说明」，材料要能下载后独立使用。' : opts.env ? `出题人指定环境：${opts.env}（${ENV_LABELS[opts.env]}）。` : '按岗位选最贴近真实工作媒介的环境：'}doc 文档 / 对账台（方案、对账、邮件、scorecard）· code 代码台（写函数 / 脚本；**starter 里的主函数必须命名为 solution**，tests 也调用 solution；language 用 js 时给 2–5 个自测用例：code 是一段 JS，拿到变量 solution（候选人的导出函数）后返回 true/false，如 "return solution([3,1,2]).join()==='1,2,3'"；其他语言不给 tests）· sheet 表格 / 数据台（csv 给起始表，含要对账 / 清洗的数据，5–30 行）· design 设计台（params 给 4–8 个要定的参数：name/unit/hint；sketch_hint 说明要画什么简图：零件轮廓、流程、布局）。
+${opts.env === 'agent' ? `出题人指定「AI 工作台」：候选人在一个沙盒工作区里做，旁边有一个 agentic AI（像 Claude Code：能读写文件、跑 Python、写代码和文档）。考什么照岗位和出题人的要求定；材料包会原样放进工作区，AI 和候选人都能读写，所以：
+- 材料就是这份工作真实会拿到的东西，以**能直接拿来干活的原始数据和资料**为主：至少 2 张 table 材料（CSV，各 40–150 行，列名清楚），外加 1–2 份文字材料（业务背景、指标口径、往期资料）。不要刻意埋坑，按真实工作的样子给。
+- 交付物 2–3 个，写成文件，就是对方真正期待的产出：处理 / 分析脚本（format 写「Python 脚本」）+ 结果表或图（「CSV 表格」或「PNG 图」）+ 给业务方看的结论文档（「Markdown 文档」）。产出要有分量，一个人不用 AI 在限时内做不完，带好 AI 能做得又快又好。
+- 任务书里说清：交付物放在 output/ 下；可以让 AI 做任何事，交出去的东西你负责。env 按 doc 出。` : opts.env === 'plugin' ? '出题人指定：候选人用自己浏览器里的网页工具做（在线文档 / 表格 / 设计工具 / 各家 AI 都行），装「真活插件」记录过程，最后在插件侧边栏交「交付说明 + 交付物链接」；所以 env 按 doc 出，交付物写成「在线文档或文件链接 + 交付说明」，材料要能下载后独立使用。' : opts.env === 'open' ? '出题人指定：候选人用自己电脑上的软件做（Excel / CAD / IDE 都行），全程录屏、最后上传交付文件；所以 env 按 doc 出，交付物写成「文件 + 交付说明」，材料要能下载后独立使用。' : opts.env ? `出题人指定环境：${opts.env}（${ENV_LABELS[opts.env]}）。` : '按岗位选最贴近真实工作媒介的环境：'}doc 文档 / 对账台（方案、对账、邮件、scorecard）· code 代码台（写函数 / 脚本；**starter 里的主函数必须命名为 solution**，tests 也调用 solution；language 用 js 时给 2–5 个自测用例：code 是一段 JS，拿到变量 solution（候选人的导出函数）后返回 true/false，如 "return solution([3,1,2]).join()==='1,2,3'"；其他语言不给 tests）· sheet 表格 / 数据台（csv 给起始表，含要对账 / 清洗的数据，5–30 行）· design 设计台（params 给 4–8 个要定的参数：name/unit/hint；sketch_hint 说明要画什么简图：零件轮廓、流程、布局）。
 env 字段：{ "type": "doc|code|sheet|design", "language": "", "starter": "", "tests": [ { "name": "", "code": "" } ], "csv": "", "params": [ { "name": "", "unit": "", "hint": "" } ], "sketch_hint": "" }（只填该环境用到的字段）。交付物要和环境匹配（code 的交付物是代码 + 说明，sheet 是表 + 口径说明，design 是参数表 + 草图 + 设计说明）。
 
 ## 要求
@@ -391,7 +394,7 @@ ${en ? `## 语言：这是英文题
     env,
     problem: { statement: s(p.problem?.statement, 400), why_now: s(p.problem?.why_now, 400), evidence: (Array.isArray(p.problem?.evidence) ? p.problem.evidence : []).slice(0, 6).map((e: any) => ({ text: s(e.text, 300), source: s(e.source, 80) })) },
     task: { title: s(p.task?.title, n(40)) || `${name} · 真活`, role: need ? (s(p.task?.role, n(40)) || s(role, 40)) : role, brief: s(p.task?.brief, n(2000)), deliverables: (Array.isArray(p.task?.deliverables) ? p.task.deliverables : []).slice(0, 4).map((d: any, i: number) => ({ id: d.id || `d${i + 1}`, title: s(d.title, n(120)), format: s(d.format, n(400)), module: resolveModule(s(d.format, n(60)), d.module) })), time_minutes: clampMinutes(p.task?.time_minutes, 60), rules: (Array.isArray(p.task?.rules) ? p.task.rules : []).slice(0, 6).map((r: any) => s(r, n(120))) },
-    materials: (Array.isArray(p.materials) ? p.materials : []).slice(0, 6).map((m: any, i: number) => ({ id: m.id || `m${i + 1}`, title: s(m.title, n(60)), kind: (['doc', 'table', 'note', 'email', 'data'].includes(m.kind) ? m.kind : 'doc'), content: s(m.content, n(6000)), source: (['db', 'generated', 'mixed'].includes(m.source) ? m.source : 'generated'), basis: s(m.basis, 200) })),
+    materials: (Array.isArray(p.materials) ? p.materials : []).slice(0, 6).map((m: any, i: number) => ({ id: m.id || `m${i + 1}`, title: s(m.title, n(60)), kind: (['doc', 'table', 'note', 'email', 'data'].includes(m.kind) ? m.kind : 'doc'), content: s(m.content, n(envType === 'agent' ? 16000 : 6000)), source: (['db', 'generated', 'mixed'].includes(m.source) ? m.source : 'generated'), basis: s(m.basis, 200) })),
     rubric: (Array.isArray(p.rubric) ? p.rubric : []).slice(0, 10).map((r: any, i: number) => ({ id: r.id || `r${i + 1}`, title: s(r.title, 60), desc: s(r.desc, 300), weight: Math.max(1, Number(r.weight) || 10), depends_on: Array.isArray(r.depends_on) ? r.depends_on.map(String) : [], basis: s(r.basis, 200), levels: { L1: s(r.levels?.L1, 160), L2: s(r.levels?.L2, 160), L3: s(r.levels?.L3, 160), L4: s(r.levels?.L4, 160) } })),
   };
   // 出题人点名了台子和数量：程序强制（模型常多出一样、或把白板换成画布）

@@ -197,6 +197,23 @@ function locate(inp: FluencyInput, a: Anchors, source: string, disclosure: strin
   // 工具事件（量表 D3，有则加强）：操作台上跑测试、交卷前自查
   const tools = ev.filter(e => e.type === 'run_tests' || e.type === 'self_check');
   if (tools.length) out.push({ bid: 'B23', src: 'event', i: -2, quote: `交卷前在操作台上${ev.some(e => e.type === 'run_tests') ? `跑了 ${ev.filter(e => e.type === 'run_tests').length} 次测试` : ''}${ev.some(e => e.type === 'self_check') ? `做了 ${ev.filter(e => e.type === 'self_check').length} 次自查` : ''}`, rule: 'B23-事件:测试/自查' });
+  // AI 工作台（11-17）：人自己动手的动作是平台直接记下的，不靠说出口——资深的人「自己核、不跟 AI 说」也看得到
+  const tAsk = inp.chat[0]?.t ?? 0;
+  const ag = ev.filter(e => /^(ws_|agent_)/.test(e.type) && e.t >= tAsk);
+  const paths = (xs: any[]) => [...new Set(xs.map(e => String(e.note || '')).filter(Boolean))].slice(0, 4).join('、');
+  let k = -10;
+  const runs = ag.filter(e => e.type === 'ws_run');
+  if (runs.length) out.push({ bid: 'B23', src: 'event', i: k--, quote: `自己运行了 ${runs.length} 次脚本（${paths(runs)}；${runs.filter(e => e.id === 'err').length} 次报错）`, rule: 'B23-事件:自己运行' });
+  const reread = ag.filter(e => e.type === 'ws_open' && /^output\//.test(String(e.note || '')));
+  if (reread.length) out.push({ bid: 'B23', src: 'event', i: k--, quote: `自己打开回读了交付文件 ${reread.length} 次（${paths(reread)}）`, rule: 'B23-事件:回读交付' });
+  const fix = ag.filter(e => e.type === 'ws_edit' && /^output\//.test(String(e.note || '')));
+  if (fix.length) out.push({ bid: 'B23', src: 'event', i: k--, quote: `自己动手改了交付文件（${paths(fix)}，共约 ${fix.reduce((n, e) => n + Math.abs(Number(e.delta) || 0), 0)} 字）`, rule: 'B23-事件:手改交付' });
+  const src0 = ag.filter(e => e.type === 'ws_open' && /^(data|docs)\//.test(String(e.note || '')));
+  if (src0.length) out.push({ bid: 'B13', src: 'event', i: k--, quote: `问过 AI 之后，自己打开原始材料看了 ${src0.length} 次（${paths(src0)}）`, rule: 'B13-事件:自己看原始材料' });
+  const rev = ag.filter(e => e.type === 'ws_revert');
+  if (rev.length) out.push({ bid: 'B16', src: 'event', i: k--, quote: `撤销了 AI 对文件的改动 ${rev.length} 次（${paths(rev)}）`, rule: 'B16-事件:撤销 AI 改动' });
+  const sw = ag.filter(e => e.type === 'agent_model');
+  if (sw.length) out.push({ bid: 'B4', src: 'event', i: k--, quote: `作答中换过模型 ${sw.length} 次（${paths(sw)}）`, rule: 'B4-事件:换模型' });
   return { cands: out, split };
 }
 const snippet = (t: string, at: number, len: number) => t.slice(Math.max(0, at - 30), at + len + 30).replace(/\s+/g, ' ').trim().slice(0, 160);
