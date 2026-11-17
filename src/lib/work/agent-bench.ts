@@ -68,21 +68,21 @@ export function outputsOf(task: { task: any }): AgentOutput[] {
 export const AGENT_TOOLS: Anthropic.Tool[] = [
   { name: 'list_files', description: '列出工作区里的全部文件（路径、大小、最后是谁改的）。', input_schema: { type: 'object', properties: {} } },
   { name: 'read_file', description: '读一个文件。大文件可以按行读：start_line / end_line（从 1 开始）。图片等二进制文件只返回大小。', input_schema: { type: 'object', properties: { path: { type: 'string' }, start_line: { type: 'number' }, end_line: { type: 'number' } }, required: ['path'] } },
-  { name: 'write_file', description: '新建或整个覆盖一个文本文件（目录不存在会自动建）。', input_schema: { type: 'object', properties: { path: { type: 'string' }, content: { type: 'string' } }, required: ['path', 'content'] } },
+  { name: 'write_file', description: '新建或整个覆盖一个文本文件（目录不存在会自动建）。单次 content 不超过约 6000 字（200 行）：长文件分几次写——第一次写开头，之后带 append: true 一段段接在末尾。', input_schema: { type: 'object', properties: { path: { type: 'string' }, content: { type: 'string' }, append: { type: 'boolean', description: 'true = 接在文件末尾，不覆盖' } }, required: ['path', 'content'] } },
   { name: 'edit_file', description: '把文件里的一段原文换成新内容。old_text 必须和文件里一字不差、且只出现一次。', input_schema: { type: 'object', properties: { path: { type: 'string' }, old_text: { type: 'string' }, new_text: { type: 'string' } }, required: ['path', 'old_text', 'new_text'] } },
   { name: 'delete_file', description: '删掉一个文件。', input_schema: { type: 'object', properties: { path: { type: 'string' } }, required: ['path'] } },
   { name: 'web_search', description: '联网检索公开信息（行业数据、公司公开资料、标准规范、方法说明）。返回要点和来源链接；引用时写明来源。材料里已有的就不用查。', input_schema: { type: 'object', properties: { query: { type: 'string', description: '检索词，一句话' } }, required: ['query'] } },
   { name: 'run_python', description: '在沙盒里跑 Python 3（浏览器里的 Pyodide，可用 pandas / numpy / matplotlib，没有网络、不能 pip 装别的）。工作目录就是工作区根目录，用相对路径读写文件；画图用 plt.savefig("output/xxx.png")。给 path 就跑这个 .py 文件，给 code 就跑这段代码。返回 stdout / stderr 和新增或改动的文件。单次最长 90 秒。', input_schema: { type: 'object', properties: { path: { type: 'string' }, code: { type: 'string' } } } },
 ];
 
-export function agentSystem(t: { task: any; company_name?: string; role?: string }, manifest: { path: string; size: number; by?: string }[], outputs: AgentOutput[], lang?: 'zh' | 'en') {
+export function agentSystem(t: { task: any; company_name?: string; role?: string }, outputs: AgentOutput[], lang?: 'zh' | 'en') {
   const en = lang === 'en';
   return `${en ? 'IMPORTANT: The user works in English. Reply in English.\n\n' : ''}你是一个 AI 编程 / 数据 / 写作代理（像 Claude Code 那样），在一个沙盒工作区里替用户干活。用户正在做一道限时的工作任务，你是他带的 AI 搭档。
 你能做的：读写工作区文件、跑 Python（pandas / numpy / matplotlib）、联网检索公开信息（web_search；Python 里不能联网）。
 工作方式：
 - 用户让你做什么就动手做，用工具把活真正干出来（写文件、跑代码、看结果），不要只在对话里讲。
 - 一次请求可以连续调用多个工具；做完用几句话说清你做了什么、产出在哪个文件、有什么没把握的地方。
-- 单次输出有上限：超过 300 行的文件分几次写（先 write_file 写骨架或前半，再用 edit_file 补后面），不要一次写完整个大文件。
+- 单次输出有上限：一次 write_file 不超过约 200 行；长文件先写开头，再用 write_file 加 append: true 一段段接上，不要一次写完整个大文件。
 - 用户没说的关键决定（口径、取舍、要不要改他的文件）可以先问一句再做。
 - 回答简洁，用简体中文${en ? '（用户用英文时用英文）' : ''}；不要用表情符号。
 
@@ -91,10 +91,15 @@ ${t.company_name || ''}${t.role ? ` · ${t.role}` : ''}：${t.task?.title || ''}
 ${String(t.task?.brief || '').slice(0, 3000)}
 ${(t.task?.rules || []).length ? `规则：\n${(t.task.rules as string[]).map(r => `- ${r}`).join('\n')}\n` : ''}
 ## 要交的文件（用户最后交这些）
-${outputs.map(o => `- ${o.path}：${o.title}${manifest.some(f => f.path === o.path) ? '' : '（还没有这个文件）'}`).join('\n')}
+${outputs.map(o => `- ${o.path}：${o.title}`).join('\n')}
 
-## 工作区现在的文件
-${manifest.map(f => `- ${f.path}（${f.size} 字${f.by === 'human' ? '，用户自己改过' : f.by === 'agent' ? '，你在这次作答里写的' : '，题目给的原始材料'}）`).join('\n') || '（空）'}`;
+工作区现在有哪些文件，附在用户每一轮的话后面；要最新的就调 list_files。`;
+}
+
+/** 每一轮开始时的工作区快照，附在这一轮用户的话后面（11-17：原来放在系统提示里，文件一变整段提示缓存就作废，代理每步多付 5–10 倍输入费） */
+export function workspaceNote(manifest: { path: string; size: number; by?: string }[], outputs: AgentOutput[]) {
+  const miss = outputs.filter(o => !manifest.some(f => f.path === o.path)).map(o => o.path);
+  return `（工作区现在的文件：${manifest.map(f => `${f.path}（${f.size} 字${f.by === 'human' ? '，用户改过' : f.by === 'agent' ? '，你写的' : '，原始材料'}）`).join('；') || '空'}${miss.length ? `。还没有：${miss.join('、')}` : ''}）`;
 }
 
 /** 「先出计划」这一轮：只许看、不许改（11-17） */

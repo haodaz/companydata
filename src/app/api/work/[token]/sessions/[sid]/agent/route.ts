@@ -4,7 +4,7 @@ import { timing } from '@/lib/work/deadline';
 import { errL } from '@/lib/work/errors-en';
 import { withCost } from '@/lib/token-logger';
 import { stepOnce, type Msg, type Result } from '@/lib/ws/agent';
-import { AGENT_MODELS, AGENT_TOOLS, DEFAULT_AGENT_MODEL, PLAN_NOTE, PLAN_TOOLS, agentSystem, outputsOf } from '@/lib/work/agent-bench';
+import { AGENT_MODELS, AGENT_TOOLS, DEFAULT_AGENT_MODEL, PLAN_NOTE, PLAN_TOOLS, agentSystem, outputsOf, workspaceNote } from '@/lib/work/agent-bench';
 import { generateContent } from '@/lib/llm-client';
 import { logTokenUsage } from '@/lib/token-logger';
 
@@ -18,7 +18,7 @@ export const maxDuration = 180;
  * body：{ q, model, files, plan? } 开新一轮（plan = 先出计划，这一轮只许看）· { results, files } 交回工具结果 · { results, stop: true } 候选人叫停 · { search } 代理的联网检索
  * stream: true 时按行回 NDJSON：{t:'text',delta} 逐字 · {t:'input',chars} 正在写工具参数（写长文件）· 最后一行 {t:'done', ...结果}
  */
-type Turn = { t: number; q: string; a: string; model: string; steps: Msg[]; stopped?: boolean; n?: number; plan?: boolean };
+type Turn = { t: number; q: string; a: string; model: string; steps: Msg[]; stopped?: boolean; n?: number; plan?: boolean; /** 这一轮开始时的工作区快照（只进给模型的历史，不进 q） */ ws?: string };
 const SEARCH_MODEL = process.env.AGENT_SEARCH_MODEL || 'qwen-plus';
 const MAX_STEPS = 40;
 const clip = (s: string, n: number) => (s.length > n ? `${s.slice(0, n)}\n……（后面 ${s.length - n} 字略）` : s);
@@ -31,7 +31,7 @@ function slim(m: Msg, hard: boolean): Msg {
 }
 function historyOf(turns: Turn[]): Msg[] {
   const out: Msg[] = [];
-  turns.forEach((tn, i) => { const old = i < turns.length - 3; out.push({ role: 'user', text: tn.q }); for (const m of tn.steps) out.push(slim(m, old)); if (tn.stopped && out[out.length - 1]?.role === 'tool') out.push({ role: 'assistant', text: '（用户叫停了这一轮）', calls: [] }); });
+  turns.forEach((tn, i) => { const old = i < turns.length - 3; out.push({ role: 'user', text: tn.ws ? `${tn.q}\n\n${tn.ws}` : tn.q }); for (const m of tn.steps) out.push(slim(m, old)); if (tn.stopped && out[out.length - 1]?.role === 'tool') out.push({ role: 'assistant', text: '（用户叫停了这一轮）', calls: [] }); });
   return out;
 }
 const summary = (tn: Turn) => tn.steps.flatMap(m => m.role === 'assistant' ? [m.text, ...m.calls.map(c => `［${c.name}${c.input?.path ? ` ${c.input.path}` : ''}］`)] : []).filter(Boolean).join('\n').slice(0, 8000);
@@ -68,7 +68,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     // 上一轮还停在工具调用上（页面刷新 / 断网）：补一条「没执行」的结果，让对话成对
     const last = turns[turns.length - 1], tail = last?.steps[last.steps.length - 1];
     if (tail?.role === 'assistant' && tail.calls.length) last.steps.push({ role: 'tool', results: tail.calls.map(c => ({ id: c.id, name: c.name, content: JSON.stringify({ error: '没有执行（页面中断）' }), is_error: true })) });
-    cur = { t: tsec, q: String(body.q).trim().slice(0, 8000), a: '', model, steps: [], n: 0, ...(body.plan ? { plan: true } : {}) };
+    cur = { t: tsec, q: String(body.q).trim().slice(0, 8000), a: '', model, steps: [], n: 0, ...(body.plan ? { plan: true } : {}), ws: workspaceNote(files, outputsOf(t)) };
     turns.push(cur);
   } else {
     cur = turns[turns.length - 1];
@@ -83,13 +83,20 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
 
   const outputs = outputsOf(t);
   // eager_input_streaming：工具参数边生成边推（写长文件时进度能动）；千问那边只取 name / description / input_schema，不受影响
-  const kit = { system: agentSystem(t, files, outputs, t.task?.lang) + (cur.plan ? PLAN_NOTE : ''), tools: (cur.plan ? AGENT_TOOLS.filter(x => PLAN_TOOLS.has(x.name)) : AGENT_TOOLS).map(x => ({ ...x, eager_input_streaming: true }) as any), run: async () => ({ result: null, label: '' }), org: t.company_name || '', task: 'Work · AI 工作台代理', streamInput: true, maxTokens: 32000 };
+  const kit = { system: agentSystem(t, outputs, t.task?.lang) + (cur.plan ? PLAN_NOTE : ''), tools: (cur.plan ? AGENT_TOOLS.filter(x => PLAN_TOOLS.has(x.name)) : AGENT_TOOLS).map(x => ({ ...x, eager_input_streaming: true }) as any), run: async () => ({ result: null, label: '' }), org: t.company_name || '', task: 'Work · AI 工作台代理', streamInput: true, maxTokens: 16000 };
   const run = async (emit: (e: any) => void) => {
     const t0 = Date.now();
     try {
-      const out = await withCost({ tool_name: 'work', task_name: 'Work · AI 工作台代理', stage: 'use' }, () => stepOnce(historyOf(turns), cur.model, kit, e => { if (e.t === 'text') emit({ t: 'text', delta: e.delta }); else if (e.t === 'tool_progress' && e.part === 'input') emit({ t: 'input', chars: e.data?.chars || 0 }); }));
-      // 输出到上限被截断：工具调用不完整已丢弃，明说出来（不然看着像 AI 说了句话就停了）
-      if (out.truncated) out.text = `${out.text ? out.text + '\n\n' : ''}（这一步输出太长被截断了，文件没有写成。可以让我把大文件分几段写：先写骨架，再用 edit_file 一段段补。）`;
+      const call = () => withCost({ tool_name: 'work', task_name: 'Work · AI 工作台代理', stage: 'use' }, () => stepOnce(historyOf(turns), cur.model, kit, e => { if (e.t === 'text') emit({ t: 'text', delta: e.delta }); else if (e.t === 'tool_progress' && e.part === 'input') emit({ t: 'input', chars: e.data?.chars || 0 }); }));
+      let out = await call();
+      // 输出到上限被截断（一次写了太长的文件）：工具调用不完整已丢弃。平台直接告诉代理拆开写、当场重试（最多 2 次），不把皮球踢给用户（11-17：模拟里连写 4 次 3.2 万 token 都被截断）
+      for (let k = 0; k < 2 && out.truncated; k++) {
+        cur.steps.push({ role: 'assistant', text: `${out.text ? out.text + '\n\n' : ''}（这一步输出太长被截断了，没有写成。）`, calls: [], provider: out.provider, at: new Date().toISOString() });
+        cur.steps.push({ role: 'user', text: '（平台提示：你上一步一次输出的内容超过了单步上限，被截断、没有生效。把文件拆开写：先用 write_file 写前 150 行左右，再用 write_file 加 append: true 一段段接上；每次不超过 200 行。现在继续。）' });
+        emit({ t: 'text', delta: '\n（这一步太长被截断了，改成分段写…）\n' });
+        out = await call();
+      }
+      if (out.truncated) out.text = `${out.text ? out.text + '\n\n' : ''}（这一步输出太长被截断了，文件没有写成。）`;
       cur.steps.push({ role: 'assistant', text: out.text, calls: out.calls, provider: out.provider, at: new Date().toISOString() });
       cur.n = (cur.n || 0) + 1;
       cur.a = summary(cur);
