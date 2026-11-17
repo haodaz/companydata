@@ -224,7 +224,7 @@ async function callQwen(h: Msg[], model: string, kit: AgentKit, emit: (e: Ev) =>
   if (lastUser > 0 && typeof messages[lastUser].content === 'string' && messages[lastUser].content) messages[lastUser] = { role: 'user', content: [{ type: 'text', text: messages[lastUser].content, cache_control: { type: 'ephemeral' } }] };
   const base = (process.env.DASHSCOPE_BASE_URL || 'https://dashscope.aliyuncs.com').replace(/\/compatible-mode\/v1\/?$/, '').replace(/\/$/, '');
   const tools = kit.tools.map(t => ({ type: 'function', function: { name: t.name, description: t.description, parameters: t.input_schema } }));
-  const res = await fetch(`${base}/compatible-mode/v1/chat/completions`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.DASHSCOPE_API_KEY || ''}` }, body: JSON.stringify({ model, messages, tools, ...(/^qwen3/.test(model) ? { enable_thinking: false } : {}) }), signal: AbortSignal.timeout(180_000) });
+  const res = await fetch(`${base}/compatible-mode/v1/chat/completions`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.DASHSCOPE_API_KEY || ''}` }, body: JSON.stringify({ model, messages, tools, ...(kit.maxTokens ? { max_tokens: Math.min(kit.maxTokens, 32768) } : {}), ...(/^qwen3/.test(model) ? { enable_thinking: false } : {}) }), signal: AbortSignal.timeout(180_000) });
   if (!res.ok) throw new Error(`千问 ${res.status}: ${(await res.text()).slice(0, 300)}`);
   const data: any = await res.json();
   const d = data.usage?.prompt_tokens_details || {};
@@ -232,8 +232,10 @@ async function callQwen(h: Msg[], model: string, kit: AgentKit, emit: (e: Ev) =>
   const msg = data.choices?.[0]?.message || {};
   const text = msg.content || '';
   if (text) emit({ t: 'text', delta: text });
-  const calls = (msg.tool_calls || []).map((c: any) => ({ id: c.id, name: c.function?.name, input: safeJson(c.function?.arguments) }));
-  return { text, calls };
+  // 到了输出上限（finish_reason=length）：工具参数多半不完整，丢掉并标出来（和 Claude 的 max_tokens 一样处理）
+  const cut = data.choices?.[0]?.finish_reason === 'length';
+  const calls = cut ? [] : (msg.tool_calls || []).map((c: any) => ({ id: c.id, name: c.function?.name, input: safeJson(c.function?.arguments) }));
+  return { text, calls, ...(cut ? { truncated: true } : {}) };
 }
 
 function safeJson(s: any) { if (s && typeof s === 'object') return s; try { return JSON.parse(String(s || '{}')); } catch { return { value: String(s || '') }; } }
