@@ -184,7 +184,7 @@ function BehaviorRow({ b, name, open }: { b: any; name: string; open: boolean })
       {open && <div style={{ fontSize: 12.5, color: '#666', paddingLeft: 8, borderLeft: '2px solid #eceefa', margin: '4px 0 6px' }}>
         {na && <div>{b.na}</div>}
         {!na && b.score === 0 && <div>基线行为，整段对话里没出现</div>}
-        {(b.evidence || []).map((e: any, k: number) => <div key={k}>{e.i >= 0 ? `第 ${e.i + 1} 条` : e.src === 'deliverable' ? '交付物' : e.src === 'disclosure' ? 'AI 参与说明' : '过程记录'} · {e.q} 档：「{e.quote}」<span style={{ color: MUTED }}> {e.why}</span></div>)}
+        {(b.evidence || []).map((e: any, k: number) => <div key={k}>{e.i >= 0 ? `第 ${e.i + 1} 条` : e.src === 'deliverable' ? '交付物' : e.src === 'disclosure' ? 'AI 参与说明' : '过程记录'}{/模型补扫/.test(e.rule || '') ? ' · 模型通读找到' : ''} · {e.q} 档：「{e.quote}」<span style={{ color: MUTED }}> {e.why}</span></div>)}
         {b.capped && <div style={{ color: MUTED }}>只有一条孤立证据，按规则最高 3.5 分</div>}
         {b.r != null && b.r >= 2 && <div style={{ color: MUTED }}>最高档比中位数高 {b.r} 档：偶发的高水平，不是稳定表现</div>}
         {(b.related || []).length > 0 && <div style={{ color: MUTED }}>另有 {b.related.length} 处和其他行为重叠，只算在一边（互斥 / 一条长提示只算一次）</div>}

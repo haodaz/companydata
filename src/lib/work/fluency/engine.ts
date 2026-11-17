@@ -7,11 +7,12 @@
  * 宇宁的 ai_fluency_v2.py 是参考实现，口径不一致的地方以 xlsx 为准，写在 docs 交接文档里。
  */
 import spec from './spec-v3.json';
+import extraPatterns from './patterns-extra.json';
 import { generateContent } from '@/lib/llm-client';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { logTokenUsage } from '@/lib/token-logger';
 
-export const FLUENCY_VERSION = 'v3-26b · engine 2026-11-16';
+export const FLUENCY_VERSION = 'v3-26b · engine 2026-11-17（+宇宁补词表 · 模型补扫）';
 const MODEL = process.env.FLUENCY_MODEL || process.env.WORK_GRADE_MODEL || 'claude-opus-5-5';
 
 type Spec = typeof spec;
@@ -121,7 +122,9 @@ function anchorsOf(chat: ChatTurn[]): Anchors {
 // ─────────── 01 取候选：正则 + 生效窗口 ───────────
 export interface Candidate { bid: string; src: 'chat' | 'deliverable' | 'disclosure' | 'event'; i: number; quote: string; rule: string; quoted?: boolean }
 const rx = (s: string) => new RegExp(s, 'is');
-const PAT: Record<string, { label: string; re: RegExp }[]> = Object.fromEntries(BIDS.map(b => [b, BEHAVIORS[b].patterns.map(p => ({ label: p.label, re: rx(p.re) }))]));
+// xlsx 词表 + 宇宁补的中文说法（patterns-extra.json，11-17 她按样本补的）：命中只是候选，成不成立由模型判
+const EXTRA = extraPatterns as unknown as Record<string, { label: string; re: string }[]>;
+const PAT: Record<string, { label: string; re: RegExp }[]> = Object.fromEntries(BIDS.map(b => [b, [...BEHAVIORS[b].patterns, ...(Array.isArray(EXTRA[b]) ? EXTRA[b] : [])].map(p => ({ label: p.label, re: rx(p.re) }))]));
 const pat = (bid: string, label: string) => PAT[bid].find(p => p.label === label)?.re;
 const PLATFORM = [pat('B3', 'CN1')!, pat('B3', 'EN1')!];
 const platforms = (s: string) => new Set(PLATFORM.flatMap(re => [...s.matchAll(new RegExp(re.source, 'gis'))].map(m => m[0].toLowerCase())));
@@ -274,6 +277,67 @@ async function judge(inp: FluencyInput, cands: Candidate[], stats: string, warn:
   return { evs, negs };
 }
 
+// ─────────── 补扫：正则没定位到的行为，让模型直接通读候选人原话找（借鉴宇宁 ai_fluency_v3.py 的 LLM 定向扫描） ───────────
+// 只补「成立证据不足 2 条」的行为（1 条最多 3.5 分，要上 4 分得有第二处）；每条消息只问它生效窗口内的行为；
+// 引文必须是这条消息里的原文，对不上就丢——防模型自己编。B19 只认程序判（PII / 脱敏），B21 / B22 只看交付侧，不补扫。
+const SCAN_PREFIX = `你是 AI 使用行为评估专家，按一份固定量表（7 维度 · 25 个可观察行为）评一个候选人做考核任务时怎么用 AI。
+这一步是「补扫」：程序的关键词没定位到足够证据的行为，请你直接通读候选人发给 AI 的原话找。
+规则：
+1. 每条消息只在它后面列的「可判行为」里找（已按量表的生效窗口筛过），列表外的行为不要报。
+2. 只看候选人自己说的话：消息里粘贴的任务书 / 材料原文、转贴的 AI 回答、平台出的题目都不算候选人的表达。
+3. 确实体现才报，对照判断标准和易混淆点；拿不准就不报——这是选拔场景，宁可漏报不误报。一条消息最多报 3 个行为。
+4. 报了就严格按该行为的 1–5 档锚点定档，拿不准给低档。
+5. 需要「对齐 AI 上一轮输出」的行为（B10 迭代、B15 质疑推理、B16 纠错、B18 偏差、B14 补背景）：看给出的上一轮 AI 回答，对不上就不报；看不到 AI 回答时，消息本身看不出针对什么也不报。
+6. quote 必须从这条消息里原样摘一段连续原文（不超过 40 字），不许改写、拼接。
+
+## 量表：25 个行为的判断标准与 1–5 档锚点
+${specText()}
+
+## 返回格式
+只输出 JSON：{"results":[{"msg":1,"bid":"B5","q":3,"quote":"原文片段","why":"不超过 40 字"}]}；一条都没有就返回 {"results":[]}`;
+
+async function scanGaps(inp: FluencyInput, a: Anchors, split: { ratio: number; self: string }[], evs: Evidence[], stats: string, logs: string[], warn: string[]): Promise<Evidence[]> {
+  const chat = inp.chat;
+  const have = new Map<string, number>();
+  for (const e of evs) if (e.valid) have.set(e.bid, (have.get(e.bid) || 0) + 1);
+  const skip = new Set(['B19', 'B21', 'B22', ...(chat.length < 4 ? [...NEED_4] : [])]);
+  const gap = BIDS.filter(b => !skip.has(b) && (have.get(b) || 0) < 2);
+  if (!gap.length) return [];
+  const judged = new Set(evs.filter(e => e.src === 'chat').map(e => `${e.bid}:${e.i}`));
+  const msgs = chat.map((c, i) => ({ i, bids: gap.filter(b => inWindow(b, i, a) && !judged.has(`${b}:${i}`)) }))
+    .filter(m => m.bids.length && split[m.i].ratio <= 0.8 && (chat[m.i].q || '').trim().length >= 6);
+  const MAX = 48;
+  if (msgs.length > MAX) warn.push(`补扫只看前 ${MAX} 条消息（共 ${msgs.length} 条可扫）`);
+  const todo = msgs.slice(0, MAX);
+  if (!todo.length) return [];
+  const clip = (s: string, n: number) => (s.length > n ? `${s.slice(0, Math.round(n * 0.4))}……（中间略）……${s.slice(-Math.round(n * 0.6))}` : s);
+  const none = '（看不到 AI 的回答）';
+  const head = `## 这次的任务\n${inp.task.title}：${inp.task.brief.replace(/\s+/g, ' ').slice(0, 500)}\n## 程序算的使用情况\n${stats}\n`;
+  const out: Evidence[] = [];
+  const BATCH = 6;
+  for (let s = 0; s < todo.length; s += BATCH) {
+    const batch = todo.slice(s, s + BATCH);
+    const body = batch.map((m, n) => {
+      const prev = chat[m.i - 1];
+      return `[消息 ${n + 1}] 候选人第 ${m.i + 1} 条 · 可判行为：${m.bids.map(b => `${b} ${BEHAVIORS[b].cn}`).join('、')}\n${prev ? `上一轮 AI 回答：${prev.a ? clip(prev.a, 300) : none}\n` : ''}${split[m.i].ratio >= 0.5 ? `（这条约 ${Math.round(split[m.i].ratio * 100)}% 是粘贴的任务书 / 材料）\n` : ''}候选人原话：${clip(chat[m.i].q, 800)}`;
+    }).join('\n\n');
+    let data: any = null;
+    try { data = await askJson(`${head}\n## 待扫消息\n${body}`, 'Fluency · 补扫', inp.institution, SCAN_PREFIX); } catch (e) { warn.push(`补扫第 ${s / BATCH + 1} 批失败：${String((e as any)?.message).slice(0, 80)}`); continue; }
+    for (const r of (data?.results || []) as any[]) {
+      const m = batch[(Number(r?.msg) || 0) - 1]; if (!m) continue;
+      const bid = String(r?.bid || ''); if (!m.bids.includes(bid)) continue;
+      const quote = String(r?.quote || '').trim().slice(0, 80);
+      const key = (x: string) => squash(norm(x)).replace(/[「」"“”'‘’…。，,.!！?？:：;；]/g, '');
+      const body = key(chat[m.i].q), qk = key(quote);
+      if (!qk || !(body.includes(qk) || (qk.length >= 12 && body.includes(qk.slice(0, 12))))) continue;   // 引文对不上原话 → 丢
+      if (out.some(e => e.bid === bid && e.i === m.i) || out.filter(e => e.i === m.i).length >= 3) continue;
+      out.push({ bid, src: 'chat', i: m.i, q: Math.max(1, Math.min(5, Math.round(Number(r.q) || 3))), why: String(r.why || '').slice(0, 120), quote, valid: true, quoted: split[m.i].ratio > 0.8, rule: `${bid}-模型补扫` });
+    }
+  }
+  logs.push(`补扫：${gap.length} 个行为正则证据不足 2 条（${gap.join(' ')}），模型通读 ${todo.length} 条消息，补到 ${out.length} 条${out.length ? `（${[...new Set(out.map(e => e.bid))].join(' ')}）` : ''}`);
+  return out;
+}
+
 async function askJson(prompt: string, task_name: string, institution?: string, prefix?: string): Promise<any> {
   let lastErr: any = null;
   for (const m of [MODEL, 'qwen3.7-plus', 'qwen-plus'].filter((x, i, a) => a.indexOf(x) === i)) {
@@ -381,7 +445,7 @@ export interface FluencyReport {
   dims: DimScore[]; behaviors: Record<string, BehaviorScore>;
   negatives: { id: string; name: string; target: string; action: string; msg: number; quote: string; quoted?: boolean }[];
   profile: TaskProfile & { type_name: string; missing: string[] }; not_triggered: { bid: string; why: string }[];
-  stats: { user_msgs: number; candidates: number; packages: number; valid: number }; logs: string[]; warnings: string[];
+  stats: { user_msgs: number; candidates: number; packages: number; valid: number; /** 模型补扫补到的证据条数 */ scanned?: number }; logs: string[]; warnings: string[];
   /** 对话从哪来：platform = 平台 AI 助手的记录；outside = 从截图 / 插件网页抽出来的外部 AI 提问（只有提问，没有 AI 回答） */
   d1_source?: 'platform' | 'outside';
   outside?: { asks: { t: number; q: string; complete: boolean; src: string }[]; note: string };
@@ -463,6 +527,8 @@ export async function assessFluency(inp: FluencyInput): Promise<FluencyReport> {
   const adopted = ev.filter(e => e.type === 'adopt').reduce((n, e) => n + (Number(e.chars) || 0), 0);
   const stats = `和站内 AI 助手对话 ${chat.length} 轮；采纳进交付物 ${ev.filter(e => e.type === 'adopt').length} 次（${adopted} 字）；粘贴 ${ev.filter(e => e.type === 'paste').length} 次；交付物 ${(inp.deliverable || '').length} 字${disclosure ? `；交卷时写了 AI 参与说明：${disclosure.slice(0, 300)}` : '；交卷时没写 AI 参与说明'}`;
   const { evs, negs: modelNegs } = await judge(I, cands, stats, warnings);
+  const scanned = await scanGaps(I, a, split, evs, stats, logs, warnings);
+  evs.push(...scanned);
   arbitrate(evs, structMsgs, logs);
   // N4 的「记录里用了」：AI 的内容真进了交付物（采纳，或问过 AI 之后粘贴过成段内容），只问过一句不算
   const firstAsk = chat[0]?.t ?? Infinity;
@@ -497,7 +563,7 @@ export async function assessFluency(inp: FluencyInput): Promise<FluencyReport> {
   const rep: FluencyReport = {
     ...base, overall: shown, score100: shown == null ? null : Math.round(shown * 20), tier: tierOf(shown),
     confidence: { level, note, c_obs, c_elig: ce.value }, status, status_note, dims, behaviors, negatives: negOut, not_triggered: notTriggered,
-    stats: { user_msgs: chat.length, candidates: cands.length, packages: new Set(cands.map(c => `${c.src}:${c.i}`)).size, valid: evs.filter(e => e.valid && !e.related).length },
+    stats: { user_msgs: chat.length, candidates: cands.length, packages: new Set(cands.map(c => `${c.src}:${c.i}`)).size, valid: evs.filter(e => e.valid && !e.related).length, scanned: scanned.length },
     portrait_overall: status === 'no_total' ? overall : null,
     d1_source: fromOutside ? 'outside' : 'platform',
     ...(fromOutside ? { outside: inp.outside! } : {}),
