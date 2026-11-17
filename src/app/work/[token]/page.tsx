@@ -629,5 +629,5 @@ const btnGhost: React.CSSProperties = { padding: '5px 12px', borderRadius: 999, 
 function ReportFull({ token, sid, task, report, participant }: { token: string; sid: string; task: Task; report: any; participant: any }) {
   const [s, setS] = useState<any>(null);
   useEffect(() => { fetch(`/api/work/${token}/sessions/${sid}?full=1`).then(r => r.json()).then(j => j.ok && setS(j.session)).catch(() => {}); }, [token, sid]);
-  return <ReportView report={report} participant={participant} deliverable={s?.deliverable} events={s ? s.events || [] : null} aiChat={s?.ai_chat || []} materials={(task as any).materials} deliverables={task.task.deliverables} defaultTab="grade" />;
+  return <ReportView sid={s?.id} report={report} participant={participant} deliverable={s?.deliverable} events={s ? s.events || [] : null} aiChat={s?.ai_chat || []} materials={(task as any).materials} deliverables={task.task.deliverables} defaultTab="grade" />;
 }

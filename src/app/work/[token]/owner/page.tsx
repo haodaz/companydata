@@ -1,7 +1,7 @@
 'use client';
 
 /** 真活台 · 出题人管理页（凭 ?k=<owner_key>，不用登录）：看题、复制参与链接、发布 / 下架、重跑基线、看每个人的报告 */
-import { mainScore } from '@/lib/work/scale';
+import { aiOnly, mainScore } from '@/lib/work/scale';
 import { useWorkScale } from '@/lib/work/scale-client';
 import { WorkTopBar } from '@/components/work/WorkTopBar';
 import { Tour, type TourStep } from '@/components/work/Tour';
@@ -83,7 +83,7 @@ function Inner() {
           <h1 style={{ fontSize: 30, margin: '0 0 6px', lineHeight: 1.25 }}>{T.task?.title}</h1>
           <div style={{ opacity: .85 }} title={T.role}>{T.company_name} · {roleLabel(T.role, T.task?.role)} · {T.task?.soft_limit ? '建议' : '限时'} {T.task?.time_minutes} 分钟</div>
           <div data-tour="stats" style={{ display: 'flex', gap: 26, marginTop: 18, flexWrap: 'wrap' }}>
-            {[[real.length, '参与'], [done.length, '交卷'], [avg ?? '–', '平均分'], ...(scale === 'ai_use' ? [] : [[T.baseline?.result?.total ?? '–', 'AI 基线']])].map(([n, l]) => <div key={String(l)}><div style={{ fontSize: 28, fontWeight: 800 }}>{n}</div><div style={{ fontSize: 12, opacity: .8 }}>{l}</div></div>)}
+            {[[real.length, '参与'], [done.length, '交卷'], [avg ?? '–', '平均分'], ...(aiOnly(scale) ? [] : [[T.baseline?.result?.total ?? '–', 'AI 基线']])].map(([n, l]) => <div key={String(l)}><div style={{ fontSize: 28, fontWeight: 800 }}>{n}</div><div style={{ fontSize: 12, opacity: .8 }}>{l}</div></div>)}
           </div>
         </div>
       </div>

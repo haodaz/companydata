@@ -9,6 +9,8 @@ import { logTokenUsage } from '@/lib/token-logger';
 import type { WorkTask } from '@/lib/work/generator';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { buildAiPolicy, hardRedFlags, STANCE_LABEL, USE_LABEL, type AiPolicy } from '@/lib/work/ai-policy';
+import { getWorkScale } from '@/lib/work/scale-server';
+import { assessFluency } from '@/lib/work/fluency/engine';
 
 const GRADE_MODEL = process.env.WORK_GRADE_MODEL || 'claude-opus-5-5';   // 优先 Claude，千问兜底（2026-10-28）
 const s = (v: any, n = 600) => (v == null ? '' : typeof v === 'string' ? v : JSON.stringify(v)).slice(0, n);
@@ -323,9 +325,21 @@ export function nextStepOf(events: WorkEvent[]): string {
 
 /** 整份报告：结果 + 过程 + AI 使用能力 + 和 AI 基线逐条比 */
 export async function buildReport(task: WorkTask, baseline: { result?: ResultReport } | null, deliverable: string, events: WorkEvent[], aiChat: { t: number; q: string; a: string }[], institution?: string, audit?: any[], policy?: AiPolicy | null) {
-  const [result, process, ai_use] = await Promise.all([gradeResult(task, deliverable, { institution, who: '候选人' }), analyzeProcess(task, events, aiChat, deliverable, { institution, audit }),
-    analyzeAiUse(task, events, aiChat, deliverable, { institution, policy }).catch(e => { console.warn('[work-grade] AI 使用能力没评出来', String(e?.message).slice(0, 120)); return null; })]);
+  // 平台选了潜历的「AI 驾驭能力」量表（11-16）才多算这一项；底座三层照常算
+  const scale = await getWorkScale().catch(() => 'full' as const);
+  const [result, process, ai_use, fluency] = await Promise.all([gradeResult(task, deliverable, { institution, who: '候选人' }), analyzeProcess(task, events, aiChat, deliverable, { institution, audit }),
+    analyzeAiUse(task, events, aiChat, deliverable, { institution, policy }).catch(e => { console.warn('[work-grade] AI 使用能力没评出来', String(e?.message).slice(0, 120)); return null; }),
+    scale === 'fluency' ? fluencyOf(task, events, aiChat, deliverable, institution).catch(e => { console.warn('[work-grade] AI 驾驭量表没评出来', String(e?.message).slice(0, 120)); return null; }) : Promise.resolve(undefined)]);
   const b = baseline?.result;
   const compare = b ? { baseline_total: b.total, delta: result.total - b.total, items: result.items.map(i => ({ id: i.id, title: i.title, mine: i.score, baseline: b.items.find(x => x.id === i.id)?.score ?? null })) } : null;
-  return { result, process, ai_use, compare, next_step: nextStepOf(events) || undefined, generated_at: new Date().toISOString() };
+  return { result, process, ai_use, ...(fluency !== undefined ? { fluency } : {}), compare, next_step: nextStepOf(events) || undefined, generated_at: new Date().toISOString() };
+}
+
+/** 潜历「AI 驾驭能力」量表（lib/work/fluency）：只看和站内 AI 助手的对话 + 交付物 + AI 参与说明 */
+export async function fluencyOf(task: WorkTask, events: WorkEvent[], aiChat: { t: number; q: string; a: string }[], deliverable: string, institution?: string) {
+  const mode = events.some(e => /^plugin_/.test(e.type)) ? 'plugin' : events.some(e => e.type === 'rec_start') ? 'open' : 'bench';
+  return assessFluency({
+    task: { title: task.task.title, brief: task.task.brief, rules: task.task.rules || [], materials: task.materials.map(m => ({ id: m.id, title: m.title, content: m.content })), lang: task.task.lang },
+    chat: aiChat, events, deliverable, mode, institution,
+  });
 }

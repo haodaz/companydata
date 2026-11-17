@@ -7,7 +7,7 @@ import { attachmentsToMaterials, mergeAttachmentDupes, reviseTask, runBaseline, 
 import { withCost, logTokenUsage } from '@/lib/token-logger';
 import { generateContent } from '@/lib/llm-client';
 import { reviewGeneric } from '@/lib/work/compare';
-import { analyzeAiUse, ensureAiPolicy } from '@/lib/work/grader';
+import { analyzeAiUse, ensureAiPolicy, fluencyOf } from '@/lib/work/grader';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -120,6 +120,21 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
         const ai_use = await withCost({ tool_name: 'work', task_name: 'Grade · AI 使用（补算）', stage: 'use' }, () => analyzeAiUse(task as any, x.events || [], x.ai_chat || [], String(x.deliverable || ''), { institution: t.company_name, policy }));
         await db.from('work_sessions').update({ report: { ...x.report, ai_use } }).eq('id', x.id); done++;
       } catch (e) { console.warn('[work] 补算 AI 使用失败', x.id, String((e as any)?.message).slice(0, 120)); }
+    }));
+    return NextResponse.json({ ok: true, done, remaining: Math.max(0, todo.length - batch.length) });
+  }
+  // 补算潜历「AI 驾驭能力」量表（11-16）：平台改选这套量表之前交的卷没有这一项；同上，一次 4 份、前端循环到 remaining = 0
+  if (body.fluency) {
+    const { data: ss } = await db.from('work_sessions').select('id, report, events, ai_chat, deliverable').eq('task_id', t.id).not('report', 'is', null);
+    const todo = (ss || []).filter((x: any) => x.report?.result && !x.report?.auditing && (body.force || !x.report?.fluency));
+    const batch = todo.slice(0, 4);
+    const task = { env: t.task?.env || { type: 'doc' }, problem: t.problem, task: t.task, materials: t.materials, rubric: t.rubric };
+    let done = 0;
+    for (let i = 0; i < batch.length; i += 2) await Promise.all(batch.slice(i, i + 2).map(async (x: any) => {
+      try {
+        const fluency = await withCost({ tool_name: 'work', task_name: 'Grade · AI 驾驭量表（补算）', stage: 'use' }, () => fluencyOf(task as any, x.events || [], x.ai_chat || [], String(x.deliverable || ''), t.company_name));
+        await db.from('work_sessions').update({ report: { ...x.report, fluency } }).eq('id', x.id); done++;
+      } catch (e) { console.warn('[work] 补算 AI 驾驭量表失败', x.id, String((e as any)?.message).slice(0, 120)); }
     }));
     return NextResponse.json({ ok: true, done, remaining: Math.max(0, todo.length - batch.length) });
   }

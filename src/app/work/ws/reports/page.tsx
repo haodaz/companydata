@@ -9,13 +9,14 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { ReportView } from '@/components/work/ReportView';
 import { useWorkScale } from '@/lib/work/scale-client';
+import { aiOnly } from '@/lib/work/scale';
 import { askHref, col, MODE, when } from '../ask';
 import { Empty, Head } from '../ui';
 
 export default function Page() { return <Suspense><Reports /></Suspense>; }
 
 function Reports() {
-  const task = useSearchParams().get('task'); const ai = useWorkScale() === 'ai_use';
+  const task = useSearchParams().get('task'); const ai = aiOnly(useWorkScale());
   const [people, setPeople] = useState<any[] | null>(null);
   const [kw, setKw] = useState(''); const [onlyDone, setOnlyDone] = useState(true);
   const [pick, setPick] = useState<string[]>([]);
@@ -76,7 +77,7 @@ function Drawer({ p, ask, onClose }: { p: any; ask: string; onClose: () => void 
           <Link href={ask} style={{ marginLeft: 'auto' }}><button className="wws-ask">问助理</button></Link>
           <button onClick={onClose} className="wws-btn">关闭</button>
         </div>
-        <div style={{ flex: 1, overflowY: 'auto', padding: '18px 20px 40px' }}>{s?.report ? <ReportView report={s.report} participant={s.participant} deliverable={s.deliverable} events={s.events || []} aiChat={s.ai_chat || []} defaultTab="deliv" /> : <div className="wws-muted">读取报告…</div>}</div>
+        <div style={{ flex: 1, overflowY: 'auto', padding: '18px 20px 40px' }}>{s?.report ? <ReportView sid={s.id} report={s.report} participant={s.participant} deliverable={s.deliverable} events={s.events || []} aiChat={s.ai_chat || []} defaultTab="deliv" /> : <div className="wws-muted">读取报告…</div>}</div>
       </div>
     </div>
   );

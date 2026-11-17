@@ -3,7 +3,7 @@ import { supabaseAdmin as db } from '@/lib/supabase';
 import { getSessionUser } from '@/lib/session';
 import { orgFor } from '@/lib/ws/org';
 import { companyJobs } from '@/lib/work/generator';
-import { mainScore } from '@/lib/work/scale';
+import { aiOnly, mainScore } from '@/lib/work/scale';
 import { getWorkScale } from '@/lib/work/scale-server';
 
 export const runtime = 'nodejs';
@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
   for (const sp of spaces || []) { const k = sp.profile?.role || sp.title; const r = roles.get(k) || { title: k, work: 0, spaces: 0, from_library: false }; r.spaces++; roles.set(k, r); }
   return NextResponse.json({ ok: true, org,
     roles: [...roles.values()].sort((a, b) => (b.work + b.spaces) - (a.work + a.spaces)),
-    work: (tasks || []).map(t => ({ id: t.id, token: t.share_token, owner_key: t.owner_key, title: t.task?.title, role: t.role, env: t.task?.env?.type, baseline: scale === 'ai_use' ? null : t.baseline?.result?.total ?? null, status: t.status, created_at: t.created_at, joined: cnt[t.id]?.n || 0, submitted: cnt[t.id]?.done || 0 })),
+    work: (tasks || []).map(t => ({ id: t.id, token: t.share_token, owner_key: t.owner_key, title: t.task?.title, role: t.role, env: t.task?.env?.type, baseline: aiOnly(scale) ? null : t.baseline?.result?.total ?? null, status: t.status, created_at: t.created_at, joined: cnt[t.id]?.n || 0, submitted: cnt[t.id]?.done || 0 })),
     spaces: (spaces || []).map(x => ({ id: x.id, title: x.title, role: x.profile?.role, created_at: x.created_at })),
     people });
 }

@@ -39,11 +39,12 @@ export default function CardPage() {
   // 英文题（11-10）：成绩单整页英文
   const lang: Lang | undefined = d.task.task?.lang; const L = (zh: string, en: string) => pick(lang, zh, en);
   if (lang === 'en' && typeof document !== 'undefined') document.title = `${d.task.task?.title} · Score card`;
-  const ai = scale === 'ai_use', u = d.s.report.ai_use;   // 平台选了「AI 使用与交互」：主分和雷达都换成 AI 使用
+  // 平台选了「AI 使用与交互」：主分和雷达都换成 AI 使用；选了潜历的「AI 驾驭能力」（11-16）：主分 = 量表总分 ×20，雷达 = 7 维
+  const fl = scale === 'fluency', ai = scale === 'ai_use' || fl, u = d.s.report.ai_use, F = d.s.report.fluency;
   const r = d.s.report.result, cmp = ai ? null : d.s.report.compare;
-  const main: number | null = ai ? u?.score ?? null : r.total;
+  const main: number | null = fl ? F?.score100 ?? null : ai ? u?.score ?? null : r.total;
   const g = grade(main ?? 0, lang);
-  const rows = ai ? (u?.items || []).filter((i: any) => i.score != null).map((i: any) => ({ title: aiItemL(i.key, i.title, lang), score: Number(i.score) || 0 })) : (r.items || []).map((i: any) => ({ title: String(i.title), score: Number(i.score) || 0, base: cmp?.items?.find((x: any) => x.id === i.id)?.baseline }));
+  const rows = fl ? (F?.dims || []).filter((x: any) => x.score != null).map((x: any) => ({ title: x.name, score: Math.round(x.score * 20) })) : ai ? (u?.items || []).filter((i: any) => i.score != null).map((i: any) => ({ title: aiItemL(i.key, i.title, lang), score: Number(i.score) || 0 })) : (r.items || []).map((i: any) => ({ title: String(i.title), score: Number(i.score) || 0, base: cmp?.items?.find((x: any) => x.id === i.id)?.baseline }));
   const when = new Date(d.s.submitted_at || d.s.started_at || Date.now());
   const company = lang === 'en' ? enCompany(d.task.company_name) : d.task.company_name;
   const code = `ZH-${String(d.s.id).replace(/-/g, '').slice(0, 10).toUpperCase()}`;
@@ -64,14 +65,14 @@ export default function CardPage() {
         <div className="zc-meta">{[company, lang === 'en' ? roleLabel(d.task.role, d.task.task?.role, 'en') : d.task.role].filter(Boolean).join(' · ')}</div>
         <div className="zc-mid">
           <div className="zc-score">
-            {main == null ? <div className="zc-num" style={{ color: '#8c8c8c', fontSize: 30 }}>{noAiLabel(u, L)}</div> : <><div className="zc-num" style={{ color: g.c }}>{main}<span>/100</span></div>
+            {main == null ? <div className="zc-num" style={{ color: '#8c8c8c', fontSize: 30 }}>{fl ? (F?.status === 'manual' ? L('待人工复核', 'Needs review') : F?.status === 'no_total' ? L('只出画像', 'Profile only') : L('无法评价', 'Not assessable')) : noAiLabel(u, L)}</div> : <><div className="zc-num" style={{ color: g.c }}>{main}<span>/100</span></div>
             <div className="zc-grade" style={{ background: g.c }}>{g.t}</div></>}
-            {ai && <div className="zc-base">{L('AI 使用与交互', 'AI use and interaction')}</div>}
+            {ai && <div className="zc-base">{fl ? L(`AI 驾驭能力 · ${F?.overall != null ? `${F.overall.toFixed(1)} / 5 · ${F.tier}` : '7 维度'}`, 'AI fluency · 7 dimensions') : L('AI 使用与交互', 'AI use and interaction')}</div>}
             {cmp && <div className="zc-base">{L(`同一道任务 AI 基线 ${cmp.baseline_total} 分`, `AI baseline on the same task: ${cmp.baseline_total}`)}</div>}
           </div>
           {rows.length >= 3 && rows.length <= 10 && <div className="zc-radar"><Radar rows={rows} /></div>}
         </div>
-        {d.s.report.ai_use?.score != null && <div className="zc-sec"><div className="zc-h">{L('AI 使用能力', 'AI use')} · <b style={{ color: '#6055f5' }}>{d.s.report.ai_use.score}</b> / 100</div>
+        {!fl && d.s.report.ai_use?.score != null && <div className="zc-sec"><div className="zc-h">{L('AI 使用能力', 'AI use')} · <b style={{ color: '#6055f5' }}>{d.s.report.ai_use.score}</b> / 100</div>
           <div className="zc-ai">{(d.s.report.ai_use.items || []).map((i: any) => <span key={i.key}>{aiItemL(i.key, i.title, lang)} <b>{i.score ?? L('未观测', 'n/a')}</b></span>)}</div>
           {d.s.report.ai_use.verdict && <div style={{ fontSize: 13, color: '#555', marginTop: 4 }}>{d.s.report.ai_use.verdict}</div>}</div>}
         {ai && main == null && u?.verdict && <div className="zc-sec"><div style={{ fontSize: 13, color: '#555' }}>{u.verdict}</div></div>}

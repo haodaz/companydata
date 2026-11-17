@@ -10,7 +10,7 @@ import { WorkReport } from '@/components/work/WorkReport';
 import { WorkProcess } from '@/components/work/WorkProcess';
 import { Md } from '@/components/ws/Md';
 import { useL } from '@/lib/work/i18n';
-import { noAiLabel } from '@/lib/work/scale';
+import { aiOnly, noAiLabel } from '@/lib/work/scale';
 import { useWorkScale } from '@/lib/work/scale-client';
 
 type Tab = 'deliv' | 'process' | 'grade';
@@ -19,11 +19,13 @@ const fmt = (t: number) => `${Math.floor(t / 60)} 分 ${String(Math.floor(t % 60
 const fmtEn = (t: number) => `${Math.floor(t / 60)} min ${String(Math.floor(t % 60)).padStart(2, '0')} s`;
 const col = (v: number) => (v >= 80 ? '#12a150' : v >= 60 ? '#b7791f' : '#c0392b');
 
-export function ReportView({ report, participant, deliverable, events, aiChat, materials, deliverables, defaultTab = 'grade' }: {
+export function ReportView({ report, participant, deliverable, events, aiChat, materials, deliverables, defaultTab = 'grade', sid }: {
   report: any; participant?: { name?: string };
   deliverable?: string; events?: any[] | null; aiChat?: any[];
   materials?: { id: string; title: string }[]; deliverables?: { id: string; title: string }[];
   defaultTab?: Tab;
+  /** 作答 id：AI 驾驭量表要拿同一道任务的平均 / 最高分 */
+  sid?: string;
 }) {
   const [tab, setTab] = useState<Tab>(defaultTab); const L = useL(); const scale = useWorkScale();
   if (!report) return null;
@@ -36,8 +38,9 @@ export function ReportView({ report, participant, deliverable, events, aiChat, m
     <div style={{ display: 'grid', gap: 14 }}>
       {/* 概要：一眼看到分数、用 AI 怎么样、用了多久 */}
       <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap', alignItems: 'baseline', padding: '12px 16px', borderRadius: 12, background: '#fafbff', border: '1px solid #e8e9f0' }}>
-        {r && scale !== 'ai_use' && <span><span style={lab}>{L('结果', 'Result')}</span><b style={{ fontSize: 26, color: col(r.total) }}>{r.total}</b><span style={dim}> / 100</span></span>}
-        {u && <span><span style={lab}>{L('AI 使用', 'AI use')}</span>{u.score == null ? <b style={{ color: '#8c8c8c' }}>{noAiLabel(u, L)}</b> : <><b style={{ fontSize: 22, color: col(u.score) }}>{u.score}</b><span style={dim}> / 100</span></>}</span>}
+        {r && !aiOnly(scale) && <span><span style={lab}>{L('结果', 'Result')}</span><b style={{ fontSize: 26, color: col(r.total) }}>{r.total}</b><span style={dim}> / 100</span></span>}
+        {scale === 'fluency' && <span><span style={lab}>{L('AI 驾驭', 'AI fluency')}</span>{report.fluency?.overall != null ? <><b style={{ fontSize: 22, color: col(report.fluency.score100) }}>{report.fluency.overall.toFixed(1)}</b><span style={dim}> / 5 · {report.fluency.tier}</span></> : <b style={{ color: '#8c8c8c' }}>{report.fluency ? (report.fluency.status === 'not_assessable' ? L('无法评价', 'Not assessable') : report.fluency.status === 'manual' ? L('待人工复核', 'Needs review') : L('只出画像', 'Profile only')) : L('未评', 'Not scored')}</b>}</span>}
+        {u && scale !== 'fluency' && <span><span style={lab}>{L('AI 使用', 'AI use')}</span>{u.score == null ? <b style={{ color: '#8c8c8c' }}>{noAiLabel(u, L)}</b> : <><b style={{ fontSize: 22, color: col(u.score) }}>{u.score}</b><span style={dim}> / 100</span></>}</span>}
         {p?.duration_s != null && <span><span style={lab}>{L('用时', 'Time taken')}</span><b>{L(fmt(p.duration_s), fmtEn(p.duration_s))}</b></span>}
       </div>
       <div role="tablist" style={{ display: 'flex', gap: 4, borderBottom: '1px solid #e8e9f0' }}>
@@ -56,7 +59,7 @@ export function ReportView({ report, participant, deliverable, events, aiChat, m
         <WorkReport report={report} participant={participant} section="process" />
         {events ? <WorkProcess part="timeline" events={events} aiChat={aiChat || []} materials={materials} deliverables={deliverables} shots={shots} /> : <div style={{ color: '#999', fontSize: 13 }}>{L('读取答题历程…', 'Loading the work history…')}</div>}
       </div>}
-      {tab === 'grade' && <WorkReport report={report} participant={participant} section="grade" />}
+      {tab === 'grade' && <WorkReport report={report} participant={participant} section="grade" sid={sid} />}
     </div>
   );
 }

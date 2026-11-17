@@ -1,0 +1,963 @@
+{
+ "version": "v3-26b",
+ "source": "AI驾驭能力评价7维度评价体系(26b)-汇总版v3.xlsx",
+ "dimensions": {
+  "01": {
+   "name": "问题定义",
+   "en": "AI-Assisted Problem Framing",
+   "desc": "利用AI澄清任务目标、问题边界、利益相关者、约束条件和关键假设，并识别完成任务所需的背景信息。",
+   "question": "是否把真正需要解决的问题、范围和信息缺口界定清楚？",
+   "behaviors": [
+    "B1",
+    "B2",
+    "B14"
+   ]
+  },
+  "02": {
+   "name": "问题拆解",
+   "en": "Human-AI Task Orchestration",
+   "desc": "判断任务是否适合使用AI，选择合适平台，将复杂任务拆分为可执行环节，并动态安排人、AI和人机协同的分工与边界。",
+   "question": "是否形成与任务特征相匹配、边界清晰且可调整的人机协作路径？",
+   "behaviors": [
+    "B3",
+    "B4",
+    "B6",
+    "B11"
+   ]
+  },
+  "03": {
+   "name": "分析与验证",
+   "en": "AI-Augmented Reasoning & Verification",
+   "desc": "利用AI开展信息处理和分析，同时核查关键事实、识别错误与偏差，区分事实、推断和不确定性。",
+   "question": "是否使用适当证据验证分析过程和关键结论，并识别潜在偏差？",
+   "behaviors": [
+    "B13",
+    "B16",
+    "B18"
+   ]
+  },
+  "04": {
+   "name": "解决方案",
+   "en": "AI-Enabled Solution Design",
+   "desc": "借助AI探索方法和备选路径，并依据目标、成本、风险、工具适配性和可行性作出有根据的选择。",
+   "question": "是否拓展方案空间，并由候选人完成关键方法选择与取舍？",
+   "behaviors": [
+    "B5",
+    "B25"
+   ]
+  },
+  "05": {
+   "name": "交付成果",
+   "en": "AI-Powered Execution",
+   "desc": "有效利用AI形成符合要求、可用、可靠、安全合规的成果，并对最终质量、提交行为及可能影响承担责任。",
+   "question": "交付物是否达到预定用途和质量要求，并符合数据、安全、伦理和责任要求？",
+   "behaviors": [
+    "B7",
+    "B9",
+    "B19",
+    "B20",
+    "B23",
+    "B24"
+   ]
+  },
+  "06": {
+   "name": "阐释交付",
+   "en": "AI-Polished Narrative",
+   "desc": "面向目标受众说明交付物的内容、依据、来源、限制和目标达成情况，并如实呈现AI的参与和贡献。",
+   "question": "交付对象能否理解成果及其使用条件，并准确了解AI在其中的作用？",
+   "behaviors": [
+    "B8",
+    "B12",
+    "B17",
+    "B21",
+    "B22"
+   ]
+  },
+  "07": {
+   "name": "迭代与判断",
+   "en": "AI Evaluation & Human Judgment",
+   "desc": "持续参与人机协作，评估进展和AI输出，发现问题、调整方法，并在AI建议不可靠时作出有依据的独立判断。",
+   "question": "是否持续掌握任务进展，根据反馈有效改进过程和成果？",
+   "behaviors": [
+    "B10",
+    "B15"
+   ]
+  }
+ },
+ "behaviors": {
+  "B1": {
+   "dim": "01",
+   "cn": "目标澄清",
+   "en": "Clarifies goal before asking for help",
+   "point": "在请求AI协助前明确任务目标、预期结果和成功条件。",
+   "evidence": "初始提示、任务计划（会话前 2 条用户消息）",
+   "strength": "强",
+   "obs": "baseline",
+   "chain": "① 正则【强·基线型】→ ② 大模型定档 → ③ 不设自评",
+   "patterns": [
+    {
+     "label": "EN",
+     "re": "\\b(i want to|i need to|my goal is|i[’']m trying to|what i want to achieve|the objective is|i[’']m looking to|the purpose is|i[’']d like to|what i need is)\\b"
+    },
+    {
+     "label": "CN",
+     "re": "(我想要|我需要|我的目标是|我正在尝试|我想实现|目标是|我希望|目的是|我想做)"
+    }
+   ],
+   "pattern_notes": "EN：\\b(i want to|i need to|my goal is|i[’']m trying to|what i want to achieve|the objective is|i[’']m looking to|the purpose is|i[’']d like to|what i need is)\\b\r\nCN：(我想要|我需要|我的目标是|我正在尝试|我想实现|目标是|我希望|目的是|我想做)\r\n预处理：与任务书模板相似度 >0.8 的连续段落标 quoted，不参与本规则（防整段粘贴冒充自定目标）。",
+   "window": "仅扫每个任务块的前 2 条用户消息（不是整个 session）。\r\n为什么：全文扫\"我想要/我需要\"几乎每条都有；多任务串在一个会话里时，用整个 session 的前 2 条会整块漏掉第二个任务的目标。\r\n命中后送模型，确认句中给的是目标或可核对的成功标准，而不是\"帮我写…\"式纯指令。",
+   "criteria": "在提要求之前或同时说明目的、预期结果或成功标准（做到什么算完成），且目标可核对；只复述题目不算",
+   "confuse": "①\"我需要一个表格\"是交付要求（→B7）不是目标；②被追问后才补目标，计弱证据；③\"我想要X，因为Y\"里 because 从句才是目标",
+   "fallback": "不设自评（该项在对话中可观测）",
+   "nohit": "基线型｜无命中 = 0 分（未提目标即低分，不是\"未观测\"）｜负向：整段粘贴任务书充当自定目标 → 降 1 档 + 表演嫌疑标记（N10）",
+   "anchors": {
+    "a1": "纯指令式提需求，无目的、无成功标准（\"帮我写个文案\"）",
+    "a2": "提到目的但无法核对（\"想让它更有说服力\"），成功标准缺失",
+    "a3": "说明了要做什么，但成功标准模糊或不可核对（\"写个吸引人的\"）",
+    "a4": "目标 + 成功标准基本齐备，但标准只覆盖部分环节，或与后续迭代方向轻微冲突",
+    "a5": "目标 + 可核对的成功条件齐备，且与后续迭代方向一致（\"让非技术 HR 在 30 秒内看懂我的项目价值\"）",
+    "hint": "只复述题目/任务书 = 1 档；目标声明与后续行为完全无关 → 降 1 档并标表演嫌疑"
+   }
+  },
+  "B2": {
+   "dim": "01",
+   "cn": "问题范围与性质识别",
+   "en": "Understands problem scope and nature",
+   "point": "说明问题边界、任务性质、相关对象及不在本次任务范围内的内容。",
+   "evidence": "任务理解说明、初始提示（含范围与约束表述）",
+   "strength": "弱",
+   "obs": "conditional",
+   "chain": "① 正则【弱·条件型】→ ② 大模型判定 → ③ 不设自评",
+   "patterns": [
+    {
+     "label": "EN",
+     "re": "\\b(scope|out of scope|in scope|constraint|assumption|boundary|edge case|prerequisite|depends on)\\b"
+    },
+    {
+     "label": "CN",
+     "re": "(范围|边界|约束|前提|假设|仅限|不包括|不包含|除了|只考虑|依赖)"
+    }
+   ],
+   "pattern_notes": "EN：\\b(scope|out of scope|in scope|constraint|assumption|boundary|edge case|prerequisite|depends on)\\b\r\nCN：(范围|边界|约束|前提|假设|仅限|不包括|不包含|除了|只考虑|依赖)",
+   "window": "全文扫，不设窗口。\r\n为什么：词面太弱，受窗口限制只会漏得更多；因此接受高命中率、低精确率，只用于给模型挑候选段落，不单独计分。\r\n单条命中不判分，需多条或多轮出现。",
+   "criteria": "是否说明问题边界（做什么/不做什么）、任务性质（生成/计算/排查/取舍）、相关对象及不在范围内的部分；能否识别隐含约束或显式做假设",
+   "confuse": "①复述需求原文≠界定边界；②罗列任务清单属拆解（→B6/B11）；③只说\"简单点/短一点\"属表达（→B12）",
+   "fallback": "不设自评（该项在对话中可观测）",
+   "nohit": "条件型｜无命中 = N/A｜边界：只复述任务书 → 归 B1，不在本条计分",
+   "anchors": {
+    "a1": "复述任务书，或范围理解错误",
+    "a2": "识别了任务性质但对象/边界有明显偏差，导致后续返工",
+    "a3": "正确识别任务性质（生成/计算/排查/取舍）与主要对象，边界有一处模糊",
+    "a4": "性质与对象正确、边界清楚，但未说明关键假设",
+    "a5": "显式说明做什么 / 不做什么 / 关键假设（\"只考虑线上渠道；假设预算不变\"）",
+    "hint": "排除：罗列任务清单 → B6/B11；只说\"简单点\" → B12"
+   }
+  },
+  "B14": {
+   "dim": "01",
+   "cn": "背景与信息缺口识别",
+   "en": "Identifies when AI might be missing context",
+   "point": "发现AI缺少完成任务所需的背景、约束或材料，并主动补充或提出澄清。",
+   "evidence": "追问、补充材料、对话修正（第 2 轮及以后）",
+   "strength": "中",
+   "obs": "conditional",
+   "chain": "① 正则【中·条件型】→ ② 大模型判定 → ③ 不设自评",
+   "patterns": [
+    {
+     "label": "EN",
+     "re": "\\b(you might not know|let me add context|for context|you[’']re missing|what you don[’']t know is|additional context|are you aware that|to clarify,|i should mention)\\b"
+    },
+    {
+     "label": "CN",
+     "re": "(补充一下|背景是|你可能不知道|需要说明|漏了|还要告诉你|前提是|说清楚一点背景)"
+    }
+   ],
+   "pattern_notes": "EN：\\b(you might not know|let me add context|for context|you[’']re missing|what you don[’']t know is|additional context|are you aware that|to clarify,|i should mention)\\b\r\nCN：(补充一下|背景是|你可能不知道|需要说明|漏了|还要告诉你|前提是|说清楚一点背景)",
+   "window": "只看第 2 条用户消息及以后。\r\n为什么：首条里的背景陈述已计入 B1/B2，不设窗口会同一句话两处计分。\r\n命中后需紧跟 AI 的含糊或错误输出才升级。",
+   "criteria": "是否发现 AI 缺少完成任务所需的背景、约束或材料，并主动补充或要求澄清；补充内容须与任务相关且能改变输出",
+   "confuse": "①一般寒暄、客套不算；②补充的是新需求（→B10）而非原有缺失背景；③单纯说\"再详细点\"是质量追问，不是补背景",
+   "fallback": "不设自评（该项在对话中可观测）",
+   "nohit": "条件型｜无命中 = N/A｜边界：\"再详细点\"是质量追问（B10/B17），不是补背景",
+   "anchors": {
+    "a1": "AI 因缺背景输出偏差后，用户无反应",
+    "a2": "被追问后补了一句背景，但未改变输出方向",
+    "a3": "被追问 / 看到偏差后才补充背景",
+    "a4": "主动补充背景，但补充发生在偏差已出现之后",
+    "a5": "主动识别缺口并前置补充，补充内容改变了输出",
+    "hint": "补充新需求 ≠ 补背景；\"再详细点\" 是质量追问（B10/B17）"
+   }
+  },
+  "B3": {
+   "dim": "02",
+   "cn": "AI工具适配性评估",
+   "en": "Evaluates whether a specific AI tool fits the task before starting",
+   "point": "在开始前评估具体AI工具是否适合任务性质、风险和交付要求。",
+   "evidence": "任务计划、工具选择说明；平台/模型标识",
+   "strength": "弱",
+   "obs": "conditional",
+   "chain": "① 正则【弱·条件型】→ ② 大模型判定 → ③ 条件表单（默认关闭）",
+   "patterns": [
+    {
+     "label": "CN1",
+     "re": "(ChatGPT|Claude|Gemini|Kimi|DeepSeek|豆包|通义|文心|Copilot|Perplexity)"
+    },
+    {
+     "label": "CN2",
+     "re": "(适合|不适合|更适合|擅长|处理不了|换成|改用|能不能做|做得来)"
+    },
+    {
+     "label": "EN1",
+     "re": "\\b(chatgpt|claude|gemini|copilot|perplexity|kimi|deepseek|doubao|qwen)\\b"
+    },
+    {
+     "label": "EN2",
+     "re": "\\b(suit|fit|better for|not good at|can[’']t handle|good at|instead of)\\b"
+    }
+   ],
+   "pattern_notes": "CN1：(ChatGPT|Claude|Gemini|Kimi|DeepSeek|豆包|通义|文心|Copilot|Perplexity)\r\nCN2：(适合|不适合|更适合|擅长|处理不了|换成|改用|能不能做|做得来)\r\nEN1：\\b(chatgpt|claude|gemini|copilot|perplexity|kimi|deepseek|doubao|qwen)\\b\r\nEN2：\\b(suit|fit|better for|not good at|can[’']t handle|good at|instead of)\\b\r\n判定：EN1 ∩ EN2 或 CN1 ∩ CN2 —— 同句/相邻句同时命中才算候选。\r\n反例：只出现\"这个格式适合做表格\"（无平台名）不触发。",
+   "window": "只取\"首个实质任务指令 P1 之前\"的消息窗口。\r\n为什么：之后的工具评价属 B16/B17，同窗会把\"这个工具不行\"误算成事前适配判断。\r\n判定 = 平台/工具名 ∩ 适配评价词（中英同构，缺一不可）；单独出现平台名不算。",
+   "criteria": "是否在动手前判断任务是否适合交给 AI、哪些部分必须人做、该选哪类工具；是否说明选择理由（能力边界、风险、数据可否外传）",
+   "confuse": "①直接打开某工具开始做≠做过适配判断；②事后才说\"这个工具不行\"属 B16/B17；③\"你能做 X 吗\"是能力确认，弱证据",
+   "fallback": "【默认关闭】记录中无任何工具适配讨论时，用表单题 S2（路径/工具选择理由）补位；已有任一记录证据则不启用。",
+   "nohit": "条件型｜无命中 = N/A，启用表单 S2｜中文必须\"平台名 ∩ 适配词\"共现",
+   "anchors": {
+    "a1": "从未想过 AI 是否适合本任务，直接开做",
+    "a2": "有模糊判断（\"这个应该能行\"），无任何依据",
+    "a3": "能说出某类任务适合/不适合 AI，但理由笼统",
+    "a4": "明确本任务哪些环节交 AI，但未说清能力边界或未执行",
+    "a5": "环节级分配 + 说清能力边界理由（\"长文检索给它，事实判断我自己来\"）",
+    "hint": "仅聊天记录观察时，出现\"你能做 X 吗\"类能力确认 = 弱证据，最高 3 档"
+   }
+  },
+  "B4": {
+   "dim": "02",
+   "cn": "AI平台比较与选择",
+   "en": "Compares and selects AI platforms based on task requirements",
+   "point": "根据任务要求比较不同AI平台的能力、限制和可用工具，并作出选择。",
+   "evidence": "平台比较、选择理由；跨平台会话时间线",
+   "strength": "中",
+   "obs": "conditional",
+   "chain": "① 正则【中·条件型】→ ② 大模型判定 → ③ 条件表单（默认关闭）",
+   "patterns": [
+    {
+     "label": "CN2",
+     "re": "(对比|比较|不如|哪个更好|各自擅长|换一个试试|还是用)"
+    },
+    {
+     "label": "EN1",
+     "re": "\\b(chatgpt|claude|gemini|copilot|perplexity|kimi|deepseek)\\b"
+    },
+    {
+     "label": "EN2",
+     "re": "\\b(vs\\.?|versus|compared? (with|to)|better than|whereas|unlike)\\b"
+    }
+   ],
+   "pattern_notes": "CN1：同上平台名（需 ≥2 个不同平台）\r\nCN2：(对比|比较|不如|哪个更好|各自擅长|换一个试试|还是用)\r\nEN1：\\b(chatgpt|claude|gemini|copilot|perplexity|kimi|deepseek)\\b（需 ≥2 个不同平台名）\r\nEN2：\\b(vs\\.?|versus|compared? (with|to)|better than|whereas|unlike)\\b\r\n判定：EN1(≥2) ∩ EN2 或 CN1(≥2) ∩ CN2，同一任务块内。",
+   "window": "同一任务块内。\r\n为什么：跨会话零散用不同平台不等于做过比较，必须先把时间线对齐到同一任务。\r\n判定 = ≥2 个不同平台名 且 出现比较词；因额度/网络失败而被动切换不计。",
+   "criteria": "是否依据任务要求比较平台能力/限制/可用工具并作出选择，理由是否具体（长文、代码、联网、多模态、额度）",
+   "confuse": "①只提到多个平台名而无比较≠B4；②因限额/网络失败的被动切换不算主动比较；③同一平台内换模型仅算弱证据",
+   "fallback": "【默认关闭】同 S2；因额度/网络被动切换不计，需用户说明\"为什么选它\"。",
+   "nohit": "条件型｜无命中 = N/A，启用表单 S2｜因额度/网络被动切换不计",
+   "anchors": {
+    "a1": "从未考虑过平台差异，用哪个是习惯",
+    "a2": "提到过别的平台，但未构成比较（\"听说 Claude 写代码好\"）",
+    "a3": "知道 2 个以上平台差异，但选择无任务依据",
+    "a4": "按任务特征选平台，但未说明为什么排除另一平台",
+    "a5": "按任务特征（长文/代码/联网/多模态/数据可否外传）有依据地选，并说明取舍",
+    "hint": "因额度/网络被动切换不计"
+   }
+  },
+  "B6": {
+   "dim": "02",
+   "cn": "人机任务分工",
+   "en": "Distributes work strategically between self and AI",
+   "point": "根据人和AI各自优势安排工作，明确本人完成、AI完成及共同推进的环节。",
+   "evidence": "任务计划、操作序列、工具调用；人工修改量",
+   "strength": "中",
+   "obs": "baseline",
+   "chain": "① 正则【中·基线型】→ ② 大模型判定 → ③ 不设自评",
+   "patterns": [
+    {
+     "label": "EN",
+     "re": "\\b(you (handle|do|write|draft|generate)|i[’']ll (do|write|review|check|verify)|let[’']s split|divide the work|you take care of|i will take|you first, then i)\\b"
+    },
+    {
+     "label": "CN",
+     "re": "(你负责|我来|我负责|你生成我改|分工|由你先|然后我|我核对|我最后把关)"
+    }
+   ],
+   "pattern_notes": "EN：\\b(you (handle|do|write|draft|generate)|i[’']ll (do|write|review|check|verify)|let[’']s split|divide the work|you take care of|i will take|you first, then i)\\b\r\nCN：(你负责|我来|我负责|你生成我改|分工|由你先|然后我|我核对|我最后把关)",
+   "window": "全文扫。\r\n为什么：分工可能出现在任意阶段，无法用窗口切。\r\n命中句必须绑定具体环节（谁做哪一段）；只有\"我来核对\"而无分工对象不升级。与 B23 的分界：分工是事前安排，验证是事后动作。",
+   "criteria": "是否说明本人/AI/协同各承担哪些环节，是否保留必须由人完成的判断（取舍、审核、对外沟通），分工是否与各自优势匹配",
+   "confuse": "①\"帮我做\"不是分工；②让 AI 全做而自己最后检查，属弱分工（偏 B23）；③只做任务拆解而不指定执行者属 B2/B11",
+   "fallback": "不设自评（该项在对话中可观测）",
+   "nohit": "基线型｜无命中 = 0 分（\"你全权处理\"即 0–1 档）｜负向：全权外包后被要求复核仍不回看 → 连带 B23",
+   "anchors": {
+    "a1": "\"你全权处理\"，本人只复制粘贴",
+    "a2": "有分工表述但未对应环节（\"你负责技术部分\"），实际仍全权外包",
+    "a3": "有分工意识但笼统（\"你写我改\"，无环节对应）",
+    "a4": "环节级分工，但未保留必须由人完成的判断点",
+    "a5": "环节级分工，且保留必须由人完成的判断点（取舍 / 审核 / 对外口径）",
+    "hint": "与 B23 分界：分工是事前安排，验证是事后动作"
+   }
+  },
+  "B11": {
+   "dim": "02",
+   "cn": "协作方式设定",
+   "en": "Sets interaction mode",
+   "point": "明确AI的角色、交互方式、阶段任务和人机衔接规则。",
+   "evidence": "系统指令、阶段提示、工作流；prompt 模板",
+   "strength": "中",
+   "obs": "conditional",
+   "chain": "① 正则【中·条件型】→ ② 大模型判定 → ③ 不设自评",
+   "patterns": [
+    {
+     "label": "EN",
+     "re": "\\b(act as|you are a|your role is|play devil[’']s advocate|don[’']t give me the answer|think step by step|walk me through|challenge my|ask me questions first)\\b"
+    },
+    {
+     "label": "CN",
+     "re": "(你是一位|你的角色是|先别给答案|逐步|反方|先问我|分步骤|先澄清再)"
+    }
+   ],
+   "pattern_notes": "EN：\\b(act as|you are a|your role is|play devil[’']s advocate|don[’']t give me the answer|think step by step|walk me through|challenge my|ask me questions first)\\b\r\nCN：(你是一位|你的角色是|先别给答案|逐步|反方|先问我|分步骤|先澄清再)",
+   "window": "主要出现在会话早期（前 5 条）。\r\n为什么：协作方式一旦设定，后续很少重申，窗口后移会漏；但窗口过宽会把中途的风格要求算进来。\r\n仅角色扮演（\"你是一位编辑\"）不足以升级，需有阶段衔接规则。",
+   "criteria": "是否设定 AI 的角色、交互方式（先澄清/先给选项/提出质疑）、阶段任务与人机衔接规则，并实际按此推进",
+   "confuse": "①\"你是一位资深编辑\"若只是写作风格设定，属角色扮演（弱，偏 B12）；②一次性风格要求属 B12；③\"一步步来\"若只是催促，不算设定",
+   "fallback": "不设自评（该项在对话中可观测）",
+   "nohit": "条件型｜无命中 = N/A｜仅角色扮演 = 弱证据，最高 3 档",
+   "anchors": {
+    "a1": "无角色 / 交互方式 / 阶段规则设定",
+    "a2": "设了角色但设定后未遵循，或只有一次性角色扮演",
+    "a3": "设了角色（\"你是资深编辑\"）但无衔接规则，或设定后未实际遵循",
+    "a4": "角色 + 一种交互方式（先澄清 / 先给选项），但缺阶段衔接",
+    "a5": "角色 + 交互方式 + 阶段衔接规则，且实际按此推进",
+    "hint": "仅角色扮演 = 弱证据，最高 3 档"
+   }
+  },
+  "B13": {
+   "dim": "03",
+   "cn": "关键事实与主张核查",
+   "en": "Checks facts and claims that matter",
+   "point": "对影响结论的事实、数据和主张进行核查，并记录依据或不确定性。",
+   "evidence": "来源、计算、交叉核验记录；检索工具调用",
+   "strength": "强",
+   "obs": "conditional",
+   "chain": "① 正则【强·条件型】→ ② 大模型定档 → ③ 不设自评",
+   "patterns": [
+    {
+     "label": "EN",
+     "re": "\\b(is this accurate|can you verify|what[’']s the source|double[- ]check|are you sure|source for that|is that correct|fact[- ]check|cite|reference)\\b"
+    },
+    {
+     "label": "CN",
+     "re": "(核实|查证|来源|出处|出处在哪|确定吗|准确吗|再核对|有依据吗)"
+    },
+    {
+     "label": "强触发（文本可见即可）",
+     "re": "\\bhttps?://|检索结果|我查了|我看了一下(官网|标准|原文)|重新算|复算|按.{0,10}(标准|规范).{0,6}应该是"
+    }
+   ],
+   "pattern_notes": "EN：\\b(is this accurate|can you verify|what[’']s the source|double[- ]check|are you sure|source for that|is that correct|fact[- ]check|cite|reference)\\b\r\nCN：(核实|查证|来源|出处|出处在哪|确定吗|准确吗|再核对|有依据吗)\r\n强触发（文本可见即可）：\\bhttps?://|检索结果|我查了|我看了一下(官网|标准|原文)|重新算|复算|按.{0,10}(标准|规范).{0,6}应该是",
+   "window": "全文。\r\n为什么：原设计靠\"联网检索日志\"升级为强，但微任务场景拿不到日志，升级通道会空转。\r\n改为文本可见即强：用户贴出链接/检索结果/复算过程/引述外部标准 = 已发生核查动作，与日志等效。\r\n日志若可得，仅作附加佐证，不改变定级。",
+   "criteria": "是否对影响结论的事实、数据、主张执行核查（要来源、交叉检索、复算），并记录依据或不确定性",
+   "confuse": "①只说\"你确定吗\"而无核查对象，弱；②质疑推理逻辑属 B15；③发现并指出 AI 事实错误属 B16（可同时命中）",
+   "fallback": "不设自评（该项在对话中可观测）",
+   "nohit": "条件型 → 事实密集型任务转基线型（无命中 = 0）｜日志不作必需，贴链接/复算即强",
+   "anchors": {
+    "a1": "对影响结论的事实 / 数据 / 主张照单全收",
+    "a2": "表达过怀疑（\"真的吗\"），但未要求来源也未核查",
+    "a3": "对关键主张提出过核实要求（要来源 / 再次确认），但无核查动作",
+    "a4": "执行了核查（贴出链接 / 检索结果 / 复算过程），但未记录不确定性",
+    "a5": "执行核查并记录不确定性（\"这条只有单一来源\"、\"数据截至 2025 年\"）",
+    "hint": "贴出链接/复算即视为核查动作（文本强证据）；日志可得时仅作附加佐证"
+   }
+  },
+  "B16": {
+   "dim": "03",
+   "cn": "错误信息识别",
+   "en": "Detects when AI generates incorrect information",
+   "point": "识别AI输出中的事实错误、计算错误、虚构内容或与材料不一致之处。",
+   "evidence": "纠错对话、修改前后版本、测试结果",
+   "strength": "中",
+   "obs": "conditional",
+   "chain": "① 正则【中·条件型】→ ② 大模型判定 → ③ 不设自评",
+   "patterns": [
+    {
+     "label": "EN",
+     "re": "\\b(that[’']s (wrong|incorrect|not right)|not accurate|hallucinat\\w*|made (that|this) up|doesn[’']t exist|no such|wrong (number|date|figure|name))\\b"
+    },
+    {
+     "label": "CN",
+     "re": "(错了|不对|算错|数字不对|日期有误|编的|幻觉|并不存在|没有这个|数据是错的)"
+    }
+   ],
+   "pattern_notes": "EN：\\b(that[’']s (wrong|incorrect|not right)|not accurate|hallucinat\\w*|made (that|this) up|doesn[’']t exist|no such|wrong (number|date|figure|name))\\b\r\nCN：(错了|不对|算错|数字不对|日期有误|编的|幻觉|并不存在|没有这个|数据是错的)",
+   "window": "全文扫，命中后必须与 AI 上一轮输出对齐定位。\r\n为什么：不对齐就无法确认被指出的是什么，容易把用户的自我纠正算成纠 AI 的错。\r\n对齐失败降为候选，不单独计分；用户自己记错却指责 AI，记反向证据。",
+   "criteria": "候选人指出的内容是否确实错误（数值/日期/引用/虚构），纠正是否准确；仅表达不满而无具体错误点不算",
+   "confuse": "①与 B15 区分：B15 质疑推理链，B16 指出事实/计算错误；②用户自己记错却指责 AI，属反向证据；③语气强但无实据，不计",
+   "fallback": "不设自评（该项在对话中可观测）",
+   "nohit": "条件型｜无命中 = N/A（须先存在 AI 错误）｜负向B：自己记错反指责 AI（N3）",
+   "anchors": {
+    "a1": "AI 的事实 / 计算错误用户未识别（复核时才发现）",
+    "a2": "感觉不对但指错位置，或指出后接受了 AI 的二次错误解释",
+    "a3": "指出了错误但纠正本身不准确，或张冠李戴",
+    "a4": "准确定位错误，但纠正不完整（改了数值未改衍生结论）",
+    "a5": "准确定位错误（数值 / 日期 / 引用 / 虚构）且纠正正确",
+    "hint": "用户自己记错反指责 AI = 负向B，本条不计分"
+   }
+  },
+  "B18": {
+   "dim": "03",
+   "cn": "偏差识别",
+   "en": "Remains alert to potential biases in AI outputs",
+   "point": "识别AI输出中可能存在的文化、性别、立场或视角偏差，并判断其对任务的影响。",
+   "evidence": "偏差检查、反例、替代视角、修改记录",
+   "strength": "弱",
+   "obs": "conditional",
+   "chain": "① 正则【弱·条件型】→ ② 大模型判定 → ③ 条件表单（默认关闭）",
+   "patterns": [
+    {
+     "label": "EN",
+     "re": "\\b(bias(ed)?|stereotyp\\w*|one[- ]sided|skewed|fairness|perspective of|underrepresent\\w*)\\b"
+    },
+    {
+     "label": "CN",
+     "re": "(偏见|刻板|片面|只站在|视角单一|性别|地域|文化预设|偏向|一家之言)"
+    }
+   ],
+   "pattern_notes": "EN：\\b(bias(ed)?|stereotyp\\w*|one[- ]sided|skewed|fairness|perspective of|underrepresent\\w*)\\b\r\nCN：(偏见|刻板|片面|只站在|视角单一|性别|地域|文化预设|偏向|一家之言)",
+   "window": "全文扫，需紧跟 AI 输出。\r\n为什么：开场就泛泛谈公平的，多半是元讨论而非针对本次输出。\r\n单条命中不判分，需有具体偏差对象（群体/立场/文化预设）。",
+   "criteria": "是否识别文化/性别/立场/视角偏差，判断其对结论的影响，并采取行动（追问、补视角、改写、标注局限）",
+   "confuse": "①泛泛\"要注意公平\"而无具体指向，弱；②指出事实错误属 B16；③提出相反观点但未涉及群体/立场偏见属 B15",
+   "fallback": "【默认关闭】仅当任务涉及人群、数据或对外发布时启用表单题 S4（偏差/伦理）。",
+   "nohit": "条件型｜无命中 = N/A，启用表单 S4｜泛泛\"注意公平\"最高 2 档",
+   "anchors": {
+    "a1": "从未想过 AI 输出可能有偏差",
+    "a2": "口头承认\"AI 可能有偏见\"，但与本次任务无关",
+    "a3": "能意识到偏差存在，但说不出本次任务的具体风险",
+    "a4": "指出本次输出的具体偏差，但未采取行动",
+    "a5": "指出具体偏差（群体 / 立场 / 文化预设）并采取行动（补视角 / 改写 / 标注局限）",
+    "hint": "泛泛\"要注意公平\" = 弱证据，最高 2 档"
+   }
+  },
+  "B5": {
+   "dim": "04",
+   "cn": "方案路径探索",
+   "en": "Consults AI on approach before execution",
+   "point": "在执行前与AI讨论可选方法、实施路径和潜在风险，并依据任务条件选择方案。",
+   "evidence": "方法讨论、方案比较、选择理由",
+   "strength": "中",
+   "obs": "conditional",
+   "chain": "① 正则【中·条件型】→ ② 大模型判定 → ③ 不设自评",
+   "patterns": [
+    {
+     "label": "EN",
+     "re": "\\b(how should i|what approach|what would you recommend|what[’']s the best way|before i start|how would you tackle|should i use|what strategy|help me think through|options?)\\b"
+    },
+    {
+     "label": "CN",
+     "re": "(怎么做|什么方法|你推荐|最佳方式|在开始前|几种方案|哪种更好|帮我梳理|有什么思路)"
+    }
+   ],
+   "pattern_notes": "EN：\\b(how should i|what approach|what would you recommend|what[’']s the best way|before i start|how would you tackle|should i use|what strategy|help me think through|options?)\\b\r\nCN：(怎么做|什么方法|你推荐|最佳方式|在开始前|几种方案|哪种更好|帮我梳理|有什么思路)",
+   "window": "只扫\"首个实质产出请求之前\"的消息。\r\n为什么：产出之后再问方案是事后复盘，应计入 B10；两条不加窗口会互相抢分，一次迭代被记成两次方案探索。",
+   "criteria": "是否在执行前与 AI 讨论可选方法/路径/风险，并据任务条件作出选择（说出取舍理由，而非让 AI 直接定）",
+   "confuse": "①问\"这段代码怎么写\"是执行请求，不是方案比较；②事后复盘\"还有别的做法吗\"不算；③把决定权全交 AI 属弱证据",
+   "fallback": "不设自评（该项在对话中可观测）",
+   "nohit": "条件型｜无命中 = N/A｜边界：产出后再问方案 → 归 B10",
+   "anchors": {
+    "a1": "上来就要产出物，或直接执行",
+    "a2": "问了\"有没有更好的办法\"，但未展开任何方案",
+    "a3": "问过\"怎么做 / 什么方法\"，但未比较选项，或把决定权全交 AI",
+    "a4": "比较过 ≥2 条路径，但取舍理由不完整，或最终由 AI 替你选",
+    "a5": "执行前比较 ≥2 条路径并说清取舍理由，最终由本人选定",
+    "hint": "窗口锚点 = 首个实质产出请求之前；之后问方案归 B10"
+   }
+  },
+  "B25": {
+   "dim": "04",
+   "cn": "借助 AI 迁移跨领域方法解决问题",
+   "en": "Uses AI to adapt methods from other domains to solve problems",
+   "point": "观察应聘者是否借助 AI 引入其他领域的方法，并根据当前任务的目标与约束进行合理调整，形成有针对性的解决方案。",
+   "evidence": "跨领域提示词、迁移调整记录、最终方案与原方法的差异",
+   "strength": "中",
+   "obs": "conditional",
+   "chain": "① 正则【中·条件型】→ ② 大模型判定 → ③ 条件表单（默认关闭）",
+   "patterns": [
+    {
+     "label": "EN",
+     "re": "\\b(borrow (from|the)|by analogy|analogous to|how do (other )?(industr\\w*|field|domain)|similar approach in|inspired by|transfer\\w* .{0,20}from)\\b"
+    },
+    {
+     "label": "CN",
+     "re": "(借鉴|类比|其他行业|别的领域|类似做法|能否把.{0,10}用于|跨领域|参考.{0,6}的做法)"
+    }
+   ],
+   "pattern_notes": "EN：\\b(borrow (from|the)|by analogy|analogous to|how do (other )?(industr\\w*|field|domain)|similar approach in|inspired by|transfer\\w* .{0,20}from)\\b\r\nCN：(借鉴|类比|其他行业|别的领域|类似做法|能否把.{0,10}用于|跨领域|参考.{0,6}的做法)",
+   "window": "全文扫。\r\n为什么：跨领域迁移可能出现在任何一轮，窗口无法切。\r\n命中后必须能看到\"迁移 + 调整\"两步；只有\"借鉴\"字样、没说改了什么，按 C 档（照搬）处理，不升级。",
+   "criteria": "是否引入其他领域方法，并依据当前任务的目标与约束做调整，形成可用方案（能说明改了什么、为什么这样改）",
+   "confuse": "①只举例\"其他行业也这么做\"而无调整，弱（C 档）；②借用相邻同类领域的常规做法不算跨领域；③让 AI 科普别领域知识但未用于任务，不计",
+   "fallback": "【默认关闭】仅当记录显示明确卡点、且无任何迁移痕迹时启用 S5。",
+   "nohit": "条件型｜无命中 = N/A，启用表单 S5｜相邻同类领域常规做法不算跨领域",
+   "anchors": {
+    "a1": "无跨领域借鉴",
+    "a2": "提到别领域名词，但只是让 AI 科普，未用于本任务",
+    "a3": "提到别领域做法但未调整（照搬）",
+    "a4": "引入别领域方法并做了调整，但说不清改了什么",
+    "a5": "引入其他领域方法，按本任务目标与约束调整，并说清改了什么、为什么",
+    "hint": "相邻同类领域常规做法不算；须见\"迁移 + 调整\"两步"
+   }
+  },
+  "B7": {
+   "dim": "05",
+   "cn": "交付格式与结构要求",
+   "en": "Specifies format and structure needed",
+   "point": "明确成果的文件形式、结构、组成部分及必要的呈现规范。",
+   "evidence": "提示词、任务清单、最终成果的结构",
+   "strength": "强",
+   "obs": "baseline",
+   "chain": "① 正则【强·基线型】→ ② 大模型定档 → ③ 不设自评",
+   "patterns": [
+    {
+     "label": "EN",
+     "re": "\\b(format as|use bullet|as a table|in json|as markdown|numbered list|output as|structured as|in the format|as csv|columns?|sections?)\\b"
+    },
+    {
+     "label": "CN",
+     "re": "(表格|分点|条目|JSON|Markdown|列成|结构|目录|章节|字数|页数)"
+    }
+   ],
+   "pattern_notes": "EN：\\b(format as|use bullet|as a table|in json|as markdown|numbered list|output as|structured as|in the format|as csv|columns?|sections?)\\b\r\nCN：(表格|分点|条目|JSON|Markdown|列成|结构|目录|章节|字数|页数)",
+   "window": "全文扫，命中即候选。\r\n为什么：结构要求通常在提需求时一次说完，窗口限制意义不大。\r\n需与最终产出的结构一致性一并核对：要求了 JSON 而交付是散文，记\"提了要求未落地\"，不给满分。",
+   "criteria": "是否明确成果形式、结构、组成部分与呈现规范，且与交付用途匹配（不是为格式而格式）",
+   "confuse": "①\"给我个摘要\"是成果类型而非结构要求（弱）；②仅要求字数属篇幅约束（弱）；③排版偏好无结构说明属 B12",
+   "fallback": "不设自评（该项在对话中可观测）",
+   "nohit": "基线型（有交付物时）｜无命中 = 0｜\"给我个摘要\"是成果类型，不作结构要求",
+   "anchors": {
+    "a1": "无任何结构 / 格式要求",
+    "a2": "有零散格式词（\"分点\"），但与用途无关",
+    "a3": "有结构要求但与用途不匹配，或为格式而格式",
+    "a4": "结构要求明确服务用途，但最终产出未完全落地",
+    "a5": "结构要求明确、服务用途，且与最终产出一致（要求表格交付确是表格）",
+    "hint": "\"给我个摘要\"是成果类型非结构要求，不作触发词"
+   }
+  },
+  "B9": {
+   "dim": "05",
+   "cn": "成果质量示例与标准",
+   "en": "Provides examples of what good looks like",
+   "point": "向AI提供优质示例、验收标准或反例，使生成结果对齐预期质量。",
+   "evidence": "参考样例、验收标准、提示词；附件类型",
+   "strength": "中",
+   "obs": "conditional",
+   "chain": "① 正则【中·条件型】→ ② 大模型判定 → ③ 不设自评",
+   "patterns": [
+    {
+     "label": "EN",
+     "re": "\\b(here[’']s an example|like this:|similar to|here[’']s a template|for reference|something like|modeled after|based on this example|acceptance criteria|good looks like)\\b"
+    },
+    {
+     "label": "CN",
+     "re": "(示例|参考这个|照这个|模板|样式如下|像这样|验收标准|合格标准|要达到.{0,6}标准)"
+    },
+    {
+     "label": "CN-共现（裸\"例如\"不作触发词，必须带对象）",
+     "re": "(例如|比如).{0,15}(模板|样式|格式|结构|标准|这样写)"
+    }
+   ],
+   "pattern_notes": "EN：\\b(here[’']s an example|like this:|similar to|here[’']s a template|for reference|something like|modeled after|based on this example|acceptance criteria|good looks like)\\b\r\nCN：(示例|参考这个|照这个|模板|样式如下|像这样|验收标准|合格标准|要达到.{0,6}标准)\r\nCN-共现（裸\"例如\"不作触发词，必须带对象）：(例如|比如).{0,15}(模板|样式|格式|结构|标准|这样写)\r\n附加信号：命中之外若同一任务块内有附件上传事件，一并作为候选。",
+   "window": "全文 + 附件事件时间点。\r\n为什么：裸\"例如\"在中文解释性文本里遍地都是，全文扫会直接把送模量打爆（成本承诺是 <15%）。\r\n示例的价值在于\"事前对齐\"：事后才补的样例无法影响产出，降档。上传待处理数据 ≠ 质量样例。",
+   "criteria": "是否提供与目标相关、能指导产出的示例/模板/验收标准/反例，并说明要对齐的点",
+   "confuse": "①\"举个例子说明需求\"≠提供质量参照；②上传的素材是待处理数据而非样例；③提\"参考行业标准\"但未给具体标准，弱",
+   "fallback": "不设自评（该项在对话中可观测）",
+   "nohit": "条件型｜无命中 = N/A｜上传待处理数据 ≠ 质量样例",
+   "anchors": {
+    "a1": "无示例、无验收标准",
+    "a2": "给了参考，但是 AI 自己生成的（用户未提供）",
+    "a3": "给了参考但事后才补，或示例与目标弱相关，未说清对齐点",
+    "a4": "事前提供样例/模板，但未说明要对其中的哪些点",
+    "a5": "事前提供样例 / 模板 / 验收标准，并说清要对齐的点",
+    "hint": "上传待处理数据 ≠ 质量样例；裸\"例如\"不作触发词"
+   }
+  },
+  "B19": {
+   "dim": "05",
+   "cn": "数据隐私、安全与制度遵守",
+   "en": "Considers data privacy, security, and organizational policies before sharing information with AI",
+   "point": "在向AI提供信息前考虑数据隐私、信息安全和组织制度，并采取相应措施。",
+   "evidence": "输入内容（含附件）、脱敏处理、权限与政策说明",
+   "strength": "规则",
+   "obs": "risk",
+   "chain": "① 正则【规则·风险型】→ ② 无需模型 → ③ 不设自评（规则定性）",
+   "patterns": [
+    {
+     "label": "PII",
+     "re": "1[3-9]\\d{9}|\\b\\d{17}[\\dXx]\\b|[\\w.]+@[\\w.]+\\.[A-Za-z]{2,}|\\b\\d{16,19}\\b"
+    },
+    {
+     "label": "脱敏",
+     "re": "\\b(redact|anonymi[sz]e|mask|remove (the )?(name|phone|id))\\b|(脱敏|打码|隐去|匿名化|改成\\*|替换成\\*)"
+    }
+   ],
+   "pattern_notes": "PII：1[3-9]\\d{9}|\\b\\d{17}[\\dXx]\\b|[\\w.]+@[\\w.]+\\.[A-Za-z]{2,}|\\b\\d{16,19}\\b\r\n脱敏：\\b(redact|anonymi[sz]e|mask|remove (the )?(name|phone|id))\\b|(脱敏|打码|隐去|匿名化|改成\\*|替换成\\*)\r\n三道豁免（命中后先过，未过才判负向）：\r\n ① 是否落在 quoted 引用块/任务书原文内 → 豁免\r\n ② 16–19 位数字做 Luhn 校验，不通过视为订单号/编号 → 豁免\r\n ③ 邮箱排除 @提及、版本号、代码标识符（user@commit、name@v1.2）→ 豁免\r\n判定：豁免后仍命中 PII 且无脱敏 → 负向A；有脱敏 → 正向；皆无 → 未观测（≠ 合规）。",
+   "window": "全量扫用户消息与附件文本（图表/图片附件标\"不可观测\"）。\r\n为什么：这是唯一可以不经模型的指标——证据就是字符串本身。\r\n但\"粘贴公开数据不构成隐私问题\"是模型判断，原设计却不让模型参与，会误判\"引用一段带 HR 手机号的公开 JD\"。\r\n豁免规则是为了让\"负向可自动判定\"成立，而不是放弃它。",
+   "criteria": "是否在提供信息前识别敏感内容，并按任务/单位规定处理（脱敏、只给片段、改用内部工具），能说明哪些内容不能给",
+   "confuse": "①粘贴公开数据（官网文案、论文摘要）不构成隐私问题；②只删姓名却保留手机号，属部分合规；③讨论隐私政策但与本次输入无关，不计",
+   "fallback": "不设自评（规则判定：PII + 脱敏动作，见 H 列）。附件全为图片、无法文本扫描时标\"不可观测\"，不补问卷。",
+   "nohit": "风险型｜无 PII = 未观测（≠ 合规，不给分）｜命中 PII 且无脱敏 = 负向A（S=1）｜先过三道豁免",
+   "anchors": {
+    "a1": "命中 PII 且无脱敏（负向A）；或明知涉敏仍要求 AI 处理",
+    "a2": "脱敏不完整且未意识到（删了姓名留手机号）",
+    "a3": "部分脱敏，或讨论了隐私但与本次输入无关",
+    "a4": "识别敏感内容并完整脱敏，但未说明依据 / 未检查附件",
+    "a5": "识别 + 完整脱敏（手机/证件/邮箱/卡号全覆盖），或说明哪些不能给并改用替代方案",
+    "hint": "先过三道豁免（引用块 / Luhn / 邮箱@与版本号）；企业可开\"任何 PII 不可上传\"严格模式"
+   }
+  },
+  "B20": {
+   "dim": "05",
+   "cn": "伦理影响考虑",
+   "en": "Considers ethical implications throughout AI interactions",
+   "point": "在AI协作和成果提交过程中识别相关伦理问题、受影响对象及潜在后果。",
+   "evidence": "风险说明、决策记录、成果限制；对外发布版本",
+   "strength": "弱",
+   "obs": "conditional",
+   "chain": "① 正则【弱·条件型】→ ② 大模型判定 → ③ 条件表单（默认关闭）",
+   "patterns": [
+    {
+     "label": "EN",
+     "re": "\\b(ethic\\w*|plagiar\\w*|misleading|attribution|consent|copyright|harm|disclos\\w*)\\b"
+    },
+    {
+     "label": "CN",
+     "re": "(伦理|合规|署名|抄袭|洗稿|误导|侵权|同意|影响他人|风险|免责)"
+    }
+   ],
+   "pattern_notes": "EN：\\b(ethic\\w*|plagiar\\w*|misleading|attribution|consent|copyright|harm|disclos\\w*)\\b\r\nCN：(伦理|合规|署名|抄袭|洗稿|误导|侵权|同意|影响他人|风险|免责)",
+   "window": "全文扫，需与本次交付对象/用途关联。\r\n为什么：泛泛讨论伦理政策很常见，但与本次任务无关，算进去会把\"知道概念\"当成\"做过判断\"。\r\n空喊\"注意伦理\"而行动未变，记弱证据。",
+   "criteria": "是否识别受影响对象、潜在后果与责任冲突，并据此调整行动或成果表述（标注局限、加免责、放弃某做法）",
+   "confuse": "①空喊\"注意伦理\"不算；②讨论法律条款但与本次使用无关，弱；③模板自带的版权声明不计",
+   "fallback": "【默认关闭】同 S4；任务不涉及第三方影响时一律不发。",
+   "nohit": "条件型｜无命中 = N/A，启用表单 S4｜模板自带声明不计",
+   "anchors": {
+    "a1": "从未考虑过伦理影响",
+    "a2": "提到\"要注意合规\"，但与本次成果无关",
+    "a3": "空泛\"注意合规 / 伦理\"，无受影响对象，行动未变",
+    "a4": "识别了受影响对象，但未调整行动",
+    "a5": "识别受影响对象 + 潜在后果，并调整行动或成果表述（标注局限 / 放弃某做法）",
+    "hint": "模板自带声明不计"
+   }
+  },
+  "B23": {
+   "dim": "05",
+   "cn": "交付前验证与测试",
+   "en": "Verifies and tests AI outputs before sharing",
+   "point": "在提交或分享前，以适合成果类型的方法进行检查、运行、测试或复核。",
+   "evidence": "测试记录、运行结果、检查清单；命令执行日志",
+   "strength": "强",
+   "obs": "baseline",
+   "chain": "① 正则【强·基线型】→ ② 大模型定档 → ③ 不设自评",
+   "patterns": [
+    {
+     "label": "CN-核查动作",
+     "re": "(检查|核对|复核|通读|看了一遍|运行|跑一下|测试|打开看|预览|回读|验证).{0,12}(结果|输出|全文|数字|数据|代码|格式|链接)"
+    },
+    {
+     "label": "CN-报错处理",
+     "re": "(报错|异常|不通过|失败|跑不起来|打不开).{0,25}(改成|修|重装|换|调整)"
+    },
+    {
+     "label": "EN",
+     "re": "(check|verify|run|test|open|preview|review).{0,20}(it|output|result|code|file)"
+    }
+   ],
+   "pattern_notes": "CN-核查动作：(检查|核对|复核|通读|看了一遍|运行|跑一下|测试|打开看|预览|回读|验证).{0,12}(结果|输出|全文|数字|数据|代码|格式|链接)\r\nCN-报错处理：(报错|异常|不通过|失败|跑不起来|打不开).{0,25}(改成|修|重装|换|调整)\r\nEN：(check|verify|run|test|open|preview|review).{0,20}(it|output|result|code|file)",
+   "window": "成品产出之后到会话结束。\r\n为什么：验证是交付前的动作，放在全时段会把\"改内容\"误记成\"做验证\"。\r\n原靠\"测试运行日志\"升级为强，现改为交付物可见的微调/回读即强：针对局部细节的精确手术式修改（\"倒数第三段措辞不符…\"\"把第2列第3列调换\"）是纯文本环境下最强的走查证据。\r\n交付后只回\"谢谢\"或直接结束 = 未观测 → 基线型记 0。",
+   "criteria": "是否执行与风险相称的检查（运行、测试、抽检、复核关键数字、通读全文），并处理发现的问题",
+   "confuse": "①让 AI\"自己检查一遍\"不算本人验证；②只扫一眼就提交，弱；③改了内容但未验证，不计",
+   "fallback": "不设自评（该项在对话中可观测）",
+   "nohit": "基线型｜无命中 = 0（交付后零核查动作即 0–1 档）｜\"我检查过了\"无对象 ≤ 2 档",
+   "anchors": {
+    "a1": "AI 输出直接提交，无任何检查",
+    "a2": "口头说\"我看看\"，但交付前无任何具体动作",
+    "a3": "让 AI 自查，或口头说\"我检查过了\"，但无具体核查对象",
+    "a4": "本人执行了核查，但只覆盖部分交付内容",
+    "a5": "本人执行针对性核查（关键数字复核 / 通读全文 / 运行代码 / 打开预览）并处理发现的问题",
+    "hint": "交付后只回\"谢谢\"即结束 = 未观测 → 基线型记 0"
+   }
+  },
+  "B24": {
+   "dim": "05",
+   "cn": "最终质量个人责任",
+   "en": "Accepts personal accountability for the final quality of AI-assisted work",
+   "point": "明确由本人对AI辅助成果的最终质量负责，并完成必要的审核和修正。",
+   "evidence": "最终检查、签署或提交行为；返工记录",
+   "strength": "弱",
+   "obs": "conditional",
+   "chain": "① 正则【弱·条件型】→ ② 大模型判定 → ③ 条件表单（默认关闭）",
+   "patterns": [
+    {
+     "label": "EN",
+     "re": "\\b(i[’']m responsible|i[’']ll (review|check|sign off)|final call is mine|on me|accountab\\w*|i take ownership)\\b"
+    },
+    {
+     "label": "CN",
+     "re": "(我负责|我来把关|最终由我|我审过|出了问题我来|我确认过|签发|署名)"
+    }
+   ],
+   "pattern_notes": "EN：\\b(i[’']m responsible|i[’']ll (review|check|sign off)|final call is mine|on me|accountab\\w*|i take ownership)\\b\r\nCN：(我负责|我来把关|最终由我|我审过|出了问题我来|我确认过|签发|署名)",
+   "window": "只扫交付前窗口。\r\n为什么：责任表述常出现在提交那一刻，窗口前移会漏；但仅有表态不足以证明负责。\r\n表述需伴随实际审核/修正动作，只有\"我负责\"没有动作降为弱证据；把错误归因于\"AI 给的\"记负向。",
+   "criteria": "是否由本人完成最终审核与修正，并对质量负责（含对错误的解释与补救），而非把责任推给 AI",
+   "confuse": "①\"我承担\"却未做任何检查，弱；②把错误归因于\"AI 给的\"属负向证据；③完成验证动作属 B23（可同时命中）",
+   "fallback": "【默认关闭】全文无任何审核/责任表述时启用表单题 S3（复核与责任）。",
+   "nohit": "条件型｜无命中 = N/A，启用表单 S3｜\"AI 给的，不怪我\" → 负向B（N4）",
+   "anchors": {
+    "a1": "\"AI 给的，出问题不怪我\"（负向B）",
+    "a2": "表态负责，但说不出自己检查了什么",
+    "a3": "表态负责但未实际审核 / 修正",
+    "a4": "完成审核并修正，但无法解释质量问题成因",
+    "a5": "完成最终审核 + 修正，对质量问题能解释并补救",
+    "hint": "\"我承担\" + 无检查动作 = 弱证据，最高 2 档"
+   }
+  },
+  "B8": {
+   "dim": "06",
+   "cn": "目标受众定义",
+   "en": "Defines audience for the output",
+   "point": "明确成果面向谁、受众的知识背景、决策需求和使用场景。",
+   "evidence": "提示词、交付说明、最终成果的读者设定",
+   "strength": "中",
+   "obs": "conditional",
+   "chain": "① 正则【中·条件型】→ ② 大模型判定 → ③ 不设自评",
+   "patterns": [
+    {
+     "label": "EN",
+     "re": "\\b(this is for|the audience is|written for|targeted at|the reader will be|non-technical|for my (manager|boss|team)|for (developers|executives|students)|stakeholders)\\b"
+    },
+    {
+     "label": "CN",
+     "re": "(受众|读者是谁|给.{0,6}看|面向.{0,8}(读者|用户|领导|客户|学生)|汇报对象|非专业|外行)"
+    }
+   ],
+   "pattern_notes": "EN：\\b(this is for|the audience is|written for|targeted at|the reader will be|non-technical|for my (manager|boss|team)|for (developers|executives|students)|stakeholders)\\b\r\nCN：(受众|读者是谁|给.{0,6}看|面向.{0,8}(读者|用户|领导|客户|学生)|汇报对象|非专业|外行)",
+   "window": "全文扫。\r\n为什么：\"读者/客户/领导\"这类泛词在评论成品时也会出现，已从规则中剔除，只保留\"给谁看/受众是谁/面向某类人\"的定向表述。\r\n仅出现\"发给老板\"这类交付渠道不算。",
+   "criteria": "是否明确受众及其知识背景、决策需求、使用场景，并据此调整表达深度与重点",
+   "confuse": "①\"发邮件给老板\"是交付渠道，非受众分析；②提\"面向大众\"但无背景说明，弱；③语气/风格本身属 B12",
+   "fallback": "不设自评（该项在对话中可观测）",
+   "nohit": "条件型｜无命中 = N/A｜\"发给老板\"是交付渠道，不是受众分析",
+   "anchors": {
+    "a1": "未提受众",
+    "a2": "提了受众类别但明显与成果不匹配",
+    "a3": "提了受众类别（\"给领导看\"）但无背景 / 需求 / 场景说明",
+    "a4": "受众 + 背景 / 需求，但未据此调整表达",
+    "a5": "受众 + 知识背景 + 决策需求 / 使用场景齐备，并据此调整表达深度",
+    "hint": "\"发给老板\"是交付渠道，不是受众分析"
+   }
+  },
+  "B12": {
+   "dim": "06",
+   "cn": "语气与风格要求",
+   "en": "Communicates tone and style preferences",
+   "point": "向AI说明适合目标受众和场景的语气、风格与表达规范。",
+   "evidence": "提示词、最终成果的语言特征",
+   "strength": "中",
+   "obs": "conditional",
+   "chain": "① 正则【中·条件型】→ ② 大模型判定 → ③ 不设自评",
+   "patterns": [
+    {
+     "label": "EN",
+     "re": "\\b(keep it|make it|use a?\\s)?(concise|formal|casual|direct|friendly|professional|simple)\\b|avoid jargon|in the style of|tone should be"
+    },
+    {
+     "label": "CN-共现（要求句式 + 风格词，缺一不可）",
+     "re": "(保持|要用|请用|尽量|语气要|风格要|写得|改成|别太).{0,8}(简洁|正式|口语|通俗|专业|友好|直接|术语)"
+    }
+   ],
+   "pattern_notes": "EN：\\b(keep it|make it|use a?\\s)?(concise|formal|casual|direct|friendly|professional|simple)\\b|avoid jargon|in the style of|tone should be\r\nCN-共现（要求句式 + 风格词，缺一不可）：(保持|要用|请用|尽量|语气要|风格要|写得|改成|别太).{0,8}(简洁|正式|口语|通俗|专业|友好|直接|术语)\r\n排除：单独的\"简洁|正式|语气\"不作触发词。",
+   "window": "成品产出之前的消息。\r\n为什么：同一句\"太正式了\"，在事前是要求、在事后是评价；不设时间窗，B12 会稳定抢 B17 的分。\r\n已由【强】降为【中】：裸风格词全文扫的误报率达不到强规则标准，必须走模型。",
+   "criteria": "是否提出适合受众与场景的语气、风格、表达规范，并能在成品中检验其落实",
+   "confuse": "①\"写长一点/短一点\"属篇幅（弱）；②要求\"术语准确\"属内容准确性（→B13）；③成品出来后才抱怨风格（→B17）",
+   "fallback": "不设自评（该项在对话中可观测）",
+   "nohit": "条件型｜无命中 = N/A｜成品后的风格评价 → B17",
+   "anchors": {
+    "a1": "无风格要求",
+    "a2": "有风格要求但前后矛盾，或与用途冲突",
+    "a3": "风格要求笼统（\"正式一点\"）或无法检验",
+    "a4": "风格要求具体，但成品中只部分落实",
+    "a5": "风格要求具体可检验（\"避免术语，用短句，口语化\"）且在成品中可验证落实",
+    "hint": "成品后的风格评价归 B17；裸\"简洁/正式\"须为要求句式"
+   }
+  },
+  "B17": {
+   "dim": "06",
+   "cn": "表达效果评估与调整",
+   "en": "Evaluates and adjusts AI communication style",
+   "point": "根据受众理解和交付目的评估AI表达，调整结构、措辞、重点和解释深度。",
+   "evidence": "多版本成果、反馈与修改记录",
+   "strength": "中",
+   "obs": "conditional",
+   "chain": "① 正则【中·条件型】→ ② 大模型判定 → ③ 不设自评",
+   "patterns": [
+    {
+     "label": "EN",
+     "re": "\\b(too (verbose|long|wordy|formal|casual|technical)|shorten|condense|reword|simplify (the )?(wording|language)|hard to follow|readers? (won[’']t|may not) understand)\\b"
+    },
+    {
+     "label": "CN",
+     "re": "(太啰嗦|太长|太正式|太口语|看不懂|精简|缩短|换个说法|读者理解不了|重点不突出)"
+    }
+   ],
+   "pattern_notes": "EN：\\b(too (verbose|long|wordy|formal|casual|technical)|shorten|condense|reword|simplify (the )?(wording|language)|hard to follow|readers? (won[’']t|may not) understand)\\b\r\nCN：(太啰嗦|太长|太正式|太口语|看不懂|精简|缩短|换个说法|读者理解不了|重点不突出)",
+   "window": "只看成品产出之后的消息。\r\n为什么：之前的风格要求属 B12，放在同一池子里会把\"事前要求\"重复算成\"事后评估\"。\r\n需指向表达效果而非内容对错；因事实错误而改记 B16。",
+   "criteria": "是否发现表达不适配受众/用途，并作针对性调整（结构、措辞、重点、解释深度），且调整后效果改善",
+   "confuse": "①因事实错误而改（→B16）；②一开始就设定风格（→B12）；③只说\"不好\"无理由，弱",
+   "fallback": "不设自评（该项在对话中可观测）",
+   "nohit": "条件型｜无命中 = N/A｜因事实错误而改 → B16",
+   "anchors": {
+    "a1": "成品直接交付，不再调整表达",
+    "a2": "事后调整但只改错别字 / 标点",
+    "a3": "事后调整过表达，但无受众 / 用途依据（纯口味偏好）",
+    "a4": "基于受众或用途调整，但调整后仍被要求返工",
+    "a5": "基于受众理解或用途调整结构 / 措辞 / 重点 / 解释深度，且调整后未再被要求返工",
+    "hint": "因事实错误而改 → B16；一开始就设定风格 → B12"
+   }
+  },
+  "B21": {
+   "dim": "06",
+   "cn": "AI参与披露",
+   "en": "Discloses AI involvement to stakeholders",
+   "point": "按照任务和组织要求，向相关方说明AI是否参与及参与的主要环节。",
+   "evidence": "交付说明、声明、交付文件正文与元数据",
+   "strength": "中",
+   "obs": "external",
+   "chain": "① 正则【中·场景外型】→ ② 大模型判定 → ③ 表单 S1（必答）",
+   "patterns": [
+    {
+     "label": "EN",
+     "re": "\\b(co-?authored-by|generated (with|by|using) (ai|chatgpt|claude|gpt)|ai[- ](assisted|generated|powered)|with the help of (ai|chatgpt|claude)|drafted using)\\b"
+    },
+    {
+     "label": "CN",
+     "re": "(AI ?辅助|AI ?生成|借助(AI|ChatGPT|Claude|大模型)|由.{0,8}生成|使用AI完成|人机协作完成)"
+    }
+   ],
+   "pattern_notes": "扫描对象＝交付文件正文/页脚/元数据、提交说明、邮件或 IM 正文（非与 AI 的对话）：\r\nEN：\\b(co-?authored-by|generated (with|by|using) (ai|chatgpt|claude|gpt)|ai[- ](assisted|generated|powered)|with the help of (ai|chatgpt|claude)|drafted using)\\b\r\nCN：(AI ?辅助|AI ?生成|借助(AI|ChatGPT|Claude|大模型)|由.{0,8}生成|使用AI完成|人机协作完成)",
+   "window": "只扫交付侧文本（文件正文/页脚/元数据/提交说明/邮件/IM），不扫与 AI 的对话。\r\n为什么：披露的对象是相关方，跟模型说\"我用了 AI\"不构成披露；扫错对象会永远零命中。",
+   "criteria": "是否向合适对象清楚说明 AI 是否参与及参与的主要环节，符合任务/单位要求（说明对象与方式均需合适）",
+   "confuse": "①私下讨论但未实际披露，不计；②交付模板自带的免责声明非本人行为；③过度声明（连未用 AI 处也说 AI 生成）反而失准（→B22）",
+   "fallback": "【表单必答 S1】披露对象与环节颗粒度。聊天记录内对 AI 说\"我用了你\"不计。无表单 → N/A。",
+   "nohit": "场景外型｜聊天记录内不可观测；无表单 = N/A｜有表单走 S1",
+   "anchors": {
+    "a1": "从未想过要向对方披露 AI 参与",
+    "a2": "在对话里对 AI 说\"我用了你\"，误认为已披露",
+    "a3": "披露了但笼统（\"用了 AI\"），未说明环节",
+    "a4": "有环节级披露，但对象 / 场合不当",
+    "a5": "按交付要求向合适对象、环节级说明 AI 参与了哪些部分",
+    "hint": "聊天记录内不计；以提交表单或交付物声明为准"
+   }
+  },
+  "B22": {
+   "dim": "06",
+   "cn": "AI贡献准确表述",
+   "en": "Represents AI contribution accurately",
+   "point": "准确区分本人完成、人机协同和AI生成的部分，不夸大或隐瞒AI贡献。",
+   "evidence": "交付说明、过程记录；实际使用记录与声明的比对",
+   "strength": "中",
+   "obs": "external",
+   "chain": "① 正则【中·场景外型】→ ② 大模型判定 → ③ 表单 S1（必答）",
+   "patterns": [
+    {
+     "label": "EN",
+     "re": "\\b(entirely (by|written by) (me|myself)|without (any )?ai|no ai (was |was used)|all done by myself)\\b"
+    },
+    {
+     "label": "CN",
+     "re": "(完全独立完成|未使用AI|全部由我完成|没有任何AI)"
+    }
+   ],
+   "pattern_notes": "同 B21 的披露句式，另加夸大/否认措辞：\r\nEN：\\b(entirely (by|written by) (me|myself)|without (any )?ai|no ai (was |was used)|all done by myself)\\b\r\nCN：(完全独立完成|未使用AI|全部由我完成|没有任何AI)",
+   "window": "需与同一任务的实际使用记录对齐后再判。\r\n为什么：准确性只能靠\"声明 vs 实际\"的比对得出，单看声明无法判断。\r\n无对照数据时只作弱证据。与 B21 的分工：B21 看\"有没有说\"，B22 看\"说得准不准\"。",
+   "criteria": "对 AI 贡献的描述是否与实际过程一致（哪些由人完成、哪些协同、哪些 AI 生成），无夸大或隐瞒",
+   "confuse": "①披露了但把 AI 产出说成人工，属负向证据；②只说\"用了 AI\"过于笼统，弱；③完全未披露属 B21 缺失，不等于表述不实",
+   "fallback": "【表单必答 S1】声明与聊天记录逐环节比对。无表单 → N/A；严重不符 → 类B 负向，可升类C。",
+   "nohit": "场景外型｜同上；声明与记录不符 → 负向B（诚信），严重可升类C",
+   "anchors": {
+    "a1": "披露与实际严重不符（把 AI 产出说成全部人工，或反之）→ 负向B",
+    "a2": "声明与记录存在明显夸大，但非全盘虚构",
+    "a3": "声明大致属实但颗粒度粗，无法对应实际过程",
+    "a4": "声明与记录基本一致，个别环节含糊",
+    "a5": "声明与聊天记录实际使用逐环节一致（哪些人工 / 哪些协同 / 哪些 AI 生成）",
+    "hint": "夸大或隐瞒 = 1 分 + 负向B 标记；严重失信可升负向C"
+   }
+  },
+  "B10": {
+   "dim": "07",
+   "cn": "主动迭代优化",
+   "en": "Iterates and refines",
+   "point": "基于AI输出和任务要求持续修正提示、方法或成果，而非直接接受首次结果。",
+   "evidence": "对话轮次、版本差异、修改理由",
+   "strength": "中",
+   "obs": "baseline",
+   "chain": "① 正则【中·基线型】→ ② 大模型判定 → ③ 不设自评",
+   "patterns": [
+    {
+     "label": "EN",
+     "re": "\\b(can you revise|change it to|make it more|that[’']s close but|now adjust|keep the same but|try again|actually,? let[’']s|instead of that|one more change|not quite|tweak|rework)\\b"
+    },
+    {
+     "label": "CN",
+     "re": "(改一下|改成|再改一版|再改|调整一下|保持原样但|重做|换个说法|还不太对|再试一次|微调|这版不行)"
+    }
+   ],
+   "pattern_notes": "EN：\\b(can you revise|change it to|make it more|that[’']s close but|now adjust|keep the same but|try again|actually,? let[’']s|instead of that|one more change|not quite|tweak|rework)\\b\r\nCN：(改一下|改成|再改一版|再改|调整一下|保持原样但|重做|换个说法|还不太对|再试一次|微调|这版不行)",
+   "window": "从第 3 条用户消息起，且必须能对齐到上一次输出。\r\n为什么：第 1 条提需求、第 2 条多为补充，尚不构成迭代；对齐失败说明是新需求而不是\"改\"，直接丢弃、不猜。",
+   "criteria": "是否基于已有结果提出有效修改（指出问题+给出方向），推动成果实质改善，而非盲目重生成",
+   "confuse": "①提出全新需求≠迭代；②只\"再生成一次\"而无修改方向，弱；③因模型报错/超时重发，不计",
+   "fallback": "不设自评（该项在对话中可观测）",
+   "nohit": "基线型｜无命中 = 0（首轮即接受即 0–1 档）｜负向B：连续 ≥3 轮仅\"继续/换一版\" → 上限 2（N6）",
+   "anchors": {
+    "a1": "首轮结果直接接受，无修改",
+    "a2": "只做了无指向重生成（\"再来一版\"）",
+    "a3": "提出修改但方向笼统（\"再改改\"），或仅无指向地重生成",
+    "a4": "指出具体问题并推动修改，但只推进 1 轮或改动非实质",
+    "a5": "指出具体问题 + 修改方向，多轮推动成果实质改善",
+    "hint": "必须对齐上一次输出；连续 ≥3 轮仅\"继续\" = 负向B，上限 2"
+   }
+  },
+  "B15": {
+   "dim": "07",
+   "cn": "质疑不成立的推理",
+   "en": "Questions when AI reasoning doesn't hold up",
+   "point": "当AI的逻辑、假设或结论缺乏支持时提出质疑，并要求解释、重算或改用其他方法。",
+   "evidence": "追问、反证、重算、方案调整",
+   "strength": "中",
+   "obs": "conditional",
+   "chain": "① 正则【中·条件型】→ ② 大模型判定 → ③ 不设自评",
+   "patterns": [
+    {
+     "label": "EN",
+     "re": "\\b(why do you think|that doesn[’']t follow|i disagree because|explain your reasoning|that logic doesn[’']t|i don[’']t think that[’']s right|what makes you say|how did you arrive at|that contradicts)\\b"
+    },
+    {
+     "label": "CN",
+     "re": "(你为什么认为|这推不出来|不同意因为|解释你的推理|逻辑不成立|依据什么|怎么得出|与.{0,8}矛盾)"
+    }
+   ],
+   "pattern_notes": "EN：\\b(why do you think|that doesn[’']t follow|i disagree because|explain your reasoning|that logic doesn[’']t|i don[’']t think that[’']s right|what makes you say|how did you arrive at|that contradicts)\\b\r\nCN：(你为什么认为|这推不出来|不同意因为|解释你的推理|逻辑不成立|依据什么|怎么得出|与.{0,8}矛盾)",
+   "window": "全文扫。\r\n为什么：质疑可能发生在任何轮次，且常见于长会话后段。\r\n需指向 AI 的推理链/假设/结论；情绪化否定（\"我觉得不对\"）无理由不升级。与 B16 互斥：问\"怎么推出来的\"记 B15，指出\"这个数字错了\"记 B16。",
+   "criteria": "是否准确指出推理中的漏洞（隐含假设、以偏概全、因果错置），给出有效理由，并推动解释、重算或换方法",
+   "confuse": "①只是提问求解≠质疑；②情绪化否定\"我觉得不对\"而无理由，弱；③指出事实/数值错误属 B16",
+   "fallback": "不设自评（该项在对话中可观测）",
+   "nohit": "条件型｜无命中 = N/A｜与 B16 互斥：问\"怎么推出来的\"归此，说\"这个数错了\"归 B16",
+   "anchors": {
+    "a1": "从不质疑 AI 推理",
+    "a2": "表达了不满但未指出具体位置（\"感觉不太对\"）",
+    "a3": "泛泛质疑（\"我觉得不对\"）无理由，未推动改变",
+    "a4": "指出具体漏洞但未推动重算，或理由不完整",
+    "a5": "指出具体推理漏洞（隐含假设 / 以偏概全 / 因果错置）+ 理由，推动重算或换方法",
+    "hint": "问\"怎么推出来的\" → B15；说\"这个数字错了\" → B16"
+   }
+  }
+ }
+}

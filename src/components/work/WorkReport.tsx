@@ -4,17 +4,18 @@
 import React from 'react';
 import { Segment } from '@/components/work/AuditPanel';
 import { aiItemL, dimL, useL, useLang } from '@/lib/work/i18n';
-import { noAiLabel } from '@/lib/work/scale';
+import { aiOnly, noAiLabel } from '@/lib/work/scale';
 import { useWorkScale } from '@/lib/work/scale-client';
+import { FluencyReport } from '@/components/work/FluencyReport';
 
 const fmt = (t: number) => `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
 const LV: Record<string, string> = { L1: '#c9ccd6', L2: '#ffd166', L3: '#3ddc97', L4: '#12a150' };
 const col = (v: number) => (v >= 80 ? '#12a150' : v >= 60 ? '#b7791f' : '#c0392b');
 
 /** section（11-05 报告分「交了什么 / 怎么做的 / 评得怎样」三栏）：grade 只出评分那几张、process 只出过程那几张；不传 = 整篇（老用法） */
-export function WorkReport({ report, participant, section = 'all' }: { report: any; participant?: { name?: string }; section?: 'all' | 'grade' | 'process' }) {
+export function WorkReport({ report, participant, section = 'all', sid }: { report: any; participant?: { name?: string }; section?: 'all' | 'grade' | 'process'; sid?: string }) {
   const G = section !== 'process', Pr = section !== 'grade'; const L = useL(); const lang = useLang();
-  const scale = useWorkScale(), ai = scale === 'ai_use';   // 平台选了「AI 使用与交互」：回答质量和过程评价不显示
+  const scale = useWorkScale(), ai = aiOnly(scale);   // 平台选了「AI 使用与交互」或「AI 驾驭量表」：回答质量和过程评价不显示
   if (!report || (!scale && !report.auditing)) return null;
   if (report.auditing) return <div style={{ padding: '14px 18px', background: '#f3f2ff', borderRadius: 14, color: '#4c43c9', fontSize: 14 }}>{L(`AI 审计中：过程 ${report.total ?? ''} 段，已看 ${report.stage ?? ''} 段${report.audit?.length ? `，到 ${fmt(report.audit[report.audit.length - 1].to)} 为止的过程信号 ${report.audit[report.audit.length - 1].tentative}（暂定）` : ''}。候选人那边做完最后一步就出正式报告。`, `AI review in progress: ${report.stage} of ${report.total} process segments reviewed${report.audit?.length ? `; process signal up to ${fmt(report.audit[report.audit.length - 1].to)} is ${report.audit[report.audit.length - 1].tentative} (provisional)` : ''}. The final report is ready once the candidate's side finishes the last step.`)}</div>;
   const r = report.result, p = report.process, c = report.compare, u = report.ai_use;
@@ -41,7 +42,9 @@ export function WorkReport({ report, participant, section = 'all' }: { report: a
         </Card>}
       </div>
       {G && !ai && r.items?.length >= 2 && <Overview items={r.items} cmp={c} />}
-      {G && u?.score != null && <AiUse u={u} />}
+      {/* 平台选了潜历的 AI 驾驭量表（11-16）：这一块换成量表报告；改选之前交的卷还没有这一项，任务页可以补算 */}
+      {G && scale === 'fluency' && (report.fluency ? <FluencyReport f={report.fluency} sid={sid} /> : <Card title={L('AI 驾驭能力 · 7 维度', 'AI fluency · 7 dimensions')}><div style={{ color: '#888', fontSize: 13 }}>{L('这份是平台改用 AI 驾驭量表之前交的，还没按这套量表评；出题方在任务页点「按 AI 驾驭量表补算」即可。', 'Submitted before this scale was switched on; the task owner can backfill it from the task page.')}</div></Card>)}
+      {G && scale !== 'fluency' && u?.score != null && <AiUse u={u} />}
       {section === 'all' && report.next_step && <Card title={L('如果再给一天，先改哪里（候选人交卷时写的）', 'With one more day, what to improve first (written by the candidate at submission)')}><div style={{ fontSize: 13.5, lineHeight: 1.75, whiteSpace: 'pre-wrap' }}>{report.next_step}</div></Card>}
       {/* 屏幕记录（11-10 潜历：原始录屏不给招聘方看）：只给 AI 看图写的概述，逐时间点的记录在答题历程里；原图不展示 */}
       {Pr && report.recording && <Card title={L('屏幕记录 · 用自己的软件做的', 'Screen record · work done in own software')}>

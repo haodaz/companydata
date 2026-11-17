@@ -5,7 +5,7 @@ import React, { useMemo, useEffect, useState } from 'react';
 import { timing } from '@/lib/work/deadline';
 import { Button, Descriptions, Drawer, Input, InputNumber, Space, Table, Tabs, Tag, Tooltip, Typography, App } from 'antd';
 import { WorkReport } from '@/components/work/WorkReport';
-import { mainScore } from '@/lib/work/scale';
+import { aiOnly, mainScore } from '@/lib/work/scale';
 import { useWorkScale } from '@/lib/work/scale-client';
 import { ReportView } from '@/components/work/ReportView';
 import { Md } from '@/components/ws/Md';
@@ -40,25 +40,27 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
   // 一道任务发给一批人（2026-10-28）：交了卷的按分排名；勾 2–4 人并排对比；导出候选名单
   const [picked, setPicked] = useState<string[]>([]);
   const [cmpOpen, setCmpOpen] = useState(false);
-  const scale = useWorkScale(), ai = scale === 'ai_use';   // 平台选了「AI 使用与交互」：按 AI 使用分排，没有这项分的排在后面、不算名次
+  const scale = useWorkScale(), ai = aiOnly(scale);   // 平台选了「AI 使用与交互」：按 AI 使用分排，没有这项分的排在后面、不算名次
   const graded = sessions.filter((s: any) => s.score != null && !s.participant?.preview).sort((a: any, b: any) => (mainScore(b, scale) ?? -1) - (mainScore(a, scale) ?? -1));
   const rankOf = new Map(graded.filter((s: any) => mainScore(s, scale) != null).map((s: any, i: number) => [s.id, i + 1]));
   const ordered = [...graded, ...sessions.filter((s: any) => !graded.includes(s))];
   // 补算 AI 使用能力（2026-10-30）：老答卷没有这一项，一次 4 份循环补到底，补完刷新
   const [aiBusy, setAiBusy] = useState('');
-  const needAi = graded.filter((s: any) => s.report?.result && !('ai_use' in (s.report || {}))).length;
+  // 平台选了 AI 驾驭量表（11-16）：补的是这一项
+  const fl = scale === 'fluency';
+  const needAi = graded.filter((s: any) => s.report?.result && (fl ? !s.report?.fluency : !('ai_use' in (s.report || {})))).length;
   const backfillAi = async () => {
     const token = (shareLink.match(/\/work\/([^/?#]+)/) || [])[1];
     if (!token || !ownerKey) return;
     try {
       for (let n = 0, left = needAi; left > 0 && n < 30; n++) {
         setAiBusy(`补算中，还剩 ${left} 份`);
-        const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(ownerKey)}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ai_use: true }) })).json();
+        const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(ownerKey)}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(fl ? { fluency: true } : { ai_use: true }) })).json();
         if (!j.ok) throw new Error(j.error || '补算失败');
         if (!j.done && j.remaining) throw new Error('有几份没算出来，稍后再试');
         left = j.remaining;
       }
-      message.success('AI 使用分补好了'); window.location.reload();
+      message.success(fl ? 'AI 驾驭量表补好了' : 'AI 使用分补好了'); window.location.reload();
     } catch (e: any) { message.error(e.message); setAiBusy(''); }
   };
   const aiOf = (s: any) => s.report?.ai_use;
@@ -195,7 +197,7 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
             <Text type="secondary" style={{ fontSize: 13 }}>交卷 {graded.length} 人，按分数排名；勾 2–4 人可以并排对比</Text>
             <span style={{ flex: 1 }} />
             <Button size="small" type="primary" disabled={picked.length < 2} onClick={() => setCmpOpen(true)}>对比所选（{picked.length}）</Button>
-            {!!needAi && ownerKey && <Button size="small" loading={!!aiBusy} onClick={backfillAi}>{aiBusy || `补算 AI 使用分（${needAi} 份）`}</Button>}
+            {!!needAi && ownerKey && <Button size="small" loading={!!aiBusy} onClick={backfillAi}>{aiBusy || (fl ? `按 AI 驾驭量表补算（${needAi} 份）` : `补算 AI 使用分（${needAi} 份）`)}</Button>}
             <Button size="small" disabled={!graded.length} onClick={exportCsv}>导出候选名单</Button>
           </div>
           <Table size="small" rowKey="id" pagination={false} dataSource={ordered}
@@ -217,13 +219,13 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
         {report && (() => {
           const me = mainScore(report, scale); const k = graded.findIndex((s: any) => s.id === report.id);
           if (me == null || k < 0) return null;
-          const top = mainScore(graded[0], scale); const base = scale === 'ai_use' ? null : T.baseline?.result?.total;
+          const top = mainScore(graded[0], scale); const base = aiOnly(scale) ? null : T.baseline?.result?.total;
           return <div style={{ marginBottom: 12, padding: '8px 12px', borderRadius: 8, background: '#fafaff', border: '1px solid #eeeefa', fontSize: 13, color: '#555' }}>
             这道题 {graded.length} 人交卷，{report.participant?.name || '他'}排第 {k + 1}（{me} 分）{k > 0 && top != null ? ` · 最高 ${top} 分，差 ${Math.round(Number(top) - Number(me))}` : graded.length > 1 ? ' · 目前最高' : ''}{base != null ? ` · AI 基线 ${base} 分` : ''}{graded.length > 1 && <> · <a onClick={() => { setReport(null); }}>回列表勾选并排对比</a></>}
           </div>;
         })()}
         {/* 三栏：交了什么 / 怎么做的 / 评得怎样；出任务的人先看交了什么（产品负责人 10-24：先看提交的答案本身，AI 只是辅助评价） */}
-        {report && <ReportView report={report.report} participant={report.participant} deliverable={report.deliverable} events={proc && proc.id === report.id ? proc.events : null} aiChat={proc && proc.id === report.id ? proc.ai_chat : []} materials={T.materials} deliverables={T.task?.deliverables} defaultTab="deliv" />}
+        {report && <ReportView sid={report.id} report={report.report} participant={report.participant} deliverable={report.deliverable} events={proc && proc.id === report.id ? proc.events : null} aiChat={proc && proc.id === report.id ? proc.ai_chat : []} materials={T.materials} deliverables={T.task?.deliverables} defaultTab="deliv" />}
       </Drawer>
     </>
   );
@@ -277,7 +279,7 @@ function AiPolicyView({ task: T, shareLink, ownerKey }: { task: any; shareLink: 
 
 /** 并排对比：逐条得分（每行最高分加粗）+ AI 基线 + 各人做得好的 / 差的 */
 function Compare({ rubric, people, baseline: base0, rankOf }: { rubric: any[]; people: any[]; baseline: any; rankOf: Map<string, number> }) {
-  const ai = useWorkScale() === 'ai_use', baseline = ai ? null : base0;
+  const ai = aiOnly(useWorkScale()), baseline = ai ? null : base0;
   const sc = (p: any, id: string) => p.report?.result?.items?.find((x: any) => x.id === id)?.score;
   const base = (id: string) => baseline?.result?.items?.find((x: any) => x.id === id)?.score;
   const cell: React.CSSProperties = { padding: '8px 10px', borderTop: '1px solid #f0f0f5', textAlign: 'center', fontVariantNumeric: 'tabular-nums' };
