@@ -112,7 +112,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     const { data: ss } = await db.from('work_sessions').select('id, report, events, ai_chat, deliverable').eq('task_id', t.id).not('report', 'is', null);
     const todo = (ss || []).filter((x: any) => x.report?.result && !x.report?.auditing && (body.force || !('ai_use' in x.report)));
     const batch = todo.slice(0, 4);
-    const task = { env: t.task?.env || { type: 'doc' }, problem: t.problem, task: t.task, materials: t.materials, rubric: t.rubric };
+    const task = { id: t.id, env: t.task?.env || { type: 'doc' }, problem: t.problem, task: t.task, materials: t.materials, rubric: t.rubric };
     const policy = await ensureAiPolicy(t);
     let done = 0;
     for (let i = 0; i < batch.length; i += 2) await Promise.all(batch.slice(i, i + 2).map(async (x: any) => {
@@ -128,7 +128,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     const { data: ss } = await db.from('work_sessions').select('id, report, events, ai_chat, deliverable').eq('task_id', t.id).not('report', 'is', null);
     const todo = (ss || []).filter((x: any) => x.report?.result && !x.report?.auditing && (body.force || !x.report?.fluency));
     const batch = todo.slice(0, 4);
-    const task = { env: t.task?.env || { type: 'doc' }, problem: t.problem, task: t.task, materials: t.materials, rubric: t.rubric };
+    const task = { id: t.id, env: t.task?.env || { type: 'doc' }, problem: t.problem, task: t.task, materials: t.materials, rubric: t.rubric };
     let done = 0;
     for (let i = 0; i < batch.length; i += 2) await Promise.all(batch.slice(i, i + 2).map(async (x: any) => {
       try {

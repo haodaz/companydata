@@ -38,7 +38,7 @@ export async function POST(_req: NextRequest, { params }: { params: Promise<{ to
   // 有人正在推进这一段（3 分钟内）：不重复跑，回当前进度
   if (r.running_since && Date.now() - new Date(r.running_since).getTime() < 180_000) return NextResponse.json({ ok: true, done: false, ...view(r) });
   await db.from('work_sessions').update({ report: { ...r, running_since: new Date().toISOString() } }).eq('id', sid);
-  const task = { env: t.task?.env || { type: 'doc' }, problem: t.problem, task: t.task, materials: t.materials, rubric: t.rubric };
+  const task = { id: t.id, env: t.task?.env || { type: 'doc' }, problem: t.problem, task: t.task, materials: t.materials, rubric: t.rubric };
   const events = s.events || [], chat = s.ai_chat || [], deliverable = s.deliverable || '';
   try {
     if (r.stage < r.total) {

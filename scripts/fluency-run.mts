@@ -59,8 +59,12 @@ async function one(r: any) {
     ai_disclosure: [...ev].reverse().find(e => e.type === 'ai_disclosure')?.text || null,
     existing: { result_score: r.score, ai_use_score: r.report?.ai_use?.score ?? null },
   }) + '\n');
-  const rep = await assessFluency({ ...input, profile: profiles.get(r.task_id) || null });
-  profiles.set(r.task_id, rep.profile);
+  // 任务画像：题上存过就用存的（和线上 fluencyOf 一致），没存过判一次；--write 时存回题上
+  const rep = await assessFluency({ ...input, profile: profiles.get(r.task_id) || t.task.fluency_profile || null });
+  if (!profiles.has(r.task_id)) {
+    profiles.set(r.task_id, rep.profile);
+    if (write && !t.task.fluency_profile) { const { type, x, why } = rep.profile; const { data: cur } = await db.from('work_tasks').select('task').eq('id', r.task_id).single(); if (cur?.task && !cur.task.fluency_profile) await db.from('work_tasks').update({ task: { ...cur.task, fluency_profile: { type, x, why } } }).eq('id', r.task_id); }
+  }
   if (write) { const { data: cur } = await db.from('work_sessions').select('report').eq('id', r.id).single(); if (cur?.report && !cur.report.auditing) await db.from('work_sessions').update({ report: { ...cur.report, fluency: rep } }).eq('id', r.id); }
   appendFileSync(`${out}/fluency.jsonl`, JSON.stringify({ session_id: r.id, task_title: t.task.title, ...rep }) + '\n');
   csv.push([r.id, r.task_id, t.company_name, t.task.title, mode, r.submitted_at, input.chat.length, rep.status, rep.overall ?? (rep.status === 'no_total' ? `(画像)` : ''), rep.tier, rep.confidence.level, rep.confidence.c_obs, rep.confidence.c_elig, `${rep.profile.type} ${rep.profile.type_name}`,

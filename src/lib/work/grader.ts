@@ -338,8 +338,16 @@ export async function buildReport(task: WorkTask, baseline: { result?: ResultRep
 /** 潜历「AI 驾驭能力」量表（lib/work/fluency）：只看和站内 AI 助手的对话 + 交付物 + AI 参与说明 */
 export async function fluencyOf(task: WorkTask, events: WorkEvent[], aiChat: { t: number; q: string; a: string }[], deliverable: string, institution?: string) {
   const mode = events.some(e => /^plugin_/.test(e.type)) ? 'plugin' : events.some(e => e.type === 'rec_start') ? 'open' : 'bench';
-  return assessFluency({
+  // 任务类型 / 结构标签同一道题只判一次、存在题上（11-17：每次让模型判会跳，C_elig 跟着变，出不出总分也跟着变）
+  const saved = (task.task as any).fluency_profile || null, id = (task as any).id as string | undefined;
+  const rep = await assessFluency({
     task: { title: task.task.title, brief: task.task.brief, rules: task.task.rules || [], materials: task.materials.map(m => ({ id: m.id, title: m.title, content: m.content })), lang: task.task.lang },
-    chat: aiChat, events, deliverable, mode, institution,
+    chat: aiChat, events, deliverable, mode, institution, profile: saved,
   });
+  if (!saved && id && rep.profile) {
+    const { type, x, why } = rep.profile;
+    const { data: cur } = await db.from('work_tasks').select('task').eq('id', id).maybeSingle();
+    if (cur?.task && !cur.task.fluency_profile) await db.from('work_tasks').update({ task: { ...cur.task, fluency_profile: { type, x, why } } }).eq('id', id);
+  }
+  return rep;
 }
