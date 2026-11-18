@@ -71,6 +71,15 @@ export function withRole(t: { role?: string; task?: any; problem?: any }, v: any
   return { old: t.role || '', role, task: { ...swap(t.task), role }, problem: swap(t.problem) };
 }
 
+/** 改企业名（11-18：企业库名称写错、数据部更正后，已出的题要跟着改）：页头 company_name、出题依据里的企业画像快照、题面 / 问题 / 材料 / 评分标准里的旧名一起换 */
+export function withCompany(t: { company_name?: string; task?: any; problem?: any; materials?: any; rubric?: any; context?: any }, v: any) {
+  const name = String(v || '').trim().slice(0, 120); if (!name) throw new Error('企业名不能为空');
+  const olds = [...new Set([t.company_name, t.context?.company?.name].map(x => String(x || '').trim()).filter(x => x.length >= 2 && x !== name && !name.includes(x)))].sort((a, b) => b.length - a.length);
+  const swap = (x: any) => { if (x == null) return x; let s = JSON.stringify(x); for (const o of olds) s = s.split(JSON.stringify(o).slice(1, -1)).join(JSON.stringify(name).slice(1, -1)); return JSON.parse(s); };
+  const context = t.context ? { ...swap(t.context), ...(t.context.company ? { company: { ...swap(t.context.company), name } } : {}) } : t.context;
+  return { old: t.company_name || '', olds, company_name: name, task: swap(t.task), problem: swap(t.problem), materials: swap(t.materials), rubric: swap(t.rubric), context };
+}
+
 /** 带兜底链的 JSON 调用：Opus → Sonnet → 千问；记账 tool=work */
 /** onPart（11-15）：边生成边把写完的顶层字段交出来（出题分段回传）；换模型重试时会从头再交一遍 */
 export async function askJson(prompt: string, model: string, task_name: string, institution?: string, extra?: Record<string, any>, onPart?: (key: string, value: any) => void): Promise<any> {
