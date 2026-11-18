@@ -61,8 +61,10 @@ export async function proxy(req: NextRequest) {
     // 根路径显示 /passport（地址栏保持 atapassport.com）；浏览器直接要的 /favicon.ico 给护照图标
     if (pathname === '/') return NextResponse.rewrite(new URL('/passport', req.url));
     if (pathname === '/favicon.ico') return NextResponse.rewrite(new URL('/passport/icon.svg', req.url));
-    // 只放行人才护照用得到的：页面和 public/passport 静态资源（都在 /passport 下）、护照接口、登录 / 退出 / 我是谁 / 改密码、Next 自己的资源
-    const PASSPORT_OK = /^\/passport(\/|$)|^\/api\/passport\/|^\/api\/auth\/(login|logout|me|password)$|^\/_next\/|^\/__nextjs/;
+    // /bp：ATA 人才护照的电子 PPT（public/bp/ 下的静态页，源在 vsbp 的 ata-passport.html）
+    if (pathname === '/bp' || pathname === '/bp/') return NextResponse.rewrite(new URL('/bp/index.html', req.url));
+    // 只放行人才护照用得到的：页面和 public/passport 静态资源（都在 /passport 下）、/bp 电子 PPT、护照接口、登录 / 退出 / 我是谁 / 改密码、Next 自己的资源
+    const PASSPORT_OK = /^\/passport(\/|$)|^\/bp(\/|$)|^\/api\/passport\/|^\/api\/auth\/(login|logout|me|password)$|^\/_next\/|^\/__nextjs/;
     // 其余（/lab、/office、/admin、/work、/college、/login、别的 /api 接口……）一律 302 回首页，这个域名摸不到别的页面和接口
     if (!PASSPORT_OK.test(pathname)) return NextResponse.redirect(new URL('/', req.url), 302);
   }
