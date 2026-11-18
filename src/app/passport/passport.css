@@ -185,7 +185,7 @@
 @keyframes tp-down { to { transform: translate(-50%, 100%); } }
 .tp-grip { position: sticky; top: 0; z-index: 2; display: flex; justify-content: center; padding: 10px 0 6px; background: linear-gradient(var(--card) 70%, transparent); }
 .tp-grip i { width: 40px; height: 5px; border-radius: 3px; background: rgba(29, 36, 80, .18); }
-.tp-x { position: absolute; right: 12px; top: 8px; width: 32px; height: 32px; border-radius: 50%; border: 0; background: rgba(29, 36, 80, .06); font-size: 18px; cursor: pointer; display: grid; place-items: center; }
+.tp-x { position: absolute; right: 12px; top: 8px; width: 32px; height: 32px; border-radius: 50%; border: 0; background: rgba(29, 36, 80, .06); font-size: 18px; cursor: pointer; display: grid; place-items: center; z-index: 5; background-color: rgba(255, 255, 255, .86); box-shadow: 0 1px 4px rgba(29, 36, 80, .12); }
 .tp-dr-art { margin: 4px auto 14px; display: flex; justify-content: center; }
 .tp-dr-art .tp-visa { width: 100%; container-type: inline-size; }
 .tp-dr-art .tp-stamp { width: 62%; max-width: 230px; }
