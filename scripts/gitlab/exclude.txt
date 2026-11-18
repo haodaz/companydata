@@ -45,3 +45,7 @@ src/lib/invest
 scripts/invest
 src/data/china-map.json
 supabase/migrations/069_invest_threads.sql
+# 2026-11-17 补：AI 驾驭量表脚本（引用真活 lib/work，不推）；人才护照 /passport（不是数据工厂）
+^scripts/fluency-
+^src/app/passport(/|$)
+^public/passport(/|$)
