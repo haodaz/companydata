@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getSessionUser } from '@/lib/session';
-import { mustChangePassword, ownerBundle } from '@/lib/passport';
+import { mustChangePassword, ownerBundle, canUsePassport } from '@/lib/passport';
 import { SwitchAccount } from '../auth';
 import { OwnerApp } from '../owner';
 import { Cover } from '../art';
@@ -24,7 +24,7 @@ export default async function MyPassport({ searchParams }: PageProps<'/passport/
   const user = await getSessionUser();
   if (!user) redirect('/passport/login?next=/passport/me');
   if (await mustChangePassword(user.userId)) redirect('/passport/password?next=/passport/me');
-  if (user.role !== 'admin') return <NotOpen />;
+  if (!canUsePassport(user.role)) return <NotOpen />;
   let bundle;
   try { bundle = await ownerBundle(user); } catch (e) {
     console.error('[passport/me]', (e as Error).message);

@@ -1,7 +1,7 @@
 /** 人才护照 · 本人（仅管理员）：GET 读整本（第一次进来自动建）；PATCH 改昵称 / 简介 / 联系方式可见范围 / 头像底色 / 走完引导 */
 import { supabaseAdmin as db } from '@/lib/supabase';
-import { getSessionUser, requireAdminUser } from '@/lib/session';
-import { VISIBILITIES, clean, fail, ownerBundle, passportDTO, passportOwner, type PassportRow } from '@/lib/passport';
+import { getSessionUser } from '@/lib/session';
+import { VISIBILITIES, clean, fail, ownerBundle, passportDTO, passportOwner, type PassportRow, requirePassportUser } from '@/lib/passport';
 import type { Visibility } from '@/app/passport/data';
 import { MOTTO_MAX, cleanMotto, isCover, isPaper, isPattern } from '@/app/passport/themes';
 
@@ -9,7 +9,7 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export async function GET(req: Request) {
-  const denied = await requireAdminUser(req);
+  const denied = await requirePassportUser(req);
   if (denied) return denied;
   try { return Response.json({ ok: true, bundle: await ownerBundle((await getSessionUser(req))!) }); } catch (e) { return fail((e as Error).message, 500); }
 }

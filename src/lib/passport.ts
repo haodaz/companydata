@@ -5,7 +5,18 @@
  */
 import { randomBytes, randomInt } from 'crypto';
 import { supabaseAdmin as db } from '@/lib/supabase';
-import { requireAdminUser, getSessionUser, type SessionUser } from '@/lib/session';
+import { getSessionUser, type SessionUser } from '@/lib/session';
+
+/** 能用人才护照的角色：管理员 + 百业用户 / 百业管理员（主人 2026-11-18：百业权限的用户也都能用） */
+export const PASSPORT_ROLES = ['admin', 'baiye_admin', 'baiye_user'];
+export const canUsePassport = (role?: string | null) => !!role && PASSPORT_ROLES.includes(role);
+/** 没登录 401、角色不在名单里 403；放行返回 null */
+export async function requirePassportUser(req: Request): Promise<Response | null> {
+  const u = await getSessionUser(req);
+  if (!u) return Response.json({ ok: false, error: '请先登录' }, { status: 401 });
+  if (!canUsePassport(u.role)) return Response.json({ ok: false, error: '人才护照还没对这个账号开放' }, { status: 403 });
+  return null;
+}
 import { PAGES, type PageId, type Visibility } from '@/app/passport/data';
 import { toLook } from '@/app/passport/themes';
 import type { BookingDTO, GrantDTO, ItemDTO, OwnerBundle, PassportDTO, ShareBundle, ShareFail } from '@/app/passport/api-types';
@@ -116,9 +127,9 @@ export async function ownerBundle(user: SessionUser): Promise<OwnerBundle> {
   };
 }
 
-/** 写接口统一入口：没登录 401、不是 admin 403；是 admin 就拿到（必要时新建的）护照 */
+/** 写接口统一入口：没登录 401、角色不能用护照 403；能用就拿到（必要时新建的）护照 */
 export async function passportOwner(req: Request): Promise<{ user: SessionUser; passport: PassportRow } | Response> {
-  const denied = await requireAdminUser(req);
+  const denied = await requirePassportUser(req);
   if (denied) return denied;
   const user = (await getSessionUser(req))!;
   try { return { user, passport: await ensurePassport(user) }; } catch (e) { return fail(`护照读不出来：${(e as Error).message}`, 500); }

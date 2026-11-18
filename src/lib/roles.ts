@@ -34,7 +34,7 @@ export function baiyePageAllowed(pathname: string) {
 export function baiyeApiAllowed(pathname: string) {
   if (/^\/api\/lab\/admin(\/|$)/.test(pathname)) return false;
   if (/^\/api\/college\/admin(\/|$)/.test(pathname)) return false;
-  return /^\/api\/(auth|lab|work|ws|college|invest)(\/|$)/.test(pathname)
+  return /^\/api\/(auth|lab|work|ws|college|invest|passport)(\/|$)/.test(pathname)   // passport：人才护照（主人 2026-11-18 对百业用户开放）
     || /^\/api\/admin\/work(\/|$)/.test(pathname)   // 真活出题 / 管自己的题（路由里再按归属检查）
     || pathname === '/api/kg/chat';                  // 「和我聊」数字职人对话
 }
