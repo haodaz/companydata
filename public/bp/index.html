@@ -923,7 +923,7 @@ stage.addEventListener('click', e => { const g = e.target.closest('[data-go]'); 
 let sx = null; addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive:true }); let swiped = false; addEventListener('touchend', e => { if (sx === null) return; const d = e.changedTouches[0].clientX - sx; sx = null; if (Math.abs(d) > 50){ swiped = true; setSlide(cur + (d < 0 ? 1 : -1)); setTimeout(() => swiped = false, 400); } }, { passive:true });
 stage.addEventListener('click', e => { if (swiped) e.stopImmediatePropagation(); }, true);
 if (q.has('t')){ ['prev', 'next', 'home', 'dots'].forEach(id => document.getElementById(id).style.display = 'none'); document.querySelectorAll('.hint').forEach(e => e.style.display = 'none'); }
-if (q.has('t')) { const go = () => { render(parseFloat(q.get('t')) || 0); window.__ready = true; }; Promise.all([PPIMG.decode().catch(() => 0), V2.ATA_LOGO.decode().catch(() => 0), liveReady()]).then(go); }
+if (q.has('t')) { const go = () => { render(parseFloat(q.get('t')) || 0); window.__ready = true; }; Promise.all([PPIMG.decode().catch(() => 0), V2.ATA_LOGO.decode().catch(() => 0), ...Object.values(ILL).map(im => im.decode().catch(() => 0)), liveReady()]).then(go); }
 else { (function loop(){ render((performance.now() - T0)/1000); requestAnimationFrame(loop); })(); window.__ready = true; }
 })();
 </script>
