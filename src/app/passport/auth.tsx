@@ -8,7 +8,6 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Cover } from './art';
-import { Sprite, SPRITE_NAME } from './sprite';
 
 /** 只认 /passport 下的站内路径，别被拿去做开放跳转，也别跳出护照 */
 export const safeNext = (raw: string | null | undefined) => {
@@ -17,20 +16,20 @@ export const safeNext = (raw: string | null | undefined) => {
 };
 const nextFromUrl = () => safeNext(new URLSearchParams(window.location.search).get('next'));
 
-function Shell({ line, children }: { line: string; children: React.ReactNode }) {
+function Shell({ title, sub, children }: { title: string; sub: string; children: React.ReactNode }) {
   return (
-    <div className="tp-root">
-      <div className="tp-app">
-        <div className="tp-login">
-          <div className="tp-eyebrow">ATA × 平方创想 · 人才护照</div>
-          <div className="tp-login-stage">
-            <div className="tp-login-book"><Cover /></div>
-            <div className="tp-login-sprite"><Sprite state="happy" /></div>
-            <div className="tp-login-say">{line}</div>
-          </div>
-          {children}
-          <div className="tp-foot">ATA × 平方创想 · TALENT PASSPORT</div>
+    <div className="tp-root tp-auth">
+      <div className="tp-auth-in">
+        <div className="tp-auth-brand"><span className="tp-eyebrow">ATA × 平方创想 · 人才护照</span></div>
+        <div className="tp-auth-hero" aria-hidden>
+          <div className="tp-auth-book"><Cover /><i className="tp-auth-glint" /></div>
         </div>
+        <div className="tp-auth-side">
+          <h1 className="tp-auth-h">{title}</h1>
+          <p className="tp-auth-sub">{sub}</p>
+          {children}
+        </div>
+        <div className="tp-auth-foot">ATA × 平方创想 · TALENT PASSPORT</div>
       </div>
     </div>
   );
@@ -56,7 +55,7 @@ export function PassportLogin() {
     } catch { setErr('网络不太好，再试一次'); } finally { setBusy(false); }
   };
   return (
-    <Shell line="来，打开你的人才护照">
+    <Shell title="打开你的人才护照" sub="真能力、真足迹，都收在这一本里。">
       <form className="tp-card tp-login-form" onSubmit={submit}>
         <label className="tp-field"><span>邮箱</span><input className="tp-input" type="email" autoComplete="username" value={email} onChange={e => setEmail(e.target.value)} placeholder="name@example.com" /></label>
         <label className="tp-field"><span>密码</span><input className="tp-input" type="password" autoComplete="current-password" value={password} onChange={e => setPassword(e.target.value)} placeholder="密码" /></label>
@@ -92,7 +91,7 @@ export function PassportPassword() {
     } catch { setErr('网络不太好，再试一次'); } finally { setBusy(false); }
   };
   return (
-    <Shell line={`先设一个只有你知道的密码，${SPRITE_NAME}在里面等你`}>
+    <Shell title="先设一个新密码" sub="只有你知道的密码，以后用它打开这本护照。">
       <form className="tp-card tp-login-form" onSubmit={submit}>
         <label className="tp-field"><span>现在的密码</span><input className="tp-input" type="password" autoComplete="current-password" value={f.current} onChange={set('current')} /></label>
         <label className="tp-field"><span>新密码</span><input className="tp-input" type="password" autoComplete="new-password" value={f.next} onChange={set('next')} placeholder="至少 8 位，字母和数字都要有" /></label>

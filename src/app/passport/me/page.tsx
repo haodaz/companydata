@@ -19,8 +19,8 @@ export const dynamic = 'force-dynamic';
 export default async function MyPassport({ searchParams }: PageProps<'/passport/me'>) {
   const dev = process.env.NODE_ENV === 'development', demo = (await searchParams).demo;
   if (dev && demo === '1') return <OwnerApp mode={{ kind: 'demo' }} />;
-  // 本机开发看新护照长什么样（领取仪式、尚未签发的空页）：假数据、不连库，写操作会被接口拒掉并退回
-  if (dev && demo === 'blank') return <OwnerApp mode={{ kind: 'real', bundle: BLANK }} />;
+  // 本机开发看新护照长什么样（领取仪式、签签引导、尚未签发的空页）：假数据，改动只在内存里，不连库
+  if (dev && demo === 'blank') return <OwnerApp mode={{ kind: 'preview', bundle: BLANK }} />;
   const user = await getSessionUser();
   if (!user) redirect('/passport/login?next=/passport/me');
   if (await mustChangePassword(user.userId)) redirect('/passport/password?next=/passport/me');

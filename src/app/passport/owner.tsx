@@ -19,7 +19,7 @@ import { buildSheets, grantToClaim, idClaimFor, type PageCtx } from './pages';
 import { ADD_KINDS, addedToClaim, fmtDay, useHydrated, type AddKind, type Booking } from './lib';
 import { DEMO_LIB, demoToClaim, newClaimNo, type DemoOption } from './demo-lib';
 import { HolderProvider } from './holder';
-import { useDemoStore, useRealStore, type MadeShare, type NewSelf, type Store } from './store';
+import { useDemoStore, usePreviewStore, useRealStore, type MadeShare, type NewSelf, type Store } from './store';
 import { Onboarding, type OnboardStage } from './onboard';
 import { AvatarPicker } from './avatar';
 import { COVERS, MOTTO_MAX, PAPERS, PATTERNS, lookVars, type CoverPattern, type CoverTheme, type Look, type PaperTheme } from './themes';
@@ -27,13 +27,14 @@ import type { OwnerBundle } from './api-types';
 import { SpriteFab, SpriteSheet, useSpriteChat, type Confirm } from './sprite-chat';
 
 type Tab = 'book' | 'add' | 'get' | 'share' | 'me';
-export type OwnerMode = { kind: 'demo' } | { kind: 'real'; bundle: OwnerBundle };
+export type OwnerMode = { kind: 'demo' } | { kind: 'real'; bundle: OwnerBundle } | { kind: 'preview'; bundle: OwnerBundle };
 
 export function OwnerApp({ mode }: { mode: OwnerMode }) {
-  return mode.kind === 'real' ? <RealOwner bundle={mode.bundle} /> : <DemoOwner />;
+  return mode.kind === 'real' ? <RealOwner bundle={mode.bundle} /> : mode.kind === 'preview' ? <PreviewOwner bundle={mode.bundle} /> : <DemoOwner />;
 }
 function DemoOwner() { return <OwnerView store={useDemoStore()} />; }
 function RealOwner({ bundle }: { bundle: OwnerBundle }) { return <OwnerView store={useRealStore(bundle)} />; }
+function PreviewOwner({ bundle }: { bundle: OwnerBundle }) { return <OwnerView store={usePreviewStore(bundle)} />; }
 
 function Ava({ color }: { color: string }) {
   return <span className="tp-ava"><svg viewBox="0 0 128 160"><Portrait x={0} y={0} w={128} h={160} color={color} ink="#1D2450" id={`a${color.slice(1)}`} /></svg></span>;
@@ -51,7 +52,6 @@ function OwnerView({ store }: { store: Store }) {
   const [jump, setJump] = useState<string | null>(null);       // 加完一条：等它出现在某一页，就翻到那一页
   const [lib, setLib] = useState<PageId | 'all' | null>(null);  // 演示签章库抽屉（按页筛）
   const [stage, setStage] = useState<OnboardStage | null>(() => (store.onboarded ? null : 'ceremony'));
-  const [writeIn, setWriteIn] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const say = (msg: string) => setToast(t => ({ msg, n: (t?.n || 0) + 1 }));
   const oops = (e: unknown) => say(`没存上：${(e as Error)?.message || '网络不太好'}，已撤回这一步`);
@@ -67,7 +67,7 @@ function OwnerView({ store }: { store: Store }) {
   const profile = store.profile;
 
   const ctx: PageCtx = {
-    claims, profile, added: store.added, grants: store.grants, onOpen: setOpen, fresh: fresh || undefined, owner: true, maxAdded: store.maxAdded, writeIn,
+    claims, profile, added: store.added, grants: store.grants, onOpen: setOpen, fresh: fresh || undefined, owner: true, maxAdded: store.maxAdded,
     onAdd: () => setTab('add'), onGet: () => setTab('get'), onLib: p => setLib(p),
   };
   const sheets = buildSheets({ holder, ctx, demos: demoClaims });
@@ -81,7 +81,6 @@ function OwnerView({ store }: { store: Store }) {
     if (i >= 0) { setIndex(i + 1); setJump(null); }
   }
   const accessIndex = 1 + sheets.findIndex(s => s.key === 'access');
-  const idIndex = 1 + sheets.findIndex(s => s.key === 'id');
   const safeIndex = Math.min(index, pages.length - 1);
 
   /** 刚加的一条：翻到它所在的页、只在它身上播一次盖戳 / 贴签动效 */
@@ -150,12 +149,6 @@ function OwnerView({ store }: { store: Store }) {
   const chat = useSpriteChat({ store, exec: execSprite });
 
   const finishOnboard = () => { setStage(null); store.finishOnboarding().catch(() => undefined); };
-  const toStage = (st: OnboardStage | 'write') => {
-    if (st !== 'write') { setStage(st); return; }
-    // 写进第一页：关掉表单、翻到身份页逐项写出来，护照号和签发日期最后打上，然后进几步引导
-    setStage(null); setTab('book'); setIndex(idIndex); setWriteIn(true);
-    window.setTimeout(() => { setWriteIn(false); setStage('coach'); }, 3300);
-  };
 
   return (
     <HolderProvider holder={holder}>
@@ -179,7 +172,7 @@ function OwnerView({ store }: { store: Store }) {
           {tab === 'share' && <SharePanel store={store} onRevoke={revoke} onLog={() => { setIndex(accessIndex); setTab('book'); }} say={say} />}
           {tab === 'me' && <ProfilePanel key={JSON.stringify(profile) + JSON.stringify(holder.look)} store={store} say={say}
             onReset={store.reset ? () => { store.reset!(); setIndex(0); say('已恢复演示数据'); } : undefined}
-            onReplay={() => { setTab('book'); setIndex(0); setStage(holder.demo ? 'intro' : 'ceremony'); }} />}
+            onReplay={() => { setTab('book'); setIndex(0); setStage(holder.demo ? 'tour' : 'ceremony'); }} />}
           </div>}
           </div>
 
@@ -196,9 +189,9 @@ function OwnerView({ store }: { store: Store }) {
         </div>
         {openClaim && <ClaimDrawer c={openClaim} avatar={profile.avatar} onClose={() => setOpen(null)} actions={actions} shareOrigin={hydrated ? window.location.origin : undefined} />}
         {lib && <DemoLibSheet store={store} filter={lib} onPick={addDemo} onClose={() => setLib(null)} />}
-        {(!stage || stage === 'coach') && <SpriteFab chat={chat} onOpen={() => setChatOpen(true)} />}
+        {(!stage || stage === 'tour') && <SpriteFab chat={chat} onOpen={() => setChatOpen(true)} />}
         {chatOpen && <SpriteSheet chat={chat} demo={holder.demo} onClose={() => setChatOpen(false)} />}
-        {stage && <Onboarding stage={stage} store={store} say={say} onStage={toStage} onDone={finishOnboard} />}
+        {stage && <Onboarding stage={stage} store={store} say={say} onStage={setStage} onDone={finishOnboard} goBook={() => { setTab('book'); setIndex(0); }} />}
         {toast && <Toast key={toast.n} msg={toast.msg} onDone={() => setToast(null)} />}
       </div>
     </HolderProvider>

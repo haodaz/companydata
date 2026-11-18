@@ -1,184 +1,201 @@
 'use client';
 
 /**
- * 第一次打开这本护照，由护照精灵签签带路：领取仪式 → 签签从护照里飞出来自我介绍 → 设置基础信息（边填边看身份页）
- * → 写进第一页（在 owner.tsx 里播）→ 签签指着各处说一句：翻页、加一条（盖戳）、拿签（贴签）、定制我的人才护照、分享，最后回到右下角。
- * 只在 passports.onboarded_at 为空时自动出现；「我的 · 重看引导」能再看一遍（不改库）。演示护照没有领取仪式，重看引导从签签自我介绍开始。
+ * 第一次打开这本护照，由护照精灵签签带路，样子像游戏的新手剧情：左下角签签的大立绘 + 底部一条对话框逐字打出台词 + 选项按钮。
+ *  ① 领取仪式（ceremony）：浅色版画底纹上，护照带着金光落下，签签出场打招呼；
+ *  ② 填第一页（fill）：护照身份页是画面主体，签签一次问一句——照片 → 昵称 → 一句话简介 → 联系方式给谁看；
+ *     每答一句，身份页上那一块就显影出来，签签换个表情接一句，再问下一个；都答完存进护照，护照号和签发日期打上、盖「签发」章；
+ *  ③ 认门（tour）：回到护照，签签指着翻页、加一条、去认证、我的（定制）、分享、右下角入口各说一句，指到的地方高亮。
+ * 只在 passports.onboarded_at 为空时自动出现；「我的 · 重看引导」能再走一遍（不改库）。演示护照没有领取仪式和填写，只认门。
  */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { PAGES, VISIBILITY, type Profile, type Visibility } from './data';
 import { Cover } from './art';
 import { HolderProvider } from './holder';
-import { PageBody, PageFrame, idClaimFor, type PageCtx } from './pages';
+import { PageBody, PageFrame, idClaimFor, type PageCtx, type RevealKey } from './pages';
 import { AVATAR_ACCEPT, cropAvatar } from './avatar';
-import type { Store } from './store';
 import { Sprite, SPRITE_NAME, type SpriteState } from './sprite';
+import type { Store } from './store';
 
-export type OnboardStage = 'ceremony' | 'intro' | 'setup' | 'coach';
+export type OnboardStage = 'ceremony' | 'fill' | 'tour';
 
-export function Onboarding({ stage, store, say, onStage, onDone }: { stage: OnboardStage; store: Store; say: (m: string) => void; onStage: (s: OnboardStage | 'write') => void; onDone: () => void }) {
-  if (stage === 'ceremony') return <Ceremony store={store} onNext={() => onStage('intro')} onSkip={onDone} />;
-  if (stage === 'intro') return <Intro store={store} onNext={() => onStage(store.holder.demo ? 'coach' : 'setup')} onSkip={onDone} />;
-  if (stage === 'setup') return <Setup store={store} say={say} onNext={() => onStage('write')} onSkip={() => onStage('coach')} />;
-  return <Coach onDone={onDone} />;
+/* ---------- 逐字打出来；点一下对话框直接打完 ---------- */
+function useTyped(text: string) {
+  const [n, setN] = useState(0);
+  const chars = useMemo(() => Array.from(text), [text]);
+  useEffect(() => {
+    const t = window.setInterval(() => setN(v => { if (v >= chars.length) { window.clearInterval(t); return v; } return v + 1; }), 38);
+    return () => window.clearInterval(t);
+  }, [chars]);
+  return { shown: chars.slice(0, n).join(''), done: n >= chars.length, finish: () => setN(chars.length) };
 }
 
-/* ---------- 1. 领取仪式 ---------- */
-const SPARKS = [[12, 30, 0], [82, 22, .5], [26, 74, 1.1], [70, 80, .3], [50, 8, .8], [92, 56, 1.4], [6, 52, 1.7]];
+/** 签签立绘 + 对话框。台词变了就重新打字（外面用 key 换台词） */
+function Npc({ mood, line, dock = 'bottom', children }: { mood: SpriteState; line: string; dock?: 'bottom' | 'top'; children?: (done: boolean) => React.ReactNode }) {
+  const { shown, done, finish } = useTyped(line);
+  return (
+    <div className={`tp-npc ${dock}`}>
+      <div className="tp-npc-char"><Sprite state={done ? (mood === 'talk' ? 'idle' : mood) : 'talk'} /></div>
+      <div className="tp-npc-box" onClick={() => { if (!done) finish(); }} role="dialog" aria-live="polite" aria-label={`${SPRITE_NAME}说`}>
+        <b className="tp-npc-name">{SPRITE_NAME}</b>
+        <p className="tp-npc-line">{shown}{!done && <i className="tp-npc-caret" />}</p>
+        <div className={`tp-npc-opts${done ? ' on' : ''}`} onClick={e => e.stopPropagation()}>{children?.(done)}</div>
+      </div>
+    </div>
+  );
+}
+
+export function Onboarding({ stage, store, say, onStage, onDone, goBook }: { stage: OnboardStage; store: Store; say: (m: string) => void; onStage: (s: OnboardStage) => void; onDone: () => void; goBook: () => void }) {
+  if (stage === 'ceremony') return <Ceremony store={store} onNext={() => onStage('fill')} onSkip={onDone} />;
+  if (stage === 'fill') return <Fill store={store} say={say} onNext={() => { goBook(); onStage('tour'); }} onSkip={() => { goBook(); onStage('tour'); }} />;
+  return <Tour demo={store.holder.demo} onDone={onDone} />;
+}
+
+/* ---------- ① 领取仪式 ---------- */
 function Ceremony({ store, onNext, onSkip }: { store: Store; onNext: () => void; onSkip: () => void }) {
   return (
-    <div className="tp-ob dark" role="dialog" aria-modal="true" aria-label="领取人才护照">
-      <div className="tp-ob-in">
-        <div className="tp-ob-book">
-          <i className="tp-ob-glow" />
-          <div className="tp-ob-sparks" aria-hidden>{SPARKS.map(([x, y, d], i) => <i key={i} style={{ left: `${x}%`, top: `${y}%`, animationDelay: `${1.2 + d}s` }} />)}</div>
-          <Cover owner={`${store.holder.name}的可信人才档案`} />
-        </div>
-        <h1 className="tp-ob-h">恭喜你拿到这本人才护照。<br />从今往后，见证你的真能力、真足迹，获得真评价。</h1>
-        <button type="button" className="tp-btn gold block" style={{ maxWidth: 300 }} onClick={onNext}>打开我的护照</button>
-        <button type="button" className="tp-ob-skip" onClick={onSkip}>先不看引导</button>
+    <div className="tp-gd" role="dialog" aria-modal="true" aria-label="领取人才护照">
+      <div className="tp-gd-cere">
+        <h1 className="tp-gd-h">恭喜你拿到这本人才护照。<br />从今往后，见证你的真能力、真足迹，<br className="tp-br-m" />获得真评价。</h1>
+        <div className="tp-gd-book"><i className="tp-ob-glow" /><Cover owner={`${store.holder.name}的可信人才档案`} /><i className="tp-auth-glint" /></div>
       </div>
+      <Npc mood="happy" line={`你好呀，我是${SPRITE_NAME}，你的护照精灵！往后这本护照里的事，我都陪着你。先花一分钟，把第一页填上？`}>
+        {() => <>
+          <button type="button" className="tp-btn ghost sm" onClick={onSkip}>先不看引导</button>
+          <button type="button" className="tp-btn v sm" onClick={onNext}>打开我的护照</button>
+        </>}
+      </Npc>
     </div>
   );
 }
 
-/* ---------- 签签从护照里飞出来，自我介绍 ---------- */
-function Intro({ store, onNext, onSkip }: { store: Store; onNext: () => void; onSkip: () => void }) {
-  return (
-    <div className="tp-ob dark" role="dialog" aria-modal="true" aria-label={`${SPRITE_NAME}自我介绍`}>
-      <div className="tp-ob-in">
-        <div className="tp-ob-book" style={{ width: 'min(44vw, 170px)', margin: '3vh auto 0', animation: 'none' }}>
-          <i className="tp-ob-glow" />
-          <Cover owner={`${store.holder.name}的可信人才档案`} />
-        </div>
-        <div className="tp-ob-sprite tp-sp-fly" style={{ marginTop: -40 }}><Sprite state="happy" /></div>
-        <div className="tp-guide-bubble" style={{ margin: '10px 0 22px', borderRadius: 16, textAlign: 'left' }}>
-          <b>你好呀，我是{SPRITE_NAME}</b>
-          <p>我是你的护照精灵。往后这本护照里的事，加一条、拿新签、给谁看，都可以叫我。先花一分钟，我带你把它填起来？</p>
-        </div>
-        <button type="button" className="tp-btn gold block" style={{ maxWidth: 300, animationDelay: '.6s' }} onClick={onNext}>好，带我走一遍</button>
-        <button type="button" className="tp-ob-skip" style={{ animationDelay: '.8s' }} onClick={onSkip}>先跳过，我自己看看</button>
-      </div>
-    </div>
-  );
-}
-
-/* ---------- 2. 设置基础信息：边填边看身份页 ---------- */
-function Setup({ store, say, onNext, onSkip }: { store: Store; say: (m: string) => void; onNext: () => void; onSkip: () => void }) {
+/* ---------- ② 填第一页：问一句、显影一块 ---------- */
+type Q = 'photo' | 'nick' | 'bio' | 'vis' | 'done';
+const BIO_EXAMPLES = ['做了三年运营，正在学用 AI 做数据分析。', '财务出身，转做经营分析，喜欢把报表看到底。', '应届毕业生，想去做产品，动手能力强。'];
+const VIS_REPLY: Record<Visibility, string> = { self: '好，联系方式只有你自己看得到。', grant: '好，只有你授权的人才看得到，最稳妥。', public: '好，大家都能看到，机会来得更快一些。' };
+function Fill({ store, say, onNext, onSkip }: { store: Store; say: (m: string) => void; onNext: () => void; onSkip: () => void }) {
+  const [q, setQ] = useState<Q>('photo');
+  const [reply, setReply] = useState<string | null>(null);   // 签签接的那一句（开心），点继续或过一会儿进下一问
+  const [reveal, setReveal] = useState<Set<RevealKey>>(() => new Set());
   const [p, setP] = useState<Profile>(store.profile);
-  const [photo, setPhoto] = useState<{ blob: Blob; url: string } | null>(null);
+  const [text, setText] = useState('');
   const [busy, setBusy] = useState(false);
   const file = useRef<HTMLInputElement>(null);
-  useEffect(() => () => { if (photo) URL.revokeObjectURL(photo.url); }, [photo]);
-  const holder = { ...store.holder, photo: photo?.url || store.holder.photo };
+  const holder = store.holder;
   const claims = new Map([[idClaimFor(holder).id, idClaimFor(holder)]]);
-  const ctx: PageCtx = { claims, profile: p, added: [], grants: [], onOpen: () => undefined, owner: true };
+  const ctx: PageCtx = { claims, profile: p, added: [], grants: [], onOpen: () => undefined, owner: true, reveal };
+  const show = (k: RevealKey) => setReveal(cur => new Set([...cur, k]));
+  /** 答了一句：那一块显影，签签开心地接一句，过一会儿（或点「继续」）问下一个 */
+  const answered = (k: RevealKey, line: string, next: Q) => { show(k); setReply(line); setText(''); setQ(next); window.setTimeout(() => setReply(r => (r === line ? null : r)), 2400); };
+
   const pick = async (f?: File | null) => {
     if (!f) return;
-    try { const blob = await cropAvatar(f); setPhoto({ blob, url: URL.createObjectURL(blob) }); } catch (e) { say((e as Error).message); }
-    if (file.current) file.current.value = '';
-  };
-  const save = async () => {
-    if (!p.nickname.trim()) { say('昵称写一个吧'); return; }
     setBusy(true);
+    try { await store.uploadAvatar(await cropAvatar(f)); answered('photo', '嗯，很精神！照片已经放上去了。', 'nick'); } catch (e) { say(`照片没传上：${(e as Error).message}`); } finally { setBusy(false); if (file.current) file.current.value = ''; }
+  };
+  const finish = async (vis: Visibility) => {
+    const next = { ...p, visibility: vis };
+    setP(next); show('vis'); setBusy(true);
     try {
-      await store.saveProfile({ ...p, nickname: p.nickname.trim() });
-      if (photo) await store.uploadAvatar(photo.blob);
-      onNext();
+      await store.saveProfile({ ...next, nickname: next.nickname.trim() || holder.name });
+      setReply(`${VIS_REPLY[vis]}`); window.setTimeout(() => { show('no'); setReply(null); setQ('done'); }, 1600);
     } catch (e) { say(`没存上：${(e as Error).message}`); } finally { setBusy(false); }
   };
-  const idDef = PAGES[0];
+
+  const line = reply || ({
+    photo: '先给你的护照放一张照片吧？证件照那种就行，没有的话也可以先跳过。',
+    nick: '大家平时怎么叫你？',
+    bio: '用一句话介绍一下自己？在做什么、想往哪儿走，都行。',
+    vis: '最后一个：你的联系方式，给谁看？',
+    done: '写好了！护照号和签发日期也盖上了——这就是你的第一页。接下来带你认认门？',
+  } as Record<Q, string>)[q];
+  const mood: SpriteState = reply ? 'happy' : q === 'done' ? 'happy' : q === 'bio' ? 'think' : 'talk';
+  const defNick = p.nickname || holder.name;
   return (
-    <div className="tp-ob light" role="dialog" aria-modal="true" aria-label="设置基础信息">
-      <div className="tp-ob-in" style={{ textAlign: 'left', paddingTop: 22 }}>
-        <div style={{ width: '100%', display: 'flex', alignItems: 'flex-end', gap: 6, marginBottom: 10 }}>
-          <div style={{ width: 74, flex: 'none' }}><Sprite state="talk" /></div>
-          <div className="tp-guide-bubble" style={{ margin: '0 0 18px', boxShadow: '0 8px 20px rgba(29,36,80,.12)' }}>
-            <b>先把第一页填上</b>
-            <p>一张证件照、一个昵称、一句话介绍自己。照片可以以后再传，之后在「我的」里随时能改。</p>
-          </div>
-        </div>
-        <HolderProvider holder={holder}>
-          <div className="tp-ob-preview"><PageFrame def={idDef} no={1}><PageBody id="id" ctx={ctx} /></PageFrame></div>
-        </HolderProvider>
-        <div className="tp-ob-form tp-card">
-          <div className="tp-field"><span>证件照（可以先跳过）</span>
-            <div className="tp-row">
-              <button type="button" className="tp-btn ghost sm" onClick={() => file.current?.click()}>{photo || store.holder.photo ? '换一张' : '上传一张'}</button>
-              {photo && <button type="button" className="tp-btn ghost sm" onClick={() => setPhoto(null)}>不用了</button>}
-            </div>
-            <small style={{ color: '#6B7290', fontSize: 12 }}>会自动裁成 4:5 证件照；不传就用带你姓氏首字的默认照。</small>
+    <div className="tp-gd" role="dialog" aria-modal="true" aria-label="填第一页">
+      <HolderProvider holder={holder}>
+        <div className="tp-gd-stage"><div className="tp-gd-page"><PageFrame def={PAGES[0]} no={1}><PageBody id="id" ctx={ctx} /></PageFrame></div></div>
+      </HolderProvider>
+      <Npc key={line} mood={mood} line={line}>
+        {done => {
+          if (reply) return <button type="button" className="tp-btn ghost sm" onClick={() => setReply(null)}>继续</button>;
+          if (!done) return null;
+          if (q === 'photo') return <>
+            <button type="button" className="tp-btn ghost sm" onClick={() => answered('photo', '没关系，先用你姓氏的首字占个位，以后在「我的」里随时能换。', 'nick')}>先跳过</button>
+            <button type="button" className="tp-btn v sm" disabled={busy} onClick={() => file.current?.click()}>{busy ? '正在放…' : '上传照片'}</button>
             <input ref={file} type="file" accept={AVATAR_ACCEPT} hidden onChange={e => pick(e.target.files?.[0])} />
-          </div>
-          <label className="tp-field"><span>昵称</span><input className="tp-input" value={p.nickname} maxLength={10} onChange={e => setP({ ...p, nickname: e.target.value })} placeholder="别人怎么称呼你" /></label>
-          <label className="tp-field"><span>一句话简介</span><textarea className="tp-input" rows={2} maxLength={60} value={p.bio} onChange={e => setP({ ...p, bio: e.target.value })} placeholder="比如：做了三年运营，最近在学用 AI 做数据分析。" /></label>
-          <div className="tp-field"><span>联系方式给谁看</span>
-            <div className="tp-seg">{(Object.keys(VISIBILITY) as Visibility[]).map(v => <button type="button" key={v} className={p.visibility === v ? 'on' : ''} onClick={() => setP({ ...p, visibility: v })}>{VISIBILITY[v]}</button>)}</div>
-          </div>
-          <button type="button" className="tp-btn v block" style={{ marginTop: 14 }} disabled={busy} onClick={save}>{busy ? '正在写…' : '写进护照'}</button>
-          <button type="button" className="tp-ob-skip" style={{ color: '#9AA0B8', width: '100%' }} onClick={onSkip}>先跳过，之后再填</button>
-        </div>
-      </div>
+          </>;
+          if (q === 'nick') return <form className="tp-npc-input" onSubmit={e => { e.preventDefault(); const n = (text.trim() || defNick).slice(0, 10); setP(cur => ({ ...cur, nickname: n })); answered('nick', `好嘞，以后我就叫你「${n}」啦。`, 'bio'); }}>
+            <input className="tp-input" autoFocus maxLength={10} value={text} onChange={e => setText(e.target.value)} placeholder={`比如：${defNick}`} />
+            <button type="submit" className="tp-btn v sm">{text.trim() ? '就叫这个' : `用「${defNick}」`}</button>
+          </form>;
+          if (q === 'bio') return <div className="tp-npc-col">
+            <div className="tp-npc-chips">{BIO_EXAMPLES.map(b => <button type="button" key={b} onClick={() => setText(b)}>{b}</button>)}</div>
+            <form className="tp-npc-input" onSubmit={e => { e.preventDefault(); const b = text.trim().slice(0, 60); if (!b) return; setP(cur => ({ ...cur, bio: b })); answered('bio', '写得好，别人一眼就知道你是做什么的。', 'vis'); }}>
+              <input className="tp-input" maxLength={60} value={text} onChange={e => setText(e.target.value)} placeholder="写一句，或者点上面的例子改一改" />
+              <button type="submit" className="tp-btn v sm" disabled={!text.trim()}>用这个简介</button>
+            </form>
+          </div>;
+          if (q === 'vis') return <>{(['self', 'grant', 'public'] as Visibility[]).map(v => <button type="button" key={v} disabled={busy} className={`tp-btn sm ${v === 'grant' ? 'v' : 'ghost'}`} onClick={() => finish(v)}>{VISIBILITY[v]}{v === 'grant' ? '（推荐）' : ''}</button>)}</>;
+          return <>
+            <button type="button" className="tp-btn ghost sm" onClick={onSkip}>先跳过</button>
+            <button type="button" className="tp-btn v sm" onClick={onNext}>好呀</button>
+          </>;
+        }}
+      </Npc>
     </div>
   );
 }
 
-/* ---------- 4. 签签带路：指着对应位置说一句 ---------- */
-const STEPS: { sel: string; t: string; p: string; mood: SpriteState }[] = [
-  { sel: '.tp-book', t: '左右滑一滑就能翻页', p: '每一枚签和章都能点开，看是谁签的、凭什么，还能查真伪。', mood: 'talk' },
-  { sel: '[data-coach="add"]', t: '自己做过的事，点这里', p: '经历、作品、证书，写一条我就帮你盖一枚本人章。', mood: 'talk' },
-  { sel: '[data-coach="get"]', t: '别人签发的签，去这里拿', p: 'ATA 考试、AI 百业体验、企业真活，拿到就贴进护照。想先看看效果，也能从演示签章库贴几张。', mood: 'talk' },
-  { sel: '[data-coach="me"]', t: '定制我的人才护照', p: '在「我的」里换封面、选纸张，再写一句自己的话烫在封面上。', mood: 'happy' },
-  { sel: '[data-coach="share"]', t: '给谁看，由你定', p: '给谁、看哪几页、看几天，生成一条链接就行；随时能撤回。', mood: 'talk' },
-  { sel: '.tp-sp-fab', t: '有事就点右下角的我', p: `想总结竞争力、找下一枚签、写一句给 HR 的话，都可以问${SPRITE_NAME}。`, mood: 'happy' },
+/* ---------- ③ 认门：指着各处说一句 ---------- */
+const STEPS: { sel: string; line: string; mood: SpriteState }[] = [
+  { sel: '.tp-book', line: '左右滑一滑就能翻页。每一枚签和章都能点开，看是谁签的、凭什么，还能查真伪。', mood: 'talk' },
+  { sel: '[data-coach="add"]', line: '自己做过的事，点「加一条」。经历、作品、证书都行，我帮你盖一枚本人章。', mood: 'talk' },
+  { sel: '[data-coach="get"]', line: '别人签发的签——ATA 考试、AI 百业体验、企业真活——去「去认证」里拿。想先看看效果，也能从演示签章库贴几张。', mood: 'think' },
+  { sel: '[data-coach="me"]', line: '在「我的」里可以定制我的人才护照：换封面、选纸张，再写一句自己的话烫在封面上。', mood: 'happy' },
+  { sel: '[data-coach="share"]', line: '给谁看、看哪几页、看几天，都由你定。点「分享」生成一条链接，随时能撤回。', mood: 'talk' },
+  { sel: '.tp-sp-fab', line: '以后有事就点右下角的我。想总结竞争力、找下一枚签、写一句给 HR 的话，都可以问我。', mood: 'happy' },
 ];
 type Box = { top: number; left: number; width: number; height: number; vh: number; vw: number };
-/** 签签和气泡放哪：宽屏放在目标旁边（右边放得下放右边，不然放左边）；手机放在目标上方或下方 */
-function guidePos(box: Box | null, below: boolean): React.CSSProperties {
-  if (!box) return { top: '30%' };
-  const GW = 440, gap = 20, top = Math.min(Math.max(10, box.top + box.height / 2 - 110), box.vh - 240);
-  if (box.vw >= 1024) {
-    if (box.left + box.width + gap + GW < box.vw - 10) return { left: box.left + box.width + gap, top, transform: 'none' };
-    if (box.left - gap - GW > 10) return { left: box.left - gap - GW, top, transform: 'none' };
-  }
-  return below ? { top: Math.min(box.top + box.height + 14, box.vh - 230) } : { top: Math.max(10, box.top - 220) };
-}
-function Coach({ onDone }: { onDone: () => void }) {
-  const [i, setI] = useState(0);
+function Tour({ demo, onDone }: { demo: boolean; onDone: () => void }) {
+  const [i, setI] = useState(demo ? -1 : 0);   // 演示护照先打个招呼
   const [box, setBox] = useState<Box | null>(null);
   useEffect(() => {
+    if (i < 0) return;
     let raf = 0;
     const measure = () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
-        const el = document.querySelector(STEPS[i].sel);
-        const r = el?.getBoundingClientRect();
+        const r = document.querySelector(STEPS[i].sel)?.getBoundingClientRect();
         setBox(r && r.width ? { top: r.top, left: r.left, width: r.width, height: r.height, vh: window.innerHeight, vw: window.innerWidth } : null);
       });
     };
     measure();
-    const t = window.setTimeout(measure, 350);   // 刚切回护照页，书还在落位
+    const t = window.setTimeout(measure, 380);   // 刚切回护照页，书还在落位
     window.addEventListener('resize', measure);
     return () => { cancelAnimationFrame(raf); window.clearTimeout(t); window.removeEventListener('resize', measure); };
   }, [i]);
-  const s = STEPS[i], last = i === STEPS.length - 1, pad = 8;
-  const below = box ? box.top + box.height / 2 < box.vh / 2 : false;
-  const next = () => (last ? onDone() : setI(i + 1));
+  const last = i === STEPS.length - 1, pad = 8;
+  // 手机上目标在下半屏（底部导航、右下角入口）时，对话框挪到上面，别把要指的东西挡住
+  const dock = box && box.vw < 1024 && box.top + box.height / 2 > box.vh * 0.45 ? 'top' : 'bottom';
+  if (i < 0) return (
+    <div className="tp-coach" role="dialog" aria-modal="true" aria-label={`${SPRITE_NAME}带你看一圈`}>
+      <Npc mood="happy" line={`你好呀，我是${SPRITE_NAME}，这本护照的精灵。带你在护照里认认门？`}>
+        {() => <><button type="button" className="tp-btn ghost sm" onClick={onDone}>先不用</button><button type="button" className="tp-btn v sm" onClick={() => setI(0)}>好呀</button></>}
+      </Npc>
+    </div>
+  );
+  const s = STEPS[i];
   return (
-    <div className="tp-coach" role="dialog" aria-modal="true" aria-label={`${SPRITE_NAME}带你看一圈`} onClick={next}>
+    <div className="tp-coach" role="dialog" aria-modal="true" aria-label={`${SPRITE_NAME}带你看一圈`}>
       {box && <div className="tp-coach-hole" style={{ top: box.top - pad, left: box.left - pad, width: box.width + pad * 2, height: box.height + pad * 2, borderRadius: s.sel === '.tp-sp-fab' ? '50%' : undefined }} />}
-      <div className="tp-guide" style={guidePos(box, below)} onClick={e => e.stopPropagation()}>
-        <Sprite key={i} state={s.mood} className="tp-sp-fly" />
-        <div className="tp-guide-bubble" key={`b${i}`}>
-          <b>{s.t}</b>
-          <p>{s.p}</p>
-          <div className="tp-coach-row">
-            <small>{i + 1} / {STEPS.length}</small>
-            {!last && <button type="button" className="skip" onClick={onDone}>跳过</button>}
-            <button type="button" className="next" onClick={next}>{last ? '知道了' : '下一步'}</button>
-          </div>
-        </div>
-      </div>
+      <Npc key={i} mood={s.mood} line={s.line} dock={dock}>
+        {() => <>
+          <small className="tp-npc-step">{i + 1} / {STEPS.length}</small>
+          {!last && <button type="button" className="tp-btn ghost sm" onClick={onDone}>跳过</button>}
+          <button type="button" className="tp-btn v sm" onClick={() => (last ? onDone() : setI(i + 1))}>{last ? '开始用' : '下一步'}</button>
+        </>}
+      </Npc>
     </div>
   );
 }

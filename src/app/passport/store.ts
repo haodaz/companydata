@@ -8,6 +8,7 @@ import { DESTINATIONS, MAX_ADDED, type Grant, type PageId, type Profile } from '
 import { DEMO_HOLDER, initialOf, type HolderInfo } from './holder';
 import { demoOption, type DemoItem } from './demo-lib';
 import { buildShareQuery, fmtDay, fmtTime, grantsWith, nowMs, useHydrated, useOwnerState, type AddKind, type AddedItem, type Booking, type ShareRec } from './lib';
+import type { Grant as GrantT } from './data';
 import { SHARE_SID } from './data';
 import type { BookingDTO, GrantDTO, ItemDTO, OwnerBundle, PassportDTO } from './api-types';
 import { DEFAULT_LOOK, toLook, type Look } from './themes';
@@ -197,5 +198,31 @@ export function useRealStore(initial: OwnerBundle): Store {
       setPassport(cur => ({ ...cur, onboarded: true }));
       try { await call('/api/passport/me', { method: 'PATCH', json: { onboarded: true } }); } catch { /* 记不上下次再出一次引导，不打扰 */ }
     },
+  };
+}
+
+/* ---------- 本机开发预览（?demo=blank）：一本空白新护照，改动只在内存里，不连库 ---------- */
+export function usePreviewStore(initial: OwnerBundle): Store {
+  const [p, setP] = useState(initial.passport);
+  const [added, setAdded] = useState<AddedItem[]>([]);
+  const [demos, setDemos] = useState<DemoItem[]>([]);
+  const [grants, setGrants] = useState<GrantT[]>([]);
+  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [photo, setPhoto] = useState<string | null>(null);
+  const holder = useMemo(() => ({ ...holderFrom(p), photo }), [p, photo]);
+  const ok = () => Promise.resolve();
+  return {
+    kind: 'real', holder, profile: { nickname: p.nickname, avatar: p.avatarColor, bio: p.bio, visibility: p.visibility }, added, demos, grants, bookings, maxAdded: 8, onboarded: p.onboarded,
+    addSelf: a => { setAdded(cur => [...cur, { ...a, createdAt: fmtDay(nowMs()) }]); return ok(); },
+    addDemo: (key, id) => { const o = demoOption(key); if (!o) return Promise.reject(new Error('没有这一条')); setDemos(cur => [...cur, { id, key, page: o.page, createdAt: fmtDay(nowMs()) }]); return ok(); },
+    removeItem: id => { setAdded(cur => cur.filter(x => x.id !== id)); setDemos(cur => cur.filter(x => x.id !== id)); return ok(); },
+    requestVerify: id => { setAdded(cur => cur.map(x => (x.id === id ? { ...x, verifyReq: true } : x))); return ok(); },
+    saveProfile: pr => { setP(cur => ({ ...cur, nickname: pr.nickname, bio: pr.bio, visibility: pr.visibility, avatarColor: pr.avatar })); return ok(); },
+    saveLook: l => { setP(cur => ({ ...cur, look: toLook(l) })); return ok(); },
+    uploadAvatar: async blob => { setPhoto(URL.createObjectURL(blob)); },
+    createShare: async o => { const t = nowMs(); const g: GrantT = { id: `s-${t.toString(36)}`, url: '/passport', to: o.to, kind: '本人分享', pages: o.pages, createdAt: fmtTime(t), days: o.days, until: fmtDay(t + o.days * 86400000), views: 0, status: 'active', purpose: '本机预览' }; setGrants(cur => [g, ...cur]); return { id: g.id, to: o.to, pages: o.pages, days: o.days, createdAt: t, url: `${window.location.origin}/passport` }; },
+    revoke: g => { setGrants(cur => cur.map(x => (x.id === g.id ? { ...x, status: 'revoked' as const, revokedAt: '刚刚' } : x))); return ok(); },
+    book: async (dest, slot) => { const t = nowMs(); const b = { id: `b-${t}`, dest, slot, no: `PRE-${t.toString(36).slice(-5).toUpperCase()}`, at: fmtTime(t) }; setBookings(cur => [...cur, b]); return b; },
+    finishOnboarding: async () => { setP(cur => ({ ...cur, onboarded: true })); },
   };
 }

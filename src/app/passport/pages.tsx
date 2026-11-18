@@ -23,6 +23,7 @@ export interface PageCtx {
   onLib?: (page: PageId) => void;     // 空页「从演示签章库添加」
   maxAdded?: number;
   writeIn?: boolean;                  // 第一次引导：身份页逐项写出来
+  reveal?: Set<RevealKey>;            // 签签引导：问一句、显影一块（不给就全显示）
 }
 
 /* ---------- 查看记录 → 一条 claim（谁、看哪几页、几天、状态） ---------- */
@@ -86,21 +87,26 @@ function VisaAt({ claim, rot, ctx, style }: { claim: Claim; rot: number; ctx: Pa
 }
 
 /* ---------- 身份页 ---------- */
+/** 引导里边聊边显影：photo 照片 / nick 昵称 / bio 简介 / vis 联系方式 / no 护照号和签发日期（最后打上，盖签发章） */
+export type RevealKey = 'photo' | 'nick' | 'bio' | 'vis' | 'no';
 function IdPage({ ctx }: { ctx: PageCtx }) {
   const pr = ctx.profile;
   const h = useHolder();
+  const rv = (k: RevealKey) => (ctx.reveal ? `tp-rv${ctx.reveal.has(k) ? ' on' : ''}` : '');
+  const issued = ctx.writeIn || !!ctx.reveal?.has('no');
   return (
     <div className={ctx.writeIn ? 'tp-writein' : undefined} style={{ position: 'absolute', inset: 0 }}>
-      <button type="button" className="tp-hit tp-id-photo" aria-label="护照签发详情" onClick={() => ctx.onOpen('TP-CL-0001')}>
+      <button type="button" className={`tp-hit tp-id-photo ${rv('photo')}`} aria-label="护照签发详情" onClick={() => ctx.onOpen('TP-CL-0001')}>
         <svg viewBox="0 0 128 160"><Portrait x={0} y={0} w={128} h={160} color={pr.avatar} ink="#1D2450" id="idp" /></svg>
         <i className="tp-visa-holo" />
       </button>
+      {ctx.reveal && !ctx.reveal.has('photo') && <div className="tp-id-photo tp-rv-slot" aria-hidden>照片</div>}
       <div className="tp-id-fields">
         <div><div className="tp-kv-k">姓名 · NAME</div><div className="tp-kv-v big">{h.name}</div></div>
-        <div><div className="tp-kv-k">昵称 · ALIAS</div><div className="tp-kv-v">{pr.nickname || '—'}</div></div>
-        <div><div className="tp-kv-k">护照号 · PASSPORT NO.</div><div className="tp-kv-v red">{h.passportNo}</div></div>
+        <div className={rv('nick')}><div className="tp-kv-k">昵称 · ALIAS</div><div className="tp-kv-v">{pr.nickname || '—'}</div></div>
+        <div className={rv('no')}><div className="tp-kv-k">护照号 · PASSPORT NO.</div><div className="tp-kv-v red">{h.passportNo}</div></div>
         <div><div className="tp-kv-k">签发 · ISSUED BY</div><div className="tp-kv-v">{h.demo ? 'ATA × 平方创想' : '平方创想 · 内测'}</div></div>
-        <div><div className="tp-kv-k">签发 / 有效至</div><div className="tp-kv-v" style={{ fontFamily: MONO, fontSize: '3cqw' }}>{h.issuedAt} – {h.validUntil}</div></div>
+        <div className={rv('no')}><div className="tp-kv-k">签发 / 有效至</div><div className="tp-kv-v" style={{ fontFamily: MONO, fontSize: '3cqw' }}>{h.issuedAt} – {h.validUntil}</div></div>
       </div>
       <div className="tp-id-mid">
         <i className="tp-chip" />
@@ -110,17 +116,17 @@ function IdPage({ ctx }: { ctx: PageCtx }) {
         </button>
       </div>
       <div className="tp-id-bio">
-        <p>{pr.bio || (ctx.owner ? '还没写简介：在「我的」里写一两句，介绍你自己。' : '本人还没写简介。')}</p>
-        <small><span>联系方式：{VISIBILITY[pr.visibility]}</span><span>数据归本人 · 按页授权</span></small>
+        <p className={rv('bio')}>{pr.bio || (ctx.owner ? '还没写简介：在「我的」里写一两句，介绍你自己。' : '本人还没写简介。')}</p>
+        <small className={rv('vis')}><span>联系方式：{VISIBILITY[pr.visibility]}</span><span>数据归本人 · 按页授权</span></small>
       </div>
-      <div className="tp-mrz">
+      <div className={`tp-mrz ${rv('no')}`}>
         <svg viewBox="0 0 600 64">
           {(h.demo ? [mrz('P<CHNHAO<<DAZHUANG'), mrz('TP7Q3K9DZ1CHN0203117M3611077TALENTPASS<<<06')] : [mrz(`P<CHN${mrzName(h.nameEn, h.passportNo)}`), mrz(mrzLine2(h))]).map((m, i) => (
             <text key={i} x={0} y={24 + i * 32} fontSize={21} fontWeight={600} fill="#3E4A6B" fontFamily={MONO} textLength={600} lengthAdjust="spacingAndGlyphs">{m}</text>
           ))}
         </svg>
       </div>
-      {ctx.writeIn && <div className="tp-issue-stamp"><Stamp s={{ shape: 'round', top: 'ISSUED · 签发', bottom: 'TALENT PASSPORT', icon: 'check', main: '签发', sub: h.issuedAt, color: '#C0262D' }} seedKey="issue" /></div>}
+      {issued && <div className="tp-issue-stamp"><Stamp s={{ shape: 'round', top: 'ISSUED · 签发', bottom: 'TALENT PASSPORT', icon: 'check', main: '签发', sub: h.issuedAt, color: '#C0262D' }} seedKey="issue" /></div>}
     </div>
   );
 }

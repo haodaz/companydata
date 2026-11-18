@@ -1,12 +1,16 @@
 'use client';
 
 /**
- * 护照精灵「签签」：原创 SVG 画的 Q 版小姑娘——大头、大眼睛、圆框眼镜、头发扎成丸子带碎发、深色小西装，抱着一本小人才护照，身边几颗小星光。
+ * 护照精灵「签签」。
+ * 主形象是生图做的软萌 3D 形象（public/passport/sprite/{idle,talk,happy,think}.png，通义万相出主形象、图像编辑出同一角色的另外三个状态、绿幕抠成透明）；
+ * 四张图叠在一起按状态淡入淡出（不闪），配 CSS 的浮动 / 点头 / 跳一下；图加载失败就退回下面原创 SVG 画的版本。
+ *
+ * 兜底：原创 SVG 画的 Q 版小姑娘——大头、大眼睛、圆框眼镜、头发扎成丸子带碎发、深色小西装，抱着一本小人才护照，身边几颗小星光。
  * 渐变做出立体和柔光。四个状态（CSS 控制，不重画）：
  *   idle 待机：上下轻轻浮动 + 眨眼；talk 说话：嘴巴一张一合 + 点头；happy 开心：举起护照、眼睛弯成月牙；think 思考：手托下巴、头上冒小点。
  * crop="head" 只取头部，用在右下角的小圆窗入口。
  */
-import React, { useId } from 'react';
+import React, { useId, useState } from 'react';
 
 import { SPRITE_TITLE } from './sprite-name';
 export { SPRITE_NAME, SPRITE_TITLE } from './sprite-name';
@@ -14,7 +18,7 @@ export type SpriteState = 'idle' | 'talk' | 'happy' | 'think';
 
 const star = (x: number, y: number, r: number) => `M${x} ${y - r}Q${x + r * 0.18} ${y - r * 0.18} ${x + r} ${y}Q${x + r * 0.18} ${y + r * 0.18} ${x} ${y + r}Q${x - r * 0.18} ${y + r * 0.18} ${x - r} ${y}Q${x - r * 0.18} ${y - r * 0.18} ${x} ${y - r}Z`;
 
-export function Sprite({ state = 'idle', crop = 'full', className, title }: { state?: SpriteState; crop?: 'full' | 'head'; className?: string; title?: string }) {
+export function SpriteSvg({ state = 'idle', crop = 'full', className, title }: { state?: SpriteState; crop?: 'full' | 'head'; className?: string; title?: string }) {
   const u = useId().replace(/[^a-zA-Z0-9]/g, '');
   const g = (n: string) => `${u}${n}`;
   const url = (n: string) => `url(#${g(n)})`;
@@ -145,5 +149,20 @@ export function Sprite({ state = 'idle', crop = 'full', className, title }: { st
         <circle cx="170" cy="62" r="6" fill={url('gl')} /><path d={star(170, 62, 3.6)} fill="#FFF3C4" />
       </g>
     </svg>
+  );
+}
+
+const STATES: SpriteState[] = ['idle', 'talk', 'happy', 'think'];
+/** 签签（生图版）：四个状态的图叠放、按状态切换；任何一张加载失败就整体退回 SVG 版 */
+export function Sprite({ state = 'idle', crop = 'full', className, title }: { state?: SpriteState; crop?: 'full' | 'head'; className?: string; title?: string }) {
+  const [broken, setBroken] = useState(false);
+  if (broken) return <SpriteSvg state={state} crop={crop} className={className} title={title} />;
+  return (
+    <span className={`tp-sp tp-spi ${state} ${crop === 'head' ? 'head' : ''} ${className || ''}`} role="img" aria-label={title || SPRITE_TITLE}>
+      {STATES.map(s => (
+        // eslint-disable-next-line @next/next/no-img-element -- 透明 PNG 小图，四张叠放切换，不走图片优化
+        <img key={s} src={`/passport/sprite/${s}.png`} alt="" draggable={false} className={s === state ? 'on' : ''} onError={() => setBroken(true)} />
+      ))}
+    </span>
   );
 }
