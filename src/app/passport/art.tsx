@@ -7,6 +7,8 @@
 import React, { useId } from 'react';
 import type { StampArt, StampIcon, VisaArt, VisaTheme } from './data';
 import { fitLen, hash, qrPath, seedOf, textW } from './lib';
+import { useHolder } from './holder';
+import type { CoverPattern, Look } from './themes';
 
 export const SANS = '"PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif';
 export const SERIF = '"Songti SC","STSong","Noto Serif SC","Source Han Serif SC","SimSun",serif';
@@ -62,7 +64,7 @@ export function AtaSquare({ x, y, s, col = '#D80C18', knock = '#fff' }: { x: num
   return (
     <g>
       <rect x={x - s / 2} y={y - s / 2} width={s} height={s} fill={col} />
-      <text x={x} y={y + s * 0.15} fill={knock} fontSize={s * 0.4} fontWeight={900} textAnchor="middle" fontFamily={SANS}>ATA</text>
+      <text x={x} y={y + s * 0.15} style={{ fill: knock }} fontSize={s * 0.4} fontWeight={900} textAnchor="middle" fontFamily={SANS}>ATA</text>
     </g>
   );
 }
@@ -77,9 +79,11 @@ export function EntMark({ x, y, s, col, ch = '北' }: { x: number; y: number; s:
   );
 }
 
-/* ---------- 头像：照片位的小人，颜色跟着本人选的头像色 ---------- */
+/* ---------- 头像：证件照位。演示护照是郝大壮的插画；真实护照是本人上传的照片，没传就是中性剪影 + 姓氏首字 ---------- */
 export function Portrait({ x, y, w, h, color, ink, id }: { x: number; y: number; w: number; h: number; color: string; ink: string; id: string }) {
-  const bg1 = mix(color, '#FFFFFF', 0.9), bg2 = mix(color, '#FFFFFF', 0.72);   // 底色跟着本人选的头像色走，人像是插画素材（public/passport/dazhuang.png）
+  const holder = useHolder();
+  const bg1 = mix(color, '#FFFFFF', 0.9), bg2 = mix(color, '#FFFFFF', 0.72);   // 底色跟着本人选的头像色走
+  const s = w / 128;   // 剪影按 128×160 画，再按框缩放
   return (
     <g>
       <defs>
@@ -88,7 +92,16 @@ export function Portrait({ x, y, w, h, color, ink, id }: { x: number; y: number;
       </defs>
       <g clipPath={`url(#${id}pc)`}>
         <rect x={x} y={y} width={w} height={h} fill={`url(#${id}pg)`} />
-        <image href="/passport/dazhuang.png" x={x} y={y} width={w} height={h} preserveAspectRatio="xMidYMid slice" />
+        {holder.photo
+          ? <image href={holder.photo} x={x} y={y} width={w} height={h} preserveAspectRatio="xMidYMid slice" />
+          : (
+            <g transform={`translate(${x} ${y}) scale(${r1(s * 1000) / 1000})`}>
+              <path d="M10 160C12 124 34 106 64 106S116 124 118 160Z" fill={mix(color, '#FFFFFF', 0.45)} />
+              <path d="M50 96h28v16c0 8-28 8-28 0Z" fill={mix(color, '#FFFFFF', 0.55)} />
+              <circle cx={64} cy={64} r={31} fill={mix(color, '#FFFFFF', 0.4)} />
+              <text x={64} y={75} textAnchor="middle" fontSize={32} fontWeight={900} fill="#fff" fontFamily={SERIF}>{holder.initial}</text>
+            </g>
+          )}
       </g>
       <rect x={x} y={y} width={w} height={h} rx={10} fill="none" stroke={ink} strokeOpacity={0.35} strokeWidth={1.2} />
     </g>
@@ -172,7 +185,7 @@ export function Visa({ v, avatar, qrText, className, style }: { v: VisaArt; avat
           {issuer}
           <text x={618} y={48} textAnchor="end" fontSize={34} fontWeight={900} fill={ink} fontFamily={SERIF}>{v.type}</text>
           <text x={618} y={66} textAnchor="end" fontSize={9.5} fontWeight={800} fill={ink} fillOpacity={0.75} fontFamily={MONO}>{v.typeEn}</text>
-          <text x={618} y={92} textAnchor="end" fontSize={16} fontWeight={800} fill="#C8102E" fontFamily={MONO} letterSpacing={0.5}>{v.no}</text>
+          <text className="tp-visa-no" x={618} y={92} textAnchor="end" fontSize={16} fontWeight={800} fill="#C8102E" fontFamily={MONO} letterSpacing={0.5}>{v.no}</text>
           <Portrait x={22} y={98} w={128} h={160} color={avatar} ink={ink} id={id} />
           {v.fields.map(([k, val], i) => {
             const col = i % 2, row = Math.floor(i / 2), x = 166 + col * 148, y = 112 + row * 52, big = i === 0, max = col ? 160 : 140, size = big ? 20 : 16;
@@ -216,7 +229,7 @@ function shapeEl(shape: StampArt['shape'], w: number, h: number, i: number, sw: 
 export function Icon({ kind, x, y, s, col }: { kind: StampIcon; x: number; y: number; s: number; col: string }) {
   const sw = s * 0.12;
   let el: React.ReactNode = null;
-  if (kind === 'ata') return <AtaSquare x={x} y={y} s={s * 0.95} col={col} knock={PAPER} />;
+  if (kind === 'ata') return <AtaSquare x={x} y={y} s={s * 0.95} col={col} knock="var(--paper, #FBF8F1)" />;
   if (kind === 'plane') el = <g transform="rotate(-28)"><path d={`M${-s * 0.6} 0L${s * 0.6} ${-s * 0.1}L${s * 0.6} ${s * 0.1}Z`} /><path d={`M0 ${-s * 0.05}L${-s * 0.25} ${-s * 0.55}L${-s * 0.05} ${-s * 0.55}L${s * 0.25} ${-s * 0.05}Z`} /><path d={`M0 ${s * 0.05}L${-s * 0.25} ${s * 0.55}L${-s * 0.05} ${s * 0.55}L${s * 0.25} ${s * 0.05}Z`} /></g>;
   if (kind === 'star') el = <polygon points={Array.from({ length: 10 }, (_, i) => { const r = i % 2 ? s * 0.22 : s * 0.55, a = i / 10 * Math.PI * 2 - Math.PI / 2; return `${r1(r * Math.cos(a))},${r1(r * Math.sin(a))}`; }).join(' ')} />;
   if (kind === 'pen') el = <g transform="rotate(-40)"><rect x={-s * 0.12} y={-s * 0.6} width={s * 0.24} height={s * 0.85} /><path d={`M${-s * 0.12} ${s * 0.25}L${s * 0.12} ${s * 0.25}L0 ${s * 0.55}Z`} /></g>;
@@ -251,7 +264,7 @@ function ArcText({ text, cx, cy, R, where, size, col, id, weight = 800 }: { text
   return (
     <>
       <path id={id} d={d} fill="none" />
-      <text fontSize={r1(sz)} fontWeight={weight} fill={col} fontFamily={SANS} letterSpacing={r1(sz * 0.16)}>
+      <text fontSize={r1(sz)} fontWeight={weight} fill={col.startsWith('var(') ? undefined : col} style={col.startsWith('var(') ? { fill: col } : undefined} fontFamily={SANS} letterSpacing={r1(sz * 0.16)}>
         <textPath href={`#${id}`} startOffset="50%" textAnchor="middle">{text}</textPath>
       </text>
     </>
@@ -270,7 +283,7 @@ export function Stamp({ s, seedKey, className, style }: { s: StampArt; seedKey: 
         {s.bottom && <ArcText text={s.bottom} cx={cx} cy={cy} R={R} where="bottom" size={S * 0.062} col={col} id={`${id}b`} weight={700} />}
         <Icon kind={iconK} x={cx - R - 1} y={cy} s={S * 0.07} col={col} />
         <Icon kind={iconK} x={cx + R + 1} y={cy} s={S * 0.07} col={col} />
-        {s.icon === 'ata' && <AtaSquare x={cx} y={cy - S * 0.16} s={S * 0.15} col={col} knock={PAPER} />}
+        {s.icon === 'ata' && <AtaSquare x={cx} y={cy - S * 0.16} s={S * 0.15} col={col} knock="var(--paper, #FBF8F1)" />}
         <text x={cx} y={cy + S * (s.icon === 'ata' ? 0.06 : 0.04)} textAnchor="middle" fontSize={r1(mainSize)} fontWeight={900} fill={col} fontFamily={SANS}>{s.main}</text>
         {s.sub && <text x={cx} y={cy + S * 0.17} textAnchor="middle" fontSize={S * 0.075} fontWeight={800} fill={col} fontFamily={MONO} {...fitLen(s.sub, S * 0.075, R * 1.3)}>{s.sub}</text>}
       </>
@@ -320,22 +333,43 @@ export function CoverEmblem() {
   return (
     <svg viewBox="0 0 300 300" className="tp-cover-emblem" aria-hidden>
       <defs>
-        <linearGradient id={`${id}g`} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#B98E3E" /><stop offset=".35" stopColor="#F6E1A6" /><stop offset=".55" stopColor="#D2A95A" /><stop offset=".75" stopColor="#FFF3CC" /><stop offset="1" stopColor="#C39648" /></linearGradient>
+        <linearGradient id={`${id}g`} x1="0" y1="0" x2="1" y2="1">{FOIL_STOPS.map(([o, v]) => <stop key={o} offset={o} style={{ stopColor: `var(${v[0]}, ${v[1]})` }} />)}</linearGradient>
       </defs>
       <circle cx={150} cy={150} r={140} fill="none" stroke={`url(#${id}g)`} strokeWidth={5} />
       <circle cx={150} cy={150} r={128} fill="none" stroke={`url(#${id}g)`} strokeWidth={1.5} />
-      <ArcText text="TALENT PASSPORT · 可信人才档案" cx={150} cy={150} R={112} where="top" size={17} col="#E6C987" id={`${id}t`} weight={700} />
-      <ArcText text="ATA × VISIONSQUARE" cx={150} cy={150} R={112} where="bottom" size={15} col="#E6C987" id={`${id}b`} weight={700} />
-      <circle cx={34} cy={150} r={3} fill="#E6C987" /><circle cx={266} cy={150} r={3} fill="#E6C987" />
+      <ArcText text="TALENT PASSPORT · 可信人才档案" cx={150} cy={150} R={112} where="top" size={17} col="var(--ftext, #E6C987)" id={`${id}t`} weight={700} />
+      <ArcText text="ATA × VISIONSQUARE" cx={150} cy={150} R={112} where="bottom" size={15} col="var(--ftext, #E6C987)" id={`${id}b`} weight={700} />
+      <circle cx={34} cy={150} r={3} style={{ fill: 'var(--ftext, #E6C987)' }} /><circle cx={266} cy={150} r={3} style={{ fill: 'var(--ftext, #E6C987)' }} />
       <rect x={95} y={95} width={110} height={110} rx={10} fill="none" stroke={`url(#${id}g)`} strokeWidth={5} />
       <path d="M150 105L195 150L150 195L105 150Z" fill="none" stroke={`url(#${id}g)`} strokeWidth={4} strokeLinejoin="round" />
       <text x={150} y={168} textAnchor="middle" fontSize={48} fontWeight={900} fill={`url(#${id}g)`} fontFamily={SERIF}>人</text>
     </svg>
   );
 }
-export function Cover({ owner, hint, className }: { owner?: string; hint?: string; className?: string }) {
+/** 封面的烫印纹样：画在封皮底下，颜色跟着烫金 / 烫银走 */
+export function CoverPat({ kind }: { kind: CoverPattern }) {
+  const id = sid(useId());
+  if (kind === 'plain') return null;
+  const tile = kind === 'fret'
+    ? <path d="M2 2h16v16H6V6h8v8h-4" fill="none" strokeWidth={1.1} style={{ stroke: 'var(--ftext, #E6C987)' }} />
+    : kind === 'wave'
+      ? <path d="M0 10c5-6 10-6 20 0s15 6 20 0M0 20c5-6 10-6 20 0s15 6 20 0" fill="none" strokeWidth={.8} style={{ stroke: 'var(--ftext, #E6C987)' }} />
+      : <><circle cx={5} cy={5} r={.9} style={{ fill: 'var(--ftext, #E6C987)' }} /><path d="M15 12.5l.8 1.9 2 .2-1.5 1.3.5 2-1.8-1.1-1.8 1.1.5-2-1.5-1.3 2-.2Z" style={{ fill: 'var(--ftext, #E6C987)' }} /></>;
+  const w = kind === 'wave' ? 40 : 20, h = 20;
+  return (
+    <svg className={`tp-cover-pat ${kind}`} aria-hidden>
+      <defs><pattern id={`${id}p`} width={w} height={h} patternUnits="userSpaceOnUse">{tile}</pattern></defs>
+      <rect width="100%" height="100%" fill={`url(#${id}p)`} />
+    </svg>
+  );
+}
+const FOIL_STOPS: [string, [string, string]][] = [['0', ['--f1', '#B98E3E']], ['.35', ['--f2', '#F6E1A6']], ['.55', ['--f3', '#D2A95A']], ['.75', ['--f4', '#FFF3CC']], ['1', ['--f5', '#C39648']]];
+export function Cover({ owner, hint, className, look }: { owner?: string; hint?: string; className?: string; look?: Look }) {
+  const holder = useHolder();
+  const lk = look || holder.look;
   return (
     <div className={`tp-cover ${className || ''}`}>
+      {lk && <CoverPat kind={lk.pattern} />}
       <div className="tp-cover-grain" />
       <div className="tp-cover-spine" />
       <div className="tp-cover-in">
@@ -348,9 +382,10 @@ export function Cover({ owner, hint, className }: { owner?: string; hint?: strin
         <div className="tp-mono tp-cover-en">TALENT PASSPORT</div>
         <i className="tp-cover-rule" />
         {owner && <div className="tp-serif tp-cover-owner">{owner}</div>}
+        {lk?.motto && <div className="tp-serif tp-foil tp-cover-motto">「{lk.motto}」</div>}
         <div className="tp-cover-chiprow">
           <i className="tp-chip" />
-          <svg viewBox="0 0 40 26" className="tp-epass" aria-hidden><rect x="1.5" y="1.5" width="37" height="23" rx="3" fill="none" stroke="#E6C987" strokeWidth="2" /><path d="M1.5 9H38.5M1.5 17H38.5" stroke="#E6C987" strokeWidth="2" /><circle cx="20" cy="13" r="4.5" fill="#1B1E44" stroke="#E6C987" strokeWidth="2" /></svg>
+          <svg viewBox="0 0 40 26" className="tp-epass" aria-hidden><rect x="1.5" y="1.5" width="37" height="23" rx="3" fill="none" strokeWidth="2" style={{ stroke: 'var(--ftext, #E6C987)' }} /><path d="M1.5 9H38.5M1.5 17H38.5" strokeWidth="2" style={{ stroke: 'var(--ftext, #E6C987)' }} /><circle cx="20" cy="13" r="4.5" strokeWidth="2" style={{ fill: 'var(--cv2, #1B1E44)', stroke: 'var(--ftext, #E6C987)' }} /></svg>
         </div>
         {hint && <div className="tp-cover-hint">{hint}</div>}
       </div>

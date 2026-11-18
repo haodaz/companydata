@@ -67,6 +67,8 @@ export async function proxy(req: NextRequest) {
     if (pathname === '/api/lab/landing' && req.method === 'GET') return NextResponse.next();
     // 证书公开：链接本身就是验证方式，分享出去的人不该被拦去登录（改名字由路由自己核对访客编号）
     if (pathname.startsWith('/api/lab/cert/')) return NextResponse.next();
+    // 人才护照分享公开（只读）：分享链接 /passport/s/<token> 里的 token 本身就是授权凭证，接口自己核对有没有过期 / 撤回、只回被授权的页；其余 /api/passport/* 照旧要登录 + 管理员
+    if (pathname.startsWith('/api/passport/share/') && req.method === 'GET') return NextResponse.next();
     // AI 大学（/college）公开：毕业生列表和档案只读；入学 / 人才培养申请不用登录（收集客户线索，接口自己防刷）
     if (pathname.startsWith('/api/college/') && !pathname.startsWith('/api/college/admin') && req.method === 'GET') return NextResponse.next();   // 教务接口 /api/college/admin 要登录
     if (pathname === '/api/college/apply' && req.method === 'POST') return NextResponse.next();

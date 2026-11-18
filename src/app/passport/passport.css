@@ -33,7 +33,7 @@
 
 /* ---------- 护照本 + 翻页 ---------- */
 .tp-stage { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 6px 0 8px; }
-.tp-book { --pw: min(calc(100vw - 36px), 392px, calc((100dvh - var(--chrome, 190px)) * .707)); position: relative; width: calc(var(--pw) + 14px); padding: 7px; border-radius: 16px; background: linear-gradient(135deg, #22265A, var(--navy)); box-shadow: 0 24px 50px rgba(24, 27, 60, .32), 0 4px 10px rgba(24, 27, 60, .2); touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.tp-book { --pw: min(calc(100vw - 36px), 392px, calc((100dvh - var(--chrome, 190px)) * .707)); position: relative; width: calc(var(--pw) + 14px); padding: 7px; border-radius: 16px; background: linear-gradient(135deg, var(--cv1, #22265A), var(--cv3, var(--navy))); box-shadow: 0 24px 50px rgba(24, 27, 60, .32), 0 4px 10px rgba(24, 27, 60, .2); touch-action: pan-y; user-select: none; -webkit-user-select: none; }
 .tp-book-in { position: relative; width: var(--pw); aspect-ratio: 707 / 1000; perspective: 1700px; }
 .tp-book-edge { position: absolute; right: -4px; top: 6px; bottom: 6px; width: 6px; border-radius: 0 3px 3px 0; background: repeating-linear-gradient(180deg, #F2EDE2 0 2px, #DCD5C6 2px 3px); }
 .tp-leaf { position: absolute; inset: 0; transform-origin: left center; z-index: 3; will-change: transform; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 4px 9px 9px 4px; box-shadow: 0 0 0 rgba(0,0,0,0); }
@@ -55,7 +55,7 @@
 .tp-chips button.sealed { color: var(--mu2); }
 
 /* ---------- 一页纸 ---------- */
-.tp-page { position: absolute; inset: 0; container-type: inline-size; background: var(--paper); border-radius: 4px 9px 9px 4px; overflow: hidden; box-shadow: inset 10px 0 14px -10px rgba(24, 27, 60, .25); }
+.tp-page { position: absolute; inset: 0; container-type: inline-size; background: var(--paper); transition: background-color .45s ease; border-radius: 4px 9px 9px 4px; overflow: hidden; box-shadow: inset 10px 0 14px -10px rgba(24, 27, 60, .25); }
 .tp-paper { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .tp-ph { position: absolute; left: 8cqw; right: 8cqw; top: 6.6cqw; display: flex; justify-content: space-between; align-items: flex-start; gap: 3cqw; }
 .tp-ph-l { font-size: 2.3cqw; font-weight: 700; color: var(--mu); letter-spacing: .04em; padding-top: .6cqw; white-space: nowrap; }
@@ -150,27 +150,27 @@
 .tp-acc-tip { position: absolute; left: 8cqw; right: 8cqw; bottom: 10cqw; font-size: 2.4cqw; color: var(--mu); text-align: center; }
 
 /* ---------- 封皮 ---------- */
-.tp-cover { position: absolute; inset: 0; container-type: inline-size; overflow: hidden; border-radius: 4px 12px 12px 4px; color: #F3E3B8;
-  background: radial-gradient(130% 100% at 30% 0%, #2C3266 0%, #1A1D44 50%, #0F1130 100%);
+.tp-cover { position: absolute; inset: 0; container-type: inline-size; overflow: hidden; border-radius: 4px 12px 12px 4px; color: var(--fowner, #F3E3B8);
+  background: radial-gradient(130% 100% at 30% 0%, var(--cv1, #2C3266) 0%, var(--cv2, #1A1D44) 50%, var(--cv3, #0F1130) 100%); transition: background .45s ease;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .05), inset 3cqw 0 4cqw -2.4cqw rgba(0, 0, 0, .6); }
-.tp-cover::before { content: ''; position: absolute; inset: 4.4cqw; border: .7cqw solid rgba(212, 180, 110, .6); border-radius: 1.6cqw; pointer-events: none; }
-.tp-cover::after { content: ''; position: absolute; inset: 6.2cqw; border: .25cqw solid rgba(212, 180, 110, .38); border-radius: 1.1cqw; pointer-events: none; }
+.tp-cover::before { content: ''; position: absolute; inset: 4.4cqw; border: .7cqw solid rgba(var(--fline, 212, 180, 110), .6); border-radius: 1.6cqw; pointer-events: none; }
+.tp-cover::after { content: ''; position: absolute; inset: 6.2cqw; border: .25cqw solid rgba(var(--fline, 212, 180, 110), .38); border-radius: 1.1cqw; pointer-events: none; }
 .tp-cover-grain { position: absolute; inset: 0; opacity: .35; pointer-events: none; background-image: radial-gradient(rgba(255, 255, 255, .07) .25cqw, transparent .3cqw), radial-gradient(rgba(0, 0, 0, .25) .25cqw, transparent .3cqw); background-size: 2cqw 2cqw, 2.8cqw 2.8cqw; background-position: 0 0, 1cqw 1.3cqw; }
 .tp-cover-spine { position: absolute; left: 0; top: 0; bottom: 0; width: 5cqw; background: linear-gradient(90deg, rgba(0, 0, 0, .45), rgba(255, 255, 255, .05) 60%, rgba(0, 0, 0, .2)); }
 .tp-cover-in { position: absolute; inset: 9cqw 8cqw 7cqw; display: flex; flex-direction: column; align-items: center; text-align: center; }
-.tp-foil { background: linear-gradient(100deg, #B98E3E, #F6E1A6 30%, #D2A95A 48%, #FFF3CC 62%, #C39648 80%, #E9CF8F); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; animation: tp-foil 6s ease-in-out infinite alternate; }
+.tp-foil { background: linear-gradient(100deg, var(--f1, #B98E3E), var(--f2, #F6E1A6) 30%, var(--f3, #D2A95A) 48%, var(--f4, #FFF3CC) 62%, var(--f5, #C39648) 80%, var(--f2, #E9CF8F)); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; animation: tp-foil 6s ease-in-out infinite alternate; }
 @keyframes tp-foil { to { background-position: 100% 0; } }
 .tp-cover-brand { font-size: 7.4cqw; font-weight: 900; letter-spacing: .12em; line-height: 1.2; filter: drop-shadow(0 .3cqw .2cqw rgba(0, 0, 0, .35)); }
-.tp-cover-sub { font-size: 2.5cqw; letter-spacing: .32em; color: rgba(230, 201, 135, .8); margin-top: 1.4cqw; padding-left: .32em; white-space: nowrap; }
+.tp-cover-sub { font-size: 2.5cqw; letter-spacing: .32em; color: rgba(var(--fsoft, 230, 201, 135), .8); margin-top: 1.4cqw; padding-left: .32em; white-space: nowrap; }
 .tp-cover-emblem { width: 40cqw; height: 40cqw; margin-top: 6cqw; filter: drop-shadow(0 .4cqw .3cqw rgba(0, 0, 0, .35)); }
 .tp-cover-title { font-size: 13cqw; font-weight: 900; letter-spacing: .22em; padding-left: .22em; margin-top: 6cqw; line-height: 1.1; filter: drop-shadow(0 .4cqw .3cqw rgba(0, 0, 0, .4)); }
-.tp-cover-en { font-size: 3.4cqw; letter-spacing: .5em; padding-left: .5em; color: rgba(230, 210, 170, .85); margin-top: 2.2cqw; white-space: nowrap; }
-.tp-cover-rule { display: block; width: 24cqw; height: .3cqw; margin-top: 5cqw; background: linear-gradient(90deg, transparent, #D9B66A, transparent); }
-.tp-cover-owner { font-size: 4.6cqw; font-weight: 800; color: #F6E1A6; margin-top: 3.6cqw; }
+.tp-cover-en { font-size: 3.4cqw; letter-spacing: .5em; padding-left: .5em; color: rgba(var(--fsoft, 230, 210, 170), .85); margin-top: 2.2cqw; white-space: nowrap; }
+.tp-cover-rule { display: block; width: 24cqw; height: .3cqw; margin-top: 5cqw; background: linear-gradient(90deg, transparent, var(--f3, #D9B66A), transparent); }
+.tp-cover-owner { font-size: 4.6cqw; font-weight: 800; color: var(--fowner, #F6E1A6); margin-top: 3.6cqw; }
 .tp-cover-chiprow { display: flex; align-items: center; gap: 6cqw; margin-top: 3.4cqw; }
 .tp-cover-chiprow .tp-chip { width: 13cqw; }
 .tp-epass { width: 8.6cqw; }
-.tp-cover-hint { margin-top: auto; font-size: 2.8cqw; letter-spacing: .4em; color: rgba(230, 210, 170, .6); padding-left: .4em; }
+.tp-cover-hint { margin-top: auto; font-size: 2.8cqw; letter-spacing: .4em; color: rgba(var(--fsoft, 230, 210, 170), .6); padding-left: .4em; }
 .tp-cover-sheen { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(115deg, transparent 30%, rgba(255, 240, 200, .16) 48%, transparent 62%); background-size: 260% 100%; animation: tp-shine 7s ease-in-out infinite; }
 
 /* ---------- 底部抽屉 ---------- */
@@ -378,3 +378,149 @@ textarea.tp-input { height: auto; min-height: 76px; padding: 10px 12px; line-hei
 .tp-intro .tp-sharehead { text-align: left; width: 100%; max-width: 380px; margin: 0; }
 .tp-intro-go { width: 100%; max-width: 380px; margin-top: 14px; height: 54px; font-size: 16px; }
 .tp-intro small { display: block; margin-top: 8px; font-size: 12px; color: var(--mu2); }
+
+/* ======================================================================
+ * 一人一本（2026-11-17）：演示标记、空页、盖戳 / 贴签动效、领取仪式与引导、定制我的人才护照
+ * ====================================================================== */
+.tp-demo-tag.beta { color: #3E2FB8; background: #EFEBFF; border-color: #CFC6FF; }
+.tp-ph-r b small { font-size: .62em; font-weight: 700; color: var(--mu); }
+.tp-cover-pat { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .13; pointer-events: none; }
+.tp-cover-pat.stars { opacity: .2; }
+.tp-cover-motto { font-size: 3.8cqw; font-weight: 800; letter-spacing: .08em; margin-top: 2.4cqw; line-height: 1.3; }
+
+/* 演示签章：护照页上一个小角标 + 列表里的标签 */
+.tp-dmark { position: absolute; right: -1cqw; top: -1.6cqw; z-index: 2; font-size: 2cqw; font-weight: 800; line-height: 1; letter-spacing: .1em; color: #8A5A00; background: #FFF4D6; border: .2cqw solid #F1D48A; border-radius: 99px; padding: .6cqw 1.4cqw; pointer-events: none; transform: rotate(calc(-1 * var(--rot, 0deg))); }
+.tp-visa-at .tp-dmark { right: 2cqw; top: -2cqw; transform: none; }
+.tp-dtag { display: inline-block; vertical-align: 1px; font-size: 10.5px; font-weight: 800; color: #8A5A00; background: #FFF4D6; border: 1px solid #F1D48A; border-radius: 99px; padding: 0 6px; margin-left: 4px; }
+.tp-dr-demo { display: flex; gap: 8px; align-items: flex-start; margin: 2px 0 12px; padding: 10px 12px; border-radius: 12px; background: #FFF8E4; border: 1px dashed #E8C66C; color: #6E4A00; font-size: 12.5px; line-height: 1.5; }
+.tp-dr-demo b { flex: none; font-size: 11px; color: #fff; background: #C98A0B; border-radius: 6px; padding: 1px 6px; margin-top: 1px; }
+.tp-lib-row > div { min-width: 0; }
+.tp-lib-row .tp-btn { flex: none; }
+.tp-dest-lib { border: 1.5px dashed #E8C66C !important; background: #FFFBF0 !important; }
+
+/* 尚未签发的空页：像护照里还没盖章的空白页 */
+.tp-empty { position: absolute; left: 8cqw; right: 8cqw; top: 18cqw; bottom: 12cqw; display: flex; flex-direction: column; align-items: center; gap: 4.4cqw; text-align: center; }
+.tp-empty-visa { position: relative; width: 100%; aspect-ratio: 640 / 400; border-radius: 2.4cqw; border: .45cqw dashed color-mix(in srgb, var(--c) 45%, transparent); background: repeating-linear-gradient(-45deg, color-mix(in srgb, var(--c) 5%, transparent) 0 1.4cqw, transparent 1.4cqw 2.8cqw); display: grid; place-content: center; gap: 1cqw; color: color-mix(in srgb, var(--c) 70%, #8A90AA); }
+.tp-empty-visa span { font-family: var(--mono); font-size: 2.1cqw; letter-spacing: .3em; opacity: .7; }
+.tp-empty-visa b { font-family: var(--serif); font-size: 6.4cqw; font-weight: 900; opacity: .55; }
+.tp-empty-visa em { font-style: normal; font-family: var(--mono); font-size: 1.9cqw; letter-spacing: .18em; opacity: .6; }
+.tp-empty-ring { width: 46cqw; aspect-ratio: 1; border-radius: 50%; border: .5cqw dashed color-mix(in srgb, var(--c) 45%, transparent); display: grid; place-items: center; box-shadow: inset 0 0 0 2.4cqw transparent, inset 0 0 0 2.7cqw color-mix(in srgb, var(--c) 18%, transparent); }
+.tp-empty-ring b { display: block; font-family: var(--serif); font-size: 7cqw; color: color-mix(in srgb, var(--c) 55%, #8A90AA); }
+.tp-empty-ring span { font-family: var(--mono); font-size: 1.9cqw; letter-spacing: .18em; color: var(--mu2); }
+.tp-empty-t b { display: block; font-family: var(--serif); font-size: 5cqw; font-weight: 900; letter-spacing: .3em; padding-left: .3em; }
+.tp-empty-t span { display: block; margin-top: 1.4cqw; font-size: 2.9cqw; color: var(--mu); line-height: 1.6; }
+.tp-empty-go { display: flex; gap: 2.4cqw; justify-content: center; flex-wrap: wrap; }
+.tp-empty-go .tp-hit { position: relative; font-size: 3cqw; font-weight: 800; padding: 2cqw 4cqw; border-radius: 99px; background: var(--ink); color: #fff; }
+.tp-empty-go .tp-hit.ghost { background: #FFF8E4; color: #6E4A00; box-shadow: inset 0 0 0 .3cqw #E8C66C; }
+
+/* ---------- 盖戳：从上方放大压下来「砰」一下，墨迹波纹扩散，印泥由浓变正常，纸面一抖 ---------- */
+.tp-root .tp-stamp-at.fresh .tp-stamp { animation: tp-slam .62s cubic-bezier(.2, .7, .3, 1) .28s both !important; will-change: transform, opacity; }
+@keyframes tp-slam {
+  0% { transform: translateY(-38%) scale(2.6) rotate(-9deg); opacity: 0; filter: saturate(2) brightness(.55); }
+  42% { transform: translateY(0) scale(.9) rotate(1.5deg); opacity: 1; filter: saturate(2) brightness(.55); }
+  58% { transform: scale(1.05) rotate(-.6deg); }
+  74% { transform: scale(.985) rotate(.2deg); }
+  100% { transform: scale(1) rotate(0); opacity: .9; filter: none; }
+}
+.tp-root .tp-stamp-at.fresh::before { content: ''; position: absolute; inset: -6%; border-radius: 50%; pointer-events: none; opacity: 0; background: radial-gradient(closest-side, color-mix(in srgb, var(--c) 30%, transparent), transparent 70%); animation: tp-ink .9s ease-out .52s; }
+.tp-root .tp-stamp-at.fresh::after { border-width: .7cqw; animation: tp-ring .9s cubic-bezier(.2, .7, .3, 1) .52s; }
+@keyframes tp-ink { 0% { opacity: .9; transform: scale(.5); } 100% { opacity: 0; transform: scale(1.7); } }
+.tp-page.tp-thud { animation: tp-thud .34s ease-out .54s; }
+@keyframes tp-thud { 0% { transform: translate(0, 0); } 20% { transform: translate(-.5%, .7%); } 45% { transform: translate(.4%, -.4%); } 70% { transform: translate(-.2%, .2%); } 100% { transform: none; } }
+
+/* ---------- 贴签：从下方斜着滑上来，一角先落下、整张压平，全息光带扫过，红色流水号最后打上 ---------- */
+.tp-root .tp-visa-at.fresh .tp-visa-in { animation: tp-stick 1.05s cubic-bezier(.22, .8, .3, 1) .2s both !important; transform-origin: 8% 10%; will-change: transform, opacity; }
+@keyframes tp-stick {
+  0% { transform: perspective(900px) translateY(70%) rotate(7deg) rotateX(28deg) rotateY(-14deg); opacity: 0; box-shadow: 0 6cqw 8cqw rgba(24, 27, 60, .35); }
+  38% { transform: perspective(900px) translateY(-3%) rotate(2.4deg) rotateX(16deg) rotateY(-10deg); opacity: 1; }
+  62% { transform: perspective(900px) translateY(0) rotate(.6deg) rotateX(7deg) rotateY(-4deg); }
+  82% { transform: perspective(900px) scale(1.012) rotateX(0) rotateY(0); }
+  100% { transform: none; opacity: 1; }
+}
+.tp-sweep { position: absolute; inset: 0; border-radius: 2.4cqw; pointer-events: none; z-index: 3; background: linear-gradient(100deg, transparent 30%, rgba(255, 160, 210, .55) 40%, rgba(160, 235, 245, .65) 47%, rgba(200, 190, 255, .6) 54%, rgba(255, 230, 150, .5) 60%, transparent 70%); background-size: 260% 100%; background-position: 130% 0; mix-blend-mode: color-dodge; animation: tp-sweep .9s ease-in-out 1.15s both; }
+@keyframes tp-sweep { from { background-position: 130% 0; opacity: 1; } 85% { opacity: 1; } to { background-position: -40% 0; opacity: 0; } }
+.tp-visa-no { transform-box: fill-box; transform-origin: center; }
+.tp-root .tp-visa-at.fresh .tp-visa-no { animation: tp-num .32s cubic-bezier(.3, 1.6, .5, 1) 1.9s both; }
+@keyframes tp-num { 0% { opacity: 0; transform: scale(1.8); } 100% { opacity: 1; transform: none; } }
+.tp-st.fresh { animation: tp-stick .9s cubic-bezier(.22, .8, .3, 1) .2s both; transform-origin: 10% 10%; }
+
+/* ---------- 写进第一页：身份页逐项写出来，护照号和签发日期最后打上，盖一个「签发」章 ---------- */
+.tp-writein .tp-id-photo { animation: tp-fade .6s ease .1s both; }
+.tp-writein .tp-id-fields > div { animation: tp-write .5s ease both; }
+.tp-writein .tp-id-fields > div:nth-child(1) { animation-delay: .35s; }
+.tp-writein .tp-id-fields > div:nth-child(2) { animation-delay: .7s; }
+.tp-writein .tp-id-fields > div:nth-child(4) { animation-delay: 1.05s; }
+.tp-writein .tp-id-bio { animation: tp-write .6s ease 1.4s both; }
+.tp-writein .tp-id-fields > div:nth-child(3), .tp-writein .tp-id-fields > div:nth-child(5) { animation: tp-num .36s cubic-bezier(.3, 1.6, .5, 1) 1.95s both; transform-origin: left center; }
+@keyframes tp-write { from { opacity: 0; clip-path: inset(0 100% 0 0); } to { opacity: 1; clip-path: inset(0 0 0 0); } }
+.tp-issue-stamp { position: absolute; right: 6cqw; top: 64cqw; width: 30cqw; pointer-events: none; }
+.tp-issue-stamp .tp-stamp { animation: tp-slam .62s cubic-bezier(.2, .7, .3, 1) 2.35s both; }
+
+/* ---------- 领取仪式 / 设置基础信息 / 几步引导 ---------- */
+.tp-ob { position: fixed; inset: 0; z-index: 60; display: flex; justify-content: center; overflow-y: auto; animation: tp-fade .35s ease both; }
+.tp-ob.dark { background: radial-gradient(90% 65% at 50% 40%, #2B3070 0%, #171A3C 55%, #0B0C1E 100%); color: #F3E3B8; }
+.tp-ob.light { background: radial-gradient(120% 60% at 50% 0%, #FFFDF8 0%, var(--bg) 60%, #ECE6DA 100%); }
+.tp-ob-in { width: 100%; max-width: 440px; min-height: 100%; padding: 40px 22px 28px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.tp-ob-book { position: relative; width: min(62vw, 250px); aspect-ratio: 707 / 1000; margin: 4vh auto 30px; animation: tp-drop 1.3s cubic-bezier(.2, .9, .25, 1) .2s both; }
+.tp-ob-book .tp-cover { border-radius: 6px 14px 14px 6px; box-shadow: 0 40px 70px rgba(0, 0, 0, .55), 0 0 0 1px rgba(255, 255, 255, .06); }
+.tp-ob-glow { position: absolute; inset: -30%; border-radius: 50%; pointer-events: none; background: radial-gradient(closest-side, rgba(246, 225, 166, .38), rgba(246, 225, 166, 0)); animation: tp-glow 2.6s ease-in-out 1s infinite alternate; }
+@keyframes tp-drop { 0% { transform: translateY(-60vh) rotate(-14deg) scale(.8); opacity: 0; } 70% { transform: translateY(2%) rotate(1.5deg) scale(1.02); opacity: 1; } 100% { transform: none; } }
+@keyframes tp-glow { from { opacity: .45; transform: scale(.92); } to { opacity: 1; transform: scale(1.05); } }
+.tp-ob-sparks { position: absolute; inset: -10%; pointer-events: none; }
+.tp-ob-sparks i { position: absolute; width: 5px; height: 5px; border-radius: 50%; background: #FFF3CC; box-shadow: 0 0 8px 2px rgba(246, 225, 166, .8); opacity: 0; animation: tp-spark 2.4s ease-out infinite; }
+@keyframes tp-spark { 0% { opacity: 0; transform: translateY(10px) scale(.5); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(-40px) scale(1.2); } }
+.tp-ob-h { font-family: var(--serif); font-size: 21px; font-weight: 900; line-height: 1.65; margin: 0 0 26px; color: #F6E1A6; animation: tp-fade .8s ease 1.3s both; text-wrap: balance; }
+.tp-ob .tp-btn.gold { background: linear-gradient(100deg, #B98E3E, #F6E1A6 45%, #D2A95A); color: #2A1E05; font-weight: 900; box-shadow: 0 10px 30px rgba(217, 182, 106, .35); animation: tp-fade .6s ease 1.8s both; }
+.tp-ob-skip { margin-top: 14px; border: 0; background: none; color: rgba(243, 227, 184, .55); font-size: 13px; cursor: pointer; animation: tp-fade .6s ease 2s both; }
+.tp-ob-form { width: 100%; text-align: left; }
+.tp-ob-preview { width: min(72vw, 290px); margin: 0 auto 16px; aspect-ratio: 707 / 1000; position: relative; border-radius: 6px 12px 12px 6px; overflow: hidden; box-shadow: 0 18px 40px rgba(24, 27, 60, .22); }
+.tp-ob-preview .tp-page { pointer-events: none; }
+.tp-ob-title { font-size: 20px; font-weight: 900; margin: 0 0 4px; }
+.tp-ob-sub { color: var(--mu); font-size: 13px; margin: 0 0 14px; }
+
+.tp-coach { position: fixed; inset: 0; z-index: 55; pointer-events: auto; }
+.tp-coach-hole { position: fixed; border-radius: 16px; box-shadow: 0 0 0 9999px rgba(11, 12, 30, .62); transition: all .38s cubic-bezier(.3, .8, .3, 1); pointer-events: none; }
+.tp-coach-hole::after { content: ''; position: absolute; inset: -6px; border-radius: 20px; border: 2px solid rgba(246, 225, 166, .9); animation: tp-glow 1.2s ease-in-out infinite alternate; }
+.tp-coach-tip { position: fixed; left: 50%; transform: translateX(-50%); width: min(330px, calc(100vw - 32px)); background: #FFFDF8; color: var(--ink); border-radius: 16px; padding: 14px 16px 12px; box-shadow: 0 16px 40px rgba(0, 0, 0, .3); transition: top .38s cubic-bezier(.3, .8, .3, 1); }
+.tp-coach-tip b { display: block; font-size: 15px; margin-bottom: 2px; }
+.tp-coach-tip p { margin: 0; font-size: 13.5px; color: #3A416A; }
+.tp-coach-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+.tp-coach-row small { color: var(--mu2); font-family: var(--mono); flex: 1; }
+.tp-coach-row button { border: 0; cursor: pointer; font-weight: 800; font-size: 13px; border-radius: 99px; padding: 7px 14px; }
+.tp-coach-row .skip { background: none; color: var(--mu); }
+.tp-coach-row .next { background: var(--ink); color: #fff; }
+
+/* ---------- 定制我的人才护照 ---------- */
+.tp-custom { display: grid; grid-template-columns: 112px 1fr; gap: 14px; align-items: start; margin-top: 4px; }
+.tp-custom-book { position: relative; width: 112px; aspect-ratio: 707 / 1000; perspective: 700px; margin-top: 4px; }
+.tp-custom-book .tp-cb-paper { position: absolute; inset: 0; border-radius: 3px 8px 8px 3px; background: var(--paper); box-shadow: 0 10px 22px rgba(24, 27, 60, .25), inset 6px 0 8px -6px rgba(24, 27, 60, .3); transition: background-color .45s ease; overflow: hidden; }
+.tp-custom-book .tp-cb-paper svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.tp-custom-book .tp-cb-cover { position: absolute; inset: 0; transform-origin: left center; animation: tp-sway 5s ease-in-out infinite; transform-style: preserve-3d; }
+.tp-custom-book .tp-cb-cover .tp-cover { border-radius: 3px 8px 8px 3px; box-shadow: 0 10px 22px rgba(24, 27, 60, .3); }
+.tp-custom-book.confirm .tp-cb-cover { animation: tp-reopen 1.2s cubic-bezier(.4, .1, .3, 1) both; }
+@keyframes tp-sway { 0%, 100% { transform: rotateY(-8deg); } 50% { transform: rotateY(-26deg); } }
+@keyframes tp-reopen { 0% { transform: rotateY(-8deg); } 40% { transform: rotateY(-150deg); } 60% { transform: rotateY(-150deg); } 100% { transform: rotateY(-8deg); } }
+.tp-custom-opts { min-width: 0; display: grid; gap: 10px; }
+.tp-custom-opts > div > span { display: block; font-size: 12px; font-weight: 700; color: var(--mu); margin-bottom: 5px; }
+.tp-chips2 { display: flex; flex-wrap: wrap; gap: 6px; }
+.tp-sw { width: 26px; height: 26px; border-radius: 50%; border: 0; cursor: pointer; padding: 0; position: relative; transition: transform .16s cubic-bezier(.3, 1.6, .5, 1), box-shadow .16s; box-shadow: inset 0 0 0 1px rgba(29, 36, 80, .12); }
+.tp-sw:active { transform: scale(.88); }
+.tp-sw.on { transform: scale(1.12); box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--ink); }
+.tp-sw.cover::after { content: ''; position: absolute; inset: 8px; border-radius: 50%; border: 1.5px solid var(--m); opacity: .9; }
+.tp-root .tp-pat { min-width: 54px; height: 34px; border-radius: 9px; border: 0; cursor: pointer; font-size: 11.5px; font-weight: 800; color: var(--fowner, #F3E3B8); background: var(--cv2, #1A1D44); position: relative; overflow: hidden; transition: transform .16s cubic-bezier(.3, 1.6, .5, 1), box-shadow .16s; padding: 0 8px; }
+.tp-pat svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .35; }
+.tp-pat span { position: relative; text-shadow: 0 1px 2px rgba(0, 0, 0, .5); }
+.tp-pat:active { transform: scale(.9); }
+.tp-pat.on { transform: scale(1.06); box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--ink); }
+
+/* 头像 */
+.tp-avatar-row { display: flex; gap: 12px; align-items: center; margin-top: 12px; }
+.tp-avatar-row .tp-avatar-pv { width: 64px; flex: none; border-radius: 10px; overflow: hidden; box-shadow: 0 3px 10px rgba(29, 36, 80, .15); }
+.tp-avatar-row .tp-avatar-pv svg { display: block; width: 100%; }
+.tp-avatar-row small { display: block; color: var(--mu); font-size: 12px; margin-top: 4px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tp-root .tp-stamp-at.fresh .tp-stamp, .tp-root .tp-visa-at.fresh .tp-visa-in, .tp-st.fresh, .tp-issue-stamp .tp-stamp, .tp-ob-book { animation: tp-fade .5s ease both !important; animation-duration: .5s !important; }
+  .tp-page.tp-thud, .tp-sweep, .tp-root .tp-stamp-at.fresh::before, .tp-root .tp-stamp-at.fresh::after, .tp-custom-book .tp-cb-cover, .tp-ob-sparks { animation: none !important; }
+  .tp-writein .tp-id-fields > div, .tp-writein .tp-id-bio, .tp-root .tp-visa-at.fresh .tp-visa-no { animation: tp-fade .5s ease both !important; animation-duration: .5s !important; clip-path: none !important; }
+}

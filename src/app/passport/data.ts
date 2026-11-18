@@ -36,7 +36,10 @@ export interface Claim {
   facts?: [string, string][];
   visa?: VisaArt;
   stamp?: StampArt;
+  demo?: boolean;        // 演示签章库里盖进来的：护照和抽屉里都标「演示」，不是真实签发
+  strength?: StrengthData;   // 长处与发展页（演示签章库）：前三项长处 + 分项 + 发展计划
 }
+export interface StrengthData { top: { name: string; why: string; v: string }[]; bars: { name: string; v: number; max: number }[]; plan: { until: string; steps: [string, string][] } }
 
 /* ---------- 演示时间：数据里的「还剩几天」都按这一天算 ---------- */
 export const DEMO_TODAY = '2026-11-17';
@@ -456,7 +459,7 @@ export const EXP_EXTRA: Placement = { claim: 'TP-CL-0401', x: 30, y: 72, w: 40, 
 export const EXP_EXTRA_STAMP: StampArt = { shape: 'cham', top: 'ARRIVAL · 走完', icon: 'case', main: '7 段', date: '一整天', color: '#B4532A' };
 
 /* ---------- 查看记录：给谁看过、看了哪几页 ---------- */
-export interface Grant { id: string; to: string; kind: string; pages: PageId[]; createdAt: string; days: number; until: string; views: number; lastView?: string; status: 'active' | 'expired' | 'revoked'; revokedAt?: string; purpose: string }
+export interface Grant { url?: string; id: string; to: string; kind: string; pages: PageId[]; createdAt: string; days: number; until: string; views: number; lastView?: string; status: 'active' | 'expired' | 'revoked'; revokedAt?: string; purpose: string }
 export const GRANTS: Grant[] = [
   { id: 'g-yuanan', to: '远岸人才（猎头）', kind: '猎头', pages: ['id', 'verify', 'ata', 'work', 'strength'], createdAt: '2026.11.12 10:20', days: 14, until: '2026.11.26', views: 5, lastView: '2026.11.16 21:40', status: 'active', purpose: '推荐某零售集团经营分析岗' },
   { id: 'g-zhiqi', to: '职启校招平台', kind: '校招平台', pages: ['id', 'verify', 'ata'], createdAt: '2026.11.02 09:05', days: 7, until: '2026.11.09', views: 2, lastView: '2026.11.04 15:12', status: 'expired', purpose: '管培生项目资格初筛' },

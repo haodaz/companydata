@@ -35,7 +35,7 @@ export function Landing() {
           <div className="tp-ctas">
             <Link className="tp-btn v" href="/passport/me">登录，管理我的护照</Link>
             <Link className="tp-btn ghost" href={`/passport/s/${SHARE_SID}?${DEMO_SHARE_QUERY}`}>看别人分享给我的</Link>
-            <small>演示：登录后进{HOLDER.name}的护照 · 他分享给某猎头的链接</small>
+            <small>内测：管理员登录后进自己的护照（一人一本）· 右边是演示人物{HOLDER.name}分享给某猎头的链接</small>
           </div>
 
           <div className="tp-three">

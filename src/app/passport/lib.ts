@@ -1,5 +1,7 @@
 import { useCallback, useMemo, useSyncExternalStore } from 'react';
 import QRCode from 'qrcode';
+import { DEMO_KEYS, demoOption, type DemoItem } from './demo-lib';
+import { toLook, type Look } from './themes';
 import {
   CLAIMS, DEFAULT_PROFILE, GRANTS, MAX_ADDED, PAGES,
   type Claim, type Grant, type PageId, type Profile, type StampArt, type StampShape, type StampIcon,
@@ -28,8 +30,8 @@ export type AddKind = 'exp' | 'work' | 'cert';
 export interface AddedItem { id: string; kind: AddKind; title: string; org: string; date: string; link?: string; verifyReq?: boolean; createdAt: string }
 export interface Booking { id: string; dest: string; slot: string; no: string; at: string }
 export interface ShareRec { id: string; to: string; pages: PageId[]; days: number; createdAt: number; url: string; revoked?: boolean }
-export interface OwnerState { profile: Profile; added: AddedItem[]; revokedGrants: string[]; shares: ShareRec[]; bookings: Booking[]; lastAdded?: string }
-export const EMPTY_STATE: OwnerState = { profile: DEFAULT_PROFILE, added: [], revokedGrants: [], shares: [], bookings: [] };
+export interface OwnerState { look?: Look; profile: Profile; added: AddedItem[]; demos: DemoItem[]; revokedGrants: string[]; shares: ShareRec[]; bookings: Booking[]; lastAdded?: string }
+export const EMPTY_STATE: OwnerState = { profile: DEFAULT_PROFILE, added: [], demos: [], revokedGrants: [], shares: [], bookings: [] };
 
 export const ADD_KINDS: Record<AddKind, { name: string; en: string; shape: StampShape; icon: StampIcon; color: string; orgLabel: string }> = {
   exp: { name: '经历', en: 'EXPERIENCE', shape: 'tag', icon: 'case', color: '#2B4C9B', orgLabel: '在哪儿 / 什么角色' },
@@ -65,7 +67,7 @@ export const pagesFromCodes = (s: string): PageId[] => PAGES.filter(p => !p.owne
 const b64e = (s: string) => { const bytes = new TextEncoder().encode(s); let bin = ''; bytes.forEach(b => { bin += String.fromCharCode(b); }); return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); };
 export const b64d = (s: string) => { const bin = atob(s.replace(/-/g, '+').replace(/_/g, '/')); return new TextDecoder().decode(Uint8Array.from(bin, c => c.charCodeAt(0))); };
 /** 本人改过的昵称 / 头像色 / 简介、本人加的条目，压进 x 参数（不然别的设备看不到） */
-export interface ShareExtras { n?: string; a?: string; b?: string; v?: string; i?: [AddKind, string, string, string, number?][] }
+export interface ShareExtras { n?: string; a?: string; b?: string; v?: string; i?: [AddKind, string, string, string, number?][]; m?: [string, string][]; l?: [string, string, string, string] }
 export function buildShareQuery(o: { pages: PageId[]; days: number; to: string; id: string; createdAt: number; state: OwnerState }) {
   const p = (['id', ...o.pages.filter(x => x !== 'id')] as PageId[]).map(codeOf).join('');
   const ex: ShareExtras = {};
@@ -75,6 +77,11 @@ export function buildShareQuery(o: { pages: PageId[]; days: number; to: string; 
   if (pr.bio !== DEFAULT_PROFILE.bio) ex.b = pr.bio;
   if (pr.visibility !== DEFAULT_PROFILE.visibility) ex.v = pr.visibility;
   if (o.state.added.length) ex.i = o.state.added.map(a => [a.kind, a.title, a.org, a.date, a.verifyReq ? 1 : 0]);
+  const sel = new Set(o.pages);
+  const dm = o.state.demos.filter(d => sel.has(d.page)).map(d => [d.key, d.id] as [string, string]);
+  if (dm.length) ex.m = dm;
+  const lk = o.state.look;
+  if (lk && (lk.cover !== 'navy' || lk.paper !== 'cream' || lk.pattern !== 'plain' || lk.motto)) ex.l = [lk.cover, lk.paper, lk.pattern, lk.motto];
   const q = new URLSearchParams({ p, d: String(o.days), to: o.to, k: o.id, t: o.createdAt.toString(36) });
   if (Object.keys(ex).length) q.set('x', b64e(JSON.stringify(ex)));
   return q.toString();
@@ -87,6 +94,13 @@ export function extrasToItems(ex: ShareExtras): AddedItem[] {
   return (ex.i || []).slice(0, MAX_ADDED).map((r, i) => ({ id: `TP-CL-S${i + 1}${String(seedOf(r[1] || '')).slice(-3)}`, kind: (['exp', 'work', 'cert'].includes(r[0]) ? r[0] : 'exp') as AddKind, title: String(r[1] || '').slice(0, 24), org: String(r[2] || '').slice(0, 30), date: String(r[3] || '').slice(0, 12), verifyReq: !!r[4], createdAt: '本人填写' }));
 }
 
+/** 演示护照分享出去的定制 */
+export const extrasToLook = (ex: ShareExtras): Look => toLook(Array.isArray(ex.l) ? { cover: ex.l[0], paper: ex.l[1], pattern: ex.l[2], motto: ex.l[3] } : null);
+/** 演示护照分享出去的演示签章库条目（只认库里有的 key） */
+export function extrasToDemos(ex: ShareExtras): DemoItem[] {
+  return (Array.isArray(ex.m) ? ex.m : []).slice(0, 40).filter(r => Array.isArray(r) && DEMO_KEYS.has(String(r[0]))).map(r => ({ key: String(r[0]), id: String(r[1] || '').slice(0, 20), page: demoOption(String(r[0]))!.page, createdAt: '' }));
+}
+
 /* ---------- 本人版的本地存储（演示）：useSyncExternalStore，服务端渲染时当作没有 ---------- */
 const KEY = 'tp:dz-7q3k9:v1';
 const EVT = 'tp-store';
@@ -94,7 +108,7 @@ function subscribe(cb: () => void) { window.addEventListener('storage', cb); win
 function read(): string | null { try { return window.localStorage.getItem(KEY); } catch { return null; } }
 function parse(raw: string | null): OwnerState {
   if (!raw) return EMPTY_STATE;
-  try { const v = JSON.parse(raw); return { ...EMPTY_STATE, ...v, profile: { ...DEFAULT_PROFILE, ...(v.profile || {}) } }; } catch { return EMPTY_STATE; }
+  try { const v = JSON.parse(raw); return { ...EMPTY_STATE, ...v, demos: Array.isArray(v.demos) ? v.demos : [], profile: { ...DEFAULT_PROFILE, ...(v.profile || {}) } }; } catch { return EMPTY_STATE; }
 }
 export function useOwnerState() {
   const raw = useSyncExternalStore(subscribe, read, () => null);

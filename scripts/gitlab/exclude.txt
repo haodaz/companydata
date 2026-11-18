@@ -49,3 +49,9 @@ supabase/migrations/069_invest_threads.sql
 ^scripts/fluency-
 ^src/app/passport(/|$)
 ^public/passport(/|$)
+# 2026-11-17 补：人才护照一人一本的接口、服务端和迁移（引用 src/app/passport，跟着一起不推）
+^src/app/api/passport(/|$)
+^src/lib/passport\.ts$
+supabase/migrations/073_talent_passport.sql
+supabase/migrations/074_passport_onboarded.sql
+supabase/migrations/075_passport_themes.sql
