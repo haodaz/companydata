@@ -67,7 +67,7 @@ export function PageFrame({ def, no, part, thud, children }: { def: PageDef; no:
 
 function StampAt({ p, art, claimId, ctx, i, label, demo }: { p: Omit<Placement, 'claim'>; art: StampArt; claimId: string; ctx: PageCtx; i: number; label: string; demo?: boolean }) {
   return (
-    <button type="button" className={`tp-hit tp-stamp-at${ctx.fresh === claimId ? ' fresh' : ''}`} aria-label={demo ? `${label}（演示）` : label}
+    <button type="button" className={`tp-hit tp-stamp-at${ctx.fresh === claimId ? ' fresh' : ''}`} aria-label={demo ? `${label}（演示）` : label} title={`${demo ? `${label}（演示）` : label} · 点开看细节`}
       style={{ left: `${p.x}%`, top: `${p.y}%`, width: `${p.w}%`, ['--rot' as string]: `${p.rot}deg`, ['--d' as string]: `${0.45 + i * 0.16}s`, ['--c' as string]: art.color }}
       onClick={() => ctx.onOpen(claimId)}>
       <Stamp s={art} seedKey={claimId + i} />
@@ -78,7 +78,7 @@ function StampAt({ p, art, claimId, ctx, i, label, demo }: { p: Omit<Placement, 
 function VisaAt({ claim, rot, ctx, style }: { claim: Claim; rot: number; ctx: PageCtx; style?: React.CSSProperties }) {
   const fresh = ctx.fresh === claim.id;
   return (
-    <button type="button" className={`tp-hit tp-visa-at${fresh ? ' fresh' : ''}`} aria-label={claim.demo ? `${claim.title}（演示）` : claim.title} style={{ transform: `rotate(${rot}deg)`, ...style }} onClick={() => ctx.onOpen(claim.id)}>
+    <button type="button" className={`tp-hit tp-visa-at${fresh ? ' fresh' : ''}`} aria-label={claim.demo ? `${claim.title}（演示）` : claim.title} title={`${claim.demo ? `${claim.title}（演示）` : claim.title} · 点开看细节`} style={{ transform: `rotate(${rot}deg)`, ...style }} onClick={() => ctx.onOpen(claim.id)}>
       <div className="tp-visa-in"><Visa v={claim.visa!} avatar={ctx.profile.avatar} />{fresh && <i className="tp-sweep" />}</div>
       {claim.demo && <span className="tp-dmark">演示</span>}
     </button>

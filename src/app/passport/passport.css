@@ -577,7 +577,7 @@ textarea.tp-input { height: auto; min-height: 76px; padding: 10px 12px; line-hei
 .tp-chat-head .tp-sp { width: 64px; flex: none; }
 .tp-chat-head b { display: block; font-size: 16px; }
 .tp-chat-head span { font-size: 12px; color: var(--mu); }
-.tp-chat-log { display: grid; gap: 10px; max-height: 46vh; overflow-y: auto; padding: 2px 2px 6px; overscroll-behavior: contain; }
+.tp-chat-log { display: grid; align-content: start; gap: 10px; max-height: 46vh; overflow-y: auto; padding: 2px 2px 6px; overscroll-behavior: contain; }
 .tp-msg { max-width: 88%; padding: 9px 12px; border-radius: 14px; font-size: 14px; line-height: 1.65; white-space: pre-wrap; overflow-wrap: anywhere; }
 .tp-msg.me { justify-self: end; background: var(--ink); color: #fff; border-bottom-right-radius: 4px; }
 .tp-msg.ai { justify-self: start; background: #fff; box-shadow: inset 0 0 0 1px rgba(29, 36, 80, .08); border-bottom-left-radius: 4px; }
@@ -620,3 +620,56 @@ textarea.tp-input { height: auto; min-height: 76px; padding: 10px 12px; line-hei
 .tp-login-tip { display: block; margin-top: 12px; color: var(--mu); font-size: 12px; text-align: center; }
 .tp-login-tip a { color: var(--v); }
 @media (prefers-reduced-motion: reduce) { .tp-login-book, .tp-login-sprite { animation: none !important; } }
+
+/* ======================================================================
+ * 电脑网页端（≥ 1024px）：书大而居中，底部导航变成左边的竖排工具栏，面板在书右边，抽屉居中弹出，签签对话从右侧滑出
+ * ====================================================================== */
+.tp-owner-main { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.tp-owner-book { flex: 1; display: flex; flex-direction: column; }
+.tp-owner.has-panel .tp-owner-book { display: none; }
+.tp-owner-side { display: flex; flex-direction: column; flex: 1; }
+.tp-desk-hint { display: none; }
+@keyframes tp-pop { from { opacity: 0; transform: translate(-50%, -46%) scale(.97); } }
+@keyframes tp-pop-out { to { opacity: 0; transform: translate(-50%, -46%) scale(.97); } }
+@keyframes tp-side-in { from { transform: translateX(100%); } }
+@keyframes tp-side-out { to { transform: translateX(100%); } }
+
+@media (min-width: 1024px) {
+  .tp-owner.tp-app { max-width: none; box-shadow: none; background: none; display: grid; grid-template-columns: 92px minmax(0, 1fr); grid-template-rows: auto 1fr; }
+  .tp-owner > .tp-top { grid-column: 2; grid-row: 1; padding: 22px 40px 4px; max-width: 1240px; width: 100%; margin: 0 auto; }
+  .tp-owner > .tp-tabbar { grid-column: 1; grid-row: 1 / span 2; position: sticky; top: 0; bottom: auto; height: 100dvh; grid-template-columns: none; grid-auto-rows: min-content; align-content: center; gap: 14px; padding: 20px 10px; border-top: 0; border-right: 1px solid var(--line); background: rgba(255, 253, 248, .7); }
+  .tp-owner > .tp-tabbar button { padding: 8px 0; border-radius: 14px; font-size: 12px; }
+  .tp-owner > .tp-tabbar button:hover { background: rgba(91, 75, 219, .07); }
+  .tp-owner > .tp-tabbar button.on { background: rgba(91, 75, 219, .1); }
+  .tp-owner-main { grid-column: 2; grid-row: 2; flex-direction: row; justify-content: center; align-items: flex-start; gap: 36px; padding: 6px 40px 28px; }
+  .tp-owner-book, .tp-owner.has-panel .tp-owner-book { display: flex; flex: 0 1 auto; }
+  .tp-owner .tp-book { --pw: min(560px, calc((100dvh - 250px) * .707)); }
+  .tp-owner .tp-chips { max-width: calc(min(560px, (100dvh - 250px) * .707) + 40px); justify-content: center; flex-wrap: wrap; }
+  .tp-owner-side { flex: 0 0 420px; max-height: calc(100dvh - 100px); overflow-y: auto; position: sticky; top: 12px; border-radius: 22px; scrollbar-width: thin; }
+  .tp-owner-side .tp-panel { padding: 0 4px 24px; }
+  .tp-desk-hint { display: block; margin-top: 8px; font-size: 12px; color: var(--mu2); letter-spacing: .04em; }
+  .tp-stage.imm .tp-desk-hint { color: rgba(255, 255, 255, .4); }
+  .tp-sp-fab { right: 32px; bottom: 32px; width: 64px; height: 64px; }
+  .tp-sp-fab .tp-sp { width: 70px; }
+  .tp-toast { bottom: 40px; }
+  /* 抽屉：宽屏居中弹出 */
+  .tp-sheet { top: 50%; bottom: auto; width: min(560px, 92vw); max-height: 86dvh; border-radius: 22px; transform: translate(-50%, -50%); animation: tp-pop .3s cubic-bezier(.2, .9, .3, 1) both; padding-bottom: 24px; box-shadow: 0 30px 80px rgba(16, 18, 42, .35); }
+  .tp-sheet.out { animation: tp-pop-out .2s ease-in both; }
+  .tp-sheet .tp-grip { display: none; }
+  /* 签签对话：右侧滑出的侧边栏 */
+  .tp-sheet.side { left: auto; right: 0; top: 0; bottom: 0; width: 440px; max-height: none; height: 100dvh; border-radius: 22px 0 0 22px; transform: none; animation: tp-side-in .34s cubic-bezier(.2, .9, .3, 1) both; display: flex; flex-direction: column; }
+  .tp-sheet.side.out { animation: tp-side-out .24s ease-in both; }
+  .tp-mask.side { background: rgba(16, 18, 42, .18); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .tp-sheet.side .tp-chat { flex: 1; min-height: 0; padding-top: 18px; }
+  .tp-sheet.side .tp-chat-log { flex: 1; max-height: none; }
+  /* 分享出去的沉浸翻页：书再大一点 */
+  .tp-stage.imm .tp-book { --pw: min(660px, calc((100dvh - 150px) * .707)); }
+  .tp-imm-top { left: 28px; }
+  /* 引导里签签更大一点 */
+  .tp-guide { width: 440px; }
+  .tp-guide .tp-sp { width: 120px; }
+}
+@media (min-width: 1600px) {
+  .tp-owner .tp-book { --pw: min(640px, calc((100dvh - 250px) * .707)); }
+  .tp-owner-side { flex-basis: 460px; }
+}

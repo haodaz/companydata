@@ -8,7 +8,8 @@ import { fmtTime, nowMs } from './lib';
 import { useHolder } from './holder';
 
 /* ---------- 通用抽屉 ---------- */
-export function Sheet({ onClose, children, label }: { onClose: () => void; children: (close: () => void) => React.ReactNode; label: string }) {
+/** variant=side：宽屏时从右侧滑出（签签对话）；默认宽屏居中弹出、手机从底部升起 */
+export function Sheet({ onClose, children, label, variant }: { onClose: () => void; children: (close: () => void) => React.ReactNode; label: string; variant?: 'side' }) {
   const [out, setOut] = useState(false);
   const close = () => setOut(true);
   useEffect(() => {
@@ -19,8 +20,8 @@ export function Sheet({ onClose, children, label }: { onClose: () => void; child
   }, []);
   return (
     <>
-      <div className={`tp-mask${out ? ' out' : ''}`} onClick={close} />
-      <div className={`tp-sheet${out ? ' out' : ''}`} role="dialog" aria-modal="true" aria-label={label} onAnimationEnd={e => { if (out && e.target === e.currentTarget) onClose(); }}>
+      <div className={`tp-mask${out ? ' out' : ''}${variant ? ` ${variant}` : ''}`} onClick={close} />
+      <div className={`tp-sheet${out ? ' out' : ''}${variant ? ` ${variant}` : ''}`} role="dialog" aria-modal="true" aria-label={label} onAnimationEnd={e => { if (out && e.target === e.currentTarget) onClose(); }}>
         <div className="tp-grip"><i /></div>
         <button type="button" className="tp-x" aria-label="关闭" onClick={close}>×</button>
         {children(close)}

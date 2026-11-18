@@ -24,6 +24,7 @@ import { Onboarding, type OnboardStage } from './onboard';
 import { AvatarPicker } from './avatar';
 import { COVERS, MOTTO_MAX, PAPERS, PATTERNS, lookVars, type CoverPattern, type CoverTheme, type Look, type PaperTheme } from './themes';
 import type { OwnerBundle } from './api-types';
+import { SpriteFab, SpriteSheet, useSpriteChat, type Confirm } from './sprite-chat';
 
 type Tab = 'book' | 'add' | 'get' | 'share' | 'me';
 export type OwnerMode = { kind: 'demo' } | { kind: 'real'; bundle: OwnerBundle };
@@ -51,6 +52,7 @@ function OwnerView({ store }: { store: Store }) {
   const [lib, setLib] = useState<PageId | 'all' | null>(null);  // 演示签章库抽屉（按页筛）
   const [stage, setStage] = useState<OnboardStage | null>(() => (store.onboarded ? null : 'ceremony'));
   const [writeIn, setWriteIn] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
   const say = (msg: string) => setToast(t => ({ msg, n: (t?.n || 0) + 1 }));
   const oops = (e: unknown) => say(`没存上：${(e as Error)?.message || '网络不太好'}，已撤回这一步`);
 
@@ -122,6 +124,31 @@ function OwnerView({ store }: { store: Store }) {
     return null;
   };
 
+  /** 签签的确认卡：本人点了「确认」才走到这里，用的都是本人版同一套护照接口（服务端照样校验管理员） */
+  const execSprite = async (c: Confirm): Promise<string> => {
+    const a = c.action as Record<string, unknown>;
+    const done = (o: Record<string, unknown>) => JSON.stringify({ ok: true, ...o });
+    if (c.name === 'add_self_item') {
+      const id = newClaimNo('U');
+      const p = store.addSelf({ id, kind: a.kind as AddKind, title: String(a.title), org: String(a.org || ''), date: String(a.date || ''), link: a.link ? String(a.link) : undefined, verifyReq: a.verify === true });
+      setChatOpen(false); land(id, '已盖章 · 签签帮你盖进了「本人填写」页');
+      await p; return done({ 结果: '已盖进「本人填写」页', claim_no: id });
+    }
+    if (c.name === 'add_demo_stamp') {
+      const o = DEMO_LIB.find(x => x.key === a.key); if (!o) throw new Error('演示签章库里没有这一条');
+      const id = newClaimNo('D'); const p = store.addDemo(o.key, id);
+      setChatOpen(false); land(id, o.form === 'stamp' ? `已盖章 · 演示「${o.label}」` : `已贴签 · 演示「${o.label}」`);
+      await p; return done({ 结果: `已放进「${pageDef(o.page).title}」页（演示）` });
+    }
+    if (c.name === 'update_profile') { await store.saveProfile({ ...profile, ...(a.nickname !== undefined ? { nickname: String(a.nickname) } : {}), ...(a.bio !== undefined ? { bio: String(a.bio) } : {}), ...(a.visibility !== undefined ? { visibility: a.visibility as Visibility } : {}) }); return done({ 结果: '身份页已更新' }); }
+    if (c.name === 'create_share') { const m = await store.createShare({ to: String(a.to), pages: a.pages as PageId[], days: Number(a.days) }); return done({ 结果: '分享链接生成好了', 链接: m.url, 到期: fmtDay(m.createdAt + m.days * 86400000) }); }
+    if (c.name === 'revoke_share') { const g = store.grants.find(x => x.id === a.share_id); if (!g) throw new Error('没有这条分享'); await store.revoke(g); return done({ 结果: `已撤回给「${g.to}」的授权` }); }
+    if (c.name === 'book_destination') { const b = await store.book(String(a.dest), String(a.slot)); return done({ 结果: '预约好了', 预约号: b.no }); }
+    if (c.name === 'request_verify') { await store.requestVerify(String(a.claim_no)); return done({ 结果: '已申请平方核验' }); }
+    throw new Error('这件事签签还不会办');
+  };
+  const chat = useSpriteChat({ store, exec: execSprite });
+
   const finishOnboard = () => { setStage(null); store.finishOnboarding().catch(() => undefined); };
   const toStage = (st: OnboardStage | 'write') => {
     if (st !== 'write') { setStage(st); return; }
@@ -133,7 +160,7 @@ function OwnerView({ store }: { store: Store }) {
   return (
     <HolderProvider holder={holder}>
       <div className="tp-root" style={lookVars(holder.look)}>
-        <div className="tp-app">
+        <div className={`tp-app tp-owner${tab !== 'book' ? ' has-panel' : ''}`}>
           {holder.demo ? <span className="tp-demo-tag">演示数据</span> : <span className="tp-demo-tag beta">内测</span>}
           <div className="tp-top">
             <Ava color={profile.avatar} />
@@ -143,17 +170,22 @@ function OwnerView({ store }: { store: Store }) {
             </div>
           </div>
 
-          {tab === 'book' && <Book pages={pages} index={safeIndex} onIndex={setIndex} keys={!open && !lib && !stage} chrome={262} />}
+          <div className="tp-owner-main">
+          {/* 手机：护照和各个面板二选一；宽屏：护照一直在中间，面板在右边 */}
+          <div className="tp-owner-book"><Book pages={pages} index={safeIndex} onIndex={setIndex} keys={!open && !lib && !stage && !chatOpen} chrome={262} /></div>
+          {tab !== 'book' && <div className="tp-owner-side">
           {tab === 'add' && <AddPanel store={store} onAdd={addSelf} onOpen={id => { setTab('book'); setJump(id); setOpen(id); }} />}
           {tab === 'get' && <GetPanel store={store} onLib={() => setLib('all')} say={say} />}
           {tab === 'share' && <SharePanel store={store} onRevoke={revoke} onLog={() => { setIndex(accessIndex); setTab('book'); }} say={say} />}
           {tab === 'me' && <ProfilePanel key={JSON.stringify(profile) + JSON.stringify(holder.look)} store={store} say={say}
             onReset={store.reset ? () => { store.reset!(); setIndex(0); say('已恢复演示数据'); } : undefined}
-            onReplay={() => { setTab('book'); setIndex(0); setStage(holder.demo ? 'coach' : 'ceremony'); }} />}
+            onReplay={() => { setTab('book'); setIndex(0); setStage(holder.demo ? 'intro' : 'ceremony'); }} />}
+          </div>}
+          </div>
 
           <nav className="tp-tabbar" aria-label="本人护照导航">
             {([['book', '护照', 'book'], ['get', '去认证', 'star'], ['add', '加一条', 'plus'], ['share', '分享', 'eye'], ['me', '我的', 'pen']] as const).map(([k, label, ic]) => (
-              <button type="button" key={k} data-coach={k} className={`${tab === k ? 'on' : ''}${k === 'add' ? ' plus' : ''}`} onClick={() => setTab(k)} aria-current={tab === k ? 'page' : undefined}>
+              <button type="button" key={k} data-coach={k} title={label} className={`${tab === k ? 'on' : ''}${k === 'add' ? ' plus' : ''}`} onClick={() => setTab(k)} aria-current={tab === k ? 'page' : undefined}>
                 {k === 'add'
                   ? <span aria-hidden><svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 5v14M5 12h14" stroke="#fff" strokeWidth="2.6" strokeLinecap="round" /></svg></span>
                   : <svg viewBox="-12 -12 24 24" aria-hidden><Icon kind={ic as 'book' | 'star' | 'eye' | 'pen'} x={0} y={0} s={17} col={tab === k ? '#5B4BDB' : '#6B7290'} /></svg>}
@@ -164,6 +196,8 @@ function OwnerView({ store }: { store: Store }) {
         </div>
         {openClaim && <ClaimDrawer c={openClaim} avatar={profile.avatar} onClose={() => setOpen(null)} actions={actions} shareOrigin={hydrated ? window.location.origin : undefined} />}
         {lib && <DemoLibSheet store={store} filter={lib} onPick={addDemo} onClose={() => setLib(null)} />}
+        {(!stage || stage === 'coach') && <SpriteFab chat={chat} onOpen={() => setChatOpen(true)} />}
+        {chatOpen && <SpriteSheet chat={chat} demo={holder.demo} onClose={() => setChatOpen(false)} />}
         {stage && <Onboarding stage={stage} store={store} say={say} onStage={toStage} onDone={finishOnboard} />}
         {toast && <Toast key={toast.n} msg={toast.msg} onDone={() => setToast(null)} />}
       </div>

@@ -132,20 +132,21 @@ export function Book({ pages, index, onIndex, keys = true, chrome = 200, immersi
       </div>
       {immersive ? (
         <div className="tp-imm-foot">
-          <button type="button" className="tp-arrow" aria-label="上一页" disabled={shown === 0} onClick={() => flip(index - 1)}>‹</button>
+          <button type="button" className="tp-arrow" aria-label="上一页" title="上一页（←）" disabled={shown === 0} onClick={() => flip(index - 1)}>‹</button>
           <div className="tp-imm-mid">
             <div className="tp-imm-tab">{pages[shown].tab}<span>{shown + 1} / {n}</span></div>
             <div className="tp-imm-dots">{pages.map((p, i) => <button type="button" aria-label={p.tab} key={p.key} className={`${i === shown ? 'on' : ''}${p.sealed ? ' sealed' : ''}`} style={{ ['--c' as string]: p.color }} onClick={() => flip(i)} />)}</div>
           </div>
-          <button type="button" className="tp-arrow" aria-label="下一页" disabled={shown === n - 1} onClick={() => flip(index + 1)}>›</button>
+          <button type="button" className="tp-arrow" aria-label="下一页" title="下一页（→）" disabled={shown === n - 1} onClick={() => flip(index + 1)}>›</button>
         </div>
       ) : (
         <>
           <div className="tp-nav">
-            <button type="button" className="tp-arrow" aria-label="上一页" disabled={index === 0} onClick={() => flip(index - 1)}>‹</button>
+            <button type="button" className="tp-arrow" aria-label="上一页" title="上一页（←）" disabled={index === 0} onClick={() => flip(index - 1)}>‹</button>
             <div className="tp-pgno"><b>{pages[shown].tab}</b> · {shown + 1} / {n}</div>
-            <button type="button" className="tp-arrow" aria-label="下一页" disabled={index === n - 1} onClick={() => flip(index + 1)}>›</button>
+            <button type="button" className="tp-arrow" aria-label="下一页" title="下一页（→）" disabled={index === n - 1} onClick={() => flip(index + 1)}>›</button>
           </div>
+          <div className="tp-desk-hint">← → 翻页 · 按住书页左右拖 · 点签和章看细节</div>
           <div className="tp-chips" ref={chipsRef}>
             {pages.map((p, i) => (
               <button type="button" key={p.key} data-i={i} className={`${i === shown ? 'on' : ''}${p.sealed ? ' sealed' : ''}`} style={{ ['--c' as string]: p.color }} onClick={() => flip(i)}>
