@@ -7,7 +7,7 @@
  *
  * 纯数据模块：服务端接口也引它来核对 demo_key，所以别在这里引 'use client' 的东西。
  */
-import { mrz, type Claim, type Level, type PageId, type StampIcon } from './data';
+import { FINISH_TAG, mrz, type Claim, type Finish, type Level, type PageId, type StampIcon } from './data';
 
 export interface DemoHolder { name: string; nameEn: string }
 export type DemoForm = 'visa' | 'stamp' | 'strength';
@@ -21,6 +21,7 @@ export interface DemoOption {
   icon: StampIcon;
   color: string;
   make: (h: DemoHolder, id: string) => Claim;
+  finish?: Exclude<Finish, 'matte'>;   // 特殊质感（样子），列表里标一个稀有度角标
 }
 /** 护照里盖了一条演示签章：id 就是 claim 编号 */
 export interface DemoItem { id: string; key: string; page: PageId; createdAt: string }
@@ -32,7 +33,7 @@ const base = (id: string, page: PageId) => ({ id, page, demo: true as const, has
 export const DEMO_LIB: DemoOption[] = [
   /* ---------- 鉴真签 ---------- */
   {
-    key: 'vs-records', page: 'verify', form: 'visa', label: '鉴真签 · 履历逐条核对', sub: '6 条履历 · 5 条对上 · 1 条人工复核', level: 'vs', icon: 'check', color: '#4B3BD6',
+    key: 'vs-records', finish: 'foil', page: 'verify', form: 'visa', label: '鉴真签 · 履历逐条核对', sub: '6 条履历 · 5 条对上 · 1 条人工复核', level: 'vs', icon: 'check', color: '#4B3BD6',
     make: (h, id) => ({
       ...base(id, 'verify'), title: '鉴真签 · 履历逐条核对', issuer: 'vs',
       statement: `${h.name}护照里的 6 条履历，平方逐条核对：5 条对上，1 条转人工复核。（演示）`,
@@ -58,7 +59,7 @@ export const DEMO_LIB: DemoOption[] = [
 
   /* ---------- ATA ---------- */
   {
-    key: 'ata-ai-l4', page: 'ata', form: 'visa', label: 'ATA AI 能力认证 · Level 4', sub: '经营分析 + AI · 任务式 · 五个分项', level: 'ata', icon: 'chip', color: '#D80C18',
+    key: 'ata-ai-l4', finish: 'holo', page: 'ata', form: 'visa', label: 'ATA AI 能力认证 · Level 4', sub: '经营分析 + AI · 任务式 · 五个分项', level: 'ata', icon: 'chip', color: '#D80C18',
     make: (h, id) => ({
       ...base(id, 'ata'), title: 'ATA AI 能力认证 · Level 4', issuer: 'ata',
       statement: '任务式认证：用 AI 分析三张报表（利润表、门店销售明细、费用台账），给 CFO 写一页建议。达到 Level 4 / 5。（演示）',
@@ -111,7 +112,7 @@ export const DEMO_LIB: DemoOption[] = [
 
   /* ---------- 体验签：AI 百业 ---------- */
   {
-    key: 'exp-analyst', page: 'exp', form: 'visa', label: '体验签 · 经营分析师的一天', sub: '7 段走完 · 胜任度 7.6', level: 'vs', icon: 'case', color: '#B4532A',
+    key: 'exp-analyst', finish: 'cosmos', page: 'exp', form: 'visa', label: '体验签 · 经营分析师的一天', sub: '7 段走完 · 胜任度 7.6', level: 'vs', icon: 'case', color: '#B4532A',
     make: (h, id) => ({
       ...base(id, 'exp'), title: '体验签 · 经营分析师的一天', issuer: 'baiye',
       statement: '在 AI 百业走完「经营分析师的一天」7 段模拟岗位任务，胜任度 7.6（胜任）。（演示）',
@@ -139,7 +140,7 @@ export const DEMO_LIB: DemoOption[] = [
 
   /* ---------- 真活签 ---------- */
   {
-    key: 'work-margin', page: 'work', form: 'visa', label: '真活签 · 门店毛利异常排查', sub: '某连锁零售出题 · 企业确认采纳', level: 'enterprise', icon: 'case', color: '#0F7A62',
+    key: 'work-margin', finish: 'gold', page: 'work', form: 'visa', label: '真活签 · 门店毛利异常排查', sub: '某连锁零售出题 · 企业确认采纳', level: 'enterprise', icon: 'case', color: '#0F7A62',
     make: (h, id) => ({
       ...base(id, 'work'), title: '真活签 · 门店毛利异常排查', issuer: 'enterprise', issuerName: '某连锁零售',
       statement: `某连锁零售在真活台出题「门店毛利异常排查」，${h.name}接题并交付，企业确认采纳。（演示）`,
@@ -233,8 +234,11 @@ export const demoOption = (key: string) => DEMO_LIB.find(o => o.key === key);
 export const DEMO_KEYS = new Set(DEMO_LIB.map(o => o.key));
 /** 一条演示签章 → claim（库里没有这个 key 就返回 undefined，前端直接跳过） */
 export function demoToClaim(d: DemoItem, h: DemoHolder): Claim | undefined {
-  const o = demoOption(d.key); return o ? o.make(h, d.id) : undefined;
+  const o = demoOption(d.key); if (!o) return undefined;
+  const c = o.make(h, d.id);
+  return o.finish && c.visa ? { ...c, visa: { ...c.visa, finish: o.finish } } : c;
 }
+export const rarityOf = (o: DemoOption) => (o.finish ? FINISH_TAG[o.finish] : undefined);
 /** 新的 claim 编号：U = 本人自述，D = 演示签章（客户端生成，服务端核对格式和唯一） */
 export const CLAIM_NO_RE = /^TP-CL-[UD][A-Z0-9]{6,12}$/;
 export function newClaimNo(kind: 'U' | 'D') {

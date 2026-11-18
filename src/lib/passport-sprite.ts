@@ -12,10 +12,11 @@
 import type Anthropic from '@anthropic-ai/sdk';
 import { stepOnce, type AgentKit, type Call, type Ev, type Msg, type Result } from '@/lib/ws/agent';
 import { makeScrubber, scrubStream } from '@/lib/ws/scrub';
-import { DESTINATIONS, PAGES, VISIBILITY, pageDef, type PageId, type Visibility } from '@/app/passport/data';
+import { DESTINATIONS, FINISH_TAG, PAGES, VISIBILITY, pageDef, type PageId, type Visibility } from '@/app/passport/data';
 import { DEMO_LIB, demoOption } from '@/app/passport/demo-lib';
 import { SPRITE_NAME } from '@/app/passport/sprite-name';
 import { cleanPages } from '@/lib/passport';
+import { COVERS, MOTTO_MAX, PAPERS, PATTERNS, cleanMotto, isCover, isPaper, isPattern } from '@/app/passport/themes';
 import type { OwnerBundle } from '@/app/passport/api-types';
 
 export const SPRITE_MODELS = [process.env.PASSPORT_MODEL || 'qwen3.7-plus', process.env.PASSPORT_FALLBACK_MODEL || 'claude-opus-5-5'];
@@ -41,6 +42,7 @@ export const SPRITE_TOOLS: Anthropic.Tool[] = [
   tool('list_bookings', '查「去认证」的预约记录。'),
   tool('list_destinations', '列出「去认证」的几个去处：去哪儿、能拿到什么签、用时、费用、可选的时间或题目。建议去哪儿拿新签时只从这里挑。'),
   tool('list_demo_library', '列出演示签章库：每条的 key、名字、落在哪一页、是否已经在护照里。'),
+  tool('show_options', '需要本人做选择时用：在界面上弹出一个可选资源的抽屉让他点选。kind：destinations 去认证的去处 / demo_stamps 演示签章库里还没加的 / share_targets 分享给谁。只在要他选的时候用；他点选后会用一句话告诉你选了什么，你再调对应的工具。', { kind: str }, ['kind']),
   tool('add_self_item', '在「本人填写」页加一条本人自述（会盖一枚本人章，状态是本人自述 · 待核验）。kind：exp 经历 / work 作品 / cert 证书。title 盖在章上，最好 6 个字以内。verify=true 表示同时申请平方核验。', { kind: str, title: str, org: str, date: str, link: str, verify: bool }, ['kind', 'title']),
   tool('update_profile', '改身份页上的昵称（≤10 字）、一句话简介（≤60 字）、联系方式可见范围（self 仅自己可见 / grant 授权后可见 / public 公开）。只传要改的。', { nickname: str, bio: str, visibility: str }),
   tool('add_demo_stamp', '从演示签章库贴一条演示签章进护照（标「演示」，不是真实签发）。key 来自 list_demo_library。', { key: str }, ['key']),
@@ -48,8 +50,9 @@ export const SPRITE_TOOLS: Anthropic.Tool[] = [
   tool('revoke_share', '撤回一次还有效的分享授权。share_id 来自 list_shares。', { share_id: str }, ['share_id']),
   tool('book_destination', '预约「去认证」的一个去处。dest 和 slot 必须来自 list_destinations。', { dest: str, slot: str }, ['dest', 'slot']),
   tool('request_verify', '给一条本人自述申请平方核验。claim_no 来自 read_passport。', { claim_no: str }, ['claim_no']),
+  tool('update_look', `定制我的人才护照：cover 封面（${Object.entries(COVERS).map(([k, v]) => `${k}=${v.name}`).join('、')}）、paper 内页纸张（${Object.entries(PAPERS).map(([k, v]) => `${k}=${v.name}`).join('、')}）、pattern 封面烫印纹样（${Object.entries(PATTERNS).map(([k, v]) => `${k}=${v}`).join('、')}）、motto 封面一句话（≤12 字）。只传要改的。`, { cover: str, paper: str, pattern: str, motto: str }),
 ];
-export const WRITE_TOOLS = new Set(['add_self_item', 'update_profile', 'add_demo_stamp', 'create_share', 'revoke_share', 'book_destination', 'request_verify']);
+export const WRITE_TOOLS = new Set(['add_self_item', 'update_profile', 'add_demo_stamp', 'create_share', 'revoke_share', 'book_destination', 'request_verify', 'update_look']);
 
 /* ---------- 系统提示 ---------- */
 const GUIDE = `护照怎么用：
@@ -69,9 +72,10 @@ export function spriteSystem(b: OwnerBundle) {
 规矩：
 - 只根据这本护照里已有的内容说话。经历、分数、等级、签发方一律来自工具结果；没有的就说护照里还没有，不编、不猜、不用常识补。
 - 本人自述的条目要说明「还没核验」；演示签章库加进来的要说明「这是演示的，不是真实签发」，不能拿演示签章当真本事夸。
-- 建议去哪儿拿新签，只从「去认证」的去处里挑（先调 list_destinations），说清去哪儿、能拿到什么签、大概多久。
+- 建议去哪儿拿新签，只从「去认证」的去处里挑：先 list_destinations 看清楚，文字里只说最推荐的一两个和理由（能拿到什么签、大概多久），然后一定调 show_options(kind=destinations) 把全部去处弹给他挑。
 - 需要护照内容时先调只读工具查，别凭印象。
-- 会改数据的事（加一条、改资料、贴演示签章、生成或撤回分享、预约、申请核验）：直接调对应的工具，界面会弹一张确认卡让本人点「确认」才执行，你不用先在文字里反复问「要不要」。确认卡出来前用一句话说你打算做什么。工具结果里 declined=true 表示本人没同意，就别再提这件事。
+- 需要他从几样里挑一个（去哪儿认证、贴哪张演示签章、分享给谁）时，调 show_options 弹出资源抽屉让他点，别在文字里列一长串。
+- 会改数据的事（加一条、改资料、定制封面纸张、贴演示签章、生成或撤回分享、预约、申请核验）：直接调对应的工具，界面会弹一张确认卡让本人点「确认」才执行，你不用先在文字里反复问「要不要」。确认卡出来前用一句话说你打算做什么。工具结果里 declined=true 表示本人没同意，就别再提这件事。
 - 帮他写分享给 HR 的话时，只用护照里有的事实；演示签章不能写进去当成就。
 - 不聊和这本护照无关的事，礼貌带回来。
 
@@ -99,11 +103,25 @@ function listShares(b: OwnerBundle) {
 }
 const destInfo = () => DESTINATIONS.map(d => ({ dest: d.id, 去处: d.title, 谁家: d.who, 拿到: d.gets, 用时: d.time, 费用: d.cost, 说明: d.desc, 可选: d.slots }));
 
-export async function runRead(name: string, b: OwnerBundle) {
+/** 资源抽屉里的一张张卡：点了就把 say 当作本人的一句话发给签签 */
+export interface OptionItem { id: string; title: string; sub: string; gets?: string; time?: string; cost?: string; tag?: string; say: string }
+export interface Options { kind: string; title: string; items: OptionItem[] }
+export function optionsFor(kind: string, b: OwnerBundle): Options | null {
+  if (kind === 'destinations') return { kind, title: '去哪儿拿一枚新的签', items: DESTINATIONS.map(d => ({ id: d.id, title: d.title, sub: d.who, gets: d.gets, time: d.time, cost: d.cost, say: `我想${d.title.replace(/^去/, '去')}` })) };
+  if (kind === 'demo_stamps') { const have = new Set(b.items.filter(i => i.source === 'demo').map(i => i.demoKey)); return { kind, title: '从演示签章库挑一张', items: DEMO_LIB.filter(o => !have.has(o.key)).map(o => ({ id: o.key, title: o.label, sub: `${pageDef(o.page).title} · ${o.sub}`, tag: o.finish ? `演示 · ${FINISH_TAG[o.finish]}` : '演示', say: `帮我加演示签章「${o.label}」` })) }; }
+  if (kind === 'share_targets') return { kind, title: '分享给谁', items: [
+    { id: 'campus', title: '某校招平台', sub: '身份 · 鉴真 · ATA · 7 天', say: '分享给某校招平台，看身份、鉴真签、ATA 能力签，7 天' },
+    { id: 'hunter', title: '某猎头', sub: '身份 · 鉴真 · ATA · 真活 · 长处 · 14 天', say: '分享给某猎头，看身份、鉴真签、ATA 能力签、真活签、长处与发展，14 天' },
+    { id: 'hr', title: '某企业 HR', sub: '身份 · 本人填写 · 真活 · 3 天', say: '分享给某企业 HR，看身份、本人填写、真活签，3 天' },
+  ] };
+  return null;
+}
+export async function runRead(name: string, b: OwnerBundle, input?: Record<string, unknown>): Promise<{ label: string; result: unknown; options?: Options }> {
   if (name === 'read_passport') return { label: '看了一遍护照', result: readPassport(b) };
   if (name === 'list_shares') return { label: '看了分享记录', result: b.grants.length ? listShares(b) : { 说明: '还没分享过' } };
   if (name === 'list_bookings') return { label: '看了预约', result: b.bookings.length ? b.bookings.map(x => ({ 去处: DESTINATIONS.find(d => d.id === x.dest)?.title || x.dest, 选的: x.slot, 预约号: x.no, 时间: x.createdAt.slice(0, 16).replace('T', ' ') })) : { 说明: '还没有预约' } };
   if (name === 'list_destinations') return { label: '看了去认证的去处', result: destInfo() };
+  if (name === 'show_options') { const o = optionsFor(String(input?.kind), b); return o ? { label: '给你挑了几样', result: { 已在界面上弹出: o.title, 选项: o.items.map(x => x.title) }, options: o } : { label: name, result: { error: 'kind 只能是 destinations / demo_stamps / share_targets' } }; }
   if (name === 'list_demo_library') { const have = new Set(b.items.filter(i => i.source === 'demo').map(i => i.demoKey)); return { label: '翻了演示签章库', result: DEMO_LIB.map(o => ({ key: o.key, 名字: o.label, 页: pageDef(o.page).title, 简介: o.sub, 已在护照里: have.has(o.key) })) }; }
   return { label: name, result: { error: '没有这个工具' } };
 }
@@ -149,6 +167,15 @@ export function propose(c: Call, b: OwnerBundle): { confirm: Confirm } | { error
     const d = DESTINATIONS.find(x => x.id === String(i.dest)); if (!d) return { error: '没有这个去处，先调 list_destinations' };
     const slot = s(i.slot, 60); if (!d.slots.includes(slot)) return { error: `可选的只有：${d.slots.join(' / ')}` };
     return mk(`预约：${d.title}`, [`${d.who}`, `选的：${slot}`, `拿到：${d.gets}`], { dest: d.id, slot });
+  }
+  if (c.name === 'update_look') {
+    const a: Record<string, unknown> = {}; const lines: string[] = []; const cur = b.passport.look;
+    if (i.cover !== undefined) { if (!isCover(i.cover)) return { error: '没有这种封面' }; a.cover = i.cover; lines.push(`封面：${COVERS[cur.cover].name} → ${COVERS[i.cover].name}`); }
+    if (i.paper !== undefined) { if (!isPaper(i.paper)) return { error: '没有这种纸张' }; a.paper = i.paper; lines.push(`纸张：${PAPERS[cur.paper].name} → ${PAPERS[i.paper].name}`); }
+    if (i.pattern !== undefined) { if (!isPattern(i.pattern)) return { error: '没有这种纹样' }; a.pattern = i.pattern; lines.push(`纹样：${PATTERNS[cur.pattern]} → ${PATTERNS[i.pattern]}`); }
+    if (i.motto !== undefined) { if (Array.from(String(i.motto)).length > MOTTO_MAX) return { error: `封面那句话最多 ${MOTTO_MAX} 个字` }; a.motto = cleanMotto(i.motto); lines.push(`封面一句话 → ${a.motto || '（不显示）'}`); }
+    if (!lines.length) return { error: '没有要改的' };
+    return mk('定制我的人才护照', lines, a);
   }
   if (c.name === 'request_verify') {
     const it = b.items.find(x => x.source === 'self' && x.claimNo === String(i.claim_no)); if (!it) return { error: '本人自述里没有这一条' };
@@ -203,9 +230,9 @@ export const pendingIds = (h: Msg[]) => {
 };
 
 /* ---------- 一轮：模型说话 → 只读工具直接跑 → 碰到会改数据的工具就出确认卡停下 ---------- */
-export type SpriteEv = Ev | { t: 'confirm'; confirm: Confirm };
+export type SpriteEv = Ev | { t: 'confirm'; confirm: Confirm } | { t: 'options'; options: Options };
 export async function spriteTurn(history: Msg[], b: OwnerBundle, emit: (e: SpriteEv) => void): Promise<Msg[]> {
-  const kit: AgentKit = { system: spriteSystem(b), tools: SPRITE_TOOLS, run: async n => runRead(n, b), org: '人才护照', task: `人才护照 · ${SPRITE_NAME}`, maxTokens: 1500 };
+  const kit: AgentKit = { system: spriteSystem(b), tools: SPRITE_TOOLS, run: async (n, i) => runRead(n, b, i), org: '人才护照', task: `人才护照 · ${SPRITE_NAME}`, maxTokens: 1500 };
   const clean = makeScrubber(SPRITE_TOOLS);
   const added: Msg[] = [];
   for (let step = 0; step < 6; step++) {
@@ -229,9 +256,10 @@ export async function spriteTurn(history: Msg[], b: OwnerBundle, emit: (e: Sprit
         emit({ t: 'confirm', confirm: p.confirm }); waiting = true; continue;
       }
       emit({ t: 'tool_start', id: c.id, name: c.name, input: c.input });
-      const r = await runRead(c.name, b);
+      const r = await runRead(c.name, b, (c.input || {}) as Record<string, unknown>);
       results.push({ id: c.id, name: c.name, content: JSON.stringify(r.result).slice(0, 8000), label: r.label });
       emit({ t: 'tool_end', id: c.id, name: c.name, label: r.label });
+      if (r.options) emit({ t: 'options', options: r.options });
     }
     added.push({ role: 'tool', results });
     if (waiting) break;   // 等本人点确认卡；结果由下一次请求接上

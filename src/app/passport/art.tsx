@@ -4,7 +4,7 @@
  * 签证贴、出入境章、护照封皮、纸张底纹：全部 SVG + CSS 画（照 vsbp/scratch/ata/visa2.js 的 canvas 版搬过来）。
  * 防伪波纹、玫瑰花纹、全息光、红色流水号、MRZ 两行、二维码；章是双线边框 + 弧形字 + 墨迹不均 + 微微旋转。
  */
-import React, { useId } from 'react';
+import React, { useEffect, useId, useRef } from 'react';
 import type { StampArt, StampIcon, VisaArt, VisaTheme } from './data';
 import { fitLen, hash, qrPath, seedOf, textW } from './lib';
 import { useHolder } from './holder';
@@ -133,8 +133,42 @@ function signature(x: number, y: number, seed: number) {
   for (let i = 0; i < 12; i++) d += `Q${x + i * 11 + 5.5} ${r1(y - 12 + 24 * hash(i + seed))} ${x + i * 11 + 11} ${r1(y + 3 - 7 * hash(i * 3 + seed))}`;
   return d;
 }
+/**
+ * 特殊质感的追光（参考主人在 coco 项目里做的 HoloCard，收得更克制）：指针 / 手指在签上移动时签朝它微微倾斜、细光带跟着走；
+ * 没人碰时光自己慢慢挪一点；有陀螺仪就轻微跟着手机倾斜；prefers-reduced-motion 时不动。
+ */
+function useFinishLight(ref: React.RefObject<HTMLDivElement | null>, on: boolean) {
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !on || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const target = { x: 0.5, y: 0.5, on: 0 }, cur = { x: 0.5, y: 0.5, on: 0 };
+    let touching = false, tilt = false, raf = 0;
+    const t0 = performance.now() + Math.random() * 4000;
+    const move = (e: PointerEvent) => { const r = el.getBoundingClientRect(); target.x = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)); target.y = Math.min(1, Math.max(0, (e.clientY - r.top) / r.height)); target.on = 1; touching = true; };
+    const leave = () => { touching = false; };
+    const orient = (e: DeviceOrientationEvent) => { if (touching || e.gamma == null || e.beta == null) return; tilt = true; target.x = 0.5 + Math.max(-1, Math.min(1, e.gamma / 30)) * 0.35; target.y = 0.5 + Math.max(-1, Math.min(1, (e.beta - 45) / 30)) * 0.25; target.on = 0.6; };
+    const tick = (now: number) => {
+      if (!touching && !tilt) { const t = (now - t0) / 1000; target.x = 0.5 + Math.sin(t * 0.5) * 0.3; target.y = 0.5 + Math.sin(t * 0.33 + 1) * 0.12; target.on = 0.22; }
+      const k = touching ? 0.16 : 0.05;
+      cur.x += (target.x - cur.x) * k; cur.y += (target.y - cur.y) * k; cur.on += (target.on - cur.on) * 0.08;
+      const dx = cur.x - 0.5, dy = cur.y - 0.5, st = el.style;
+      st.setProperty('--px', `${(cur.x * 100).toFixed(1)}%`); st.setProperty('--py', `${(cur.y * 100).toFixed(1)}%`);
+      st.setProperty('--dx', dx.toFixed(3)); st.setProperty('--on', cur.on.toFixed(3));
+      st.setProperty('--rx', `${(-dy * 7 * cur.on).toFixed(2)}deg`); st.setProperty('--ry', `${(dx * 9 * cur.on).toFixed(2)}deg`);
+      raf = requestAnimationFrame(tick);
+    };
+    el.addEventListener('pointermove', move); el.addEventListener('pointerleave', leave); el.addEventListener('pointercancel', leave);
+    window.addEventListener('deviceorientation', orient);
+    raf = requestAnimationFrame(tick);
+    return () => { cancelAnimationFrame(raf); el.removeEventListener('pointermove', move); el.removeEventListener('pointerleave', leave); el.removeEventListener('pointercancel', leave); window.removeEventListener('deviceorientation', orient); };
+  }, [ref, on]);
+}
+
 export function Visa({ v, avatar, qrText, className, style }: { v: VisaArt; avatar: string; qrText?: string; className?: string; style?: React.CSSProperties }) {
   const id = sid(useId());
+  const fxRef = useRef<HTMLDivElement>(null);
+  const fx = v.finish && v.finish !== 'matte' ? v.finish : undefined;
+  useFinishLight(fxRef, !!fx);
   const t = VISA_THEMES[v.theme], ink = t.ink, seed = seedOf(v.no);
   const issuer = (() => {
     if (v.theme === 'ata') return (
@@ -162,7 +196,7 @@ export function Visa({ v, avatar, qrText, className, style }: { v: VisaArt; avat
   })();
   const micro = (v.theme === 'ata' ? 'ATA·全美在线·' : v.theme === 'work' ? 'REALWORK·真活·' : 'VISIONSQUARE·平方·').repeat(16);
   return (
-    <div className={`tp-visa ${className || ''}`} style={style}>
+    <div ref={fxRef} className={`tp-visa ${className || ''}`} data-finish={fx} style={style}>
       <svg viewBox={`0 0 ${VW} ${VH}`} role="img" aria-label={`${v.type} ${v.no}`}>
         <defs>
           <linearGradient id={`${id}bg`} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor={t.c1} /><stop offset=".55" stopColor={t.c2} /><stop offset="1" stopColor={t.c1} /></linearGradient>
@@ -211,6 +245,7 @@ export function Visa({ v, avatar, qrText, className, style }: { v: VisaArt; avat
       </svg>
       <i className="tp-visa-holo" style={{ left: `${22 / VW * 100}%`, top: `${98 / VH * 100}%`, width: `${128 / VW * 100}%`, height: `${160 / VH * 100}%` }} />
       <i className="tp-visa-shine" />
+      {fx && <><i className="tp-fx-band" /><i className="tp-fx-corner" /></>}
     </div>
   );
 }

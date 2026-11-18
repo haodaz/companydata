@@ -781,3 +781,46 @@ textarea.tp-input { height: auto; min-height: 76px; padding: 10px 12px; line-hei
   .tp-gd-book { width: min(330px, calc((100dvh - 430px) * .707)); }
 }
 @media (prefers-reduced-motion: reduce) { .tp-npc-char, .tp-npc-box, .tp-gd-book { animation: none !important; } }
+
+/* ---------- 签签对话：结果卡、「选一个」卡、资源抽屉 ---------- */
+.tp-result { justify-self: stretch; display: flex; gap: 10px; align-items: flex-start; padding: 11px 13px; border-radius: 14px; background: #F0F8F3; box-shadow: inset 0 0 0 1.5px #A9D8BE; }
+.tp-result > i { flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-size: 13px; font-weight: 900; color: #fff; background: #0F7A62; }
+.tp-result b { display: block; font-size: 13.5px; line-height: 1.5; }
+.tp-link-btn { border: 0; background: none; padding: 2px 0 0; cursor: pointer; font-size: 12.5px; font-weight: 800; color: var(--v); }
+.tp-optcard { justify-self: stretch; display: flex; gap: 10px; align-items: center; padding: 12px 14px; border-radius: 14px; background: linear-gradient(135deg, #F4F1FF, #FFF7EE); box-shadow: inset 0 0 0 1.5px #D9D1FF; }
+.tp-optcard > div { flex: 1; min-width: 0; }
+.tp-optcard b { display: block; font-size: 14px; }
+.tp-optcard span { font-size: 12px; color: var(--mu); }
+.tp-res-list { display: grid; gap: 10px; }
+.tp-res-card { display: grid; gap: 4px; padding: 13px 14px; border-radius: 16px; background: #fff; box-shadow: inset 0 0 0 1px rgba(29, 36, 80, .1), 0 4px 14px rgba(29, 36, 80, .06); }
+.tp-res-h { display: flex; gap: 6px; align-items: center; }
+.tp-res-h b { font-size: 14.5px; }
+.tp-res-sub { font-size: 12.5px; color: var(--mu); }
+.tp-res-meta { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 12px; color: #3A416A; }
+.tp-res-card .tp-btn { justify-self: end; margin-top: 4px; }
+/* 「点击查看」：护照那一页闪一下 */
+.tp-flash .tp-book { animation: tp-flash 1.6s ease both; }
+@keyframes tp-flash { 0%, 100% { box-shadow: 0 24px 50px rgba(24, 27, 60, .32), 0 0 0 0 rgba(255, 214, 92, 0); } 30% { box-shadow: 0 24px 50px rgba(24, 27, 60, .32), 0 0 0 8px rgba(255, 214, 92, .75); } }
+
+/* ---------- 签证贴的特殊质感（样子）：像真证件的防伪全息和烫金——静止几乎看不出，倾斜 / 追光时一道细光带掠过、角落防伪纹泛一点虹彩 ---------- */
+.tp-visa[data-finish] { --px: 50%; --py: 50%; --on: 0; --dx: 0; transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); will-change: transform; }
+.tp-fx-band, .tp-fx-corner { position: absolute; inset: 0; pointer-events: none; border-radius: inherit; }
+.tp-fx-band { mix-blend-mode: color-dodge; opacity: calc(var(--on) * .9);
+  background: linear-gradient(112deg, transparent calc(var(--px) - 10%), rgba(255, 110, 185, .6) calc(var(--px) - 4.5%), rgba(100, 215, 245, .68) var(--px), rgba(255, 210, 110, .6) calc(var(--px) + 4.5%), transparent calc(var(--px) + 10%)); }
+.tp-fx-corner { opacity: calc(var(--on) * .75); mix-blend-mode: color-dodge;
+  background: conic-gradient(from calc(var(--dx) * 300deg) at 76% 58%, rgba(255, 150, 200, .5), rgba(150, 232, 246, .5), rgba(200, 190, 255, .5), rgba(255, 228, 160, .5), rgba(255, 150, 200, .5));
+  -webkit-mask: radial-gradient(circle at 76% 58%, #000 0, #000 9%, transparent 19%); mask: radial-gradient(circle at 76% 58%, #000 0, #000 9%, transparent 19%); }
+/* 闪粉：细密的亮点只在光附近出现 */
+.tp-visa[data-finish="foil"] .tp-fx-band { opacity: calc(var(--on) * .6); background: radial-gradient(circle, rgba(255, 255, 255, .95) 0 .5px, transparent 1.2px) 0 0 / 7px 7px, radial-gradient(circle, rgba(190, 220, 255, .9) 0 .5px, transparent 1.2px) 3px 4px / 9px 9px;
+  -webkit-mask: radial-gradient(circle at var(--px) var(--py), #000, transparent 24%); mask: radial-gradient(circle at var(--px) var(--py), #000, transparent 24%); }
+/* 金箔：暖金的细光带 + 一圈细金边 */
+.tp-visa[data-finish="gold"] { box-shadow: 0 1.4cqw 3cqw rgba(24, 27, 60, .16), inset 0 0 0 .35cqw rgba(201, 162, 74, .55); }
+.tp-visa[data-finish="gold"] .tp-fx-band { background: linear-gradient(112deg, transparent calc(var(--px) - 10%), rgba(255, 226, 150, .55) calc(var(--px) - 3%), rgba(255, 246, 214, .7) var(--px), rgba(214, 170, 80, .5) calc(var(--px) + 4%), transparent calc(var(--px) + 10%)); mix-blend-mode: soft-light; opacity: calc(var(--on) * .8); }
+.tp-visa[data-finish="gold"] .tp-fx-corner { background: conic-gradient(from calc(var(--dx) * 300deg) at 76% 58%, #F6E1A6, #C39648, #FFF3CC, #B98E3E, #F6E1A6); opacity: calc(var(--on) * .35); }
+/* 星空：防伪圈里泛出一点夜空和星点 */
+.tp-visa[data-finish="cosmos"] .tp-fx-corner { mix-blend-mode: screen; opacity: calc(.05 + var(--on) * .7); background: radial-gradient(circle, #fff 0 .7px, transparent 1.5px) 0 0 / 9px 11px, radial-gradient(circle, rgba(220, 210, 255, .9) 0 .5px, transparent 1.2px) 4px 6px / 13px 7px, radial-gradient(circle at 76% 58%, rgba(150, 130, 255, .6), rgba(90, 200, 255, .35) 50%, transparent 72%); }
+.tp-visa[data-finish="cosmos"] .tp-fx-band { background: linear-gradient(112deg, transparent calc(var(--px) - 10%), rgba(190, 180, 255, .5) var(--px), transparent calc(var(--px) + 10%)); }
+@media (prefers-reduced-motion: reduce) { .tp-visa[data-finish] { transform: none; } }
+.tp-rtag { display: inline-block; vertical-align: 1px; margin-left: 4px; font-size: 10.5px; font-weight: 800; padding: 0 7px; border-radius: 99px; color: #4B3BD6; background: linear-gradient(100deg, #F3EEFF, #E8F7FB, #FFF4E0); box-shadow: inset 0 0 0 1px rgba(91, 75, 219, .25); }
+.tp-rtag.gold { color: #8A6418; background: linear-gradient(100deg, #FFF6DD, #F6E1A6); box-shadow: inset 0 0 0 1px rgba(185, 142, 62, .45); }
+.tp-rtag.cosmos { color: #E8E4FF; background: linear-gradient(100deg, #2A2F6E, #4B3BD6); box-shadow: none; }

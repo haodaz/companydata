@@ -15,7 +15,10 @@ export type VisaTheme = 'vs' | 'ata' | 'baiye' | 'work' | 'grant';
 
 export interface Evidence { label: string; detail: string; ok?: boolean | 'review' }
 export interface StampArt { shape: StampShape; top: string; bottom?: string; main: string; sub?: string; date?: string; icon: StampIcon; color: string }
-export interface VisaArt { theme: VisaTheme; type: string; typeEn: string; no: string; fields: [string, string][]; mrz: [string, string]; issuerLine?: string; issuerEn?: string }
+/** 签证贴的特殊质感（样子）：matte 默认 / holo 幻彩 / foil 闪粉 / gold 金箔 / cosmos 星空。克制：静止时几乎看不出，倾斜 / 追光时一道细光带掠过、角落防伪纹泛一点虹彩 */
+export type Finish = 'matte' | 'holo' | 'foil' | 'gold' | 'cosmos';
+export const FINISH_TAG: Record<Exclude<Finish, 'matte'>, string> = { holo: '幻彩 · 稀有', foil: '闪粉 · 精选', gold: '金箔 · 珍藏', cosmos: '星空 · 稀有' };
+export interface VisaArt { finish?: Finish; theme: VisaTheme; type: string; typeEn: string; no: string; fields: [string, string][]; mrz: [string, string]; issuerLine?: string; issuerEn?: string }
 export interface Claim {
   id: string;            // claim 编号
   page: PageId;
@@ -188,7 +191,7 @@ export const CLAIMS: Claim[] = [
     ],
     code: 'TPV-0201-VS11', hash: 'sha256:3d9e…a8b2',
     visa: {
-      theme: 'vs', type: '鉴真签', typeEn: 'VERIFIED · RECORD CHECK', no: 'VS 1108 2026',
+      finish: 'foil', theme: 'vs', type: '鉴真签', typeEn: 'VERIFIED · RECORD CHECK', no: 'VS 1108 2026',
       fields: [['HOLDER · 持有人', '郝大壮'], ['RECORDS · 履历', '6 条 · 5 对上'], ['PENDING · 待核', '1 条 · 人工复核'], ['METHOD · 方式', '逐条对记录'], ['ISSUED · 签发', '2026.11.08'], ['VALID · 有效', '长期 · 可更新']],
       mrz: [mrz('V<CHNHAO<<DAZHUANG<<VERIFIED'), mrz('VS11082026CHN<<RECORDS6<<5OF6<<REVIEW1')],
     },
@@ -234,7 +237,7 @@ export const CLAIMS: Claim[] = [
     ],
     code: 'ATA-K4207718', hash: 'sha256:d81c…f0a4',
     visa: {
-      theme: 'ata', type: '能力签', typeEn: 'AI CAPABILITY · CERTIFIED', no: 'ATA K4207718',
+      finish: 'holo', theme: 'ata', type: '能力签', typeEn: 'AI CAPABILITY · CERTIFIED', no: 'ATA K4207718',
       fields: [['HOLDER · 持有人', '郝大壮'], ['SKILL · 能力', '经营分析 + AI'], ['LEVEL · 等级', 'Level 4 / 5'], ['METHOD · 方式', '任务式 · 每步留痕'], ['ISSUED · 签发', '2026.10.28'], ['VALID · 有效', '2028.10 · 可复测']],
       mrz: [mrz('C<CHNHAO<<DAZHUANG<<AICAPABILITY<<FIN'), mrz('K4207718CHN<<LEVEL4<<ATA<<RETESTABLE')],
     },
@@ -272,7 +275,7 @@ export const CLAIMS: Claim[] = [
     scores: [{ name: '胜任度', v: 7.6, max: 10 }],
     code: 'AI100-7DZ3-K2Q8', hash: 'sha256:6e21…b93f',
     visa: {
-      theme: 'baiye', type: '体验签', typeEn: 'EXPERIENCE · ONE FULL DAY', no: 'AI100-7DZ3-K2Q8',
+      finish: 'cosmos', theme: 'baiye', type: '体验签', typeEn: 'EXPERIENCE · ONE FULL DAY', no: 'AI100-7DZ3-K2Q8',
       fields: [['HOLDER · 持有人', '郝大壮'], ['ROLE · 岗位', '经营分析师'], ['BAND · 胜任度', '7.6 · 胜任'], ['SEGMENTS · 段落', '7 段全部走完'], ['ISSUED · 签发', '2026.08.23'], ['ENTRIES · 次数', '可再体验']],
       mrz: [mrz('E<CHNHAO<<DAZHUANG<<BIZ<<ANALYST'), mrz('AI1007DZ3K2Q8CHN<<BAND7<6<<SEG7OF7')],
       issuerLine: '平方创想 · AI 百业', issuerEn: 'AI 百业 · EXPERIENCE',
@@ -304,7 +307,7 @@ export const CLAIMS: Claim[] = [
     facts: [['企业评价', '「能直接拿去开会」'], ['结果', '找到 2 个原因：促销叠加、损耗漏记']],
     code: 'ZH-2610-0931', hash: 'sha256:b7e3…4a62',
     visa: {
-      theme: 'work', type: '真活签', typeEn: 'REAL WORK · CONFIRMED', no: 'ZH 2610 0931',
+      finish: 'gold', theme: 'work', type: '真活签', typeEn: 'REAL WORK · CONFIRMED', no: 'ZH 2610 0931',
       fields: [['HOLDER · 持有人', '郝大壮'], ['TASK · 题目', '门店毛利排查'], ['RESULT · 结果', '企业确认采纳'], ['TIME · 用时', '9 天 · 3 轮'], ['ISSUED · 签发', '2026.10.12'], ['BY · 出题', '北辰连锁']],
       mrz: [mrz('W<CHNHAO<<DAZHUANG<<REALWORK<<CONFIRMED'), mrz('ZH26100931CHN<<BEICHEN<<ACCEPTED')],
       issuerLine: '北辰连锁 · 企业出题', issuerEn: 'VIA 平方真活台',

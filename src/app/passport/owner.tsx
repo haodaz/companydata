@@ -17,14 +17,14 @@ import { Book, type BookPage } from './book';
 import { ClaimDrawer, LevelBadge, Sheet, Toast } from './drawer';
 import { buildSheets, grantToClaim, idClaimFor, type PageCtx } from './pages';
 import { ADD_KINDS, addedToClaim, fmtDay, useHydrated, type AddKind, type Booking } from './lib';
-import { DEMO_LIB, demoToClaim, newClaimNo, type DemoOption } from './demo-lib';
+import { DEMO_LIB, demoToClaim, newClaimNo, rarityOf, type DemoOption } from './demo-lib';
 import { HolderProvider } from './holder';
 import { useDemoStore, usePreviewStore, useRealStore, type MadeShare, type NewSelf, type Store } from './store';
 import { Onboarding, type OnboardStage } from './onboard';
 import { AvatarPicker } from './avatar';
 import { COVERS, MOTTO_MAX, PAPERS, PATTERNS, lookVars, type CoverPattern, type CoverTheme, type Look, type PaperTheme } from './themes';
 import type { OwnerBundle } from './api-types';
-import { SpriteFab, SpriteSheet, useSpriteChat, type Confirm } from './sprite-chat';
+import { SpriteFab, SpriteSheet, useSpriteChat, type Confirm, type ExecResult, type ResultView } from './sprite-chat';
 
 type Tab = 'book' | 'add' | 'get' | 'share' | 'me';
 export type OwnerMode = { kind: 'demo' } | { kind: 'real'; bundle: OwnerBundle } | { kind: 'preview'; bundle: OwnerBundle };
@@ -53,6 +53,7 @@ function OwnerView({ store }: { store: Store }) {
   const [lib, setLib] = useState<PageId | 'all' | null>(null);  // 演示签章库抽屉（按页筛）
   const [stage, setStage] = useState<OnboardStage | null>(() => (store.onboarded ? null : 'ceremony'));
   const [chatOpen, setChatOpen] = useState(false);
+  const [flash, setFlash] = useState(false);
   const say = (msg: string) => setToast(t => ({ msg, n: (t?.n || 0) + 1 }));
   const oops = (e: unknown) => say(`没存上：${(e as Error)?.message || '网络不太好'}，已撤回这一步`);
 
@@ -123,28 +124,36 @@ function OwnerView({ store }: { store: Store }) {
     return null;
   };
 
-  /** 签签的确认卡：本人点了「确认」才走到这里，用的都是本人版同一套护照接口（服务端照样校验管理员） */
-  const execSprite = async (c: Confirm): Promise<string> => {
+  /** 签签的确认卡：本人点了「确认」才走到这里，用的都是本人版同一套护照接口（服务端照样校验管理员）；回结果卡上的一句话和「点击查看」去哪儿 */
+  const execSprite = async (c: Confirm): Promise<ExecResult> => {
     const a = c.action as Record<string, unknown>;
     const done = (o: Record<string, unknown>) => JSON.stringify({ ok: true, ...o });
     if (c.name === 'add_self_item') {
       const id = newClaimNo('U');
       const p = store.addSelf({ id, kind: a.kind as AddKind, title: String(a.title), org: String(a.org || ''), date: String(a.date || ''), link: a.link ? String(a.link) : undefined, verifyReq: a.verify === true });
-      setChatOpen(false); land(id, '已盖章 · 签签帮你盖进了「本人填写」页');
-      await p; return done({ 结果: '已盖进「本人填写」页', claim_no: id });
+      await p; return { content: done({ 结果: '已盖进「本人填写」页', claim_no: id }), summary: `已在「本人填写」页盖上：${String(a.title)}`, view: { kind: 'claim', id } };
     }
     if (c.name === 'add_demo_stamp') {
       const o = DEMO_LIB.find(x => x.key === a.key); if (!o) throw new Error('演示签章库里没有这一条');
-      const id = newClaimNo('D'); const p = store.addDemo(o.key, id);
-      setChatOpen(false); land(id, o.form === 'stamp' ? `已盖章 · 演示「${o.label}」` : `已贴签 · 演示「${o.label}」`);
-      await p; return done({ 结果: `已放进「${pageDef(o.page).title}」页（演示）` });
+      const id = newClaimNo('D'); await store.addDemo(o.key, id);
+      return { content: done({ 结果: `已放进「${pageDef(o.page).title}」页（演示）` }), summary: `已${o.form === 'stamp' ? '盖' : '贴'}上演示「${o.label}」`, view: { kind: 'claim', id } };
     }
-    if (c.name === 'update_profile') { await store.saveProfile({ ...profile, ...(a.nickname !== undefined ? { nickname: String(a.nickname) } : {}), ...(a.bio !== undefined ? { bio: String(a.bio) } : {}), ...(a.visibility !== undefined ? { visibility: a.visibility as Visibility } : {}) }); return done({ 结果: '身份页已更新' }); }
-    if (c.name === 'create_share') { const m = await store.createShare({ to: String(a.to), pages: a.pages as PageId[], days: Number(a.days) }); return done({ 结果: '分享链接生成好了', 链接: m.url, 到期: fmtDay(m.createdAt + m.days * 86400000) }); }
-    if (c.name === 'revoke_share') { const g = store.grants.find(x => x.id === a.share_id); if (!g) throw new Error('没有这条分享'); await store.revoke(g); return done({ 结果: `已撤回给「${g.to}」的授权` }); }
-    if (c.name === 'book_destination') { const b = await store.book(String(a.dest), String(a.slot)); return done({ 结果: '预约好了', 预约号: b.no }); }
-    if (c.name === 'request_verify') { await store.requestVerify(String(a.claim_no)); return done({ 结果: '已申请平方核验' }); }
+    if (c.name === 'update_profile') { await store.saveProfile({ ...profile, ...(a.nickname !== undefined ? { nickname: String(a.nickname) } : {}), ...(a.bio !== undefined ? { bio: String(a.bio) } : {}), ...(a.visibility !== undefined ? { visibility: a.visibility as Visibility } : {}) }); return { content: done({ 结果: '身份页已更新' }), summary: '身份页已更新', view: { kind: 'page', key: 'id' } }; }
+    if (c.name === 'update_look') { const l = { ...holder.look, ...(a as Partial<Look>) }; await store.saveLook(l); return { content: done({ 结果: '护照定制已保存' }), summary: [a.cover ? `封面换成${COVERS[l.cover].name}` : '', a.paper ? `纸张换成${PAPERS[l.paper].name}` : '', a.pattern ? `纹样换成${PATTERNS[l.pattern]}` : '', a.motto !== undefined ? (l.motto ? `封面写上「${l.motto}」` : '去掉了封面那句话') : ''].filter(Boolean).join('，'), view: a.paper && !a.cover && !a.pattern && a.motto === undefined ? { kind: 'page', key: 'id' } : { kind: 'cover' } }; }
+    if (c.name === 'create_share') { const m = await store.createShare({ to: String(a.to), pages: a.pages as PageId[], days: Number(a.days) }); return { content: done({ 结果: '分享链接生成好了', 链接: m.url, 到期: fmtDay(m.createdAt + m.days * 86400000) }), summary: `已生成给「${m.to}」的分享，${m.days} 天有效`, view: { kind: 'tab', tab: 'share' } }; }
+    if (c.name === 'revoke_share') { const g = store.grants.find(x => x.id === a.share_id); if (!g) throw new Error('没有这条分享'); await store.revoke(g); return { content: done({ 结果: `已撤回给「${g.to}」的授权` }), summary: `已撤回「${g.to}」的授权`, view: { kind: 'page', key: 'access' } }; }
+    if (c.name === 'book_destination') { const b = await store.book(String(a.dest), String(a.slot)); const d = DESTINATIONS.find(x => x.id === a.dest); return { content: done({ 结果: '预约好了', 预约号: b.no }), summary: `已预约：${d?.title || ''} · ${b.slot}`, view: { kind: 'tab', tab: 'get' } }; }
+    if (c.name === 'request_verify') { await store.requestVerify(String(a.claim_no)); return { content: done({ 结果: '已申请平方核验' }), summary: '已申请平方核验', view: { kind: 'claim', id: String(a.claim_no) } }; }
     throw new Error('这件事签签还不会办');
+  };
+  /** 结果卡「点击查看」：收起对话，护照翻到对应的地方，把变化的那块高亮一下 */
+  const viewResult = (v: ResultView) => {
+    setChatOpen(false);
+    if (v.kind === 'tab') { setTab(v.tab); return; }
+    setTab('book');
+    if (v.kind === 'claim') { setJump(v.id); setFresh(v.id); window.setTimeout(() => setFresh(f => (f === v.id ? null : f)), 2800); return; }
+    const i = v.kind === 'cover' ? 0 : 1 + sheets.findIndex(s => s.key === v.key);
+    setIndex(Math.max(0, i)); setFlash(true); window.setTimeout(() => setFlash(false), 1800);
   };
   const chat = useSpriteChat({ store, exec: execSprite });
 
@@ -165,7 +174,7 @@ function OwnerView({ store }: { store: Store }) {
 
           <div className="tp-owner-main">
           {/* 手机：护照和各个面板二选一；宽屏：护照一直在中间，面板在右边 */}
-          <div className="tp-owner-book"><Book pages={pages} index={safeIndex} onIndex={setIndex} keys={!open && !lib && !stage && !chatOpen} chrome={262} /></div>
+          <div className={`tp-owner-book${flash ? ' tp-flash' : ''}`}><Book pages={pages} index={safeIndex} onIndex={setIndex} keys={!open && !lib && !stage && !chatOpen} chrome={262} /></div>
           {tab !== 'book' && <div className="tp-owner-side">
           {tab === 'add' && <AddPanel store={store} onAdd={addSelf} onOpen={id => { setTab('book'); setJump(id); setOpen(id); }} />}
           {tab === 'get' && <GetPanel store={store} onLib={() => setLib('all')} say={say} />}
@@ -190,7 +199,7 @@ function OwnerView({ store }: { store: Store }) {
         {openClaim && <ClaimDrawer c={openClaim} avatar={profile.avatar} onClose={() => setOpen(null)} actions={actions} shareOrigin={hydrated ? window.location.origin : undefined} />}
         {lib && <DemoLibSheet store={store} filter={lib} onPick={addDemo} onClose={() => setLib(null)} />}
         {(!stage || stage === 'tour') && <SpriteFab chat={chat} onOpen={() => setChatOpen(true)} />}
-        {chatOpen && <SpriteSheet chat={chat} demo={holder.demo} onClose={() => setChatOpen(false)} />}
+        {chatOpen && <SpriteSheet chat={chat} demo={holder.demo} onClose={() => setChatOpen(false)} onView={viewResult} />}
         {stage && <Onboarding stage={stage} store={store} say={say} onStage={setStage} onDone={finishOnboard} goBook={() => { setTab('book'); setIndex(0); }} />}
         {toast && <Toast key={toast.n} msg={toast.msg} onDone={() => setToast(null)} />}
       </div>
@@ -220,7 +229,7 @@ function DemoLibSheet({ store, filter, onPick, onClose }: { store: Store; filter
               return (
                 <div key={o.key} className="tp-mini tp-lib-row">
                   <svg viewBox="-12 -12 24 24" width="24" height="24" aria-hidden><Icon kind={o.icon} x={0} y={0} s={o.icon === 'ata' ? 18 : 16} col={o.color} /></svg>
-                  <div><b>{o.label}<span className="tp-dtag">演示</span></b><span>{pageDef(o.page).title} · {o.sub}</span></div>
+                  <div><b>{o.label}<span className="tp-dtag">演示</span>{rarityOf(o) && <span className={`tp-rtag ${o.finish}`}>{rarityOf(o)}</span>}</b><span>{pageDef(o.page).title} · {o.sub}</span></div>
                   {on
                     ? <button type="button" className="tp-btn ghost sm" onClick={() => { store.removeItem(on.id).catch(() => undefined); }}>删掉</button>
                     : <button type="button" className="tp-btn v sm" onClick={() => { onPick(o); close(); }}>{o.form === 'stamp' ? '盖进去' : o.form === 'strength' ? '放进去' : '贴进去'}</button>}

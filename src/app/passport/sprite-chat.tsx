@@ -13,6 +13,11 @@ import type { Store } from './store';
 import type { Msg, Result } from '@/lib/ws/agent';
 
 export interface Confirm { id: string; name: string; title: string; lines: string[]; action: Record<string, unknown> }
+/** 执行完的结果：content 接回给模型；summary 写在结果卡上；view 是「点击查看」要去的地方 */
+export type ResultView = { kind: 'claim'; id: string } | { kind: 'page'; key: string } | { kind: 'tab'; tab: 'get' | 'share' | 'me' } | { kind: 'cover' };
+export interface ExecResult { content: string; summary: string; view?: ResultView }
+export interface OptionItem { id: string; title: string; sub: string; gets?: string; time?: string; cost?: string; tag?: string; say: string }
+export interface Options { kind: string; title: string; items: OptionItem[] }
 type Card = Confirm & { status: 'ask' | 'busy' | 'done' | 'no'; note?: string };
 export const QUICK = ['总结一下我现在的竞争力', '下一枚签去哪儿拿最划算', '这本护照怎么用', '帮我写一句分享给 HR 的话'];
 
@@ -27,9 +32,9 @@ const GREET = `我是${SPRITE_NAME}，你这本护照里的事都可以问我。
 
 /** 模型偶尔还是会带 Markdown：气泡是纯文字，去掉加粗和标题符号 */
 const plain = (t: string) => t.replace(/\*\*(.+?)\*\*/g, '$1').replace(/^#{1,4}\s*/gm, '');
-type View = { kind: 'me' | 'ai' | 'tool'; text: string; key: string } | { kind: 'card'; card: Card; key: string };
+type View = { kind: 'me' | 'ai' | 'tool'; text: string; key: string } | { kind: 'card'; card: Card; key: string } | { kind: 'result'; summary: string; view?: ResultView; key: string } | { kind: 'options'; options: Options; key: string };
 
-export function useSpriteChat({ store, exec, onDone }: { store: Store; exec: (c: Confirm) => Promise<string>; onDone?: (c: Confirm, ok: boolean) => void }) {
+export function useSpriteChat({ store, exec, onDone }: { store: Store; exec: (c: Confirm) => Promise<ExecResult>; onDone?: (c: Confirm, ok: boolean) => void }) {
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [views, setViews] = useState<View[]>([]);
   const [live, setLive] = useState('');
@@ -72,6 +77,7 @@ export function useSpriteChat({ store, exec, onDone }: { store: Store; exec: (c:
           if (e.t === 'text') { text += String(e.delta || ''); setLive(text); setState('talk'); }
           else if (e.t === 'tool_start') { flush(); setState('think'); }
           else if (e.t === 'tool_end') { push({ kind: 'tool', text: `${SPRITE_NAME}${String(e.label || '查了一下')}`, key: key() }); }
+          else if (e.t === 'options') { flush(); push({ kind: 'options', options: e.options as Options, key: key() }); }
           else if (e.t === 'confirm') { flush(); const c = e.confirm as Confirm; push({ kind: 'card', card: { ...c, status: 'ask' }, key: key() }); }
           else if (e.t === 'added') { msgsRef.current = e.messages as Msg[]; setMsgs(msgsRef.current); }
           else if (e.t === 'error') { flush(); push({ kind: 'ai', text: String(e.message || '出错了'), key: key() }); }
@@ -94,7 +100,7 @@ export function useSpriteChat({ store, exec, onDone }: { store: Store; exec: (c:
     if (!yes) { setCard(c.id, { status: 'no', note: '算了' }); onDone?.(c, false); call({ results: [{ id: c.id, name: c.name, content: JSON.stringify({ declined: true }) }] }); return; }
     setCard(c.id, { status: 'busy' });
     let content: string, ok = true;
-    try { content = await exec(c); setCard(c.id, { status: 'done', note: '办好了' }); happy(); } catch (e) { ok = false; content = JSON.stringify({ error: (e as Error).message }); setCard(c.id, { status: 'no', note: `没办成：${(e as Error).message}` }); }
+    try { const r = await exec(c); content = r.content; setCard(c.id, { status: 'done', note: '办好了' }); push({ kind: 'result', summary: r.summary, view: r.view, key: key() }); happy(); } catch (e) { ok = false; content = JSON.stringify({ error: (e as Error).message }); setCard(c.id, { status: 'no', note: `没办成：${(e as Error).message}` }); }
     onDone?.(c, ok);
     call({ results: [{ id: c.id, name: c.name, content }] });
   };
@@ -111,11 +117,13 @@ export function SpriteFab({ chat, onOpen }: { chat: SpriteChat; onOpen: () => vo
   );
 }
 
-export function SpriteSheet({ chat, demo, onClose }: { chat: SpriteChat; demo: boolean; onClose: () => void }) {
+export function SpriteSheet({ chat, demo, onClose, onView }: { chat: SpriteChat; demo: boolean; onClose: () => void; onView: (v: ResultView) => void }) {
   const [text, setText] = useState('');
+  const [res, setRes] = useState<Options | null>(null);
   const log = useRef<HTMLDivElement>(null);
   useEffect(() => { const el = log.current; if (el) el.scrollTop = el.scrollHeight; }, [chat.views, chat.live]);
   return (
+    <>
     <Sheet onClose={onClose} label={SPRITE_TITLE} variant="side">
       {() => (
         <div className="tp-chat">
@@ -127,7 +135,11 @@ export function SpriteSheet({ chat, demo, onClose }: { chat: SpriteChat; demo: b
             <div className="tp-msg ai">{GREET}</div>
             {chat.views.map(v => v.kind === 'card'
               ? <ConfirmCard key={v.key} c={v.card} onAnswer={yes => chat.answer(v.card, yes)} />
-              : <div key={v.key} className={`tp-msg ${v.kind}`}>{v.text}</div>)}
+              : v.kind === 'result'
+                ? <div key={v.key} className="tp-result"><i aria-hidden>✓</i><div><b>{v.summary}</b>{v.view && <button type="button" className="tp-link-btn" onClick={() => onView(v.view!)}>点击查看 ›</button>}</div></div>
+                : v.kind === 'options'
+                  ? <div key={v.key} className="tp-optcard"><div><b>{v.options.title}</b><span>{SPRITE_NAME}挑了 {v.options.items.length} 样，选一个</span></div><button type="button" className="tp-btn v sm" onClick={() => setRes(v.options)}>打开看看</button></div>
+                  : <div key={v.key} className={`tp-msg ${v.kind}`}>{v.text}</div>)}
             {chat.live && <div className="tp-msg ai">{plain(chat.live)}</div>}
             {chat.busy && !chat.live && <div className="tp-msg tool">{SPRITE_NAME}正在翻你的护照…</div>}
           </div>
@@ -136,6 +148,33 @@ export function SpriteSheet({ chat, demo, onClose }: { chat: SpriteChat; demo: b
             <textarea className="tp-input" rows={1} value={text} maxLength={800} placeholder={demo ? `登录后${SPRITE_NAME}才能回答你自己的问题` : `问${SPRITE_NAME}，或者让她帮你办点事`}
               onChange={e => setText(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); chat.send(text); setText(''); } }} />
             <button type="button" className="tp-btn v sm" disabled={chat.busy || !text.trim()} onClick={() => { chat.send(text); setText(''); }}>发送</button>
+          </div>
+        </div>
+      )}
+    </Sheet>
+    {res && <ResourceSheet options={res} onClose={() => setRes(null)} onPick={it => { setRes(null); chat.send(it.say); }} />}
+    </>
+  );
+}
+
+/** 资源抽屉：一张张可选的资源卡片，点选后把选择告诉签签，再走确认卡 → 执行 → 结果卡 */
+function ResourceSheet({ options, onClose, onPick }: { options: Options; onClose: () => void; onPick: (it: OptionItem) => void }) {
+  return (
+    <Sheet onClose={onClose} label={options.title} variant="side">
+      {close => (
+        <div className="tp-res">
+          <div className="tp-dr-title" style={{ marginTop: 6 }}>{options.title}</div>
+          <p className="tp-card-p" style={{ margin: '2px 0 12px' }}>点一张，{SPRITE_NAME}帮你办；要动护照的事还会先给你确认。</p>
+          <div className="tp-res-list">
+            {options.items.map(it => (
+              <div key={it.id} className="tp-res-card">
+                <div className="tp-res-h"><b>{it.title}</b>{it.tag && <span className="tp-dtag">{it.tag}</span>}</div>
+                <span className="tp-res-sub">{it.sub}</span>
+                {(it.gets || it.time || it.cost) && <div className="tp-res-meta">{it.gets && <span>拿到：{it.gets}</span>}{it.time && <span>用时：{it.time}</span>}{it.cost && <span>费用：{it.cost}</span>}</div>}
+                <button type="button" className="tp-btn v sm" onClick={() => { onPick(it); close(); }}>就这个</button>
+              </div>
+            ))}
+            {!options.items.length && <p className="tp-card-p">这一类都已经在你的护照里了。</p>}
           </div>
         </div>
       )}
