@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>给人升维 · 从扁平简历到升维体</title>
+<style>
+/* ===== 极光白 · 给人升维（1080×1440 动态画布）=====
+   每一帧都是时间 t 的纯函数：window.renderAt(t)；?t=秒 定格，否则持续播放。
+   A 上段：扁平简历从平面升起 → 六层信源逐层托举 → 升维体（三个立体空间 × 三根双极轴 = 九维，箭头生长、光晕收小、立方体缓转）
+   B 中段：三维宇宙——实体星云 + 物 / 人 / 组织三层轨道绕升维体旋转，Learning Graph 虚线、关系图谱实线、升维配升维橙线；下沿两条心智闭环轮转
+   C 下段：平方怎么精细描绘人才——全景构建五步轮转、动向雷达、三张图谱；44 类实体星座绕「人」旋转
+   来源：升维人才画像报告（林知夏，演示虚构人物）、《心智模式与看人》研究简报、datasquare 求真工作室、ch2 行业级知识图谱 */
+*{box-sizing:border-box}
+:root{
+  --bg:#F7F8FC;--ink:#16182B;--muted:#5F6680;--dim:#9AA0B8;--line:rgba(22,24,43,.09);
+  --glass:rgba(255,255,255,.74);--cyan:#2BB3D9;--violet:#6D5BFF;--mint:#2FBF8F;--gold:#C8891F;--rose:#E25C8E;--ai:#F0652A;--en:#1F9D5B;--cp:#2F6BFF;
+  --sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  --mono:"SF Mono",Menlo,Consolas,"Roboto Mono",monospace;
+}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:var(--sans);overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1080px;height:1440px;transform-origin:0 0;overflow:hidden;background:var(--bg)}
+#stage::before{content:"";position:absolute;inset:0;pointer-events:none;background:
+  radial-gradient(900px 600px at 50% 46%,rgba(109,91,255,.22),transparent 62%),
+  radial-gradient(760px 540px at 6% 94%,rgba(43,179,217,.32),transparent 62%),
+  radial-gradient(700px 460px at 96% 4%,rgba(120,220,180,.30),transparent 65%),
+  radial-gradient(600px 420px at 92% 88%,rgba(255,190,210,.28),transparent 65%),
+  radial-gradient(520px 360px at 4% 10%,rgba(255,214,170,.22),transparent 65%)}
+#stage::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(22,24,43,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(22,24,43,.045) 1px,transparent 1px);
+  background-size:48px 48px;mask-image:radial-gradient(ellipse at 50% 46%,#000 20%,transparent 72%);-webkit-mask-image:radial-gradient(ellipse at 50% 46%,#000 20%,transparent 72%)}
+#stage>*{position:absolute;z-index:1}
+p,li,td,small,em,b,span,div.msg{text-wrap:balance}
+h1,h2,h3{text-wrap:balance}
+
+.top{left:0;top:0;width:1080px;height:48px;display:flex;align-items:center;gap:14px;padding:0 18px;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--muted);
+  border-bottom:1px solid var(--line);background:rgba(247,248,252,.78);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.top .tag{font-family:var(--sans);font-weight:800;color:var(--ink);font-size:14px;letter-spacing:.1em;white-space:nowrap;flex:none}
+.top .ety{flex:none;font-family:var(--sans);font-size:11px;color:var(--muted);font-weight:600;white-space:nowrap;letter-spacing:.04em;padding-right:12px;border-right:1px solid var(--line)}
+.top .sp{flex:none;display:grid;grid-template-columns:auto auto;gap:0 8px;align-items:baseline;line-height:1.3;white-space:nowrap;padding-left:8px;border-left:3px solid var(--c)}
+.top .sp i{font-style:normal;font-weight:700;color:var(--c);font-size:10.5px;letter-spacing:.1em}
+.top .sp em{font-style:normal;font-size:9px;color:var(--ink);font-weight:700;text-wrap:nowrap}
+.top .sp b{grid-column:1/3;font-family:var(--sans);font-weight:500;font-size:9px;color:var(--muted);letter-spacing:0;text-wrap:nowrap}
+.top .logo{margin-left:auto;height:26px;flex:none}
+
+.sec{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--muted);display:flex;align-items:baseline;gap:10px;white-space:nowrap}
+.sec b{font-family:var(--sans);font-size:17px;letter-spacing:.06em;color:var(--ink);font-weight:800}
+.sec i{font-style:normal;color:var(--dim);letter-spacing:.06em;font-size:10px}
+.card{border-radius:14px;background:var(--glass);border:1px solid #fff;box-shadow:0 1px 2px rgba(22,24,43,.04),0 10px 30px rgba(22,24,43,.06);padding:12px 14px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);overflow:hidden}
+.card h3{margin:0 0 6px;font:700 12px/1.3 var(--sans);color:var(--ink);display:flex;align-items:center;gap:7px;letter-spacing:.04em;white-space:nowrap}
+.card h3::before{content:"";width:7px;height:7px;border-radius:2px;background:var(--c,var(--violet));flex:none}
+.card h3 small{margin-left:auto;font:500 9.5px var(--mono);color:var(--dim);letter-spacing:.08em}
+.card p{margin:0;font-size:10.5px;line-height:1.55;color:var(--muted)}
+.card p b{color:var(--ink);font-weight:700}
+canvas{display:block}
+
+/* A */
+.flat{left:24px;top:92px;width:236px;height:330px;--c:var(--dim)}
+.flat canvas{width:208px;height:160px;margin:0 0 6px}
+.lift{left:270px;top:92px;width:316px;height:330px;--c:var(--en)}
+.lift ol{margin:4px 0 0;padding:0;list-style:none;display:grid;gap:4px}
+.lift li{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:start;padding:4px 8px 4px 0;border-left:3px solid var(--lc);border-radius:0 8px 8px 0;opacity:.35}
+.lift li.on{opacity:1;background:linear-gradient(90deg,color-mix(in srgb,var(--lc) 14%,#fff),transparent 70%)}
+.lift li.now{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--lc) 45%,#fff)}
+.lift li i{font:800 11px/1.5 var(--mono);color:var(--lc);text-align:center;font-style:normal}
+.lift li b{display:block;font-size:11px;color:var(--ink);white-space:nowrap}
+.lift li b em{font-style:normal;font-weight:500;color:var(--muted);margin-left:6px}
+.lift li span{display:block;font:500 9.5px/1.4 var(--mono);color:var(--muted);letter-spacing:.02em;white-space:nowrap}
+.lift .ladder{margin-top:7px;font:500 9.5px/1.5 var(--mono);color:var(--dim);letter-spacing:.04em;white-space:nowrap}
+.lift .ladder b{color:var(--ink)}
+.body{left:596px;top:92px;width:460px;height:330px;--c:var(--violet)}
+.body canvas{width:432px;height:206px;margin-top:2px}
+.body .dims{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:4px}
+.body .dims ul{margin:0;padding:0;list-style:none;font-size:8.5px;line-height:1.45;color:var(--muted)}
+.body .dims li{display:grid;grid-template-columns:auto 1fr;gap:0 4px;white-space:nowrap}
+.body .dims li b{color:var(--ink);font-weight:700}
+.body .dims li em{font-style:normal;font-family:var(--mono);color:var(--violet);font-weight:700;text-align:right}
+.body .note{margin-top:5px;font-size:9px;line-height:1.4;color:var(--dim);white-space:nowrap}
+.arrow{font-family:var(--mono);font-size:22px;color:var(--dim);top:230px}
+.arrow.a1{left:252px}.arrow.a2{left:580px}
+
+/* B */
+.space{left:24px;top:470px;width:1032px;height:390px;--c:var(--cyan);padding-bottom:10px}
+.space canvas{width:1004px;height:248px}
+.space .loops{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-top:24px}
+.loop{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;position:relative}
+.loop::before{content:attr(data-t);position:absolute;left:0;top:-12px;font:700 8.5px var(--mono);letter-spacing:.14em;color:var(--lc)}
+.loop div{border-radius:6px;border:1.2px solid var(--lc);background:#fff;padding:3px 4px;text-align:center;font-size:8.5px;line-height:1.2;color:var(--ink);font-weight:700}
+.loop div small{display:block;font-weight:500;color:var(--dim);font-size:7.5px;margin-top:1px;white-space:nowrap}
+.loop div.on{background:var(--lc);color:#fff}.loop div.on small{color:rgba(255,255,255,.85)}
+.loop .back{grid-column:1/5;text-align:center;font:700 7.5px var(--mono);color:var(--lc);border:0;background:none;padding:0;margin-top:-2px}
+.space .mid{text-align:center;font:700 8.5px var(--mono);color:var(--ai);white-space:nowrap;line-height:1.4}
+.space .mid small{display:block;font-weight:500;color:var(--dim);font-size:7.5px}
+
+/* C */
+.pano{left:24px;top:900px;width:566px;height:518px;--c:var(--en)}
+.pano .steps{display:grid;gap:5px;margin-top:2px}
+.pano .step{display:grid;grid-template-columns:26px 1fr;gap:8px;padding:5px 8px;border-radius:9px;background:rgba(255,255,255,.5);border:1px solid var(--line)}
+.pano .step.on{background:rgba(31,157,91,.09);border-color:rgba(31,157,91,.45)}
+.pano .step i{font:800 13px/1.2 var(--mono);color:var(--en);font-style:normal}
+.pano .step b{display:block;font-size:11px;color:var(--ink);margin-bottom:1px}
+.pano .step b em{font-style:normal;font-weight:500;color:var(--dim);font-family:var(--mono);font-size:9px;margin-left:6px;letter-spacing:.06em}
+.pano .step p{font-size:9.5px;line-height:1.5;color:var(--muted)}
+.pano .step p .f{font-family:var(--mono);color:var(--ink);font-size:9.5px}
+.pano .two{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:7px}
+.pano .mini{border-radius:9px;background:rgba(255,255,255,.55);border:1px solid var(--line);padding:7px 9px}
+.pano .mini h4{margin:0 0 4px;font:700 10.5px var(--sans);color:var(--ink);display:flex;gap:6px;align-items:center;white-space:nowrap}
+.pano .mini h4 small{margin-left:auto;font:500 8.5px var(--mono);color:var(--dim)}
+.pano .sig{display:grid;grid-template-columns:auto 1fr auto;gap:2px 6px;align-items:center;font-size:9px;color:var(--muted)}
+.pano .sig i{display:block;height:4px;border-radius:2px;background:rgba(22,24,43,.07);overflow:hidden}
+.pano .sig i::after{content:"";display:block;height:100%;width:var(--w);background:var(--cyan)}
+.pano .sig b{font-family:var(--mono);color:var(--cyan);font-weight:700}
+.pano .sig span{white-space:nowrap}
+.pano .sig .on span,.pano .sig .on b{color:var(--ink)}
+.pano .graphs{display:grid;gap:3px;font-size:9.5px;line-height:1.4;color:var(--muted)}
+.pano .graphs div{display:grid;grid-template-columns:auto 1fr;gap:6px;align-items:baseline;white-space:nowrap}
+.pano .graphs b{color:var(--ink);font-weight:700}
+.pano .graphs i{font-style:normal;font-family:var(--mono);color:var(--gc);font-size:9px;letter-spacing:.06em}
+.pano .chips{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px}
+.pano .chips span{font-size:8.5px;padding:1px 6px;border-radius:10px;background:color-mix(in srgb,var(--cc) 12%,#fff);color:var(--ink);border:1px solid color-mix(in srgb,var(--cc) 30%,#fff);white-space:nowrap}
+.ents{left:600px;top:900px;width:456px;height:518px;--c:var(--gold)}
+.ents canvas{width:428px;height:300px;margin-top:0}
+.ents .lg{display:grid;grid-template-columns:repeat(3,1fr);gap:3px 10px;margin-top:4px;font-size:9px;color:var(--muted)}
+.ents .lg div{display:grid;grid-template-columns:8px 1fr auto;gap:5px;align-items:center;white-space:nowrap}
+.ents .lg i{width:8px;height:8px;border-radius:2px;background:var(--gc)}
+.ents .lg b{color:var(--ink);font-weight:700}
+.ents .lg em{font-style:normal;font-family:var(--mono);color:var(--dim);font-size:8.5px}
+.ents .foot{margin-top:7px;padding-top:6px;border-top:1px solid var(--line);font:500 9.5px/1.5 var(--mono);color:var(--dim);letter-spacing:.04em}
+.ents .foot b{color:var(--ink)}
+.src{left:0;top:1422px;width:1080px;text-align:center;font:500 9px var(--mono);color:var(--dim);letter-spacing:.08em;white-space:nowrap}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="top">
+    <span class="tag">平方智能</span>
+    <span class="ety">教育科技人才一体化</span>
+    <span class="sp" style="--c:var(--violet)"><i>03 升维空间</i><em id="tUp">—</em><b>平面的简历，落进有坐标、有置信、有关系的空间</b></span>
+    <span class="sp" style="--c:var(--cyan)"><i>01 人本空间</i><em id="tHum">—</em><b>人串联教科人要素</b></span>
+    <span class="sp" style="--c:var(--en)"><i>02 求真空间</i><em id="tTru">—</em><b>多种方式还原真实 · 科技求真</b></span>
+    <span class="sp" style="--c:var(--ai)"><i>04 心智空间</i><em id="tMind">—</em><b>人与组织各一个闭环 · A2A 对齐</b></span>
+    <img class="logo" src="assets/dual/vs-logo.png" alt="平方创想 VisionSquare">
+  </div>
+
+  <div class="sec" style="left:24px;top:60px"><b>给人升维</b>从扁平简历到升维体<i>不是信息更多，是每一层补上简历缺的一块</i></div>
+
+  <div class="card flat">
+    <h3>扁平简历<small>水面上</small></h3>
+    <canvas id="cFlat" width="416" height="320"></canvas>
+    <p>简历是平面上的一个点：<b>知识、技能、经历</b>。九个维度 60 条证据里，简历只占 <b>2 条</b>（边界、视野）；决定去留的驱动、掌控、确定性，简历一条都没有。</p>
+  </div>
+  <div class="arrow a1">→</div>
+
+  <div class="card lift">
+    <h3>六层信源托举<small id="liftCount">0 / 152 条证据</small></h3>
+    <ol id="liftList">
+      <li style="--lc:#2FBF8F"><i>1</i><div><b>检索<em>全网找你</em></b><span>37 个来源 · 14 条确认是本人 · 6 条简历里没有</span></div></li>
+      <li style="--lc:#1F9D5B"><i>2</i><div><b>验真<em>这个人是真的</em></b><span>14 条声明核验 · 11 条多源一致 · 0 矛盾</span></div></li>
+      <li style="--lc:#2BB3D9"><i>3</i><div><b>测评<em>看你怎么答</em></b><span>64 题作答行为 · 用时 × 正确率 × 回看</span></div></li>
+      <li style="--lc:#2F6BFF"><i>4</i><div><b>长期<em>长期地看你</em></b><span>31 条画像事实 · 潜仔 / 小欧 8 个月陪伴</span></div></li>
+      <li style="--lc:#6D5BFF"><i>5</i><div><b>操作<em>看你怎么干</em></b><span>13 条操作记录 · 数字岗位空间 · 吻合 90%</span></div></li>
+      <li style="--lc:#E25C8E"><i>6</i><div><b>谈话<em>听你怎么说</em></b><span>16 轮对话 · 预聊分身 · A2A 10 轮</span></div></li>
+    </ol>
+    <div class="ladder">可信度分层：<b>自述</b> &lt; 真伪核验 &lt; 长期观察 &lt; <b>真实行为</b> · 只出现在简历里的不加分</div>
+  </div>
+  <div class="arrow a2">→</div>
+
+  <div class="card body">
+    <h3>升维体<small>三个立体空间 × 三根双极轴 = 九维</small></h3>
+    <canvas id="cCube" width="864" height="412"></canvas>
+    <div class="dims" id="dims"></div>
+    <div class="note">箭头 = 方向与强度 · 光晕越大 = 证据越少 · 坐标是后验均值，光晕是方差 · 两端都不是缺点</div>
+  </div>
+
+  <div class="sec" style="left:24px;top:440px"><b>升维相关的整体空间</b>人和物、人和人、人和组织<i>物连物 · 物连人 · 人连人 → 人与组织同一空间</i></div>
+  <div class="card space">
+    <h3>升维体落进空间以后<small>Learning Graph · 关系图谱 · 升维配升维</small></h3>
+    <canvas id="cSpace" width="2008" height="496"></canvas>
+    <div class="loops">
+      <div class="loop" data-t="人这一侧 · 知己 / 潜仔" style="--lc:#2BB3D9" id="loopA">
+        <div>先验<small>简历 · 自述</small></div><div>证据<small>检索 验真 测评 操作</small></div><div>后验<small>升维画像 + 光晕</small></div><div>行动<small>预聊 · A2A · 面试</small></div>
+        <div class="back">↺ 结果回流：录用 · 表现 · 留存</div>
+      </div>
+      <div class="mid">⇄ 匹配分析 · A2A<small>两边的模型互相读取</small></div>
+      <div class="loop" data-t="企业这一侧 · 一答" style="--lc:#5546D9" id="loopB">
+        <div>先验<small>JD · 公司介绍</small></div><div>证据<small>全景检索 · 公开信源</small></div><div>后验<small>升维企业画像</small></div><div>行动<small>A2A · 面试邀请</small></div>
+        <div class="back">↺ 结果回流：新人留存 · 绩效</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec" style="left:24px;top:868px"><b>平方怎么精细描绘人才</b>人才全景构建 · 动向雷达 · 三张图谱 · 44 类实体<i>求真工作室 · datasquare</i></div>
+  <div class="card pano">
+    <h3>人才全景构建<small>验真回答「是不是真的」· 全景回答「这个人是谁」</small></h3>
+    <div class="steps" id="steps">
+      <div class="step"><i>①</i><div><b>身份锚定<em>identityAnchor</em></b><p>ORCID · Google Scholar · OpenAlex 取候选；置信 <span class="f">≥ 60</span> 才成锚点，命中 <span class="f">≥ 2</span> 个平台 = 强锚定。「同名不等于同人」「宁可漏，不可错」</p></div></div>
+      <div class="step"><i>②</i><div><b>同名消歧<em>disambiguation</em></b><p><span class="f">名字^0.3 × 机构^0.4 × 领域^0.25 × 合作者^0.2 + 0.03·softmax(ln(1+丰富度))</span>，乘法：任何一项接近 0 都把总分拉低</p></div></div>
+      <div class="step"><i>③</i><div><b>单条证据<em>claims</em></b><p>按信源分档：<span class="f">权威登记 80 · 参考资料 60 · 推演所得 55 · 开放网络 45</span>；附证据链接 +10，原文缺失 −10，限定 [5, 99]</p></div></div>
+      <div class="step"><i>④</i><div><b>卡片聚合<em>cards</em></b><p><span class="f">多源互证 +10</span> · 单源支持 · <span class="f">存在矛盾 ×0.5</span> · 未获佐证 = 0。主体对不上的记录一律不计入互证</p></div></div>
+      <div class="step"><i>⑤</i><div><b>价值评分<em>valuePrompts</em></b><p>六维评审团：学术与教育底蕴 · 科研与学术影响力 · 产业与实践价值 · 领导与团队管理 · 创新与前沿探索 · 社会与行业影响力；证据少的维度向池均值收缩 <span class="f">ŝ = λs + (1−λ)s̄</span>；人才池乘数 <span class="f">潜力 .90 · 青年 .95 · 优秀 1.00 · 杰出 1.05 · 领军 1.12</span>，封顶 100</p></div></div>
+    </div>
+    <div class="two">
+      <div class="mini">
+        <h4>人才动向雷达<small>热度 ×（变化 + 缺口）</small></h4>
+        <div class="sig" id="sig">
+          <span>主页失效</span><i style="--w:100%"></i><b>3</b>
+          <span>学术机构变了</span><i style="--w:83%"></i><b>2.5</b>
+          <span>师资名单里没了</span><i style="--w:83%"></i><b>2.5</b>
+          <span>ORCID 有新任职</span><i style="--w:67%"></i><b>2</b>
+          <span>职称 / 职务变了</span><i style="--w:67%"></i><b>2</b>
+          <span>有人事新闻</span><i style="--w:67%"></i><b>2</b>
+          <span>有新成果</span><i style="--w:33%"></i><b>1</b>
+        </div>
+      </div>
+      <div class="mini">
+        <h4>三张图谱 · 一个人<small>ch2 · 行业级知识图谱</small></h4>
+        <div class="graphs">
+          <div style="--gc:var(--gold)"><b>知识图谱</b><span><i>物连物</i> 院校、机构、岗位、学科、论文、专利</span></div>
+          <div style="--gc:var(--cyan)"><b>认知图谱</b><span><i>物连人</i> 一个人与课题、导师、院校、成果</span></div>
+          <div style="--gc:var(--violet)"><b>关系图谱</b><span><i>人连人</i> 合著、师承、校友、同事、联合创办、投资</span></div>
+        </div>
+        <div class="chips" style="--cc:var(--cyan)"><span>内在特质</span><span>价值观</span><span>兴趣</span><span>性格</span><span>体质</span><span>能力</span><span>知识</span></div>
+        <div class="chips" style="--cc:var(--gold)"><span>社会性表达</span><span>学业经历</span><span>学术经历</span><span>职业经历</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card ents">
+    <h3>教科人空间里的实体<small>44 类 · 数字来自行业级知识图谱</small></h3>
+    <canvas id="cEnt" width="856" height="600"></canvas>
+    <div class="lg" id="entLg"></div>
+    <div class="foot">SQUARECORE = <b>Knowledge Square</b>（知识 + 数据）+ <b>SquareAI</b>（垂类大模型与智能体）+ <b>Flora</b>（开发框架与工具 DFT）</div>
+  </div>
+
+  <div class="src">来源 · 升维人才画像报告（林知夏，演示虚构人物）· 《心智模式与看人》研究简报 2026-10-09 · datasquare 求真工作室 · ch2 行业级知识图谱 · 冰山模型 McClelland 1973</div>
+</div>
+
+<script>
+(() => {
+'use strict';
+const stage = document.getElementById('stage');
+function fit(){ const s = Math.min(innerWidth/1080, innerHeight/1440); stage.style.transform = `translate(${-540*s}px,${-720*s}px) scale(${s})`; }
+addEventListener('resize', fit); fit();
+const $ = id => document.getElementById(id);
+const F = '"PingFang SC","Hiragino Sans GB",sans-serif', M = '"SF Mono",Menlo,monospace';
+const TAU = Math.PI*2, clamp01 = u => Math.max(0, Math.min(1, u)), easeOut = u => 1 - Math.pow(1-u, 3), ease = u => u < .5 ? 2*u*u : 1 - Math.pow(-2*u+2, 2)/2;
+function mulberry32(a){ return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const rnd = mulberry32(20261010);
+const CYCLE = 24;                                   // 升维一轮 24 s：0–3 平面，3–15 六层逐层到齐，15–24 升维体稳定
+const cyc = t => ((t % CYCLE) + CYCLE) % CYCLE;
+const layersAt = t => Math.min(6, Math.max(0, Math.floor((cyc(t) - 3) / 2) + (cyc(t) >= 3 ? 1 : 0)));   // 3s 起每 2s 一层
+const liftP = t => clamp01((cyc(t) - 3) / 12);      // 0..1 托举进度
+
+// ---------- 九维数据（林知夏，演示）----------
+const CUBES = [
+  { en:'空间 1 · HOW', name:'做事方式', c:'#6D5BFF', ax:[['节奏','深耕打磨','快速迭代',.42,72],['依据','直觉判断','证据先行',.82,90],['边界','专精纵深','横向贯通',.32,60]] },
+  { en:'空间 2 · WHY', name:'驱动', c:'#2BB3D9', ax:[['驱动来源','外在认可','内在意义',.76,85],['用户距离','底层能力','贴着用户',.80,88],['视野','本土深耕','全球',.38,70]] },
+  { en:'空间 3 · WITH', name:'关系与环境', c:'#2FBF8F', ax:[['掌控','清晰指导','自主负责',.66,80],['协作','独立作战','高密度协作',.22,52],['确定性','稳定可预期','模糊高变化',.28,58]] },
+];
+const VEC = CUBES.flatMap(c => c.ax.map(a => a[3]));
+$('dims').innerHTML = CUBES.map(cb => `<ul>${cb.ax.map((a, i) => `<li><b>${a[0]}</b><em class="dv" data-v="${a[3]}" data-c="${a[4]}">+0.00 · 置信 0%</em></li>`).join('')}</ul>`).join('');
+const dimEls = [...document.querySelectorAll('.dv')];
+const liftLis = [...$('liftList').children], liftCount = $('liftCount');
+
+// ---------- 3D 工具 ----------
+function proj3(x, y, z, rotY, tiltX, f, cx, cy, scale){
+  let X = x*Math.cos(rotY) + z*Math.sin(rotY), Z = -x*Math.sin(rotY) + z*Math.cos(rotY), Y = y;
+  const Y2 = Y*Math.cos(tiltX) - Z*Math.sin(tiltX), Z2 = Y*Math.sin(tiltX) + Z*Math.cos(tiltX);
+  const k = f / (f + Z2*scale);
+  return { x: cx + X*scale*k, y: cy + Y2*scale*k, k, z: Z2 };
+}
+
+// ---------- A1 扁平简历 → 升起 ----------
+const cFlat = $('cFlat').getContext('2d');
+function drawFlat(t){
+  const ctx = cFlat; ctx.setTransform(2,0,0,2,0,0); ctx.clearRect(0,0,208,160);
+  const lp = liftP(t), rot = t*.18;
+  const P = (x, y, z) => proj3(x, y, z, rot, .9, 420, 104, 92, 1);
+  // 平面网格
+  ctx.strokeStyle = 'rgba(109,91,255,.18)'; ctx.lineWidth = 1;
+  for (let g = -60; g <= 60; g += 20) { let a = P(-60, 0, g), b = P(60, 0, g); ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); a = P(g, 0, -60); b = P(g, 0, 60); ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); }
+  // 简历卡躺在平面上
+  const card = [[-26,0,-18],[26,0,-18],[26,0,18],[-26,0,18]].map(v => P(...v));
+  ctx.fillStyle = 'rgba(255,255,255,.95)'; ctx.strokeStyle = 'rgba(22,24,43,.3)'; ctx.beginPath(); card.forEach((p, i) => i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y)); ctx.closePath(); ctx.fill(); ctx.stroke();
+  for (let i = 0; i < 4; i++) { const a = P(-20, 0, -11 + i*7), b = P(-20 + (i ? 26 : 16), 0, -11 + i*7); ctx.strokeStyle = i ? 'rgba(22,24,43,.25)' : 'rgba(22,24,43,.6)'; ctx.lineWidth = i ? 1.5 : 2.5; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); }
+  // 点升起：高度随托举进度
+  const h = 70*easeOut(lp), base = P(0, 0, 0), top = P(0, -h, 0);
+  if (h > 1) { ctx.setLineDash([3,3]); ctx.strokeStyle = 'rgba(109,91,255,.6)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(base.x, base.y); ctx.lineTo(top.x, top.y); ctx.stroke(); ctx.setLineDash([]);
+    // 托举层：到齐几层画几圈
+    const n = layersAt(t); const LC = ['#2FBF8F','#1F9D5B','#2BB3D9','#2F6BFF','#6D5BFF','#E25C8E'];
+    for (let i = 0; i < n; i++) { const y = -h*(i+1)/6, r = 22 - i*2.2; ctx.strokeStyle = LC[i]; ctx.globalAlpha = .55; ctx.beginPath(); for (let a = 0; a <= 32; a++) { const q = P(Math.cos(a/32*TAU)*r, y, Math.sin(a/32*TAU)*r); a ? ctx.lineTo(q.x, q.y) : ctx.moveTo(q.x, q.y); } ctx.stroke(); } ctx.globalAlpha = 1; }
+  const halo = 16 - 10*lp; const g = ctx.createRadialGradient(top.x, top.y, 0, top.x, top.y, halo); g.addColorStop(0, 'rgba(109,91,255,.5)'); g.addColorStop(1, 'rgba(109,91,255,0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(top.x, top.y, halo, 0, TAU); ctx.fill();
+  ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(top.x, top.y, 4, 0, TAU); ctx.fill(); ctx.strokeStyle = '#6D5BFF'; ctx.lineWidth = 2; ctx.stroke();
+  if (lp > .95) { for (let d = 0; d < 9; d++) { const a = -Math.PI/2 + d*TAU/9; ctx.strokeStyle = '#6D5BFF'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(top.x + Math.cos(a)*6, top.y + Math.sin(a)*6); ctx.lineTo(top.x + Math.cos(a)*(6 + 8*VEC[d]), top.y + Math.sin(a)*(6 + 8*VEC[d])); ctx.stroke(); } }
+  ctx.font = `700 8px ${M}`; ctx.fillStyle = '#9AA0B8'; ctx.textAlign = 'left'; ctx.fillText('RESUME · 2 / 60 条证据', 4, 10);
+  ctx.font = `700 9px ${F}`; ctx.fillStyle = '#6D5BFF'; ctx.textAlign = 'center'; ctx.fillText(lp <= 0 ? '平面上的一个点' : lp < 1 ? `托举中 · ${layersAt(t)} / 6 层` : '升维体', 104, 154);
+}
+
+// ---------- A3 三个立方体 ----------
+const cCube = $('cCube').getContext('2d');
+function drawCubes(t){
+  const ctx = cCube; ctx.setTransform(2,0,0,2,0,0); ctx.clearRect(0,0,432,206);
+  const lp = liftP(t), rot = .6 + Math.sin(t*.25)*.35;
+  CUBES.forEach((cb, k) => {
+    const cx = 72 + k*144, cy = 96, S = 34;
+    const P = (x, y, z) => proj3(x, -y, z, rot, .5, 400, cx, cy, S);
+    ctx.font = `700 8px ${M}`; ctx.fillStyle = cb.c; ctx.textAlign = 'center'; ctx.fillText(cb.en, cx, 10);
+    ctx.font = `700 10.5px ${F}`; ctx.fillStyle = '#16182B'; ctx.fillText(cb.name, cx, 23);
+    const V = [[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]].map(v => P(...v));
+    ctx.strokeStyle = cb.c; ctx.globalAlpha = .3; ctx.lineWidth = 1;
+    [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]].forEach(([a,b]) => { ctx.beginPath(); ctx.moveTo(V[a].x, V[a].y); ctx.lineTo(V[b].x, V[b].y); ctx.stroke(); });
+    ctx.globalAlpha = .55; ctx.setLineDash([3,2]);
+    [[[-1,0,0],[1,0,0]],[[0,-1,0],[0,1,0]],[[0,0,-1],[0,0,1]]].forEach(([a,b]) => { const pa = P(...a), pb = P(...b); ctx.beginPath(); ctx.moveTo(pa.x, pa.y); ctx.lineTo(pb.x, pb.y); ctx.stroke(); });
+    ctx.setLineDash([]); ctx.globalAlpha = 1;
+    // 轴标签
+    ctx.font = `500 7px ${F}`; ctx.fillStyle = cb.c;
+    const lab = (v, s, dx, dy, al) => { const p = P(...v); ctx.textAlign = al; ctx.fillText(s, p.x + dx, p.y + dy); };
+    const [a1,a2,a3] = cb.ax;
+    lab([-1.3,0,0], a1[1], -2, 3, 'end'); lab([1.3,0,0], a1[2], 2, 3, 'start');
+    lab([0,1.3,0], a2[2], 0, -3, 'center'); lab([0,-1.3,0], a2[1], 0, 9, 'center');
+    lab([0,0,-1.3], a3[1], 0, 3, 'center'); lab([0,0,1.3], a3[2], 0, 3, 'center');
+    // 向量：随托举生长；光晕随置信收小
+    const g = easeOut(lp), v = [a1[3]*g, a2[3]*g, a3[3]*g], p = P(v[0]*1.05, v[1]*1.05, v[2]*1.05), o = P(0,0,0);
+    const conf = (a1[4] + a2[4] + a3[4]) / 3; const halo = 6 + 26*(1 - conf/100*lp);
+    const rg = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, halo); rg.addColorStop(0, cb.c + '8C'); rg.addColorStop(1, cb.c + '00'); ctx.fillStyle = rg; ctx.beginPath(); ctx.arc(p.x, p.y, halo, 0, TAU); ctx.fill();
+    if (g > .02) { ctx.strokeStyle = cb.c; ctx.lineWidth = 2.6; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(o.x, o.y); ctx.lineTo(p.x, p.y); ctx.stroke();
+      const dx = p.x-o.x, dy = p.y-o.y, l = Math.hypot(dx,dy) || 1, ux = dx/l, uy = dy/l; ctx.fillStyle = cb.c; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x-ux*9-uy*4, p.y-uy*9+ux*4); ctx.lineTo(p.x-ux*9+uy*4, p.y-uy*9-ux*4); ctx.closePath(); ctx.fill(); }
+    ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(p.x, p.y, 4, 0, TAU); ctx.fill(); ctx.strokeStyle = cb.c; ctx.lineWidth = 2; ctx.stroke();
+    ctx.fillStyle = '#16182B'; ctx.beginPath(); ctx.arc(o.x, o.y, 2, 0, TAU); ctx.fill();
+    ctx.font = `700 8px ${F}`; ctx.fillStyle = '#16182B'; ctx.textAlign = 'left'; ctx.fillText('林知夏', p.x + 7, p.y - 6);
+    ctx.font = `600 7.5px ${M}`; ctx.fillStyle = '#9AA0B8'; ctx.textAlign = 'center'; ctx.fillText(`置信 ${Math.round(conf*lp)}% · 光晕 ${halo.toFixed(0)}`, cx, 202);
+  });
+}
+
+// ---------- B 三维宇宙 ----------
+const cSpace = $('cSpace').getContext('2d');
+const SW = 1004, SH = 248, SCX = 502, SCY = 118;
+const GPAL = ['#C8891F','#2F6BFF','#E25C8E','#2BB3D9','#1F9D5B','#2FBF8F'];
+const stars = []; for (let i = 0; i < 520; i++) { const u = rnd(), v = rnd(), th = u*TAU, ph = Math.acos(2*v-1), r = 120 + 150*Math.pow(rnd(), .6); stars.push({ x: r*Math.sin(ph)*Math.cos(th), y: r*Math.cos(ph)*.55, z: r*Math.sin(ph)*Math.sin(th), c: GPAL[Math.floor(rnd()*6)], s: .8 + rnd()*1.4, ph: rnd()*TAU }); }
+const THINGS = [['课题 · AI for Good 黑客松','#2BB3D9'],['导师 · UCL HCI','#2BB3D9'],['院校 · UCL','#2BB3D9'],['成果 · 选课搭子 2,300 用户','#2BB3D9'],['实习 · Relay Labs / 飞书','#2BB3D9'],['文章 · 评估集不是越大越好','#2BB3D9'],['论文 · 30+ 篇 Agent 交互','#2BB3D9'],['比赛 · 二等奖 2026-03','#2BB3D9']];
+const PEOPLE = [['合著 · 陈默'],['师承 · UCL 导师'],['校友 · UCL 2027 届'],['同事 · Relay Labs PM'],['同机构 · 飞书实习'],['前主管 · Relay Labs'],['A2A · 潜仔 ⇄ 一答']];
+const ORGS = [['深曜智能 · AI 产品经理','匹配 0.82'],['字节跳动 · 产品','0.61'],['Relay Labs','0.74'],['UCL · HCI','0.88']];
+const things = THINGS.map((e, i) => ({ n: e[0], c: e[1], a: i*TAU/THINGS.length, r: 96, y: Math.sin(i*1.7)*26 }));
+const people = PEOPLE.map((e, i) => ({ n: e[0], a: i*TAU/PEOPLE.length + .4, r: 156, y: Math.cos(i*2.1)*40 }));
+const orgs = ORGS.map((e, i) => ({ n: e[0], m: e[1], a: i*TAU/ORGS.length + 1.1, r: 215, y: -40 + Math.sin(i*2.6)*18 }));
+let spaceLinks = 0;
+function drawSpace(t){
+  const ctx = cSpace; ctx.setTransform(2,0,0,2,0,0); ctx.clearRect(0,0,SW,SH);
+  const rot = t*.16, lp = liftP(t);
+  const P = (x, y, z) => proj3(x, y, z, rot, .5, 700, SCX, SCY, 1);
+  // 轨道
+  [92, 150, 215].forEach((r, i) => { ctx.strokeStyle = ['rgba(43,179,217,.35)','rgba(109,91,255,.3)','rgba(240,101,42,.25)'][i]; ctx.lineWidth = 1; ctx.setLineDash(i === 2 ? [4,4] : []); ctx.beginPath(); for (let a = 0; a <= 90; a++) { const q = P(Math.cos(a/90*TAU)*r, 0, Math.sin(a/90*TAU)*r); a ? ctx.lineTo(q.x, q.y) : ctx.moveTo(q.x, q.y); } ctx.stroke(); }); ctx.setLineDash([]);
+  // 星云（远处的实体）：按深度排序，远的淡
+  const sp = stars.map(s => ({ ...P(s.x, s.y + Math.sin(t*.6 + s.ph)*2, s.z), c: s.c, s: s.s })).sort((a, b) => b.z - a.z);
+  for (const q of sp) { const depth = clamp01((q.z + 270) / 540); ctx.globalAlpha = .18 + .55*(1 - depth); ctx.fillStyle = q.c; ctx.beginPath(); ctx.arc(q.x, q.y, Math.max(.3, q.s*q.k), 0, TAU); ctx.fill(); }
+  ctx.globalAlpha = 1;
+  // 星云内部少量连线（物连物）
+  ctx.strokeStyle = 'rgba(200,137,31,.14)'; ctx.lineWidth = .6; for (let i = 0; i < 120; i++) { const a = sp[(i*37) % sp.length], b = sp[(i*53 + 11) % sp.length]; if (Math.hypot(a.x-b.x, a.y-b.y) < 70) { ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); } }
+  const O = P(0, 0, 0);
+  const items = [];
+  things.forEach(o => items.push({ kind: 'thing', o, p: P(Math.cos(o.a)*o.r, o.y, Math.sin(o.a)*o.r) }));
+  people.forEach(o => items.push({ kind: 'person', o, p: P(Math.cos(o.a)*o.r, o.y, Math.sin(o.a)*o.r) }));
+  orgs.forEach(o => items.push({ kind: 'org', o, p: P(Math.cos(o.a)*o.r, o.y, Math.sin(o.a)*o.r) }));
+  items.sort((a, b) => b.p.z - a.p.z);
+  spaceLinks = 0;
+  // 先画后面的线和点，再画前面的
+  for (const it of items) {
+    const { p, o, kind } = it; const front = p.z < 0; const al = .35 + .65*clamp01((-p.z + 260) / 520);
+    if (kind === 'thing') { ctx.setLineDash([4,3]); ctx.strokeStyle = `rgba(43,179,217,${.6*al*lp})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(O.x, O.y); ctx.lineTo(p.x, p.y); ctx.stroke(); ctx.setLineDash([]); spaceLinks++;
+      ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.roundRect(p.x - 4*p.k, p.y - 4*p.k, 8*p.k, 8*p.k, 2); ctx.fill(); ctx.strokeStyle = '#2BB3D9'; ctx.lineWidth = 1.4; ctx.stroke(); }
+    else if (kind === 'person') { ctx.strokeStyle = `rgba(109,91,255,${.55*al*lp})`; ctx.lineWidth = 1.1; ctx.beginPath(); ctx.moveTo(O.x, O.y); ctx.lineTo(p.x, p.y); ctx.stroke(); spaceLinks++;
+      const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 12*p.k); g.addColorStop(0, 'rgba(109,91,255,.35)'); g.addColorStop(1, 'rgba(109,91,255,0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x, p.y, 12*p.k, 0, TAU); ctx.fill();
+      ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(p.x, p.y, 4.5*p.k, 0, TAU); ctx.fill(); ctx.strokeStyle = '#6D5BFF'; ctx.lineWidth = 1.6; ctx.stroke(); }
+    else { const best = o === orgs[0]; const pulse = best ? .5 + .5*Math.sin(t*2.2) : 0;
+      ctx.strokeStyle = best ? `rgba(240,101,42,${(.55 + .4*pulse)*lp})` : `rgba(240,101,42,${.18*al*lp})`; ctx.lineWidth = best ? 1.8 : 1; ctx.beginPath(); ctx.moveTo(O.x, O.y); ctx.lineTo(p.x, p.y); ctx.stroke();
+      if (best && lp > .9) { const u = (t*.5) % 1; const q = { x: O.x + (p.x-O.x)*u, y: O.y + (p.y-O.y)*u }; ctx.fillStyle = '#F0652A'; ctx.beginPath(); ctx.arc(q.x, q.y, 3, 0, TAU); ctx.fill(); }
+      ctx.fillStyle = '#fff'; ctx.strokeStyle = '#16182B'; ctx.lineWidth = 1.3; const s = 6*p.k; ctx.beginPath(); ctx.rect(p.x - s, p.y - s, 2*s, 2*s); ctx.fill(); ctx.stroke(); }
+    // 标签：只给前半圈的
+    const nearCenter = Math.abs(p.x - SCX) < 150 && Math.abs(p.y - SCY) < 50;
+    if ((front && !nearCenter) || kind === 'org') { ctx.globalAlpha = kind === 'org' ? 1 : al; ctx.font = `${kind === 'org' ? 700 : 500} ${kind === 'org' ? 9 : 8.5}px ${F}`; ctx.fillStyle = kind === 'thing' ? '#1C8FB3' : kind === 'person' ? '#5546D9' : '#16182B'; ctx.textAlign = p.x < SCX ? 'end' : 'start'; const dx = p.x < SCX ? -9 : 9; ctx.fillText(o.n, p.x + dx, p.y + 3);
+      if (kind === 'org') { ctx.font = `600 7.5px ${M}`; ctx.fillStyle = '#F0652A'; ctx.fillText(o.m, p.x + dx, p.y + 13); } ctx.globalAlpha = 1; }
+    if (kind === 'person' && p.z < 0 && O.z > p.z) { /* 中心在后面时下面补画 */ }
+  }
+  // 中心升维体
+  const halo = 40 - 18*lp; const g = ctx.createRadialGradient(O.x, O.y, 0, O.x, O.y, halo); g.addColorStop(0, 'rgba(109,91,255,.5)'); g.addColorStop(1, 'rgba(109,91,255,0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(O.x, O.y, halo, 0, TAU); ctx.fill();
+  ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(O.x, O.y, 9, 0, TAU); ctx.fill(); ctx.strokeStyle = '#6D5BFF'; ctx.lineWidth = 2.4; ctx.stroke();
+  VEC.forEach((v, d) => { const a = -Math.PI/2 + d*TAU/9 + t*.3, r0 = 12, r1 = 12 + 4 + 16*v*easeOut(lp); ctx.strokeStyle = '#6D5BFF'; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(O.x + Math.cos(a)*r0, O.y + Math.sin(a)*r0); ctx.lineTo(O.x + Math.cos(a)*r1, O.y + Math.sin(a)*r1); ctx.stroke(); });
+  ctx.font = `800 11px ${F}`; ctx.fillStyle = '#16182B'; ctx.textAlign = 'center'; ctx.fillText('林知夏 · 升维体', O.x, O.y + 46);
+  ctx.font = `500 8px ${M}`; ctx.fillStyle = '#5F6680'; ctx.fillText(`九维坐标 + 置信光晕 · ${Math.round(152*lp)} 条证据`, O.x, O.y + 58);
+  // 角标
+  ctx.textAlign = 'left'; ctx.font = `700 9px ${M}`; ctx.fillStyle = '#2BB3D9'; ctx.fillText('物连人 · LEARNING GRAPH', 8, 14); ctx.font = `500 8px ${F}`; ctx.fillStyle = '#9AA0B8'; ctx.fillText('内圈 · 一个人与课题、导师、院校、成果的联结 · 记忆对象：成长档案', 8, 26);
+  ctx.textAlign = 'right'; ctx.font = `700 9px ${M}`; ctx.fillStyle = '#6D5BFF'; ctx.fillText('人连人 · 关系图谱', SW - 8, 14); ctx.font = `500 8px ${F}`; ctx.fillStyle = '#9AA0B8'; ctx.fillText('中圈 · 合著 · 师承 · 校友 · 同事 · 同机构 · 联合创办 · 投资', SW - 8, 26);
+  ctx.textAlign = 'left'; ctx.font = `700 9px ${M}`; ctx.fillStyle = '#F0652A'; ctx.fillText('升维配升维', 8, SH - 14); ctx.font = `500 8px ${F}`; ctx.fillStyle = '#9AA0B8'; ctx.fillText('外圈 · 组织的 JD 也写成同一套九维向量 · 夹角 = 方向差 · 距离 = 程度差', 8, SH - 3);
+  ctx.textAlign = 'right'; ctx.font = `500 8px ${F}`; ctx.fillStyle = '#9AA0B8'; ctx.fillText('远处的星云 · 44 类实体 · 物连物（知识图谱）', SW - 8, SH - 3);
+}
+
+// ---------- C2 实体星座 ----------
+const cEnt = $('cEnt').getContext('2d');
+const EG = [
+  ['科研','#C8891F',[['论文','1.3亿+'],['学者','1300万+'],['科研机构','400万+'],['学术基金项目','84万+'],['科研试剂','160万+'],['科研耗材','45万+'],['科研仪器','13万+'],['科研实习','3,300+'],['学术会议','2,600+'],['期刊','2,000+'],['美国院士','2,000+'],['中国院士','1700+'],['诺贝尔奖获得者','920+']]],
+  ['升学','#2F6BFF',[['高考分数线','700万+'],['国内高中','2万+'],['国内offer','1.2万+'],['多元升学项目','5,600+'],['国内院校','3,000+'],['中国本科专业','816'],['中国专科专业','748'],['高中竞赛学业资源','600+'],['高校营','400+'],['本科后留学项目','330+'],['高中竞赛','100+']]],
+  ['留学','#E25C8E',[['留学offer','47万+'],['留学项目','41万+'],['PhD直招','3万+'],['海外院校','1.4万+'],['暑期学校','7,000+'],['留学案例','5,500+']]],
+  ['学业资源','#2BB3D9',[['讲座论坛','8.7万+'],['公益项目','6.4万+'],['公司实习','4.5万+'],['学术会议学业资源','3,800+'],['大学竞赛学业资源','2,100+'],['大学竞赛','1,600+']]],
+  ['职业','#1F9D5B',[['公司','8,000+'],['招聘会','3000+'],['职业','430'],['证书','370'],['国标行业','97']]],
+  ['课程专业','#2FBF8F',[['问答社区','31万+'],['课程核心','1,100+'],['专业核心','91']]],
+];
+const ENTS = EG.flatMap((g, gi) => g[2].map(e => ({ n: e[0], v: e[1], c: g[1], g: gi })));
+$('entLg').innerHTML = EG.map(g => `<div style="--gc:${g[1]}"><i></i><b>${g[0]}</b><em>${g[2].length} 类</em></div>`).join('');
+function drawEnt(t){
+  const ctx = cEnt; ctx.setTransform(2,0,0,2,0,0); ctx.clearRect(0,0,428,300);
+  const cx = 214, cy = 152, rot = -t*.12;
+  const P = (x, y, z) => proj3(x, y, z, rot, .6, 560, cx, cy, 1);
+  // 六个组：六个方向的球面簇
+  const pts = ENTS.map((e, i) => { const ga = e.g*TAU/6, within = i - EG.slice(0, e.g).reduce((a, g) => a + g[2].length, 0), n = EG[e.g][2].length; const a = ga + (within/n - .5)*.95, r = 104 + (within % 4)*20, y = ((within % 5) - 2)*26; return { ...P(Math.cos(a)*r, y, Math.sin(a)*r), e, i }; }).sort((a, b) => b.z - a.z);
+  const O = P(0, 0, 0);
+  // 连线：人 → 每个实体（认知图谱）
+  for (const q of pts) { const front = q.z < 0; ctx.strokeStyle = q.e.c; ctx.globalAlpha = front ? .35 : .12; ctx.lineWidth = .8; ctx.beginPath(); ctx.moveTo(O.x, O.y); ctx.lineTo(q.x, q.y); ctx.stroke(); }
+  // 同组相邻连线（知识图谱）
+  ctx.globalAlpha = .25; for (let i = 0; i < pts.length; i++) for (let j = i+1; j < pts.length; j++) { if (pts[i].e.g !== pts[j].e.g) continue; if (Math.abs(pts[i].i - pts[j].i) !== 1) continue; ctx.strokeStyle = pts[i].e.c; ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(pts[j].x, pts[j].y); ctx.stroke(); }
+  ctx.globalAlpha = 1;
+  const hi = Math.floor(t / 1.3) % ENTS.length;
+  for (const q of pts) { const front = q.z < 0, al = front ? 1 : .45, big = q.e.i === hi;
+    ctx.globalAlpha = al; ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(q.x, q.y, (big ? 6 : 3.6)*q.k, 0, TAU); ctx.fill(); ctx.strokeStyle = q.e.c; ctx.lineWidth = big ? 2 : 1.3; ctx.stroke();
+    if (big) { ctx.fillStyle = q.e.c; ctx.beginPath(); ctx.arc(q.x, q.y, 2.4, 0, TAU); ctx.fill(); }
+    if ((q.z < -40) || big) { ctx.font = `${big ? 700 : 500} ${big ? 9.5 : 8}px ${F}`; ctx.fillStyle = big ? '#16182B' : 'rgba(22,24,43,.75)'; ctx.textAlign = q.x < cx ? 'end' : 'start'; const dx = q.x < cx ? -7 : 7; ctx.fillText(q.e.n, q.x + dx, q.y + 3); ctx.font = `700 ${big ? 9 : 7.5}px ${M}`; ctx.fillStyle = q.e.c; ctx.fillText(q.e.v, q.x + dx, q.y + (big ? 14 : 12)); }
+    ctx.globalAlpha = 1; }
+  // 中心「人」
+  const g = ctx.createRadialGradient(O.x, O.y, 0, O.x, O.y, 30); g.addColorStop(0, 'rgba(109,91,255,.45)'); g.addColorStop(1, 'rgba(109,91,255,0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(O.x, O.y, 30, 0, TAU); ctx.fill();
+  ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(O.x, O.y, 13, 0, TAU); ctx.fill(); ctx.strokeStyle = '#6D5BFF'; ctx.lineWidth = 2.2; ctx.stroke();
+  ctx.font = `800 12px ${F}`; ctx.fillStyle = '#16182B'; ctx.textAlign = 'center'; ctx.fillText('人', O.x, O.y + 4.5);
+  ctx.font = `500 8px ${F}`; ctx.fillStyle = '#5F6680'; ctx.fillText('内在特质 + 社会性表达', O.x, O.y + 26); ctx.font = `500 7.5px ${M}`; ctx.fillStyle = '#9AA0B8'; ctx.fillText('认知图谱 · 物连人', O.x, O.y + 37);
+}
+
+// ---------- DOM 状态 ----------
+const loopA = [...$('loopA').children].slice(0, 4), loopB = [...$('loopB').children].slice(0, 4);
+const steps = [...$('steps').children], sigEls = [...$('sig').children];
+const tUp = $('tUp'), tHum = $('tHum'), tTru = $('tTru'), tMind = $('tMind');
+function renderDom(t){
+  const n = layersAt(t), lp = liftP(t);
+  liftLis.forEach((li, i) => { li.classList.toggle('on', i < n); li.classList.toggle('now', i === n - 1 && lp < 1); });
+  const counts = [14, 14, 64, 31, 13, 16]; liftCount.textContent = `${counts.slice(0, n).reduce((a, b) => a + b, 0)} / 152 条证据`;
+  dimEls.forEach(el => { const v = +el.dataset.v, c = +el.dataset.c; el.textContent = `+${(v*easeOut(lp)).toFixed(2)} · 置信 ${Math.round(c*lp)}%`; });
+  const li = Math.floor(t / 1.6) % 4; loopA.forEach((d, i) => d.classList.toggle('on', i === li)); loopB.forEach((d, i) => d.classList.toggle('on', i === (li + 2) % 4));
+  const si = Math.floor(t / 2.4) % 5; steps.forEach((s, i) => s.classList.toggle('on', i === si));
+  const ri = Math.floor(t / 1.1) % 7; sigEls.forEach((el, i) => el.classList.toggle('on', Math.floor(i / 3) === ri));
+  tUp.textContent = lp < 1 ? `托举 ${n} / 6 层` : '已升维 · 九维 152 证据'; tHum.textContent = `${spaceLinks} 条联结 · 44 类实体`; tTru.textContent = `验真 14 · 多源一致 11 · 矛盾 0`; tMind.textContent = ['先验','证据','后验','行动'][li] + ' ⇄ ' + ['先验','证据','后验','行动'][(li + 2) % 4];
+}
+
+function render(t){ drawFlat(t); drawCubes(t); drawSpace(t); drawEnt(t); renderDom(t); }
+const q = new URLSearchParams(location.search);
+window.renderAt = render;
+if (q.has('t')) { render(parseFloat(q.get('t')) || 0); window.__ready = true; }
+else { const start = performance.now(); (function loop(){ render((performance.now() - start)/1000); requestAnimationFrame(loop); })(); window.__ready = true; }
+})();
+</script>
+</body>
+</html>
