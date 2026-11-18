@@ -3,7 +3,8 @@
 /**
  * 本人版：/passport/me。
  *  - 管理员登录后是自己的护照（一人一本，存数据库；接口在 /api/passport/me/*，乐观更新 + 失败提示）；
- *  - 本机 next dev 下 ?demo=1 是郝大壮的演示护照（改动存 localStorage）。
+ *  - 本机 next dev 下 ?demo=1 是韩梅梅的演示护照（改动存 localStorage）。
+ * 护照首页顶上有一张签签的「主动提醒」卡（哪张认证快到期 / 该复测 / 这一段该准备什么），点开就进签签对话。
  * 能翻全部页；能加本人自述的经历 / 作品 / 证书（盖戳）；能从演示签章库贴别人签发的签（贴签）；能改个人信息、传证件照、定制封面和纸张；
  * 能去认证预约；能生成分享链接、看查看记录、撤回授权。第一次打开有领取仪式和几步引导。
  */
@@ -18,13 +19,14 @@ import { ClaimDrawer, LevelBadge, Sheet, Toast } from './drawer';
 import { buildSheets, grantToClaim, idClaimFor, type PageCtx } from './pages';
 import { ADD_KINDS, addedToClaim, fmtDay, useHydrated, type AddKind, type Booking } from './lib';
 import { DEMO_LIB, demoToClaim, newClaimNo, rarityOf, type DemoOption } from './demo-lib';
-import { HolderProvider } from './holder';
+import { HolderProvider, mrzLite } from './holder';
 import { useDemoStore, usePreviewStore, useRealStore, type MadeShare, type NewSelf, type Store } from './store';
 import { Onboarding, type OnboardStage } from './onboard';
 import { AvatarPicker } from './avatar';
 import { COVERS, MOTTO_MAX, PAPERS, PATTERNS, lookVars, type CoverPattern, type CoverTheme, type Look, type PaperTheme } from './themes';
 import type { OwnerBundle } from './api-types';
-import { SpriteFab, SpriteSheet, useSpriteChat, type Confirm, type ExecResult, type ResultView } from './sprite-chat';
+import { QUICK, SpriteFab, SpriteSheet, spriteNudge, useSpriteChat, type Confirm, type ExecResult, type ResultView } from './sprite-chat';
+import { Sprite, SPRITE_NAME } from './sprite';
 
 type Tab = 'book' | 'add' | 'get' | 'share' | 'me';
 export type OwnerMode = { kind: 'demo' } | { kind: 'real'; bundle: OwnerBundle } | { kind: 'preview'; bundle: OwnerBundle };
@@ -57,7 +59,7 @@ function OwnerView({ store }: { store: Store }) {
   const say = (msg: string) => setToast(t => ({ msg, n: (t?.n || 0) + 1 }));
   const oops = (e: unknown) => say(`没存上：${(e as Error)?.message || '网络不太好'}，已撤回这一步`);
 
-  const lite = useMemo(() => ({ name: holder.name, nameEn: holder.nameEn.toUpperCase().replace(/[^A-Z]+/g, '<').replace(/^<+|<+$/g, '') || 'HOLDER' }), [holder]);
+  const lite = useMemo(() => ({ name: holder.name, nameEn: mrzLite(holder) }), [holder]);
   const demoClaims = useMemo(() => store.demos.map(d => demoToClaim(d, lite)).filter((c): c is Claim => !!c), [store.demos, lite]);
   const claims = useMemo(() => {
     const base = holder.demo ? CLAIMS : [idClaimFor(holder)];
@@ -156,6 +158,11 @@ function OwnerView({ store }: { store: Store }) {
     setIndex(Math.max(0, i)); setFlash(true); window.setTimeout(() => setFlash(false), 1800);
   };
   const chat = useSpriteChat({ store, exec: execSprite });
+  /** 签签的主动提醒：护照首页顶上一张小卡，点开进对话、直接问「这个阶段该准备什么」 */
+  const [nudgeOff, setNudgeOff] = useState(false);
+  const nudge = useMemo(() => spriteNudge(holder.demo, [...claims.values()]), [holder.demo, claims]);
+  const showNudge = !!nudge && !nudgeOff && tab === 'book' && !stage;
+  const askNudge = () => { setChatOpen(true); chat.setUnread(false); if (!chat.views.length) chat.send(nudge?.ask || QUICK[1]); };
 
   const finishOnboard = () => { setStage(null); store.finishOnboarding().catch(() => undefined); };
 
@@ -167,14 +174,24 @@ function OwnerView({ store }: { store: Store }) {
           <div className="tp-top">
             <Ava color={profile.avatar} />
             <div className="tp-top-t">
-              <div className="tp-top-cap">MY TALENT PASSPORT · 本人</div>
+              <div className="tp-top-cap">MY ATA TALENT PASSPORT · 本人</div>
               <div className="tp-top-h">{holder.name}<small>{profile.nickname && profile.nickname !== holder.name ? `「${profile.nickname}」 · ` : ''}{holder.passportNo}</small></div>
             </div>
+            {showNudge && nudge && (
+              <div className="tp-nudge" role="status">
+                <button type="button" className="tp-nudge-go" onClick={askNudge}>
+                  <span className="tp-nudge-ava" aria-hidden><Sprite crop="head" state="happy" /></span>
+                  <span className="tp-nudge-t"><b>{SPRITE_NAME}提醒你</b><span>{nudge.text}</span></span>
+                  <em>问{SPRITE_NAME} ›</em>
+                </button>
+                <button type="button" className="tp-nudge-x" aria-label="收起这条提醒" onClick={() => setNudgeOff(true)}>×</button>
+              </div>
+            )}
           </div>
 
           <div className="tp-owner-main">
           {/* 手机：护照和各个面板二选一；宽屏：护照一直在中间，面板在右边 */}
-          <div className={`tp-owner-book${flash ? ' tp-flash' : ''}`}><Book pages={pages} index={safeIndex} onIndex={setIndex} keys={!open && !lib && !stage && !chatOpen} chrome={262} /></div>
+          <div className={`tp-owner-book${flash ? ' tp-flash' : ''}`}><Book pages={pages} index={safeIndex} onIndex={setIndex} keys={!open && !lib && !stage && !chatOpen} chrome={showNudge ? 318 : 262} /></div>
           {tab !== 'book' && <div className="tp-owner-side">
           {tab === 'add' && <AddPanel store={store} onAdd={addSelf} onOpen={id => { setTab('book'); setJump(id); setOpen(id); }} />}
           {tab === 'get' && <GetPanel store={store} onLib={() => setLib('all')} say={say} />}
@@ -302,12 +319,12 @@ function GetPanel({ store, onLib, say }: { store: Store; onLib: () => void; say:
     <div className="tp-panel">
       <div className="tp-card" style={{ background: 'linear-gradient(135deg,#FFF7F5,#F4F1FF)' }}>
         <h2 className="tp-card-h">去拿一枚新的签或章</h2>
-        <p className="tp-card-p">护照里别人签发的签越多、级别越高，别人越容易信你。考试、模拟岗位、企业真题，挑一个去做。</p>
+        <p className="tp-card-p">ATA 的考试和认证，加上各个场景平台的体验、真活、课题、先修课，挑一个去做。签发的签越多、级别越高，别人越容易信你。</p>
       </div>
       {DESTINATIONS.map(d => (
         <button type="button" key={d.id} className="tp-dest" style={{ ['--c' as string]: d.color }} onClick={() => setDest(d)}>
           <span className="tp-dest-ic"><svg viewBox="-20 -20 40 40" aria-hidden><Icon kind={d.icon} x={0} y={0} s={d.icon === 'ata' ? 30 : 26} col={d.color} /></svg></span>
-          <span style={{ minWidth: 0 }}><b>{d.title}</b><span>{d.who} · 拿到：{d.gets}</span></span>
+          <span style={{ minWidth: 0 }}><b>{d.title}</b><span>{d.who} · 拿到：{d.gets}</span><span className="tp-dest-fit">适合：{d.fits}</span></span>
           <em>›</em>
         </button>
       ))}
@@ -342,12 +359,12 @@ function DestSheet({ d, store, say, onClose }: { d: Destination; store: Store; s
     <Sheet onClose={onClose} label={d.title}>
       {close => done ? (
         <div className="tp-booked">
-          <Stamp s={{ shape: 'tag', top: 'BOOKED · 已预约', icon: d.icon === 'ata' ? 'check' : d.icon, main: d.id === 'zhenhuo' ? '已接题' : '已预约', date: done.no, sub: d.gets, color: d.color }} seedKey={done.id} />
-          <b>{d.id === 'zhenhuo' ? '题目已领到，加油' : '预约好了'}</b>
+          <Stamp s={{ shape: 'tag', top: 'BOOKED · 已预约', icon: d.icon === 'ata' ? 'check' : d.icon, main: d.ui?.main || '已预约', date: done.no, sub: d.gets, color: d.color }} seedKey={done.id} />
+          <b>{d.ui?.done || '预约好了'}</b>
           <span>完成后，{d.gets}会出现在你的护照里</span>
           <div className="tp-ticket">
             <span>去哪儿</span><span>{d.who}</span>
-            <span>{d.id === 'baiye' || d.id === 'zhenhuo' ? '选的是' : '时间'}</span><span>{done.slot}</span>
+            <span>{d.ui ? '选的是' : '时间'}</span><span>{done.slot}</span>
             <span>预约号</span><span className="tp-mono">{done.no}</span>
             <span>预约于</span><span>{done.at}</span>
           </div>
@@ -366,11 +383,12 @@ function DestSheet({ d, store, say, onClose }: { d: Destination; store: Store; s
             <div>用时</div><div>{d.time}</div>
             <div>费用</div><div>{d.cost}</div>
             <div>签发</div><div>{LEVELS[d.level].name} · 直接进护照</div>
+            <div>适合</div><div>{d.fits}</div>
           </div>
-          <div className="tp-field" style={{ marginTop: 14 }}><span>{d.id === 'baiye' ? '选一个岗位' : d.id === 'zhenhuo' ? '为你挑的题' : '选个时间'}</span>
+          <div className="tp-field" style={{ marginTop: 14 }}><span>{d.ui?.pick || '选个时间'}</span>
             <div className="tp-seg" style={{ display: 'grid', gap: 6 }}>{d.slots.map(s => <button type="button" key={s} className={slot === s ? 'on' : ''} style={{ textAlign: 'left', whiteSpace: 'normal' }} onClick={() => setSlot(s)}>{s}</button>)}</div>
           </div>
-          <button type="button" className="tp-btn v block" style={{ marginTop: 16 }} disabled={busy} onClick={confirm}>{busy ? '正在预约…' : d.id === 'zhenhuo' ? '确认接题' : '确认预约'}</button>
+          <button type="button" className="tp-btn v block" style={{ marginTop: 16 }} disabled={busy} onClick={confirm}>{busy ? '正在预约…' : d.ui?.go || '确认预约'}</button>
           <p style={{ fontSize: 12, color: '#9AA0B8', textAlign: 'center', margin: '8px 0 0' }}>不会跳转外站</p>
         </>
       )}
@@ -425,8 +443,8 @@ function SharePanel({ store, onRevoke, onLog, say }: { store: Store; onRevoke: (
               <Visa avatar={store.profile.avatar} qrText={made.url} v={{
                 theme: 'grant', type: '授权签', typeEn: 'ACCESS · SCAN TO VIEW', no: `TP ${made.id.replace(/^s-/, '').replace(/\W/g, '').slice(0, 6).toUpperCase()} · ${made.days}D`,
                 fields: [['TO · 给谁', made.to], ['HOLDER · 持有人', h.name], ['PAGES · 几页', `${made.pages.length} 页`], ['VALID · 有效', `${made.days} 天 · ${fmtDay(made.createdAt + made.days * 86400000)}`], ['REVOCABLE · 撤回', '随时可撤'], ['ISSUED · 生成', fmtDay(made.createdAt)]],
-                mrz: [`Q<CHN${h.demo ? 'HAO<<DAZHUANG' : h.passportNo.replace(/\W/g, '')}<<ACCESS<<${made.days}DAYS<<<<<<<<<<<<<<<<<<<<<<<<`.slice(0, 44), `TP${made.id.replace(/\W/g, '').slice(0, 10).toUpperCase()}CHN<<PAGES${made.pages.length}<<REVOCABLE<<<<<<<<<<<<<<<<<<<<<<`.slice(0, 44)],
-                issuerEn: h.demo ? 'ATA × 平方创想 · 本人授权' : '平方创想 · 本人授权',
+                mrz: [`Q<CHN${h.demo ? mrzLite(h) : h.passportNo.replace(/\W/g, '')}<<ACCESS<<${made.days}DAYS<<<<<<<<<<<<<<<<<<<<<<<<`.slice(0, 44), `TP${made.id.replace(/\W/g, '').slice(0, 10).toUpperCase()}CHN<<PAGES${made.pages.length}<<REVOCABLE<<<<<<<<<<<<<<<<<<<<<<`.slice(0, 44)],
+                issuerEn: 'ATA TALENT PASSPORT · 本人授权',
               }} />
             </div>
             <div className="tp-link">{made.url}</div>

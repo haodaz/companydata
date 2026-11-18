@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * 人才护照自己的登录页和设置新密码页（不走平台通用的登录页，页面里不露别的产品的痕迹）。
+ * ATA 人才护照自己的登录页和设置新密码页（不走平台通用的登录页，页面里不露别的产品的痕迹）。
  * 登录复用 /api/auth/login，改密码复用 /api/auth/password；成功后回 next（只认 /passport 下的站内路径，默认 /passport/me）。
  */
 import React, { useEffect, useState } from 'react';
@@ -20,7 +20,7 @@ function Shell({ title, sub, children }: { title: string; sub: string; children:
   return (
     <div className="tp-root tp-auth">
       <div className="tp-auth-in">
-        <div className="tp-auth-brand"><span className="tp-eyebrow">ATA × 平方创想 · 人才护照</span></div>
+        <div className="tp-auth-brand"><span className="tp-eyebrow">ATA 人才护照 · ATA TALENT PASSPORT</span></div>
         <div className="tp-auth-hero" aria-hidden>
           <div className="tp-auth-book"><Cover /><i className="tp-auth-glint" /></div>
         </div>
@@ -29,7 +29,7 @@ function Shell({ title, sub, children }: { title: string; sub: string; children:
           <p className="tp-auth-sub">{sub}</p>
           {children}
         </div>
-        <div className="tp-auth-foot">ATA × 平方创想 · TALENT PASSPORT</div>
+        <div className="tp-auth-foot">ATA 全美在线 签发 · ATA TALENT PASSPORT</div>
       </div>
     </div>
   );
@@ -55,7 +55,7 @@ export function PassportLogin() {
     } catch { setErr('网络不太好，再试一次'); } finally { setBusy(false); }
   };
   return (
-    <Shell title="打开你的人才护照" sub="真能力、真足迹，都收在这一本里。">
+    <Shell title="打开你的 ATA 人才护照" sub="ATA 签发，场景平台来用；从高中到职场，一直在你手里。">
       <form className="tp-card tp-login-form" onSubmit={submit}>
         <label className="tp-field"><span>邮箱</span><input className="tp-input" type="email" autoComplete="username" value={email} onChange={e => setEmail(e.target.value)} placeholder="name@example.com" /></label>
         <label className="tp-field"><span>密码</span><input className="tp-input" type="password" autoComplete="current-password" value={password} onChange={e => setPassword(e.target.value)} placeholder="密码" /></label>

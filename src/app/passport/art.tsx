@@ -68,8 +68,8 @@ export function AtaSquare({ x, y, s, col = '#D80C18', knock = '#fff' }: { x: num
     </g>
   );
 }
-/** 企业徽记（虚构的北辰连锁）：六边形 + 北 */
-export function EntMark({ x, y, s, col, ch = '北' }: { x: number; y: number; s: number; col: string; ch?: string }) {
+/** 企业徽记（演示里的企业一律泛称）：六边形 + 企 */
+export function EntMark({ x, y, s, col, ch = '企' }: { x: number; y: number; s: number; col: string; ch?: string }) {
   const pts = Array.from({ length: 6 }, (_, i) => { const a = Math.PI / 6 + i * Math.PI / 3; return `${r1(x + s * 0.5 * Math.cos(a))},${r1(y + s * 0.5 * Math.sin(a))}`; }).join(' ');
   return (
     <g>
@@ -79,7 +79,7 @@ export function EntMark({ x, y, s, col, ch = '北' }: { x: number; y: number; s:
   );
 }
 
-/* ---------- 头像：证件照位。演示护照是郝大壮的插画；真实护照是本人上传的照片，没传就是中性剪影 + 姓氏首字 ---------- */
+/* ---------- 头像：证件照位。演示护照是韩梅梅的插画；真实护照是本人上传的照片，没传就是中性剪影 + 姓氏首字 ---------- */
 export function Portrait({ x, y, w, h, color, ink, id }: { x: number; y: number; w: number; h: number; color: string; ink: string; id: string }) {
   const holder = useHolder();
   const bg1 = mix(color, '#FFFFFF', 0.9), bg2 = mix(color, '#FFFFFF', 0.72);   // 底色跟着本人选的头像色走
@@ -180,21 +180,21 @@ export function Visa({ v, avatar, qrText, className, style }: { v: VisaArt; avat
     if (v.theme === 'grant') return (
       <g>
         <AtaSquare x={36} y={34} s={28} />
-        <VsMark x={74} y={34} s={28} col={ink} />
-        <text x={96} y={39} fontSize={17} fontWeight={900} fill={ink} fontFamily={SERIF}>ATA × 平方创想</text>
-        <text x={22} y={62} fontSize={9} fontWeight={800} fill={ink} fillOpacity={0.7} fontFamily={MONO}>{v.issuerEn || '联合签发 · JOINTLY ISSUED'}</text>
+        <text x={60} y={39} fontSize={17} fontWeight={900} fill={ink} fontFamily={SERIF}>ATA 人才护照</text>
+        <text x={22} y={62} fontSize={9} fontWeight={800} fill={ink} fillOpacity={0.7} fontFamily={MONO}>{v.issuerEn || 'ATA TALENT PASSPORT · 本人授权'}</text>
       </g>
     );
-    const line = v.issuerLine || '平方创想';
+    // 鉴真签由平方验证；体验签、真活签写各自的场景平台
+    const line = v.issuerLine || '平方验证';
     return (
       <g>
         {v.theme === 'work' ? <EntMark x={38} y={36} s={32} col={ink} /> : <VsMark x={38} y={36} s={32} col={ink} />}
         <text x={62} y={40} fontSize={17} fontWeight={900} fill={ink} fontFamily={SERIF} {...fitLen(line, 17, 230)}>{line}</text>
-        <text x={62} y={55} fontSize={9} fontWeight={800} fill={ink} fillOpacity={0.7} fontFamily={MONO}>{v.issuerEn || 'VISIONSQUARE'}</text>
+        <text x={62} y={55} fontSize={9} fontWeight={800} fill={ink} fillOpacity={0.7} fontFamily={MONO}>{v.issuerEn || 'VERIFIED BY VISIONSQUARE'}</text>
       </g>
     );
   })();
-  const micro = (v.theme === 'ata' ? 'ATA·全美在线·' : v.theme === 'work' ? 'REALWORK·真活·' : 'VISIONSQUARE·平方·').repeat(16);
+  const micro = (v.theme === 'ata' || v.theme === 'grant' ? 'ATA·全美在线·' : v.theme === 'work' ? 'REALWORK·真活·' : v.theme === 'baiye' ? 'AIBAIYE·百业·' : 'VERIFIED·鉴真·').repeat(16);
   return (
     <div ref={fxRef} className={`tp-visa ${className || ''}`} data-finish={fx} style={style}>
       <svg viewBox={`0 0 ${VW} ${VH}`} role="img" aria-label={`${v.type} ${v.no}`}>
@@ -214,7 +214,7 @@ export function Visa({ v, avatar, qrText, className, style }: { v: VisaArt; avat
           <path d={rosettePath(470, 230, 110, 39, 64)} stroke={ink} strokeOpacity={0.16} strokeWidth={0.6} fill="none" />
           <path d={rosettePath(470, 230, 74, 27, 40)} stroke={t.ink2} strokeOpacity={0.15} strokeWidth={0.6} fill="none" />
           <path d={rosettePath(110, 330, 66, 22, 38)} stroke={ink} strokeOpacity={0.1} strokeWidth={0.6} fill="none" />
-          <g opacity={0.06}>{v.theme === 'ata' ? <AtaSquare x={320} y={205} s={170} col={ink} knock={t.c2} /> : v.theme === 'work' ? <EntMark x={320} y={205} s={190} col={ink} /> : <VsMark x={320} y={205} s={190} col={ink} />}</g>
+          <g opacity={0.06}>{v.theme === 'ata' || v.theme === 'grant' ? <AtaSquare x={320} y={205} s={170} col={ink} knock={t.c2} /> : v.theme === 'work' ? <EntMark x={320} y={205} s={190} col={ink} /> : <VsMark x={320} y={205} s={190} col={ink} />}</g>
           <text x={0} y={80} fontSize={5.5} fontWeight={700} fill={ink} fillOpacity={0.24} fontFamily={MONO}>{micro}</text>
           {issuer}
           <text x={618} y={48} textAnchor="end" fontSize={34} fontWeight={900} fill={ink} fontFamily={SERIF}>{v.type}</text>
@@ -362,7 +362,7 @@ export function Paper({ tint }: { tint: string }) {
   );
 }
 
-/* ---------- 封皮：深藏青 + 金色烫字 ---------- */
+/* ---------- 封皮：深藏青 + 金色烫字；ATA 签发，封面上只写 ATA ---------- */
 export function CoverEmblem() {
   const id = sid(useId());
   return (
@@ -372,12 +372,12 @@ export function CoverEmblem() {
       </defs>
       <circle cx={150} cy={150} r={140} fill="none" stroke={`url(#${id}g)`} strokeWidth={5} />
       <circle cx={150} cy={150} r={128} fill="none" stroke={`url(#${id}g)`} strokeWidth={1.5} />
-      <ArcText text="TALENT PASSPORT · 可信人才档案" cx={150} cy={150} R={112} where="top" size={17} col="var(--ftext, #E6C987)" id={`${id}t`} weight={700} />
-      <ArcText text="ATA × VISIONSQUARE" cx={150} cy={150} R={112} where="bottom" size={15} col="var(--ftext, #E6C987)" id={`${id}b`} weight={700} />
+      <ArcText text="ATA TALENT PASSPORT · 人才护照" cx={150} cy={150} R={112} where="top" size={17} col="var(--ftext, #E6C987)" id={`${id}t`} weight={700} />
+      <ArcText text="ISSUED BY ATA · 全美在线签发" cx={150} cy={150} R={112} where="bottom" size={15} col="var(--ftext, #E6C987)" id={`${id}b`} weight={700} />
       <circle cx={34} cy={150} r={3} style={{ fill: 'var(--ftext, #E6C987)' }} /><circle cx={266} cy={150} r={3} style={{ fill: 'var(--ftext, #E6C987)' }} />
-      <rect x={95} y={95} width={110} height={110} rx={10} fill="none" stroke={`url(#${id}g)`} strokeWidth={5} />
-      <path d="M150 105L195 150L150 195L105 150Z" fill="none" stroke={`url(#${id}g)`} strokeWidth={4} strokeLinejoin="round" />
-      <text x={150} y={168} textAnchor="middle" fontSize={48} fontWeight={900} fill={`url(#${id}g)`} fontFamily={SERIF}>人</text>
+      <rect x={88} y={100} width={124} height={100} rx={10} fill="none" stroke={`url(#${id}g)`} strokeWidth={5} />
+      <text x={150} y={163} textAnchor="middle" fontSize={50} fontWeight={900} fill={`url(#${id}g)`} fontFamily={SANS} letterSpacing={2}>ATA</text>
+      <path d="M108 178H192" stroke={`url(#${id}g)`} strokeWidth={2.5} strokeLinecap="round" />
     </svg>
   );
 }
@@ -409,12 +409,12 @@ export function Cover({ owner, hint, className, look }: { owner?: string; hint?:
       <div className="tp-cover-spine" />
       <div className="tp-cover-in">
         <div className="tp-cover-top">
-          <div className="tp-serif tp-foil tp-cover-brand">ATA × 平方创想</div>
-          <div className="tp-mono tp-cover-sub">TALENT PASSPORT · 联合签发</div>
+          <div className="tp-serif tp-foil tp-cover-brand">ATA 全美在线</div>
+          <div className="tp-mono tp-cover-sub">ISSUED BY ATA · 签发</div>
         </div>
         <CoverEmblem />
-        <div className="tp-serif tp-foil tp-cover-title">人才护照</div>
-        <div className="tp-mono tp-cover-en">TALENT PASSPORT</div>
+        <div className="tp-serif tp-foil tp-cover-title"><small>ATA</small>人才护照</div>
+        <div className="tp-mono tp-cover-en">ATA TALENT PASSPORT</div>
         <i className="tp-cover-rule" />
         {owner && <div className="tp-serif tp-cover-owner">{owner}</div>}
         {lk?.motto && <div className="tp-serif tp-foil tp-cover-motto">「{lk.motto}」</div>}

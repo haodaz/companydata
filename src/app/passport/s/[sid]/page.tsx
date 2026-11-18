@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { SHARE_SID } from '../../data';
 import { RealShareApp, ShareApp, VoidView } from '../../share';
 
-export const metadata: Metadata = { title: '人才护照 · 分享给你', robots: { index: false, follow: false } };
+export const metadata: Metadata = { title: 'ATA 人才护照 · 分享给你', robots: { index: false, follow: false } };
 
 /** 到没到期（放在组件外：渲染里不直接调 Date.now） */
 const passed = (end: number) => Date.now() > end;
@@ -11,7 +11,7 @@ const day = (ms: number) => { const d = new Date(ms + 8 * 3600000); return `${d.
 
 /**
  * 分享版：
- *  - 演示：/passport/s/dz-share?p=页代码&d=天数&to=给谁&k=分享号&t=生成时间&x=本人改动（郝大壮，选的页都写在地址里）；
+ *  - 演示：/passport/s/dz-share?p=页代码&d=天数&to=给谁&k=分享号&t=生成时间&x=本人改动（韩梅梅，选的页都写在地址里）；
  *  - 真实：/passport/s/<token>（32 位随机），按 token 去公开接口取被授权的页；过期 / 撤回由接口判断。
  */
 export default async function SharePage({ params, searchParams }: PageProps<'/passport/s/[sid]'>) {

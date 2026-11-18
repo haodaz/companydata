@@ -1,6 +1,6 @@
 /**
  * 本人版的数据源：两种实现，同一个接口，界面不用分两套。
- *  - useDemoStore：郝大壮演示护照（本机 ?demo=1），改动存 localStorage；
+ *  - useDemoStore：韩梅梅演示护照（本机 ?demo=1），改动存 localStorage；
  *  - useRealStore：管理员自己的护照，读写 /api/passport/me/*，乐观更新——先改界面，接口失败就退回去并抛错让界面提示。
  */
 import { useCallback, useMemo, useState } from 'react';
@@ -53,7 +53,7 @@ function shareToGrant(s: ShareRec, now: number): Grant {
     views: 0, status: s.revoked ? 'revoked' : now > until ? 'expired' : 'active', revokedAt: s.revoked ? '本人撤回' : undefined, purpose: '本人生成的分享链接',
   };
 }
-const DEMO_ONBOARD_KEY = 'tp:dz-7q3k9:onboard';
+const DEMO_ONBOARD_KEY = 'tp:hm-7q3k9:onboard';
 export function useDemoStore(): Store {
   const { state, update, reset } = useOwnerState();
   const hydrated = useHydrated();
@@ -78,7 +78,7 @@ export function useDemoStore(): Store {
     },
     revoke: g => { update(s => (g.id.startsWith('s-') ? { ...s, shares: s.shares.map(x => (x.id === g.id ? { ...x, revoked: true } : x)) } : { ...s, revokedGrants: [...s.revokedGrants, g.id] })); return ok(); },
     book: (dest, slot) => {
-      const t = nowMs(); const no = `${dest === 'zhenhuo' ? 'ZH' : dest === 'baiye' ? 'AI' : 'ATA'}-${t.toString(36).toUpperCase().slice(-6)}`;
+      const t = nowMs(); const no = `${DESTINATIONS.find(d => d.id === dest)?.prefix || 'ATA'}-${t.toString(36).toUpperCase().slice(-6)}`;
       const b = { id: `b-${t.toString(36)}`, dest, slot, no, at: fmtTime(t) };
       update(s => ({ ...s, bookings: [...s.bookings, b] }));
       return Promise.resolve(b);

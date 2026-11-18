@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * 护照持有人：演示护照是郝大壮（public/passport/dazhuang.png 插画证件照），
+ * 护照持有人：演示护照是韩梅梅（public/passport/hanmeimei.png 插画证件照），
  * 管理员的真实护照是本人（账号信息 + 自己上传的证件照；没传就用中性的剪影 + 姓氏首字）。
  * 用 context 往下传，证件照、身份页、抽屉里的「本人」都从这里读，不用一层层传参数。
  */
@@ -10,7 +10,7 @@ import { HOLDER } from './data';
 import { DEFAULT_LOOK, type Look } from './themes';
 
 export interface HolderInfo {
-  demo: boolean;          // true = 郝大壮演示护照
+  demo: boolean;          // true = 韩梅梅演示护照
   name: string;
   nameEn: string;         // 机读区用的拉丁字母
   passportNo: string;
@@ -25,7 +25,7 @@ export interface HolderInfo {
 
 export const DEMO_HOLDER: HolderInfo = {
   demo: true, name: HOLDER.name, nameEn: HOLDER.nameEn, passportNo: HOLDER.passportNo, issuedAt: HOLDER.issuedAt, validUntil: HOLDER.validUntil,
-  phone: HOLDER.phone, email: HOLDER.email, photo: '/passport/dazhuang.png', initial: '郝', look: DEFAULT_LOOK,
+  phone: HOLDER.phone, email: HOLDER.email, photo: '/passport/hanmeimei.png', initial: '韩', look: DEFAULT_LOOK,
 };
 
 const Ctx = createContext<HolderInfo>(DEMO_HOLDER);
@@ -34,6 +34,8 @@ export const useHolder = () => useContext(Ctx);
 
 /** 名字 → 证件照上的首字：中文取第一个字，西文取首字母大写 */
 export const initialOf = (name: string) => { const ch = Array.from(name.trim())[0] || '人'; return /[a-z]/i.test(ch) ? ch.toUpperCase() : ch; };
+/** 演示签章库、授权签上的机读区名字：演示护照是 HAN<<MEIMEI，真实护照把拉丁字母以外的都换成 < */
+export const mrzLite = (h: HolderInfo) => (h.demo ? HOLDER.mrzName : (h.nameEn.toUpperCase().replace(/[^A-Z]+/g, '<').replace(/^<+|<+$/g, '') || 'HOLDER'));
 /** 名字 → 机读区：只留 A–Z，空格换成 <<；没有拉丁字母就用护照号 */
 export const mrzName = (s: string, fallback: string) => { const t = s.toUpperCase().replace(/[^A-Z ]+/g, ' ').trim().replace(/\s+/g, '<<'); return t || fallback.replace(/[^A-Z0-9]/g, ''); };
 /** 机读区第二行：护照号 + 国家 + 签发 / 到期日 */

@@ -43,8 +43,9 @@ export function IssuerLogo({ issuer }: { issuer: IssuerId }) {
       <img src="/passport/ata-logo.png" alt="全美在线 ATA" />
     </span>
   );
-  if (issuer === 'joint') return <span className="tp-logo wide"><svg viewBox="0 0 76 34" style={{ width: 64, height: 30 }}><AtaSquare x={17} y={17} s={28} /><VsMark x={56} y={17} s={28} col="#5B4BDB" /></svg></span>;
-  if (issuer === 'enterprise' || issuer === 'employer') return <span className="tp-logo"><svg viewBox="0 0 40 40"><EntMark x={20} y={20} s={34} col="#0F7A62" ch={issuer === 'employer' ? '青' : '北'} /></svg></span>;
+  if (issuer === 'joint') return <span className="tp-logo"><svg viewBox="0 0 40 40"><AtaSquare x={20} y={20} s={30} /></svg></span>;
+  if (issuer === 'enterprise' || issuer === 'employer') return <span className="tp-logo"><svg viewBox="0 0 40 40"><EntMark x={20} y={20} s={34} col="#0F7A62" /></svg></span>;
+  if (issuer === 'platform') return <span className="tp-logo"><svg viewBox="0 0 40 40"><circle cx={20} cy={20} r={16} fill="none" stroke="#2F6B4F" strokeWidth={2.4} /><Icon kind="plane" x={20} y={20} s={18} col="#2F6B4F" /></svg></span>;
   if (issuer === 'self') return <span className="tp-logo"><svg viewBox="0 0 40 40"><Icon kind="pen" x={20} y={20} s={30} col="#2B4C9B" /></svg></span>;
   return <span className="tp-logo"><svg viewBox="0 0 40 40"><VsMark x={20} y={20} s={32} col={issuer === 'baiye' ? '#B4532A' : '#5B4BDB'} /></svg></span>;
 }
@@ -57,9 +58,11 @@ function signerOf(c: Claim) {
   if (c.demo) return '演示签章 · 没有真实签发方签名';
   if (c.issuer === 'self') return '本人签名（护照私钥）';
   if (c.issuer === 'ata') return 'ATA 签发签名';
-  if (c.issuer === 'joint') return 'ATA × 平方创想 联合签名';
-  if (c.issuer === 'enterprise' || c.issuer === 'employer') return `${c.issuerName || ISSUERS[c.issuer].name} 确认签名 + 平方背书`;
-  return '平方创想 鉴真签名';
+  if (c.issuer === 'joint') return 'ATA 签名（画像由平方支持）';
+  if (c.issuer === 'platform') return `${c.issuerName || ISSUERS.platform.name} 盖章签名`;
+  if (c.issuer === 'enterprise' || c.issuer === 'employer') return `${c.issuerName || ISSUERS[c.issuer].name} 确认签名`;
+  if (c.issuer === 'baiye') return 'AI 百业 体验签名';
+  return '平方验证 · 鉴真签名';
 }
 function VerifyBox({ c }: { c: Claim }) {
   const [lines, setLines] = useState<Line[] | null>(null);

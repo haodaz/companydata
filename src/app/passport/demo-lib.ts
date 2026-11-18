@@ -1,9 +1,10 @@
 /**
- * 演示签章库（2026-11-17）：需要别人签发的签和章——鉴真签、ATA 考试 / AI 能力认证、体验签、真活签、长处与发展、足迹——
+ * 演示签章库（2026-11-18）：需要别人签发的签和章——鉴真签、ATA 考试 / AI 能力认证、体验签、真活签、长处与发展、足迹——
  * 先做成一组预设的演示 option，本人在「去认证」里点一个就盖 / 贴进自己护照对应的页，可以删。
  * 每条都是完整的 claim（签发方、分数 / 等级、证据、方法、核验级别、查验码），但一律带 demo: true：
  * 护照页上角标「演示」、抽屉顶上写明「演示签章 · 不是真实签发」，查验码以 DEMO- 开头。
- * 企业、院校、平台一律虚构或泛称，只有 ATA（全美在线）和平方创想用真名。
+ * 企业、院校、场景平台一律用泛称，只有 ATA（全美在线）和平方创想用真名；持有人名字跟着护照走（演示护照是韩梅梅）。
+ * 足迹按成长阶段来：高中、大中衔接、大学、校招实习、从业，章上写明是哪类场景平台盖的。
  *
  * 纯数据模块：服务端接口也引它来核对 demo_key，所以别在这里引 'use client' 的东西。
  */
@@ -110,6 +111,21 @@ export const DEMO_LIB: DemoOption[] = [
     }),
   },
 
+  {
+    key: 'ata-exam-hs', page: 'ata', form: 'visa', label: 'ATA 考试签 · 信息技术（高中）', sub: '高中阶段 · 信息技术基础 · 92 分', level: 'ata', icon: 'ata', color: '#C2410C',
+    make: (h, id) => ({
+      ...base(id, 'ata'), title: 'ATA 考试签 · 信息技术基础', issuer: 'ata',
+      statement: '高中阶段考 ATA 信息技术基础（数据处理与编程入门），通过，成绩 92 分。（演示）',
+      issuedAt: '2019.12.14', validUntil: '长期', level: 'ata', status: 'valid',
+      method: '标准化考试，学校授权考点实名入场，机考自动评分。',
+      evidence: [ev('成绩单', '92 / 100 · 合格线 60'), ev('考点', '某中学授权考点 · 实名入场')],
+      scores: [{ name: '成绩', v: 92, max: 100 }],
+      facts: [['阶段', '高中']],
+      code: `DEMO-ATA-${D(id)}`,
+      visa: { theme: 'ata', type: '考试签', typeEn: 'EXAM · HIGH SCHOOL', no: `ATA E${D(id)}`, fields: [['HOLDER · 持有人', h.name], ['EXAM · 科目', '信息技术基础'], ['SCORE · 成绩', '92 / 100'], ['STAGE · 阶段', '高中'], ['ISSUED · 签发', '2019.12.14'], ['VALID · 有效', '长期']], mrz: [mrz(`X<CHN${h.nameEn}<<EXAM<<IT<<DEMO`), mrz(`E${D(id)}CHN<<SCORE92<<HIGHSCHOOL`)] },
+    }),
+  },
+
   /* ---------- 体验签：AI 百业 ---------- */
   {
     key: 'exp-analyst', finish: 'cosmos', page: 'exp', form: 'visa', label: '体验签 · 经营分析师的一天', sub: '7 段走完 · 胜任度 7.6', level: 'vs', icon: 'case', color: '#B4532A',
@@ -121,7 +137,7 @@ export const DEMO_LIB: DemoOption[] = [
       evidence: [ev('7 段任务记录', '晨会数据 → 周报 → 异常追问 → 预算对比 → 门店访谈 → 建议 → 复盘'), ev('与老师傅一致', '68%（按每一步对照）'), ev('同段对比', '超过 81% 的体验者')],
       scores: [{ name: '胜任度', v: 7.6, max: 10 }],
       code: `DEMO-AI100-${D(id)}`,
-      visa: { theme: 'baiye', type: '体验签', typeEn: 'EXPERIENCE · ONE FULL DAY', no: `AI100-${D(id)}`, fields: [['HOLDER · 持有人', h.name], ['ROLE · 岗位', '经营分析师'], ['BAND · 胜任度', '7.6 · 胜任'], ['SEGMENTS · 段落', '7 段全部走完'], ['ISSUED · 签发', '2026.08.23'], ['ENTRIES · 次数', '可再体验']], mrz: [mrz(`E<CHN${h.nameEn}<<BIZ<<ANALYST<<DEMO`), mrz(`AI100${D(id)}CHN<<BAND7<6<<SEG7OF7`)], issuerLine: '平方创想 · AI 百业', issuerEn: 'AI 百业 · EXPERIENCE' },
+      visa: { theme: 'baiye', type: '体验签', typeEn: 'EXPERIENCE · ONE FULL DAY', no: `AI100-${D(id)}`, fields: [['HOLDER · 持有人', h.name], ['ROLE · 岗位', '经营分析师'], ['BAND · 胜任度', '7.6 · 胜任'], ['SEGMENTS · 段落', '7 段全部走完'], ['ISSUED · 签发', '2026.08.23'], ['ENTRIES · 次数', '可再体验']], mrz: [mrz(`E<CHN${h.nameEn}<<BIZ<<ANALYST<<DEMO`), mrz(`AI100${D(id)}CHN<<BAND7<6<<SEG7OF7`)], issuerLine: 'AI 百业 · 模拟岗位', issuerEn: 'AI 百业 · EXPERIENCE' },
     }),
   },
   {
@@ -134,7 +150,7 @@ export const DEMO_LIB: DemoOption[] = [
       evidence: [ev('段落记录', '需求评审 → 竞品拆解 → 写 PRD → 排期 → 用户访谈 → 数据复盘；「上线复盘」未走', true), ev('与老师傅一致', '57%')],
       scores: [{ name: '胜任度', v: 6.4, max: 10 }],
       code: `DEMO-AI100-${D(id)}`,
-      visa: { theme: 'baiye', type: '体验签', typeEn: 'EXPERIENCE · ONE FULL DAY', no: `AI100-${D(id)}`, fields: [['HOLDER · 持有人', h.name], ['ROLE · 岗位', '产品经理'], ['BAND · 胜任度', '6.4 · 接近胜任'], ['SEGMENTS · 段落', '6 / 7 段'], ['ISSUED · 签发', '2026.07.30'], ['ENTRIES · 次数', '可再体验']], mrz: [mrz(`E<CHN${h.nameEn}<<PRODUCT<<MGR<<DEMO`), mrz(`AI100${D(id)}CHN<<BAND6<4<<SEG6OF7`)], issuerLine: '平方创想 · AI 百业', issuerEn: 'AI 百业 · EXPERIENCE' },
+      visa: { theme: 'baiye', type: '体验签', typeEn: 'EXPERIENCE · ONE FULL DAY', no: `AI100-${D(id)}`, fields: [['HOLDER · 持有人', h.name], ['ROLE · 岗位', '产品经理'], ['BAND · 胜任度', '6.4 · 接近胜任'], ['SEGMENTS · 段落', '6 / 7 段'], ['ISSUED · 签发', '2026.07.30'], ['ENTRIES · 次数', '可再体验']], mrz: [mrz(`E<CHN${h.nameEn}<<PRODUCT<<MGR<<DEMO`), mrz(`AI100${D(id)}CHN<<BAND6<4<<SEG6OF7`)], issuerLine: 'AI 百业 · 模拟岗位', issuerEn: 'AI 百业 · EXPERIENCE' },
     }),
   },
 
@@ -145,11 +161,11 @@ export const DEMO_LIB: DemoOption[] = [
       ...base(id, 'work'), title: '真活签 · 门店毛利异常排查', issuer: 'enterprise', issuerName: '某连锁零售',
       statement: `某连锁零售在真活台出题「门店毛利异常排查」，${h.name}接题并交付，企业确认采纳。（演示）`,
       issuedAt: '2026.10.12', validUntil: '长期', level: 'enterprise', status: 'valid',
-      method: '企业出题 → 本人接题 → 交付 → 企业确认；平方真活台托管全过程。',
+      method: '企业出题 → 本人接题 → 交付 → 企业确认；真活台托管全过程，结果盖进护照。',
       evidence: [ev('题目原文', '找出 38 家门店里毛利异常的原因，给出可执行建议'), ev('交付物', '分析报告 12 页 + 异常看板'), ev('企业确认函', '财务总监签字（已脱敏）'), ev('修改记录', '3 轮修改，用时 9 天')],
       facts: [['企业评价', '「能直接拿去开会」'], ['结果', '找到 2 个原因：促销叠加、损耗漏记']],
       code: `DEMO-ZH-${D(id)}`,
-      visa: { theme: 'work', type: '真活签', typeEn: 'REAL WORK · CONFIRMED', no: `ZH ${D(id)}`, fields: [['HOLDER · 持有人', h.name], ['TASK · 题目', '门店毛利排查'], ['RESULT · 结果', '企业确认采纳'], ['TIME · 用时', '9 天 · 3 轮'], ['ISSUED · 签发', '2026.10.12'], ['BY · 出题', '某连锁零售']], mrz: [mrz(`W<CHN${h.nameEn}<<REALWORK<<DEMO`), mrz(`ZH${D(id)}CHN<<RETAIL<<ACCEPTED`)], issuerLine: '某连锁零售 · 企业出题', issuerEn: 'VIA 平方真活台' },
+      visa: { theme: 'work', type: '真活签', typeEn: 'REAL WORK · CONFIRMED', no: `ZH ${D(id)}`, fields: [['HOLDER · 持有人', h.name], ['TASK · 题目', '门店毛利排查'], ['RESULT · 结果', '企业确认采纳'], ['TIME · 用时', '9 天 · 3 轮'], ['ISSUED · 签发', '2026.10.12'], ['BY · 出题', '某连锁零售']], mrz: [mrz(`W<CHN${h.nameEn}<<REALWORK<<DEMO`), mrz(`ZH${D(id)}CHN<<RETAIL<<ACCEPTED`)], issuerLine: '某连锁零售 · 企业出题', issuerEn: 'VIA 真活台 · 企业确认' },
     }),
   },
   {
@@ -158,11 +174,11 @@ export const DEMO_LIB: DemoOption[] = [
       ...base(id, 'work'), title: '真活签 · 会员复购下滑诊断', issuer: 'enterprise', issuerName: '某连锁茶饮',
       statement: `某连锁茶饮在真活台出题「会员复购下滑诊断」，${h.name}交付了诊断和三条挽回动作，企业确认结题。（演示）`,
       issuedAt: '2026.09.26', validUntil: '长期', level: 'enterprise', status: 'valid',
-      method: '企业出题 → 本人接题 → 交付 → 企业确认；平方真活台托管全过程。',
+      method: '企业出题 → 本人接题 → 交付 → 企业确认；真活台托管全过程，结果盖进护照。',
       evidence: [ev('题目原文', '近三个月会员复购率从 41% 降到 33%，找原因、给动作'), ev('交付物', '诊断报告 8 页 + 分群名单'), ev('企业确认', '运营负责人确认结题 · 评价 4.5 / 5')],
       facts: [['企业评价', '「分群很清楚，第二条动作已经在试」']],
       code: `DEMO-ZH-${D(id)}`,
-      visa: { theme: 'work', type: '真活签', typeEn: 'REAL WORK · CONFIRMED', no: `ZH ${D(id)}`, fields: [['HOLDER · 持有人', h.name], ['TASK · 题目', '会员复购诊断'], ['RESULT · 结果', '结题 · 4.5 / 5'], ['TIME · 用时', '12 天 · 2 轮'], ['ISSUED · 签发', '2026.09.26'], ['BY · 出题', '某连锁茶饮']], mrz: [mrz(`W<CHN${h.nameEn}<<REALWORK<<DEMO`), mrz(`ZH${D(id)}CHN<<TEA<<CLOSED`)], issuerLine: '某连锁茶饮 · 企业出题', issuerEn: 'VIA 平方真活台' },
+      visa: { theme: 'work', type: '真活签', typeEn: 'REAL WORK · CONFIRMED', no: `ZH ${D(id)}`, fields: [['HOLDER · 持有人', h.name], ['TASK · 题目', '会员复购诊断'], ['RESULT · 结果', '结题 · 4.5 / 5'], ['TIME · 用时', '12 天 · 2 轮'], ['ISSUED · 签发', '2026.09.26'], ['BY · 出题', '某连锁茶饮']], mrz: [mrz(`W<CHN${h.nameEn}<<REALWORK<<DEMO`), mrz(`ZH${D(id)}CHN<<TEA<<CLOSED`)], issuerLine: '某连锁茶饮 · 企业出题', issuerEn: 'VIA 真活台 · 企业确认' },
     }),
   },
 
@@ -173,7 +189,7 @@ export const DEMO_LIB: DemoOption[] = [
       ...base(id, 'strength'), title: '长处与发展 · 经营分析方向', issuer: 'joint',
       statement: `从护照里已核验的签章归纳出${h.name}的前三项长处，并排出下一步：补「核对 AI 的结论」→ ATA 复测 → 去真活台接题。（演示）`,
       issuedAt: '2026.11.08', validUntil: '随新签章更新', level: 'vs', status: 'valid',
-      method: '考培一体：ATA 能力认证的分项结果 + 平方画像，不用本人自述。',
+      method: '考培一体：ATA 能力认证的分项结果，加上护照里已核验的签章（画像由平方支持），不用本人自述。',
       evidence: [ev('ATA 能力签', '找出异常 4.6 / 把问题拆清楚 4.5 / 写成建议 4.1'), ev('真活签', '企业评价「能直接拿去开会」'), ev('短板', '核对 AI 的结论 3.4 / 5（五项最低）', 'review')],
       code: `DEMO-TPV-${D(id)}`,
       strength: {
@@ -189,7 +205,7 @@ export const DEMO_LIB: DemoOption[] = [
       ...base(id, 'strength'), title: '长处与发展 · 运营方向', issuer: 'joint',
       statement: `从护照里已核验的签章归纳出${h.name}的前三项长处，并排出下一步：补「找出异常」→ 再体验一个岗位 → 去真活台接题。（演示）`,
       issuedAt: '2026.10.02', validUntil: '随新签章更新', level: 'vs', status: 'valid',
-      method: '考培一体：ATA 能力认证的分项结果 + 平方画像，不用本人自述。',
+      method: '考培一体：ATA 能力认证的分项结果，加上护照里已核验的签章（画像由平方支持），不用本人自述。',
       evidence: [ev('ATA 能力签', '让 AI 干对的活 4.0 / 写成建议 3.9 / 把问题拆清楚 3.8'), ev('短板', '核对 AI 的结论 2.9 / 5', 'review')],
       code: `DEMO-TPV-${D(id)}`,
       strength: {
@@ -200,13 +216,34 @@ export const DEMO_LIB: DemoOption[] = [
     }),
   },
 
-  /* ---------- 足迹（盖戳） ---------- */
+  /* ---------- 足迹（盖戳）：按成长阶段，章上写明是哪类场景平台盖的 ---------- */
+  {
+    key: 'ent-camp', page: 'entries', form: 'stamp', label: '足迹 · 暑期营地（大中衔接）', sub: '某升学服务平台盖章 · 结营优秀', level: 'platform', icon: 'book', color: '#B4532A',
+    make: (_h, id) => ({
+      ...base(id, 'entries'), title: '暑期营地 · 人工智能入门营', issuer: 'platform', issuerName: '某升学服务平台',
+      statement: '高二暑假参加某高校的人工智能入门营，结营项目获优秀。（演示）', issuedAt: '2019.08.03', validUntil: '长期', level: 'platform', status: 'valid',
+      method: '营地通过升学服务平台报名，结营证明由平台盖进护照。', evidence: [ev('结营证明', '某高校暑期营地 · 优秀营员')], code: `DEMO-CMP-${D(id)}`,
+      facts: [['阶段', '大中衔接'], ['盖章', '某升学服务平台']],
+      stamp: { shape: 'oval', top: 'SUMMER CAMP · 营地', icon: 'book', main: 'AI 入门营', date: '2019.08 · 优秀', color: '#B4532A' },
+    }),
+  },
+  {
+    key: 'ent-precollege', page: 'entries', form: 'stamp', label: '足迹 · 大学先修课（大中衔接）', sub: '某大学先修课程平台盖章 · 统计学导论 A-', level: 'platform', icon: 'book', color: '#7A3FA0',
+    make: (_h, id) => ({
+      ...base(id, 'entries'), title: '大学先修 · 统计学导论', issuer: 'platform', issuerName: '某大学先修课程平台',
+      statement: '高三下学期修完大学先修课「统计学导论」，结课成绩 A-。（演示）', issuedAt: '2020.05.30', validUntil: '长期', level: 'platform', status: 'valid',
+      method: '线上先修课，结课考试由平台组织，成绩盖进护照。', evidence: [ev('结课成绩', 'A- · 某大学先修课程平台')], code: `DEMO-PRE-${D(id)}`,
+      facts: [['阶段', '大中衔接'], ['盖章', '某大学先修课程平台']],
+      stamp: { shape: 'cham', top: 'PRE-COLLEGE · 先修', icon: 'book', main: '统计导论 A-', date: '2020.05.30', sub: '大学先修课程平台', color: '#7A3FA0' },
+    }),
+  },
   {
     key: 'ent-grad', page: 'entries', form: 'stamp', label: '足迹 · 毕业', sub: '学历公开查询对上 · 毕业章', level: 'vs', icon: 'star', color: '#1B3F8F',
     make: (_h, id) => ({
       ...base(id, 'entries'), title: '毕业 · 学士学位', issuer: 'vs',
       statement: '2024 年 6 月本科毕业，获学士学位。（演示）', issuedAt: '2024.06.28', validUntil: '长期', level: 'vs', status: 'valid',
       method: '学历学位公开查询（本人授权）。', evidence: [ev('学历学位', '对上')], code: `DEMO-GRD-${D(id)}`,
+      facts: [['阶段', '大学'], ['盖章', '平方验证（学历学位）']],
       stamp: { shape: 'round', top: 'GRADUATE · 毕业', bottom: 'CLASS OF 2024', icon: 'star', main: '毕业', sub: '2024.06', color: '#1B3F8F' },
     }),
   },
@@ -214,17 +251,19 @@ export const DEMO_LIB: DemoOption[] = [
     key: 'ent-hired', page: 'entries', form: 'stamp', label: '足迹 · 入职', sub: '社保记录对上 · 入职章', level: 'vs', icon: 'case', color: '#C8323C',
     make: (_h, id) => ({
       ...base(id, 'entries'), title: '入职 · 某食品企业', issuer: 'vs',
-      statement: '2024 年 7 月入职某食品企业财务部。（演示）', issuedAt: '2024.07.08', validUntil: '长期', level: 'vs', status: 'valid',
+      statement: '2024 年 7 月入职某食品企业，数据分析岗。（演示）', issuedAt: '2024.07.08', validUntil: '长期', level: 'vs', status: 'valid',
       method: '社保缴纳记录（本人授权）。', evidence: [ev('社保记录', '2024.07 起连续缴纳 · 对上')], code: `DEMO-HIR-${D(id)}`,
+      facts: [['阶段', '从业'], ['盖章', '某食品企业 · 平方核对社保']],
       stamp: { shape: 'round', top: 'HIRED · 入职', bottom: 'WELCOME', icon: 'case', main: '入职', sub: '2024.07.08', color: '#C8323C' },
     }),
   },
   {
     key: 'ent-transfer', page: 'entries', form: 'stamp', label: '足迹 · 换方向', sub: '企业回函确认 · 转岗章', level: 'enterprise', icon: 'plane', color: '#0F7A62',
     make: (_h, id) => ({
-      ...base(id, 'entries'), title: '换方向 · 财务 → 经营分析', issuer: 'employer', issuerName: '某食品企业',
-      statement: '2026 年 3 月内部转岗：财务专员 → 经营分析。（演示）', issuedAt: '2026.03.02', validUntil: '长期', level: 'enterprise', status: 'valid',
+      ...base(id, 'entries'), title: '换方向 · 数据分析 → 经营分析', issuer: 'employer', issuerName: '某食品企业',
+      statement: '2026 年 3 月内部转岗：数据分析 → 经营分析。（演示）', issuedAt: '2026.03.02', validUntil: '长期', level: 'enterprise', status: 'valid',
       method: '在职单位人力资源部回函确认。', evidence: [ev('单位回函', '人力资源部 · 2026.11.05')], code: `DEMO-TRF-${D(id)}`,
+      facts: [['阶段', '从业'], ['盖章', '某食品企业']],
       stamp: { shape: 'tag', top: 'TRANSFER · 换方向', icon: 'plane', main: '经营分析', date: '2026.03.02', sub: '企业确认', color: '#0F7A62' },
     }),
   },

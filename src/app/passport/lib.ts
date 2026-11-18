@@ -102,7 +102,7 @@ export function extrasToDemos(ex: ShareExtras): DemoItem[] {
 }
 
 /* ---------- 本人版的本地存储（演示）：useSyncExternalStore，服务端渲染时当作没有 ---------- */
-const KEY = 'tp:dz-7q3k9:v1';
+const KEY = 'tp:hm-7q3k9:v1';   // 2026-11-18 演示人物换成韩梅梅，换个键，旧的本机改动不带过来
 const EVT = 'tp-store';
 function subscribe(cb: () => void) { window.addEventListener('storage', cb); window.addEventListener(EVT, cb); return () => { window.removeEventListener('storage', cb); window.removeEventListener(EVT, cb); }; }
 function read(): string | null { try { return window.localStorage.getItem(KEY); } catch { return null; } }

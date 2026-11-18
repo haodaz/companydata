@@ -3,8 +3,8 @@
 /** 护照的每一页：身份页、本人填写、鉴真签、ATA、体验签、真活签、长处与发展、足迹、查看记录，外加封住的页。 */
 import React from 'react';
 import {
-  EXP_EXTRA, EXP_EXTRA_STAMP, LAYOUT, PAGES, SELF_SLOTS, VISIBILITY, mrz, pageDef,
-  type Claim, type Grant, type PageDef, type PageId, type Placement, type Profile, type StampArt,
+  ENTRY_SHEETS, EXP_EXTRA, EXP_EXTRA_STAMP, HOLDER, LAYOUT, PAGES, SELF_SLOTS, STAGES, STAMP_GRID, VISIBILITY, mrz, pageDef,
+  type Claim, type EntrySheet, type Grant, type PageDef, type PageId, type Placement, type Profile, type StampArt,
 } from './data';
 import { Medal, Paper, Portrait, Qr, Stamp, Visa, MONO } from './art';
 import { addedToClaim, type AddedItem } from './lib';
@@ -57,11 +57,11 @@ export function PageFrame({ def, no, part, thud, children }: { def: PageDef; no:
     <div className={`tp-page${thud ? ' tp-thud' : ''}`}>
       <Paper tint={def.tint} />
       <div className="tp-ph">
-        <div className="tp-ph-l">人才护照 · TALENT PASSPORT</div>
+        <div className="tp-ph-l">ATA 人才护照 · TALENT PASSPORT</div>
         <div className="tp-ph-r"><b>{def.title}{part && part > 1 ? <small> · 续 {part}</small> : null}</b><span>{def.en}</span></div>
       </div>
       {children}
-      <div className="tp-pf"><span>平方创想 VISIONSQUARE</span><b>{String(no).padStart(2, '0')}</b><span>ATA</span></div>
+      <div className="tp-pf"><span>ATA 全美在线 签发</span><b>{String(no).padStart(2, '0')}</b><span>ATA</span></div>
     </div>
   );
 }
@@ -105,7 +105,7 @@ function IdPage({ ctx }: { ctx: PageCtx }) {
         <div><div className="tp-kv-k">姓名 · NAME</div><div className="tp-kv-v big">{h.name}</div></div>
         <div className={rv('nick')}><div className="tp-kv-k">昵称 · ALIAS</div><div className="tp-kv-v">{pr.nickname || '—'}</div></div>
         <div className={rv('no')}><div className="tp-kv-k">护照号 · PASSPORT NO.</div><div className="tp-kv-v red">{h.passportNo}</div></div>
-        <div><div className="tp-kv-k">签发 · ISSUED BY</div><div className="tp-kv-v">{h.demo ? 'ATA × 平方创想' : '平方创想 · 内测'}</div></div>
+        <div><div className="tp-kv-k">签发 · ISSUED BY</div><div className="tp-kv-v">{h.demo ? 'ATA 全美在线' : 'ATA 人才护照 · 内测'}</div></div>
         <div className={rv('no')}><div className="tp-kv-k">签发 / 有效至</div><div className="tp-kv-v" style={{ fontFamily: MONO, fontSize: '3cqw' }}>{h.issuedAt} – {h.validUntil}</div></div>
       </div>
       <div className="tp-id-mid">
@@ -121,7 +121,7 @@ function IdPage({ ctx }: { ctx: PageCtx }) {
       </div>
       <div className={`tp-mrz ${rv('no')}`}>
         <svg viewBox="0 0 600 64">
-          {(h.demo ? [mrz('P<CHNHAO<<DAZHUANG'), mrz('TP7Q3K9DZ1CHN0203117M3611077TALENTPASS<<<06')] : [mrz(`P<CHN${mrzName(h.nameEn, h.passportNo)}`), mrz(mrzLine2(h))]).map((m, i) => (
+          {(h.demo ? [mrz(`P<CHN${HOLDER.mrzName}`), mrz('TP7Q3K9HM1CHN0203117F2903154TALENTPASS<<<06')] : [mrz(`P<CHN${mrzName(h.nameEn, h.passportNo)}`), mrz(mrzLine2(h))]).map((m, i) => (
             <text key={i} x={0} y={24 + i * 32} fontSize={21} fontWeight={600} fill="#3E4A6B" fontFamily={MONO} textLength={600} lengthAdjust="spacingAndGlyphs">{m}</text>
           ))}
         </svg>
@@ -163,9 +163,22 @@ function VisaPage({ id, ctx }: { id: PageId; ctx: PageCtx }) {
   );
 }
 
-/* ---------- 足迹 ---------- */
-function EntriesPage({ ctx }: { ctx: PageCtx }) {
-  return <>{LAYOUT.entries!.stamps.map((p, i) => { const c = ctx.claims.get(p.claim); return c?.stamp ? <StampAt key={p.claim} p={p} art={c.stamp} claimId={c.id} ctx={ctx} i={i} label={c.title} /> : null; })}</>;
+/* ---------- 足迹：按成长阶段排，一条阶段线下面盖这一段的章；「下一站」留一个虚线框 ---------- */
+function EntriesPage({ sheet, ctx }: { sheet: EntrySheet; ctx: PageCtx }) {
+  return (
+    <>
+      {sheet.bands.map(b => {
+        const s = STAGES[b.stage];
+        return (
+          <div key={b.stage} className={`tp-band${b.stage === 'next' ? ' next' : ''}`} style={{ top: `${b.y}%`, ['--c' as string]: s.color }}>
+            <b>{s.name}</b><span>{s.years}</span><i /><em>{s.note}</em>
+            {b.stage === 'next' && <div className="tp-band-slot"><span>还没盖章</span><small>到了下一段，企业、实验室这些场景平台会在这里盖一枚章；签签会提前告诉你该准备什么</small></div>}
+          </div>
+        );
+      })}
+      {sheet.stamps.map((p, i) => { const c = ctx.claims.get(p.claim); return c?.stamp ? <StampAt key={p.claim} p={p} art={c.stamp} claimId={c.id} ctx={ctx} i={i} label={c.title} /> : null; })}
+    </>
+  );
 }
 
 /* ---------- 长处与发展 ---------- */
@@ -240,7 +253,7 @@ export function PageBody({ id, ctx }: { id: PageId; ctx: PageCtx }) {
   if (id === 'id') return <IdPage ctx={ctx} />;
   if (id === 'self') return <SelfPage ctx={ctx} />;
   if (id === 'strength') return <StrengthPage ctx={ctx} />;
-  if (id === 'entries') return <EntriesPage ctx={ctx} />;
+  if (id === 'entries') return <EntriesPage sheet={ENTRY_SHEETS[0]} ctx={ctx} />;
   if (id === 'access') return <AccessPage ctx={ctx} />;
   return <VisaPage id={id} ctx={ctx} />;
 }
@@ -252,17 +265,17 @@ export function PageBody({ id, ctx }: { id: PageId; ctx: PageCtx }) {
 /** 真实护照的身份页那条 claim：开通护照（内测），没做实名核验就照实写 */
 export function idClaimFor(h: HolderInfo): Claim {
   return {
-    id: 'TP-CL-0001', page: 'id', title: '人才护照 · 开通（内测）', issuer: 'vs',
-    statement: `为${h.name}开通人才护照（内测）。档案归本人所有，本人授权后对方才可查看。`,
+    id: 'TP-CL-0001', page: 'id', title: 'ATA 人才护照 · 开通（内测）', issuer: 'ata',
+    statement: `为${h.name}开通 ATA 人才护照（内测）。档案归本人所有，本人授权后对方才可查看。`,
     issuedAt: h.issuedAt, validUntil: h.validUntil, level: 'self', status: 'declared',
-    method: '平台账号登录后开通；尚未做实名核验，姓名和联系方式来自平台账号。',
+    method: '内测账号登录后开通；尚未做实名核验，姓名和联系方式来自账号。',
     evidence: [
       { label: '平台账号', detail: h.email ? `账号邮箱 ${h.email}` : '账号邮箱（按可见范围隐藏）', ok: true },
       { label: '实名核验', detail: '尚未进行', ok: false },
       { label: '本人同意书', detail: '数据归本人；默认不公开，按页授权、可随时撤回', ok: true },
     ],
     code: `TPV-${h.passportNo.replace(/^TP-/, '')}`, hash: `id:${h.passportNo.replace(/\W/g, '').toLowerCase()}`,
-    facts: [['护照号', h.passportNo], ['开通', `${h.issuedAt} · 平方创想（内测）`]],
+    facts: [['护照号', h.passportNo], ['开通', `${h.issuedAt} · 内测`]],
   };
 }
 
@@ -272,8 +285,8 @@ const EMPTY_HINT: Partial<Record<PageId, string>> = {
   ata: '去 ATA 考一场、或做一次 AI 能力认证，成绩直接贴进这一页。',
   exp: '在 AI 百业走完一个模拟岗位的一天，这里贴体验签。',
   work: '在真活台接一道企业题，交付并被企业确认后，这里贴真活签。',
-  strength: '有了核验过的签章，平方会归纳出你的长处，排出下一步。',
-  entries: '入学、毕业、入职、换方向，一次次进出都盖在这一页。',
+  strength: '有了核验过的签章，这里会归纳出你的长处，排出下一步。',
+  entries: '高中、大学、校招、入职、科研，每到一个新阶段，场景平台就在这一页盖一枚章。',
 };
 /** 还没签发的页：像护照里还没盖章的空白页 */
 function EmptyBody({ def, ctx }: { def: PageDef; ctx: PageCtx }) {
@@ -300,8 +313,8 @@ const VISA_SLOTS: { style: React.CSSProperties; rot: number }[] = [
   { style: { left: '8cqw', right: '8cqw', top: '77cqw' }, rot: 1 },
 ];
 const slotOf = (p: Placement): Omit<Placement, 'claim'> => ({ x: p.x, y: p.y, w: p.w, rot: p.rot });
-/** 一页最多六枚章（足迹页的位置） */
-const STAMP_SLOTS: Omit<Placement, 'claim'>[] = LAYOUT.entries!.stamps.map(slotOf);
+/** 一页最多六枚章 */
+const STAMP_SLOTS: Omit<Placement, 'claim'>[] = STAMP_GRID;
 const chunk = <T,>(a: T[], n: number) => { const out: T[][] = []; for (let i = 0; i < a.length; i += n) out.push(a.slice(i, i + n)); return out; };
 
 function VisaSheet({ claims, ctx }: { claims: Claim[]; ctx: PageCtx }) {
@@ -369,7 +382,7 @@ function RealSelfPage({ ctx }: { ctx: PageCtx }) {
 export interface SheetSpec { key: string; tab: string; color: string; sealed?: boolean; ids: string[]; node: React.ReactNode }
 /**
  * 把一本护照排成一张张纸：
- *  - 演示护照（郝大壮）：每一节先是原来的版式，演示签章库加的条目接在后面的续页上；
+ *  - 演示护照（韩梅梅）：每一节先是原来的版式（足迹按成长阶段排两页），演示签章库加的条目接在后面的续页上；
  *  - 真实护照：每一节按条目排（签证贴一页两张、章一页六枚、长处一份一页），一条都没有就是「尚未签发」空页。
  * allowed：分享版只给授权的页，其余每节一张封页（不透露有几页）。
  */
@@ -396,7 +409,8 @@ export function buildSheets(o: { holder: HolderInfo; ctx: PageCtx; demos: Claim[
       continue;
     }
     let part = 0;
-    if (holder.demo) { part = 1; push(d, 1, [], <PageBody id={d.id} ctx={ctx} />); }
+    if (holder.demo && d.id === 'entries') ENTRY_SHEETS.forEach(sh => { part += 1; push(d, part, sh.stamps.map(p => p.claim), <EntriesPage sheet={sh} ctx={ctx} />); });
+    else if (holder.demo) { part = 1; push(d, 1, [], <PageBody id={d.id} ctx={ctx} />); }
     if (d.id === 'strength') {
       mine.filter(c => c.strength).forEach(c => { part += 1; push(d, part, [c.id], <StrengthSheet c={c} ctx={ctx} />); });
     } else if (VISA_PAGES.includes(d.id)) {

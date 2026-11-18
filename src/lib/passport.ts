@@ -17,7 +17,7 @@ export async function requirePassportUser(req: Request): Promise<Response | null
   if (!canUsePassport(u.role)) return Response.json({ ok: false, error: '人才护照还没对这个账号开放' }, { status: 403 });
   return null;
 }
-import { PAGES, type PageId, type Visibility } from '@/app/passport/data';
+import { DESTINATIONS, PAGES, type PageId, type Visibility } from '@/app/passport/data';
 import { toLook } from '@/app/passport/themes';
 import type { BookingDTO, GrantDTO, ItemDTO, OwnerBundle, PassportDTO, ShareBundle, ShareFail } from '@/app/passport/api-types';
 
@@ -58,7 +58,7 @@ const rnd = (n: number) => Array.from({ length: n }, () => AB[randomInt(AB.lengt
 export const newPassportNo = () => `TP-${rnd(4)}-${rnd(4)}`;
 /** 分享 token：24 字节随机 → 32 位 base64url */
 export const newToken = () => randomBytes(24).toString('base64url');
-export const newBookingNo = (dest: string) => `${dest === 'zhenhuo' ? 'ZH' : dest === 'baiye' ? 'AI' : 'ATA'}-${rnd(6)}`;
+export const newBookingNo = (dest: string) => `${DESTINATIONS.find(d => d.id === dest)?.prefix || 'ATA'}-${rnd(6)}`;
 export const avatarVer = (p: PassportRow) => new Date(p.updated_at).getTime().toString(36);
 export const clean = (v: unknown, max: number) => String(v ?? '').replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, max);
 /** 页码列表：只认能分享的页，身份页必含 */

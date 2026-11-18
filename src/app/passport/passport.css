@@ -163,7 +163,8 @@
 .tp-cover-brand { font-size: 7.4cqw; font-weight: 900; letter-spacing: .12em; line-height: 1.2; filter: drop-shadow(0 .3cqw .2cqw rgba(0, 0, 0, .35)); }
 .tp-cover-sub { font-size: 2.5cqw; letter-spacing: .32em; color: rgba(var(--fsoft, 230, 201, 135), .8); margin-top: 1.4cqw; padding-left: .32em; white-space: nowrap; }
 .tp-cover-emblem { width: 40cqw; height: 40cqw; margin-top: 6cqw; filter: drop-shadow(0 .4cqw .3cqw rgba(0, 0, 0, .35)); }
-.tp-cover-title { font-size: 13cqw; font-weight: 900; letter-spacing: .22em; padding-left: .22em; margin-top: 6cqw; line-height: 1.1; filter: drop-shadow(0 .4cqw .3cqw rgba(0, 0, 0, .4)); }
+.tp-cover-title { font-size: 13cqw; font-weight: 900; letter-spacing: .22em; padding-left: .22em; margin-top: 4.6cqw; line-height: 1.1; filter: drop-shadow(0 .4cqw .3cqw rgba(0, 0, 0, .4)); }
+.tp-cover-title small { display: block; font-family: var(--sans, sans-serif); font-size: .4em; letter-spacing: .5em; padding-left: .5em; margin: 0 0 .9cqw -.22em; line-height: 1; }
 .tp-cover-en { font-size: 3.4cqw; letter-spacing: .5em; padding-left: .5em; color: rgba(var(--fsoft, 230, 210, 170), .85); margin-top: 2.2cqw; white-space: nowrap; }
 .tp-cover-rule { display: block; width: 24cqw; height: .3cqw; margin-top: 5cqw; background: linear-gradient(90deg, transparent, var(--f3, #D9B66A), transparent); }
 .tp-cover-owner { font-size: 4.6cqw; font-weight: 800; color: var(--fowner, #F6E1A6); margin-top: 3.6cqw; }
@@ -824,3 +825,35 @@ textarea.tp-input { height: auto; min-height: 76px; padding: 10px 12px; line-hei
 .tp-rtag { display: inline-block; vertical-align: 1px; margin-left: 4px; font-size: 10.5px; font-weight: 800; padding: 0 7px; border-radius: 99px; color: #4B3BD6; background: linear-gradient(100deg, #F3EEFF, #E8F7FB, #FFF4E0); box-shadow: inset 0 0 0 1px rgba(91, 75, 219, .25); }
 .tp-rtag.gold { color: #8A6418; background: linear-gradient(100deg, #FFF6DD, #F6E1A6); box-shadow: inset 0 0 0 1px rgba(185, 142, 62, .45); }
 .tp-rtag.cosmos { color: #E8E4FF; background: linear-gradient(100deg, #2A2F6E, #4B3BD6); box-shadow: none; }
+
+/* ---------- 足迹按成长阶段排：一条阶段线，章盖在线下面；「下一站」留虚线框（2026-11-18） ---------- */
+.tp-band { position: absolute; left: 8cqw; right: 8cqw; display: flex; align-items: center; gap: 1.6cqw; color: var(--c); pointer-events: none; }
+.tp-band b { flex: none; font-size: 3cqw; font-weight: 900; padding: .5cqw 2cqw; border-radius: 99px; background: color-mix(in srgb, var(--c) 11%, transparent); letter-spacing: .04em; }
+.tp-band span { flex: none; font-family: var(--mono); font-size: 2.2cqw; font-weight: 700; opacity: .85; }
+.tp-band i { flex: 1; min-width: 4cqw; border-top: .3cqw dashed currentColor; opacity: .32; }
+.tp-band em { flex: none; font-style: normal; font-size: 2.2cqw; color: var(--mu); }
+.tp-band.next b { background: rgba(107, 114, 144, .1); }
+.tp-band-slot { position: absolute; left: 6%; right: 6%; top: 6.5cqw; height: 24cqw; border: .45cqw dashed rgba(107, 114, 144, .42); border-radius: 3.4cqw; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.2cqw; padding: 0 6cqw; text-align: center; color: var(--mu); }
+.tp-band-slot span { font-size: 3.6cqw; font-weight: 900; letter-spacing: .1em; }
+.tp-band-slot small { font-size: 2.4cqw; line-height: 1.55; text-wrap: balance; }
+
+/* ---------- 签签的主动提醒卡：护照首页顶上，点开进对话 ---------- */
+.tp-top { flex-wrap: wrap; }
+.tp-nudge { flex: 1 0 100%; display: flex; align-items: stretch; gap: 0; margin-top: 4px; border-radius: 16px; background: linear-gradient(120deg, #FFF8EC, #F4F0FF); box-shadow: 0 1px 0 rgba(217, 182, 106, .35) inset, 0 6px 16px rgba(29, 36, 80, .08); animation: tp-nudge-in .5s cubic-bezier(.2, .9, .3, 1) both; }
+.tp-nudge-go { flex: 1; min-width: 0; display: flex; align-items: center; gap: 9px; border: 0; background: none; cursor: pointer; text-align: left; padding: 6px 2px 6px 8px; color: var(--ink); font: inherit; }
+.tp-nudge-ava { flex: none; width: 34px; height: 34px; border-radius: 50%; overflow: hidden; background: radial-gradient(circle at 40% 30%, #FFFDF6, #F3EAFF 70%); box-shadow: 0 0 0 2px #fff; }
+.tp-nudge-ava .tp-sp, .tp-nudge-ava .tp-spi { width: 100%; height: 100%; display: block; }
+.tp-nudge-t { min-width: 0; flex: 1; display: flex; flex-direction: column; }
+.tp-nudge-t b { font-size: 11.5px; color: #8A5A00; letter-spacing: .04em; }
+.tp-nudge-t span { font-size: 12.5px; line-height: 1.4; color: #3A3F5C; text-wrap: pretty; }
+.tp-nudge-go em { flex: none; font-style: normal; font-size: 12px; font-weight: 800; color: #5B4BDB; white-space: nowrap; }
+.tp-nudge-x { flex: none; width: 30px; border: 0; background: none; cursor: pointer; color: #9AA0B8; font-size: 18px; line-height: 1; border-radius: 0 16px 16px 0; }
+.tp-nudge-x:hover { color: #3A3F5C; }
+@keyframes tp-nudge-in { from { opacity: 0; transform: translateY(-6px); } }
+@media (min-width: 1024px) {
+  .tp-top { flex-wrap: nowrap; }
+  .tp-nudge { flex: 0 1 540px; margin: 0 92px 0 auto; }
+  .tp-root:has(.tp-owner) .tp-demo-tag { right: 28px; top: 22px; }
+}
+@media (prefers-reduced-motion: reduce) { .tp-nudge { animation: none; } }
+.tp-dest .tp-dest-fit { display: block; font-size: 11.5px; color: var(--mu2, #9AA0B8); margin-top: 1px; }

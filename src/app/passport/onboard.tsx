@@ -54,12 +54,12 @@ export function Onboarding({ stage, store, say, onStage, onDone, goBook }: { sta
 /* ---------- ① 领取仪式 ---------- */
 function Ceremony({ store, onNext, onSkip }: { store: Store; onNext: () => void; onSkip: () => void }) {
   return (
-    <div className="tp-gd" role="dialog" aria-modal="true" aria-label="领取人才护照">
+    <div className="tp-gd" role="dialog" aria-modal="true" aria-label="领取 ATA 人才护照">
       <div className="tp-gd-cere">
-        <h1 className="tp-gd-h">恭喜你拿到这本人才护照。<br />从今往后，见证你的真能力、真足迹，<br className="tp-br-m" />获得真评价。</h1>
+        <h1 className="tp-gd-h">恭喜你拿到这本 ATA 人才护照。<br />ATA 签发和认证，场景平台来用、来盖章；<br className="tp-br-m" />从高中到职场，一直在你手里。</h1>
         <div className="tp-gd-book"><i className="tp-ob-glow" /><Cover owner={`${store.holder.name}的可信人才档案`} /><i className="tp-auth-glint" /></div>
       </div>
-      <Npc mood="happy" line={`你好呀，我是${SPRITE_NAME}，你的护照精灵！往后这本护照里的事，我都陪着你。先花一分钟，把第一页填上？`}>
+      <Npc mood="happy" line={`你好呀，我是${SPRITE_NAME}，你的护照精灵！往后我一直陪着你：哪张认证快到期、下一段该准备什么、去哪儿拿，我都先提醒你。先花一分钟，把第一页填上？`}>
         {() => <>
           <button type="button" className="tp-btn ghost sm" onClick={onSkip}>先不看引导</button>
           <button type="button" className="tp-btn v sm" onClick={onNext}>打开我的护照</button>
@@ -71,7 +71,7 @@ function Ceremony({ store, onNext, onSkip }: { store: Store; onNext: () => void;
 
 /* ---------- ② 填第一页：问一句、显影一块 ---------- */
 type Q = 'photo' | 'nick' | 'bio' | 'vis' | 'done';
-const BIO_EXAMPLES = ['做了三年运营，正在学用 AI 做数据分析。', '财务出身，转做经营分析，喜欢把报表看到底。', '应届毕业生，想去做产品，动手能力强。'];
+const BIO_EXAMPLES = ['高二，喜欢数学和经济，想学数据方向。', '大三，学经济统计，正在找数据分析实习。', '做了三年运营，正在学用 AI 做数据分析。'];
 const VIS_REPLY: Record<Visibility, string> = { self: '好，联系方式只有你自己看得到。', grant: '好，只有你授权的人才看得到，最稳妥。', public: '好，大家都能看到，机会来得更快一些。' };
 function Fill({ store, say, onNext, onSkip }: { store: Store; say: (m: string) => void; onNext: () => void; onSkip: () => void }) {
   const [q, setQ] = useState<Q>('photo');
@@ -151,10 +151,10 @@ function Fill({ store, say, onNext, onSkip }: { store: Store; say: (m: string) =
 const STEPS: { sel: string; line: string; mood: SpriteState }[] = [
   { sel: '.tp-book', line: '左右滑一滑就能翻页。每一枚签和章都能点开，看是谁签的、凭什么，还能查真伪。', mood: 'talk' },
   { sel: '[data-coach="add"]', line: '自己做过的事，点「加一条」。经历、作品、证书都行，我帮你盖一枚本人章。', mood: 'talk' },
-  { sel: '[data-coach="get"]', line: '别人签发的签——ATA 考试、AI 百业体验、企业真活——去「去认证」里拿。想先看看效果，也能从演示签章库贴几张。', mood: 'think' },
+  { sel: '[data-coach="get"]', line: '别人签发的签——ATA 考试和认证，还有各个场景平台的体验、真活、课题——去「去认证」里拿。想先看看效果，也能从演示签章库贴几张。', mood: 'think' },
   { sel: '[data-coach="me"]', line: '在「我的」里可以定制我的人才护照：换封面、选纸张，再写一句自己的话烫在封面上。', mood: 'happy' },
   { sel: '[data-coach="share"]', line: '给谁看、看哪几页、看几天，都由你定。点「分享」生成一条链接，随时能撤回。', mood: 'talk' },
-  { sel: '.tp-sp-fab', line: '以后有事就点右下角的我。想总结竞争力、找下一枚签、写一句给 HR 的话，都可以问我。', mood: 'happy' },
+  { sel: '.tp-sp-fab', line: '以后有事就点右下角的我。我会一直盯着你的认证：快到期了提醒你复测，到了新阶段告诉你该准备哪张签、去哪儿拿，再帮你从长处排出下一步。', mood: 'happy' },
 ];
 type Box = { top: number; left: number; width: number; height: number; vh: number; vw: number };
 function Tour({ demo, onDone }: { demo: boolean; onDone: () => void }) {
@@ -180,7 +180,7 @@ function Tour({ demo, onDone }: { demo: boolean; onDone: () => void }) {
   const dock = box && box.vw < 1024 && box.top + box.height / 2 > box.vh * 0.45 ? 'top' : 'bottom';
   if (i < 0) return (
     <div className="tp-coach" role="dialog" aria-modal="true" aria-label={`${SPRITE_NAME}带你看一圈`}>
-      <Npc mood="happy" line={`你好呀，我是${SPRITE_NAME}，这本护照的精灵。带你在护照里认认门？`}>
+      <Npc mood="happy" line={`你好呀，我是${SPRITE_NAME}，这本护照的精灵。从高中到职场我一路陪着：哪张认证该复测、这一段该准备什么，我都先提醒你。带你在护照里认认门？`}>
         {() => <><button type="button" className="tp-btn ghost sm" onClick={onDone}>先不用</button><button type="button" className="tp-btn v sm" onClick={() => setI(0)}>好呀</button></>}
       </Npc>
     </div>

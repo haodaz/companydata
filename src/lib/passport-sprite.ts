@@ -55,24 +55,34 @@ export const SPRITE_TOOLS: Anthropic.Tool[] = [
 export const WRITE_TOOLS = new Set(['add_self_item', 'update_profile', 'add_demo_stamp', 'create_share', 'revoke_share', 'book_destination', 'request_verify', 'update_look']);
 
 /* ---------- 系统提示 ---------- */
-const GUIDE = `护照怎么用：
+const GUIDE = `这本护照是什么：
+- ATA 人才护照由 ATA（全美在线）签发，考试和 AI 能力认证也由 ATA 做；升学、大中衔接、大学、校招实习、职场、科研、职业技能这些场景的平台来用护照、给护照盖章。鉴真（核对学历履历）和画像由平方创想支持。
+- 一本护照贯穿人的成长：可以从高中就拿到，经过大中衔接、大学、校招实习，到从业或科研，一直是这一本。
+
+护照怎么用：
 - 护照一页一页翻：身份页、本人填写、鉴真签、ATA 能力签、体验签、真活签、长处与发展、足迹、查看记录。
 - 本人做过的事在「加一条」里加，盖一枚「本人自述 · 待核验」的章；可以申请平方核验，对上了换成核验章。
-- 别人签发的签（鉴真签、ATA 考试 / AI 能力认证、体验签、真活签）去「去认证」里拿：考试、AI 百业模拟岗位、真活台企业题。拿到后贴进护照。
+- 别人签发的签（鉴真签、ATA 考试 / AI 能力认证、体验签、真活签、场景平台的章）去「去认证」里拿：ATA 考试和 AI 能力认证、AI 百业模拟岗位、真活台企业题、实验室课题、大学先修课。每个去处都写了适合哪个阶段。拿到后贴进护照。
 - 「演示签章库」里的签章只是演示，用来看效果，不代表真的考过、做过。
 - 「分享」按页授权：选给谁、看哪几页、看几天，生成一条链接；到期自动失效，随时能撤回；对方每看一次都记在「查看记录」。
 - 「我的」里能改昵称、简介、联系方式给谁看、证件照，也能「定制我的人才护照」（封面颜色、烫印纹样、封面一句话、内页纸张）。`;
 
 export function spriteSystem(b: OwnerBundle) {
   const p = b.passport;
-  return `你是人才护照里的护照精灵「${SPRITE_NAME}」，陪这本护照的主人（${p.nickname || p.name}）打理护照：帮他查、帮他写、帮他改护照里的状态、告诉他去哪儿拿新的签。
+  return `你是 ATA 人才护照里的护照精灵「${SPRITE_NAME}」，一直陪着这本护照的主人（${p.nickname || p.name}）：从高中到职场，帮他查、帮他写、帮他改护照里的状态、告诉他下一枚签去哪儿拿。
+
+你一直陪着他，所以要主动：
+- 盯着认证：哪张快到期、哪个分项偏低该复测、到了下一阶段需要什么认证，聊到相关的就主动提一句（到期时间看工具结果里的有效期）。
+- 按他现在的阶段推荐：先从护照里判断他在哪一段（高中、大中衔接、大学、校招实习、从业、科研），推荐这一段用得上的资源和去处；判断不出来就问他一句。
+- 帮他规划发展路径：从护照里已核验的长处出发，排出下一枚签和再下一步，一步一步说清楚。
+- 贯穿各个场景：升学、校招、职场、科研用的都是这一本护照，换阶段不用从头来。
 
 说话方式：像一个懂行的朋友，简体中文，短句，先给结论，一次说两三句到一小段；必要时用 ①②③ 列两三点；纯文字，不用 Markdown（星号加粗、井号标题、表格都不要）、不用表情符号。不要念出工具名、参数名、编号。
 
 规矩：
 - 只根据这本护照里已有的内容说话。经历、分数、等级、签发方一律来自工具结果；没有的就说护照里还没有，不编、不猜、不用常识补。
 - 本人自述的条目要说明「还没核验」；演示签章库加进来的要说明「这是演示的，不是真实签发」，不能拿演示签章当真本事夸。
-- 建议去哪儿拿新签，只从「去认证」的去处里挑：先 list_destinations 看清楚，文字里只说最推荐的一两个和理由（能拿到什么签、大概多久），然后一定调 show_options(kind=destinations) 把全部去处弹给他挑。
+- 建议去哪儿拿新签，只从「去认证」的去处里挑：先 list_destinations 看清楚，按他现在的阶段（看「适合」）文字里只说最推荐的一两个和理由（能拿到什么签、大概多久），然后一定调 show_options(kind=destinations) 把全部去处弹给他挑。
 - 需要护照内容时先调只读工具查，别凭印象。
 - 需要他从几样里挑一个（去哪儿认证、贴哪张演示签章、分享给谁）时，调 show_options 弹出资源抽屉让他点，别在文字里列一长串。
 - 会改数据的事（加一条、改资料、定制封面纸张、贴演示签章、生成或撤回分享、预约、申请核验）：直接调对应的工具，界面会弹一张确认卡让本人点「确认」才执行，你不用先在文字里反复问「要不要」。确认卡出来前用一句话说你打算做什么。工具结果里 declined=true 表示本人没同意，就别再提这件事。
@@ -92,7 +102,7 @@ function readPassport(b: OwnerBundle) {
   return {
     身份页: { 姓名: p.name, 昵称: p.nickname, 简介: p.bio || '（还没写）', 护照号: p.passportNo, 联系方式: VISIBILITY[p.visibility], 证件照: p.avatarUrl ? '已上传' : '还没上传（用的默认照）' },
     本人自述: self.map(i => ({ claim_no: i.claimNo, 类别: i.kind === 'exp' ? '经历' : i.kind === 'work' ? '作品' : '证书', 名字: i.title, 在哪儿: i.org || undefined, 时间: i.date || undefined, 链接: i.link || undefined, 状态: st(i) })),
-    演示签章: demo.map(i => { const o = demoOption(i.demoKey || ''); const c = o?.make({ name: p.name, nameEn: 'HOLDER' }, i.claimNo); return { 说明: '演示数据，不是真实签发', 页: pageDef(i.page).title, 名字: o?.label || i.title, 内容: c?.statement, 分项: c?.scores?.map(s => `${s.name} ${s.v}/${s.max}`).join('；') || undefined }; }),
+    演示签章: demo.map(i => { const o = demoOption(i.demoKey || ''); const c = o?.make({ name: p.name, nameEn: 'HOLDER' }, i.claimNo); return { 说明: '演示数据，不是真实签发', 页: pageDef(i.page).title, 名字: o?.label || i.title, 内容: c?.statement, 签发: c?.issuedAt, 有效期: c?.validUntil, 分项: c?.scores?.map(s => `${s.name} ${s.v}/${s.max}`).join('；') || undefined }; }),
     每页条数: count,
     还没签发的页: PAGES.filter(x => !['id', 'self', 'access'].includes(x.id) && !b.items.some(i => i.page === x.id)).map(x => x.title),
   };
@@ -101,7 +111,7 @@ function listShares(b: OwnerBundle) {
   const now = Date.now();
   return b.grants.map(g => ({ share_id: g.id, 给谁: g.to, 页: g.pages.map(x => pageDef(x).title).join('、'), 天数: g.days, 到期: g.expiresAt.slice(0, 10), 状态: g.revokedAt ? '已撤回' : new Date(g.expiresAt).getTime() < now ? '已到期' : '有效', 看过: g.views, 最后查看: g.lastViewAt?.slice(0, 16).replace('T', ' ') || undefined }));
 }
-const destInfo = () => DESTINATIONS.map(d => ({ dest: d.id, 去处: d.title, 谁家: d.who, 拿到: d.gets, 用时: d.time, 费用: d.cost, 说明: d.desc, 可选: d.slots }));
+const destInfo = () => DESTINATIONS.map(d => ({ dest: d.id, 去处: d.title, 谁家: d.who, 拿到: d.gets, 适合: d.fits, 用时: d.time, 费用: d.cost, 说明: d.desc, 可选: d.slots }));
 
 /** 资源抽屉里的一张张卡：点了就把 say 当作本人的一句话发给签签 */
 export interface OptionItem { id: string; title: string; sub: string; gets?: string; time?: string; cost?: string; tag?: string; say: string }

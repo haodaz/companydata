@@ -2,7 +2,7 @@
 
 /**
  * 分享版：别人看我的护照。只读，左右翻；没授权的页封住；签和章都能点开看细节、查验真伪。
- *  - 演示：/passport/s/dz-share?…，郝大壮的数据全在地址参数里（ShareApp）；
+ *  - 演示：/passport/s/dz-share?…，韩梅梅的数据全在地址参数里（ShareApp）；
  *  - 真实：/passport/s/<token>，按 token 去公开接口 /api/passport/share/<token> 取被授权的页（RealShareApp）。
  */
 import React, { useEffect, useMemo, useState } from 'react';
@@ -14,7 +14,7 @@ import { ClaimDrawer } from './drawer';
 import { buildSheets, idClaimFor, type PageCtx } from './pages';
 import { addedToClaim, extrasToDemos, extrasToItems, extrasToLook, pagesFromCodes, parseExtras, useHydrated, useRevokedHere, type AddedItem } from './lib';
 import { demoToClaim, type DemoItem } from './demo-lib';
-import { DEMO_HOLDER, HolderProvider, type HolderInfo } from './holder';
+import { DEMO_HOLDER, HolderProvider, mrzLite, type HolderInfo } from './holder';
 import { day8, holderFrom } from './store';
 import { COVERS, lookVars } from './themes';
 import type { ItemDTO, ShareBundle, ShareFail } from './api-types';
@@ -29,7 +29,7 @@ export function VoidView({ title, text }: { title: string; text: string }) {
         <Stamp s={{ shape: 'rect', top: 'INVALID · 无效', icon: 'lock', main: rv ? '已撤回' : '链接无效', date: 'TALENT PASSPORT', sub: rv ? '本人收回' : '或已过期', color: '#C0262D' }} seedKey="void" />
         <h1>{title}</h1>
         <p>{text}</p>
-        <Link href="/passport" className="tp-btn ghost">回到人才护照首页</Link>
+        <Link href="/passport" className="tp-btn ghost">回到 ATA 人才护照首页</Link>
       </div></div>
     </div></div>
   );
@@ -39,7 +39,7 @@ interface ShareViewProps { holder: HolderInfo; profile: Profile; allowed: Set<Pa
 /** 两种分享共用的展示：先一页授权说明，点「查看护照」进深色沉浸翻页 */
 function ShareView({ holder, profile, allowed, added, demos, to, days, until, initClaim }: ShareViewProps) {
   const hydrated = useHydrated();
-  const lite = useMemo(() => ({ name: holder.name, nameEn: holder.demo ? 'HAO<<DAZHUANG' : (holder.nameEn.toUpperCase().replace(/[^A-Z]+/g, '<').replace(/^<+|<+$/g, '') || 'HOLDER') }), [holder]);
+  const lite = useMemo(() => ({ name: holder.name, nameEn: mrzLite(holder) }), [holder]);
   const demoClaims = useMemo(() => demos.map(d => demoToClaim(d, lite)).filter((c): c is Claim => !!c), [demos, lite]);
   const claims = useMemo(() => new Map([...(holder.demo ? CLAIMS : [idClaimFor(holder)]), ...added.map(addedToClaim), ...demoClaims].map(c => [c.id, c])), [holder, added, demoClaims]);
   const okClaim = initClaim && claims.get(initClaim) && allowed.has(claims.get(initClaim)!.page) ? initClaim : null;
@@ -63,8 +63,8 @@ function ShareView({ holder, profile, allowed, added, demos, to, days, until, in
           <div className="tp-app">
             {tag}
             <div className="tp-intro">
-              <div className="tp-eyebrow">TALENT PASSPORT · 分享给你</div>
-              <h1 className="tp-intro-h">{holder.name}把人才护照<br />交给<em>{to}</em>看</h1>
+              <div className="tp-eyebrow">ATA TALENT PASSPORT · 分享给你</div>
+              <h1 className="tp-intro-h">{holder.name}把 ATA 人才护照<br />交给<em>{to}</em>看</h1>
               <div className="tp-hero"><div className="tp-hero-book"><Cover owner={`${holder.name}的可信人才档案`} /></div></div>
               <div className="tp-sharehead">
                 <span className="tp-lock" aria-hidden>✓</span>
@@ -81,7 +81,7 @@ function ShareView({ holder, profile, allowed, added, demos, to, days, until, in
             {tag}
             <div className="tp-imm-top">
               <button type="button" className="tp-imm-back" onClick={() => { setOpen(null); setOpened(false); }}>‹ 授权信息</button>
-              <span className="tp-imm-who">{holder.name}的人才护照 · 只读</span>
+              <span className="tp-imm-who">{holder.name}的 ATA 人才护照 · 只读</span>
             </div>
             <Book pages={pages} index={Math.min(index, pages.length - 1)} onIndex={setIndex} keys={!open} immersive />
           </div>
@@ -92,7 +92,7 @@ function ShareView({ holder, profile, allowed, added, demos, to, days, until, in
   );
 }
 
-/* ---------- 演示：郝大壮，数据在地址里 ---------- */
+/* ---------- 演示：韩梅梅，数据在地址里 ---------- */
 export function ShareApp({ q }: { q: ShareParams }) {
   const allowed = useMemo(() => new Set<PageId>(['id', ...pagesFromCodes(q.p || 'ivaws')]), [q.p]);
   const extras = useMemo(() => parseExtras(q.x), [q.x]);
