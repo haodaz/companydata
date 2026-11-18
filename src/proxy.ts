@@ -55,6 +55,17 @@ export async function proxy(req: NextRequest) {
   if (pathname === '/' && /(^|\.)aisimjob\.com$/.test(host)) return NextResponse.rewrite(new URL('/lab', req.url));
   // AI 大学的独立域名 baiyecollege.com：根路径直接显示 /college（里面的链接本来就是 /college/…）
   if (pathname === '/' && /(^|\.)baiyecollege\.com$/.test(host)) return NextResponse.rewrite(new URL('/college', req.url));
+  // 人才护照的独立域名 atapassport.com（11-17）：放在 PROXIED 过滤之前，这个域名下所有路径都过一遍。
+  // 裸域和 www 都直接服务护照（Vercel 上裸域已经 308 到 www，这里不再互相跳，免得死循环）
+  if (/^(www\.)?atapassport\.com$/.test(host)) {
+    // 根路径显示 /passport（地址栏保持 atapassport.com）；浏览器直接要的 /favicon.ico 给护照图标
+    if (pathname === '/') return NextResponse.rewrite(new URL('/passport', req.url));
+    if (pathname === '/favicon.ico') return NextResponse.rewrite(new URL('/passport/icon.svg', req.url));
+    // 只放行人才护照用得到的：页面和 public/passport 静态资源（都在 /passport 下）、护照接口、登录 / 退出 / 我是谁 / 改密码、Next 自己的资源
+    const PASSPORT_OK = /^\/passport(\/|$)|^\/api\/passport\/|^\/api\/auth\/(login|logout|me|password)$|^\/_next\/|^\/__nextjs/;
+    // 其余（/lab、/office、/admin、/work、/college、/login、别的 /api 接口……）一律 302 回首页，这个域名摸不到别的页面和接口
+    if (!PASSPORT_OK.test(pathname)) return NextResponse.redirect(new URL('/', req.url), 302);
+  }
   // 只管下面 PROXIED 列出的路径（matcher 是全部页面，这里收回来，其余照旧直接放行）
   if (!PROXIED.some(re => re.test(pathname))) return NextResponse.next();
   // 浏览器 / 分享卡片会直接要 /favicon.ico：大学域名给校徽
