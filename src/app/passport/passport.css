@@ -232,6 +232,11 @@
 .tp-btn.sm { height: 34px; padding: 0 12px; font-size: 13px; border-radius: 10px; }
 .tp-btn.block { width: 100%; }
 .tp-btn:disabled { opacity: .5; cursor: default; }
+/* .tp-root button { color: inherit } 比 .tp-btn 更具体，按钮文字会被盖成深色：这里按按钮再定一次 */
+.tp-root button.tp-btn { color: #fff; }
+.tp-root button.tp-btn.ghost { color: var(--ink); }
+.tp-root button.tp-btn.red { color: #C0262D; }
+.tp-root button.tp-btn.gold { color: #2A1F06; }
 .tp-row { display: flex; gap: 10px; }
 .tp-row > * { flex: 1; min-width: 0; }
 
@@ -524,3 +529,94 @@ textarea.tp-input { height: auto; min-height: 76px; padding: 10px 12px; line-hei
   .tp-page.tp-thud, .tp-sweep, .tp-root .tp-stamp-at.fresh::before, .tp-root .tp-stamp-at.fresh::after, .tp-custom-book .tp-cb-cover, .tp-ob-sparks { animation: none !important; }
   .tp-writein .tp-id-fields > div, .tp-writein .tp-id-bio, .tp-root .tp-visa-at.fresh .tp-visa-no { animation: tp-fade .5s ease both !important; animation-duration: .5s !important; clip-path: none !important; }
 }
+
+/* ======================================================================
+ * 护照精灵「签签」：四个状态，CSS 控制
+ * ====================================================================== */
+.tp-sp { display: block; width: 100%; height: auto; overflow: visible; }
+.tp-sp * { transform-box: fill-box; }
+.tp-sp .sp-float { animation: sp-float 3.2s ease-in-out infinite; transform-box: view-box; }
+.tp-sp .sp-shadow { animation: sp-shadow 3.2s ease-in-out infinite; transform-origin: center; }
+@keyframes sp-float { 50% { transform: translateY(-5px); } }
+@keyframes sp-shadow { 50% { transform: scaleX(.86); opacity: .1; } }
+.tp-sp .sp-eye { transform-origin: center; animation: sp-blink 4.6s infinite; }
+@keyframes sp-blink { 0%, 93%, 100% { transform: scaleY(1); } 95.5% { transform: scaleY(.1); } }
+.tp-sp .sp-eyes.happy, .tp-sp .sp-mouth.open, .tp-sp .sp-dots, .tp-sp .sp-arms.up, .tp-sp .sp-arms.think { display: none; }
+.tp-sp.happy .sp-eyes.open, .tp-sp.talk .sp-mouth.smile, .tp-sp.happy .sp-arms.hold, .tp-sp.think .sp-arms.hold { display: none; }
+.tp-sp.happy .sp-eyes.happy, .tp-sp.talk .sp-mouth.open, .tp-sp.think .sp-dots, .tp-sp.happy .sp-arms.up, .tp-sp.think .sp-arms.think { display: inline; }
+.tp-sp .sp-head { transform-origin: 50% 90%; }
+.tp-sp.talk .sp-head { animation: sp-nod .9s ease-in-out infinite; }
+.tp-sp.talk .sp-mouth.open { transform-origin: center; animation: sp-talk .26s ease-in-out infinite alternate; }
+@keyframes sp-nod { 0%, 100% { transform: rotate(0); } 30% { transform: rotate(-2.5deg) translateY(1px); } 70% { transform: rotate(2deg); } }
+@keyframes sp-talk { from { transform: scaleY(.35); } to { transform: scaleY(1); } }
+.tp-sp.happy .sp-float { animation: sp-hop .7s cubic-bezier(.3, 1.6, .5, 1) 2 both, sp-float 3.2s ease-in-out 1.4s infinite; }
+@keyframes sp-hop { 0% { transform: translateY(0); } 40% { transform: translateY(-10px); } 100% { transform: translateY(0); } }
+.tp-sp.think .sp-head { transform: rotate(-4deg); }
+.tp-sp.think .sp-eye ellipse:nth-child(2) { transform: translate(1.5px, -2px); }
+.tp-sp .sp-dots circle { opacity: 0; animation: sp-dot 1.5s ease-in-out infinite; }
+.tp-sp .sp-dots circle:nth-child(2) { animation-delay: .25s; }
+.tp-sp .sp-dots circle:nth-child(3) { animation-delay: .5s; }
+@keyframes sp-dot { 0%, 100% { opacity: 0; } 30%, 70% { opacity: 1; } }
+.tp-sp .sp-stars > path, .tp-sp .sp-stars > circle { transform-origin: center; animation: sp-twinkle 2.4s ease-in-out infinite; }
+.tp-sp .sp-stars > :nth-child(3), .tp-sp .sp-stars > :nth-child(4) { animation-delay: .7s; }
+.tp-sp .sp-stars > :nth-child(5), .tp-sp .sp-stars > :nth-child(6) { animation-delay: 1.3s; }
+.tp-sp .sp-stars > :nth-child(7), .tp-sp .sp-stars > :nth-child(8) { animation-delay: 1.9s; }
+@keyframes sp-twinkle { 0%, 100% { transform: scale(.6); opacity: .4; } 50% { transform: scale(1.15); opacity: 1; } }
+.tp-sp.happy .sp-stars > * { animation-duration: 1.1s; }
+.tp-sp.head .sp-stars { display: none; }
+
+/* 右下角入口：签签的头像小圆窗，带一点呼吸光；不挡底部导航 */
+.tp-sp-fab { position: fixed; z-index: 25; right: max(14px, calc(50% - 206px)); bottom: calc(76px + env(safe-area-inset-bottom)); width: 58px; height: 58px; border-radius: 50%; border: 0; padding: 0; cursor: pointer; background: radial-gradient(circle at 40% 30%, #FFFDF6, #F3EAFF 70%); box-shadow: 0 6px 18px rgba(91, 75, 219, .28), 0 0 0 2px #fff; animation: sp-breath 3s ease-in-out infinite; overflow: hidden; }
+.tp-sp-fab .tp-sp { width: 64px; margin: -2px 0 0 -3px; }
+.tp-sp-fab i { position: absolute; right: 3px; top: 3px; width: 11px; height: 11px; border-radius: 50%; background: #FFD45C; box-shadow: 0 0 0 2px #fff; }
+@keyframes sp-breath { 0%, 100% { box-shadow: 0 6px 18px rgba(91, 75, 219, .28), 0 0 0 2px #fff, 0 0 0 0 rgba(255, 214, 92, .0); } 50% { box-shadow: 0 6px 18px rgba(91, 75, 219, .28), 0 0 0 2px #fff, 0 0 0 7px rgba(255, 214, 92, .28); } }
+
+/* 对话抽屉 */
+.tp-chat { display: flex; flex-direction: column; gap: 10px; min-height: 52vh; }
+.tp-chat-head { display: flex; align-items: center; gap: 10px; }
+.tp-chat-head .tp-sp { width: 64px; flex: none; }
+.tp-chat-head b { display: block; font-size: 16px; }
+.tp-chat-head span { font-size: 12px; color: var(--mu); }
+.tp-chat-log { display: grid; gap: 10px; max-height: 46vh; overflow-y: auto; padding: 2px 2px 6px; overscroll-behavior: contain; }
+.tp-msg { max-width: 88%; padding: 9px 12px; border-radius: 14px; font-size: 14px; line-height: 1.65; white-space: pre-wrap; overflow-wrap: anywhere; }
+.tp-msg.me { justify-self: end; background: var(--ink); color: #fff; border-bottom-right-radius: 4px; }
+.tp-msg.ai { justify-self: start; background: #fff; box-shadow: inset 0 0 0 1px rgba(29, 36, 80, .08); border-bottom-left-radius: 4px; }
+.tp-msg.tool { justify-self: start; font-size: 12px; color: var(--mu); background: transparent; padding: 0 4px; }
+.tp-quick { display: flex; flex-wrap: wrap; gap: 6px; }
+.tp-quick button { border: 0; cursor: pointer; font-size: 12.5px; font-weight: 700; padding: 7px 11px; border-radius: 99px; background: #F1EEFF; color: #3E2FB8; }
+.tp-chat-in { display: flex; gap: 8px; align-items: flex-end; }
+.tp-chat-in textarea { flex: 1; resize: none; min-height: 42px; max-height: 110px; }
+.tp-confirm { justify-self: stretch; border-radius: 14px; padding: 12px 14px; background: #FFFBF0; box-shadow: inset 0 0 0 1.5px #E8C66C; }
+.tp-confirm b { display: block; font-size: 14px; margin-bottom: 4px; }
+.tp-confirm ul { margin: 0 0 10px; padding-left: 18px; font-size: 13px; color: #3A416A; }
+.tp-confirm .tp-row { gap: 8px; }
+.tp-confirm.done { background: #F2F8F4; box-shadow: inset 0 0 0 1.5px #A9D8BE; }
+.tp-confirm.no { background: #F4F4F6; box-shadow: inset 0 0 0 1.5px #D9DBE4; opacity: .8; }
+
+/* 签签带路的引导：角色 + 对话气泡 */
+.tp-guide { position: fixed; left: 50%; transform: translateX(-50%); width: min(360px, calc(100vw - 24px)); display: flex; align-items: flex-end; gap: 6px; transition: top .4s cubic-bezier(.3, .8, .3, 1); }
+.tp-guide .tp-sp { width: 92px; flex: none; filter: drop-shadow(0 8px 14px rgba(0, 0, 0, .25)); }
+.tp-guide-bubble { position: relative; flex: 1; background: #FFFDF8; color: var(--ink); border-radius: 16px 16px 16px 4px; padding: 12px 14px 10px; box-shadow: 0 14px 34px rgba(0, 0, 0, .28); margin-bottom: 26px; animation: tp-fade .3s ease both; }
+.tp-guide-bubble b { display: block; font-size: 15px; margin-bottom: 2px; }
+.tp-guide-bubble p { margin: 0; font-size: 13.5px; color: #3A416A; line-height: 1.6; }
+.tp-sp-fly { animation: sp-fly 1s cubic-bezier(.25, .9, .3, 1.15) both; }
+@keyframes sp-fly { 0% { transform: translate(40px, 90px) scale(.2) rotate(-20deg); opacity: 0; } 60% { opacity: 1; } 100% { transform: none; opacity: 1; } }
+.tp-ob-sprite { width: 120px; margin: 0 auto -6px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tp-sp *, .tp-sp-fab, .tp-sp-fly { animation: none !important; }
+}
+
+/* ---------- 人才护照自己的登录页 / 设置新密码页 ---------- */
+.tp-login { min-height: 100dvh; display: flex; flex-direction: column; align-items: center; padding: 34px 20px 24px; text-align: center; }
+.tp-login-stage { position: relative; width: 100%; height: min(46vh, 330px); margin: 10px 0 8px; }
+.tp-login-book { position: absolute; left: 50%; top: 4%; width: min(42vw, 170px); aspect-ratio: 707 / 1000; transform: translateX(-60%) rotate(-6deg); filter: drop-shadow(0 24px 30px rgba(24, 27, 60, .3)); animation: tp-login-float 5s ease-in-out infinite; }
+.tp-login-book .tp-cover { border-radius: 5px 12px 12px 5px; }
+@keyframes tp-login-float { 50% { transform: translateX(-60%) rotate(-4deg) translateY(-8px); } }
+.tp-login-sprite { position: absolute; left: calc(50% + min(10vw, 40px)); bottom: 0; width: min(30vw, 120px); animation: sp-fly 1s cubic-bezier(.25, .9, .3, 1.15) .3s both; }
+.tp-login-say { position: absolute; right: 2%; top: 4%; max-width: 46%; background: #fff; border-radius: 14px 14px 4px 14px; padding: 8px 12px; font-size: 13.5px; font-weight: 700; color: var(--ink); box-shadow: 0 8px 20px rgba(29, 36, 80, .14); animation: tp-fade .5s ease 1s both; text-align: left; }
+.tp-login-form { width: 100%; max-width: 380px; text-align: left; }
+.tp-login-err { margin: 8px 0 0; color: #C0262D; font-size: 13px; }
+.tp-login-tip { display: block; margin-top: 12px; color: var(--mu); font-size: 12px; text-align: center; }
+.tp-login-tip a { color: var(--v); }
+@media (prefers-reduced-motion: reduce) { .tp-login-book, .tp-login-sprite { animation: none !important; } }

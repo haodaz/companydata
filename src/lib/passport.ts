@@ -193,3 +193,9 @@ export async function avatarResponse(p: Pick<PassportRow, 'avatar_path'>, cache:
   const buf = Buffer.from(await data.arrayBuffer());
   return new Response(buf, { headers: { 'Content-Type': sniffImage(buf) || 'application/octet-stream', 'Cache-Control': cache, 'X-Content-Type-Options': 'nosniff' } });
 }
+
+/** 管理员开的 / 重置过密码的账号要先设新密码（迁移 055；没跑或查不到当 false，不把人卡住） */
+export async function mustChangePassword(userId: string): Promise<boolean> {
+  const { data, error } = await db.from('system_users').select('must_change_password').eq('id', userId).maybeSingle();
+  return !error && !!(data as { must_change_password?: boolean } | null)?.must_change_password;
+}
