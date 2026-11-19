@@ -9,7 +9,7 @@
  */
 import { recordEdit } from '@/lib/lab-edits';
 import { generateContent, resolveModel } from '@/lib/llm-client';
-import { FORMS, formOf, specTextOf } from '@/lib/lab-spec';
+import { FORMS, formOf, specTextOf, DEEP_SEGMENT, depthOf } from '@/lib/lab-spec';
 import { logTokenUsage, withCost } from '@/lib/token-logger';
 import { buildLesson } from '@/lib/lab-lesson';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
@@ -122,10 +122,11 @@ function readNewCast(raw: any): { tmp: string; kind: CastKind; name: string; typ
 // 1. 一天骨架
 // ────────────────────────────────────────────
 /** 排一天骨架（记账：这次的调用都记到这个空间上，环节 create） */
-export function buildDay(spaceId: string, model: string, hint: string, progress: Progress): Promise<{ added: number; total: number; cast: number }> {
-  return withCost({ space_id: spaceId, stage: 'create' }, () => buildDayInner(spaceId, model, hint, progress));
+/** plan（11-19）：人自己排好的格子（时段 + 一句话），有就照抄时段和顺序，模型只提炼标题、补走向 */
+export function buildDay(spaceId: string, model: string, hint: string, progress: Progress, plan: { slot: string; text: string }[] = []): Promise<{ added: number; total: number; cast: number }> {
+  return withCost({ space_id: spaceId, stage: 'create' }, () => buildDayInner(spaceId, model, hint, progress, plan));
 }
-async function buildDayInner(spaceId: string, model: string, hint: string, progress: Progress): Promise<{ added: number; total: number; cast: number }> {
+async function buildDayInner(spaceId: string, model: string, hint: string, progress: Progress, plan: { slot: string; text: string }[]): Promise<{ added: number; total: number; cast: number }> {
   const { data: space, error } = await supabaseAdmin.from('skill_tasks').select('id, title, profile, jd_snapshot, bible').eq('id', spaceId).single();
   if (error) throw error;
   // 重排骨架：空的、没锁的草稿格子先清掉（有步骤的、锁定的、已发布的都留着）
@@ -154,7 +155,11 @@ ${castText(cast)}
 ${DAY_RULES}
 ${hint ? `\n管理员的要求：${hint}\n` : ''}
 要求：
-${form ? `- 这个空间的形态是「${FORMS[form].label}」（${FORMS[form].essence}），体验者是${FORMS[form].who}。${FORMS[form].day}
+${plan.length ? `- 这个空间的形态是「${form ? FORMS[form].label : '新人上班的一天'}」${form ? `（${FORMS[form].essence}），体验者是${FORMS[form].who}` : ''}。
+- **管理员已经排好了这一天，一共 ${plan.length} 格，时段和顺序照抄，不增不减**（形态里写的格数和「我和这一行」收尾这次都不用管）：
+${plan.map(x => `  ${x.slot}｜${x.text}`).join('\n')}
+  每格 title 从管理员这句话里提炼（4–8 字，用他的说法）；brief 在他的话上补成 2–3 句这一段的走向：起（到场、处境）→ 转（这一段会出的一个意外 / 分歧）→ 合（怎么收场），写清和前后格的衔接。slot 原样照抄。${depthOf((space as any).jd_snapshot) === 'deep' ? '每一格都是 15–20 分钟的长段。' : ''}${form === 'career' ? '生涯体验不单列「我和这一行」：最后一格的结尾顺带回看这一天，讲清怎么进这一行（选科、对口专业、入行的路）。' : ''}
+  已有章节放进时段最接近的那一格（existing 里的 slot 用管理员的时段），那一格就不用再新建。` : form ? `- 这个空间的形态是「${FORMS[form].label}」（${FORMS[form].essence}），体验者是${FORMS[form].who}。${FORMS[form].day}
   （形态的排法优先于上面「一天」的时段规则。）新格子只给标题和要交代的事，不出题。` : '- 整天 6–8 格。新格子只给标题和要交代的事，不出题。'}
 - **格数含已有章节**：上面已经做好的 ${chapters.length} 章算在这一天的格数里，新格子 = 总格数 − ${chapters.length}；已有的每一章都要在 existing 里给一个时段（建空间时自带的那一章一般是操作台章，放在上午的核心操作时段）。
 - 这一天会反复出场、但角色表里还没有的人物 / 地点 / 道具，放进 new_cast（各章生成时会优先用）。人物 2–6 个，地点 2–4 个，道具 2–5 个（道具一定要有）。
@@ -184,16 +189,25 @@ ${CAST_RULES}
   const tmpDay = new Map<string, CastMember>();
   for (const x of readNewCast(p.new_cast)) tmpDay.set(x.tmp, await addCast(spaceId, cast, x, family));
   const nameOf = (code: string) => (tmpDay.get(code) || cast.find(m => m.code === code))?.name;
-  const slots = (Array.isArray(p.slots) ? p.slots : [])
+  let slots = (Array.isArray(p.slots) ? p.slots : [])
     // 资质考核每一场都是考核（11-06 国内版：电工「考核3」标成了日常）
     .map((x: any) => ({ slot: str(x.slot, 40), title: decodeCastRefs(str(x.title, 60), nameOf), kind: form === 'certify' ? 'assessment' : KINDS.includes(x.kind) ? x.kind : 'daily', brief: decodeCastRefs(str(x.brief, 400), nameOf) }))
     .filter((x: any) => x.slot && x.title)
     // 已有章节占了的时段不再新建（11-06 考核样例：建空间时自带的工位章排到「考核4」，又新建了一格「考核4」做同一件事）
     .filter((x: any) => !chapters.some(c => (c.slot || (Array.isArray(p.existing) ? p.existing.find((e: any) => e?.id === c.id)?.slot : '')) === x.slot))
     // 生涯体验一天 5–6 格（含已有章节）（11-13 反馈：说排了 5 格，实际出来 6 章，建空间自带的那章还是「未定时段」）
-    .slice(0, form === 'career' ? Math.max(0, 6 - chapters.length) : 9);
+    .slice(0, plan.length ? 9 : form === 'career' ? Math.max(0, 6 - chapters.length) : 9);
+  // 人排好的格子（11-19）：时段和格数以人为准——模型漏的补上（标题取那句话的开头），多出来的去掉；已有章节占了的时段不再建
+  if (plan.length) {
+    const taken = new Set(chapters.map(c => c.slot).filter(Boolean));
+    slots = plan.filter(x => !taken.has(x.slot)).map(x => {
+      const m = slots.find((y: any) => y.slot === x.slot);
+      const [t0, ...rest] = x.text.split('｜');
+      return m ? { ...m, slot: x.slot } : { slot: x.slot, title: (rest.length ? t0 : x.text).slice(0, 8), kind: form === 'certify' ? 'assessment' : 'daily', brief: rest.length ? rest.join('，') : x.text };
+    });
+  }
   // 生涯体验最后一格必须是「我和这一行」（讲选科、对口专业、证书、怎么入行）：模型漏了就补上
-  if (form === 'career' && !slots.some((x: any) => x.kind === 'assessment' || /我和这一行/.test(x.title)) && !chapters.some(c => c.kind === 'assessment' || /我和这一行/.test(c.title))) {
+  if (form === 'career' && !plan.length && !slots.some((x: any) => x.kind === 'assessment' || /我和这一行/.test(x.title)) && !chapters.some(c => c.kind === 'assessment' || /我和这一行/.test(c.title))) {
     if (slots.length && slots.length + chapters.length >= 6) slots.pop();
     slots.push({ slot: '17:30', title: '收尾：我和这一行', kind: 'assessment', brief: '回看这一天，聊聊自己合不合适；讲清高中怎么选科、对口的大学 / 高职专业、要考的证书和入行的路。' });
   }
@@ -281,7 +295,8 @@ ${CAST_RULES}
    scene.time 要落在本章时段附近（前后 1 小时内）。
 3. 要接住前面章节发生的事（提到具体的人和事），但不要重复它们的操作。
 4. 情境与数据虚构，不用真实企业的内部数据。全部用中文。${form ? `
-7. 「${FORMS[form].label}」的写法（和上面冲突时以这条为准）：${FORMS[form].chapter}评分：${FORMS[form].score}` : ''}
+7. 「${FORMS[form].label}」的写法（和上面冲突时以这条为准）：${FORMS[form].chapter}评分：${FORMS[form].score}` : ''}${depthOf((space as any).jd_snapshot) === 'deep' ? `
+8. ${DEEP_SEGMENT}` : ''}
 6. rubric：这一章的评分标准 4 个维度，权重合计 100；每个维度写「看什么」，要能区分会做事的人和会写套话的人，贴着这一章的内容（不要泛泛的「专业能力」）。
 5. expert：这一行老师傅在每一步会怎么做（choose 填选项 id；multi 填 id 数组；classify 填 {条目 id: 标签 id}；allocate 填 {条目 id: 数值}，和等于 total；slider 填数字；text 写一段示范答案）。
 

@@ -63,6 +63,8 @@ export default function StudioPage() {
   useEffect(() => { try { setEmbed(window.self !== window.top); } catch { setEmbed(true); } }, []);
   const setTab = (t: StudioTab) => router.replace(`${nav.space(id)}${t === 'day' ? (cur ? `?ch=${cur}` : '') : `?tab=${t}`}`);
   const [dayHint, setDayHint] = useState('');
+  // 11-19 百业同事：一天只配 3 段、每段起承转合，时间点自己定——自己排格子 + 长段
+  const [dayPlan, setDayPlan] = useState(''); const [dayDeep, setDayDeep] = useState<boolean | null>(null);
   const [jobs, setJobs] = useState<any[]>([]);
   const runningJobs = jobs.filter(j => j.status === 'running');
 
@@ -123,8 +125,9 @@ export default function StudioPage() {
   }, [runningKey]);
 
   const startDay = async () => {
-    const j = await fetch(`/api/lab/studio/${id}/day`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: genModel, hint: dayHint }) }).then(r => r.json());
+    const j = await fetch(`/api/lab/studio/${id}/day`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: genModel, hint: dayHint, plan: dayPlan, ...(dayDeep != null ? { depth: dayDeep ? 'deep' : 'normal' } : {}) }) }).then(r => r.json());
     if (!j.ok) { message.error(j.error); return; }
+    if (dayDeep != null) setData(d => d && { ...d, space: { ...d.space, jd_snapshot: { ...(d.space.jd_snapshot || {}), depth: dayDeep ? 'deep' : 'normal' } } });
     setDayOpen(false); message.info(j.job.already ? '骨架已经在排了' : '开始排一天骨架，约 1 分钟'); loadJobs();
   };
   const startChapter = async () => {
@@ -444,6 +447,13 @@ export default function StudioPage() {
           只排骨架、不出题；之后一格一格生成。<b>重排会清掉没有步骤的空草稿格</b>，已写好的、锁定的、已发布的不动。
         </div>
         <textarea className="lab-input" rows={3} style={field} value={dayHint} onChange={e => setDayHint(e.target.value)} placeholder="附几句要求（可空）：如「要有两台不同的手术、上午查房、下午多学科会诊」" />
+        <div style={{ fontWeight: 700, fontSize: 13, margin: '14px 0 4px' }}>自己排时间点（可空）</div>
+        <div style={{ fontSize: 12, color: 'var(--ink2)', marginBottom: 6 }}>一行一格，时间开头：时段和格数照你写的排，AI 只提炼标题、补这一段的走向。不写就由 AI 按形态排。</div>
+        <textarea className="lab-input" rows={4} style={field} value={dayPlan} onChange={e => setDayPlan(e.target.value)} placeholder={'09:00｜需求沟通｜接到客户的网站需求，了解客户想做什么、给谁用\n13:30｜页面开发｜按定好的设计方案做网页\n17:00｜上线排查｜上线前检查不同设备上的显示效果'} />
+        <label style={{ display: 'flex', gap: 8, alignItems: 'flex-start', marginTop: 12, fontSize: 13, lineHeight: 1.6, cursor: 'pointer' }}>
+          <input type="checkbox" checked={dayDeep ?? space.jd_snapshot?.depth === 'deep'} onChange={e => setDayDeep(e.target.checked)} style={{ marginTop: 4 }} />
+          <span><b>每段写长一些（起承转合）</b><br /><span style={{ color: 'var(--ink2)', fontSize: 12 }}>适合一天只排 3 段左右：每段 15–20 分钟、6–9 步，有起、承、转（一个意外或分歧）、合，人物贯穿。存在这个空间上，之后写 / 重写每一章都按这个来。</span></span>
+        </label>
       </Modal>
       {revise && draft && <ReviseModal spaceId={id} chapter={draft} model={genModel} target={revise.target} stepId={revise.stepId} initial={revise.text} onClose={() => setRevise(null)}
         onAdopt={(r: any) => {
