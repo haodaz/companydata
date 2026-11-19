@@ -142,16 +142,19 @@ export function parseDayPlan(text: string): { slot: string; text: string }[] {
 export const LAB_GEN_MODEL = process.env.NEXT_PUBLIC_LAB_GEN_MODEL || 'claude-sonnet-5-5';
 
 /**
- * 难度 + 版本标记（11-19 用户：同一个职业有很精密的外科医生，也有生涯体验的，列表里分不清）。
- * level = 四档难度（没定形态的老空间叫「岗位日常」）；version = 几段 · 多深 · 生成日期。体验馆、百业工厂、空间页同一套。
+ * 难度标记（11-19 用户：同一个职业有很精密的外科医生，也有生涯体验的，列表里分不清；「要落在 frame 里，不是创建时一套标准、使用时另一套」）。
+ * 只用建空间时让人点选的那四档（FORMS / LEVEL_ORDER）。11-06 以前没选形态的老空间按当时的生成口径归进这四档（只用于标记和筛选，不改它的生成 / 评分规则）：
+ *   从职业名生成的职业探索（jd.kind = career）、学科体验（discipline）→ 生涯体验；从 JD 生成的「新人上班的一天」（校招工作样本）、研究岗带教 → 职业虚拟考核。
+ * version = 几段 · 多深 · 生成日期。体验馆、百业工厂、空间页同一套。
  */
-export function spaceTag(jdSnapshot: any, createdAt?: string | null, chapterCount = 0): { level: string; form: SpaceForm | null; version: string } {
-  const f = formOf(jdSnapshot);
+export const tagFormOf = (jdSnapshot: any): SpaceForm => formOf(jdSnapshot) || (jdSnapshot?.kind === 'career' || jdSnapshot?.kind === 'discipline' ? 'career' : 'assess');
+export function spaceTag(jdSnapshot: any, createdAt?: string | null, chapterCount = 0): { level: string; form: SpaceForm; inferred: boolean; version: string } {
+  const f = tagFormOf(jdSnapshot);
   const n = slotsOf(jdSnapshot) || chapterCount;
   // 深度只标真按深度生成的（人选了，或定了格数按格数推）；11-19 以前的老空间没有这条规则，不往上推
   const d = isDepth(jdSnapshot?.depth) || slotsOf(jdSnapshot) ? depthOf(jdSnapshot, n) : null;
   const date = createdAt ? String(createdAt).slice(5, 10) : '';
-  return { level: f ? FORMS[f].label : '岗位日常', form: f, version: [n ? `${n} 段` : '', d ? `${DEPTHS[d].label.replace(' · 起承转合', '')}段` : '', date].filter(Boolean).join(' · ') };
+  return { level: FORMS[f].label, form: f, inferred: !formOf(jdSnapshot), version: [n ? `${n} 段` : '', d ? `${DEPTHS[d].label.replace(' · 起承转合', '')}段` : '', date].filter(Boolean).join(' · ') };
 }
 
 export const isForm = (v: any): v is SpaceForm => v === 'career' || v === 'training' || v === 'assess' || v === 'certify';
