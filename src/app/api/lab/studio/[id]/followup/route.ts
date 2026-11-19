@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { LAB_GEN_MODEL } from '@/lib/lab-spec';
 import { denyUnlessLabOwner } from '@/lib/lab-owner';
 import { getSessionUser } from '@/lib/session';
 import { withCost } from '@/lib/token-logger';
@@ -35,7 +36,7 @@ export async function POST(req: NextRequest, { params }: Ctx) {
     if (b.action === 'fix') {
       const todos: Todo[] = Array.isArray(b.todos) ? b.todos.slice(0, 12) : [];
       if (!todos.length) return NextResponse.json({ ok: false, error: '没有要改的' }, { status: 400 });
-      const model = String(b.model || process.env.NEXT_PUBLIC_LAB_GEN_MODEL || 'gpt-5.6-luna');
+      const model = String(b.model || LAB_GEN_MODEL);
       const job = await startJob(id, null, 'fix_review', progress => withCost({ space_id: id, stage: 'edit', actor: me?.email || null }, () => fixByReview(id, todos, model, progress)));
       return NextResponse.json({ ok: true, job });
     }

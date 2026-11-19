@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse, after } from 'next/server';
+import { LAB_GEN_MODEL } from '@/lib/lab-spec';
 import { denyUnlessLabOwner } from '@/lib/lab-owner';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { getSessionUser } from '@/lib/session';
@@ -11,7 +12,7 @@ export const dynamic = 'force-dynamic';
 export const maxDuration = 300;
 
 type Ctx = { params: Promise<{ id: string }> };
-const MODEL = () => process.env.NEXT_PUBLIC_LAB_GEN_MODEL || 'gpt-5.6-luna';
+const MODEL = () => LAB_GEN_MODEL;
 
 /**
  * 局部改（lib/lab-revise.ts）：POST { chapter_id, target: 'step' | 'opening' | 'bench', step_id?, instruction, model?, live? }

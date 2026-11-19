@@ -130,6 +130,9 @@ export function parseDayPlan(text: string): { slot: string; text: string }[] {
     .map(m => ({ slot: m![1].replace('：', ':').padStart(5, '0'), text: m![2].replace(/\s*[｜|丨]\s*/g, '｜').slice(0, 300) })).slice(0, 9);
 }
 
+/** 百业生成默认模型（11-19 用户：挂 Claude，效果好；OpenAI 余额用完后 luna 全线 429）。环境变量可覆盖，国内 simulator 有自己的模型总控 */
+export const LAB_GEN_MODEL = process.env.NEXT_PUBLIC_LAB_GEN_MODEL || 'claude-sonnet-5-5';
+
 export const isForm = (v: any): v is SpaceForm => v === 'career' || v === 'training' || v === 'assess' || v === 'certify';
 /** 选级别时显示的一行：名字（证书说明） */
 export const levelText = (f: SpaceForm) => `${FORMS[f].label}（${FORMS[f].cert}）`;

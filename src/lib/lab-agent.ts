@@ -8,14 +8,14 @@ import type Anthropic from '@anthropic-ai/sdk';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import type { AgentKit } from '@/lib/ws/agent';
 import { locateAnchor } from '@/lib/lab-anchor';
-import { cleanAnchor, cleanSpec, hasSpec, LEVEL_ORDER, levelText, PRESETS, DEPTHS, isDepth, parseDayPlan } from '@/lib/lab-spec';
+import { cleanAnchor, cleanSpec, hasSpec, LEVEL_ORDER, levelText, PRESETS, DEPTHS, isDepth, parseDayPlan, LAB_GEN_MODEL } from '@/lib/lab-spec';
 import { startJob } from '@/lib/lab-jobs';
 import { buildChapter, buildDay } from '@/lib/agents/lab-chapters';
 import { reviseOpening, reviseStep, logRevision } from '@/lib/lab-revise';
 import { fixByReview, latestReview, reviewBlocks, reviewSpace } from '@/lib/lab-followup';
 
 type User = { email: string; role: string };
-const MODEL = () => process.env.NEXT_PUBLIC_LAB_GEN_MODEL || 'gpt-5.6-luna';
+const MODEL = () => LAB_GEN_MODEL;
 const s = (v: any, n = 300) => (v == null ? '' : String(v)).slice(0, n);
 
 export const LAB_TOOLS: Anthropic.Tool[] = [

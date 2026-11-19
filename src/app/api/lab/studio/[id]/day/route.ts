@@ -3,7 +3,7 @@ import { denyUnlessLabOwner } from '@/lib/lab-owner';
 import { labError } from '@/lib/skill-lab-server';
 import { startJob } from '@/lib/lab-jobs';
 import { buildDay } from '@/lib/agents/lab-chapters';
-import { parseDayPlan, isDepth } from '@/lib/lab-spec';
+import { parseDayPlan, isDepth, LAB_GEN_MODEL } from '@/lib/lab-spec';
 import { supabaseAdmin as db } from '@/lib/supabase';
 
 export const runtime = 'nodejs';
@@ -18,7 +18,7 @@ export async function POST(req: NextRequest, { params }: Ctx) {
     const { id } = await params;
     const denied = await denyUnlessLabOwner(req, id); if (denied) return denied;
     const b = await req.json().catch(() => ({}));
-    const model = String(b.model || process.env.NEXT_PUBLIC_LAB_GEN_MODEL || 'gpt-5.6-luna');
+    const model = String(b.model || LAB_GEN_MODEL);
     // 格数 / 深度（11-19）：存进 jd_snapshot，之后排骨架、写每一章都按它；传 null / 'auto' = 回到按形态默认
     if ('slots' in b || 'depth' in b) {
       const { data: t } = await db.from('skill_tasks').select('jd_snapshot').eq('id', id).single();

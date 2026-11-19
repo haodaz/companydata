@@ -12,7 +12,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useLabNav } from '@/components/lab/FactoryKit';
 import { useRouter } from 'next/navigation';
 import { App } from 'antd';
-import { type Anchor, type GenSpec } from '@/lib/lab-spec';
+import { type Anchor, type GenSpec, LAB_GEN_MODEL } from '@/lib/lab-spec';
 import { SpecEditor, SPEC_CSS } from '@/components/lab/SpecEditor';
 
 type Occ = { id: number; name: string; category: string; intro: string };
@@ -69,7 +69,7 @@ function NewSpace() {
     if (anchor.kind === 'pasted' && paste.text.trim().length < 40) { message.warning('JD 正文至少 40 字'); return; }
     const buildId = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
     setBuilding({ buildId, phase: anchor.kind === 'job' || anchor.kind === 'pasted' ? '读取岗位 JD' : '结构化职业 · 推断典型岗位', since: Date.now() });
-    const body: any = { anchor, spec, model: process.env.NEXT_PUBLIC_LAB_GEN_MODEL || 'gpt-5.6-luna', buildId, draft: true };
+    const body: any = { anchor, spec, model: LAB_GEN_MODEL, buildId, draft: true };
     if (anchor.kind === 'pasted') Object.assign(body, { jdText: paste.text.trim(), title: paste.title.trim(), company: paste.company.trim() });
     const res = await fetch('/api/lab/spaces', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }).catch(() => null);
     const j = res ? await res.json().catch(() => null) : null;

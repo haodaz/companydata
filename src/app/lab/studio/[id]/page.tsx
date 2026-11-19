@@ -10,7 +10,7 @@ import { SimRunner, SimStage } from '@/components/lab/SimRunner';
 import { CHAPTER_KINDS, STEP_TYPES, blankStep, checkAll, type StudioChapter, type StudioIssue, type BasisRow } from '@/lib/lab-studio';
 import { SpecEditor, SPEC_CSS } from '@/components/lab/SpecEditor';
 import { col, FX_CSS, LISTING, Plays, useLabNav } from '@/components/lab/FactoryKit';
-import { formOf, hasSpec, REVISE_CHIPS, watchBenchOf, DEPTHS, defaultSlots, type Depth, type Anchor, type GenSpec } from '@/lib/lab-spec';
+import { formOf, hasSpec, REVISE_CHIPS, watchBenchOf, DEPTHS, defaultSlots, type Depth, type Anchor, type GenSpec, LAB_GEN_MODEL } from '@/lib/lab-spec';
 import { CAST_KINDS, applyCastArt, castKind, stepsUsing, type CastKind, type CastMember, type LabAsset } from '@/lib/lab-cast';
 
 /**
@@ -48,7 +48,7 @@ export default function StudioPage() {
   const [newType, setNewType] = useState('choose');
   // 生成：模型（默认 luna，写故事要好一点的模型）、任务进度
   // 默认生成模型：NEXT_PUBLIC_LAB_GEN_MODEL（公司国内部署设 qwen-max；海外默认 luna）
-  const [genModel, setGenModel] = useState(process.env.NEXT_PUBLIC_LAB_GEN_MODEL || 'gpt-5.6-luna');
+  const [genModel, setGenModel] = useState(LAB_GEN_MODEL);
   const [genHint, setGenHint] = useState('');
   const [genArt, setGenArt] = useState(true);
   const [dayOpen, setDayOpen] = useState(false);

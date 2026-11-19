@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { LAB_GEN_MODEL } from '@/lib/lab-spec';
 import { denyUnlessLabOwner } from '@/lib/lab-owner';
 import { supabaseAdmin } from '@/lib/supabase';
 import { labError } from '@/lib/skill-lab-server';
@@ -20,7 +21,7 @@ export async function POST(req: NextRequest, { params }: Ctx) {
     const { id } = await params;
     const denied = await denyUnlessLabOwner(req, id); if (denied) return denied;
     const b = await req.json().catch(() => ({}));
-    const model = String(b.model || process.env.NEXT_PUBLIC_LAB_GEN_MODEL || 'gpt-5.6-luna');
+    const model = String(b.model || LAB_GEN_MODEL);
     const { data: chs, error } = await supabaseAdmin.from('lab_chapters').select('id, title, status, locked, seq').eq('task_id', id).order('seq');
     if (error) throw error;
     const todo = (chs || []).filter((c: any) => !c.locked && (b.include_published || c.status !== 'published'));

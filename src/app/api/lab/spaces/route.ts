@@ -9,7 +9,7 @@ import { trackDemand } from '@/lib/flywheel/signals';
 import { attachCostToSpace, withCost } from '@/lib/token-logger';
 import { ensureOccupationLater } from '@/lib/kg/ensure-occupation';
 import { getSessionUser } from '@/lib/session';
-import { cleanAnchor, cleanSpec, hasSpec, renderSpec } from '@/lib/lab-spec';
+import { cleanAnchor, cleanSpec, hasSpec, renderSpec, LAB_GEN_MODEL } from '@/lib/lab-spec';
 import { reviewSpace } from '@/lib/lab-followup';
 import { after } from 'next/server';
 
@@ -173,7 +173,7 @@ async function build(req: Request, body: any, costJob: string) {
     const snapExtra = { ...(anchor ? { anchor } : {}), ...(hasSpec(spec) ? { spec } : {}), ...(body.buildId ? { build_id: String(body.buildId).slice(0, 40) } : {}) };
     const { jobId, createdBy } = body;
     // 没传模型就用百业默认生成模型（和工作室一致）；以前兜底到 Gemini，Gemini 已停充
-    const model = String(body.model || process.env.NEXT_PUBLIC_LAB_GEN_MODEL || 'gpt-5.6-luna'); buildId = String(body.buildId || '');
+    const model = String(body.model || LAB_GEN_MODEL); buildId = String(body.buildId || '');
     const discipline = String(body.discipline || '').trim().slice(0, 40);
     const profession = String(body.profession || '').trim().slice(0, 40) || discipline;
     const isDiscipline = !!discipline && !body.profession;
