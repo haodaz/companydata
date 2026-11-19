@@ -54,7 +54,7 @@ function Factory() {
 
 function Spaces({ d, reload }: { d: { spaces: Space[]; migrated: boolean; role: string } | null; reload: () => void }) {
   const router = useRouter(); const { message } = App.useApp(); const nav = useLabNav();
-  const [kw, setKw] = useState(''); const [st, setSt] = useState('all');
+  const [kw, setKw] = useState(''); const [st, setSt] = useState('all'); const [lvl, setLvl] = useState<string | null>(null);   // 难度筛选（11-19）
   // 批量配置（11-10）：复选未上架的空间，定开放哪些模块、工位是否只观摩
   const [pick, setPick] = useState<string[]>([]); const [mods, setMods] = useState<string[]>(OPEN_MODULES.map(m => m.key)); const [watch, setWatch] = useState(false); const [saving, setSaving] = useState(false);
   const toggle = (s: Space, on: boolean) => { if (on && !pick.length) { setMods(s.open_modules || OPEN_MODULES.map(m => m.key)); setWatch(s.watch_bench); } setPick(x => on ? [...x, s.id] : x.filter(y => y !== s.id)); };
@@ -65,7 +65,7 @@ function Spaces({ d, reload }: { d: { spaces: Space[]; migrated: boolean; role: 
     if (!j.ok) { message.error(j.error); return; }
     message.success(`已配置 ${j.done} 个空间${j.skipped ? `，跳过 ${j.skipped} 个（已上架或没有权限）` : ''}`); setPick([]); reload();
   };
-  const list = useMemo(() => (d?.spaces || []).filter(s => (st === 'all' || s.listing === st) && (!kw || [s.title, s.name, s.role, s.company, s.anchor?.label].some(v => String(v || '').includes(kw)))), [d, kw, st]);
+  const list = useMemo(() => (d?.spaces || []).filter(s => (st === 'all' || s.listing === st) && (lvl == null || (s.tag?.form || '') === lvl) && (!kw || [s.title, s.name, s.role, s.company, s.anchor?.label].some(v => String(v || '').includes(kw)))), [d, kw, st, lvl]);
   const n = (k: string) => (d?.spaces || []).filter(s => k === 'all' || s.listing === k).length;
   const setListing = async (s: Space, listing: string) => {
     const j = await (await fetch('/api/lab/factory', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: s.id, listing }) })).json().catch(() => ({ ok: false, error: '网络错误' }));
@@ -76,6 +76,11 @@ function Spaces({ d, reload }: { d: { spaces: Space[]; migrated: boolean; role: 
     <div className="fx-bar">
       <input className="lab-input fx-in" value={kw} onChange={e => setKw(e.target.value)} placeholder="搜职业 / 岗位 / 名字" />
       {[['all', '全部'], ['draft', '草稿'], ['listed', '已上架'], ['unlisted', '已下架']].map(([k, t]) => <button key={k} className={`fx-chip${st === k ? ' on' : ''}`} onClick={() => setSt(k)}>{t} {d ? n(k) : ''}</button>)}
+    </div>
+    <div className="fx-bar" style={{ marginTop: -4 }}>
+      <span style={{ fontSize: 12.5, color: 'var(--ink2)' }}>难度</span>
+      <button className={`fx-chip${lvl == null ? ' on' : ''}`} onClick={() => setLvl(null)}>全部</button>
+      {(['career', 'training', 'assess', 'certify', '']).map(k => { const c = (d?.spaces || []).filter(s => (s.tag?.form || '') === k).length; if (!c) return null; return <button key={k || 'none'} className={`fx-chip${lvl === k ? ' on' : ''}`} onClick={() => setLvl(lvl === k ? null : k)}>{(d?.spaces || []).find(s => (s.tag?.form || '') === k)?.tag?.level || '岗位日常'} {c}</button>; })}
     </div>
     {pick.length > 0 && <div className="lab-glass" style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center', padding: '10px 14px', marginBottom: 12, fontSize: 13.5 }}>
       <b>已选 {pick.length} 个</b>

@@ -52,6 +52,7 @@ export default function GalleryPage() {
   const [err, setErr] = useState('');
   const [q, setQ] = useState('');
   const [fam, setFam] = useState('');
+  const [lvl, setLvl] = useState<string | null>(null);   // 按难度筛（11-19）：null = 全部，'' = 岗位日常（没定难度的老空间）
   /** 两类体验分开放：职业岗位 / 学科研究（研究岗空间、学科空间） */
   const [track, setTrack] = useState<'career' | 'research'>('career');
 
@@ -69,7 +70,7 @@ export default function GalleryPage() {
       const family = familyOf(prof, s.skill?.domain, jd.title, jd.company);
       const text = [p.name, p.role, p.tagline, prof, jd.title, jd.company, jd.location, s.skill?.domain, family].filter(Boolean).join(' ').toLowerCase();
       const research = jd.kind === 'research_post' || jd.kind === 'discipline';
-      return { s, jd, p, family, text, research };
+      return { s, jd, p, family, text, research, form: (s.tag?.form || '') as string, level: (s.tag?.level || '岗位日常') as string };
     })
     // 排序：精选名单最前；然后故事全（一整天的章节都发布了）且有工位的；再是有工位的、故事全的；同档里工位章节多、有场景图的靠前
     .sort((a, b) => rank(b.s) - rank(a.s)), [spaces]);
@@ -84,8 +85,9 @@ export default function GalleryPage() {
 
   const shown = useMemo(() => {
     const kw = q.trim().toLowerCase();
-    return inTrack.filter(x => (!fam || x.family === fam) && (!kw || x.text.includes(kw)));
-  }, [inTrack, q, fam]);
+    return inTrack.filter(x => (!fam || x.family === fam) && (lvl == null || x.form === lvl) && (!kw || x.text.includes(kw)));
+  }, [inTrack, q, fam, lvl]);
+  const lvls = useMemo(() => { const m = new Map<string, { label: string; n: number }>(); for (const x of inTrack) { const e = m.get(x.form) || { label: x.level, n: 0 }; e.n++; m.set(x.form, e); } return ['career', 'training', 'assess', 'certify', ''].filter(k => m.has(k)).map(k => [k, m.get(k)!] as const); }, [inTrack]);
 
   const share = async (id: string) => {
     const url = `${window.location.origin}/lab/${id}?m=test&from=gallery`;
@@ -115,6 +117,13 @@ export default function GalleryPage() {
         </div>
         <input className="lab-input" value={q} onChange={e => setQ(e.target.value)} placeholder={track === 'research' ? '搜学科、研究方向、机构——如：固态电池 / 结构生物学 / 研究院' : '搜职业、企业、城市——如：咖啡 / 焊接 / 护士'}
           style={{ padding: '9px 14px', borderRadius: 12, fontSize: 14 }} />
+        {lvls.length > 1 && (
+          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', alignItems: 'center', marginTop: 10 }}>
+            <span style={{ fontSize: 12.5, opacity: .7, marginRight: 2 }}>难度</span>
+            <button className={`lab-chip ${lvl == null ? '' : 'g'}`} style={{ cursor: 'pointer' }} onClick={() => setLvl(null)}>全部</button>
+            {lvls.map(([k, v]) => <button key={k || 'none'} className={`lab-chip ${lvl === k ? '' : 'g'}`} style={{ cursor: 'pointer', ...(lvl === k && LEVEL_COLOR[k] ? { background: LEVEL_COLOR[k], color: '#fff' } : {}) }} onClick={() => setLvl(lvl === k ? null : k)}>{v.label} · {v.n}</button>)}
+          </div>
+        )}
         {fams.length > 1 && (
           <div className="gal-fams">
             <button className={`lab-chip ${fam ? 'g' : ''}`} style={{ cursor: 'pointer' }} onClick={() => setFam('')}>全部 · {inTrack.length}</button>
