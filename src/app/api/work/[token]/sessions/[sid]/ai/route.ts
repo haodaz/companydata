@@ -6,7 +6,7 @@ import { logTokenUsage, withCost } from '@/lib/token-logger';
 import { errL } from '@/lib/work/errors-en';
 
 export const runtime = 'nodejs';
-export const maxDuration = 120;
+export const maxDuration = 300;   // 11-19 潜历：长回答要一分多钟，120 秒到点被网关掐断，前端只看到「发了没反应」
 
 // 做题 AI 锁定千问（2026-10-21 演示前定的：国内口径稳妥）；千问出错退到 DeepSeek（同在阿里云百炼）；Claude 国内用不了，不进这条链
 const ASSIST_MODEL = 'qwen-plus';   // 候选人做题时的实时助手要快：默认千问，兜底千问 Max / DeepSeek
@@ -33,18 +33,40 @@ ${(t.materials || []).map((m: any) => `- ${m.id} ${m.title}`).join('\n')}
 ${body.material ? `## 他现在打开的材料\n${String(body.material).slice(0, 3000)}\n` : ''}${history ? `## 前面的对话\n${history}\n` : ''}
 ## 他的问题
 ${q}${t.task?.lang === 'en' ? '\n\nReply in English.' : ''}`;
-  try {
+  // 11-19：body.stream 时边写边回（NDJSON：{d} 新字 / {reset} 换模型重来 / 最后 {ok,a,t} 或 {ok:false,error}），候选人不用干等一两分钟
+  const run = async (onText?: (d: string) => void, onReset?: () => void) => {
     const t0 = Date.now();
     const a = await withCost({ tool_name: 'work', task_name: 'Assist · 工作台 AI', stage: 'use' }, async () => {
+      let tried = 0;
       for (const m of [ASSIST_MODEL, 'qwen-max', 'deepseek-v4-pro']) {   // 候选人做题时的助手要快：默认千问，兜底也走国内（2026-10-28），候选人端不能没回答
-        try { const r = await generateContent(prompt, m); await logTokenUsage({ tool_name: 'work', task_name: 'Assist · 工作台 AI', institution: t.company_name || '', model_id: m, usageMetadata: r.usageMetadata } as any).catch(() => {}); if (r.text?.trim()) return r.text.trim(); } catch (e) { console.warn(`[work-assist] ${m} 失败：${String((e as any)?.message).slice(0, 100)}`); }
+        if (tried++ && onReset) onReset();
+        try { const r = await generateContent(prompt, m, onText ? { onText } : undefined); await logTokenUsage({ tool_name: 'work', task_name: 'Assist · 工作台 AI', institution: t.company_name || '', model_id: m, usageMetadata: r.usageMetadata } as any).catch(() => {}); if (r.text?.trim()) return r.text.trim(); } catch (e) { console.warn(`[work-assist] ${m} 失败：${String((e as any)?.message).slice(0, 100)}`); }
       }
-      throw new Error('AI 没有回答');
+      throw new Error(errL(t, 'AI 暂时没回上来，再发一次试试'));
     });
     const tsec = Math.round((Date.now() - new Date(s.started_at).getTime()) / 1000);
-    const ai_chat = [...(s.ai_chat || []), { t: tsec, q, a, ms: Date.now() - t0 }].slice(-200);
+    // 重读一次再追加：流式回答要一两分钟，期间别的请求可能写过 ai_chat
+    const { data: cur } = await db.from('work_sessions').select('ai_chat').eq('id', sid).maybeSingle();
+    const ai_chat = [...(cur?.ai_chat || s.ai_chat || []), { t: tsec, q, a, ms: Date.now() - t0 }].slice(-200);
     await db.from('work_sessions').update({ ai_chat }).eq('id', sid);
-    return NextResponse.json({ ok: true, a, t: tsec });
+    return { a, t: tsec };
+  };
+  if (body.stream) {
+    const enc = new TextEncoder();
+    const stream = new ReadableStream({
+      async start(c) {
+        const line = (o: any) => { try { c.enqueue(enc.encode(JSON.stringify(o) + '\n')); } catch { /* 前端断了 */ } };
+        const ping = setInterval(() => line({ p: 1 }), 15_000);   // 千问思考时一直没字，保活别让中间层当成挂了
+        try { const r = await run(d => line({ d }), () => line({ reset: 1 })); line({ ok: true, ...r }); }
+        catch (e: any) { line({ ok: false, error: String(e?.message || e) }); }
+        finally { clearInterval(ping); try { c.close(); } catch { /* */ } }
+      },
+    });
+    return new Response(stream, { headers: { 'Content-Type': 'application/x-ndjson; charset=utf-8', 'Cache-Control': 'no-cache, no-transform', 'X-Accel-Buffering': 'no' } });
+  }
+  try {
+    const r = await run();
+    return NextResponse.json({ ok: true, ...r });
   } catch (e: any) {
     return NextResponse.json({ ok: false, error: String(e?.message || e) }, { status: 500 });
   }

@@ -83,7 +83,7 @@ export function OpenBench({ token, sid, materials, deliverables, summary, onSumm
     for (const f of files) {
       setUpBusy(L(`${f.name} 上传中…`, `Uploading ${f.name}…`));
       try { const j = await uploadWorkFile(token, sid, f, { t: Math.round((Date.now() - t0) / 1000) }); onUploads(u => [...u, j]); onEvent('file', { note: j.name }); }
-      catch (e: any) { setErr(L(`${f.name} 没传上去：${e.message}`, `${f.name} failed to upload: ${e.message}`)); }
+      catch (e: any) { setErr(L(`${f.name} 没传上去：${e.message}`, `${f.name} failed to upload: ${e.message}`)); onEvent('client_error', { where: 'upload', name: f.name, size: f.size, msg: String(e?.message || e).slice(0, 200) }); }
     }
     setUpBusy('');
   };

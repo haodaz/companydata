@@ -13,7 +13,7 @@ export function CodeBench({ code, onCode, notes, onNotes, tests, language, onRun
   const passed = /(?:通过|[Pp]assed) (\d+)\/(\d+)/.exec(testOut);
   const mono = 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: '#ffffff', borderRadius: 14, overflow: 'hidden', border: '1px solid #d9dbe6', color: '#1a1a2e' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', flex: 1, minHeight: 0, background: '#ffffff', borderRadius: 14, overflow: 'hidden', border: '1px solid #d9dbe6', color: '#1a1a2e' }}>
       {/* 标签栏 */}
       {leading && <div style={{ display: 'flex', alignItems: 'center', padding: '6px 10px', background: '#f3f5f9', borderBottom: '1px solid #d9dbe6' }}>{leading}</div>}
       <div style={{ display: 'flex', alignItems: 'center', background: '#f3f5f9', borderBottom: '1px solid #d9dbe6', fontSize: 12.5, fontFamily: mono }}>
@@ -24,12 +24,13 @@ export function CodeBench({ code, onCode, notes, onNotes, tests, language, onRun
         </div>
       </div>
       {/* 编辑区：行号 + 文本 */}
-      <div style={{ flex: 1, display: 'flex', minHeight: 300, position: 'relative' }}>
+      {/* 11-19「solution.js 下滑不动」：以前这里 minHeight 300 + 终端 150，作答区矮的时候整块超出外框被裁掉，textarea 底下几行滚不到；现在跟着外框缩 */}
+      <div style={{ flex: 1, display: 'flex', minHeight: 100, position: 'relative' }}>
         <div ref={gutter} style={{ width: 46, background: '#f6f7fb', color: '#9a9db5', textAlign: 'right', padding: '12px 8px 12px 0', fontFamily: mono, fontSize: 13, lineHeight: '20px', overflow: 'hidden', userSelect: 'none', borderRight: '1px solid #d9dbe6' }}>
           {Array.from({ length: lines }, (_, i) => <div key={i}>{i + 1}</div>)}
         </div>
         {tab === 'tests' ? (
-          <pre style={{ flex: 1, margin: 0, padding: '12px 14px', fontFamily: mono, fontSize: 13, lineHeight: '20px', color: '#555555', overflow: 'auto', whiteSpace: 'pre' }}>{testsSrc(tests, lang)}</pre>
+          <pre onScroll={e => { if (gutter.current) gutter.current.scrollTop = e.currentTarget.scrollTop; }} style={{ flex: 1, margin: 0, padding: '12px 14px', fontFamily: mono, fontSize: 13, lineHeight: '20px', color: '#555555', overflow: 'auto', whiteSpace: 'pre' }}>{testsSrc(tests, lang)}</pre>
         ) : (
           <textarea value={tab === 'main' ? code : notes} onChange={e => (tab === 'main' ? onCode : onNotes)(e.target.value)} onPaste={onPaste} onScroll={e => { if (gutter.current) gutter.current.scrollTop = e.currentTarget.scrollTop; }} spellCheck={false}
             placeholder={tab === 'main' ? L(`// 在这里写代码；导出 solution 函数\nfunction solution(...) {\n\n}`, `// Write your code here; export a solution function\nfunction solution(...) {\n\n}`) : L('# 说明\n思路、假设、没做完的……', '# Notes\nApproach, assumptions, anything unfinished…')}
@@ -37,7 +38,7 @@ export function CodeBench({ code, onCode, notes, onNotes, tests, language, onRun
         )}
       </div>
       {/* 终端 */}
-      <div style={{ height: 150, background: '#fafbff', borderTop: '1px solid #d9dbe6', fontFamily: mono, fontSize: 12.5, display: 'flex', flexDirection: 'column' }}>
+      <div style={{ flex: '0 1 150px', minHeight: 64, background: '#fafbff', borderTop: '1px solid #d9dbe6', fontFamily: mono, fontSize: 12.5, display: 'flex', flexDirection: 'column' }}>
         <div style={{ display: 'flex', gap: 14, padding: '6px 12px', borderBottom: '1px solid #1a1a2e', color: '#888888', fontSize: 11.5 }}><span style={{ color: '#6055f5' }}>TERMINAL</span><span>PROBLEMS</span><span>OUTPUT</span>{passed && <span style={{ marginLeft: 'auto', color: passed[1] === passed[2] ? '#3ddc97' : '#ffd166' }}>● {passed[1]}/{passed[2]} passed</span>}</div>
         <pre style={{ flex: 1, margin: 0, padding: '8px 12px', overflow: 'auto', whiteSpace: 'pre-wrap', color: '#333333' }}><span style={{ color: '#3ddc97' }}>$</span> npm test{'\n'}{testOut ? testOut.replace(/^✓/gm, '\u001b').split('\u001b').join('✓') : (tests.length ? L('（还没跑。点右上 Run tests）', '(Not run yet. Click Run tests at the top right.)') : L('（这道题没有自测用例）', '(This task has no self-tests.)'))}</pre>
       </div>

@@ -12,6 +12,7 @@ export const EVENT_DICT: { type: string; zh: string; fields?: string }[] = [
   { type: 'copy', zh: '复制（插件模式）', fields: 'chars, src, host' },
   { type: 'ai_ask', zh: '问页面 AI 助手（原文在 ai_chat）', fields: 'chars' },
   { type: 'adopt', zh: '把 AI 回答采纳进交付物', fields: 'chars' },
+  { type: 'client_error', zh: '平台出错（不算作答）：AI 没回上来 / 上传失败 / 过程同步失败', fields: 'where = ai | upload | sync；msg = 报错；name / size = 上传的文件' },
   { type: 'draft', zh: '稿子快照，作答中每 3 分钟一版', fields: 'text, chars' },
   { type: 'board_edit / board_library / board_template', zh: '白板操作', fields: 'delta' },
   { type: 'canvas_add / canvas_move / canvas_text', zh: '画布操作', fields: 'id' },

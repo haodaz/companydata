@@ -16,6 +16,7 @@ const EN: Record<string, string> = {
   '截图不对': 'Invalid screenshot.',
   '不认识的操作': 'Unknown action.',
   '问题为空': 'Please type a question.',
+  'AI 暂时没回上来，再发一次试试': 'The AI did not answer this time. Please send it again.',
   '交付物太短了，至少写点东西': 'Your deliverable is too short — please write something first.',
   '交付说明太短了：把结论、关键数字、口径和假设写清楚': 'Your submission note is too short: state your conclusions, key figures, definitions and assumptions.',
   '交付说明太短了：贴上交付物链接，写清结论和假设': 'Your submission note is too short: paste the links to your deliverables and state your conclusions and assumptions.',

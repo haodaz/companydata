@@ -274,7 +274,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
     for (const f of Array.from(list)) {
       setPfBusy(n => n + 1);
       try { const j = await uploadWorkFile(token, sid, f, { t: now_s(), part }); setPfiles(x => [...x, { ...j, part }]); }
-      catch (e: any) { setPfErr(L(`${f.name} 没传上去：${e.message}`, `${f.name} didn't upload: ${e.message}`)); }
+      catch (e: any) { setPfErr(L(`${f.name} 没传上去：${e.message}`, `${f.name} didn't upload: ${e.message}`)); ev('client_error', { where: 'upload', name: f.name, size: f.size, msg: String(e?.message || e).slice(0, 200) }); }
       setPfBusy(n => n - 1);
     }
   };
@@ -318,11 +318,15 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   // 回来时记一笔离开了多久；离开页面前提醒（时间不会停）
   useEffect(() => { if (resume) { const away = (resume.elapsed_s || 0) - (resume.resume?.last_t || 0); if (away >= 10) ev('away', { seconds: away }); } }, []); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { const h = (e: BeforeUnloadEvent) => { if (grading) return; e.preventDefault(); e.returnValue = ''; }; window.addEventListener('beforeunload', h); return () => window.removeEventListener('beforeunload', h); }, [grading]);
+  const syncBad = useRef(false);
   useEffect(() => {
     const sync = async () => {
       const events = buf.current.splice(0);
       const raw = JSON.stringify(psRef.current), draft = raw !== lastDraft.current ? psRef.current : undefined;
-      try { await fetch(`/api/work/${token}/sessions/${sid}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ events, deliverable: delivRef.current, draft }) }); lastDraft.current = raw; } catch { buf.current.unshift(...events); }
+      // 11-19：以前只接网络异常，服务器回 403 / 504 也当成存上了，这段过程就丢了；现在不是 2xx 就把事件放回去，下次一起补，并记一条 client_error
+      let bad = '';
+      try { const r = await fetch(`/api/work/${token}/sessions/${sid}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ events, deliverable: delivRef.current, draft }) }); if (r.ok) lastDraft.current = raw; else bad = `sync ${r.status}`; } catch (e: any) { bad = `sync ${String(e?.message || e).slice(0, 80)}`; }
+      if (bad) { buf.current.unshift(...events); if (!syncBad.current) buf.current.push({ t: Math.round((Date.now() - t0.current) / 1000), type: 'client_error', where: 'sync', msg: bad }); syncBad.current = true; } else syncBad.current = false;
     };
     const iv = setInterval(sync, 30_000);
     // 关页 / 切到别的标签：把剩下的事件用 sendBeacon 补发（fetch 在卸载时会被掐）
@@ -341,17 +345,59 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   const openStage = (st: Stage, i: number) => { if (i >= unlocked) { setUnlocked(i + 1); ev('stage_unlock', { id: st.id }); } setMat({ id: st.id, title: `${st.id} · ${st.question}`, kind: 'stage', content: st.reveal || L('（这一步没有新信息，直接作答）', '(No new information in this step. Go ahead and answer.)'), source: 'stage' }); ev('open_stage', { id: st.id }); };
 
   // AI
-  const [chat, setChat] = useState<{ q: string; a: string }[]>(resume?.resume?.ai_chat || []);
+  // 11-19 潜历反馈「发了问题没反馈」：以前整段生成完才回（最长 109 秒），超过 120 秒被网关掐断、前端没接住，问题也被清掉了。
+  // 现在问题先上屏、回答边写边出（流式）；出错在对话里写明原因、给「重试」，并记一条 client_error 进过程，事后查得到。
+  type ChatItem = { q: string; a: string; pending?: boolean; err?: string; at?: number };
+  const [chat, setChat] = useState<ChatItem[]>(resume?.resume?.ai_chat || []);
   const [q, setQ] = useState(''); const [asking, setAsking] = useState(false);
-  const ask = async () => {
-    const text = q.trim(); if (!text || asking) return;
-    setAsking(true); setQ(''); ev('ai_ask', { chars: text.length });
+  const [askSec, setAskSec] = useState(0);
+  // 对话框跟着新字往下滚；人往上翻着看时不抢
+  const chatBox = useRef<HTMLDivElement>(null), chatStick = useRef(true);
+  useEffect(() => { const el = chatBox.current; if (el && chatStick.current) el.scrollTop = el.scrollHeight; }, [chat]);
+  useEffect(() => { if (!asking) return; const t1 = Date.now(); setAskSec(0); const iv = setInterval(() => setAskSec(Math.round((Date.now() - t1) / 1000)), 1000); return () => clearInterval(iv); }, [asking]);
+  const ask = async (again?: string, idx?: number) => {
+    const text = (again ?? q).trim(); if (!text || asking) return;
+    setAsking(true); if (again == null) setQ(''); ev('ai_ask', { chars: text.length, ...(again != null ? { retry: 1 } : {}) });
+    let at = -1; chatStick.current = true;
+    setChat(c => { const n = idx != null ? c.filter((_, i) => i !== idx) : c; at = n.length; return [...n, { q: text, a: '', pending: true }]; });
+    const put = (f: (x: ChatItem) => ChatItem) => setChat(c => c.map((x, i) => (i === at ? f(x) : x)));
+    let got = false;
     try {
-      const j = await (await fetch(`/api/work/${token}/sessions/${sid}/ai`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ q: text, material: mat ? `${mat.title}\n${mat.content}` : '' }) })).json();
-      setChat(c => [...c, { q: text, a: j.ok ? j.a : L(`（出错：${j.error}）`, `(Error: ${j.error})`) }]);
+      const r = await fetch(`/api/work/${token}/sessions/${sid}/ai`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ q: text, material: mat ? `${mat.title}\n${mat.content}` : '', stream: true }) });
+      if (!r.ok || !r.body || !/ndjson|json/.test(r.headers.get('content-type') || '')) {
+        const j = await r.json().catch(() => null);
+        throw new Error(j?.error || (r.status === 504 ? L('AI 写得太久，被网络掐断了（504）', 'The AI took too long and the connection was cut (504)') : L(`网络出错（${r.status}）`, `Network error (${r.status})`)));
+      }
+      if (!/ndjson/.test(r.headers.get('content-type') || '')) { const j = await r.json(); if (!j.ok) throw new Error(j.error); put(x => ({ ...x, a: j.a, pending: false })); got = true; return; }
+      const rd = r.body.getReader(), dec = new TextDecoder(); let buf2 = '';
+      for (;;) {
+        const { value, done } = await rd.read(); if (done) break;
+        buf2 += dec.decode(value, { stream: true });
+        let k; while ((k = buf2.indexOf('\n')) >= 0) {
+          const ln = buf2.slice(0, k).trim(); buf2 = buf2.slice(k + 1); if (!ln) continue;
+          let o: any; try { o = JSON.parse(ln); } catch { continue; }
+          if (o.d) put(x => ({ ...x, a: x.a + o.d }));
+          else if (o.reset) put(x => ({ ...x, a: '' }));
+          else if (o.ok === true) { put(x => ({ ...x, a: o.a, pending: false })); got = true; }
+          else if (o.ok === false) throw new Error(o.error || L('AI 没回上来', 'The AI did not answer'));
+        }
+      }
+      if (!got) throw new Error(L('连接中途断了，回答没收完', 'The connection dropped before the answer finished'));
+    } catch (e: any) {
+      const msg = String(e?.message || e).slice(0, 200);
+      put(x => ({ ...x, pending: false, err: msg }));
+      ev('client_error', { where: 'ai', msg });
     } finally { setAsking(false); }
   };
-  const adopt = (a: string) => { ev('adopt', { chars: a.length }); if (curPart.module === 'doc') setPart(x => ({ doc: x.doc + (x.doc ? '\n\n' : '') + a })); else setNotes(n => n + (n ? '\n\n' : '') + a); };
+  // 「放进当前交付物」（11-19 反馈：点了没反应、名字看不懂）：按钮直接写放到哪，点完变成「✓ 已放进 …」
+  const adoptTarget = curPart ? (curPart.module === 'doc' ? L(`${curPart.id} 文档`, `${curPart.id} doc`) : curPart.module === 'code' ? `${curPart.id} · NOTES.md` : L(`${curPart.id} 的说明`, `${curPart.id} notes`)) : L('当前交付物', 'current deliverable');
+  const [adopted, setAdopted] = useState<Record<number, string>>({});
+  const [adoptFlash, setAdoptFlash] = useState('');
+  const adopt = (a: string, i: number) => {
+    ev('adopt', { chars: a.length, part: curPart?.id });
+    if (curPart.module === 'doc') setPart(x => ({ doc: x.doc + (x.doc ? '\n\n' : '') + a })); else setNotes(n => n + (n ? '\n\n' : '') + a);
+    setAdopted(m => ({ ...m, [i]: adoptTarget })); setAdoptFlash(L(`已放进 ${adoptTarget} 末尾`, `Added to the end of ${adoptTarget}`)); setTimeout(() => setAdoptFlash(''), 3000);
+  };
   const onPaste = (e: React.ClipboardEvent) => { const n = e.clipboardData.getData('text').length; if (n > 20) ev('paste', { chars: n }); };
 
   // 代码自测（只跑 js，在 Worker 里，3 秒超时）
@@ -394,7 +440,9 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   const [pane, setPane] = useState<'mat' | 'work' | 'ai'>('work');
   const boxRef = useRef<HTMLDivElement>(null);
   const [boxH, setBoxH] = useState<number | null>(null);   // 手机上作答区高度 = 屏幕剩下的（顶上可能有预览条、提示条）
-  useEffect(() => { if (!narrow) return; const f = () => { const el = boxRef.current; if (el) setBoxH(Math.max(320, window.innerHeight - el.getBoundingClientRect().top - window.scrollY - 58)); }; f(); window.addEventListener('resize', f); const t = setInterval(f, 1500); return () => { window.removeEventListener('resize', f); clearInterval(t); }; }, [narrow]);
+  // 11-19 潜历反馈「页面卡住、左栏材料包出不来、solution.js 滑不动」：电脑上原来写死 100vh - 52，顶上多一条提示 / 报错 / 预览条，整块就被挤出屏幕底，
+  // 编辑器和左栏的最后一截看不到也滚不到。现在电脑和手机一样按「屏幕剩下的」算（手机再让出底部导航 58）
+  useEffect(() => { const f = () => { const el = boxRef.current; if (el) setBoxH(Math.max(320, Math.round(window.innerHeight - el.getBoundingClientRect().top - window.scrollY - (narrow ? 58 : 0)))); }; f(); window.addEventListener('resize', f); const t = setInterval(f, 1000); return () => { window.removeEventListener('resize', f); clearInterval(t); }; }, [narrow]);
   const [matMode, setMatMode] = useState<'split' | 'full' | 'bar'>('split');
   // 白板要地方画：第一次切到白板交付物时，材料面板收成一条（点一下还能展开）
   const boardSeen = useRef<Set<string>>(new Set());
@@ -523,7 +571,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
       {tour != null && <Tour step={tour} steps={TOUR_STEPS(L).filter(t => mode !== 'open' || t.key !== 'tabs')} onStep={setTour} onDone={() => { setTour(null); try { localStorage.setItem('work-tour-done', '1'); } catch {} }} />}
       {grading && <div style={{ padding: '12px 18px', background: '#f3f2ff', color: '#4c43c9', fontSize: 13.5 }}>{L('交卷了。正在逐条核对交付物、回看过程、和 AI 基线比——大约 1–2 分钟，别关页面。', 'Submitted. Checking each deliverable, reviewing your process and comparing with an AI baseline. This takes about 1–2 minutes; please keep this page open.')}</div>}
       {(localErr || (error && !errGone)) && !grading && <div style={{ padding: '10px 18px', background: '#fff1f0', color: '#c0392b', fontSize: 13.5 }}>{localErr || error}</div>}
-      <div ref={boxRef} style={{ display: 'flex', flexDirection: narrow ? 'column' : 'row', height: narrow ? (boxH ?? 'calc(100dvh - 110px)') : 'calc(100vh - 52px)' }}>
+      <div ref={boxRef} style={{ display: 'flex', flexDirection: narrow ? 'column' : 'row', height: narrow ? (boxH ?? 'calc(100dvh - 110px)') : (boxH ?? 'calc(100vh - 52px)') }}>
         {/* 材料包 · 要交什么（可收） */}
         {(narrow ? pane === 'mat' && !mat : leftOpen) && <aside data-tour="materials" style={{ width: narrow ? undefined : 272, flex: narrow ? 1 : 'none', borderRight: narrow ? undefined : `1px solid ${line}`, background: dark ? '#16171f' : '#fafbff', color: dark ? '#d6d8e6' : undefined, padding: 14, overflow: 'auto', minHeight: 0 }}>
           {stages.length > 0 && <div style={{ marginBottom: 14 }}>
@@ -531,7 +579,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
             {stages.map((st2, i) => { const locked = i >= unlocked; const on = mat?.id === st2.id; return (
               <div key={st2.id} onClick={() => { if (!locked || i === unlocked) { openStage(st2, i); if (matMode === 'bar') setMatMode('split'); } }} style={{ padding: '9px 12px', borderRadius: 10, marginBottom: 6, cursor: locked && i !== unlocked ? 'not-allowed' : 'pointer', opacity: locked && i !== unlocked ? .45 : 1, background: on ? panel : 'transparent', border: `1px solid ${on ? '#6055f5' : line}` }}>
                 <div style={{ fontSize: 11, color: '#999', letterSpacing: 1 }}>{st2.id.toUpperCase()}{STAGE_CN[st2.type] ? ` · ${STAGE_CN[st2.type]}` : ''}{locked ? (i === unlocked ? L(' · 点开下一步', ' · Open next step') : L(' · 先答上一步', ' · Answer the previous step first')) : ''}</div>
-                <div style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.5, marginTop: 2 }}>{locked && i !== unlocked ? '…' : st2.question}</div>
+                <div title={st2.question} style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.5, marginTop: 2, ...(on ? {} : { display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }) }}>{locked && i !== unlocked ? '…' : st2.question}</div>
               </div>); })}
             {nextQCard(`Q${stages.length + 1}`, unlocked < stages.length)}
           </div>}
@@ -545,7 +593,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
         {/* 作答区：交付物标签常驻 → 材料面板（可拖高 / 占满 / 一条 / 关）→ 操作台 */}
         {(!narrow || pane === 'work' || (pane === 'mat' && mat)) && <main style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 10, padding: '10px 12px', background: dark ? '#14151e' : undefined, minHeight: 0 }}>
           {nudge && <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px', borderRadius: 10, background: '#fff7e6', border: '1px solid #ffd591', color: '#8a5a00', fontSize: 13 }}><span>{L('⏱ 20 分钟了：', '⏱ 20 minutes in: ')}{nudge}</span><button onClick={() => setNudge(null)} style={{ marginLeft: 'auto', ...miniBtn, color: '#8a5a00', borderColor: '#ffd591' }}>{L('知道了', 'Got it')}</button></div>}
-          {mat && (!narrow || pane === 'mat') && <div style={{ background: panel, color: dark ? '#d6d8e6' : undefined, border: `1px solid ${line}`, borderRadius: 12, display: 'flex', flexDirection: 'column', flex: narrow || matMode === 'full' ? 1 : 'none', height: !narrow && matMode === 'split' ? matH : undefined, minHeight: 0, overflow: 'hidden' }}>
+          {mat && (!narrow || pane === 'mat') && <div style={{ background: panel, color: dark ? '#d6d8e6' : undefined, border: `1px solid ${line}`, borderRadius: 12, display: 'flex', flexDirection: 'column', flex: narrow || matMode === 'full' ? 1 : 'none', height: !narrow && matMode === 'split' ? Math.max(120, Math.min(matH, (boxH ?? 800) - 20 - (mode === 'open' ? 440 : 340))) : undefined, minHeight: 0, overflow: 'hidden' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', borderBottom: matMode === 'bar' ? 0 : `1px solid ${line}` }}>
               <b style={{ fontSize: 13.5, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{mat.title}</b>
               {narrow ? <button onClick={() => setMat(null)} style={{ ...miniBtn, order: -1 }}>{L('← 材料', '← Materials')}</button> : <><button onClick={() => setMatMode('full')} style={iconBtn(matMode === 'full')} title={L('最大化：材料占满，作答区收成一条', 'Maximize: materials fill the space, answer area collapses')}><Ico k="max" /></button>
@@ -577,18 +625,27 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
               <span style={{ fontSize: 11.5, color: ink2 }}>{L('读得到你打开的材料（图只读说明）', 'Reads the material you have open (images via their description)')}</span>
               {!narrow && <button onClick={() => setAiOpen(false)} style={miniBtn} title={L('收起', 'Hide')}>✕</button>}
             </div>
-            <div style={{ flex: 1, overflow: 'auto', padding: 14, display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <div ref={chatBox} onScroll={e => { const el = e.currentTarget; chatStick.current = el.scrollHeight - el.scrollTop - el.clientHeight < 80; }} style={{ flex: 1, overflow: 'auto', padding: 14, display: 'flex', flexDirection: 'column', gap: 12 }}>
               {!chat.length && <div style={{ fontSize: 12.5, color: ink2, lineHeight: 1.7, padding: '4px 2px' }}>{L('随便问，不算作弊。评的是你怎么用、哪些判断是你自己定的。可以让它核算、起草、挑毛病，但结论要你自己写。', "Ask anything. It's not cheating. We look at how you use it and which calls you make yourself. Let it check numbers, draft or find holes, but write the conclusions yourself.")}</div>}
               {chat.map((c, i) => <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                 <div style={{ alignSelf: 'flex-end', maxWidth: '88%', background: '#6055f5', color: '#fff', padding: '8px 12px', borderRadius: '14px 14px 4px 14px', fontSize: 13.5, whiteSpace: 'pre-wrap', lineHeight: 1.55 }}>{c.q}</div>
-                <div style={{ alignSelf: 'flex-start', maxWidth: '94%', background: dark ? '#262838' : '#f7f7fb', padding: '10px 12px', borderRadius: '4px 14px 14px 14px', fontSize: 13.5, lineHeight: 1.65 }} className="wk-md"><Md text={c.a} /><div style={{ marginTop: 8 }}><button onClick={() => adopt(c.a)} style={{ ...miniBtn, color: '#6055f5', borderColor: 'rgba(96,85,245,.4)' }}>{L('放进当前交付物', 'Add to current deliverable')}</button></div></div>
+                {c.err ? <div style={{ alignSelf: 'flex-start', maxWidth: '94%', background: dark ? '#3a2326' : '#fff1f0', color: dark ? '#ffb4ab' : '#c0392b', padding: '10px 12px', borderRadius: '4px 14px 14px 14px', fontSize: 13, lineHeight: 1.6 }}>
+                  {L('这次没回上来：', "This one didn't come back: ")}{c.err}
+                  <div style={{ marginTop: 8, display: 'flex', gap: 6, flexWrap: 'wrap' }}><button onClick={() => ask(c.q, i)} disabled={asking} style={{ ...miniBtn, color: '#6055f5', borderColor: 'rgba(96,85,245,.4)' }}>{L('重试', 'Retry')}</button><button onClick={() => setQ(c.q)} style={miniBtn}>{L('把问题放回输入框', 'Put the question back in the box')}</button></div>
+                </div>
+                : <div style={{ alignSelf: 'flex-start', maxWidth: '94%', background: dark ? '#262838' : '#f7f7fb', padding: '10px 12px', borderRadius: '4px 14px 14px 14px', fontSize: 13.5, lineHeight: 1.65 }} className="wk-md">
+                  {c.a ? <Md text={c.a} /> : null}
+                  {c.pending ? <div style={{ color: ink2, fontSize: 12.5, marginTop: c.a ? 6 : 0 }}>{c.a ? L(`AI 还在写… ${askSec} 秒`, `Still writing… ${askSec}s`) : L(`AI 在想… ${askSec} 秒`, `Thinking… ${askSec}s`)}{askSec >= 30 && !c.a ? L('（长回答要一两分钟）', ' (long answers can take a minute or two)') : ''}</div>
+                  : <div style={{ marginTop: 8 }}>{adopted[i] ? <span style={{ ...miniBtn, display: 'inline-block', color: '#1e8e3e', borderColor: 'rgba(30,142,62,.35)', cursor: 'default' }}>{L(`✓ 已放进 ${adopted[i]}`, `✓ Added to ${adopted[i]}`)}</span>
+                    : <button onClick={() => adopt(c.a, i)} title={L(`把这段回答整段加到 ${adoptTarget} 末尾，可以再改`, `Append this whole answer to the end of ${adoptTarget}; you can edit it afterwards`)} style={{ ...miniBtn, color: '#6055f5', borderColor: 'rgba(96,85,245,.4)' }}>{L(`＋ 加到 ${adoptTarget}`, `+ Add to ${adoptTarget}`)}</button>}</div>}
+                </div>}
               </div>)}
-              {asking && <div style={{ color: ink2, fontSize: 13 }}>{L('AI 在想…', 'AI is thinking…')}</div>}
+              {adoptFlash && <div style={{ position: 'sticky', bottom: 0, alignSelf: 'center', background: '#1e8e3e', color: '#fff', fontSize: 12.5, padding: '6px 12px', borderRadius: 8, boxShadow: '0 4px 14px rgba(0,0,0,.15)' }}>{adoptFlash}</div>}
             </div>
             <div style={{ padding: 10, borderTop: `1px solid ${line}` }}>
               <div style={{ border: `1px solid ${line}`, borderRadius: 14, background: dark ? '#1a1b26' : '#fff', padding: '8px 8px 8px 12px', display: 'flex', alignItems: 'flex-end', gap: 8 }}>
                 <textarea className="wk-ta" value={q} onChange={e => setQ(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(); } }} placeholder={L('问 AI… Enter 发送，Shift+Enter 换行', 'Ask AI… Enter to send, Shift+Enter for a new line')} rows={2} style={{ flex: 1, border: 0, outline: 'none', resize: 'none', font: 'inherit', fontSize: 13.5, lineHeight: 1.5, background: 'transparent', color: 'inherit', minHeight: 40, maxHeight: 140 }} />
-                <button onClick={ask} disabled={asking || !q.trim()} style={{ width: 32, height: 32, borderRadius: 10, border: 0, background: q.trim() && !asking ? 'linear-gradient(135deg,#6055f5,#12b5cb)' : (dark ? '#2b2d3e' : '#e8e9f0'), color: '#fff', cursor: q.trim() ? 'pointer' : 'default', fontSize: 15, flex: 'none' }} title={L('发送', 'Send')}>↑</button>
+                <button onClick={() => ask()} disabled={asking || !q.trim()} style={{ width: 32, height: 32, borderRadius: 10, border: 0, background: q.trim() && !asking ? 'linear-gradient(135deg,#6055f5,#12b5cb)' : (dark ? '#2b2d3e' : '#e8e9f0'), color: '#fff', cursor: q.trim() ? 'pointer' : 'default', fontSize: 15, flex: 'none' }} title={L('发送', 'Send')}>↑</button>
               </div>
             </div>
           </div>
@@ -613,7 +670,7 @@ function CsvPreview({ csv }: { csv: string }) {
 const TOUR_STEPS = (L: (zh: string, en: string) => string): TourStep[] => [
   { key: 'materials', title: L('材料包', 'Materials'), text: L('题目给你的材料都在这里，点一份在中间看。材料面板可以拖高、占满、收成一条或关掉。「要交什么」和「任务书」也在这一栏。', 'Everything the task gives you is here. Click one to read it in the middle. You can resize the materials panel, make it fill the space, collapse it to a bar or close it. "What to submit" and "The task" are in this column too.') },
   { key: 'tabs', title: L('作答区有几个标签，都要做', 'The answer area has several tabs. Do them all'), text: L('每个交付物一个标签（文档 / 表格 / 代码 / 画布），切着做。小圆点变绿表示动过笔；20 分钟还没打开的会提醒你。', 'Each deliverable has its own tab (document / spreadsheet / code / canvas). Switch between them as you work. A green dot means you\'ve started it; you\'ll get a reminder about any tab still unopened after 20 minutes.') },
-  { key: 'ai', title: L('AI 助手', 'AI assistant'), text: L('随便问，不算作弊。评的是你怎么用、哪些判断是你自己定的。它看得到你当前打开的材料；回答可以一键放进当前交付物。', 'Ask anything. It\'s not cheating. We look at how you use it and which calls you make yourself. It can see the material you have open, and you can add any answer to the current deliverable in one click.') },
+  { key: 'ai', title: L('AI 助手', 'AI assistant'), text: L('随便问，不算作弊。评的是你怎么用、哪些判断是你自己定的。它看得到你当前打开的材料；回答下面的「＋ 加到 …」会把整段加到当前交付物末尾。', 'Ask anything. It\'s not cheating. We look at how you use it and which calls you make yourself. It can see the material you have open. "+ Add to …" under an answer appends it to the end of the current deliverable.') },
   { key: 'clock', title: L('时间和交卷', 'Time and submitting'), text: L('右上角看时间，离开页面也不暂停；限时的任务到点自动交卷。做完点「交卷」，再点一次确认——交了就不能改。', 'The time is at the top right, and it keeps running if you leave the page. Timed tasks are submitted automatically when time is up. When you\'re done, click "Submit" and then click again to confirm. You can\'t edit after that.') },
   { key: 'views', title: L('两侧可以收起', 'Hide the side panels'), text: L('文件夹 = 材料栏，星芒 = AI 助手，点一下收起或展开，给作答区腾地方。随时点「?」再看这份说明。', 'The folder is the materials panel and the star is the AI assistant. Click to hide or show them and make room for your work. Click "?" any time to see this guide again.') },
 ];

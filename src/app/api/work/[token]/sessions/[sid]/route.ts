@@ -23,7 +23,8 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ toke
   return NextResponse.json({ ok: true, session: { elapsed_s: tm.elapsed, limit_s: tm.limit, expired: tm.expired, resume, id: s.id, participant: s.participant, started_at: s.started_at, submitted_at: s.submitted_at, deliverable: s.deliverable, report: s.report, score: s.score, events_n: (s.events || []).length, files: (s.events || []).filter((e: any) => e.type === 'file' && e.url && !(s.events || []).some((x: any) => x.type === 'file_remove' && x.url === e.url)).map((e: any) => ({ name: e.name, url: e.url, size: e.size || 0, part: e.part || '' })), ...(req.nextUrl.searchParams.get('full') && s.submitted_at ? { events: s.events || [], ai_chat: s.ai_chat || [] } : {}) } });
 }
 
-/** 过程同步（每 30 秒 / 每个动作攒一批）：{ events: [...], deliverable?: 草稿 }。交卷后不再收。POST 是给 sendBeacon 用的同义接口 */
+/** 字段白名单 11-19 加了 where / msg（client_error：AI 没回上来 / 上传失败 / 同步失败，事后能查）、part（采纳进哪份交付物）、retry。
+ * 过程同步（每 30 秒 / 每个动作攒一批）：{ events: [...], deliverable?: 草稿 }。交卷后不再收。POST 是给 sendBeacon 用的同义接口 */
 export const POST = (req: NextRequest, ctx: { params: Promise<{ token: string; sid: string }> }) => PATCH(req, ctx);
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ token: string; sid: string }> }) {
   const { token, sid } = await params;
@@ -32,7 +33,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ to
   if (x.s.submitted_at) return NextResponse.json({ ok: false, error: '已经交卷了' }, { status: 409 });
   if (timing(x.t.task, x.s).closed) return NextResponse.json({ ok: false, error: '时间到了', expired: true }, { status: 409 });
   const body = await req.json().catch(() => ({}));
-  const incoming = (Array.isArray(body.events) ? body.events : []).slice(0, 500).map((e: any) => ({ t: Math.max(0, Number(e.t) || 0), type: String(e.type || '').slice(0, 20), ...(e.id ? { id: String(e.id).slice(0, 20) } : {}), ...(e.chars != null ? { chars: Number(e.chars) || 0 } : {}), ...(e.delta != null ? { delta: Number(e.delta) || 0 } : {}), ...(e.note ? { note: String(e.note).slice(0, 120) } : {}), ...(e.type === 'draft' && typeof e.text === 'string' ? { text: e.text.slice(0, 12000) } : {}) }));
+  const incoming = (Array.isArray(body.events) ? body.events : []).slice(0, 500).map((e: any) => ({ t: Math.max(0, Number(e.t) || 0), type: String(e.type || '').slice(0, 20), ...(e.id ? { id: String(e.id).slice(0, 20) } : {}), ...(e.where ? { where: String(e.where).slice(0, 20) } : {}), ...(e.msg ? { msg: String(e.msg).slice(0, 240) } : {}), ...(e.part ? { part: String(e.part).slice(0, 20) } : {}), ...(e.retry ? { retry: 1 } : {}), ...(e.type === 'client_error' && e.name ? { name: String(e.name).slice(0, 80), size: Number(e.size) || 0 } : {}), ...(e.chars != null ? { chars: Number(e.chars) || 0 } : {}), ...(e.delta != null ? { delta: Number(e.delta) || 0 } : {}), ...(e.note ? { note: String(e.note).slice(0, 120) } : {}), ...(e.type === 'draft' && typeof e.text === 'string' ? { text: e.text.slice(0, 12000) } : {}) }));
   const events = [...(x.s.events || []), ...incoming].slice(-3000);
   const patch: Record<string, any> = { events };
   if (typeof body.deliverable === 'string') patch.deliverable = body.deliverable.slice(0, 60000);

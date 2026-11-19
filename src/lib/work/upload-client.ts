@@ -6,19 +6,30 @@
 export type WorkFile = { name: string; size: number; url: string; part?: string };
 
 const api = (token: string, sid: string) => `/api/work/${token}/sessions/${sid}/upload`;
+// 11-19 潜历反馈「trace_jd_b.txt 没传上去：服务器没接住（403）」：同一场里另外 6 个文件都传上了，403 不是我们接口回的（接口的错都带 JSON），
+// 多半是线路 / 防火墙偶发拦了一下。接口和存储都自动再试两次（隔 1.5 / 4 秒）；真不行再报一句人话。
+const wait = (ms: number) => new Promise(r => setTimeout(r, ms));
 async function post(url: string, body: any) {
-  const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-  const j = await r.json().catch(() => ({ ok: false, error: `服务器没接住（${r.status}）` }));
-  if (!j.ok) throw new Error(j.error || '没传上去');
-  return j;
+  let last = '';
+  for (let k = 0; k < 3; k++) {
+    if (k) await wait(k === 1 ? 1500 : 4000);
+    const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }).catch(e => { last = `网络断了（${String(e?.message || e).slice(0, 60)}）`; return null; });
+    if (!r) continue;
+    const j = await r.json().catch(() => null);
+    if (j) { if (!j.ok) throw new Error(j.error || '没传上去'); return j; }
+    last = `服务器没接住（${r.status}）`;
+    if (r.status < 500 && r.status !== 403 && r.status !== 429) break;
+  }
+  throw new Error(`${last}，已自动重试 2 次。刷新页面再传一次；还不行请截图告诉发链接的人`);
 }
 
 export async function uploadWorkFile(token: string, sid: string, f: File, extra: { t: number; part?: string }): Promise<WorkFile> {
   if (f.size > 200 * 1024 * 1024) throw new Error('太大了（上限 200MB）');
   const sign = await post(api(token, sid), { step: 'sign', name: f.name, size: f.size });
   const fd = new FormData(); fd.append('cacheControl', '3600'); fd.append('', f);
-  const r = await fetch(sign.signed_url, { method: 'PUT', body: fd, headers: { 'x-upsert': 'true' } });
-  if (!r.ok) throw new Error(`存储没收下（${r.status}）`);
+  let r: Response | null = null;
+  for (let k = 0; k < 3 && !r?.ok; k++) { if (k) await wait(k === 1 ? 1500 : 4000); r = await fetch(sign.signed_url, { method: 'PUT', body: fd, headers: { 'x-upsert': 'true' } }).catch(() => null); }
+  if (!r?.ok) throw new Error(`存储没收下（${r?.status ?? '网络断了'}），已自动重试 2 次。刷新页面再传一次`);
   const j = await post(api(token, sid), { step: 'done', path: sign.path, name: f.name, size: f.size, type: f.type, t: extra.t, part: extra.part || '' });
   return { name: j.name, size: j.size, url: j.url, part: extra.part || '' };
 }

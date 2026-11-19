@@ -46,6 +46,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
       const size = Number(obj.metadata?.size) || Number(b.size) || 0;
       const url = labMediaUrl(db.storage.from(BUCKET).getPublicUrl(path).data.publicUrl);
       const part = String(b.part || '').slice(0, 20);
+      if ((s.events || []).some((e: any) => e.type === 'file' && e.url === url)) return NextResponse.json({ ok: true, url, name: safe, size });   // 前端重试登记（11-19）：登记过的不再记一遍
       const ev = { t: tsec, type: 'file', name: safe, size, url, ...(part ? { part } : {}) };
       await db.from('work_sessions').update({ events: [...(s.events || []), ev].slice(-3000) }).eq('id', sid);
       return NextResponse.json({ ok: true, url, name: safe, size });
