@@ -8,7 +8,7 @@ import type Anthropic from '@anthropic-ai/sdk';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import type { AgentKit } from '@/lib/ws/agent';
 import { locateAnchor } from '@/lib/lab-anchor';
-import { cleanAnchor, cleanSpec, hasSpec, LEVEL_ORDER, levelText, PRESETS } from '@/lib/lab-spec';
+import { cleanAnchor, cleanSpec, hasSpec, LEVEL_ORDER, levelText, PRESETS, DEPTHS, isDepth, parseDayPlan } from '@/lib/lab-spec';
 import { startJob } from '@/lib/lab-jobs';
 import { buildChapter, buildDay } from '@/lib/agents/lab-chapters';
 import { reviseOpening, reviseStep, logRevision } from '@/lib/lab-revise';
@@ -27,7 +27,12 @@ export const LAB_TOOLS: Anthropic.Tool[] = [
   }, required: ['anchor', 'spec'] } },
   { name: 'my_spaces', description: '列出用户生成的空间（状态、章节、作答、平均分）。用户说「我那个……空间」先用它找 space_id。', input_schema: { type: 'object', properties: { q: { type: 'string' } } } },
   { name: 'space_detail', description: '看一个空间：生成要求、每一章（时段 / 标题 / 状态 / 锁定 / 步数 / 每步题干）、最近一次 AI 评审的待办、正在跑的任务。改之前先看。', input_schema: { type: 'object', properties: { space_id: { type: 'string' } }, required: ['space_id'] } },
-  { name: 'build_day', description: '排一天骨架：按空间的形态排（生涯体验 5–6 格，其余 6–8 格，建空间时自带的章节算在内；时段、标题、要交代的事），不出题。新空间生成好后一般先做这个。后台约 1 分钟。', input_schema: { type: 'object', properties: { space_id: { type: 'string' }, hint: { type: 'string' } }, required: ['space_id'] } },
+  { name: 'build_day', description: '排一天骨架（时段、标题、要交代的事，不出题；建空间时自带的章节算在内）。新空间生成好后一般先做这个。后台约 1 分钟。slots / depth 会存在空间上，之后写每一章都按它；不传就按形态默认（生涯体验 5–6 格、模拟实践 4–6、职业虚拟考核 6–8、资质考核 4–5）。', input_schema: { type: 'object', properties: {
+    space_id: { type: 'string' }, hint: { type: 'string' },
+    slots: { type: 'integer', description: '这一天几格（2–9）' },
+    depth: { type: 'string', enum: ['light', 'standard', 'deep'], description: `每段多深：${Object.entries(DEPTHS).map(([k, v]) => `${k} = ${v.label}（${v.pick}）`).join('；')}` },
+    plan: { type: 'string', description: '用户自己排的时间点，一行一格「09:00｜标题｜要交代的事」；给了就以它的时段和格数为准' },
+  }, required: ['space_id'] } },
   { name: 'write_chapters', description: '给章节写故事线和示范答案（按生成要求）。chapter_ids 不传 = 所有没写过、没锁定的草稿格。后台顺序跑，每章约 1 分钟。', input_schema: { type: 'object', properties: { space_id: { type: 'string' }, chapter_ids: { type: 'array', items: { type: 'string' } }, hint: { type: 'string' } }, required: ['space_id'] } },
   { name: 'revise', description: '局部改：改某一章的某一步（target=step，step_no 从 1 数）或标题和开场（target=opening）。出一份提案，对话里给用户看改前改后，他点「采纳」才写进去。工位（虚拟操作台）请让用户到工作室里「重新设计」。', input_schema: { type: 'object', properties: { space_id: { type: 'string' }, chapter_id: { type: 'string' }, target: { type: 'string', enum: ['step', 'opening'] }, step_no: { type: 'number' }, instruction: { type: 'string' } }, required: ['space_id', 'chapter_id', 'target', 'instruction'] } },
   { name: 'review', description: 'AI 评审这个空间（约半分钟）：按平台规则 + 生成要求打分，列出具体到哪一章哪一步的待改问题。', input_schema: { type: 'object', properties: { space_id: { type: 'string' } }, required: ['space_id'] } },
@@ -89,7 +94,15 @@ async function run(name: string, input: any, user: User): Promise<{ result: any;
     }
     case 'build_day': {
       const sp = await own(user, input.space_id);
-      const job = await startJob(sp.id, null, 'build_day', async progress => { const r = await buildDay(sp.id, MODEL(), s(input.hint, 500), progress); return `一天共 ${r.total} 格（新排 ${r.added} 格，建空间时自带的章节也算在内）· 角色表新增 ${r.cast} 项`; });
+      // 格数 / 深度存进空间（11-19，和工作室「排一天骨架」弹窗同一套）
+      if (input.slots != null || input.depth != null) {
+        const { data: t } = await db.from('skill_tasks').select('jd_snapshot').eq('id', sp.id).single();
+        const jd: any = { ...((t as any)?.jd_snapshot || {}) }; const n = Math.round(Number(input.slots));
+        if (n >= 2 && n <= 9) jd.slots = n; if (isDepth(input.depth)) jd.depth = input.depth;
+        await db.from('skill_tasks').update({ jd_snapshot: jd }).eq('id', sp.id);
+      }
+      const plan = parseDayPlan(s(input.plan, 3000));
+      const job = await startJob(sp.id, null, 'build_day', async progress => { const r = await buildDay(sp.id, MODEL(), s(input.hint, 500), progress, plan); return `一天共 ${r.total} 格（新排 ${r.added} 格，建空间时自带的章节也算在内）· 角色表新增 ${r.cast} 项`; });
       return { label: job.already ? '骨架已经在排了' : '开始排一天骨架（约 1 分钟）', ui: { ...panel(sp.id, nameOf(sp)), job_id: job.id, job: '排一天骨架' }, result: { job_id: job.id, already: job.already } };
     }
     case 'write_chapters': {
@@ -186,7 +199,12 @@ function systemPrompt(email: string) {
 2. locate 定位，用 ask_user 让他在粒度里选（问题一句话，选项写名字，如「程序员（常见叫法）」「后端开发工程师」「SRE 工程师」）。给高中生 / 生涯体验默认推荐常见叫法。
 3. 级别：用户原话里明说了四个级别之一（「生涯体验」「模拟实践 / 实训」「职业虚拟考核 / 上岗考核」「资质考核 / 考证」）才直接定；「职业体验」「了解一下」「给高中生做一个」这类不算说了级别，**一定先 ask_user 让他点**（这是 locate 之后的第一个问题），选项照抄这四个（由浅到深，括号里是证书）：${LEVEL_ORDER.map(f => `「${levelText(f)}」`).join('')}，按受众把最合适的放第一个。别解释每一级内部怎么排。
    生成要求：给谁看、要多深、考核多难最重要；必须有 / 不要的问一句就行。没说的按受众和级别先定默认（预设可参考：${PRESETS.map(p => `「${p.label}」`).join('')}），然后用 ask_user 复述一行确认：做什么｜级别｜给谁看｜多深｜多难｜必须有 / 不要，选项「就这样生成」「改一下」。
-4. create_space。做完会自动发来一句话告诉你空间编号，接着建议：排一天骨架（build_day）→ 写各章（write_chapters）→ 评审（review）。一步一步来，每步做完说一句结果和下一步，问他要不要继续（ask_user）。
+4. create_space。做完会自动发来一句话告诉你空间编号，接着建议：排一天骨架（build_day）→ 写各章（write_chapters）→ 评审（review）。
+   排一天之前先问清这一天的样子（一次问一件，用 ask_user，用户已经说过的不再问）：
+   ① 这一天排几段：选项给「按默认（这个级别一般 N 段）」「3 段，每段深一点」「我自己写时间点」，也可以让他直接说个数；
+   ② 每段多深：${Object.values(DEPTHS).map(v => `「${v.label}：${v.pick}」`).join('')}（段少就推荐长 · 起承转合）；
+   ③ 选了自己写时间点的，请他一行一段发过来（「09:00｜需求沟通｜……」），原样放进 plan，不要改他的时段。
+   然后 build_day 带上 slots / depth / plan。这两项会存在空间上，之后写每一章都照着来；他以后说「改成 4 段」「每段再长一点」，就带上新的 slots / depth 重排一天。一步一步来，每步做完说一句结果和下一步，问他要不要继续（ask_user）。
    build_day / write_chapters / fix_by_review 是后台任务：发起后说一句就停，别催别查；做完会自动发来「「…」做完了：…」，收到再接着下一步（写完章节就直接 review，不用再问）。
 改：
 - 用户说「第二章太难」「这一步换个场景」：先 space_detail 看清楚是哪一章哪一步，再 revise 出提案（对话里会显示改前改后，用户点采纳才写进去），别自己说「已改好」。

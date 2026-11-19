@@ -101,17 +101,29 @@ export const FORMS: Record<SpaceForm, { label: string; pick: string; cert: strin
   },
 };
 /**
- * 长段（11-19 百业同事：生涯体验想一天只配 3 段，每段长一些、有起承转合，时间点自己定）。
- * 存在 jd_snapshot.depth = 'deep'；写每一章时这条优先于形态里的步数（生涯原来每章 3–4 步、一天 5–6 格）。
- * 其他形态也能用：职业虚拟考核的「真实一天」、模拟实践的「一个模块走完整」都适合少段深做。
+ * 一天怎么排（11-19 百业同事：生涯体验想一天只配 3 段、每段有起承转合、时间点自己定；用户：3 也是一种写死，格数和深度都让人定）。
+ * 存在 jd_snapshot：slots = 这一天几格（含已有章节，2–9；不填按形态默认），depth = 每段多深（不填按形态默认）。
+ * 人工（排一天骨架弹窗）和百业工厂助理（build_day 前先问）用同一套。四个形态都能用。
  */
-export const DEEP_SEGMENT = `这一章是「长段」：这一天只有 3 段左右，每段 15–20 分钟、6–9 步，要有起承转合——
+export type Depth = 'light' | 'standard' | 'deep';
+export const DEPTHS: Record<Depth, { label: string; pick: string; rule: string }> = {
+  light: { label: '短', pick: '每段 5–8 分钟、3–4 步，一段只做一件事', rule: '这一章是「短段」：5–8 分钟、3–4 步，一段只做一件事，台词简短，开场一两句就进题。' },
+  standard: { label: '标准', pick: '每段 10 分钟左右、4–6 步', rule: '这一章是「标准段」：10 分钟左右、4–6 步，有开场、有推进、有一个需要判断的点。' },
+  deep: { label: '长 · 起承转合', pick: '每段 15–20 分钟、6–9 步，有起承转合，适合一天只排 3 段左右', rule: `这一章是「长段」：15–20 分钟、6–9 步，要有起承转合——
   起：到场，交代这一段的处境、在场的人和要做成什么；
   承：按这一行真实的做法往下推 2–3 步（看、问、判断、动手）；
   转：出现一个这一行真会遇到的意外 / 分歧 / 新信息（不是刁难），逼你调整原来的判断；
   合：事情怎么收场、师傅点评为什么这样做，最后一步让你回看这一段。
-同一批人物贯穿整段，剧情连着走，不要拆成互不相干的小题；步数和上面形态里写的不一样时，以这条为准。`;
-export const depthOf = (jdSnapshot: any): 'deep' | 'normal' => (jdSnapshot?.depth === 'deep' ? 'deep' : 'normal');
+同一批人物贯穿整段，剧情连着走，不要拆成互不相干的小题。` },
+};
+export const isDepth = (v: any): v is Depth => v === 'light' || v === 'standard' || v === 'deep';
+export const depthOf = (jdSnapshot: any): Depth | null => (isDepth(jdSnapshot?.depth) ? jdSnapshot.depth : null);
+/** 每章的写法规则：人定了深度就用它（步数优先于形态里写的） */
+export const depthRule = (jdSnapshot: any) => { const d = depthOf(jdSnapshot); return d ? `${DEPTHS[d].rule}步数和上面形态里写的不一样时，以这条为准。` : ''; };
+export const slotsOf = (jdSnapshot: any): number | null => { const n = Math.round(Number(jdSnapshot?.slots)); return n >= 2 && n <= 9 ? n : null; };
+/** 形态默认几格（不填时） */
+export const defaultSlots = (form: SpaceForm | null) => (form === 'career' ? '5–6' : form === 'training' ? '4–6' : form === 'certify' ? '4–5' : '6–8');
+
 /** 人自己排的一天：每行「09:00｜需求沟通｜接到客户的网站需求……」，开头是时间的行才算一格（「前端开发工程师｜一天」这类标题行跳过） */
 export function parseDayPlan(text: string): { slot: string; text: string }[] {
   return String(text || '').split(/\r?\n/).map(l => /^\s*(\d{1,2}[:：]\d{2})\s*[｜|丨]?\s*(.+?)\s*$/.exec(l)).filter(Boolean)
