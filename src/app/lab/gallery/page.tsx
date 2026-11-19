@@ -7,6 +7,8 @@ import { App } from 'antd';
 import { familyOf } from '@/lib/career-family';
 import { featuredIndex } from '@/lib/lab-featured';
 import { useNicknames } from '@/components/kg/useNicknames';
+import { beta3dForSpace } from '@/lib/lab-3d-beta';
+const SEL: React.CSSProperties = { width: 'auto', padding: '6px 10px', borderRadius: 10, fontSize: 13 };
 /** 难度标记的颜色（11-19）：由浅到深 */
 const LEVEL_COLOR: Record<string, string> = { career: 'rgba(22,163,74,.85)', training: 'rgba(37,99,235,.85)', assess: 'rgba(147,51,234,.85)', certify: 'rgba(220,38,38,.85)' };
 
@@ -52,7 +54,7 @@ export default function GalleryPage() {
   const [err, setErr] = useState('');
   const [q, setQ] = useState('');
   const [fam, setFam] = useState('');
-  const [lvl, setLvl] = useState<string | null>(null);   // 按难度筛（11-19）：null = 全部，'' = 岗位日常（没定难度的老空间）
+  const [lvl, setLvl] = useState<string | null>(null); const [more, setMore] = useState('');   // 按难度筛（11-19）：null = 全部，'' = 岗位日常（没定难度的老空间）
   /** 两类体验分开放：职业岗位 / 学科研究（研究岗空间、学科空间） */
   const [track, setTrack] = useState<'career' | 'research'>('career');
 
@@ -70,7 +72,7 @@ export default function GalleryPage() {
       const family = familyOf(prof, s.skill?.domain, jd.title, jd.company);
       const text = [p.name, p.role, p.tagline, prof, jd.title, jd.company, jd.location, s.skill?.domain, family].filter(Boolean).join(' ').toLowerCase();
       const research = jd.kind === 'research_post' || jd.kind === 'discipline';
-      return { s, jd, p, family, text, research, form: (s.tag?.form || '') as string, level: (s.tag?.level || '岗位日常') as string };
+      return { s, jd, p, family, text, research, has3d: !!beta3dForSpace(s.id), form: (s.tag?.form || '') as string, level: (s.tag?.level || '岗位日常') as string };
     })
     // 排序：精选名单最前；然后故事全（一整天的章节都发布了）且有工位的；再是有工位的、故事全的；同档里工位章节多、有场景图的靠前
     .sort((a, b) => rank(b.s) - rank(a.s)), [spaces]);
@@ -85,8 +87,8 @@ export default function GalleryPage() {
 
   const shown = useMemo(() => {
     const kw = q.trim().toLowerCase();
-    return inTrack.filter(x => (!fam || x.family === fam) && (lvl == null || x.form === lvl) && (!kw || x.text.includes(kw)));
-  }, [inTrack, q, fam, lvl]);
+    return inTrack.filter(x => (!fam || x.family === fam) && (lvl == null || x.form === lvl) && (!more || (more === '3d' ? x.has3d : !!x.s.features?.bench)) && (!kw || x.text.includes(kw)));
+  }, [inTrack, q, fam, lvl, more]);
   const lvls = useMemo(() => { const m = new Map<string, { label: string; n: number }>(); for (const x of inTrack) { const e = m.get(x.form) || { label: x.level, n: 0 }; e.n++; m.set(x.form, e); } return ['career', 'training', 'assess', 'certify', ''].filter(k => m.has(k)).map(k => [k, m.get(k)!] as const); }, [inTrack]);
 
   const share = async (id: string) => {
@@ -112,26 +114,24 @@ export default function GalleryPage() {
       <div className="lab-glass" style={{ padding: '12px 14px', marginBottom: 16, display: 'grid', gap: 10 }}>
         <div className="gal-tabs">
           {([['career', '职业岗位体验'], ['research', '学科研究体验']] as const).map(([k, t]) => (
-            <button key={k} className={track === k ? 'on' : ''} onClick={() => { setTrack(k); setFam(''); }}>{t}<span>{trackCount[k]}</span></button>
+            <button key={k} className={track === k ? 'on' : ''} onClick={() => { setTrack(k); setFam(''); setLvl(null); setMore(''); }}>{t}<span>{trackCount[k]}</span></button>
           ))}
         </div>
         <input className="lab-input" value={q} onChange={e => setQ(e.target.value)} placeholder={track === 'research' ? '搜学科、研究方向、机构——如：固态电池 / 结构生物学 / 研究院' : '搜职业、企业、城市——如：咖啡 / 焊接 / 护士'}
           style={{ padding: '9px 14px', borderRadius: 12, fontSize: 14 }} />
-        {lvls.length > 1 && (
-          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', alignItems: 'center', marginTop: 10 }}>
-            <span style={{ fontSize: 12.5, opacity: .7, marginRight: 2 }}>难度</span>
-            <button className={`lab-chip ${lvl == null ? '' : 'g'}`} style={{ cursor: 'pointer' }} onClick={() => setLvl(null)}>全部</button>
-            {lvls.map(([k, v]) => <button key={k || 'none'} className={`lab-chip ${lvl === k ? '' : 'g'}`} style={{ cursor: 'pointer', ...(lvl === k && LEVEL_COLOR[k] ? { background: LEVEL_COLOR[k], color: '#fff' } : {}) }} onClick={() => setLvl(lvl === k ? null : k)}>{v.label} · {v.n}</button>)}
-          </div>
-        )}
-        {fams.length > 1 && (
-          <div className="gal-fams">
-            <button className={`lab-chip ${fam ? 'g' : ''}`} style={{ cursor: 'pointer' }} onClick={() => setFam('')}>全部 · {inTrack.length}</button>
-            {fams.map(([f, n]) => (
-              <button key={f} className={`lab-chip ${fam === f ? '' : 'g'}`} style={{ cursor: 'pointer' }} onClick={() => setFam(fam === f ? '' : f)}>{f} · {n}</button>
-            ))}
-          </div>
-        )}
+        {/* 筛选（11-19 用户：别摆一大串，最多三个维度）：行业 · 难度 · 更多（3D / 操作台），一行下拉 */}
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center', marginTop: 10, fontSize: 13 }}>
+          {fams.length > 1 && <select className="lab-input" style={SEL} value={fam} onChange={e => setFam(e.target.value)}>
+            <option value="">行业：全部 · {inTrack.length}</option>{fams.map(([f, n]) => <option key={f} value={f}>{f} · {n}</option>)}
+          </select>}
+          {lvls.length > 1 && <select className="lab-input" style={SEL} value={lvl ?? '*'} onChange={e => setLvl(e.target.value === '*' ? null : e.target.value)}>
+            <option value="*">难度：全部</option>{lvls.map(([k, v]) => <option key={k || 'none'} value={k}>{v.label} · {v.n}</option>)}
+          </select>}
+          <select className="lab-input" style={SEL} value={more} onChange={e => setMore(e.target.value)}>
+            <option value="">更多：不限</option><option value="3d">有 3D 场景 · {inTrack.filter(x => x.has3d).length}</option><option value="bench">有虚拟操作台 · {inTrack.filter(x => x.s.features?.bench).length}</option>
+          </select>
+          {(fam || lvl != null || more) && <button className="lab-chip g" style={{ cursor: 'pointer' }} onClick={() => { setFam(''); setLvl(null); setMore(''); }}>清空筛选</button>}
+        </div>
       </div>
 
       {err ? (
