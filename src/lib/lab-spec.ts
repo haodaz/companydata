@@ -106,10 +106,10 @@ export const FORMS: Record<SpaceForm, { label: string; pick: string; cert: strin
  * 人工（排一天骨架弹窗）和百业工厂助理（build_day 前先问）用同一套。四个形态都能用。
  */
 export type Depth = 'light' | 'standard' | 'deep';
-export const DEPTHS: Record<Depth, { label: string; pick: string; rule: string }> = {
-  light: { label: '短', pick: '每段 5–8 分钟、3–4 步，一段只做一件事', rule: '这一章是「短段」：5–8 分钟、3–4 步，一段只做一件事，台词简短，开场一两句就进题。' },
-  standard: { label: '标准', pick: '每段 10 分钟左右、4–6 步', rule: '这一章是「标准段」：10 分钟左右、4–6 步，有开场、有推进、有一个需要判断的点。' },
-  deep: { label: '长 · 起承转合', pick: '每段 15–20 分钟、6–9 步，有起承转合，适合一天只排 3 段左右', rule: `这一章是「长段」：15–20 分钟、6–9 步，要有起承转合——
+export const DEPTHS: Record<Depth, { label: string; pick: string; steps: string; rule: string }> = {
+  light: { label: '短', steps: '3–4 步', pick: '每段 5–8 分钟、3–4 步，一段只做一件事', rule: '这一章是「短段」：5–8 分钟、3–4 步，一段只做一件事，台词简短，开场一两句就进题。' },
+  standard: { label: '标准', steps: '4–6 步', pick: '每段 10 分钟左右、4–6 步', rule: '这一章是「标准段」：10 分钟左右、4–6 步，有开场、有推进、有一个需要判断的点。' },
+  deep: { label: '长 · 起承转合', steps: '6–9 步（按起承转合推进，见第 8 条）', pick: '每段 15–20 分钟、6–9 步，有起承转合，适合一天只排 3 段左右', rule: `这一章是「长段」：15–20 分钟、6–9 步，要有起承转合——
   起：到场，交代这一段的处境、在场的人和要做成什么；
   承：按这一行真实的做法往下推 2–3 步（看、问、判断、动手）；
   转：出现一个这一行真会遇到的意外 / 分歧 / 新信息（不是刁难），逼你调整原来的判断；
@@ -117,9 +117,17 @@ export const DEPTHS: Record<Depth, { label: string; pick: string; rule: string }
 同一批人物贯穿整段，剧情连着走，不要拆成互不相干的小题。` },
 };
 export const isDepth = (v: any): v is Depth => v === 'light' || v === 'standard' || v === 'deep';
-export const depthOf = (jdSnapshot: any): Depth | null => (isDepth(jdSnapshot?.depth) ? jdSnapshot.depth : null);
-/** 每章的写法规则：人定了深度就用它（步数优先于形态里写的） */
-export const depthRule = (jdSnapshot: any) => { const d = depthOf(jdSnapshot); return d ? `${DEPTHS[d].rule}步数和上面形态里写的不一样时，以这条为准。` : ''; };
+/**
+ * 每段多深：人选了就用人选的；没选就按这一天几格自己判断（11-19 用户：要会判断长任务还是短任务）——
+ * 段少每段就该长：≤ 3 格写长段（起承转合），4–5 格写标准段，6 格以上按形态默认。count = 这一天的格数（排骨架时是要排的格数，写章节时是已有章节数）
+ */
+export const depthOf = (jdSnapshot: any, count = 0): Depth | null => {
+  if (isDepth(jdSnapshot?.depth)) return jdSnapshot.depth;
+  const n = slotsOf(jdSnapshot) || count;
+  return n >= 2 && n <= 3 ? 'deep' : n >= 4 && n <= 5 ? 'standard' : null;
+};
+/** 每章的写法规则（步数优先于形态里写的） */
+export const depthRule = (jdSnapshot: any, count = 0) => { const d = depthOf(jdSnapshot, count); return d ? `${DEPTHS[d].rule}步数和上面形态里写的不一样时，以这条为准。` : ''; };
 export const slotsOf = (jdSnapshot: any): number | null => { const n = Math.round(Number(jdSnapshot?.slots)); return n >= 2 && n <= 9 ? n : null; };
 /** 形态默认几格（不填时） */
 export const defaultSlots = (form: SpaceForm | null) => (form === 'career' ? '5–6' : form === 'training' ? '4–6' : form === 'certify' ? '4–5' : '6–8');

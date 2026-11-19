@@ -452,7 +452,7 @@ export default function StudioPage() {
             <option value="">按形态默认（{defaultSlots(formOf(space.jd_snapshot))} 格）</option>{[2, 3, 4, 5, 6, 7, 8, 9].map(n => <option key={n} value={n}>{n} 格</option>)}
           </select></label>
           <label>每段多深 <select className="lab-input" style={{ width: 'auto', padding: '2px 6px' }} value={String(dayDepth ?? space.jd_snapshot?.depth ?? '')} onChange={e => setDayDepth(e.target.value)}>
-            <option value="">按形态默认</option>{(Object.keys(DEPTHS) as Depth[]).map(k => <option key={k} value={k}>{DEPTHS[k].label}：{DEPTHS[k].pick}</option>)}
+            <option value="">自动：段少写长（≤3 段起承转合，4–5 段标准）</option>{(Object.keys(DEPTHS) as Depth[]).map(k => <option key={k} value={k}>{DEPTHS[k].label}：{DEPTHS[k].pick}</option>)}
           </select></label>
         </div>
         <div style={{ fontSize: 12, color: 'var(--ink2)' }}>格数和深度存在这个空间上，之后排骨架、写 / 重写每一章都按这个来。</div>

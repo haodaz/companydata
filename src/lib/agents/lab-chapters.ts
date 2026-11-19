@@ -142,7 +142,7 @@ async function buildDayInner(spaceId: string, model: string, hint: string, progr
   const facts = await occupationFacts(space);
   // 11-19：格数 / 深度由人定（jd_snapshot.slots / depth）；自己排了时间点就以时间点的格数为准
   const want = plan.length || slotsOf((space as any).jd_snapshot) || 0;
-  const depth = depthOf((space as any).jd_snapshot);
+  const depth = depthOf((space as any).jd_snapshot, want);
 
   await progress('排一天骨架', `已有 ${chapters.length} 章 · 角色表 ${cast.length} 项`);
   const p = await ask(`
@@ -188,6 +188,9 @@ ${CAST_RULES}
   for (const e of Array.isArray(p.existing) ? p.existing : []) {
     const c = chapters.find(x => x.id === e?.id);
     if (c && ids.has(c.id) && !c.slot && str(e.slot, 40)) { c.slot = str(e.slot, 40); await supabaseAdmin.from('lab_chapters').update({ slot: c.slot }).eq('id', c.id); }
+    // 人排了时间点（11-19 实测：建空间自带的那章被放进 13:30，标题还是「前端组件设计工作台」）：没锁的草稿章改用人写的标题和要交代的事，之后重写这一章就按它来
+    const pl = c && plan.find(x => x.slot === c.slot);
+    if (c && pl && !c.locked && c.status === 'draft') { const [t0, ...rest] = pl.text.split('｜'); const title = (rest.length ? t0 : pl.text).slice(0, rest.length ? 20 : 8); const brief = rest.length ? rest.join('，') : pl.text; c.title = title; (c as any).brief = brief; await supabaseAdmin.from('lab_chapters').update({ title, brief }).eq('id', c.id); }
   }
   if (form === 'certify') { const daily = chapters.filter(c => c.kind !== 'assessment' && !c.locked).map(c => c.id); if (daily.length) await supabaseAdmin.from('lab_chapters').update({ kind: 'assessment' }).in('id', daily); }
   // 新角色先进角色表，好把简介里的编号（P01 / 临时的 N1）换成名字——简介是给体验者看的
@@ -267,6 +270,7 @@ async function buildChapterInner(spaceId: string, chapterId: string, model: stri
   const facts = await occupationFacts(space);
   const bible: DayBible = (space as any).bible || {};
   const day = (chs || []) as StudioChapter[];
+  const nDay = day.length;   // 这一天几格：没人定深度时按它判断长段 / 短段（11-19）
   const t = slotMinutes(ch.slot);
   const others = day.filter(c => c.id !== ch.id);
   const before = others.filter(c => (t != null && slotMinutes(c.slot) != null ? slotMinutes(c.slot)! < t : c.seq < ch.seq));
@@ -290,7 +294,7 @@ ${DAY_RULES}
 ${CAST_RULES}
 
 写法要求：
-1. 4–6 步真实工作中的决策动作，最后一步固定为 text（写结论 / 记录 / 交接留言）。让人是在「操作」而不是「答题」。
+1. ${depthOf((space as any).jd_snapshot, nDay) ? DEPTHS[depthOf((space as any).jd_snapshot, nDay)!].steps : '4–6 步'}真实工作中的决策动作，最后一步固定为 text（写结论 / 记录 / 交接留言）。让人是在「操作」而不是「答题」。
    - choose：单选一个动作 / 判断（4–5 个选项，有新人最容易选的错误项，正确项不能一眼看出）
    - multi：多选，带 max 上限，逼人取舍
    - classify：options 是要贴标签的 3–5 个条目（每条一个具体的人 / 事 / 物），labels 是 2 个标签。条目一定放在 options 里，不能只给 labels
@@ -302,8 +306,8 @@ ${CAST_RULES}
    scene.time 要落在本章时段附近（前后 1 小时内）。
 3. 要接住前面章节发生的事（提到具体的人和事），但不要重复它们的操作。
 4. 情境与数据虚构，不用真实企业的内部数据。全部用中文。${form ? `
-7. 「${FORMS[form].label}」的写法（和上面冲突时以这条为准）：${FORMS[form].chapter}评分：${FORMS[form].score}` : ''}${depthRule((space as any).jd_snapshot) ? `
-8. ${depthRule((space as any).jd_snapshot)}` : ''}
+7. 「${FORMS[form].label}」的写法（和上面冲突时以这条为准）：${depthOf((space as any).jd_snapshot, nDay) ? FORMS[form].chapter.replace(/每章 \d+–\d+ 步[，,；;]?/g, '') : FORMS[form].chapter}评分：${FORMS[form].score}` : ''}${depthRule((space as any).jd_snapshot, nDay) ? `
+8. ${depthRule((space as any).jd_snapshot, nDay)}` : ''}
 6. rubric：这一章的评分标准 4 个维度，权重合计 100；每个维度写「看什么」，要能区分会做事的人和会写套话的人，贴着这一章的内容（不要泛泛的「专业能力」）。
 5. expert：这一行老师傅在每一步会怎么做（choose 填选项 id；multi 填 id 数组；classify 填 {条目 id: 标签 id}；allocate 填 {条目 id: 数值}，和等于 total；slider 填数字；text 写一段示范答案）。
 
