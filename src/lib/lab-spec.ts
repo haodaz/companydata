@@ -141,6 +141,19 @@ export function parseDayPlan(text: string): { slot: string; text: string }[] {
 /** 百业生成默认模型（11-19 用户：挂 Claude，效果好；OpenAI 余额用完后 luna 全线 429）。环境变量可覆盖，国内 simulator 有自己的模型总控 */
 export const LAB_GEN_MODEL = process.env.NEXT_PUBLIC_LAB_GEN_MODEL || 'claude-sonnet-5-5';
 
+/**
+ * 难度 + 版本标记（11-19 用户：同一个职业有很精密的外科医生，也有生涯体验的，列表里分不清）。
+ * level = 四档难度（没定形态的老空间叫「岗位日常」）；version = 几段 · 多深 · 生成日期。体验馆、百业工厂、空间页同一套。
+ */
+export function spaceTag(jdSnapshot: any, createdAt?: string | null, chapterCount = 0): { level: string; form: SpaceForm | null; version: string } {
+  const f = formOf(jdSnapshot);
+  const n = slotsOf(jdSnapshot) || chapterCount;
+  // 深度只标真按深度生成的（人选了，或定了格数按格数推）；11-19 以前的老空间没有这条规则，不往上推
+  const d = isDepth(jdSnapshot?.depth) || slotsOf(jdSnapshot) ? depthOf(jdSnapshot, n) : null;
+  const date = createdAt ? String(createdAt).slice(5, 10) : '';
+  return { level: f ? FORMS[f].label : '岗位日常', form: f, version: [n ? `${n} 段` : '', d ? `${DEPTHS[d].label.replace(' · 起承转合', '')}段` : '', date].filter(Boolean).join(' · ') };
+}
+
 export const isForm = (v: any): v is SpaceForm => v === 'career' || v === 'training' || v === 'assess' || v === 'certify';
 /** 选级别时显示的一行：名字（证书说明） */
 export const levelText = (f: SpaceForm) => `${FORMS[f].label}（${FORMS[f].cert}）`;

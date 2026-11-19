@@ -14,7 +14,7 @@ import { useUser } from '@/lib/user-context';
 import { col, FX_CSS, LISTING, Plays, useLabNav, when } from '@/components/lab/FactoryKit';
 import { OPEN_MODULES } from '@/lib/lab-spec';
 
-type Space = { id: string; title: string; name: string | null; role: string; avatar: string | null; kind: string; company: string | null; anchor: any; preset: string | null; listing: 'draft' | 'listed' | 'unlisted'; chapters: { total: number; published: number }; plays: number; avg: number | null; last_play: string | null; created_by: string; created_at: string; form: string | null; open_modules: string[] | null; watch_bench: boolean };
+type Space = { tag?: { level: string; form: string | null; version: string }; id: string; title: string; name: string | null; role: string; avatar: string | null; kind: string; company: string | null; anchor: any; preset: string | null; listing: 'draft' | 'listed' | 'unlisted'; chapters: { total: number; published: number }; plays: number; avg: number | null; last_play: string | null; created_by: string; created_at: string; form: string | null; open_modules: string[] | null; watch_bench: boolean };
 const KIND: Record<string, string> = { career: '职业探索', discipline: '学科体验', research_post: '研究岗', pasted: '粘贴 JD', jd: '真实 JD' };
 
 export default function Page() { return <Suspense><App><Factory /></App></Suspense>; }
@@ -94,7 +94,7 @@ function Spaces({ d, reload }: { d: { spaces: Space[]; migrated: boolean; role: 
             <td style={{ minWidth: 240 }}>
               <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
                 {s.avatar ? <img src={s.avatar} alt="" className="fx-av" /> : <span className="fx-av ph">{(s.role || s.title).slice(0, 1)}</span>}
-                <div style={{ minWidth: 0 }}><b>{s.name ? `${s.name} · ${s.role}` : s.role || s.title}</b><div className="fx-sub">{[KIND[s.kind] || s.kind, s.company, s.preset, s.watch_bench ? '工位只观摩' : null, s.open_modules ? `开放 ${s.open_modules.length} 个模块` : null].filter(Boolean).join(' · ')}</div></div>
+                <div style={{ minWidth: 0 }}><b>{s.name ? `${s.name} · ${s.role}` : s.role || s.title}</b><div className="fx-sub">{[s.tag ? `${s.tag.level}${s.tag.version ? ` · ${s.tag.version}` : ''}` : null, KIND[s.kind] || s.kind, s.company, s.preset, s.watch_bench ? '工位只观摩' : null, s.open_modules ? `开放 ${s.open_modules.length} 个模块` : null].filter(Boolean).join(' · ')}</div></div>
               </div>
             </td>
             <td><span className={`fx-tag ${LISTING[s.listing]?.[1]}`}>{LISTING[s.listing]?.[0]}</span></td>

@@ -10,7 +10,7 @@ import { App, Drawer, Input, Modal, Popconfirm } from 'antd';
 import { useModel } from '@/lib/model-context';
 import { useUser } from '@/lib/user-context';
 import { passed, visitorIds } from '@/lib/lab-cert';
-import { formOf, moduleClosed, watchBenchOf } from '@/lib/lab-spec';
+import { formOf, moduleClosed, watchBenchOf, spaceTag } from '@/lib/lab-spec';
 import { SimRunner, SimStage, TraceCompare, enterFullscreen } from '@/components/lab/SimRunner';
 import { ChatLauncher } from '@/components/kg/PersonaChat';
 import { useNicknames } from '@/components/kg/useNicknames';
@@ -234,8 +234,8 @@ const HUB_CSS = `
  * 人物首页：一个人站在他自己的工作现场里。
  * 景深：远景（失焦的现场）、光束和网格、人物（带一点 3D 倾斜）、前景光斑，鼠标一动各层按远近错开。
  */
-function PersonHub({ name, role, avatar, tagline, scene, origin, level, levelLabel, stats, skills, portals, top, actions, onEnter }: {
-  name: string; role: string; avatar: string; tagline: string; scene: string; origin: React.ReactNode; level: number; levelLabel: string;
+function PersonHub({ name, role, badge, avatar, tagline, scene, origin, level, levelLabel, stats, skills, portals, top, actions, onEnter }: {
+  name: string; role: string; badge?: string; avatar: string; tagline: string; scene: string; origin: React.ReactNode; level: number; levelLabel: string;
   stats: { k: string; v: number; u: string }[]; skills: string[]; portals: { key: Mode | 'chat'; label: string; icon: string; sub: string; main?: boolean; go?: () => void }[];
   top: React.ReactNode; actions?: React.ReactNode; onEnter: (m: Mode) => void;
 }) {
@@ -279,6 +279,8 @@ function PersonHub({ name, role, avatar, tagline, scene, origin, level, levelLab
           <div className="hub-hud">
             <div className="lab-mono hub-kicker">{name}</div>
             <h1 className="hub-name">{role}</h1>
+            {/* 难度 · 版本（11-19：同一职业有生涯体验版也有精细考核版，进来就要知道是哪个） */}
+            {badge && <div className="lab-mono" style={{ display: 'inline-block', margin: '6px 0 2px', padding: '3px 10px', borderRadius: 999, border: '1px solid rgba(255,255,255,.28)', background: 'rgba(255,255,255,.08)', fontSize: 12, letterSpacing: .5 }}>{badge}</div>}
             {tagline && <div className="hub-tag">「{tagline}」</div>}
             <div className="hub-origin">{origin}</div>
             <div className="hub-lv">
@@ -1111,7 +1113,7 @@ function castOf(space: any, sim: Sim | null) {
       {/* ══════ 人物首页：一个人站在他的工作现场里 ══════ */}
       {!mode && (
         <PersonHub
-          name={nicks[String(id)] || profile.name || 'AI CORE'} role={profile.role || jd.title || ''} avatar={profile.avatar || ''} tagline={profile.tagline || ''}
+          name={nicks[String(id)] || profile.name || 'AI CORE'} role={profile.role || jd.title || ''} badge={(() => { const t = spaceTag(jd, space?.created_at, chapters.length); return `难度：${t.level}${t.version ? `  ·  ${t.version}` : ''}`; })()} avatar={profile.avatar || ''} tagline={profile.tagline || ''}
           scene={sim?.art?.cover || ''} level={lv.level} levelLabel={lv.label} stats={hubStats} skills={(profile.capabilities || []).slice(0, 4)} portals={portals}
           onEnter={m => (exp && m === 'learn' ? enterTeach() : setMode(m))}
           origin={draft

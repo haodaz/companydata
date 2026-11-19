@@ -7,6 +7,8 @@ import { App } from 'antd';
 import { familyOf } from '@/lib/career-family';
 import { featuredIndex } from '@/lib/lab-featured';
 import { useNicknames } from '@/components/kg/useNicknames';
+/** 难度标记的颜色（11-19）：由浅到深 */
+const LEVEL_COLOR: Record<string, string> = { career: 'rgba(22,163,74,.85)', training: 'rgba(37,99,235,.85)', assess: 'rgba(147,51,234,.85)', certify: 'rgba(220,38,38,.85)' };
 
 /**
  * 体验百业 · 体验馆：所有已发布的职业空间，像应用商店一样摆出来，点开就玩。
@@ -143,6 +145,7 @@ export default function GalleryPage() {
                 <div className="gal-cover">
                   {s.cover && <Image className="bg" src={s.cover} alt="" fill sizes="(max-width: 700px) 100vw, 400px" />}
                   <div className="gal-badges">
+                    {s.tag && <span className="gal-badge" title={`难度：${s.tag.level}${s.tag.version ? `｜版本：${s.tag.version}` : ''}`} style={{ background: LEVEL_COLOR[s.tag.form || ''] || 'rgba(255,255,255,.18)', color: '#fff' }}>{s.tag.level}{s.tag.version ? ` · ${s.tag.version}` : ''}</span>}
                     {s.features?.bench && <span className="gal-badge bench">⚙ 虚拟工位{s.features.benchChapters > 1 ? ` · ${s.features.benchChapters} 处` : ''}</span>}
                     {fullDay(s) ? <span className="gal-badge">完整一天 · {ch.published} 章</span> : ch.published > 1 && <span className="gal-badge">一天 · {ch.published} 章</span>}
                     {s.features?.immersive && <span className="gal-badge">沉浸场景</span>}

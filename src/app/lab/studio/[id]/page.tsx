@@ -10,7 +10,7 @@ import { SimRunner, SimStage } from '@/components/lab/SimRunner';
 import { CHAPTER_KINDS, STEP_TYPES, blankStep, checkAll, type StudioChapter, type StudioIssue, type BasisRow } from '@/lib/lab-studio';
 import { SpecEditor, SPEC_CSS } from '@/components/lab/SpecEditor';
 import { col, FX_CSS, LISTING, Plays, useLabNav } from '@/components/lab/FactoryKit';
-import { formOf, hasSpec, REVISE_CHIPS, watchBenchOf, DEPTHS, defaultSlots, type Depth, type Anchor, type GenSpec, LAB_GEN_MODEL } from '@/lib/lab-spec';
+import { formOf, hasSpec, REVISE_CHIPS, watchBenchOf, DEPTHS, defaultSlots, spaceTag, type Depth, type Anchor, type GenSpec, LAB_GEN_MODEL } from '@/lib/lab-spec';
 import { CAST_KINDS, applyCastArt, castKind, stepsUsing, type CastKind, type CastMember, type LabAsset } from '@/lib/lab-cast';
 
 /**
@@ -221,6 +221,7 @@ export default function StudioPage() {
         <div style={{ minWidth: 0 }}>
           <div className="lab-mono lab-cap">SPACE · 百业工厂</div>
           <div style={{ fontSize: 19, fontWeight: 800 }}>{profile.name ? <>{profile.name} <span style={{ color: 'var(--v)' }}>· {profile.role}</span></> : space.title}</div>
+          {(() => { const t = spaceTag(space.jd_snapshot, space.created_at, (data?.chapters || []).length); return <div style={{ fontSize: 12.5, color: 'var(--ink2)', marginTop: 2 }}>难度 <b style={{ color: 'var(--v)' }}>{t.level}</b>{t.version ? ` · 版本 ${t.version}` : ''}</div>; })()}
         </div>
         <div style={{ flex: 1 }} />
         {/* 右上角：发布状态 + 预览 + 更多（11-06：预览和上下架是动作，不占 tab） */}

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { getSessionUser } from '@/lib/session';
 import { denyUnlessLabOwner } from '@/lib/lab-owner';
-import { formOf, OPEN_MODULES, watchBenchOf } from '@/lib/lab-spec';
+import { formOf, OPEN_MODULES, watchBenchOf, spaceTag } from '@/lib/lab-spec';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -64,7 +64,7 @@ export async function GET(req: NextRequest) {
           listing: migrated ? (s.listing || 'listed') : (c.published ? 'listed' : 'draft'), listed_at: s.listed_at || null,
           chapters: c, plays: x?.plays || 0, avg: x?.scored ? n1(x.sum / x.scored) : null, last_play: x?.last || null,
           created_by: s.created_by, created_at: s.created_at,
-          form: formOf(jd), open_modules: Array.isArray(jd.open_modules) ? jd.open_modules : null, watch_bench: watchBenchOf(jd),
+          tag: spaceTag(jd, s.created_at, c.total), form: formOf(jd), open_modules: Array.isArray(jd.open_modules) ? jd.open_modules : null, watch_bench: watchBenchOf(jd),
         };
       });
       return NextResponse.json({ ok: true, migrated, role: me.role, spaces: rows });

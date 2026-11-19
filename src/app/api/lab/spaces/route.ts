@@ -9,7 +9,7 @@ import { trackDemand } from '@/lib/flywheel/signals';
 import { attachCostToSpace, withCost } from '@/lib/token-logger';
 import { ensureOccupationLater } from '@/lib/kg/ensure-occupation';
 import { getSessionUser } from '@/lib/session';
-import { cleanAnchor, cleanSpec, hasSpec, renderSpec, LAB_GEN_MODEL } from '@/lib/lab-spec';
+import { cleanAnchor, cleanSpec, hasSpec, renderSpec, LAB_GEN_MODEL, spaceTag } from '@/lib/lab-spec';
 import { reviewSpace } from '@/lib/lab-followup';
 import { after } from 'next/server';
 
@@ -51,6 +51,7 @@ export async function GET(req: Request) {
       const sim = s.sim as any;
       return {
         ...s, sim: undefined, created_by: undefined,   // 生成者邮箱不往外给（体验百业是公开的）
+        tag: spaceTag(s.jd_snapshot, s.created_at, ((chs as any).data || []).filter((c: any) => c.task_id === s.id && c.status === 'published').length),
         // 有工位：老空间看主 sim，按章节的看已发布章节里有没有工位步骤（体验馆按这个排序、打标记）
         features: (() => {
           const pubCh = ((chs as any).data || []).filter((c: any) => c.task_id === s.id && c.status === 'published');
