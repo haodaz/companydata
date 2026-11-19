@@ -147,7 +147,8 @@ export const LAB_GEN_MODEL = process.env.NEXT_PUBLIC_LAB_GEN_MODEL || 'claude-so
  *   从职业名生成的职业探索（jd.kind = career）、学科体验（discipline）→ 生涯体验；从 JD 生成的「新人上班的一天」（校招工作样本）、研究岗带教 → 职业虚拟考核。
  * version = 几段 · 多深 · 生成日期。体验馆、百业工厂、空间页同一套。
  */
-export const tagFormOf = (jdSnapshot: any): SpaceForm => formOf(jdSnapshot) || (jdSnapshot?.kind === 'career' || jdSnapshot?.kind === 'discipline' ? 'career' : 'assess');
+// level_tag：老空间按内容难度打分后归的档（scripts/lab-level-tag.mts，1–3 生涯体验 / 4–5 模拟实践 / 6–8 职业虚拟考核 / 9–10 资质考核）
+export const tagFormOf = (jdSnapshot: any): SpaceForm => formOf(jdSnapshot) || (isForm(jdSnapshot?.level_tag) ? jdSnapshot.level_tag : null) || (jdSnapshot?.kind === 'career' || jdSnapshot?.kind === 'discipline' ? 'career' : 'assess');
 export function spaceTag(jdSnapshot: any, createdAt?: string | null, chapterCount = 0): { level: string; form: SpaceForm; inferred: boolean; version: string } {
   const f = tagFormOf(jdSnapshot);
   const n = slotsOf(jdSnapshot) || chapterCount;
