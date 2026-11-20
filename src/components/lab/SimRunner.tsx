@@ -429,6 +429,7 @@ export function TraceCompare({ sim, trace, expertTrace, expertName }: { sim: Sim
         const m = compareStep(s, trace?.[s.id], expertTrace?.[s.id]);
         const tone = m === null ? 'var(--ink3)' : m === 1 ? '#12a150' : m === 0.5 ? '#d97706' : '#dc2626';
         const why = expertTrace?._why?.[s.id];
+        const explain = (expertTrace as any)?._explain?.[s.id];   // 生涯体验：为什么（11-20）
         return (
           <div key={s.id} style={{ display: 'flex', gap: 12, paddingBottom: 14, marginBottom: 14, borderBottom: '1px solid var(--line)' }}>
             <span style={{ width: 26, height: 26, borderRadius: 13, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 800, color: '#fff', background: tone }}>{m === null ? i + 1 : m === 1 ? '✓' : m === 0.5 ? '≈' : '✗'}</span>
@@ -437,6 +438,7 @@ export function TraceCompare({ sim, trace, expertTrace, expertName }: { sim: Sim
               <div style={{ fontSize: 14, lineHeight: 1.75, marginTop: 3 }}>{describeStep(s, trace?.[s.id])}</div>
               {s.type === 'bench' && trace?.[s.id]?.events && <SnapshotStrip trace={trace[s.id] as BenchTrace} />}
               {expertTrace && m !== 1 && <div style={{ fontSize: 13, lineHeight: 1.75, marginTop: 4, padding: '6px 10px', borderRadius: 10, background: 'rgba(18,161,80,.07)', color: '#0d7a3d' }}><b>{expertName || '专家'}在这一步：</b>{describeStep(s, expertTrace[s.id])}</div>}
+              {explain && <div style={{ fontSize: 13.5, lineHeight: 1.75, marginTop: 6, padding: '8px 12px', borderRadius: 10, background: 'rgba(96,85,245,.06)', borderLeft: '3px solid var(--v)' }}><b>为什么：</b>{String(explain).split(/\*\*(.+?)\*\*/g).map((t, k) => k % 2 ? <b key={k}>{t}</b> : t)}</div>}
               {why && <div className="lab-mono" style={{ fontSize: 11.5, color: 'var(--v)', marginTop: 4, letterSpacing: '.02em' }}>AI 核心在这一步追问过：{why}</div>}
             </div>
           </div>

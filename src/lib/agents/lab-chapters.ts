@@ -9,7 +9,7 @@
  */
 import { recordEdit } from '@/lib/lab-edits';
 import { generateContent, resolveModel } from '@/lib/llm-client';
-import { FORMS, formOf, specTextOf, DEPTHS, depthOf, depthRule, slotsOf } from '@/lib/lab-spec';
+import { FORMS, formOf, specTextOf, DEPTHS, depthOf, depthRule, slotsOf, CAREER_STORY, CAREER_LAST } from '@/lib/lab-spec';
 import { logTokenUsage, withCost } from '@/lib/token-logger';
 import { buildLesson } from '@/lib/lab-lesson';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
@@ -171,7 +171,8 @@ ${plan.map(x => `  ${x.slot}｜${x.text}`).join('\n')}
 - **格数含已有章节**：上面已经做好的 ${chapters.length} 章算在这一天的格数里，新格子 = 总格数 − ${chapters.length}；已有的每一章都要在 existing 里给一个时段（建空间时自带的那一章一般是操作台章，放在上午的核心操作时段）。
 - 这一天会反复出场、但角色表里还没有的人物 / 地点 / 道具，放进 new_cast（各章生成时会优先用）。人物 2–6 个，地点 2–4 个，道具 2–5 个（道具一定要有）。
 ${CAST_RULES}
-- 要前后一致的事实 3–6 条（如「上午 9 点有一批团购顾客」「消毒液只剩半桶」）。${form === 'training' || form === 'assess' || form === 'certify' ? `
+- 要前后一致的事实 3–6 条（如「上午 9 点有一批团购顾客」「消毒液只剩半桶」）。${form === 'career' ? `
+- 生涯体验要有一条主线（11-20 照百业同事的样板）：facts 第一条写「今天的主线事件」——一件贯穿全天的事（如「昨夜急诊收的阑尾炎患者小许，今天第一台手术就是他」「上午线上白屏，祸源是昨天的发版」）；第二条写「全天最大的扣子」——上午的哪个判断 / 教训，到哪一段被验证或成为做决定的理由。人物定一位带教师傅（有名字、有性格）+ 2–3 位协作的人。` : ''}${form === 'training' || form === 'assess' || form === 'certify' ? `
 - 这是${FORMS[form].label}：数字就是考点。facts 第一条写这一次统一的配方 / 参数表（每项写死具体数值和允许偏差，总量要算得通）；已有章节里已经用过的数字照搬，不要另起一套。后面每一章都只能用这一套数字。` : ''}
 - 全部用中文。
 
@@ -294,7 +295,7 @@ ${DAY_RULES}
 ${CAST_RULES}
 
 写法要求：
-1. ${depthOf((space as any).jd_snapshot, nDay) ? DEPTHS[depthOf((space as any).jd_snapshot, nDay)!].steps : '4–6 步'}真实工作中的决策动作，最后一步固定为 text（写结论 / 记录 / 交接留言）。让人是在「操作」而不是「答题」。
+1. ${form === 'career' ? '3 道决策题（全天最后一段再加 1 道反思 text，见第 9 条）' : depthOf((space as any).jd_snapshot, nDay) ? DEPTHS[depthOf((space as any).jd_snapshot, nDay)!].steps : '4–6 步'}真实工作中的决策动作，${form === 'career' ? '' : '最后一步固定为 text'}（写结论 / 记录 / 交接留言）。让人是在「操作」而不是「答题」。
    - choose：单选一个动作 / 判断（4–5 个选项，有新人最容易选的错误项，正确项不能一眼看出）
    - multi：多选，带 max 上限，逼人取舍
    - classify：options 是要贴标签的 3–5 个条目（每条一个具体的人 / 事 / 物），labels 是 2 个标签。条目一定放在 options 里，不能只给 labels
@@ -307,7 +308,8 @@ ${CAST_RULES}
 3. 要接住前面章节发生的事（提到具体的人和事），但不要重复它们的操作。
 4. 情境与数据虚构，不用真实企业的内部数据。全部用中文。${form ? `
 7. 「${FORMS[form].label}」的写法（和上面冲突时以这条为准）：${depthOf((space as any).jd_snapshot, nDay) ? FORMS[form].chapter.replace(/每章 \d+–\d+ 步[，,；;]?/g, '') : FORMS[form].chapter}评分：${FORMS[form].score}` : ''}${depthRule((space as any).jd_snapshot, nDay) ? `
-8. ${depthRule((space as any).jd_snapshot, nDay)}` : ''}
+8. ${depthRule((space as any).jd_snapshot, nDay)}` : ''}${form === 'career' ? `
+9. ${CAREER_STORY}` : ''}
 6. rubric：这一章的评分标准 4 个维度，权重合计 100；每个维度写「看什么」，要能区分会做事的人和会写套话的人，贴着这一章的内容（不要泛泛的「专业能力」）。
 5. expert：这一行老师傅在每一步会怎么做（choose 填选项 id；multi 填 id 数组；classify 填 {条目 id: 标签 id}；allocate 填 {条目 id: 数值}，和等于 total；slider 填数字；text 写一段示范答案）。
 
@@ -315,7 +317,8 @@ ${CAST_RULES}
 {
   "new_cast": [ { "id": "N1", "kind": "person|place|prop", "name": "", "type_name": "", "note": "", "look": "" } ],
   "sim": { "title": "<本章操作台名称>", "intro": "<开场：把体验者带进这一章时段的情境，2–3 句>", "steps": [ { "id": "<英文短 id>", "type": "choose|multi|classify|allocate|slider|text", "scene": { "who": "<P01 / N1>", "time": "", "text": "" }, "place": "<S01 / N2>", "props": ["<T01>"], "prompt": "", "options": [ { "id": "", "label": "", "detail": "" } ], "max": 2, "labels": [ { "id": "", "label": "" } ], "total": 100, "unit": "" } ] },
-  "expert": { "<step id>": "<见上>" },
+  "expert": { "<step id>": "<见上>" },${form === 'career' ? `
+  "explain": { "<决策题 step id>": "<为什么：对的为什么对、错的错在哪，2–3 句>" },` : ''}
   "rubric": [ { "key": "<英文短 key>", "name": "<维度名>", "weight": <数字>, "description": "<看什么>" } ]
 }`;
   const prompt = (fix: string) => `角色表（编号 · 名字 · 类型；★ 表示这一天前面的章节已经出场过）：
@@ -326,7 +329,7 @@ ${(bible.facts || []).map(f => `- ${f}`).join('\n') || '（无）'}
 这一天里，在这一章之前已经发生的：
 ${before.length ? before.map(chapterLine).join('\n') : '（这是一天的第一章）'}
 在这一章之后还会发生的（不要抢它们的内容）：
-${after.length ? after.map(c => `- ${c.slot || ''} ${c.title}`).join('\n') : '（无）'}
+${after.length ? after.map(c => `- ${c.slot || ''} ${c.title}`).join('\n') : '（无）'}${form === 'career' && !after.length ? `\n\n${CAREER_LAST(String((space as any).profile?.role || (space as any).jd_snapshot?.title || '这一行'))}` : ''}
 
 【要写的这一章】时段 ${ch.slot || '未定'} · 类型 ${ch.kind} · 标题「${ch.title}」${benchNote}
 要交代的事：${ch.brief || '（按标题发挥）'}
@@ -359,13 +362,17 @@ ${hint ? `管理员的要求：${hint}\n` : ''}
   const nameOf = (code: string) => (tmp.get(code) || cast.find(m => m.code === code))?.name;
   decodeSimRefs(p.sim, nameOf);
   if (p.expert && typeof p.expert === 'object') for (const k of Object.keys(p.expert)) if (typeof p.expert[k] === 'string') p.expert[k] = decodeCastRefs(p.expert[k], nameOf);
-  const sim = cleanSim(p.sim, ch, ref);
+  // 生涯体验（11-20）：只有全天最后一段收一道反思 text，其余段不留 text、也不自动补
+  const careerEnd = form === 'career' ? (after.length ? 'none' : 'reflect') : undefined;
+  const sim = cleanSim(p.sim, ch, ref, careerEnd, String((space as any).profile?.role || (space as any).jd_snapshot?.title || '这一行'));
   if (sim.steps.length < 3) throw new Error('生成的步骤太少，换个说法再试一次');
   if (benches.length && !sim.steps.some((st: any) => st.type === 'bench')) {
     for (const b of benches) sim.steps.splice(Math.min(Math.round(b.i / oldSteps.length * sim.steps.length), sim.steps.length), 0, b.st);
   }
   const oldTrace: any = (ch as any).expert_trace || {};
   const trace = sanitizeTrace(sim, { ...Object.fromEntries(benches.map(b => [b.st.id, oldTrace[b.st.id]])), ...(p.expert || {}) });
+  // 答完的「为什么」（11-20 生涯体验：对的为什么对、错的错在哪），回放对照里给学生看
+  if (p.explain && typeof p.explain === 'object') { const ex = Object.fromEntries(Object.entries(p.explain).filter(([k, v]) => sim.steps.some((x: any) => x.id === k) && typeof v === 'string').map(([k, v]) => [k, String(v).slice(0, 400)])); if (Object.keys(ex).length) (trace as any)._explain = ex; }
 
   // 用到但还没有图的人物 / 场景：现画，画完立刻归库（一章最多画 4 张，省钱）
   let drawn = 0;
@@ -398,7 +405,7 @@ ${hint ? `管理员的要求：${hint}\n` : ''}
 }
 
 /** 不用 sanitizeSim：它会悄悄丢步骤、截到 8 步。这里补齐结构、把角色编号换成角色表里的人名 / id，问题留给工作室的校验去标 */
-function cleanSim(raw: any, ch: StudioChapter, ref: (v: any) => CastMember | null): Sim {
+function cleanSim(raw: any, ch: StudioChapter, ref: (v: any) => CastMember | null, careerEnd?: 'none' | 'reflect', role = ''): Sim {
   const TYPES = ['choose', 'multi', 'classify', 'allocate', 'slider', 'text'];
   const used = new Set<string>();
   const steps: SimStep[] = (Array.isArray(raw?.steps) ? raw.steps : []).filter((s: any) => TYPES.includes(s?.type) && s.prompt).slice(0, 8).map((s: any, i: number) => {
@@ -421,7 +428,9 @@ function cleanSim(raw: any, ch: StudioChapter, ref: (v: any) => CastMember | nul
     if (s.type === 'slider') { st.min = 0; st.maxValue = 100; st.unit = String(s.unit || '%'); }
     return st;
   });
-  if (steps.length && steps[steps.length - 1].type !== 'text') steps.push({ id: 'final', type: 'text', prompt: '最后，用几句话写下你的结论。' });
+  if (careerEnd === 'none') { for (let i = steps.length - 1; i >= 0; i--) if (steps[i].type === 'text') steps.splice(i, 1); }
+  else if (careerEnd === 'reflect') { if (steps.length && steps[steps.length - 1].type !== 'text') steps.push({ id: 'reflect', type: 'text', prompt: `走完${role}的一天：哪件事你干得最有劲？哪件事你撑不住？这样的每一天，你还愿意吗？（80 字以内，不用讨好任何人，实话就行）` }); }
+  else if (steps.length && steps[steps.length - 1].type !== 'text') steps.push({ id: 'final', type: 'text', prompt: '最后，用几句话写下你的结论。' });
   return { title: String(raw?.title || ch.title), intro: String(raw?.intro || ''), steps };
 }
 
