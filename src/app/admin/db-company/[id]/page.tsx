@@ -6,8 +6,9 @@ import { Button, Card, Col, Descriptions, Empty, Form, Input, InputNumber, Modal
 import { guardLink } from '@/lib/download-gate';
 import { ArrowLeftOutlined, DeleteOutlined, EditOutlined, GlobalOutlined, LinkOutlined, ThunderboltOutlined, FileTextOutlined, ApiOutlined, CheckCircleOutlined, CloseCircleOutlined, LockOutlined, ProfileOutlined, EyeOutlined, TrophyOutlined, SearchOutlined, LoadingOutlined, FilePdfOutlined } from '@ant-design/icons';
 import { DEEP_TOPICS, topicsFor } from '@/lib/company-deep-topics';
-import { FINANCING_COLUMNS, NEWS_COLUMNS, EXECUTIVE_COLUMNS, PRODUCT_COLUMNS, formatProfileValue } from '@/components/admin/CompanyRunView';
+import { FINANCING_COLUMNS, NEWS_COLUMNS, EXECUTIVE_COLUMNS, formatProfileValue } from '@/components/admin/CompanyRunView';
 import { EntityHero } from '@/components/admin/EntityHero';
+import { CompanyProductsPanel } from '@/components/admin/CompanyProductsPanel';
 import { useModel } from '@/lib/model-context';
 import { BRAND } from '@/lib/theme';
 import { COMPANY_EDIT_FIELDS, COMPANY_TYPE_LABELS, COMPANY_TYPE_OPTIONS, SEGMENT_LABELS, SEGMENT_OPTIONS, KIND_LABELS, KIND_OPTIONS, hasValue } from '@/lib/company-fields';
@@ -312,8 +313,7 @@ export default function CompanyDetailPage() {
               },
               {
                 key: 'products', label: `核心产品（${products.length}）`,
-                children: <Table rowKey="id" size="small" scroll={{ x: 1000 }} dataSource={products} columns={[...PRODUCT_COLUMNS, entityActionCol('products')]} pagination={false}
-                  locale={{ emptyText: <Empty description={<span>还没有核心产品。<a onClick={() => router.push(toolCompanyHref)}>跑画像流水线</a>会从官网产品中心 / 年报 / 旗舰店提取。</span>} /> }} />,
+                children: <CompanyProductsPanel companyId={company.id} website={company.official_website} products={products} actionCol={entityActionCol('products')} onChanged={load} />,
               },
               {
                 key: 'financings', label: `融资（${financings.length}）`,

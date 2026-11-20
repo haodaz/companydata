@@ -96,6 +96,13 @@ async function upsertRows(table: string, companyId: number, logId: number, rows:
   return saved;
 }
 
+/** 核心产品单独落库（官网抓取 / 人工链接抓取，11-20）：同一套去重键，已有的只填空，人工改过 / 删过的不动 */
+export async function saveCompanyProducts(companyId: number, rows: any[]): Promise<number> {
+  const saved = await upsertRows('company_products', companyId, null as any, rows, r => productKey(companyId, r));
+  await refreshCompleteness(companyId);
+  return saved;
+}
+
 export interface ApplyResult { filled: string[]; financings_saved: number; news_saved: number; executives_saved: number; products_saved: number; completeness_before: number; completeness_after: number; frozen: boolean }
 
 export async function applyProfileBundle(logId: number, companyId: number, bundle: ProfileBundle): Promise<ApplyResult> {

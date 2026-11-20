@@ -1,4 +1,5 @@
-import { kwText } from '@/lib/entity-ids';
+import { kwText, randomId } from '@/lib/entity-ids';
+import { normalizeProduct, productKey } from '@/lib/company-merge';
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { SUB_ENTITIES, type SubEntityKey } from '@/lib/company-fields';
@@ -30,6 +31,31 @@ export async function GET(request: Request) {
     const { data, error } = await supabaseAdmin.from(t.table).select('*').eq('company_id', companyId).eq('if_delete', false).order(order, { ascending: t.key === 'executives' || t.key === 'products', nullsFirst: false }).limit(500);
     if (error) throw error;
     return NextResponse.json({ success: true, data: data || [] });
+  } catch (error: any) {
+    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  }
+}
+
+/** 人工新增一条（目前开放核心产品，11-20）：{ entity: 'products', companyId, ...fields }；填了的字段都锁定 */
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+    const companyId = parseInt(body.companyId);
+    if (body.entity !== 'products' || !companyId) return NextResponse.json({ success: false, error: '目前只支持手动新增核心产品' }, { status: 400 });
+    const p = normalizeProduct(body);
+    if (!p) return NextResponse.json({ success: false, error: '产品名必填（80 字以内）' }, { status: 400 });
+    const key = productKey(companyId, p);
+    const { data: dup } = await supabaseAdmin.from('company_products').select('id, if_delete').eq('dedupe_key', key).maybeSingle();
+    const now = new Date().toISOString();
+    const row: Record<string, any> = { ...p, tech_keywords: kwText(p.tech_keywords), human_locked_fields: EDITABLE.products.filter(k => body[k] !== undefined && body[k] !== '' && body[k] !== null), human_review_status: 'review', updated_at: now };
+    // 同名的删过就恢复成这条，没删就提示已有
+    if (dup && !dup.if_delete) return NextResponse.json({ success: false, error: '已经有同名产品了，直接改那一条' }, { status: 400 });
+    const { data, error } = dup
+      ? await supabaseAdmin.from('company_products').update({ ...row, if_delete: false }).eq('id', dup.id).select().single()
+      : await supabaseAdmin.from('company_products').insert({ ...row, company_id: companyId, dedupe_key: key, external_id: randomId(24), if_delete: false, created_at: now }).select().single();
+    if (error) throw error;
+    await refreshCompleteness(companyId);
+    return NextResponse.json({ success: true, row: data });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
