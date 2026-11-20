@@ -12,7 +12,7 @@ import { generateContent } from '@/lib/llm-client';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { logTokenUsage } from '@/lib/token-logger';
 
-export const FLUENCY_VERSION = 'v3-26b · engine 2026-11-17（+宇宁补词表 · 模型补扫）';
+export const FLUENCY_VERSION = 'v3-26b · engine 2026-11-20（任务块 · 窗口按块）';
 const MODEL = process.env.FLUENCY_MODEL || process.env.WORK_GRADE_MODEL || 'claude-opus-5-5';
 
 type Spec = typeof spec;
@@ -30,6 +30,8 @@ export interface FluencyInput {
   profile?: TaskProfile | null;
   /** false = 不写解读（只要分数时省一次调用） */
   narrate?: boolean;
+  /** 评法（11-20）：默认 v3（k 按不相邻几段数）；'v3-spec' = 照 02 页「同块同行为 1 条、k=b=1 封顶」（单任务作答会全部封顶，对照用）；'committee' = 评审团。线上没切之前都走默认 */
+  engine?: 'v3' | 'v3-spec' | 'committee';
   /** 站内没问过 AI、但在自己电脑上用了外部 AI：从截图 / 插件网页抽出来的提问原话（lib/work/outside-asks），没有 AI 的回答 */
   outside?: { asks: { t: number; q: string; complete: boolean; src: string }[]; note: string } | null;
 }
@@ -106,7 +108,27 @@ const TASK_VERB = /(分析|写|做|改|算|查|整理|设计|翻译|核对|生�
 const OUT_REQ = /(给我|输出|生成|写一份|写一个|写个|写一版|整理成|做成|做一份|做一个|列出|列成|起草|帮我写|帮我做|帮我整理|帮我算|帮我生成|export|give me|write (me )?an?|draft an?|generate|produce|create)/i;
 const CONSULT = /(怎么做|你觉得呢|帮我想想|有什么思路|什么方法|怎么看|该怎么|如何|吗[？?]?$|what do you think|how should|any ideas)/i;
 const NEGATE = /^\s*(不对|不是|错了|重来|不行|不要|no[,. ]|wrong)/i;
-interface Anchors { P1: number | null; O1: number | null; Aout: number | null; Olast: number | null; Afinal: number | null }
+interface Anchors { P1: number | null; O1: number | null; Aout: number | null; Olast: number | null; Afinal: number | null; /** 块内第几条（从 0 起）、所在块有几条用户消息（11-20 窗口按块） */ rel?: number[]; size?: number[] }
+
+/**
+ * 任务块（11-20 潜历复盘 4.1 第 1 条：先切任务块，再跑指标；窗口按块、同块同行为只算 1 条、跨块才算独立证据）。
+ * 平台上不靠措辞猜：块 = 当时在做的子任务——推进式题解锁到第几步 × 正在做哪份交付物（回到之前的交付物算回到同一块）；
+ * 外部 AI 的提问（录屏 / 插件抽出来的）按用的是哪个工具分（换工具 = 硬边界）。AI 工作台的题一般只有一块。
+ */
+export interface TaskBlock { id: number; label: string; msgs: number[] }
+export function taskBlocks(chat: ChatTurn[], events: { t: number; type: string; [k: string]: any }[], srcs?: string[] | null): { of: number[]; list: TaskBlock[] } {
+  const ev = [...events].filter(e => e.type === 'stage_unlock' || e.type === 'switch_part').sort((x, y) => x.t - y.t);
+  const hasStage = ev.some(e => e.type === 'stage_unlock');
+  const keyAt = (t: number, i: number) => {
+    if (srcs) return `外部 AI · ${srcs[i] || '未知工具'}`;
+    let st = '', pt = '';
+    for (const e of ev) { if (e.t > t) break; if (e.type === 'stage_unlock' && e.id) st = String(e.id); if (e.type === 'switch_part' && e.id) pt = String(e.id); }
+    return [hasStage ? (st || '第 1 步').toUpperCase() : '', pt || 'd1'].filter(Boolean).join(' · ');
+  };
+  const ids = new Map<string, number>(), list: TaskBlock[] = [];
+  const of = chat.map((c, i) => { const k = keyAt(c.t, i); if (!ids.has(k)) { ids.set(k, list.length); list.push({ id: list.length, label: k, msgs: [] }); } const b = ids.get(k)!; list[b].msgs.push(i); return b; });
+  return { of, list };
+}
 function anchorsOf(chat: ChatTurn[]): Anchors {
   const isReq = (q: string) => OUT_REQ.test(q) && !(CONSULT.test(q) && !/(给我|写一份|做成|整理成|生成)/.test(q));
   const isOut = (a: string) => (a || '').length >= 150 || /```|\n\|.+\|/.test(a || '');
@@ -150,13 +172,14 @@ function firstHit(bid: string, text: string): { m: RegExpMatchArray; label: stri
 }
 
 function inWindow(bid: string, i: number, a: Anchors): boolean {
+  const r = a.rel ? a.rel[i] : i;   // 块内第几条（11-20）
   switch (bid) {
-    case 'B1': return i < 2;
-    case 'B14': return i >= 1;
+    case 'B1': return r < 2;
+    case 'B14': return r >= 1;
     case 'B3': return a.P1 == null || i <= a.P1;
     case 'B5': return a.O1 == null || i < a.O1;
-    case 'B11': return i < 5;
-    case 'B10': return i >= 2;
+    case 'B11': return r < 5;
+    case 'B10': return r >= 2;
     case 'B12': return a.Aout == null || i <= a.Aout;
     case 'B17': return a.Aout != null && i > a.Aout;
     case 'B23': return a.Afinal != null && i > a.Afinal;
@@ -172,7 +195,7 @@ function locate(inp: FluencyInput, a: Anchors, source: string, disclosure: strin
   inp.chat.forEach((c, i) => {
     for (const bid of BIDS) {
       if (!inWindow(bid, i, a)) continue;
-      if (NEED_4.has(bid) && inp.chat.length < 4) continue;
+      if (NEED_4.has(bid) && (a.size ? a.size[i] : inp.chat.length) < 4) continue;   // 单块 < 4 条用户消息 → 这四项 N/A（06 页四）
       const quoted = split[i].ratio > 0.8;
       const text = SELF_ONLY.has(bid) && split[i].ratio >= 0.5 ? split[i].self : c.q;
       if (SELF_ONLY.has(bid) && quoted && split[i].self.length < 20) continue;
@@ -260,7 +283,7 @@ ${specText()}
 只输出 JSON：{"results":[{"pkg":1,"bid":"B10","valid":true,"q":3,"why":"不超过 40 字","quote":"不超过 30 字原文","neg":""}]}
 每个包里列出的每个行为都要给一条结果。`;
 
-interface Evidence { bid: string; src: Candidate['src']; i: number; q: number; why: string; quote: string; valid: boolean; quoted?: boolean; related?: boolean; rule: string }
+interface Evidence { bid: string; src: Candidate['src']; i: number; q: number; why: string; quote: string; valid: boolean; quoted?: boolean; related?: boolean; rule: string; /** 任务块编号（11-20）：对话按块；交付侧 / 事件证据归最后一块 */ block?: number }
 
 async function judge(inp: FluencyInput, cands: Candidate[], stats: string, warn: string[]): Promise<{ evs: Evidence[]; negs: { id: string; i: number; quote: string }[] }> {
   // 同一条消息命中的多条规则合成一个包（06 页七：多规则合并，一次 multi-label）
@@ -328,7 +351,7 @@ async function scanGaps(inp: FluencyInput, a: Anchors, split: { ratio: number; s
   const gap = BIDS.filter(b => !skip.has(b) && (have.get(b) || 0) < 2);
   if (!gap.length) return [];
   const judged = new Set(evs.filter(e => e.src === 'chat').map(e => `${e.bid}:${e.i}`));
-  const msgs = chat.map((c, i) => ({ i, bids: gap.filter(b => inWindow(b, i, a) && !judged.has(`${b}:${i}`)) }))
+  const msgs = chat.map((c, i) => ({ i, bids: gap.filter(b => inWindow(b, i, a) && !(NEED_4.has(b) && a.size && a.size[i] < 4) && !judged.has(`${b}:${i}`)) }))
     .filter(m => m.bids.length && split[m.i].ratio <= 0.8 && (chat[m.i].q || '').trim().length >= 6);
   const MAX = 48;
   if (msgs.length > MAX) warn.push(`补扫只看前 ${MAX} 条消息（共 ${msgs.length} 条可扫）`);
@@ -459,8 +482,79 @@ function arbitrate(evs: Evidence[], structMsgs: Set<number>, logs: string[]) {
   }
 }
 
+// ─────────── 评审团（11-20）：切块 → 7 个维度评委 → 代码合分 → 总评 ───────────
+// 为什么：v3 让一个模型同时记住 25 个行为 + 窗口 + 互斥 + 去重 + 封顶，规则越补越乱、出了错分不清是哪层。
+// 评审团把它拆开：每个评委只管自己维度的 3–4 个行为，逐块读整段对话、引原话、按锚点定档；评委之间不抢指标（不用互斥 / 超级 Prompt 仲裁）；
+// 原话核对、取最高档、一次 vs 多次，交给几行看得懂的代码；最后的解读（narrate）就是总评委。对话全文放在共用前缀里，7 个评委走提示缓存。
+const clip = (t: string, n: number) => { const s = String(t || '').replace(/\s+/g, ' ').trim(); return s.length > n ? `${s.slice(0, n)}……（共 ${s.length} 字）` : s; };
+function dimSpec(bids: string[]) {
+  return bids.map(b => { const x = BEHAVIORS[b]; return `### ${b} ${x.cn}\n评价要点：${x.point}\n判断标准：${x.criteria}\n易混淆点：${x.confuse}\n看哪里：${x.window.replace(/\s+/g, ' ').slice(0, 160)}\n1 分：${x.anchors.a1}\n2 分：${x.anchors.a2}\n3 分：${x.anchors.a3}\n4 分：${x.anchors.a4}\n5 分：${x.anchors.a5}\n定档提示：${x.anchors.hint}`; }).join('\n\n');
+}
+async function committeeJudge(inp: FluencyInput, B: { of: number[]; list: TaskBlock[] }, cands: Candidate[], logs: string[], warn: string[]): Promise<{ evs: Evidence[]; negs: { id: string; i: number; quote: string }[] }> {
+  const chat = inp.chat, outsideOnly = chat.every(c => !c.a);
+  const facts = cands.filter(c => c.src !== 'chat');
+  const factLine = (c: Candidate, n: number) => `[F${n + 1}] ${c.src === 'event' ? '平台记录的动作' : c.src === 'deliverable' ? '交付物里' : '交卷时的 AI 参与说明'}（${c.bid} 相关）：${c.quote}`;
+  const transcript = B.list.map(bl => `【任务块 ${bl.id + 1}｜${bl.label}｜第 ${bl.msgs[0] + 1}–${bl.msgs[bl.msgs.length - 1] + 1} 条】\n` + bl.msgs.map(i => `[${i + 1}] 候选人：${clip(chat[i].q, 700)}${chat[i].a ? `\n      AI：${clip(chat[i].a, 260)}` : ''}`).join('\n')).join('\n\n');
+  const prefix = `你是「AI 驾驭能力」评审团里的一位评委。评审团按维度分工：每位评委只评分给自己的那几个行为，其他行为由别的评委负责，你不用管、也不用让。
+候选人在做一道考核任务，下面是他和 AI 的全部对话（按任务块分好），以及平台记录的动作和交付侧信息。
+
+评法（每位评委都一样）：
+1. 只看候选人自己说的话和平台记录；他原样粘贴的任务书 / 材料不算他的表达。
+2. 逐个任务块看：你负责的每个行为，在这一块里有没有真的发生。要对齐 AI 上一轮回答才能判的（迭代、纠错、质疑推理、补背景、偏差），看给出的 AI 回答，对不上就不算。
+3. 发生了就引用候选人原话（逐字，不超过 40 字）或平台记录编号，按锚点定 1–5 档；看实际效果、不看措辞；拿不准给低档。
+4. 同一个行为，每个任务块最多列 2 处最有代表性的（不同消息）；没发生就不列，不要硬凑。
+5. 一条消息同时体现了你负责的两个行为，可以两个都列，但理由要分别说清各体现了哪一部分。${outsideOnly ? '\n6. 这场只有候选人的提问原话（外部 AI 的回答看不到）：需要对齐 AI 回答的行为，只按提问本身能看出来的判。' : ''}
+
+## 任务
+${inp.task.title}：${clip(inp.task.brief, 500)}
+
+## 平台记录（不是对话）
+${facts.length ? facts.map(factLine).join('\n') : '（无）'}
+
+## 对话（共 ${chat.length} 条，${B.list.length} 个任务块）
+${transcript}`;
+  const nums = Object.keys(DIMS).sort();
+  const run = async (num: string) => {
+    const bids = DIMS[num].behaviors.filter(b => b !== 'B21' && b !== 'B22' || facts.length);
+    const p = await askJson(`## 你是「${DIMS[num].name}」评委，只评这几个行为
+${dimSpec(bids)}
+
+## 返回 JSON
+{"behaviors":[{"bid":"${bids[0]}","evidence":[{"msg":<消息编号，平台记录写 0>,"fact":"<平台记录编号如 F2，没有就空>","q":<1-5>,"quote":"<候选人原话，逐字>","why":"<不超过 40 字：体现了什么、为什么是这一档>"}],"none":"<一处都没有时写一句为什么>"}],"negatives":[{"id":"N3|N5|N11","msg":<编号>,"quote":"<原话>"}]}
+你负责的每个行为都要出现一次（没有证据就 evidence 为空、写 none）。negatives 只在看到「自己记错反指责 AI（N3）/ 辱骂或情绪发泄且无修改方向（N5）/ 把错误归因于 AI 并放弃修正（N11）」时填。`, `Fluency · 评委 ${num}`, undefined, prefix);
+    return { num, bids, p };
+  };
+  // 第一位评委先跑，把对话全文写进缓存；其余并行（最多 3 路）
+  const outs = [await run(nums[0]).catch(e => ({ num: nums[0], bids: [] as string[], p: null, err: e }))];
+  for (let i = 1; i < nums.length; i += 3) outs.push(...await Promise.all(nums.slice(i, i + 3).map(n => run(n).catch(e => ({ num: n, bids: [] as string[], p: null, err: e })))));
+  const evs: Evidence[] = [], negs: { id: string; i: number; quote: string }[] = [];
+  const lastBlock = B.of.length ? B.of[B.of.length - 1] : 0;
+  for (const o of outs) {
+    if (!o.p) { warn.push(`维度 ${o.num} 评委没给出结果：${String((o as any).err?.message || '').slice(0, 80)}`); continue; }
+    let ok = 0, bad = 0;
+    for (const r of Array.isArray(o.p.behaviors) ? o.p.behaviors : []) {
+      const bid = String(r?.bid || ''); if (!o.bids.includes(bid)) continue;
+      for (const x of Array.isArray(r.evidence) ? r.evidence.slice(0, 8) : []) {
+        const n = Math.round(Number(x?.msg) || 0), quote = String(x?.quote || '').slice(0, 80), q = Math.max(1, Math.min(5, Math.round(Number(x?.q) || 0)));
+        const fi = /^F(\d+)$/i.exec(String(x?.fact || '').trim());
+        if (fi && facts[Number(fi[1]) - 1]) { const f = facts[Number(fi[1]) - 1]; evs.push({ bid, src: f.src, i: f.i, q, why: String(x?.why || '').slice(0, 120), quote: f.quote.slice(0, 80), valid: true, rule: `评委${o.num}-${f.rule}`, block: lastBlock }); ok++; continue; }
+        if (n < 1 || n > chat.length || !quote) { bad++; continue; }
+        // 原话核对：引文要在这条消息里找得到（忽略空白和标点差异）
+        const z = (t: string) => norm(t).replace(/[\s，。、,.!?！？；;：:「」“”"'（）()…]/g, '');
+        const verified = z(chat[n - 1].q).includes(z(quote).slice(0, 24));
+        if (!verified) { bad++; continue; }
+        evs.push({ bid, src: 'chat', i: n - 1, q, why: String(x?.why || '').slice(0, 120), quote, valid: true, rule: `评委${o.num}`, block: B.of[n - 1] });
+        ok++;
+      }
+    }
+    for (const g of Array.isArray(o.p.negatives) ? o.p.negatives : []) { const id = String(g?.id || ''); const n = Math.round(Number(g?.msg) || 0); if (/^N(3|5|11)$/.test(id) && n >= 1 && n <= chat.length && !negs.some(x => x.id === id && x.i === n - 1)) negs.push({ id, i: n - 1, quote: String(g?.quote || '').slice(0, 60) }); }
+    logs.push(`评委 ${o.num}「${DIMS[o.num].name}」：成立证据 ${ok} 条${bad ? `，${bad} 条引文对不上原话已作废` : ''}`);
+  }
+  return { evs, negs };
+}
+
 // ─────────── 02 计分与聚合 ───────────
-export interface BehaviorScore { bid: string; score: number | null; obs: string; na?: string; q_max?: number; k?: number; capped?: boolean; r?: number | null; evidence: Evidence[]; related: Evidence[]; rejected: Evidence[]; negatives: string[] }
+export interface BehaviorScore { bid: string; score: number | null; obs: string; na?: string; q_max?: number; k?: number; b?: number; /** 诊断：成立证据出现在几段不相邻的地方（不进分） */ occ?: number; capped?: boolean; r?: number | null; evidence: Evidence[]; related: Evidence[]; rejected: Evidence[]; negatives: string[] }
 export interface DimScore { num: string; name: string; score: number | null; weight: number; observable: number; total: number; thin: boolean }
 export interface FluencyReport {
   version: string; model: string; generated_at: string;
@@ -490,7 +584,7 @@ const TIERS: [number, string][] = [[4, '专家'], [3, '熟练者'], [1.5, '发�
 export const tierOf = (v: number | null) => (v == null ? '未评估' : TIERS.find(([t]) => v >= t)![1]);
 const NA_REASON: Record<string, string> = { conditional: '未观测（条件未触发）', risk: '未观测（任务未涉及隐私数据）', external: '不可观测（没有交付侧披露）' };
 
-function scoreBehavior(bid: string, evs: Evidence[], negs: { id: string }[]): BehaviorScore {
+function scoreBehavior(bid: string, evs: Evidence[], negs: { id: string }[], mode: 'v3' | 'v3-spec' | 'committee' = 'v3'): BehaviorScore {
   const obs = BEHAVIORS[bid].obs;
   const mine = evs.filter(e => e.bid === bid);
   const ok = mine.filter(e => e.valid && !e.related);
@@ -499,17 +593,24 @@ function scoreBehavior(bid: string, evs: Evidence[], negs: { id: string }[]): Be
   if (!ok.length && !myNeg.length) return { ...base, score: obs === 'baseline' ? 0 : null, na: obs === 'baseline' ? undefined : NA_REASON[obs], evidence: [] };
   if (!ok.length) return { ...base, score: myNeg.some(n => NEGATIVES[n.id].action === 'na') ? null : 1, evidence: [] };
   const q_max = Math.max(...ok.map(e => e.q));
-  // k：支撑 q_max 的独立证据数（不同任务块，或同块内不相邻的两段）；平台上一道题 = 一个任务块（07 页四：会话隔离）
-  const tops = ok.filter(e => e.q === q_max).map(e => e.i).sort((a, b) => a - b);
-  let k = 0, last = -9; for (const i of tops) { if (i < 0 || i - last > 1) k++; last = i; }
+  // 02 页公式（11-20 按潜历复盘对齐 · 与宇宁 ai_fluency_v3 同口径）：同任务块同行为只算 1 条（取最高档，05 页 · 通用防重复）→
+  // k = 支撑 q_max 的证据条数、b = 它们落在几个块；k = 1 且 b = 1 → 单点封顶 min(q_max, 4) − 0.5；跨块（b ≥ 2）不下调
+  const topBlocks = new Set(ok.filter(e => e.q === q_max).map(e => e.block ?? 0));
+  const k = topBlocks.size, b = topBlocks.size;
   let s: number = q_max, capped = false;
-  if (k <= 1) { s = Math.min(q_max, 4) - 0.5; capped = true; }   // 单点封顶 3.5（02 页三 · 决议③）
+  // 评审团：封顶看「这个行为是偶然一次，还是一以贯之」——成立证据出现在 ≥ 2 处（不同块，或同块内不相邻的两段）就不封顶
+  const at0 = ok.filter(e => e.q >= q_max - 1).map(e => e.i).filter(i => i >= 0).sort((x, y) => x - y); let occTop = ok.some(e => e.i < 0 && e.q >= q_max - 1) ? 1 : 0, l0 = -9; for (const i of at0) { if (i - l0 > 1) occTop++; l0 = i; }
+  // 默认 v3：k 按「不相邻的几段」数（同块内不相邻也算）——11-17 起线上一直这么算；v3-spec 照 02 页；评审团看一次 vs 多次
+  const tops = ok.filter(e => e.q === q_max).map(e => e.i).sort((x, y) => x - y); let kSeg = 0, lSeg = -9; for (const i of tops) { if (i < 0 || i - lSeg > 1) kSeg++; lSeg = i; }
+  if (mode === 'committee' ? occTop <= 1 : mode === 'v3-spec' ? k <= 1 && b <= 1 : kSeg <= 1) { s = Math.min(q_max, 4) - 0.5; capped = true; }   // 单点封顶 3.5（02 页三 · 决议③）
+  // 诊断（不进分，11-20 给潜历看「偶然闪光 vs 一如既往」）：成立证据在几段不相邻的消息上出现（同块内也数）——11-17 以前的 k 就是这么数的
+  const at = ok.map(e => e.i).filter(i => i >= 0).sort((x, y) => x - y); let occ = ok.some(e => e.i < 0) ? 1 : 0, last = -9; for (const i of at) { if (i - last > 1) occ++; last = i; }
   for (const n of myNeg) {
     const a = NEGATIVES[n.id].action;
     if (a === 'A') s = 1; else if (a === 'B' || a === 'cap2') s = Math.min(s, 2); else if (a === 'downgrade1') s = Math.max(1, s - 1);
   }
   const qs = ok.map(e => e.q).sort((a, b) => a - b), med = qs[Math.floor(qs.length / 2)];
-  return { ...base, score: Math.round(Math.max(0, Math.min(5, s)) * 10) / 10, q_max, k, capped, r: q_max - med, evidence: ok };
+  return { ...base, score: Math.round(Math.max(0, Math.min(5, s)) * 10) / 10, q_max, k, b, occ, capped, r: q_max - med, evidence: ok };
 }
 
 export async function assessFluency(inp: FluencyInput): Promise<FluencyReport> {
@@ -541,6 +642,9 @@ export async function assessFluency(inp: FluencyInput): Promise<FluencyReport> {
   }
   if (fromOutside) logs.push(`站内没问过 AI，用外部 AI 的提问原话顶上（${inp.outside!.asks.length} 条，${inp.outside!.note}）：只有提问、没有 AI 的回答，迭代 / 纠错 / 质疑推理这类要对齐 AI 上一轮输出的行为判定受限`);
   const a = anchorsOf(chat);
+  const B = taskBlocks(chat, inp.events, fromOutside ? inp.outside!.asks.map(x => x.src) : null);
+  a.rel = B.of.map((b, i) => B.of.slice(0, i).filter(x => x === b).length); a.size = B.of.map(b => B.list[b].msgs.length);
+  logs.push(`任务块：${B.list.length} 块（${B.list.map(x => `${x.id} ${x.label}：第 ${x.msgs[0] + 1}–${x.msgs[x.msgs.length - 1] + 1} 条，${x.msgs.length} 条`).join('；')}）——窗口按块、同块同行为只算 1 条、跨块才算独立证据`);
   logs.push(`锚点：P1=${a.P1 == null ? '—' : a.P1 + 1} O1=${a.O1 == null ? '—' : a.O1 + 1} A_out=${a.Aout == null ? '—' : a.Aout + 1} O_last=${a.Olast == null ? '—' : a.Olast + 1} A_final=${a.Afinal == null ? '—' : a.Afinal + 1}（第几条用户消息）`);
   if (chat.length < 4) logs.push(`用户消息只有 ${chat.length} 条（<4）：B10 / B15 / B16 / B17 自动记 N/A`);
   const { cands, split } = locate(I, a, source, disclosure);
@@ -550,10 +654,18 @@ export async function assessFluency(inp: FluencyInput): Promise<FluencyReport> {
   const ev = inp.events;
   const adopted = ev.filter(e => e.type === 'adopt').reduce((n, e) => n + (Number(e.chars) || 0), 0);
   const stats = `和站内 AI 助手对话 ${chat.length} 轮；采纳进交付物 ${ev.filter(e => e.type === 'adopt').length} 次（${adopted} 字）；粘贴 ${ev.filter(e => e.type === 'paste').length} 次；交付物 ${(inp.deliverable || '').length} 字${disclosure ? `；交卷时写了 AI 参与说明：${disclosure.slice(0, 300)}` : '；交卷时没写 AI 参与说明'}`;
-  const { evs, negs: modelNegs } = await judge(I, cands, stats, warnings);
-  const scanned = await scanGaps(I, a, split, evs, stats, logs, warnings);
-  evs.push(...scanned);
-  arbitrate(evs, structMsgs, logs);
+  const committee = inp.engine === 'committee' || (!inp.engine && process.env.FLUENCY_ENGINE === 'committee');
+  const lastBlock = B.of.length ? B.of[B.of.length - 1] : 0;
+  let evs: Evidence[], modelNegs: { id: string; i: number; quote: string }[], scanned: Evidence[] = [];
+  if (committee) {
+    ({ evs, negs: modelNegs } = await committeeJudge(I, B, cands, logs, warnings));
+  } else {
+    ({ evs, negs: modelNegs } = await judge(I, cands, stats, warnings));
+    scanned = await scanGaps(I, a, split, evs, stats, logs, warnings);
+    evs.push(...scanned);
+    for (const e of evs) e.block = e.src === 'chat' && e.i >= 0 && e.i < B.of.length ? B.of[e.i] : lastBlock;
+    arbitrate(evs, structMsgs, logs);
+  }
   // N4 的「记录里用了」：AI 的内容真进了交付物（采纳，或问过 AI 之后粘贴过成段内容），只问过一句不算
   const firstAsk = chat[0]?.t ?? Infinity;
   const aiIn = ev.some(e => e.type === 'adopt') || ev.some(e => e.type === 'paste' && e.t >= firstAsk && (Number(e.chars) || 0) >= 50);
@@ -561,7 +673,7 @@ export async function assessFluency(inp: FluencyInput): Promise<FluencyReport> {
   for (const i of structMsgs) if (split[i]?.ratio > 0.8) logs.push(`第 ${i + 1} 条超级 Prompt 与任务书高度相似：加「表演嫌疑」标记，进人工抽检`);
   const behaviors: Record<string, BehaviorScore> = {};
   for (const b of BIDS) {
-    let s = scoreBehavior(b, evs, negs);
+    let s = scoreBehavior(b, evs, negs, committee ? 'committee' : inp.engine === 'v3-spec' ? 'v3-spec' : 'v3');
     if (NEED_4.has(b) && chat.length < 4 && s.score === 0) s = { ...s, score: null, na: '未观测（用户消息不足 4 条）' };
     if (b === 'B10' && chat.length < 4) s = { ...s, score: null, na: '未观测（用户消息不足 4 条）' };
     const nt = notTriggered.find(x => x.bid === b);
@@ -592,6 +704,7 @@ export async function assessFluency(inp: FluencyInput): Promise<FluencyReport> {
     d1_source: fromOutside ? 'outside' : 'platform',
     ...(fromOutside ? { outside: inp.outside! } : {}),
   };
+  if (committee) rep.version = `${FLUENCY_VERSION} · 评审团`; else if (inp.engine === 'v3-spec') rep.version = `${FLUENCY_VERSION} · 照 02 页计分`;
   if (inp.narrate !== false) rep.narrative = await narrate(rep, I).catch(e => { warnings.push(`解读没写出来：${String(e?.message).slice(0, 80)}`); return null; });
   return rep;
 }
