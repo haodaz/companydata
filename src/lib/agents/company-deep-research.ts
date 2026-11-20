@@ -58,6 +58,7 @@ export async function saveDeepTopic(companyId: number, key: string, r: DeepTopic
 }
 
 const STAGE_CN: Record<string, string> = { approved: '已获批', nda: 'NDA 申报', 'phase 3': 'III 期', 'phase 2/3': 'II/III 期', 'phase 2': 'II 期', 'phase 1/2': 'I/II 期', 'phase 1': 'I 期', preclinical: '临床前', ind: 'IND', launched: '已上线', beta: '测试中', 'in development': '开发中' };
+export const CLINICAL_STAGE = /phase|期|临床|clinical|nda|bla|ind\b|approved|获批|注册|审评|fda|ce认证|ce mark|510\(k\)/i;
 const stageCn = (s: any) => STAGE_CN[String(s || '').toLowerCase()] || String(s || '未标注');
 const normName = (s: string) => String(s || '').replace(/[（(].*?[)）]/g, '').replace(/[A-Za-z .\-]/g, '').trim();
 const ratioNum = (s: any) => { const m = String(s || '').match(/(\d+(?:\.\d+)?)\s*%/); return m ? Number(m[1]) : null; };
@@ -69,7 +70,8 @@ export async function applyDeepTopic(companyId: number, key: string, data: any):
     const pipe = Array.isArray(data?.pipeline) ? data.pipeline : [];
     const { data: existing } = await supabaseAdmin.from('company_products').select('dedupe_key').eq('company_id', companyId);
     const have = new Set((existing || []).map(r => r.dedupe_key));
-    const rows = pipe.map((p: any) => {
+    // 只收真正的临床 / 注册管线（药、医疗器械）；非医药公司的「已上线 / 开发中」不是管线，不写进核心产品表（11-20：机器人、大模型公司被写成「临床管线 · 已上线」）
+    const rows = pipe.filter((p: any) => CLINICAL_STAGE.test(String(p.stage || ''))).map((p: any) => {
       const name = [p.name, p.indication].filter(Boolean).join(' · '); if (!name) return null;
       const dk = productKey(companyId, { name } as any); if (have.has(dk)) return null; have.add(dk);
       return { company_id: companyId, name, category: `临床管线 · ${stageCn(p.stage)}`, tech_keywords: p.target ? String(p.target) : null, external_id: randomId(24), kind: 'other', status: 'unknown', is_flagship: false, description: [p.milestone, p.partner ? `合作方：${p.partner}` : '', p.region ? `地区：${p.region}` : ''].filter(Boolean).join('；'), source_url: typeof p.source === 'string' ? p.source : null, dedupe_key: dk, human_review_status: 'pending' };
