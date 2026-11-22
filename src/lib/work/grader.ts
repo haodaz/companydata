@@ -56,7 +56,7 @@ ${task.materials.map(m => `### ${m.id} ${m.title}\n${m.content.slice(0, m.kind =
 ## rubric
 ${task.rubric.map(r => `- ${r.id} ${r.title}（权重 ${r.weight}${r.depends_on.length ? '，依赖 ' + r.depends_on.join('/') : ''}）：${r.desc}\n  依据：${r.basis}\n  L1 ${r.levels.L1} | L2 ${r.levels.L2} | L3 ${r.levels.L3} | L4 ${r.levels.L4}`).join('\n')}
 ${task.task.stages?.length ? `## 推进步骤与参考答案（候选人看不到；测算按 value 核对，误差 ±5% 内算对；判断题看结论和理由是否成立，不要求措辞一致）\n${task.task.stages.map(st => `- ${st.id} 问：${st.question}\n  参考：${st.expected}${st.calc?.length ? `\n  数：${st.calc.map(c => `${c.label} = ${c.expr} = ${c.value}`).join('；')}` : ''}`).join('\n')}\n` : ''}只返回 JSON：{ "items": [ { "id": "r1", "score": 0, "level": "L1", "evidence": "引用原句", "note": "一句为什么" } ], "summary": "三句话总评（观察到什么，不下定性）", "strengths": ["", ""], "gaps": ["", ""] }` + enTail(task);
-  const p = await askJson(`## 交付物\n${deliverable.slice(0, 12000)}`, 'Grade · 结果', opts.institution, prefix);
+  const p = await askJson(`## 交付物\n${fitDeliverable(deliverable, 24000)}`, 'Grade · 结果', opts.institution, prefix);
   const got = new Map<string, any>((Array.isArray(p.items) ? p.items : []).map((x: any) => [String(x.id), x]));
   const items: ResultItem[] = task.rubric.map(r => {
     const x = got.get(r.id) || {};
@@ -65,14 +65,34 @@ ${task.task.stages?.length ? `## 推进步骤与参考答案（候选人看不�
     const [lo, hi] = LEVEL_BAND[lv];
     return { id: r.id, title: r.title, weight: r.weight, score: Math.max(lo, Math.min(hi, Number(x.score) || 0)), level: lv, evidence: sl(task)(x.evidence, 300), note: sl(task)(x.note, 200) };
   });
-  // 依赖：前置没过（< 50）的，后置封顶 59 / L2，并写明被谁卡住
+  // 依赖：前置没到 L3（< 60）的，后置封顶 59 / L2，并写明被谁卡住；一路往后传（11-22 评审：以前 < 50 才触发、封顶却是 59，传一跳就断）
   const byId = new Map(items.map(i => [i.id, i]));
-  for (const r of task.rubric) {
-    const me = byId.get(r.id)!; const weak = r.depends_on.filter(d => (byId.get(d)?.score ?? 100) < 50);
-    if (weak.length && me.score > 59) { me.score = 59; me.level = 'L2'; me.blocked_by = weak.join('、'); }
+  for (let round = 0, changed = true; changed && round < task.rubric.length; round++) {
+    changed = false;
+    for (const r of task.rubric) {
+      const me = byId.get(r.id); if (!me) continue;
+      const weak = r.depends_on.filter(d => (byId.get(d)?.score ?? 100) < 60);
+      if (weak.length && me.score > 59) { me.score = 59; me.level = 'L2'; me.blocked_by = weak.join('、'); changed = true; }
+    }
   }
   const total = Math.round(items.reduce((a, i) => a + i.score * i.weight, 0) / (items.reduce((a, i) => a + i.weight, 0) || 1));
   return { total, items, summary: sl(task)(p.summary, 500), strengths: (Array.isArray(p.strengths) ? p.strengths : []).slice(0, 4).map((x: any) => sl(task)(x, 120)), gaps: (Array.isArray(p.gaps) ? p.gaps : []).slice(0, 4).map((x: any) => sl(task)(x, 120)), who: opts.who };
+}
+
+/**
+ * 交付物送评卷前的长度控制（11-22 评审：以前整串截到 12000 字，AI 工作台「文档 + 表格 + 脚本」排在后面的脚本被截掉，评卷只能「推断已实现」）。
+ * 认出各份交付物（考试台 ## d1 …、AI 工作台 ### 标题（output/…）），每份分到相近的额度、短的让给长的；超长的那份留头尾、中间写明省略多少字。
+ */
+export function fitDeliverable(text: string, budget = 24000): string {
+  const s = String(text || '');
+  if (s.length <= budget) return s;
+  const cut = (t: string, n: number) => (t.length <= n ? t : `${t.slice(0, Math.round(n * 0.7))}\n……（中间省略 ${t.length - n} 字）……\n${t.slice(t.length - Math.round(n * 0.3))}`);
+  const marks = [...s.matchAll(/^(?:## d\d+ .*|### .*（[^）\n]*\/[^）\n]*）)$/gm)].map(m => m.index!);
+  if (marks.length < 2) return cut(s, budget);
+  const secs = [s.slice(0, marks[0]), ...marks.map((m, i) => s.slice(m, marks[i + 1] ?? s.length))].filter(x => x.length);
+  let left = budget, rest = secs.length; const quota = new Map<number, number>();
+  for (const i of secs.map((x, i) => i).sort((a, b) => secs[a].length - secs[b].length)) { const q = Math.min(secs[i].length, Math.floor(left / rest)); quota.set(i, q); left -= q; rest--; }
+  return secs.map((x, i) => cut(x, quota.get(i)!)).join('');
 }
 
 /** 六维人机协作技能（先定小的，别一上来 29 项；每维给 BARS 等级 + 一句观察） */

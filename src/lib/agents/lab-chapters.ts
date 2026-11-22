@@ -77,6 +77,13 @@ const castText = (cast: CastMember[]) => (['person', 'place', 'prop'] as CastKin
   return `${castKind(k).label}：${list.length ? list.map(m => `${m.code} ${m.name}（${m.type_name || '未定类型'}${m.note ? `；${m.note}` : ''}）`).join('；') : '（还没有）'}`;
 }).join('\n');
 
+/** 前面章节实际发生了什么（11-22 评审：只给标题和开场前 160 字，后面的章节不知道前面的人说过什么 → 律师样本上午「当面说你明天不用来了」下午变「没说辞退」） */
+const storyOf = (c: StudioChapter) => {
+  const sim: any = c.sim, tr: any = (c as any).expert_trace || {};
+  const steps = (sim?.steps || []).filter((x: any) => x.type !== 'text');
+  if (!steps.length) return '';
+  return '\n  这一章已经发生的（后面要和它一致）：' + steps.map((x: any) => { const ans = tr[x.id]; const pick = Array.isArray(ans) ? ans : [ans]; const lab = (x.options || []).filter((o: any) => pick.includes(o.id)).map((o: any) => o.label).join('；'); return `${x.scene?.text ? `${String(x.scene.text).replace(/\s+/g, ' ').slice(0, 90)} → ` : ''}${String(x.prompt || '').slice(0, 50)}${lab ? `（师傅的做法：${lab.slice(0, 60)}）` : ''}`; }).join(' ｜ ').slice(0, 900);
+};
 const chapterLine = (c: StudioChapter) =>
   `- [${c.id}] ${c.slot || '未定时段'} · ${c.kind} · ${c.title}${c.brief ? `：${c.brief}` : ''}${c.sim?.intro ? `\n  开场：${String(c.sim.intro).slice(0, 160)}` : ''}`;
 
@@ -327,7 +334,7 @@ ${(['person', 'place', 'prop'] as CastKind[]).map(k => `${castKind(k).label}：$
 ${(bible.facts || []).map(f => `- ${f}`).join('\n') || '（无）'}
 
 这一天里，在这一章之前已经发生的：
-${before.length ? before.map(chapterLine).join('\n') : '（这是一天的第一章）'}
+${before.length ? before.map(c => chapterLine(c) + storyOf(c)).join('\n') : '（这是一天的第一章）'}
 在这一章之后还会发生的（不要抢它们的内容）：
 ${after.length ? after.map(c => `- ${c.slot || ''} ${c.title}`).join('\n') : '（无）'}${form === 'career' && !after.length ? `\n\n${CAREER_LAST(String((space as any).profile?.role || (space as any).jd_snapshot?.title || '这一行'))}` : ''}
 
@@ -408,7 +415,7 @@ ${hint ? `管理员的要求：${hint}\n` : ''}
 function cleanSim(raw: any, ch: StudioChapter, ref: (v: any) => CastMember | null, careerEnd?: 'none' | 'reflect', role = ''): Sim {
   const TYPES = ['choose', 'multi', 'classify', 'allocate', 'slider', 'text'];
   const used = new Set<string>();
-  const steps: SimStep[] = (Array.isArray(raw?.steps) ? raw.steps : []).filter((s: any) => TYPES.includes(s?.type) && s.prompt).slice(0, 8).map((s: any, i: number) => {
+  const steps: SimStep[] = (Array.isArray(raw?.steps) ? raw.steps : []).filter((s: any) => TYPES.includes(s?.type) && s.prompt).slice(0, 12)   /* 11-22：长段 6–9 步 + 工位，原来截 8 步会把收尾截掉 */.map((s: any, i: number) => {
     let id = String(s.id || `s${i + 1}`).replace(/[^\w-]/g, '').slice(0, 24) || `s${i + 1}`;
     while (used.has(id)) id += 'x';
     used.add(id);

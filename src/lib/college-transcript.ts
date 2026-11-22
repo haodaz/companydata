@@ -41,7 +41,8 @@ export async function buildTranscript(studentId: string): Promise<Transcript | n
       status: e.status, teacher: sk ? (sk.source !== 'jd-draft' ? `${sk.expert_name}${sk.expert_location ? `（${sk.expert_location}）` : ''}` : 'AI 草案（待老师傅校正）') : '—', graduated_at: e.graduated_at,
     };
   });
-  const passed = courses.filter(c => (c.after ?? 0) >= 60);
+  // 通过 = 已毕业（每章都过、且没有诚信问题）；以前只看分数 ≥ 60，编造数据但手艺分高的也算过（11-22 评审）
+  const passed = courses.filter(c => c.status === 'graduated');
   const majors = MAJORS.map(m => ({ key: m.key, name: m.name, en: m.en, taken: courses.filter(c => c.major === m.name).length, passed: passed.filter(c => c.major === m.name).length, done: passed.filter(c => c.major === m.name).length >= 2 })).filter(m => m.taken);
   const graded = courses.filter(c => c.after != null);
   const credW = graded.reduce((n, c) => n + Math.max(1, c.credits), 0);

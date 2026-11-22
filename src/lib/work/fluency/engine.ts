@@ -311,7 +311,7 @@ async function judge(inp: FluencyInput, cands: Candidate[], stats: string, warn:
   for (const [bi, batch] of batches.entries()) {
     const body = batch.map((g, n) => `[包 ${n + 1}] 待判行为：${[...new Set(g.map(c => c.bid))].join('、')}\n${ctx(g)}`).join('\n\n');
     let data: any = null;
-    try { data = await askJson(`${head}\n## 待评证据\n${body}`, 'Fluency · 判定定档', inp.institution, PREFIX); } catch (e) { warn.push(`第 ${bi + 1} 批模型判定失败：${String((e as any)?.message).slice(0, 80)}；这批候选记未判`); continue; }
+    try { data = await askJson(`${head}\n## 待评证据\n${body}`, 'Fluency · 判定定档', inp.institution, PREFIX, warn); } catch (e) { warn.push(`第 ${bi + 1} 批模型判定失败：${String((e as any)?.message).slice(0, 80)}；这批候选记未判`); continue; }
     for (const r of (data?.results || []) as any[]) {
       const g = batch[(Number(r?.pkg) || 0) - 1]; if (!g) continue;
       const c = g.find(x => x.bid === r.bid); if (!c) continue;
@@ -369,7 +369,7 @@ async function scanGaps(inp: FluencyInput, a: Anchors, split: { ratio: number; s
       return `[消息 ${n + 1}] 候选人第 ${m.i + 1} 条 · 可判行为：${m.bids.map(b => `${b} ${BEHAVIORS[b].cn}`).join('、')}\n${prev ? `上一轮 AI 回答：${prev.a ? clip(prev.a, 300) : none}\n` : ''}${split[m.i].ratio >= 0.5 ? `（这条约 ${Math.round(split[m.i].ratio * 100)}% 是粘贴的任务书 / 材料）\n` : ''}候选人原话：${clip(chat[m.i].q, 800)}`;
     }).join('\n\n');
     let data: any = null;
-    try { data = await askJson(`${head}\n## 待扫消息\n${body}`, 'Fluency · 补扫', inp.institution, SCAN_PREFIX); } catch (e) { warn.push(`补扫第 ${s / BATCH + 1} 批失败：${String((e as any)?.message).slice(0, 80)}`); continue; }
+    try { data = await askJson(`${head}\n## 待扫消息\n${body}`, 'Fluency · 补扫', inp.institution, SCAN_PREFIX, warn); } catch (e) { warn.push(`补扫第 ${s / BATCH + 1} 批失败：${String((e as any)?.message).slice(0, 80)}`); continue; }
     for (const r of (data?.results || []) as any[]) {
       const m = batch[(Number(r?.msg) || 0) - 1]; if (!m) continue;
       const bid = String(r?.bid || ''); if (!m.bids.includes(bid)) continue;
@@ -385,14 +385,16 @@ async function scanGaps(inp: FluencyInput, a: Anchors, split: { ratio: number; s
   return out;
 }
 
-async function askJson(prompt: string, task_name: string, institution?: string, prefix?: string): Promise<any> {
+async function askJson(prompt: string, task_name: string, institution?: string, prefix?: string, warn?: string[]): Promise<any> {
   let lastErr: any = null;
   for (const m of [MODEL, 'qwen3.7-plus', 'qwen-plus'].filter((x, i, a) => a.indexOf(x) === i)) {
     for (let attempt = 0; attempt < 2; attempt++) {
       try {
         const res = await generateContent(prompt + (attempt ? '\n\n上一次返回的 JSON 无法解析。这次只返回一个合法 JSON 对象，字符串里不要英文双引号（引用用「」），不要换行。' : ''), m, { jsonMode: true, prefix, temperature: 0 });
         await logTokenUsage({ tool_name: 'work', task_name, institution: institution || '', model_id: m, usageMetadata: res.usageMetadata } as any).catch(() => {});
-        const p = parseJsonLoose(res.text); if (!p || typeof p !== 'object') throw new Error('不是 JSON'); return p;
+        const p = parseJsonLoose(res.text); if (!p || typeof p !== 'object') throw new Error('不是 JSON');
+        if (m !== MODEL && warn) warn.push(`${task_name} 主模型没成，用了兜底模型 ${m}`);   // 11-22 评审：以前换了模型报告里看不出来
+        return p;
       } catch (e) { lastErr = e; if (!/JSON/.test(String((e as any)?.message))) break; }
     }
   }
@@ -486,7 +488,8 @@ function arbitrate(evs: Evidence[], structMsgs: Set<number>, logs: string[]) {
 // 为什么：v3 让一个模型同时记住 25 个行为 + 窗口 + 互斥 + 去重 + 封顶，规则越补越乱、出了错分不清是哪层。
 // 评审团把它拆开：每个评委只管自己维度的 3–4 个行为，逐块读整段对话、引原话、按锚点定档；评委之间不抢指标（不用互斥 / 超级 Prompt 仲裁）；
 // 原话核对、取最高档、一次 vs 多次，交给几行看得懂的代码；最后的解读（narrate）就是总评委。对话全文放在共用前缀里，7 个评委走提示缓存。
-const clip = (t: string, n: number) => { const s = String(t || '').replace(/\s+/g, ' ').trim(); return s.length > n ? `${s.slice(0, n)}……（共 ${s.length} 字）` : s; };
+// 留头尾（11-22 评审：只留开头会把贴完材料后写在末尾的指令和核查要求截掉）
+const clip = (t: string, n: number) => { const s = String(t || '').replace(/\s+/g, ' ').trim(); return s.length > n ? `${s.slice(0, Math.round(n * 0.4))}……（中间省略 ${s.length - n} 字）……${s.slice(s.length - Math.round(n * 0.6))}` : s; };
 function dimSpec(bids: string[]) {
   return bids.map(b => { const x = BEHAVIORS[b]; return `### ${b} ${x.cn}\n评价要点：${x.point}\n判断标准：${x.criteria}\n易混淆点：${x.confuse}\n看哪里：${x.window.replace(/\s+/g, ' ').slice(0, 160)}\n1 分：${x.anchors.a1}\n2 分：${x.anchors.a2}\n3 分：${x.anchors.a3}\n4 分：${x.anchors.a4}\n5 分：${x.anchors.a5}\n定档提示：${x.anchors.hint}`; }).join('\n\n');
 }
@@ -511,6 +514,9 @@ ${inp.task.title}：${clip(inp.task.brief, 500)}
 ## 平台记录（不是对话）
 ${facts.length ? facts.map(factLine).join('\n') : '（无）'}
 
+## 最终交付物（节选；交付格式、要求有没有落地、AI 内容占比要对着它看）
+${inp.deliverable?.trim() ? clip(inp.deliverable, 3000) : '（没有交付物正文）'}
+
 ## 对话（共 ${chat.length} 条，${B.list.length} 个任务块）
 ${transcript}`;
   const nums = Object.keys(DIMS).sort();
@@ -521,7 +527,7 @@ ${dimSpec(bids)}
 
 ## 返回 JSON
 {"behaviors":[{"bid":"${bids[0]}","evidence":[{"msg":<消息编号，平台记录写 0>,"fact":"<平台记录编号如 F2，没有就空>","q":<1-5>,"quote":"<候选人原话，逐字>","why":"<不超过 40 字：体现了什么、为什么是这一档>"}],"none":"<一处都没有时写一句为什么>"}],"negatives":[{"id":"N3|N5|N11","msg":<编号>,"quote":"<原话>"}]}
-你负责的每个行为都要出现一次（没有证据就 evidence 为空、写 none）。negatives 只在看到「自己记错反指责 AI（N3）/ 辱骂或情绪发泄且无修改方向（N5）/ 把错误归因于 AI 并放弃修正（N11）」时填。`, `Fluency · 评委 ${num}`, undefined, prefix);
+你负责的每个行为都要出现一次（没有证据就 evidence 为空、写 none）。negatives 只在看到「自己记错反指责 AI（N3）/ 辱骂或情绪发泄且无修改方向（N5）/ 把错误归因于 AI 并放弃修正（N11）」时填。`, `Fluency · 评委 ${num}`, undefined, prefix, warn);
     return { num, bids, p };
   };
   // 第一位评委先跑，把对话全文写进缓存；其余并行（最多 3 路）
@@ -659,6 +665,7 @@ export async function assessFluency(inp: FluencyInput): Promise<FluencyReport> {
   let evs: Evidence[], modelNegs: { id: string; i: number; quote: string }[], scanned: Evidence[] = [];
   if (committee) {
     ({ evs, negs: modelNegs } = await committeeJudge(I, B, cands, logs, warnings));
+    arbitrate(evs, structMsgs, logs);   // 评委各评各的；合分前由代码统一做一次互斥 / 超级 Prompt 收口（11-22 评审：同一句话在几个评委那里同时拿分）
   } else {
     ({ evs, negs: modelNegs } = await judge(I, cands, stats, warnings));
     scanned = await scanGaps(I, a, split, evs, stats, logs, warnings);
@@ -704,6 +711,7 @@ export async function assessFluency(inp: FluencyInput): Promise<FluencyReport> {
     d1_source: fromOutside ? 'outside' : 'platform',
     ...(fromOutside ? { outside: inp.outside! } : {}),
   };
+  if (warnings.some(w => /兜底模型/.test(w))) rep.model = `${MODEL}（部分环节用了兜底模型，见 warnings）`;
   if (committee) rep.version = `${FLUENCY_VERSION} · 评审团`; else if (inp.engine === 'v3-spec') rep.version = `${FLUENCY_VERSION} · 照 02 页计分`;
   if (inp.narrate !== false) rep.narrative = await narrate(rep, I).catch(e => { warnings.push(`解读没写出来：${String(e?.message).slice(0, 80)}`); return null; });
   return rep;

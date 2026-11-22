@@ -232,6 +232,7 @@ export async function createPlacement(input: { enrollment_id: string; target_kin
   if (!['ws_org', 'company', 'demand'].includes(input.target_kind)) throw new Error('去向类型不对');
   const { data: en } = await db.from('college_enrollments').select('id, status').eq('id', input.enrollment_id).single();
   if (!en) throw new Error('学籍不存在');
+  if ((en as any).status !== 'graduated') throw new Error('还没毕业的学籍不能派去向（11-22）');
   const { data, error } = await db.from('college_placements').insert({ enrollment_id: input.enrollment_id, target_kind: input.target_kind, target_id: String(input.target_id), target_name: String(input.target_name).slice(0, 200), note: input.note || null, created_by: by }).select('*').single();
   if (error) throw MIG(error);
   return data;
@@ -257,8 +258,8 @@ export async function overview() {
   const [apps, students, ens, pls] = await Promise.all([
     db.from('college_applications').select('kind, status').then(r => r.data || []),
     db.from('college_students').select('kind').then(r => r.data || [], () => []),
-    db.from('college_enrollments').select('status').then(r => r.data || [], () => []),
-    db.from('college_placements').select('status').then(r => r.data || [], () => []),
+    db.from('college_enrollments').select('id, status').then(r => r.data || [], () => []),
+    db.from('college_placements').select('enrollment_id, status').then(r => r.data || [], () => []),
   ]);
   const cnt = (xs: any[], f: (x: any) => boolean) => xs.filter(f).length;
   return {
@@ -266,6 +267,7 @@ export async function overview() {
     students: { total: students.length, platform: cnt(students, s => s.kind === 'platform'), customer: cnt(students, s => s.kind === 'customer') },
     enrollments: { total: ens.length, enrolled: cnt(ens, e => e.status === 'enrolled'), training: cnt(ens, e => ['training', 'examining'].includes(e.status)), remedial: cnt(ens, e => e.status === 'remedial'), graduated: cnt(ens, e => e.status === 'graduated') },
     placements: { total: pls.length, proposed: cnt(pls, p => p.status === 'proposed'), offered: cnt(pls, p => p.status === 'offered'), placed: cnt(pls, p => p.status === 'placed') },
-    unplaced_graduates: 0,
+    // 已毕业、还没有任何去向（提议 / 已发 offer / 已上岗）的学籍（11-22：以前写死 0）
+    unplaced_graduates: cnt(ens, e => e.status === 'graduated' && !pls.some((p: any) => p.enrollment_id === e.id && ['proposed', 'offered', 'placed'].includes(p.status))),
   };
 }

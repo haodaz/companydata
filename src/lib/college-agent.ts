@@ -9,7 +9,7 @@ import { supabaseAdmin as db } from '@/lib/supabase';
 import type { AgentKit } from '@/lib/ws/agent';
 import { MODEL_OPTIONS } from '@/lib/model-options';
 import { admitApplication, APP_STATUS, createEnrollment, createPlacement, createStudent, ENROLL_STATUS, enrollmentDetail, ensurePlatformStudents, listCourses, listEnrollments, listPlacements, listStudents, overview, PLACE_STATUS, searchTargets, type PlacementKind, type PlacementStatus } from '@/lib/college-admin';
-import { advance, attendClass, nextStep, pickableWorkTasks, reflect, regradeEnrollment, runChapterExam, runWorkExam } from '@/lib/college-train';
+import { advance, attendClass, nextStep, pickableWorkTasks, reflect, regradeEnrollment, runChapterExam, runWorkExam, studyMethods } from '@/lib/college-train';
 
 type Ui = { kind: 'college_page'; path: string; title: string } | { kind: 'space_build'; buildId: string; payload: Record<string, any>; title: string };
 const s = (v: any, n = 300) => (v == null ? '' : typeof v === 'string' ? v : JSON.stringify(v)).slice(0, n);
@@ -30,6 +30,7 @@ export const COLLEGE_TOOLS: Anthropic.Tool[] = [
   { name: 'entrance_exam', description: '入学考（裸考，不装技能）：默认考核章。', input_schema: { type: 'object', properties: { enrollment_id: { type: 'string' }, chapter_id: { type: 'string' } }, required: ['enrollment_id'] } },
   { name: 'attend_class', description: '上一章课：把教案 + 示范提炼成要点进学员笔记。', input_schema: { type: 'object', properties: { enrollment_id: { type: 'string' }, chapter_id: { type: 'string' } }, required: ['enrollment_id', 'chapter_id'] } },
   { name: 'final_exam', description: '毕业考 / 补考一章：装技能卡 + 笔记，按学院口径评。', input_schema: { type: 'object', properties: { enrollment_id: { type: 'string' }, chapter_id: { type: 'string' } }, required: ['enrollment_id', 'chapter_id'] } },
+  { name: 'study_methods', description: '实验类 / 科研课：把这门课对得上的实验方法（方法库）装进学员的笔记（培养第 4 层）。入学考之后、上课之前做；不是实验类课程会报「没对上方法」。', input_schema: { type: 'object', properties: { enrollment_id: { type: 'string' } }, required: ['enrollment_id'] } },
   { name: 'reflect', description: '对最近一次没过的作答反思，写进错题本（补考前必做）。不给 submission_id 就取最近一次没过的。', input_schema: { type: 'object', properties: { enrollment_id: { type: 'string' }, submission_id: { type: 'string' } }, required: ['enrollment_id'] } },
   { name: 'list_work_tasks', description: '可以拿来当真活实习的真活（真活台已发布的），和课程同岗位 / 同企业的标 related。', input_schema: { type: 'object', properties: { enrollment_id: { type: 'string' } }, required: ['enrollment_id'] } },
   { name: 'work_exam', description: '让学员做一道真活，按同一套 rubric 评，和 AI 基线比。不给 work_task_id 就挑最相关的。', input_schema: { type: 'object', properties: { enrollment_id: { type: 'string' }, work_task_id: { type: 'string' } }, required: ['enrollment_id'] } },
@@ -45,7 +46,8 @@ export const COLLEGE_TOOLS: Anthropic.Tool[] = [
 export function collegeSystemPrompt(user: string) {
   return `你是百业学院的学院秘书（教务 AI）。和你说话的是好大壮院长（${user}）、院长 A，或教务同事——他们懂管理，不一定懂 AI，所以你要把事办成，用人话汇报。
 学院是什么：学生是 AI 模型（学员）；课程是百业工厂里的职业空间（一个岗位一天的章节、工位、老师傅技能卡、每章教案）；学籍 = 学员 × 课程，同一个模型上不同的课就是不同的毕业生；考核按「学院口径」对照老师傅评（关键动作做到几个、行话与行规 / 具体执行 / 现场判断 / 交付可用），每章 ≥ 60 才毕业；毕业生派去工作台机构 / 企业库企业 / 培养需求单。
-学习路径：入学考（裸考看底子）→ 逐章上课（教案要点进笔记）→ 毕业考（技能卡 + 笔记）→ 没过的章反思进错题本再考 → 真活实习（和 AI 基线比）→ 毕业。advance 会按这个路径自动走；也可以单步点。
+学习路径：入学考（裸考看底子）→ 逐章上课（教案要点进笔记）→ 毕业考（技能卡 + 笔记）→ 没过的章反思进错题本再考 → 真活实习（和 AI 基线比）→ 毕业。
+实验类 / 科研课：入学考之后先 study_methods 把对得上的实验方法装进笔记（培养第 4 层），再上课；advance 不会自动做这一步。advance 会按这个路径自动走；也可以单步点。
 申请管理是线索（CRM），不是台账；录取 / 立项只是从线索顺手建学员、建学籍。
 
 做事的方式：
@@ -101,9 +103,10 @@ async function run(name: string, input: any, user: string): Promise<{ result: an
     case 'entrance_exam': { const r = await runChapterExam(String(input.enrollment_id), input.chapter_id || null, false); return { result: r, label: `入学考 · ${r.chapter}：${r.score} 分`, ui: page(`/college/admin/training/${input.enrollment_id}`, '学籍') }; }
     case 'attend_class': { const r = await attendClass(String(input.enrollment_id), String(input.chapter_id)); return { result: r, label: `上课 · ${r.chapter}：${r.points.length} 条要点`, ui: page(`/college/admin/training/${input.enrollment_id}`, '学籍') }; }
     case 'final_exam': { const r = await runChapterExam(String(input.enrollment_id), String(input.chapter_id), true); return { result: r, label: `毕业考 · ${r.chapter}：${r.score} 分${r.passed ? ' ✓' : ''}`, ui: page(`/college/admin/training/${input.enrollment_id}`, '学籍') }; }
+    case 'study_methods': { const r: any = await studyMethods(String(input.enrollment_id)); return { result: r, label: '修了这门课对得上的实验方法课', ui: page(`/college/admin/training/${input.enrollment_id}`, '学籍') }; }
     case 'reflect': {
       let sid = input.submission_id as string | undefined;
-      if (!sid) { const d = await enrollmentDetail(String(input.enrollment_id)); const failed = d.chapters.flatMap(c => c.latest.filter(x => x.after && (x.score ?? 0) < 60)).sort((a, b) => String(b.at).localeCompare(String(a.at)))[0]; if (!failed) throw new Error('没有没过的作答可以反思'); sid = failed.id; }
+      if (!sid) { const d = await enrollmentDetail(String(input.enrollment_id)); const failed = d.chapters.flatMap(c => c.latest.filter(x => x.after && ((x.score ?? 0) < 60 || (x as any).honesty?.integrity))).sort((a, b) => String(b.at).localeCompare(String(a.at)))[0]; if (!failed) throw new Error('没有没过的作答可以反思'); sid = failed.id; }
       const r = await reflect(String(input.enrollment_id), sid); return { result: r, label: `反思 · ${r.chapter}：${r.rules.length} 条规则`, ui: page(`/college/admin/training/${input.enrollment_id}`, '学籍') };
     }
     case 'list_work_tasks': { const d = await enrollmentDetail(String(input.enrollment_id)); const ws = await pickableWorkTasks(d.space_id); return { result: ws.slice(0, 20), label: `可考的真活 ${ws.length} 道` }; }
