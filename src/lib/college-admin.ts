@@ -193,7 +193,10 @@ export async function recomputeEnrollment(id: string) {
   const final = afters.length ? Math.round(afters.reduce((a, b) => a + b, 0) / afters.length) : null;
   const allPassed = d.chapters.length > 0 && d.chapters.every(c => c.passed);
   const status: EnrollmentStatus = allPassed ? 'graduated' : afters.length ? (d.chapters.some(c => c.after != null && !c.passed) ? 'remedial' : 'examining') : (befores.length || d.work.length) ? 'training' : 'enrolled';
-  const patch: Record<string, any> = { entrance_score: entrance, final_score: final, status, updated_at: new Date().toISOString() };
+  // 培养增益（11-22）：只拿入学考、毕业考两头都考过的同一批章节比——入学考常只考一章、毕业考是全部章节平均，直接相减量的不是同一个东西
+  const pairs = d.chapters.filter(c => c.before != null && c.after != null);
+  const gain = pairs.length ? { chapters: pairs.length, before: Math.round(pairs.reduce((a, c) => a + c.before!, 0) / pairs.length), after: Math.round(pairs.reduce((a, c) => a + c.after!, 0) / pairs.length) } : null;
+  const patch: Record<string, any> = { entrance_score: entrance, final_score: final, status, updated_at: new Date().toISOString(), notebook: { ...(d.notebook || {}), gain: gain ? { ...gain, gain: gain.after - gain.before } : null } };
   if (status === 'graduated' && !d.graduated_at) patch.graduated_at = new Date().toISOString();
   if (status !== 'graduated') patch.graduated_at = null;
   await db.from('college_enrollments').update(patch).eq('id', id);

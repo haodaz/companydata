@@ -397,12 +397,19 @@ export async function runWorkExam(enrollmentId: string, workTaskId: string) {
   // 训练数据里 AI 学员就有过程可以和真人比，回放和报告也看得到它是怎么做的。t 是步骤序号换算的秒数，不是真实耗时
   const priv = await privateForEnrollment(en);   // 私域资料（11-22）：真活实习也带上
   if (priv) await notePrivate(en, priv);
-  const { answer, events } = await solveStaged(task, model, { persona: `${en.nova}，正在学院里做真活实习`, rules, institution: t.company_name || '', knowledge: priv?.pack });
+  // 真活实习装和章节考同一套装备（11-22 评审：以前只带错题本，等于裸考，检验不了举一反三）：老师傅技能卡 + 笔记规则 + 方法卡；错题本规则已在 rules 里
+  const space = await loadSpace(en.space_id).catch(() => null);
+  const skill = space ? skillRef(space.skill) : null;
+  const methods = skill ? await loadMethods(await methodKeysFor(en)).catch(() => []) : [];
+  const equipped = skill ? augmentSkill(skill, { ...en.notebook, rules: [] }, null, en.nova, methods) : null;
+  const card = equipped ? skillCardToPrompt(equipped.name, equipped.card) : '';
+  const knowledge = [card ? `${card}\n（以上是这门课老师傅的技能卡，做这道真活时照着用）` : '', priv?.pack || ''].filter(Boolean).join('\n\n');
+  const { answer, events } = await solveStaged(task, model, { persona: `${en.nova}，正在学院里做真活实习`, rules, institution: t.company_name || '', knowledge: knowledge || undefined });
   if (answer.length < 50) throw new Error('模型没有给出像样的交付物');
   const result = await gradeResult(task, answer, { institution: t.company_name || '', who: en.nova });
   // 老实（11-12）：真活也写交卷说明、判无来源的数字；诚信问题封顶 45
   const statement = await selfStatement(model, t.task?.title || '', answer, en.nova);
-  const honesty = await judgeHonesty([t.task?.brief, ...(t.task?.rules || []), ...(t.materials || []).map((m: any) => `${m.title}\n${m.content}`), priv?.pack].filter(Boolean).join('\n'), answer, statement, en.nova);
+  const honesty = await judgeHonesty([t.task?.brief, ...(t.task?.rules || []), ...(t.materials || []).map((m: any) => `${m.title}\n${m.content}`), knowledge].filter(Boolean).join('\n'), answer, statement, en.nova);
   if (honesty.integrity && result.total > 45) result.total = 45;
   const b = t.baseline?.result;
   const compare = b ? { baseline_total: b.total, delta: result.total - b.total, items: result.items.map(i => ({ id: i.id, title: i.title, mine: i.score, baseline: b.items?.find((x: any) => x.id === i.id)?.score ?? null })) } : null;
@@ -422,7 +429,7 @@ export async function runWorkExam(enrollmentId: string, workTaskId: string) {
 /** 学员做真活的四步（计划 → 初稿 → 自查 → 定稿），每步一条事件：plan / open_material / draft / self_check。提示走真活共用的 buildSolvePrompt */
 async function solveStaged(task: WorkTask, model: string, opts: { persona: string; rules: string[]; institution: string; knowledge?: string }) {
   const { buildSolvePrompt } = await import('@/lib/work/solve');
-  const base = buildSolvePrompt(task, { persona: opts.persona, rules: opts.rules }) + (opts.knowledge ? `\n\n${opts.knowledge}\n（以上是培养你的机构给的私域资料，可以用；用到的地方说明出处）` : '');
+  const base = buildSolvePrompt(task, { persona: opts.persona, rules: opts.rules }) + (opts.knowledge ? `\n\n${opts.knowledge}\n（以上资料可以用；用到私域资料的地方说明出处）` : '');
   const call = async (prompt: string, name: string, json = false) => {
     const r = await generateContent(prompt, model, json ? { jsonMode: true, temperature: 0 } : { temperature: 0 });
     await logTokenUsage({ tool_name: 'college', task_name: `College · 学员做真活 · ${name}`, institution: opts.institution, model_id: model, usageMetadata: r.usageMetadata } as any).catch(() => {});

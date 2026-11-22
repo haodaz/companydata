@@ -220,6 +220,15 @@ function locate(inp: FluencyInput, a: Anchors, source: string, disclosure: strin
   // 工具事件（量表 D3，有则加强）：操作台上跑测试、交卷前自查
   const tools = ev.filter(e => e.type === 'run_tests' || e.type === 'self_check');
   if (tools.length) out.push({ bid: 'B23', src: 'event', i: -2, quote: `交卷前在操作台上${ev.some(e => e.type === 'run_tests') ? `跑了 ${ev.filter(e => e.type === 'run_tests').length} 次测试` : ''}${ev.some(e => e.type === 'self_check') ? `做了 ${ev.filter(e => e.type === 'self_check').length} 次自查` : ''}`, rule: 'B23-事件:测试/自查' });
+  // 数字的来路（11-22，聊天考试台「不说出口的核查」）：交付物里有几个数字直接取自材料、AI 的回答里没有——他自己回到材料核过或算过。
+  // 模拟数据里这一项能把新手分出来（新手平均 1 个，资深 / 一般 6–7 个），资深和一般分不开，要等真人数据看；只作证据候选，成不成立、几档由模型判
+  {
+    const numsOf = (t: string) => { const out = new Set<string>(); for (const m of String(t || '').matchAll(/(?<![\w.])(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+\.\d+|\d{2,})/g)) { const v = m[1].replace(/,/g, ''); if (/^(19|20)\d\d$/.test(v)) continue; out.add(v); } return out; };
+    const M = numsOf(inp.task.materials.map(m => m.content || '').join('\n')), A = numsOf(inp.chat.map(c => c.a).join('\n')), D = numsOf(inp.deliverable);
+    const own = [...D].filter(v => M.has(v) && !A.has(v));
+    const reread = ev.filter(e => e.type === 'open_material' && e.t > (inp.chat[0]?.t ?? Infinity)).length;
+    if (own.length >= 3) out.push({ bid: 'B13', src: 'event', i: -3, quote: `交付物里有 ${own.length} 个数字直接取自材料、AI 的回答里没有（如 ${own.slice(0, 4).join('、')}）${reread ? `；问过 AI 之后回看材料 ${reread} 次` : ''}`, rule: 'B13-事件:数字自己从材料取' });
+  }
   // AI 工作台（11-17）：人自己动手的动作是平台直接记下的，不靠说出口——资深的人「自己核、不跟 AI 说」也看得到
   const tAsk = inp.chat[0]?.t ?? 0;
   const ag = ev.filter(e => /^(ws_|agent_|change_)/.test(e.type) && (e.t >= tAsk || e.type === 'agent_mode'));   // 协作开关常在第一次提问前就设好

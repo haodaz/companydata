@@ -516,6 +516,25 @@ export async function suggestRoles(q: string, companyId?: number | null) {
 }
 
 /** 第三步：最强模型先做一遍当基线（用和候选人一样的材料），再用同一套 rubric 评它 */
+/**
+ * 没有基线就补一个（11-22：11 月以来的题只有约三分之一有 AI 基线，AI 工作台 14 道一道都没有——聊着出题时基线是单独一步，不提就不跑；脚本导入的也没跑）。
+ * 发布时调用：请求里用 next/server 的 after() 在返回之后跑，不让发布等；不在请求里（脚本）就直接跑。
+ */
+export async function ensureBaseline(taskId: string) {
+  const { supabaseAdmin: db } = await import('@/lib/supabase');
+  const { withCost } = await import('@/lib/token-logger');
+  const { data: t } = await db.from('work_tasks').select('id, task, problem, materials, rubric, company_name, baseline, created_by').eq('id', taskId).maybeSingle();
+  if (!t || (t as any).baseline?.result) return null;
+  const baseline = await withCost({ tool_name: 'work', task_name: 'Baseline · AI 先做一遍', stage: 'create', actor: (t as any).created_by || null }, () =>
+    runBaseline({ env: (t as any).task?.env || { type: 'doc' }, problem: (t as any).problem, task: (t as any).task, materials: (t as any).materials, rubric: (t as any).rubric }, { institution: (t as any).company_name }));
+  await db.from('work_tasks').update({ baseline, updated_at: new Date().toISOString() }).eq('id', taskId);
+  return baseline.result.total as number;
+}
+export async function ensureBaselineLater(taskId: string) {
+  const run = () => ensureBaseline(taskId).catch(e => console.warn('[work] 补基线失败', taskId, String(e?.message).slice(0, 120)));
+  try { const { after } = await import('next/server'); after(run); } catch { void run(); }
+}
+
 export async function runBaseline(task: WorkTask, opts: { model?: string; institution?: string } = {}): Promise<{ model: string; answer: string; result: any }> {
   // 做题走共用的 solve.ts（学院考学员也走它）；这里只多一层模型兜底
   const model = opts.model || WORK_MODEL;

@@ -181,6 +181,7 @@ async function run(name: string, input: any, user: { email: string; role: string
     case 'publish_task': {
       const t = await loadMine(user, String(input.task_id));
       await db.from('work_tasks').update({ status: 'published', updated_at: new Date().toISOString() }).eq('id', t.id);
+      if (!t.baseline?.result) { const { ensureBaselineLater } = await import('@/lib/work/generator'); await ensureBaselineLater(t.id); }   // 没基线就在后台补（11-22）
       return { result: { published: true, share_link: `/work/${t.share_token}` }, ui: ui({ ...t, status: 'published' }), label: '已发布' };
     }
     case 'task_summary': { const t = await loadMine(user, String(input.task_id)); return { result: brief(t), ui: ui(t), label: `看了「${t.task?.title}」` }; }

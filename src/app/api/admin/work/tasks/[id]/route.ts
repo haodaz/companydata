@@ -33,6 +33,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (body.rubric && Array.isArray(body.rubric)) patch.rubric = body.rubric;
   const { error } = await db.from('work_tasks').update(patch).eq('id', id);
   if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
+  if (patch.status === 'published') { const { ensureBaselineLater } = await import('@/lib/work/generator'); await ensureBaselineLater(id); }   // 发布时没基线就在后台补（11-22）
   return NextResponse.json({ ok: true });
 }
 

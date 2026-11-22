@@ -16,7 +16,7 @@ const one = (v: any) => (Array.isArray(v) ? v[0] : v);
 
 export async function buildLeaderboard(): Promise<Leaderboard> {
   const [{ data: ens }, { data: sts }, { data: sps }] = await Promise.all([
-    db.from('college_enrollments').select('student_id, space_id, entrance_score, final_score, updated_at, private:notebook->private'),
+    db.from('college_enrollments').select('student_id, space_id, entrance_score, final_score, updated_at, private:notebook->private, gain:notebook->gain'),
     db.from('college_students').select('id, name, kind, model_id'),
     db.from('skill_tasks').select('id, title, profile, jd_snapshot, org_id'),
   ]);
@@ -32,8 +32,9 @@ export async function buildLeaderboard(): Promise<Leaderboard> {
   const rows = [...latest.values()];
   const row = (model: string, list: any[]): LbRow => {
     const b = list.map(x => x.entrance_score).filter((v: any) => typeof v === 'number'), a = list.map(x => x.final_score).filter((v: any) => typeof v === 'number');
-    const both = list.filter(x => typeof x.entrance_score === 'number' && typeof x.final_score === 'number');
-    return { model, student_id: studentOf.get(model), ...label(model), courses: list.length, before: avg(b), after: avg(a), gain: both.length ? avg(both.map(x => x.final_score - x.entrance_score)) : null };
+    // 增益只用同一批章节两头都考过的（recomputeEnrollment 存在 notebook.gain）；以前直接拿毕业分减入学分，两边考的章节不一样
+    const both = list.filter(x => typeof x.gain?.gain === 'number');
+    return { model, student_id: studentOf.get(model), ...label(model), courses: list.length, before: avg(b), after: avg(a), gain: both.length ? avg(both.map(x => x.gain.gain)) : null };
   };
   const byModel = new Map<string, any[]>(); for (const r of rows) byModel.set(r.model, [...(byModel.get(r.model) || []), r]);
   const rank = (x: LbRow, y: LbRow) => (y.after ?? y.before ?? -1) - (x.after ?? x.before ?? -1) || (y.before ?? -1) - (x.before ?? -1);
