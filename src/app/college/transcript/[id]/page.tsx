@@ -42,7 +42,7 @@ export default function TranscriptPage() {
           <thead><tr><th>课程（职业）</th><th>专业</th><th className="n">学分</th><th className="n">入学</th><th className="n">毕业</th><th className="n">等级</th><th>授课老师傅</th><th>状态</th></tr></thead>
           <tbody>{t.courses.map(c => (
             <tr key={c.enrollment_id}>
-              <td><Link href={`/college/g/${c.enrollment_id}`} className="tr-c">{c.role}</Link><div className="tr-co">{c.company}</div></td>
+              <td><Link href={`/college/g/${c.enrollment_id}`} className="tr-c">{c.role}</Link><div className="tr-co">{c.company}</div>{c.research && <div className="tr-co">{c.research.n ? `科研测评 ${c.research.n} 道 · 平均 ${c.research.avg}` : ''}{c.research.private_n ? `${c.research.n ? '；' : ''}另有 ${c.research.private_n} 道私域测评（仅培养机构可见）` : ''}</div>}</td>
               <td className="tr-mj">{c.major || '—'}</td>
               <td className="n">{c.credits}</td>
               <td className="n mute">{c.before ?? '—'}</td>

@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server';
 import { guard, fail, ok } from '../../_guard';
 import { enrollmentDetail, recomputeEnrollment } from '@/lib/college-admin';
+import { listResearchExams, runResearchExam } from '@/lib/college-research';
 import { advance, attendClass, studyMethods, ensureLessons, nextStep, pickableWorkTasks, reflect, regradeEnrollment, runChapterExam, runWorkExam } from '@/lib/college-train';
 export const runtime = 'nodejs'; export const maxDuration = 300;
 
@@ -14,14 +15,15 @@ export const runtime = 'nodejs'; export const maxDuration = 300;
  *    lessons  {}                   给课程补教案
  *    advance  { steps? }           按学习路径连做几步
  *    regrade  {}                   按学院口径重评这份学籍已有的作答（同一份答案、同一把尺）
- *    recompute {}                  重算成绩和状态 */
+ *    recompute {}                  重算成绩和状态
+ *    research { exam_id }          考一道科研测评题（11-22；私域题带这家实验室的私域资料） */
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const g = await guard(req); if (g.denied) return g.denied;
   try {
     const { id } = await params;
     const d = await enrollmentDetail(id);
-    const [next, works] = await Promise.all([nextStep(id).catch(e => ({ kind: 'blocked', label: String(e?.message || e) })), pickableWorkTasks(d.space_id)]);
-    return ok({ data: { ...d, next, work_options: works } });
+    const [next, works, research] = await Promise.all([nextStep(id).catch(e => ({ kind: 'blocked', label: String(e?.message || e) })), pickableWorkTasks(d.space_id), listResearchExams(id).catch(() => [])]);
+    return ok({ data: { ...d, next, work_options: works, research_options: research } });
   } catch (e) { return fail(e); }
 }
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -39,6 +41,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       case 'advance': return ok({ result: await advance(id, Math.min(5, Number(b.steps) || 3)) });
       case 'regrade': return ok({ result: await regradeEnrollment(id) });   // 按学院口径重评已有作答
       case 'recompute': return ok({ result: await recomputeEnrollment(id) });
+      case 'research': return ok({ result: await runResearchExam(id, String(b.exam_id)) });
       default: return fail('不认识的操作', 400);
     }
   } catch (e) { return fail(e); }

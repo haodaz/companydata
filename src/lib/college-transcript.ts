@@ -19,13 +19,15 @@ const letter = (v: number | null) => (v == null ? '—' : v >= 90 ? 'A' : v >= 8
 const gp = (v: number) => (v >= 90 ? 4 : v >= 80 ? 3 : v >= 70 ? 2 : v >= 60 ? 1 : 0);
 const one = (v: any) => (Array.isArray(v) ? v[0] : v);
 
-export type TranscriptCourse = { enrollment_id: string; role: string; company: string; major: string | null; credits: number; before: number | null; after: number | null; grade: string; status: string; teacher: string; graduated_at: string | null };
+export type TranscriptCourse = { enrollment_id: string; role: string; company: string; major: string | null; credits: number; before: number | null; after: number | null; grade: string; status: string; teacher: string; graduated_at: string | null;
+  /** 科研测评（11-22）：成绩单公开，只列公开题的道数和均分；私域题只给道数（成绩只给培养机构看） */
+  research?: { n: number; avg: number | null; private_n: number } };
 export type Transcript = { student: { id: string; name: string; model: string; provider: string }; courses: TranscriptCourse[]; credits: number; gpa: number | null; majors: { key: string; name: string; en: string; passed: number; taken: number; done: boolean }[] };
 
 export async function buildTranscript(studentId: string): Promise<Transcript | null> {
   const { data: s } = await db.from('college_students').select('id, name, kind, model_id').eq('id', studentId).maybeSingle();
   if (!s || s.kind !== 'platform') return null;   // 只公开平台自己的模型；客户的不出成绩单
-  const { data: ens } = await db.from('college_enrollments').select('id, space_id, status, entrance_score, final_score, graduated_at').eq('student_id', studentId).order('created_at');
+  const { data: ens } = await db.from('college_enrollments').select('id, space_id, status, entrance_score, final_score, graduated_at, research:notebook->research').eq('student_id', studentId).order('created_at');
   const ids = [...new Set((ens || []).map(e => e.space_id))];
   const [{ data: sps }, { data: chs }] = await Promise.all([
     ids.length ? db.from('skill_tasks').select('id, title, profile, jd_snapshot, skill:skills(name, source, expert_name, expert_location)').in('id', ids) : Promise.resolve({ data: [] as any[] }),
@@ -38,6 +40,7 @@ export async function buildTranscript(studentId: string): Promise<Transcript | n
     return {
       enrollment_id: e.id, role, company: jd.company || '', major: majorOf(role, research)?.name || null,
       credits: (chs || []).filter((c: any) => c.task_id === e.space_id).length, before: e.entrance_score, after: e.final_score, grade: letter(e.final_score),
+      research: (() => { const rs: any[] = Array.isArray(e.research) ? e.research : []; const pub = rs.filter(r => r.scope !== 'private'); return rs.length ? { n: pub.length, avg: pub.length ? Math.round(pub.reduce((a, r) => a + (Number(r.total) || 0), 0) / pub.length) : null, private_n: rs.length - pub.length } : undefined; })(),
       status: e.status, teacher: sk ? (sk.source !== 'jd-draft' ? `${sk.expert_name}${sk.expert_location ? `（${sk.expert_location}）` : ''}` : 'AI 草案（待老师傅校正）') : '—', graduated_at: e.graduated_at,
     };
   });
