@@ -9,11 +9,11 @@
 /* ---------- 基本类型 ---------- */
 export type Level = 'self' | 'vs' | 'platform' | 'enterprise' | 'ata';
 export type Status = 'valid' | 'declared' | 'pending' | 'review' | 'expired' | 'revoked';
-export type IssuerId = 'joint' | 'ata' | 'vs' | 'baiye' | 'platform' | 'enterprise' | 'employer' | 'self';
-export type PageId = 'id' | 'self' | 'verify' | 'ata' | 'exp' | 'work' | 'strength' | 'entries' | 'access';
+export type IssuerId = 'joint' | 'ata' | 'vs' | 'baiye' | 'platform' | 'enterprise' | 'employer' | 'intern' | 'self';
+export type PageId = 'id' | 'self' | 'verify' | 'ata' | 'exp' | 'work' | 'employ' | 'strength' | 'entries' | 'access';
 export type StampShape = 'round' | 'rect' | 'oval' | 'tag' | 'cham';
 export type StampIcon = 'plane' | 'star' | 'pen' | 'book' | 'check' | 'chip' | 'case' | 'ata' | 'eye' | 'lock';
-export type VisaTheme = 'vs' | 'ata' | 'baiye' | 'work' | 'grant';
+export type VisaTheme = 'vs' | 'ata' | 'baiye' | 'work' | 'employ' | 'grant';
 
 export interface Evidence { label: string; detail: string; ok?: boolean | 'review' }
 export interface StampArt { shape: StampShape; top: string; bottom?: string; main: string; sub?: string; date?: string; icon: StampIcon; color: string }
@@ -87,6 +87,7 @@ export const ISSUERS: Record<IssuerId, { name: string; en: string }> = {
   platform: { name: '场景平台', en: 'SCENE PLATFORM · 用护照、给护照盖章' },
   enterprise: { name: '某连锁零售', en: '企业出题 · 经真活台确认' },
   employer: { name: '某食品企业', en: '在职单位 · 人力资源部回函' },
+  intern: { name: '某咨询公司', en: '实习单位 · 人力资源部在护照里确认' },
   self: { name: '韩梅梅（本人）', en: 'SELF-DECLARED · 本人填写' },
 };
 export const LEVELS: Record<Level, { name: string; en: string; color: string; bg: string; rank: number }> = {
@@ -125,6 +126,7 @@ export const PAGES: PageDef[] = [
   { id: 'ata', code: 'a', title: 'ATA 能力签', en: 'CERTIFIED', tab: 'ATA', tint: '#D80C18' },
   { id: 'exp', code: 'e', title: '体验签', en: 'EXPERIENCE', tab: '体验', tint: '#C2622B' },
   { id: 'work', code: 'w', title: '真活签', en: 'REAL WORK', tab: '真活', tint: '#0F7A62' },
+  { id: 'employ', code: 'c', title: '雇主确认签', en: 'EMPLOYER CONFIRMED', tab: '雇主', tint: '#2E5E8C' },
   { id: 'strength', code: 's', title: '长处与发展', en: 'STRENGTHS & PLAN', tab: '长处', tint: '#B8892E' },
   { id: 'entries', code: 'f', title: '足迹', en: 'ENTRIES', tab: '足迹', tint: '#2F6B4F' },
   { id: 'access', code: 'l', title: '查看记录', en: 'ACCESS LOG', tab: '记录', tint: '#3E4A6B', ownerOnly: true },
@@ -195,13 +197,14 @@ export const CLAIMS: Claim[] = [
   /* 鉴真签：平方验证 */
   {
     id: 'TP-CL-0201', page: 'verify', title: '鉴真签 · 履历逐条核对', issuer: 'vs',
-    statement: '韩梅梅护照里的 6 条履历，平方逐条核对：5 条对上，1 条转人工复核。',
+    statement: '韩梅梅护照里的 7 条履历，平方逐条核对：6 条对上，1 条转人工复核。',
     issuedAt: '2026.11.08', validUntil: '长期 · 履历更新时重核', level: 'vs', status: 'valid',
     method: '本人授权后，逐条对公开记录与单位回函；对不上的不删，照实标「人工复核」。',
     evidence: [
       { label: '学历 · 某理工大学 经济统计学 本科', detail: '学历公开查询（本人授权）· 对上', ok: true },
       { label: '学位 · 经济学学士', detail: '学位证书编号查询 · 对上', ok: true },
-      { label: '实习 · 某咨询公司 数据分析实习（经某校招平台）', detail: '单位尚未回函 · 人工复核中', ok: 'review' },
+      { label: '实习 · 某咨询公司 数据分析实习（经某校招平台）', detail: '实习单位在护照里盖了雇主确认签 · 对上', ok: true },
+      { label: '获奖 · 全国大学生统计建模大赛 省赛二等奖', detail: '主办方尚未回函 · 人工复核中', ok: 'review' },
       { label: '入职 · 某食品企业 数据分析管培生', detail: '社保缴纳记录（本人授权）· 对上', ok: true },
       { label: '转岗 · 某食品企业 经营分析', detail: '单位人力资源部回函 · 对上', ok: true },
       { label: 'ATA 成绩回链', detail: 'ATA 成绩库比对（高中、大学、从业三次）· 对上', ok: true },
@@ -209,25 +212,25 @@ export const CLAIMS: Claim[] = [
     code: 'TPV-0201-VS11', hash: 'sha256:3d9e…a8b2',
     visa: {
       finish: 'foil', theme: 'vs', type: '鉴真签', typeEn: 'VERIFIED · RECORD CHECK', no: 'VS 1108 2026',
-      fields: [['HOLDER · 持有人', '韩梅梅'], ['RECORDS · 履历', '6 条 · 5 对上'], ['PENDING · 待核', '1 条 · 人工复核'], ['METHOD · 方式', '逐条对记录'], ['ISSUED · 签发', '2026.11.08'], ['VALID · 有效', '长期 · 可更新']],
-      mrz: [mrz(`V<CHN${N}<<VERIFIED`), mrz('VS11082026CHN<<RECORDS6<<5OF6<<REVIEW1')],
+      fields: [['HOLDER · 持有人', '韩梅梅'], ['RECORDS · 履历', '7 条 · 6 对上'], ['PENDING · 待核', '1 条 · 人工复核'], ['METHOD · 方式', '逐条对记录'], ['ISSUED · 签发', '2026.11.08'], ['VALID · 有效', '长期 · 可更新']],
+      mrz: [mrz(`V<CHN${N}<<VERIFIED`), mrz('VS11082026CHN<<RECORDS7<<6OF7<<REVIEW1')],
     },
   },
   {
-    id: 'TP-CL-0202', page: 'verify', title: '5 条履历对上', issuer: 'vs',
-    statement: '学历、学位、入职、转岗、ATA 成绩 5 条与记录一致。',
+    id: 'TP-CL-0202', page: 'verify', title: '6 条履历对上', issuer: 'vs',
+    statement: '学历、学位、实习、入职、转岗、ATA 成绩 6 条与记录一致；实习那条由实习单位亲自确认。',
     issuedAt: '2026.11.08', validUntil: '长期', level: 'vs', status: 'valid',
-    method: '公开查询 + 单位回函 + 成绩库比对，三种来源交叉。',
-    evidence: [{ label: '对上的 5 条', detail: '学历 / 学位 / 入职 / 转岗 / ATA 成绩', ok: true }],
+    method: '公开查询 + 单位回函 + 雇主确认签 + 成绩库比对，多种来源交叉。',
+    evidence: [{ label: '对上的 6 条', detail: '学历 / 学位 / 实习 / 入职 / 转岗 / ATA 成绩', ok: true }],
     code: 'TPV-0202-OK5', hash: 'sha256:77aa…2e19',
-    stamp: { shape: 'round', top: 'VERIFIED · 核验', bottom: '平方验证', icon: 'check', main: '5 / 6', sub: '对上', color: '#4B3BD6' },
+    stamp: { shape: 'round', top: 'VERIFIED · 核验', bottom: '平方验证', icon: 'check', main: '6 / 7', sub: '对上', color: '#4B3BD6' },
   },
   {
     id: 'TP-CL-0203', page: 'verify', title: '1 条人工复核', issuer: 'vs',
-    statement: '大四的实习经历（某咨询公司）暂未对上：单位未回函，转人工复核，照实写着。',
+    statement: '大三的竞赛获奖（全国大学生统计建模大赛 省赛二等奖）暂未对上：主办方未回函，转人工复核，照实写着。',
     issuedAt: '2026.11.08', validUntil: '复核完成后更新', level: 'vs', status: 'review',
-    method: '平方鉴真员人工复核：电话回访 + 本人补充实习证明。',
-    evidence: [{ label: '回函', detail: '已发函 2026.11.03，等待回复', ok: 'review' }, { label: '本人补充', detail: '实习证明扫描件 1 份', ok: true }],
+    method: '平方鉴真员人工复核：向主办方发函 + 本人补充获奖证书。',
+    evidence: [{ label: '回函', detail: '已发函 2026.11.03，等待回复', ok: 'review' }, { label: '本人补充', detail: '获奖证书扫描件 1 份', ok: true }],
     code: 'TPV-0203-RVW', hash: 'sha256:c0de…5511',
     stamp: { shape: 'rect', top: 'PENDING · 待核实', icon: 'star', main: '人工复核', date: '照实写着', color: '#C0262D' },
   },
@@ -354,6 +357,47 @@ export const CLAIMS: Claim[] = [
     stamp: { shape: 'tag', top: 'CLOSED · 结题', icon: 'case', main: '超出预期', date: '2026.10.15', color: '#1B3F8F' },
   },
 
+  /* 雇主确认签：挂着公司名字的经历，由当时的公司确认；写到什么程度双方一起定，涉密项目标「不公开」 */
+  {
+    id: 'TP-CL-0801', page: 'employ', title: '雇主确认签 · 数据分析实习', issuer: 'intern',
+    statement: '某咨询公司确认：韩梅梅 2023.07–2023.09 在数据分析组实习。经历写到什么程度由公司和本人一起定，3 项可写，1 个项目按公司要求不公开。',
+    issuedAt: '2023.09.29', validUntil: '长期', level: 'enterprise', status: 'valid',
+    method: '实习结束时，本人把实习经历写进护照，公司人力资源部逐条确认措辞；涉及公司未公开数据的项目，按公司要求只留项目名、标「不公开」；双方确认后盖进护照。',
+    evidence: [
+      { label: '岗位与时间', detail: '数据分析实习生 · 2023.07.03–2023.09.29 · 公司确认', ok: true },
+      { label: '职责', detail: '门店销售周报自动化、数据清洗与口径核对 · 公司确认', ok: true },
+      { label: '参与项目', detail: '会员分层分析 · 可写，措辞经公司确认', ok: true },
+      { label: '不公开', detail: '门店定价试点 · 不公开（雇主要求，涉及未公开定价数据）', ok: true },
+      { label: '确认人', detail: '人力资源部（示例）· 2023.09.29', ok: true },
+    ],
+    facts: [['阶段', '校招实习'], ['可写', '3 项 · 措辞双方确认'], ['不公开', '1 项 · 雇主要求']],
+    code: 'EC-2309-0729', hash: 'sha256:ec09…72a9',
+    visa: {
+      theme: 'employ', type: '雇主确认签', typeEn: 'EMPLOYER · CONFIRMED', no: 'EC 2309 0729',
+      fields: [['HOLDER · 持有人', '韩梅梅'], ['ROLE · 岗位', '数据分析实习'], ['PERIOD · 时间', '2023.07–09'], ['CONFIRMED · 可写', '3 项'], ['PRIVATE · 不公开', '1 项 · 雇主要求'], ['BY · 确认', '某咨询公司 HR']],
+      mrz: [mrz(`C<CHN${N}<<EMPLOYER<<CONFIRMED`), mrz('EC23090729CHN<<INTERN<<3OK<<1PRIVATE')],
+      issuerLine: '某咨询公司 · 实习单位', issuerEn: 'CONFIRMED BY EMPLOYER · 人力资源部',
+    },
+  },
+  {
+    id: 'TP-CL-0802', page: 'employ', title: '不公开 · 门店定价试点', issuer: 'intern',
+    statement: '项目「门店定价试点」涉及公司未公开的定价数据，按公司要求不公开细节：护照里只留项目名，看的人知道有这段经历，看不到内容。',
+    issuedAt: '2023.09.29', validUntil: '长期', level: 'enterprise', status: 'valid',
+    method: '雇主在确认时勾选「不公开」；分享给任何人都只显示项目名，内容不外传。',
+    evidence: [{ label: '雇主要求', detail: '人力资源部 · 确认时标记', ok: true }, { label: '本人同意', detail: '2023.09.29 在护照里确认', ok: true }],
+    code: 'EC-2309-0729-P', hash: 'sha256:5e1c…0d7b',
+    stamp: { shape: 'rect', top: 'PRIVATE · 不公开', icon: 'lock', main: '定价试点', date: '雇主要求', color: '#2E5E8C' },
+  },
+  {
+    id: 'TP-CL-0803', page: 'employ', title: '雇主确认 · 措辞', issuer: 'intern',
+    statement: '经历写到什么程度：本人起草，公司逐条确认措辞，没有夸大，也没有写不该写的。',
+    issuedAt: '2023.09.29', validUntil: '长期', level: 'enterprise', status: 'valid',
+    method: '本人起草 → 公司逐条确认 → 双方都点「确认」后盖章。',
+    evidence: [{ label: '确认记录', detail: '2 轮修改 · 2023.09.29 双方确认', ok: true }],
+    code: 'EC-2309-0729-C', hash: 'sha256:a4c8…19e3',
+    stamp: { shape: 'round', top: 'CONFIRMED · 雇主确认', bottom: 'EMPLOYER', icon: 'check', main: '确认', sub: '2023.09.29', color: '#2E5E8C' },
+  },
+
   /* 长处与发展 */
   {
     id: 'TP-CL-0601', page: 'strength', title: '长处 ① 找出异常', issuer: 'vs',
@@ -445,11 +489,11 @@ export const CLAIMS: Claim[] = [
   },
   {
     id: 'TP-CL-0707', page: 'entries', title: '实习 · 某咨询公司 数据分析', issuer: 'platform', issuerName: '某校招平台',
-    statement: '大三暑假经某校招平台投递，进某咨询公司做数据分析实习。', issuedAt: '2023.07.03', validUntil: '长期', level: 'platform', status: 'review',
-    method: '校招平台盖了实习章；单位回函尚未回复，平方人工复核中。', evidence: [{ label: '校招平台', detail: '投递和录用记录 · 对上', ok: true }, { label: '单位回函', detail: '等待中', ok: 'review' }, { label: '本人补充', detail: '实习证明扫描件', ok: true }],
+    statement: '大三暑假经某校招平台投递，进某咨询公司做数据分析实习；实习结束时公司在护照里确认了这段经历。', issuedAt: '2023.07.03', validUntil: '长期', level: 'platform', status: 'valid',
+    method: '校招平台盖了实习章；实习结束时，实习单位在护照里盖了雇主确认签（见「雇主确认签」页）。', evidence: [{ label: '校招平台', detail: '投递和录用记录 · 对上', ok: true }, { label: '雇主确认签', detail: '某咨询公司人力资源部 · 2023.09.29', ok: true }],
     facts: [['阶段', '校招实习'], ['盖章', '某校招平台']],
     code: 'TPV-0707-INT', hash: 'sha256:0707…0a70',
-    stamp: { shape: 'cham', top: 'INTERNSHIP · 实习', icon: 'plane', main: '数据分析实习', date: '2023.07.03', sub: '某校招平台 · 复核中', color: '#C8323C' },
+    stamp: { shape: 'cham', top: 'INTERNSHIP · 实习', icon: 'plane', main: '数据分析实习', date: '2023.07.03', sub: '某校招平台 · 雇主已确认', color: '#C8323C' },
   },
   {
     id: 'TP-CL-0708', page: 'entries', title: '校招录用 · 某食品企业', issuer: 'platform', issuerName: '某校招平台',
@@ -501,6 +545,10 @@ export const LAYOUT: Partial<Record<PageId, { visa?: { claim: string; rot: numbe
   work: { visa: { claim: 'TP-CL-0501', rot: -0.8 }, stamps: [
     { claim: 'TP-CL-0502', x: 28, y: 71, w: 34, rot: -10 },
     { claim: 'TP-CL-0503', x: 68, y: 78, w: 48, rot: 5 },
+  ] },
+  employ: { visa: { claim: 'TP-CL-0801', rot: 0.8 }, stamps: [
+    { claim: 'TP-CL-0803', x: 28, y: 71, w: 34, rot: -9 },
+    { claim: 'TP-CL-0802', x: 68, y: 78, w: 46, rot: 5 },
   ] },
 };
 /** 一页六枚章的通用位置（真实护照、演示签章库的续页） */
@@ -566,6 +614,8 @@ export const DESTINATIONS: Destination[] = [
     ui: { pick: '选一个岗位', go: '确认预约', done: '预约好了', main: '已预约' } },
   { id: 'zhenhuo', title: '去真活台接一个企业题', who: '真活台 · 企业出题平台', gets: '真活签（企业确认）', level: 'enterprise', time: '1–3 周 · 按题', cost: '企业付酬 · 以题目为准', fits: '校招实习 · 从业', prefix: 'ZH', desc: '企业把真实问题挂出来，做完由企业确认。和你的发展计划对得上的题已经挑好了。', slots: ['供应商对账异常 · 某食品企业', '会员复购下滑 · 某连锁茶饮', '费用报销抽查规则 · 某物流公司'], icon: 'case', color: '#0F7A62',
     ui: { pick: '为你挑的题', go: '确认接题', done: '题目已领到，加油', main: '已接题' } },
+  { id: 'employer', title: '请实习 / 任职单位确认经历', who: '当时的实习单位或雇主 · 人力资源部', gets: '雇主确认签（企业确认）', level: 'enterprise', time: '3–5 个工作日', cost: '免费', fits: '校招实习 · 从业', prefix: 'EC', desc: '把挂着公司名字的经历发给当时的单位，人力资源部逐条确认；写到什么程度你们一起定，涉密项目可以标「不公开」。确认后盖进护照，以后求职不用再发函。', slots: ['某食品企业 · 经营分析（在职）', '某食品企业 · 数据分析管培生（2024–2026）'], icon: 'check', color: '#2E5E8C',
+    ui: { pick: '选一段经历', go: '发给单位确认', done: '已发给单位，确认后盖进护照', main: '待确认' } },
   { id: 'lab', title: '去实验室跟一个课题', who: '某高校实验室 · 科研场景平台', gets: '科研章（实验室确认）', level: 'platform', time: '8–12 周 · 课题制', cost: '以实验室公示为准', fits: '大学 · 想转科研', prefix: 'LAB', desc: '想转科研，先跟一个课题做一段。做完由实验室确认，盖进护照；读研申请时拿得出手。和你「消费数据」方向对得上的课题已经挑好了。', slots: ['会员消费行为数据 · 某高校营销实验室', '门店选址与客流 · 某高校城市数据实验室', '价格弹性测算 · 某高校经济学实验室'], icon: 'book', color: '#2F6B4F',
     ui: { pick: '为你挑的课题', go: '确认报名', done: '报上名了，等实验室回复', main: '已报名' } },
   { id: 'precollege', title: '去上一门大学先修课', who: '某大学先修课程平台', gets: '先修章（平台盖章）', level: 'platform', time: '8 周 · 线上', cost: '以平台公示为准', fits: '高中 · 大中衔接', prefix: 'PC', desc: '高中和大一前后用得上：先修一门大学课，结课成绩由平台盖进护照，升学、选专业时都拿得出来。', slots: ['微观经济学 · 春季班', '统计学导论 · 春季班', 'Python 数据分析入门 · 寒假班'], icon: 'book', color: '#7A3FA0',

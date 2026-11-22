@@ -151,7 +151,7 @@ function SelfPage({ ctx }: { ctx: PageCtx }) {
   );
 }
 
-/* ---------- 签证页（鉴真 / ATA / 体验 / 真活） ---------- */
+/* ---------- 签证页（鉴真 / ATA / 体验 / 真活 / 雇主确认） ---------- */
 function VisaPage({ id, ctx }: { id: PageId; ctx: PageCtx }) {
   const L = LAYOUT[id]!; const v = L.visa ? ctx.claims.get(L.visa.claim) : undefined;
   return (
@@ -279,12 +279,13 @@ export function idClaimFor(h: HolderInfo): Claim {
   };
 }
 
-const VISA_PAGES: PageId[] = ['verify', 'ata', 'exp', 'work'];
+const VISA_PAGES: PageId[] = ['verify', 'ata', 'exp', 'work', 'employ'];
 const EMPTY_HINT: Partial<Record<PageId, string>> = {
   verify: '平方逐条核对你的学历、履历之后，鉴真签贴在这一页。',
   ata: '去 ATA 考一场、或做一次 AI 能力认证，成绩直接贴进这一页。',
   exp: '在 AI 百业走完一个模拟岗位的一天，这里贴体验签。',
   work: '在真活台接一道企业题，交付并被企业确认后，这里贴真活签。',
+  employ: '挂着公司名字的经历，请当时的单位确认后，这里贴雇主确认签；涉密项目可以标「不公开」。',
   strength: '有了核验过的签章，这里会归纳出你的长处，排出下一步。',
   entries: '高中、大学、校招、入职、科研，每到一个新阶段，场景平台就在这一页盖一枚章。',
 };

@@ -125,6 +125,7 @@ export const VISA_THEMES: Record<VisaTheme, { c1: string; c2: string; ink: strin
   ata: { c1: '#FFF6F4', c2: '#F8D3CF', ink: '#B3121C', ink2: '#D99A2B' },
   baiye: { c1: '#FFF7EE', c2: '#FBD8BC', ink: '#B4532A', ink2: '#D99A2B' },
   work: { c1: '#EFFAF5', c2: '#CBEBDD', ink: '#0F7A62', ink2: '#1E9FD6' },
+  employ: { c1: '#F1F5FA', c2: '#D2DFEC', ink: '#2E5E8C', ink2: '#B8892E' },
   grant: { c1: '#F3F5FB', c2: '#DCE1F1', ink: '#1D2450', ink2: '#6D5BFF' },
 };
 const VW = 640, VH = 400;
@@ -188,13 +189,13 @@ export function Visa({ v, avatar, qrText, className, style }: { v: VisaArt; avat
     const line = v.issuerLine || '平方验证';
     return (
       <g>
-        {v.theme === 'work' ? <EntMark x={38} y={36} s={32} col={ink} /> : <VsMark x={38} y={36} s={32} col={ink} />}
+        {v.theme === 'work' || v.theme === 'employ' ? <EntMark x={38} y={36} s={32} col={ink} /> : <VsMark x={38} y={36} s={32} col={ink} />}
         <text x={62} y={40} fontSize={17} fontWeight={900} fill={ink} fontFamily={SERIF} {...fitLen(line, 17, 230)}>{line}</text>
         <text x={62} y={55} fontSize={9} fontWeight={800} fill={ink} fillOpacity={0.7} fontFamily={MONO}>{v.issuerEn || 'VERIFIED BY VISIONSQUARE'}</text>
       </g>
     );
   })();
-  const micro = (v.theme === 'ata' || v.theme === 'grant' ? 'ATA·全美在线·' : v.theme === 'work' ? 'REALWORK·真活·' : v.theme === 'baiye' ? 'AIBAIYE·百业·' : 'VERIFIED·鉴真·').repeat(16);
+  const micro = (v.theme === 'ata' || v.theme === 'grant' ? 'ATA·全美在线·' : v.theme === 'work' ? 'REALWORK·真活·' : v.theme === 'employ' ? 'EMPLOYER·雇主确认·' : v.theme === 'baiye' ? 'AIBAIYE·百业·' : 'VERIFIED·鉴真·').repeat(16);
   return (
     <div ref={fxRef} className={`tp-visa ${className || ''}`} data-finish={fx} style={style}>
       <svg viewBox={`0 0 ${VW} ${VH}`} role="img" aria-label={`${v.type} ${v.no}`}>
@@ -214,7 +215,7 @@ export function Visa({ v, avatar, qrText, className, style }: { v: VisaArt; avat
           <path d={rosettePath(470, 230, 110, 39, 64)} stroke={ink} strokeOpacity={0.16} strokeWidth={0.6} fill="none" />
           <path d={rosettePath(470, 230, 74, 27, 40)} stroke={t.ink2} strokeOpacity={0.15} strokeWidth={0.6} fill="none" />
           <path d={rosettePath(110, 330, 66, 22, 38)} stroke={ink} strokeOpacity={0.1} strokeWidth={0.6} fill="none" />
-          <g opacity={0.06}>{v.theme === 'ata' || v.theme === 'grant' ? <AtaSquare x={320} y={205} s={170} col={ink} knock={t.c2} /> : v.theme === 'work' ? <EntMark x={320} y={205} s={190} col={ink} /> : <VsMark x={320} y={205} s={190} col={ink} />}</g>
+          <g opacity={0.06}>{v.theme === 'ata' || v.theme === 'grant' ? <AtaSquare x={320} y={205} s={170} col={ink} knock={t.c2} /> : v.theme === 'work' || v.theme === 'employ' ? <EntMark x={320} y={205} s={190} col={ink} /> : <VsMark x={320} y={205} s={190} col={ink} />}</g>
           <text x={0} y={80} fontSize={5.5} fontWeight={700} fill={ink} fillOpacity={0.24} fontFamily={MONO}>{micro}</text>
           {issuer}
           <text x={618} y={48} textAnchor="end" fontSize={34} fontWeight={900} fill={ink} fontFamily={SERIF}>{v.type}</text>

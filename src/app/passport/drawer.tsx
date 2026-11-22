@@ -60,7 +60,7 @@ function signerOf(c: Claim) {
   if (c.issuer === 'ata') return 'ATA 签发签名';
   if (c.issuer === 'joint') return 'ATA 签名（画像由平方支持）';
   if (c.issuer === 'platform') return `${c.issuerName || ISSUERS.platform.name} 盖章签名`;
-  if (c.issuer === 'enterprise' || c.issuer === 'employer') return `${c.issuerName || ISSUERS[c.issuer].name} 确认签名`;
+  if (c.issuer === 'enterprise' || c.issuer === 'employer' || c.issuer === 'intern') return `${c.issuerName || ISSUERS[c.issuer].name} 确认签名`;
   if (c.issuer === 'baiye') return 'AI 百业 体验签名';
   return '平方验证 · 鉴真签名';
 }
