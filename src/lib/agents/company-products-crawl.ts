@@ -95,7 +95,9 @@ ${links.map((l, i) => `${i}. ${l.text || '(无文字)'} ${l.url}`).join('\n')}
 export interface ProductCrawlResult { pages: { url: string; ok: boolean; products: number }[]; products: any[] }
 
 /** urls 给了就只读这些页；没给就从官网首页挑产品页 */
-export async function crawlCompanyProducts(company: any, opts: { urls?: string[]; model: string; existing?: string[] }): Promise<ProductCrawlResult> {
+/** maxPages：最多读几页（默认 12，顺着详情页再多读 8 页）；budgetMs：读到这么久就不再开新页（接口默认 200 秒，批量可以短一点） */
+export async function crawlCompanyProducts(company: any, opts: { urls?: string[]; model: string; existing?: string[]; maxPages?: number; budgetMs?: number }): Promise<ProductCrawlResult> {
+  const MAX = opts.maxPages || MAX_PAGES;
   let pages = (opts.urls || []).map(u => u.trim()).filter(u => /^https?:\/\//.test(u));
   if (!pages.length) {
     if (!company.official_website) throw new Error('这家企业还没有官网，先在档案里填官网，或者直接贴产品页链接');
@@ -103,11 +105,11 @@ export async function crawlCompanyProducts(company: any, opts: { urls?: string[]
     if (!home) throw new Error(`官网打不开：${company.official_website}（可以直接贴产品页链接再抓）`);
     pages = [company.official_website, ...(await pickPages(company, home, opts.model))];
   }
-  pages = [...new Set(pages)].slice(0, MAX_PAGES);
+  pages = [...new Set(pages)].slice(0, MAX);
   const result: ProductCrawlResult = { pages: [], products: [] };
   const queue = [...pages], seen = new Set(pages);
   let active = 0;
-  const stopAt = Date.now() + 200_000;   // 线上接口最多 300 秒：读到 200 秒就不再开新页，已经抓到的照样入库
+  const stopAt = Date.now() + (opts.budgetMs || 200_000);   // 线上接口最多 300 秒：读到 200 秒就不再开新页，已经抓到的照样入库
   await Promise.all([0, 1, 2].map(async () => {
     while (queue.length || active) {
       if (Date.now() > stopAt) { queue.length = 0; if (!active) break; await new Promise(r => setTimeout(r, 300)); continue; }
@@ -120,7 +122,7 @@ export async function crawlCompanyProducts(company: any, opts: { urls?: string[]
         result.pages.push({ url, ok: true, products: got.length });
         result.products.push(...got);
         // 列表页上抽到的产品有自己的详情页：顺着读（首页导航藏在下拉里、挑不出产品页时靠这个），总数不超过上限
-        for (const p of got) if (p.source_url !== url && !seen.has(p.source_url) && seen.size < MAX_PAGES + 8) { seen.add(p.source_url); queue.push(p.source_url); }
+        for (const p of got) if (p.source_url !== url && !seen.has(p.source_url) && seen.size < MAX + 8) { seen.add(p.source_url); queue.push(p.source_url); }
       } finally { active--; }
     }
   }));
