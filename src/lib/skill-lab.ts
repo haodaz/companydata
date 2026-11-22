@@ -62,6 +62,8 @@ export function skillCardToPrompt(name: string, card: SkillCard): string {
     card.good_example ? `好的样子：${card.good_example}` : '',
     card.bad_example ? `差的样子：${card.bad_example}` : '',
     card.checklist?.length ? `交付前检查：\n${card.checklist.map(c => `- ${c}`).join('\n')}` : '',
+    // 百业学院私域资料（11-22）：培养这位学员的机构给的，只在这家的课上装
+    (card as any).private?.text ? `${(card as any).private.text}\n（以上私域资料可以用，用到的地方说明出处）` : '',
   ].filter(Boolean).join('\n\n');
 }
 

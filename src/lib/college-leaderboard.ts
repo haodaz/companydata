@@ -16,14 +16,15 @@ const one = (v: any) => (Array.isArray(v) ? v[0] : v);
 
 export async function buildLeaderboard(): Promise<Leaderboard> {
   const [{ data: ens }, { data: sts }, { data: sps }] = await Promise.all([
-    db.from('college_enrollments').select('student_id, space_id, entrance_score, final_score, updated_at'),
+    db.from('college_enrollments').select('student_id, space_id, entrance_score, final_score, updated_at, private:notebook->private'),
     db.from('college_students').select('id, name, kind, model_id'),
-    db.from('skill_tasks').select('id, title, profile, jd_snapshot'),
+    db.from('skill_tasks').select('id, title, profile, jd_snapshot, org_id'),
   ]);
   const stu = new Map((sts || []).filter((s: any) => s.kind === 'platform' && s.model_id).map((s: any) => [s.id, s]));
   const spc = new Map((sps || []).map((s: any) => [s.id, s]));
   const label = (m: string) => { const o = MODEL_OPTIONS.find(x => x.id === m); return { label: o?.label || m, provider: (o as any)?.provider || '' }; };
-  const scored = (ens || []).filter((e: any) => stu.has(e.student_id) && (e.entrance_score != null || e.final_score != null));
+  // 私域课（课程挂了机构，或考试时装过某机构的私域资料）的成绩只属于那家，不进公开榜（11-22）：带资料考的分和裸考的不可比，也不该公开
+  const scored = (ens || []).filter((e: any) => stu.has(e.student_id) && (e.entrance_score != null || e.final_score != null) && !e.private && !(spc.get(e.space_id) as any)?.org_id);
   // 同一模型同一门课可能有多份学籍：取最近一份
   const studentOf = new Map<string, string>(); for (const s of stu.values() as any) if (!studentOf.has(s.model_id)) studentOf.set(s.model_id, s.id);
   const latest = new Map<string, any>();

@@ -83,3 +83,33 @@ export async function labAction(orgId: string, who: string, a: { action: 'add' |
   await db.from('college_private_materials').update({ ...patch, source: 'lab', is_demo: m.is_demo, created_by: by, history: hist.slice(-30), confirmed_by: by, confirmed_at: at, updated_at: at }).eq('id', m.id);
   return {};
 }
+
+/* ───────────── 私域资料接进学员培养（11-22）───────────── */
+
+/**
+ * 这份学籍是给哪家机构培养的：
+ *   ① 课程空间本身挂了机构（skill_tasks.org_id）→ 这门课就是那家的私域课，最明确；
+ *   ② 学籍来自某机构「要人」的申请单（demand_id → college_applications.org，按名字对 ws_orgs）。
+ * 不用学员上的 org——那是模型厂商（如 Aliyun），不是培养它的机构。
+ */
+export async function orgOfEnrollment(en: { space_id: string; demand_id?: string | null }): Promise<{ org_id: string; org_name: string; via: 'space' | 'demand' } | null> {
+  const { data: sp } = await db.from('skill_tasks').select('org_id').eq('id', en.space_id).maybeSingle();
+  if ((sp as any)?.org_id) {
+    const { data: o } = await db.from('ws_orgs').select('id, name').eq('id', (sp as any).org_id).maybeSingle();
+    if (o) return { org_id: o.id, org_name: o.name, via: 'space' };
+  }
+  if (en.demand_id) {
+    const { data: a } = await db.from('college_applications').select('org').eq('id', en.demand_id).maybeSingle();
+    const name = String((a as any)?.org || '').trim();
+    if (name) { const { data: o } = await db.from('ws_orgs').select('id, name').eq('name', name).limit(1); if (o?.[0]) return { org_id: o[0].id, org_name: o[0].name, via: 'demand' }; }
+  }
+  return null;
+}
+
+/** 这份学籍考试时要装的私域资料：机构 + 拼好的资料包 + 份数；没有归属机构或这家没交资料 → null */
+export async function privateForEnrollment(en: { space_id: string; demand_id?: string | null }, max = 12000) {
+  const org = await orgOfEnrollment(en); if (!org) return null;
+  const ms = await listMaterials(org.org_id); if (!ms.length) return null;
+  const pack = await privatePack(org.org_id, { max });
+  return pack ? { ...org, pack, n: ms.length } : null;
+}

@@ -23,12 +23,15 @@ import type { WorkTask } from '@/lib/work/generator';
 import { buildLesson } from '@/lib/lab-lesson';
 import { enrollmentDetail, recomputeEnrollment } from '@/lib/college-admin';
 import { chapterMethods, loadMethods, methodRules, methodsForSpace, type MethodCard } from '@/lib/college-methods';
+import { privateForEnrollment } from '@/lib/college-private';
 
 /** 提炼要点、写错题本这类整理活用便宜的国内模型（不联网） */
 const NOTE_MODEL = process.env.COLLEGE_NOTE_MODEL || 'qwen-plus';
 const str = (v: any, n = 500) => String(v ?? '').trim().slice(0, n);
 
 export interface Notebook {
+  /** 私域资料（11-22）：这份学籍给哪家机构培养、考试时装了这家的几份私域资料；有它的成绩只属于这家，公开排行榜不计 */
+  private?: { org_id: string; org_name: string; via: 'space' | 'demand'; n: number; at: string };
   lessons?: Record<string, string[]>;                                    // 章节 id → 要点
   mistakes?: { chapter: string; chapter_id?: string | null; score: number | null; lesson: string; at: string }[];
   rules?: string[];                                                      // 从错题里总结出来、下次要记住的规则
@@ -58,6 +61,12 @@ async function methodKeysFor(en: { space_id: string; notebook: Notebook; student
   return [...new Set([...own, ...usable])].slice(0, 6);
 }
 async function saveNotebook(id: string, nb: Notebook) { await db.from('college_enrollments').update({ notebook: nb, updated_at: new Date().toISOString() }).eq('id', id); }
+/** 记下这份学籍装过哪家的私域资料（第一次装、或份数变了才写） */
+async function notePrivate(en: { id: string; notebook: Notebook }, p: { org_id: string; org_name: string; via: 'space' | 'demand'; n: number }) {
+  if (en.notebook.private?.org_id === p.org_id && en.notebook.private?.n === p.n) return;
+  en.notebook = { ...en.notebook, private: { org_id: p.org_id, org_name: p.org_name, via: p.via, n: p.n, at: new Date().toISOString() } };
+  await saveNotebook(en.id, en.notebook);
+}
 
 /** 学院校规：老实（11-12）。毕业考装进技能卡第一条；入学考是裸考，不装 */
 const HONEST_RULE = '材料、工位记录和对话里没看到的读数、编号、日期时间、谁说了什么，一律不写；必须写的标「假设」或「待核」，并说清依据。不确定就说不确定。';
@@ -318,6 +327,9 @@ export async function runChapterExam(enrollmentId: string, chapterId: string | n
   const useSkill = withSkill && !!skill;
   const methods = useSkill && !opts.noMethods ? chapterMethods(await loadMethods(await methodKeysFor(en)), chapter) : [];
   const equipped = useSkill ? augmentSkill(skill, en.notebook, chapter?.id, en.nova, methods) : null;
+  // 私域资料（11-22）：入学考裸考不装；上课后的章节考 / 补考装上这家机构的私域资料，作为技能卡里单独一节——评卷的 given 也跟着带上，里面的数字不算编造
+  const priv = useSkill ? await privateForEnrollment(en) : null;
+  if (equipped && priv) { (equipped.card as any).private = { org: priv.org_name, text: priv.pack }; await notePrivate(en, priv); }
   const cost = { space_id: en.space_id, chapter_id: chapter?.id || null, stage: 'use', actor: `college:${en.id}` };
   const sim: Sim | null = chapter?.sim?.steps?.length ? chapter.sim : null;
   const task = chapterTask(space, chapter);
@@ -383,12 +395,14 @@ export async function runWorkExam(enrollmentId: string, workTaskId: string) {
   const rules = en.notebook.rules || [];
   // 过程留痕（11-12）：不再一口气写完，按「计划 → 初稿 → 自查 → 定稿」四步做，每一步记进事件流——
   // 训练数据里 AI 学员就有过程可以和真人比，回放和报告也看得到它是怎么做的。t 是步骤序号换算的秒数，不是真实耗时
-  const { answer, events } = await solveStaged(task, model, { persona: `${en.nova}，正在学院里做真活实习`, rules, institution: t.company_name || '' });
+  const priv = await privateForEnrollment(en);   // 私域资料（11-22）：真活实习也带上
+  if (priv) await notePrivate(en, priv);
+  const { answer, events } = await solveStaged(task, model, { persona: `${en.nova}，正在学院里做真活实习`, rules, institution: t.company_name || '', knowledge: priv?.pack });
   if (answer.length < 50) throw new Error('模型没有给出像样的交付物');
   const result = await gradeResult(task, answer, { institution: t.company_name || '', who: en.nova });
   // 老实（11-12）：真活也写交卷说明、判无来源的数字；诚信问题封顶 45
   const statement = await selfStatement(model, t.task?.title || '', answer, en.nova);
-  const honesty = await judgeHonesty([t.task?.brief, ...(t.task?.rules || []), ...(t.materials || []).map((m: any) => `${m.title}\n${m.content}`)].filter(Boolean).join('\n'), answer, statement, en.nova);
+  const honesty = await judgeHonesty([t.task?.brief, ...(t.task?.rules || []), ...(t.materials || []).map((m: any) => `${m.title}\n${m.content}`), priv?.pack].filter(Boolean).join('\n'), answer, statement, en.nova);
   if (honesty.integrity && result.total > 45) result.total = 45;
   const b = t.baseline?.result;
   const compare = b ? { baseline_total: b.total, delta: result.total - b.total, items: result.items.map(i => ({ id: i.id, title: i.title, mine: i.score, baseline: b.items?.find((x: any) => x.id === i.id)?.score ?? null })) } : null;
@@ -406,9 +420,9 @@ export async function runWorkExam(enrollmentId: string, workTaskId: string) {
 }
 
 /** 学员做真活的四步（计划 → 初稿 → 自查 → 定稿），每步一条事件：plan / open_material / draft / self_check。提示走真活共用的 buildSolvePrompt */
-async function solveStaged(task: WorkTask, model: string, opts: { persona: string; rules: string[]; institution: string }) {
+async function solveStaged(task: WorkTask, model: string, opts: { persona: string; rules: string[]; institution: string; knowledge?: string }) {
   const { buildSolvePrompt } = await import('@/lib/work/solve');
-  const base = buildSolvePrompt(task, { persona: opts.persona, rules: opts.rules });
+  const base = buildSolvePrompt(task, { persona: opts.persona, rules: opts.rules }) + (opts.knowledge ? `\n\n${opts.knowledge}\n（以上是培养你的机构给的私域资料，可以用；用到的地方说明出处）` : '');
   const call = async (prompt: string, name: string, json = false) => {
     const r = await generateContent(prompt, model, json ? { jsonMode: true, temperature: 0 } : { temperature: 0 });
     await logTokenUsage({ tool_name: 'college', task_name: `College · 学员做真活 · ${name}`, institution: opts.institution, model_id: model, usageMetadata: r.usageMetadata } as any).catch(() => {});
