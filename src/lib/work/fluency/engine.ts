@@ -471,15 +471,26 @@ const PAIRS: [string, string, string][] = [
   ['B21', 'B22', '是否披露 → B21；披露得准不准 → B22'], ['B2', 'B11', '划范围 → B2；拆环节 / 定角色 → B11'], ['B3', 'B4', '同类工具比较 → B4；要不要用 AI → B3'],
 ];
 const bnum = (b: string) => Number(b.slice(1));
-function arbitrate(evs: Evidence[], structMsgs: Set<number>, logs: string[]) {
+/** 两条证据引的是不是同一段话（同一成分）：去掉空白标点后，短的那条里有连续 8 个字出现在长的里（短于 8 字就整条包含） */
+function sameComponent(a: string, b: string) {
+  const z = (t: string) => norm(String(t || '')).replace(/[\s，。、,.!?！？；;：:「」“”"'（）()…·\-—]/g, '');
+  const [s, l] = [z(a), z(b)].sort((x, y) => x.length - y.length);
+  if (!s || !l) return false;
+  if (s.length <= 8) return l.includes(s);
+  for (let i = 0; i + 8 <= s.length; i++) if (l.includes(s.slice(i, i + 8))) return true;
+  return false;
+}
+/** byComponent（评审团，11-23 潜历讨论）：超级 Prompt 和互斥只在「抢同一成分」时生效——同一条消息里不同的话对应不同指标，都算（复盘 4.1 第 5 条；一刀切只留 1 个主指标会漏判） */
+function arbitrate(evs: Evidence[], structMsgs: Set<number>, logs: string[], byComponent = false) {
   const live = evs.filter(e => e.valid);
   // 超级 Prompt：一条消息只留 1 个主指标（B11 > B7 > B1），其余记「关联」不进聚合
   for (const i of structMsgs) {
     const on = live.filter(e => e.src === 'chat' && e.i === i && !e.related);
     if (on.length < 2) continue;
     const main = on.find(e => e.bid === 'B11') || on.find(e => e.bid === 'B7') || on.find(e => e.bid === 'B1') || on.sort((a, b) => b.q - a.q)[0];
-    for (const e of on) if (e !== main) e.related = true;
-    logs.push(`第 ${i + 1} 条是结构化的超级 Prompt：主归 ${main.bid}，${on.filter(e => e !== main).map(e => e.bid).join(' ')} 记关联、不另计分（05 页三）`);
+    const drop = on.filter(e => e !== main && (!byComponent || sameComponent(e.quote, main.quote)));
+    for (const e of drop) e.related = true;
+    if (drop.length) logs.push(`第 ${i + 1} 条是结构化的超级 Prompt：主归 ${main.bid}，${drop.map(e => e.bid).join(' ')} ${byComponent ? '引的是同一段话，' : ''}记关联、不另计分（05 页三）${byComponent && drop.length < on.length - 1 ? `；${on.filter(e => e !== main && !drop.includes(e)).map(e => e.bid).join(' ')} 引的是别的话，照算` : ''}`);
   }
   // 互斥：同一片段上两项都成立，留档位高的；同档按编号小的（05 页二 ③，只为日志一致）
   const byMsg = new Map<string, Evidence[]>();
@@ -487,6 +498,7 @@ function arbitrate(evs: Evidence[], structMsgs: Set<number>, logs: string[]) {
   for (const [k, g] of byMsg) for (const [x, y, why] of PAIRS) {
     const ex = g.find(e => e.bid === x && !e.related), ey = g.find(e => e.bid === y && !e.related);
     if (!ex || !ey) continue;
+    if (byComponent && !sameComponent(ex.quote, ey.quote)) continue;   // 同一条消息、不同的话：两项都算
     const drop = ex.q !== ey.q ? (ex.q < ey.q ? ex : ey) : (bnum(x) > bnum(y) ? ex : ey);
     drop.related = true;
     logs.push(`${k.replace('chat:', '第 ').replace(/^(第 )(\d+)$/, (_, a, n) => `${a}${Number(n) + 1} 条`)}：${x}↔${y} 互斥，留 ${drop === ex ? y : x}，${drop.bid} 记关联。判据：${why}`);
@@ -506,7 +518,7 @@ async function committeeJudge(inp: FluencyInput, B: { of: number[]; list: TaskBl
   const chat = inp.chat, outsideOnly = chat.every(c => !c.a);
   const facts = cands.filter(c => c.src !== 'chat');
   const factLine = (c: Candidate, n: number) => `[F${n + 1}] ${c.src === 'event' ? '平台记录的动作' : c.src === 'deliverable' ? '交付物里' : '交卷时的 AI 参与说明'}（${c.bid} 相关）：${c.quote}`;
-  const transcript = B.list.map(bl => `【任务块 ${bl.id + 1}｜${bl.label}｜第 ${bl.msgs[0] + 1}–${bl.msgs[bl.msgs.length - 1] + 1} 条】\n` + bl.msgs.map(i => `[${i + 1}] 候选人：${clip(chat[i].q, 700)}${chat[i].a ? `\n      AI：${clip(chat[i].a, 260)}` : ''}`).join('\n')).join('\n\n');
+  const transcript = B.list.map(bl => `【任务块 ${bl.id + 1}｜${bl.label}｜第 ${bl.msgs[0] + 1}–${bl.msgs[bl.msgs.length - 1] + 1} 条】\n` + bl.msgs.map(i => `[${i + 1}] 候选人：${clip(chat[i].q, 700)}${chat[i].a ? `\n      AI：${clip(chat[i].a, 500)}` : ''}`).join('\n')).join('\n\n');
   const prefix = `你是「AI 驾驭能力」评审团里的一位评委。评审团按维度分工：每位评委只评分给自己的那几个行为，其他行为由别的评委负责，你不用管、也不用让。
 候选人在做一道考核任务，下面是他和 AI 的全部对话（按任务块分好），以及平台记录的动作和交付侧信息。
 
@@ -515,7 +527,8 @@ async function committeeJudge(inp: FluencyInput, B: { of: number[]; list: TaskBl
 2. 逐个任务块看：你负责的每个行为，在这一块里有没有真的发生。要对齐 AI 上一轮回答才能判的（迭代、纠错、质疑推理、补背景、偏差），看给出的 AI 回答，对不上就不算。
 3. 发生了就引用候选人原话（逐字，不超过 40 字）或平台记录编号，按锚点定 1–5 档；看实际效果、不看措辞；拿不准给低档。
 4. 同一个行为，每个任务块最多列 2 处最有代表性的（不同消息）；没发生就不列，不要硬凑。
-5. 一条消息同时体现了你负责的两个行为，可以两个都列，但理由要分别说清各体现了哪一部分。${outsideOnly ? '\n6. 这场只有候选人的提问原话（外部 AI 的回答看不到）：需要对齐 AI 回答的行为，只按提问本身能看出来的判。' : ''}
+5. 一条消息同时体现了你负责的两个行为，可以两个都列，但理由要分别说清各体现了哪一部分。
+6. 候选人没在对话里说、而是直接在产出物上标注 / 修改后让 AI 改：AI 的回复里常会复述「根据你标注的…已改为…」。这算候选人的迭代 / 纠错证据：quote 引 AI 回复里复述他要改的那句（逐字），why 开头写「据 AI 回复」。${outsideOnly ? '\n7. 这场只有候选人的提问原话（外部 AI 的回答看不到）：需要对齐 AI 回答的行为，只按提问本身能看出来的判。' : ''}
 
 ## 任务
 ${inp.task.title}：${clip(inp.task.brief, 500)}
@@ -556,7 +569,8 @@ ${dimSpec(bids)}
         if (n < 1 || n > chat.length || !quote) { bad++; continue; }
         // 原话核对：引文要在这条消息里找得到（忽略空白和标点差异）
         const z = (t: string) => norm(t).replace(/[\s，。、,.!?！？；;：:「」“”"'（）()…]/g, '');
-        const verified = z(chat[n - 1].q).includes(z(quote).slice(0, 24));
+        const fromAi = /^据\s*AI\s*回复/.test(String(x?.why || ''));   // 11-23：用户没说出口的修改，从 AI 回复里认
+        const verified = z(fromAi ? chat[n - 1].a || '' : chat[n - 1].q).includes(z(quote).slice(0, 24));
         if (!verified) { bad++; continue; }
         evs.push({ bid, src: 'chat', i: n - 1, q, why: String(x?.why || '').slice(0, 120), quote, valid: true, rule: `评委${o.num}`, block: B.of[n - 1] });
         ok++;
@@ -614,7 +628,8 @@ function scoreBehavior(bid: string, evs: Evidence[], negs: { id: string }[], mod
   const k = topBlocks.size, b = topBlocks.size;
   let s: number = q_max, capped = false;
   // 评审团：封顶看「这个行为是偶然一次，还是一以贯之」——成立证据出现在 ≥ 2 处（不同块，或同块内不相邻的两段）就不封顶
-  const at0 = ok.filter(e => e.q >= q_max - 1).map(e => e.i).filter(i => i >= 0).sort((x, y) => x - y); let occTop = ok.some(e => e.i < 0 && e.q >= q_max - 1) ? 1 : 0, l0 = -9; for (const i of at0) { if (i - l0 > 1) occTop++; l0 = i; }
+  // 11-23 稳定性测试：「不相邻才算两次」让两次评分各挑的证据一相邻一隔开就翻（同一行为 3.5 ↔ 5）；改成「两条不同消息就算」，聊天考试台两次评分最大差 0.96 → 0.63
+  const occTop = new Set(ok.filter(e => e.q >= q_max - 1 && e.i >= 0).map(e => e.i)).size + (ok.some(e => e.i < 0 && e.q >= q_max - 1) ? 1 : 0);
   // 默认 v3：k 按「不相邻的几段」数（同块内不相邻也算）——11-17 起线上一直这么算；v3-spec 照 02 页；评审团看一次 vs 多次
   const tops = ok.filter(e => e.q === q_max).map(e => e.i).sort((x, y) => x - y); let kSeg = 0, lSeg = -9; for (const i of tops) { if (i < 0 || i - lSeg > 1) kSeg++; lSeg = i; }
   if (mode === 'committee' ? occTop <= 1 : mode === 'v3-spec' ? k <= 1 && b <= 1 : kSeg <= 1) { s = Math.min(q_max, 4) - 0.5; capped = true; }   // 单点封顶 3.5（02 页三 · 决议③）
@@ -674,7 +689,7 @@ export async function assessFluency(inp: FluencyInput): Promise<FluencyReport> {
   let evs: Evidence[], modelNegs: { id: string; i: number; quote: string }[], scanned: Evidence[] = [];
   if (committee) {
     ({ evs, negs: modelNegs } = await committeeJudge(I, B, cands, logs, warnings));
-    arbitrate(evs, structMsgs, logs);   // 评委各评各的；合分前由代码统一做一次互斥 / 超级 Prompt 收口（11-22 评审：同一句话在几个评委那里同时拿分）
+    arbitrate(evs, structMsgs, logs, true);   // 评委各评各的；合分前由代码统一收口，只在两项引的是同一段话时才去重（11-23）（11-22 评审：同一句话在几个评委那里同时拿分）
   } else {
     ({ evs, negs: modelNegs } = await judge(I, cands, stats, warnings));
     scanned = await scanGaps(I, a, split, evs, stats, logs, warnings);
