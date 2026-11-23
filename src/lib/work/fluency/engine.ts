@@ -215,7 +215,7 @@ function locate(inp: FluencyInput, a: Anchors, source: string, disclosure: strin
   if (lastIn) {
     const after = ev.filter(e => e.t > lastIn.t && e.type === 'edit');
     const delta = after.reduce((n, e) => n + Math.abs(Number(e.delta) || 0), 0);
-    if (after.length && delta >= 20) out.push({ bid: 'B23', src: 'event', i: -1, quote: `AI 内容最后一次进交付物（${lastIn.type === 'adopt' ? '采纳' : '粘贴'}）之后，他自己又改了 ${after.length} 次、约 ${delta} 字`, rule: 'B23-事件:采纳后自改' });
+    if (after.length && delta >= 20) out.push({ bid: 'B23', src: 'event', i: -1, quote: `AI 内容最后一次进交付物（${lastIn.type === 'adopt' ? '采纳' : '粘贴'}）之后，他自己又改了 ${after.length} 次、约 ${delta} 字（约占交付物 ${Math.round(delta / Math.max(1, (inp.deliverable || '').length) * 100)}%）`, rule: 'B23-事件:采纳后自改' });
   }
   // 工具事件（量表 D3，有则加强）：操作台上跑测试、交卷前自查
   const tools = ev.filter(e => e.type === 'run_tests' || e.type === 'self_check');
@@ -517,7 +517,7 @@ function dimSpec(bids: string[]) {
 async function committeeJudge(inp: FluencyInput, B: { of: number[]; list: TaskBlock[] }, cands: Candidate[], logs: string[], warn: string[]): Promise<{ evs: Evidence[]; negs: { id: string; i: number; quote: string }[] }> {
   const chat = inp.chat, outsideOnly = chat.every(c => !c.a);
   const facts = cands.filter(c => c.src !== 'chat');
-  const factLine = (c: Candidate, n: number) => `[F${n + 1}] ${c.src === 'event' ? '平台记录的动作' : c.src === 'deliverable' ? '交付物里' : '交卷时的 AI 参与说明'}（${c.bid} 相关）：${c.quote}`;
+  const factLine = (c: Candidate, n: number) => `[F${n + 1}] ${c.src === 'event' ? '平台记录的动作' : c.src === 'deliverable' ? '交付物里' : '交卷时的 AI 参与说明（候选人自述，只能用于 B21 / B22）'}（${c.bid} 相关）：${c.quote}`;
   const transcript = B.list.map(bl => `【任务块 ${bl.id + 1}｜${bl.label}｜第 ${bl.msgs[0] + 1}–${bl.msgs[bl.msgs.length - 1] + 1} 条】\n` + bl.msgs.map(i => `[${i + 1}] 候选人：${clip(chat[i].q, 700)}${chat[i].a ? `\n      AI：${clip(chat[i].a, 500)}` : ''}`).join('\n')).join('\n\n');
   const prefix = `你是「AI 驾驭能力」评审团里的一位评委。评审团按维度分工：每位评委只评分给自己的那几个行为，其他行为由别的评委负责，你不用管、也不用让。
 候选人在做一道考核任务，下面是他和 AI 的全部对话（按任务块分好），以及平台记录的动作和交付侧信息。
@@ -528,7 +528,9 @@ async function committeeJudge(inp: FluencyInput, B: { of: number[]; list: TaskBl
 3. 发生了就引用候选人原话（逐字，不超过 40 字）或平台记录编号，按锚点定 1–5 档；看实际效果、不看措辞；拿不准给低档。
 4. 同一个行为，每个任务块最多列 2 处最有代表性的（不同消息）；没发生就不列，不要硬凑。
 5. 一条消息同时体现了你负责的两个行为，可以两个都列，但理由要分别说清各体现了哪一部分。
-6. 候选人没在对话里说、而是直接在产出物上标注 / 修改后让 AI 改：AI 的回复里常会复述「根据你标注的…已改为…」。这算候选人的迭代 / 纠错证据：quote 引 AI 回复里复述他要改的那句（逐字），why 开头写「据 AI 回复」。${outsideOnly ? '\n7. 这场只有候选人的提问原话（外部 AI 的回答看不到）：需要对齐 AI 回答的行为，只按提问本身能看出来的判。' : ''}
+6. 「AI 参与说明」是候选人交卷时的自述，**只能作为 B21（有没有披露）和 B22（贡献说得准不准）的证据**，不能拿来证明核查、纠错、验证等行为发生过——那些要在对话或平台记录里有对应的动作才算。B22 要把自述和记录对照：自述说「逐条核对 / 修正了错误」，但对话和平台记录里看不到对应动作，就是表述与实际不符，按锚点定低档。
+7. 平台记录里的改写量这样看：自己改写约占交付物 10% 以内是小修，10–20% 是中等，20% 以上是大幅改写（拿到 AI 的东西后自己重写了不少）；定档时把这个量算进去，不要不管多少都给同一档。
+8. 候选人没在对话里说、而是直接在产出物上标注 / 修改后让 AI 改：AI 的回复里常会复述「根据你标注的…已改为…」。这算候选人的迭代 / 纠错证据：quote 引 AI 回复里复述他要改的那句（逐字），why 开头写「据 AI 回复」。${outsideOnly ? '\n9. 这场只有候选人的提问原话（外部 AI 的回答看不到）：需要对齐 AI 回答的行为，只按提问本身能看出来的判。' : ''}
 
 ## 任务
 ${inp.task.title}：${clip(inp.task.brief, 500)}

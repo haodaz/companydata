@@ -203,6 +203,8 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
           <Table size="small" rowKey="id" pagination={false} dataSource={ordered}
             rowSelection={{ selectedRowKeys: picked, onChange: k => setPicked((k as string[]).slice(0, 4)), getCheckboxProps: (s: any) => ({ disabled: !s.report?.result }) }} columns={[
           { title: '#', width: 44, render: (_: any, s: any) => (rankOf.has(s.id) ? <b style={{ color: rankOf.get(s.id)! <= 3 ? '#6055f5' : '#888' }}>{rankOf.get(s.id)}</b> : <Text type="secondary">–</Text>) },
+          // 同题对比（11-23）：同一道题的候选人两两比较排出的名次——分数顶到天花板时也分得开
+          { title: <span title="同一道题的候选人两两比较（谁更会带着 AI 把事做好）排出的名次；交卷后几分钟内更新">同题对比</span>, width: 84, render: (_: any, s: any) => (s.peer ? <span><b style={{ color: s.peer.rank <= 3 ? '#0f6c7a' : '#888' }}>{s.peer.rank}</b><Text type="secondary"> / {s.peer.of}</Text></span> : <Text type="secondary">–</Text>) },
           { title: '谁', render: (_: any, s: any) => <span>{s.participant?.name} {s.participant?.preview && <Tag color="orange" style={{ marginLeft: 4 }}>预览</Tag>}{s.participant?.mode === 'ai' && <Tag style={{ marginLeft: 4 }}>AI 学员</Tag>}<Text type="secondary">{s.participant?.contact}</Text>{swapped.has(s.id) && <Tag color="orange" style={{ marginLeft: 4 }} title="同一个浏览器用不同的手机或邮箱做过这道题">同一浏览器换过联系方式</Tag>}{s.participant?.retake_allowed && <Tag style={{ marginLeft: 4 }}>已允许重做</Tag>}</span> },
           { title: '开始', dataIndex: 'started_at', render: (v: string) => new Date(v).toLocaleString('zh-CN', { hour12: false }) },
           { title: '交卷', dataIndex: 'submitted_at', render: (v: string) => (v ? new Date(v).toLocaleString('zh-CN', { hour12: false }) : <Text type="secondary">做着呢</Text>) },

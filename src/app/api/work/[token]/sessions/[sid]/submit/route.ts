@@ -1,4 +1,5 @@
 import { refreshSignals } from '@/lib/work/question-bank';
+import { insertPeerLater } from '@/lib/work/fluency/peer-server';
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { buildReport, ensureAiPolicy } from '@/lib/work/grader';
@@ -100,6 +101,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
       buildReport({ id: t.id, env: t.task?.env || { type: 'doc' }, problem: t.problem, task: t.task, materials: t.materials, rubric: t.rubric } as any, t.baseline, deliverable, events, s.ai_chat || [], t.company_name, undefined, await ensureAiPolicy(t), sid));
     const report = { ...base, ...(recording ? { recording } : {}), mode: open ? 'open' : plugin ? 'plugin' : 'bench' };
     await db.from('work_sessions').update({ report, score: report.result.total }).eq('id', sid); refreshSignals(t.id);
+    await insertPeerLater(t.id, sid);   // 同题对比：交卷后在后台插进这道题的排名（11-23）
     return NextResponse.json({ ok: true, report, score: report.result.total });
   } catch (e: any) {
     return NextResponse.json({ ok: false, error: String(e?.message || e) }, { status: 500 });

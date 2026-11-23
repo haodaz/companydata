@@ -1,4 +1,5 @@
 import { refreshSignals } from '@/lib/work/question-bank';
+import { insertPeerLater } from '@/lib/work/fluency/peer-server';
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { buildReport, ensureAiPolicy } from '@/lib/work/grader';
@@ -51,6 +52,7 @@ export async function POST(_req: NextRequest, { params }: { params: Promise<{ to
     const base = await withCost({ tool_name: 'work', task_name: 'Grade · 报告', stage: 'use' }, async () => buildReport(task, t.baseline, deliverable, events, chat, t.company_name, r.audit || [], await ensureAiPolicy(t), sid));
     const report = { ...base, audit: r.audit || [], mode: r.mode, ...(r.recording ? { recording: r.recording } : {}) };
     await db.from('work_sessions').update({ report, score: report.result.total }).eq('id', sid); refreshSignals(t.id);
+    await insertPeerLater(t.id, sid);   // 同题对比（11-23）
     return NextResponse.json({ ok: true, done: true, report, score: report.result.total });
   } catch (e: any) {
     await db.from('work_sessions').update({ report: { ...r, running_since: null, last_error: String(e?.message || e).slice(0, 200) } }).eq('id', sid);

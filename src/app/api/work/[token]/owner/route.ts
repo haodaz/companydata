@@ -1,4 +1,5 @@
 import { refreshSignals } from '@/lib/work/question-bank';
+import { peerRanks } from '@/lib/work/fluency/peer-server';
 import { NextRequest, NextResponse, after } from 'next/server';
 import { AUTO_FROM, timing, withAutoSubmit } from '@/lib/work/deadline';
 import { releaseContact } from '@/lib/work/contact';
@@ -29,7 +30,8 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ toke
   const left = (sessions || []).filter(s => !s.submitted_at && new Date(s.started_at).getTime() >= AUTO_FROM && timing(t.task, s).closed).slice(0, 3);
   if (left.length) after(() => Promise.all(left.map(s => fetch(`${req.nextUrl.origin}/api/work/${token}/sessions/${s.id}/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ auto: true, sync: true }) }).catch(e => console.warn('[work] 代收卷失败', e)))));
   const { owner_key: _k, context: ctx, ...task } = t;
-  return NextResponse.json({ ok: true, task: { ...task, notes: ctx?.notes || [], sources: ctx ? sourcesOf(ctx) : null }, sessions: sessions || [] });
+  const pr = peerRanks(t.task, (sessions || []).map(s => s.id));   // 同题对比名次（11-23）
+  return NextResponse.json({ ok: true, task: { ...task, notes: ctx?.notes || [], sources: ctx ? sourcesOf(ctx) : null }, sessions: (sessions || []).map(s => ({ ...s, peer: pr.get(s.id) || null })) });
 }
 
 /** 发布 / 下架 */
