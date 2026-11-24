@@ -132,10 +132,10 @@ function readNewCast(raw: any): { tmp: string; kind: CastKind; name: string; typ
 // ────────────────────────────────────────────
 /** 排一天骨架（记账：这次的调用都记到这个空间上，环节 create） */
 /** plan（11-19）：人自己排好的格子（时段 + 一句话），有就照抄时段和顺序，模型只提炼标题、补走向 */
-export function buildDay(spaceId: string, model: string, hint: string, progress: Progress, plan: { slot: string; text: string }[] = []): Promise<{ added: number; total: number; cast: number }> {
+export function buildDay(spaceId: string, model: string, hint: string, progress: Progress, plan: { slot: string; text: string }[] = []): Promise<{ added: number; total: number; cast: number; over: number }> {
   return withCost({ space_id: spaceId, stage: 'create' }, () => buildDayInner(spaceId, model, hint, progress, plan));
 }
-async function buildDayInner(spaceId: string, model: string, hint: string, progress: Progress, plan: { slot: string; text: string }[]): Promise<{ added: number; total: number; cast: number }> {
+async function buildDayInner(spaceId: string, model: string, hint: string, progress: Progress, plan: { slot: string; text: string }[]): Promise<{ added: number; total: number; cast: number; over: number }> {
   const { data: space, error } = await supabaseAdmin.from('skill_tasks').select('id, title, profile, jd_snapshot, bible').eq('id', spaceId).single();
   if (error) throw error;
   // 重排骨架：空的、没锁的草稿格子先清掉（有步骤的、锁定的、已发布的都留着）
@@ -252,7 +252,9 @@ ${CAST_RULES}
     updated_at: new Date().toISOString(),
   };
   await supabaseAdmin.from('skill_tasks').update({ bible }).eq('id', spaceId);
-  return { added: slots.length, total: chapters.length + slots.length, cast: cast.length - before };
+  // 已有内容的章比定的格数多（11-24 国内试用：选了 3 段，空间里已经有 6 章写好的，重排后还是 6 段、也没说）：写好的 / 锁定的 / 已发布的章不自动删，告诉人多了几章
+  const over = want ? Math.max(0, chapters.length - want) : 0;
+  return { added: slots.length, total: chapters.length + slots.length, cast: cast.length - before, over };
 }
 
 // ────────────────────────────────────────────

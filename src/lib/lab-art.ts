@@ -37,8 +37,16 @@ async function submitImage(prompt: string, size: string, model: string): Promise
   return p;
 }
 
+/** 图里不要字（11-24 国内试用：律师空间的底图把描述里引号中的「违约金」「解约」画成了乱码字）：
+ *  文生图画不好汉字，描述里引号 / 书名号里的原文去掉，只留「有一份文件 / 屏幕」这层意思；再明说屏幕和纸上只用色块线条示意 */
+export function noText(prompt: string): string {
+  const p = String(prompt || '').replace(/[「『“"《]([^」』”"》]{1,60})[」』”"》]/g, '').replace(/'[^']{1,60}'/g, '').replace(/\s{2,}/g, ' ');
+  return /不出现任何文字/.test(p) ? p : `${p}。画面里的屏幕、纸张、标牌、白板上只用抽象的色块和线条示意内容，不出现任何文字、字母和数字`;
+}
+
 /** 文生图：提交异步任务（排队）→ 轮询 → 下载 PNG */
 export async function genImage(prompt: string, size = '1440*810', model = 'wan2.2-t2i-flash', purpose = '出图'): Promise<Buffer> {
+  prompt = noText(prompt);
   if (!KEY()) throw new Error('缺少 DASHSCOPE_API_KEY，无法生成美术');
   const taskId = await submitImage(prompt, size, model);
   for (let i = 0; i < 60; i++) {

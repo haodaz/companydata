@@ -102,7 +102,7 @@ async function run(name: string, input: any, user: User): Promise<{ result: any;
         await db.from('skill_tasks').update({ jd_snapshot: jd }).eq('id', sp.id);
       }
       const plan = parseDayPlan(s(input.plan, 3000));
-      const job = await startJob(sp.id, null, 'build_day', async progress => { const r = await buildDay(sp.id, MODEL(), s(input.hint, 500), progress, plan); return `一天共 ${r.total} 格（新排 ${r.added} 格，建空间时自带的章节也算在内）· 角色表新增 ${r.cast} 项`; });
+      const job = await startJob(sp.id, null, 'build_day', async progress => { const r = await buildDay(sp.id, MODEL(), s(input.hint, 500), progress, plan); return `一天共 ${r.total} 格（新排 ${r.added} 格，建空间时自带的章节也算在内）· 角色表新增 ${r.cast} 项${r.over ? `。注意：比定的格数多 ${r.over} 格——这个空间里已经有写好内容的章，不会自动删。请如实告诉用户，并问他：新建一个空间按这个段数从头做，还是到工作室里手动删掉多余的章` : ''}`; });
       return { label: job.already ? '骨架已经在排了' : '开始排一天骨架（约 1 分钟）', ui: { ...panel(sp.id, nameOf(sp)), job_id: job.id, job: '排一天骨架' }, result: { job_id: job.id, already: job.already } };
     }
     case 'write_chapters': {
@@ -201,6 +201,7 @@ function systemPrompt(email: string) {
    生成要求：给谁看、要多深、考核多难最重要；必须有 / 不要的问一句就行。没说的按受众和级别先定默认（预设可参考：${PRESETS.map(p => `「${p.label}」`).join('')}），然后用 ask_user 复述一行确认：做什么｜级别｜给谁看｜多深｜多难｜必须有 / 不要，选项「就这样生成」「改一下」。
 4. create_space。做完会自动发来一句话告诉你空间编号，接着建议：排一天骨架（build_day）→ 写各章（write_chapters）→ 评审（review）。
    先判断他要长任务还是短任务，能判断的直接定、复述一句，拿不准再问：说了「段少一点 / 每段有剧情 / 起承转合 / 深一点 / 只配三段」→ depth = deep；说了「快速体验 / 轻一点 / 多几个场景 / 每段简单」→ depth = light；给了 3 个左右时间点、每个写了一整段要做的事 → deep。没提就不传，系统按段数自己判断（≤ 3 段长段，4–5 段标准，更多按默认）。
+   用户要一个新的空间就 create_space 新建，不要拿他以前的同名空间直接重排（老空间里写好的章不会被删，段数改不少）。
    排一天之前先问清这一天的样子（一次问一件，用 ask_user，用户已经说过的、上面已经判断出来的不再问）：
    ① 这一天排几段：选项给「按默认（这个级别一般 N 段）」「3 段，每段深一点」「我自己写时间点」，也可以让他直接说个数；
    ② 每段多深：${Object.values(DEPTHS).map(v => `「${v.label}：${v.pick}」`).join('')}（段少就推荐长 · 起承转合）；

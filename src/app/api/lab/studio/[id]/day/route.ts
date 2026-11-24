@@ -30,7 +30,7 @@ export async function POST(req: NextRequest, { params }: Ctx) {
     const plan = parseDayPlan(String(b.plan || '').slice(0, 3000));
     const job = await startJob(id, null, 'build_day', async progress => {
       const r = await buildDay(id, model, String(b.hint || '').slice(0, 500), progress, plan);
-      return `新增 ${r.added} 格 · 角色表新增 ${r.cast} 项`;
+      return `新增 ${r.added} 格 · 角色表新增 ${r.cast} 项${r.over ? `｜注意：这一天现在有 ${r.total} 格，比定的多 ${r.over} 格——已经写好内容的章不会自动删，要改成更少的段，请在左边章节列表里删掉多余的章（或新建一个空间）` : ''}`;
     });
     return NextResponse.json({ ok: true, job });
   } catch (e: any) {

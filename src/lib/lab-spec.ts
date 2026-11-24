@@ -169,7 +169,8 @@ export const LAB_GEN_MODEL = process.env.NEXT_PUBLIC_LAB_GEN_MODEL || 'claude-so
 export const tagFormOf = (jdSnapshot: any): SpaceForm => formOf(jdSnapshot) || (isForm(jdSnapshot?.level_tag) ? jdSnapshot.level_tag : null) || (jdSnapshot?.kind === 'career' || jdSnapshot?.kind === 'discipline' ? 'career' : 'assess');
 export function spaceTag(jdSnapshot: any, createdAt?: string | null, chapterCount = 0): { level: string; form: SpaceForm; inferred: boolean; version: string } {
   const f = tagFormOf(jdSnapshot);
-  const n = slotsOf(jdSnapshot) || chapterCount;
+  // 实际章数比定的多（老空间改了段数、写好的章没删）就标实际的，别标「3 段」却有 6 章（11-24）
+  const n = Math.max(slotsOf(jdSnapshot) || 0, chapterCount);
   // 深度只标真按深度生成的（人选了，或定了格数按格数推）；11-19 以前的老空间没有这条规则，不往上推
   const d = isDepth(jdSnapshot?.depth) || slotsOf(jdSnapshot) ? depthOf(jdSnapshot, n) : null;
   const date = createdAt ? String(createdAt).slice(5, 10) : '';
