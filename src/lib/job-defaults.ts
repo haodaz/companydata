@@ -3,6 +3,7 @@
  *   主办方 organizer：空的就填这个岗位所属企业的名字
  *   年级要求 grade：空的、且学历说明有值时，按学历说明推（「本科及以上」→ college_student|master_student|phd_student）
  *   工作地址 address：空的就和工作地点 location 一样
+ *   投递入口 application_website 和岗位详情页 link 保持一致（11-24）
  *   四个标签 skill_labels / skill_labels_jd / exp_labels / exp_labels_jd：标签之间统一用中文「；」（10-19 起都是文本）
  *   国家 / 省份 / 城市：存数据部门选项集的编码（10-19），见 region-codes.ts
  */
@@ -112,6 +113,9 @@ export function applyJobDefaults(job: Record<string, any>, company?: string | nu
   if (!job.organizer && company) job.organizer = company;
   if (!(Array.isArray(job.grade) && job.grade.length)) { const g = gradeFromEducation(job.education_description); if (g) job.grade = g; }
   if (!job.address && job.location) job.address = job.location;
+  // 投递入口和岗位详情页保持一致（数据部门 11-24）：有详情页就两个都写详情页；列表页由 scripts/jobs/unify-links-1124.mts 标「需补详情页」
+  if (job.link) job.application_website = job.link;
+  else if (job.application_website) job.link = job.application_website;
   // 四个标签（要求 / 职责 × 经验 / 技能）都是中文分号「；」隔开的文本（数据部门 10-19 #13）
   for (const k of ['skill_labels', 'skill_labels_jd', 'exp_labels', 'exp_labels_jd']) {
     if (Array.isArray(job[k])) job[k] = job[k].join('；');
