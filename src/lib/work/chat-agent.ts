@@ -14,7 +14,8 @@ import { attachmentsToMaterials, mergeAttachmentDupes, clampMinutes, DEFAULT_MIN
 import { autoPickSamples, getSample, listSamples, parseSample, saveSample } from '@/lib/work/samples';
 import { bankTask, pickBankRefs, refreshSignals, renderBankRefs } from '@/lib/work/question-bank';
 import { randomBytes } from 'node:crypto';
-import { timing, withAutoSubmit } from '@/lib/work/deadline';
+import { timing, withAutoSubmit, DEFAULT_AUTO_SUBMIT } from '@/lib/work/deadline';
+import { extendSession } from '@/lib/work/extend';
 import { contactKey, releaseContact } from '@/lib/work/contact';
 import { fillAttachText, refreshImageMaterials } from '@/lib/work/attach-text';
 
@@ -33,11 +34,11 @@ export const WORK_CHAT_TOOLS: Anthropic.Tool[] = [
   { name: 'task_summary', description: '看一道已出的题的要点：业务问题、任务书、推进步骤、材料清单、评分标准、基线分。回答用户「题是什么样」「哪条标准是什么意思」用它。', input_schema: { type: 'object', properties: { task_id: { type: 'string' } }, required: ['task_id'] } },
   { name: 'run_baseline', description: 'AI 先做一遍当基线（约 1 分钟）。出完题接着调。', input_schema: { type: 'object', properties: { task_id: { type: 'string' } }, required: ['task_id'] } },
   { name: 'revise_task', description: '按用户的意见修订这道题（没提到的部分不动；修订后基线作废，要重跑）。用户说「材料太少」「难度降一点」「换个角度」都用它。', input_schema: { type: 'object', properties: { task_id: { type: 'string' }, feedback: { type: 'string' } }, required: ['task_id', 'feedback'] } },
-  { name: 'update_task_settings', description: '直接改题目设置，不经过模型改写、马上生效：title 改任务标题（2–40 字）；time_minutes 改限时（15–240 分钟，计时器跟着变；题面里写的时长也一并替换）；auto_submit 开关到点自动交卷（false = 时长只作建议，超时可以继续）；allow_retake 允许某个已经做完或到点的人重做（照用户说的名字或手机邮箱）；role 改岗位名 / 要找的人（页头显示的那个，题面里的旧名字一起换）；company 改企业名（企业名写错 / 数据部更正后：页头、出题依据里的企业画像、题面、材料、评分标准里的旧名一起换），用户只说「按企业库同步企业名」就传 sync_company=true（按企业库里当前的名字改）；attachments 把用户这回上传的图 / 文件补进材料包（候选人能看原图，消息里【文件】行的 url / name / mime / text 原样传；text 太长可以不传，服务端按地址读全文）；refresh_images 把材料包里没看成的图（只有「附图：文件名」）重新看一遍、补上说明——用户说「补图片说明」「AI 看不到图」就传 true。返回里说没改成的，照实告诉用户，不要接着重跑基线。用户说「时长改成 X」「不用卡时间」「让某人重做」「标题改成 X」「岗位名 / 职位改成 X」「公司名错了 / 企业名改成 X」「按企业库同步企业名」「把这张图附到题目里」「候选人看不到图」一律用它，不要用 revise_task。', input_schema: { type: 'object', properties: { title: { type: 'string', description: '新的任务标题' }, auto_submit: { type: 'boolean' }, allow_retake: { type: 'string', description: '要重做的人的名字或手机邮箱' }, task_id: { type: 'string' }, time_minutes: { type: 'number' }, role: { type: 'string', description: '新的岗位名或要找的人，照用户原话' }, company: { type: 'string', description: '正确的企业名' }, sync_company: { type: 'boolean', description: '按企业库里这家企业当前的名字同步' }, refresh_images: { type: 'boolean', description: '重新看材料包里没看成的图' }, attachments: { type: 'array', items: { type: 'object', properties: { url: { type: 'string' }, name: { type: 'string' }, mime: { type: 'string' }, text: { type: 'string' }, image: { type: 'boolean' } }, required: ['url', 'name'] } } }, required: ['task_id'] } },
+  { name: 'update_task_settings', description: '直接改题目设置，不经过模型改写、马上生效：title 改任务标题（2–40 字）；time_minutes 改限时（15–240 分钟，计时器跟着变；题面里写的时长也一并替换）；auto_submit 开关到点自动交卷（false = 时长只作建议，超时可以继续）；allow_retake 允许某个已经做完或到点的人重做（照用户说的名字或手机邮箱）；extend_who + extend_minutes 给某个人加时，已经提交的（到点被收的或自己交的）会重新打开接着做、这次的评估作废、再提交时重评；role 改岗位名 / 要找的人（页头显示的那个，题面里的旧名字一起换）；company 改企业名（企业名写错 / 数据部更正后：页头、出题依据里的企业画像、题面、材料、评分标准里的旧名一起换），用户只说「按企业库同步企业名」就传 sync_company=true（按企业库里当前的名字改）；attachments 把用户这回上传的图 / 文件补进材料包（候选人能看原图，消息里【文件】行的 url / name / mime / text 原样传；text 太长可以不传，服务端按地址读全文）；refresh_images 把材料包里没看成的图（只有「附图：文件名」）重新看一遍、补上说明——用户说「补图片说明」「AI 看不到图」就传 true。返回里说没改成的，照实告诉用户，不要接着重跑基线。用户说「时长改成 X」「不用卡时间」「让某人重做」「标题改成 X」「岗位名 / 职位改成 X」「公司名错了 / 企业名改成 X」「按企业库同步企业名」「把这张图附到题目里」「候选人看不到图」一律用它，不要用 revise_task。', input_schema: { type: 'object', properties: { title: { type: 'string', description: '新的任务标题' }, auto_submit: { type: 'boolean' }, allow_retake: { type: 'string', description: '要重做的人的名字或手机邮箱' }, extend_who: { type: 'string', description: '要加时 / 接着做的人的名字或手机邮箱' }, extend_minutes: { type: 'number', description: '加多少分钟（5–600），默认 30' }, task_id: { type: 'string' }, time_minutes: { type: 'number' }, role: { type: 'string', description: '新的岗位名或要找的人，照用户原话' }, company: { type: 'string', description: '正确的企业名' }, sync_company: { type: 'boolean', description: '按企业库里这家企业当前的名字同步' }, refresh_images: { type: 'boolean', description: '重新看材料包里没看成的图' }, attachments: { type: 'array', items: { type: 'object', properties: { url: { type: 'string' }, name: { type: 'string' }, mime: { type: 'string' }, text: { type: 'string' }, image: { type: 'boolean' } }, required: ['url', 'name'] } } }, required: ['task_id'] } },
   { name: 'ask_user', description: '需要用户决定时用：一句话的问题 + 2–4 个短选项（不带编号；也可以自己打字）。出任务前确认题意、选企业 / 岗位有歧义、要不要照参考资料出，用它。出任务前复述题意那一次**必须同时填 spec**（任务规格卡，界面会显示成能直接改的卡片），其余时候不填。', input_schema: { type: 'object', properties: { question: { type: 'string' }, options: { type: 'array', items: { type: 'string' } },
     spec: { type: 'object', description: '任务规格卡：和复述的那一行同一份内容，结构化给界面渲染；只在出任务前复述题意时填', properties: {
       company: { type: 'string', description: '企业全称' }, company_id: { type: 'number' }, role: { type: 'string', description: '要找的人（照用户原话）' },
-      focus: { type: 'string', description: '考什么' }, time_minutes: { type: 'number', description: '限时（分钟，15–240）' }, auto_submit: { type: 'boolean', description: '到点自动交卷，默认 true' },
+      focus: { type: 'string', description: '考什么' }, time_minutes: { type: 'number', description: '限时（分钟，15–240）' }, auto_submit: { type: 'boolean', description: `到点自动提交（false = 时长只作建议，超时可以继续做、用时照实记）。平台默认 ${DEFAULT_AUTO_SUBMIT ? '开' : '关'}；用户没提就不传` },
       experience: { type: 'string', description: '给几年经验的人，如「应届」「3–5 年」' }, materials: { type: 'string', description: '素材用哪些；没有写「按企业材料」' },
       lang: { type: 'string', enum: ['zh', 'en'] }, deep: { type: 'boolean', description: '往深里延伸' }, steps: { type: 'boolean', description: '分步带着做' },
       deliverables: { type: 'array', items: { type: 'string' }, description: '交付几样、各是什么，一样一条' }, criteria: { type: 'array', items: { type: 'string' }, description: '评分主要看：3–5 个短语' },
@@ -57,7 +58,7 @@ export function minutesFromText(x: string) {
   return /半小时/.test(x) ? 30 : 0;
 }
 /** 出任务时可以关掉到点自动交卷（2026-11-09） */
-const withDelivery = (row: any, body: { auto_submit?: boolean }) => ({ ...row, task: withAutoSubmit(row.task, body.auto_submit !== false) });
+const withDelivery = (row: any, body: { auto_submit?: boolean }) => ({ ...row, task: withAutoSubmit(row.task, body.auto_submit ?? DEFAULT_AUTO_SUBMIT) });
 
 export async function createWorkTask(user: { email: string; role: string }, body: { /** 分段回传（11-15）：出题时写完一块交一块 */ onPart?: (key: string, value: any) => void; /** 题目语言（11-10）：en = 候选人看到的题面和作答界面都是英文 */ lang?: 'zh' | 'en'; /** 出题风格（11-10）：deep 升维解读、steps 给候选人拆推进步骤；不传 = 都不（照出题人自己的参考资料出时默认分步） */ deep?: boolean; steps?: boolean; /** 材料给多少提示（11-13）：不传 = lean 只给事实 */ hints?: 'lean' | 'rich'; auto_submit?: boolean; time_minutes?: number; modules?: string[]; company: string; company_id?: number | string | null; intro?: string; role: string; env?: string; focus?: string; model?: string; sample_id?: string; sample_mode?: 'reskin' | 'inspire'; attachments?: Attachment[]; verbatim?: string; showcase_id?: string; showcase_use?: 'base' | 'ref' }) {
   const company = String(body.company || '').trim(), role = String(body.role || '').trim();
@@ -169,12 +170,12 @@ async function run(name: string, input: any, user: { email: string; role: string
     }
     case 'create_task': {
       const onPart = progress ? (k: string, v: any) => { if (PART_KEYS.includes(k)) { const data = partView(k, v); if (data) progress({ part: k, data }); } } : undefined;
-      const r = await createWorkTask(user, { onPart, company: String(input.company || ''), company_id: input.company_id ? Number(input.company_id) : null, intro: input.intro ? String(input.intro) : undefined, role: String(input.role || ''), env: input.env, time_minutes: input.time_minutes ? Number(input.time_minutes) : undefined, auto_submit: input.auto_submit === false ? false : undefined, lang: input.lang === 'en' ? 'en' : undefined, deep: input.deep === true ? true : undefined, hints: input.hints === 'rich' ? 'rich' : undefined, steps: typeof input.steps === 'boolean' ? input.steps : undefined, modules: Array.isArray(input.modules) ? input.modules.map(String) : undefined, focus: input.focus ? String(input.focus) : undefined, sample_id: input.reference_id ? String(input.reference_id) : undefined, sample_mode: 'reskin', attachments: Array.isArray(input.attachments) ? input.attachments : [], showcase_id: input.showcase_id ? String(input.showcase_id) : undefined, showcase_use: input.showcase_use === 'ref' ? 'ref' : 'base' });
+      const r = await createWorkTask(user, { onPart, company: String(input.company || ''), company_id: input.company_id ? Number(input.company_id) : null, intro: input.intro ? String(input.intro) : undefined, role: String(input.role || ''), env: input.env, time_minutes: input.time_minutes ? Number(input.time_minutes) : undefined, auto_submit: typeof input.auto_submit === 'boolean' ? input.auto_submit : undefined, lang: input.lang === 'en' ? 'en' : undefined, deep: input.deep === true ? true : undefined, hints: input.hints === 'rich' ? 'rich' : undefined, steps: typeof input.steps === 'boolean' ? input.steps : undefined, modules: Array.isArray(input.modules) ? input.modules.map(String) : undefined, focus: input.focus ? String(input.focus) : undefined, sample_id: input.reference_id ? String(input.reference_id) : undefined, sample_mode: 'reskin', attachments: Array.isArray(input.attachments) ? input.attachments : [], showcase_id: input.showcase_id ? String(input.showcase_id) : undefined, showcase_use: input.showcase_use === 'ref' ? 'ref' : 'base' });
       const t = await loadMine(user, r.id);
       return { result: { ...brief(t), share_link: `/work/${r.share_token}`, owner_link: `/work/${r.share_token}/owner?k=${r.owner_key}` }, ui: ui(t), label: `出好了（待发布）：${r.title}` };
     }
     case 'publish_verbatim': {
-      const r = await createWorkTask(user, { company: String(input.company || ''), role: String(input.role || ''), env: input.env, verbatim: String(input.text || ''), lang: input.lang === 'en' || (input.lang == null && /^[\x00-\x7F\s]{60,}$/.test(String(input.text || '').slice(0, 400))) ? 'en' : undefined, time_minutes: input.time_minutes ? Number(input.time_minutes) : undefined, auto_submit: input.auto_submit === false ? false : undefined, attachments: Array.isArray(input.attachments) ? input.attachments : [] });
+      const r = await createWorkTask(user, { company: String(input.company || ''), role: String(input.role || ''), env: input.env, verbatim: String(input.text || ''), lang: input.lang === 'en' || (input.lang == null && /^[\x00-\x7F\s]{60,}$/.test(String(input.text || '').slice(0, 400))) ? 'en' : undefined, time_minutes: input.time_minutes ? Number(input.time_minutes) : undefined, auto_submit: typeof input.auto_submit === 'boolean' ? input.auto_submit : undefined, attachments: Array.isArray(input.attachments) ? input.attachments : [] });
       const t = await loadMine(user, r.id);
       return { result: { ...brief(t), share_link: `/work/${r.share_token}`, owner_link: `/work/${r.share_token}/owner?k=${r.owner_key}` }, ui: ui(t), label: `整理好了（待发布）：${r.title}` };
     }
@@ -255,6 +256,16 @@ async function run(name: string, input: any, user: { email: string; role: string
         if (e2) throw new Error(e2.message);
         done.push(`${hit[0].participant?.name} 可以重做了`);
       }
+      if (input.extend_who) {
+        const who = String(input.extend_who).trim(), key = contactKey(who);
+        const { data: ss } = await db.from('work_sessions').select('id, participant').eq('task_id', t.id);
+        const hit = (ss || []).filter(x => !x.participant?.preview && (x.participant?.name === who || x.participant?.contact === who || (key && x.participant?.contact_key === key)));
+        if (hit.length !== 1) return { result: { error: hit.length ? `有 ${hit.length} 份作答对得上，要手机号或邮箱才分得清` : '作答名单里没有这个人' }, label: '没改' };
+        const r = await extendSession(t, hit[0].id, Number(input.extend_minutes) || 30);
+        if (!r.ok) return { result: { error: r.error }, label: '没改' };
+        if (r.reopened && patch.task?.peer_order) patch.task = { ...patch.task, peer_order: patch.task.peer_order.filter((x: string) => x !== hit[0].id) };   // 同一次还改了别的设置：别把刚拿掉的名次写回去
+        done.push(`${hit[0].participant?.name} ${r.reopened ? `重新打开了，可以接着做${r.until_s != null ? `（${r.minutes} 分钟）` : ''}，用同一个链接进来就行` : `加了 ${r.minutes} 分钟`}`);
+      }
       if (!done.length) return { result: { error: '没有要改的' }, label: '没改' };
       const { error } = await db.from('work_tasks').update({ ...patch, updated_at: new Date().toISOString() }).eq('id', t.id);
       if (error) throw new Error(error.message);
@@ -283,7 +294,7 @@ export function workChatSystemPrompt(user: string) {
 - 出任务前用 ask_user 复述题意让他确认，一行写全：企业｜要找的人｜考什么｜限时 X 分钟（到点自动交卷）｜给几年经验的人｜素材用哪些（没有就写「按企业材料」）｜（英文题才写）语言：英文｜出法：他选的那一项（照实写）｜交付：几样、各是什么｜评分主要看：3–5 个短语（结果怎样算好 + 过程怎样算好，按你对这个岗位的理解先定），复述末尾加一句「你们有现成的考核标准，或者觉得怎样算做得好，直接告诉我，我照着定」，选项如「就这样出」「改一下」；**这一次 ask_user 同时填 spec**（任务规格卡：company、company_id、role、focus、time_minutes、auto_submit、experience、materials、lang、deep、steps、deliverables、criteria，和复述的那一行一致），界面会把它显示成能直接改的卡片。他给了标准就写进 create_task 的 focus（「出题人的考核标准：……」），评分照它定；他改哪项就照改，再复述一次（同样带 spec）。
 - 他在卡片上改过再确认，会发来「按这份规格出：{JSON}」：这就是确认，**不要再复述**，直接按卡片上的值 create_task——role、time_minutes、auto_submit、lang、deep、steps 照填；focus 写成「考什么：…；面向：经验段；交付：…（一样一条）；出题人确认的评分要点：…」；company / company_id 用卡片上的，素材照之前说定的传 attachments。确认后 create_task 的 time_minutes 填限时，focus 里写明用时和经验段；确认了 create_task（告诉他要 2 分钟），出完接着 run_baseline（1 分钟），然后用三五句话说这道题：要解决什么问题、要交什么、（分步的才说）几步推进、基线几分。**出好的题是待发布**：告诉他右边空间里可以「预览做题台」看候选人会看到什么、哪里不对说一句就改；他说「可以了 / 发布」再调 publish_task，参与链接才生效。
 - 发布后把参与链接给他，告诉他：这一条发给所有候选人就行，不用名单。候选人填姓名和手机或邮箱后，地址变成自己的作答链接；同一个手机或邮箱只能做一次，换设备再填一次就接着做。回收时任务空间里每人一行：个人链接和结果。**不要问链接怎么发，也不要问人数上限。**
-- 候选人时间到了没做完，或者要重做：做过的不能续；公司同意重做就用 update_task_settings 传 allow_retake（名字或手机邮箱），这个人再用同一条链接、同一个手机或邮箱进来就是新的一次，旧的作答和报告留着。
+- 候选人时间不够、到点被收了，或者交了还想接着改：企业说可以，就用 update_task_settings 传 extend_who + extend_minutes（加时；已经提交的会重新打开接着做，这次的评估作废、再提交时重评——这一条先 ask_user 确认）。要从头再来一次就传 allow_retake（名字或手机邮箱），这个人再用同一条链接、同一个手机或邮箱进来就是新的一次，旧的作答和报告留着。
 - 任务出好、给他看的时候顺带一句：材料包只放了事实和数据，要候选人自己发现的问题没点破；预览时觉得提示太少或太多，直接说「材料多给点提示 / 再少给点」就改。（这件事因人而异，不在出任务前单独问。）
 - 他说哪里不对，revise_task 改；改完提醒基线要重跑，问要不要跑。
 - 只改标题、限时、开关到点交卷、让某人重做、或要把图 / 文件补进材料包：用 update_task_settings（直接生效，基线不作废），别用 revise_task——revise_task 是让模型改写题目内容的。改完告诉他候选人那边已经看得到。

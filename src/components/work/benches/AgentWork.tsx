@@ -279,6 +279,7 @@ export function AgentWork({ token, sid, task, resume, limit, grading, error, onS
   };
   const left = limit == null ? null : Math.max(0, limit - now);
   const autoFired = useRef(false);
+  useEffect(() => { autoFired.current = false; }, [limit]);   // 企业加了时：到新时限再自动提交（11-24）
   useEffect(() => { if (limit != null && now >= limit && !autoFired.current && !grading) { autoFired.current = true; finish(true); } });
 
   // ── 渲染 ──
@@ -415,7 +416,7 @@ export function AgentWork({ token, sid, task, resume, limit, grading, error, onS
       <main style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' }}>
         <header style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 16px' }}>
           <div style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 14, fontWeight: 700 }}>{task.task.title} <span style={{ fontWeight: 400, fontSize: 12.5, color: C.ink2 }}>{task.company_name} · {L('AI 工作台 beta', 'AI workspace beta')}</span></div>
-          <span style={{ fontFamily: C.mono, fontSize: 13, color: left != null && left <= 300 ? C.bad : C.ink2 }}>{left != null ? `${L('剩', 'left')} ${fmt(left)}` : fmt(now)}</span>
+          <span style={{ fontFamily: C.mono, fontSize: 13, color: left != null && left <= 300 ? C.bad : C.ink2 }}>{left != null ? `${L('剩', 'left')} ${fmt(left)}` : fmt(now)}</span>{left == null && (task as any).task?.soft_limit && now > ((task as any).task?.time_minutes || 60) * 60 && <span title={L('建议时长只作参考：可以接着做，用时会如实记给企业', 'The suggested time is only a guide. You can keep going; your time is recorded as is.')} style={{ fontSize: 12, color: C.ink2, marginLeft: 6 }}>{L('已过建议时长，可以接着做', 'past suggested time, keep going')}</span>}
           {!appOpen && <button onClick={() => { setAppOpen(true); if (!tabs.length) { setTabs([BRIEF]); setActive(BRIEF); } }} style={{ ...iconBtn, border: `1px solid ${C.line}` }}>{L('打开文件区', 'Open files')}</button>}
           <button onClick={submit} disabled={grading} style={{ border: 0, background: arm ? C.bad : C.ink, color: '#fff', borderRadius: 9, padding: '7px 16px', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}>{grading ? L('评分中…', 'Grading…') : arm ? L('确定交卷', 'Confirm') : L('交卷', 'Submit')}</button>
         </header>

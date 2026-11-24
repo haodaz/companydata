@@ -25,6 +25,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   const open = s.participant?.mode === 'open', plugin = s.participant?.mode === 'plugin';
   // 时间到自动交卷。过了宽限再来的（关了页面回来）不收新内容，按最后保存到服务器的算
   const tm = timing(t.task, s);
+  // 页面按旧时限自动提交，但企业刚给这个人加了时（11-24）：不收，告诉页面新的时限，接着做
+  if (body.auto && !tm.expired && tm.limit != null) return NextResponse.json({ ok: false, extended: true, limit_s: tm.limit, elapsed_s: tm.elapsed });
   const auto = tm.closed || (!!body.auto && tm.expired);
   let deliverable = String((tm.closed ? s.deliverable : body.deliverable ?? s.deliverable) ?? '').slice(0, 60000);
   const tsec = tm.limit != null ? Math.min(tm.limit, tm.elapsed) : tm.elapsed;   // 用时不超过时限（超时回来收卷的不算成几天）

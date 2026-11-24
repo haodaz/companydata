@@ -3,6 +3,7 @@ import { peerRanks } from '@/lib/work/fluency/peer-server';
 import { NextRequest, NextResponse, after } from 'next/server';
 import { AUTO_FROM, timing, withAutoSubmit } from '@/lib/work/deadline';
 import { releaseContact } from '@/lib/work/contact';
+import { extendSession } from '@/lib/work/extend';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { attachmentsToMaterials, mergeAttachmentDupes, reviseTask, runBaseline, sourcesOf, withMinutes, withRole } from '@/lib/work/generator';
 import { withCost, logTokenUsage } from '@/lib/token-logger';
@@ -48,6 +49,12 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ to
     const { error } = await db.from('work_sessions').update({ participant: releaseContact(s.participant) }).eq('id', s.id);
     if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
     return NextResponse.json({ ok: true });
+  }
+  // 给某个人加时 / 让已经提交的人接着做（11-24）：{ extend: 作答 id, minutes }
+  if (body.extend) {
+    const r = await extendSession(t, String(body.extend), Number(body.minutes) || 30);
+    if (!r.ok) return NextResponse.json(r, { status: 400 });
+    return NextResponse.json(r);
   }
   // 到点自动交卷的开关
   if (typeof body.auto_submit === 'boolean') {

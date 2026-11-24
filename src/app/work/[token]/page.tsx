@@ -81,6 +81,7 @@ export default function WorkPage() {
   const [task, setTask] = useState<Task | null>(null);
   const [preview, setPreview] = useState(false);   // 出任务的人预览（待发布的题，带管理密钥进来）
   const [err, setErr] = useState('');
+  const [limitS, setLimitS] = useState<number | null | undefined>(undefined);   // 企业刚加了时：服务器给的新时限
   const [phase, setPhase] = useState<'loading' | 'intro' | 'work' | 'grading' | 'report' | 'ended'>('loading');
   const [resume, setResume] = useState<any>(null);   // 回到还没交卷的作答：服务器记的用时、聊天、内容
   const [switchFrom, setSwitchFrom] = useState('');   // 换作答方式：沿用这一次作答，时钟不重置
@@ -204,20 +205,24 @@ export default function WorkPage() {
     </Shell>
   );
 
+  // 时限以服务器为准（企业单独给这个人加过时的，回来时 limit_s 已经算上）；页面按旧时限自动提交时服务器回 extended，就换成新的接着做（11-24）
+  const limitNow = limitS !== undefined ? limitS : resume && 'limit_s' in resume ? resume.limit_s : preview || participant?.preview || task.task.soft_limit ? null : (Number(task.task.time_minutes) || 60) * 60;
   const tipBar = linkTip && sid ? <div style={{ position: 'fixed', top: 54, left: '50%', transform: 'translateX(-50%)', zIndex: 60, maxWidth: 'calc(100vw - 24px)', display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px', background: '#fff', border: '1px solid #d8d4ff', borderRadius: 10, boxShadow: '0 8px 24px rgba(20,24,60,.16)', fontSize: 13, color: '#333' }}><span>{L('地址已变成你的作答链接，换设备打开能接着做', 'This address is now your personal link. Open it on another device to continue.')}</span><button onClick={() => navigator.clipboard.writeText(location.href)} style={{ border: 0, background: 'none', color: '#6055f5', fontWeight: 700, cursor: 'pointer', padding: 0, whiteSpace: 'nowrap' }}>{L('复制', 'Copy')}</button><button onClick={() => setLinkTip(false)} aria-label={L('关闭', 'Close')} style={{ border: 0, background: 'none', color: '#999', cursor: 'pointer', padding: 0 }}>×</button></div> : null;
-  if (env.type === 'agent') return <WorkLang lang={lang}>{tipBar}<AgentWork key={sid} token={token} sid={sid} task={task as any} resume={resume} grading={phase === 'grading'} error={err} limit={preview || participant?.preview || task.task.soft_limit ? null : (Number(task.task.time_minutes) || 60) * 60} onSubmit={async (deliverable, events, auto) => {
+  if (env.type === 'agent') return <WorkLang lang={lang}>{tipBar}<AgentWork key={sid} token={token} sid={sid} task={task as any} resume={resume} grading={phase === 'grading'} error={err} limit={limitNow} onSubmit={async (deliverable, events, auto) => {
     setPhase('grading'); setErr('');
     const j = await (await fetch(`/api/work/${token}/sessions/${sid}/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deliverable, events, auto }) })).json();
-    if (!j.ok) { if (auto || j.expired) { setPhase('ended'); return; } setErr(j.error || L('交卷失败，再试一次', "Couldn't submit. Please try again.")); setPhase('work'); return; }
+    if (j.extended) { setLimitS(j.limit_s); setErr(L('出任务的企业给你延长了时间，可以接着做', 'The company has given you more time. Keep going.')); setPhase('work'); return; }
+    if (!j.ok) { if (auto || j.expired) { setPhase('ended'); return; } setErr(j.error || L('提交失败，再试一次', "Couldn't submit. Please try again.")); setPhase('work'); return; }
     if (j.staged) return;
     setReport(j.report); setPhase('report');
   }} /></WorkLang>;
   if (mode === 'plugin' && participant?.code) return <Shell lang={lang}>{tipBar}<PluginWork code={participant.code} task={task as any} onSubmitted={() => setPhase('grading')} /></Shell>;
 
-  return <WorkLang lang={lang}>{tipBar}<Workspace key={`${sid}:${mode}`} token={token} sid={sid} task={task} env={env} mode={mode as 'bench' | 'open'} narrow={narrow} grading={phase === 'grading'} error={err} resume={resume} limit={preview || participant?.preview || task.task.soft_limit ? null : (Number(task.task.time_minutes) || 60) * 60} onRestart={() => { setSwitchFrom(sid); setName(participant?.name || ''); setContact(participant?.contact || ''); setPhase('intro'); window.scrollTo(0, 0); }} onSubmit={async (deliverable, events, auto) => {
+  return <WorkLang lang={lang}>{tipBar}<Workspace key={`${sid}:${mode}`} token={token} sid={sid} task={task} env={env} mode={mode as 'bench' | 'open'} narrow={narrow} grading={phase === 'grading'} error={err} resume={resume} limit={limitNow} onRestart={() => { setSwitchFrom(sid); setName(participant?.name || ''); setContact(participant?.contact || ''); setPhase('intro'); window.scrollTo(0, 0); }} onSubmit={async (deliverable, events, auto) => {
     setPhase('grading'); setErr('');
     const j = await (await fetch(`/api/work/${token}/sessions/${sid}/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deliverable, events, auto }) })).json();
-    if (!j.ok) { if (auto || j.expired) { setPhase('ended'); return; } setErr(j.error || L('交卷失败，再试一次', "Couldn't submit. Please try again.")); setPhase('work'); return; }
+    if (j.extended) { setLimitS(j.limit_s); setErr(L('出任务的企业给你延长了时间，可以接着做', 'The company has given you more time. Keep going.')); setPhase('work'); return; }
+    if (!j.ok) { if (auto || j.expired) { setPhase('ended'); return; } setErr(j.error || L('提交失败，再试一次', "Couldn't submit. Please try again.")); setPhase('work'); return; }
     if (j.staged) return;   // 进「AI 审计中」，由 AuditPanel 推进
     setReport(j.report); setPhase('report');
   }} /></WorkLang>;
@@ -520,6 +525,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   };
   const left = limit == null ? null : Math.max(0, limit - now);
   const autoFired = useRef(false);
+  useEffect(() => { autoFired.current = false; }, [limit]);   // 企业加了时：到新时限再自动提交
   useEffect(() => { if (limit != null && now >= limit && !autoFired.current && !grading) { autoFired.current = true; finish(true); } });
   const over = left == null ? now > task.task.time_minutes * 60 : left <= 300;   // 最后 5 分钟变红
 
@@ -554,7 +560,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
         </div>}
         <button onClick={() => setTour(0)} title={L('界面说明', 'How this page works')} style={{ ...viewBtn(false), border: `1px solid ${line}`, fontWeight: 700, fontSize: 13 }}>?</button>
         <div data-tour="clock" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-        <div style={{ fontFamily: 'ui-monospace, Menlo, monospace', fontWeight: 700, fontSize: 13.5, color: over ? '#ff8a80' : dark ? '#e6e8f0' : '#1a1a2e' }}>{left == null ? fmt(now) : lang === 'en' ? <>{fmt(left)} left</> : <>剩 {fmt(left)}</>}{!narrow && <span style={{ color: '#aaa', fontWeight: 400 }}> / {task.task.time_minutes}:00</span>}</div>
+        <div style={{ fontFamily: 'ui-monospace, Menlo, monospace', fontWeight: 700, fontSize: 13.5, color: over ? '#ff8a80' : dark ? '#e6e8f0' : '#1a1a2e' }}>{left == null ? fmt(now) : lang === 'en' ? <>{fmt(left)} left</> : <>剩 {fmt(left)}</>}{!narrow && <span style={{ color: '#aaa', fontWeight: 400 }}> / {task.task.time_minutes}:00</span>}{left == null && task.task.soft_limit && now > task.task.time_minutes * 60 && <span title={L('建议时长只作参考：可以接着做，用时会如实记给企业', 'The suggested time is only a guide. You can keep going; your time is recorded as is.')} style={{ fontWeight: 400, fontSize: 12, marginLeft: 6, fontFamily: 'inherit' }}>{L('已过建议时长，可以接着做', 'past suggested time, keep going')}</span>}</div>
         <button onClick={submit} disabled={grading} style={{ ...btnPrimary, padding: '7px 16px', fontSize: 13.5, ...(arm ? { background: '#c0392b' } : {}) }}>{grading ? L('评卷中…', 'Grading…') : arm ? L('再点一次确认交卷', 'Click again to confirm') : L('交卷 →', 'Submit →')}</button>
         </div>
       </div>

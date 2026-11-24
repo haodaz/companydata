@@ -2,7 +2,7 @@
 
 /** 真活台 · 一道题的详情（后台和出题人管理页共用）：问题与任务 / 材料包 / rubric / AI 基线 / 作答 */
 import React, { useMemo, useEffect, useState } from 'react';
-import { timing } from '@/lib/work/deadline';
+import { timing, overMinutes } from '@/lib/work/deadline';
 import { Button, Descriptions, Drawer, Input, InputNumber, Space, Table, Tabs, Tag, Tooltip, Typography, App } from 'antd';
 import { WorkReport } from '@/components/work/WorkReport';
 import { aiOnly, mainScore } from '@/lib/work/scale';
@@ -27,7 +27,7 @@ export const realStatement = (s?: string) => (s && !/^(出题人给的原题|Tas
 export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab, ownerKey, inlineEdit = true }: { /** 任务空间把岗位名 / 用时放到上面的「调整这道题」里，这里只显示（11-05） */ inlineEdit?: boolean; task: any; sessions: any[]; shareLink: string; notes?: string[]; defaultTab?: string; /** 有管理密钥才能补算 AI 使用分 */ ownerKey?: string }) {
   // 出题人是不是用一句话说的要找什么样的人（和 lib/work/generator.ts 的 isNeedText 同一判断；那边是服务端模块，这里不能直接引）
   const isNeed = String(T.role || '').trim().length > 14 || /[，,。、]|要一个|能看懂|能把|的人/.test(String(T.role || ''));
-  const { message } = App.useApp();
+  const { message, modal } = App.useApp();
   const [report, setReport] = useState<any>(null);
   const [tab, setTab] = useState<string>(defaultTab || 'p');
   useEffect(() => { const h = (e: Event) => setTab(String((e as CustomEvent).detail || 'p')); window.addEventListener('work-tab', h); return () => window.removeEventListener('work-tab', h); }, []);
@@ -72,6 +72,28 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
     if (!j.ok) return message.error(j.error || '没改成');
     message.success(`${s.participant?.name} 再用这条链接进来就是新的一次，旧的作答和报告都留着`); setTimeout(() => location.reload(), 900);
   };
+  // 给某个人加时 / 让已经提交的人接着做（11-24 潜历讨论：work sample 不是考试，到点也可以不收、人接着干——由企业自己选）
+  const extendFor = (s: any) => {
+    let mins = 30;
+    const reopen = !!s.submitted_at;
+    modal.confirm({
+      title: reopen ? `让 ${s.participant?.name || '这个人'} 接着做` : `给 ${s.participant?.name || '这个人'} 加时`,
+      content: <div style={{ fontSize: 13.5, lineHeight: 1.8 }}>
+        {reopen ? <p style={{ margin: '0 0 8px' }}>这份作答会重新打开：内容和过程都留着，这次的评估作废，他再提交时重新评估。{T.task?.soft_limit ? '' : '从现在起给他：'}</p> : <p style={{ margin: '0 0 8px' }}>在他现在的截止时间上再加：</p>}
+        {(!reopen || !T.task?.soft_limit) && <Space><InputNumber min={5} max={600} defaultValue={30} onChange={v => { mins = Number(v) || 30; }} /> 分钟</Space>}
+        <p style={{ margin: '8px 0 0', color: '#888' }}>他用原来的个人链接、或同一个手机 / 邮箱进来就能接着做。</p>
+      </div>,
+      okText: reopen ? '重新打开' : '加时',
+      onOk: async () => {
+        const token = (shareLink.match(/\/work\/([^/?#]+)/) || [])[1];
+        const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(ownerKey || '')}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ extend: s.id, minutes: mins }) })).json();
+        if (!j.ok) { message.error(j.error || '没改成'); return; }
+        message.success(j.reopened ? '已重新打开，把个人链接发给他就能接着做' : `加了 ${j.minutes} 分钟`); setTimeout(() => location.reload(), 900);
+      },
+    });
+  };
+  // 用时：开始到提交（还在做的算到现在）；超过建议 / 限定时长的标出来，单独加过时的也标出来
+  const usedOf = (s: any) => Math.max(0, Math.round(((s.submitted_at ? new Date(s.submitted_at).getTime() : Date.now()) - new Date(s.started_at).getTime()) / 1000));
   // 改限时（15–240 分钟）：计时器和任务书里写的时长一起换（2026-11-03，潜历反馈对 AI 说改 180 改不动）
   const [minutes, setMinutes] = useState<number>(Number(T.task?.time_minutes) || 60);
   const [minEdit, setMinEdit] = useState<number>(minutes);
@@ -207,10 +229,11 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
           { title: <span title="同一道题的候选人两两比较（谁更会带着 AI 把事做好）排出的名次；交卷后几分钟内更新">同题对比</span>, width: 84, render: (_: any, s: any) => (s.peer ? <span><b style={{ color: s.peer.rank <= 3 ? '#0f6c7a' : '#888' }}>{s.peer.rank}</b><Text type="secondary"> / {s.peer.of}</Text></span> : <Text type="secondary">–</Text>) },
           { title: '谁', render: (_: any, s: any) => <span>{s.participant?.name} {s.participant?.preview && <Tag color="orange" style={{ marginLeft: 4 }}>预览</Tag>}{s.participant?.mode === 'ai' && <Tag style={{ marginLeft: 4 }}>AI 学员</Tag>}<Text type="secondary">{s.participant?.contact}</Text>{swapped.has(s.id) && <Tag color="orange" style={{ marginLeft: 4 }} title="同一个浏览器用不同的手机或邮箱做过这道题">同一浏览器换过联系方式</Tag>}{s.participant?.retake_allowed && <Tag style={{ marginLeft: 4 }}>已允许重做</Tag>}</span> },
           { title: '开始', dataIndex: 'started_at', render: (v: string) => new Date(v).toLocaleString('zh-CN', { hour12: false }) },
-          { title: '交卷', dataIndex: 'submitted_at', render: (v: string) => (v ? new Date(v).toLocaleString('zh-CN', { hour12: false }) : <Text type="secondary">做着呢</Text>) },
+          { title: '提交', dataIndex: 'submitted_at', render: (v: string) => (v ? new Date(v).toLocaleString('zh-CN', { hour12: false }) : <Text type="secondary">作答中</Text>) },
+          { title: <span title={T.task?.soft_limit ? '建议时长只作参考，多花时间做好也可以；超出的部分标出来，企业自己权衡' : '限时内的用时；单独加过时的标出来'}>用时</span>, width: 110, render: (_: any, s: any) => { const u = usedOf(s), o = T.task?.soft_limit ? overMinutes(T.task, s, u) : 0, x = Number(s.participant?.extra_min) || 0; return <span>{Math.round(u / 60)} 分{o > 0 && <Tag color="gold" style={{ marginLeft: 4 }}>超建议 {o} 分</Tag>}{x > 0 && <Tag style={{ marginLeft: 4 }}>加过时 · {x} 分</Tag>}</span>; } },
           ...(ai ? [] : [{ title: '结果', dataIndex: 'score', width: 70, render: (v: number) => (v == null ? '–' : <b>{v}</b>) }]),
           { title: 'AI 使用', width: 80, render: (_: any, s: any) => { const u = aiOf(s); return !u ? <Text type="secondary">–</Text> : u.score == null ? <Text type="secondary" style={{ fontSize: 12 }}>没用</Text> : <b style={{ color: '#6055f5' }}>{u.score}</b>; } },
-          { title: '', width: 260, render: (_: any, s: any) => <Space>{s.report && <Button size="small" type="primary" ghost onClick={() => setReport(s)}>看报告</Button>}<Button size="small" onClick={() => { navigator.clipboard.writeText(`${shareLink}?s=${s.id}`); message.success('个人链接已复制'); }}>个人链接</Button>{ownerKey && s.participant?.contact_key && (s.submitted_at || timing(T.task, s).closed) && <Button size="small" onClick={() => allowRetake(s)}>允许重做</Button>}</Space> },
+          { title: '', width: 330, render: (_: any, s: any) => <Space wrap>{s.report && <Button size="small" type="primary" ghost onClick={() => setReport(s)}>看报告</Button>}<Button size="small" onClick={() => { navigator.clipboard.writeText(`${shareLink}?s=${s.id}`); message.success('个人链接已复制'); }}>个人链接</Button>{ownerKey && s.participant?.contact_key && (s.submitted_at || timing(T.task, s).closed) && <Button size="small" onClick={() => allowRetake(s)}>允许重做</Button>}{ownerKey && !s.participant?.preview && s.participant?.mode !== 'ai' && (s.submitted_at || !T.task?.soft_limit) && <Button size="small" onClick={() => extendFor(s)}>{s.submitted_at ? '接着做' : '加时'}</Button>}</Space> },
         ]} /></> },
       ]} />
       <Drawer open={cmpOpen} onClose={() => setCmpOpen(false)} size={Math.min(1100, typeof window !== 'undefined' ? window.innerWidth - 40 : 1100)} title="并排对比">
