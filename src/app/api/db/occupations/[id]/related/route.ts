@@ -1,4 +1,5 @@
 import { regionName } from '@/lib/region-codes';
+import { aliasList } from '@/lib/occupation-fields';
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { selectAll } from '@/lib/supabase-all';
@@ -13,7 +14,7 @@ type Ctx = { params: Promise<{ id: string }> };
 async function namesOf(id: number): Promise<string[] | null> {
   const { data: o } = await supabaseAdmin.from('occupations').select('name, name_lang_cn, aliases').eq('id', id).single();
   if (!o) return null;
-  return Array.from(new Set([o.name, o.name_lang_cn, ...(o.aliases || [])].filter((n: any) => n && String(n).trim().length >= 2).map((n: string) => n.trim()))).slice(0, 12);
+  return Array.from(new Set([o.name, o.name_lang_cn, ...aliasList(o.aliases)].filter((n: any) => n && String(n).trim().length >= 2).map((n: string) => n.trim()))).slice(0, 12);
 }
 
 /**

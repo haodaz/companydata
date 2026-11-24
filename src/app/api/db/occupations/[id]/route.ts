@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
-import { OCCUPATION_EDITABLE_KEYS, computeOccupationCompleteness, sanitizeOccupation, SALARY_YEARS } from '@/lib/occupation-fields';
+import { OCCUPATION_EDITABLE_KEYS, aliasList, aliasText, computeOccupationCompleteness, sanitizeOccupation, SALARY_YEARS } from '@/lib/occupation-fields';
 import { refreshCompleteness, upsertSalaries } from '@/lib/occupation-store';
 import { spaceOccupationMap } from '@/lib/kg/space-occupation';
 import { orIlike } from '@/lib/pg-filter';
@@ -21,7 +21,7 @@ export async function GET(_req: Request, ctx: Ctx) {
     const id = parseInt((await ctx.params).id);
     const { data: o, error } = await supabaseAdmin.from('occupations').select('*').eq('id', id).single();
     if (error || !o) return NextResponse.json({ success: false, error: '职业不存在' }, { status: 404 });
-    const names = Array.from(new Set([o.name, o.name_lang_cn, ...(o.aliases || [])].filter((n: any) => n && String(n).length >= 2))).slice(0, 8) as string[];
+    const names = Array.from(new Set([o.name, o.name_lang_cn, ...aliasList(o.aliases)].filter((n: any) => n && String(n).length >= 2))).slice(0, 8) as string[];
 
     const nextNames: string[] = (o.career_map?.next_roles || []).map((r: any) => r.name).filter(Boolean);
     const [salaries, jobs, spaces, standards, regions, linked] = await Promise.all([
@@ -41,14 +41,14 @@ export async function GET(_req: Request, ctx: Ctx) {
       supabaseAdmin.from('occupation_region_salaries').select('*').eq('occupation_id', id).eq('if_delete', false),
       // 图谱里「更资深 / 可转型」的岗位名 → 职业库里的职业（名称或别名命中），前端做成可点的链接
       nextNames.length
-        ? supabaseAdmin.from('occupations').select('id, name, aliases').eq('if_delete', false).or(`name.in.(${nextNames.map(n => JSON.stringify(n)).join(',')}),aliases.ov.{${nextNames.map(n => JSON.stringify(n)).join(',')}}`)
+        ? supabaseAdmin.from('occupations').select('id, name, aliases').eq('if_delete', false).or(`name.in.(${nextNames.map(n => JSON.stringify(n)).join(',')}),${nextNames.map(n => `aliases.ilike.${JSON.stringify(`%${n}%`)}`).join(',')}`)
         : Promise.resolve({ data: [] } as any),
     ]);
     // AI 替代性（职业子实体，2026-11-01）
     const axTable = await aiExposureTable();
     const aiExposure = axTable ? (await supabaseAdmin.from(axTable).select('*').eq('occupation_id', id).maybeSingle()).data : null;
     const roleLinks: Record<string, number> = {};
-    for (const n of nextNames) { const hit = (linked.data || []).find((x: any) => x.name === n || (x.aliases || []).includes(n)); if (hit) roleLinks[n] = hit.id; }
+    for (const n of nextNames) { const hit = (linked.data || []).find((x: any) => x.name === n || aliasList(x.aliases).includes(n)); if (hit) roleLinks[n] = hit.id; }
     const order = (y: string) => SALARY_YEARS.indexOf(y);
     return NextResponse.json({
       success: true, occupation: o,
@@ -83,6 +83,7 @@ export async function PATCH(req: Request, ctx: Ctx) {
     const patch: Record<string, any> = {};
     const fields = sanitizeOccupation(Object.fromEntries(Object.entries(body).filter(([k]) => OCCUPATION_EDITABLE_KEYS.includes(k))));
     const locked = new Set<string>(o.human_locked_fields || []);
+    if ('aliases' in fields) fields.aliases = aliasText(fields.aliases);   // 别名存「;」隔开的文本
     for (const [k, v] of Object.entries(fields)) {
       if (JSON.stringify(o[k] ?? null) === JSON.stringify(v ?? null)) continue;
       patch[k] = v; locked.add(k);

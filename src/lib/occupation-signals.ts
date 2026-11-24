@@ -6,6 +6,7 @@
  *     能并进已有职业的给出「并进 X」（叫法记别名）；特别长尾、又归并不了的先不管——岗位不挂职业，信号照记。
  */
 import { supabaseAdmin } from '@/lib/supabase';
+import { aliasList, aliasText } from '@/lib/occupation-fields';
 import { toList } from '@/lib/list-field';
 import { selectAll } from '@/lib/supabase-all';
 import { generateContent } from '@/lib/llm-client';
@@ -72,7 +73,7 @@ export async function aggregateSignals(opts: { model: string; minJobs?: number; 
   const big = [...byKey].filter(([, g]) => g.jobs.size >= 3).sort((a, b) => b[1].jobs.size - a[1].jobs.size).slice(0, 400);
   const { data: occ } = await selectAll(() => supabaseAdmin.from('occupations').select('id, name, aliases').not('if_delete', 'is', true).order('id'));
   const occByName = new Map((occ as any[]).map(o => [String(o.name).replace(/\s+/g, ''), o]));
-  const occText = (occ as any[]).map(o => o.name + ((o.aliases || []).length ? `（${o.aliases.slice(0, 3).join('/')}）` : '')).join('、');
+  const occText = (occ as any[]).map(o => o.name + (aliasList(o.aliases).length ? `（${aliasList(o.aliases).slice(0, 3).join('/')}）` : '')).join('、');
   const groups: { name: string; keys: string[]; same_as: string | null; why: string }[] = [];
   for (let i = 0; i < big.length; i += 120) {
     const chunk = big.slice(i, i + 120);
@@ -124,7 +125,7 @@ ${chunk.map(([k, g]) => `${[...g.names.keys()][0]}｜key=${k}（${g.jobs.size}�
  * 把一组信号落到某个职业上：岗位挂上这个职业（related_career_ids 追加），信号标 created / merged，叫法记进职业别名。
  * 建职业（origin = market）和「并进已有职业」都走这里。
  */
-export async function settleSignals(keys: string[], occupation: { id: number; external_id: string; name: string; aliases?: string[] | null }, status: 'created' | 'merged') {
+export async function settleSignals(keys: string[], occupation: { id: number; external_id: string; name: string; aliases?: string[] | string | null }, status: 'created' | 'merged') {
   const { data } = await selectAll(() => supabaseAdmin.from('occupation_signals').select('id, job_id, wanted_name').in('norm_key', keys).eq('status', 'open').order('id'));
   const sig = data as any[];
   const jobIds = [...new Set(sig.map(s => s.job_id))];
@@ -140,8 +141,8 @@ export async function settleSignals(keys: string[], occupation: { id: number; ex
     }
   }
   const names = [...new Set(sig.map(s => s.wanted_name))].filter(n => n !== occupation.name);
-  const aliases = [...new Set([...(occupation.aliases || []), ...names])].slice(0, 30);
-  await supabaseAdmin.from('occupations').update({ aliases }).eq('id', occupation.id);
+  const aliases = [...new Set([...aliasList(occupation.aliases), ...names])].slice(0, 30);
+  await supabaseAdmin.from('occupations').update({ aliases: aliasText(aliases) }).eq('id', occupation.id);
   for (let i = 0; i < sig.length; i += 300) await supabaseAdmin.from('occupation_signals').update({ status, occupation_id: occupation.id }).in('id', sig.slice(i, i + 300).map(s => s.id));
   return { signals: sig.length, linked };
 }

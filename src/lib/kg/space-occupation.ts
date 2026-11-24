@@ -3,6 +3,7 @@
  * 依次在职业库里找名称 / 中文名完全一致的，再找别名里有的；第一个对上的就是）。一次把所有空间算完，给职业详情页「百业空间」用。
  */
 import { supabaseAdmin } from '@/lib/supabase';
+import { aliasList } from '@/lib/occupation-fields';
 import { selectAll } from '@/lib/supabase-all';
 
 export function spaceNameCandidates(space: any): string[] {
@@ -18,7 +19,7 @@ export async function spaceOccupationMap(): Promise<Map<string, number>> {
   const byName = new Map<string, number>(), byAlias = new Map<string, number>();
   for (const o of occ as any[]) {
     for (const n of [o.name, o.name_lang_cn]) if (n && !byName.has(n)) byName.set(n, o.id);
-    for (const a of o.aliases || []) if (a && !byAlias.has(a)) byAlias.set(a, o.id);
+    for (const a of aliasList(o.aliases)) if (a && !byAlias.has(a)) byAlias.set(a, o.id);
   }
   const out = new Map<string, number>();
   for (const s of spaces as any[]) {

@@ -5,6 +5,7 @@
  * 版权口径：要点是转述（每条一句，自己的话），不抄原文；全文给官方链接。只返回找到的值，入库交给 standard-store。
  */
 import { generateContent } from '@/lib/llm-client';
+import { aliasList } from '@/lib/occupation-fields';
 import { logTokenUsage } from '@/lib/token-logger';
 import { parseJsonLoose, searchJson } from '@/lib/agents/search-llm';
 import { fetchJinaUrl } from '@/lib/agents/fetcher';
@@ -120,10 +121,10 @@ All free text in Chinese. "operation_relevance": which operations of the profess
 // 3. 答题人模式（scripts/agent-research.mts 的 standards 步骤）：一题里同时「找」和「补全」——
 //    由能自己联网检索的 agent 作答（不调大模型接口），找到的每条标准直接给完整题录 + 转述要点，写库走 upsertStandards
 // ────────────────────────────────────────────
-export function buildAgentStandardsPrompt(o: { name: string; aliases?: string[] | null; intro?: string | null; responsibility?: string | null; places?: string[]; items?: string[] }, count = 8) {
+export function buildAgentStandardsPrompt(o: { name: string; aliases?: string[] | string | null; intro?: string | null; responsibility?: string | null; places?: string[]; items?: string[] }, count = 8) {
   return `
 你在给职业知识图谱的「行业标准与操作规程库」找资料：一个职业日常怎么干活，要能追到真实的标准条款、规程、操作手册上。今天是 ${today()}。
-职业：${o.name}${o.aliases?.length ? `（也叫：${o.aliases.slice(0, 6).join('、')}）` : ''}
+职业：${o.name}${aliasList(o.aliases).length ? `（也叫：${aliasList(o.aliases).slice(0, 6).join('、')}）` : ''}
 ${o.intro ? `简介：${o.intro}\n` : ''}${o.responsibility ? `工作内容：${String(o.responsibility).slice(0, 500)}\n` : ''}${o.places?.length ? `工作场所：${o.places.slice(0, 8).join('、')}\n` : ''}${o.items?.length ? `常用仪器设备 / 软件：${o.items.slice(0, 25).join('、')}\n` : ''}
 找真正约束这个职业日常操作的（最多 ${count} 条，宁缺毋滥）：
 - 国标 / 行标 / 地标 / 团标里管这些操作的安全规程、技术规范、工艺规范（带数值窗口：温度、压力、时间、公差）、检验验收标准、服务规范；

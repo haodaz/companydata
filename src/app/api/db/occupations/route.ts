@@ -25,7 +25,7 @@ export async function GET(request: Request) {
     const build = () => {
       let q = supabaseAdmin.from('occupations').select('*', { count: 'exact' }).eq('if_delete', false);
       const s = get('search').trim();
-      if (s) q = q.or(`${orIlike(['name', 'name_lang_en', 'key', 'intro', 'relevant_certificates'], s)},aliases.cs.${JSON.stringify([s]).replace(/^\[/, '{').replace(/\]$/, '}')}`);
+      if (s) q = q.or(orIlike(['name', 'name_lang_en', 'key', 'intro', 'relevant_certificates', 'aliases'], s))   // 别名是「;」隔开的文本（11-24），一起模糊搜;
       if (get('category')) q = q.eq('career_category', get('category'));
       if (get('mid')) q = q.eq('career_mid_category', get('mid'));
       if (get('review') === 'none') q = q.is('human_review_status', null);

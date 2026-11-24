@@ -7,6 +7,7 @@
  *    职责_经验标签 exp_labels_jd / 职责_技能标签 skill_labels_jd，中文分号「；」隔开；经验标签原文没直说也要按语义归纳 1–3 个。
  */
 import fos91 from '@/data/fos-91.json';
+import { aliasList } from '@/lib/occupation-fields';
 import { supabaseAdmin } from '@/lib/supabase';
 import { selectAll } from '@/lib/supabase-all';
 import { generateCheap, generateContent } from '@/lib/llm-client';
@@ -27,7 +28,7 @@ export async function tagCatalog(): Promise<Catalog> {
   // 职业清单只给模型看中文名（带常用叫法），模型照抄中文名、代码换回 key（2026-10-20）：
   // 给英文 key 时模型照 key 的英文意思挑——有的 key 是当初套的 O*NET 泛名、和中文名不是一个职业（electrical_engineers = 集成电路设计工程技术人员），
   // 错配了 1400 多个岗位；改给编号又会抄错位（高中物理教师 → 隔壁的幼儿园教师）
-  const occ = (data as any[]).map(o => ({ key: String(o.external_id), name: String(o.name), aliases: (o.aliases || []).slice(0, 2) as string[] }));
+  const occ = (data as any[]).map(o => ({ key: String(o.external_id), name: String(o.name), aliases: aliasList(o.aliases).slice(0, 2) }));
   const occByName = new Map<string, string>();
   const nk = (x: string) => x.replace(/\s+/g, '').replace(/（.*?）|\(.*?\)/g, '');
   for (const o of occ) occByName.set(nk(o.name), o.key);

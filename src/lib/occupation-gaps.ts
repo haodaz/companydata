@@ -9,6 +9,7 @@
  *   岗位数只按核对通过的岗位名算。
  */
 import { supabaseAdmin } from '@/lib/supabase';
+import { aliasList } from '@/lib/occupation-fields';
 import { selectAll } from '@/lib/supabase-all';
 import { generateContent } from '@/lib/llm-client';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
@@ -49,7 +50,7 @@ export async function findOccupationGaps(opts: { model: string; sinceDays?: numb
   const titles = [...cnt.entries()].filter(([, n]) => n >= 2).sort((a, b) => b[1] - a[1]).slice(0, opts.top || 900);
   const { data: occ } = await selectAll(() => supabaseAdmin.from('occupations').select('name, aliases').not('if_delete', 'is', true).order('id'));
   const occNames = new Map((occ as any[]).map(o => [String(o.name).replace(/\s+/g, ''), String(o.name)]));
-  const occText = (occ as any[]).map(o => o.name + ((o.aliases || []).length ? `（${o.aliases.slice(0, 4).join('/')}）` : '')).join('、');
+  const occText = (occ as any[]).map(o => o.name + (aliasList(o.aliases).length ? `（${aliasList(o.aliases).slice(0, 4).join('/')}）` : '')).join('、');
   log(`职业缺口：岗位 ${(jobs as any[]).length} 个 → 有效岗位名 ${titles.length} 种；职业库 ${(occ as any[]).length} 个`);
   if (!titles.length) return { gaps: [] as OccupationGap[], aliasHints: [] as AliasHint[] };
 

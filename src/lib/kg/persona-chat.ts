@@ -7,6 +7,7 @@
  * 只读 /lab 的表。
  */
 import { regionName } from '@/lib/region-codes';
+import { aliasList } from '@/lib/occupation-fields';
 import { supabaseAdmin } from '@/lib/supabase';
 import { generateContent } from '@/lib/llm-client';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
@@ -48,7 +49,7 @@ export async function buildKnowledge(occ: any, spaceId?: string | null): Promise
   const src = (type: ChatSource['type'], title: string, url?: string | null, ref?: SourceRef) => { const id = `${({ job: 'J', standard: 'S', task: 'T', data: 'D', company: 'C', web: 'W', faq: 'F' } as Record<string, string>)[type]}${sources.filter(s => s.type === type).length + 1}`; sources.push({ id, type, title, url, ref }); return id; };
   const occRef = (section: SourceRef['section']): SourceRef => ({ kind: 'occupation', id: occ.id, section });
   const card = (id: string, tag: string, lines: (string | number | false | null | undefined)[]) => { const x = sources.find(y => y.id === id); if (x) x.card = { tag, lines: lines.filter(x => typeof x === 'string' && x).slice(0, 3) as string[] }; };
-  const names = Array.from(new Set([occ.name, occ.name_lang_cn, ...(occ.aliases || [])].filter((n: any) => n && String(n).length >= 2))).slice(0, 10) as string[];
+  const names = Array.from(new Set([occ.name, occ.name_lang_cn, ...aliasList(occ.aliases)].filter((n: any) => n && String(n).length >= 2))).slice(0, 10) as string[];
   const match = names.map(n => orIlike(['name'], n)).join(',');
 
   const [sal, regions, tasks, links, stds, openJobs, chapters] = await Promise.all([
@@ -64,7 +65,7 @@ export async function buildKnowledge(occ: any, spaceId?: string | null): Promise
 
   const L: string[] = [];
   const dOcc = src('data', `平方职业库 · ${occ.name}`, null, occRef('intro'));
-  L.push(`【职业】${occ.name}${occ.name_lang_en ? `（${occ.name_lang_en}）` : ''}，${CAREER_CATEGORY_LABELS[occ.career_category] || ''}。也叫：${(occ.aliases || []).slice(0, 6).join('、')} [${dOcc}]`);
+  L.push(`【职业】${occ.name}${occ.name_lang_en ? `（${occ.name_lang_en}）` : ''}，${CAREER_CATEGORY_LABELS[occ.career_category] || ''}。也叫：${aliasList(occ.aliases).slice(0, 6).join('、')} [${dOcc}]`);
   if (occ.intro) L.push(`简介：${cut(occ.intro, 220)}`);
   if (occ.responsibility) L.push(`工作内容：${cut(occ.responsibility, 360)}`);
   if (occ.position_requirement) L.push(`职业要求：${cut(occ.position_requirement, 300)}`);
@@ -358,7 +359,7 @@ export async function entityDetail(occ: any, knowledge: { sources: ChatSource[] 
       const links = (await linksOf('occupation', occ.id).catch(() => [])).filter((l: any) => l.dir === 'out' && ['place', 'station', 'item'].includes(l.other_type));
       return { kind: 'occupation', section: 'context', occupation: { id: o!.id, name: o!.name }, links: links.map((l: any) => ({ type: l.other_type, name: l.other.name, kind: l.other.kind, category: l.other.category, image_url: l.other.image_url, frequency: l.frequency, proficiency: l.proficiency, note: l.note })) };
     }
-    const names = Array.from(new Set([o!.name, ...(o!.aliases || [])].filter((n: any) => n && String(n).length >= 2))).slice(0, 10) as string[];
+    const names = Array.from(new Set([o!.name, ...aliasList(o!.aliases)].filter((n: any) => n && String(n).length >= 2))).slice(0, 10) as string[];
     const { data: jobs, count } = await supabaseAdmin.from('jobs').select('id, name, institute_or_company_name, company_id, city, location, job_type, official_publish_date, internship_salary_min, internship_salary_max, salary_unit, salary_currency, link', { count: 'exact' })
       .not('if_delete', 'is', true).eq('status', 'open').or(names.map(n => orIlike(['name'], n)).join(',')).order('updated_at', { ascending: false }).limit(40);
     return { kind: 'occupation', section: 'jobs', occupation: { id: o!.id, name: o!.name }, total: count || 0, jobs: jobs || [] };
@@ -369,7 +370,7 @@ export async function entityDetail(occ: any, knowledge: { sources: ChatSource[] 
   }
   if (ref.kind === 'company') {
     const { data } = await supabaseAdmin.from('companies').select('id, name, name_en, registered_name, logo_url, industry, sub_industry, city, country, company_scale, info_founding_year, one_sentence, introduction, official_website, campus_url').eq('id', ref.id).single();
-    const names = Array.from(new Set([occ.name, ...(occ.aliases || [])].filter((n: any) => n && String(n).length >= 2))).slice(0, 10) as string[];
+    const names = Array.from(new Set([occ.name, ...aliasList(occ.aliases)].filter((n: any) => n && String(n).length >= 2))).slice(0, 10) as string[];
     const { data: jobs, count } = await supabaseAdmin.from('jobs').select('id, name, city, location, job_type, link', { count: 'exact' }).eq('company_id', ref.id).not('if_delete', 'is', true).eq('status', 'open').or(names.map(n => orIlike(['name'], n)).join(',')).limit(20);
     return { kind: 'company', company: data, jobs: jobs || [], total: count || 0, occupation: { name: occ.name } };
   }

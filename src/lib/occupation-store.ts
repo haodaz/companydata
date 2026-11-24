@@ -6,7 +6,7 @@
  */
 import { supabaseAdmin } from '@/lib/supabase';
 import { FROZEN_REVIEW_STATUSES } from '@/lib/review-status';
-import { SALARY_YEARS, computeOccupationCompleteness, hasOccupationValue, occupationKey, sanitizeOccupation, type CareerGraph } from '@/lib/occupation-fields';
+import { SALARY_YEARS, aliasList, aliasText, computeOccupationCompleteness, hasOccupationValue, occupationKey, sanitizeOccupation, type CareerGraph } from '@/lib/occupation-fields';
 import type { RegionSalary } from '@/lib/agents/occupation-enrich';
 
 export interface SalaryRow { year: string; salary: number | null; source_url?: string | null }
@@ -19,8 +19,10 @@ export async function findOccupation(by: { external_id?: string | null; name?: s
   if (by.name) {
     const { data } = await supabaseAdmin.from('occupations').select('*').eq('if_delete', false).or(`name.eq.${JSON.stringify(by.name)},name_lang_cn.eq.${JSON.stringify(by.name)}`).limit(1);
     if (data?.[0]) return data[0];
-    const { data: alias } = await supabaseAdmin.from('occupations').select('*').eq('if_delete', false).contains('aliases', [by.name]).limit(1);
-    if (alias?.[0]) return alias[0];
+    // 别名是「;」隔开的文本：先模糊找，再逐个对整名
+    const { data: alias } = await supabaseAdmin.from('occupations').select('*').eq('if_delete', false).ilike('aliases', `%${by.name.replace(/[%_]/g, '')}%`).limit(20);
+    const hit = (alias || []).find(o => aliasList(o.aliases).includes(by.name!));
+    if (hit) return hit;
   }
   return null;
 }
@@ -44,7 +46,7 @@ export async function upsertOccupation(
       ext = `${key}-${n}`;
     }
     const row = {
-      ...clean, key, external_id: ext, name_lang_cn: clean.name_lang_cn || clean.name,
+      ...clean, aliases: aliasText(clean.aliases), key, external_id: ext, name_lang_cn: clean.name_lang_cn || clean.name,
       if_delete: raw.if_delete === true || raw.if_delete === '是', source: opts.source, ai_sources: opts.sources || {},
       human_review_status: 'review', completeness_score: computeOccupationCompleteness(clean),
     };
@@ -59,7 +61,7 @@ export async function upsertOccupation(
   for (const [k, v] of Object.entries(clean)) {
     if (locked.has(k) || !hasOccupationValue(v)) continue;
     if (opts.mode === 'fill' && hasOccupationValue(existing[k])) continue;
-    if (k === 'aliases') { const merged = Array.from(new Set([...(existing.aliases || []), ...v])); if (merged.length !== (existing.aliases || []).length) patch.aliases = merged; continue; }
+    if (k === 'aliases') { const old = aliasList(existing.aliases), merged = Array.from(new Set([...old, ...aliasList(v)])); if (merged.length !== old.length) patch.aliases = aliasText(merged); continue; }
     if (JSON.stringify(existing[k]) !== JSON.stringify(v)) patch[k] = v;
   }
   if (external_id && !existing.external_id) patch.external_id = external_id;
@@ -129,8 +131,8 @@ export async function mergeOccupations(keepId: number, dropId: number) {
   const { data: rows } = await supabaseAdmin.from('occupations').select('*').in('id', [keepId, dropId]);
   const keep = rows?.find(r => r.id === keepId), drop = rows?.find(r => r.id === dropId);
   if (!keep || !drop) throw new Error('职业不存在');
-  const aliases = Array.from(new Set([...(keep.aliases || []), drop.name, ...(drop.aliases || [])])).filter(a => a && a !== keep.name);
-  const patch: Record<string, any> = { aliases, updated_at: new Date().toISOString() };
+  const aliases = Array.from(new Set([...aliasList(keep.aliases), drop.name, ...aliasList(drop.aliases)])).filter(a => a && a !== keep.name);
+  const patch: Record<string, any> = { aliases: aliasText(aliases), updated_at: new Date().toISOString() };
   for (const k of ['intro', 'responsibility', 'position_requirement', 'recent_year_monthly_salary', 'relevant_certificates', 'relevant_celebrities', 'name_lang_en', 'career_category', 'career_mid_category', 'career_map']) {
     if (!hasOccupationValue(keep[k]) && hasOccupationValue(drop[k])) patch[k] = drop[k];
   }

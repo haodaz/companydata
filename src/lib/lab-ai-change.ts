@@ -7,6 +7,7 @@
  * 模型：Claude 优先、千问兜底（askJson 的链）。职业这一层是职业实体的 AI 替代性数据（occupation_ai_exposure，搜过就存、不再重算），个人那一层（按简历）不存。
  */
 import { supabaseAdmin as db } from '@/lib/supabase';
+import { aliasList } from '@/lib/occupation-fields';
 import { askJson } from '@/lib/work/generator';
 import { listShowcase } from '@/lib/work/showcase';
 import { CAREER_CATEGORY_LABELS, CAREER_MID_CATEGORIES } from '@/lib/occupation-fields';
@@ -177,7 +178,7 @@ export async function analyzeChange(occupationId: number, text: string): Promise
   const srcUrl = (sal || []).find((r: any) => r.source_url)?.source_url || null;
   // 接下来：百业里同职业的空间（亲手试一天）+ 任务库里相关的真活
   const { data: sps } = await db.from('skill_tasks').select('id, title, profile, jd_snapshot').limit(600);
-  const names = [occ.name, ...(Array.isArray(occ.aliases) ? occ.aliases : [])].filter(Boolean).map(String);
+  const names = [occ.name, ...aliasList(occ.aliases)].filter(Boolean).map(String);
   const hit = (s: string) => !!s && names.some(n => s.includes(n) || (s.length >= 2 && n.includes(s)));
   const spaces = (sps || []).filter((s: any) => hit(String(s.profile?.role || '')) || hit(String(s.jd_snapshot?.career?.profession || '')) || hit(String(s.jd_snapshot?.title || '')))
     .slice(0, 2).map((s: any) => ({ id: s.id, title: s.title, role: s.profile?.role || s.jd_snapshot?.title || '', avatar: s.profile?.avatar || '' }));

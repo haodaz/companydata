@@ -10,6 +10,7 @@
  * 编辑过的字段锁定，AI 补全不再覆盖；审核同其他库。
  */
 import React, { useCallback, useEffect, useState } from 'react';
+import { aliasList } from '@/lib/occupation-fields';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { App, Avatar, Button, Card, Col, Descriptions, Empty, Form, Input, InputNumber, Modal, Popconfirm, Row, Segmented, Select, Space, Spin, Table, Tabs, Tooltip, Tag, Typography } from 'antd';
 import { ArrowLeftOutlined, CheckCircleOutlined, CloseCircleOutlined, DeleteOutlined, EditOutlined, ThunderboltOutlined, ApartmentOutlined, GlobalOutlined, ToolOutlined } from '@ant-design/icons';
@@ -159,7 +160,7 @@ export default function OccupationDetailPage() {
   const openEdit = () => {
     const o = d!.occupation;
     const sal = Object.fromEntries(d!.salaries.map((s: any) => [s.year, s.salary]));
-    form.setFieldsValue({ ...o, external_id: o.external_id, ...Object.fromEntries(SALARY_YEARS.map(y => [`salary_${y}`, sal[y] ?? null])) });
+    form.setFieldsValue({ ...o, aliases: aliasList(o.aliases), external_id: o.external_id, ...Object.fromEntries(SALARY_YEARS.map(y => [`salary_${y}`, sal[y] ?? null])) });
     setEditOpen(true);
   };
   const saveEdit = async () => {
@@ -197,7 +198,7 @@ export default function OccupationDetailPage() {
             <Card key={g} size="small" style={{ marginBottom: 16 }} title={g} extra={fields.length > filled.length && <Text type="secondary" style={{ fontSize: 12 }}>空缺 {fields.length - filled.length} 项</Text>}>
               {short.length > 0 && <Descriptions column={1} size="small" labelStyle={{ width: 140 }}>
                 {short.map(f => <Descriptions.Item key={f.key} label={<span>{f.label}{locked.includes(f.key) && <Tag style={{ marginLeft: 4, fontSize: 10 }}>已锁定</Tag>}</span>}>
-                  {f.kind === 'tags' ? <Space size={4} wrap>{(o[f.key] || []).map((t: string) => <Tag key={t} style={{ margin: 0 }}>{t}</Tag>)}</Space> : formatOccupationValue(f, o[f.key])}
+                  {f.kind === 'tags' ? <Space size={4} wrap>{aliasList(o[f.key]).map((t: string) => <Tag key={t} style={{ margin: 0 }}>{t}</Tag>)}</Space> : formatOccupationValue(f, o[f.key])}
                   {o.ai_sources?.[f.key] && <a href={o.ai_sources[f.key]} target="_blank" rel="noreferrer" style={{ marginLeft: 8, fontSize: 12 }}>来源</a>}
                 </Descriptions.Item>)}
               </Descriptions>}
@@ -294,7 +295,7 @@ export default function OccupationDetailPage() {
             : <Tag color="geekblue">官方框架</Tag>)}
           {o.source && <Tag>{SOURCE_LABELS[o.source] || o.source}</Tag>}
           <Tag color={REVIEW_STATUS[o.human_review_status]?.color}>{REVIEW_STATUS[o.human_review_status]?.label || '未审核'}</Tag>
-          {(o.aliases || []).map((a: string) => <Tag key={a} color="default" style={{ color: BRAND.ink3 }}>{a}</Tag>)}
+          {aliasList(o.aliases).map((a: string) => <Tag key={a} color="default" style={{ color: BRAND.ink3 }}>{a}</Tag>)}
         </>}
         metrics={[
           { label: '完整度', value: `${o.completeness_score || 0}%`, color: (o.completeness_score || 0) >= 80 ? '#16a34a' : '#d97706' },

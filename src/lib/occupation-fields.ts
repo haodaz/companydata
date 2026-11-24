@@ -121,6 +121,9 @@ export const OCCUPATION_GROUPS = Array.from(new Set(OCCUPATION_FIELDS.map(f => f
 const INT_KEYS = new Set(OCCUPATION_FIELDS.filter(f => f.kind === 'int').map(f => f.key));
 const TAG_KEYS = new Set(OCCUPATION_FIELDS.filter(f => f.kind === 'tags').map(f => f.key));
 
+/** 别名库里存英文分号隔开的文本（数据部门 11-24 赞灵，原来是数组）；程序里一律当数组用：读用 aliasList，写库用 aliasText */
+export const aliasList = (v: any): string[] => (Array.isArray(v) ? v : String(v ?? '').split(/[;；]/)).map((x: any) => String(x).trim()).filter(Boolean);
+export const aliasText = (v: any): string | null => { const a = [...new Set(aliasList(v))]; return a.length ? a.join(';') : null; };
 export const hasOccupationValue = (v: any) => v != null && v !== '' && !(Array.isArray(v) && v.length === 0);
 
 export function computeOccupationCompleteness(o: Record<string, any>, salaryCount = 0): number {
@@ -173,7 +176,7 @@ export function formatOccupationValue(f: OccupationField, v: any): string {
   if (!hasOccupationValue(v)) return '';
   if (f.kind === 'category') return CAREER_CATEGORY_LABELS[v] || v;
   if (f.kind === 'mid_category') return CAREER_MID_LABELS[v] || v;
-  if (f.kind === 'tags') return (v as string[]).join('、');
+  if (f.kind === 'tags') return aliasList(v).join('、');
   if (f.key === 'recent_year_monthly_salary') return `${Number(v).toLocaleString()} 元/月`;
   return String(v);
 }

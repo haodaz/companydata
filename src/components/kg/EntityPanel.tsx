@@ -6,6 +6,7 @@
  * 数据来自 {endpoint}/entity（只给这段对话引用过的实体）。
  */
 import React, { useEffect, useState } from 'react';
+import { aliasList } from '@/lib/occupation-fields';
 import { OccupationCareerGraph } from '@/components/admin/OccupationCareerGraph';
 import { CAREER_CATEGORY_LABELS, SALARY_CN_REGIONS, SALARY_COUNTRIES, SALARY_YEAR_LABELS, SALARY_YEARS } from '@/lib/occupation-fields';
 import { ITEM_KIND_LABELS, TASK_DIFFICULTY_LABELS } from '@/lib/entity-fields';
@@ -51,7 +52,7 @@ function Body({ d }: { d: any }) {
     const o = d.occupation;
     return <>
       <div style={{ fontSize: 13, color: C.ink3 }}>{[o.name_lang_en, CAREER_CATEGORY_LABELS[o.career_category]].filter(Boolean).join(' · ')}</div>
-      {!!o.aliases?.length && <div style={{ marginTop: 10 }}>{o.aliases.slice(0, 8).map((a: string) => <Chip key={a}>{a}</Chip>)}</div>}
+      {!!aliasList(o.aliases).length && <div style={{ marginTop: 10 }}>{aliasList(o.aliases).slice(0, 8).map((a: string) => <Chip key={a}>{a}</Chip>)}</div>}
       {o.intro && <><H>简介</H><P>{o.intro}</P></>}
       {o.responsibility && <><H>工作内容</H><P>{o.responsibility}</P></>}
       {o.position_requirement && <><H>职业要求</H><P>{o.position_requirement}</P></>}

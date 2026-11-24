@@ -5,6 +5,7 @@
  * 只返回「找到的值」，写库交给 occupation-store（AI 模式只填空）。
  */
 import { parseJsonLoose, searchJson } from '@/lib/agents/search-llm';
+import { aliasList } from '@/lib/occupation-fields';
 import { generateContent } from '@/lib/llm-client';
 import { withCost } from '@/lib/token-logger';
 import fos91 from '@/data/fos-91.json';
@@ -34,7 +35,7 @@ const ask = async (prompt: string, modelId: string, meta: { tool_name: any; task
 
 export interface OccupationResearch { fields: Record<string, any>; salaries: { year: string; salary: number; source_url?: string | null }[]; sources: Record<string, string>; searchQueries: string[]; raw: any }
 
-export async function researchOccupation(o: { name: string; name_lang_en?: string | null; aliases?: string[] | null }, modelId: string, batchId: number): Promise<OccupationResearch> {
+export async function researchOccupation(o: { name: string; name_lang_en?: string | null; aliases?: string[] | string | null }, modelId: string, batchId: number): Promise<OccupationResearch> {
   const cats = Object.entries(CAREER_CATEGORY_LABELS).map(([v, n]) => `${v}=${n}`).join('; ');
   const mids = Object.entries(CAREER_MID_CATEGORIES).map(([v, [n, c]]) => `${v}=${n}(${c})`).join('; ');
   const years = Object.entries(SALARY_YEAR_LABELS).map(([v, n]) => `${v}=${n}`).join('; ');
@@ -61,7 +62,7 @@ export async function researchOccupation(o: { name: string; name_lang_en?: strin
 }
 规则：只报告检索到或有把握的事实；薪资必须来自可查的数据源并在 sources 里给链接，查不到就 null；中文字段用中文。
 `;
-  const prompt = `职业：${o.name}${o.name_lang_en ? `（${o.name_lang_en}）` : ''}${o.aliases?.length ? `；也叫：${o.aliases.join('、')}` : ''}`;
+  const prompt = `职业：${o.name}${o.name_lang_en ? `（${o.name_lang_en}）` : ''}${aliasList(o.aliases).length ? `；也叫：${aliasList(o.aliases).join('、')}` : ''}`;
   const { parsed, searchQueries } = await ask(prompt, cn(modelId), { tool_name: 'occupation', task_name: 'Occupation Research', institution: o.name, batch_id: batchId }, prefix);
   const p = parsed || {};
   const fields: Record<string, any> = {};
