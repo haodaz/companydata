@@ -15,7 +15,7 @@ const DAILY_LIMIT = Number(process.env.WORK_PUBLIC_DAILY_LIMIT || 3);
  */
 export async function POST(req: NextRequest) {
   // 2026-10-18 用户：出题做在登录后，只有做题免登录。公开出题接口停用，保留代码备用
-  if (process.env.WORK_PUBLIC_CREATE !== '1') return NextResponse.json({ ok: false, error: '出题需要登录：请到 /work/mine' }, { status: 403 });
+  if (process.env.WORK_PUBLIC_CREATE !== '1') return NextResponse.json({ ok: false, error: '出任务需要登录：请到 /work/mine' }, { status: 403 });
   try {
     const body = await req.json();
     const company = String(body.company || '').trim(), role = String(body.role || '').trim();
@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
 
     const ctx = await gatherContext(body.company_id ? String(body.company_id) : company, role);
     const actor = `public:${contact}`;
-    const { task, model } = await withCost({ tool_name: 'work', task_name: 'Generate · 出题', stage: 'create', actor }, () =>
+    const { task, model } = await withCost({ tool_name: 'work', task_name: 'Generate · 出任务', stage: 'create', actor }, () =>
       generateTask(ctx, role, { model: body.model || WORK_MODEL, focus: String(body.focus || '').slice(0, 600) || undefined, env: ['doc', 'code', 'sheet', 'design'].includes(body.env) ? body.env : undefined }));
     const share_token = randomBytes(8).toString('base64url'), owner_key = randomBytes(12).toString('base64url');
     const row = { share_token, owner_key, owner: { name, contact, ip }, status: 'published', company_id: ctx.company?.id ?? null, company_name: ctx.company?.name || company, role, context: ctx, problem: task.problem, task: { ...task.task, env: task.env }, materials: task.materials, rubric: task.rubric, model, created_by: actor };
@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
     try {
       baseline = await withCost({ tool_name: 'work', task_name: 'Baseline · AI 先做一遍', stage: 'create', actor }, () => runBaseline(task, { institution: ctx.company?.name || company }));
       await db.from('work_tasks').update({ baseline }).eq('id', data.id);
-    } catch (e) { console.warn('[work] 自助出题基线失败：', String((e as any)?.message).slice(0, 120)); }
+    } catch (e) { console.warn('[work] 自助出任务基线失败：', String((e as any)?.message).slice(0, 120)); }
     return NextResponse.json({ ok: true, share_token, owner_key, title: task.task.title, env: task.env.type, baseline: baseline ? baseline.result.total : null, notes: ctx.notes });
   } catch (e: any) {
     return NextResponse.json({ ok: false, error: String(e?.message || e) }, { status: 500 });

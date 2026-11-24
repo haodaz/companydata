@@ -23,7 +23,7 @@ export function ShowcaseAdmin() {
   useEffect(() => { load(); }, [load]);
   const deid = async (c: Cand) => {
     setBusy(c.task_id);
-    try { const j = await (await fetch('/api/admin/work/showcase', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ task_id: c.task_id }) })).json(); if (!j.ok) throw new Error(j.error); if (j.item.leak) message.warning('题面里可能还带着原企业名，上架前看一下', 6); else message.success('去好头了，看一眼再上架'); await load(); }
+    try { const j = await (await fetch('/api/admin/work/showcase', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ task_id: c.task_id }) })).json(); if (!j.ok) throw new Error(j.error); if (j.item.leak) message.warning('任务书里可能还带着原企业名，上架前看一下', 6); else message.success('去好头了，看一眼再上架'); await load(); }
     catch (e: any) { message.error(e.message); } finally { setBusy(''); }
   };
   const save = async (id: string, patch: Record<string, any>) => {
@@ -36,7 +36,7 @@ export function ShowcaseAdmin() {
   const drafts = d.drafts.filter(x => x.status === 'draft');
   return (
     <div style={{ display: 'grid', gap: 18 }}>
-      <div style={{ fontSize: 13, color: '#666', lineHeight: 1.7 }}>任务库自己长：题目资产库里 AI 基线 70 分以上、已发布的任务列成候选。点「去头」由 AI 去掉企业名、写好展示题面，看一眼没问题就上架。人工整理的 25 道不在这里。</div>
+      <div style={{ fontSize: 13, color: '#666', lineHeight: 1.7 }}>任务库自己长：任务资产库里 AI 基线 70 分以上、已发布的任务列成候选。点「去头」由 AI 去掉企业名、写好展示任务书，看一眼没问题就上架。人工整理的 25 道不在这里。</div>
       {!!drafts.length && <section>
         <h4 style={{ margin: '0 0 8px' }}>待看 · {drafts.length}</h4>
         <div style={{ display: 'grid', gap: 12 }}>{drafts.map((x: any) => { const e = edit[x.id] || {}; return (

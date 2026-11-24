@@ -27,7 +27,7 @@ export default function TasksPage() {
   return (
     <div className="wws-page">
       <Head eyebrow="MANAGE" zh="管理真活" en="Every task you've set, and how it's going"
-        lead="点标题打开任务空间：改题、发参与链接、看每个人。「问助理」让它替你看这道题的作答情况。"
+        lead="点标题打开任务空间：改题、发参与链接、看每个人。「问助理」让它替你看这个任务的作答情况。"
         acts={<Menu label="＋ 新建">
           <Link href="/work/ws/tasks/new">手动填写<small>一项项填：企业、岗位、考什么、用时</small></Link>
           <Link href={askHref('帮我出一道真活：', { fill: true })}>跟助理说<small>说一句你缺什么样的人，缺的它来问</small></Link>
@@ -39,7 +39,7 @@ export default function TasksPage() {
       </div>
       <div className="wws-card" style={{ overflowX: 'auto' }}>
         <table className="wws-table t-tasks">
-          <thead><tr>{[['TASK', '题目'], ['STATUS', '状态'], ['TAKERS', '参与 / 交卷'], ['AVG', '平均'], ['BEST', '最高'], ['AI', '基线'], ['LAST', '最近交卷'], ['', '']].map(([e, z], i) => <th key={i}>{e}<small>{z}</small></th>)}</tr></thead>
+          <thead><tr>{[['TASK', '任务'], ['STATUS', '状态'], ['TAKERS', '参与 / 提交'], ['AVG', '平均'], ['BEST', '最高'], ['AI', '基线'], ['LAST', '最近提交'], ['', '']].map(([e, z], i) => <th key={i}>{e}<small>{z}</small></th>)}</tr></thead>
           <tbody>
             {tasks == null && <tr><td colSpan={8} className="wws-muted">读取中…</td></tr>}
             {tasks && !list.length && <tr><td colSpan={8}><Empty>{tasks.length ? '没有符合的。' : '还没出过题。点右上「＋ 新建」，或者跟助理说一句你缺什么样的人。'}</Empty></td></tr>}
@@ -53,7 +53,7 @@ export default function TasksPage() {
               <td className="wws-muted" style={{ whiteSpace: 'nowrap' }}>{when(t.last_submit)}</td>
               <td style={{ whiteSpace: 'nowrap', textAlign: 'right' }}>
                 {t.submitted > 0 && <Link href={`/work/ws/reports?task=${t.task_id}`} className="wws-back" style={{ marginRight: 12 }}>看报告</Link>}
-                <Link href={askHref(t.submitted ? '这道题大家做得怎么样？卡在哪，推荐谁？' : '这道题现在什么情况？下一步该做什么？', { task_id: t.task_id, token: t.token, k: t.owner_key, title: t.title })}><button className="wws-ask">问助理</button></Link>
+                <Link href={askHref(t.submitted ? '这个任务大家做得怎么样？卡在哪，推荐谁？' : '这个任务现在什么情况？下一步该做什么？', { task_id: t.task_id, token: t.token, k: t.owner_key, title: t.title })}><button className="wws-ask">问助理</button></Link>
                 <button className="wws-back" onClick={() => remove(t)} style={{ marginLeft: 10, border: 0, background: 'none', color: '#c0392b', cursor: 'pointer', font: 'inherit' }}>删除</button>
               </td>
             </tr>)}

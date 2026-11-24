@@ -90,11 +90,11 @@ function Inner() {
   };
   const env = ENVS.find(e => e.value === f.env) || ENVS[0];
   const model = MODELS.find(m => m.id === f.model);
-  const delivery = (n: string) => <Sec n={n} t="限时多久？用什么语言？" d="时间从候选人点开始算，离开页面也不暂停。出好后也能改。选英文，题面和候选人的作答界面都是英文。">
+  const delivery = (n: string) => <Sec n={n} t="限时多久？用什么语言？" d="时间从候选人点开始算，离开页面也不暂停。出好后也能改。选英文，任务书和候选人的作答界面都是英文。">
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px 20px', alignItems: 'center' }}>
-      <Select size="large" value={lang} onChange={setLang} style={{ width: 150 }} options={[{ value: 'zh', label: '题目用中文' }, { value: 'en', label: 'English 英文题' }]} />
+      <Select size="large" value={lang} onChange={setLang} style={{ width: 150 }} options={[{ value: 'zh', label: '任务用中文' }, { value: 'en', label: 'English 英文题' }]} />
       <InputNumber size="large" min={15} max={240} step={5} value={mins} onChange={v => setMins(v == null ? null : Number(v))} placeholder="默认 60" suffix="分钟" style={{ width: 170 }} />
-      <span style={{ fontSize: 13.5, color: '#555' }}><Switch size="small" checked={autoSubmit} onChange={setAutoSubmit} style={{ marginRight: 8 }} />{autoSubmit ? '到点自动交卷' : '不卡时间，超时可以继续'}</span>
+      <span style={{ fontSize: 13.5, color: '#555' }}><Switch size="small" checked={autoSubmit} onChange={setAutoSubmit} style={{ marginRight: 8 }} />{autoSubmit ? '到点自动提交' : '不卡时间，超时可以继续'}</span>
     </div>
   </Sec>;
 
@@ -121,13 +121,13 @@ function Inner() {
           </div>
           </>}
           {way === 'verbatim' && !lib && <div style={{ marginBottom: 18 }}>
-            <div style={{ fontSize: 12.5, color: '#888', marginBottom: 6 }}>你手里已经有一道干净的题：整段贴进来，<b>一字不改</b>发给候选人。平台只整理交付物和评分点（只从题目自己的要求里推），生成参与链接。企业和岗位可不填，填了只当标签。</div>
-            <Input.TextArea value={verbatim} onChange={e => setVerbatim(e.target.value)} autoSize={{ minRows: 8, maxRows: 24 }} maxLength={12000} showCount placeholder="把题目原文贴这里：背景、要求、要交什么、时间……" />
+            <div style={{ fontSize: 12.5, color: '#888', marginBottom: 6 }}>你手里已经有一道干净的题：整段贴进来，<b>一字不改</b>发给候选人。平台只整理交付物和评分点（只从任务自己的要求里推），生成参与链接。企业和岗位可不填，填了只当标签。</div>
+            <Input.TextArea value={verbatim} onChange={e => setVerbatim(e.target.value)} autoSize={{ minRows: 8, maxRows: 24 }} maxLength={12000} showCount placeholder="把任务原文贴这里：背景、要求、要交什么、时间……" />
           </div>}
 
 
           {way === 'gen' && !lib && <div style={{ display: 'flex', gap: 8, alignItems: 'center', margin: '0 0 18px', fontSize: 13 }}>
-            {([[1, '题目'], [2, '任务设置']] as const).map(([n, t]) => <div key={n} onClick={() => n === 1 && setPage(1)} style={{ display: 'flex', alignItems: 'center', gap: 6, cursor: n === 1 ? 'pointer' : 'default', color: page === n ? '#1a1a2e' : '#999', fontWeight: page === n ? 700 : 500 }}><span style={{ width: 22, height: 22, borderRadius: 99, display: 'grid', placeItems: 'center', fontSize: 12, background: page === n ? '#6055f5' : page > n ? '#22c55e' : '#e8e9f0', color: page >= n ? '#fff' : '#888' }}>{page > n ? '✓' : n}</span>{t}</div>)}
+            {([[1, '任务'], [2, '任务设置']] as const).map(([n, t]) => <div key={n} onClick={() => n === 1 && setPage(1)} style={{ display: 'flex', alignItems: 'center', gap: 6, cursor: n === 1 ? 'pointer' : 'default', color: page === n ? '#1a1a2e' : '#999', fontWeight: page === n ? 700 : 500 }}><span style={{ width: 22, height: 22, borderRadius: 99, display: 'grid', placeItems: 'center', fontSize: 12, background: page === n ? '#6055f5' : page > n ? '#22c55e' : '#e8e9f0', color: page >= n ? '#fff' : '#888' }}>{page > n ? '✓' : n}</span>{t}</div>)}
             <span style={{ color: '#aaa', margin: '0 2px' }}>→</span><span style={{ color: '#999' }}>出任务</span>
           </div>}
           {(way === 'verbatim' || page === 1) && <>
@@ -146,10 +146,10 @@ function Inner() {
           {!lib && <Sec n="2" t="想考什么？（选填）" d="">
             <Input.TextArea value={f.focus} onChange={e => setF(x => ({ ...x, focus: e.target.value }))} placeholder="例：聚焦德布勒森工厂爬坡期的欧洲供需平衡；给 3 年以内的人做；一小时内" autoSize={{ minRows: 2, maxRows: 5 }} />
           </Sec>}
-          <Sec n={lib ? '2' : '3'} t="题里要给做题人什么素材？（选填）" d="这些会直接出现在考题里，做题人看得到。建议给做这件事真实要用的东西：数据表、报表截图、图纸、合同要点">
+          <Sec n={lib ? '2' : '3'} t="题里要给作答人什么素材？（选填）" d="这些会直接出现在考题里，作答人看得到。建议给做这件事真实要用的东西：数据表、报表截图、图纸、合同要点">
             <AttachUpload value={atts} onChange={setAtts} />
           </Sec>
-          {!lib && <Sec n="4" t="有没有以前用过的题可以参照？（选填）" d="这些不会给做题人看。你们过往用过的题、内部考题、认可的案例，AI 出任务时照它的路数出">
+          {!lib && <Sec n="4" t="有没有以前用过的题可以参照？（选填）" d="这些不会给作答人看。你们过往用过的题、内部考题、认可的案例，AI 出任务时照它的路数出">
             {refs.length > 0 && <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 8 }}>
               {refs.map(sm => <Tag.CheckableTag key={sm.id} checked={ref?.id === sm.id} onChange={c => setRef(c ? sm : null)} style={{ padding: '4px 10px', fontSize: 13, border: '1px solid #e0e0ee' }}>{sm.title} <span style={{ opacity: .6 }}>· {sm.stages} 步</span></Tag.CheckableTag>)}
             </div>}
@@ -162,8 +162,8 @@ function Inner() {
           {way === 'gen' && !lib && <Button type="primary" size="large" block onClick={() => { if (!f.company.trim() || !f.role.trim()) return message.warning('企业和要找的人都要填'); setPage(2); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ height: 50, fontWeight: 700, marginTop: 6 }}>下一步：任务设置 →</Button>}
           </>}
           {way === 'gen' && page === 2 && <>
-            <div style={{ fontSize: 13, color: '#666', marginBottom: 14, padding: '10px 14px', background: '#fafbff', border: '1px solid #e8e9f0', borderRadius: 12 }}><b>{f.company || '（企业）'}</b> · 要找：{f.role || '—'}{f.focus ? ` · 考：${f.focus.slice(0, 40)}` : ''}{atts.length ? ` · 素材 ${atts.length} 份` : ''}{ref ? ' · 有参考' : ''} <a onClick={() => setPage(1)} style={{ marginLeft: 8 }}>改题目</a></div>
-          <Sec n="1" t="给答题的人配哪个 AI？" d="">
+            <div style={{ fontSize: 13, color: '#666', marginBottom: 14, padding: '10px 14px', background: '#fafbff', border: '1px solid #e8e9f0', borderRadius: 12 }}><b>{f.company || '（企业）'}</b> · 要找：{f.role || '—'}{f.focus ? ` · 考：${f.focus.slice(0, 40)}` : ''}{atts.length ? ` · 素材 ${atts.length} 份` : ''}{ref ? ' · 有参考' : ''} <a onClick={() => setPage(1)} style={{ marginLeft: 8 }}>改任务</a></div>
+          <Sec n="1" t="给作答的人配哪个 AI？" d="">
             <Select value={f.model} onChange={v => setF(x => ({ ...x, model: v }))} size="large" style={{ width: '100%' }} optionLabelProp="label"
               options={MODELS.map(m => ({ value: m.id, label: m.label, desc: m.provider + (m.badge ? ' · ' + m.badge : '') }))}
               optionRender={o => <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}><span>{o.data.label}</span><span style={{ color: '#999', fontSize: 12 }}>{o.data.desc}</span></div>} />
@@ -190,7 +190,7 @@ function Inner() {
           </>}
           {way === 'verbatim' && <Button type="primary" size="large" block icon={<RocketOutlined />} loading={!!busy} onClick={create} style={{ height: 50, fontWeight: 700, marginTop: 6 }}>发出去（约 1 分钟）</Button>}
           {busy && <GenProgress phase={phase} company={f.company} picked={picked} intro={picked ? '' : f.intro} role={f.role} focus={f.focus} env={f.env ? ENVS.find(e => e.value === f.env)?.label : undefined} />}
-          {way === 'gen' && page === 2 && <Text type="secondary" style={{ display: 'block', fontSize: 12, marginTop: 12 }}>出好的题先是「待发布」：你可以预览做题台、哪里不对让 AI 改，确认后再发布给候选人。</Text>}
+          {way === 'gen' && page === 2 && <Text type="secondary" style={{ display: 'block', fontSize: 12, marginTop: 12 }}>出好的题先是「待发布」：你可以预览作答台、哪里不对让 AI 改，确认后再发布给候选人。</Text>}
         </div>
 
         <div style={{ position: 'sticky', top: 80, display: 'grid', gap: 14 }}>

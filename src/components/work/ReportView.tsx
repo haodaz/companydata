@@ -57,7 +57,7 @@ export function ReportView({ report, participant, deliverable, events, aiChat, m
       </div>}
       {tab === 'process' && <div style={{ display: 'grid', gap: 14 }}>
         <WorkReport report={report} participant={participant} section="process" />
-        {events ? <WorkProcess part="timeline" events={events} aiChat={aiChat || []} materials={materials} deliverables={deliverables} shots={shots} /> : <div style={{ color: '#999', fontSize: 13 }}>{L('读取答题历程…', 'Loading the work history…')}</div>}
+        {events ? <WorkProcess part="timeline" events={events} aiChat={aiChat || []} materials={materials} deliverables={deliverables} shots={shots} /> : <div style={{ color: '#999', fontSize: 13 }}>{L('读取作答历程…', 'Loading the work history…')}</div>}
       </div>}
       {tab === 'grade' && <WorkReport report={report} participant={participant} section="grade" sid={sid} />}
     </div>

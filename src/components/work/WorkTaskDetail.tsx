@@ -22,9 +22,9 @@ export function envLabel(T: any) {
   return mods.length ? mods.map(m => MODULES[m].label).join(' + ') : ENV_META[env]?.label || '文档';
 }
 /** 原题直发没有问题陈述，生成时填的是占位「出题人给的原题」：显示时跳过 */
-export const realStatement = (s?: string) => (s && !/^(出题人给的原题|Task provided by )/.test(s) ? s : '');
+export const realStatement = (s?: string) => (s && !/^(出题人给的原题|出任务的人给的原题|Task provided by )/.test(s) ? s : '');
 
-export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab, ownerKey, inlineEdit = true }: { /** 任务空间把岗位名 / 用时放到上面的「调整这道题」里，这里只显示（11-05） */ inlineEdit?: boolean; task: any; sessions: any[]; shareLink: string; notes?: string[]; defaultTab?: string; /** 有管理密钥才能补算 AI 使用分 */ ownerKey?: string }) {
+export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab, ownerKey, inlineEdit = true }: { /** 任务空间把岗位名 / 用时放到上面的「调整这个任务」里，这里只显示（11-05） */ inlineEdit?: boolean; task: any; sessions: any[]; shareLink: string; notes?: string[]; defaultTab?: string; /** 有管理密钥才能补算 AI 使用分 */ ownerKey?: string }) {
   // 出题人是不是用一句话说的要找什么样的人（和 lib/work/generator.ts 的 isNeedText 同一判断；那边是服务端模块，这里不能直接引）
   const isNeed = String(T.role || '').trim().length > 14 || /[，,。、]|要一个|能看懂|能把|的人/.test(String(T.role || ''));
   const { message, modal } = App.useApp();
@@ -117,7 +117,7 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
     try {
       const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(ownerKey)}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ role: roleEdit }) })).json();
       if (!j.ok) throw new Error(j.error || '没改成');
-      setRole(j.role); setRoleEdit(null); message.success('岗位名改好了，题面里的旧名字也一起换了');
+      setRole(j.role); setRoleEdit(null); message.success('岗位名改好了，任务书里的旧名字也一起换了');
     } catch (e: any) { message.error(e.message); }
   };
   // 材料包：补传 / 删上传的文件（11-05 潜历：出好任务后还想加文件、换文件）
@@ -150,7 +150,7 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
   const exportCsv = () => {
     const items: any[] = T.rubric || [];
     const esc = (v: any) => `"${String(v ?? '').replace(/"/g, '""')}"`;
-    const head = ['名次', '姓名', '联系方式', ...(ai ? [] : ['总分']), 'AI 使用', ...(ai ? [] : items.map((r: any) => r.title)), '交卷时间', '个人链接'];
+    const head = ['名次', '姓名', '联系方式', ...(ai ? [] : ['总分']), 'AI 使用', ...(ai ? [] : items.map((r: any) => r.title)), '提交时间', '个人链接'];
     const lines = graded.map((s: any, i: number) => { const it = s.report?.result?.items || []; return [ai ? rankOf.get(s.id) ?? '' : i + 1, s.participant?.name, s.participant?.contact, ...(ai ? [] : [s.score]), aiOf(s) ? (aiOf(s).score ?? '没用 AI') : '', ...(ai ? [] : items.map((r: any) => it.find((x: any) => x.id === r.id)?.score ?? '')), s.submitted_at ? new Date(s.submitted_at).toLocaleString('zh-CN', { hour12: false }) : '', `${shareLink}?s=${s.id}`].map(esc).join(','); });
     const blob = new Blob(['\ufeff' + [head.map(esc).join(','), ...lines].join('\n')], { type: 'text/csv;charset=utf-8' });
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `候选名单-${(T.task?.title || '真活').slice(0, 20)}.csv`; a.click(); URL.revokeObjectURL(a.href);
@@ -166,11 +166,11 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
             { key: 'link', label: '参与链接', children: <Space><code>{shareLink}</code><Button size="small" onClick={() => { navigator.clipboard.writeText(shareLink); message.success('已复制'); }}>复制</Button></Space> },
             // 出题依据（11-10 潜历：「为什么是现在」看不懂、候选人也看不到）：改叫人话，标明谁看得到
             ...(realStatement(T.problem?.statement) ? [{ key: 's', label: <span>要解决的问题<div style={{ fontSize: 11, color: '#999', fontWeight: 400 }}>候选人在标题下看得到</div></span>, children: T.problem?.statement }] : []),
-            ...(T.problem?.why_now ? [{ key: 'w', label: <span>为什么现在要做<div style={{ fontSize: 11, color: '#999', fontWeight: 400 }}>出题依据 · 候选人看不到</div></span>, children: T.problem.why_now }] : []),
+            ...(T.problem?.why_now ? [{ key: 'w', label: <span>为什么现在要做<div style={{ fontSize: 11, color: '#999', fontWeight: 400 }}>出任务依据 · 候选人看不到</div></span>, children: T.problem.why_now }] : []),
             { key: 'e', label: <span>材料依据<div style={{ fontSize: 11, color: '#999', fontWeight: 400 }}>候选人看不到</div></span>, children: <ul style={{ margin: 0, paddingLeft: 18 }}>{(T.problem?.evidence || []).map((x: any, i: number) => <li key={i}>{x.text} <Text type="secondary">— {x.source}</Text></li>)}</ul> },
             { key: 'd', label: '交付物', children: <ol style={{ margin: 0, paddingLeft: 18 }}>{(T.task?.deliverables || []).map((d: any) => <li key={d.id}>{d.title} <Text type="secondary">{d.format}</Text></li>)}</ol> },
             { key: 'r', label: '规则', children: <RulesView rules={T.task?.rules || []} fontSize={13.5} /> },
-            ...(T.task?.lang === 'en' ? [{ key: 'lang', label: '题目语言', children: <span style={{ fontSize: 13 }}>英文：候选人看到的题面、作答界面、AI 助手、评分标准和报告都是英文；出题依据（为什么现在要做、材料依据）仍是中文</span> }] : []),
+            ...(T.task?.lang === 'en' ? [{ key: 'lang', label: '任务语言', children: <span style={{ fontSize: 13 }}>英文：候选人看到的任务书、作答界面、AI 助手、评分标准和报告都是英文；出任务依据（为什么现在要做、材料依据）仍是中文</span> }] : []),
             ...(T.task?.style ? [{ key: 'st', label: '出法', children: <span style={{ fontSize: 13 }}>{T.task.style.deep ? '升维解读（可以延伸到更大的问题）' : '按字面出，不升维'} · {T.task.style.steps ? '分步推进' : '不替候选人拆步骤'}</span> }] : []),
             { key: 'm', label: '时间与操作台', children: <Space wrap><span>{T.task?.soft_limit ? '建议' : '限时'} {minutes} 分钟 · 操作台 {envLabel(T)}</span>{ownerKey && inlineEdit && <Space.Compact size="small"><InputNumber size="small" min={15} max={240} step={5} value={minEdit} onChange={v => setMinEdit(Number(v) || minutes)} suffix="分钟" style={{ width: 110 }} /><Button size="small" disabled={minEdit === minutes} loading={minBusy} onClick={saveMinutes}>改用时</Button></Space.Compact>}</Space> },
           ]} />
@@ -178,7 +178,7 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
           {T.task?.env?.type === 'code' && <Paragraph><b>自测用例</b>：{(T.task.env.tests || []).map((t: any) => t.name).join('、') || '无'}</Paragraph>}
           {notes?.length ? <Paragraph type="warning">材料缺口：{notes.join('；')}</Paragraph> : null}
           {T.sources && <div style={{ marginTop: 14, padding: '12px 14px', borderRadius: 10, background: '#f3fbf6', border: '1px solid #cfe9d8' }}>
-            <div style={{ fontWeight: 700, marginBottom: 6 }}>取材清单 · 这道题从库里拿了什么</div>
+            <div style={{ fontWeight: 700, marginBottom: 6 }}>取材清单 · 这个任务从库里拿了什么</div>
             <div style={{ display: 'grid', gap: 4, fontSize: 13 }}>
               {T.sources.company && <div><Tag color="green">企业画像</Tag>{T.sources.company.name}{T.sources.company.industry ? `（${T.sources.company.industry}）` : ''} · 用到字段：{T.sources.company.fields.join('、') || '—'}</div>}
               <div><Tag color="green">子实体</Tag>产品 {T.sources.products.length} 个{T.sources.products.length ? `（${T.sources.products.slice(0, 5).join('、')}${T.sources.products.length > 5 ? '…' : ''}）` : ''} · 近期动态 {T.sources.news} 条 · 高管 {T.sources.executives} 位</div>
@@ -193,7 +193,7 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
           {!!T.task?.revisions?.length && <div style={{ marginTop: 12 }}><div style={{ fontWeight: 700, marginBottom: 4 }}>修订记录</div>{T.task.revisions.map((r: any, i: number) => <div key={i} style={{ fontSize: 13, padding: '6px 0', borderTop: '1px solid #f0f0f5' }}><Text type="secondary">{new Date(r.at).toLocaleString('zh-CN', { hour12: false })}</Text> · 意见：{r.feedback}<div style={{ color: '#12a150' }}>改动：{r.changelog}</div></div>)}</div>}
         </div> },
         ...(T.task?.stages?.length ? [{ key: 'q', label: `推进步骤（${T.task.stages.length}）`, children: <div>
-          <Paragraph type="secondary" style={{ fontSize: 13 }}>照深度样本出的案例推进式真活：候选人一步一步看信息、作答；参考答案和算式只有这里和评卷 AI 看得到。测算的数都由平台按算式重算过。</Paragraph>
+          <Paragraph type="secondary" style={{ fontSize: 13 }}>照深度样本出的案例推进式真活：候选人一步一步看信息、作答；参考答案和算式只有这里和评估 AI 看得到。测算的数都由平台按算式重算过。</Paragraph>
           {T.task.stages.map((st: any) => <div key={st.id} style={{ marginBottom: 16, padding: '12px 14px', background: '#fafbff', borderRadius: 10 }}>
             <div><Tag color="purple">{st.id}</Tag><Tag>{({ structuring: '搭框架', judgement: '判断与洞察', numeracy: '测算', creativity: '出主意', synthesis: '综合建议' } as any)[st.type] || st.type}</Tag><b>{st.question}</b></div>
             {st.reveal && <details style={{ marginTop: 6 }}><summary style={{ cursor: 'pointer', color: '#6055f5', fontSize: 13 }}>这一步给候选人的信息</summary><div style={{ fontSize: 13, marginTop: 6 }}><Md text={st.reveal} /></div></details>}
@@ -212,11 +212,11 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
           { title: '依据', dataIndex: 'basis', width: 200, render: (v: string) => <span style={{ fontSize: 12 }}>{v}</span> },
           { title: 'BARS', dataIndex: 'levels', width: 320, render: (l: any) => <div style={{ fontSize: 12 }}>{['L1', 'L2', 'L3', 'L4'].map(k => <div key={k}><b>{k}</b> {l?.[k]}</div>)}</div> },
         ]} /> },
-        ...(ai ? [] : [{ key: 'b', label: `AI 基线${T.baseline ? ` · ${T.baseline.result?.total} 分` : ''}`, children: T.baseline ? <div><Paragraph>AI 先做了一遍，用同一套 rubric 评：<b>{T.baseline.result?.total}</b> 分。{T.baseline.result?.summary}</Paragraph><Table size="small" rowKey="id" pagination={false} dataSource={T.baseline.result?.items || []} columns={[{ title: '条目', dataIndex: 'title' }, { title: '等级', dataIndex: 'level', width: 60 }, { title: '分', dataIndex: 'score', width: 60 }, { title: '证据 / 说明', render: (_: any, i: any) => <span style={{ fontSize: 12 }}>{i.evidence && <i>“{i.evidence}” </i>}{i.note}</span> }]} /><details style={{ marginTop: 12 }}><summary>AI 的答卷</summary><MdView text={T.baseline.answer || ''} style={{ fontSize: 13, background: '#fafbff', padding: 10, borderRadius: 8 }} /></details></div> : <Text type="secondary">AI 基线还没出来。出任务后它在后台跑，约一分钟，刷新这页就有；也可以点上面的「重跑 AI 基线」现在跑。基线 = 一个通用 AI 直接做这道题能得几分，是候选人分数的参照。</Text> }]),
+        ...(ai ? [] : [{ key: 'b', label: `AI 基线${T.baseline ? ` · ${T.baseline.result?.total} 分` : ''}`, children: T.baseline ? <div><Paragraph>AI 先做了一遍，用同一套 rubric 评：<b>{T.baseline.result?.total}</b> 分。{T.baseline.result?.summary}</Paragraph><Table size="small" rowKey="id" pagination={false} dataSource={T.baseline.result?.items || []} columns={[{ title: '条目', dataIndex: 'title' }, { title: '等级', dataIndex: 'level', width: 60 }, { title: '分', dataIndex: 'score', width: 60 }, { title: '证据 / 说明', render: (_: any, i: any) => <span style={{ fontSize: 12 }}>{i.evidence && <i>“{i.evidence}” </i>}{i.note}</span> }]} /><details style={{ marginTop: 12 }}><summary>AI 的答卷</summary><MdView text={T.baseline.answer || ''} style={{ fontSize: 13, background: '#fafbff', padding: 10, borderRadius: 8 }} /></details></div> : <Text type="secondary">AI 基线还没出来。出任务后它在后台跑，约一分钟，刷新这页就有；也可以点上面的「重跑 AI 基线」现在跑。基线 = 一个通用 AI 直接做这个任务能得几分，是候选人分数的参照。</Text> }]),
         { key: 'ai', label: 'AI 使用标准', children: <AiPolicyView task={T} shareLink={shareLink} ownerKey={ownerKey} /> },
-        { key: 's', label: `做题情况与评分（${sessions.filter((s: any) => !s.participant?.preview).length}）`, children: <>
+        { key: 's', label: `作答情况与评分（${sessions.filter((s: any) => !s.participant?.preview).length}）`, children: <>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 10, flexWrap: 'wrap' }}>
-            <Text type="secondary" style={{ fontSize: 13 }}>交卷 {graded.length} 人，按分数排名；勾 2–4 人可以并排对比</Text>
+            <Text type="secondary" style={{ fontSize: 13 }}>提交 {graded.length} 人，按分数排名；勾 2–4 人可以并排对比</Text>
             <span style={{ flex: 1 }} />
             <Button size="small" type="primary" disabled={picked.length < 2} onClick={() => setCmpOpen(true)}>对比所选（{picked.length}）</Button>
             {!!needAi && ownerKey && <Button size="small" loading={!!aiBusy} onClick={backfillAi}>{aiBusy || (fl ? `按 AI 驾驭量表补算（${needAi} 份）` : `补算 AI 使用分（${needAi} 份）`)}</Button>}
@@ -226,8 +226,8 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
             rowSelection={{ selectedRowKeys: picked, onChange: k => setPicked((k as string[]).slice(0, 4)), getCheckboxProps: (s: any) => ({ disabled: !s.report?.result }) }} columns={[
           { title: '#', width: 44, render: (_: any, s: any) => (rankOf.has(s.id) ? <b style={{ color: rankOf.get(s.id)! <= 3 ? '#6055f5' : '#888' }}>{rankOf.get(s.id)}</b> : <Text type="secondary">–</Text>) },
           // 同题对比（11-23）：同一道题的候选人两两比较排出的名次——分数顶到天花板时也分得开
-          { title: <span title="同一道题的候选人两两比较（谁更会带着 AI 把事做好）排出的名次；交卷后几分钟内更新">同题对比</span>, width: 84, render: (_: any, s: any) => (s.peer ? <span><b style={{ color: s.peer.rank <= 3 ? '#0f6c7a' : '#888' }}>{s.peer.rank}</b><Text type="secondary"> / {s.peer.of}</Text></span> : <Text type="secondary">–</Text>) },
-          { title: '谁', render: (_: any, s: any) => <span>{s.participant?.name} {s.participant?.preview && <Tag color="orange" style={{ marginLeft: 4 }}>预览</Tag>}{s.participant?.mode === 'ai' && <Tag style={{ marginLeft: 4 }}>AI 学员</Tag>}<Text type="secondary">{s.participant?.contact}</Text>{swapped.has(s.id) && <Tag color="orange" style={{ marginLeft: 4 }} title="同一个浏览器用不同的手机或邮箱做过这道题">同一浏览器换过联系方式</Tag>}{s.participant?.retake_allowed && <Tag style={{ marginLeft: 4 }}>已允许重做</Tag>}</span> },
+          { title: <span title="同一道题的候选人两两比较（谁更会带着 AI 把事做好）排出的名次；提交后几分钟内更新">同题对比</span>, width: 84, render: (_: any, s: any) => (s.peer ? <span><b style={{ color: s.peer.rank <= 3 ? '#0f6c7a' : '#888' }}>{s.peer.rank}</b><Text type="secondary"> / {s.peer.of}</Text></span> : <Text type="secondary">–</Text>) },
+          { title: '谁', render: (_: any, s: any) => <span>{s.participant?.name} {s.participant?.preview && <Tag color="orange" style={{ marginLeft: 4 }}>预览</Tag>}{s.participant?.mode === 'ai' && <Tag style={{ marginLeft: 4 }}>AI 学员</Tag>}<Text type="secondary">{s.participant?.contact}</Text>{swapped.has(s.id) && <Tag color="orange" style={{ marginLeft: 4 }} title="同一个浏览器用不同的手机或邮箱做过这个任务">同一浏览器换过联系方式</Tag>}{s.participant?.retake_allowed && <Tag style={{ marginLeft: 4 }}>已允许重做</Tag>}</span> },
           { title: '开始', dataIndex: 'started_at', render: (v: string) => new Date(v).toLocaleString('zh-CN', { hour12: false }) },
           { title: '提交', dataIndex: 'submitted_at', render: (v: string) => (v ? new Date(v).toLocaleString('zh-CN', { hour12: false }) : <Text type="secondary">作答中</Text>) },
           { title: <span title={T.task?.soft_limit ? '建议时长只作参考，多花时间做好也可以；超出的部分标出来，企业自己权衡' : '限时内的用时；单独加过时的标出来'}>用时</span>, width: 110, render: (_: any, s: any) => { const u = usedOf(s), o = T.task?.soft_limit ? overMinutes(T.task, s, u) : 0, x = Number(s.participant?.extra_min) || 0; return <span>{Math.round(u / 60)} 分{o > 0 && <Tag color="gold" style={{ marginLeft: 4 }}>超建议 {o} 分</Tag>}{x > 0 && <Tag style={{ marginLeft: 4 }}>加过时 · {x} 分</Tag>}</span>; } },
@@ -246,7 +246,7 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
           if (me == null || k < 0) return null;
           const top = mainScore(graded[0], scale); const base = aiOnly(scale) ? null : T.baseline?.result?.total;
           return <div style={{ marginBottom: 12, padding: '8px 12px', borderRadius: 8, background: '#fafaff', border: '1px solid #eeeefa', fontSize: 13, color: '#555' }}>
-            这道题 {graded.length} 人交卷，{report.participant?.name || '他'}排第 {k + 1}（{me} 分）{k > 0 && top != null ? ` · 最高 ${top} 分，差 ${Math.round(Number(top) - Number(me))}` : graded.length > 1 ? ' · 目前最高' : ''}{base != null ? ` · AI 基线 ${base} 分` : ''}{graded.length > 1 && <> · <a onClick={() => { setReport(null); }}>回列表勾选并排对比</a></>}
+            这个任务 {graded.length} 人提交，{report.participant?.name || '他'}排第 {k + 1}（{me} 分）{k > 0 && top != null ? ` · 最高 ${top} 分，差 ${Math.round(Number(top) - Number(me))}` : graded.length > 1 ? ' · 目前最高' : ''}{base != null ? ` · AI 基线 ${base} 分` : ''}{graded.length > 1 && <> · <a onClick={() => { setReport(null); }}>回列表勾选并排对比</a></>}
           </div>;
         })()}
         {/* 三栏：交了什么 / 怎么做的 / 评得怎样；出任务的人先看交了什么（产品负责人 10-24：先看提交的答案本身，AI 只是辅助评价） */}
@@ -276,7 +276,7 @@ function AiPolicyView({ task: T, shareLink, ownerKey }: { task: any; shareLink: 
   };
   if (!pol) return <div style={{ padding: '20px 4px', color: '#666', lineHeight: 1.8 }}>
     <div>还没有这道任务的 AI 使用标准。生成时会读这家企业的画像和动态、这个岗位在职业库里的职责和典型任务、相关行业规范、任务书和材料，以及适用的法规，每一条都标出处。</div>
-    <div style={{ marginTop: 6, color: '#999', fontSize: 13 }}>不点也行：第一位候选人交卷时会自动生成，评「AI 使用能力」照它评。</div>
+    <div style={{ marginTop: 6, color: '#999', fontSize: 13 }}>不点也行：第一位候选人提交时会自动生成，评「AI 使用能力」照它评。</div>
     <Button type="primary" style={{ marginTop: 12 }} loading={busy} onClick={() => gen()}>生成 AI 使用标准</Button>
   </div>;
   const B = ({ ids }: { ids: string[] }) => <>{(ids || []).map(id => <Tooltip key={id} title={pol.sources?.[id] || id}><Tag style={{ marginLeft: 4, fontSize: 11, cursor: 'help' }}>{id.startsWith('G:') ? '法规' : id.startsWith('X:') ? '案例' : id}</Tag></Tooltip>)}</>;

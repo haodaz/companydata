@@ -8,7 +8,7 @@ import { createCompanyEntity } from '@/lib/ws/setup';
 import { normalizeCompanyRegion } from '@/lib/region-codes';
 
 const FIELDS = ['industry', 'city', 'company_scale', 'one_sentence', 'introduction', 'business_profile', 'product_area', 'tech_advantage', 'growth_signals', 'industry_position', 'public_sentiment'] as const;
-export const WORK_SOURCE = '真活出题';
+export const WORK_SOURCE = '真活出任务';
 
 /** 返回新建（或撞名命中）的企业 id；建不成返回 null，不挡出题 */
 export async function ensureWorkCompany(name: string, profile: Record<string, any> | null | undefined, email: string): Promise<number | null> {

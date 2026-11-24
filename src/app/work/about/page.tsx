@@ -175,7 +175,7 @@ export default function WorkLanding() {
             <Link href="/work" style={{ ...btn, textDecoration: 'none', height: 54, display: 'inline-flex', alignItems: 'center', padding: '0 30px' }}>出一道真活 →</Link>
             <Link href="/work/T712yYY1swI" style={{ ...btnGhost, textDecoration: 'none', height: 54, display: 'inline-flex', alignItems: 'center' }}>先试一道示范题</Link>
           </div>
-          <div style={{ marginTop: 16, fontSize: 13, color: '#6b6f86' }}>登录后出任务 · 做题的人不用登录 · 出任务约 2–3 分钟</div>
+          <div style={{ marginTop: 16, fontSize: 13, color: '#6b6f86' }}>登录后出任务 · 作答的人不用登录 · 出任务约 2–3 分钟</div>
         </div>
         <div style={{ position: 'absolute', right: 28, bottom: 26, display: 'flex', alignItems: 'center', gap: 12, color: '#1a1a2e' }}>
           <div style={{ textAlign: 'right' }}><div style={{ fontSize: 11, letterSpacing: 3, color: '#6b6f86' }}>真活发生的地方</div><div style={{ fontSize: 15, fontWeight: 700 }}>{SCENES[sceneIdx].cap}</div></div>
@@ -219,7 +219,7 @@ export default function WorkLanding() {
       {/* 怎么用 */}
       <section id="how" style={{ maxWidth: 1180, margin: '0 auto', padding: '56px 28px 8px' }}>
         <h2 style={h2}>一道真活，就是招聘里的一个小项目</h2>
-        <div style={{ color: '#4a4f66', marginBottom: 18 }}>四步走完，不用懂 HR。每道真活有自己的空间：管理、分享、看做题情况、看评分报告。</div>
+        <div style={{ color: '#4a4f66', marginBottom: 18 }}>四步走完，不用懂 HR。每道真活有自己的空间：管理、分享、看作答情况、看评分报告。</div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: 14 }}>
           {STEPS.map((st, i) => <div key={st.t} style={{ ...card, position: 'relative', overflow: 'hidden', padding: '22px 20px 20px' }}>
             <div style={{ position: 'absolute', right: -10, top: -14, fontSize: 96, fontWeight: 900, color: 'rgba(96,85,245,.07)', lineHeight: 1 }}>{i + 1}</div>
@@ -235,7 +235,7 @@ export default function WorkLanding() {
         <div>
           <div style={{ fontSize: 12, letterSpacing: 3, color: '#6055f5', fontWeight: 700 }}>WATCH · 2.5 MIN</div>
           <h2 style={{ ...h2, margin: '8px 0 10px' }}>看一道真活是怎么做完、怎么被评的</h2>
-          <p style={{ color: '#4a4f66', lineHeight: 1.85, margin: '0 0 16px' }}>宁德时代供应链计划的一道题：候选人对账、问 AI、交卷，报告把他的高光和风险一条条指出来。两分半，一镜到底。</p>
+          <p style={{ color: '#4a4f66', lineHeight: 1.85, margin: '0 0 16px' }}>宁德时代供应链计划的一道题：候选人对账、问 AI、提交，报告把他的高光和风险一条条指出来。两分半，一镜到底。</p>
           <Link href="/work/T712yYY1swI" style={{ ...btnGhost, textDecoration: 'none', height: 46, display: 'inline-flex', alignItems: 'center' }}>自己进去做一遍 →</Link>
         </div>
         <div style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid #ebe7de', boxShadow: '0 24px 60px rgba(20,24,60,.14)', background: '#000' }}>
@@ -306,7 +306,7 @@ export default function WorkLanding() {
         <div style={{ borderRadius: 20, padding: '34px 32px', background: 'linear-gradient(135deg,#6055f5,#12b5cb)', color: '#fff', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20, alignItems: 'center' }}>
           <div>
             <h2 style={{ ...h2, color: '#fff', marginBottom: 8 }}>出一道真活</h2>
-            <div style={{ color: 'rgba(255,255,255,.9)', lineHeight: 1.8 }}>填企业和岗位，两三分钟出任务。每道真活有自己的空间：管理、分享、看做题情况、看评分报告。出任务要登录，做题的人不用。</div>
+            <div style={{ color: 'rgba(255,255,255,.9)', lineHeight: 1.8 }}>填企业和岗位，两三分钟出任务。每道真活有自己的空间：管理、分享、看作答情况、看评分报告。出任务要登录，作答的人不用。</div>
           </div>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
             <Link href="/work" style={{ ...btn, background: '#fff', color: '#6055f5', textDecoration: 'none', height: 52, display: 'inline-flex', alignItems: 'center', padding: '0 28px' }}>进入我的真活 →</Link>

@@ -30,8 +30,8 @@ export type CompareReview = {
 };
 const ROWS: CompareRow[] = ['scenario', 'task', 'materials', 'rubric', 'facts'];
 export const CHECKLIST: { key: string; label: string; rule: string }[] = [
-  { key: 'c1', label: '场景是这家企业近期的真事', rule: '题目场景是这家企业（含其品牌 / 关联主体）近 12 个月内真实发生的事；虚构公司或两年前的旧事算否' },
-  { key: 'c2', label: '考生拿到能直接用的材料', rule: '给了成型的材料（文档 / 表格 / 数据），考生不用自己去找就能做；只有一段背景描述算部分' },
+  { key: 'c1', label: '场景是这家企业近期的真事', rule: '任务场景是这家企业（含其品牌 / 关联主体）近 12 个月内真实发生的事；虚构公司或两年前的旧事算否' },
+  { key: 'c2', label: '候选人拿到能直接用的材料', rule: '给了成型的材料（文档 / 表格 / 数据），候选人不用自己去找就能做；只有一段背景描述算部分' },
   { key: 'c3', label: '材料里埋了要识别的坑', rule: '材料里有需要识别的矛盾、缺口或口径不一致，并且评分会看有没有发现' },
   { key: 'c4', label: '评分有可观察的分级', rule: '每条标准写了分级的、能从交付物里观察到的行为或产出；只写「逻辑清晰」「有深度」算否' },
   { key: 'c5', label: '每条评分说明了依据', rule: '每条标准说明依据来自哪里（材料、企业事实、岗位要求、行业规范）' },
@@ -69,7 +69,7 @@ export async function reviewGeneric(genericText: string, _ctx: unknown, task: an
   const facts = await loadFacts(task.company_id ?? null, company, task.role || '');
   const ours = JSON.stringify({ title: task.task?.title, problem: task.problem, brief: task.task?.brief, deliverables: task.task?.deliverables, rules: task.task?.rules, time_minutes: task.task?.time_minutes, materials: (task.materials || []).map((m: any) => ({ id: m.id, title: m.title, source: m.source, basis: m.basis, content: String(m.content || '').slice(0, 500) })), rubric: (task.rubric || []).map((r: any) => ({ title: r.title, weight: r.weight, basis: r.basis, levels: r.levels })) }).slice(0, 9000);
   const today = new Date().toISOString().slice(0, 10);
-  const prompt = `你是招聘测评方法专家，做一份可复核的对比研判。同一个需求，两种出题方式：A 是通用模型只拿一句话出的题；B 是平方用企业库资料出的题。今天是 ${today}。
+  const prompt = `你是招聘测评方法专家，做一份可复核的对比研判。同一个需求，两种出任务方式：A 是通用模型只拿一句话出的题；B 是平方用企业库资料出的题。今天是 ${today}。
 
 ## 库里关于这家企业的最新资料（${company}；别名、品牌、关联主体都算同一个体系）
 ${facts}
@@ -86,7 +86,7 @@ ${CHECKLIST.map(c => `${c.key} ${c.label}：${c.rule}`).join('\n')}
 
 ## 二、企业事实核对（只核 A）
 摘出 A 当作真事写的、关于「${company}」这个体系（含品牌、关联主体、合伙人、被投企业、投资策略）的具体说法，最多 8 条。
-不摘：A 自己标了虚构 / 假设 / 示例的内容；出题人那句话里本来就给的公司名和岗位；纯行业常识。
+不摘：A 自己标了虚构 / 假设 / 示例的内容；出任务的人那句话里本来就给的公司名和岗位；纯行业常识。
 每条：quote（A 原文逐字、6–40 字）、claim（这条说法是什么，≤30 字）、status：
 - 证实：资料里有支持（evidence 写资料原话或要点，source 写出自哪一段）
 - 有出入：资料里有明确相反的信息（evidence 写资料里怎么说）
@@ -94,7 +94,7 @@ ${CHECKLIST.map(c => `${c.key} ${c.label}：${c.rule}`).join('\n')}
 不要因为资料没提到就判有出入。
 
 ## 三、五行速览（两边各写，≤40 字，同样口吻，不评价）
-scenario 业务场景 · task 要候选人做什么 · materials 给考生的材料 · rubric 评分标准（几条、怎么评）· facts 用到的企业事实（真实 / 虚构，出自哪里）
+scenario 业务场景 · task 要候选人做什么 · materials 给候选人的材料 · rubric 评分标准（几条、怎么评）· facts 用到的企业事实（真实 / 虚构，出自哪里）
 
 ## 四、verdict：一句话（≤60 字），只说清单上客观的差别，不夸 B。
 

@@ -18,14 +18,14 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   if (!t) return NextResponse.json({ ok: false, error: errL(t, '链接不可用') }, { status: 404 });
   const { data: s } = await db.from('work_sessions').select('id, ai_chat, submitted_at, started_at, participant').eq('id', sid).eq('task_id', t.id).maybeSingle();
   if (!s) return NextResponse.json({ ok: false, error: errL(t, '没有这次作答') }, { status: 404 });
-  if (s.submitted_at) return NextResponse.json({ ok: false, error: errL(t, '已经交卷了') }, { status: 409 });
+  if (s.submitted_at) return NextResponse.json({ ok: false, error: errL(t, '已经提交了') }, { status: 409 });
   if (timing(t.task, s).closed) return NextResponse.json({ ok: false, error: errL(t, '时间到了'), expired: true }, { status: 409 });
   const body = await req.json().catch(() => ({}));
   const q = String(body.q || '').trim().slice(0, 4000);
   if (!q) return NextResponse.json({ ok: false, error: errL(t, '问题为空') }, { status: 400 });
   const history = (s.ai_chat || []).slice(-6).map((c: any) => `用户：${c.q}\n助手：${String(c.a).slice(0, 800)}`).join('\n\n');
   // 英文题（11-10 实测：只在末尾提一句，模型还是用中文答）：开头就定死语言
-  const prompt = `${t.task?.lang === 'en' ? 'IMPORTANT: The candidate works in English. Write your entire reply in English (keep company and product names as they are). Only reply in Chinese if the candidate writes in Chinese.\n\n' : ''}你是做题人手边的 AI 助手（像平时工作里用的那种），帮他完成一道真活。有问必答、直接给可用的内容；涉及材料里没有的数据要提醒「这是假设」。不要替他做判断取舍，把选项和依据摆出来。你看不到图片本身，只能读到下面写的文字（图片材料是 AI 看图写的说明）；问到说明里没有的画面细节，直说「我看不到这一处」，不要猜，更不要编公司、岗位、数字。
+  const prompt = `${t.task?.lang === 'en' ? 'IMPORTANT: The candidate works in English. Write your entire reply in English (keep company and product names as they are). Only reply in Chinese if the candidate writes in Chinese.\n\n' : ''}你是作答人手边的 AI 助手（像平时工作里用的那种），帮他完成一道真活。有问必答、直接给可用的内容；涉及材料里没有的数据要提醒「这是假设」。不要替他做判断取舍，把选项和依据摆出来。你看不到图片本身，只能读到下面写的文字（图片材料是 AI 看图写的说明）；问到说明里没有的画面细节，直说「我看不到这一处」，不要猜，更不要编公司、岗位、数字。
 ## 任务
 ${t.task?.title}：${String(t.task?.brief || '').slice(0, 800)}
 ## 材料目录
@@ -38,7 +38,7 @@ ${q}${t.task?.lang === 'en' ? '\n\nReply in English.' : ''}`;
     const t0 = Date.now();
     const a = await withCost({ tool_name: 'work', task_name: 'Assist · 工作台 AI', stage: 'use' }, async () => {
       let tried = 0;
-      for (const m of [ASSIST_MODEL, 'qwen-max', 'deepseek-v4-pro']) {   // 候选人做题时的助手要快：默认千问，兜底也走国内（2026-10-28），候选人端不能没回答
+      for (const m of [ASSIST_MODEL, 'qwen-max', 'deepseek-v4-pro']) {   // 候选人作答时的助手要快：默认千问，兜底也走国内（2026-10-28），候选人端不能没回答
         if (tried++ && onReset) onReset();
         try { const r = await generateContent(prompt, m, onText ? { onText } : undefined); await logTokenUsage({ tool_name: 'work', task_name: 'Assist · 工作台 AI', institution: t.company_name || '', model_id: m, usageMetadata: r.usageMetadata } as any).catch(() => {}); if (r.text?.trim()) return r.text.trim(); } catch (e) { console.warn(`[work-assist] ${m} 失败：${String((e as any)?.message).slice(0, 100)}`); }
       }

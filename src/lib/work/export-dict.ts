@@ -29,17 +29,17 @@ export const EVENT_DICT: { type: string; zh: string; fields?: string }[] = [
   { type: 'visit', zh: '插件记录：打开一个网页', fields: 'host, note = 网页标题' },
   { type: 'page', zh: '插件记录：网页内容摘录', fields: 'host, note = 标题, text = 正文摘录' },
   { type: 'open_next_step / next_step', zh: '最后一问「再给一天先改哪里」（选填）', fields: 'text' },
-  { type: 'ai_disclosure', zh: '交卷前的 AI 参与说明（有条件弹出）', fields: 'text' },
-  { type: 'submit / auto_submit', zh: '交卷 / 到点自动交卷', fields: 'chars' },
+  { type: 'ai_disclosure', zh: '提交前的 AI 参与说明（有条件弹出）', fields: 'text' },
+  { type: 'submit / auto_submit', zh: '提交 / 到点自动提交', fields: 'chars' },
 ];
 
 export const RECORD_DICT: [string, string][] = [
-  ['session', '作答编号、化名、作答方式（bench 作答台 / open 用自己的软件 + 屏幕记录 / plugin 网页工具 + 插件 / ai AI 学员）、开始和交卷时间、用时秒数'],
-  ['task', '题目：标题、企业、岗位、任务书、规则、交付物、材料（全文）、逐条评分标准、AI 使用标准、AI 基线（AI 同题先做一遍的得分）'],
+  ['session', '作答编号、化名、作答方式（bench 作答台 / open 用自己的软件 + 屏幕记录 / plugin 网页工具 + 插件 / ai AI 学员）、开始和提交时间、用时秒数'],
+  ['task', '任务：标题、企业、岗位、任务书、规则、交付物、材料（全文）、逐条评分标准、AI 使用标准、AI 基线（AI 同题先做一遍的得分）'],
   ['events', '过程事件，按时间排；t = 从开始作答算起的秒数。含义见「事件字典」'],
   ['ai_chat', '和页面 AI 助手的每一轮 { t, q 问, a 答 }'],
-  ['deliverable', '交卷时的交付物文本'],
+  ['deliverable', '提交时的交付物文本'],
   ['files', '上传的附件 { t, name, url, part }（已删除的不在里面）'],
   ['screenshots', '屏幕记录的原始截图 { t, url }，开放模式和插件模式才有；每张的 AI 解读是 events 里的 screen'],
-  ['report', '评分结果：result 回答质量（逐条分 + 证据）、process 作答过程（六维 + 高光 / 风险）、ai_use AI 使用（五项档位 + 证据 + 负向 + AI 参与说明比对）、audit 交卷后逐段审计笔记、recording 屏幕记录概述'],
+  ['report', '评分结果：result 回答质量（逐条分 + 证据）、process 作答过程（六维 + 高光 / 风险）、ai_use AI 使用（五项档位 + 证据 + 负向 + AI 参与说明比对）、audit 提交后逐段审计笔记、recording 屏幕记录概述'],
 ];

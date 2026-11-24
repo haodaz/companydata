@@ -142,11 +142,11 @@ export async function gatherContext(companyQuery: string, role: string, opts: { 
     // 库里没有的企业（2026-10-22）：出题人贴一段介绍，先解析成画像再出题；之后再按单入库补全（make to order）
     const parsed = await parseCompanyIntro(q, intro).catch(e => { console.warn('[work] 介绍解析失败：', String(e?.message).slice(0, 120)); return null; });
     if (parsed) {
-      ctx.company = { ...parsed.company, name: parsed.company?.name || q, __src: '出题人提供的企业介绍，AI 解析' };
+      ctx.company = { ...parsed.company, name: parsed.company?.name || q, __src: '出任务的人提供的企业介绍，AI 解析' };
       ctx.products = parsed.products; ctx.news = parsed.news; ctx.executives = parsed.executives;
-    } else ctx.company = { name: q, introduction: intro.slice(0, 1500), __src: '出题人提供的企业介绍' };
-    ctx.notes.push(`「${q}」还不在企业库里，企业事实来自出题人贴的介绍`);
-  } else ctx.notes.push(`企业库里没找到「${q}」，只能按名字出题，企业事实会少`);
+    } else ctx.company = { name: q, introduction: intro.slice(0, 1500), __src: '出任务的人提供的企业介绍' };
+    ctx.notes.push(`「${q}」还不在企业库里，企业事实来自出任务的人贴的介绍`);
+  } else ctx.notes.push(`企业库里没找到「${q}」，只能按名字出任务，企业事实会少`);
   // 职业层：名字 / 别名命中，命不中就模糊找。出题人用自然语言描述要什么样的人时，不硬套职业库
   let occ: any = isNeedText(role) ? null : await findOccupation({ name: role });
   if (!occ && !isNeedText(role)) { const { data } = await db.from('occupations').select('*').eq('if_delete', false).ilike('name', `%${role}%`).limit(1); occ = data?.[0] || null; }
@@ -192,7 +192,7 @@ async function relatedEntities(cid: number, label: Record<string, string>, strip
 
 /** 出题人贴的企业介绍 → 和企业库同样字段的画像（只用介绍里有的，不编） */
 export async function parseCompanyIntro(name: string, intro: string): Promise<{ company: Record<string, any>; products: WorkContext['products']; news: WorkContext['news']; executives: WorkContext['executives'] }> {
-  const prompt = `下面是出题人贴的一段企业介绍（可能来自官网、BP、公众号或口述）。把它整理成企业画像 JSON，给出题用。
+  const prompt = `下面是出任务的人贴的一段企业介绍（可能来自官网、BP、公众号或口述）。把它整理成企业画像 JSON，给出任务用。
 规则：只用介绍里写到的信息，没写的字段留空字符串 / 空数组，绝不编造数字、客户、人名；原话里的关键事实尽量保留。
 企业名：${name}
 ## 介绍原文
@@ -270,7 +270,7 @@ export function mergeAttachmentDupes<T extends { problem?: any; task?: any; rubr
 }
 
 export function attachmentsToMaterials(atts: Attachment[], startAt: number): WorkTask['materials'] {
-  return atts.map((a, i) => ({ id: `m${startAt + i}`, title: a.name, kind: 'file' as const, content: a.image ? (a.text ? `图片说明（AI 看图整理，以原图为准）：\n${a.text.slice(0, 4000)}` : `附图：${a.name}`) : a.text ? a.text.slice(0, 8000) : `附件：${a.name}`, source: 'upload' as const, basis: a.image ? '出题人上传的素材图 + AI 看图说明' : '出题人上传的素材', url: a.url, mime: a.mime, name: a.name }));
+  return atts.map((a, i) => ({ id: `m${startAt + i}`, title: a.name, kind: 'file' as const, content: a.image ? (a.text ? `图片说明（AI 看图整理，以原图为准）：\n${a.text.slice(0, 4000)}` : `附图：${a.name}`) : a.text ? a.text.slice(0, 8000) : `附件：${a.name}`, source: 'upload' as const, basis: a.image ? '出任务的人上传的素材图 + AI 看图说明' : '出任务的人上传的素材', url: a.url, mime: a.mime, name: a.name }));
 }
 
 /**
@@ -279,15 +279,15 @@ export function attachmentsToMaterials(atts: Attachment[], startAt: number): Wor
  */
 export async function verbatimTask(text: string, opts: { lang?: 'zh' | 'en'; company?: string; role?: string; env?: WorkEnvType; model?: string; attachments?: Attachment[] } = {}): Promise<{ task: WorkTask; model: string }> {
   const model = opts.model || WORK_MODEL;
-  const prompt = `出题人交来一道现成的题，要**原样**发给候选人做，不许改写、不许增删要求。你只做整理：
+  const prompt = `出任务的人交来一道现成的题，要**原样**发给候选人做，不许改写、不许增删要求。你只做整理：
 - title：题里有标题就用，没有就用 8–16 字概括。
-- deliverables：题里要求交什么（2–4 个，id d1…）；没写就一条「按题目要求作答」。
+- deliverables：题里要求交什么（2–4 个，id d1…）；没写就一条「按任务要求作答」。
 - time_minutes：题里写了就用，没写 60。
-- deliverables 的 module：doc 文档 / sheet 表格或测算 / code 脚本 / design 工程参数与草图（结构 / 机械 / 电气这类要定尺寸的设计）/ canvas 流程图、泳道图、思维导图、架构图 / board 白板（线框图、界面草图、海报、IP 形象、视觉方案这类自由画的设计）；按题目要交的形态选，可混用。
-- materials：题里如果有明显独立的材料段（数据表、背景资料、附录），拆成材料，**文字原样**（kind 按内容：table / doc / data），source 写 generated、basis 写「原题附带」；没有就 []。题里只是**提到**「附件 / 附表 / 附图」而正文没给内容的，不要造材料（附件由出题人另外上传）。
-- rubric：从题目自己的要求里推出评分点，5–8 条，basis 写「题目要求：…」并引原句；levels 四档可观察；weight 加起来 100。不加题里没有的要求。
+- deliverables 的 module：doc 文档 / sheet 表格或测算 / code 脚本 / design 工程参数与草图（结构 / 机械 / 电气这类要定尺寸的设计）/ canvas 流程图、泳道图、思维导图、架构图 / board 白板（线框图、界面草图、海报、IP 形象、视觉方案这类自由画的设计）；按任务要交的形态选，可混用。
+- materials：题里如果有明显独立的材料段（数据表、背景资料、附录），拆成材料，**文字原样**（kind 按内容：table / doc / data），source 写 generated、basis 写「原题附带」；没有就 []。题里只是**提到**「附件 / 附表 / 附图」而正文没给内容的，不要造材料（附件由出任务的人另外上传）。
+- rubric：从任务自己的要求里推出评分点，5–8 条，basis 写「任务要求：…」并引原句；levels 四档可观察；weight 加起来 100。不加题里没有的要求。
 - env：按题的作答媒介选 doc / code / sheet / design。
-${opts.attachments?.length ? `\n题目附件（会原样挂给候选人）：${opts.attachments.map(a => a.name).join('、')}` : ''}
+${opts.attachments?.length ? `\n任务附件（会原样挂给候选人）：${opts.attachments.map(a => a.name).join('、')}` : ''}
 ${opts.lang === 'en' ? '- 这是英文题：title、deliverables 的 title 和 format、rubric 的 title / desc / levels 用英文写（候选人在报告里看得到）；rubric 的 basis 用中文。\n' : ''}## 原题
 ${text.slice(0, 12000)}
 只返回 JSON：{ "env": { "type": "doc" }, "title": "", "deliverables": [ { "id": "d1", "title": "", "format": "", "module": "doc" } ], "time_minutes": 60, "materials": [ { "id": "m1", "title": "", "kind": "doc", "content": "" } ], "rubric": [ { "id": "r1", "title": "", "desc": "", "weight": 20, "depends_on": [], "basis": "", "levels": { "L1": "", "L2": "", "L3": "", "L4": "" } } ] }`;
@@ -295,13 +295,13 @@ ${text.slice(0, 12000)}
   const envType: WorkEnvType = opts.env || (['doc', 'code', 'sheet', 'design'].includes(p.env?.type) ? p.env.type : 'doc');
   const task: WorkTask = {
     env: { type: envType },
-    problem: { statement: opts.lang === 'en' ? `Task provided by ${opts.company || 'the hiring company'}` : `出题人给的原题${opts.company ? `（${opts.company}）` : ''}`, why_now: '', evidence: [] },
-    task: { title: s(p.title, 40) || '真活', role: opts.role || '候选人', brief: text.slice(0, 6000), deliverables: (Array.isArray(p.deliverables) ? p.deliverables : []).slice(0, 4).map((d: any, i: number) => ({ id: d.id || `d${i + 1}`, title: s(d.title, 120), format: s(d.format, 400), module: resolveModule(s(d.format, 60), d.module) })), time_minutes: clampMinutes(p.time_minutes, 60), rules: opts.lang === 'en' ? ['Deliverables: The task is shown exactly as written.', 'AI use: You may use AI freely — it is not cheating; we assess how you use it.', 'Data & sources: Flag any figure that is not in the materials as an assumption.'] : ['交付：题目原样，不改一字', 'AI 使用：可以随便用 AI，不算作弊；评的是你怎么用', '数据与来源：材料里没有的数据要标注假设'], ...(opts.lang === 'en' ? { lang: 'en' as const } : {}) },
+    problem: { statement: opts.lang === 'en' ? `Task provided by ${opts.company || 'the hiring company'}` : `出任务的人给的原题${opts.company ? `（${opts.company}）` : ''}`, why_now: '', evidence: [] },
+    task: { title: s(p.title, 40) || '真活', role: opts.role || '候选人', brief: text.slice(0, 6000), deliverables: (Array.isArray(p.deliverables) ? p.deliverables : []).slice(0, 4).map((d: any, i: number) => ({ id: d.id || `d${i + 1}`, title: s(d.title, 120), format: s(d.format, 400), module: resolveModule(s(d.format, 60), d.module) })), time_minutes: clampMinutes(p.time_minutes, 60), rules: opts.lang === 'en' ? ['Deliverables: The task is shown exactly as written.', 'AI use: You may use AI freely — it is not cheating; we assess how you use it.', 'Data & sources: Flag any figure that is not in the materials as an assumption.'] : ['交付：任务原样，不改一字', 'AI 使用：可以随便用 AI，不算作弊；评的是你怎么用', '数据与来源：材料里没有的数据要标注假设'], ...(opts.lang === 'en' ? { lang: 'en' as const } : {}) },
     // 模型拆出的材料：内容空的、或和上传附件重名的都丢掉（附件另挂）
     materials: (Array.isArray(p.materials) ? p.materials : []).filter((m: any) => String(m.content || '').trim().length >= 20 && !(opts.attachments || []).some(a => a.name && String(m.title || '').includes(a.name.replace(/\.[^.]+$/, '')))).slice(0, 6).map((m: any, i: number) => ({ id: `m${i + 1}`, title: s(m.title, 60), kind: (['doc', 'table', 'note', 'email', 'data'].includes(m.kind) ? m.kind : 'doc'), content: s(m.content, 8000), source: 'generated' as const, basis: '原题附带' })),
     rubric: (Array.isArray(p.rubric) ? p.rubric : []).slice(0, 10).map((r: any, i: number) => ({ id: r.id || `r${i + 1}`, title: s(r.title, 60), desc: s(r.desc, 300), weight: Math.max(1, Number(r.weight) || 10), depends_on: Array.isArray(r.depends_on) ? r.depends_on.map(String) : [], basis: s(r.basis, 200), levels: { L1: s(r.levels?.L1, 160), L2: s(r.levels?.L2, 160), L3: s(r.levels?.L3, 160), L4: s(r.levels?.L4, 160) } })),
   };
-  if (!task.task.deliverables.length) task.task.deliverables = [{ id: 'd1', title: '按题目要求作答', format: '文档' }];
+  if (!task.task.deliverables.length) task.task.deliverables = [{ id: 'd1', title: '按任务要求作答', format: '文档' }];
   const ids = new Set(task.rubric.map(r => r.id)); const sum = task.rubric.reduce((a, r) => a + r.weight, 0) || 1;
   for (const r of task.rubric) { r.weight = Math.round(r.weight / sum * 100); r.depends_on = r.depends_on.filter(d => ids.has(d) && d !== r.id); }
   return { task, model: used };
@@ -312,7 +312,7 @@ export type TaskStyle = { deep?: boolean; steps?: boolean; hints?: 'lean' | 'ric
 export interface WorkTask {
   env: WorkEnv;
   problem: { statement: string; why_now: string; evidence: { text: string; source: string }[] };
-  task: { /** 题目语言（11-10），不写 = 中文 */ lang?: 'zh' | 'en'; /** 出题风格（11-10） */ style?: TaskStyle; title: string; role: string; brief: string; deliverables: { id: string; title: string; format: string; module?: 'doc' | 'sheet' | 'code' | 'design' | 'canvas' | 'board' }[]; time_minutes: number; rules: string[]; stages?: SampleStage[] };   // stages：案例推进式（照深度样本出）：一步步给信息、每步有问、有参考答案和要算的数（2026-10-23）
+  task: { /** 任务语言（11-10），不写 = 中文 */ lang?: 'zh' | 'en'; /** 出任务风格（11-10） */ style?: TaskStyle; title: string; role: string; brief: string; deliverables: { id: string; title: string; format: string; module?: 'doc' | 'sheet' | 'code' | 'design' | 'canvas' | 'board' }[]; time_minutes: number; rules: string[]; stages?: SampleStage[] };   // stages：案例推进式（照深度样本出）：一步步给信息、每步有问、有参考答案和要算的数（2026-10-23）
   materials: { id: string; title: string; kind: 'doc' | 'table' | 'note' | 'email' | 'data' | 'file'; content: string; source: 'db' | 'generated' | 'mixed' | 'upload'; basis?: string; url?: string; mime?: string; name?: string }[];   // file = 出题人上传的附件（表格 / 图纸 / 截图 / PDF），候选人能看原件；content 是抽出的文字或说明
   rubric: { id: string; title: string; desc: string; weight: number; depends_on: string[]; basis: string; levels: { L1: string; L2: string; L3: string; L4: string } }[];
 }
@@ -325,7 +325,7 @@ const EN_DATA = 'Data & sources: Flag any figure that is not in the materials as
 /** 研究真活（2026-10-20）：科研院所招博士后 / 研究员 / 教授，考的是研究方向上的操作和研究技能 */
 export const RESEARCH_TASK_KINDS = ['实验设计（给研究问题，设计方案、对照、变量与样本量）', '数据分析（给一份真实格式的实验 / 观测数据，找异常、选统计方法、下结论并说清局限）', '文献与选题（给一个方向，梳理进展、指出研究空白、提可做的课题）', '审稿（给一篇稿件或摘要，找方法和结论上的问题，写审稿意见）', '写基金本子（研究目标、技术路线、可行性与风险）', '复现（用代码复现论文里的一个结果并解释差异）'];
 
-export async function generateTask(ctx: WorkContext, role: string, opts: { /** 题目语言（11-10）：en = 候选人看到的内容用英文 */ lang?: 'zh' | 'en'; /** 限时（分钟）：出任务的人定的，没定就 60；交付量按它定 */ minutes?: number; /** 出题风格（11-10 潜历：拆得太细像教学）：deep 升维解读、steps 给候选人拆推进步骤，默认都关 */ style?: TaskStyle; model?: string; /** 出题人点名的台子（一样交付物一个，11-05） */ modules?: string[]; focus?: string; env?: WorkEnvType; research?: boolean; sample?: SampleSkeleton | null; sampleMode?: 'reskin' | 'inspire'; attachments?: Attachment[] ; bankRefs?: string; base?: { text: string; mode: 'base' | 'ref'; title: string; origin?: string[] };
+export async function generateTask(ctx: WorkContext, role: string, opts: { /** 任务语言（11-10）：en = 候选人看到的内容用英文 */ lang?: 'zh' | 'en'; /** 限时（分钟）：出任务的人定的，没定就 60；交付量按它定 */ minutes?: number; /** 出任务风格（11-10 潜历：拆得太细像教学）：deep 升维解读、steps 给候选人拆推进步骤，默认都关 */ style?: TaskStyle; model?: string; /** 出任务的人点名的台子（一样交付物一个，11-05） */ modules?: string[]; focus?: string; env?: WorkEnvType; research?: boolean; sample?: SampleSkeleton | null; sampleMode?: 'reskin' | 'inspire'; attachments?: Attachment[] ; bankRefs?: string; base?: { text: string; mode: 'base' | 'ref'; title: string; origin?: string[] };
   /** 分段回传（11-15）：业务问题 / 任务书 / 材料包 / 评分标准 / 推进步骤写完一块交一块，前台看着题长出来 */
   onPart?: (key: string, value: any) => void } = {}): Promise<{ task: WorkTask; model: string }> {
   const model = opts.model || WORK_MODEL;
@@ -336,25 +336,25 @@ export async function generateTask(ctx: WorkContext, role: string, opts: { /** �
   const n = (x: number) => (en ? Math.round(x * 2.5) : x);   // 英文同样的意思字符多两三倍，截断上限放宽（11-10 英文题标题被截成半个词）
   const need = isNeedText(role);
   const needNote = need ? `
-## 出题人要找的人（自然语言，原话）
+## 出任务的人要找的人（自然语言，原话）
 「${role}」
-出题人没有说职位名，也不要你替他套一个职位名（不要写成「xx 分析师 / xx 专员」）。直接围绕「这个人有没有这样的本事」出真活：这道题做得好的人，就是他要找的人。
+出任务的人没有说职位名，也不要你替他套一个职位名（不要写成「xx 分析师 / xx 专员」）。直接围绕「这个人有没有这样的本事」出真活：这个任务做得好的人，就是他要找的人。
 task.role 写成 6–14 字的人话概括，说这个人能干什么（例：「能看懂人工智能行业、能做投资判断的人」），不要职位名。
 ` : '';
   const prompt = `${opts.research
-    ? `你是「真活台」的出题人：拿一个科研团队**此刻真实的研究问题**给「${role}」出一道**研究真活**——考的是这个研究方向上的操作和研究技能，不是知识题、不是面试八股。
-研究真活的类型：${RESEARCH_TASK_KINDS.join('；')}。按岗位和出题人的要求挑最合适的一种（或组合两种）。
+    ? `你是「真活台」的出任务的人：拿一个科研团队**此刻真实的研究问题**给「${role}」出一道**研究真活**——考的是这个研究方向上的操作和研究技能，不是知识题、不是面试八股。
+研究真活的类型：${RESEARCH_TASK_KINDS.join('；')}。按岗位和出任务的人的要求挑最合适的一种（或组合两种）。
 参照的方法：先锚定「这个团队现在卡在哪个研究问题上、这个人来了要啃什么」，再展开成一个开放的研究任务，配上做这件事会拿到的材料（数据表、实验记录、审稿稿件、项目指南…，没有真实数据就按真实格式生成并标「示例数据」），最后把粗标准展开成能逐条核对、**条目之间有依赖关系**的细 rubric（例：先界定问题与假设 → 再设计对照与变量 → 再选统计方法 → 再解释结果与局限）。评分重点是科学严谨：对照、可重复、统计、局限、伦理与安全。`
-    : `你是「真活台」的出题人：拿一家企业**此刻真实的业务问题**给「${role}」岗位出一道真活，不是模拟职业、不是知识题。
+    : `你是「真活台」的出任务的人：拿一家企业**此刻真实的业务问题**给「${role}」岗位出一道真活，不是模拟职业、不是知识题。
 参照的方法：先锚定「这个岗位要替企业解决什么内部问题」，再把问题展开成一个开放的真实任务，配上做这件事会拿到的材料，最后把人写的粗标准展开成 agent 能逐条核对、**条目之间有依赖关系**的细 rubric（例：先设假设 → 再建模 → 再估值 → 再调整）。`}
 
 ${needNote}
 ## 材料（只许用这些；没有的数字写「示例数据」并说明；每条依据指回来源）
 ${renderContext(ctx)}
-${ctx.notes.some(n => /取了同企业(其他|最接近的)岗位做参考/.test(n)) ? `\n注意：材料里的在招岗位不是「${role}」本岗，只拿来理解这家企业的工作方式和用语；**题目主题由「${role}」决定**，不要被参考岗位的职能（如 ESG、合规、行政）带偏。\n` : ''}${opts.focus ? `\n## 出题人额外要求\n${opts.focus}\n` : ''}${opts.attachments?.length ? `\n## 出题人上传的题目附件（会原样发给候选人；文字是从文件里抽出来的，图片只有文件名）\n${opts.attachments.map((a, i) => `[附件 ${i + 1}] ${a.name}${a.text ? `：\n${a.text.slice(0, 4000)}` : '（图片 / 无文字）'}`).join('\n\n')}\n题目要围绕这些附件出：任务书里写明候选人要看哪份附件做什么；materials 里不要重复抄附件内容，平台会把附件原件挂进材料包。\n` : ''}${opts.sample ? `
-${opts.bankRefs ? `## 这家企业 / 这个行业以前出过的题（题目资产库；只借推进结构、交付形态、评分依赖——**业务问题要换一个角度，不要和过往题撞题**）
+${ctx.notes.some(n => /取了同企业(其他|最接近的)岗位做参考/.test(n)) ? `\n注意：材料里的在招岗位不是「${role}」本岗，只拿来理解这家企业的工作方式和用语；**任务主题由「${role}」决定**，不要被参考岗位的职能（如 ESG、合规、行政）带偏。\n` : ''}${opts.focus ? `\n## 出任务的人额外要求\n${opts.focus}\n` : ''}${opts.attachments?.length ? `\n## 出任务的人上传的任务附件（会原样发给候选人；文字是从文件里抽出来的，图片只有文件名）\n${opts.attachments.map((a, i) => `[附件 ${i + 1}] ${a.name}${a.text ? `：\n${a.text.slice(0, 4000)}` : '（图片 / 无文字）'}`).join('\n\n')}\n任务要围绕这些附件出：任务书里写明候选人要看哪份附件做什么；materials 里不要重复抄附件内容，平台会把附件原件挂进材料包。\n` : ''}${opts.sample ? `
+${opts.bankRefs ? `## 这家企业 / 这个行业以前出过的题（任务资产库；只借推进结构、交付形态、评分依赖——**业务问题要换一个角度，不要和过往题撞题**）
 ${opts.bankRefs}
-` : ''}## 深度样本（出题人给的参照：一道公认的好题）
+` : ''}## 深度样本（出任务的人给的参照：一道公认的好题）
 ${renderSkeleton(opts.sample)}
 ${!staged
   ? `只借它的难度、信息密度、要算的东西和交付形态，**不要照它分步推进**：任务书一次把背景和要求给全，怎么拆、先做什么由候选人自己定（这本身是考察的一部分）。内容全部换成 ${name} 此刻真实的问题和材料，行业、公司、数字都不能照抄样本。`
@@ -362,37 +362,37 @@ ${!staged
   ? `照它出：**推进结构、题型顺序、步数、难度和数字密度跟样本一致**，内容全部换成 ${name} 此刻真实的问题和材料（行业、公司、数字都不能照抄样本）。`
   : `**改背景、换数字，再出一次**（老师从上一届作业里拿题的做法）：每一步的题型、问法、要算什么、答案的推导路径都**原样保留**；把故事背景换成 ${name} 此刻真实的处境（用材料里的事实），样本里的数据表换成同样结构、同样量级但不同的数字（每个数改 20%–60%，别只换单位），calc 的 expr 用新数字重写，value 平台会重算；expected 按新数字重写结论。样本里没有而材料里有的事实可以加进背景，不要加新的步骤。`}
 ${staged ? '每一步只给当步需要的信息；测算要有可复核的算式；最后一步综合前面所有步骤。\n' : ''}` : ''}
-${opts.base ? `## 任务库里的原题（出题人从「任务库」选的：「${opts.base.title}」）
+${opts.base ? `## 任务库里的原题（出任务的人从「任务库」选的：「${opts.base.title}」）
 ${opts.base.text}
 ${opts.base.mode === 'base'
-  ? `**原题直出，换成 ${name}**（出题人要的就是这道题，只是要变成自己公司的）：任务结构、交付物（数量、名称的意思、format、module）、材料的种类和各自的作用、材料里埋的坑、评分要点**原样保留**；企业、背景故事、工厂 / 项目 / 产品 / 人名换成 ${name} 此刻的真实处境（用上面「材料」里的事实），数字换成同结构、同量级、符合 ${name} 的数（材料没有的标「示例数据」）。**原题里的企业名、地名、项目名一个都不能留**。题面要读起来就是 ${name} 自己的活。`
-  : `**仅做参考**：只借这道题的题型、推进方式、交付形态和难度；业务问题、背景、材料、数字全部按 ${name} 此刻的真实情况重新出，不要和原题撞题。`}
+  ? `**原题直出，换成 ${name}**（出任务的人要的就是这个任务，只是要变成自己公司的）：任务结构、交付物（数量、名称的意思、format、module）、材料的种类和各自的作用、材料里埋的坑、评分要点**原样保留**；企业、背景故事、工厂 / 项目 / 产品 / 人名换成 ${name} 此刻的真实处境（用上面「材料」里的事实），数字换成同结构、同量级、符合 ${name} 的数（材料没有的标「示例数据」）。**原题里的企业名、地名、项目名一个都不能留**。任务书要读起来就是 ${name} 自己的活。`
+  : `**仅做参考**：只借这个任务的题型、推进方式、交付形态和难度；业务问题、背景、材料、数字全部按 ${name} 此刻的真实情况重新出，不要和原题撞题。`}
 ` : ''}
-${opts.modules?.length ? `## 出题人指定的交付物（必须照办）\n交付物正好 ${opts.modules.length} 样，按顺序分别用这些台子：${opts.modules.join('、')}（doc 文档 / sheet 表格 / code 代码 / canvas 画布流程图 / board 白板 / design 参数草图）。不要多出、不要换台子。\n` : ''}## 操作台（环境）
-${opts.env === 'agent' ? `出题人指定「AI 工作台」：候选人在一个沙盒工作区里做，旁边有一个 agentic AI（像 Claude Code：能读写文件、跑 Python、写代码和文档）。考什么照岗位和出题人的要求定；材料包会原样放进工作区，AI 和候选人都能读写，所以：
+${opts.modules?.length ? `## 出任务的人指定的交付物（必须照办）\n交付物正好 ${opts.modules.length} 样，按顺序分别用这些台子：${opts.modules.join('、')}（doc 文档 / sheet 表格 / code 代码 / canvas 画布流程图 / board 白板 / design 参数草图）。不要多出、不要换台子。\n` : ''}## 操作台（环境）
+${opts.env === 'agent' ? `出任务的人指定「AI 工作台」：候选人在一个沙盒工作区里做，旁边有一个 agentic AI（像 Claude Code：能读写文件、跑 Python、写代码和文档）。考什么照岗位和出任务的人的要求定；材料包会原样放进工作区，AI 和候选人都能读写，所以：
 - 材料就是这份工作真实会拿到的东西，以**能直接拿来干活的原始数据和资料**为主：至少 2 张 table 材料（CSV，各 40–150 行，列名清楚），外加 1–2 份文字材料（业务背景、指标口径、往期资料）。不要刻意埋坑，按真实工作的样子给。
 - 交付物 2–3 个，写成文件，就是对方真正期待的产出：处理 / 分析脚本（format 写「Python 脚本」）+ 结果表或图（「CSV 表格」或「PNG 图」）+ 给业务方看的结论文档（「Markdown 文档」）。产出要有分量，一个人不用 AI 在限时内做不完，带好 AI 能做得又快又好。
-- 任务书里说清：交付物放在 output/ 下；可以让 AI 做任何事，交出去的东西你负责。env 按 doc 出。` : opts.env === 'plugin' ? '出题人指定：候选人用自己浏览器里的网页工具做（在线文档 / 表格 / 设计工具 / 各家 AI 都行），装「真活插件」记录过程，最后在插件侧边栏交「交付说明 + 交付物链接」；所以 env 按 doc 出，交付物写成「在线文档或文件链接 + 交付说明」，材料要能下载后独立使用。' : opts.env === 'open' ? '出题人指定：候选人用自己电脑上的软件做（Excel / CAD / IDE 都行），全程录屏、最后上传交付文件；所以 env 按 doc 出，交付物写成「文件 + 交付说明」，材料要能下载后独立使用。' : opts.env ? `出题人指定环境：${opts.env}（${ENV_LABELS[opts.env]}）。` : '按岗位选最贴近真实工作媒介的环境：'}doc 文档 / 对账台（方案、对账、邮件、scorecard）· code 代码台（写函数 / 脚本；**starter 里的主函数必须命名为 solution**，tests 也调用 solution；language 用 js 时给 2–5 个自测用例：code 是一段 JS，拿到变量 solution（候选人的导出函数）后返回 true/false，如 "return solution([3,1,2]).join()==='1,2,3'"；其他语言不给 tests）· sheet 表格 / 数据台（csv 给起始表，含要对账 / 清洗的数据，5–30 行）· design 设计台（params 给 4–8 个要定的参数：name/unit/hint；sketch_hint 说明要画什么简图：零件轮廓、流程、布局）。
+- 任务书里说清：交付物放在 output/ 下；可以让 AI 做任何事，交出去的东西你负责。env 按 doc 出。` : opts.env === 'plugin' ? '出任务的人指定：候选人用自己浏览器里的网页工具做（在线文档 / 表格 / 设计工具 / 各家 AI 都行），装「真活插件」记录过程，最后在插件侧边栏交「交付说明 + 交付物链接」；所以 env 按 doc 出，交付物写成「在线文档或文件链接 + 交付说明」，材料要能下载后独立使用。' : opts.env === 'open' ? '出任务的人指定：候选人用自己电脑上的软件做（Excel / CAD / IDE 都行），全程录屏、最后上传交付文件；所以 env 按 doc 出，交付物写成「文件 + 交付说明」，材料要能下载后独立使用。' : opts.env ? `出任务的人指定环境：${opts.env}（${ENV_LABELS[opts.env]}）。` : '按岗位选最贴近真实工作媒介的环境：'}doc 文档 / 对账台（方案、对账、邮件、scorecard）· code 代码台（写函数 / 脚本；**starter 里的主函数必须命名为 solution**，tests 也调用 solution；language 用 js 时给 2–5 个自测用例：code 是一段 JS，拿到变量 solution（候选人的导出函数）后返回 true/false，如 "return solution([3,1,2]).join()==='1,2,3'"；其他语言不给 tests）· sheet 表格 / 数据台（csv 给起始表，含要对账 / 清洗的数据，5–30 行）· design 设计台（params 给 4–8 个要定的参数：name/unit/hint；sketch_hint 说明要画什么简图：零件轮廓、流程、布局）。
 env 字段：{ "type": "doc|code|sheet|design", "language": "", "starter": "", "tests": [ { "name": "", "code": "" } ], "csv": "", "params": [ { "name": "", "unit": "", "hint": "" } ], "sketch_hint": "" }（只填该环境用到的字段）。交付物要和环境匹配（code 的交付物是代码 + 说明，sheet 是表 + 口径说明，design 是参数表 + 草图 + 设计说明）。
 
 ## 要求
-- 企业是出题的客户：**企业自身的负面舆情**（监管立案、减持套现、高管离职、募资遇冷、亏损传闻）**不进 problem / why_now / 任务书**；只有候选人做这件事确实要处理它时，才在材料里作中性、带来源的一句陈述，不渲染。（这条是给你的出题约束，**不要写进 rules 或任何候选人看得到的地方**——写出来本身就点出了负面话题）
-- 口吻中性、克制（出题的企业是客户，题面会给候选人看）：说清现状和要达成的目标，**不夸大问题、不渲染困境**（不用「危机、困境、痛点严重、迫在眉睫、严重滞后、岌岌可危」这类词），不替企业下负面判断；材料里的「坑」照常埋，但用平实的陈述。
-- ${deep ? '可以升维解读：从出题人说的事联想到背后更大的业务问题，把题出得更开放；但升维的部分要在 brief 里说清是延伸，不能让候选人误以为是企业已经确认的事实。' : '按出题人说的字面意思出，**不升维、不替他联想**到更大的命题；题面只覆盖他说的范围，他没提的方向不加。'}
+- 企业是出任务的客户：**企业自身的负面舆情**（监管立案、减持套现、高管离职、募资遇冷、亏损传闻）**不进 problem / why_now / 任务书**；只有候选人做这件事确实要处理它时，才在材料里作中性、带来源的一句陈述，不渲染。（这条是给你的出任务约束，**不要写进 rules 或任何候选人看得到的地方**——写出来本身就点出了负面话题）
+- 口吻中性、克制（出任务的企业是客户，任务书会给候选人看）：说清现状和要达成的目标，**不夸大问题、不渲染困境**（不用「危机、困境、痛点严重、迫在眉睫、严重滞后、岌岌可危」这类词），不替企业下负面判断；材料里的「坑」照常埋，但用平实的陈述。
+- ${deep ? '可以升维解读：从出任务的人说的事联想到背后更大的业务问题，把题出得更开放；但升维的部分要在 brief 里说清是延伸，不能让候选人误以为是企业已经确认的事实。' : '按出任务的人说的字面意思出，**不升维、不替他联想**到更大的命题；任务书只覆盖他说的范围，他没提的方向不加。'}
 - ${staged ? '候选人分步推进（见下面 stages）。' : '**不替候选人拆推进步骤**：任务书只说背景、目标、交付和约束，不写「第一步…第二步…」、不给方法框架、示例清单、参考做法或「这一步请你」——怎么拆、先做什么由候选人自己定，这是考察的一部分。'}
 - problem.statement：一句话说清 ${name} 现在的哪个${opts.research ? '研究问题' : '业务问题'}需要「${role}」来解决，必须能从材料里推出来（${opts.research ? '研究方向 / 在研项目 / 平台 / 岗位要求' : '近期动态 / 产品 / 岗位职责 / 典型任务'}）；why_now 一句话说这件事为什么现在要做（最近的动态、计划、时间节点），中性陈述；evidence 列 2–4 条材料原句 + 来源名。
-- task：title（8–16 字）；brief（给做题人看的任务书，300–500 字，口吻像业务负责人交代活；**用 Markdown 分小节写**，依次是「#### 背景」「#### 要你做什么」「#### 交付」（交什么、交给谁）「#### 时间与方式」，每节 1–4 句或短列表，不要写成一大段；「交给谁」写角色（如「交给投委会」），**不要给真实人物编邮箱、电话、微信**）；deliverables 2–3 个（id d1…，title，format 如「一页纸方案 / 估值表 / 筛选脚本 / 流程图」，**module** 从 doc / sheet / code / design / canvas / board 里选：文档类 doc，表格 / 模型 / 测算表 sheet，脚本 / SQL / 函数 code，工程参数表 + 尺寸草图 design（只给结构 / 机械 / 电气这类要定尺寸的工程设计），流程图 / 泳道图 / 思维导图 / 架构图 canvas，线框图 / 界面草图 / 海报 / IP 形象 / 视觉方案这类自由画的设计 board（产品经理、UI / 视觉 / 品牌设计师用这个，不要给他们 design）——**一道题的交付物可以混用模组**，这个岗位真实工作里会交什么就交什么，别为了省事全写成文档）；time_minutes 填 ${clampMinutes(opts.minutes, DEFAULT_MINUTES)}（这是候选人的限时，出任务的人定的或默认值：开始后不暂停、到点自动交卷）；**交付物的量反过来按这个时长定**，让认真做的人做得完——15–30 分钟的小体验只交一样小东西；rules 3–6 条，**每条以分类开头**：「AI 使用：」「数据与来源：」「工作过程：」「交付：」之一（必须含「AI 使用：可以随便用 AI，不算作弊；评的是你怎么用」和「数据与来源：材料里没有的数据要标注假设」）；同一类可以有多条，一条只说一件事。
+- task：title（8–16 字）；brief（给作答人看的任务书，300–500 字，口吻像业务负责人交代活；**用 Markdown 分小节写**，依次是「#### 背景」「#### 要你做什么」「#### 交付」（交什么、交给谁）「#### 时间与方式」，每节 1–4 句或短列表，不要写成一大段；「交给谁」写角色（如「交给投委会」），**不要给真实人物编邮箱、电话、微信**）；deliverables 2–3 个（id d1…，title，format 如「一页纸方案 / 估值表 / 筛选脚本 / 流程图」，**module** 从 doc / sheet / code / design / canvas / board 里选：文档类 doc，表格 / 模型 / 测算表 sheet，脚本 / SQL / 函数 code，工程参数表 + 尺寸草图 design（只给结构 / 机械 / 电气这类要定尺寸的工程设计），流程图 / 泳道图 / 思维导图 / 架构图 canvas，线框图 / 界面草图 / 海报 / IP 形象 / 视觉方案这类自由画的设计 board（产品经理、UI / 视觉 / 品牌设计师用这个，不要给他们 design）——**一道题的交付物可以混用模组**，这个岗位真实工作里会交什么就交什么，别为了省事全写成文档）；time_minutes 填 ${clampMinutes(opts.minutes, DEFAULT_MINUTES)}（这是候选人的限时，出任务的人定的或默认值：开始后不暂停、到点自动提交）；**交付物的量反过来按这个时长定**，让认真做的人做得完——15–30 分钟的小体验只交一样小东西；rules 3–6 条，**每条以分类开头**：「AI 使用：」「数据与来源：」「工作过程：」「交付：」之一（必须含「AI 使用：可以随便用 AI，不算作弊；评的是你怎么用」和「数据与来源：材料里没有的数据要标注假设」）；同一类可以有多条，一条只说一件事。
 - materials 3–5 份，做这件事真的会拿到的东西：kind ∈ doc/table/note/email/data；content 用 Markdown，每份 300–900 字，表格用 Markdown 表；source：db=全部来自材料、generated=为任务合理补写（必须贴近企业真实情况并在正文标「示例数据」）、mixed；basis 写它依据材料的哪一段。材料按做这件事真会拿到的样子给齐，**默认不刻意埋坑**；只有任务本身就是找问题 / 查错 / 审核类时，才在材料里留真实会遇到的问题（信息不全、口径不一致、过期）。${rich ? '可以在材料里给些背景解读，帮候选人更快上手，但不替他下结论。' : '**材料只给事实和数据**（数字、记录、原话、截图说明），不写分析结论、问题清单、「注意」「提示」这类引导；如果是找问题类任务，要候选人自己发现的问题留在数据里，不点破。'}
-${staged ? `- stages（必填，${opts.sample ? `${opts.sample.stages.length} 步，和样本一一对应` : '3–5 步，按这道题自然的推进顺序'}）：id q1…；type ${opts.sample ? '同样本' : '从 structuring / calculation / judgement / synthesis 里选'}；question（这一步问候选人什么，一句话）；reveal（这一步才给的信息：背景、数据表、图表，Markdown，图表用 Markdown 表把数据给全，300–900 字；数据要和 materials 里的事实一致，材料没有的标「示例数据」）；expected（参考答案 / 关键结论，评卷用，候选人看不到，含关键数字）；calc（这一步要算的数：label、expr 只含数字和 + - * / ( )、value；没有测算填 []）。brief 里要告诉候选人「这道题分 ${opts.sample ? opts.sample.stages.length : '几（写你出的 stages 步数）'} 步推进，每一步看完信息再答，答完再看下一步」，deliverables 按步骤对应。\n` : ''}- rubric 5–8 条：id r1…；title；desc（怎么算做到）；weight 加起来 100；${staged ? '每一步至少对应一条（desc 里写明对应 q 几）；' : ''}depends_on 填前置条目 id（没有填 []）；basis 必须指向材料来源（「行业标准 xxx 第 n 点」「岗位职责：…」「典型任务：…」），实在没有写「出题人判断，待业务负责人确认」；「出题人额外要求」里给了考核标准或「怎样算做得好」的，rubric 照它的条目定，basis 写「出题人给的标准：…」，不要自己另起一套；levels L1–L4 各一句可观察的行为描述（BARS）。
+${staged ? `- stages（必填，${opts.sample ? `${opts.sample.stages.length} 步，和样本一一对应` : '3–5 步，按这个任务自然的推进顺序'}）：id q1…；type ${opts.sample ? '同样本' : '从 structuring / calculation / judgement / synthesis 里选'}；question（这一步问候选人什么，一句话）；reveal（这一步才给的信息：背景、数据表、图表，Markdown，图表用 Markdown 表把数据给全，300–900 字；数据要和 materials 里的事实一致，材料没有的标「示例数据」）；expected（参考答案 / 关键结论，评估用，候选人看不到，含关键数字）；calc（这一步要算的数：label、expr 只含数字和 + - * / ( )、value；没有测算填 []）。brief 里要告诉候选人「这个任务分 ${opts.sample ? opts.sample.stages.length : '几（写你出的 stages 步数）'} 步推进，每一步看完信息再答，答完再看下一步」，deliverables 按步骤对应。\n` : ''}- rubric 5–8 条：id r1…；title；desc（怎么算做到）；weight 加起来 100；${staged ? '每一步至少对应一条（desc 里写明对应 q 几）；' : ''}depends_on 填前置条目 id（没有填 []）；basis 必须指向材料来源（「行业标准 xxx 第 n 点」「岗位职责：…」「典型任务：…」），实在没有写「出任务的人判断，待业务负责人确认」；「出任务的人额外要求」里给了考核标准或「怎样算做得好」的，rubric 照它的条目定，basis 写「出任务的人给的标准：…」，不要自己另起一套；levels L1–L4 各一句可观察的行为描述（BARS）。
 ${en ? `## 语言：这是英文题
-给候选人看的内容**全部用英文**写（自然、地道的职场英文，不要中式英文）：problem.statement（候选人在标题下看得到）、task.title（6–12 个词）、task.role、task.brief（小节标题依次用「#### Background」「#### What you'll do」「#### Deliverables」「#### Time & format」）、deliverables 的 title 和 format、rules（分类前缀用「AI use:」「Data & sources:」「Process:」「Deliverables:」，必须含「${EN_RULE}」和「${EN_DATA}」）、materials 的 title 和 content${staged ? '、stages 的 question 和 reveal' : ''}、rubric 的 title / desc / levels（候选人在报告里看得到）。只给出题人看的用中文：problem.why_now、evidence、materials 和 rubric 的 basis${staged ? '、stages 的 expected 和 calc 的 label' : ''}。企业名、产品名保留原文。
+给候选人看的内容**全部用英文**写（自然、地道的职场英文，不要中式英文）：problem.statement（候选人在标题下看得到）、task.title（6–12 个词）、task.role、task.brief（小节标题依次用「#### Background」「#### What you'll do」「#### Deliverables」「#### Time & format」）、deliverables 的 title 和 format、rules（分类前缀用「AI use:」「Data & sources:」「Process:」「Deliverables:」，必须含「${EN_RULE}」和「${EN_DATA}」）、materials 的 title 和 content${staged ? '、stages 的 question 和 reveal' : ''}、rubric 的 title / desc / levels（候选人在报告里看得到）。只给出任务的人看的用中文：problem.why_now、evidence、materials 和 rubric 的 basis${staged ? '、stages 的 expected 和 calc 的 label' : ''}。企业名、产品名保留原文。
 ` : ''}只返回 JSON：
 { "env": { "type": "doc" },
   "problem": { "statement": "", "why_now": "", "evidence": [ { "text": "", "source": "" } ] },
   "task": { "title": "", "role": "${role}", "brief": "", "deliverables": [ { "id": "d1", "title": "", "format": "", "module": "doc" } ], "time_minutes": 60, "rules": [""] },
   "materials": [ { "id": "m1", "title": "", "kind": "doc", "content": "", "source": "db", "basis": "" } ],
   "rubric": [ { "id": "r1", "title": "", "desc": "", "weight": 20, "depends_on": [], "basis": "", "levels": { "L1": "", "L2": "", "L3": "", "L4": "" } } ]${staged ? ',\n  "stages": [ { "id": "q1", "type": "structuring", "question": "", "reveal": "", "expected": "", "calc": [ { "label": "", "expr": "", "value": 0 } ] } ]' : ''} }`;
-  const { parsed: p, model: used } = await askJson(prompt, model, 'Generate · 出题', name, undefined, opts.onPart);
+  const { parsed: p, model: used } = await askJson(prompt, model, 'Generate · 出任务', name, undefined, opts.onPart);
   const e = p.env || {};
   const envType: WorkEnvType = opts.env || (['doc', 'code', 'sheet', 'design'].includes(e.type) ? e.type : 'doc');   // open / plugin 原样保留，参与页据此只给开放模式
   const env: WorkEnv = { type: envType };
@@ -456,10 +456,10 @@ export function sourcesOf(raw: WorkContext) {
 /** 出题人提意见 → 按意见修订（保留没提到的部分；rubric 权重重新归一）。返回新题 + 一句改了什么 */
 export async function reviseTask(task: WorkTask, ctx: WorkContext, feedback: string, opts: { model?: string } = {}): Promise<{ task: WorkTask; model: string; changelog: string }> {
   const model = opts.model || WORK_MODEL;
-  const prompt = `你是「真活台」的出题人。业务负责人看了下面这道真活，提了意见。请**按意见修订**，没提到的部分原样保留（不要顺手改风格、不要重写材料正文），意见涉及的部分改到位；仍然只用材料，材料里没有的数字标「示例数据」。
+  const prompt = `你是「真活台」的出任务的人。业务负责人看了下面这道真活，提了意见。请**按意见修订**，没提到的部分原样保留（不要顺手改风格、不要重写材料正文），意见涉及的部分改到位；仍然只用材料，材料里没有的数字标「示例数据」。
 ## 业务负责人的意见
 ${feedback.slice(0, 1200)}
-## 材料（出题依据）
+## 材料（出任务依据）
 ${renderContext(ctx).slice(0, 12000)}
 ## 现在的题（完整 JSON）
 ${JSON.stringify({ env: task.env, problem: task.problem, task: task.task, materials: task.materials, rubric: task.rubric }).slice(0, 40000)}

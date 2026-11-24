@@ -32,13 +32,13 @@ function Reports() {
         lead={<>{task ? <><Link href="/work/ws/reports" className="wws-back">← 看所有题的</Link>　</> : null}点「看报告」在右边打开；勾同一道题的 2–4 个人，可以让助理并排比、给录用建议。</>}
         acts={sameTask ? <Link href={askHref(`把这几个人并排比一下：${picked.map(p => p.name).join('、')}。推荐谁进面试？各自要追问什么？`, { task_id: picked[0].task_id, title: picked[0].task_title })}><button className="wws-btn p">让助理比这 {picked.length} 个人</button></Link> : undefined} />
       <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center', marginBottom: 14 }}>
-        <input className="wws-in" value={kw} onChange={e => setKw(e.target.value)} placeholder="搜名字 / 题目 / 企业" style={{ minWidth: 240 }} />
+        <input className="wws-in" value={kw} onChange={e => setKw(e.target.value)} placeholder="搜名字 / 任务 / 企业" style={{ minWidth: 240 }} />
         <label style={{ fontSize: 13, color: 'var(--ink2)', display: 'flex', gap: 6, alignItems: 'center' }}><input type="checkbox" checked={onlyDone} onChange={e => setOnlyDone(e.target.checked)} />只看交了卷的</label>
         <span className="wws-muted" style={{ marginLeft: 'auto' }}>{people ? `${list.length} 份` : ''}{picked.length ? ` · 已勾 ${picked.length} 人${picked.length > 1 && !sameTask ? '（不是同一道题，没法逐条比）' : ''}` : ''}</span>
       </div>
       <div className="wws-card" style={{ overflowX: 'auto' }}>
         <table className="wws-table t-reports">
-          <thead><tr>{[['', ''], ['NAME', '谁'], ['TASK', '题目'], ['MODE', '方式'], ['SUBMITTED', '交卷'], ['TIME', '用时'], ...(ai ? [] : [['SCORE', '总分']]), ['AI USE', 'AI 使用'], ['IN A LINE', '一句话'], ['', '']].map(([e, z], i) => <th key={i}>{e}<small>{z}</small></th>)}</tr></thead>
+          <thead><tr>{[['', ''], ['NAME', '谁'], ['TASK', '任务'], ['MODE', '方式'], ['SUBMITTED', '提交'], ['TIME', '用时'], ...(ai ? [] : [['SCORE', '总分']]), ['AI USE', 'AI 使用'], ['IN A LINE', '一句话'], ['', '']].map(([e, z], i) => <th key={i}>{e}<small>{z}</small></th>)}</tr></thead>
           <tbody>
             {people == null && <tr><td colSpan={10} className="wws-muted">读取中…</td></tr>}
             {people && !list.length && <tr><td colSpan={10}><Empty>{people.length ? '没有符合的。' : '还没有人做过你的题。题发布后把参与链接发给候选人。'}</Empty></td></tr>}

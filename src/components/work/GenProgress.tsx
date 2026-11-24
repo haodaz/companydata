@@ -55,7 +55,7 @@ const BASE_LINES: Line[] = [
   { t: '按评分标准逐条打分' },
   { t: '给每一条找答卷里的原文证据' },
   { t: '算出 AI 基线分' },
-  { t: '发布这道题，生成参与链接' },
+  { t: '发布这个任务，生成参与链接' },
 ];
 
 const need = (r: string) => r.trim().length > 30 ? r.trim().slice(0, 30) + '…' : r.trim();

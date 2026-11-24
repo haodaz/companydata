@@ -6,7 +6,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { logTokenUsage } from '@/lib/token-logger';
 
-const PROMPT = '这是一道考核题要发给候选人的素材图。请用中文写一段 150–400 字的说明，让没看到图的人也能用它做题：1）这是什么图（报表 / 图纸 / 截图 / 流程图 / 照片…）；2）里面有哪些区块、表头、字段、单位；3）关键数字逐条列出（看得清的都列，带单位和所属项）；4）图上的备注、脚注、口径说明；5）看起来可疑或口径不一致的地方。只描述，不下结论，不编造看不清的数字。';
+const PROMPT = '这是一道考核题要发给候选人的素材图。请用中文写一段 150–400 字的说明，让没看到图的人也能用它作答：1）这是什么图（报表 / 图纸 / 截图 / 流程图 / 照片…）；2）里面有哪些区块、表头、字段、单位；3）关键数字逐条列出（看得清的都列，带单位和所属项）；4）图上的备注、脚注、口径说明；5）看起来可疑或口径不一致的地方。只描述，不下结论，不编造看不清的数字。';
 
 type Media = 'image/png' | 'image/jpeg' | 'image/gif' | 'image/webp';
 /** 长截图切段（11-13 潜历：手机长图 780×10090 超过 Claude 单图 8000 像素上限，整张失败；就算不超，长边也会被压到 1568，字看不清）。
@@ -60,7 +60,7 @@ export async function readPdfVisually(buf: Buffer, name = '', maxChars = 12000):
     const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
     const res = await client.messages.create({ model: 'claude-sonnet-5-5', max_tokens: 8000, messages: [{ role: 'user', content: [
       { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: buf.toString('base64') } } as any,
-      { type: 'text', text: `这是候选人做一道考核任务交上来的文件${name ? `《${name}》` : ''}。请把它的内容转写成 Markdown，给评卷的人读：按页 / 按章节保留标题、要点、结论、表格（用 Markdown 表，数字照抄）、图和画布里的文字与连线关系（用一两句话说清画的是什么）。只转写看到的，不评价、不补充；看不清的写「看不清」。超过 ${Math.round(maxChars / 1000)}k 字就压缩次要段落，结论和数字保留。` },
+      { type: 'text', text: `这是候选人做一道考核任务交上来的文件${name ? `《${name}》` : ''}。请把它的内容转写成 Markdown，给评估的人读：按页 / 按章节保留标题、要点、结论、表格（用 Markdown 表，数字照抄）、图和画布里的文字与连线关系（用一两句话说清画的是什么）。只转写看到的，不评价、不补充；看不清的写「看不清」。超过 ${Math.round(maxChars / 1000)}k 字就压缩次要段落，结论和数字保留。` },
     ] }] });
     await logTokenUsage({ tool_name: 'work', task_name: 'Grade · 读 PDF 原件', model_id: 'claude-sonnet-5-5', usageMetadata: { promptTokenCount: res.usage?.input_tokens, candidatesTokenCount: res.usage?.output_tokens } } as any).catch(() => {});
     return res.content.map(c => (c.type === 'text' ? c.text : '')).join('').trim().slice(0, maxChars);

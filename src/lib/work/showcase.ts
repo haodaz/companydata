@@ -95,7 +95,7 @@ export async function deidentifyToShowcase(taskId: string, email: string) {
   const { data: t } = await db.from('work_tasks').select('id, company_name, role, task, materials').eq('id', taskId).single();
   if (!t) throw new Error('没有这道任务');
   const text = await baseTaskText({ id: '', source_task_id: taskId, industry: '', direction: '', role: t.role, title: t.task?.title || '', scenario: '', deliverables: [], materials: [] });
-  const prompt = `下面是一道已经出好的「真活」（企业真实业务任务）。把它写成「任务库」里给别的企业浏览的展示题面：**去头**——企业、基金、客户、人名、地名、工厂 / 项目 / 产品专名一律换成泛称（如「一家动力电池龙头」「一家头部美元基金」「欧洲新工厂」），业务逻辑、关键约束、交付对象的角色照原文保留，不编数字。
+  const prompt = `下面是一道已经出好的「真活」（企业真实业务任务）。把它写成「任务库」里给别的企业浏览的展示任务书：**去头**——企业、基金、客户、人名、地名、工厂 / 项目 / 产品专名一律换成泛称（如「一家动力电池龙头」「一家头部美元基金」「欧洲新工厂」），业务逻辑、关键约束、交付对象的角色照原文保留，不编数字。
 原企业：${t.company_name}（这个名字和它的简称、英文名都不能出现在输出里）
 ## 原任务
 ${text.slice(0, 9000)}

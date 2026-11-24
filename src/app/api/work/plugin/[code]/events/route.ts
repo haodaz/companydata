@@ -12,7 +12,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ cod
   const { code } = await params;
   const x = await sessionByCode(code);
   if (!x) return NextResponse.json({ ok: false, error: '真活码不对' }, { status: 404 });
-  if (x.s.submitted_at) return NextResponse.json({ ok: false, error: '已经交卷了', submitted: true }, { status: 409 });
+  if (x.s.submitted_at) return NextResponse.json({ ok: false, error: '已经提交了', submitted: true }, { status: 409 });
   const body = await req.json().catch(() => ({}));
   const incoming = cleanEvents(body.events);
   const chats = (Array.isArray(body.chats) ? body.chats : []).slice(0, 40).filter((c: any) => c?.text && isAiHost(String(c.host || ''))).map((c: any) => ({

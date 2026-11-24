@@ -21,7 +21,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   if (!t) return NextResponse.json({ ok: false, error: errL(t, '链接不可用') }, { status: 404 });
   const { data: s } = await db.from('work_sessions').select('id, events, submitted_at, started_at, participant').eq('id', sid).eq('task_id', t.id).maybeSingle();
   if (!s) return NextResponse.json({ ok: false, error: errL(t, '没有这次作答') }, { status: 404 });
-  if (s.submitted_at) return NextResponse.json({ ok: false, error: errL(t, '已经交卷了') }, { status: 409 });
+  if (s.submitted_at) return NextResponse.json({ ok: false, error: errL(t, '已经提交了') }, { status: 409 });
   if (timing(t.task, s).closed) return NextResponse.json({ ok: false, error: errL(t, '时间到了'), expired: true }, { status: 409 });
   // 交付文件直传（11-10）：sign 发签名地址 → 浏览器直传存储 → done 登记事件；remove 记一条 file_remove（交卷时不算）。见 lib/work/upload-client.ts
   if ((req.headers.get('content-type') || '').includes('application/json')) {

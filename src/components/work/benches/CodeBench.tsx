@@ -40,12 +40,12 @@ export function CodeBench({ code, onCode, notes, onNotes, tests, language, onRun
       {/* 终端 */}
       <div style={{ flex: '0 1 150px', minHeight: 64, background: '#fafbff', borderTop: '1px solid #d9dbe6', fontFamily: mono, fontSize: 12.5, display: 'flex', flexDirection: 'column' }}>
         <div style={{ display: 'flex', gap: 14, padding: '6px 12px', borderBottom: '1px solid #1a1a2e', color: '#888888', fontSize: 11.5 }}><span style={{ color: '#6055f5' }}>TERMINAL</span><span>PROBLEMS</span><span>OUTPUT</span>{passed && <span style={{ marginLeft: 'auto', color: passed[1] === passed[2] ? '#3ddc97' : '#ffd166' }}>● {passed[1]}/{passed[2]} passed</span>}</div>
-        <pre style={{ flex: 1, margin: 0, padding: '8px 12px', overflow: 'auto', whiteSpace: 'pre-wrap', color: '#333333' }}><span style={{ color: '#3ddc97' }}>$</span> npm test{'\n'}{testOut ? testOut.replace(/^✓/gm, '\u001b').split('\u001b').join('✓') : (tests.length ? L('（还没跑。点右上 Run tests）', '(Not run yet. Click Run tests at the top right.)') : L('（这道题没有自测用例）', '(This task has no self-tests.)'))}</pre>
+        <pre style={{ flex: 1, margin: 0, padding: '8px 12px', overflow: 'auto', whiteSpace: 'pre-wrap', color: '#333333' }}><span style={{ color: '#3ddc97' }}>$</span> npm test{'\n'}{testOut ? testOut.replace(/^✓/gm, '\u001b').split('\u001b').join('✓') : (tests.length ? L('（还没跑。点右上 Run tests）', '(Not run yet. Click Run tests at the top right.)') : L('（这个任务没有自测用例）', '(This task has no self-tests.)'))}</pre>
       </div>
     </div>
   );
 }
 
 function testsSrc(tests: { name: string; code: string }[], lang?: Lang) {
-  return tests.length ? `${pick(lang, '// 自测用例（只读）：每个用例拿到 solution 后返回 true / false', '// Self-tests (read-only): each test receives solution and returns true / false')}\n${tests.map((t, i) => `test(${JSON.stringify(t.name)}, (solution) => {\n  ${t.code.includes('return') ? t.code.replace(/\n/g, '\n  ') : 'return ' + t.code}\n});${i < tests.length - 1 ? '\n' : ''}`).join('\n')}` : pick(lang, '// 这道题没有自测用例', '// This task has no self-tests');
+  return tests.length ? `${pick(lang, '// 自测用例（只读）：每个用例拿到 solution 后返回 true / false', '// Self-tests (read-only): each test receives solution and returns true / false')}\n${tests.map((t, i) => `test(${JSON.stringify(t.name)}, (solution) => {\n  ${t.code.includes('return') ? t.code.replace(/\n/g, '\n  ') : 'return ' + t.code}\n});${i < tests.length - 1 ? '\n' : ''}`).join('\n')}` : pick(lang, '// 这个任务没有自测用例', '// This task has no self-tests');
 }

@@ -22,11 +22,11 @@ const mins = (sec: number | null | undefined) => (sec == null ? null : Math.roun
 
 export const WORK_HOME_TOOLS: Anthropic.Tool[] = [
   ...WORK_CHAT_TOOLS,
-  { name: 'my_tasks', description: '列出用户出过的真活：标题、企业、岗位、状态（待发布 / 已发布 / 已下架）、参与和交卷人数、平均分、最高分、AI 基线、最近一次交卷时间。用户问「我的题」「哪道题有人做了」「最近怎么样」先调它。query 按标题 / 企业 / 岗位筛。', input_schema: { type: 'object', properties: { query: { type: 'string' }, scope: { type: 'string', enum: ['mine', 'all'], description: '默认 mine；只有管理员说「全部 / 全站」才用 all' } } } },
-  { name: 'task_people', description: '一道真活谁做了：每个人的名字、作答方式、开始 / 交卷时间、用时、总分、AI 使用分、一句话总结、最强和最弱的一条。按分数排。预览（出任务的人自己试做的）单独标出，不算候选人。', input_schema: { type: 'object', properties: { task_id: { type: 'string', description: '任务 id 或参与链接里的编号' } }, required: ['task_id'] } },
+  { name: 'my_tasks', description: '列出用户出过的真活：标题、企业、岗位、状态（待发布 / 已发布 / 已下架）、参与和提交人数、平均分、最高分、AI 基线、最近一次提交时间。用户问「我的题」「哪道题有人做了」「最近怎么样」先调它。query 按标题 / 企业 / 岗位筛。', input_schema: { type: 'object', properties: { query: { type: 'string' }, scope: { type: 'string', enum: ['mine', 'all'], description: '默认 mine；只有管理员说「全部 / 全站」才用 all' } } } },
+  { name: 'task_people', description: '一道真活谁做了：每个人的名字、作答方式、开始 / 提交时间、用时、总分、AI 使用分、一句话总结、最强和最弱的一条。按分数排。预览（出任务的人自己试做的）单独标出，不算候选人。', input_schema: { type: 'object', properties: { task_id: { type: 'string', description: '任务 id 或参与链接里的编号' } }, required: ['task_id'] } },
   { name: 'read_report', description: '读一个人的完整报告：逐条评分（等级、得分、证据）、做得好的 / 差的、过程（阶段、高光、风险、怎么用 AI）、AI 使用评价、和 AI 基线差多少、交付物原文摘录、问 AI 的前几个问题、最后一问写了什么。分析某个人、回答「他为什么分低」时用。会在右边打开这份报告。', input_schema: { type: 'object', properties: { session_id: { type: 'string' } }, required: ['session_id'] } },
-  { name: 'compare_people', description: '把一道题里的几个人逐条并排比（每条评分标准各人得分 + AI 基线），加上各自的强项弱项。不给 session_ids 就取交卷的前 4 名。', input_schema: { type: 'object', properties: { task_id: { type: 'string' }, session_ids: { type: 'array', items: { type: 'string' } } }, required: ['task_id'] } },
-  { name: 'task_insights', description: '一道题整体的作答情况：交卷率、用时分布（对比限时）、作答方式分布、每条评分标准的平均 / 最低 / 最高和 L1 人数（哪条普遍做不到）、AI 使用分、反复出现的短板、和 AI 基线的差距。用户问「这道题出得怎么样」「大家卡在哪」「题是不是太难」时用。', input_schema: { type: 'object', properties: { task_id: { type: 'string' } }, required: ['task_id'] } },
+  { name: 'compare_people', description: '把一道题里的几个人逐条并排比（每条评分标准各人得分 + AI 基线），加上各自的强项弱项。不给 session_ids 就取提交的前 4 名。', input_schema: { type: 'object', properties: { task_id: { type: 'string' }, session_ids: { type: 'array', items: { type: 'string' } } }, required: ['task_id'] } },
+  { name: 'task_insights', description: '一道题整体的作答情况：提交率、用时分布（对比限时）、作答方式分布、每条评分标准的平均 / 最低 / 最高和 L1 人数（哪条普遍做不到）、AI 使用分、反复出现的短板、和 AI 基线的差距。用户问「这个任务出得怎么样」「大家卡在哪」「题是不是太难」时用。', input_schema: { type: 'object', properties: { task_id: { type: 'string' } }, required: ['task_id'] } },
   { name: 'set_task_status', description: '上架 / 下架 / 删除一道题：published = 发布（参与链接可用），archived = 下架（链接停用，已有作答保留，可以再发布），deleted = 删除（从列表里拿掉、链接失效；作答和报告不会丢）。下架、删除前都用 ask_user 确认。', input_schema: { type: 'object', properties: { task_id: { type: 'string' }, status: { type: 'string', enum: ['published', 'archived', 'deleted'] } }, required: ['task_id', 'status'] } },
   { name: 'search_library', description: '在平台任务库里找现成的任务（去了企业名的好题，可以原题直出换成用户的公司，或只做参考）。按关键词（行业、方向、岗位、要考的本事，如「数据分析」「投研」「品牌设计」）找，返回编号、标题、行业 · 方向、岗位、场景摘要、要交什么、建议用时。不给关键词就返回各行业有多少道。用户说「从任务库挑」「有没有现成的题」时用；会在右边打开任务库。', input_schema: { type: 'object', properties: { query: { type: 'string', description: '关键词，空格分开' }, industry: { type: 'string' } } } },
   { name: 'kb_lookup', description: '查用户知识库里存过的企业资料和岗位（要找什么样的人、看重什么）。出任务前先查：存过就直接用，复述时说「按你知识库里的 X」，不再让用户重说。', input_schema: { type: 'object', properties: { company: { type: 'string' }, role: { type: 'string' } } } },
@@ -97,18 +97,18 @@ async function run(name: string, input: any, user: User, progress?: (p: { part: 
     case 'my_tasks': {
       const list = await myTasks(user, { query: input.query, all: input.scope === 'all' });
       const busy = list.filter(t => t.submitted).length;
-      return { result: list.slice(0, 60).map(({ owner_key, ...t }) => t), label: list.length ? `你出过 ${list.length} 道题，${busy} 道有人交卷` : '还没出过题' };
+      return { result: list.slice(0, 60).map(({ owner_key, ...t }) => t), label: list.length ? `你出过 ${list.length} 道题，${busy} 道有人提交` : '还没出过题' };
     }
     case 'task_people': {
       const t = await loadMine(user, String(input.task_id));
       const ps = await taskPeople(t.id);
       const real = ps.filter(p => !p.preview);
-      return { result: { title: t.task?.title, time_minutes: t.task?.time_minutes, baseline: t.baseline?.result?.total ?? null, people: ps.slice(0, 80) }, ui: taskUi(t), label: `「${t.task?.title}」：${real.length} 人做，${real.filter(p => p.submitted_at).length} 人交卷` };
+      return { result: { title: t.task?.title, time_minutes: t.task?.time_minutes, baseline: t.baseline?.result?.total ?? null, people: ps.slice(0, 80) }, ui: taskUi(t), label: `「${t.task?.title}」：${real.length} 人做，${real.filter(p => p.submitted_at).length} 人提交` };
     }
     case 'read_report': {
       const { x, t } = await sessionOf(user, String(input.session_id));
       const r = x.report || {};
-      if (!r.result) return { result: { name: nameOf(x), submitted: !!x.submitted_at, note: x.submitted_at ? '报告还在生成' : '还没交卷' }, ui: reportUi(t, x), label: `${nameOf(x)}：${x.submitted_at ? '报告还在生成' : '还没交卷'}` };
+      if (!r.result) return { result: { name: nameOf(x), submitted: !!x.submitted_at, note: x.submitted_at ? '报告还在生成' : '还没提交' }, ui: reportUi(t, x), label: `${nameOf(x)}：${x.submitted_at ? '报告还在生成' : '还没提交'}` };
       const p = r.process || {}; const u = r.ai_use || {};
       const chat = (x.ai_chat || []) as any[];
       if ((await getWorkScale()) === 'ai_use') return { result: { scale_note: AI_ONLY_NOTE, name: nameOf(x), mode: x.participant?.mode, minutes: mins(durOf(x)), time_minutes: t.task?.time_minutes, ai_use: u.score == null ? s(u.verdict, 200) || '没用 AI' : { score: u.score, verdict: u.verdict, items: (u.items || []).map((i: any) => i.score == null ? `${i.title} 未观测（${s(i.why_na, 60)}）` : `${i.title} ${i.score}：${s(i.note, 100)}`), disclosure: u.disclosure ? `${u.disclosure.match}：${s(u.disclosure.note, 100)}` : undefined }, asks: chat.length, first_asks: chat.slice(0, 6).map((c: any) => s(c.q, 120)) }, ui: reportUi(t, x), label: `读了 ${nameOf(x)} 的报告` };
@@ -132,7 +132,7 @@ async function run(name: string, input: any, user: User, progress?: (p: { part: 
       let rows = (data || []).filter(x => x.report?.result && !x.participant?.preview);
       const aiOnly = (await getWorkScale()) === 'ai_use', rank = (x: any) => Number(aiOnly ? x.report.ai_use?.score : x.score) || 0;
       rows = want.length ? rows.filter(x => want.includes(x.id)) : rows.sort((a, b) => rank(b) - rank(a)).slice(0, 4);
-      if (!rows.length) return { result: { error: '这道题还没有评好分的作答' }, ui: taskUi(t), label: '还没有可比的' };
+      if (!rows.length) return { result: { error: '这个任务还没有评好分的作答' }, ui: taskUi(t), label: '还没有可比的' };
       if (aiOnly) return { result: { scale_note: AI_ONLY_NOTE, title: t.task?.title, people: rows.map(x => ({ session_id: x.id, name: nameOf(x), minutes: mins(durOf(x)), ai_use: x.report.ai_use?.score ?? null, verdict: s(x.report.ai_use?.verdict, 200), items: (x.report.ai_use?.items || []).map((i: any) => `${i.title} ${i.score ?? '未观测'}`) })) }, ui: taskUi(t), label: `并排比了 ${rows.length} 个人` };
       const rubric = (t.rubric || []) as any[];
       const base = t.baseline?.result?.items || [];
@@ -155,7 +155,7 @@ async function run(name: string, input: any, user: User, progress?: (p: { part: 
       const durs = graded.map(x => mins(durOf(x))).filter((v): v is number => v != null).sort((a, b) => a - b);
       const modes: Record<string, number> = {}; for (const x of all) { const m = x.participant?.mode || 'bench'; modes[m] = (modes[m] || 0) + 1; }
       const ai = graded.map(x => x.report.ai_use?.score).filter((v: any) => v != null) as number[];
-      if ((await getWorkScale()) === 'ai_use') return { result: { scale_note: AI_ONLY_NOTE, title: t.task?.title, status: t.status, time_minutes: t.task?.time_minutes, started: all.length, submitted: done.length, graded: graded.length, modes, ai_use_avg: ai.length ? Math.round(ai.reduce((a, b) => a + b, 0) / ai.length) : null, ai_use_min: ai.length ? Math.min(...ai) : null, ai_use_max: ai.length ? Math.max(...ai) : null, no_ai: graded.filter(x => x.report.ai_use && x.report.ai_use.score == null).length }, ui: taskUi(t), label: '看了这道题的 AI 使用情况' };
+      if ((await getWorkScale()) === 'ai_use') return { result: { scale_note: AI_ONLY_NOTE, title: t.task?.title, status: t.status, time_minutes: t.task?.time_minutes, started: all.length, submitted: done.length, graded: graded.length, modes, ai_use_avg: ai.length ? Math.round(ai.reduce((a, b) => a + b, 0) / ai.length) : null, ai_use_min: ai.length ? Math.min(...ai) : null, ai_use_max: ai.length ? Math.max(...ai) : null, no_ai: graded.filter(x => x.report.ai_use && x.report.ai_use.score == null).length }, ui: taskUi(t), label: '看了这个任务的 AI 使用情况' };
       const totals = graded.map(x => Number(x.score) || 0);
       const result = {
         title: t.task?.title, status: t.status, time_minutes: t.task?.time_minutes, started: all.length, submitted: done.length, graded: graded.length,
@@ -202,19 +202,19 @@ async function run(name: string, input: any, user: User, progress?: (p: { part: 
 /** focus：用户右边正开着的东西（题 / 报告），「这道题」「他」指的就是它 */
 export function workHomeKit(user: User, focus?: { task_id?: string; session_id?: string; title?: string; name?: string } | null): AgentKit {
   const where = focus?.session_id ? `用户右边正开着「${focus.title || ''}」里 ${focus.name || '某人'} 的报告（task_id ${focus.task_id}，session_id ${focus.session_id}）：他说「这份报告」「他 / 她」指的就是这个。`
-    : focus?.task_id ? `用户右边正开着「${focus.title || ''}」这道题的空间（task_id ${focus.task_id}）：他说「这道题」指的就是它。` : '';
+    : focus?.task_id ? `用户右边正开着「${focus.title || ''}」这个任务的空间（task_id ${focus.task_id}）：他说「这个任务」指的就是它。` : '';
   const system = `${workChatSystemPrompt(user.email).replace('你是「百业AI｜真活」的出任务助理，在帮出任务的人', '你是「百业AI｜真活」工作台的助理，在帮出任务的人')}
 
 工作台（2026-11-05 起）：你不只出任务，出任务的人在真活里要干的事都能做——
-- 管：看他出过哪些题（my_tasks）、上架、下架、删除（set_task_status，下架和删除先 ask_user 确认）、改限时 / 到点交卷 / 岗位名 / 素材、允许某人重做（update_task_settings）、改题目内容（revise_task）。
+- 管：看他出过哪些题（my_tasks）、上架、下架、删除（set_task_status，下架和删除先 ask_user 确认）、改限时 / 到点提交 / 岗位名 / 素材、允许某人重做（update_task_settings）、改任务内容（revise_task）。
 - 看：一道题谁做了（task_people）、一个人的报告（read_report）、几个人并排比（compare_people）、整道题的作答情况（task_insights）。
 - 任务库：用户说「从任务库挑」「有没有现成的题」，search_library 按他要考的本事 / 行业找，挑最合适的 2–3 道用 ask_user 让他选（选项写标题，问题里一句话说清各自考什么）；选定后照「用任务库里的某任务」的流程走：问企业、问原题直出还是只做参考，create_task 传 showcase_id 和 showcase_use。没找到合适的就直说，建议按他的话从头出。
 - 知识库：用户存的企业资料、岗位（kb_lookup / kb_save），任务样本（my_references / read_reference），出过的题里的素材。出任务前先 kb_lookup 这家企业和岗位，存过就用、只问缺的；对话里新讲清的企业或岗位，出完任务用 kb_save 整理存进去（AI 先出初稿，用户在知识库里校正）。
 - 想打开给他看的，用 open_panel 在右边打开；工作台左边也有「管理真活 / 任务报告 / 知识库」可以自己点。
 怎么回答：
-- 先给结论，再给依据。分析一个人：总分和基线差多少 → 强在哪、弱在哪（引证据里的原话或时间点）→ 用 AI 的方式 → 面试时值得追问的两三个问题。并排比：先说推荐谁、为什么，再说各自短板；分数接近时说清楚差在哪条。整道题：交卷率、用时是否合理、哪条标准普遍做不到（是候选人弱还是题 / 标准有问题），给一两条改题建议，问他要不要照改。
+- 先给结论，再给依据。分析一个人：总分和基线差多少 → 强在哪、弱在哪（引证据里的原话或时间点）→ 用 AI 的方式 → 面试时值得追问的两三个问题。并排比：先说推荐谁、为什么，再说各自短板；分数接近时说清楚差在哪条。整道题：提交率、用时是否合理、哪条标准普遍做不到（是候选人弱还是题 / 标准有问题），给一两条改题建议，问他要不要照改。
 - 报告里的事实只引工具结果；分数是 AI 评的，你可以指出看起来评得不对的地方，但别自己改分。
-- 用户说「这道题」「刚才那个人」时先看上下文和右边开着的东西；实在不知道是哪道，my_tasks 列出来用 ask_user 让他点。
+- 用户说「这个任务」「刚才那个人」时先看上下文和右边开着的东西；实在不知道是哪道，my_tasks 列出来用 ask_user 让他点。
 - 说人用名字，说题用标题；session_id、task_id 这些编号不说给用户。
 ${where}`;
   return { system, tools: WORK_HOME_TOOLS, run: (n, i, p) => run(n, i, user, p) as any, org: '真活台', task: '真活 · 工作台' };

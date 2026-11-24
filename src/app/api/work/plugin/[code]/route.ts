@@ -8,7 +8,7 @@ export const runtime = 'nodejs';
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ code: string }> }) {
   const { code } = await params;
   const x = await sessionByCode(code);
-  if (!x) return NextResponse.json({ ok: false, error: '真活码不对，回到答题页再复制一次' }, { status: 404 });
+  if (!x) return NextResponse.json({ ok: false, error: '真活码不对，回到作答页再复制一次' }, { status: 404 });
   const { s, t } = x;
   const minutes = Number(t.task?.time_minutes) || 60;
   const ev = (s.events || []) as any[];
@@ -30,7 +30,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ co
   const { code } = await params;
   const x = await sessionByCode(code);
   if (!x) return NextResponse.json({ ok: false, error: '真活码不对' }, { status: 404 });
-  if (x.s.submitted_at) return NextResponse.json({ ok: false, error: '已经交卷了' }, { status: 409 });
+  if (x.s.submitted_at) return NextResponse.json({ ok: false, error: '已经提交了' }, { status: 409 });
   const body = await req.json().catch(() => ({}));
   if (typeof body.deliverable !== 'string' && typeof body.next_step !== 'string' && typeof body.ai_disclosure !== 'string') return NextResponse.json({ ok: false, error: '没有内容' }, { status: 400 });
   const patch: Record<string, any> = {};
@@ -49,7 +49,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ cod
   const { code } = await params;
   const x = await sessionByCode(code);
   if (!x) return NextResponse.json({ ok: false, error: '真活码不对' }, { status: 404 });
-  if (x.s.submitted_at) return NextResponse.json({ ok: false, error: '已经交卷了' }, { status: 409 });
+  if (x.s.submitted_at) return NextResponse.json({ ok: false, error: '已经提交了' }, { status: 409 });
   const file = (await req.formData().catch(() => null))?.get('file') as File | null;
   if (!file || file.size > 3 * 1024 * 1024) return NextResponse.json({ ok: false, error: '截图不对' }, { status: 400 });
   const t = Math.max(0, Math.round((Date.now() - new Date(x.s.started_at).getTime()) / 1000));

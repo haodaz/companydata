@@ -30,7 +30,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ to
   const { token, sid } = await params;
   const x = await load(token, sid);
   if (!x) return NextResponse.json({ ok: false, error: '没有这次作答' }, { status: 404 });
-  if (x.s.submitted_at) return NextResponse.json({ ok: false, error: '已经交卷了' }, { status: 409 });
+  if (x.s.submitted_at) return NextResponse.json({ ok: false, error: '已经提交了' }, { status: 409 });
   if (timing(x.t.task, x.s).closed) return NextResponse.json({ ok: false, error: '时间到了', expired: true }, { status: 409 });
   const body = await req.json().catch(() => ({}));
   const incoming = (Array.isArray(body.events) ? body.events : []).slice(0, 500).map((e: any) => ({ t: Math.max(0, Number(e.t) || 0), type: String(e.type || '').slice(0, 20), ...(e.id ? { id: String(e.id).slice(0, 20) } : {}), ...(e.where ? { where: String(e.where).slice(0, 20) } : {}), ...(e.msg ? { msg: String(e.msg).slice(0, 240) } : {}), ...(e.part ? { part: String(e.part).slice(0, 20) } : {}), ...(e.retry ? { retry: 1 } : {}), ...(e.type === 'client_error' && e.name ? { name: String(e.name).slice(0, 80), size: Number(e.size) || 0 } : {}), ...(e.chars != null ? { chars: Number(e.chars) || 0 } : {}), ...(e.delta != null ? { delta: Number(e.delta) || 0 } : {}), ...(e.note ? { note: String(e.note).slice(0, 120) } : {}), ...(e.type === 'draft' && typeof e.text === 'string' ? { text: e.text.slice(0, 12000) } : {}) }));

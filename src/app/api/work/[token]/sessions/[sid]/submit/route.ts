@@ -46,7 +46,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     const files = events.filter(e => e.type === 'file' && e.url && !removed.has(e.url)).map(e => ({ name: e.name, url: e.url, size: e.size || 0 }));
     const rec = [...events].reverse().find(e => e.type === 'recording' && e.url);
     const shots = await listShots(sid);   // 11-05 起：整屏定时截图（老作答是整段录屏）
-    if (!rec && !shots.length && !auto) return NextResponse.json({ ok: false, error: errL(t, '还没有屏幕记录：开放模式要先点「开始记录」再交卷') }, { status: 400 });
+    if (!rec && !shots.length && !auto) return NextResponse.json({ ok: false, error: errL(t, '还没有屏幕记录：开放模式要先点「开始记录」再提交') }, { status: 400 });
     if (deliverable.trim().length < 30 && !auto) return NextResponse.json({ ok: false, error: errL(t, '交付说明太短了：把结论、关键数字、口径和假设写清楚') }, { status: 400 });
     const links = await readLinks(deliverable);
     deliverable = `## 交付说明\n${deliverable}\n\n## 交付文件\n${files.length ? await readTextFiles(files) : '（没有上传文件）'}${links ? `\n\n## 交付说明里的链接\n${links}` : ''}`;
@@ -65,7 +65,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
       } catch (e) { console.warn('[work] 插件截图分析失败：', String((e as any)?.message).slice(0, 160)); recording = { url: '', duration: shots[shots.length - 1].t - shots[0].t, summary: '（截图看图失败）', frames: 0, shots: shots.length }; }
     }
     // 真活插件：交付 = 交付说明 + 链接；到时间自动收卷时没写也照收（按未交付评）
-    if (deliverable.trim().length < 20) { if (!auto) return NextResponse.json({ ok: false, error: errL(t, '交付说明太短了：贴上交付物链接，写清结论和假设') }, { status: 400 }); deliverable = `（时间到，自动交卷；候选人没写完交付说明）\n${deliverable}`; }
+    if (deliverable.trim().length < 20) { if (!auto) return NextResponse.json({ ok: false, error: errL(t, '交付说明太短了：贴上交付物链接，写清结论和假设') }, { status: 400 }); deliverable = `（时间到，自动提交；候选人没写完交付说明）\n${deliverable}`; }
   } else if (deliverable.trim().length < 50 && !auto) return NextResponse.json({ ok: false, error: errL(t, '交付物太短了，至少写点东西') }, { status: 400 });
   // 工作台作答的附件（11-05）：文件抽文字、图片看图写说明，接在交付物后面给评卷（以原文件为准）
   if (!open) {

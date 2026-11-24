@@ -18,7 +18,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ cod
   const body = await req.json().catch(() => ({}));
   if (typeof body.deliverable === 'string') await db.from('work_sessions').update({ deliverable: body.deliverable.slice(0, 60000) }).eq('id', s.id);
   const r = await fetch(`${req.nextUrl.origin}/api/work/${t.share_token}/sessions/${s.id}/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ auto: !!body.auto, events: [{ t: Math.round((Date.now() - new Date(s.started_at).getTime()) / 1000), type: 'plugin_stop', note: body.auto ? '时间到，自动结束' : '侧边栏结束作答', src: 'plugin' }] }) });
-  const j = await r.json().catch(() => ({ ok: false, error: '交卷失败' }));
-  if (!j.ok) return NextResponse.json({ ok: false, error: j.error || '交卷失败' }, { status: r.status || 500 });
+  const j = await r.json().catch(() => ({ ok: false, error: '提交失败' }));
+  if (!j.ok) return NextResponse.json({ ok: false, error: j.error || '提交失败' }, { status: r.status || 500 });
   return NextResponse.json({ ok: true, staged: !!j.staged, share_token: t.share_token, sid: s.id });
 }

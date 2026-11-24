@@ -65,7 +65,7 @@ export function WorkProcess({ events, aiChat, materials, deliverables, shots = [
         case 'auto_submit': out.push({ t: e.t, kind: 'end', color: C.end, label: L('时间到，系统自动提交', 'Time up, submitted automatically') }); break;
         // 企业给这个人加时 / 重新打开接着做（11-24）
         case 'extend': out.push({ t: e.t, kind: 'end', color: C.end, label: e.reopen ? L(`企业重新打开，接着做${e.minutes ? `（给了 ${e.minutes} 分钟）` : ''}${e.prev_score != null ? `；之前那次 ${e.prev_score} 分` : ''}`, `Reopened by the company to keep working${e.minutes ? ` (${e.minutes} min)` : ''}${e.prev_score != null ? `; earlier score ${e.prev_score}` : ''}`) : L(`企业加时 ${e.minutes} 分钟`, `Company added ${e.minutes} min`) }); break;
-        case 'submit': out.push({ t: e.t, kind: 'end', color: C.end, label: L(`交卷（交付物 ${e.chars || 0} 字）`, `Submitted (deliverable ${e.chars || 0} chars)`) }); break;
+        case 'submit': out.push({ t: e.t, kind: 'end', color: C.end, label: L(`提交（交付物 ${e.chars || 0} 字）`, `Submitted (deliverable ${e.chars || 0} chars)`) }); break;
         default: if (/^plugin_/.test(e.type) || e.note) out.push({ t: e.t, kind: 'other', color: C.screen, label: `${e.type.replace(/^plugin_/, L('插件 · ', 'Extension · '))}${e.host ? ` · ${e.host}` : ''}`, body: e.note ? String(e.note) : undefined });
       }
     }
@@ -98,7 +98,7 @@ export function WorkProcess({ events, aiChat, materials, deliverables, shots = [
       </div>}
       {part !== 'files' && <div style={box}>
         <div style={{ ...head, display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-          <span>{L('答题历程', 'Work history')}</span><span style={{ fontWeight: 400, color: '#8a8fa8', fontSize: 12 }}>{L(`用时 ${fmt(real)} · 平台内问 AI ${n('ai')} 条${outside ? ` · 录屏里用外部 AI ${outside} 处` : ''} · 材料 / 文件 ${n('mat')} 次 · 稿子快照 ${n('draft')} 份`, `Time ${fmt(real)} · ${n('ai')} on-page AI questions${outside ? ` · outside AI seen ${outside} times on screen` : ''} · ${n('mat')} material / file actions · ${n('draft')} draft snapshots`)}</span>
+          <span>{L('作答历程', 'Work history')}</span><span style={{ fontWeight: 400, color: '#8a8fa8', fontSize: 12 }}>{L(`用时 ${fmt(real)} · 平台内问 AI ${n('ai')} 条${outside ? ` · 录屏里用外部 AI ${outside} 处` : ''} · 材料 / 文件 ${n('mat')} 次 · 稿子快照 ${n('draft')} 份`, `Time ${fmt(real)} · ${n('ai')} on-page AI questions${outside ? ` · outside AI seen ${outside} times on screen` : ''} · ${n('mat')} material / file actions · ${n('draft')} draft snapshots`)}</span>
           <span style={{ flex: 1 }} />
           {FILTERS.map(([k, t, te]) => <button key={k} onClick={() => setFilter(k)} style={{ border: '1px solid ' + (filter === k ? '#6055f5' : '#e3e4ec'), background: filter === k ? '#f1efff' : '#fff', color: filter === k ? '#4c43c9' : '#555', borderRadius: 999, padding: '2px 10px', fontSize: 12, cursor: 'pointer' }}>{L(t, te)}</button>)}
         </div>

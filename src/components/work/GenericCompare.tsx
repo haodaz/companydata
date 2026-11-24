@@ -16,7 +16,7 @@ type Fact = { quote: string; claim: string; status: '证实' | '有出入' | '�
 type Review = { v?: number; verdict: string; checklist?: Check[]; facts?: Fact[]; generic: Record<Row, string>; ours: Record<Row, string>; issues: Issue[] };
 type Compare = { prompt: string; text: string; model: string; at: string; review?: Review };
 
-const ROWS: [Row, string][] = [['scenario', '业务场景'], ['task', '要候选人做什么'], ['materials', '给考生的材料'], ['rubric', '评分标准'], ['facts', '用到的企业事实']];
+const ROWS: [Row, string][] = [['scenario', '业务场景'], ['task', '要候选人做什么'], ['materials', '给候选人的材料'], ['rubric', '评分标准'], ['facts', '用到的企业事实']];
 const RED = '#d4380d';
 const TONE = { bad: { bg: '#fff1e8', fg: RED }, warn: { bg: '#fff7e0', fg: '#ad6800' }, good: { bg: '#eafaf0', fg: '#237a45' } };
 const MARK: Record<Mark, { t: string; c: string; bg: string }> = { yes: { t: '✓ 是', c: '#237a45', bg: '#eafaf0' }, partial: { t: '△ 部分', c: '#ad6800', bg: '#fff7e0' }, no: { t: '✗ 否', c: RED, bg: '#fff1e8' } };
@@ -161,7 +161,7 @@ export function GenericCompare({ token, ownerKey, task }: { token: string; owner
               <Fold title={`通用模型原文（${c.text.length} 字${issues.length ? '，绿 = 事实证实，红 = 有出入，橙 = 清单没做到，悬停看原因' : ''}）`} open><Plain text={c.text} issues={issues} /></Fold>
             </div>
             <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '10px 16px' }}>
-              <Fold title={`平方出的完整题目（任务书 + ${mats.length} 份材料 + ${rub.length} 条评分标准）`} open>
+              <Fold title={`平方出的完整任务（任务书 + ${mats.length} 份材料 + ${rub.length} 条评分标准）`} open>
                 <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 6 }}>{task.task?.title}</div>
                 {task.problem?.statement && <p style={{ fontSize: 13, lineHeight: 1.75 }}><b>业务问题 · </b>{task.problem.statement}</p>}
                 {task.problem?.why_now && <p style={{ fontSize: 13, lineHeight: 1.75 }}><b>为什么是现在 · </b>{task.problem.why_now}</p>}
@@ -169,7 +169,7 @@ export function GenericCompare({ token, ownerKey, task }: { token: string; owner
                 {!!task.problem?.evidence?.length && <Sub t="依据（企业库原文）">{task.problem.evidence.map((e: any, i: number) => <div key={i}>「{e.text}」<span style={{ color: '#999' }}> — {e.source}</span></div>)}</Sub>}
                 {!!task.task?.deliverables?.length && <Sub t="交付物">{task.task.deliverables.map((d: any) => <div key={d.id}>{d.id} {d.title}<span style={{ color: '#999' }}> · {d.format}</span></div>)}</Sub>}
                 {!!task.task?.rules?.length && <Sub t="规则">{task.task.rules.map((r: string, i: number) => <div key={i}>· {r}</div>)}</Sub>}
-                <Sub t={`材料包 ${mats.length} 份（考生拿到的原样）`}>{mats.map((m: any) => <div key={m.id} style={{ marginBottom: 10 }}><b>{m.id} {m.title}</b><pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: 12.5, background: '#fafbff', border: '1px solid #eef0f5', padding: 10, borderRadius: 8, margin: '4px 0 0' }}>{m.content}</pre></div>)}</Sub>
+                <Sub t={`材料包 ${mats.length} 份（候选人拿到的原样）`}>{mats.map((m: any) => <div key={m.id} style={{ marginBottom: 10 }}><b>{m.id} {m.title}</b><pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: 12.5, background: '#fafbff', border: '1px solid #eef0f5', padding: 10, borderRadius: 8, margin: '4px 0 0' }}>{m.content}</pre></div>)}</Sub>
                 <Sub t={`评分标准 ${rub.length} 条（每条 L1–L4 行为锚定）`}>{rub.map((r: any) => <div key={r.id} style={{ marginBottom: 10 }}><b>{r.id} {r.title}</b><span style={{ color: '#999' }}> · 权重 {r.weight}{r.depends_on?.length ? ` · 依赖 ${r.depends_on.join('、')}` : ''}</span>{r.desc && <div>{r.desc}</div>}{r.basis && <div style={{ color: '#777' }}>依据：{r.basis}</div>}{r.levels && ['L1', 'L2', 'L3', 'L4'].map(l => r.levels[l] && <div key={l} style={{ color: '#555' }}><b>{l}</b> {r.levels[l]}</div>)}</div>)}</Sub>
                 {task.baseline?.result?.total != null && <Sub t="AI 基线">AI 用同一套标准先做一遍：{task.baseline.result.total} 分。{task.baseline.result.summary}</Sub>}
               </Fold>

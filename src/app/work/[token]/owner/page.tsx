@@ -31,9 +31,9 @@ function Inner() {
   useEffect(() => { let seen = false; try { seen = localStorage.getItem('work-owner-tour-done') === '1'; } catch {} if (!seen) { const t = setTimeout(() => setTour(0), 900); return () => clearTimeout(t); } }, []);
   const OWNER_TOUR: TourStep[] = [
     { key: 'stats', title: '这是一道题的空间', text: '题名、企业、要找的人、时限，和四个数：多少人参与、多少人交了、平均分、AI 基线。这条链接带管理密钥，可以转给同事，别发给候选人。' },
-    { key: 'share', title: '预览、发布、下架', text: '出好的题先是「待发布」。点「预览做题台」看候选人会看到什么；确认了点「发布」，参与链接才生效；之后随时下架。改过题记得「重跑 AI 基线」。' },
-    { key: 'revise', title: '调整这道题', text: '左边直接改岗位名、用时、素材，马上生效；右边把意见写给 AI，它只改提到的部分，其余原样保留，改完留一条修订记录。' },
-    { key: 'detail', title: '题的全部', text: '问题与任务、推进步骤、材料包、评分标准、AI 基线、做题情况——分标签看。做题情况里点「看报告」：分「交了什么 / 怎么做的 / 评得怎样」三栏。' },
+    { key: 'share', title: '预览、发布、下架', text: '出好的题先是「待发布」。点「预览作答台」看候选人会看到什么；确认了点「发布」，参与链接才生效；之后随时下架。改过题记得「重跑 AI 基线」。' },
+    { key: 'revise', title: '调整这个任务', text: '左边直接改岗位名、用时、素材，马上生效；右边把意见写给 AI，它只改提到的部分，其余原样保留，改完留一条修订记录。' },
+    { key: 'detail', title: '题的全部', text: '问题与任务、推进步骤、材料包、评分标准、AI 基线、作答情况——分标签看。作答情况里点「看报告」：分「交了什么 / 怎么做的 / 评得怎样」三栏。' },
   ];
   const revise = async () => { if (!fb.trim()) return; setRevising(true); try { const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(k)}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ feedback: fb }) })).json(); if (!j.ok) throw new Error(j.error); message.success(`改好了：${j.changelog}`, 8); setFb(''); load(); } catch (e: any) { message.error(e.message); } finally { setRevising(false); } };
   const load = useCallback(async () => {
@@ -49,7 +49,7 @@ function Inner() {
     if (statusBusy) return;
     const pub = status === 'published';
     modal.confirm({
-      title: pub ? '发布这道题？' : '下架这道题？',
+      title: pub ? '发布这个任务？' : '下架这个任务？',
       content: pub ? '发布后参与链接生效，拿到链接的人就能开始做。之后随时可以下架。' : '下架后候选人打不开参与链接；已经交的卷和报告都还在，随时可以重新发布。',
       okText: pub ? '发布' : '下架', okButtonProps: pub ? {} : { danger: true }, cancelText: '再想想',
       onOk: async () => {
@@ -83,7 +83,7 @@ function Inner() {
           <h1 style={{ fontSize: 30, margin: '0 0 6px', lineHeight: 1.25 }}>{T.task?.title}</h1>
           <div style={{ opacity: .85 }} title={T.role}>{T.company_name} · {roleLabel(T.role, T.task?.role)} · {T.task?.soft_limit ? '建议' : '限时'} {T.task?.time_minutes} 分钟</div>
           <div data-tour="stats" style={{ display: 'flex', gap: 26, marginTop: 18, flexWrap: 'wrap' }}>
-            {[[real.length, '参与'], [done.length, '交卷'], [avg ?? '–', '平均分'], ...(aiOnly(scale) ? [] : [[T.baseline?.result?.total ?? '–', 'AI 基线']])].map(([n, l]) => <div key={String(l)}><div style={{ fontSize: 28, fontWeight: 800 }}>{n}</div><div style={{ fontSize: 12, opacity: .8 }}>{l}</div></div>)}
+            {[[real.length, '参与'], [done.length, '提交'], [avg ?? '–', '平均分'], ...(aiOnly(scale) ? [] : [[T.baseline?.result?.total ?? '–', 'AI 基线']])].map(([n, l]) => <div key={String(l)}><div style={{ fontSize: 28, fontWeight: 800 }}>{n}</div><div style={{ fontSize: 12, opacity: .8 }}>{l}</div></div>)}
           </div>
         </div>
       </div>
@@ -91,22 +91,22 @@ function Inner() {
         {/* 分享区 */}
         <div data-tour="share" style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '14px 18px', display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap', marginBottom: 16 }}>
           <div style={{ fontSize: 12, color: '#888', fontWeight: 600 }}>参与链接</div>
-          {T.status === 'published' ? <code style={{ fontSize: 13, background: '#f7f8fc', padding: '6px 10px', borderRadius: 8, border: '1px solid #e8e9f0', wordBreak: 'break-all' }}>{share}</code> : <span style={{ fontSize: 13, color: '#8a5a00', background: '#fff7e6', border: '1px solid #ffd591', padding: '6px 10px', borderRadius: 8 }}>{T.status === 'archived' ? '已下架，候选人打不开；需要再开就重新发布' : '待发布：先预览做题台，哪里不对让 AI 改（比如材料提示给多了或少了、时长不合适），确认后点「发布」，候选人才能做'}</span>}
+          {T.status === 'published' ? <code style={{ fontSize: 13, background: '#f7f8fc', padding: '6px 10px', borderRadius: 8, border: '1px solid #e8e9f0', wordBreak: 'break-all' }}>{share}</code> : <span style={{ fontSize: 13, color: '#8a5a00', background: '#fff7e6', border: '1px solid #ffd591', padding: '6px 10px', borderRadius: 8 }}>{T.status === 'archived' ? '已下架，候选人打不开；需要再开就重新发布' : '待发布：先预览作答台，哪里不对让 AI 改（比如材料提示给多了或少了、时长不合适），确认后点「发布」，候选人才能做'}</span>}
           <Space style={{ marginLeft: 'auto' }}>
-            <Button onClick={() => window.open(`/work/${token}?k=${encodeURIComponent(k)}`, '_blank')}>预览做题台</Button>
+            <Button onClick={() => window.open(`/work/${token}?k=${encodeURIComponent(k)}`, '_blank')}>预览作答台</Button>
             {T.status === 'published' ? <><Button type="primary" onClick={() => { navigator.clipboard.writeText(share); message.success('参与链接已复制，发给候选人就能做'); }}>复制参与链接</Button><Button onClick={() => setStatus('archived')} disabled={statusBusy}>下架</Button></> : <Button type="primary" onClick={() => setStatus('published')} loading={statusBusy}>发布</Button>}
             <Button onClick={rerun} loading={busy}>重跑 AI 基线</Button>
             <GenericCompare token={token} ownerKey={k} task={T} />
           </Space>
         </div>
-        {/* 调整这道题（11-05 重排）：以前改岗位名 / 用时藏在下面的表格里、加删素材在「材料包」标签、AI 修订又单独一块——
-            用户要改一样东西得先知道它在哪。现在一张卡：左边直接改（马上生效），右边让 AI 改题目内容 */}
+        {/* 调整这个任务（11-05 重排）：以前改岗位名 / 用时藏在下面的表格里、加删素材在「材料包」标签、AI 修订又单独一块——
+            用户要改一样东西得先知道它在哪。现在一张卡：左边直接改（马上生效），右边让 AI 改任务内容 */}
         <div data-tour="revise" style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '14px 18px', marginBottom: 16 }}>
-          <div style={{ fontWeight: 700, marginBottom: 10 }}>调整这道题</div>
+          <div style={{ fontWeight: 700, marginBottom: 10 }}>调整这个任务</div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 18 }}>
             <QuickSettings T={T} token={token} k={k} onSaved={load} />
             <div>
-              <div style={{ fontSize: 12.5, color: '#888', fontWeight: 600, marginBottom: 6 }}>让 AI 改题目内容 · 约 1 分钟</div>
+              <div style={{ fontSize: 12.5, color: '#888', fontWeight: 600, marginBottom: 6 }}>让 AI 改任务内容 · 约 1 分钟</div>
               <Input.TextArea value={fb} onChange={e => setFb(e.target.value)} placeholder="比如：缺口补位那条标准太宽，要求按月给出具体调拨量；材料 m3 的良率改成 78%；去掉邮件这个交付物" autoSize={{ minRows: 2, maxRows: 5 }} style={{ flex: 1, minWidth: 320 }} />
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 8, flexWrap: 'wrap' }}>
                 <Button type="primary" loading={revising} onClick={revise} disabled={!fb.trim()}>按意见修订</Button>
@@ -132,7 +132,7 @@ function QuickSettings({ T, token, k, onSaved }: { T: any; token: string; k: str
   useEffect(() => { setRole(T.role || ''); setMins(Number(T.task?.time_minutes) || 60); }, [T.role, T.task?.time_minutes]);
   const save = async (body: any, what: string) => {
     setBusy(what);
-    try { const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(k)}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })).json(); if (!j.ok) throw new Error(j.error || '没改成'); message.success(what === '到点交卷' || what === '标题' ? '改好了，候选人那边马上生效' : `${what}改好了，任务书里的写法也一起换了`); onSaved(); }
+    try { const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(k)}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })).json(); if (!j.ok) throw new Error(j.error || '没改成'); message.success(what === '到点提交' || what === '标题' ? '改好了，候选人那边马上生效' : `${what}改好了，任务书里的写法也一起换了`); onSaved(); }
     catch (e: any) { message.error(e.message); } finally { setBusy(''); }
   };
   const mats = T.materials || []; const files = mats.filter((m: any) => m.kind === 'file').length;
@@ -144,9 +144,9 @@ function QuickSettings({ T, token, k, onSaved }: { T: any; token: string; k: str
       <div style={row}><span style={lab}>标题</span><Space.Compact style={{ width: '100%' }}><Input value={title} onChange={e => setTitle(e.target.value)} maxLength={100} onPressEnter={() => title.trim().length >= 2 && title !== T.task?.title && save({ title }, '标题')} /><Button disabled={title.trim().length < 2 || title === T.task?.title} loading={busy === '标题'} onClick={() => save({ title }, '标题')}>保存</Button></Space.Compact></div>
       <div style={row}><span style={lab} title="岗位名，或一句话写要找什么样的人">岗位</span><Space.Compact style={{ width: '100%' }}><Input value={role} onChange={e => setRole(e.target.value)} maxLength={120} onPressEnter={() => role.trim() && role !== T.role && save({ role }, '岗位名')} /><Button disabled={!role.trim() || role === T.role} loading={busy === '岗位名'} onClick={() => save({ role }, '岗位名')}>保存</Button></Space.Compact></div>
       <div style={row}><span style={lab}>限时</span><Space.Compact><InputNumber min={15} max={240} step={5} value={mins} onChange={v => setMins(Number(v) || mins)} suffix="分钟" style={{ width: 130 }} /><Button disabled={mins === Number(T.task?.time_minutes)} loading={busy === '用时'} onClick={() => save({ time_minutes: mins }, '用时')}>保存</Button></Space.Compact></div>
-      <div style={row}><span style={lab}>到点交卷</span><span style={{ fontSize: 13, color: '#666' }}><Switch size="small" checked={!T.task?.soft_limit} loading={busy === '到点交卷'} onChange={v => save({ auto_submit: v }, '到点交卷')} style={{ marginRight: 8 }} />{T.task?.soft_limit ? '关着：超时可以继续做，用时如实记录' : '时间一到自动交卷，不能再改'}</span></div>
+      <div style={row}><span style={lab}>到点提交</span><span style={{ fontSize: 13, color: '#666' }}><Switch size="small" checked={!T.task?.soft_limit} loading={busy === '到点提交'} onChange={v => save({ auto_submit: v }, '到点提交')} style={{ marginRight: 8 }} />{T.task?.soft_limit ? '关着：超时可以继续做，用时如实记录' : '时间一到自动提交，不能再改'}</span></div>
       <div style={row}><span style={lab}>素材</span><span style={{ fontSize: 13 }}>{mats.length} 份{files ? `（上传的文件 ${files} 个）` : ''} · <a onClick={() => { window.dispatchEvent(new CustomEvent('work-tab', { detail: 'm' })); document.querySelector('[data-tour="detail"]')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}>加删素材 →</a></span></div>
-      <div style={row}><span style={lab}>删除</span><span style={{ fontSize: 13, color: '#888' }}><a style={{ color: '#c0392b' }} onClick={async () => { if (!confirm(`删除「${T.task?.title}」？\n从「我的真活」里拿掉，参与链接马上失效，候选人打不开。已有的作答和报告不会丢，要找回请联系我们。`)) return; const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(k)}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'deleted' }) })).json(); if (!j.ok) return message.error(j.error || '没删掉'); message.success('删掉了'); setTimeout(() => { location.href = '/work/mine'; }, 700); }}>删除这道题</a> · 只想暂停用上面的「下架」</span></div>
+      <div style={row}><span style={lab}>删除</span><span style={{ fontSize: 13, color: '#888' }}><a style={{ color: '#c0392b' }} onClick={async () => { if (!confirm(`删除「${T.task?.title}」？\n从「我的真活」里拿掉，参与链接马上失效，候选人打不开。已有的作答和报告不会丢，要找回请联系我们。`)) return; const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(k)}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'deleted' }) })).json(); if (!j.ok) return message.error(j.error || '没删掉'); message.success('删掉了'); setTimeout(() => { location.href = '/work/mine'; }, 700); }}>删除这个任务</a> · 只想暂停用上面的「下架」</span></div>
     </div>
   );
 }

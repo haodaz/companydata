@@ -62,7 +62,7 @@ export async function refreshImageMaterials(materials: any[]) {
   for (const m of materials || []) {
     if (m?.kind === 'file' && m.url && isImage(m) && /^附图[:：]/.test(String(m.content || ''))) {
       const [a] = await fillAttachText([{ url: m.url, name: m.name || m.title, mime: m.mime, text: '', image: true }]);
-      if (a.text) { next.push({ ...m, content: `图片说明（AI 看图整理，以原图为准）：\n${a.text.slice(0, 4000)}`, basis: '出题人上传的素材图 + AI 看图说明' }); fixed.push(m.title); continue; }
+      if (a.text) { next.push({ ...m, content: `图片说明（AI 看图整理，以原图为准）：\n${a.text.slice(0, 4000)}`, basis: '出任务的人上传的素材图 + AI 看图说明' }); fixed.push(m.title); continue; }
     }
     next.push(m);
   }

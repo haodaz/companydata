@@ -152,9 +152,9 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     const prompt = `我们公司是${t.company_name}，要招人：${t.role}。请你出一道题给应聘者做，并给出评分标准。`;
     try {
       let compare = t.task?.compare;
-      if (!compare?.text || body.force) compare = await withCost({ tool_name: 'work', task_name: 'Compare · 通用大模型直接出题', stage: 'use' }, async () => {
+      if (!compare?.text || body.force) compare = await withCost({ tool_name: 'work', task_name: 'Compare · 通用大模型直接出任务', stage: 'use' }, async () => {
         for (const m of ['qwen-plus', 'deepseek-v4-pro']) {
-          try { const r = await generateContent(prompt, m); await logTokenUsage({ tool_name: 'work', task_name: 'Compare · 通用大模型直接出题', institution: t.company_name || '', model_id: m, usageMetadata: r.usageMetadata } as any).catch(() => {}); if (r.text?.trim()) return { prompt, text: r.text.trim(), model: m, at: new Date().toISOString() }; } catch (e) { console.warn(`[work-compare] ${m} 失败：${String((e as any)?.message).slice(0, 100)}`); }
+          try { const r = await generateContent(prompt, m); await logTokenUsage({ tool_name: 'work', task_name: 'Compare · 通用大模型直接出任务', institution: t.company_name || '', model_id: m, usageMetadata: r.usageMetadata } as any).catch(() => {}); if (r.text?.trim()) return { prompt, text: r.text.trim(), model: m, at: new Date().toISOString() }; } catch (e) { console.warn(`[work-compare] ${m} 失败：${String((e as any)?.message).slice(0, 100)}`); }
         }
         throw new Error('通用大模型没有回答');
       });

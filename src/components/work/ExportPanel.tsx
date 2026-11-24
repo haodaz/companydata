@@ -25,10 +25,10 @@ export function ExportPanel() {
       <p className="wws-muted" style={{ margin: 0 }}>一次作答一行（JSONL）：过程事件、和 AI 的每一轮、稿子快照、交付物、附件、屏幕截图和 AI 对截图的解读、审计笔记、三层评分。候选人的姓名和联系方式不导出，换成化名。</p>
       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center', fontSize: 13.5 }}>
         <select className="wws-in" value={task} onChange={e => setTask(e.target.value)} style={{ minWidth: 280 }} aria-label="选题">
-          <option value="">全部题目</option>
+          <option value="">全部任务</option>
           {tasks.map(t => <option key={t.id} value={t.id}>{t.title}{t.company ? ` · ${t.company}` : ''}</option>)}
         </select>
-        <label><input type="checkbox" checked={all} onChange={e => setAll(e.target.checked)} /> 连没交卷的</label>
+        <label><input type="checkbox" checked={all} onChange={e => setAll(e.target.checked)} /> 连没提交的</label>
         <label><input type="checkbox" checked={noAi} onChange={e => setNoAi(e.target.checked)} /> 不要 AI 学员</label>
         <label><input type="checkbox" checked={shots} onChange={e => setShots(e.target.checked)} /> 列出截图地址</label>
         <button className="wws-btn p" disabled={busy} onClick={go}>{busy ? '导出中…' : '下载 JSONL'}</button>

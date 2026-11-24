@@ -116,6 +116,6 @@ export function buildAgentDeliverable(files: WsFile[], outputs: AgentOutput[], o
   const rank = (p: string) => (/\.md$/i.test(p) ? 0 : /\.(csv|tsv)$/i.test(p) ? 1 : /\.(png|jpe?g|gif|webp)$/i.test(p) ? 2 : 3);
   for (const o of [...outputs].sort((a, b) => rank(a.path) - rank(b.path))) { const f = files.find(x => x.path === o.path); parts.push(`### ${o.title}（${o.path}）\n${f && (f.bin || f.content.trim()) ? show(f, 20000) : '（没交：文件不存在或是空的）'}`); }
   const extra = files.filter(f => !outputs.some(o => o.path === f.path) && (!orig.has(f.path) || orig.get(f.path) !== f.content));
-  if (extra.length) { parts.push('## 工作区里新建或改过的其他文件'); for (const f of extra.slice(0, 20)) parts.push(`### ${f.path}${orig.has(f.path) ? '（改过题目给的原文件）' : ''}${f.by === 'human' ? ' · 最后是候选人自己改的' : f.by === 'agent' ? ' · 最后是 AI 代理写的' : ''}\n${show(f, 6000)}`); }
+  if (extra.length) { parts.push('## 工作区里新建或改过的其他文件'); for (const f of extra.slice(0, 20)) parts.push(`### ${f.path}${orig.has(f.path) ? '（改过任务给的原文件）' : ''}${f.by === 'human' ? ' · 最后是候选人自己改的' : f.by === 'agent' ? ' · 最后是 AI 代理写的' : ''}\n${show(f, 6000)}`); }
   return parts.join('\n\n').slice(0, 60000);
 }

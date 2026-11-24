@@ -101,7 +101,7 @@ function Inner() {
               <Button size="small" icon={<CopyOutlined />} onClick={() => copy(t)}>复制链接</Button>
               <Button size="small" icon={<EyeOutlined />} onClick={() => open(t.id)}>详情</Button>
               {t.status !== 'published' ? <Button size="small" type="primary" ghost icon={<SendOutlined />} onClick={() => setStatus(t, 'published')}>发布</Button> : <Button size="small" onClick={() => setStatus(t, 'archived')}>下架</Button>}
-              <Popconfirm title="删除这道题和所有作答？" onConfirm={() => remove(t)}><Button size="small" danger icon={<DeleteOutlined />} /></Popconfirm>
+              <Popconfirm title="删除这个任务和所有作答？" onConfirm={() => remove(t)}><Button size="small" danger icon={<DeleteOutlined />} /></Popconfirm>
             </Space> },
           ]} />
       </Panel>

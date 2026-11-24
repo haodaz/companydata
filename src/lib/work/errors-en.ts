@@ -2,11 +2,11 @@
 const EN: Record<string, string> = {
   '留个名字': 'Please enter your name.',
   '请填手机号或邮箱，换设备回来靠它接着做': 'Please enter a phone number or email — you will need it to continue on another device.',
-  '这个手机号或邮箱已经做过这道题了。如需重新作答，请联系发给你链接的公司。': 'This phone number or email has already been used for this task. To try again, please contact the company that sent you the link.',
+  '这个手机号或邮箱已经做过这个任务了。如需重新作答，请联系发给你链接的公司。': 'This phone number or email has already been used for this task. To try again, please contact the company that sent you the link.',
   '这个链接不可用': 'This link is no longer available.',
   '链接不可用': 'This link is no longer available.',
   '没有这次作答': 'We could not find this attempt.',
-  '已经交卷了': 'You have already submitted.',
+  '已经提交了': 'You have already submitted.',
   '时间到了': 'Time is up.',
   '没有文件': 'No file received.',
   '没有这个文件': 'File not found.',
@@ -21,6 +21,6 @@ const EN: Record<string, string> = {
   '交付说明太短了：把结论、关键数字、口径和假设写清楚': 'Your submission note is too short: state your conclusions, key figures, definitions and assumptions.',
   '交付说明太短了：贴上交付物链接，写清结论和假设': 'Your submission note is too short: paste the links to your deliverables and state your conclusions and assumptions.',
   '时间到了，这次作答没有内容': 'Time is up, and this attempt has no content.',
-  '还没有屏幕记录：开放模式要先点「开始记录」再交卷': 'No screen record yet: click "Start recording" before you submit.',
+  '还没有屏幕记录：开放模式要先点「开始记录」再提交': 'No screen record yet: click "Start recording" before you submit.',
 };
 export const errL = (task: { task?: { lang?: string } } | null | undefined, zh: string) => (task?.task?.lang === 'en' && EN[zh]) || zh;

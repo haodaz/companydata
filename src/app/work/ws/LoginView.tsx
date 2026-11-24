@@ -39,7 +39,7 @@ export function LoginView() {
             {err && <div className="lg-err">{err}</div>}
             <button type="submit" disabled={busy}>{busy ? '进门中…' : '进入工作台'}</button>
           </form>
-          <div className="lg-foot">没有账号？请管理员开通　·　做题的人不用登录，点参与链接就能做</div>
+          <div className="lg-foot">没有账号？请管理员开通　·　作答的人不用登录，点参与链接就能做</div>
         </div>
         <a className="lg-about" href="/work/about">关于真活 →</a>
         <div className="lg-motto">“Every trade has its true work.”<span>百业皆有真活</span></div>

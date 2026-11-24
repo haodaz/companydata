@@ -63,9 +63,9 @@ export function PluginWork({ code, task, onSubmitted }: { code: string; task: { 
     }, 1200);
   };
   const submit = async () => {
-    if (!confirm(L('确定结束作答并交卷？交卷后不能再改。', 'Finish and submit? You cannot make changes after submitting.'))) return;
+    if (!confirm(L('确定结束作答并提交？提交后不能再改。', 'Finish and submit? You cannot make changes after submitting.'))) return;
     setBusy(true); setErr('');
-    const r = await fetch(`/api/work/plugin/${code}/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deliverable: draft ?? '' }) }).then(x => x.json()).catch(() => ({ ok: false, error: L('交卷失败，再试一次', 'Submission failed. Please try again.') }));
+    const r = await fetch(`/api/work/plugin/${code}/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deliverable: draft ?? '' }) }).then(x => x.json()).catch(() => ({ ok: false, error: L('提交失败，再试一次', 'Submission failed. Please try again.') }));
     setBusy(false);
     if (!r.ok) { setErr(r.error); return; }
     onSubmitted();
@@ -102,7 +102,7 @@ export function PluginWork({ code, task, onSubmitted }: { code: string; task: { 
             <i style={{ width: 10, height: 10, borderRadius: '50%', background: live ? '#cf1322' : '#bbb', display: 'inline-block' }} />{live ? L('插件在记录', 'Extension is recording') : L('还没收到插件的记录', 'Nothing received from the extension yet')}
           </div>
           {live && <div style={{ fontSize: 13, color: '#555', marginTop: 6 }}>{L('网页', 'Pages')} {rec.pages} · {L('AI 对话', 'AI chats')} {rec.ai} · {L('事件', 'Events')} {rec.events}</div>}
-          {left != null && <div style={{ marginTop: 10 }}><span style={{ font: '800 32px/1 ui-monospace, Menlo, monospace', color: left <= 60_000 ? '#cf1322' : left <= 300_000 ? '#d46b08' : '#1a1a2e' }}>{mmss(left)}</span><span style={{ fontSize: 12.5, color: '#888', marginLeft: 8 }}>{L('剩余 · 到时间自动交卷', 'left · submits automatically when time is up')}</span></div>}
+          {left != null && <div style={{ marginTop: 10 }}><span style={{ font: '800 32px/1 ui-monospace, Menlo, monospace', color: left <= 60_000 ? '#cf1322' : left <= 300_000 ? '#d46b08' : '#1a1a2e' }}>{mmss(left)}</span><span style={{ fontSize: 12.5, color: '#888', marginLeft: 8 }}>{L('剩余 · 到时间自动提交', 'left · submits automatically when time is up')}</span></div>}
         </div>
       </div>
 
@@ -146,7 +146,7 @@ export function PluginWork({ code, task, onSubmitted }: { code: string; task: { 
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 16, flexWrap: 'wrap' }}>
-        <button style={{ ...primary, background: '#cf1322' }} onClick={submit} disabled={busy}>{busy ? L('交卷中…', 'Submitting…') : L('结束作答（交卷）', 'Finish and submit')}</button>
+        <button style={{ ...primary, background: '#cf1322' }} onClick={submit} disabled={busy}>{busy ? L('提交中…', 'Submitting…') : L('结束作答（提交）', 'Finish and submit')}</button>
         {err && <span style={{ color: '#cf1322', fontSize: 13 }}>{err}</span>}
       </div>
     </div>

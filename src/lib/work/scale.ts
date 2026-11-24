@@ -6,7 +6,7 @@ export type ScaleId = 'full' | 'ai_use' | 'fluency';
 export const DEFAULT_SCALE: ScaleId = 'full';
 export const SCALES: { id: ScaleId; name: string; desc: string }[] = [
   { id: 'full', name: '全看', desc: '回答质量 + 作答过程 + AI 使用与交互。排名看回答质量总分，AI 使用单独一项。' },
-  { id: 'ai_use', name: 'AI 使用与交互', desc: '报告、成绩单和排名只看 AI 使用：怎么问、怎么核、怎么取舍。回答质量和过程评价不显示；交付物和答题历程照常能看。' },
+  { id: 'ai_use', name: 'AI 使用与交互', desc: '报告、成绩单和排名只看 AI 使用：怎么问、怎么核、怎么取舍。回答质量和过程评价不显示；交付物和作答历程照常能看。' },
   { id: 'fluency', name: 'AI 驾驭能力（7 维度 · 潜历量表）', desc: '潜历定的 7 维度、25 个可观察行为：按和 AI 的对话原话逐条取证、按锚点定 1–5 档，出总分、段位和 7 维画像。只评站内 AI 助手的对话；回答质量和过程评价不显示。选它之后新交的卷才会算这一项。' },
 ];
 /** 只看 AI 那一类（不显示回答质量、过程评价、AI 基线） */

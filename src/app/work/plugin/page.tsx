@@ -17,10 +17,10 @@ type Bound = { ok: boolean; title?: string; error?: string; submitted?: boolean 
 
 /** 四步做完一道题：每步配真实截图（[图, 说明, 是否竖长的侧边栏图]） */
 const FLOW: { t: string; d: string; imgs: [string, string, boolean?][] }[] = [
-  { t: '拿到真活码，去关联', d: '打开出任务的人发的参与链接，留个名字点「开始做」。答题页会给一个 6 位真活码，点「去装插件 / 关联」来到这一页，点「关联这次作答」。看到「已关联」就好。', imgs: [['/work/plugin/02-launch-bound.jpg', '插件页：真活码、已检测到插件、关联好了']] },
-  { t: '打开侧边栏，同意并开始记录', d: '点浏览器右上角的真活图标，打开侧边栏。上面是题目和剩余时间，中间说清楚会记什么。看完点「同意并开始记录」。', imgs: [['/work/plugin/03-panel-before.jpg', '侧边栏：还没开始记录，同意并开始记录', true]] },
-  { t: '用自己的工具做，交付说明写在侧边栏', d: '在线文档、表格、设计工具、各家 AI 随你用。侧边栏一直显示剩余时间和记了多少，剩 5 分钟、1 分钟各提醒一次。交付物链接和说明写在侧边栏里，自动保存，答题页上也能看到同一份。', imgs: [['/work/plugin/04-panel-recording.jpg', '侧边栏：记录中、倒计时、交付说明', true], ['/work/plugin/05-answer-page.jpg', '答题页：真活码、记录状态、任务书与材料、交付说明']] },
-  { t: '结束作答，等报告', d: '点侧边栏底下的「结束作答（交卷）」。时间到还没交，会自动交卷。交卷后记录停止，报告页自动打开，AI 一段一段回看你的过程，看完出报告。', imgs: [['/work/plugin/06-panel-submitted.jpg', '侧边栏：已交卷，AI 正在回看过程', true]] },
+  { t: '拿到真活码，去关联', d: '打开出任务的人发的参与链接，留个名字点「开始做」。作答页会给一个 6 位真活码，点「去装插件 / 关联」来到这一页，点「关联这次作答」。看到「已关联」就好。', imgs: [['/work/plugin/02-launch-bound.jpg', '插件页：真活码、已检测到插件、关联好了']] },
+  { t: '打开侧边栏，同意并开始记录', d: '点浏览器右上角的真活图标，打开侧边栏。上面是任务和剩余时间，中间说清楚会记什么。看完点「同意并开始记录」。', imgs: [['/work/plugin/03-panel-before.jpg', '侧边栏：还没开始记录，同意并开始记录', true]] },
+  { t: '用自己的工具做，交付说明写在侧边栏', d: '在线文档、表格、设计工具、各家 AI 随你用。侧边栏一直显示剩余时间和记了多少，剩 5 分钟、1 分钟各提醒一次。交付物链接和说明写在侧边栏里，自动保存，作答页上也能看到同一份。', imgs: [['/work/plugin/04-panel-recording.jpg', '侧边栏：记录中、倒计时、交付说明', true], ['/work/plugin/05-answer-page.jpg', '作答页：真活码、记录状态、任务书与材料、交付说明']] },
+  { t: '结束作答，等报告', d: '点侧边栏底下的「结束作答（提交）」。时间到还没交，会自动提交。提交后记录停止，报告页自动打开，AI 一段一段回看你的过程，看完出报告。', imgs: [['/work/plugin/06-panel-submitted.jpg', '侧边栏：已提交，AI 正在回看过程', true]] },
 ];
 /** FLOW 的英文版（?lang=en）：顺序、截图和 FLOW 一一对应 */
 const FLOW_EN: typeof FLOW = [
@@ -87,7 +87,7 @@ function Inner() {
         <section className="zp-launch">
           <div className="zp-in">
             <div className="zp-k">{L('启动 · 关联这次作答', 'Get started · Link this attempt')}</div>
-            {task?.ok ? <h2>{task.task.title}<small>{task.task.company} · {lang === 'en' ? `${task.deadline ? 'Time limit' : 'Suggested time'}: ${task.task.time_minutes} min${task.submitted ? ' · Submitted' : ''}` : <>{task.deadline ? '限时' : '建议'} {task.task.time_minutes} 分钟{task.submitted ? ' · 已交卷' : ''}</>}</small></h2> : task ? <h2 className="zp-bad">{lang === 'en' ? <>Work code {code} wasn&apos;t found. Go back to the task page and click &quot;Install / link the extension&quot; again.</> : <>真活码 {code} 没找到：回答题页再点一次「去装插件 / 关联」</>}</h2> : <h2>{L('读取中…', 'Loading…')}</h2>}
+            {task?.ok ? <h2>{task.task.title}<small>{task.task.company} · {lang === 'en' ? `${task.deadline ? 'Time limit' : 'Suggested time'}: ${task.task.time_minutes} min${task.submitted ? ' · Submitted' : ''}` : <>{task.deadline ? '限时' : '建议'} {task.task.time_minutes} 分钟{task.submitted ? ' · 已提交' : ''}</>}</small></h2> : task ? <h2 className="zp-bad">{lang === 'en' ? <>Work code {code} wasn&apos;t found. Go back to the task page and click &quot;Install / link the extension&quot; again.</> : <>真活码 {code} 没找到：回作答页再点一次「去装插件 / 关联」</>}</h2> : <h2>{L('读取中…', 'Loading…')}</h2>}
             <div className="zp-code"><span>{L('真活码', 'Work code')}</span><b>{code}</b><button onClick={copy}>{copied ? L('已复制', 'Copied') : L('复制', 'Copy')}</button></div>
             {task?.ok && !task.submitted && (installed
               ? <div className="zp-act">
@@ -108,7 +108,7 @@ function Inner() {
         <div className="zp-in">
           <div className="zp-k light">{L('百业AI｜真活 · 第四种作答方式', 'Baiye AI · True Work · The fourth way to answer')}</div>
           {lang === 'en' ? <h1>Use your own tools<br /><em>to do real work</em></h1> : <h1>用你自己的工具，<br /><em>做一道真活</em></h1>}
-          <p>{L('在线文档、表格、设计工具、各家 AI，平时怎么干活，答题就怎么干。真活插件只在答题期间，记下你打开了什么、页面上出现了什么、写了多少。交卷后，AI 照着这份记录回看你是怎么做出来的。', 'Online docs, spreadsheets, design tools, any AI: work on the task the way you normally work. Only while you\'re on the task, the work-sample extension notes what you opened, what appeared on those pages and how much you wrote. After you submit, AI uses that record to look back at how you got to your result.')}</p>
+          <p>{L('在线文档、表格、设计工具、各家 AI，平时怎么干活，作答就怎么干。真活插件只在作答期间，记下你打开了什么、页面上出现了什么、写了多少。提交后，AI 照着这份记录回看你是怎么做出来的。', 'Online docs, spreadsheets, design tools, any AI: work on the task the way you normally work. Only while you\'re on the task, the work-sample extension notes what you opened, what appeared on those pages and how much you wrote. After you submit, AI uses that record to look back at how you got to your result.')}</p>
           <div className="zp-acts">
             <a className="zp-btn light" href="/downloads/zhenhuo-plugin.zip" download>{L('下载真活插件', 'Download the extension')}{ver ? ` v${ver}` : ''}</a>
             <a className="zp-btn line" href="#install">{L('三步装好 ↓', 'Set up in three steps ↓')}</a>
@@ -128,7 +128,7 @@ function Inner() {
               ['Screen recording upload', 'Work in software on your own computer, record your screen in the browser, then upload the file.', 'AI has to sample frames from the video: slow, costly and low on detail'],
               ['Work-sample extension', 'Work with the tools in your own browser. The extension reads the text on the page, not the picture.', 'Lighter than screen recording and more detailed, down to the full text of your AI chats'],
             ] : [
-              ['站内操作台', '材料、编辑区、AI 都在答题页里。每一步自动记，最省事。', '工具只能用我们给的'],
+              ['站内操作台', '材料、编辑区、AI 都在作答页里。每一步自动记，最省事。', '工具只能用我们给的'],
               ['录屏上传', '用自己电脑上的软件做，浏览器录屏，最后上传文件。', '视频要抽帧给 AI 看，慢、贵、看不细'],
               ['真活插件', '用自己浏览器里的工具做；插件读的是页面上的文字，不是画面。', '比录屏轻，过程看得更细，连 AI 对话原文都在'],
             ]).map(([t, d, n], i) => (
@@ -142,7 +142,7 @@ function Inner() {
       <section className="zp-sec alt">
         <div className="zp-in">
           <div className="zp-k">{L('读什么，不读什么', 'What is and isn\'t recorded')}</div>
-          <h3>{L('只在答题期间，只读屏幕上已经显示的东西', 'Only while you\'re on the task, and only what\'s already shown on screen')}</h3>
+          <h3>{L('只在作答期间，只读屏幕上已经显示的东西', 'Only while you\'re on the task, and only what\'s already shown on screen')}</h3>
           <div className="zp-two">
             {lang === 'en' ? <div><b className="yes">Recorded</b><ul>
               <li>Which web pages you open and switch between: the site&apos;s domain and the page title</li>
@@ -164,12 +164,12 @@ function Inner() {
               <li>It never clicks, scrolls or submits anything, and never operates any page for you</li>
             </ul></div> : <div><b className="no">不记</b><ul>
               <li>你按了哪些键、打的具体内容（只数字数）</li>
-              <li>点「同意并开始记录」之前、交卷之后的任何东西</li>
+              <li>点「同意并开始记录」之前、提交之后的任何东西</li>
               <li>浏览器以外的软件（除非你自己打开「也记录整个屏幕」）</li>
               <li>不点、不翻、不提交，不替你操作任何页面</li>
             </ul></div>}
           </div>
-          <div className="zp-note">{L('开始记录前侧边栏会再说一遍，你点「同意并开始记录」才开始；中途可以暂停（暂停也会记在过程里）。交卷或时间到，自动停止。记录只用于这道题的过程评价，出任务的人在报告里看得到。', 'The sidebar explains this again before recording starts, and nothing is recorded until you click "Agree and start recording". You can pause along the way (pauses also show up in the record). Recording stops automatically when you submit or time runs out. The record is used only to assess your process on this task, and the person who set the task can see it in the report.')}</div>
+          <div className="zp-note">{L('开始记录前侧边栏会再说一遍，你点「同意并开始记录」才开始；中途可以暂停（暂停也会记在过程里）。提交或时间到，自动停止。记录只用于这个任务的过程评价，出任务的人在报告里看得到。', 'The sidebar explains this again before recording starts, and nothing is recorded until you click "Agree and start recording". You can pause along the way (pauses also show up in the record). Recording stops automatically when you submit or time runs out. The record is used only to assess your process on this task, and the person who set the task can see it in the report.')}</div>
         </div>
       </section>
 
@@ -195,7 +195,7 @@ function Inner() {
       <section className="zp-sec alt">
         <div className="zp-in">
           <div className="zp-k">{L('四步做完一道题', 'Four steps to finish a task')}</div>
-          <h3>{L('答题页拿码，侧边栏记录，自己的工具干活', 'Get the code on the task page, record in the sidebar, work in your own tools')}</h3>
+          <h3>{L('作答页拿码，侧边栏记录，自己的工具干活', 'Get the code on the task page, record in the sidebar, work in your own tools')}</h3>
           <div className="zp-flow">
             {(lang === 'en' ? FLOW_EN : FLOW).map((f, i) => (
               <div key={f.t} className="zp-flow-row">
@@ -219,7 +219,7 @@ function Inner() {
           <details><summary>做下一道题要重装吗？</summary><p>不用。每道题有自己的真活码，来这一页点「关联这次作答」，或者在侧边栏粘贴新码就行。</p></details>
           <details><summary>可以用桌面版 Word / Excel 吗？</summary><p>插件只看得到浏览器里的网页。要用桌面软件，出任务的人可以选「录屏上传」，或者用站内操作台。</p></details>
           <details><summary>中途断网了怎么办？</summary><p>记录先存在你的浏览器里，联网后自动补传。</p></details>
-          <details><summary>和数据外采篮是一个插件吗？</summary><p>不是。真活插件只用于答题，和数据部门的采集工具没有关系。</p></details>
+          <details><summary>和数据外采篮是一个插件吗？</summary><p>不是。真活插件只用于作答，和数据部门的采集工具没有关系。</p></details>
           </>}
         </div>
       </section>

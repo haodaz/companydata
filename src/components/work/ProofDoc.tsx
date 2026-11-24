@@ -37,7 +37,7 @@ export function ProofDoc({ p, mode, actions }: { p: Proof; mode: 'archive' | 've
         <div className="pd-top"><WorkLogo size="md" href={null} /><span className="pd-kind">{mode === 'verify' ? L('作品核验', 'WORK VERIFICATION') : L('真活作品存档', 'WORK SAMPLE ARCHIVE')}</span></div>
         <div className="pd-name">{p.who || L('作答人', 'Candidate')}</div>
         <div className="pd-task">{L('完成了一道真活：', 'Completed a work sample: ')}<b>{p.task.title}</b></div>
-        <div className="pd-meta">{[p.task.company, p.task.role].filter(Boolean).join(' · ')} · {L('交卷于', 'Submitted')} {date}</div>
+        <div className="pd-meta">{[p.task.company, p.task.role].filter(Boolean).join(' · ')} · {L('提交于', 'Submitted')} {date}</div>
         {p.score != null && <div className="pd-score">{p.scale === 'ai_use' ? L('AI 使用与交互', 'AI use and interaction') : p.scale === 'fluency' ? L('AI 驾驭能力', 'AI fluency') : L('得分', 'Score')} <b>{p.score}</b> / 100{p.scale !== 'ai_use' && p.scale !== 'fluency' && p.ai_use != null ? <span>　{L('AI 使用', 'AI use')} {p.ai_use} / 100</span> : null}</div>}
 
         <div className="pd-sec"><div className="pd-h">{L('任务书', 'The task')}</div><MdView text={p.task.brief} style={{ fontSize: 13.5, lineHeight: 1.75 }} />

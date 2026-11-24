@@ -46,7 +46,7 @@ const LEVEL_BAND: Record<ResultItem['level'], [number, number]> = { L1: [0, 39],
 /** 结果：rubric 逐条，每条引用交付物原句当证据；前置条目没做到的，后置条目封顶 L2 */
 export async function gradeResult(task: WorkTask, deliverable: string, opts: { institution?: string; who?: string } = {}): Promise<ResultReport> {
   // 提示缓存（11-15）：评卷说明、任务书、材料、评分标准、返回格式同一道题都一样，当 prefix；交付物放最后（基线、前后脚交卷的几个人、重评都能命中）
-  const prefix = `你是「真活台」的评卷 agent。按 rubric 逐条评这份交付物，每条必须引用交付物里的原句当证据（没有就写「未见」），给 BARS 等级 L1–L4 和 0–100 分，分数落在等级的区间里：L1 0–39、L2 40–59、L3 60–79、L4 80–100。只看交付物和材料，不脑补。
+  const prefix = `你是「真活台」的评估 agent。按 rubric 逐条评这份交付物，每条必须引用交付物里的原句当证据（没有就写「未见」），给 BARS 等级 L1–L4 和 0–100 分，分数落在等级的区间里：L1 0–39、L2 40–59、L3 60–79、L4 80–100。只看交付物和材料，不脑补。
 ## 任务书
 ${task.task.brief}
 ## 交付物要求
@@ -122,10 +122,10 @@ export async function analyzeProcess(task: WorkTask, events: WorkEvent[], aiChat
   stats.deliverable_chars = deliverable.length;
   const lines = ev.slice(0, 400).map(e => `[${fmt(e.t)}] ${e.type}${e.id ? ' ' + e.id : ''}${e.chars ? ` ${e.chars}字` : ''}${e.delta != null ? ` Δ${e.delta}` : ''}${e.host ? ' ' + e.host : ''}${e.note ? ' ' + s(e.note, 80) : ''}${e.text ? ' 「' + s(e.text, 160) + '」' : ''}`);
   const chat = aiChat.slice(0, 40).map(c => `[${fmt(c.t)}] 问：${s(c.q, 300)}\n   答（摘）：${s(c.a, 200)}`);
-  const prompt = `你是「真活台」的过程分析 agent。只看事件流和 AI 对话，判断这个人做题的过程：什么是他自己判断的、什么交给了 AI、有没有核验材料、有没有发现材料里的坑。措辞用「观察到…」，每条高光 / 风险必须指向具体时刻和证据。
+  const prompt = `你是「真活台」的过程分析 agent。只看事件流和 AI 对话，判断这个人作答的过程：什么是他自己判断的、什么交给了 AI、有没有核验材料、有没有发现材料里的坑。措辞用「观察到…」，每条高光 / 风险必须指向具体时刻和证据。
 ## 任务（操作台：${task.env?.type || 'doc'}）
 ${task.task.title}：${task.task.brief.slice(0, 600)}
-事件类型含义：open_material 打开材料 · ai_ask 问 AI · adopt 把 AI 的话放进交付物 · paste 粘贴 · edit 自己改稿（Δ字数）· run_tests 跑自测（note 里是通过数）· set_param 改设计参数 · sketch 画草图 · idle 空闲超过 2 分钟 · submit 交卷 · 真活插件：plugin_start/plugin_stop 开始 / 结束记录 · visit 打开或切到某个网页（host · 标题）· page 网页上读到的文字（摘）· edit 在网页里打字（Δ字数）· paste 粘贴 · copy 复制 · 和 AI 的对话里「插件读到的 xx 页面」是候选人在外部 AI 网站上的对话原文（问和答混在一起，按语义区分）
+事件类型含义：open_material 打开材料 · ai_ask 问 AI · adopt 把 AI 的话放进交付物 · paste 粘贴 · edit 自己改稿（Δ字数）· run_tests 跑自测（note 里是通过数）· set_param 改设计参数 · sketch 画草图 · idle 空闲超过 2 分钟 · submit 提交 · 真活插件：plugin_start/plugin_stop 开始 / 结束记录 · visit 打开或切到某个网页（host · 标题）· page 网页上读到的文字（摘）· edit 在网页里打字（Δ字数）· paste 粘贴 · copy 复制 · 和 AI 的对话里「插件读到的 xx 页面」是候选人在外部 AI 网站上的对话原文（问和答混在一起，按语义区分）
 AI 工作台（操作台 agent：候选人带一个能读写工作区文件、跑 Python 的 AI 代理做 project；对话里 a 的［write_file 路径］［run_python］是代理做的动作）：ws_open 自己打开某个文件看（note=路径）· ws_edit 自己改文件（note=路径，Δ字数）· ws_run 自己运行脚本（note=路径，id=ok/err）· ws_revert 撤销了 AI 对某个文件的改动 · ws_new 自己新建文件 · agent_stop 叫停 AI · agent_model 换了模型 · agent_mode 打开 / 关掉协作开关（plan = 先出计划再动手，confirm = 每次改文件先给他确认；plan:skip = 第一次发指令时平台问要不要先出计划，他选了直接做）· agent_plan 处理 AI 的计划（ok 批准 / edit 改过再执行 / reject 打回）· change_ok / change_reject 接受 / 拒绝 AI 的一次文件改动 · download 下载文件
 开放模式（用自己的软件做）：download 下载材料 · rec_start / rec_stop 录屏起止 · screen 录屏抽帧看图得到的描述（note = 软件 · 动作 · 看到的内容，这是主要的过程证据）· file 上传交付文件
 ${task.env?.type === 'agent' ? 'AI 工作台：材料是真实工作资料，没有刻意埋坑；看要交的文件做得好不好，以及哪些判断和核对是他自己做的。' : `材料里故意留的坑（看他有没有发现）：${task.materials.filter(m => m.source !== 'db').map(m => m.id + ' ' + m.title).join('、') || '无标注'}`}
@@ -162,14 +162,14 @@ ${opts.audit?.length ? `## 分段审计笔记（边看边记的，总评要和�
 export const AI_USE_COND: Record<string, string> = { verify: 'AI 给出过会影响结论的事实、数字、计算或主张', select: 'AI 给出过可以取舍的方案、内容或建议', integrate: 'AI 的内容进了交付物（采纳、粘贴或改写）' };
 /** 1–5 档判定条件（每档一句，能对着证据判） */
 export const AI_USE_ANCHORS: Record<string, string[]> = {
-  ask: ['把题目原样丢给 AI，或问得很空', '问得具体，但没给材料里的数字和约束', '给了关键数字和约束，一问一件事', '把问题拆成几步问，追问追到点上', '还让 AI 挑战题目本身：真正要解决什么、漏了哪些相关方和前提'],
+  ask: ['把任务原样丢给 AI，或问得很空', '问得具体，但没给材料里的数字和约束', '给了关键数字和约束，一问一件事', '把问题拆成几步问，追问追到点上', '还让 AI 挑战任务本身：真正要解决什么、漏了哪些相关方和前提'],
   verify: ['AI 给的数字和结论原样用，没核', '偶尔对一处，发现问题也没改', '对照材料核了关键数字，发现错会改', '系统地核：复算、换口径、查来源，留下依据', '让 AI 反驳自己、换方法复算，能指出 AI 哪里不可靠'],
   select: ['照单全收', '删改凭感觉，说不出理由', '丢掉明显不对的，理由站得住', '比较过几种方案，按任务约束取舍', '取舍有依据，还清楚自己交付里哪里还不可靠'],
   divide: ['整道题交给 AI，关键判断也是 AI 做的', '有分工但混乱，该自己判断的也交出去了', 'AI 干整理、起草、计算，关键判断自己做', '分工清楚，并按环节调整', '按风险分配：敏感数据不给 AI、关键判断自己核、体力活全交给 AI'],
   integrate: ['AI 的内容原样贴进交付物', '只改了措辞，口径前后不一致', '改写后融进交付物，口径基本一致', '融成自己的结构，数字口径统一', 'AI 的内容只是素材，交付物明显是他自己的判断和表达'],
 };
 export const AI_USE_ITEMS = [
-  { key: 'ask', title: '提问', desc: '会不会拆问题、给足上下文（材料里的数字、约束）、追问到点上；更好的是让 AI 挑战题目本身——这道题真正要解决什么、漏了哪些相关方、约束和前提' },
+  { key: 'ask', title: '提问', desc: '会不会拆问题、给足上下文（材料里的数字、约束）、追问到点上；更好的是让 AI 挑战任务本身——这个任务真正要解决什么、漏了哪些相关方、约束和前提' },
   { key: 'verify', title: '核验', desc: 'AI 的回答有没有对照材料核对，发现 AI 说错、说漏、编数字；更好的是反向验证——让 AI 反驳自己的结论、换一种算法或口径复算' },
   { key: 'select', title: '取舍', desc: '采纳什么、丢掉什么，理由站得住；不照单全收；清楚自己的交付哪里还不可靠、再给时间先改哪里' },
   { key: 'divide', title: '分工', desc: '让 AI 干体力活（整理、起草、算），关键判断自己做' },
@@ -270,7 +270,7 @@ ${chat.slice(0, 40).map(c => `[${fmt(c.t)}] 问：${pasted[chat.indexOf(c)] >= 5
 ${lines.join('\n')}
 ## 交付物（节选）
 ${deliverable.slice(0, 2500)}
-${nextStep ? `## 交卷时他写的「如果再给一天，先改哪里」（选填）
+${nextStep ? `## 提交时他写的「如果再给一天，先改哪里」（选填）
 ${s(nextStep, 600)}
 （算进「取舍」：说得出自己哪里还不可靠、改的方向有依据，加分；空泛的不加不扣）
 ` : ''}
@@ -281,14 +281,14 @@ ${pol ? `## 这家企业、这个岗位的 AI 使用标准（照它评，不要�
 治理红线：${pol.red_lines.map(x => x.text).join('；') || '（无）'}
 ${pol.summary}
 ` : ''}${flags.length ? `程序查到问 AI 时贴了：${flags.map(f => `${fmt(f.t)} ${f.what}`).join('、')}\n` : ''}
-${disclosureText ? `## 交卷时他写的「AI 参与说明」（告诉过他会和记录比对）
+${disclosureText ? `## 提交时他写的「AI 参与说明」（告诉过他会和记录比对）
 ${disclosureText}
 拿它和上面的硬指标、每一轮对话、采纳记录比：consistent 逐环节吻合 · minor 颗粒度粗或把自己做的说得更关键 · major 把 AI 生成的说成自己做的（或反过来）· vague 笼统到没法对。
 ` : ''}
-五个子项逐项定档。先判这一项能不能评：提问、分工是基线项，只要用了 AI 就一定能评，没看到好的做法就给低档；核验、取舍、整合是条件项，这道题和这次过程没出现对应场景时 observable 填 false、why_na 写一句为什么（不是他做得差，是没机会），不要硬打低分。
+五个子项逐项定档。先判这一项能不能评：提问、分工是基线项，只要用了 AI 就一定能评，没看到好的做法就给低档；核验、取舍、整合是条件项，这个任务和这次过程没出现对应场景时 observable 填 false、why_na 写一句为什么（不是他做得差，是没机会），不要硬打低分。
 能评的按下面的档位定 level（1–5，只能是整数），每档都要有证据撑着：证据写时刻和原话 / 原文片段，最多 3 条；标了「原样粘贴」的提问不能当提问的证据。
 ${AI_USE_ITEMS.map(i => `- ${i.key} ${i.title}（${AI_USE_COND[i.key] ? `条件项：${AI_USE_COND[i.key]}` : '基线项'}）：${i.desc}\n  ${AI_USE_ANCHORS[i.key].map((a, k) => `${k + 1} 档 ${a}`).join('；')}`).join('\n')}
-核验、取舍拿不准这道题有没有给机会时，当作能评。原样照搬比例高、AI 编的数字被直接写进交付物，核验和整合要明显压档。
+核验、取舍拿不准这个任务有没有给机会时，当作能评。原样照搬比例高、AI 编的数字被直接写进交付物，核验和整合要明显压档。
 负向分三类，写进 negatives（没有就空数组）：
 - conduct 做法问题：某个环节做法不对（比如把客户名单、手机号原样贴给 AI，在不该交的环节把判断整个交给 AI）——把对应子项压到 1–2 档，不另外扣分${flags.length ? '；程序查到的贴个人信息算这一类，压「分工」' : ''}；
 - integrity 诚信问题：AI 参与说明严重不符、把 AI 编的数字说成自己查的、出错甩锅给 AI；
@@ -302,7 +302,7 @@ ${pol ? '对照标准：在「不能用 / 慎用」的环节把判断整个交�
     const evidence = (Array.isArray(x.evidence) ? x.evidence : []).slice(0, 3).map((e: any) => ({ t: Math.max(0, Number(e?.t) || 0), quote: sl(task)(e?.quote, 160) })).filter((e: any) => e.quote);
     // 条件项没给机会 → 未观测，不进分母；基线项不许 N/A
     if (i.key === 'integrate' && !canIntegrate()) return { key: i.key, title: i.title, score: null, q: null, why_na: task.task?.lang === 'en' ? 'No AI content went into the deliverable (nothing adopted or pasted)' : 'AI 的内容没进交付物（没采纳、没粘贴），没法评怎么融进去', note: sl(task)(x.note, 200), evidence: [] };
-    if (AI_USE_COND[i.key] && x.observable === false) return { key: i.key, title: i.title, score: null, q: null, why_na: sl(task)(x.why_na, 120) || (task.task?.lang === 'en' ? 'The task gave no chance to show this' : '这道题没给机会'), note: sl(task)(x.note, 200), evidence: [] };
+    if (AI_USE_COND[i.key] && x.observable === false) return { key: i.key, title: i.title, score: null, q: null, why_na: sl(task)(x.why_na, 120) || (task.task?.lang === 'en' ? 'The task gave no chance to show this' : '这个任务没给机会'), note: sl(task)(x.note, 200), evidence: [] };
     let q = Math.max(1, Math.min(5, Math.round(Number(x.level) || 1)));
     if (lowUse && (i.key === 'ask' || i.key === 'divide')) q = Math.min(q, 2);   // 只问过一次：谈不上会问、会分工
     const qq = evidence.length <= 1 && q > 3.5 ? 3.5 : q;   // 单条证据最高 3.5 档

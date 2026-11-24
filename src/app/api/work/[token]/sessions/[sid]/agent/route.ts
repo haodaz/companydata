@@ -40,10 +40,10 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   const { token, sid } = await params;
   const { data: t } = await db.from('work_tasks').select('id, task, materials, company_name, role').eq('share_token', token).maybeSingle();
   if (!t) return NextResponse.json({ ok: false, error: errL(t, '链接不可用') }, { status: 404 });
-  if (t.task?.env?.type !== 'agent') return NextResponse.json({ ok: false, error: '这道题不是AI 工作台' }, { status: 400 });
+  if (t.task?.env?.type !== 'agent') return NextResponse.json({ ok: false, error: '这个任务不是AI 工作台' }, { status: 400 });
   const { data: s } = await db.from('work_sessions').select('id, ai_chat, submitted_at, started_at').eq('id', sid).eq('task_id', t.id).maybeSingle();
   if (!s) return NextResponse.json({ ok: false, error: errL(t, '没有这次作答') }, { status: 404 });
-  if (s.submitted_at) return NextResponse.json({ ok: false, error: errL(t, '已经交卷了') }, { status: 409 });
+  if (s.submitted_at) return NextResponse.json({ ok: false, error: errL(t, '已经提交了') }, { status: 409 });
   if (timing(t.task, s).closed) return NextResponse.json({ ok: false, error: errL(t, '时间到了'), expired: true }, { status: 409 });
   const body = await req.json().catch(() => ({}));
   // 代理的联网检索：前端执行 web_search 时来这里（结果也会作为工具结果记进这一轮）

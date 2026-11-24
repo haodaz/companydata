@@ -128,7 +128,7 @@ export function FluencyReport({ f, sid, expand = false }: { f: any; sid?: string
 
       <Card title="评分口径与局限">
         <div style={{ fontSize: 13, color: '#555', display: 'grid', gap: 6 }}>
-          <div><b>怎么评的：</b>只看候选人和平台 AI 助手的对话原话，加上交付物和交卷时的「AI 参与说明」。25 个行为先按规则定位候选句、再由模型逐条判断成立与否、按每个行为写死的 1–5 档锚点定档；同一行为取最高档，只有一条孤立证据的最高 3.5 分；行为分 → 维度分（取均值）→ 总分（7 维等权，薄证据维度减半）。</div>
+          <div><b>怎么评的：</b>只看候选人和平台 AI 助手的对话原话，加上交付物和提交时的「AI 参与说明」。25 个行为先按规则定位候选句、再由模型逐条判断成立与否、按每个行为写死的 1–5 档锚点定档；同一行为取最高档，只有一条孤立证据的最高 3.5 分；行为分 → 维度分（取均值）→ 总分（7 维等权，薄证据维度减半）。</div>
           <div><b>0 分和不计分：</b>目标澄清、人机分工、格式要求、交付前验证、主动迭代是任何实质任务都该有的基线行为，没出现记 0；其余行为要有触发场景，没机会就不计分，不拉低总分。</div>
           <div><b>这道任务：</b>{f.profile?.type_name}类（{f.profile?.type}）；任务可及性 C_elig {f.confidence.c_elig}，本次看到的覆盖 C_obs {f.confidence.c_obs}。{f.profile?.missing?.length ? `任务缺：${f.profile.missing.map((x: string) => X_NAME[x] || x).join('、')}。` : ''}{f.not_triggered?.length ? `本次未触发：${f.not_triggered.map((x: any) => name(x.bid)).join('、')}——不是候选人不会，是这道任务测不到。` : ''}</div>
           <div><b>局限：</b>结果只反映这一次任务、这一段对话里的表现；在自己电脑上用外部 AI 的部分平台读不到原话，不在本评分内。分数和证据条数概括的是行为特征，不等同于工作效率或成果质量。</div>

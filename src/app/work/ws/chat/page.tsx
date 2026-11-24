@@ -166,7 +166,7 @@ function ReportPanel({ token, sid }: { token: string; sid: string }) {
   useEffect(() => { fetch(`/api/work/${token}/sessions/${sid}?full=1`).then(r => r.json()).then(j => (j.ok ? setS(j.session) : setErr(j.error || '读不到'))).catch(e => setErr(e.message)); }, [token, sid]);
   if (err) return <div className="wc-mute" style={{ padding: 20 }}>{err}</div>;
   if (!s) return <div className="wc-mute" style={{ padding: 20 }}>读取报告…</div>;
-  if (!s.report) return <div className="wc-mute" style={{ padding: 20 }}>{s.submitted_at ? '报告还在生成，过一两分钟再看。' : '还没交卷。'}</div>;
+  if (!s.report) return <div className="wc-mute" style={{ padding: 20 }}>{s.submitted_at ? '报告还在生成，过一两分钟再看。' : '还没提交。'}</div>;
   return <div style={{ padding: '16px 18px 40px', overflowY: 'auto', height: '100%' }}><ReportView sid={s.id} report={s.report} participant={s.participant} deliverable={s.deliverable} events={s.events || []} aiChat={s.ai_chat || []} defaultTab="deliv" /></div>;
 }
 

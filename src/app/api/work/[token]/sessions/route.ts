@@ -22,7 +22,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     const { data: ex } = await db.from('work_sessions').select('id, participant, submitted_at, started_at').eq('task_id', t.id).eq('participant->>contact_key', key).order('created_at', { ascending: false }).limit(1).maybeSingle();
     if (ex) {
       // 做完或到点的不接回去：只凭手机号不能看别人的报告
-      if (ex.submitted_at || timing(t.task, ex).expired) return NextResponse.json({ ok: false, done: true, error: errL(t, '这个手机号或邮箱已经做过这道题了。如需重新作答，请联系发给你链接的公司。') }, { status: 409 });
+      if (ex.submitted_at || timing(t.task, ex).expired) return NextResponse.json({ ok: false, done: true, error: errL(t, '这个手机号或邮箱已经做过这个任务了。如需重新作答，请联系发给你链接的公司。') }, { status: 409 });
       return NextResponse.json({ ok: true, session_id: ex.id, resumed: true, ...(ex.participant?.code ? { code: ex.participant.code } : {}) });
     }
   }

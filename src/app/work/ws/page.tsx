@@ -13,12 +13,12 @@ const hello = () => { const h = new Date().getHours(); return h < 6 ? '夜深了
 // 第一次进工作台的引导：从输入框讲到侧栏每个入口，最后是账号菜单
 const HOME_TOUR: TourStep[] = [
   { key: 'ask', title: '有事直接说', text: '出一道任务、看谁做得好、分析一份报告、改题、上下架，都在这里说一句，AI 来办。打「/」能看常用指令。' },
-  { key: 'desk', title: '案头', text: '最近交卷的人、最近出的题。每一行的「问助理」会把这个人或这道题带进对话，接着往下问。' },
+  { key: 'desk', title: '案头', text: '最近提交的人、最近出的题。每一行的「问助理」会把这个人或这个任务带进对话，接着往下问。' },
   { key: 'ham', title: '菜单', text: '管理真活、任务报告、知识库、任务库、最近的对话，还有设置和退出登录，都在这里。右上角的笔是开一段新对话。' },
   { key: 'nav-new', title: '新对话', text: '每件事开一段对话，都会存着；做出来的题、报告在对话右边打开。' },
   { key: 'recent', title: '最近的对话', text: '聊过的都在这里，点开接着聊。' },
   { key: 'nav-tasks', title: '管理真活', text: '你出过的每道题：状态、多少人做、平均分。右上「＋ 新建」也能手动一项项填。' },
-  { key: 'nav-reports', title: '任务报告', text: '所有交卷的人一张表。看报告，或者勾同一道题的几个人让助理并排比。' },
+  { key: 'nav-reports', title: '任务报告', text: '所有提交的人一张表。看报告，或者勾同一道题的几个人让助理并排比。' },
   { key: 'nav-kb', title: '知识库', text: '企业介绍、岗位要求、你过往的题和素材存在这里。助理出任务前会先查，不用每次重说。' },
   { key: 'nav-library', title: '任务库', text: '平台上现成的好任务，可以原题直出换成你们公司，或者只做参考。' },
   { key: 'account', title: '账号菜单', text: '设置、使用教程、切换到传统版、退出登录都在这里。想再看一遍这份引导，也点这里的「新手引导」。' },
@@ -34,7 +34,7 @@ export default function HomePage() {
   const [d, setD] = useState<any>(null);
   useEffect(() => { fetch('/api/admin/work/home?view=overview', { cache: 'no-store' }).then(r => r.json()).then(j => setD(j.ok ? j : { stats: {}, tasks: [], recent: [] })).catch(() => setD({ stats: {}, tasks: [], recent: [] })); }, []);
   const st = d?.stats || {};
-  const nums: [string, string, any][] = [['TASKS', '出过的题', st.tasks], ['LIVE', '已发布', st.live], ['DRAFT', '待发布', st.pending], ['TAKERS', '参与', st.started], ['SUBMITTED', '交卷', st.submitted]];
+  const nums: [string, string, any][] = [['TASKS', '出过的题', st.tasks], ['LIVE', '已发布', st.live], ['DRAFT', '待发布', st.pending], ['TAKERS', '参与', st.started], ['SUBMITTED', '提交', st.submitted]];
   return (
     <div className="wws-page h-page">
       <style>{CHAT_CSS + CSS}</style>
@@ -50,8 +50,8 @@ export default function HomePage() {
 
       <div className="h-cols" data-tour="desk">
         <section className="wws-card lined pad">
-          <div className="wws-card-h"><h2 className="wws-h2">最近交卷<small>Latest submissions</small></h2><Link href={askHref('最近交卷的这几个人里，谁值得我先看？为什么？')} style={{ marginLeft: 'auto' }}><button className="wws-ask">问助理：先看谁</button></Link></div>
-          {d && !d.recent.length && <Empty>还没有人交卷。题发布后，把参与链接发给候选人。</Empty>}
+          <div className="wws-card-h"><h2 className="wws-h2">最近提交<small>Latest submissions</small></h2><Link href={askHref('最近提交的这几个人里，谁值得我先看？为什么？')} style={{ marginLeft: 'auto' }}><button className="wws-ask">问助理：先看谁</button></Link></div>
+          {d && !d.recent.length && <Empty>还没有人提交。题发布后，把参与链接发给候选人。</Empty>}
           {(d?.recent || []).map((p: any) => <div key={p.session_id} className="h-row">
             <b className="wws-num" style={{ width: 34, color: col(p.score) }}>{p.score ?? '—'}</b>
             <div style={{ minWidth: 0, flex: 1 }}><div style={{ fontWeight: 800 }}>{p.name}</div><div className="h-sub">{p.task_title} · {when(p.submitted_at)}{p.minutes != null ? ` · ${p.minutes} 分钟` : ''}</div></div>
@@ -65,7 +65,7 @@ export default function HomePage() {
           {(d?.tasks || []).map((t: any) => <div key={t.task_id} className="h-row">
             <span className={`wws-tag ${TONE[t.status] || 'mute'}`}>{STATUS[t.status]?.[0] || t.status}</span>
             <div style={{ minWidth: 0, flex: 1 }}><a href={`/work/${t.token}/owner?k=${encodeURIComponent(t.owner_key || '')}`} target="_blank" rel="noreferrer" style={{ fontWeight: 800, textDecoration: 'none' }}>{t.title}</a><div className="h-sub">{t.company} · {t.started} 人做 / {t.submitted} 人交{t.avg != null ? ` · 平均 ${t.avg}` : ''}</div></div>
-            <Link href={askHref(t.submitted ? '这道题大家做得怎么样？卡在哪，推荐谁？' : '这道题现在什么情况？下一步该做什么？', { task_id: t.task_id, token: t.token, k: t.owner_key, title: t.title })}><button className="wws-ask">问助理</button></Link>
+            <Link href={askHref(t.submitted ? '这个任务大家做得怎么样？卡在哪，推荐谁？' : '这个任务现在什么情况？下一步该做什么？', { task_id: t.task_id, token: t.token, k: t.owner_key, title: t.title })}><button className="wws-ask">问助理</button></Link>
           </div>)}
         </section>
       </div>

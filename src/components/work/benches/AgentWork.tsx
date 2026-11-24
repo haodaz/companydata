@@ -267,7 +267,7 @@ export function AgentWork({ token, sid, task, resume, limit, grading, error, onS
     for (const f of filesRef.current.filter(x => x.bin && /\.(png|jpe?g|gif|webp)$/i.test(x.path) && (outputs.some(o => o.path === x.path) || /^output\//.test(x.path))).slice(0, 8)) {
       try { const blob = await (await fetch(f.content)).blob(); const fd = new FormData(); fd.append('file', new File([blob], f.path.replace(/\//g, '_'), { type: blob.type })); fd.append('kind', 'file'); const j = await (await fetch(`/api/work/${token}/sessions/${sid}/upload`, { method: 'POST', body: fd })).json(); if (j.ok) imgs[f.path] = j.url; } catch { /* 图没传上去就只交文字 */ }
     }
-    try { await fetch(`/api/work/${token}/sessions/${sid}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ events: [], draft: { agent: { files: filesRef.current.filter(f => !f.bin || f.content.length < 300_000), model } } }) }); } catch { /* 草稿没存上不影响交卷 */ }
+    try { await fetch(`/api/work/${token}/sessions/${sid}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ events: [], draft: { agent: { files: filesRef.current.filter(f => !f.bin || f.content.length < 300_000), model } } }) }); } catch { /* 草稿没存上不影响提交 */ }
     onSubmit(deliverable(imgs), buf.current.splice(0), auto);
   };
   const submit = () => {
@@ -295,7 +295,7 @@ export function AgentWork({ token, sid, task, resume, limit, grading, error, onS
         <button onClick={newFile} title={L('新建文件', 'New file')} style={iconBtn}>＋</button>
         <button onClick={() => setTree(false)} title={L('收起', 'Collapse')} style={iconBtn}>⟨</button>
       </div>
-      <div style={{ fontSize: 11.5, color: C.ink2, padding: '0 12px 8px', lineHeight: 1.6 }}>{L('题目给的材料都在这里，AI 和你都能读写。', 'All task materials are here; you and the AI can both read and write them.')}<br />{py === 'ready' ? L('Python 已就绪', 'Python ready') : py === 'loading' ? L('Python 环境准备中…', 'Preparing Python…') : L('Python 没装上，刷新试试', 'Python failed to load; try refreshing')}</div>
+      <div style={{ fontSize: 11.5, color: C.ink2, padding: '0 12px 8px', lineHeight: 1.6 }}>{L('任务给的材料都在这里，AI 和你都能读写。', 'All task materials are here; you and the AI can both read and write them.')}<br />{py === 'ready' ? L('Python 已就绪', 'Python ready') : py === 'loading' ? L('Python 环境准备中…', 'Preparing Python…') : L('Python 没装上，刷新试试', 'Python failed to load; try refreshing')}</div>
       <div style={{ flex: 1, overflow: 'auto', padding: '0 6px 12px' }}>
         <div onClick={() => openFile(BRIEF, false)} style={{ padding: '6px 8px', borderRadius: 6, cursor: 'pointer', fontSize: 13, background: active === BRIEF && appOpen ? C.soft : 'transparent', fontWeight: 600 }}>📋 {L('任务书', 'Task brief')}</div>
         {folders.map(([d, fs]) => <div key={d} style={{ marginTop: 8 }}>
@@ -418,17 +418,17 @@ export function AgentWork({ token, sid, task, resume, limit, grading, error, onS
           <div style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 14, fontWeight: 700 }}>{task.task.title} <span style={{ fontWeight: 400, fontSize: 12.5, color: C.ink2 }}>{task.company_name} · {L('AI 工作台 beta', 'AI workspace beta')}</span></div>
           <span style={{ fontFamily: C.mono, fontSize: 13, color: left != null && left <= 300 ? C.bad : C.ink2 }}>{left != null ? `${L('剩', 'left')} ${fmt(left)}` : fmt(now)}</span>{left == null && (task as any).task?.soft_limit && now > ((task as any).task?.time_minutes || 60) * 60 && <span title={L('建议时长只作参考：可以接着做，用时会如实记给企业', 'The suggested time is only a guide. You can keep going; your time is recorded as is.')} style={{ fontSize: 12, color: C.ink2, marginLeft: 6 }}>{L('已过建议时长，可以接着做', 'past suggested time, keep going')}</span>}
           {!appOpen && <button onClick={() => { setAppOpen(true); if (!tabs.length) { setTabs([BRIEF]); setActive(BRIEF); } }} style={{ ...iconBtn, border: `1px solid ${C.line}` }}>{L('打开文件区', 'Open files')}</button>}
-          <button onClick={submit} disabled={grading} style={{ border: 0, background: arm ? C.bad : C.ink, color: '#fff', borderRadius: 9, padding: '7px 16px', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}>{grading ? L('评分中…', 'Grading…') : arm ? L('确定交卷', 'Confirm') : L('交卷', 'Submit')}</button>
+          <button onClick={submit} disabled={grading} style={{ border: 0, background: arm ? C.bad : C.ink, color: '#fff', borderRadius: 9, padding: '7px 16px', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}>{grading ? L('评分中…', 'Grading…') : arm ? L('确定提交', 'Confirm') : L('提交', 'Submit')}</button>
         </header>
         {(err || error) && <div style={{ margin: '0 16px 8px', padding: '8px 12px', borderRadius: 10, background: '#fef2f2', color: C.bad, fontSize: 13 }}>{err || error}</div>}
         <div style={{ flex: 1, minHeight: 0, display: 'flex' }}>{chatEl}{appEl}</div>
       </main>
       {disc != null && <div style={{ position: 'fixed', inset: 0, background: 'rgba(20,20,40,.35)', display: 'grid', placeItems: 'center', zIndex: 50 }}>
         <div style={{ width: 'min(560px, calc(100vw - 32px))', background: '#fff', borderRadius: 16, padding: 22 }}>
-          <div style={{ fontWeight: 700, fontSize: 16 }}>{L('交卷前：说说 AI 在这份成果里做了什么', 'Before you submit: what did the AI do in this work?')}</div>
+          <div style={{ fontWeight: 700, fontSize: 16 }}>{L('提交前：说说 AI 在这份成果里做了什么', 'Before you submit: what did the AI do in this work?')}</div>
           <div style={{ fontSize: 13, color: C.ink2, margin: '6px 0 10px', lineHeight: 1.7 }}>{L('哪些是 AI 做的、哪些你核过或自己改的、哪一步你没信它。会写进给企业的报告；不写也能交。', "Which parts the AI did, what you checked or rewrote, where you didn't trust it. This goes into the report for the company; you can skip it.")}</div>
           <textarea value={disc} onChange={e => setDisc(e.target.value)} rows={5} autoFocus style={{ width: '100%', boxSizing: 'border-box', border: `1px solid ${C.line}`, borderRadius: 10, padding: 10, fontSize: 14, fontFamily: 'inherit' }} placeholder={L('比如：清洗脚本是 AI 写的，我核了缺失值的处理；第二个结论 AI 算反了，我让它重算并自己抽查了三行', 'e.g. The AI wrote the cleaning script; I checked how it handled missing values. It got the second conclusion backwards, so I had it redo the math and spot-checked three rows myself.')} />
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, marginTop: 12 }}><button onClick={() => setDisc(null)} style={{ border: `1px solid ${C.line}`, background: '#fff', borderRadius: 9, padding: '7px 14px', cursor: 'pointer' }}>{L('回去再看看', 'Go back')}</button><button onClick={() => finish()} style={{ border: 0, background: C.ink, color: '#fff', borderRadius: 9, padding: '7px 16px', cursor: 'pointer', fontWeight: 600 }}>{L('交卷', 'Submit')}</button></div>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, marginTop: 12 }}><button onClick={() => setDisc(null)} style={{ border: `1px solid ${C.line}`, background: '#fff', borderRadius: 9, padding: '7px 14px', cursor: 'pointer' }}>{L('回去再看看', 'Go back')}</button><button onClick={() => finish()} style={{ border: 0, background: C.ink, color: '#fff', borderRadius: 9, padding: '7px 16px', cursor: 'pointer', fontWeight: 600 }}>{L('提交', 'Submit')}</button></div>
         </div>
       </div>}
     </div>

@@ -19,7 +19,7 @@ export type TourStep = { key: string; title: string; text: string };
 type Rect = { x: number; y: number; w: number; h: number };
 
 export function Tour({ step, steps, onStep, onDone, doneLabel: doneLabel0 }: { step: number; steps: TourStep[]; onStep: (n: number) => void; onDone: () => void; doneLabel?: string }) {
-  const L = useL(); const doneLabel = doneLabel0 ?? L('开始做题', 'Start the task');
+  const L = useL(); const doneLabel = doneLabel0 ?? L('开始作答', 'Start the task');
   const [rect, setRect] = useState<Rect | null>(null);
   const [vp, setVp] = useState({ w: 1200, h: 800 });
   const last = useRef('');

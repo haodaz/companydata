@@ -219,7 +219,7 @@ function locate(inp: FluencyInput, a: Anchors, source: string, disclosure: strin
   }
   // 工具事件（量表 D3，有则加强）：操作台上跑测试、交卷前自查
   const tools = ev.filter(e => e.type === 'run_tests' || e.type === 'self_check');
-  if (tools.length) out.push({ bid: 'B23', src: 'event', i: -2, quote: `交卷前在操作台上${ev.some(e => e.type === 'run_tests') ? `跑了 ${ev.filter(e => e.type === 'run_tests').length} 次测试` : ''}${ev.some(e => e.type === 'self_check') ? `做了 ${ev.filter(e => e.type === 'self_check').length} 次自查` : ''}`, rule: 'B23-事件:测试/自查' });
+  if (tools.length) out.push({ bid: 'B23', src: 'event', i: -2, quote: `提交前在操作台上${ev.some(e => e.type === 'run_tests') ? `跑了 ${ev.filter(e => e.type === 'run_tests').length} 次测试` : ''}${ev.some(e => e.type === 'self_check') ? `做了 ${ev.filter(e => e.type === 'self_check').length} 次自查` : ''}`, rule: 'B23-事件:测试/自查' });
   // 数字的来路（11-22，聊天考试台「不说出口的核查」）：交付物里有几个数字直接取自材料、AI 的回答里没有——他自己回到材料核过或算过。
   // 模拟数据里这一项能把新手分出来（新手平均 1 个，资深 / 一般 6–7 个），资深和一般分不开，要等真人数据看；只作证据候选，成不成立、几档由模型判
   {
@@ -306,7 +306,7 @@ async function judge(inp: FluencyInput, cands: Candidate[], stats: string, warn:
   pkgs.sort((a, b) => (a[0].i - b[0].i));
   const ctx = (g: Candidate[]) => {
     const c = g[0];
-    if (c.src !== 'chat') return c.src === 'event' ? `【过程事件】${c.quote}` : `【${c.src === 'deliverable' ? '交付物正文' : '交卷时写的 AI 参与说明'}】${c.src === 'disclosure' ? (inp.events.find(e => e.type === 'ai_disclosure')?.text || c.quote) : c.quote}`;
+    if (c.src !== 'chat') return c.src === 'event' ? `【过程事件】${c.quote}` : `【${c.src === 'deliverable' ? '交付物正文' : '提交时写的 AI 参与说明'}】${c.src === 'disclosure' ? (inp.events.find(e => e.type === 'ai_disclosure')?.text || c.quote) : c.quote}`;
     const prev = inp.chat[c.i - 1], cur = inp.chat[c.i];
     const clip = (s: string, n: number) => (s.length > n ? `${s.slice(0, Math.round(n * 0.33))}……（中间略）……${s.slice(-Math.round(n * 0.67))}` : s);
     const none = '（外部 AI 的回答平台看不到；只按候选人这条消息本身判断，需要对齐上一轮输出的行为，消息里看不出对着什么就判不成立）';
@@ -340,7 +340,7 @@ const SCAN_PREFIX = `你是 AI 使用行为评估专家，按一份固定量表�
 这一步是「补扫」：程序的关键词没定位到足够证据的行为，请你直接通读候选人发给 AI 的原话找。
 规则：
 1. 每条消息只在它后面列的「可判行为」里找（已按量表的生效窗口筛过），列表外的行为不要报。
-2. 只看候选人自己说的话：消息里粘贴的任务书 / 材料原文、转贴的 AI 回答、平台出的题目都不算候选人的表达。
+2. 只看候选人自己说的话：消息里粘贴的任务书 / 材料原文、转贴的 AI 回答、平台出的任务都不算候选人的表达。
 3. 确实体现才报，对照判断标准和易混淆点；拿不准就不报——这是选拔场景，宁可漏报不误报。一条消息最多报 3 个行为。
 4. 报了就严格按该行为的 1–5 档锚点定档，拿不准给低档。
 5. 需要「对齐 AI 上一轮输出」的行为（B10 迭代、B15 质疑推理、B16 纠错、B18 偏差、B14 补背景）：看给出的上一轮 AI 回答，对不上就不报；看不到 AI 回答时，消息本身看不出针对什么也不报。
@@ -517,7 +517,7 @@ function dimSpec(bids: string[]) {
 async function committeeJudge(inp: FluencyInput, B: { of: number[]; list: TaskBlock[] }, cands: Candidate[], logs: string[], warn: string[]): Promise<{ evs: Evidence[]; negs: { id: string; i: number; quote: string }[] }> {
   const chat = inp.chat, outsideOnly = chat.every(c => !c.a);
   const facts = cands.filter(c => c.src !== 'chat');
-  const factLine = (c: Candidate, n: number) => `[F${n + 1}] ${c.src === 'event' ? '平台记录的动作' : c.src === 'deliverable' ? '交付物里' : '交卷时的 AI 参与说明（候选人自述，只能用于 B21 / B22）'}（${c.bid} 相关）：${c.quote}`;
+  const factLine = (c: Candidate, n: number) => `[F${n + 1}] ${c.src === 'event' ? '平台记录的动作' : c.src === 'deliverable' ? '交付物里' : '提交时的 AI 参与说明（候选人自述，只能用于 B21 / B22）'}（${c.bid} 相关）：${c.quote}`;
   const transcript = B.list.map(bl => `【任务块 ${bl.id + 1}｜${bl.label}｜第 ${bl.msgs[0] + 1}–${bl.msgs[bl.msgs.length - 1] + 1} 条】\n` + bl.msgs.map(i => `[${i + 1}] 候选人：${clip(chat[i].q, 700)}${chat[i].a ? `\n      AI：${clip(chat[i].a, 500)}` : ''}`).join('\n')).join('\n\n');
   const prefix = `你是「AI 驾驭能力」评审团里的一位评委。评审团按维度分工：每位评委只评分给自己的那几个行为，其他行为由别的评委负责，你不用管、也不用让。
 候选人在做一道考核任务，下面是他和 AI 的全部对话（按任务块分好），以及平台记录的动作和交付侧信息。
@@ -528,7 +528,7 @@ async function committeeJudge(inp: FluencyInput, B: { of: number[]; list: TaskBl
 3. 发生了就引用候选人原话（逐字，不超过 40 字）或平台记录编号，按锚点定 1–5 档；看实际效果、不看措辞；拿不准给低档。
 4. 同一个行为，每个任务块最多列 2 处最有代表性的（不同消息）；没发生就不列，不要硬凑。
 5. 一条消息同时体现了你负责的两个行为，可以两个都列，但理由要分别说清各体现了哪一部分。
-6. 「AI 参与说明」是候选人交卷时的自述，**只能作为 B21（有没有披露）和 B22（贡献说得准不准）的证据**，不能拿来证明核查、纠错、验证等行为发生过——那些要在对话或平台记录里有对应的动作才算。B22 要把自述和记录对照：自述说「逐条核对 / 修正了错误」，但对话和平台记录里看不到对应动作，就是表述与实际不符，按锚点定低档。
+6. 「AI 参与说明」是候选人提交时的自述，**只能作为 B21（有没有披露）和 B22（贡献说得准不准）的证据**，不能拿来证明核查、纠错、验证等行为发生过——那些要在对话或平台记录里有对应的动作才算。B22 要把自述和记录对照：自述说「逐条核对 / 修正了错误」，但对话和平台记录里看不到对应动作，就是表述与实际不符，按锚点定低档。
 7. 平台记录里的改写量这样看：自己改写约占交付物 10% 以内是小修，10–20% 是中等，20% 以上是大幅改写（拿到 AI 的东西后自己重写了不少）；定档时把这个量算进去，不要不管多少都给同一档。
 8. 候选人没在对话里说、而是直接在产出物上标注 / 修改后让 AI 改：AI 的回复里常会复述「根据你标注的…已改为…」。这算候选人的迭代 / 纠错证据：quote 引 AI 回复里复述他要改的那句（逐字），why 开头写「据 AI 回复」。${outsideOnly ? '\n9. 这场只有候选人的提问原话（外部 AI 的回答看不到）：需要对齐 AI 回答的行为，只按提问本身能看出来的判。' : ''}
 
@@ -685,7 +685,7 @@ export async function assessFluency(inp: FluencyInput): Promise<FluencyReport> {
   const structMsgs = new Set([...hitsBy].filter(([i, h]) => isStructPrompt(chat[i].q, h)).map(([i]) => i));
   const ev = inp.events;
   const adopted = ev.filter(e => e.type === 'adopt').reduce((n, e) => n + (Number(e.chars) || 0), 0);
-  const stats = `和站内 AI 助手对话 ${chat.length} 轮；采纳进交付物 ${ev.filter(e => e.type === 'adopt').length} 次（${adopted} 字）；粘贴 ${ev.filter(e => e.type === 'paste').length} 次；交付物 ${(inp.deliverable || '').length} 字${disclosure ? `；交卷时写了 AI 参与说明：${disclosure.slice(0, 300)}` : '；交卷时没写 AI 参与说明'}`;
+  const stats = `和站内 AI 助手对话 ${chat.length} 轮；采纳进交付物 ${ev.filter(e => e.type === 'adopt').length} 次（${adopted} 字）；粘贴 ${ev.filter(e => e.type === 'paste').length} 次；交付物 ${(inp.deliverable || '').length} 字${disclosure ? `；提交时写了 AI 参与说明：${disclosure.slice(0, 300)}` : '；提交时没写 AI 参与说明'}`;
   const committee = inp.engine === 'committee' || (!inp.engine && process.env.FLUENCY_ENGINE === 'committee');
   const lastBlock = B.of.length ? B.of[B.of.length - 1] : 0;
   let evs: Evidence[], modelNegs: { id: string; i: number; quote: string }[], scanned: Evidence[] = [];

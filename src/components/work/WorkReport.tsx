@@ -43,12 +43,12 @@ export function WorkReport({ report, participant, section = 'all', sid }: { repo
       </div>
       {G && !ai && r.items?.length >= 2 && <Overview items={r.items} cmp={c} />}
       {/* 平台选了潜历的 AI 驾驭量表（11-16）：这一块换成量表报告；改选之前交的卷还没有这一项，任务页可以补算 */}
-      {G && scale === 'fluency' && (report.fluency ? <FluencyReport f={report.fluency} sid={sid} /> : <Card title={L('AI 驾驭能力 · 7 维度', 'AI fluency · 7 dimensions')}><div style={{ color: '#888', fontSize: 13 }}>{L('这份是平台改用 AI 驾驭量表之前交的，还没按这套量表评；出题方在任务页点「按 AI 驾驭量表补算」即可。', 'Submitted before this scale was switched on; the task owner can backfill it from the task page.')}</div></Card>)}
+      {G && scale === 'fluency' && (report.fluency ? <FluencyReport f={report.fluency} sid={sid} /> : <Card title={L('AI 驾驭能力 · 7 维度', 'AI fluency · 7 dimensions')}><div style={{ color: '#888', fontSize: 13 }}>{L('这份是平台改用 AI 驾驭量表之前交的，还没按这套量表评；出任务方在任务页点「按 AI 驾驭量表补算」即可。', 'Submitted before this scale was switched on; the task owner can backfill it from the task page.')}</div></Card>)}
       {G && scale !== 'fluency' && u?.score != null && <AiUse u={u} />}
-      {section === 'all' && report.next_step && <Card title={L('如果再给一天，先改哪里（候选人交卷时写的）', 'With one more day, what to improve first (written by the candidate at submission)')}><div style={{ fontSize: 13.5, lineHeight: 1.75, whiteSpace: 'pre-wrap' }}>{report.next_step}</div></Card>}
-      {/* 屏幕记录（11-10 潜历：原始录屏不给招聘方看）：只给 AI 看图写的概述，逐时间点的记录在答题历程里；原图不展示 */}
+      {section === 'all' && report.next_step && <Card title={L('如果再给一天，先改哪里（候选人提交时写的）', 'With one more day, what to improve first (written by the candidate at submission)')}><div style={{ fontSize: 13.5, lineHeight: 1.75, whiteSpace: 'pre-wrap' }}>{report.next_step}</div></Card>}
+      {/* 屏幕记录（11-10 潜历：原始录屏不给招聘方看）：只给 AI 看图写的概述，逐时间点的记录在作答历程里；原图不展示 */}
       {Pr && report.recording && <Card title={L('屏幕记录 · 用自己的软件做的', 'Screen record · work done in own software')}>
-        <div style={{ fontSize: 13.5, lineHeight: 1.7 }}><div style={{ color: '#888', fontSize: 12, marginBottom: 4 }}>{L(`时长 ${fmt(report.recording.duration || 0)} · AI 看了 ${report.recording.frames ?? ''} 张截图写的概述；为保护候选人隐私，原始截图不展示，逐时间点的记录在答题历程里`, `Duration ${fmt(report.recording.duration || 0)} · summary written by AI from ${report.recording.frames} screenshots; to protect the candidate's privacy the original screenshots are not shown, and the time-stamped log is in the work history`)}</div>{report.recording.summary}</div>
+        <div style={{ fontSize: 13.5, lineHeight: 1.7 }}><div style={{ color: '#888', fontSize: 12, marginBottom: 4 }}>{L(`时长 ${fmt(report.recording.duration || 0)} · AI 看了 ${report.recording.frames ?? ''} 张截图写的概述；为保护候选人隐私，原始截图不展示，逐时间点的记录在作答历程里`, `Duration ${fmt(report.recording.duration || 0)} · summary written by AI from ${report.recording.frames} screenshots; to protect the candidate's privacy the original screenshots are not shown, and the time-stamped log is in the work history`)}</div>{report.recording.summary}</div>
       </Card>}
       {G && !ai && <Card title={L('逐条（每条都有证据；前置没做到的，后置封顶）', 'Item by item (each with evidence; if a prerequisite is missed, later items are capped)')}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
@@ -71,7 +71,7 @@ export function WorkReport({ report, participant, section = 'all', sid }: { repo
         <Card title={L('高光时刻', 'Highlights')} style={{ flex: '1 1 280px' }}>{p?.highlights?.length ? p?.highlights.map((h: any, i: number) => <Moment key={i} m={h} color="#12a150" />) : <span style={{ color: '#999' }}>{L('没有观察到明显的高光', 'No clear highlights observed')}</span>}</Card>
         <Card title={L('风险时刻', 'Risk moments')} style={{ flex: '1 1 280px' }}>{p?.risks?.length ? p?.risks.map((h: any, i: number) => <Moment key={i} m={h} color="#c0392b" />) : <span style={{ color: '#999' }}>{L('没有观察到明显的风险', 'No clear risks observed')}</span>}</Card>
       </div>}
-      {Pr && !ai && !!report.audit?.length && <Card title={L('审计过程（交卷后一段一段看的笔记，总评和它连续）', 'Review notes (taken segment by segment after submission; the overall verdict follows from them)')}>
+      {Pr && !ai && !!report.audit?.length && <Card title={L('审计过程（提交后一段一段看的笔记，总评和它连续）', 'Review notes (taken segment by segment after submission; the overall verdict follows from them)')}>
         <div style={{ display: 'grid', gap: 10 }}>{report.audit.map((seg: any) => <Segment key={seg.idx} seg={seg} compact />)}</div>
       </Card>}
       {Pr && !ai && <Card title={L('人机协作六维（观察到的，不是定性）', 'Six dimensions of human-AI collaboration (observed, not a verdict)')}>
@@ -97,14 +97,14 @@ export function AiUse({ u }: { u: any }) {
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 14 }}>{chips.map(([k, v]) => <span key={k} style={{ fontSize: 12.5, padding: '3px 10px', borderRadius: 999, background: '#f4f3ff', color: '#4c43c9' }}>{k} <b>{v}</b></span>)}</div>
       {u.low_use && <div style={{ marginBottom: 12, padding: '8px 12px', borderRadius: 8, background: '#fff8ec', border: '1px solid #f5dfb8', fontSize: 13, color: '#8a5a12' }}>{L(`几乎没用 AI：站内只问过 ${u.stats?.asks ?? 1} 次，站外也没看到。提问和分工最高 2 档${u.standard && !/传统/.test(u.standard.stance) ? '；这家企业鼓励用 AI，AI 使用分封顶 40' : ''}。`, `Barely used AI: asked the on-page assistant ${u.stats?.asks ?? 1} time and no outside AI was seen. Asking and dividing work are capped at level 2${u.standard && !/传统/.test(u.standard.stance) ? '; this company encourages AI use, so the AI-use score is capped at 40' : ''}.`)}</div>}
       {u.disclosure && <div style={{ marginBottom: 12, padding: '8px 12px', borderRadius: 8, background: u.disclosure.match === 'major' ? '#fff4f2' : '#f7f9fc', border: `1px solid ${u.disclosure.match === 'major' ? '#ffd6cf' : '#e8ecf3'}`, fontSize: 13 }}>
-        <b>{L('AI 参与说明（交卷时写的）', 'AI involvement statement (written at submission)')}</b> · <span style={{ fontWeight: 700, color: u.disclosure.match === 'consistent' ? '#12a150' : u.disclosure.match === 'major' ? '#b42318' : '#b7791f' }}>{({ consistent: L('与记录一致', 'Matches the record'), minor: L('有些夸大', 'Somewhat overstated'), major: L('与记录严重不符', 'Contradicts the record'), vague: L('太笼统，没法核对', 'Too vague to check') } as Record<string, string>)[u.disclosure.match]}</span>
+        <b>{L('AI 参与说明（提交时写的）', 'AI involvement statement (written at submission)')}</b> · <span style={{ fontWeight: 700, color: u.disclosure.match === 'consistent' ? '#12a150' : u.disclosure.match === 'major' ? '#b42318' : '#b7791f' }}>{({ consistent: L('与记录一致', 'Matches the record'), minor: L('有些夸大', 'Somewhat overstated'), major: L('与记录严重不符', 'Contradicts the record'), vague: L('太笼统，没法核对', 'Too vague to check') } as Record<string, string>)[u.disclosure.match]}</span>
         <div style={{ color: '#555', marginTop: 4, whiteSpace: 'pre-wrap' }}>「{u.disclosure.text}」</div>{u.disclosure.note && <div style={{ color: '#888', marginTop: 2 }}>{u.disclosure.note}</div>}
       </div>}
       <div style={{ display: 'grid', gap: 12 }}>
         {(u.items || []).map((i: any) => i.score == null ? (
           <div key={i.key} style={{ display: 'grid', gridTemplateColumns: '56px 1fr', gap: 12, alignItems: 'start', color: '#8c8c8c' }}>
             <div><b style={{ fontSize: 14 }}>{aiItemL(i.key, i.title, lang)}</b><div style={{ fontSize: 12.5, fontWeight: 700, lineHeight: 1.6 }}>{L('未观测', 'Not observed')}</div></div>
-            <div style={{ fontSize: 13, paddingTop: 2 }}>{i.why_na}{L('（不是没做到，是这道题没给机会，不计入分数）', ' (not a weakness: the task gave no chance to show it, so it is left out of the score)')}</div>
+            <div style={{ fontSize: 13, paddingTop: 2 }}>{i.why_na}{L('（不是没做到，是这个任务没给机会，不计入分数）', ' (not a weakness: the task gave no chance to show it, so it is left out of the score)')}</div>
           </div>
         ) : (
           <div key={i.key} style={{ display: 'grid', gridTemplateColumns: '56px 1fr', gap: 12, alignItems: 'start' }}>

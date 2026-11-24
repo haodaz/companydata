@@ -4,18 +4,19 @@
  * 真活的对话部件（2026-11-05 从 /work/new/chat 抽出来）：输入框（拖文件 / 粘贴截图 / 📎）、历史还原、工具运行时的说明、整套样式。
  * 聊着出任务和真活工作台 /work/ws 共用。
  */
+import { DEFAULT_AUTO_SUBMIT } from '@/lib/work/deadline';
 import React, { useRef, useState } from 'react';
 import { MODEL_OPTIONS } from '@/lib/model-options';
 
 export type Item =
   | { k: 'user'; text: string }
   | { k: 'text'; text: string }
-  | { k: 'tool'; id: string; name: string; input: any; label?: string; ui?: any; error?: string; running: boolean; /** 出题分段回传（11-15）：problem / task / materials / rubric / stages 的摘要 */ parts?: Record<string, any> }
+  | { k: 'tool'; id: string; name: string; input: any; label?: string; ui?: any; error?: string; running: boolean; /** 出任务分段回传（11-15）：problem / task / materials / rubric / stages 的摘要 */ parts?: Record<string, any> }
   | { k: 'ask'; id: string; question: string; options: string[]; answered?: string; spec?: Spec }
   | { k: 'error'; text: string };
 
 export const MODELS = MODEL_OPTIONS.filter(m => /^(claude-|gpt-|qwen)/.test(m.id));
-export const RUNNING: Record<string, string> = { find_company: '在企业库里搜', company_brief: '看这家企业的材料', suggest_roles: '找岗位', my_references: '看参考资料', read_reference: '读参考资料（约 1 分钟）', create_task: '出任务中（约 2 分钟：拼材料、锚定问题、写任务书、做材料包、定标准）', task_summary: '看这道题', run_baseline: 'AI 先做一遍当基线（约 1 分钟）', revise_task: '按意见修订', update_task_settings: '改设置', publish_task: '发布', publish_verbatim: '原题直发', my_tasks: '看你出过的题', task_people: '看谁做了这道题', read_report: '读报告', compare_people: '并排比', task_insights: '看整道题的作答情况', set_task_status: '改上下架', open_panel: '在右边打开', search_library: '在任务库里找', kb_lookup: '查知识库', kb_save: '存进知识库' };
+export const RUNNING: Record<string, string> = { find_company: '在企业库里搜', company_brief: '看这家企业的材料', suggest_roles: '找岗位', my_references: '看参考资料', read_reference: '读参考资料（约 1 分钟）', create_task: '出任务中（约 2 分钟：拼材料、锚定问题、写任务书、做材料包、定标准）', task_summary: '看这个任务', run_baseline: 'AI 先做一遍当基线（约 1 分钟）', revise_task: '按意见修订', update_task_settings: '改设置', publish_task: '发布', publish_verbatim: '原题直发', my_tasks: '看你出过的题', task_people: '看谁做了这个任务', read_report: '读报告', compare_people: '并排比', task_insights: '看整道题的作答情况', set_task_status: '改上下架', open_panel: '在右边打开', search_library: '在任务库里找', kb_lookup: '查知识库', kb_save: '存进知识库' };
 
 export type Cmd = { t: string; p: string };
 /** 把一条指令放进输入框，选中第一个【空位】让人直接改 */
@@ -140,7 +141,7 @@ function SpecCard({ spec, answered, busy, options, send }: { spec: Spec; answere
   const row = (label: string, el: React.ReactNode) => <label className="wc-spec-row"><span>{label}</span>{el}</label>;
   return (
     <div className="wc-spec">
-      <div className="wc-spec-h"><b>出题前确认</b><span>{answered ? '已确认' : '哪里不对直接在卡片上改，或者在下面说一句'}</span></div>
+      <div className="wc-spec-h"><b>出任务前确认</b><span>{answered ? '已确认' : '哪里不对直接在卡片上改，或者在下面说一句'}</span></div>
       {v.company && row('企业', <div className="wc-spec-ro">{v.company}</div>)}
       {row('要找的人', <input value={v.role || ''} disabled={off} onChange={e => set('role', e.target.value)} />)}
       {row('考什么', <textarea rows={2} value={v.focus || ''} disabled={off} onChange={e => set('focus', e.target.value)} />)}
@@ -154,7 +155,7 @@ function SpecCard({ spec, answered, busy, options, send }: { spec: Spec; answere
       <div className="wc-spec-flags">
         <label><input type="checkbox" checked={!!v.deep} disabled={off} onChange={e => set('deep', e.target.checked)} />往深里延伸</label>
         <label><input type="checkbox" checked={!!v.steps} disabled={off} onChange={e => set('steps', e.target.checked)} />分步带着做</label>
-        <label><input type="checkbox" checked={v.auto_submit !== false} disabled={off} onChange={e => set('auto_submit', e.target.checked)} />到点自动交卷</label>
+        <label><input type="checkbox" checked={v.auto_submit ?? DEFAULT_AUTO_SUBMIT} disabled={off} onChange={e => set('auto_submit', e.target.checked)} />到点自动提交</label>
         <label><input type="checkbox" checked={v.lang === 'en'} disabled={off} onChange={e => set('lang', e.target.checked ? 'en' : 'zh')} />英文题</label>
       </div>
       {!answered && <div className="wc-opts" style={{ marginTop: 12 }}>
@@ -189,7 +190,7 @@ export function BuildParts({ parts, running }: { parts?: Record<string, any>; ru
   if (!parts || !Object.keys(parts).length) return null;
   const done = PART_ORDER.filter(([k]) => parts[k]);
   const next = PART_ORDER.slice(1, 5).find(([k]) => !parts[k]);
-  if (!running && !open) return <button className="wc-link" style={{ margin: '-2px auto 8px', display: 'block' }} onClick={() => setOpen(true)}>看出题过程（{done.map(([, n]) => n).join(' · ')}）</button>;
+  if (!running && !open) return <button className="wc-link" style={{ margin: '-2px auto 8px', display: 'block' }} onClick={() => setOpen(true)}>看出任务过程（{done.map(([, n]) => n).join(' · ')}）</button>;
   return (
     <div className="wc-build">
       {done.map(([k, name]) => {

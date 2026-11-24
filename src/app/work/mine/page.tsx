@@ -49,7 +49,7 @@ function Inner() {
         <div style={{ display: 'flex', alignItems: 'flex-end', gap: 16, flexWrap: 'wrap', marginBottom: 18 }}>
           <div style={{ flex: 1, minWidth: 260 }}>
             <h1 style={{ fontSize: 26, margin: '0 0 6px' }}>我的真活</h1>
-            <div style={{ color: '#666' }}>出任务、分享参与链接、看每个人的考评，都在这一页。做题的人不用登录，留个名字就能做。</div>
+            <div style={{ color: '#666' }}>出任务、分享参与链接、看每个人的考评，都在这一页。作答的人不用登录，留个名字就能做。</div>
           </div>
           <Link href="/work/library"><Button>从任务库挑一道 →</Button></Link>
         </div>
@@ -76,7 +76,7 @@ function Inner() {
                 </div>
               </div>
               <div style={{ padding: '12px 16px 12px', display: 'flex', alignItems: 'center', gap: 16 }}>
-                <div><div style={{ fontSize: 20, fontWeight: 800 }}>{t.sessions.done}<span style={{ fontSize: 12, color: '#999', fontWeight: 500 }}> / {t.sessions.n}</span></div><div style={{ fontSize: 11.5, color: '#999' }}>交卷 / 参与</div></div>
+                <div><div style={{ fontSize: 20, fontWeight: 800 }}>{t.sessions.done}<span style={{ fontSize: 12, color: '#999', fontWeight: 500 }}> / {t.sessions.n}</span></div><div style={{ fontSize: 11.5, color: '#999' }}>提交 / 参与</div></div>
                 <div><div style={{ fontSize: 20, fontWeight: 800, color: '#6055f5' }}>{t.baseline?.total ?? '–'}</div><div style={{ fontSize: 11.5, color: '#999' }}>AI 基线</div></div>
                 <div style={{ marginLeft: 'auto', fontSize: 12, color: '#999', textAlign: 'right' }}>{new Date(t.created_at).toLocaleDateString('zh-CN')}{!t.demo && t.created_by && <div style={{ fontSize: 11 }}>{t.created_by.split('@')[0]}</div>}</div>
               </div>

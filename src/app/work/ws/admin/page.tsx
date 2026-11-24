@@ -33,7 +33,7 @@ function Admin() {
   if (role && role !== 'admin') return <div className="wws-page"><div className="wws-card"><Empty>全站管理只给管理员。</Empty></div></div>;
   return (
     <div className="wws-page">
-      <Head eyebrow="ADMIN" zh="全站管理" en="Everything on the platform, for admins" lead="所有人出的题、训练样本、任务库上架、法规清单，和平台的题目资产。" />
+      <Head eyebrow="ADMIN" zh="全站管理" en="Everything on the platform, for admins" lead="所有人出的题、训练样本、任务库上架、法规清单，和平台的任务资产。" />
       <div className="wws-tabs" role="tablist">{TABS.map(([k, t, en]) => <button key={k} role="tab" aria-selected={tab === k} className={tab === k ? 'on' : ''} onClick={() => router.replace(`/work/ws/admin?tab=${k}`)}>{t}<small>{en}</small></button>)}</div>
       {role == null ? <div className="wws-muted">读取中…</div> : <>
         {tab === 'tasks' && <AllTasks />}
@@ -57,7 +57,7 @@ function AllTasks() {
   const people = useMemo(() => { const m: Record<string, number> = {}; for (const t of tasks || []) m[t.created_by || '—'] = (m[t.created_by || '—'] || 0) + 1; return Object.entries(m).sort((a, b) => b[1] - a[1]); }, [tasks]);
   const list = (tasks || []).filter(t => (st === 'all' || t.status === st) && (who === 'all' || (t.created_by || '—') === who) && (!kw || [t.title, t.company, t.role].some((v: string) => String(v || '').includes(kw))));
   const setStatus = async (t: any, status: string) => { const j = await (await fetch(`/api/admin/work/tasks/${t.task_id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status }) })).json().catch(() => ({ ok: false })); if (j.ok === false) message.error(j.error || '没改成'); else { message.success(status === 'published' ? '已发布' : '已下架'); load(); } };
-  const remove = (t: any) => modal.confirm({ title: `删除「${t.title}」？`, content: '这道题和所有作答都会删掉，不能恢复。', okText: '删除', okButtonProps: { danger: true }, cancelText: '取消', onOk: async () => { await fetch(`/api/admin/work/tasks/${t.task_id}`, { method: 'DELETE' }); message.success('已删除'); load(); } });
+  const remove = (t: any) => modal.confirm({ title: `删除「${t.title}」？`, content: '这个任务和所有作答都会删掉，不能恢复。', okText: '删除', okButtonProps: { danger: true }, cancelText: '取消', onOk: async () => { await fetch(`/api/admin/work/tasks/${t.task_id}`, { method: 'DELETE' }); message.success('已删除'); load(); } });
   return (
     <div>
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center', marginBottom: 14 }}>
@@ -68,7 +68,7 @@ function AllTasks() {
       </div>
       <div className="wws-card" style={{ overflowX: 'auto' }}>
         <table className="wws-table t-all">
-          <thead><tr>{[['TASK', '题目'], ['BY', '谁出的'], ['STATUS', '状态'], ['TAKERS', '参与 / 交卷'], ['AVG', '平均'], ['AI', '基线'], ['CREATED', '出题时间'], ['', '']].map(([e, z], i) => <th key={i}>{e}<small>{z}</small></th>)}</tr></thead>
+          <thead><tr>{[['TASK', '任务'], ['BY', '谁出的'], ['STATUS', '状态'], ['TAKERS', '参与 / 提交'], ['AVG', '平均'], ['AI', '基线'], ['CREATED', '出任务时间'], ['', '']].map(([e, z], i) => <th key={i}>{e}<small>{z}</small></th>)}</tr></thead>
           <tbody>
             {tasks == null && <tr><td colSpan={8} className="wws-muted">读取中…</td></tr>}
             {tasks && !list.length && <tr><td colSpan={8}><Empty>没有符合的。</Empty></td></tr>}
@@ -84,7 +84,7 @@ function AllTasks() {
                 {t.status === 'published' ? <button className="wws-back" style={lnk} onClick={() => setStatus(t, 'archived')}>下架</button> : <button className="wws-back" style={lnk} onClick={() => setStatus(t, 'published')}>发布</button>}
                 <button style={{ ...lnk, color: '#b42318' }} onClick={() => remove(t)}>删</button>
                 {t.submitted > 0 && <Link href={`/work/ws/reports?task=${t.task_id}`} className="wws-back" style={{ marginRight: 10 }}>看报告</Link>}
-                <Link href={askHref(t.submitted ? '这道题大家做得怎么样？卡在哪，推荐谁？' : '这道题现在什么情况？', { task_id: t.task_id, token: t.token, k: t.owner_key, title: t.title })}><button className="wws-ask">问助理</button></Link>
+                <Link href={askHref(t.submitted ? '这个任务大家做得怎么样？卡在哪，推荐谁？' : '这个任务现在什么情况？', { task_id: t.task_id, token: t.token, k: t.owner_key, title: t.title })}><button className="wws-ask">问助理</button></Link>
               </td>
             </tr>)}
           </tbody>
@@ -96,7 +96,7 @@ function AllTasks() {
 
 function Assets() {
   const L: [string, string, string, string][] = [
-    ['题目资产库', 'Question bank', '/admin/db-question', '所有出过的题按企业 / 行业 / 职能沉淀，出题时自动挑来参照（对客户不讲）。'],
+    ['任务资产库', 'Question bank', '/admin/db-question', '所有出过的题按企业 / 行业 / 职能沉淀，出任务时自动挑来参照（对客户不讲）。'],
     ['外部参照', 'External simulations', '/admin/db-external-sim', 'Forage / Extern 的公开模拟和作品墙，看行业真活怎么出、学员交什么。'],
   ];
   return <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))', gap: 12 }}>{L.map(([t, en, href, d]) => <a key={href} href={href} target="_blank" rel="noreferrer" className="wws-card lined pad" style={{ textDecoration: 'none' }}><div className="wws-eyebrow">{en}</div><div style={{ font: '800 17px var(--serif)', margin: '6px 0' }}>{t} ↗</div><div className="wws-muted" style={{ lineHeight: 1.75 }}>{d}</div></a>)}</div>;
