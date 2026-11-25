@@ -42,6 +42,30 @@ const QUERIES: Q[] = [
   ...['腾讯', '阿里巴巴', '字节跳动', '百度', '华为', '美团', '京东', '小米', '网易', '快手', 'vivo', 'OPPO', '蚂蚁集团', '比亚迪', '宁德时代', '大疆', '科大讯飞', '商汤科技', '中兴通讯', '联想', '拼多多', '米哈游', '哔哩哔哩', '招商银行', '中国移动'].map(c => ({ query: `${c} ${Y} 大学生 比赛 / 挑战赛 / 黑客松 / 开发者大赛`, company: c })),
 ];
 
+// --set dev：技术团队自己去打（11-25 起）——社会团队 / 企业团队能报名的开发者赛、黑客松，奔着奖金、设备、算力
+const DEV_QUERIES: Q[] = [
+  { query: `${Y} 11月 12月 黑客松 国内 线下 报名中 社会开发者 团队`, kinds: ['hackathon'], rewards: ['cash', 'hardware'] },
+  { query: `${Y + 1} 春季 黑客马拉松 国内 开发者 报名`, kinds: ['hackathon'] },
+  { query: `${Y} AI Agent 智能体 开发大赛 奖金 报名中 不限学生 企业团队`, kinds: ['developer', 'hackathon'], rewards: ['cash'] },
+  { query: `${Y} 大模型 应用 创新大赛 奖金 算力 报名中 社会组`, kinds: ['developer'], rewards: ['cash', 'credits'] },
+  { query: `${Y} 开发者大赛 奖品 电脑 显卡 GPU 服务器 开发板`, kinds: ['developer', 'hackathon'], rewards: ['hardware'] },
+  { query: `${Y} AI 硬件 具身智能 机器人 开发者 挑战赛 奖励 设备`, kinds: ['developer'], rewards: ['hardware', 'cash'] },
+  { query: `${Y} 云厂商 开发者大赛 阿里云 腾讯云 华为云 火山引擎 百度智能云 报名中`, kinds: ['developer'], rewards: ['cash', 'credits'] },
+  { query: `${Y} 魔搭 ModelScope 通义 千问 开发者 比赛 黑客松`, kinds: ['developer', 'hackathon'] },
+  { query: `${Y} 鸿蒙 HarmonyOS 开发者 创新大赛 奖金 报名`, kinds: ['developer'], rewards: ['cash', 'hardware'] },
+  { query: `${Y} 小程序 应用 开发 大赛 奖金 社会开发者`, kinds: ['developer'], rewards: ['cash'] },
+  { query: `${Y} 开源 创新大赛 开放原子 OpenHarmony 奖金 报名`, kinds: ['developer'] },
+  { query: `${Y} 人工智能 创新创业大赛 企业组 奖金 报名中 省 市`, kinds: ['developer', 'campus_innovation'], rewards: ['cash'] },
+  { query: `${Y} 数据要素 数据应用 开发大赛 奖金 企业 团队 报名`, kinds: ['data_science', 'developer'], rewards: ['cash'] },
+  { query: `${Y} AI 教育 人才 HR 招聘 测评 应用 创新大赛 报名`, kinds: ['developer'] },
+  { query: `${Y} 算法 竞赛 天池 DataFountain 和鲸 讯飞 报名中 奖金`, kinds: ['data_science'], rewards: ['cash'] },
+  { query: `${Y} AdventureX Hackathon 上海 北京 深圳 杭州 线下 黑客松`, kinds: ['hackathon'] },
+  { query: `${Y} 游戏 GameJam 国内 报名 奖金`, kinds: ['hackathon', 'design'] },
+  { query: `${Y} 年底 开发者 挑战赛 奖励 Mac 笔记本 显卡`, rewards: ['hardware'] },
+  // 主办方逐家查（大厂 / 模型厂 / 硬件厂开发者活动）
+  ...['阿里云', '腾讯云', '华为', '百度', '字节跳动 火山引擎', '科大讯飞', '智谱', '月之暗面', 'MiniMax', '阶跃星辰', '英伟达 NVIDIA 中国', '英特尔 中国', 'AMD 中国', '小米', '大疆', '地平线', '摩尔线程', '昇腾'].map(c => ({ query: `${c} ${Y} 开发者大赛 黑客松 报名中`, company: c.split(' ')[0], kinds: ['developer', 'hackathon'] })),
+];
+const SET = opt('set', '');
 const norm = (s: string) => String(s || '').toLowerCase().replace(/\s+/g, '').replace(/[·•\-—_()（）【】\[\]「」“”"'：:，,]/g, '').replace(/20\d\d|第.{1,3}届/g, '');
 const { data: have } = await selectAll(() => db.from('competitions').select('name').order('id'));
 const known = new Set((have as any[]).map(r => norm(r.name)));
@@ -51,10 +75,11 @@ const { data: task, error: te } = await db.from('competition_tasks').insert({ na
 if (te) throw te;
 const rows = [];
 // 常驻信源：比赛平台列表页，每个平台记一条（不联网检索，直接抓）
-const PLATFORMS = PLATFORM_SOURCES.filter(p => p.region === 'china' || process.argv.includes('--overseas'));
+const ONLY = opt('only', '').split(',').map(x => x.trim()).filter(Boolean);   // --only "lablab.ai,DoraHacks"：只扫这几个平台（新加平台时用）
+const PLATFORMS = PLATFORM_SOURCES.filter(p => ONLY.length ? ONLY.some(o => p.name.includes(o)) : (p.region === 'china' || process.argv.includes('--overseas')));
 for (const p of PLATFORMS) rows.push({ task_id: task.id, query: `平台列表页 · ${p.name}`, company: null, company_id: null, kinds: [], region: p.region, rewards: [], only_open: true, count: 30, enrich: true, model_id: MODEL, status: 'pending', created_by: 'script' });
 const ONLY_PLATFORMS = process.argv.includes('--platforms-only');
-if (!ONLY_PLATFORMS) for (const q of QUERIES) rows.push({ task_id: task.id, query: q.query, company: q.company || null, company_id: q.company ? await resolveCompanyId(q.company) : null, kinds: q.kinds || [], region: 'china', rewards: q.rewards || [], only_open: true, count: 12, enrich: true, model_id: MODEL, status: 'pending', created_by: 'script' });
+if (!ONLY_PLATFORMS) for (const q of (SET === 'dev' ? DEV_QUERIES : QUERIES)) rows.push({ task_id: task.id, query: q.query, company: q.company || null, company_id: q.company ? await resolveCompanyId(q.company) : null, kinds: q.kinds || [], region: 'china', rewards: q.rewards || [], only_open: true, count: 12, enrich: true, model_id: MODEL, status: 'pending', created_by: 'script' });
 const { data: searches, error: se } = await db.from('competition_searches').insert(rows).select('id, query, company, company_id, kinds, rewards');
 if (se) throw se;
 console.log(`任务 ${task.id}：${searches!.length} 条检索，模型 ${MODEL}，库里原有 ${before} 个赛事`);

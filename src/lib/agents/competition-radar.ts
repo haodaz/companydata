@@ -24,7 +24,23 @@ export const PLATFORM_SOURCES: { name: string; url: string; region: 'china' | 'o
   { name: '赛氪', url: 'https://www.saikr.com/vs', region: 'china' },
   { name: '牛客竞赛', url: 'https://ac.nowcoder.com/acm/contest/vip-index', region: 'china' },
   { name: '腾讯云开发者', url: 'https://cloud.tencent.com/developer/competition', region: 'china' },
+  // 11-25 加：聚合站 / 活动平台（实测能读出比赛列表的才收）
+  { name: '我爱竞赛网', url: 'https://www.52jingsai.com/', region: 'china' },
+  { name: '活动行 · 黑客松', url: 'https://www.huodongxing.com/search?qs=%E9%BB%91%E5%AE%A2%E6%9D%BE', region: 'china' },
+  { name: '活动行 · 开发者大赛', url: 'https://www.huodongxing.com/search?qs=%E5%BC%80%E5%8F%91%E8%80%85%E5%A4%A7%E8%B5%9B', region: 'china' },
+  { name: '极市平台', url: 'https://www.cvmart.net/race/', region: 'china' },
+  { name: 'DataCastle', url: 'https://www.datacastle.cn/', region: 'china' },
+  { name: 'SegmentFault 活动', url: 'https://segmentfault.com/events', region: 'china' },
+  { name: '华为开发者活动', url: 'https://developer.huawei.com/consumer/cn/activity/', region: 'china' },
+  { name: '稀土掘金活动', url: 'https://juejin.cn/events/all', region: 'china' },
   { name: 'Devpost', url: 'https://devpost.com/hackathons?status[]=open', region: 'overseas' },
+  // 海外线上赛不少不限国籍（国内程序员在 Devpost 上常见）；能不能报看各自规则页，competition-eligibility 脚本核对
+  { name: 'Devpost · 线上', url: 'https://devpost.com/hackathons?challenge_type[]=online&status[]=open', region: 'overseas' },
+  { name: 'lablab.ai', url: 'https://lablab.ai/event', region: 'overseas' },
+  { name: 'DoraHacks', url: 'https://dorahacks.io/hackathon', region: 'overseas' },
+  { name: 'HackerEarth', url: 'https://www.hackerearth.com/challenges/hackathon/', region: 'overseas' },
+  { name: 'Devfolio', url: 'https://devfolio.co/hackathons/open', region: 'overseas' },
+  { name: 'AIcrowd', url: 'https://www.aicrowd.com/challenges?status=active', region: 'overseas' },
   { name: 'Kaggle', url: 'https://www.kaggle.com/competitions', region: 'overseas' },
 ];
 
