@@ -126,7 +126,7 @@ export function fromHistory(ms: any[]): Item[] {
 }
 
 /** 任务规格卡（11-15）：出题前复述的那一行，结构化成能直接改的卡片。字段和 ask_user.spec 一致 */
-export type Spec = { company?: string; company_id?: number; role?: string; focus?: string; time_minutes?: number; auto_submit?: boolean; experience?: string; materials?: string; lang?: 'zh' | 'en'; deep?: boolean; steps?: boolean; deliverables?: string[]; criteria?: string[] };
+export type Spec = { company?: string; company_id?: number; role?: string; focus?: string; time_minutes?: number; auto_submit?: boolean; /** 11-24：none = 不限时（像 Kaggle） */ time_mode?: 'limit' | 'suggest' | 'none'; experience?: string; materials?: string; lang?: 'zh' | 'en'; deep?: boolean; steps?: boolean; deliverables?: string[]; criteria?: string[] };
 const lines = (v: any) => (Array.isArray(v) ? v.map(String) : []).join('\n');
 const toList = (v: string) => v.split('\n').map(x => x.replace(/^[-•·\d.、\s]+/, '').trim()).filter(Boolean);
 const SURE = /就这样|可以|确认|没问题/;
@@ -155,7 +155,8 @@ function SpecCard({ spec, answered, busy, options, send }: { spec: Spec; answere
       <div className="wc-spec-flags">
         <label><input type="checkbox" checked={!!v.deep} disabled={off} onChange={e => set('deep', e.target.checked)} />往深里延伸</label>
         <label><input type="checkbox" checked={!!v.steps} disabled={off} onChange={e => set('steps', e.target.checked)} />分步带着做</label>
-        <label><input type="checkbox" checked={v.auto_submit ?? DEFAULT_AUTO_SUBMIT} disabled={off} onChange={e => set('auto_submit', e.target.checked)} />到点自动提交</label>
+        <label><input type="checkbox" checked={v.time_mode === 'none' ? false : v.auto_submit ?? DEFAULT_AUTO_SUBMIT} disabled={off || v.time_mode === 'none'} onChange={e => set('auto_submit', e.target.checked)} />到点自动提交</label>
+        <label title="不写时长、不计时，谁来做、做多久都行"><input type="checkbox" checked={v.time_mode === 'none'} disabled={off} onChange={e => set('time_mode', e.target.checked ? 'none' : undefined)} />不限时</label>
         <label><input type="checkbox" checked={v.lang === 'en'} disabled={off} onChange={e => set('lang', e.target.checked ? 'en' : 'zh')} />英文题</label>
       </div>
       {!answered && <div className="wc-opts" style={{ marginTop: 12 }}>

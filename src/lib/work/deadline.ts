@@ -17,9 +17,42 @@ export const DEFAULT_AUTO_SUBMIT = process.env.NEXT_PUBLIC_WORK_DEFAULT_AUTO_SUB
 /** 用时比建议 / 限定时长多出的分钟数（没超为 0）；限时的算上单独加的时间 */
 export const overMinutes = (task: any, s: { participant?: any }, usedSec: number) => Math.max(0, Math.floor((usedSec - limitSec(task) - extraSec(s)) / 60));
 
-/** elapsed 已用秒数；limit 时限秒数（出任务的人预览、或这道题关了到点交卷，为 null）；expired 到点；closed 过了宽限，内容一律不再收 */
+/**
+ * 时间方式（11-24，三种并列、出任务时选，都可以发布后再改）：
+ *   limit   限时：到点自动提交（默认，task 上什么都不标）
+ *   suggest 建议时长：到点不收、可以接着做，用时照实记（task.soft_limit）
+ *   none    不限时（像 Kaggle）：不写时长、不计时、不标超时，谁来做、做多久都行（task.soft_limit + task.no_limit）
+ * 另外几样和时间方式独立、都可选：
+ *   open_until 任务开放到某个时间（ISO）：过了不再开始新的作答，没提交的到点收；页面倒计时按它
+ *   resubmit   候选人自己可以重新打开、再提交几次（0 / 不写 = 不允许）；每次重新评估、重排同题名次
+ *   show_rank  候选人看得到自己「同题第几 / 共几人」
+ *   public_board 公开排行榜 /work/<链接>/board（只显示名次和打码的名字）
+ */
+export type TimeMode = 'limit' | 'suggest' | 'none';
+export const timeModeOf = (task: any): TimeMode => (task?.no_limit ? 'none' : task?.soft_limit ? 'suggest' : 'limit');
+export const withTimeMode = (task: any, mode: TimeMode) => { const { soft_limit: _s, no_limit: _n, ...rest } = task || {}; return mode === 'none' ? { ...rest, soft_limit: true, no_limit: true } : mode === 'suggest' ? { ...rest, soft_limit: true } : rest; };
+export const isTimeMode = (v: any): v is TimeMode => v === 'limit' || v === 'suggest' || v === 'none';
+/** 任务整体截止的时间戳（没设为 null） */
+export const untilOf = (task: any): number | null => { const t = task?.open_until ? Date.parse(task.open_until) : NaN; return Number.isFinite(t) ? t : null; };
+/** 任务已经过了开放时间 */
+export const taskClosed = (task: any, now = Date.now()) => { const u = untilOf(task); return u != null && now >= u; };
+/** 候选人自己最多能重新提交几次 */
+export const resubmitMax = (task: any) => Math.max(0, Math.min(50, Math.round(Number(task?.resubmit) || 0)));
+/** 投入时长（秒）：过程事件之间的间隔，超过 5 分钟的按 5 分钟算（隔几天回来接着做的，不把中间几天算进去） */
+export function activeSec(events: { t?: number }[] | null | undefined, endS?: number): number {
+  const ts = (events || []).map(e => Number(e?.t)).filter(t => Number.isFinite(t) && t >= 0).sort((a, b) => a - b);
+  if (endS != null) ts.push(endS);
+  let sum = 0; for (let i = 1; i < ts.length; i++) sum += Math.min(300, Math.max(0, ts[i] - ts[i - 1]));
+  return Math.round(sum);
+}
+
+/** elapsed 已用秒数；limit 时限秒数（出任务的人预览、或不卡时间又没设截止，为 null；设了任务截止的按「离截止还有多久」封顶）；expired 到点；closed 过了宽限，内容一律不再收 */
 export function timing(task: any, s: { started_at: string; participant?: any }, now = Date.now()) {
-  const ms = Math.max(0, now - new Date(s.started_at).getTime());
-  const limit = s.participant?.preview || task?.soft_limit ? null : limitSec(task) + extraSec(s);
+  const start = new Date(s.started_at).getTime();
+  const ms = Math.max(0, now - start);
+  const own = s.participant?.preview || task?.soft_limit ? null : limitSec(task) + extraSec(s);
+  const u = s.participant?.preview ? null : untilOf(task);
+  const rel = u == null ? null : Math.max(0, Math.floor((u - start) / 1000));
+  const limit = own == null ? rel : rel == null ? own : Math.min(own, rel);
   return { elapsed: Math.round(ms / 1000), limit, expired: limit != null && ms >= limit * 1000 - 5000, closed: limit != null && ms >= limit * 1000 + GRACE_MS };
 }

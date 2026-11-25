@@ -73,7 +73,7 @@ function Ico({ k }: { k: 'left' | 'ai' | 'max' | 'split' | 'min' | 'close' }) {
 const modLabel = (m: Module, lang?: Lang) => (lang === 'en' ? MODULES[m].en : MODULES[m].label);
 const modulesLabel = (task: Task, env: Env) => env.type === 'agent' ? pick(task.task.lang, '工作区 + AI 代理', 'Workspace + AI agent') : [...new Set(partsOf(task, env).map(p => modLabel(p.module, task.task.lang)))].join(' + ');
 const ENV_NAME: Record<string, string> = { doc: '文档 / 对账台', code: '代码台', sheet: '表格 / 数据台', design: '设计台', open: '用自己的软件做（录屏）', plugin: '用自己的网页工具做（真活插件）' };
-const fmt = (t: number) => `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
+const fmt = (t: number) => (t >= 86400 ? `${Math.floor(t / 86400)}天${Math.floor((t % 86400) / 3600)}时` : `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(Math.floor(t % 60)).padStart(2, '0')}`);   // 设了任务截止、离截止还有几天的按天显示（11-24）
 
 export default function WorkPage() {
   const { token } = useParams<{ token: string }>();
@@ -150,7 +150,8 @@ export default function WorkPage() {
         <div style={{ color: '#666', marginBottom: 20 }}>{task.statement}</div>
         <Box title={L('任务书', 'The task')}><MdView text={task.task.brief} style={{ lineHeight: 1.8 }} /></Box>
         <Box title={L('要交什么', 'What to submit')}><ol style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9 }}>{task.task.deliverables.map(d => <li key={d.id}><b>{d.title}</b> <span style={{ color: '#888' }}>{d.format}</span></li>)}</ol></Box>
-        <Box title={L('规则', 'Rules')}><RulesView rules={task.task.rules} /><div style={{ color: '#888', fontSize: 13, marginTop: 6 }}>{L('操作台：', 'Workbench: ')}{modulesLabel(task, env)}{env.type === 'agent' ? ' · ' : L('（按交付物切换） · ', ' (one per deliverable) · ')}{task.task.soft_limit ? L(`建议 ${task.task.time_minutes} 分钟（开始后时间不暂停，超时会如实记录）`, `Suggested time: ${task.task.time_minutes} minutes (the clock doesn't pause once you start; going over is recorded as is)`) : L(`限时 ${task.task.time_minutes} 分钟（开始后时间不暂停，到点自动提交）`, `${task.task.time_minutes}-minute limit (the clock doesn't pause once you start; your work is submitted automatically when time is up)`)}{L(`· 材料 ${task.materials.length} 份 · 提交后立刻出报告`, ` · ${task.materials.length} ${task.materials.length === 1 ? 'material' : 'materials'} · Report right after you submit`)}</div></Box>
+        {(task.task as any).open_until && (() => { const u = new Date((task.task as any).open_until); const past = Date.now() >= u.getTime(); const d = u.toLocaleString(lang === 'en' ? 'en-US' : 'zh-CN', { hour12: false, month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }); return <div style={{ margin: '0 0 12px', padding: '10px 14px', borderRadius: 10, background: past ? '#fff4f2' : '#f4f2ff', color: past ? '#c0392b' : '#4a4f66', fontSize: 14 }}>{past ? L(`这个任务已经在 ${d} 截止，不再接受新的作答`, `This task closed on ${d} and no longer accepts new attempts`) : L(`开放到 ${d}：在这之前开始、提交都可以，到时没提交的会自动收`, `Open until ${d}. Start and submit any time before then; anything not submitted by then is collected automatically`)}</div>; })()}
+        <Box title={L('规则', 'Rules')}><RulesView rules={task.task.rules} /><div style={{ color: '#888', fontSize: 13, marginTop: 6 }}>{L('操作台：', 'Workbench: ')}{modulesLabel(task, env)}{env.type === 'agent' ? ' · ' : L('（按交付物切换） · ', ' (one per deliverable) · ')}{(task.task as any).no_limit ? L('不限时：做多久都行，可以离开、换设备回来接着做', 'No time limit: take as long as you need; you can leave and come back on any device') : task.task.soft_limit ? L(`建议 ${task.task.time_minutes} 分钟（开始后时间不暂停，超时会如实记录）`, `Suggested time: ${task.task.time_minutes} minutes (the clock doesn't pause once you start; going over is recorded as is)`) : L(`限时 ${task.task.time_minutes} 分钟（开始后时间不暂停，到点自动提交）`, `${task.task.time_minutes}-minute limit (the clock doesn't pause once you start; your work is submitted automatically when time is up)`)}{L(`· 材料 ${task.materials.length} 份 · 提交后立刻出报告`, ` · ${task.materials.length} ${task.materials.length === 1 ? 'material' : 'materials'} · Report right after you submit`)}</div></Box>
         {env.type === 'agent'
           ? <Box title={L('怎么做 · AI 工作台（beta）', 'How to work · AI workspace (beta)')}><div style={{ lineHeight: 1.8 }}>{L('页面里有一个工作区（任务给的材料都在里面）和一个能读写文件、跑 Python、写代码和文档的 AI 搭档，用法像 Claude Code。你可以自己做，也可以让它做，交出去的文件你负责。你和 AI 的每一步、你自己打开 / 改 / 运行的文件都会记录。', 'The page has a workspace with all the task materials and an AI partner that can read and write files, run Python, and write code and documents, much like Claude Code. Work on your own or have it do the work; you are responsible for the files you submit. Every step between you and the AI, and every file you open, edit or run, is recorded.')}</div></Box>
           : env.type === 'plugin'
@@ -187,6 +188,7 @@ export default function WorkPage() {
           <div style={{ fontSize: 26 }}>🎖️</div><div style={{ flex: 1 }}><div style={{ fontWeight: 800 }}>{L('领取你的真活成绩单', 'Get your score card')}</div><div style={{ fontSize: 13, color: '#666' }}>{L('分数、等级和要点一页纸：链接可以发给下一家公司，也可以存成 PDF 放进简历和作品集，当你真干过这件活的证明', 'Your score, grade and key points on one page: send the link to your next employer, or save it as a PDF for your CV and portfolio as proof of work')}</div></div><span style={{ color: '#6055f5', fontWeight: 700 }}>{L('去看 →', 'View →')}</span>
         </a>}
         {report?.result && <div style={{ margin: '-6px 0 16px', fontSize: 13, color: '#777' }}>{L('想把整份作品带走？', 'Want to keep the whole piece of work? ')}<a href={`/work/${token}/archive?s=${sid}`} style={{ color: '#6055f5' }}>{L('保存我的作品（任务书 + 交付原文 + 附件，带核验码，可存 PDF）→', 'Save my work (task, submission and files, with a verification code, as PDF) →')}</a></div>}
+        <SelfExtras token={token} sid={sid} lang={lang} />
         <ReportFull token={token} sid={sid} task={task} report={report} participant={participant} />
         <div style={{ marginTop: 16, fontSize: 13, color: '#888' }}>{L('这页的链接：', 'Link to this page: ')}<code>{typeof location !== 'undefined' ? `${location.origin}/work/${token}?s=${sid}` : ''}</code></div>
       </div>
@@ -527,7 +529,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   const autoFired = useRef(false);
   useEffect(() => { autoFired.current = false; }, [limit]);   // 企业加了时：到新时限再自动提交
   useEffect(() => { if (limit != null && now >= limit && !autoFired.current && !grading) { autoFired.current = true; finish(true); } });
-  const over = left == null ? now > task.task.time_minutes * 60 : left <= 300;   // 最后 5 分钟变红
+  const over = left == null ? !(task.task as any).no_limit && now > task.task.time_minutes * 60 : left <= 300;   // 最后 5 分钟变红
 
   const matBody = mat && (mat.kind === 'next' ? <div style={{ marginTop: 8 }}>
     <div style={{ fontSize: 13, color: ink2, lineHeight: 1.7, marginBottom: 8 }}>{L('有余力就写，不写不扣分。写清楚交付里哪里还不够可靠、你会先补什么，算进评价。', "Write this if you have time; skipping it costs nothing. Say which parts of your work aren't solid yet and what you'd fix first. It counts toward your evaluation.")}</div>
@@ -560,14 +562,14 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
         </div>}
         <button onClick={() => setTour(0)} title={L('界面说明', 'How this page works')} style={{ ...viewBtn(false), border: `1px solid ${line}`, fontWeight: 700, fontSize: 13 }}>?</button>
         <div data-tour="clock" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-        <div style={{ fontFamily: 'ui-monospace, Menlo, monospace', fontWeight: 700, fontSize: 13.5, color: over ? '#ff8a80' : dark ? '#e6e8f0' : '#1a1a2e' }}>{left == null ? fmt(now) : lang === 'en' ? <>{fmt(left)} left</> : <>剩 {fmt(left)}</>}{!narrow && <span style={{ color: '#aaa', fontWeight: 400 }}> / {task.task.time_minutes}:00</span>}{left == null && task.task.soft_limit && now > task.task.time_minutes * 60 && <span title={L('建议时长只作参考：可以接着做，用时会如实记给企业', 'The suggested time is only a guide. You can keep going; your time is recorded as is.')} style={{ fontWeight: 400, fontSize: 12, marginLeft: 6, fontFamily: 'inherit' }}>{L('已过建议时长，可以接着做', 'past suggested time, keep going')}</span>}</div>
+        <div style={{ fontFamily: 'ui-monospace, Menlo, monospace', fontWeight: 700, fontSize: 13.5, color: over ? '#ff8a80' : dark ? '#e6e8f0' : '#1a1a2e' }}>{left == null ? ((task.task as any).no_limit ? L('不限时', 'No limit') : fmt(now)) : lang === 'en' ? <>{fmt(left)} left</> : <>剩 {fmt(left)}</>}{!narrow && !(task.task as any).no_limit && !(task.task as any).open_until && <span style={{ color: '#aaa', fontWeight: 400 }}> / {task.task.time_minutes}:00</span>}{left == null && task.task.soft_limit && now > task.task.time_minutes * 60 && <span title={L('建议时长只作参考：可以接着做，用时会如实记给企业', 'The suggested time is only a guide. You can keep going; your time is recorded as is.')} style={{ fontWeight: 400, fontSize: 12, marginLeft: 6, fontFamily: 'inherit' }}>{L('已过建议时长，可以接着做', 'past suggested time, keep going')}</span>}</div>
         <button onClick={submit} disabled={grading} style={{ ...btnPrimary, padding: '7px 16px', fontSize: 13.5, ...(arm ? { background: '#c0392b' } : {}) }}>{grading ? L('评估中…', 'Grading…') : arm ? L('再点一次确认提交', 'Click again to confirm') : L('提交 →', 'Submit →')}</button>
         </div>
       </div>
       {brief && <div onClick={() => setBrief(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(10,12,30,.35)', zIndex: 40, display: 'flex', justifyContent: 'center', alignItems: 'flex-start', padding: '40px 16px', overflow: 'auto' }}>
         <div onClick={e => e.stopPropagation()} style={{ width: '100%', maxWidth: 760, background: '#fff', color: '#1a1a2e', borderRadius: 16, padding: '22px 26px', boxShadow: '0 20px 60px rgba(20,20,60,.25)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}><b style={{ fontSize: 18, flex: 1 }}>{task.task.title}</b><button onClick={() => setBrief(false)} style={{ border: '1px solid #e0e0ee', background: '#fff', borderRadius: 8, padding: '4px 12px', cursor: 'pointer' }}>{L('继续作答', 'Back to work')}</button></div>
-          <div style={{ color: '#666', fontSize: 13, margin: '4px 0 14px' }}>{task.company_name} · {roleLabel(task.role, (task.task as any).role, lang)} · {lang === 'en' ? `${task.task.time_minutes} minutes${task.task.soft_limit ? ' suggested' : ' limit'} · Your progress is saved; close this panel to go back` : <>{task.task.soft_limit ? '建议' : '限时'} {task.task.time_minutes} 分钟 · 作答进度都在，关掉这个面板就回去</>}</div>
+          <div style={{ color: '#666', fontSize: 13, margin: '4px 0 14px' }}>{task.company_name} · {roleLabel(task.role, (task.task as any).role, lang)} · {lang === 'en' ? `${(task.task as any).no_limit ? 'No time limit' : `${task.task.time_minutes} minutes${task.task.soft_limit ? ' suggested' : ' limit'}`} · Your progress is saved; close this panel to go back` : <>{(task.task as any).no_limit ? '不限时' : `${task.task.soft_limit ? '建议' : '限时'} ${task.task.time_minutes} 分钟`} · 作答进度都在，关掉这个面板就回去</>}</div>
           <div style={{ fontWeight: 700, margin: '10px 0 4px' }}>{L('任务书', 'The task')}</div><MdView text={task.task.brief} style={{ fontSize: 14 }} />
           <div style={{ fontWeight: 700, margin: '14px 0 4px' }}>{L('要交什么', 'What to submit')}</div><ol style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9, fontSize: 14 }}>{task.task.deliverables.map(d => <li key={d.id}><b>{d.title}</b> <span style={{ color: '#888' }}>{d.format}</span></li>)}</ol>
           <div style={{ fontWeight: 700, margin: '14px 0 4px' }}>{L('规则', 'Rules')}</div><RulesView rules={task.task.rules} dark={dark} />
@@ -703,4 +705,28 @@ function ReportFull({ token, sid, task, report, participant }: { token: string; 
   const [s, setS] = useState<any>(null);
   useEffect(() => { fetch(`/api/work/${token}/sessions/${sid}?full=1`).then(r => r.json()).then(j => j.ok && setS(j.session)).catch(() => {}); }, [token, sid]);
   return <ReportView sid={s?.id} report={report} participant={participant} deliverable={s?.deliverable} events={s ? s.events || [] : null} aiChat={s?.ai_chat || []} materials={(task as any).materials} deliverables={task.task.deliverables} defaultTab="grade" />;
+}
+
+/** 报告页给候选人自己的（11-24，任务开了才出现）：同题第几 / 共几人、公开排行榜、自己重新打开再提交（像 Kaggle 多次提交） */
+function SelfExtras({ token, sid, lang }: { token: string; sid: string; lang?: Lang }) {
+  const L = (zh: string, en: string) => pick(lang, zh, en);
+  const [x, setX] = useState<{ peer?: { rank: number; of: number } | null; resubmit_left?: number; board?: boolean } | null>(null);
+  const [busy, setBusy] = useState(false); const [err, setErr] = useState('');
+  useEffect(() => { fetch(`/api/work/${token}/sessions/${sid}`).then(r => r.json()).then(j => j.ok && setX(j.session)).catch(() => {}); }, [token, sid]);
+  if (!x || (!x.peer && !x.resubmit_left && !x.board)) return null;
+  const reopen = async () => {
+    if (!confirm(L('重新打开这份作答接着改？这次的评估会作废，再提交时重新评估。', 'Reopen this submission to keep improving it? This evaluation will be discarded and you will be evaluated again when you resubmit.'))) return;
+    setBusy(true); setErr('');
+    const j = await (await fetch(`/api/work/${token}/sessions/${sid}/reopen`, { method: 'POST' })).json().catch(() => ({ ok: false }));
+    if (!j.ok) { setErr(j.error || L('没打开，再试一次', "Couldn't reopen. Please try again.")); setBusy(false); return; }
+    location.href = `/work/${token}?s=${sid}`;
+  };
+  return (
+    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 14, margin: '0 0 16px', padding: '12px 16px', borderRadius: 12, background: '#fafaff', border: '1px solid #e6e3ff', fontSize: 14 }}>
+      {x.peer && <span>{L('同一个任务里，你目前排', 'Among everyone on this task you rank ')}<b style={{ color: '#6055f5', fontSize: 18 }}> {x.peer.rank} </b>{L(`/ 共 ${x.peer.of} 人`, `of ${x.peer.of}`)}</span>}
+      {x.board && <a href={`/work/${token}/board`} target="_blank" rel="noreferrer" style={{ color: '#6055f5' }}>{L('看排行榜 →', 'Leaderboard →')}</a>}
+      {!!x.resubmit_left && <span style={{ marginLeft: 'auto' }}><button onClick={reopen} disabled={busy} style={{ border: '1px solid #6055f5', background: '#fff', color: '#6055f5', borderRadius: 8, padding: '6px 14px', fontWeight: 700, cursor: 'pointer' }}>{busy ? L('打开中…', 'Opening…') : L(`继续改进，再提交一次（还能 ${x.resubmit_left} 次）`, `Keep improving and resubmit (${x.resubmit_left} left)`)}</button></span>}
+      {err && <span style={{ color: '#c0392b', fontSize: 13 }}>{err}</span>}
+    </div>
+  );
 }

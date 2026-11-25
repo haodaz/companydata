@@ -23,7 +23,7 @@ type Item =
   | { k: 'confirm'; id: string; path: string; act: 'write' | 'edit' | 'delete'; before: string; after: string; state: 'wait' | 'ok' | 'no' };
 
 const C = { bg: '#f6f6f9', card: '#ffffff', line: '#e7e7ee', ink: '#1d1d2b', ink2: '#6b6b80', brand: '#5b50e6', soft: '#f1f0ff', ok: '#16a34a', bad: '#dc2626', mono: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace' };
-const fmt = (t: number) => `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
+const fmt = (t: number) => (t >= 86400 ? `${Math.floor(t / 86400)}天${Math.floor((t % 86400) / 3600)}时` : `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(Math.floor(t % 60)).padStart(2, '0')}`);   // 设了任务截止、离截止还有几天的按天显示（11-24）
 const sizeOf = (f: WsFile) => (f.bin ? Math.round(f.content.length * 0.75) : f.content.length);
 const BRIEF = '__brief';
 
@@ -416,7 +416,7 @@ export function AgentWork({ token, sid, task, resume, limit, grading, error, onS
       <main style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' }}>
         <header style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 16px' }}>
           <div style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 14, fontWeight: 700 }}>{task.task.title} <span style={{ fontWeight: 400, fontSize: 12.5, color: C.ink2 }}>{task.company_name} · {L('AI 工作台 beta', 'AI workspace beta')}</span></div>
-          <span style={{ fontFamily: C.mono, fontSize: 13, color: left != null && left <= 300 ? C.bad : C.ink2 }}>{left != null ? `${L('剩', 'left')} ${fmt(left)}` : fmt(now)}</span>{left == null && (task as any).task?.soft_limit && now > ((task as any).task?.time_minutes || 60) * 60 && <span title={L('建议时长只作参考：可以接着做，用时会如实记给企业', 'The suggested time is only a guide. You can keep going; your time is recorded as is.')} style={{ fontSize: 12, color: C.ink2, marginLeft: 6 }}>{L('已过建议时长，可以接着做', 'past suggested time, keep going')}</span>}
+          <span style={{ fontFamily: C.mono, fontSize: 13, color: left != null && left <= 300 ? C.bad : C.ink2 }}>{left != null ? `${L('剩', 'left')} ${fmt(left)}` : (task as any).task?.no_limit ? L('不限时', 'No limit') : fmt(now)}</span>{left == null && (task as any).task?.soft_limit && now > ((task as any).task?.time_minutes || 60) * 60 && <span title={L('建议时长只作参考：可以接着做，用时会如实记给企业', 'The suggested time is only a guide. You can keep going; your time is recorded as is.')} style={{ fontSize: 12, color: C.ink2, marginLeft: 6 }}>{L('已过建议时长，可以接着做', 'past suggested time, keep going')}</span>}
           {!appOpen && <button onClick={() => { setAppOpen(true); if (!tabs.length) { setTabs([BRIEF]); setActive(BRIEF); } }} style={{ ...iconBtn, border: `1px solid ${C.line}` }}>{L('打开文件区', 'Open files')}</button>}
           <button onClick={submit} disabled={grading} style={{ border: 0, background: arm ? C.bad : C.ink, color: '#fff', borderRadius: 9, padding: '7px 16px', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}>{grading ? L('评分中…', 'Grading…') : arm ? L('确定提交', 'Confirm') : L('提交', 'Submit')}</button>
         </header>

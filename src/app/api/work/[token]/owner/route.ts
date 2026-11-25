@@ -1,7 +1,7 @@
 import { refreshSignals } from '@/lib/work/question-bank';
 import { peerRanks } from '@/lib/work/fluency/peer-server';
 import { NextRequest, NextResponse, after } from 'next/server';
-import { AUTO_FROM, timing, withAutoSubmit } from '@/lib/work/deadline';
+import { AUTO_FROM, timing, withAutoSubmit, withTimeMode, isTimeMode, activeSec } from '@/lib/work/deadline';
 import { releaseContact } from '@/lib/work/contact';
 import { extendSession } from '@/lib/work/extend';
 import { supabaseAdmin as db } from '@/lib/supabase';
@@ -26,13 +26,13 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ toke
   const { token } = await params;
   const t = await auth(token, req);
   if (!t) return NextResponse.json({ ok: false, error: '管理链接不对' }, { status: 404 });
-  const { data: sessions } = await db.from('work_sessions').select('id, participant, started_at, submitted_at, score, report, deliverable').eq('task_id', t.id).order('created_at', { ascending: false });
+  const { data: sessions } = await db.from('work_sessions').select('id, participant, started_at, submitted_at, score, report, deliverable, events').eq('task_id', t.id).order('created_at', { ascending: false });
   // 到点后人没回来的作答：出任务的人打开管理页时代为收卷（一次最多 3 份，评完下次刷新能看到）
   const left = (sessions || []).filter(s => !s.submitted_at && new Date(s.started_at).getTime() >= AUTO_FROM && timing(t.task, s).closed).slice(0, 3);
   if (left.length) after(() => Promise.all(left.map(s => fetch(`${req.nextUrl.origin}/api/work/${token}/sessions/${s.id}/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ auto: true, sync: true }) }).catch(e => console.warn('[work] 代收卷失败', e)))));
   const { owner_key: _k, context: ctx, ...task } = t;
   const pr = peerRanks(t.task, (sessions || []).map(s => s.id));   // 同题对比名次（11-23）
-  return NextResponse.json({ ok: true, task: { ...task, notes: ctx?.notes || [], sources: ctx ? sourcesOf(ctx) : null }, sessions: (sessions || []).map(s => ({ ...s, peer: pr.get(s.id) || null })) });
+  return NextResponse.json({ ok: true, task: { ...task, notes: ctx?.notes || [], sources: ctx ? sourcesOf(ctx) : null }, sessions: (sessions || []).map(({ events, ...s }: any) => ({ ...s, peer: pr.get(s.id) || null, active_s: activeSec(events, s.submitted_at ? Math.round((new Date(s.submitted_at).getTime() - new Date(s.started_at).getTime()) / 1000) : undefined) })) });   // 投入时长（11-24）：不限时的任务隔几天回来做，按过程事件算实际干了多久
 }
 
 /** 发布 / 下架 */
@@ -55,6 +55,20 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ to
     const r = await extendSession(t, String(body.extend), Number(body.minutes) || 30);
     if (!r.ok) return NextResponse.json(r, { status: 400 });
     return NextResponse.json(r);
+  }
+  // 时间方式和开放规则（11-24，都可选、不收束）：time_mode limit | suggest | none；open_until ISO 或 null；resubmit 次数；show_rank / public_board 开关
+  if (isTimeMode(body.time_mode) || 'open_until' in body || body.resubmit != null || typeof body.show_rank === 'boolean' || typeof body.public_board === 'boolean') {
+    let task: any = isTimeMode(body.time_mode) ? withTimeMode(t.task, body.time_mode) : { ...t.task };
+    if ('open_until' in body) { const u = body.open_until ? Date.parse(String(body.open_until)) : NaN; if (Number.isFinite(u)) task.open_until = new Date(u).toISOString(); else delete task.open_until; }
+    if (body.resubmit != null) { const n = Math.max(0, Math.min(50, Math.round(Number(body.resubmit) || 0))); if (n) task.resubmit = n; else delete task.resubmit; }
+    if (typeof body.show_rank === 'boolean') { if (body.show_rank) task.show_rank = true; else delete task.show_rank; }
+    if (typeof body.public_board === 'boolean') { if (body.public_board) task.public_board = true; else delete task.public_board; }
+    // 别把同时在插的同题名次冲掉：顺序以库里最新的为准
+    const { data: t2 } = await db.from('work_tasks').select('task').eq('id', t.id).single();
+    task = { ...task, peer_order: (t2 as any)?.task?.peer_order };
+    const { error } = await db.from('work_tasks').update({ task, updated_at: new Date().toISOString() }).eq('id', t.id);
+    if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
+    return NextResponse.json({ ok: true, task });
   }
   // 到点自动交卷的开关
   if (typeof body.auto_submit === 'boolean') {
