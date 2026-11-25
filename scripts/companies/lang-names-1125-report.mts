@@ -1,0 +1,21 @@
+/** 名称分中英文回填明细（11-25）：reports/企业名称分中英文明细-20261125.xlsx */
+import XLSX from 'xlsx';
+process.loadEnvFile('.env.local');
+const { supabaseAdmin } = await import('../../src/lib/supabase');
+const { selectAll } = await import('../../src/lib/supabase-all');
+const changes = JSON.parse((await import('node:fs')).readFileSync('reports/1125-名称分中英文.json', 'utf8')) as { id: number }[];
+const ids = new Set(changes.map(c => c.id));
+const { data } = await selectAll(() => supabaseAdmin.from('companies').select('id,external_id,name,brief_name,historical_name,name_lang_cn,brief_name_lang_cn,brief_name_lang_en,historical_name_lang_cn,historical_name_lang_en').order('id'));
+const row = (r: any) => ({ id: r.id, 企业编号: r.external_id, 企业名称: r.name, '原·公司简称': r.brief_name, '原·曾用名': r.historical_name, '名称 (Cn)': r.name_lang_cn, '公司简称 (Cn)': r.brief_name_lang_cn, '公司简称 (En)': r.brief_name_lang_en, '曾用名 (Cn)': r.historical_name_lang_cn, '曾用名 (En)': r.historical_name_lang_en });
+const all = (data as any[]).filter(r => ids.has(r.id)).map(row);
+const F = ['名称 (Cn)', '公司简称 (Cn)', '公司简称 (En)', '曾用名 (Cn)', '曾用名 (En)'];
+const sum = [{ 项: '企业总数', 数: data.length }, { 项: '这次写入的企业', 数: all.length }, ...F.map(f => ({ 项: `${f} 有值`, 数: (data as any[]).map(row).filter((r: any) => r[f]).length })), { 项: '名称 (Cn) 仍空（企业名是外文，待画像补中文名）', 数: (data as any[]).filter(r => !r.name_lang_cn).length }];
+const wb = XLSX.utils.book_new();
+const add = (n: string, rows: any[]) => { const ws = XLSX.utils.json_to_sheet(rows); ws['!cols'] = Object.keys(rows[0] || {}).map(k => ({ wch: /曾用名|名称|简称/.test(k) ? 32 : 10 })); XLSX.utils.book_append_sheet(wb, ws, n); };
+add('汇总', sum);
+add('曾用名拆分（请核对）', all.filter((r: any) => r['原·曾用名']));
+add('英文简称', all.filter((r: any) => r['公司简称 (En)']));
+add('名称 (Cn) 仍空', (data as any[]).filter(r => !r.name_lang_cn).map(row));
+add('全部写入', all);
+XLSX.writeFile(wb, 'reports/企业名称分中英文明细-20261125.xlsx');
+console.log(sum);
