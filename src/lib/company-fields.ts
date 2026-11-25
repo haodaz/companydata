@@ -41,6 +41,12 @@ export const COMPANY_EDIT_FIELDS: { key: string; label: string; kind: 'string' |
   { key: 'registered_name', label: '工商企业名称', kind: 'string', group: '基本信息' },
   { key: 'brief_name', label: '公司简称', kind: 'string', group: '基本信息' },
   { key: 'historical_name', label: '曾用名', kind: 'string', group: '基本信息' },
+  // 数据部门 11-25：名称分中英文（077），多个值英文「;」隔开
+  { key: 'name_lang_cn', label: '名称 (Cn)', kind: 'string', group: '基本信息' },
+  { key: 'brief_name_lang_cn', label: '公司简称 (Cn)', kind: 'string', group: '基本信息' },
+  { key: 'brief_name_lang_en', label: '公司简称 (En)', kind: 'string', group: '基本信息' },
+  { key: 'historical_name_lang_cn', label: '曾用名 (Cn)', kind: 'string', group: '基本信息' },
+  { key: 'historical_name_lang_en', label: '曾用名 (En)', kind: 'string', group: '基本信息' },
   { key: 'aliases', label: '别名 / 简称', kind: 'tags', group: '基本信息' },
   // 数据部门 10-22 #24 / 10-23 #37：查找名称 = 全称 / 简称 / 工商名 / 英文名 / 曾用名 / 别名去重，英文「;」隔开的文本，数据库触发器自动维护（046）
   { key: 'name_to_search', label: '查找名称', kind: 'string', group: '基本信息' },
@@ -157,7 +163,7 @@ export type SubEntityKey = keyof typeof SUB_ENTITIES;
  */
 export const PROFILE_TOPICS: { key: string; label: string; desc: string; fields: string[]; entity?: SubEntityKey }[] = [
   { key: 'basic', label: '基础与工商', desc: '官网 / 名称 / 行业 / 类型 / 总部 / 规模 / 财务 / 工商登记 / 高管', fields: [
-    'name_en', 'registered_name', 'brief_name', 'historical_name', 'segment', 'jv_partners', 'official_website', 'linkedin_url', 'industry', 'sub_industry', 'company_type', 'kind',
+    'name_en', 'registered_name', 'brief_name', 'historical_name', 'name_lang_cn', 'brief_name_lang_cn', 'brief_name_lang_en', 'historical_name_lang_cn', 'historical_name_lang_en', 'segment', 'jv_partners', 'official_website', 'linkedin_url', 'industry', 'sub_industry', 'company_type', 'kind',
     'stock_code', 'info_founding_year', 'company_scale', 'company_employees', 'operating_revenue', 'profit', 'registered_capital', 'paid_in_capital', 'unified_social_credit_code',
     'continent', 'country', 'province', 'city', 'county_area', 'address', 'registration_address', 'legal_representative', 'chairman', 'ceo_general_manager', 'cto',
     'info_email', 'info_phone', 'year_report_address', 'business_range', 'one_sentence', 'introduction', 'company_specialties', 'product_area', 'fortune_global_rank', 'ranking_year', 'type_label',
