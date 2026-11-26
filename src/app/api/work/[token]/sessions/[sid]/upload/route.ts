@@ -15,7 +15,9 @@ async function quickCheck(path: string, name: string, size: number, lang?: strin
     const buf = Buffer.from(await data.arrayBuffer());
     if (/\.xlsx?$/i.test(name)) { const XLSX = await import('xlsx'); XLSX.read(buf, { type: 'buffer' }); return null; }
     if (/\.pptx$/i.test(name)) { const { pptxText } = await import('@/lib/work/recording'); const t = await pptxText(buf); return t.replace(/[#\s]|第 \d+ 页|（这页没有文字，可能是图）/g, '').length > 20 ? null : en ? 'No text found in this PowerPoint (probably all images): export it to PDF and upload that too' : 'PPT 里没读出文字（可能全是图）：再导出一份 PDF 一起传更稳'; }
-    const { extractText } = await import('@/lib/work/samples'); await extractText(buf, name); return null;   // PDF 抽不出字没关系，评估时 AI 会看原件
+    const { extractText } = await import('@/lib/work/samples'); const txt = await extractText(buf, name);
+    if (/\.docx$/i.test(name) && !txt.trim()) return en ? 'No text found in this Word file (empty or damaged?): check it, or export to PDF and re-upload' : '这份 Word 没读出文字（是空的或损坏了？）：检查一下，或导出 PDF 再传';
+    return null;   // PDF 抽不出字没关系，评估时 AI 会看原件
   } catch { return en ? "This file couldn't be opened (damaged or password-protected?): export it again and re-upload" : '这个文件打不开（可能损坏或加了密码）：重新导出一份再传'; }
 }
 
