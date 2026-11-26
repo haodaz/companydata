@@ -57,6 +57,10 @@ export function jobsOf(json: any): any[] {
 /** 入库后由 job-tagging 专门打的字段：重新提取时不覆盖 */
 const TAGGED_FIELDS = ['fos_ids', 'related_career_ids', 'exp_labels', 'skill_labels', 'exp_labels_jd', 'skill_labels_jd', 'qianli_job_labels', 'qianli_job_labels_reason', 'qianli_job_specialty_labels', 'qianli_specialty_labels_reason'];
 
+/** 第三方平台 / 高校就业网按关键词搜的结果页：结果里是各家公司的岗位，不能当某一家的岗位来源 */
+export const CROSS_COMPANY_SEARCH = /\/\/([^/]*\.)?(nowcoder\.com|liepin\.com|zhipin\.com|shixiseng\.com|lagou\.com|zhaopin\.com|51job\.com|yingjiesheng\.com|gaoxiaojob\.com|iguopin\.com|edu\.cn)\/[^#]*[?&](keyword|key|kw|query|q|searchkey)=|\/\/(www|campus)\.zhiye\.com\/[^#]*[?&]keyword=/i;
+export const isCrossCompanySearch = (u?: string | null) => !!u && CROSS_COMPANY_SEARCH.test(u);
+
 export async function upsertJobsFromLog(logId: number, structuredJson: any): Promise<number> {
   const { data: log, error: logErr } = await supabaseAdmin
     .from('job_crawl_logs')
@@ -64,6 +68,8 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
     .eq('id', logId)
     .single();
   if (logErr) throw logErr;
+  // 跨公司的关键词搜索页（牛客 / 猎聘 / 实习僧 / 职业 zhiye 总站 / 高校就业网…?keyword=公司名）搜出来的多半是别家的岗位，不挂到这家企业名下（数据部门 11-26 Oracle 例）
+  if (isCrossCompanySearch(log.target_url)) { console.log(`[job-store] 日志 #${logId}：${log.target_url} 是跨公司的搜索结果页，岗位不入库`); return 0; }
   // 来源 = 所属企业的名单批次（数据部门 10-14，和企业一致）；招聘渠道按链接推，单独一列
   const { data: co } = log.company_id ? await supabaseAdmin.from('companies').select('source, name, brief_name, registered_name, name_en, aliases').eq('id', log.company_id).maybeSingle() : { data: null as any };
   // 多选（迁移 031 起企业、岗位的来源都是数组）；迁移前库里还是字符串，按企业那边的类型写，两边一起迁移
@@ -243,6 +249,7 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
 
 /** 实测出岗位的网址记进信息源库：有就改成职位列表 + 核实通过，没有就新建一条。数据部门给的「招聘官网」不动 */
 export async function markRealEntry(companyId: number, company: string, url: string, jobs: number) {
+  if (isCrossCompanySearch(url)) return;   // 搜索结果页不记成这家的职位列表
   const health = { reason: `实测出岗位 ${jobs} 个（${new Date().toISOString().slice(0, 10)}）`, by: 'job-store' };
   const now = new Date().toISOString();
   const { data: rows } = await supabaseAdmin.from('url_sources').select('id, subtype, reasoning').eq('company_id', companyId).eq('url', url).limit(1);
