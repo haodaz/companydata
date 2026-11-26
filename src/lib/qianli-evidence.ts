@@ -27,6 +27,7 @@ const RULES: Record<string, { any: RegExp[]; none?: RegExp[]; also?: RegExp; orN
       /(海外|国外|外籍|国际)(团队|客户|同事|伙伴|供应商)/,
     ],
     none: [new RegExp(`(一定|基本|基础)的?${FOREIGN_LANG}(基础|能力)?(即可)?$`)],
+    orName: new RegExp(`${FOREIGN_LANG}.{0,6}(教师|老师|教练|讲师|翻译|编辑)|翻译`),   // 外语老师 / 翻译：岗位本身就用外语（11-25 陈彩瑛）
   },
   global_bonus: { any: [/海归|留学|海外(学习|工作|求学)?(经历|背景|经验)|国外(学习|工作)?(经历|背景)|外籍|overseas (study|experience|background)|international (students?|background|experience)/i] },
   cross_cultural: { any: [/跨文化|多元文化|国际化(团队|视野|环境|氛围)|多语种|global team|international team|multicultural|cross-cultural|diverse (team|environment)|international environment/i] },
@@ -38,25 +39,26 @@ const RULES: Record<string, { any: RegExp[]; none?: RegExp[]; also?: RegExp; orN
   // 培养新人
   mentorship: { any: [/导师|带教|mentor|buddy|师傅|传帮带|老带新|带新人|coach/i] },
   coaching: { any: [/一对一|1对1|1v1|1-on-1|one-on-one|专人(指导|辅导|带)|一带一/i] },
-  training_system: { any: [/培训|培养(体系|计划|机制|方案|项目)|系统(化)?培养|轮岗|管培|培养生|储备(干部|人才)|训练营|入职(引导|学习)|training|onboarding|rotation|(graduate|leadership|development|trainee) (programme|program)|learning (programme|program|opportunities)|academy/i] },
-  ramp_up: { any: [/成长(空间|路径|通道|计划|周期|期)|培养周期|职业(发展|规划)|晋升(通道|机制|空间|路径)?|发展(空间|通道|路径)|career (path|development|growth|progression)|professional (development|growth)|grow (your|with)|develop your/i] },
-  high_impact: { any: [/高成长|快速成长|影响力|核心岗位|关键岗位|核心(骨干|团队)|impact|fast-?growing|accelerated (growth|career)/i] },
+  // 11-25 陈彩瑛抽检：光写「培训」不算（「参加培训活动 / 教师培训」是员工义务、教学岗的「培训」是教学生），要公司给员工的培训 / 培养
+  training_system: { any: [/培训体系|(提供|完善的?|系统(化|的)?|专业(的)?|全面(的)?|入职|岗前|带薪|新人|新员工|定制化?|多元化?)培训|培训(机会|资源|计划|支持|课程体系)|(可|也可|亦可)培养|培养(体系|计划|机制|方案|项目)|系统(化)?培养|轮岗|管培|培养生|储备(干部|人才)|训练营|入职(引导|学习)|training|onboarding|rotation|(graduate|leadership|development|trainee) (programme|program)|learning (programme|program|opportunities)|academy/i] },
+  ramp_up: { any: [/应届|20\d\d\s*(届|年)[^。；;\n]{0,10}毕业生|(可|也可|亦可)培养|成长(空间|路径|通道|计划|周期|期)|培养周期|职业(发展|规划)|晋升(通道|机制|空间|路径)?|发展(空间|通道|路径)|career (path|development|growth|progression)|professional (development|growth)|grow (your|with)|develop your/i] },
+  high_impact: { any: [/leadership potential|领导(潜力|潜质)|高成长|快速成长|影响力|核心岗位|关键岗位|核心(骨干|团队)|impact|fast-?growing|accelerated (growth|career)/i] },
   ownership: {
     any: [/独立负责|独当一面|独立承担|独立完成|独立主导|主导|ownership|take (the )?lead|lead (your own|projects?)|end-to-end responsib/i],
     also: /应届|毕业生|无经验|经验不限|实习|校招|校园招聘|零基础|new grad|graduate|intern/i,
   },
   ai_driven: { any: [/(使用|运用|借助|利用|善用|熟练|熟悉|掌握|应用)[^。；;\n]{0,10}(AI|AIGC|大模型|LLM|GPT|ChatGPT|Claude|Copilot|Cursor|Midjourney|Stable Diffusion|豆包|Kimi|DeepSeek|通义|文心|智能体|Agent)|AI\s*(工具|工作流|辅助|提效|赋能)|AIGC(工具|创作|内容|生产)|用AI/i] },
   prompt_tuning: { any: [/prompt|提示词|提示工程|调教|AI调优|指令(优化|设计)/i] },
-  ai_ready: { any: [/适应AI时代|拥抱AI|AI时代|AI原住民|智能化时代|AI native/i] },
-  digital_skills: { any: [/数字化|数据素养|数据驱动|数据思维|data-driven|data literacy|digital (skills|literacy|tools|transformation)/i] },
-  self_learning: { any: [/持续学习|自学|自我驱动学习|学习新(技能|技术|知识)|自我提升|主动学习|快速学习新|渴望学习|continuous(ly)? learn|eager to learn|learn new|self-?(learning|taught|starter)|curiosity to learn/i] },
+  ai_ready: { any: [/(兴趣|interest|热爱|关注|接触过?|了解)[^。；;\n]{0,12}(AI|人工智能|大模型|emerging technolog)|(AI|人工智能|大模型)[^。；;\n]{0,10}(优先|加分)|适应AI时代|拥抱AI|AI时代|AI原住民|智能化时代|AI native/i] },
+  digital_skills: { any: [/digital(ly)?[- ]savvy|tech(nolog(y|ically))?[- ]savvy|数字化|数据素养|数据驱动|数据思维|data-driven|data literacy|digital (skills|literacy|tools|transformation)/i] },
+  self_learning: { any: [/active learning|学习前沿|快速学习能力|持续学习|自学|自我驱动学习|学习新(技能|技术|知识)|自我提升|主动学习|快速学习新|渴望学习|continuous(ly)? learn|eager to learn|learn new|self-?(learning|taught|starter)|curiosity to learn/i] },
   no_degree: { any: [/学历不限|不限学历|无需高学历|大专及以上|专科及以上|中专及以上|高中及以上|大专以上|专科以上|学历要求[:：]?\s*(大专|专科|不限)/] },
   fast_training: { any: [/[1一12两二][-~至到]?[2两二]?个?月.{0,6}(培训|上手)|短期培训|快速上手|培训后(即可)?上岗|零基础(可学|培训|上手)/] },
   talent_gap: { any: [/缺口大|大量招聘|急招|急聘|需求量大|扩招|长期招聘|招聘人数[:：]?\s*(若干|\d{2,})/] },
   // 收文科艺术生
-  liberal_arts: { any: [/文科|艺术|人文|社科|社会科学|传媒|新闻|中文|汉语言|设计类|美术|广告学|编导|播音|哲学|历史学|法学|外语类|语言类/] },
+  liberal_arts: { orName: /人文|文学|写作|语文|创作|编导|文案|美术|艺术|播音|主持/, any: [/文科|艺术|人文|社科|社会科学|传媒|新闻|中文|汉语言|设计类|美术|广告学|编导|播音|哲学|历史学|法学|外语类|语言类/] },
   // 判定标准允许「未提任何专业要求且职能属文科 / 商业 / 复合方向」——原文压根没提专业的不去掉（职能方向交给模型），提了专业的才要明文「不限」
-  non_stem: { any: [/专业不限|不限专业|不限理工|专业背景不限|任何专业|所有专业|各类专业|专业要求[:：]?\s*不限|any (major|discipline|degree)|all (majors|disciplines)/i], orNoMention: /专业|major|discipline|degree in/i },
+  non_stem: { any: [/专业不限|不限专业|不限理工|专业背景不限|任何专业|所有专业|各类专业|专业要求[:：]?\s*不限|any (major|discipline|degree)|all (majors|disciplines)/i], orNoMention: /(相关|以下|等|类|学科|理工科?|工科|理科|计算机|电子|机械|化工|金融|财会|法学|医学)[^。；;\n]{0,2}专业|专业(要求|背景|优先|方向|限制)|major in|majoring|degree in/i },   // 「提升专业能力」不算提了专业（11-25）
   hybrid_role: { any: [/复合型|一专多能|跨学科|多职能|跨职能|跨部门协作|运营|营销|策划|品牌|内容|新媒体|市场推广|用户研究|交互设计|视觉设计/] },
   // 可转正
   convertible: { any: [/可转正|转正机会|转正名额|提供转正|有机会转正|优先转正|择优转正|表现优秀.{0,6}转正|转正(通道|考核|答辩)/], none: [/不转正|无转正|不提供转正|不可转正|没有转正|不能转正/] },
@@ -86,7 +88,13 @@ const DETECT: Record<string, RegExp[]> = {
   intern_to_full: [/实习[^。；;\n]{0,15}(转正|转全职|转为正式)/],
   retainable: [/(表现|考核)[^。；;\n]{0,4}(优异|优秀)[^。；;\n]{0,8}(留用|转正)|留用(机会|offer|答辩)/i],
   liberal_arts: [/(动画|数字媒体艺术|视觉传达|美术|艺术设计|平面设计|游戏美术|设计类|传媒|新闻|广告学|中文|汉语言|戏剧|影视|播音|编导|音乐|舞蹈|文学|历史学|哲学|社会学|人文社科)[^。；;\n]{0,12}(专业|背景)/],
-  ramp_up: [/无(工作)?经验(要求|也可|亦可|可|\s*[·|｜,，])|经验不限|不要求(工作)?经验|零基础|无经验但/],
+  ramp_up: [/无(工作)?经验(要求|也可|亦可|可|\s*[·|｜,，])|经验不限|不要求(工作)?经验|零基础|无经验但|应届(毕业)?生|20\d\d\s*(届|年)[^。；;\n]{0,10}毕业生|(也可|亦可)培养/],   // 招应届 = 新人成长期（11-25）
+  non_stem: [/专业不限|不限专业|any disciplines?|no specific major/i],
+  language_skills: [new RegExp(`^[^\\n]{0,20}${FOREIGN_LANG}.{0,6}(教师|老师|教练|讲师)`), new RegExp(`${FOREIGN_LANG}.{0,4}(读写|听说读写|口语流利|流利|熟练|精通|工作语言)`), /CET-?6|英语六级|雅思|托福|IELTS|TOEFL/i],
+  ai_ready: [/interest in AI|接触过\s*AI|(AI|人工智能)[^。；;\n]{0,8}(相关)?(内容|经验|知识)?优先/i],
+  digital_skills: [/digital(ly)?[- ]savvy|digital transformation|数字化转型/i],
+  training_system: [/(也可|亦可)培养|培训体系|岗前培训|入职培训|系统(化)?培训/],
+  high_impact: [/leadership potential/i],
   self_learning: [/(愿意|乐于|渴望)学习|学习能力强亦可/],
   global_bonus: [/海外[^。；;\n]{0,10}(学习|生活|实习|留学|求学)[^。；;\n]{0,8}(经历|经验|背景)|海外(顶尖|知名)?(院校|高校)|海内外知名高校|留学(经历|背景)|海归/],
   cross_cultural: [/国际视野|跨文化/],
@@ -96,7 +104,11 @@ const DETECT: Record<string, RegExp[]> = {
 export function detectSpecialty(t: SpecialtyText): string[] {
   if (!hasJdText(t)) return [];
   const text = `${t.name || ''}\n${t.responsibilities || ''}\n${t.overview || ''}`;
-  return Object.entries(DETECT).filter(([, res]) => res.some(re => re.test(text))).map(([k]) => k);
+  const out = Object.entries(DETECT).filter(([, res]) => res.some(re => re.test(text))).map(([k]) => k);
+  // 11-25 陈彩瑛：要求里没写专业限制 = 不限理工背景（文理岗位一样）；人文 / 写作 / 艺术类岗位名 = 收文科/艺术生
+  if (!out.includes('non_stem') && !RULES.non_stem.orNoMention!.test(text)) out.push('non_stem');
+  if (/人文|文学|写作|语文|编导|文案|美术|艺术|播音|主持/.test(t.name || '')) out.push('liberal_arts');
+  return out;
 }
 
 export function checkSpecialty(l2In: string[], t: SpecialtyText): { l1: string[]; l2: string[]; dropped: Record<string, string> } {

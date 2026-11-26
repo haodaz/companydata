@@ -76,6 +76,16 @@ ${JSON.stringify(input)}`, model, { jsonMode: true, temperature: 0, prefix });
 }
 
 /** 特色标签：SYSTEM + 标签体系与判定标准 + 示例 + 批量模式（≤10 个岗位） */
+/** 数据部门 11-25 陈彩瑛 50 条抽检补的判定口径（接在示例后面，当缓存前缀的一部分） */
+const SPECIALTY_REVIEW_1125 = `
+【补充判定（数据部门抽检）】
+- 培训体系：只算公司给员工的培训 / 培养（入职培训、系统培训、培养计划、轮岗、「无经验也可培养」）。员工「参加培训活动 / 教研会议」、教学岗给学生上课辅导，都不算。
+- 不限理工背景：要求里没写专业限制就打（只要求某科知识功底不算专业限制），文科理科岗位都一样。
+- 新人成长期：招应届毕业生、写了「20xx 届 / 20xx 年毕业生」、「无经验也可培养」就打。
+- 外语能力可发挥：外语老师 / 翻译岗，岗位名就是证据。
+- 收文科/艺术生：人文、写作、阅读、艺术类课程的老师和内容岗。
+- 适应AI时代：「对 AI 有兴趣 / 接触过 AI 优先」；数字化素养：「digitally savvy」；高成长性高影响力：「leadership potential」；自学新技能：「active learning」。`;
+
 export async function tagJobSpecialties(jobs: QianliInput[], model: string): Promise<Map<number, { l1: string[]; l2: string[] }>> {
   // USER 模板里的「标签体系与判定标准」「判定流程」原样用；输入段换成批量格式
   const standards = SPECIALTY_USER.slice(SPECIALTY_USER.indexOf('【标签体系与判定标准】'), SPECIALTY_USER.indexOf('【输出格式】'));
@@ -87,6 +97,7 @@ export async function tagJobSpecialties(jobs: QianliInput[], model: string): Pro
 
 ${standards}
 ${SPECIALTY_EXAMPLES}
+${SPECIALTY_REVIEW_1125}
 
 ${batchOut}
 为了能用 JSON 模式返回，请把数组放在 {"items": [...]} 里。`;
