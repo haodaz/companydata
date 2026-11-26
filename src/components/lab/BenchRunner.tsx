@@ -316,7 +316,8 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
   const firePtr = (type: 'pointerdown' | 'pointermove' | 'pointerup', x: number, y: number) => {
     const svg = sceneRef.current; if (!svg) return;
     const r = svg.getBoundingClientRect(); const cx = r.left + x / VW * r.width, cy = r.top + y / VH * r.height;
-    const el = document.elementFromPoint(cx, cy); if (!el || !svg.contains(el)) return;
+    // 台面上那一点最上层的元素（跳过盖在上面的 HUD 文字、摄像头小窗）
+    const el = document.elementsFromPoint(cx, cy).find(x => svg.contains(x)); if (!el) return;
     el.dispatchEvent(new PointerEvent(type, { clientX: cx, clientY: cy, bubbles: true, cancelable: true, pointerId: 77, pointerType: 'touch', isPrimary: true, buttons: type === 'pointerup' ? 0 : 1 }));
   };
   const onPosePtr = (p: HandPose | null) => {
@@ -689,7 +690,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
       {spec.surface === 'desktop' && spec.surfaceConfig?.master === 'desktop' && <DesktopStage key={resetKey} spec={spec} cfg={spec.surfaceConfig as any} st={st} running={running} auto={auto} act={act} setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
       {spec.surface === 'dialog' && spec.surfaceConfig?.master === 'dialog' && <DialogStage key={resetKey} spec={spec} cfg={spec.surfaceConfig as any} st={st} running={running} auto={auto} act={act} setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
       {spec.surface === 'desk' && <DeskStage key={resetKey} st={st} running={running} auto={auto} act={act} setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
-      <div className="lab-mono" style={{ position: 'absolute', left: 12, top: hud ? 34 : 10, display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,.6)', letterSpacing: '.06em' }}>
+      <div className="lab-mono" style={{ position: 'absolute', left: 12, top: hud ? 34 : 10, display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,.6)', letterSpacing: '.06em', pointerEvents: 'none' }}>
         <span style={{ width: 8, height: 8, borderRadius: 4, background: running ? '#ff3b5c' : '#777', boxShadow: running ? '0 0 8px #ff3b5c' : 'none' }} />CAM 01 · 数字工位 · T+{fmtT(st.t)}
       </div>
       {!!spec.expertScript?.length && !guided && !watchOnly && (
