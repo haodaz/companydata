@@ -7,7 +7,7 @@
  */
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { removeWorkFile, uploadWorkFile } from '@/lib/work/upload-client';
-import { READABLE_HINT_ZH, READABLE_HINT_EN } from '@/lib/work/file-kinds';
+import { READABLE_HINT_ZH, READABLE_HINT_EN, fileWarn } from '@/lib/work/file-kinds';
 import { MdView, RulesView } from '@/components/work/WorkText';
 import { CONSENT_V, ConsentNotice, consentItems } from '@/components/work/ConsentNotice';
 import { contactKey } from '@/lib/work/contact';
@@ -293,7 +293,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   type PFile = { name: string; size: number; url: string; part: string; warn?: string };
   const [pfiles, setPfiles] = useState<PFile[]>([]); const [attOpen, setAttOpen] = useState(false); const [pfBusy, setPfBusy] = useState(0); const [pfErr, setPfErr] = useState('');
   // 刷新 / 换设备回来：已经传的文件从服务器拿回来（开放模式以前没拿，刷新后列表空了、删也删不掉，11-10）
-  useEffect(() => { if (!sid) return; fetch(`/api/work/${token}/sessions/${sid}`).then(r => r.json()).then(j => { const fs: PFile[] = j.session?.files || []; if (mode === 'open') setUploads(fs); else setPfiles(fs); }).catch(() => {}); }, [token, sid, mode]);
+  useEffect(() => { if (!sid) return; fetch(`/api/work/${token}/sessions/${sid}`).then(r => r.json()).then(j => { /* 刷新回来：读不了的格式照样标出来 */ const fs: PFile[] = (j.session?.files || []).map((f: PFile) => ({ ...f, warn: f.warn || fileWarn(f.name, lang) || undefined })); if (mode === 'open') setUploads(fs); else setPfiles(fs); }).catch(() => {}); }, [token, sid, mode]);
 
   const uploadPart = async (list: FileList | null, part: string) => {
     if (!list?.length) return; setPfErr('');
