@@ -8,10 +8,13 @@
  */
 import React, { useEffect, useRef, useState } from 'react';
 import { removeWorkFile, uploadWorkFile } from '@/lib/work/upload-client';
-import { useL } from '@/lib/work/i18n';
+import { useL, useLang } from '@/lib/work/i18n';
+import { READABLE_HINT_ZH, READABLE_HINT_EN } from '@/lib/work/file-kinds';
+/** 交付说明最少几个字（和提交接口一致，11-26 潜历：「太短了」但没说最少多少） */
+export const OPEN_NOTE_MIN = 30;
 
 type Material = { id: string; title: string; kind: string; content: string; url?: string; mime?: string; name?: string };
-type Up = { name: string; size: number; url: string };
+type Up = { name: string; size: number; url: string; warn?: string };
 export type Rec = { url: string; duration: number; shots?: number };
 const EVERY = 10;   // 秒
 // 后台标签页里主线程的定时器会被降到一分钟一次，Worker 里的不会：用它打拍子
@@ -22,7 +25,7 @@ export function OpenBench({ token, sid, materials, deliverables, summary, onSumm
   summary: string; onSummary: (v: string) => void; onEvent: (type: string, extra?: Record<string, any>) => void;
   uploads: Up[]; onUploads: (f: (u: Up[]) => Up[]) => void; recording: Rec | null; onRecording: (r: Rec | null) => void; t0: number;
 }) {
-  const [rec, setRec] = useState<'idle' | 'on'>('idle'); const L = useL();
+  const [rec, setRec] = useState<'idle' | 'on'>('idle'); const L = useL(); const lang = useLang();
   const [secs, setSecs] = useState(0); const [shots, setShots] = useState(recording?.shots || 0); const [pending, setPending] = useState(0);
   const started = useRef(0); const stream = useRef<MediaStream | null>(null); const worker = useRef<Worker | null>(null);
   const video = useRef<HTMLVideoElement | null>(null); const last = useRef<string>(''); const nShots = useRef(recording?.shots || 0);
@@ -116,10 +119,12 @@ export function OpenBench({ token, sid, materials, deliverables, summary, onSumm
         <div style={{ fontSize: 13, color: '#666', marginBottom: 8 }}>{L('要交：', 'To submit: ')}{deliverables.map(d => L(`${d.title}（${d.format}）`, `${d.title} (${d.format})`)).join(L('；', '; '))}</div>
         <label style={{ ...chip, display: 'inline-block', cursor: 'pointer' }}>{L('⬆ 上传交付文件（表格 / 图纸 / PDF / 截图 / 压缩包）', '⬆ Upload deliverables (spreadsheets / drawings / PDF / screenshots / archives)')}<input type="file" multiple style={{ display: 'none' }} disabled={!!upBusy} onChange={e => { const fs = Array.from(e.target.files || []); e.target.value = ''; upload(fs); }} /></label>
         {upBusy && <span style={{ marginLeft: 10, fontSize: 13, color: '#6055f5' }}>{upBusy}</span>}
+        <div style={{ fontSize: 12, color: '#888', marginTop: 6 }}>{lang === 'en' ? READABLE_HINT_EN : READABLE_HINT_ZH}</div>
         <div style={{ fontSize: 12, color: '#888', marginTop: 6 }}>{L('可以一次选多个，单个 200MB 以内；传错了点「删除」。在线文档 / 智能体里的内容，平台不一定打得开链接（要登录或动态加载的读不到正文），请导出成 PDF / Word / 图片一起传上来。', 'You can select several at once, up to 200MB each; click "Delete" to remove a wrong one. The platform may not be able to open links to online docs or AI agents (pages that need a login or load dynamically cannot be read), so export them as PDF / Word / images and upload those too.')}</div>
-        {!!uploads.length && <ul style={{ margin: '8px 0 0', paddingLeft: 18, fontSize: 13 }}>{uploads.map(u => <li key={u.url}><a href={u.url} target="_blank" rel="noreferrer">{u.name}</a> <span style={{ color: '#999' }}>{Math.round(u.size / 1024)} KB</span> <a onClick={() => remove(u)} style={{ color: '#c0392b', cursor: 'pointer', marginLeft: 6 }}>{L('删除', 'Delete')}</a></li>)}</ul>}
+        {!!uploads.length && <ul style={{ margin: '8px 0 0', paddingLeft: 18, fontSize: 13 }}>{uploads.map(u => <li key={u.url}><a href={u.url} target="_blank" rel="noreferrer">{u.name}</a> <span style={{ color: '#999' }}>{Math.round(u.size / 1024)} KB</span> <a onClick={() => remove(u)} style={{ color: '#c0392b', cursor: 'pointer', marginLeft: 6 }}>{L('删除', 'Delete')}</a>{u.warn && <div style={{ color: '#b45309', fontSize: 12.5, margin: '2px 0 4px' }}>⚠ {u.warn}</div>}</li>)}</ul>}
         <div style={{ fontSize: 12.5, color: '#888', marginTop: 10, marginBottom: 4 }}>{L('交付说明（必填：结论、关键数字、口径和假设、哪些没做完——文件里机器读不了的，这里要写清楚）', 'Submission notes (required: conclusions, key numbers, definitions and assumptions, what is unfinished; spell out anything in your files a machine cannot read)')}</div>
         <textarea value={summary} onChange={e => onSummary(e.target.value)} placeholder={L('例：供需平衡表见 balance.xlsx；口径统一为 GWh，pack 按 75kWh/包折算（假设）；德布勒森 11–12 月缺口 0.4 GWh，建议国内基地海运补……', 'e.g. Supply-demand balance is in balance.xlsx; all figures in GWh, packs converted at 75 kWh each (assumption); Debrecen is 0.4 GWh short in Nov–Dec, suggest shipping from the domestic plant…')} style={{ width: '100%', minHeight: 160, border: '1px solid #d9dbe6', borderRadius: 10, padding: '10px 12px', fontSize: 14, lineHeight: 1.7, resize: 'vertical', outline: 'none', fontFamily: 'inherit' }} />
+        <div style={{ fontSize: 12, marginTop: 4, color: summary.trim().length < OPEN_NOTE_MIN ? '#b45309' : '#888' }}>{summary.trim().length < OPEN_NOTE_MIN ? L(`至少 ${OPEN_NOTE_MIN} 字才能提交（现在 ${summary.trim().length} 字）`, `At least ${OPEN_NOTE_MIN} characters to submit (now ${summary.trim().length})`) : L(`${summary.trim().length} 字`, `${summary.trim().length} characters`)}</div>
       </div>
       {err && <div style={{ color: '#c0392b', fontSize: 13 }}>{err}</div>}
     </div>

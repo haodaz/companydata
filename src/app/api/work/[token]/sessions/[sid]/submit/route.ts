@@ -47,7 +47,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     const rec = [...events].reverse().find(e => e.type === 'recording' && e.url);
     const shots = await listShots(sid);   // 11-05 起：整屏定时截图（老作答是整段录屏）
     if (!rec && !shots.length && !auto) return NextResponse.json({ ok: false, error: errL(t, '还没有屏幕记录：开放模式要先点「开始记录」再提交') }, { status: 400 });
-    if (deliverable.trim().length < 30 && !auto) return NextResponse.json({ ok: false, error: errL(t, '交付说明太短了：把结论、关键数字、口径和假设写清楚') }, { status: 400 });
+    if (deliverable.trim().length < 30 && !auto) return NextResponse.json({ ok: false, error: (t.task?.lang === 'en' ? `Your submission notes are too short (at least 30 characters, now ${deliverable.trim().length}): state your conclusions, key figures, definitions and assumptions. Your screen recording and uploaded files are all still there.` : `交付说明太短了（至少 30 字，现在 ${deliverable.trim().length} 字）：把结论、关键数字、口径和假设写清楚。屏幕记录和传好的文件都还在`) }, { status: 400 });
     const links = await readLinks(deliverable);
     deliverable = `## 交付说明\n${deliverable}\n\n## 交付文件\n${files.length ? await readTextFiles(files) : '（没有上传文件）'}${links ? `\n\n## 交付说明里的链接\n${links}` : ''}`;
     if (rec || shots.length) try {

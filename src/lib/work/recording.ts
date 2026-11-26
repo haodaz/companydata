@@ -105,15 +105,25 @@ export function parseFrames(text: string): { frames: any[]; summary: string } {
   return { frames, summary: sm ? sm[1] : '' };
 }
 
+/** PPT（.pptx，11-26 潜历：界面写着 PPT 都行，其实没读）：解出每页 slideN.xml，取 <a:t> 里的文字，按页排 */
+export async function pptxText(buf: Buffer): Promise<string> {
+  const es = await unzipEntries(buf, n => /^ppt\/(slides\/slide|notesSlides\/notesSlide)\d+\.xml$/.test(n), 400);
+  const num = (n: string) => Number((n.match(/(\d+)\.xml$/) || [])[1]) || 0;
+  const txt = (x: Buffer) => [...x.toString('utf8').matchAll(/<a:t>([^<]*)<\/a:t>/g)].map(m => m[1]).join(' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/\s+/g, ' ').trim();
+  const notes = new Map(es.filter(e => /notesSlide/.test(e.name)).map(e => [num(e.name), txt(e.data)]));
+  return es.filter(e => /slides\/slide/.test(e.name)).sort((a, b) => num(a.name) - num(b.name))
+    .map(e => { const n = num(e.name), body = txt(e.data), note = (notes.get(n) || '').replace(/^\d+$/, ''); return `#### 第 ${n} 页\n${body || '（这页没有文字，可能是图）'}${note ? `\n备注：${note}` : ''}`; }).join('\n\n');
+}
+
 /** zip 里的文件（11-13 潜历：界面说压缩包都行，其实没读）：走中央目录，只解 stored / deflate；跳过目录和 __MACOSX，最多 30 个、单个 30MB 内 */
-export async function unzipEntries(buf: Buffer): Promise<{ name: string; data: Buffer }[]> {
+export async function unzipEntries(buf: Buffer, want?: (name: string) => boolean, max = 30): Promise<{ name: string; data: Buffer }[]> {
   const { inflateRawSync } = await import('node:zlib');
   let e = -1;
   for (let i = buf.length - 22; i >= Math.max(0, buf.length - 65557); i--) if (buf.readUInt32LE(i) === 0x06054b50) { e = i; break; }
   if (e < 0) return [];
   const n = buf.readUInt16LE(e + 10); let p = buf.readUInt32LE(e + 16);
   const out: { name: string; data: Buffer }[] = [];
-  for (let k = 0; k < n && out.length < 30 && p + 46 <= buf.length; k++) {
+  for (let k = 0; k < n && out.length < max && p + 46 <= buf.length; k++) {
     if (buf.readUInt32LE(p) !== 0x02014b50) break;
     const flags = buf.readUInt16LE(p + 8), method = buf.readUInt16LE(p + 10), csize = buf.readUInt32LE(p + 20), usize = buf.readUInt32LE(p + 24);
     const nlen = buf.readUInt16LE(p + 28), xlen = buf.readUInt16LE(p + 30), clen = buf.readUInt16LE(p + 32), off = buf.readUInt32LE(p + 42);
@@ -121,6 +131,7 @@ export async function unzipEntries(buf: Buffer): Promise<{ name: string; data: B
     const name = raw.toString('utf8');   // 没打 UTF-8 标记（flags & 0x800）的也按 UTF-8：Windows 中文名可能乱码，不影响读内容
     p += 46 + nlen + xlen + clen;
     if (name.endsWith('/') || /(^|\/)(__MACOSX|\.DS_Store)/.test(name) || usize > 30_000_000 || !(method === 0 || method === 8)) continue;
+    if (want && !want(name)) continue;
     if (buf.readUInt32LE(off) !== 0x04034b50) continue;
     const start = off + 30 + buf.readUInt16LE(off + 26) + buf.readUInt16LE(off + 28);
     try { const d = buf.subarray(start, start + csize); out.push({ name, data: method === 8 ? inflateRawSync(d) : Buffer.from(d) }); } catch {}
@@ -142,6 +153,10 @@ export async function readTextFiles(files: { name: string; url: string; size: nu
     if (seen.has(md5)) { parts.push(`${head}（和「${seen.get(md5)}」是同一个文件，内容见上）`); return; }
     seen.set(md5, name);
     if (/\.(txt|md|csv|json|tsv)$/i.test(name) && size < 400_000) parts.push(`${head}\n${buf.toString('utf8').slice(0, 12000)}`);
+    else if (/\.pptx$/i.test(name) && size < 60_000_000) {
+      const txt = await pptxText(buf).catch(() => '');
+      parts.push(txt.replace(/[#\s]|第 \d+ 页|（这页没有文字，可能是图）/g, '').length > 20 ? `${head}（PPT 抽出的文字，图片和版式以原文件为准）\n${txt.slice(0, 12000)}` : `${head}（PPT，${Math.round(size / 1024)} KB，没读出文字——可能全是图，请导出 PDF；按交付说明评）`);
+    }
     else if (/\.(pdf|docx|xlsx?)$/i.test(name) && size < 30_000_000) {
       try {
         let txt = '', how = '抽出的文字';

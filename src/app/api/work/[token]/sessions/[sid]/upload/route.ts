@@ -3,6 +3,21 @@ import { supabaseAdmin as db } from '@/lib/supabase';
 import { labMediaUrl } from '@/lib/media-url';
 import { timing } from '@/lib/work/deadline';
 import { errL } from '@/lib/work/errors-en';
+import { fileWarn } from '@/lib/work/file-kinds';
+
+/** 传完马上试读一下（11-26 潜历：附件读不了，交了才知道）：格式不认的直接提示怎么转；PDF / Word / Excel / PPT 打不开、PPT 全是图的也提示。读得了返回 null */
+async function quickCheck(path: string, name: string, size: number, lang?: string): Promise<string | null> {
+  const w = fileWarn(name, lang); if (w) return w;
+  if (!/\.(pdf|docx|xlsx?|pptx)$/i.test(name) || size > 30_000_000) return null;
+  const en = lang === 'en';
+  try {
+    const { data } = await db.storage.from(BUCKET).download(path); if (!data) return null;
+    const buf = Buffer.from(await data.arrayBuffer());
+    if (/\.xlsx?$/i.test(name)) { const XLSX = await import('xlsx'); XLSX.read(buf, { type: 'buffer' }); return null; }
+    if (/\.pptx$/i.test(name)) { const { pptxText } = await import('@/lib/work/recording'); const t = await pptxText(buf); return t.replace(/[#\s]|第 \d+ 页|（这页没有文字，可能是图）/g, '').length > 20 ? null : en ? 'No text found in this PowerPoint (probably all images): export it to PDF and upload that too' : 'PPT 里没读出文字（可能全是图）：再导出一份 PDF 一起传更稳'; }
+    const { extractText } = await import('@/lib/work/samples'); await extractText(buf, name); return null;   // PDF 抽不出字没关系，评估时 AI 会看原件
+  } catch { return en ? "This file couldn't be opened (damaged or password-protected?): export it again and re-upload" : '这个文件打不开（可能损坏或加了密码）：重新导出一份再传'; }
+}
 
 export const runtime = 'nodejs';
 export const maxDuration = 120;
@@ -49,7 +64,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
       if ((s.events || []).some((e: any) => e.type === 'file' && e.url === url)) return NextResponse.json({ ok: true, url, name: safe, size });   // 前端重试登记（11-19）：登记过的不再记一遍
       const ev = { t: tsec, type: 'file', name: safe, size, url, ...(part ? { part } : {}) };
       await db.from('work_sessions').update({ events: [...(s.events || []), ev].slice(-3000) }).eq('id', sid);
-      return NextResponse.json({ ok: true, url, name: safe, size });
+      const warn = await quickCheck(path, String(b.name || safe), size, t.task?.lang).catch(() => null);
+      return NextResponse.json({ ok: true, url, name: safe, size, ...(warn ? { warn } : {}) });
     }
     if (b.step === 'remove') {
       const url = String(b.url || '');

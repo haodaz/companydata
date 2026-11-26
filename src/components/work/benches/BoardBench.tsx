@@ -111,14 +111,14 @@ export function BoardBench({ value, onChange, notes, onNotes, caption, leading, 
         <button style={btn} onClick={() => addTemplate('web')}>{L('网页屏', 'Web screen')}</button>
         <button style={btn} onClick={() => addTemplate('note')}>{L('便签', 'Sticky note')}</button>
         <span style={{ position: 'relative' }}>
-          <button style={btn} onClick={() => (refs.length ? setRefOpen(v => !v) : fileIn.current?.click())}>{L('贴参考图', 'Add reference image')}</button>
+          <button style={btn} title={L('把图放进白板里画：任务材料里的图，或电脑上的图（也可以直接拖进白板、Ctrl+V）。用别的软件做好的成品文件，请传到上面的「📎 附件」', 'Put an image on the board to draw on: a task image or one from your computer (you can also drag it in or press Ctrl+V). Finished files made in other software go in "📎 Files" above')} onClick={() => (refs.length ? setRefOpen(v => !v) : fileIn.current?.click())}>{L('放一张图', 'Add an image')}</button>
           {refOpen && <div style={{ position: 'absolute', right: 0, top: 30, zIndex: 20, background: '#fff', border: '1px solid #e0e0ee', borderRadius: 10, boxShadow: '0 8px 24px rgba(20,20,60,.12)', padding: 6, width: 240 }}>
             {refs.map(r => <div key={r.url} onClick={() => addRef(r)} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 8px', borderRadius: 7, cursor: 'pointer', fontSize: 12.5 }} onMouseEnter={e => (e.currentTarget.style.background = '#f4f3ff')} onMouseLeave={e => (e.currentTarget.style.background = '')}><img src={r.url} alt="" style={{ width: 34, height: 34, objectFit: 'cover', borderRadius: 5, border: '1px solid #eee' }} /><span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.title}</span></div>)}
             <div onClick={() => fileIn.current?.click()} style={{ padding: '7px 8px', borderTop: '1px solid #f0f0f5', marginTop: 4, fontSize: 12.5, color: '#4c43c9', cursor: 'pointer' }}>{L('从电脑选一张…', 'Choose from your computer…')}</div>
           </div>}
           <input ref={fileIn} type="file" accept="image/*" hidden onChange={e => { const f = e.target.files?.[0]; e.target.value = ''; if (f) addImage(f, '本机图片'); }} />
         </span>
-        <button style={{ ...btn, borderColor: '#d8d4ff', color: '#4c43c9', fontWeight: 600 }} onClick={() => { api.current?.toggleSidebar?.({ name: 'default', tab: 'library', force: true }); onEvent?.('board_library'); }}>{L('组件库', 'Components')}</button>
+        <button style={{ ...btn, borderColor: '#d8d4ff', color: '#4c43c9', fontWeight: 600 }} title={L('现成的按钮、卡片、输入框等界面零件，拖进来拼页面', 'Ready-made UI parts (buttons, cards, inputs) to drag in and build screens')} onClick={() => { api.current?.toggleSidebar?.({ name: 'default', tab: 'library', force: true }); onEvent?.('board_library'); }}>{L('组件库', 'Components')}</button>
       </div>
       <div style={{ flex: 1, minHeight: 360, position: 'relative' }}>
         <Excalidraw

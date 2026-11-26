@@ -6,6 +6,19 @@ import { useL } from '@/lib/work/i18n';
 
 const parse = (csv: string): string[][] => csv.split(/\r?\n/).filter((l, i, a) => l.length || i < a.length - 1).map(l => l.split(','));
 const ser = (rows: string[][]) => rows.map(r => r.join(',')).join('\n');
+/** 粘进来的一块表（11-26 潜历：把 Markdown 表格粘进 CSV 源成了乱表、没提示；要 15 列得点 6 次「+列」）：
+ *  Markdown 表格（| a | b |，分隔行 |---| 去掉）、从 Excel / 网页复制的（制表符分隔）→ 行列；单元格里的逗号换全角（底层是 CSV）。认不出来返回 null */
+export function pastedTable(text: string): string[][] | null {
+  const lines = String(text || '').replace(/\r/g, '').split('\n').filter(l => l.trim());
+  if (!lines.length) return null;
+  const cell = (x: string) => x.trim().replace(/,/g, '，');
+  if (lines.filter(l => /^\s*\|.*\|\s*$/.test(l)).length >= Math.max(2, Math.ceil(lines.length * 0.6))) {
+    return lines.filter(l => /\|/.test(l) && !/^\s*\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)*\|?\s*$/.test(l)).map(l => l.trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map(cell));
+  }
+  if (lines.some(l => l.includes('\t'))) return lines.map(l => l.split('\t').map(cell));
+  return null;
+}
+const sameWidth = (rows: string[][]) => { const w = Math.max(...rows.map(r => r.length)); return rows.map(r => [...r, ...Array(w - r.length).fill('')]); };
 const colName = (i: number) => { let s = ''; i++; while (i > 0) { const m = (i - 1) % 26; s = String.fromCharCode(65 + m) + s; i = Math.floor((i - 1) / 26); } return s; };
 
 /** 交付要求里写了每条要哪些字段（「每条包含：页面 / 截图编号 / …」），拿来当空表的表头（11-13 潜历：要 7 个字段，空表却是 8×4） */
@@ -23,6 +36,27 @@ export function SheetBench({ csv, onCsv, notes, onNotes, onPaste, onCell, leadin
   const cols = Math.max(1, ...rows.map(r => r.length)); const L = useL();
   const [sel, setSel] = useState<[number, number]>([0, 0]);
   const [raw, setRaw] = useState(false);
+  // 往格子里粘一整块：从这一格开始铺开，行列不够自动加
+  const pasteBlock = (r0: number, c0: number, block: string[][]) => {
+    const next = rows.map(x => [...x]);
+    block.forEach((br, i) => { const r = r0 + i; while (next.length <= r) next.push([]); br.forEach((v, j) => { const c = c0 + j; while (next[r].length <= c) next[r].push(''); next[r][c] = v; }); });
+    onCsv(ser(sameWidth(next))); onCell?.();
+    setTip(L(`粘贴了 ${block.length} 行 × ${Math.max(...block.map(x => x.length))} 列`, `Pasted ${block.length} rows × ${Math.max(...block.map(x => x.length))} columns`));
+  };
+  const onCellPaste = (r: number, c: number) => (e: React.ClipboardEvent<HTMLInputElement>) => {
+    onPaste(e);
+    const t = pastedTable(e.clipboardData.getData('text/plain'));
+    if (t && (t.length > 1 || t[0].length > 1)) { e.preventDefault(); pasteBlock(r, c, t); }
+  };
+  // CSV 源：粘进来的是 Markdown 表格 / Excel 复制的，先转成 CSV；粘完回到表格视图
+  const onRawPaste = (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
+    onPaste(e);
+    const t = pastedTable(e.clipboardData.getData('text/plain'));
+    if (t) { e.preventDefault(); const el = e.currentTarget; const before = csv.slice(0, el.selectionStart), after = csv.slice(el.selectionEnd); onCsv(`${before}${ser(sameWidth(t))}${after}`); setRaw(false); setTip(L(`认出是表格，转成了 ${t.length} 行 × ${Math.max(...t.map(x => x.length))} 列`, `Recognised a table: ${t.length} rows × ${Math.max(...t.map(x => x.length))} columns`)); }
+    else setTimeout(() => setRaw(false), 0);
+  };
+  // CSV 源里列数对不上的行（多半是单元格里有英文逗号、或粘错了格式）
+  const ragged = useMemo(() => { const r = parse(csv).filter(x => x.some(c => c !== '')); if (r.length < 2) return null; const w = r[0].length; const bad = r.findIndex(x => x.length !== w); return bad > 0 ? { row: bad + 1, n: r[bad].length, w } : null; }, [csv]);
   const set = (r: number, c: number, v: string) => { const next = rows.map(x => [...x]); while (next.length <= r) next.push([]); while (next[r].length <= c) next[r].push(''); next[r][c] = v.replace(/,/g, '，'); onCsv(ser(next)); onCell?.(); };
   const addRow = () => onCsv(ser([...rows, Array(cols).fill('')]));
   const addCol = () => onCsv(ser(rows.map(r => [...r, ''])));
@@ -57,8 +91,9 @@ export function SheetBench({ csv, onCsv, notes, onNotes, onPaste, onCell, leadin
         <span style={{ color: '#aaa' }}>fx</span>
         <input value={cur} onChange={e => set(sel[0], sel[1], e.target.value)} style={{ flex: 1, border: '1px solid transparent', outline: 'none', padding: '3px 8px', borderRadius: 4, fontFamily: mono, fontSize: 13 }} onFocus={e => (e.currentTarget.style.borderColor = '#6055f5')} onBlur={e => (e.currentTarget.style.borderColor = 'transparent')} />
       </div>
+      {ragged && <div style={{ padding: '6px 12px', fontSize: 12.5, color: '#b45309', background: '#fff8eb', borderBottom: '1px solid #f3e2c3' }}>{L(`第 ${ragged.row} 行有 ${ragged.n} 列，表头是 ${ragged.w} 列——多半是单元格里有英文逗号，或者粘错了格式。直接把 Excel / Markdown 表格粘进格子里会自动对齐`, `Row ${ragged.row} has ${ragged.n} columns but the header has ${ragged.w}: probably a comma inside a cell or a wrongly formatted paste. Paste Excel or Markdown tables straight into a cell and they line up automatically`)}</div>}
       {raw ? (
-        <textarea value={csv} onChange={e => onCsv(e.target.value)} onPaste={onPaste} spellCheck={false} style={{ flex: 1, border: 0, outline: 'none', resize: 'none', padding: 12, fontFamily: mono, fontSize: 13, lineHeight: 1.6, minHeight: 320 }} />
+        <textarea value={csv} onChange={e => onCsv(e.target.value)} onPaste={onRawPaste} spellCheck={false} style={{ flex: 1, border: 0, outline: 'none', resize: 'none', padding: 12, fontFamily: mono, fontSize: 13, lineHeight: 1.6, minHeight: 320 }} />
       ) : (
         <div style={{ flex: 1, overflow: 'auto', minHeight: 320 }}>
           <table style={{ borderCollapse: 'separate', borderSpacing: 0, fontSize: 13, fontFamily: 'var(--font-geist-sans), -apple-system, "PingFang SC", sans-serif', minWidth: '100%' }}>
@@ -73,7 +108,7 @@ export function SheetBench({ csv, onCsv, notes, onNotes, onPaste, onCell, leadin
                 <td style={{ ...hd, position: 'sticky', left: 0, zIndex: 1, background: sel[0] === ri ? '#e4e7f5' : '#f3f5f9', textAlign: 'center', color: '#777' }}>{ri + 1}</td>
                 {Array.from({ length: cols }, (_, c) => { const v = r[c] ?? ''; const on = sel[0] === ri && sel[1] === c; return (
                   <td key={c} style={{ padding: 0, borderRight: '1px solid #e6e8f0', borderBottom: '1px solid #e6e8f0', background: ri === 0 ? '#fafbff' : '#fff', outline: on ? '2px solid #6055f5' : 'none', outlineOffset: -1 }}>
-                    <input value={v} onFocus={() => setSel([ri, c])} onChange={e => set(ri, c, e.target.value)} onPaste={onPaste} style={{ width: '100%', border: 0, outline: 'none', padding: '6px 8px', fontSize: 13, fontWeight: ri === 0 ? 700 : 400, background: 'transparent', fontFamily: 'inherit', whiteSpace: 'nowrap' }} />
+                    <input value={v} onFocus={() => setSel([ri, c])} onChange={e => set(ri, c, e.target.value)} onPaste={onCellPaste(ri, c)} style={{ width: '100%', border: 0, outline: 'none', padding: '6px 8px', fontSize: 13, fontWeight: ri === 0 ? 700 : 400, background: 'transparent', fontFamily: 'inherit', whiteSpace: 'nowrap' }} />
                   </td>); })}
               </tr>)}
             </tbody>
