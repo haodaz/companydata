@@ -220,13 +220,16 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
 
   // ── 轨迹工位（焊缝 / 拉花）：指针或手的位置 → 投影到折线上的进度 + 离折线的距离 ──
   const trackLayer = scene?.layers.find(l => (l.kind === 'seam' || l.kind === 'pour') && l.control);
+  /** 靠鼠标按住 / 拖动 / 点选操作的交互故事台面（开腹分层入腹，10-11 换上后没有轨迹层，摄像头握刀跟着没了；11-26 接回）：
+   *  摄像头的手当一只虚拟鼠标——像鼠标一样相对移动，捏住 = 按下，捏着挪 = 拖，松开 = 抬起；事件直接发给台面上那一点的元素，台面的玩法一行不用改 */
+  const ptrSurface = spec.surface === 'laparotomy';
   const trackLayerRef = useRef<typeof trackLayer>(undefined); trackLayerRef.current = trackLayer;
   const trackPts = useRef<Pt[]>([]);
   if (trackLayer && !trackPts.current.length) trackPts.current = layerPath(trackLayer);
   const isLatte = trackLayer?.kind === 'pour';
   /** 手里握的到底是什么——摄像头提示、按钮、手法镜都用它 */
   const holdName = (() => {
-    if (!trackLayer) return '工具';
+    if (!trackLayer) return ptrSurface ? (['手术刀', '电刀', '血管钳', '镊子', '牵开器'][Math.round(st.controls.tool || 0)] || '器械') : '工具';
     if (trackLayer.kind === 'seam') return '焊枪';
     const ic = trackLayer.iconBy ? (trackLayer.icons || [])[Math.round(st.controls[trackLayer.iconBy] || 0)] : trackLayer.icon;
     return ({ needle: '持针器', scalpel: '手术刀', cautery: '电刀', clamp: '血管钳', forceps: '镪子', retractor: '牵开器', torch: '焊枪', hand: '手', brush: '毛刷' } as Record<string, string>)[ic || ''] || '奶缸';
@@ -308,7 +311,30 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
    */
   const HAND_GAIN = 0.55;
   const grabAnchor = useRef<{ hand: Pt; tool: Pt } | null>(null);
+  const vCur = useRef<Pt | null>(null), vLast = useRef<Pt | null>(null), vDown = useRef(false);
+  const PTR_GAIN = 0.9;
+  const firePtr = (type: 'pointerdown' | 'pointermove' | 'pointerup', x: number, y: number) => {
+    const svg = sceneRef.current; if (!svg) return;
+    const r = svg.getBoundingClientRect(); const cx = r.left + x / VW * r.width, cy = r.top + y / VH * r.height;
+    const el = document.elementFromPoint(cx, cy); if (!el || !svg.contains(el)) return;
+    el.dispatchEvent(new PointerEvent(type, { clientX: cx, clientY: cy, bubbles: true, cancelable: true, pointerId: 77, pointerType: 'touch', isPrimary: true, buttons: type === 'pointerup' ? 0 : 1 }));
+  };
+  const onPosePtr = (p: HandPose | null) => {
+    if (!p) { if (vDown.current && vCur.current) firePtr('pointerup', vCur.current.x, vCur.current.y); vDown.current = false; vLast.current = null; handRef.current = null; return; }
+    const g = { x: (p.gx ?? p.x) * VW, y: (p.gy ?? p.y) * VH };
+    if (!vCur.current) vCur.current = { x: VW * 0.5, y: VH * 0.62 };
+    if (vLast.current && !p.lost) vCur.current = { x: Math.max(0, Math.min(VW, vCur.current.x + (g.x - vLast.current.x) * PTR_GAIN)), y: Math.max(0, Math.min(VH, vCur.current.y + (g.y - vLast.current.y) * PTR_GAIN)) };
+    vLast.current = g;
+    const c = vCur.current;
+    if (running && !auto) {
+      if (p.pinch && !vDown.current) { firePtr('pointerdown', c.x, c.y); vDown.current = true; }
+      else if (!p.pinch && vDown.current) { firePtr('pointerup', c.x, c.y); vDown.current = false; }
+      else firePtr('pointermove', c.x, c.y);
+    } else if (vDown.current) { firePtr('pointerup', c.x, c.y); vDown.current = false; }
+    handRef.current = { x: c.x, y: c.y, pinch: p.pinch, holding: vDown.current };
+  };
   const onPose = (p: HandPose | null) => {
+    if (ptrSurface) { onPosePtr(p); return; }
     if (!p) { handRef.current = null; grabAnchor.current = null; return; }
     const px = p.x * VW, py = p.y * VH;
     // 握着走按手掌点算位移（捏住后手指还在收，指尖中点会漂；2026-10-28）
@@ -671,12 +697,12 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
           {auto ? '■ 演示中 · 点此停下' : '▶ 看我操作一遍'}
         </button>
       )}
-      {trackLayer && !watchOnly && (
+      {(trackLayer || ptrSurface) && !watchOnly && (
         <button onClick={() => setCam(v => !v)} style={{ position: 'absolute', left: 12, top: hud ? 58 : 34, padding: '6px 12px', borderRadius: 999, border: '1px solid rgba(255,255,255,.35)', background: cam ? 'linear-gradient(135deg,#ff5fa2,#ff8a5f)' : 'rgba(15,18,36,.7)', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer', backdropFilter: 'blur(6px)' }}>
           {bareHand ? (cam ? '📷 摄像头跟手中 · 关闭' : '📷 用摄像头比划手法') : cam ? `📷 摄像头握${holdName}中 · 关闭` : `📷 用摄像头握${holdName}`}
         </button>
       )}
-      {cam && !isLatte && <div style={{ position: 'absolute', left: 12, top: hud ? 94 : 68, zIndex: 2 }}><HandCam onPose={onPose} hold="焊枪" /></div>}
+      {cam && !isLatte && <div style={{ position: 'absolute', left: 12, top: hud ? 94 : 68, zIndex: 2 }}><HandCam onPose={onPose} hold={ptrSurface ? holdName : '焊枪'} /></div>}
       {!hud && <div className="lab-mono" style={{ position: 'absolute', right: 12, top: 10, fontSize: 11, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,.6)' }}>{role === 'expert' ? 'EXPERT' : 'TRAINEE'} · {goalsDone}/{spec.goals.length} · ⛔{violations}</div>}
     </div>
   ) : null;
