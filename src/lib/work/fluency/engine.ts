@@ -257,6 +257,16 @@ function locate(inp: FluencyInput, a: Anchors, source: string, disclosure: strin
   if (sw.length) out.push({ bid: 'B4', src: 'event', i: k--, quote: `作答中换过模型 ${sw.length} 次（${paths(sw)}）`, rule: 'B4-事件:换模型' });
   return { cands: out, split };
 }
+/** 「最不满意」里说的问题，他当时有没有跟 AI 提过（11-27：字面比对判不准——他在对话里换了说法就对不上），拆成几点逐点找消息号 */
+async function raisedInChat(worst: string, chat: ChatTurn[], institution?: string, warn?: string[]): Promise<{ points: { point: string; msg: number }[] } | null> {
+  const w = String(worst || '').trim();
+  if (!w || /^(没有|无|都还行|都挺好|都满意|还好|none|no|n\/a|nothing)[。.!！\s]*$/i.test(w) || !chat.length) return null;
+  try {
+    const p = await askJson(`候选人交付后说，对 AI 这次的表现「最不满意」的是：\n${w}\n\n下面是他当时发给 AI 的全部消息（按顺序编号）。把他说的不满意拆成 1–4 个具体问题点，逐点找：他当时有没有在哪条消息里向 AI 指出过这个问题（意思对上就算，措辞不必一样；只是 AI 自己出了问题、他没说过，不算）。\n${chat.map((c, i) => `[${i + 1}] ${String(c.q).replace(/\s+/g, ' ').slice(0, 300)}`).join('\n')}\n\n只返回 JSON：{"points":[{"point":"问题点，15 字内","msg":<最早指出它的消息编号，没指出过写 0>}]}`, 'Fluency · 两问核对', institution, undefined, warn);
+    const pts = (Array.isArray(p?.points) ? p.points : []).slice(0, 4).map((x: any) => ({ point: String(x?.point || '').slice(0, 30), msg: Math.max(0, Math.min(chat.length, Math.round(Number(x?.msg) || 0))) })).filter((x: any) => x.point);
+    return { points: pts };
+  } catch { return null; }
+}
 const pct = (v: number | null | undefined) => (v == null ? '—' : `${Math.round(v * 100)}%`);
 /**
  * 11-27：平台能直接算 / 问到的证据（宇宁《数据源与字段设计》）——都只作候选，成不成立、几档仍由模型照锚点判：
@@ -265,7 +275,7 @@ const pct = (v: number | null | undefined) => (v == null ? '—' : `${Math.round
  *       改了很多却说「没有不满意」→ 表述与行为不一致；说的问题在对话里从没出现过 → 事后追认，不升档
  *   B22 贡献表述：自报 AI 贡献度 vs 交付物里 AI 原样占比，差 40 个百分点以上标「表述不一致」
  */
-function collectedEvidence(diff: AiDiff | null, d: any, chat: ChatTurn[], cands: Candidate[], events: { t: number; type: string; [k: string]: any }[] = []) {
+function collectedEvidence(diff: AiDiff | null, d: any, chat: ChatTurn[], cands: Candidate[], events: { t: number; type: string; [k: string]: any }[] = [], seen: { points: { point: string; msg: number }[] } | null = null) {
   const flags: { id: 'share_gap' | 'says_none_but_changed' | 'after_the_fact'; note: string }[] = [];
   const o = diff?.overall;
   if (o && o.chars >= 50) {
@@ -286,9 +296,10 @@ function collectedEvidence(diff: AiDiff | null, d: any, chat: ChatTurn[], cands:
   if (worst || best || d.fix) {
     const notes: string[] = [];
     if (o && (!worst || none.test(worst)) && (o.changed_ratio ?? 0) >= 0.4 && diff!.ai_chars > 300) { notes.push(`他说没有不满意，但交付物里约 ${pct(o.changed_ratio)} 是自己写或改过的：表述与行为不一致`); flags.push({ id: 'says_none_but_changed', note: notes[notes.length - 1] }); }
-    if (worst && !none.test(worst) && chat.length) {
-      const g = gram3(worst), seen = chat.some(c => jac(g, gram3(c.q)) >= 0.08 || [...g].filter(x => squash(c.q).includes(x)).length >= Math.min(6, Math.max(3, g.size / 3)));
-      if (!seen) { notes.push('他指出的不满意之处在和 AI 的对话里从没提过：事后追认，不能据此升档'); flags.push({ id: 'after_the_fact', note: notes[notes.length - 1] }); }
+    if (seen && seen.points.length) {
+      const raised = seen.points.filter(p => p.msg > 0), never = seen.points.filter(p => !p.msg);
+      if (!raised.length) { notes.push(`他说的不满意之处（${never.map(p => p.point).join('；')}）在和 AI 的对话里都没提过：事后追认，不能据此升档`); flags.push({ id: 'after_the_fact', note: notes[notes.length - 1] }); }
+      else notes.push(`他说的不满意之处在对话里提过：${raised.map(p => `「${p.point}」见第 ${p.msg} 条`).join('；')}${never.length ? `；另有 ${never.map(p => `「${p.point}」`).join('')}对话里没提过，属事后补说` : ''}`);
     }
     const fx: Record<string, string> = { edit: '自己动手改了', reask: '指出问题让 AI 重做', rewrite: '弃用、自己重写', keep: '没来得及处理 / 保留了' };
     cands.push({ bid: 'B24', src: 'disclosure', i: -21, quote: `【交付后单题】最满意：${best || '（没写）'}；最不满意：${worst || '（没写）'}；处理：${fx[d.fix] || '（没选）'}${notes.length ? `。平台比对：${notes.join('；')}` : ''}`, rule: 'B24-交付后单题' });
@@ -733,7 +744,8 @@ export async function assessFluency(inp: FluencyInput): Promise<FluencyReport> {
   // 11-27（宇宁：B23 要最终件和 AI 输出的差异、B24 要交付后单题、B22 要声明和记录比对）：平台算得出的直接算，作为证据候选交给模型判
   const dEv = [...inp.events].reverse().find(e => e.type === 'ai_disclosure') || null;
   const diff = fromOutside ? null : aiDiff(inp.deliverable || '', inp.chat || [], inp.events, [inp.task.brief, ...inp.task.materials.map(m => m.content || '')].join('\n'));
-  const collected = collectedEvidence(diff, dEv, chat, cands, inp.events);
+  const seen = dEv?.worst ? await raisedInChat(dEv.worst, chat, inp.institution, warnings) : null;
+  const collected = collectedEvidence(diff, dEv, chat, cands, inp.events, seen);
   if (diff?.overall) logs.push(`交付物和 AI 输出：原样一致约 ${pct(diff.overall.ai_verbatim_ratio)}、自己写 / 改过约 ${pct(diff.overall.changed_ratio)}${diff.since_last_ai_sec != null ? `；最后一次 AI 输出到提交隔 ${Math.round(diff.since_last_ai_sec / 60)} 分钟` : ''}`);
   const hitsBy = new Map<number, Set<string>>();
   for (const c of cands) if (c.src === 'chat') hitsBy.set(c.i, new Set([...(hitsBy.get(c.i) || []), c.bid]));
