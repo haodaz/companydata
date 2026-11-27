@@ -1,3 +1,4 @@
+import { fixHotjobLink } from '@/lib/agents/ats-adapters';
 /**
  * 岗位字段的默认值与规整（数据部门 10-14 口径）。入库（job-store）和存量回填（scripts/fix-1014.mts）共用。
  *   主办方 organizer：空的就填这个岗位所属企业的名字
@@ -114,6 +115,7 @@ export function applyJobDefaults(job: Record<string, any>, company?: string | nu
   if (!(Array.isArray(job.grade) && job.grade.length)) { const g = gradeFromEducation(job.education_description); if (g) job.grade = g; }
   if (!job.address && job.location) job.address = job.location;
   // 投递入口和岗位详情页保持一致（数据部门 11-24）：有详情页就两个都写详情页；列表页由 scripts/jobs/unify-links-1124.mts 标「需补详情页」
+  if (job.link) job.link = fixHotjobLink(job.link);   // hotjob 详情页 postType=1/2 打不开（11-27）
   if (job.link) job.application_website = job.link;
   else if (job.application_website) job.link = job.application_website;
   // 四个标签（要求 / 职责 × 经验 / 技能）都是中文分号「；」隔开的文本（数据部门 10-19 #13）

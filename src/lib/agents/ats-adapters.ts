@@ -73,6 +73,11 @@ export async function resolveListUrl(url: string): Promise<string> {
 
 const strip = (v: unknown) => String(v ?? '').replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
 
+/** 详情页的 postType 要用名字：接口里的 recruitType 1 / 2 直接拼进去页面打不开（数据部门 11-27 实测 1→campus、2→society 才能打开） */
+export const hotjobPostType = (t: any) => ({ '1': 'campus', '2': 'society' } as Record<string, string>)[String(t)] || String(t);
+/** 库里已有的 hotjob 详情链接：postType=1 / 2 换成 campus / society */
+export const fixHotjobLink = (u?: string | null) => (u && /hotjob\.cn\/.*posDetail\.html/i.test(u) ? u.replace(/([?&]postType=)([12])(?=&|$)/, (_m, p, t) => p + hotjobPostType(t)) : u);
+
 /** hotjob 并发打快了会直接断开连接（fetch failed），每个请求最多试 3 次、间隔递增 */
 async function hotjobPost(origin: string, path: string, suite: string, form: Record<string, string>): Promise<any> {
   let last: any;
@@ -158,7 +163,7 @@ export async function hotjobMarkdown(rawUrl: string, scope: 'campus' | 'all'): P
 
   const blocks = rows.flatMap((r, i) => {
     const d = details[i] || {};
-    const link = `${origin}/SU${suite}/pb/posDetail.html?postId=${r.postId}&postType=${r._type}`;
+    const link = `${origin}/SU${suite}/pb/posDetail.html?postId=${r.postId}&postType=${hotjobPostType(r._type)}`;
     const duty = d.workContent ? strip(d.workContent) : '', req = d.serviceCondition ? strip(d.serviceCondition) : '';
     // 一个招聘帖里装了多个子岗位（立讯「研发岗(华南区)」= 产品设计 / 电子 / 声学 … 12 个）：按编号拆成独立岗位，原文不动
     const subs = splitSubRoles(duty, req);

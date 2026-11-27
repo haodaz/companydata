@@ -14,6 +14,17 @@ const L2_ORDER = SPECIALTY_TAGS.map(t => t.l2_value);
 
 const FOREIGN_LANG = '(英语|英文|English|日语|日文|韩语|德语|法语|西班牙语|俄语|葡萄牙语|阿拉伯语|意大利语|泰语|越南语|印尼语|小语种|外语)';
 
+/** 11-27 陈彩瑛第二轮：明确写了专业要求（含「医学、药学 或相 关专业」这种中间带空格的、只列学科不写「专业」二字的、「理工类背景」） */
+const MAJOR_REQ = /(相关|以下|等|类|学科|理工科?|工科|理科|计算机|电子|机械|化工|金融|财会|法学|医学|药学)[^。；;\n]{0,2}专业|专业(要求|背景|优先|方向|限制)|(类|方向)背景|理工类|([\u4e00-\u9fff]{2,8}(学|化学|工程|技术|科学|材料|设计|自动化|仪器|合成)、){2,}|major in|majoring|degree in/i;
+/** 写明了「不限」 */
+const MAJOR_OPEN = /专业不限|不限专业|不限理工|专业背景不限|任何专业|所有专业|各类专业|专业要求[:：]?\s*不限|any (major|discipline|degree)|all (majors|disciplines)|no specific major/i;
+/** 技术 / 研发 / 实验类岗位：原文没写专业也不当「不限理工背景」（一般默认要对口专业，陈彩瑛 11-27 存疑那几条） */
+const TECH_ROLE = /工程师|开发|算法|研发|测试|设计师|技术员|实验|博士|（博）|\(博\)|U3D|Unity|架构|运维|电气|机械|化学|材料|药物|医学|engineer|developer|scientist/i;
+/** 文科 / 艺术类专业字眼：专业要求里有这些，收文科艺术生那组照样成立 */
+const HUMANITIES = /文科|艺术|人文|社科|中文|汉语言|新闻|传媒|设计类|美术|外语|语言|哲学|历史|法学|教育学|心理学/;
+/** 原文去掉汉字之间的空格（「医学、药学 或相 关专业」）再比对 */
+const jdText = (t: { name?: string | null; responsibilities?: string | null; overview?: string | null }) => `${t.name || ''}\n${t.responsibilities || ''}\n${t.overview || ''}`.replace(/(?<=[\u4e00-\u9fff、，])[ \t\u3000]+(?=[\u4e00-\u9fff、，])/g, '');
+
 /** 每个二级标签要在原文里命中的字眼（命中 any 才留；有 none 命中就去掉） */
 const RULES: Record<string, { any: RegExp[]; none?: RegExp[]; also?: RegExp; orNoMention?: RegExp; orName?: RegExp }> = {
   // 留学增值
@@ -29,7 +40,7 @@ const RULES: Record<string, { any: RegExp[]; none?: RegExp[]; also?: RegExp; orN
     none: [new RegExp(`(一定|基本|基础)的?${FOREIGN_LANG}(基础|能力)?(即可)?$`)],
     orName: new RegExp(`${FOREIGN_LANG}.{0,6}(教师|老师|教练|讲师|翻译|编辑)|翻译`),   // 外语老师 / 翻译：岗位本身就用外语（11-25 陈彩瑛）
   },
-  global_bonus: { any: [/海归|留学|海外(学习|工作|求学)?(经历|背景|经验)|国外(学习|工作)?(经历|背景)|外籍|overseas (study|experience|background)|international (students?|background|experience)/i] },
+  global_bonus: { any: [/海归|留学|海外(学习|工作|求学)?(经历|背景|经验)|国外(学习|工作)?(经历|背景)|外籍|overseas (study|experience|background)|international (students?|background|experience)/i], none: [/(境外|海外|国外)(院校|高校|学历)[^。；;\n]{0,15}(认证|认定)|留学服务中心认证/] },   // 只写了境外学历要认证 ≠ 留学生加分（11-27）
   cross_cultural: { any: [/跨文化|多元文化|国际化(团队|视野|环境|氛围)|多语种|global team|international team|multicultural|cross-cultural|diverse (team|environment)|international environment/i] },
   global_posting: { any: [/外派|派驻|驻外|海外出差|国外出差|出国|境外(工作|出差|项目)|海外(工作|项目现场|常驻)|international travel|overseas (assignment|posting)|travel abroad|relocat(e|ion) (to|abroad)|international (assignment|rotation|mobility)/i],
     // 岗位本身在海外（岗位名标了海外地区，如「项目管理工程师（巴西-葡语）」「中东非-项目管理」「工厂管培生（海外集团）」）
@@ -90,12 +101,12 @@ const DETECT: Record<string, RegExp[]> = {
   liberal_arts: [/(动画|数字媒体艺术|视觉传达|美术|艺术设计|平面设计|游戏美术|设计类|传媒|新闻|广告学|中文|汉语言|戏剧|影视|播音|编导|音乐|舞蹈|文学|历史学|哲学|社会学|人文社科)[^。；;\n]{0,12}(专业|背景)/],
   ramp_up: [/无(工作)?经验(要求|也可|亦可|可|\s*[·|｜,，])|经验不限|不要求(工作)?经验|零基础|无经验但|应届(毕业)?生|20\d\d\s*(届|年)[^。；;\n]{0,10}毕业生|(也可|亦可)培养/],   // 招应届 = 新人成长期（11-25）
   non_stem: [/专业不限|不限专业|any disciplines?|no specific major/i],
-  language_skills: [new RegExp(`^[^\\n]{0,20}${FOREIGN_LANG}.{0,6}(教师|老师|教练|讲师)`), new RegExp(`${FOREIGN_LANG}.{0,4}(读写|听说读写|口语流利|流利|熟练|精通|工作语言)`), /CET-?6|英语六级|雅思|托福|IELTS|TOEFL/i],
-  ai_ready: [/interest in AI|接触过\s*AI|(AI|人工智能)[^。；;\n]{0,8}(相关)?(内容|经验|知识)?优先/i],
+  language_skills: [/(oral|written|spoken)[^.;\n]{0,20}English|English[^.;\n]{0,10}(oral|written)/i, new RegExp(`^[^\\n]{0,20}${FOREIGN_LANG}.{0,6}(教师|老师|教练|讲师)`), new RegExp(`${FOREIGN_LANG}.{0,4}(读写|听说读写|口语流利|流利|熟练|精通|工作语言)`), /CET-?6|英语六级|雅思|托福|IELTS|TOEFL/i],
+  ai_ready: [/AI\s*(应用|技术)[^。；;\n]{0,8}(能力|趋势)|(追踪|跟踪|关注)[^。；;\n]{0,6}(最新|前沿)?\s*AI|interest in AI|接触过\s*AI|(AI|人工智能)[^。；;\n]{0,8}(相关)?(内容|经验|知识)?优先/i],
   digital_skills: [/digital(ly)?[- ]savvy|digital transformation|数字化转型/i],
   training_system: [/(也可|亦可)培养|培训体系|岗前培训|入职培训|系统(化)?培训/],
   high_impact: [/leadership potential/i],
-  self_learning: [/(愿意|乐于|渴望)学习|学习能力强亦可/],
+  self_learning: [/(愿意|乐于|渴望)学习|学习能力强亦可|(优秀|较强|很强|良好|出色)的?学习能力|学习能力(强|优秀|突出)|学习敏锐|对新技术有热情|learning agility/i],
   global_bonus: [/海外[^。；;\n]{0,10}(学习|生活|实习|留学|求学)[^。；;\n]{0,8}(经历|经验|背景)|海外(顶尖|知名)?(院校|高校)|海内外知名高校|留学(经历|背景)|海归/],
   cross_cultural: [/国际视野|跨文化/],
   global_posting: [/(海外|国外|境外)[^。；;\n]{0,6}(出差|驻外|驻场|办公|派驻)|驻外|外派|海外区域出差/],
@@ -103,10 +114,10 @@ const DETECT: Record<string, RegExp[]> = {
 };
 export function detectSpecialty(t: SpecialtyText): string[] {
   if (!hasJdText(t)) return [];
-  const text = `${t.name || ''}\n${t.responsibilities || ''}\n${t.overview || ''}`;
+  const text = jdText(t);
   const out = Object.entries(DETECT).filter(([, res]) => res.some(re => re.test(text))).map(([k]) => k);
   // 11-25 陈彩瑛：要求里没写专业限制 = 不限理工背景（文理岗位一样）；人文 / 写作 / 艺术类岗位名 = 收文科/艺术生
-  if (!out.includes('non_stem') && !RULES.non_stem.orNoMention!.test(text)) out.push('non_stem');
+  if (!out.includes('non_stem') && !MAJOR_REQ.test(text) && !TECH_ROLE.test(t.name || '')) out.push('non_stem');
   if (/人文|文学|写作|语文|编导|文案|美术|艺术|播音|主持/.test(t.name || '')) out.push('liberal_arts');
   return out;
 }
@@ -114,7 +125,7 @@ export function detectSpecialty(t: SpecialtyText): string[] {
 export function checkSpecialty(l2In: string[], t: SpecialtyText): { l1: string[]; l2: string[]; dropped: Record<string, string> } {
   const dropped: Record<string, string> = {};
   if (!hasJdText(t)) { for (const v of l2In) dropped[v] = 'JD / 要求为空'; return { l1: [], l2: [], dropped }; }
-  const text = `${t.name || ''}\n${t.responsibilities || ''}\n${t.overview || ''}`;
+  const text = jdText(t);
   const detected = new Set(detectSpecialty(t));   // 规则直接认出来的：本身就是原文证据
   let l2 = L2_ORDER.filter(v => l2In.includes(v) || detected.has(v)).filter(v => {
     const r = RULES[v];
@@ -125,6 +136,15 @@ export function checkSpecialty(l2In: string[], t: SpecialtyText): { l1: string[]
     if (r.also && !r.also.test(text)) { dropped[v] = '缺另一半条件'; return false; }
     return true;
   });
+  // 收文科艺术生（11-27）：写了专业要求、又不是文科艺术类专业、也没写「不限」→ 不限理工背景 / 复合型岗位都不成立；技术岗没写「不限」也不打不限理工背景
+  if (!MAJOR_OPEN.test(text)) {
+    const restricted = MAJOR_REQ.test(text) && !HUMANITIES.test(text);
+    l2 = l2.filter(v => {
+      if (v === 'non_stem' && (MAJOR_REQ.test(text) || TECH_ROLE.test(t.name || ''))) { dropped[v] = MAJOR_REQ.test(text) ? '原文写了专业要求' : '技术岗没写专业不限'; return false; }
+      if (v === 'hybrid_role' && restricted) { dropped[v] = '专业限定在非文科方向'; return false; }
+      return true;
+    });
+  }
   // 可转正的排除项：原文明确不转正，整个一级都不打
   if (/不转正|无转正|不提供转正|不可转正|没有转正名额/.test(text)) l2 = l2.filter(v => { if (L2_PARENT.get(v) === 'convertible') { dropped[v] = '原文明确不转正'; return false; } return true; });
   // 培养新人：只剩 AI 类的，整组去掉
