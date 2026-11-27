@@ -15,7 +15,7 @@ import { REVIEW_RULES } from '@/lib/agents/lab-review';
 import { buildChapter } from '@/lib/agents/lab-chapters';
 import { applyRevision, logRevision, reviseOpening, reviseStep } from '@/lib/lab-revise';
 import { slotMinutes } from '@/lib/lab-studio';
-import { FORMS, formOf, hasSpec, specTextOf, slotsOf, depthOf, DEPTHS, watchBenchOf, CAREER_STORY } from '@/lib/lab-spec';
+import { FORMS, formOf, hasSpec, specTextOf, slotsOf, depthOf, DEPTHS, watchBenchOf, CAREER_STORY, CAREER_LAST } from '@/lib/lab-spec';
 
 /** 级别的完整规范（排法 / 每章写法 / 工位 / 评分），评审逐条对照：偏离级别（比如生涯体验里出了计时、考核版没有否决项）照样能挑出来 */
 function levelRules(jd: any, chapterCount = 0): string {
@@ -26,7 +26,7 @@ function levelRules(jd: any, chapterCount = 0): string {
   const n = slotsOf(jd), d = depthOf(jd, chapterCount);
   const day = n ? `管理员定了这一天 ${n} 段${d ? `、每段「${DEPTHS[d].label}」` : ''}，以这个为准：**不要要求补章节、加段、单独的收尾章**；形态里写的格数和环节这次不适用，只看这 ${n} 段本身写得好不好。${f === 'career' ? '最后一段结尾那道反思题就是全天的收尾。' : ''}` : F.day;
   const watch = watchBenchOf(jd);
-  return `【级别「${F.label}」的规范（这个空间应当照它生成，逐条对照；明显偏离级别、会让体验者拿错证书或难度错位的算 must）】\n排法：${day}\n每章：${F.chapter}${f === 'career' ? `\n${CAREER_STORY}` : ''}\n工位：${F.bench}\n这个空间的工位：${watch ? '只观摩——师傅做、学生看，台词和题干不能让学生上手；**不要要求加学生操作的交互**，也别因为学生没动手扣分' : '学生自己上手一小段'}。生涯体验不强求每段都有虚拟工位，没有工位不算问题。\n评分：${F.score}\n证书：${F.cert}`;
+  return `【级别「${F.label}」的规范（这个空间应当照它生成，逐条对照；明显偏离级别、会让体验者拿错证书或难度错位的算 must）】\n排法：${day}\n每章：${F.chapter}${f === 'career' ? `\n${CAREER_STORY}\n全天最后一段的规定写法（照这个写的不算问题：收口的归类题和固定措辞的反思题都是样板要求）：${CAREER_LAST(jd.career?.profession || jd.title || '这一行')}` : ''}\n工位：${F.bench}\n这个空间的工位：${watch ? '只观摩——师傅做、学生看，台词和题干不能让学生上手；**不要要求加学生操作的交互**，也别因为学生没动手扣分' : '学生自己上手一小段'}。生涯体验不强求每段都有虚拟工位，没有工位不算问题。\n评分：${F.score}\n证书：${F.cert}`;
 }
 
 export type Todo = { id: string; chapter_id: string | null; chapter: string; step_id: string | null; step_no: number | null; target: 'chapter' | 'step' | 'bench' | 'opening'; rule: string; problem: string; fix: string; severity?: 'must' | 'nice' };
