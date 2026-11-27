@@ -7,6 +7,9 @@
  */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useL, useLang } from '@/lib/work/i18n';
+import { ReflectFields } from '@/components/work/AiReflect';
+import { type AiReflect } from '@/lib/work/reflect';
+import { useWorkScale } from '@/lib/work/scale-client';
 
 type Material = { id: string; title: string; kind: string; content: string; url?: string; mime?: string; name?: string };
 
@@ -20,6 +23,7 @@ export function PluginWork({ code, task, onSubmitted }: { code: string; task: { 
   const [open, setOpen] = useState<string | null>(null);
   // 最后一问（选填）：如果再给一天，先改哪里；和交付说明一样边写边存
   const [nextStep, setNextStep] = useState<string | null>(null);
+  const [refl, setRefl] = useState<AiReflect>({}); const reflTimer = useRef<any>(null); const reflEditing = useRef(false); const askReflect = useWorkScale() === 'fluency';   // 交付后两问（只在 AI 驾驭量表下问）
   const [disc, setDisc] = useState<string | null>(null); const [discSaved, setDiscSaved] = useState(''); const discEditing = useRef(false); const discTimer = useRef<any>(null);
   const [nextSaved, setNextSaved] = useState('');
   const nextTimer = useRef<any>(null);
@@ -35,6 +39,7 @@ export function PluginWork({ code, task, onSubmitted }: { code: string; task: { 
     if (!editing.current) setDraft(j.deliverable || '');
     if (!nextEditing.current) setNextStep(j.next_step || '');
     if (!discEditing.current) setDisc(j.ai_disclosure || '');
+    if (!reflEditing.current && j.ai_reflect) setRefl(j.ai_reflect);
   }, [code, onSubmitted]);
   useEffect(() => { poll(); const a = setInterval(poll, 5000); const b = setInterval(() => setNow(Date.now()), 1000); return () => { clearInterval(a); clearInterval(b); }; }, [poll]);
 
@@ -61,6 +66,10 @@ export function PluginWork({ code, task, onSubmitted }: { code: string; task: { 
       const r = await fetch(`/api/work/plugin/${code}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ai_disclosure: v }) }).then(x => x.json()).catch(() => ({ ok: false }));
       setDiscSaved(r.ok ? L('已保存（插件侧边栏里也能看到）', 'Saved (also visible in the extension sidebar)') : L('没保存上，检查网络', 'Not saved. Check your connection.')); discEditing.current = false;
     }, 1200);
+  };
+  const saveRefl = (v: AiReflect) => {
+    setRefl(v); reflEditing.current = true; clearTimeout(reflTimer.current);
+    reflTimer.current = setTimeout(async () => { await fetch(`/api/work/plugin/${code}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ai_reflect: v }) }).catch(() => null); reflEditing.current = false; }, 1200);
   };
   const submit = async () => {
     if (!confirm(L('确定结束作答并提交？提交后不能再改。', 'Finish and submit? You cannot make changes after submitting.'))) return;
@@ -143,6 +152,7 @@ export function PluginWork({ code, task, onSubmitted }: { code: string; task: { 
         <div style={{ fontSize: 13, color: '#666', marginBottom: 6 }}>{L('就像附在成果上的说明：AI 参与了哪些环节、哪些是你自己做的。会和你的作答记录比对，照实写就行；不写也能交。', 'Like a note attached to your work: which parts AI helped with and which you did yourself. It is checked against your work record, so just be accurate. You can leave it blank.')}</div>
         <textarea value={disc ?? ''} onChange={e => saveDisc(e.target.value)} rows={3} placeholder={L('比如：竞品表的初稿是 AI 整理的，我核了三家的价格；结论和测算是我自己写的', 'e.g. AI drafted the competitor table and I checked three prices; the conclusion and the estimate are my own.')} style={{ width: '100%', boxSizing: 'border-box', borderRadius: 8, border: '1px solid #e0e0ea', padding: '8px 10px', font: 'inherit', fontSize: 13.5 }} />
         {discSaved && <div style={{ fontSize: 12.5, color: '#888', marginTop: 4 }}>{discSaved}</div>}
+        {askReflect && <ReflectFields v={refl} set={saveRefl} L={L} line="#e0e0ea" />}
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 16, flexWrap: 'wrap' }}>

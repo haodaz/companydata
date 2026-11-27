@@ -11,8 +11,10 @@ import extraPatterns from './patterns-extra.json';
 import { generateContent } from '@/lib/llm-client';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { logTokenUsage } from '@/lib/token-logger';
+import { aiDiff, type AiDiff } from './record';
+import { reflectText } from '@/lib/work/reflect';
 
-export const FLUENCY_VERSION = 'v3-26b · engine 2026-11-20（任务块 · 窗口按块）';
+export const FLUENCY_VERSION = 'v3-26b · engine 2026-11-27（任务块 · 窗口按块 · 交付差异与交付后两问）';
 const MODEL = process.env.FLUENCY_MODEL || process.env.WORK_GRADE_MODEL || 'claude-opus-5-5';
 
 type Spec = typeof spec;
@@ -255,6 +257,44 @@ function locate(inp: FluencyInput, a: Anchors, source: string, disclosure: strin
   if (sw.length) out.push({ bid: 'B4', src: 'event', i: k--, quote: `作答中换过模型 ${sw.length} 次（${paths(sw)}）`, rule: 'B4-事件:换模型' });
   return { cands: out, split };
 }
+const pct = (v: number | null | undefined) => (v == null ? '—' : `${Math.round(v * 100)}%`);
+/**
+ * 11-27：平台能直接算 / 问到的证据（宇宁《数据源与字段设计》）——都只作候选，成不成立、几档仍由模型照锚点判：
+ *   B23 交付前验证：最终件和 AI 输出的差异（原样照搬 → 弱；交付物里有成段的自己改写 → 有动作）
+ *   B24 质量责任：交付后单题（最满意 / 最不满意 / 怎么处理）；两条交叉校验——
+ *       改了很多却说「没有不满意」→ 表述与行为不一致；说的问题在对话里从没出现过 → 事后追认，不升档
+ *   B22 贡献表述：自报 AI 贡献度 vs 交付物里 AI 原样占比，差 40 个百分点以上标「表述不一致」
+ */
+function collectedEvidence(diff: AiDiff | null, d: any, chat: ChatTurn[], cands: Candidate[]) {
+  const flags: { id: 'share_gap' | 'says_none_but_changed' | 'after_the_fact'; note: string }[] = [];
+  const o = diff?.overall;
+  if (o && o.chars >= 50) {
+    const ed = diff!.edits_after_last_in;
+    cands.push({ bid: 'B23', src: 'event', i: -20, quote: `交付物 ${o.chars} 字里，和 AI 输出原样一致的约 ${pct(o.ai_verbatim_ratio)}、自己写或改过的约 ${pct(o.changed_ratio)}${diff!.parts.length > 1 ? `（${diff!.parts.map(p => `${p.part} 自改 ${pct(p.changed_ratio)}`).join('，')}）` : ''}${diff!.since_last_ai_sec != null ? `；最后一次 AI 输出到提交隔 ${Math.round(diff!.since_last_ai_sec / 60)} 分钟` : ''}${ed ? `；最后一次放进 AI 内容后自己又改了 ${ed.count} 次、约 ${ed.chars} 字` : ''}（平台按 10 字连片比对算出，剔掉任务书和材料原文）`, rule: 'B23-事件:交付物与AI输出差异' });
+  }
+  if (!d) return { flags };
+  const none = /^(没有|无|都还行|都挺好|都满意|还好|none|no|n\/a|nothing)[。.!！\s]*$/i;
+  const worst = String(d.worst || '').trim(), best = String(d.best || '').trim();
+  if (worst || best || d.fix) {
+    const notes: string[] = [];
+    if (o && (!worst || none.test(worst)) && (o.changed_ratio ?? 0) >= 0.4 && diff!.ai_chars > 300) { notes.push(`他说没有不满意，但交付物里约 ${pct(o.changed_ratio)} 是自己写或改过的：表述与行为不一致`); flags.push({ id: 'says_none_but_changed', note: notes[notes.length - 1] }); }
+    if (worst && !none.test(worst) && chat.length) {
+      const g = gram3(worst), seen = chat.some(c => jac(g, gram3(c.q)) >= 0.08 || [...g].filter(x => squash(c.q).includes(x)).length >= Math.min(6, Math.max(3, g.size / 3)));
+      if (!seen) { notes.push('他指出的不满意之处在和 AI 的对话里从没提过：事后追认，不能据此升档'); flags.push({ id: 'after_the_fact', note: notes[notes.length - 1] }); }
+    }
+    const fx: Record<string, string> = { edit: '自己动手改了', reask: '指出问题让 AI 重做', rewrite: '弃用、自己重写', keep: '没来得及处理 / 保留了' };
+    cands.push({ bid: 'B24', src: 'disclosure', i: -21, quote: `【交付后单题】最满意：${best || '（没写）'}；最不满意：${worst || '（没写）'}；处理：${fx[d.fix] || '（没选）'}${notes.length ? `。平台比对：${notes.join('；')}` : ''}`, rule: 'B24-交付后单题' });
+  }
+  if (d.share != null && o && diff!.ai_chars > 300) {
+    const gap = d.share / 100 - o.ai_verbatim_ratio;
+    const q = `自报 AI 贡献度 ${d.share}%；平台测得交付物里和 AI 输出原样一致的文字约 ${pct(o.ai_verbatim_ratio)}`;
+    // 原样占比只算照搬：AI 出思路、他自己写的不在里面，所以自报高于实测属正常；自报比实测低 30 个百分点以上才是少报
+    const under = gap <= -0.3;
+    if (under) flags.push({ id: 'share_gap', note: `${q}：自报比交付物里照搬的部分还少 ${Math.round(-gap * 100)} 个百分点` });
+    cands.push({ bid: 'B22', src: 'disclosure', i: -22, quote: `${q}${under ? `：自报比照搬的部分还少 ${Math.round(-gap * 100)} 个百分点，少报了 AI 的贡献` : gap >= 0.3 ? '：自报高于照搬比例，可能是 AI 出思路、他自己落笔，不算不符' : '：大体相符'}`, rule: 'B22-自报vs记录' });
+  }
+  return { flags };
+}
 const snippet = (t: string, at: number, len: number) => t.slice(Math.max(0, at - 30), at + len + 30).replace(/\s+/g, ' ').trim().slice(0, 160);
 
 // 05 页三：超级 Prompt（一条消息万箭齐发）
@@ -306,7 +346,7 @@ async function judge(inp: FluencyInput, cands: Candidate[], stats: string, warn:
   pkgs.sort((a, b) => (a[0].i - b[0].i));
   const ctx = (g: Candidate[]) => {
     const c = g[0];
-    if (c.src !== 'chat') return c.src === 'event' ? `【过程事件】${c.quote}` : `【${c.src === 'deliverable' ? '交付物正文' : '提交时写的 AI 参与说明'}】${c.src === 'disclosure' ? (inp.events.find(e => e.type === 'ai_disclosure')?.text || c.quote) : c.quote}`;
+    if (c.src !== 'chat') return c.src === 'event' ? `【过程事件】${c.quote}` : c.i <= -20 ? `【交付后平台问的两问（候选人自述）+ 平台比对】${c.quote}` : `【${c.src === 'deliverable' ? '交付物正文' : '提交时写的 AI 参与说明'}】${c.src === 'disclosure' ? (inp.events.find(e => e.type === 'ai_disclosure')?.text || c.quote) : c.quote}`;
     const prev = inp.chat[c.i - 1], cur = inp.chat[c.i];
     const clip = (s: string, n: number) => (s.length > n ? `${s.slice(0, Math.round(n * 0.33))}……（中间略）……${s.slice(-Math.round(n * 0.67))}` : s);
     const none = '（外部 AI 的回答平台看不到；只按候选人这条消息本身判断，需要对齐上一轮输出的行为，消息里看不出对着什么就判不成立）';
@@ -517,7 +557,7 @@ function dimSpec(bids: string[]) {
 async function committeeJudge(inp: FluencyInput, B: { of: number[]; list: TaskBlock[] }, cands: Candidate[], logs: string[], warn: string[]): Promise<{ evs: Evidence[]; negs: { id: string; i: number; quote: string }[] }> {
   const chat = inp.chat, outsideOnly = chat.every(c => !c.a);
   const facts = cands.filter(c => c.src !== 'chat');
-  const factLine = (c: Candidate, n: number) => `[F${n + 1}] ${c.src === 'event' ? '平台记录的动作' : c.src === 'deliverable' ? '交付物里' : '提交时的 AI 参与说明（候选人自述，只能用于 B21 / B22）'}（${c.bid} 相关）：${c.quote}`;
+  const factLine = (c: Candidate, n: number) => `[F${n + 1}] ${c.src === 'event' ? '平台记录的动作' : c.src === 'deliverable' ? '交付物里' : c.i <= -20 ? '交付后平台问的两问（候选人自述，附平台比对；只能用于 B22 / B24，自述的内容在对话里没出现过就不能升档）' : '提交时的 AI 参与说明（候选人自述，只能用于 B21 / B22）'}（${c.bid} 相关）：${c.quote}`;
   const transcript = B.list.map(bl => `【任务块 ${bl.id + 1}｜${bl.label}｜第 ${bl.msgs[0] + 1}–${bl.msgs[bl.msgs.length - 1] + 1} 条】\n` + bl.msgs.map(i => `[${i + 1}] 候选人：${clip(chat[i].q, 700)}${chat[i].a ? `\n      AI：${clip(chat[i].a, 500)}` : ''}`).join('\n')).join('\n\n');
   const prefix = `你是「AI 驾驭能力」评审团里的一位评委。评审团按维度分工：每位评委只评分给自己的那几个行为，其他行为由别的评委负责，你不用管、也不用让。
 候选人在做一道考核任务，下面是他和 AI 的全部对话（按任务块分好），以及平台记录的动作和交付侧信息。
@@ -528,7 +568,7 @@ async function committeeJudge(inp: FluencyInput, B: { of: number[]; list: TaskBl
 3. 发生了就引用候选人原话（逐字，不超过 40 字）或平台记录编号，按锚点定 1–5 档；看实际效果、不看措辞；拿不准给低档。
 4. 同一个行为，每个任务块最多列 2 处最有代表性的（不同消息）；没发生就不列，不要硬凑。
 5. 一条消息同时体现了你负责的两个行为，可以两个都列，但理由要分别说清各体现了哪一部分。
-6. 「AI 参与说明」是候选人提交时的自述，**只能作为 B21（有没有披露）和 B22（贡献说得准不准）的证据**，不能拿来证明核查、纠错、验证等行为发生过——那些要在对话或平台记录里有对应的动作才算。B22 要把自述和记录对照：自述说「逐条核对 / 修正了错误」，但对话和平台记录里看不到对应动作，就是表述与实际不符，按锚点定低档。
+6. 「AI 参与说明」是候选人提交时的自述，**只能作为 B21（有没有披露）和 B22（贡献说得准不准）的证据**，不能拿来证明核查、纠错、验证等行为发生过——那些要在对话或平台记录里有对应的动作才算。B22 要把自述和记录对照：自述说「逐条核对 / 修正了错误」，但对话和平台记录里看不到对应动作，就是表述与实际不符，按锚点定低档。交付后平台问的两问（最满意 / 最不满意 / 怎么处理）是 B24（质量责任）的来源：平台比对写了「表述与行为不一致」的按低档；写了「事后追认」的最多给到有动作的那一档、不升档。
 7. 平台记录里的改写量这样看：自己改写约占交付物 10% 以内是小修，10–20% 是中等，20% 以上是大幅改写（拿到 AI 的东西后自己重写了不少）；定档时把这个量算进去，不要不管多少都给同一档。
 8. 候选人没在对话里说、而是直接在产出物上标注 / 修改后让 AI 改：AI 的回复里常会复述「根据你标注的…已改为…」。这算候选人的迭代 / 纠错证据：quote 引 AI 回复里复述他要改的那句（逐字），why 开头写「据 AI 回复」。${outsideOnly ? '\n9. 这场只有候选人的提问原话（外部 AI 的回答看不到）：需要对齐 AI 回答的行为，只按提问本身能看出来的判。' : ''}
 
@@ -600,13 +640,15 @@ export interface FluencyReport {
   outside?: { asks: { t: number; q: string; complete: boolean; src: string }[]; note: string };
   /** 只出画像不出总分时（C_elig < 0.75），按公式算出来的数，只给校准看，不对外 */
   portrait_overall?: number | null;
+  /** 11-27 平台算出来 / 问出来的：交付物和 AI 输出的差异、交付后两问、两者交叉比对的标记（给报告「AI 参与：自报 vs 记录」用） */
+  collected?: { diff: AiDiff | null; answers: { share: number | null; best: string; worst: string; fix: string } | null; flags: { id: 'share_gap' | 'says_none_but_changed' | 'after_the_fact'; note: string }[] };
   narrative?: FluencyNarrative | null;
 }
 /** 给人看的解读（模型按上面的结构化结果写，只许引用已有证据，不许加新判断） */
 export interface FluencyNarrative {
   summary: string; tendency: string;
   highlights: { bid: string; title: string; text: string; quotes: string[] }[];
-  gaps: { bid: string; title: string; text: string }[];
+  gaps: { bid: string; title: string; text: string; /** 示范：他的原话（逐字核过）→ 做到位的说法 */ before?: string; after?: string }[];
   patterns: { title: string; text: string }[];
   interview: { topic: string; why: string; ask: string; watch: string }[];
   advice: { verdict: string; fit: { task: string; basis: string; condition: string }[]; verify: string[] };
@@ -680,12 +722,17 @@ export async function assessFluency(inp: FluencyInput): Promise<FluencyReport> {
   logs.push(`锚点：P1=${a.P1 == null ? '—' : a.P1 + 1} O1=${a.O1 == null ? '—' : a.O1 + 1} A_out=${a.Aout == null ? '—' : a.Aout + 1} O_last=${a.Olast == null ? '—' : a.Olast + 1} A_final=${a.Afinal == null ? '—' : a.Afinal + 1}（第几条用户消息）`);
   if (chat.length < 4) logs.push(`用户消息只有 ${chat.length} 条（<4）：B10 / B15 / B16 / B17 自动记 N/A`);
   const { cands, split } = locate(I, a, source, disclosure);
+  // 11-27（宇宁：B23 要最终件和 AI 输出的差异、B24 要交付后单题、B22 要声明和记录比对）：平台算得出的直接算，作为证据候选交给模型判
+  const dEv = [...inp.events].reverse().find(e => e.type === 'ai_disclosure') || null;
+  const diff = fromOutside ? null : aiDiff(inp.deliverable || '', inp.chat || [], inp.events, [inp.task.brief, ...inp.task.materials.map(m => m.content || '')].join('\n'));
+  const collected = collectedEvidence(diff, dEv, chat, cands);
+  if (diff?.overall) logs.push(`交付物和 AI 输出：原样一致约 ${pct(diff.overall.ai_verbatim_ratio)}、自己写 / 改过约 ${pct(diff.overall.changed_ratio)}${diff.since_last_ai_sec != null ? `；最后一次 AI 输出到提交隔 ${Math.round(diff.since_last_ai_sec / 60)} 分钟` : ''}`);
   const hitsBy = new Map<number, Set<string>>();
   for (const c of cands) if (c.src === 'chat') hitsBy.set(c.i, new Set([...(hitsBy.get(c.i) || []), c.bid]));
   const structMsgs = new Set([...hitsBy].filter(([i, h]) => isStructPrompt(chat[i].q, h)).map(([i]) => i));
   const ev = inp.events;
   const adopted = ev.filter(e => e.type === 'adopt').reduce((n, e) => n + (Number(e.chars) || 0), 0);
-  const stats = `和站内 AI 助手对话 ${chat.length} 轮；采纳进交付物 ${ev.filter(e => e.type === 'adopt').length} 次（${adopted} 字）；粘贴 ${ev.filter(e => e.type === 'paste').length} 次；交付物 ${(inp.deliverable || '').length} 字${disclosure ? `；提交时写了 AI 参与说明：${disclosure.slice(0, 300)}` : '；提交时没写 AI 参与说明'}`;
+  const stats = `${diff?.overall ? `交付物里和 AI 输出原样一致的文字约 ${pct(diff.overall.ai_verbatim_ratio)}（自己写 / 改过约 ${pct(diff.overall.changed_ratio)}）；` : ''}${dEv && reflectText({ ...dEv, text: '' }) ? `交付后两问：${reflectText({ ...dEv, text: '' }).replace(/\n/g, '；')}；` : ''}和站内 AI 助手对话 ${chat.length} 轮；采纳进交付物 ${ev.filter(e => e.type === 'adopt').length} 次（${adopted} 字）；粘贴 ${ev.filter(e => e.type === 'paste').length} 次；交付物 ${(inp.deliverable || '').length} 字${disclosure ? `；提交时写了 AI 参与说明：${disclosure.slice(0, 300)}` : '；提交时没写 AI 参与说明'}`;
   const committee = inp.engine === 'committee' || (!inp.engine && process.env.FLUENCY_ENGINE === 'committee');
   const lastBlock = B.of.length ? B.of[B.of.length - 1] : 0;
   let evs: Evidence[], modelNegs: { id: string; i: number; quote: string }[], scanned: Evidence[] = [];
@@ -735,6 +782,7 @@ export async function assessFluency(inp: FluencyInput): Promise<FluencyReport> {
     stats: { user_msgs: chat.length, candidates: cands.length, packages: new Set(cands.map(c => `${c.src}:${c.i}`)).size, valid: evs.filter(e => e.valid && !e.related).length, scanned: scanned.length },
     portrait_overall: status === 'no_total' ? overall : null,
     d1_source: fromOutside ? 'outside' : 'platform',
+    collected: { diff, answers: dEv ? { share: dEv.share ?? null, best: dEv.best || '', worst: dEv.worst || '', fix: dEv.fix || '' } : null, flags: collected.flags },
     ...(fromOutside ? { outside: inp.outside! } : {}),
   };
   if (warnings.some(w => /兜底模型/.test(w))) rep.model = `${MODEL}（部分环节用了兜底模型，见 warnings）`;
@@ -761,19 +809,21 @@ ${inp.task.title}（${rep.profile.type_name}类）：${inp.task.brief.replace(/\
 负向：${rep.negatives.map(n => `${n.id} ${n.name}「${n.quote}」`).join('；') || '无'}
 ## 25 个行为
 ${lines}
+## 他发给 AI 的原话（按顺序，长的截断）
+${inp.chat.slice(0, 40).map((c, i) => `[${i + 1}] ${String(c.q).replace(/\s+/g, ' ').slice(0, 140)}`).join('\n') || '（无）'}
 ## 写法
 - 只依据上面的分数和证据原文，不新增判断、不编证据；引用原话只用上面「」里的。
 - 「0 分」是该做没做（基线行为），「不计分」是没机会或看不到——两者写法必须分开，不计分的不能写成短板。
 - 以候选人的做法为主语，克制：写「这次记录里…」，不写「他具备 / 不具备」。
 - 给招聘方看：写行为名称（如「目标澄清」），不写 B1 这类编号。
 - 对话轮数很少时如实说证据有限，不要硬凑高光；高光只写分数 ≥3 的行为，没有就空数组。
-- 待提升优先写 0 分的基线行为和 1–2 分的行为。
+- 待提升优先写 0 分的基线行为和 1–2 分的行为。每条尽量配一个示范：before 从下面「他发给 AI 的原话」里逐字摘一句最相关的（不超过 60 字，摘不到就留空），after 写同样意思下做到位的说法（不超过 80 字，只改说法、不替他编新事实或数字）。
 - 面试核验写 2–3 条：为什么要核验（指向哪几项分数）、具体追问一句、重点观察什么。
 - 用人建议：初步判断一句；适合先拿来验证的任务 2–4 行（任务性质 / 依据哪几项 / 建议的工作条件）；承担哪些任务前要补充验证 2–3 条。
 只返回 JSON：
 {"summary":"两三句总评","tendency":"工作倾向，用 → 串起 3–4 个动作，如「先补背景 → 要方案 → 逐版修改」；证据不够就写「证据不足以概括」",
 "highlights":[{"bid":"B5","title":"一句话标题","text":"两三句","quotes":["原话"]}],
-"gaps":[{"bid":"B23","title":"一句话标题","text":"一两句，带改进方向"}],
+"gaps":[{"bid":"B23","title":"一句话标题","text":"一两句，带改进方向","before":"他的原话（逐字）或空","after":"做到位的说法"}],
 "patterns":[{"title":"","text":""}],
 "interview":[{"topic":"","why":"","ask":"","watch":""}],
 "advice":{"verdict":"","fit":[{"task":"","basis":"","condition":""}],"verify":[""]}}`, 'Fluency · 解读', inp.institution);
@@ -784,7 +834,12 @@ ${lines}
   return {
     summary: t(p.summary, 400), tendency: t(p.tendency, 120),
     highlights: arr(p.highlights).filter((h: any) => BEHAVIORS[h?.bid] && (rep.behaviors[h.bid].score ?? 0) >= 3).slice(0, 5).map((h: any) => ({ bid: h.bid, title: t(h.title, 60) || title(h.bid), text: t(h.text), quotes: arr(h.quotes).map((q: any) => t(q, 120)).slice(0, 3) })),
-    gaps: arr(p.gaps).filter((g: any) => BEHAVIORS[g?.bid] && rep.behaviors[g.bid].score != null).slice(0, 5).map((g: any) => ({ bid: g.bid, title: t(g.title, 60) || title(g.bid), text: t(g.text) })),
+    gaps: arr(p.gaps).filter((g: any) => BEHAVIORS[g?.bid] && rep.behaviors[g.bid].score != null).slice(0, 5).map((g: any) => {
+      // 示范的「原话」必须真在他的消息里（逐字对得上才留），对不上就只留改进方向
+      const before = t(g.before, 80).replace(/^[「“"]|[」”"]$/g, '').replace(/…+$/, '').trim();
+      const real = before.length >= 4 && inp.chat.some(c => squash(c.q).includes(squash(before)));
+      return { bid: g.bid, title: t(g.title, 60) || title(g.bid), text: t(g.text), ...(real && g.after ? { before, after: t(g.after, 120) } : {}) };
+    }),
     patterns: arr(p.patterns).slice(0, 3).map((x: any) => ({ title: t(x.title, 40), text: t(x.text) })),
     interview: arr(p.interview).slice(0, 3).map((x: any) => ({ topic: t(x.topic, 30), why: t(x.why, 200), ask: t(x.ask, 200), watch: t(x.watch, 200) })),
     advice: { verdict: t(p.advice?.verdict, 200), fit: arr(p.advice?.fit).slice(0, 4).map((x: any) => ({ task: t(x.task, 60), basis: t(x.basis, 80), condition: t(x.condition, 80) })), verify: arr(p.advice?.verify).slice(0, 3).map((x: any) => t(x, 160)) },

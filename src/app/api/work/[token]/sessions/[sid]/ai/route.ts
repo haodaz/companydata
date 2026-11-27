@@ -23,6 +23,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   const body = await req.json().catch(() => ({}));
   const q = String(body.q || '').trim().slice(0, 4000);
   if (!q) return NextResponse.json({ ok: false, error: errL(t, '问题为空') }, { status: 400 });
+  // 这一问带给 AI 的材料（他当时打开的那份）：记 id / 标题和带上的时点，B9 / B14 要分「事前给」还是「AI 追问后才补」
+  const mat = body.material && (body.material_id || body.material_title) ? { id: String(body.material_id || '').slice(0, 40), title: String(body.material_title || '').slice(0, 80) } : null;
   const history = (s.ai_chat || []).slice(-6).map((c: any) => `用户：${c.q}\n助手：${String(c.a).slice(0, 800)}`).join('\n\n');
   // 英文题（11-10 实测：只在末尾提一句，模型还是用中文答）：开头就定死语言
   const prompt = `${t.task?.lang === 'en' ? 'IMPORTANT: The candidate works in English. Write your entire reply in English (keep company and product names as they are). Only reply in Chinese if the candidate writes in Chinese.\n\n' : ''}你是作答人手边的 AI 助手（像平时工作里用的那种），帮他完成一道真活。有问必答、直接给可用的内容；涉及材料里没有的数据要提醒「这是假设」。不要替他做判断取舍，把选项和依据摆出来。你看不到图片本身，只能读到下面写的文字（图片材料是 AI 看图写的说明）；问到说明里没有的画面细节，直说「我看不到这一处」，不要猜，更不要编公司、岗位、数字。
@@ -36,18 +38,20 @@ ${q}${t.task?.lang === 'en' ? '\n\nReply in English.' : ''}`;
   // 11-19：body.stream 时边写边回（NDJSON：{d} 新字 / {reset} 换模型重来 / 最后 {ok,a,t} 或 {ok:false,error}），候选人不用干等一两分钟
   const run = async (onText?: (d: string) => void, onReset?: () => void) => {
     const t0 = Date.now();
+    // 11-27（宇宁：评价要分清主动换平台和因故障被动切换）：记下这一轮实际是哪个模型答的、前面哪几个失败了
+    let used = ASSIST_MODEL; const failed: string[] = [];
     const a = await withCost({ tool_name: 'work', task_name: 'Assist · 工作台 AI', stage: 'use' }, async () => {
       let tried = 0;
       for (const m of [ASSIST_MODEL, 'qwen-max', 'deepseek-v4-pro']) {   // 候选人作答时的助手要快：默认千问，兜底也走国内（2026-10-28），候选人端不能没回答
         if (tried++ && onReset) onReset();
-        try { const r = await generateContent(prompt, m, onText ? { onText } : undefined); await logTokenUsage({ tool_name: 'work', task_name: 'Assist · 工作台 AI', institution: t.company_name || '', model_id: m, usageMetadata: r.usageMetadata } as any).catch(() => {}); if (r.text?.trim()) return r.text.trim(); } catch (e) { console.warn(`[work-assist] ${m} 失败：${String((e as any)?.message).slice(0, 100)}`); }
+        try { const r = await generateContent(prompt, m, onText ? { onText } : undefined); await logTokenUsage({ tool_name: 'work', task_name: 'Assist · 工作台 AI', institution: t.company_name || '', model_id: m, usageMetadata: r.usageMetadata } as any).catch(() => {}); if (r.text?.trim()) { used = m; return r.text.trim(); } failed.push(m); } catch (e) { failed.push(m); console.warn(`[work-assist] ${m} 失败：${String((e as any)?.message).slice(0, 100)}`); }
       }
       throw new Error(errL(t, 'AI 暂时没回上来，再发一次试试'));
     });
     const tsec = Math.round((Date.now() - new Date(s.started_at).getTime()) / 1000);
     // 重读一次再追加：流式回答要一两分钟，期间别的请求可能写过 ai_chat
     const { data: cur } = await db.from('work_sessions').select('ai_chat').eq('id', sid).maybeSingle();
-    const ai_chat = [...(cur?.ai_chat || s.ai_chat || []), { t: tsec, q, a, ms: Date.now() - t0 }].slice(-200);
+    const ai_chat = [...(cur?.ai_chat || s.ai_chat || []), { t: tsec, q, a, ms: Date.now() - t0, model: used, ...(failed.length ? { failed } : {}), ...(mat ? { mat } : {}) }].slice(-200);
     await db.from('work_sessions').update({ ai_chat }).eq('id', sid);
     return { a, t: tsec };
   };

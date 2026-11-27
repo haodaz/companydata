@@ -1,6 +1,7 @@
 import { refreshSignals } from '@/lib/work/question-bank';
 import { insertPeerLater } from '@/lib/work/fluency/peer-server';
 import { NextRequest, NextResponse } from 'next/server';
+import { disclosureEvent } from '@/lib/work/reflect';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { buildReport, ensureAiPolicy } from '@/lib/work/grader';
 import { planSegments } from '@/lib/work/audit';
@@ -88,7 +89,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   if (plugin) { const links = await readLinks(deliverable); if (links) deliverable = `${deliverable}\n\n## 交付说明里的链接（平台读到的内容，以原页面为准）\n${links}`.slice(0, 60000); }
   // 插件模式的最后一问（选填）存在 participant 里，交卷时转成事件
   if (s.participant?.next_step?.trim() && !events.some(e => e.type === 'next_step')) events = [...events, { t: tsec, type: 'next_step', text: String(s.participant.next_step).trim().slice(0, 1000) }];
-  if (String(s.participant?.ai_disclosure || '').trim().length >= 10 && !events.some(e => e.type === 'ai_disclosure')) events = [...events, { t: tsec, type: 'ai_disclosure', text: String(s.participant.ai_disclosure).trim().slice(0, 800) }];
+  if (!events.some(e => e.type === 'ai_disclosure')) { const d = disclosureEvent(s.participant?.ai_disclosure, s.participant?.ai_reflect); if (d) events = [...events, { t: tsec, type: 'ai_disclosure', ...d }]; }
   events = [...events, { t: tsec, type: 'submit', chars: deliverable.length }];
   await db.from('work_sessions').update({ deliverable, events, submitted_at: new Date().toISOString() }).eq('id', sid);
   // 默认「AI 审计中」渐进式：先存一份半成品 report（auditing），前端一段一段调 /audit 推进；{ sync: true } 才一次出完（脚本用）

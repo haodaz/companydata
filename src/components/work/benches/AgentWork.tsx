@@ -10,6 +10,9 @@ import { MdView, RulesView } from '@/components/work/WorkText';
 import { useL } from '@/lib/work/i18n';
 import { AGENT_MODELS, DEFAULT_AGENT_MODEL, buildAgentDeliverable, initialFiles, outputsOf, type WsFile } from '@/lib/work/agent-bench';
 import { runPython, warmSandbox, type RunResult } from './agent/sandbox';
+import { ReflectFields } from '@/components/work/AiReflect';
+import { disclosureEvent, type AiReflect } from '@/lib/work/reflect';
+import { useWorkScale } from '@/lib/work/scale-client';
 
 type Task = { id: string; company_name: string; role: string; statement?: string; task: any; materials: any[] };
 type Ev = { t: number; type: string; [k: string]: any };
@@ -84,6 +87,7 @@ export function AgentWork({ token, sid, task, resume, limit, grading, error, onS
   const [runOut, setRunOut] = useState<Record<string, RunResult>>({});
   const [editMode, setEditMode] = useState<Record<string, boolean>>({});
   const [err, setErr] = useState(''); const [arm, setArm] = useState(false); const [disc, setDisc] = useState<string | null>(null);
+  const [refl, setRefl] = useState<AiReflect>({}); const askReflect = useWorkScale() === 'fluency';   // 交付后两问（只在 AI 驾驭量表下问）
   const [restored, setRestored] = useState(false);
   const t0 = useRef(Date.now() - (resume?.elapsed_s || 0) * 1000);
   const [now, setNow] = useState<number>(resume?.elapsed_s || 0);
@@ -262,7 +266,7 @@ export function AgentWork({ token, sid, task, resume, limit, grading, error, onS
   // ── 交卷 ──
   const missing = outputs.filter(o => { const f = files.find(x => x.path === o.path); return !f || (!f.bin && !f.content.trim()); });
   const finish = async (auto?: boolean) => {
-    if (disc && disc.trim().length >= 10) ev('ai_disclosure', { text: disc.trim().slice(0, 800) });
+    { const d = disclosureEvent(disc, askReflect ? refl : null); if (d) ev('ai_disclosure', d); }
     const imgs: Record<string, string> = {};
     for (const f of filesRef.current.filter(x => x.bin && /\.(png|jpe?g|gif|webp)$/i.test(x.path) && (outputs.some(o => o.path === x.path) || /^output\//.test(x.path))).slice(0, 8)) {
       try { const blob = await (await fetch(f.content)).blob(); const fd = new FormData(); fd.append('file', new File([blob], f.path.replace(/\//g, '_'), { type: blob.type })); fd.append('kind', 'file'); const j = await (await fetch(`/api/work/${token}/sessions/${sid}/upload`, { method: 'POST', body: fd })).json(); if (j.ok) imgs[f.path] = j.url; } catch { /* 图没传上去就只交文字 */ }
@@ -424,10 +428,11 @@ export function AgentWork({ token, sid, task, resume, limit, grading, error, onS
         <div style={{ flex: 1, minHeight: 0, display: 'flex' }}>{chatEl}{appEl}</div>
       </main>
       {disc != null && <div style={{ position: 'fixed', inset: 0, background: 'rgba(20,20,40,.35)', display: 'grid', placeItems: 'center', zIndex: 50 }}>
-        <div style={{ width: 'min(560px, calc(100vw - 32px))', background: '#fff', borderRadius: 16, padding: 22 }}>
+        <div style={{ width: 'min(560px, calc(100vw - 32px))', maxHeight: 'calc(100vh - 32px)', overflow: 'auto', boxSizing: 'border-box', background: '#fff', borderRadius: 16, padding: 22 }}>
           <div style={{ fontWeight: 700, fontSize: 16 }}>{L('提交前：说说 AI 在这份成果里做了什么', 'Before you submit: what did the AI do in this work?')}</div>
           <div style={{ fontSize: 13, color: C.ink2, margin: '6px 0 10px', lineHeight: 1.7 }}>{L('哪些是 AI 做的、哪些你核过或自己改的、哪一步你没信它。会写进给企业的报告；不写也能交。', "Which parts the AI did, what you checked or rewrote, where you didn't trust it. This goes into the report for the company; you can skip it.")}</div>
-          <textarea value={disc} onChange={e => setDisc(e.target.value)} rows={5} autoFocus style={{ width: '100%', boxSizing: 'border-box', border: `1px solid ${C.line}`, borderRadius: 10, padding: 10, fontSize: 14, fontFamily: 'inherit' }} placeholder={L('比如：清洗脚本是 AI 写的，我核了缺失值的处理；第二个结论 AI 算反了，我让它重算并自己抽查了三行', 'e.g. The AI wrote the cleaning script; I checked how it handled missing values. It got the second conclusion backwards, so I had it redo the math and spot-checked three rows myself.')} />
+          <textarea value={disc} onChange={e => setDisc(e.target.value)} rows={askReflect ? 3 : 5} autoFocus style={{ width: '100%', boxSizing: 'border-box', border: `1px solid ${C.line}`, borderRadius: 10, padding: 10, fontSize: 14, fontFamily: 'inherit' }} placeholder={L('比如：清洗脚本是 AI 写的，我核了缺失值的处理；第二个结论 AI 算反了，我让它重算并自己抽查了三行', 'e.g. The AI wrote the cleaning script; I checked how it handled missing values. It got the second conclusion backwards, so I had it redo the math and spot-checked three rows myself.')} />
+          {askReflect && <ReflectFields v={refl} set={setRefl} L={L} line={C.line} />}
           <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, marginTop: 12 }}><button onClick={() => setDisc(null)} style={{ border: `1px solid ${C.line}`, background: '#fff', borderRadius: 9, padding: '7px 14px', cursor: 'pointer' }}>{L('回去再看看', 'Go back')}</button><button onClick={() => finish()} style={{ border: 0, background: C.ink, color: '#fff', borderRadius: 9, padding: '7px 16px', cursor: 'pointer', fontWeight: 600 }}>{L('提交', 'Submit')}</button></div>
         </div>
       </div>}

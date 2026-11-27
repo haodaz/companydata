@@ -34,8 +34,11 @@ export function FluencyReport({ f, sid, expand = false }: { f: any; sid?: string
   const scored = all.filter(b => b.score != null), zeros = scored.filter(b => b.score === 0), weak = scored.filter(b => b.score > 0 && b.score < 3);
   const naCount = (k: string) => all.filter(b => b.score == null && NA_KIND(b.na) === k).length;
   const shown = f.overall;
+  const C = f.collected;
   return (
-    <div style={{ display: 'grid', gap: 16, fontSize: 14, lineHeight: 1.75, color: INK }}>
+    <div className="flu-rep" style={{ display: 'grid', gap: 16, fontSize: 14, lineHeight: 1.75, color: INK }}>
+      <style>{`@media print{.flu-noprint{display:none!important}.flu-rep{gap:10px!important}.flu-rep>div{break-inside:avoid}body{background:#fff!important}}`}</style>
+      <div className="flu-noprint" style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: -8 }}><button onClick={() => window.print()} style={{ border: '1px solid #dcdcf5', background: '#fff', color: BLUE, borderRadius: 8, padding: '4px 12px', fontSize: 12.5, cursor: 'pointer' }}>打印 / 存成 PDF（先点各维度「展开证据」可带上原话）</button></div>
       {/* 01 结论 */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 16 }}>
         <Card title="AI 驾驭能力 · 本次对话行为评价">
@@ -63,6 +66,19 @@ export function FluencyReport({ f, sid, expand = false }: { f: any; sid?: string
         </Card>
       </div>
 
+      {/* 01b 这次测到了什么 / 没测到什么：分低是没做还是没机会，招聘方先看清楚 */}
+      <Card title="这次任务测到了什么">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: 14 }}>
+          <div><div style={sub('#4c43c9')}>任务</div><div style={{ fontSize: 13.5 }}>{f.profile?.type_name}类{f.profile?.why ? `：${f.profile.why}` : ''}</div>
+            <div style={{ fontSize: 12.5, color: MUTED, marginTop: 6 }}>证据来自：{[f.d1_source === 'outside' ? `外部 AI 的提问原话 ${f.stats?.user_msgs} 条（看不到 AI 回答）` : `和 AI 的对话 ${f.stats?.user_msgs} 轮`, '交付物', C?.diff ? '交付物和 AI 输出的比对' : '', C?.answers ? '交付后两问' : ''].filter(Boolean).join(' · ')}</div></div>
+          <div><div style={sub('#087d6c')}>测到了（{scored.length} 项进分）</div><div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>{scored.map(b => <span key={b.bid} style={pill(col(b.score))}>{name(b.bid)} {b.score.toFixed(1)}</span>)}</div></div>
+          <div><div style={sub(MUTED)}>没测到（{all.length - scored.length} 项不进分）</div><div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>{all.filter(b => b.score == null).map(b => <span key={b.bid} title={b.na} style={pill('#9aa3b5')}>{name(b.bid)}</span>)}</div>
+            <div style={{ fontSize: 12.5, color: MUTED, marginTop: 6 }}>这次任务没给机会，或平台拿不到这类数据（鼠标停在上面看原因）。不进均分，也不说明不会。</div></div>
+        </div>
+      </Card>
+
+      {C && (C.diff?.overall || C.answers) && <AiShare c={C} />}
+
       {/* 02 高光 / 待提升 */}
       {(N?.highlights?.length > 0 || zeros.length > 0 || weak.length > 0) && <Card title="高光与待提升">
         {N?.highlights?.length > 0 && <>
@@ -79,7 +95,12 @@ export function FluencyReport({ f, sid, expand = false }: { f: any; sid?: string
         {(zeros.length > 0 || weak.length > 0) && <div style={{ marginTop: N?.highlights?.length ? 14 : 0 }}>
           <div style={sub('#8a5a12')}>待提升</div>
           {zeros.length > 0 && <div style={{ fontSize: 13, marginBottom: 6 }}><b>该做没做（基线行为，整段对话里没出现，记 0 分）：</b>{zeros.map(b => name(b.bid)).join('、')}</div>}
-          {(N?.gaps || []).map((g: any, k: number) => <div key={k} style={{ padding: '6px 0', fontSize: 13.5 }}><b style={{ color: '#8a5a12' }}>{g.title}（{name(g.bid)} {B[g.bid]?.score} 分）：</b>{g.text}</div>)}
+          {(N?.gaps || []).map((g: any, k: number) => <div key={k} style={{ padding: '6px 0', fontSize: 13.5 }}><b style={{ color: '#8a5a12' }}>{g.title}（{name(g.bid)} {B[g.bid]?.score} 分）：</b>{g.text}
+            {g.before && g.after && <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '2px 10px', marginTop: 6, padding: '8px 12px', borderRadius: 8, background: '#fffaf1', border: '1px solid #f0dfbf', fontSize: 13 }}>
+              <span style={{ color: MUTED }}>他这样说</span><span style={{ color: '#666' }}>「{g.before}」</span>
+              <span style={{ color: '#805d24', fontWeight: 600 }}>可以这样说</span><span>「{g.after}」</span>
+            </div>}
+          </div>)}
           {!N?.gaps?.length && weak.length > 0 && <div style={{ fontSize: 13 }}><b>做了但一般：</b>{weak.map(b => `${name(b.bid)} ${b.score}`).join('、')}</div>}
         </div>}
       </Card>}
@@ -128,14 +149,43 @@ export function FluencyReport({ f, sid, expand = false }: { f: any; sid?: string
 
       <Card title="评分口径与局限">
         <div style={{ fontSize: 13, color: '#555', display: 'grid', gap: 6 }}>
-          <div><b>怎么评的：</b>只看候选人和平台 AI 助手的对话原话，加上交付物和提交时的「AI 参与说明」。25 个行为先按规则定位候选句、再由模型逐条判断成立与否、按每个行为写死的 1–5 档锚点定档；同一行为取最高档，只有一条孤立证据的最高 3.5 分；行为分 → 维度分（取均值）→ 总分（7 维等权，薄证据维度减半）。</div>
+          <div><b>怎么评的：</b>看候选人和 AI 的对话原话（站内助手、AI 工作台；在自己电脑上用外部 AI 的，从截图 / 插件网页抽提问原话），加上交付物、提交时的「AI 参与说明」和交付后两问，以及平台算出的交付物与 AI 输出的差异。25 个行为先按规则定位候选句、再由模型逐条判断成立与否、按每个行为写死的 1–5 档锚点定档；同一行为取最高档，只有一条孤立证据的最高 3.5 分；行为分 → 维度分（取均值）→ 总分（7 维等权，薄证据维度减半）。</div>
           <div><b>0 分和不计分：</b>目标澄清、人机分工、格式要求、交付前验证、主动迭代是任何实质任务都该有的基线行为，没出现记 0；其余行为要有触发场景，没机会就不计分，不拉低总分。</div>
           <div><b>这道任务：</b>{f.profile?.type_name}类（{f.profile?.type}）；任务可及性 C_elig {f.confidence.c_elig}，本次看到的覆盖 C_obs {f.confidence.c_obs}。{f.profile?.missing?.length ? `任务缺：${f.profile.missing.map((x: string) => X_NAME[x] || x).join('、')}。` : ''}{f.not_triggered?.length ? `本次未触发：${f.not_triggered.map((x: any) => name(x.bid)).join('、')}——不是候选人不会，是这道任务测不到。` : ''}</div>
-          <div><b>局限：</b>结果只反映这一次任务、这一段对话里的表现；在自己电脑上用外部 AI 的部分平台读不到原话，不在本评分内。分数和证据条数概括的是行为特征，不等同于工作效率或成果质量。</div>
+          <div><b>局限：</b>结果只反映这一次任务、这一段对话里的表现；外部 AI 的回答平台看不到，要对照 AI 上一轮输出的行为在这种情况下只按提问本身判。分数和证据条数概括的是行为特征，不等同于工作效率或成果质量。</div>
           <div style={{ color: MUTED }}>量表：潜历《AI 驾驭能力评价 7 维度评价体系》v3（26b）；框架参考 Dakan &amp; Feller (2025) AI Fluency Framework、Anthropic (2026) The AI Fluency Index、McKinsey 七步问题解决法。评分引擎 {f.version} · {f.model}</div>
         </div>
       </Card>
     </div>
+  );
+}
+
+/** AI 参与：自报 vs 记录（11-27，宇宁：B23 要交付物和 AI 输出的差异、B24 要交付后单题、题 1 贡献度和实际修改量比对） */
+const FIX_CN: Record<string, string> = { edit: '自己动手改了', reask: '指出问题让 AI 重做', rewrite: '弃用、自己重写', keep: '没来得及处理 / 保留了' };
+function AiShare({ c }: { c: any }) {
+  const o = c.diff?.overall, a = c.answers;
+  const bar = (v: number, color: string) => <div style={{ height: 8, borderRadius: 4, background: '#eef0f5', overflow: 'hidden', flex: 1 }}><div style={{ width: `${Math.round(v * 100)}%`, height: '100%', background: color }} /></div>;
+  const row = (label: string, v: number | null, color: string, extra?: string) => <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 13 }}><span style={{ width: 150, color: '#555' }}>{label}</span>{v == null ? <span style={{ color: MUTED, flex: 1 }}>未作答</span> : bar(v, color)}<b style={{ width: 44, textAlign: 'right' }}>{v == null ? '' : `${Math.round(v * 100)}%`}</b>{extra && <span style={{ fontSize: 12, color: MUTED }}>{extra}</span>}</div>;
+  return (
+    <Card title="AI 参与：他自己怎么说 vs 记录里是什么样">
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 18 }}>
+        <div style={{ display: 'grid', gap: 8, alignContent: 'start' }}>
+          {row('自报 AI 贡献度', a?.share == null ? null : a.share / 100, BLUE)}
+          {o && row('交付物里照搬 AI 的', o.ai_verbatim_ratio, '#9aa3b5')}
+          {o && c.diff.parts?.length > 1 && c.diff.parts.map((p: any) => <div key={p.part} style={{ display: 'flex', gap: 10, fontSize: 12.5, color: MUTED, paddingLeft: 12 }}><span style={{ width: 138 }}>{p.part} {p.title}</span><span>照搬 {Math.round(p.ai_verbatim_ratio * 100)}% · 自己写 / 改 {Math.round((p.changed_ratio ?? 0) * 100)}% · {p.chars} 字</span></div>)}
+          {o && <div style={{ fontSize: 12.5, color: '#555' }}>{c.diff.since_last_ai_sec != null && <>最后一次用 AI 到提交隔了 <b>{Math.round(c.diff.since_last_ai_sec / 60)}</b> 分钟。</>}{c.diff.edits_after_last_in && <>最后一次把 AI 的内容放进交付物后，自己又改了 <b>{c.diff.edits_after_last_in.count}</b> 次、约 <b>{c.diff.edits_after_last_in.chars}</b> 字。</>}</div>}
+          <div style={{ fontSize: 12, color: MUTED }}>「照搬」= 交付物里和 AI 输出连续 10 个字以上一模一样的部分（剔掉任务书和材料原文）。AI 出思路、他自己落笔的不算照搬，所以自报高于照搬比例是正常的；自报明显低于照搬比例才是少报。</div>
+        </div>
+        <div style={{ fontSize: 13.5, display: 'grid', gap: 6, alignContent: 'start' }}>
+          {a ? <>
+            <div><b style={{ color: '#087d6c' }}>最满意：</b>{a.best || <span style={{ color: MUTED }}>没写</span>}</div>
+            <div><b style={{ color: '#8a5a12' }}>最不满意：</b>{a.worst || <span style={{ color: MUTED }}>没写</span>}</div>
+            <div><b>怎么处理的：</b>{FIX_CN[a.fix] || <span style={{ color: MUTED }}>没选</span>}</div>
+          </> : <div style={{ color: MUTED }}>交付后两问未作答（这场在开这两问之前提交，或候选人跳过了），质量责任一项据此记「未观测」。</div>}
+          {(c.flags || []).map((x: any, k: number) => <div key={k} style={note('#fff4f2', '#f3cfc8', '#9c3a2a')}>{x.id === 'share_gap' ? '贡献度少报' : x.id === 'says_none_but_changed' ? '表述与行为不一致' : '事后追认'}：{x.note}</div>)}
+        </div>
+      </div>
+    </Card>
   );
 }
 
@@ -198,7 +248,8 @@ function BehaviorRow({ b, name, open }: { b: any; name: string; open: boolean })
 function Radar7({ dims, peers }: { dims: any[]; peers: Peers }) {
   const n = dims.length, cx = 200, cy = 170, R = 115;
   const pt = (i: number, r: number) => [cx + r * Math.sin((2 * Math.PI * i) / n), cy - r * Math.cos((2 * Math.PI * i) / n)];
-  const poly = (vals: (number | null)[]) => vals.map((v, i) => pt(i, (R * (v ?? 0)) / 5).map(x => x.toFixed(1)).join(',')).join(' ');
+  // 没测到的维度不画成 0 分（11-27：画成 0 会把整张图拉到圆心，看着像这一维很差）：跳过那个顶点，标签写「没测到」
+  const poly = (vals: (number | null)[]) => vals.map((v, i) => (v == null ? null : pt(i, (R * v) / 5).map(x => x.toFixed(1)).join(','))).filter(Boolean).join(' ');
   const avg = peers?.dims ? dims.map(d => peers.dims[d.num]?.avg ?? null) : null;
   return (
     <svg viewBox="0 0 400 340" style={{ width: '100%', maxWidth: 420, display: 'block', margin: '0 auto' }} role="img" aria-label="7 个维度得分雷达图，满分 5 分">
@@ -206,7 +257,7 @@ function Radar7({ dims, peers }: { dims: any[]; peers: Peers }) {
       {dims.map((_, i) => { const [x, y] = pt(i, R); return <line key={i} x1={cx} y1={cy} x2={x} y2={y} stroke="#eceff5" />; })}
       {avg && avg.some(v => v != null) && <polygon points={poly(avg)} fill="none" stroke="#9aa3b5" strokeDasharray="4 3" strokeWidth={1.5} />}
       <polygon points={poly(dims.map(d => d.score))} fill={`${BLUE}26`} stroke={BLUE} strokeWidth={2.5} />
-      {dims.map((d, i) => { const [x, y] = pt(i, R + 30); return <text key={i} x={x} y={y} textAnchor={Math.abs(x - cx) < 12 ? 'middle' : x < cx ? 'end' : 'start'} fontSize={12} fill="#555">{d.name}<tspan x={x} dy={15} fontWeight={700} fill={col(d.score)}>{d.score == null ? '—' : d.score.toFixed(1)}</tspan></text>; })}
+      {dims.map((d, i) => { const [x, y] = pt(i, R + 30); return <text key={i} x={x} y={y} textAnchor={Math.abs(x - cx) < 12 ? 'middle' : x < cx ? 'end' : 'start'} fontSize={12} fill="#555">{d.name}<tspan x={x} dy={15} fontWeight={d.score == null ? 400 : 700} fill={col(d.score)}>{d.score == null ? '没测到' : d.score.toFixed(1)}</tspan></text>; })}
     </svg>
   );
 }
@@ -215,6 +266,7 @@ const DIM_BIDS: Record<string, string[]> = { '01': ['B1', 'B2', 'B14'], '02': ['
 const SPEC_CN: Record<string, string> = { B1: '目标澄清', B2: '问题范围与性质识别', B14: '背景与信息缺口识别', B3: 'AI 工具适配性评估', B4: 'AI 平台比较与选择', B6: '人机任务分工', B11: '协作方式设定', B13: '关键事实与主张核查', B16: '错误信息识别', B18: '偏差识别', B5: '方案路径探索', B25: '借助 AI 迁移跨领域方法', B7: '交付格式与结构要求', B9: '成果质量示例与标准', B19: '数据隐私、安全与制度遵守', B20: '伦理影响考虑', B23: '交付前验证与测试', B24: '最终质量个人责任', B8: '目标受众定义', B12: '语气与风格要求', B17: '表达效果评估与调整', B21: 'AI 参与披露', B22: 'AI 贡献准确表述', B10: '主动迭代优化', B15: '质疑不成立的推理' };
 const X_NAME: Record<string, string> = { X1: '交付物文件', X2: '可换用多个 AI 平台', X3: '外部事实主张', X4: '受限数据', X5: '跨领域卡点', X6: '明确的受众' };
 const ACTION: Record<string, string> = { A: '该行为直接记 1 分', B: '该行为封顶 2 分', cap2: '该行为不超过 2 分', C: '转人工复核', downgrade1: '降 1 档并记表演嫌疑', na: '标为不可观测' };
+const pill = (c: string): React.CSSProperties => ({ fontSize: 12, padding: '1px 8px', borderRadius: 999, border: `1px solid ${c}55`, color: c, background: '#fff', whiteSpace: 'nowrap' });
 const chip = (c: string): React.CSSProperties => ({ fontSize: 12.5, padding: '2px 10px', borderRadius: 999, background: `${c}1a`, color: c, fontWeight: 700 });
 const note = (bg: string, bd: string, c: string): React.CSSProperties => ({ marginTop: 10, padding: '8px 12px', borderRadius: 8, background: bg, border: `1px solid ${bd}`, color: c, fontSize: 13 });
 const sub = (c: string): React.CSSProperties => ({ fontWeight: 700, color: c, margin: '2px 0 6px' });

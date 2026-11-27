@@ -28,6 +28,9 @@ import { Tour, type TourStep } from '@/components/work/Tour';
 import { MODULES, boardToText, canvasToText, resolveModule, type CanvasGraph, type Module } from '@/lib/work/modules';
 import { PluginWork } from '@/components/work/benches/PluginWork';
 import { AgentWork } from '@/components/work/benches/AgentWork';
+import { ReflectFields } from '@/components/work/AiReflect';
+import { disclosureEvent, type AiReflect } from '@/lib/work/reflect';
+import { useWorkScale } from '@/lib/work/scale-client';
 import { WorkLang, pick, useL, useLang, type Lang } from '@/lib/work/i18n';
 
 /** 英文题显示企业英文名：「潜历（DeepTalent）」→「DeepTalent」；没有英文名就原样 */
@@ -389,7 +392,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
     const put = (f: (x: ChatItem) => ChatItem) => setChat(c => c.map((x, i) => (i === at ? f(x) : x)));
     let got = false;
     try {
-      const r = await fetch(`/api/work/${token}/sessions/${sid}/ai`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ q: text, material: mat ? `${mat.title}\n${mat.content}` : '', stream: true }) });
+      const r = await fetch(`/api/work/${token}/sessions/${sid}/ai`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ q: text, material: mat ? `${mat.title}\n${mat.content}` : '', material_id: mat?.id || '', material_title: mat?.title || '', stream: true }) });
       if (!r.ok || !r.body || !/ndjson|json/.test(r.headers.get('content-type') || '')) {
         const j = await r.json().catch(() => null);
         throw new Error(j?.error || (r.status === 504 ? L('AI 写得太久，被网络掐断了（504）', 'The AI took too long and the connection was cut (504)') : L(`网络出错（${r.status}）`, `Network error (${r.status})`)));
@@ -450,6 +453,8 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   const [arm, setArm] = useState(false);
   const [nextStep, setNextStep] = useState('');
   // 交卷前的「AI 参与说明」（11-11 借潜历 v3 的 S1）：用过 AI（站内问过或用自己软件做）、交付物里又没写 AI 参与了什么，才问这一句；写了会和记录比对
+  const [refl, setRefl] = useState<AiReflect>({});   // 交付后两问（只在 AI 驾驭量表下问，lib/work/reflect）
+  const askReflect = useWorkScale() === 'fluency';
   const [disc, setDisc] = useState<string | null>(null);   // 最后一问（选填）：如果再给一天，先改哪里；占作答时间，交卷时存成 next_step 事件
   const dark = false;   // 代码台也用浅色（2026-10-25）：整页一个色调，别忽然深一块
   const [localErr, setLocalErr] = useState('');
@@ -519,13 +524,13 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
     setArm(false);
     const usedAi = chat.length > 0 || mode === 'open';
     const disclosed = /(AI|人工智能|大模型|ChatGPT|GPT|Claude|千问|通义|豆包|Kimi|DeepSeek|文心|智能体)[^。\n]{0,16}(生成|辅助|参与|协助|帮我|起草|整理)/i.test(deliverable);
-    if (disc == null && usedAi && !disclosed) { setDisc(''); return; }
+    if (disc == null && usedAi && (!disclosed || askReflect)) { setDisc(''); return; }
     finish();
   };
   // 手动确认后，或者时间到了，都走这里
   const finish = (auto?: boolean) => {
     if (nextStep.trim()) ev('next_step', { text: nextStep.trim().slice(0, 1000) });
-    if (disc && disc.trim().length >= 10) ev('ai_disclosure', { text: disc.trim().slice(0, 800) });
+    { const d = disclosureEvent(disc, askReflect ? refl : null); if (d) ev('ai_disclosure', d); }
     const events = buf.current.splice(0);
     // 白板：交卷前把每张画板导出 PNG 存起来（给出任务的人看），文字版照样进交付内容
     const boards = parts.filter(p => p.module === 'board' && (ps[p.id]?.board.elements || []).some((e: any) => !e.isDeleted));
@@ -563,13 +568,14 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   return (
     <Shell dark={dark}>
       {disc != null && !grading && <div style={{ position: 'fixed', inset: 0, zIndex: 60, background: 'rgba(20,24,60,.35)', display: 'grid', placeItems: 'center', padding: 16 }}>
-        <div style={{ width: 'min(560px, 100%)', background: '#fff', borderRadius: 14, padding: '18px 20px', boxShadow: '0 20px 60px rgba(20,24,60,.25)' }}>
-          <div style={{ fontWeight: 800, fontSize: 16, marginBottom: 4 }}>{L('提交前一句话：AI 参与说明', 'Before you submit: how AI was involved')}</div>
+        <div style={{ width: 'min(560px, 100%)', maxHeight: 'calc(100vh - 32px)', overflow: 'auto', boxSizing: 'border-box', background: '#fff', borderRadius: 14, padding: '18px 20px', boxShadow: '0 20px 60px rgba(20,24,60,.25)' }}>
+          <div style={{ fontWeight: 800, fontSize: 16, marginBottom: 4 }}>{askReflect ? L('提交前：AI 参与说明', 'Before you submit: how AI was involved') : L('提交前一句话：AI 参与说明', 'Before you submit: how AI was involved')}</div>
           <div style={{ fontSize: 13, color: '#666', lineHeight: 1.7, marginBottom: 10 }}>{L('就像附在成果上的说明：AI 参与了哪些环节、哪些是你自己做的。会和你的作答记录比对，照实写就行；不写也能交。', 'Like a note attached to your work: which parts AI helped with and which you did yourself. It will be checked against your work record, so just be accurate. You can also skip it.')}</div>
-          <textarea className="wk-ta" value={disc} onChange={e => setDisc(e.target.value)} rows={4} autoFocus placeholder={L('比如：竞品表的初稿是 AI 整理的，我核了三家的价格、删了一家过期的；结论和测算是我自己写的', 'e.g. AI drafted the competitor table; I checked three prices and removed an outdated entry. The conclusion and the estimate are my own.')} style={{ width: '100%', boxSizing: 'border-box' }} />
+          <textarea className="wk-ta" value={disc} onChange={e => setDisc(e.target.value)} rows={askReflect ? 3 : 4} autoFocus placeholder={L('比如：竞品表的初稿是 AI 整理的，我核了三家的价格、删了一家过期的；结论和测算是我自己写的', 'e.g. AI drafted the competitor table; I checked three prices and removed an outdated entry. The conclusion and the estimate are my own.')} style={{ width: '100%', boxSizing: 'border-box' }} />
+          {askReflect && <ReflectFields v={refl} set={setRefl} L={L} />}
           <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', marginTop: 12 }}>
             <button onClick={() => setDisc(null)} style={{ border: '1px solid #e0e0ee', background: '#fff', borderRadius: 8, padding: '7px 14px', cursor: 'pointer', font: 'inherit' }}>{L('回去继续做', 'Back to work')}</button>
-            <button onClick={() => finish()} style={{ border: 0, background: '#6055f5', color: '#fff', borderRadius: 8, padding: '7px 16px', cursor: 'pointer', font: 'inherit', fontWeight: 700 }}>{disc.trim() ? L('提交', 'Submit') : L('不写，直接提交', 'Skip and submit')}</button>
+            <button onClick={() => finish()} style={{ border: 0, background: '#6055f5', color: '#fff', borderRadius: 8, padding: '7px 16px', cursor: 'pointer', font: 'inherit', fontWeight: 700 }}>{disc.trim() || (askReflect && (refl.share != null || refl.best?.trim() || refl.worst?.trim())) ? L('提交', 'Submit') : L('不写，直接提交', 'Skip and submit')}</button>
           </div>
         </div>
       </div>}
