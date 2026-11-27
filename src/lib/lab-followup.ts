@@ -15,14 +15,18 @@ import { REVIEW_RULES } from '@/lib/agents/lab-review';
 import { buildChapter } from '@/lib/agents/lab-chapters';
 import { applyRevision, logRevision, reviseOpening, reviseStep } from '@/lib/lab-revise';
 import { slotMinutes } from '@/lib/lab-studio';
-import { FORMS, formOf, hasSpec, specTextOf } from '@/lib/lab-spec';
+import { FORMS, formOf, hasSpec, specTextOf, slotsOf, depthOf, DEPTHS, watchBenchOf, CAREER_STORY } from '@/lib/lab-spec';
 
 /** 级别的完整规范（排法 / 每章写法 / 工位 / 评分），评审逐条对照：偏离级别（比如生涯体验里出了计时、考核版没有否决项）照样能挑出来 */
-function levelRules(jd: any): string {
+function levelRules(jd: any, chapterCount = 0): string {
   const f = formOf(jd);
   if (!f) return '';
   const F = FORMS[f];
-  return `【级别「${F.label}」的规范（这个空间应当照它生成，逐条对照；明显偏离级别、会让体验者拿错证书或难度错位的算 must）】\n排法：${F.day}\n每章：${F.chapter}\n工位：${F.bench}\n评分：${F.score}\n证书：${F.cert}`;
+  // 11-27 国内试用（军花）：选了 3 段长段，评审还照形态默认的「5–6 格 + 收尾我和这一行」说「结构缺失、应有 6 章」，助理跟着劝加段。人定的段数 / 深度优先
+  const n = slotsOf(jd), d = depthOf(jd, chapterCount);
+  const day = n ? `管理员定了这一天 ${n} 段${d ? `、每段「${DEPTHS[d].label}」` : ''}，以这个为准：**不要要求补章节、加段、单独的收尾章**；形态里写的格数和环节这次不适用，只看这 ${n} 段本身写得好不好。${f === 'career' ? '最后一段结尾那道反思题就是全天的收尾。' : ''}` : F.day;
+  const watch = watchBenchOf(jd);
+  return `【级别「${F.label}」的规范（这个空间应当照它生成，逐条对照；明显偏离级别、会让体验者拿错证书或难度错位的算 must）】\n排法：${day}\n每章：${F.chapter}${f === 'career' ? `\n${CAREER_STORY}` : ''}\n工位：${F.bench}\n这个空间的工位：${watch ? '只观摩——师傅做、学生看，台词和题干不能让学生上手；**不要要求加学生操作的交互**，也别因为学生没动手扣分' : '学生自己上手一小段'}。生涯体验不强求每段都有虚拟工位，没有工位不算问题。\n评分：${F.score}\n证书：${F.cert}`;
 }
 
 export type Todo = { id: string; chapter_id: string | null; chapter: string; step_id: string | null; step_no: number | null; target: 'chapter' | 'step' | 'bench' | 'opening'; rule: string; problem: string; fix: string; severity?: 'must' | 'nice' };
@@ -46,24 +50,28 @@ const chapterText = (c: any, n: number) => {
 export async function reviewSpace(spaceId: string, model = 'claude-sonnet-5-5', prev?: FullReview | null, sent?: string[]): Promise<FullReview> {
   const [{ data: space, error }, { data: list }] = await Promise.all([
     db.from('skill_tasks').select('id, title, profile, jd_snapshot').eq('id', spaceId).single(),
-    db.from('lab_chapters').select('id, seq, slot, title, kind, brief, sim, locked, status').eq('task_id', spaceId),
+    db.from('lab_chapters').select('id, seq, slot, title, kind, brief, sim, locked, status, updated_at').eq('task_id', spaceId),
   ]);
   if (error) throw error;
   const chapters = [...(list || [])].filter((c: any) => (c.sim?.steps || []).length).sort((a: any, b: any) => (slotMinutes(a.slot) ?? 9999) - (slotMinutes(b.slot) ?? 9999) || a.seq - b.seq);
   if (!chapters.length) throw new Error('还没有写好的章节，先生成再评');
   const jd: any = space.jd_snapshot || {};
-  const rules = [...REVIEW_RULES, A1];
+  // 生涯体验不看工位交互 / 红线 / 突发 / 一线动手这几条（11-27：一条要「加学生操作」、一条又说「只观摩不许上手」，来回打架）
+  const career = formOf(jd) === 'career';
+  const rules = [...REVIEW_RULES.filter(r => !career || r.id === 'D2'), A1];
+  // 复评只在改过的章里报新的「必须改」：上一轮之后没动过的章，新挑出来的问题一律算「可以更好」（11-27：改了五六轮，每轮冒出新的必须改）
+  const changedSince = prev?.at ? new Set(chapters.filter((c: any) => c.updated_at && new Date(c.updated_at).getTime() > new Date(prev.at).getTime()).map((c: any) => c.id)) : null;
   const prompt = `你是「AI 百业」的内容评审。一个职业空间 = 一位数字职人的一整天，按时段分章，每章若干步，虚拟工位是真动手的操作台。
 职业：${jd.career?.profession || jd.title || space.title}${jd.company ? `（${jd.company}）` : ''}
 ${hasSpec(jd.spec) ? specTextOf(jd) : '（没写生成要求：按「职业探索——没入行的人也能上手」来看）'}
-${levelRules(jd)}
+${levelRules(jd, chapters.length)}
 
 ${chapters.map((c, i) => chapterText(c, i + 1)).join('\n\n')}
 
 ${prev ? `【这是复评】上一轮（第 ${prev.round || 1} 轮）的意见${sent ? '，标了「已交给 AI 改」的这轮改过，其它的这轮没动' : '已经交给 AI 改过了'}：
 ${prev.todos.map((t, i) => `${i + 1}. [${t.severity === 'nice' ? 'nice' : 'must'}]${sent ? (sent.includes(t.id) ? '［已交给 AI 改］' : '［这轮没动］') : ''} ${t.chapter}${t.step_no ? ` 第${t.step_no}步` : ''}：${t.problem}（要求：${t.fix}）`).join('\n')}
 先核对交去改的改到位没有（resolved 填改到位的序号）。还在的问题照旧列成待办，carry 填它在上一轮的序号，severity 照上一轮的不要升级；
-新发现的问题只列 must 级的，「可以更好」的不要再列——不要每轮换一批毛病。
+新发现的问题只列 must 级的，「可以更好」的不要再列——不要每轮换一批毛病。上一轮之后改过的章：${changedSince && changedSince.size ? chapters.map((c: any, i: number) => (changedSince.has(c.id) ? `第${i + 1}章` : '')).filter(Boolean).join('、') : '（没有）'}；**没改过的章，上一轮没提的问题这轮不要当 must 提**（上一轮已经看过它了），除非是示范答案错或前后事实矛盾。
 ` : ''}材料里以「…」结尾的地方是评审材料省略的，不是原文被截断，不要当问题报。
 平台规则和用户的生成要求冲突时（比如要求里说「红线只留真会出事故的」「不要求精准」），以用户要求为准：不要为了凑规则提违背要求的修改，对应规则按要求的口径打分。
 
@@ -90,8 +98,12 @@ ${rules.map(r => `- ${r.id} ${r.label}：${r.ask}`).join('\n')}
     let target = targets.includes(t.target) ? t.target : st ? 'step' : 'chapter';
     if (st?.type === 'bench') target = 'bench';
     if ((target === 'step' || target === 'bench') && !st) target = 'chapter';
-    return { id: `t${i + 1}`, chapter_id: c.id, chapter: `${c.slot || ''} ${c.title}`.trim(), step_id: st?.id || null, step_no: st ? stepNo : null, target, rule: String(t.rule || ''), severity: (prev && Number(t.carry) >= 1 && prev.todos[Number(t.carry) - 1] ? (prev.todos[Number(t.carry) - 1].severity === 'nice' ? 'nice' : 'must') : t.severity === 'nice' ? 'nice' : 'must'), problem: String(t.problem || '').slice(0, 200), fix: String(t.fix || '').slice(0, 300) } as Todo;
+    return { id: `t${i + 1}`, chapter_id: c.id, chapter: `${c.slot || ''} ${c.title}`.trim(), step_id: st?.id || null, step_no: st ? stepNo : null, target, rule: String(t.rule || ''), severity: (prev && Number(t.carry) >= 1 && prev.todos[Number(t.carry) - 1] ? (prev.todos[Number(t.carry) - 1].severity === 'nice' ? 'nice' : 'must') : t.severity === 'nice' ? 'nice' : 'must'), problem: String(t.problem || '').slice(0, 200), fix: String(t.fix || '').slice(0, 300), _carry: Number(t.carry) || 0 } as Todo & { _carry?: number };
   }).filter(Boolean) as Todo[];
+  if (prev && changedSince) {
+    todos.forEach(t => { if (!(t as any)._carry && t.chapter_id && !changedSince.has(t.chapter_id) && isMust(t)) t.severity = 'nice'; });
+  }
+  todos.forEach(t => { delete (t as any)._carry; });
   todos.sort((a, b) => Number(isMust(b)) - Number(isMust(a)));
   const worst = Math.min(...items.map(i => i.score));
   const asked = prev ? prev.todos.map((t, i) => i + 1).filter(n => !sent || sent.includes(prev.todos[n - 1].id)) : [];

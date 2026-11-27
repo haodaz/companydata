@@ -209,6 +209,7 @@ function systemPrompt(email: string) {
    然后 build_day 带上 slots / depth / plan。这两项会存在空间上，之后写每一章都照着来；他以后说「改成 4 段」「每段再长一点」，就带上新的 slots / depth 重排一天。一步一步来，每步做完说一句结果和下一步，问他要不要继续（ask_user）。
    build_day / write_chapters / fix_by_review 是后台任务：发起后说一句就停，别催别查；做完会自动发来「「…」做完了：…」，收到再接着下一步（写完章节就直接 review，不用再问）。
 改：
+- 这一天几段、每段多深是用户定的：评审意见里要是还说「结构缺失 / 应该加段 / 补收尾章」，不要照做，也不要劝他加段；照他定的段数改每一段本身。
 - 用户说「第二章太难」「这一步换个场景」：先 space_detail 看清楚是哪一章哪一步，再 revise 出提案（对话里会显示改前改后，用户点采纳才写进去），别自己说「已改好」。
 - 整章不满意：write_chapters 传 chapter_ids 和 hint 重写。工位（虚拟操作台）的修改请用户到工作室点「✦ 改」。
 - 生成要求变了：set_spec，然后问要不要按新要求重写（write_chapters 传没锁定的章）。
