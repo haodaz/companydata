@@ -155,7 +155,10 @@ export function buildRecord(task: any, s: any): FluencyRecord {
     plat++;
     const model = c.model || 'qwen-plus（2026-11-27 前没逐轮记录）';
     if (c.failed?.length) switches.push({ t, from: c.failed[0], to: c.model, reason: 'failure' });
-    msgs.push({ role: 'user', t, timestamp: ts(t), source: 'platform', tool_name: 'assistant', content: q, quoted: quotedRatio(q, source) > 0.8, ...(c.mat ? { attachments: [{ name: c.mat.title || c.mat.id, kind: 'open_material' as const, given_at: t, by: 'auto' as const }] } : {}) });
+    msgs.push({ role: 'user', t, timestamp: ts(t), source: 'platform', tool_name: 'assistant', content: q, quoted: quotedRatio(q, source) > 0.8, ...(c.mat || c.files?.length ? { attachments: [
+      ...(c.files || []).map((f: any) => ({ name: String(f.name || ''), kind: 'upload' as const, given_at: Number(events.find(e => e.type === 'ai_file' && e.url === f.url)?.t ?? t), by: 'user' as const })),
+      ...(c.mat ? [{ name: c.mat.title || c.mat.id, kind: 'open_material' as const, given_at: t, by: 'auto' as const }] : []),
+    ] } : {}) });
     msgs.push({ role: 'assistant', t, timestamp: ts(t), source: 'platform', tool_name: 'assistant', content: String(c.a || ''), model, ...(c.failed?.length ? { failed: c.failed } : {}) });
   }
   // 截图 / 插件网页里抽出来的外部 AI 提问（报告里已经抽过的）：每条提问后补一条「这里本该有 AI 回答、但看不到」
@@ -177,6 +180,7 @@ export function buildRecord(task: any, s: any): FluencyRecord {
   const removed = new Set(events.filter(e => e.type === 'file_remove').map(e => e.url));
   // 交付附件（file 事件）+ AI 工作台里他自己新建、AI 读得到的文件（ws_new；part 记 workspace）
   const files = [
+    ...events.filter(e => e.type === 'ai_file').map(e => ({ name: String(e.name || ''), uploaded_at: Number(e.t) || 0, part: 'to_ai', size: Number(e.size) || 0 })),
     ...events.filter(e => e.type === 'file' && e.url && !removed.has(e.url)).map(e => ({ name: String(e.name || ''), uploaded_at: Number(e.t) || 0, part: String(e.part || ''), size: Number(e.size) || 0 })),
     ...events.filter(e => e.type === 'ws_new' && e.note).map(e => ({ name: String(e.note), uploaded_at: Number(e.t) || 0, part: 'workspace', size: 0 })),
   ].sort((a, b) => a.uploaded_at - b.uploaded_at);

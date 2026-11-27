@@ -25,7 +25,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ toke
   const max = resubmitMax(t.task);
   const resubmit_left = max && !taskClosed(t.task) ? Math.max(0, max - selfReopens(s.events)) : 0;
   // 还没交卷时把作答现场带回去：刷新 / 换设备回来，时间接着走，聊天、内容、解锁进度都在
-  const resume = s.submitted_at ? undefined : { ai_chat: (s.ai_chat || []).map((c: any) => ({ q: c.q, a: c.a })), draft: s.draft || null, unlocked: (s.events || []).filter((e: any) => e.type === 'stage_unlock').map((e: any) => e.id), last_t: Math.max(0, ...(s.events || []).map((e: any) => Number(e.t) || 0)) };
+  const resume = s.submitted_at ? undefined : { ai_chat: (s.ai_chat || []).map((c: any) => ({ q: c.q, a: c.a, ...(c.files?.length ? { files: c.files.map((f: any) => f.name) } : {}) })), draft: s.draft || null, unlocked: (s.events || []).filter((e: any) => e.type === 'stage_unlock').map((e: any) => e.id), last_t: Math.max(0, ...(s.events || []).map((e: any) => Number(e.t) || 0)) };
   return NextResponse.json({ ok: true, session: { peer, resubmit_left, board: !!t.task?.public_board, elapsed_s: tm.elapsed, limit_s: tm.limit, expired: tm.expired, resume, id: s.id, participant: s.participant, started_at: s.started_at, submitted_at: s.submitted_at, deliverable: s.deliverable, report: s.report, score: s.score, events_n: (s.events || []).length, files: (s.events || []).filter((e: any) => e.type === 'file' && e.url && !(s.events || []).some((x: any) => x.type === 'file_remove' && x.url === e.url)).map((e: any) => ({ name: e.name, url: e.url, size: e.size || 0, part: e.part || '' })), ...(req.nextUrl.searchParams.get('full') && s.submitted_at ? { events: s.events || [], ai_chat: s.ai_chat || [] } : {}) } });
 }
 

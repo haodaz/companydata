@@ -23,14 +23,15 @@ async function post(url: string, body: any) {
   throw new Error(`${last}，已自动重试 2 次。刷新页面再传一次；还不行请截图告诉发链接的人`);
 }
 
-export async function uploadWorkFile(token: string, sid: string, f: File, extra: { t: number; part?: string }): Promise<WorkFile> {
+/** forAi（11-27）：发给 AI 助手的文件——不进交付物，平台读出文字给 AI，记 ai_file 事件 */
+export async function uploadWorkFile(token: string, sid: string, f: File, extra: { t: number; part?: string; forAi?: boolean }): Promise<WorkFile> {
   if (f.size > 200 * 1024 * 1024) throw new Error('太大了（上限 200MB）');
   const sign = await post(api(token, sid), { step: 'sign', name: f.name, size: f.size });
   const fd = new FormData(); fd.append('cacheControl', '3600'); fd.append('', f);
   let r: Response | null = null;
   for (let k = 0; k < 3 && !r?.ok; k++) { if (k) await wait(k === 1 ? 1500 : 4000); r = await fetch(sign.signed_url, { method: 'PUT', body: fd, headers: { 'x-upsert': 'true' } }).catch(() => null); }
   if (!r?.ok) throw new Error(`存储没收下（${r?.status ?? '网络断了'}），已自动重试 2 次。刷新页面再传一次`);
-  const j = await post(api(token, sid), { step: 'done', path: sign.path, name: f.name, size: f.size, type: f.type, t: extra.t, part: extra.part || '' });
+  const j = await post(api(token, sid), { step: 'done', path: sign.path, name: f.name, size: f.size, type: f.type, t: extra.t, part: extra.part || '', ...(extra.forAi ? { for: 'ai' } : {}) });
   return { name: j.name, size: j.size, url: j.url, part: extra.part || '', ...(j.warn ? { warn: j.warn } : {}) };
 }
 

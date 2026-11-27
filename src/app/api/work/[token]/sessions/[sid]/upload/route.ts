@@ -62,6 +62,17 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
       if (!obj) return NextResponse.json({ ok: false, error: errL(t, '存储里没找到这个文件，再传一次') }, { status: 400 });
       const size = Number(obj.metadata?.size) || Number(b.size) || 0;
       const url = labMediaUrl(db.storage.from(BUCKET).getPublicUrl(path).data.publicUrl);
+      // 发给 AI 助手的文件（11-27，宇宁：B9 质量参照 / B14 背景缺口要看「他什么时候主动给 AI 材料」）：不进交付物；当场读出文字存在事件里，问 AI 时带上
+      if (b.for === 'ai') {
+        const prev = (s.events || []).find((e: any) => e.type === 'ai_file' && e.url === url);
+        if (prev) return NextResponse.json({ ok: true, url, name: safe, size, chars: String(prev.text || '').length });
+        const warn = fileWarn(String(b.name || safe), t.task?.lang);
+        let text = '';
+        if (!warn) { try { const { readTextFiles } = await import('@/lib/work/recording'); text = (await readTextFiles([{ name: safe, url, size }])).replace(/^### 文件 \[[^\]]*\]\([^)]*\)/, '').trim().slice(0, 8000); } catch { /* 读不了就只记名字 */ } }
+        const { data: cur } = await db.from('work_sessions').select('events').eq('id', sid).maybeSingle();   // 看图要几秒，期间页面可能同步过事件
+        await db.from('work_sessions').update({ events: [...(cur?.events || s.events || []), { t: tsec, type: 'ai_file', name: safe, size, url, text }].slice(-3000) }).eq('id', sid);
+        return NextResponse.json({ ok: true, url, name: safe, size, chars: text.length, ...(warn ? { warn } : !text ? { warn: t.task?.lang === 'en' ? "Couldn't read any text from this file; the AI will only see its name" : '这个文件没读出内容，AI 只能看到文件名' } : {}) });
+      }
       const part = String(b.part || '').slice(0, 20);
       if ((s.events || []).some((e: any) => e.type === 'file' && e.url === url)) return NextResponse.json({ ok: true, url, name: safe, size });   // 前端重试登记（11-19）：登记过的不再记一遍
       const ev = { t: tsec, type: 'file', name: safe, size, url, ...(part ? { part } : {}) };

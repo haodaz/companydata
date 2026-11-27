@@ -265,13 +265,21 @@ const pct = (v: number | null | undefined) => (v == null ? '—' : `${Math.round
  *       改了很多却说「没有不满意」→ 表述与行为不一致；说的问题在对话里从没出现过 → 事后追认，不升档
  *   B22 贡献表述：自报 AI 贡献度 vs 交付物里 AI 原样占比，差 40 个百分点以上标「表述不一致」
  */
-function collectedEvidence(diff: AiDiff | null, d: any, chat: ChatTurn[], cands: Candidate[]) {
+function collectedEvidence(diff: AiDiff | null, d: any, chat: ChatTurn[], cands: Candidate[], events: { t: number; type: string; [k: string]: any }[] = []) {
   const flags: { id: 'share_gap' | 'says_none_but_changed' | 'after_the_fact'; note: string }[] = [];
   const o = diff?.overall;
   if (o && o.chars >= 50) {
     const ed = diff!.edits_after_last_in;
     cands.push({ bid: 'B23', src: 'event', i: -20, quote: `交付物 ${o.chars} 字里，和 AI 输出原样一致的约 ${pct(o.ai_verbatim_ratio)}、自己写或改过的约 ${pct(o.changed_ratio)}${diff!.parts.length > 1 ? `（${diff!.parts.map(p => `${p.part} 自改 ${pct(p.changed_ratio)}`).join('，')}）` : ''}${diff!.since_last_ai_sec != null ? `；最后一次 AI 输出到提交隔 ${Math.round(diff!.since_last_ai_sec / 60)} 分钟` : ''}${ed ? `；最后一次放进 AI 内容后自己又改了 ${ed.count} 次、约 ${ed.chars} 字` : ''}（平台按 10 字连片比对算出，剔掉任务书和材料原文）`, rule: 'B23-事件:交付物与AI输出差异' });
   }
+  // 他主动发给 AI 的文件（11-27 新入口）：发在第几问、是什么——样例 / 模板（B9）还是补背景（B14），由模型判；平台自动带的打开材料不算
+  const fileEv = new Map<string, any>((events || []).filter(e => e.type === 'ai_file').map(e => [e.url, e]));
+  chat.forEach((c: any, i) => {
+    for (const f of (c.files || []).slice(0, 2)) {
+      const e = fileEv.get(f.url), head = String(e?.text || '').replace(/\s+/g, ' ').slice(0, 120);
+      for (const bid of i === 0 ? ['B9'] : ['B9', 'B14']) cands.push({ bid, src: 'event', i: -30 - i, quote: `第 ${i + 1} 条消息附带他主动发给 AI 的文件「${f.name}」${head ? `（开头：${head}）` : ''}；他这条说：${String(c.q).replace(/\s+/g, ' ').slice(0, 80)}`, rule: `${bid}-事件:主动给AI文件` });
+    }
+  });
   if (!d) return { flags };
   const none = /^(没有|无|都还行|都挺好|都满意|还好|none|no|n\/a|nothing)[。.!！\s]*$/i;
   const worst = String(d.worst || '').trim(), best = String(d.best || '').trim();
@@ -725,7 +733,7 @@ export async function assessFluency(inp: FluencyInput): Promise<FluencyReport> {
   // 11-27（宇宁：B23 要最终件和 AI 输出的差异、B24 要交付后单题、B22 要声明和记录比对）：平台算得出的直接算，作为证据候选交给模型判
   const dEv = [...inp.events].reverse().find(e => e.type === 'ai_disclosure') || null;
   const diff = fromOutside ? null : aiDiff(inp.deliverable || '', inp.chat || [], inp.events, [inp.task.brief, ...inp.task.materials.map(m => m.content || '')].join('\n'));
-  const collected = collectedEvidence(diff, dEv, chat, cands);
+  const collected = collectedEvidence(diff, dEv, chat, cands, inp.events);
   if (diff?.overall) logs.push(`交付物和 AI 输出：原样一致约 ${pct(diff.overall.ai_verbatim_ratio)}、自己写 / 改过约 ${pct(diff.overall.changed_ratio)}${diff.since_last_ai_sec != null ? `；最后一次 AI 输出到提交隔 ${Math.round(diff.since_last_ai_sec / 60)} 分钟` : ''}`);
   const hitsBy = new Map<number, Set<string>>();
   for (const c of cands) if (c.src === 'chat') hitsBy.set(c.i, new Set([...(hitsBy.get(c.i) || []), c.bid]));

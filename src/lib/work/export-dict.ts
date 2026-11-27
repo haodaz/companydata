@@ -29,6 +29,7 @@ export const EVENT_DICT: { type: string; zh: string; fields?: string }[] = [
   { type: 'visit', zh: '插件记录：打开一个网页', fields: 'host, note = 网页标题' },
   { type: 'page', zh: '插件记录：网页内容摘录', fields: 'host, note = 标题, text = 正文摘录' },
   { type: 'open_next_step / next_step', zh: '最后一问「再给一天先改哪里」（选填）', fields: 'text' },
+  { type: 'ai_file', zh: '发给 AI 助手的文件（不进交付物；问 AI 时带上，ai_chat 那一轮记 files）', fields: 'name, size, url, text（平台读出的文字，最多 8000 字）' },
   { type: 'ai_disclosure', zh: '提交前的 AI 参与说明（有条件弹出）；AI 驾驭量表下另有交付后两问', fields: 'text, share（自报 AI 贡献 %）, best（最满意）, worst（最不满意）, fix（edit 自己改 / reask 让 AI 重做 / rewrite 自己重写 / keep 没处理）' },
   { type: 'submit / auto_submit', zh: '提交 / 到点自动提交', fields: 'chars' },
 ];

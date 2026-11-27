@@ -376,7 +376,17 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   // AI
   // 11-19 潜历反馈「发了问题没反馈」：以前整段生成完才回（最长 109 秒），超过 120 秒被网关掐断、前端没接住，问题也被清掉了。
   // 现在问题先上屏、回答边写边出（流式）；出错在对话里写明原因、给「重试」，并记一条 client_error 进过程，事后查得到。
-  type ChatItem = { q: string; a: string; pending?: boolean; err?: string; at?: number };
+  type ChatItem = { q: string; a: string; pending?: boolean; err?: string; at?: number; files?: string[] };
+  // 发给 AI 的文件（11-27）：先传上去、平台读出文字，挂在下一问上发出去；不进交付物
+  const [aiFiles, setAiFiles] = useState<{ name: string; url: string; warn?: string }[]>([]); const [aiUp, setAiUp] = useState(0); const aiFileRef = useRef<HTMLInputElement>(null);
+  const attachAi = async (list: FileList | File[] | null) => {
+    for (const f of Array.from(list || []).slice(0, 5)) {
+      setAiUp(n => n + 1);
+      try { const j = await uploadWorkFile(token, sid, f, { t: now_s(), forAi: true }); setAiFiles(x => x.some(y => y.url === j.url) ? x : [...x, { name: j.name, url: j.url, ...(j.warn ? { warn: j.warn } : {}) }]); }
+      catch (e: any) { setAiFiles(x => [...x, { name: f.name, url: '', warn: L(`没传上去：${e.message}`, `Upload failed: ${e.message}`) }]); }
+      setAiUp(n => n - 1);
+    }
+  };
   const [chat, setChat] = useState<ChatItem[]>(resume?.resume?.ai_chat || []);
   const [q, setQ] = useState(''); const [asking, setAsking] = useState(false);
   const [askSec, setAskSec] = useState(0);
@@ -385,14 +395,15 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   useEffect(() => { const el = chatBox.current; if (el && chatStick.current) el.scrollTop = el.scrollHeight; }, [chat]);
   useEffect(() => { if (!asking) return; const t1 = Date.now(); setAskSec(0); const iv = setInterval(() => setAskSec(Math.round((Date.now() - t1) / 1000)), 1000); return () => clearInterval(iv); }, [asking]);
   const ask = async (again?: string, idx?: number) => {
-    const text = (again ?? q).trim(); if (!text || asking) return;
-    setAsking(true); if (again == null) setQ(''); ev('ai_ask', { chars: text.length, ...(again != null ? { retry: 1 } : {}) });
+    const text = (again ?? q).trim(); if (!text || asking || aiUp) return;
+    const sendFiles = again == null ? aiFiles.filter(f => f.url) : (chat[idx ?? -1] as any)?.fileUrls || [];
+    setAsking(true); if (again == null) { setQ(''); setAiFiles([]); } ev('ai_ask', { chars: text.length, ...(again != null ? { retry: 1 } : {}) });
     let at = -1; chatStick.current = true;
-    setChat(c => { const n = idx != null ? c.filter((_, i) => i !== idx) : c; at = n.length; return [...n, { q: text, a: '', pending: true }]; });
+    setChat(c => { const n = idx != null ? c.filter((_, i) => i !== idx) : c; at = n.length; return [...n, { q: text, a: '', pending: true, ...(sendFiles.length ? { files: sendFiles.map((f: any) => f.name), fileUrls: sendFiles } : {}) } as ChatItem]; });
     const put = (f: (x: ChatItem) => ChatItem) => setChat(c => c.map((x, i) => (i === at ? f(x) : x)));
     let got = false;
     try {
-      const r = await fetch(`/api/work/${token}/sessions/${sid}/ai`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ q: text, material: mat ? `${mat.title}\n${mat.content}` : '', material_id: mat?.id || '', material_title: mat?.title || '', stream: true }) });
+      const r = await fetch(`/api/work/${token}/sessions/${sid}/ai`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ q: text, material: mat ? `${mat.title}\n${mat.content}` : '', material_id: mat?.id || '', material_title: mat?.title || '', files: sendFiles.map((f: any) => f.url), stream: true }) });
       if (!r.ok || !r.body || !/ndjson|json/.test(r.headers.get('content-type') || '')) {
         const j = await r.json().catch(() => null);
         throw new Error(j?.error || (r.status === 504 ? L('AI 写得太久，被网络掐断了（504）', 'The AI took too long and the connection was cut (504)') : L(`网络出错（${r.status}）`, `Network error (${r.status})`)));
@@ -664,7 +675,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
             <div ref={chatBox} onScroll={e => { const el = e.currentTarget; chatStick.current = el.scrollHeight - el.scrollTop - el.clientHeight < 80; }} style={{ flex: 1, overflow: 'auto', padding: 14, display: 'flex', flexDirection: 'column', gap: 12 }}>
               {!chat.length && <div style={{ fontSize: 12.5, color: ink2, lineHeight: 1.7, padding: '4px 2px' }}>{L('随便问，不算作弊。评的是你怎么用、哪些判断是你自己定的。可以让它核算、起草、挑毛病，但结论要你自己写。', "Ask anything. It's not cheating. We look at how you use it and which calls you make yourself. Let it check numbers, draft or find holes, but write the conclusions yourself.")}</div>}
               {chat.map((c, i) => <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                <div style={{ alignSelf: 'flex-end', maxWidth: '88%', background: '#6055f5', color: '#fff', padding: '8px 12px', borderRadius: '14px 14px 4px 14px', fontSize: 13.5, whiteSpace: 'pre-wrap', lineHeight: 1.55 }}>{c.q}</div>
+                <div style={{ alignSelf: 'flex-end', maxWidth: '88%', background: '#6055f5', color: '#fff', padding: '8px 12px', borderRadius: '14px 14px 4px 14px', fontSize: 13.5, whiteSpace: 'pre-wrap', lineHeight: 1.55 }}>{c.files?.length ? <div style={{ fontSize: 12, opacity: .85, marginBottom: 4 }}>📎 {c.files.join('、')}</div> : null}{c.q}</div>
                 {c.err ? <div style={{ alignSelf: 'flex-start', maxWidth: '94%', background: dark ? '#3a2326' : '#fff1f0', color: dark ? '#ffb4ab' : '#c0392b', padding: '10px 12px', borderRadius: '4px 14px 14px 14px', fontSize: 13, lineHeight: 1.6 }}>
                   {L('这次没回上来：', "This one didn't come back: ")}{c.err}
                   <div style={{ marginTop: 8, display: 'flex', gap: 6, flexWrap: 'wrap' }}><button onClick={() => ask(c.q, i)} disabled={asking} style={{ ...miniBtn, color: '#6055f5', borderColor: 'rgba(96,85,245,.4)' }}>{L('重试', 'Retry')}</button><button onClick={() => setQ(c.q)} style={miniBtn}>{L('把问题放回输入框', 'Put the question back in the box')}</button></div>
@@ -679,9 +690,15 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
               {adoptFlash && <div style={{ position: 'sticky', bottom: 0, alignSelf: 'center', background: '#1e8e3e', color: '#fff', fontSize: 12.5, padding: '6px 12px', borderRadius: 8, boxShadow: '0 4px 14px rgba(0,0,0,.15)' }}>{adoptFlash}</div>}
             </div>
             <div style={{ padding: 10, borderTop: `1px solid ${line}` }}>
-              <div style={{ border: `1px solid ${line}`, borderRadius: 14, background: dark ? '#1a1b26' : '#fff', padding: '8px 8px 8px 12px', display: 'flex', alignItems: 'flex-end', gap: 8 }}>
-                <textarea className="wk-ta" value={q} onChange={e => setQ(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(); } }} placeholder={L('问 AI… Enter 发送，Shift+Enter 换行', 'Ask AI… Enter to send, Shift+Enter for a new line')} rows={2} style={{ flex: 1, border: 0, outline: 'none', resize: 'none', font: 'inherit', fontSize: 13.5, lineHeight: 1.5, background: 'transparent', color: 'inherit', minHeight: 40, maxHeight: 140 }} />
-                <button onClick={() => ask()} disabled={asking || !q.trim()} style={{ width: 32, height: 32, borderRadius: 10, border: 0, background: q.trim() && !asking ? 'linear-gradient(135deg,#6055f5,#12b5cb)' : (dark ? '#2b2d3e' : '#e8e9f0'), color: '#fff', cursor: q.trim() ? 'pointer' : 'default', fontSize: 15, flex: 'none' }} title={L('发送', 'Send')}>↑</button>
+              {(aiFiles.length > 0 || aiUp > 0) && <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 6 }}>
+                {aiFiles.map((f, k) => <span key={k} title={f.warn || L('发出这一问时一起交给 AI', 'Sent to the AI with your next message')} style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 12, padding: '2px 8px', borderRadius: 999, border: `1px solid ${f.warn ? '#f0c36d' : line}`, background: f.warn ? '#fff8e6' : dark ? '#262838' : '#f4f3ff', color: f.warn ? '#8a5a12' : dark ? '#d0d3e6' : '#4c43c9', maxWidth: '100%' }}>📎 {f.name}{f.warn ? ` · ${f.warn}` : ''}<button onClick={() => setAiFiles(x => x.filter((_, j) => j !== k))} style={{ border: 0, background: 'none', cursor: 'pointer', color: 'inherit', padding: 0, fontSize: 13 }} title={L('不发了', 'Remove')}>×</button></span>)}
+                {aiUp > 0 && <span style={{ fontSize: 12, color: ink2 }}>{L(`读取中（${aiUp}）…`, `Reading (${aiUp})…`)}</span>}
+              </div>}
+              <div onDragOver={e => { if (e.dataTransfer?.types?.includes('Files')) e.preventDefault(); }} onDrop={e => { if (!e.dataTransfer?.files?.length) return; e.preventDefault(); attachAi(e.dataTransfer.files); }} style={{ border: `1px solid ${line}`, borderRadius: 14, background: dark ? '#1a1b26' : '#fff', padding: '8px 8px 8px 12px', display: 'flex', alignItems: 'flex-end', gap: 8 }}>
+                <input ref={aiFileRef} type="file" multiple accept=".pdf,.docx,.pptx,.txt,.md,.csv,.json,.xlsx,.xls,.png,.jpg,.jpeg,.webp,.gif,.zip" style={{ display: 'none' }} onChange={e => { attachAi(e.target.files); e.target.value = ''; }} />
+                <button onClick={() => aiFileRef.current?.click()} title={L('给 AI 发文件（样例、模板、补充资料、截图）：只发给 AI，不算交付物', 'Send a file to the AI (an example, template, extra notes, a screenshot). It goes to the AI only, not into your submission.')} style={{ width: 28, height: 32, border: 0, background: 'transparent', color: ink2, cursor: 'pointer', fontSize: 16, flex: 'none', padding: 0 }}>📎</button>
+                <textarea className="wk-ta" value={q} onChange={e => setQ(e.target.value)} onPaste={e => { const fs2 = Array.from(e.clipboardData?.files || []); if (fs2.length) { e.preventDefault(); attachAi(fs2.map((f, i) => f.name && f.name !== 'image.png' ? f : new File([f], `截图-${new Date().toTimeString().slice(0, 8).replace(/:/g, '')}${i ? '-' + i : ''}.png`, { type: f.type || 'image/png' }))); } }} onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(); } }} placeholder={L('问 AI… Enter 发送，Shift+Enter 换行', 'Ask AI… Enter to send, Shift+Enter for a new line')} rows={2} style={{ flex: 1, border: 0, outline: 'none', resize: 'none', font: 'inherit', fontSize: 13.5, lineHeight: 1.5, background: 'transparent', color: 'inherit', minHeight: 40, maxHeight: 140 }} />
+                <button onClick={() => ask()} disabled={asking || !q.trim() || aiUp > 0} style={{ width: 32, height: 32, borderRadius: 10, border: 0, background: q.trim() && !asking ? 'linear-gradient(135deg,#6055f5,#12b5cb)' : (dark ? '#2b2d3e' : '#e8e9f0'), color: '#fff', cursor: q.trim() ? 'pointer' : 'default', fontSize: 15, flex: 'none' }} title={L('发送', 'Send')}>↑</button>
               </div>
             </div>
           </div>
