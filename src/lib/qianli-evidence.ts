@@ -2,7 +2,7 @@
  * 潜历特色标签的原文证据关（陈彩瑛 10-21 质量反馈）：模型给的二级标签，原文里找不到对应字眼的一律去掉，不靠模型推断。
  *   1.1 可转正：只认明确写了转正 / 留用 / 转全职的（之前只有 3 条是明文，其余靠推断）
  *   1.2 留学增值：触发条件过宽——外语要有真实使用场景，「国际化经验」要职责本身涉外
- *   1.3 培养新人：没有培养信号、只有 AI 类证据的不算
+ *   1.3 培养新人：只有 AI 类证据的原先不算；11-28 陈彩瑛改口——「适应AI时代」等单独出现也算
  *   2   JD / 要求都没内容的：全部清掉
  * 纯代码，不调模型；打标时过一遍，存量用 scripts/qianli-specialty-evidence.mts 按同一套规则清。
  */
@@ -78,9 +78,6 @@ const RULES: Record<string, { any: RegExp[]; none?: RegExp[]; also?: RegExp; orN
   retainable: { any: [/留用|(表现|考核)?(优异|优秀)者?[^。；;\n]{0,6}(可|将|有机会)[^。；;\n]{0,4}(留|转)/], none: [/不转正|无转正|不留用|不予留用/] },
 };
 
-/** 培养新人：AI 类二级单独不算培养信号（陈彩瑛 1.3） */
-const AI_ONLY = new Set(['ai_driven', 'prompt_tuning', 'ai_ready', 'digital_skills']);
-
 export type SpecialtyText = { name?: string | null; responsibilities?: string | null; overview?: string | null };
 
 /** JD 和要求都没有实质内容（陈彩瑛 2：JD / 要求无内容的一律不打） */
@@ -147,9 +144,6 @@ export function checkSpecialty(l2In: string[], t: SpecialtyText): { l1: string[]
   }
   // 可转正的排除项：原文明确不转正，整个一级都不打
   if (/不转正|无转正|不提供转正|不可转正|没有转正名额/.test(text)) l2 = l2.filter(v => { if (L2_PARENT.get(v) === 'convertible') { dropped[v] = '原文明确不转正'; return false; } return true; });
-  // 培养新人：只剩 AI 类的，整组去掉
-  const growth = l2.filter(v => L2_PARENT.get(v) === 'growth');
-  if (growth.length && growth.every(v => AI_ONLY.has(v))) l2 = l2.filter(v => { if (growth.includes(v)) { dropped[v] = '只有 AI 类证据、没有培养信号'; return false; } return true; });
   const l1 = L1_ORDER.filter(v => l2.some(x => L2_PARENT.get(x) === v));
   return { l1, l2, dropped };
 }

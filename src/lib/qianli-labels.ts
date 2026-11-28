@@ -111,7 +111,7 @@ ${batchOut}
   for (const it of items) {
     const id = Number(it['岗位ID'] ?? it.id);
     if (!jobs.some(j => j.id === id)) continue;
-    // 只认清单里的二级，再过原文证据关（原文找不到字眼的去掉、只有 AI 类的不算培养新人、JD 空的全清）；一级按二级反推
+    // 只认清单里的二级，再过原文证据关（原文找不到字眼的去掉、JD 空的全清）；一级按二级反推
     const j = jobs.find(x => x.id === id)!;
     const { l1, l2 } = checkSpecialty((it['二级标签'] || []).map(String), j);
     out.set(id, { l1, l2 });
